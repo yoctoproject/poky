@@ -1,9 +1,13 @@
+#
+# Copyright 2006-2007 Openedhand Ltd.
+#
 
 do_rootfs[depends] += "dpkg-native:do_populate_staging apt-native:do_populate_staging"
 
 fakeroot rootfs_deb_do_rootfs () {
 	set +e
-	mkdir -p ${IMAGE_ROOTFS}/var/dpkg/{info,updates}
+	mkdir -p ${IMAGE_ROOTFS}/var/dpkg/info
+	mkdir -p ${IMAGE_ROOTFS}/var/dpkg/updates
 
 	rm -f ${STAGING_DIR}/etc/apt/sources.list.rev
 	rm -f ${STAGING_DIR}/etc/apt/preferences
