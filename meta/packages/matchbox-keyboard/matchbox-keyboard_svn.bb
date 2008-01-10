@@ -4,9 +4,10 @@ DEPENDS = "libfakekey expat libxft gtk+ matchbox-panel-2"
 RDEPENDS = "formfactor"
 SECTION = "x11"
 PV = "0.0+svn${SRCDATE}"
-PR = "r7"
+PR = "r8"
 
 SRC_URI = "svn://svn.o-hand.com/repos/matchbox/trunk;module=${PN};proto=http \
+           file://silence.patch;patch=1 \
 	   file://80matchboxkeyboard"
 
 S = "${WORKDIR}/${PN}"
