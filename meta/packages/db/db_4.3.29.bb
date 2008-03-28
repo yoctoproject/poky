@@ -19,7 +19,7 @@ VIRTUAL_NAME ?= "virtual/db"
 CONFLICTS = "db3"
 PR = "r7"
 
-SRC_URI = "http://downloads.sleepycat.com/db-${PV}.tar.gz"
+SRC_URI = "http://download.oracle.com/berkeley-db/db-${PV}.tar.gz"
 #SRC_URI_MD5 = "http://downloads.sleepycat.com/db-${PV}.tar.gz.md5"
 SRC_URI += "file://arm-thumb-mutex.patch;patch=1"
 

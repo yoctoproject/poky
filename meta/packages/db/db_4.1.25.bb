@@ -14,7 +14,7 @@ HOMEPAGE = "http://www.sleepycat.com"
 LICENSE = "BSD Sleepycat"
 PR = "r2"
 
-SRC_URI = "http://downloads.sleepycat.com/${P}.tar.gz"
+SRC_URI = "http://download.oracle.com/berkeley-db/db-${PV}.tar.gz"
 
 inherit autotools
 
