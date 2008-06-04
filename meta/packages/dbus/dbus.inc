@@ -3,7 +3,7 @@ PR = "r0"
 HOMEPAGE = "http://dbus.freedesktop.org"
 DESCRIPTION = "Message bus system for applications to talk to one another"
 LICENSE = "GPL"
-DEPENDS = "expat glib-2.0 virtual/libintl virtual/libx11"
+DEPENDS = "expat glib-2.0 virtual/libintl virtual/libx11 libsm"
 
 DEFAULT_PREFERENCE = "-1"
 
