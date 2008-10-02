@@ -35,6 +35,8 @@ EXTRA_OECONF_mx31ads = "${BASE_CONF} --with-flavour=eglnative"
 PACKAGE_ARCH_mx31ads = "${MACHINE_ARCH}"
 LDFLAGS_append_mx31ads = " -lpvrNULLWSEGL -lstdc++ "
 
+FILESPATH = "${FILE_DIRNAME}/clutter"
+
 inherit autotools pkgconfig gtk-doc
 
 PACKAGES =+ "clutter-examples"
