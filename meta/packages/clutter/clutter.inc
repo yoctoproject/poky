@@ -39,7 +39,7 @@ FILESPATH = "${FILE_DIRNAME}/clutter"
 
 inherit autotools pkgconfig gtk-doc
 
-PACKAGES =+ "clutter-examples"
+PACKAGES =+ "${PN}-examples"
 FILES_clutter-examples = "${bindir}/test-* ${pkgdatadir}/redhand.png"
 
 #check for TARGET_FPU=soft and inform configure of the result so it can disable some floating points
