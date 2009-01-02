@@ -22,6 +22,8 @@ do_stage () {
 	install -m 0755 libtoolize ${STAGING_BINDIR}/libtoolize
 	oe_libinstall -a -so -C libltdl libltdl ${STAGING_LIBDIR}
 	install -m 0644 libltdl/ltdl.h ${STAGING_INCDIR}/
+	install -d ${STAGING_INCDIR}/libltdl
+	install -m 0644 libltdl/libltdl/*.h ${STAGING_INCDIR}/libltdl/
 	install -d ${STAGING_DATADIR}/libtool/config/ ${STAGING_DATADIR}/aclocal/
 	install -c ${S}/libltdl/config/config.guess ${STAGING_DATADIR}/libtool/
 	install -c ${S}/libltdl/config/config.sub ${STAGING_DATADIR}/libtool/
