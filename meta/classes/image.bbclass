@@ -88,6 +88,8 @@ fakeroot do_rootfs () {
 	rm -f ${IMAGE_ROOTFS}${libdir}/ipkg/lists/*
 	
 	${IMAGE_PREPROCESS_COMMAND}
+
+	export ROOTFS_SIZE=`du -ks ${IMAGE_ROOTFS}|awk '{size = ${IMAGE_EXTRA_SPACE} + $1; print (size > ${IMAGE_ROOTFS_SIZE} ? size : ${IMAGE_ROOTFS_SIZE}) }'`
 		
 	export TOPDIR=${TOPDIR}
 	export MACHINE=${MACHINE}
