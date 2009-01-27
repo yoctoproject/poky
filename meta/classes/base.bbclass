@@ -85,7 +85,7 @@ def base_chk_file(parser, pn, pv, src_uri, localpath, data):
 
 
 def base_dep_prepend(d):
-	import bb;
+	import bb
 	#
 	# Ideally this will check a flag so we will operate properly in
 	# the case where host == build == target, for now we don't work in
