@@ -4,13 +4,14 @@ LICENSE = "LGPL"
 DEPENDS = "intltool-native glib-2.0 gtk+ gconf dbus db gnome-common virtual/libiconv zlib libsoup"
 
 PV = "1.4.0+svnr${SRCREV}"
-PR = "r3"
+PR = "r4"
 
 SRC_URI = "svn://svn.o-hand.com/repos/${PN};module=trunk;proto=http \
            file://oh-contact.patch;patch=1;pnum=0 \
            file://no_libdb.patch;patch=1 \
            file://no_iconv_test.patch;patch=1 \
            file://no_libedataserverui.patch;patch=1 \
+           file://r683-force-libsoup22.patch;patch=1 \
            file://iconv-detect.h"
 
 S = "${WORKDIR}/trunk"
