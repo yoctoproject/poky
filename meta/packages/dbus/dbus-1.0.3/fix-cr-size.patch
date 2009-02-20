@@ -1,0 +1,24 @@
+Dbus-native fails to build on few systems:
+
+- Debian 'sid' post-Lenny release
+- Fedora 9
+
+Bug was reported in OE bugtracker: http://bugs.openembedded.net/show_bug.cgi?id=4334
+
+| dbus-sysdeps-unix.c: In function '_dbus_read_credentials_unix_socket':
+| dbus-sysdeps-unix.c:1002: error: storage size of 'cr' isn't known
+| dbus-sysdeps-unix.c:1005: warning: pointer targets in passing argument 5 of 'getsockopt' differ in signedness
+| dbus-sysdeps-unix.c:1002: warning: unused variable 'cr'
+
+diff -urN dbus-1.0.1.orig/dbus/dbus-sysdeps-unix.c dbus-1.0.1/dbus/dbus-sysdeps-unix.c
+--- dbus-1.0.1.orig/dbus/dbus-sysdeps-unix.c	2009-01-01 03:50:33.000000000 +0200
++++ dbus-1.0.1/dbus/dbus-sysdeps-unix.c	2009-01-01 04:09:24.000000000 +0200
+@@ -992,7 +992,7 @@
+   _dbus_verbose ("read credentials byte\n");
+ 
+   {
+-#ifdef SO_PEERCRED
++#if defined(SO_PEERCRED) && defined(HAVE_GETPEERUCRED)
+     struct ucred cr;   
+     int cr_len = sizeof (cr);
+    
