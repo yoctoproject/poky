@@ -1,6 +1,6 @@
 LICENSE = "GPL"
 DEPENDS = "zlib"
-PR = "r7"
+PR = "r8"
 
 FILESPATH = "${FILE_DIRNAME}/qemu-${PV}"
 FILESDIR = "${WORKDIR}"
@@ -34,6 +34,7 @@ SRC_URI = "\
     file://writev_fix.patch;patch=1 \
     file://configure_symlinkpath_fix.patch;patch=1 \
     file://disable-error-in-configure.patch;patch=1 \
+    file://fix-dirent.h-location.diff;patch=1 \
     file://no-strip.patch;patch=1"
 
 S = "${WORKDIR}/qemu-${PV}"
