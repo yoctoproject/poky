@@ -1,0 +1,64 @@
+commit e6088d987c545d60a86e1f44836ab8ba072fffd9
+Author: David Woodhouse <dwmw2@infradead.org>
+Date:   Sat Feb 23 22:28:36 2008 +0900
+
+    Fix recv_image compilation with new glibc
+    
+    struct ip_mreq is hidden behind __USE_MISC now
+
+diff --git a/recv_image.c b/recv_image.c
+index 028635a..3b79304 100644
+--- a/recv_image.c
++++ b/recv_image.c
+@@ -1,5 +1,6 @@
+ 
+ #define _XOPEN_SOURCE 500
++#define _USE_MISC
+ 
+ #include <errno.h>  	
+ #include <error.h> 	
+
+commit b995f89a81589be8d8a41c374a6df109d0ee12b3
+Author: David Woodhouse <dwmw2@infradead.org>
+Date:   Thu May 22 12:44:14 2008 +0100
+
+    Fix recv_image build harder
+    
+    Signed-off-by: David Woodhouse <dwmw2@infradead.org>
+
+diff --git a/recv_image.c b/recv_image.c
+index 3b79304..d65aa2a 100644
+--- a/recv_image.c
++++ b/recv_image.c
+@@ -1,14 +1,14 @@
+ 
+ #define _XOPEN_SOURCE 500
+-#define _USE_MISC
+ 
+-#include <errno.h>  	
+-#include <error.h> 	
+-#include <netdb.h> 	
+-#include <stdio.h> 	
+-#include <stdlib.h> 	
++#include <errno.h>
++#include <error.h>
++#include <stdio.h>
++#define __USE_GNU
++#include <netdb.h>
++#include <stdlib.h>
+ #include <string.h>
+-#include <unistd.h> 	
++#include <unistd.h>
+ #include <fcntl.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+@@ -307,7 +307,7 @@ int main(int argc, char **argv)
+ 						~(meminfo.erasesize - 1);
+ 					erase.length = meminfo.erasesize;
+ 
+-					printf("Will erase at %08lx len %08lx (bad write was at %08lx)\n", 
++					printf("Will erase at %08x len %08x (bad write was at %08x)\n", 
+ 					       erase.start, erase.length, eraseblocks[block_nr].flash_offset);
+ 					if (ioctl(flfd, MEMERASE, &erase)) {
+ 						perror("MEMERASE");
+
