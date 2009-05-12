@@ -7,10 +7,18 @@ def patch_init(d):
 	import os, sys
 
 	def md5sum(fname):
-		import md5, sys
+		import sys
+
+		# when we move to Python 2.5 as minimal supported
+		# we can kill that try/except as hashlib is 2.5+
+		try:
+			import hashlib
+			m = hashlib.md5()
+		except ImportError:
+			import md5
+			m = md5.new()
 
 		f = file(fname, 'rb')
-		m = md5.new()
 		while True:
 			d = f.read(8096)
 			if not d:
