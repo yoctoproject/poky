@@ -257,7 +257,7 @@ class Cache:
         pv       = self.getVar('PV', file_name, True)
         pr       = self.getVar('PR', file_name, True)
         dp       = int(self.getVar('DEFAULT_PREFERENCE', file_name, True) or "0")
-        provides  = Set([pn] + (self.getVar("PROVIDES", file_name, True) or "").split())
+        provides  = set([pn] + (self.getVar("PROVIDES", file_name, True) or "").split())
         depends   = bb.utils.explode_deps(self.getVar("DEPENDS", file_name, True) or "")
         packages  = (self.getVar('PACKAGES', file_name, True) or "").split()
         packages_dynamic = (self.getVar('PACKAGES_DYNAMIC', file_name, True) or "").split()
@@ -282,17 +282,17 @@ class Cache:
         # Forward: virtual -> [filenames]
         # Reverse: PN -> [virtuals]
         if pn not in cacheData.pn_provides:
-            cacheData.pn_provides[pn] = Set()
+            cacheData.pn_provides[pn] = set()
         cacheData.pn_provides[pn] |= provides
 
-        cacheData.fn_provides[file_name] = Set()
+        cacheData.fn_provides[file_name] = set()
         for provide in provides:
             if provide not in cacheData.providers:
                 cacheData.providers[provide] = []
             cacheData.providers[provide].append(file_name)
             cacheData.fn_provides[file_name].add(provide)
 
-        cacheData.deps[file_name] = Set()
+        cacheData.deps[file_name] = set()
         for dep in depends:
             cacheData.all_depends.add(dep)
             cacheData.deps[file_name].add(dep)
@@ -416,7 +416,7 @@ class CacheData:
         self.pkg_dp = {}
         self.pn_provides = {}
         self.fn_provides = {}
-        self.all_depends = Set()
+        self.all_depends = set()
         self.deps = {}
         self.rundeps = {}
         self.runrecs = {}
