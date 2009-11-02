@@ -1,4 +1,4 @@
-PR = "r6"
+PR = "r7"
 DESCRIPTION = "The GNU cc and gcc C compilers."
 HOMEPAGE = "http://www.gnu.org/software/gcc/"
 SECTION = "devel"
@@ -22,7 +22,8 @@ SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2 \
 	   file://GCC3.4.0VisibilityPatch.diff;patch=1 \
 	   file://15342.patch;patch=1 \
 	   file://jarfix.patch;patch=1 \
-	   file://always-fixincperm.patch;patch=1"
+	   file://always-fixincperm.patch;patch=1 \
+           file://hrw-open-needs-3-args.patch"
 
 SRC_URI += "file://gcc34-configure.in.patch;patch=1"
 SRC_URI += "file://gcc34-thumb-support.patch;patch=1"
