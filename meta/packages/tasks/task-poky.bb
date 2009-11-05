@@ -3,7 +3,7 @@
 #
 
 DESCRIPTION = "Tasks for OpenedHand Poky"
-PR = "r21"
+PR = "r22"
 
 PACKAGES = "\
     task-poky-apps-console \
@@ -44,12 +44,13 @@ XSERVER ?= "xserver-kdrive-fbdev"
 
 ALLOW_EMPTY = "1"
 
+SPLASH ?= "psplash"
 
 RDEPENDS_task-poky-apps-console = "\
     avahi-daemon \
     dropbear \
     portmap \
-    psplash"
+    ${SPLASH}"
 
 
 RDEPENDS_task-poky-x11-base = "\
