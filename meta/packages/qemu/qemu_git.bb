@@ -13,7 +13,8 @@ SRC_URI = "\
     file://fix-dirent.patch;patch=1 \
     file://fix-nogl.patch;patch=1 \
     file://zlibsearch.patch;patch=1 \
-    file://qemugl-allow-glxcontext-release.patch;patch=1 "
+    file://qemugl-allow-glxcontext-release.patch;patch=1 \
+    file://2ca2078e287174522e3a6229618947d3d285b8c0.patch;patch=1"
 
 S = "${WORKDIR}/git"
 
