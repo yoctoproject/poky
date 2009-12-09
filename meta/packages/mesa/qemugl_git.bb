@@ -12,20 +12,13 @@ SRC_URI = "git://git.o-hand.com/qemugl.git;protocol=git \
 S = "${WORKDIR}/git"
 
 PV = "0.0+git${SRCREV}"
-PR = "r5"
+PR = "r6"
 
 DEFAULT_PREFERENCE = "-1"
 
 do_install () {
 	install -d ${D}${libdir}/
 	install -m 0755 ${S}/libGL.so.1.2 ${D}${libdir}/libGL-qemu.so.1.2
-}
-
-do_stage () {
-	install -d ${STAGING_LIBDIR}/
-	install -m 0755 ${S}/libGL.so.1.2 ${STAGING_LIBDIR}/libGL.so.1.2
-	ln -s libGL.so.1.2 ${STAGING_LIBDIR}/libGL.so.1
-	ln -s libGL.so.1 ${STAGING_LIBDIR}/libGL.so
 }
 
 pkg_postinst_${PN} () {
