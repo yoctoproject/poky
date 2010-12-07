@@ -18,29 +18,21 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 """
-    This module implements an xmlrpc server for BitBake.
+    This module implements a passthrough server for BitBake.
 
-    Use this by deriving a class from BitBakeXMLRPCServer and then adding
-    methods which you want to "export" via XMLRPC. If the methods have the
-    prefix xmlrpc_, then registering those function will happen automatically,
-    if not, you need to call register_function.
-
-    Use register_idle_function() to add a function which the xmlrpc server
-    calls from within server_forever when no requests are pending. Make sure
+    Use register_idle_function() to add a function which the server
+    calls from within idle_commands when no requests are pending. Make sure
     that those functions are non-blocking or else you will introduce latency
     in the server's main loop.
 """
 
 import time
 import bb
-from bb.ui import uievent
-import xmlrpclib
 import pickle
 import signal
 
 DEBUG = False
 
-from SimpleXMLRPCServer import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 import inspect, select
 
 class BitBakeServerCommands():
