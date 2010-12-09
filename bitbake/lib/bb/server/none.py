@@ -79,18 +79,22 @@ class BBUIEventQueue:
         self.BBServer = BBServer
         self.EventHandle = bb.event.register_UIHhandler(self)
 
-    def getEvent(self):
+    def __popEvent(self):
         if len(self.eventQueue) == 0:
             return None
-
         return self.eventQueue.pop(0)
 
+    def getEvent(self):
+        if len(self.eventQueue) == 0:
+          self.BBServer.idle_commands(0)
+        return self.__popEvent()
+
     def waitEvent(self, delay):
-        event = self.getEvent()
+        event = self.__popEvent()
         if event:
             return event
         self.BBServer.idle_commands(delay)
-        return self.getEvent()
+        return self.__popEvent()
 
     def queue_event(self, event):
         self.eventQueue.append(event)
