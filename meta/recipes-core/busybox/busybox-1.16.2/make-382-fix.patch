@@ -6,10 +6,10 @@ Subject: mkmakefile: make 3.82 fix
 Signed-off-by: Thomas Chou <thomas@wytron.com.tw>
 Signed-off-by: Denys Vlasenko <dvlasenk@redhat.com>
 ---
-diff --git a/scripts/mkmakefile b/scripts/mkmakefile
-index 7f9d544..9fc51a7 100755
---- a/scripts/mkmakefile
-+++ b/scripts/mkmakefile
+Index: busybox-1.16.2/scripts/mkmakefile
+===================================================================
+--- busybox-1.16.2.orig/scripts/mkmakefile
++++ busybox-1.16.2/scripts/mkmakefile
 @@ -31,6 +31,9 @@ all:
  
  Makefile:;
@@ -21,5 +21,36 @@ index 7f9d544..9fc51a7 100755
 +%/:
  	\$(MAKE) -C \$(KERNELSRC) O=\$(KERNELOUTPUT) \$@
  EOF
---
-cgit v0.8.2.1
+Index: busybox-1.16.2/Makefile
+===================================================================
+--- busybox-1.16.2.orig/Makefile
++++ busybox-1.16.2/Makefile
+@@ -428,11 +428,15 @@ ifeq ($(config-targets),1)
+ -include $(srctree)/arch/$(ARCH)/Makefile
+ export KBUILD_DEFCONFIG
+ 
+-config %config: scripts_basic outputmakefile FORCE
++config: scripts_basic outputmakefile FORCE
+ 	$(Q)mkdir -p include
+ 	$(Q)$(MAKE) $(build)=scripts/kconfig $@
+ 	$(Q)$(MAKE) -C $(srctree) KBUILD_SRC= .kernelrelease
+ 
++%config: scripts_basic outputmakefile FORCE
++	$(Q)mkdir -p include
++	$(Q)$(MAKE) $(build)=scripts/kconfig $@
++	$(Q)$(MAKE) -C $(srctree) KBUILD_SRC= .kernelrelease
+ else
+ # ===========================================================================
+ # Build targets only - this includes busybox, arch specific targets, clean
+@@ -1280,7 +1284,10 @@ endif
+ 	$(Q)$(MAKE) $(build)=$(build-dir) $(target-dir)$(notdir $@)
+ 
+ # Modules
+-/ %/: prepare scripts FORCE
++%/: prepare scripts FORCE
++	$(Q)$(MAKE) KBUILD_MODULES=$(if $(CONFIG_MODULES),1) \
++	$(build)=$(build-dir)
++/: prepare scripts FORCE
+ 	$(Q)$(MAKE) KBUILD_MODULES=$(if $(CONFIG_MODULES),1) \
+ 	$(build)=$(build-dir)
+ %.ko: prepare scripts FORCE
