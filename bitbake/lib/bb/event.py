@@ -354,7 +354,6 @@ class TargetsTreeGenerated(Event):
     """
     Event when a set of buildable targets has been generated
     """
-
     def __init__(self, model):
         Event.__init__(self)
         self._model = model
@@ -363,10 +362,9 @@ class ConfigFilesFound(Event):
     """
     Event when a list of appropriate config files has been generated
     """
-
     def __init__(self, variable, values):
         Event.__init__(self)
-        self._variable =  variable
+        self._variable = variable
         self._values = values
 
 class MsgBase(Event):
