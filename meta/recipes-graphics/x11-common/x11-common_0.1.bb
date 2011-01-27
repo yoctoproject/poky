@@ -2,7 +2,7 @@ DESCRIPTION = "Common X11 scripts"
 LICENSE = "GPLv2"
 SECTION = "x11"
 RDEPENDS_${PN} = "xmodmap xdpyinfo xtscal xinit formfactor"
-PR = "r38"
+PR = "r39"
 
 SRC_URI = "file://etc"
 S = ${WORKDIR}
