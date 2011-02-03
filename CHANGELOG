@@ -1,0 +1,220 @@
+commit fd7a07b3a2153826bedda2ef76b9a33ab2791680
+Author: Scott Garman <scott.a.garman@intel.com>
+Date:   Fri Jan 21 14:15:05 2011 -0800
+
+    poky-extract-sdk: allow relative paths for extract-dir
+    
+    psuedo needs a full path to its pid file, so convert
+    relative extract-dir paths to full ones.
+    
+    The symptom of this bug is receiving the following error:
+    
+    pseudo: Couldn't open relative/path/to/var/pseudo/pseudo.pid: No such file or directory
+    
+    This fixes [BUGID #670]
+    
+    Signed-off-by: Scott Garman <scott.a.garman@intel.com>
+
+commit 01bc47f4d47df3276b4b6c2583bcddd834fd5050
+Author: Beth Flanagan <elizabeth.flanagan@intel.com>
+Date:   Wed Nov 3 17:20:00 2010 -0700
+
+    quilt: Fixed configure test for patch --version.
+    
+    OpenSuSE 11.3 uses GNU patch 2.6.1.81-5b68 which breaks quilt's
+    configure test for patch version.
+    
+    Signed-off-by: Beth Flanagan <elizabeth.flanagan@intel.com>
+
+commit 12a3d41a24db79ae6c0491defffcf4f4753001cf
+Author: Richard Purdie <richard.purdie@linuxfoundation.org>
+Date:   Fri Jan 14 11:57:18 2011 +0000
+
+    image.bbclass: Use the dedicated BB_WORKERCONTEXT, not bitbake internals to detect context
+    
+    Signed-off-by: Richard Purdie <richard.purdie@linuxfoundation.org>
+
+commit ce4f8356796bc797d9156ed252a4ed638a2150d5
+Author: Richard Purdie <rpurdie@linux.intel.com>
+Date:   Wed Dec 15 23:22:16 2010 +0000
+
+    scripts/poky-qemu: Improve tmp layout assumption
+    
+    If someone has changed TMPDIR in local.conf to a non-standard location, the
+    poky-qemu script currently doesn't handle this and assumes if BUILDDIR is set,
+    $BUILDDIR/tmp will exist.
+    
+    Its simple to check if this exists and if not, to ask bitbake where the
+    directory is so this patch changes the code to do that.
+    
+    Signed-off-by: Richard Purdie <rpurdie@linux.intel.com>
+
+commit 54f08d23cd7d0de6aec31f4764389ff4dab2990d
+Author: Scott Garman <scott.a.garman@intel.com>
+Date:   Tue Dec 7 20:59:06 2010 -0800
+
+    Make poky-qemu and related scripts work with arbitrary SDK locations
+    
+    * No longer assume SDK toolchains are installed in /opt/poky
+    * [BUGFIX #568] where specifying paths to both the kernel and fs
+      image caused an error due to POKY_NATIVE_SYSROOT never being
+      set, triggering failure of poky-qemu-ifup/ifdown
+    * Cosmetic improvements to usage() functions by using basename
+    
+    Signed-off-by: Scott Garman <scott.a.garman@intel.com>
+
+commit 8a3d0f375ce416ada1a5443e4a8e467504001beb
+Author: Scott Garman <scott.a.garman@intel.com>
+Date:   Fri Nov 12 16:31:13 2010 -0800
+
+    poky-qemu: Fix issues when running Yocto 0.9 release images
+    
+    This fixes two bugs with poky-qemu when it is run from a
+    standalone meta-toolchain setup.
+    
+    [BUGFIX #535] and [BUGFIX #536]
+    
+    Signed-off-by: Scott Garman <scott.a.garman@intel.com>
+
+commit 0c2003f13434c77f901a976523478d37d8aadb48
+Author: Paul Eggleton <paul.eggleton@linux.intel.com>
+Date:   Thu Dec 16 10:29:50 2010 +0000
+
+    openssl: restore -Wall flag
+    
+    The -Wall flag was unintentionally removed from the end of the CFLAG var in
+    089612794d4d8d9c79bd2a4365d6df78371f7f40 by me. This patch puts it back in.
+    
+    Signed-off-by: Paul Eggleton <paul.eggleton@linux.intel.com>
+    Signed-off-by: Richard Purdie <rpurdie@linux.intel.com>
+
+commit 6e71b0a012f0676c06b7b4788d932f320fca0b74
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Wed Dec 15 14:31:21 2010 +0000
+
+    web-webkit: fix for make 3.82
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 4b5c1c053000d297956f08949ffde7454ee33c5d
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Wed Dec 15 13:42:15 2010 +0000
+
+    contacts: fix for make 3.82
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 171e709ae6f4b1a7640bf393f57aa787648cdc0f
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Wed Dec 15 12:58:09 2010 +0000
+
+    dates: fix for Make 3.82
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit a8b8557e4cb34b594bb620eb276bcaf7a8e0a8e3
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Wed Dec 15 12:27:52 2010 +0000
+
+    owl-video-widget: fix Makefile for super strict make 3.82
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 399e6b8008cb0b8cc0b75efd48dd821a6cf5a8a8
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Tue Dec 14 18:29:43 2010 +0000
+
+    libowl-av: fix for Make 3.82
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 290280b332570ec73301f76765b1c5f2de20a9fd
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Tue Dec 14 17:56:53 2010 +0000
+
+    gst-plugins: fix for make 3.82
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 9e11fbf9048b17526ca8160d82b69f386595c9a7
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Tue Dec 14 15:39:42 2010 +0000
+
+    gstreamer: fix to comply with make 3.82's stricter parser
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 0f8244faba5c36c0580081c112ea27ce683af99b
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Tue Dec 14 12:49:13 2010 +0000
+
+    linux-libc-headers: fix for Make 3.82
+    
+    Fix the kernel Makefile for use with Make 3.82 by splitting mixed implicit and
+    normal rules into separate rules.
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 0cc23a86562d0ce1e236ceb4a56a8f19d400192f
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Tue Dec 14 12:21:33 2010 +0000
+
+    busybox: additional fixes for Make 3.82
+    
+    There where still some mixed implicit and normal rules in the Busybox Makefile,
+    Update our existing make-382.patch to split these into separate rules.
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 30c39cc97c384134661300e107d7a81f257f8034
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Fri Nov 12 16:36:54 2010 +0000
+
+    procps: fix for build against make 3.82
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 261ca885962ba9606bcad4c5415927a79fdd7b96
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Tue Nov 9 12:18:14 2010 +0000
+
+    busybox: import upstream patch for make 3.82
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 72ddd5c20246a5d5b1752b58a61ef75b4c39cc40
+Author: Joshua Lock <josh@linux.intel.com>
+Date:   Tue Nov 9 12:14:28 2010 +0000
+
+    eglibc: fix build of eglibc-initial for make 3.82
+    
+    Make 3.82, as shipped with Fedora 14, fixes some holes in the parser which in
+    turn breaks behaviour of some Makefiles. Most notably eglibc's.
+    
+    Signed-off-by: Joshua Lock <josh@linux.intel.com>
+
+commit 6026999e81042a7f6560f9bce04390865509b235
+Author: Paul Eggleton <paul.eggleton@intel.com>
+Date:   Fri Nov 19 15:03:32 2010 +0000
+
+    qemu: fix failure to find zlib header files during configure
+    
+    Corrects problems during configure of qemu-native due to the BUILD_CFLAGS
+    not being included when attempting to compile the test program for zlib
+    within the configure script.
+    
+    Signed-off-by: Paul Eggleton <paul.eggleton@intel.com>
+    Signed-off-by: Richard Purdie <rpurdie@linux.intel.com>
+
+commit c5ab4d56f97a0e45b124d40c9f536541be04c201
+Author: Paul Eggleton <paul.eggleton@intel.com>
+Date:   Wed Nov 17 11:37:47 2010 +0000
+
+    openssl-native: disable execstack flag to prevent problems with SELinux
+    
+    The execstack flag gets set on libcrypto.so by default which causes SELinux
+    to prevent it from being loaded on systems using SELinux, which includes
+    Fedora. This patch disables the execstack flag. (Note: Red Hat do this in
+    their openssl packaging.)
+    
+    Signed-off-by: Paul Eggleton <paul.eggleton@linux.intel.com>

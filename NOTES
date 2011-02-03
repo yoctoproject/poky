@@ -1,0 +1,70 @@
+Name: Laverne
+Version: 4.0.1
+Built from Revision: fd7a07b3a2153826bedda2ef76b9a33ab2791680
+Build Date: Jan 26 2011
+Builder: autobuilder.pokylinux.org 
+
+The Laverne 4.0.1 Release ensures you can use Poky Laverne on systems running 
+Fedora 14 and Opensuse 11.3, fixes issues with the poky-qemu script, and fixes 
+several other bugs. For the full changelog for Laverne 4.0.1 please read 
+CHANGELOG.
+
+Following are descriptions of fixes and known issues.
+
+Fixes
+------------------------
+
+    * Make 3.82, as shipped with Fedora 14, included parser bug fixes that 
+    resulted in a much stricter parser. As a result, the Makefiles could not be 
+    parsed for many of the software versions shipped with Laverne. The Makefiles
+    in the following recipes were fixed:
+
+          o eglibc
+          o busybox
+          o procps
+          o linux-libc-headers
+          o gstreamer
+          o gst-plugins
+          o libowl-av
+          o owl-video-widget
+          o dates
+          o contacts
+          o web-webkit 
+
+    * The ability to build openssl-native on a system that has SELINUX enabled 
+    was restored. (We disabled the execstack flag at compile time.) 
+
+    * A host-intrusion issue caused by a failure in QEMU to find zlib headers 
+    during configure was fixed. The issue was causing qemu-native to use the 
+    system zlib if it was present. If the system zlib was not present the build 
+    would fail. 
+
+    * Stability and usability enhancements, which included handling relative 
+    filesystem paths, were made to poky-qemu scripts. 
+
+    * The run-time remapping of package names when adding extra packages to an 
+    image via the IMAGE_INSTALL mechanism were fixed. 
+
+    * The configure test in quilt for GNU patch was fixed to that it correctly 
+    detects the version. 
+
+Known Issues
+------------------------
+
+    * The mpc3815e-rbd and routerstationpro machines were untested and not a 
+    part of the official Laverne 4.0 release. These machines are still unusable 
+    for this Laverne 4.0.1 release.
+          o mpx3815e-rdb will not boot due to a kernel/uboot issue Bug #685
+          o routerstation will not boot (by default) due to incorrect boot 
+          parameters Bug #681
+          o routerstationpro debug messages related to the ethernet driver print 
+          during boot Bug #679 
+    * Shutdown/poweroff on qemuarm does not cleanly halt the virtual machine. 
+    To workaround this issue use the reboot command. Using this command avoids 
+    a "power-cycle" and instead cleanly shuts down the VM Bug #684
+    * Two "Connection Manager" icons appear in the Sato UI. This duplication has
+    been fixed in master. Note that you can use either icon to launch the 
+    connectivity UI. Bug #683
+    * The on-screen keyboard incorrectly launches in the qemumips machine. This 
+    issue is due to a mis-configured formfactor file Bug #682 
+
