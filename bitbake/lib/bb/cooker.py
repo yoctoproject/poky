@@ -1185,15 +1185,21 @@ class CookerParser(object):
             multiprocessing.util.Finalize(None, bb.codeparser.parser_cache_save, args=(self.cooker.configuration.data, ), exitpriority=1)
             parse_file.cfg = cfg
 
-        bb.event.fire(bb.event.ParseStarted(self.toparse), self.cfgdata)
+        self.results = self.load_cached()
 
-        self.pool = multiprocessing.Pool(self.num_processes, init, [self.cfgdata])
-        parsed = self.pool.imap(parse_file, self.willparse)
-        self.pool.close()
+        if self.toparse:
+            bb.event.fire(bb.event.ParseStarted(self.toparse), self.cfgdata)
 
-        self.results = itertools.chain(self.load_cached(), parsed)
+            self.pool = multiprocessing.Pool(self.num_processes, init, [self.cfgdata])
+            parsed = self.pool.imap(parse_file, self.willparse)
+            self.pool.close()
+
+            self.results = itertools.chain(self.results, parsed)
 
     def shutdown(self, clean=True):
+        if not self.toparse:
+            return
+
         if clean:
             event = bb.event.ParseCompleted(self.cached, self.parsed,
                                             self.skipped, self.masked,
