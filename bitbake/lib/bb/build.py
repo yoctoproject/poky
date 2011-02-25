@@ -221,7 +221,8 @@ def exec_func_shell(function, d, runfile, cwd=None):
         if logger.isEnabledFor(logging.DEBUG):
             script.write("set -x\n")
         data.emit_func(function, script, d)
-
+        if cwd:
+            script.write("cd %s" % cwd)
         script.write("%s\n" % function)
         os.fchmod(script.fileno(), 0775)
 
@@ -238,8 +239,7 @@ def exec_func_shell(function, d, runfile, cwd=None):
         logfile = sys.stdout
 
     try:
-        bb.process.run(cmd, env=env, cwd=cwd, shell=False, stdin=NULL,
-                       log=logfile)
+        bb.process.run(cmd, env=env, shell=False, stdin=NULL, log=logfile)
     except bb.process.CmdError:
         logfn = d.getVar('BB_LOGFILE', True)
         raise FuncFailed(function, logfn)
