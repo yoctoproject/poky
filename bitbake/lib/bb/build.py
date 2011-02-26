@@ -222,7 +222,7 @@ def exec_func_shell(function, d, runfile, cwd=None):
             script.write("set -x\n")
         data.emit_func(function, script, d)
         if cwd:
-            script.write("cd %s" % cwd)
+            script.write("cd %s\n" % cwd)
         script.write("%s\n" % function)
         os.fchmod(script.fileno(), 0775)
 
