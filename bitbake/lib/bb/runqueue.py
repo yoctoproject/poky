@@ -1060,27 +1060,23 @@ class RunQueueExecute:
         return
 
     def fork_off_task(self, fn, task, taskname, quieterrors=False):
-        the_data = bb.cache.Cache.loadDataFull(fn, self.cooker.get_file_appends(fn), self.cooker.configuration.data)
 
-        env = bb.data.export_vars(the_data)
-        env = bb.data.export_envvars(env, the_data)
+        envbackup = os.environ.copy()
+        env = {}
 
         taskdep = self.rqdata.dataCache.task_deps[fn]
         if 'fakeroot' in taskdep and taskname in taskdep['fakeroot']:
-            envvars = the_data.getVar("FAKEROOTENV", True).split()
+            envvars = (self.rqdata.dataCache.fakerootenv[fn] or "").split()
             for var in envvars:
                 comps = var.split("=")
                 env[comps[0]] = comps[1]
-            fakedirs = (the_data.getVar("FAKEROOTDIRS", True) or "").split()
+
+            fakedirs = (self.rqdata.dataCache.fakerootdirs[fn] or "").split()
             for p in fakedirs:
                 bb.mkdirhier(p)
             logger.debug(2, "Running %s:%s under fakeroot, state dir is %s" % (fn, taskname, fakedirs))
-
-        envbackup = os.environ.copy()
-        for e in envbackup:
-            os.unsetenv(e)
-        for e in env:
-            os.putenv(e, env[e])
+            for e in env:
+                os.putenv(e, env[e])
 
         sys.stdout.flush()
         sys.stderr.flush()
@@ -1111,6 +1107,20 @@ class RunQueueExecute:
             # No stdin
             newsi = os.open(os.devnull, os.O_RDWR)
             os.dup2(newsi, sys.stdin.fileno())
+
+
+            the_data = bb.cache.Cache.loadDataFull(fn, self.cooker.get_file_appends(fn), self.cooker.configuration.data)
+
+            env2 = bb.data.export_vars(the_data)
+            env2 = bb.data.export_envvars(env2, the_data)
+
+            for e in os.environ:
+                os.unsetenv(e)
+            for e in env2:
+                os.putenv(e, env2[e])
+            for e in env:
+                os.putenv(e, env[e])
+
             if quieterrors:
                 the_data.setVarFlag(taskname, "quieterrors", "1")
 
@@ -1137,7 +1147,8 @@ class RunQueueExecute:
         for e in env:
             os.unsetenv(e)
         for e in envbackup:
-            os.putenv(e, envbackup[e])
+            if e in env:
+                os.putenv(e, envbackup[e])
 
         return pid, pipein, pipeout
 
