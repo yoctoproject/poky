@@ -52,6 +52,8 @@ if sys.hexversion < 0x020600F0:
 # implementations from Python 2.6.6's xmlrpclib.
 #
 # Upstream Python bug is #8194 (http://bugs.python.org/issue8194)
+# This bug is relevant for Python 2.7.0 and 2.7.1 but was fixed for
+# Python > 2.7.2
 ##
 
 class BBTransport(xmlrpclib.Transport):
@@ -107,6 +109,18 @@ class BBTransport(xmlrpclib.Transport):
 
         return u.close()
 
+def _create_server(host, port):
+    # Python 2.7.0 and 2.7.1 have a buggy Transport implementation
+    # For those versions of Python, and only those versions, use our
+    # own copy/paste BBTransport class.
+    if (2, 7, 0) <= sys.version_info < (2, 7, 2):
+        t = BBTransport()
+        s = xmlrpclib.Server("http://%s:%d/" % (host, port), transport=t, allow_none=True)
+    else:
+        s = xmlrpclib.Server("http://%s:%d/" % (host, port), allow_none=True)
+
+    return s
+
 class BitBakeServerCommands():
     def __init__(self, server, cooker):
         self.cooker = cooker
@@ -116,8 +130,8 @@ class BitBakeServerCommands():
         """
         Register a remote UI Event Handler
         """
-        t = BBTransport()
-        s = xmlrpclib.Server("http://%s:%d/" % (host, port), transport=t, allow_none=True)
+        s = _create_server(host, port)
+
         return bb.event.register_UIHhandler(s)
 
     def unregisterEventHandler(self, handlerNum):
@@ -240,8 +254,7 @@ class BitbakeUILauch():
 
 class BitBakeServerConnection():
     def __init__(self, serverinfo):
-        t = BBTransport()
-        self.connection = xmlrpclib.Server("http://%s:%s" % (serverinfo.host, serverinfo.port), transport=t, allow_none=True)
+        self.connection = _create_server(serverinfo.host, serverinfo.port)
         self.events = uievent.BBUIEventQueue(self.connection)
         for event in bb.event.ui_queue:
             self.events.queue_event(event)
