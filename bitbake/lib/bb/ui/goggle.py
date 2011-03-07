@@ -105,6 +105,8 @@ def main (server, eventHandler):
         # ignore interrupted io
         if ioerror.args[0] == 4:
             pass
+    except KeyboardInterrupt:
+        pass
     finally:
         server.runCommand(["stateStop"])
 
