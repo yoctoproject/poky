@@ -525,6 +525,7 @@ class FetchData(object):
         self.localpath = None
         self.lockfile = None
         self.mirrortarball = None
+        self.basename = None
         (self.type, self.host, self.path, self.user, self.pswd, self.parm) = decodeurl(data.expand(url, d))
         self.date = self.getSRCDate(d)
         self.url = url
@@ -573,11 +574,10 @@ class FetchData(object):
         elif self.localfile:
             self.localpath = self.method.localpath(self.url, self, d)
 
-        if self.localfile and self.localpath:
-            # Note: These files should always be in DL_DIR whereas localpath may not be.
-            basepath = bb.data.expand("${DL_DIR}/%s" % os.path.basename(self.localpath), d)
-            self.donestamp = basepath + '.done'
-            self.lockfile = basepath + '.lock'
+        # Note: These files should always be in DL_DIR whereas localpath may not be.
+        basepath = bb.data.expand("${DL_DIR}/%s" % os.path.basename(self.localpath or self.basename), d)
+        self.donestamp = basepath + '.done'
+        self.lockfile = basepath + '.lock'
 
     def setup_localpath(self, d):
         if not self.localpath:
@@ -913,9 +913,6 @@ class Fetch(object):
             m = ud.method
             localpath = ""
 
-            if not ud.localfile:
-                continue
-
             lf = bb.utils.lockfile(ud.lockfile)
 
             try:
@@ -951,7 +948,7 @@ class Fetch(object):
                         mirrors = mirror_from_string(bb.data.getVar('MIRRORS', self.d, True))
                         localpath = try_mirrors (self.d, ud, mirrors)
 
-                if not localpath or not os.path.exists(localpath):
+                if not localpath or ((not os.path.exists(localpath)) and localpath.find("*") == -1):
                     raise FetchError("Unable to fetch URL %s from any source." % u, u)
 
                 if os.path.exists(ud.donestamp):
