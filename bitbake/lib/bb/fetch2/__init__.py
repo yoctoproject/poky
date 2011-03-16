@@ -28,10 +28,8 @@ from __future__ import absolute_import
 from __future__ import print_function
 import os, re
 import logging
-import bb
-from   bb import data
-from   bb import persist_data
-from   bb import utils
+import bb.data, bb.persist_data, bb.utils
+from bb import data
 
 __version__ = "2"
 
@@ -352,7 +350,7 @@ def get_srcrev(d):
 
 def localpath(url, d):
     fetcher = bb.fetch2.Fetch([url], d)
-	return fetcher.localpath(url)
+    return fetcher.localpath(url)
 
 def runfetchcmd(cmd, d, quiet = False, cleanup = []):
     """
@@ -372,7 +370,7 @@ def runfetchcmd(cmd, d, quiet = False, cleanup = []):
                   'SSH_AUTH_SOCK', 'SSH_AGENT_PID', 'HOME']
 
     for var in exportvars:
-        val = data.getVar(var, d, True)
+        val = bb.data.getVar(var, d, True)
         if val:
             cmd = 'export ' + var + '=\"%s\"; %s' % (val, cmd)
 
@@ -498,15 +496,15 @@ def srcrev_internal_helper(ud, d, name):
         return ud.parm['tag']
 
     rev = None
-    pn = data.getVar("PN", d, True)
+    pn = bb.data.getVar("PN", d, True)
     if name != '':
-        rev = data.getVar("SRCREV_%s_pn-%s" % (name, pn), d, True)
+        rev = bb.data.getVar("SRCREV_%s_pn-%s" % (name, pn), d, True)
         if not rev:
-            rev = data.getVar("SRCREV_%s" % name, d, True)
+            rev = bb.data.getVar("SRCREV_%s" % name, d, True)
     if not rev:
-       rev = data.getVar("SRCREV_pn-%s" % pn, d, True)
+       rev = bb.data.getVar("SRCREV_pn-%s" % pn, d, True)
     if not rev:
-        rev = data.getVar("SRCREV", d, True)
+        rev = bb.data.getVar("SRCREV", d, True)
     if rev == "INVALID":
         raise FetchError("Please set SRCREV to a valid value", ud.url)
     if rev == "AUTOINC":
@@ -592,12 +590,12 @@ class FetchData(object):
         if "srcdate" in self.parm:
             return self.parm['srcdate']
 
-        pn = data.getVar("PN", d, True)
+        pn = bb.data.getVar("PN", d, True)
 
         if pn:
-            return data.getVar("SRCDATE_%s" % pn, d, True) or data.getVar("SRCDATE", d, True) or data.getVar("DATE", d, True)
+            return bb.data.getVar("SRCDATE_%s" % pn, d, True) or bb.data.getVar("SRCDATE", d, True) or bb.data.getVar("DATE", d, True)
 
-        return data.getVar("SRCDATE", d, True) or data.getVar("DATE", d, True)
+        return bb.data.getVar("SRCDATE", d, True) or bb.data.getVar("DATE", d, True)
 
 class FetchMethod(object):
     """Base class for 'fetch'ing data"""
@@ -790,10 +788,10 @@ class FetchMethod(object):
 
         localcount = None
         if name != '':
-            pn = data.getVar("PN", d, True)
-            localcount = data.getVar("LOCALCOUNT_" + name, d, True)
+            pn = bb.data.getVar("PN", d, True)
+            localcount = bb.data.getVar("LOCALCOUNT_" + name, d, True)
         if not localcount:
-            localcount = data.getVar("LOCALCOUNT", d, True)
+            localcount = bb.data.getVar("LOCALCOUNT", d, True)
         return localcount
 
     localcount_internal_helper = staticmethod(localcount_internal_helper)

@@ -224,7 +224,8 @@ def exec_func_shell(function, d, runfile, cwd=None):
         if cwd:
             script.write("cd %s\n" % cwd)
         script.write("%s\n" % function)
-        os.fchmod(script.fileno(), 0775)
+
+    os.chmod(runfile, 0775)
 
     env = {
         'PATH': d.getVar('PATH', True),

@@ -153,7 +153,7 @@ def fetcher_init(d):
     Called to initialize the fetchers once the configuration data is known.
     Calls before this must not hit the cache.
     """
-    pd = persist_data.persist(d)
+    pd = bb.persist_data.persist(d)
     # When to drop SCM head revisions controlled by user policy
     srcrev_policy = bb.data.getVar('BB_SRCREV_POLICY', d, 1) or "clear"
     if srcrev_policy == "cache":
@@ -178,7 +178,7 @@ def fetcher_compare_revisions(d):
     return true/false on whether they've changed.
     """
 
-    pd = persist_data.persist(d)
+    pd = bb.persist_data.persist(d)
     data = pd['BB_URI_HEADREVS'].items()
     data2 = bb.fetch.saved_headrevs
 
@@ -756,7 +756,7 @@ class Fetch(object):
         if not hasattr(self, "_latest_revision"):
             raise ParameterError
 
-        pd = persist_data.persist(d)
+        pd = bb.persist_data.persist(d)
         revs = pd['BB_URI_HEADREVS']
         key = self.generate_revision_key(url, ud, d)
         rev = revs[key]
@@ -773,7 +773,7 @@ class Fetch(object):
         if hasattr(self, "_sortable_revision"):
             return self._sortable_revision(url, ud, d)
 
-        pd = persist_data.persist(d)
+        pd = bb.persist_data.persist(d)
         localcounts = pd['BB_URI_LOCALCOUNT']
         key = self.generate_revision_key(url, ud, d)
 
