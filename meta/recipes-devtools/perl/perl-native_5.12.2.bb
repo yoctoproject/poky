@@ -4,22 +4,22 @@ SECTION = "libs"
 LICENSE = "Artistic|GPL"
 LIC_FILES_CHKSUM = "file://Copying;md5=2b4c6ffbcfcbdee469f02565f253d81a \
 		    file://Artistic;md5=f921793d03cc6d63ec4b15e9be8fd3f8"
-PR = "r7"
+PR = "r8"
 
 LIC_FILES_CHKSUM = "file://Copying;md5=2b4c6ffbcfcbdee469f02565f253d81a \
                     file://Artistic;md5=f921793d03cc6d63ec4b15e9be8fd3f8"
 
 SRC_URI = "http://ftp.funet.fi/pub/CPAN/src/perl-${PV}.tar.gz \
-           file://Configure-multilib.patch;patch=1 \
-           file://perl-configpm-switch.patch;patch=1 \
+           file://Configure-multilib.patch \
+           file://perl-configpm-switch.patch \
            file://parallel_build_fix_1.patch \
            file://parallel_build_fix_2.patch \
            file://parallel_build_fix_3.patch \
            file://parallel_build_fix_4.patch \
            file://parallel_build_fix_5.patch \
            file://parallel_build_fix_6.patch \
-           file://native-nopacklist.patch;patch=1 \
-           file://native-perlinc.patch;patch=1"
+           file://native-nopacklist.patch \
+           file://native-perlinc.patch"
 
 SRC_URI[md5sum] = "af2df531d46b77fdf0d97eecb03eddb2"
 SRC_URI[sha256sum] = "cf888340021d5a2d1238bbd9b8b55aaf420a848d46e4d317cb8567f86ceb1022"
@@ -27,6 +27,8 @@ SRC_URI[sha256sum] = "cf888340021d5a2d1238bbd9b8b55aaf420a848d46e4d317cb8567f86c
 S = "${WORKDIR}/perl-${PV}"
 
 inherit native
+
+export LD="${CCLD}"
 
 do_configure () {
 	./Configure \
