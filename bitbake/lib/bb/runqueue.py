@@ -1060,23 +1060,24 @@ class RunQueueExecute:
         return
 
     def fork_off_task(self, fn, task, taskname, quieterrors=False):
+        # We need to setup the environment BEFORE the fork, since
+        # a fork() or exec*() activates PSEUDO...
 
-        envbackup = os.environ.copy()
-        env = {}
+        envbackup = {}
 
         taskdep = self.rqdata.dataCache.task_deps[fn]
         if 'fakeroot' in taskdep and taskname in taskdep['fakeroot']:
             envvars = (self.rqdata.dataCache.fakerootenv[fn] or "").split()
-            for var in envvars:
-                comps = var.split("=")
-                env[comps[0]] = comps[1]
+            for key, value in (var.split('=') for var in envvars):
+                envbackup[key] = os.environ.get(key)
+                os.environ[key] = value
 
             fakedirs = (self.rqdata.dataCache.fakerootdirs[fn] or "").split()
             for p in fakedirs:
-                bb.mkdirhier(p)
-            logger.debug(2, "Running %s:%s under fakeroot, state dir is %s" % (fn, taskname, fakedirs))
-            for e in env:
-                os.putenv(e, env[e])
+                bb.utils.mkdirhier(p)
+
+            logger.debug(2, 'Running %s:%s under fakeroot, fakedirs: %s' %
+                            (fn, taskname, ', '.join(fakedirs)))
 
         sys.stdout.flush()
         sys.stderr.flush()
@@ -1087,6 +1088,7 @@ class RunQueueExecute:
             pid = os.fork()
         except OSError as e:
             bb.msg.fatal(bb.msg.domain.RunQueue, "fork failed: %d (%s)" % (e.errno, e.strerror))
+
         if pid == 0:
             pipein.close()
 
@@ -1143,12 +1145,12 @@ class RunQueueExecute:
                 os._exit(ret)
             except:
                 os._exit(1)
-
-        for e in env:
-            os.unsetenv(e)
-        for e in envbackup:
-            if e in env:
-                os.putenv(e, envbackup[e])
+        else:
+            for key, value in envbackup.iteritems():
+                if value is None:
+                    del os.environ[key]
+                else:
+                    os.environ[key] = value
 
         return pid, pipein, pipeout
 
