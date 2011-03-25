@@ -182,16 +182,16 @@ def exec_func_python(func, d, runfile, cwd=None):
     """Execute a python BB 'function'"""
 
     bbfile = d.getVar('FILE', True)
-    try:
-        olddir = os.getcwd()
-    except OSError:
-        olddir = None
     code = _functionfmt.format(function=func, body=d.getVar(func, True))
     bb.utils.mkdirhier(os.path.dirname(runfile))
     with open(runfile, 'w') as script:
         script.write(code)
 
     if cwd:
+        try:
+            olddir = os.getcwd()
+        except OSError:
+            olddir = None
         os.chdir(cwd)
 
     try:
@@ -203,8 +203,11 @@ def exec_func_python(func, d, runfile, cwd=None):
 
         raise FuncFailed(func, None)
     finally:
-        if olddir:
-            os.chdir(olddir)
+        if cwd and olddir:
+            try:
+                os.chdir(olddir)
+            except OSError:
+                pass
 
 def exec_func_shell(function, d, runfile, cwd=None):
     """Execute a shell function from the metadata
