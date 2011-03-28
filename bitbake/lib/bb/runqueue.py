@@ -105,11 +105,6 @@ class RunQueueScheduler(object):
             if self.rq.runq_running[taskid] == 1:
                 continue
             if self.rq.runq_buildable[taskid] == 1:
-                fn = self.rqdata.taskData.fn_index[self.rqdata.runq_fnid[taskid]]
-                taskname = self.rqdata.runq_task[taskid]
-                stamp = bb.build.stampfile(taskname, self.rqdata.dataCache, fn)
-                if stamp in self.rq.build_stamps.values():
-                    continue
                 return taskid
 
     def next(self):
@@ -1015,7 +1010,6 @@ class RunQueueExecute:
         self.runq_complete = []
         self.build_pids = {}
         self.build_pipes = {}
-        self.build_stamps = {}
         self.failed_fnids = []
 
     def runqueue_process_waitpid(self):
@@ -1030,7 +1024,6 @@ class RunQueueExecute:
         del self.build_pids[result[0]]
         self.build_pipes[result[0]].close()
         del self.build_pipes[result[0]]
-        del self.build_stamps[result[0]]
         if result[1] != 0:
             self.task_fail(task, result[1]>>8)
         else:
@@ -1319,7 +1312,6 @@ class RunQueueExecuteTasks(RunQueueExecute):
 
             self.build_pids[pid] = task
             self.build_pipes[pid] = runQueuePipe(pipein, pipeout, self.cfgData)
-            self.build_stamps[pid] = bb.build.stampfile(taskname, self.rqdata.dataCache, fn)
             self.runq_running[task] = 1
             self.stats.taskActive()
             if self.stats.active < self.number_tasks:

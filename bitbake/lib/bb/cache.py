@@ -55,7 +55,6 @@ recipe_fields = (
     'provides',
     'task_deps',
     'stamp',
-    'stamp_base',
     'stamp_extrainfo',
     'broken',
     'not_world',
@@ -161,7 +160,6 @@ class RecipeInfo(namedtuple('RecipeInfo', recipe_fields)):
             broken           = cls.getvar('BROKEN', metadata),
             not_world        = cls.getvar('EXCLUDE_FROM_WORLD', metadata),
             stamp            = cls.getvar('STAMP', metadata),
-            stamp_base       = cls.flaglist('stamp-base', tasks, metadata),
             stamp_extrainfo  = cls.flaglist('stamp-extra-info', tasks, metadata),
             packages_dynamic = cls.listvar('PACKAGES_DYNAMIC', metadata),
             depends          = cls.depvar('DEPENDS', metadata),
@@ -581,7 +579,6 @@ class CacheData(object):
         self.task_queues = {}
         self.task_deps = {}
         self.stamp = {}
-        self.stamp_base = {}
         self.stamp_extrainfo = {}
         self.preferred = {}
         self.tasks = {}
@@ -607,7 +604,6 @@ class CacheData(object):
         self.pkg_pepvpr[fn] = (info.pe, info.pv, info.pr)
         self.pkg_dp[fn] = info.defaultpref
         self.stamp[fn] = info.stamp
-        self.stamp_base[fn] = info.stamp_base
         self.stamp_extrainfo[fn] = info.stamp_extrainfo
 
         provides = [info.pn]
