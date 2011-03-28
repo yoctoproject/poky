@@ -37,8 +37,16 @@ ${GNU_MIRROR}/gcc/	http://gcc.get-software.com/releases/ \n \
 #
 gcclibdir = "${libdir}/gcc"
 BINV = "${PV}"
-S = "${WORKDIR}/gcc-${PV}"
-B = "${S}/build.${HOST_SYS}.${TARGET_SYS}"
+#S = "${WORKDIR}/gcc-${PV}"
+S = "${TMPDIR}/work-shared/gcc-${PV}"
+B = "${WORKDIR}/gcc-${PV}/build.${HOST_SYS}.${TARGET_SYS}"
+
+do_fetch[stamp-base] = "${TMPDIR}/stamps/work-shared/gcc-${PV}"
+do_unpack[stamp-base] = "${TMPDIR}/stamps/work-shared/gcc-${PV}"
+do_patch[stamp-base] = "${TMPDIR}/stamps/work-shared/gcc-${PV}"
+
+WORKDIR_task-unpack = "${TMPDIR}/work-shared/"
+WORKDIR_task-patch = "${TMPDIR}/work-shared/"
 
 target_includedir ?= "${includedir}"
 target_libdir ?= "${libdir}"
