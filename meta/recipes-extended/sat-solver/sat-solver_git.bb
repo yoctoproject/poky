@@ -11,6 +11,7 @@ PR = "r8"
 
 SRC_URI = "git://gitorious.org/opensuse/sat-solver.git;protocol=git \
            file://sat-solver_rpm5.patch \
+           file://sat-solver_obsolete.patch \
            file://cmake.patch \
            file://db5.patch \
            file://sat-solver_poky.patch \
