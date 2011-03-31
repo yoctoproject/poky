@@ -1063,6 +1063,7 @@ class RunQueueExecute:
         # We need to setup the environment BEFORE the fork, since
         # a fork() or exec*() activates PSEUDO...
 
+        env = {}
         envbackup = {}
 
         taskdep = self.rqdata.dataCache.task_deps[fn]
@@ -1071,6 +1072,7 @@ class RunQueueExecute:
             for key, value in (var.split('=') for var in envvars):
                 envbackup[key] = os.environ.get(key)
                 os.environ[key] = value
+                env[key] = value
 
             fakedirs = (self.rqdata.dataCache.fakerootdirs[fn] or "").split()
             for p in fakedirs:
