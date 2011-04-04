@@ -110,6 +110,9 @@ class SQLTable(collections.MutableMapping):
         for row in data:
             yield row[0]
 
+    def has_key(self, key):
+        return key in self
+
 
 class SQLData(object):
     """Object representing the persistent data"""
