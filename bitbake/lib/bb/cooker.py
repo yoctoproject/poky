@@ -1169,8 +1169,7 @@ class CookerParser(object):
         for virtualfn, info in result:
             if info.skipped:
                 self.skipped += 1
-            else:
-                self.bb_cache.add_info(virtualfn, info, self.cooker.status,
+            self.bb_cache.add_info(virtualfn, info, self.cooker.status,
                                         parsed=parsed)
         return True
 
