@@ -1098,12 +1098,6 @@ class RunQueueExecute:
             # events
             bb.event.worker_pid = os.getpid()
             bb.event.worker_pipe = pipeout
-            bb.event.useStdout = False
-
-            # Child processes should send their messages to the UI
-            # process via the server process, not print them
-            # themselves
-            bblogger.handlers = [bb.event.LogHandler()]
 
             self.rq.state = runQueueChildProcess
             # Make the child the process group leader
