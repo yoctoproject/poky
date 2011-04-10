@@ -1112,6 +1112,7 @@ class CookerParser(object):
     def start(self):
         def init(cfg):
             signal.signal(signal.SIGINT, signal.SIG_IGN)
+            multiprocessing.util.Finalize(None, bb.codeparser.parser_cache_save, args=(self.cooker.configuration.data, ), exitpriority=1)
             parse_file.cfg = cfg
 
         bb.event.fire(bb.event.ParseStarted(self.toparse), self.cfgdata)
@@ -1136,10 +1137,6 @@ class CookerParser(object):
         sync = threading.Thread(target=self.bb_cache.sync)
         sync.start()
         atexit.register(lambda: sync.join())
-
-        codesync = threading.Thread(target=bb.codeparser.parser_cache_save(self.cooker.configuration.data))
-        codesync.start()
-        atexit.register(lambda: codesync.join())
 
     def load_cached(self):
         for filename, appends in self.fromcache:
