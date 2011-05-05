@@ -29,7 +29,7 @@ OUTPUTS = bsp-guide.pdf bsp-guide.html
 SOURCES = *.png *.xml *.css *.svg
 
 publish:
-	scp -r $(OUTPUTS) $(SOURCES) o-hand.com:/srv/www/pokylinux.org/doc/
+	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/
 
 clean:
 	rm -f $(OUTPUTS)
