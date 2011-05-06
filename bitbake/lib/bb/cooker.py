@@ -1225,7 +1225,7 @@ class CookerParser(object):
             raise
         except ParsingFailure as exc:
             self.shutdown(clean=False)
-            bb.fatal('Error parsing %s: %s' %
+            bb.fatal('Unable to parse %s: %s' %
                      (exc.recipe, bb.exceptions.to_string(exc.realexception)))
         except bb.parse.ParseError as exc:
             bb.fatal(str(exc))
@@ -1233,13 +1233,11 @@ class CookerParser(object):
             logger.error('Unable to parse %s', exc.recipe)
             sys.exit(1)
         except Exception as exc:
-            import traceback
             etype, value, tb = sys.exc_info()
-            formatted = bb.exceptions.format_extracted(value.traceback, limit=5)
-            formatted.extend(traceback.format_exception_only(etype, value))
-
+            logger.error('Unable to parse %s', value.recipe,
+                         exc_info=(etype, value, exc.traceback))
             self.shutdown(clean=False)
-            bb.fatal('Error parsing %s:\n%s' % (value.recipe, ''.join(formatted)))
+            sys.exit(1)
 
         self.current += 1
         self.virtuals += len(result)
