@@ -36,7 +36,7 @@ OUTPUTS = kernel-manual.tgz kernel-manual.html kernel-manual.pdf
 SOURCES = *.png *.xml *.css
 
 publish:
-	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/
+	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/kernel-manual
 
 clean:
 	rm -f $(OUTPUTS)
