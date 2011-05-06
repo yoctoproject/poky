@@ -26,7 +26,7 @@ OUTPUTS = yocto-project-qs.tgz yocto-project-qs.html ypqs.pdf
 SOURCES = *.png *.xml *.css
 
 publish:
-	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/
+	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/yocto-quick-start
 
 clean:
 	rm -f $(OUTPUTS)
