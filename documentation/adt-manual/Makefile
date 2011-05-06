@@ -27,16 +27,18 @@ html:
 	xsltproc $(XSLTOPTS) -o adt-manual.html adt-manual-customization.xsl adt-manual.xml
 
 tarball: html
-	tar -cvzf adt-manual.tgz adt-manual.html adt-manual.pdf style.css figures/adt-title.png figures/yocto-project-transp.png
+	tar -cvzf adt-manual.tgz adt-manual.html adt-manual.pdf style.css figures/adt-title.png
 
 validate:
 	xmllint --postvalid --xinclude --noout adt-manual.xml
 
-OUTPUTS = adt-manual.tgz adt-manual.html adt-manual.pdf
-SOURCES = *.png *.xml *.css
+MANUALS = adt-manual.html adt-manual.pdf
+FIGURES = figures/*.png
+STYLESHEET = *.css
 
 publish:
-	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/adt-manual
+	scp -r $(MANUALS) $(STYLESHEET) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/adt-manual
+	scp -r $(FIGURES) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/adt-manual/figures
 
 clean:
-	rm -f $(OUTPUTS)
+	rm -f $(MANUALS)
