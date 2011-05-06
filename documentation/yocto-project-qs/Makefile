@@ -17,16 +17,18 @@ html:
 	xsltproc $(XSLTOPTS) -o yocto-project-qs.html yocto-project-qs-customization.xsl yocto-project-qs.xml
 
 tarball: html
-	tar -cvzf yocto-project-qs.tgz yocto-project-qs.html ypqs.pdf style.css figures/yocto-environment.png figures/building-an-image.png figures/using-a-pre-built-image.png figures/yocto-project-transp.png
+	tar -cvzf yocto-project-qs.tgz yocto-project-qs.html style.css figures/yocto-environment.png figures/building-an-image.png figures/using-a-pre-built-image.png figures/yocto-project-transp.png
 
 validate:
 	xmllint --postvalid --xinclude --noout yocto-project-qs.xml
 
-OUTPUTS = yocto-project-qs.tgz yocto-project-qs.html ypqs.pdf
-SOURCES = *.png *.xml *.css
+MANUALS = yocto-project-qs.html
+FIGURES = figures/*.png
+STYLESHEET = *.css
 
 publish:
-	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/yocto-quick-start
+	scp -r $(MANUALS) $(STYLESHEET) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/yocto-quick-start
+	scp -r $(FIGURES) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/yocto-quick-start/figures
 
 clean:
-	rm -f $(OUTPUTS)
+	rm -f $(MANUALS)
