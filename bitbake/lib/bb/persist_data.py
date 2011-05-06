@@ -66,6 +66,13 @@ class SQLTable(collections.MutableMapping):
                     continue
                 raise
 
+    def __enter__(self):
+        self.cursor.__enter__()
+        return self
+
+    def __exit__(self, *excinfo):
+        self.cursor.__exit__(*excinfo)
+
     def __getitem__(self, key):
         data = self._execute("SELECT * from %s where key=?;" %
                              self.table, [key])
@@ -104,35 +111,40 @@ class SQLTable(collections.MutableMapping):
 
     def __iter__(self):
         data = self._execute("SELECT key FROM %s;" % self.table)
-        for row in data:
-            yield row[0]
+        return (row[0] for row in data)
 
     def __lt__(self, other):
         if not isinstance(other, Mapping):
             raise NotImplemented
 
-    def iteritems(self):
-        data = self._execute("SELECT * FROM %s;" % self.table)
-        for row in data:
-            yield row[0], row[1]
+        return len(self) < len(other)
+
+    def values(self):
+        return list(self.itervalues())
 
     def itervalues(self):
         data = self._execute("SELECT value FROM %s;" % self.table)
-        for row in data:
-            yield row[0]
+        return (row[0] for row in data)
 
-    def has_key(self, key):
-        return key in self
+    def items(self):
+        return list(self.iteritems())
+
+    def iteritems(self):
+        return self._execute("SELECT * FROM %s;" % self.table)
 
     def clear(self):
         self._execute("DELETE FROM %s;" % self.table)
+
+    def has_key(self, key):
+        return key in self
 
 
 class PersistData(object):
     """Deprecated representation of the bitbake persistent data store"""
     def __init__(self, d):
-        warnings.warn("Use of PersistData will be deprecated in the future",
-                      category=PendingDeprecationWarning,
+        warnings.warn("Use of PersistData is deprecated.  Please use "
+                      "persist(domain, d) instead.",
+                      category=DeprecationWarning,
                       stacklevel=2)
 
         self.data = persist(d)
