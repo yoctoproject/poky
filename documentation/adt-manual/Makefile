@@ -36,7 +36,7 @@ OUTPUTS = adt-manual.tgz adt-manual.html adt-manual.pdf
 SOURCES = *.png *.xml *.css
 
 publish:
-	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/
+	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/adt-manual
 
 clean:
 	rm -f $(OUTPUTS)
