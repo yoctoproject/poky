@@ -30,7 +30,7 @@ OUTPUTS = poky-ref-manual.tgz poky-ref-manual.html poky-ref-manual.pdf
 SOURCES = *.png *.xml *.css *.svg
 
 publish:
-	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/
+	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/poky-ref-manual
 
 clean:
 	rm -f $(OUTPUTS)
