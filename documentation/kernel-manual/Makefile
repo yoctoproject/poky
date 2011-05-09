@@ -16,14 +16,8 @@ all: html pdf tarball
 pdf:
 	../tools/poky-docbook-to-pdf kernel-manual.xml ../template
 
-##
-# These URI should be rewritten by your distribution's xml catalog to
-# match your localy installed XSL stylesheets.
-
 html:
 #       See http://www.sagehill.net/docbookxsl/HtmlOutput.html 
-
-#	xsltproc $(XSLTOPTS) -o yocto-project-qs.html $(XSL_XHTML_URI) yocto-project-qs.xml
 	xsltproc $(XSLTOPTS) -o kernel-manual.html yocto-project-kernel-manual-customization.xsl kernel-manual.xml
 
 tarball: html
@@ -32,11 +26,13 @@ tarball: html
 validate:
 	xmllint --postvalid --xinclude --noout kernel-manual.xml
 
-OUTPUTS = kernel-manual.tgz kernel-manual.html kernel-manual.pdf
-SOURCES = *.png *.xml *.css
+MANUALS = kernel-manual.html kernel-manual.pdf
+FIGURES = figures/*.png
+STYLESHEET = *.css
 
 publish:
-	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/kernel-manual
+	scp -r $(MANUALS) $(STYLESHEET) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/kernel-manual
+	scp -r $(FIGURES) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/kernel-manual/figures
 
 clean:
 	rm -f $(OUTPUTS)
