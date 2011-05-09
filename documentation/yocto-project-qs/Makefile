@@ -27,8 +27,8 @@ FIGURES = figures/*.png
 STYLESHEET = *.css
 
 publish:
-	scp -r $(MANUALS) $(STYLESHEET) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/yocto-quick-start
-	scp -r $(FIGURES) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/yocto-quick-start/figures
+	scp -r $(MANUALS) $(STYLESHEET) www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/yocto-quick-start
+	scp -r $(FIGURES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/yocto-quick-start/figures
 
 clean:
 	rm -f $(MANUALS)

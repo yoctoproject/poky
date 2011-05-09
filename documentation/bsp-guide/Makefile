@@ -30,8 +30,8 @@ FIGURES = figures/*.png
 STYLESHEET = *.css
 
 publish:
-	scp -r $(MANUALS) $(STYLESHEET) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/bsp-guide
-	scp -r $(FIGURES) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/bsp-guide/figures
+	scp -r $(MANUALS) $(STYLESHEET) www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/bsp-guide
+	scp -r $(FIGURES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/bsp-guide/figures
 
 clean:
 	rm -f $(OUTPUTS)
