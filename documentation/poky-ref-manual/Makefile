@@ -21,7 +21,7 @@ html:
 	xsltproc $(XSLTOPTS) -o poky-ref-manual.html poky-ref-manual-customization.xsl poky-ref-manual.xml
 
 tarball: html
-	tar -cvzf poky-ref-manual.tgz poky-ref-manual.html style.css figures/poky-ref-manual.png figures/ss-sato.png
+	tar -cvzf poky-ref-manual.tgz poky-ref-manual.html style.css figures/poky-title.png figures/ss-sato.png
 
 validate:
 	xmllint --postvalid --xinclude --noout poky-ref-manual.xml
