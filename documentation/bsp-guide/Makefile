@@ -19,7 +19,7 @@ XSLTOPTS = --stringparam html.stylesheet style.css \
            --stringparam  chapter.autolabel 1 \
            --stringparam  section.autolabel 1 \
            --stringparam  section.label.includes.component.label 1 \
-	   --xinclude
+         --xinclude
 
 VER = 1.0
 DOC = bsp-guide
