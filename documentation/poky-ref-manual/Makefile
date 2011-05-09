@@ -3,7 +3,7 @@ XSLTOPTS = --stringparam html.stylesheet style.css \
            --stringparam  appendix.autolabel A \
            --stringparam  section.autolabel 1 \
            --stringparam  section.label.includes.component.label 1 \
-	   --xinclude
+         --xinclude
 
 ##
 # These URI should be rewritten by your distribution's xml catalog to
@@ -26,11 +26,13 @@ tarball: html
 validate:
 	xmllint --postvalid --xinclude --noout poky-ref-manual.xml
 
-OUTPUTS = poky-ref-manual.tgz poky-ref-manual.html poky-ref-manual.pdf 
-SOURCES = *.png *.xml *.css *.svg
+MANUALS = poky-ref-manual.html poky-ref-manual.pdf
+FIGURES = figures/*.png
+STYLESHEET = *.css
 
 publish:
-	scp -r $(OUTPUTS) $(SOURCES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-doc/poky-ref-manual
+	scp -r $(MANUALS) $(STYLESHEET) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/poky-ref-manual
+	scp -r $(FIGURES) srifenbark@www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/poky-ref-manual/figures
 
 clean:
 	rm -f $(OUTPUTS)
