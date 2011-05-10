@@ -2,6 +2,10 @@
 # glibc specific configuration
 #
 
+TARGET_OS = "linux"
+TARGET_OS_arm = "linux-gnueabi"
+TARGET_OS_armeb = "linux-gnueabi"
+
 # Add glibc to the overrides.
 OVERRIDES =. "libc-glibc:"
 
@@ -15,8 +19,6 @@ PREFERRED_PROVIDER_virtual/${TARGET_PREFIX}libc-initial ?= "glibc-initial"
 PREFERRED_PROVIDER_virtual/libiconv-nativesdk ?= "glibc-nativesdk"
 PREFERRED_PROVIDER_virtual/libc-nativesdk ?= "glibc-nativesdk"
 PREFERRED_PROVIDER_virtual/${SDK_PREFIX}libc-initial-nativesdk ?= "glibc-initial-nativesdk"
-
-TARGET_OS = "${GLIBCTARGETOS}"
 
 CXXFLAGS += "-fvisibility-inlines-hidden"
 
