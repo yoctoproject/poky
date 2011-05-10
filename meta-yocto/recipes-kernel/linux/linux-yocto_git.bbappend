@@ -9,4 +9,7 @@ SRCREV_machine_routerstationpro = "95ca94d2e71ca2db6822a37a7f575fa79c3d05d0"
 SRCREV_machine_mpc8315e-rdb = "53c800c244e73d81d2832f6da306eeae3b09e5dc"
 SRCREV_machine_beagleboard = "b906f358fd404a1e74a961f25079274e0d933ee1"
 
-COMPATIBLE_MACHINE = "(mpc8315e-rdb|routerstationpro|beagleboard|atom-pc)"
+COMPATIBLE_MACHINE_mpc8315e-rdb = "mpc8315e-rdb"
+COMPATIBLE_MACHINE_routerstationpro = "routerstationpro"
+COMPATIBLE_MACHINE_beagleboard = "beagleboard"
+COMPATIBLE_MACHINE_atom-pc = "atom-pc"
