@@ -10,16 +10,11 @@ TARGET_OS_powerpc = "linux${@['','-gnuspe'][bb.data.getVar('BASE_PACKAGE_ARCH',d
 # Add glibc to the overrides.
 OVERRIDES =. "libc-glibc:"
 
-#glibc
 PREFERRED_PROVIDER_virtual/libiconv ?= "glibc"
+PREFERRED_PROVIDER_virtual/libiconv-nativesdk ?= "glibc-nativesdk"
 PREFERRED_PROVIDER_virtual/libintl ?= "glibc"
 PREFERRED_PROVIDER_virtual/libc ?= "glibc"
-PREFERRED_PROVIDER_virtual/${TARGET_PREFIX}libc-initial ?= "glibc-initial"
-
-#glibc-nativesdk
-PREFERRED_PROVIDER_virtual/libiconv-nativesdk ?= "glibc-nativesdk"
 PREFERRED_PROVIDER_virtual/libc-nativesdk ?= "glibc-nativesdk"
-PREFERRED_PROVIDER_virtual/${SDK_PREFIX}libc-initial-nativesdk ?= "glibc-initial-nativesdk"
 
 CXXFLAGS += "-fvisibility-inlines-hidden"
 
