@@ -428,6 +428,39 @@
         </answer>
     </qandaentry>
 
+    <qandaentry>
+        <question>
+            <para>
+                How do I use an external toolchain?
+            </para>
+        </question>
+        <answer>
+            <para>
+                The toolchain configuration is very flexible and customizable.
+                It is primarily controlled with the TCMODE variable.
+                This variable controls which file to include 
+                (<filename>conf/distro/include/tcmode-*.inc</filename>).
+            </para>
+            <para>
+                The default value of TCMODE is "default".
+                However, other patterns are accepted.
+                In particular, "external-*" refers to external toolchains of which there are some basic examples
+                included with the core.
+                A user can use their own custom toolchain definition in their own layer 
+                (or <filename>local.conf</filename> directory) at the location 
+                <filename>conf/distro/include/tcmode-*.inc</filename>.
+            </para>
+            <para>
+                In addition to the toolchain configuration, you also need a corresponding toolchain recipe file.
+                This recipe file needs to package up any pre-built objects in the toolchain such as 
+                <filename>libgcc</filename>, <filename>libstdcc++</filename>, 
+                any locales and <filename>libc</filename>.
+                An example is the <filename>external-csl-toolchain_2008q3-72.bb</filename>, which reuses the core 
+                <filename>libc</filename> packaging class to do most of the work.
+            </para>
+        </answer>
+    </qandaentry>
+
 
 
 
