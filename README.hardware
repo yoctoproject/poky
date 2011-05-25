@@ -149,15 +149,26 @@ The Beagleboard is an ARM Cortex-A8 development board with USB, DVI-D, S-Video,
 faster CPU, more RAM, an ethernet port, more USB ports, microSD, and removes
 the NAND flash. The beagleboard MACHINE is tested on the following platforms:
 
-  o Beagleboard xM
+  o Beagleboard C4
+  o Beagleboard xM Rev A
 
-TODO: need someone with a Beagleboard C4 to verify these instructions.
+The Beagleboard C4 has NAND, while the xM does not. For the sake of simplicity,
+these instructions assume you have erased the NAND on the C4 so its boot
+behavior matches that of the xM. To do this, issue the following commands from
+the u-boot prompt (note that the unlock may be unecessary depending on the
+version of u-boot installed on your board and only one of the erase commands
+will succeed):
 
-Due to the lack of NAND on the xM, the install and boot process varies a bit
-between boards.  The C4 can run the x-loader and u-boot binaries from NAND or
-the SD, while the xM can only run them from the SD. The following instructions
-apply to both the C4 and the xM, but the C4 can skip step 2 (as noted below),
-and may require modification of the NAND environment.
+    # nand unlock
+    # nand erase
+    # nand erase.chip
+
+To further tailor these instructions for your board, please refer to the
+documentation at http://www.beagleboard.org.
+
+From a Linux system with access to the image files perform the following steps
+as root, replacing mmcblk0* with the SD card device on your machine (such as sdc
+if used via a usb card reader):
 
   1. Partition and format an SD card:
      # fdisk -lu /dev/mmcblk0
@@ -173,14 +184,14 @@ and may require modification of the NAND environment.
      # mkfs.vfat -F 16 -n "boot" /dev/mmcblk0p1
      # mke2fs -j -L "root" /dev/mmcblk0p2
 
-   The following assumes the SD card partition 1 and 2 are mounted at
-   /media/boot and /media/root respectively. The files referenced here
-   are made available after the build in build/tmp/deploy/images.
+  The following assumes the SD card partition 1 and 2 are mounted at
+  /media/boot and /media/root respectively. Removing the card and reinserting
+  it will do just that on most modern Linux desktop environments.
+  
+  The files referenced below are made available after the build in
+  build/tmp/deploy/images.
 
   2. Install the boot loaders
-     This step can be omitted for the C4 as it can have the x-loader and
-     u-boot installed in NAND.
-
      # cp MLO-beagleboard /media/boot/MLO
      # cp u-boot-beagleboard.bin /media/boot/u-boot.bin
 
@@ -205,14 +216,15 @@ and may require modification of the NAND environment.
      boot
      EOF
      ) > serial-boot.cmd
-     # mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Poky Minimal" -d ./serial-boot.cmd ./boot.scr
+     # mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Core Minimal" -d ./serial-boot.cmd ./boot.scr
      # cp boot.scr /media/boot
 
-   6. Unmount the SD partitions and boot the Beagleboard
+   6. Unmount the SD partitions, insert the SD card into the Beagleboard, and
+      boot the Beagleboard
 
 Note: As of the 2.6.37 linux-yocto kernel recipe, the Beagleboard uses the
       OMAP_SERIAL device (ttyO2). If you are using an older kernel, such as the
-      2.6.35 linux-yocto-stable, be sure replace ttyO2 with ttyS2 above. You
+      2.6.34 linux-yocto-stable, be sure to replace ttyO2 with ttyS2 above. You
       should also override the machine SERIAL_CONSOLE in your local.conf in
       order to setup the getty on the serial line:
 
