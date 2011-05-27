@@ -1107,6 +1107,8 @@ class RunQueueExecute:
             os.dup2(newsi, sys.stdin.fileno())
 
 
+            bb.data.setVar("BB_WORKERCONTEXT", "1", self.cooker.configuration.data)
+
             the_data = bb.cache.Cache.loadDataFull(fn, self.cooker.get_file_appends(fn), self.cooker.configuration.data)
 
             env2 = bb.data.export_vars(the_data)
@@ -1124,7 +1126,6 @@ class RunQueueExecute:
 
             bb.data.setVar("__RUNQUEUE_DO_NOT_USE_EXTERNALLY", self, self.cooker.configuration.data)
             bb.data.setVar("__RUNQUEUE_DO_NOT_USE_EXTERNALLY2", fn, self.cooker.configuration.data)
-            bb.data.setVar("BB_WORKERCONTEXT", "1", the_data)
             bb.parse.siggen.set_taskdata(self.rqdata.hashes, self.rqdata.hash_deps)
 
             for h in self.rqdata.hashes:
