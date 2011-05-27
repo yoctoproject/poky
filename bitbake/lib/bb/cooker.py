@@ -1161,6 +1161,7 @@ class CookerParser(object):
         sync = threading.Thread(target=self.bb_cache.sync)
         sync.start()
         atexit.register(lambda: sync.join())
+        bb.codeparser.parser_cache_savemerge(self.cooker.configuration.data)
 
     def load_cached(self):
         for filename, appends in self.fromcache:
