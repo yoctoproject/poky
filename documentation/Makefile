@@ -74,10 +74,10 @@ validate:
 
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = $(DOC)/figures/*.png
-STYLESHEET = *.css
+STYLESHEET = $(DOC)/*.css
 
 publish:
-    scp -r $(MANUALS) $(STYLESHEET) www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/$(DISTROVERSION)/$(DOC)
+	scp -r $(MANUALS) $(STYLESHEET) www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/$(DISTROVERSION)/$(DOC)
 	scp -r $(FIGURES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/$(DISTROVERSION)/$(DOC)/figures
 
 clean:
