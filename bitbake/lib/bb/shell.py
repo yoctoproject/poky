@@ -407,7 +407,7 @@ SRC_URI = ""
 
     def parse( self, params ):
         """(Re-)parse .bb files and calculate the dependency graph"""
-        cooker.status = cache.CacheData()
+        cooker.status = cache.CacheData(cooker.caches_array)
         ignore = data.getVar("ASSUME_PROVIDED", cooker.configuration.data, 1) or ""
         cooker.status.ignored_dependencies = set( ignore.split() )
         cooker.handleCollections( data.getVar("BBFILE_COLLECTIONS", cooker.configuration.data, 1) )
