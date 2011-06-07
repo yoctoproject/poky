@@ -42,8 +42,9 @@ from bb import server
 from bb.server import none
 #from bb.server import xmlrpc
 
-__version__ = "1.11.0"
+__version__ = "1.13.0"
 logger = logging.getLogger("BitBake")
+
 
 
 class BBConfiguration(object):
@@ -172,9 +173,6 @@ Default BBFILES are the .bb files in the current directory.""")
 
     ui_main = get_ui(configuration)
 
-    loghandler = event.LogHandler()
-    logger.addHandler(loghandler)
-
     #server = bb.server.xmlrpc
     server = bb.server.none
 
@@ -184,6 +182,10 @@ Default BBFILES are the .bb files in the current directory.""")
 
     bb.utils.init_logger(bb.msg, configuration.verbose, configuration.debug,
                          configuration.debug_domains)
+
+    # Ensure logging messages get sent to the UI as events
+    handler = bb.event.LogHandler()
+    logger.addHandler(handler)
 
     # Clear away any spurious environment variables. But don't wipe the
     # environment totally. This is necessary to ensure the correct operation
@@ -198,16 +200,10 @@ Default BBFILES are the .bb files in the current directory.""")
     server.BitBakeServerFork(cooker, cooker.server, serverinfo, cooker_logfile)
     del cooker
 
-    logger.removeHandler(loghandler)
+    logger.removeHandler(handler)
 
     # Setup a connection to the server (cooker)
     server_connection = server.BitBakeServerConnection(serverinfo)
-
-    # Launch the UI
-    if configuration.ui:
-        ui = configuration.ui
-    else:
-        ui = "knotty"
 
     try:
         return server.BitbakeUILauch().launch(serverinfo, ui_main, server_connection.connection, server_connection.events)
@@ -222,3 +218,4 @@ if __name__ == "__main__":
         import traceback
         traceback.print_exc(5)
     sys.exit(ret)
+
