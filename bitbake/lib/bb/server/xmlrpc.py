@@ -150,7 +150,7 @@ class BitBakeServerCommands():
         Trigger the server to quit
         """
         self.server.quit = True
-        print("Server (cooker) exitting")
+        print("Server (cooker) exiting")
         return
 
     def ping(self):
