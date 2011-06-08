@@ -1109,31 +1109,31 @@ class RunQueueExecute:
             bb.data.setVar("__RUNQUEUE_DO_NOT_USE_EXTERNALLY", self, self.cooker.configuration.data)
             bb.data.setVar("__RUNQUEUE_DO_NOT_USE_EXTERNALLY2", fn, self.cooker.configuration.data)
             bb.parse.siggen.set_taskdata(self.rqdata.hashes, self.rqdata.hash_deps)
-
-            the_data = bb.cache.Cache.loadDataFull(fn, self.cooker.get_file_appends(fn), self.cooker.configuration.data)
-
-            env2 = bb.data.export_vars(the_data)
-            env2 = bb.data.export_envvars(env2, the_data)
-
-            for e in os.environ:
-                os.unsetenv(e)
-            for e in env2:
-                os.putenv(e, env2[e])
-            for e in env:
-                os.putenv(e, env[e])
-
-            if quieterrors:
-                the_data.setVarFlag(taskname, "quieterrors", "1")
-
-
-            for h in self.rqdata.hashes:
-                bb.data.setVar("BBHASH_%s" % h, self.rqdata.hashes[h], the_data)
-            for h in self.rqdata.hash_deps:
-                bb.data.setVar("BBHASHDEPS_%s" % h, self.rqdata.hash_deps[h], the_data)
-
-            bb.data.setVar("BB_TASKHASH", self.rqdata.runq_hash[task], the_data)
-
             ret = 0
+            try:
+                the_data = bb.cache.Cache.loadDataFull(fn, self.cooker.get_file_appends(fn), self.cooker.configuration.data)
+                the_data.setVar('BB_TASKHASH', self.rqdata.runq_hash[task])
+                for h in self.rqdata.hashes:
+                    the_data.setVar("BBHASH_%s" % h, self.rqdata.hashes[h])
+                for h in self.rqdata.hash_deps:
+                    the_data.setVar("BBHASHDEPS_%s" % h, self.rqdata.hash_deps[h])
+
+                env2 = bb.data.export_vars(the_data)
+                env2 = bb.data.export_envvars(env2, the_data)
+                for e in os.environ:
+                    os.unsetenv(e)
+                for e in env2:
+                    os.putenv(e, env2[e])
+                for e in env:
+                    os.putenv(e, env[e])
+
+                if quieterrors:
+                    the_data.setVarFlag(taskname, "quieterrors", "1")
+
+            except Exception as exc:
+                if not quieterrors:
+                    logger.critical(str(exc))
+                os._exit(1)
             try:
                 if not self.cooker.configuration.dry_run:
                     ret = bb.build.exec_task(fn, taskname, the_data)
