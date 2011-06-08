@@ -19,7 +19,6 @@ import bb.cache
 import bb.cooker
 import bb.providers
 from bb.cooker import state
-from bb.server import none
 
 
 logger = logging.getLogger('BitBake')
@@ -45,10 +44,13 @@ class Commands(cmd.Cmd):
         self.returncode = 0
         self.config = Config(parse_only=True)
         self.cooker = bb.cooker.BBCooker(self.config,
-                                         bb.server.none)
+                                         self.register_idle_function)
         self.config_data = self.cooker.configuration.data
         bb.providers.logger.setLevel(logging.ERROR)
         self.prepare_cooker()
+
+    def register_idle_function(self, function, data):
+        pass
 
     def prepare_cooker(self):
         sys.stderr.write("Parsing recipes..")
