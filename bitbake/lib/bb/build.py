@@ -232,11 +232,6 @@ def exec_func_shell(function, d, runfile, cwd=None):
 
     os.chmod(runfile, 0775)
 
-    env = {
-        'PATH': d.getVar('PATH', True),
-        'LC_ALL': 'C',
-    }
-
     cmd = runfile
 
     if logger.isEnabledFor(logging.DEBUG):
@@ -245,7 +240,7 @@ def exec_func_shell(function, d, runfile, cwd=None):
         logfile = sys.stdout
 
     try:
-        bb.process.run(cmd, env=env, shell=False, stdin=NULL, log=logfile)
+        bb.process.run(cmd, shell=False, stdin=NULL, log=logfile)
     except bb.process.CmdError:
         logfn = d.getVar('BB_LOGFILE', True)
         raise FuncFailed(function, logfn)
