@@ -21,7 +21,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-__version__ = "1.11.0"
+__version__ = "1.13.0"
 
 import sys
 if sys.version_info < (2, 6, 0):
@@ -79,6 +79,10 @@ def plain(*args):
     logger.plain(''.join(args))
 
 def debug(lvl, *args):
+    if isinstance(lvl, basestring):
+        logger.warn("Passed invalid debug level '%s' to bb.debug", lvl)
+        args = (lvl,) + args
+        lvl = 1
     logger.debug(lvl, ''.join(args))
 
 def note(*args):
@@ -95,7 +99,7 @@ def fatal(*args):
     sys.exit(1)
 
 
-def deprecated(func, name = None, advice = ""):
+def deprecated(func, name=None, advice=""):
     """This is a decorator which can be used to mark functions
     as deprecated. It will result in a warning being emmitted
     when the function is used."""
@@ -109,8 +113,8 @@ def deprecated(func, name = None, advice = ""):
     def newFunc(*args, **kwargs):
         warnings.warn("Call to deprecated function %s%s." % (name,
                                                              advice),
-                      category = PendingDeprecationWarning,
-                      stacklevel = 2)
+                      category=DeprecationWarning,
+                      stacklevel=2)
         return func(*args, **kwargs)
     newFunc.__name__ = func.__name__
     newFunc.__doc__ = func.__doc__
