@@ -28,7 +28,6 @@
 
 import time
 import bb
-import pickle
 import signal
 
 DEBUG = False
@@ -68,7 +67,7 @@ class BBUIEventQueue:
             self.parent = parent
         @staticmethod
         def send(event):
-            bb.server.none.eventQueue.append(pickle.loads(event))
+            bb.server.none.eventQueue.append(event)
         @staticmethod
         def quit():
             return
