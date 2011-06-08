@@ -229,6 +229,13 @@ class ProcessEventQueue(multiprocessing.queues.Queue):
         except Empty:
             return None
 
+    def getEvent(self):
+        try:
+            return self.get(False)
+        except Empty:
+            return None
+
+
 class BitBakeServer(object):
     def initServer(self):
         # establish communication channels.  We use bidirectional pipes for
