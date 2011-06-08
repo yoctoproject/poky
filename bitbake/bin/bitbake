@@ -40,7 +40,7 @@ from bb import cooker
 from bb import ui
 from bb import server
 from bb.server import none
-#from bb.server import xmlrpc
+from bb.server import xmlrpc
 
 __version__ = "1.13.0"
 logger = logging.getLogger("BitBake")
@@ -173,9 +173,6 @@ Default BBFILES are the .bb files in the current directory.""")
 
     ui_main = get_ui(configuration)
 
-    #server = bb.server.xmlrpc
-    server = bb.server.none
-
     # Save a logfile for cooker into the current working directory. When the
     # server is daemonized this logfile will be truncated.
     cooker_logfile = os.path.join(os.getcwd(), "cooker.log")
@@ -192,21 +189,29 @@ Default BBFILES are the .bb files in the current directory.""")
     # of the UIs (e.g. for DISPLAY, etc.)
     bb.utils.clean_environment()
 
-    cooker = bb.cooker.BBCooker(configuration, server)
+    #server = bb.server.xmlrpc.BitBakeServer()
+    server = bb.server.none.BitBakeServer()
+
+    server.initServer()
+    idle = server.getServerIdleCB()
+
+    cooker = bb.cooker.BBCooker(configuration, idle)
     cooker.parseCommandLine()
 
-    serverinfo = server.BitbakeServerInfo(cooker.server)
+    server.addcooker(cooker)
+    server.saveConnectionDetails()
+    server.detach(cooker_logfile)
 
-    server.BitBakeServerFork(cooker, cooker.server, serverinfo, cooker_logfile)
+    # Should no longer need to ever reference cooker
     del cooker
 
     logger.removeHandler(handler)
 
     # Setup a connection to the server (cooker)
-    server_connection = server.BitBakeServerConnection(serverinfo)
+    server_connection = server.establishConnection()
 
     try:
-        return server.BitbakeUILauch().launch(serverinfo, ui_main, server_connection.connection, server_connection.events)
+        return server.launchUI(ui_main, server_connection.connection, server_connection.events)
     finally:
         server_connection.terminate()
 

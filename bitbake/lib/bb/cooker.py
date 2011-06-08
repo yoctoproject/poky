@@ -63,12 +63,11 @@ class BBCooker:
     Manages one bitbake build run
     """
 
-    def __init__(self, configuration, server):
+    def __init__(self, configuration, server_registration_cb):
         self.status = None
         self.appendlist = {}
 
-        if server:
-            self.server = server.BitBakeServer(self)
+        self.server_registration_cb = server_registration_cb
 
         self.configuration = configuration
 
@@ -109,7 +108,7 @@ class BBCooker:
 
         self.configuration.data = bb.data.init()
 
-        if not server:
+        if not self.server_registration_cb:
             bb.data.setVar("BB_WORKERCONTEXT", "1", self.configuration.data)
 
         bb.data.inheritFromOS(self.configuration.data)
@@ -831,7 +830,7 @@ class BBCooker:
                 return True
             return retval
 
-        self.server.register_idle_function(buildFileIdle, rq)
+        self.server_registration_cb(buildFileIdle, rq)
 
     def buildTargets(self, targets, task):
         """
@@ -890,7 +889,7 @@ class BBCooker:
 
         rq = bb.runqueue.RunQueue(self, self.configuration.data, self.status, taskdata, runlist)
 
-        self.server.register_idle_function(buildTargetsIdle, rq)
+        self.server_registration_cb(buildTargetsIdle, rq)
 
     def updateCache(self):
         if self.state == state.running:

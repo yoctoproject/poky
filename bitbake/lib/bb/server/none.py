@@ -36,8 +36,7 @@ DEBUG = False
 import inspect, select
 
 class BitBakeServerCommands():
-    def __init__(self, server, cooker):
-        self.cooker = cooker
+    def __init__(self, server):
         self.server = server
 
     def runCommand(self, command):
@@ -106,13 +105,17 @@ class BBUIEventQueue:
 def chldhandler(signum, stackframe):
     pass
 
-class BitBakeServer():
+class BitBakeNoneServer():
     # remove this when you're done with debugging
     # allow_reuse_address = True
 
-    def __init__(self, cooker):
+    def __init__(self):
         self._idlefuns = {}
-        self.commands = BitBakeServerCommands(self, cooker)
+        self.commands = BitBakeServerCommands(self)
+
+    def addcooker(self, cooker):
+        self.cooker = cooker
+        self.commands.cooker = cooker
 
     def register_idle_function(self, function, data):
         """Register a function to be called while the server is idle"""
@@ -157,25 +160,10 @@ class BitBakeServer():
             except:
                 pass
 
-class BitbakeServerInfo():
-    def __init__(self, server):
-        self.server = server
-        self.commands = server.commands
-
-class BitBakeServerFork():
-    def __init__(self, cooker, server, serverinfo, logfile):
-        serverinfo.logfile = logfile
-        serverinfo.cooker = cooker
-        serverinfo.server = server
-
-class BitbakeUILauch():
-    def launch(self, serverinfo, uifunc, *args):
-        return bb.cooker.server_main(serverinfo.cooker, uifunc, *args)
-
 class BitBakeServerConnection():
-    def __init__(self, serverinfo):
-        self.server = serverinfo.server
-        self.connection = serverinfo.commands
+    def __init__(self, server):
+        self.server = server.server
+        self.connection = self.server.commands
         self.events = bb.server.none.BBUIEventQueue(self.server)
         for event in bb.event.ui_queue:
             self.events.queue_event(event)
@@ -189,3 +177,28 @@ class BitBakeServerConnection():
             self.connection.terminateServer()
         except:
             pass
+
+class BitBakeServer(object):
+    def initServer(self):
+        self.server = BitBakeNoneServer()
+
+    def addcooker(self, cooker):
+        self.cooker = cooker
+        self.server.addcooker(cooker)
+
+    def getServerIdleCB(self):
+        return self.server.register_idle_function
+
+    def saveConnectionDetails(self):
+        return
+
+    def detach(self, cooker_logfile):
+        self.logfile = cooker_logfile
+
+    def establishConnection(self):
+        self.connection = BitBakeServerConnection(self)
+        return self.connection
+
+    def launchUI(self, uifunc, *args):
+        return bb.cooker.server_main(self.cooker, uifunc, *args)
+
