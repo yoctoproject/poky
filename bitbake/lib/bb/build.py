@@ -28,6 +28,7 @@
 import os
 import sys
 import logging
+import shlex
 import bb
 import bb.msg
 import bb.process

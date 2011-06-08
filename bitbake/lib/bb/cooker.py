@@ -28,7 +28,6 @@ import atexit
 import itertools
 import logging
 import multiprocessing
-import signal
 import sre_constants
 import threading
 from cStringIO import StringIO
@@ -147,6 +146,8 @@ class BBCooker:
 
         self.command = bb.command.Command(self)
         self.state = state.initial
+
+        self.parser = None
 
     def parseConfiguration(self):
 
@@ -799,9 +800,6 @@ class BBCooker:
         buildname = bb.data.getVar("BUILDNAME", self.configuration.data)
         bb.event.fire(bb.event.BuildStarted(buildname, [item]), self.configuration.event_data)
 
-        # Clear locks
-        bb.fetch.persistent_database_connection = {}
-
         # Execute the runqueue
         runlist = [[item, "do_%s" % task]]
 
@@ -821,6 +819,10 @@ class BBCooker:
                     buildlog.error("'%s' failed" % taskdata.fn_index[fnid])
                 failures += len(exc.args)
                 retval = False
+            except SystemExit as exc:
+                self.command.finishAsyncCommand()
+                return False
+
             if not retval:
                 bb.event.fire(bb.event.BuildCompleted(buildname, item, failures), self.configuration.event_data)
                 self.command.finishAsyncCommand()
@@ -858,6 +860,10 @@ class BBCooker:
                     buildlog.error("'%s' failed" % taskdata.fn_index[fnid])
                 failures += len(exc.args)
                 retval = False
+            except SystemExit as exc:
+                self.command.finishAsyncCommand()
+                return False
+
             if not retval:
                 bb.event.fire(bb.event.BuildCompleted(buildname, targets, failures), self.configuration.event_data)
                 self.command.finishAsyncCommand()
@@ -883,9 +889,6 @@ class BBCooker:
             runlist.append([k, "do_%s" % task])
         taskdata.add_unresolved(localdata, self.status)
 
-        # Clear locks
-        bb.fetch.persistent_database_connection = {}
-
         rq = bb.runqueue.RunQueue(self, self.configuration.data, self.status, taskdata, runlist)
 
         self.server_registration_cb(buildTargetsIdle, rq)
@@ -893,6 +896,10 @@ class BBCooker:
     def updateCache(self):
         if self.state == state.running:
             return
+
+        if self.state in (state.shutdown, state.stop):
+            self.parser.shutdown(clean=False)
+            sys.exit(1)
 
         if self.state != state.parsing:
             self.parseConfiguration ()
@@ -1194,9 +1201,8 @@ class CookerParser(object):
 
     def start(self):
         def init(cfg):
-            signal.signal(signal.SIGINT, signal.SIG_IGN)
-            multiprocessing.util.Finalize(None, bb.codeparser.parser_cache_save, args=(self.cooker.configuration.data, ), exitpriority=1)
             parse_file.cfg = cfg
+            multiprocessing.util.Finalize(None, bb.codeparser.parser_cache_save, args=(self.cooker.configuration.data, ), exitpriority=1)
 
         self.results = self.load_cached()
 
@@ -1225,7 +1231,7 @@ class CookerParser(object):
 
         sync = threading.Thread(target=self.bb_cache.sync)
         sync.start()
-        atexit.register(lambda: sync.join())
+        multiprocessing.util.Finalize(None, sync.join, exitpriority=-100)
         bb.codeparser.parser_cache_savemerge(self.cooker.configuration.data)
 
     def load_cached(self):
@@ -1239,9 +1245,6 @@ class CookerParser(object):
         except StopIteration:
             self.shutdown()
             return False
-        except KeyboardInterrupt:
-            self.shutdown(clean=False)
-            raise
         except ParsingFailure as exc:
             self.shutdown(clean=False)
             bb.fatal('Unable to parse %s: %s' %

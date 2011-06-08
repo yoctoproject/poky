@@ -753,7 +753,6 @@ class RunQueueData:
                            self.rqdata.runq_depends[task],
                            self.rqdata.runq_revdeps[task])
 
-
 class RunQueue:
     def __init__(self, cooker, cfgData, dataCache, taskData, targets):
 
@@ -1106,8 +1105,10 @@ class RunQueueExecute:
             newsi = os.open(os.devnull, os.O_RDWR)
             os.dup2(newsi, sys.stdin.fileno())
 
-
             bb.data.setVar("BB_WORKERCONTEXT", "1", self.cooker.configuration.data)
+            bb.data.setVar("__RUNQUEUE_DO_NOT_USE_EXTERNALLY", self, self.cooker.configuration.data)
+            bb.data.setVar("__RUNQUEUE_DO_NOT_USE_EXTERNALLY2", fn, self.cooker.configuration.data)
+            bb.parse.siggen.set_taskdata(self.rqdata.hashes, self.rqdata.hash_deps)
 
             the_data = bb.cache.Cache.loadDataFull(fn, self.cooker.get_file_appends(fn), self.cooker.configuration.data)
 
@@ -1124,9 +1125,6 @@ class RunQueueExecute:
             if quieterrors:
                 the_data.setVarFlag(taskname, "quieterrors", "1")
 
-            bb.data.setVar("__RUNQUEUE_DO_NOT_USE_EXTERNALLY", self, self.cooker.configuration.data)
-            bb.data.setVar("__RUNQUEUE_DO_NOT_USE_EXTERNALLY2", fn, self.cooker.configuration.data)
-            bb.parse.siggen.set_taskdata(self.rqdata.hashes, self.rqdata.hash_deps)
 
             for h in self.rqdata.hashes:
                 bb.data.setVar("BBHASH_%s" % h, self.rqdata.hashes[h], the_data)
