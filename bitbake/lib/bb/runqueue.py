@@ -1062,7 +1062,6 @@ class RunQueueExecute:
         # We need to setup the environment BEFORE the fork, since
         # a fork() or exec*() activates PSEUDO...
 
-        env = {}
         envbackup = {}
 
         taskdep = self.rqdata.dataCache.task_deps[fn]
@@ -1071,7 +1070,6 @@ class RunQueueExecute:
             for key, value in (var.split('=') for var in envvars):
                 envbackup[key] = os.environ.get(key)
                 os.environ[key] = value
-                env[key] = value
 
             fakedirs = (self.rqdata.dataCache.fakerootdirs[fn] or "").split()
             for p in fakedirs:
@@ -1118,14 +1116,7 @@ class RunQueueExecute:
                 for h in self.rqdata.hash_deps:
                     the_data.setVar("BBHASHDEPS_%s" % h, self.rqdata.hash_deps[h])
 
-                env2 = bb.data.export_vars(the_data)
-                env2 = bb.data.export_envvars(env2, the_data)
-                for e in os.environ:
-                    os.unsetenv(e)
-                for e in env2:
-                    os.putenv(e, env2[e])
-                for e in env:
-                    os.putenv(e, env[e])
+                os.environ.update(bb.data.exported_vars(the_data))
 
                 if quieterrors:
                     the_data.setVarFlag(taskname, "quieterrors", "1")
