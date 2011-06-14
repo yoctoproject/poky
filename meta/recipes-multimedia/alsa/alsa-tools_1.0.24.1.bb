@@ -14,6 +14,4 @@ SRC_URI = "ftp://ftp.alsa-project.org/pub/tools/alsa-tools-${PV}.tar.bz2"
 SRC_URI[md5sum] = "08fe93a12006093e590d7ecc02b119dd"
 SRC_URI[sha256sum] = "17d43de93ab2db98886d89a53e45341daa46a4ef6edd405db87f4b5a5dc64a05"
 
-EXTRA_OEFLAGS = "--host ${HOST_SYS}"
-
 inherit autotools
