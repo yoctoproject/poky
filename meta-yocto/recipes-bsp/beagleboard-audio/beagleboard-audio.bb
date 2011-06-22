@@ -15,6 +15,9 @@ SRC_URI = "file://beagleboard-audio"
 INITSCRIPT_NAME = "beagleboard-audio"
 INITSCRIPT_PARAMS = "defaults 90"
 
+COMPATIBLE_MACHINE = "beagleboard"
+INHIBIT_DEFAULT_DEPS = "1"
+
 do_install() {
 	install -d ${D}${sysconfdir} \
 	           ${D}${sysconfdir}/init.d
