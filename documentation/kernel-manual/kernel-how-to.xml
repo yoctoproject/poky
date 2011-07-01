@@ -1021,62 +1021,76 @@ That's it. Configure and build.
                 </para>
                 
                 <para>
-                    You can start with something in <filename>meta/conf/machine</filename> - <filename>
-                    meta/conf/machine/atom-pc.conf</filename> for example.  Or, you can start with a machine 
-                    configuration from any of the BSP layers in the meta-intel repository at 
-                    <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/meta-intel/'></ulink>, such as 
-                    <filename>meta-intel/meta-emenlow/conf/machine/emenlow.conf</filename>.
+                    You can start with a machine configuration file in the Yocto Project source tree
+                    such as the <filename>atom-pc.conf</filename> in <filename>meta-yocto/conf/machine</filename>.
+                    Or, you can start with a machine configuration file from a BSP layer
+                    such as <filename>emenlow.conf</filename> in <filename>meta-emenlow/conf/machine</filename>.
                 </para>
                 
                 <para>
-                    The main difference between the two is that "emenlow" is in its own layer.
-                    It is in its own layer because it needs extra machine-specific packages such as its 
-                    own video driver and other supporting packages.  
-                    The "atom-pc" is simpler and does not need any special packages - everything it needs can 
-                    be specified in the configuration file.  
+                    The main difference between these two BSP machine configuration files is that "emenlow" is 
+                    in its own isolated BSP layer, while "atom-pc" is in a more encompassing layer 
+                    named <filename>meta-yocto</filename> that is part of the Yocto Project source tree.
+                    The "emenlow" configuration is in its own BSP layer because the target hardware
+                    needs extra machine-specific packages to support graphics and other features.  
+                    The "atom-pc" configuration file supports more basic hardware that does not need any 
+                    special packages - everything the hardware needs can be specified in the configuration file.  
                     The "atom-pc" machine also supports all of Asus eee901, Acer Aspire One, Toshiba NB305, 
                     and the Intel&reg; Embedded Development Board 1-N450 with no changes.
                 </para>
   
                 <para>
                     If you want to make minor changes to support a slightly different machine, you can
-                    create a new configuration file for it and add it alongside the others.
-                    You might consider keeping the common information separate and including it.
+                    create a new configuration file for the new machine and add it alongside the 
+                    configuration files.
+                    You might consider keeping common configurations for several machines in a separate file 
+                    and then including the other configuration files that have more specific configurations.
                 </para>
                 
                 <para>
                     Similarly, you can also use multiple configuration files for different machines even 
-                    if you do it as a separate layer like meta-emenlow.
+                    when the configuration files come from a separate and different layer.
                 </para>
  
                 <para>
                     As an example consider this:
-                    <itemizedlist>
-                        <listitem><para>Copy meta-emenlow to meta-mymachine</para></listitem>
-                        <listitem><para>Fix or remove anything you do not need.  
-                        For this example the only thing left was the kernel directory with a 
-                        <filename>linux-yocto_git.bbappend</filename>
-                        file
-                        and <filename>meta-mymachine/conf/machine/mymachine.conf</filename>
-                        (linux-yocto is the kernel listed in
-                        <filename>meta-emenlow/conf/machine/emenlow.conf</filename>)</para></listitem>.
-                        <listitem><para>Add a new entry in the <filename>build/conf/bblayers.conf</filename> 
-                        so the new layer can be found by BitBake.</para></listitem>
-                    </itemizedlist>
+                    <orderedlist>
+                        <listitem><para>Copy the "emenlow" BSP layer to a new BSP layer named 
+                        <filename>meta-mymachine</filename>.
+                        Now you have two identical BSP layers &dash; but with different names.</para></listitem>
+                        <listitem><para>This example assumes you only need to change some machine
+                        configurations and inform the Yocto Project build process of the new layer.
+                        Consequently, modify the new layer's structure so that all it contains
+                        is the <filename>linux-yocto_git.bbappend</filename> file in the 
+                        <filename>meta-mymachine/recipes-kernel/linux</filename> directory
+                        and the <filename>emenlow.conf</filename> configuration file in the 
+                        <filename>meta-mymachine/conf/machine</filename> directory.
+                        Note that "linux-yocto" is the kernel specified in the <filename>mymachine.conf</filename>
+                        configuration file.</para></listitem>.
+                        <listitem><para>Rename the <filename>emenlow.conf</filename> file to <filename>mymachine.conf</filename>
+                        and fix or remove any configurations.</para></listitem>
+                        <listitem><para>Make sure the Yocto Project build process knows about the new BSP
+                        layer by adding the layer to the <filename>bblayers.conf</filename> configuration
+                        file located in the Yocto Project build tree at <filename>build/conf/bblayers.conf</filename>. 
+                        Adding the layer allows Bitbake to find the new layer.
+                        You also need to edit the <filename>layer.conf</filename> file located in the 
+                        <filename>meta-mymachine/conf</filename> directory such that "mymachine" replaces
+                        "emenlow".</para></listitem>
+                    </orderedlist>
                 </para></listitem>
                 
                 <listitem><para>
-                    Create a machine branch for your machine.
+                    Create a machine branch for your machine in a the Yocto Project git repository.
                 </para>
 
                 <para>
-                    For the kernel to compile successfully, you need to create a branch in the git repository
-                    specifically named for your machine.  
-                    To create this branch first create a bare clone of the Yocto Project git repository.
-                    Next, create a local clone of that:
+                    For the kernel to compile successfully, you need to create a branch in the 
+                    Yocto Project git repository that is specifically named for your machine.  
+                    To create this branch, first create a bare clone of the Yocto Project git repository.
+                    Then, create a local clone of that bare clone.
+                    Here are the commands:
                     <literallayout class='monospaced'>
-     $ git clone --bare git://git.yoctoproject.org/linux-yocto-2.6.37.git
-     linux-yocto-2.6.37.git
+     $ git clone --bare git://git.yoctoproject.org/linux-yocto-2.6.37.git linux-yocto-2.6.37.git
      $ git clone linux-yocto-2.6.37.git linux-yocto-2.6.37
                     </literallayout>
                 </para>
@@ -1090,8 +1104,12 @@ That's it. Configure and build.
                 </para></listitem>
                
                 <listitem><para>
-                    In a layer, create a <filename>linux-yocto_git.bbappend</filename> 
-                    file with the following:
+                    In your new layer you need to edit the <filename>linux-yocto_git.bbappend</filename> 
+                    file so that the compatible machine is "mymachine". 
+                    It is also convenient point to a cloned Yocto Project git repository that is local 
+                    to your system for development purposes.
+                    Thus, change the <filename>linux-yocto_git.bbappend</filename> file in your 
+                    <filename>meta-mymachine</filename> layer to the following:
                 </para>       
                 
                 <para>
@@ -1099,11 +1117,11 @@ That's it. Configure and build.
      FILESEXTRAPATHS := "${THISDIR}/${PN}"
      COMPATIBLE_MACHINE_mymachine = "mymachine"
 
-     # It is often nice to have a local clone of the kernel repository, to
+     # It is often nice to have a clone of the kernel repository, to
      # allow patches to be staged, branches created, and so forth.  Modify
-     # KSRC to point to your local clone as appropriate.
+     # KSRC to point to your bare clone as appropriate.
 
-     KSRC ?= /path/to/your/bare/clone/for/example/linux-yocto-2.6.37.git
+     KSRC ?= $MYWORK/linux-yocto-2.6.37.git
 
      # KMACHINE is the branch to be built, or alternatively 
      # KBRANCH can be directly set.
@@ -1117,7 +1135,9 @@ That's it. Configure and build.
                 </para>
 
                 <para>
-                    After doing that, select the machine in <filename>build/conf/local.conf</filename>:
+                    After updating the <filename>linux-yocto_git.bbappend</filename> file,
+                    edit the <filename>build/conf/local.conf</filename> found
+                    in the Yocto Project build tree so that it selects your machine:
                     <literallayout class='monospaced'>
       #
       MACHINE ?= "mymachine"
@@ -1137,7 +1157,7 @@ That's it. Configure and build.
                 </para>
                 
                 <para>
-                    Of course, that will give you a kernel with the default configuration file, which is probably 
+                    At this point you will build a kernel with the default configuration file, which is probably 
                     not what you want.
                     If you just want to set some kernel configuration options, you can do that by 
                     putting them in a file.
@@ -1155,7 +1175,7 @@ That's it. Configure and build.
                     </literallayout>
 
                 <para>
-                    These config fragments could then be picked up and
+                    These configuration fragments could then be picked up and
                     applied to the kernel .config by appending them to the kernel SRC_URI:
                 </para>
 
