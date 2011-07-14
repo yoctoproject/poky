@@ -28,12 +28,12 @@
         </para>
 
         <para>
-            The proposed format does have elements that are specific to the Poky and 
+            The proposed format does have elements that are specific to the Yocto Project and 
             OpenEmbedded build systems. 
             It is intended that this information can be 
-            used by other systems besides Poky and OpenEmbedded and that it will be simple
+            used by other systems besides Yocto Project and OpenEmbedded and that it will be simple
             to extract information and convert it to other formats if required.
-            Poky, through its standard layers mechanism, can directly accept the format 
+            Yocto Project, through its standard layers mechanism, can directly accept the format 
             described as a layer.
             The BSP captures all 
             the hardware-specific details in one place in a standard format, which is 
@@ -86,7 +86,7 @@
                 </literallayout>
                 For more detailed information on layers, see the 
                 <ulink url='http://www.yoctoproject.org/docs/poky-ref-manual/poky-ref-manual.html#usingpoky-changes-layers'>
-                BitBake Layers</ulink> section of the Poky Reference Manual.
+                BitBake Layers</ulink> section of the Yocto Project Reference Manual.
             </para>
 
             <para>
@@ -204,8 +204,8 @@ meta-&lt;bsp_name&gt;/conf/layer.conf
             </programlisting>
 
             <para>
-                This file identifies the structure as a Poky layer, identifies the  
-                contents of the layer, and contains information about how Poky should use it. 
+                This file identifies the structure as a Yocto Project layer, identifies the  
+                contents of the layer, and contains information about how Yocto Project should use it. 
                 Generally, a standard boilerplate file such as the following works.
                 In the following example you would replace "bsp" and "_bsp" with the actual name
                 of the BSP (i.e. &lt;bsp_name&gt; from the example template).
@@ -228,7 +228,7 @@ BBFILE_PRIORITY_bsp = "5"
 
             <para>
                 This file simply makes BitBake aware of the recipes and configuration directories.
-                This file must exist so that Poky can recognize the BSP.
+                This file must exist so that the Yocto Project build system can recognize the BSP.
             </para>
             </section>
 
@@ -240,7 +240,7 @@ meta-&lt;bsp_name&gt;/conf/machine/*.conf
 
             <para>
                 The machine files bind together all the information contained elsewhere
-                in the BSP into a format that Poky can understand. 
+                in the BSP into a format that the Yocto Project build system can understand. 
                 If the BSP supports multiple machines, multiple machine configuration files
                 can be present. 
                 These filenames correspond to the values to which users have set the MACHINE variable.
@@ -278,10 +278,10 @@ TARGET_CC_ARCH = "-m32 -march=core2 -msse3 -mtune=generic -mfpmath=sse"
             <para>
                 The tune file would be included by the machine definition and can be
                 contained in the BSP or referenced from one of the standard core set of
-                files included with Poky itself.
+                files included with the Yocto Project.
             </para>
             <para>
-                Both the base package architecture file and the tune file are optional for a Poky BSP layer.
+                Both the base package architecture file and the tune file are optional for a BSP layer.
             </para>
             </section>
 
@@ -343,8 +343,8 @@ meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_git.bbappend
                 This file appends your specific changes to the kernel you are using.
             </para>
             <para>
-                For your BSP you typically want to use an existing Poky kernel found in the 
-                Poky repository at <filename class='directory'>meta/recipes-kernel/kernel</filename>.
+                For your BSP you typically want to use an existing Yocto Project kernel found in the 
+                Yocto Project repository at <filename class='directory'>meta/recipes-kernel/kernel</filename>.
                 You can append your specific changes to the kernel recipe by using an append file, 
                 which is located in the 
                 <filename class='directory'>meta-&lt;bsp_name&gt;/recipes-kernel/linux</filename> 
@@ -542,7 +542,7 @@ FILESEXTRAPATHS := "${THISDIR}/${PN}"
 	      upon the user a requirement to accept the terms of a
 	      'click-through' license.  
               Once the license is accepted the
-	      Poky build system can then build and include the
+	      Yocto Project build system can then build and include the
 	      corresponding component in the final BSP image.  
               Some affected components might be essential to the normal
 	      functioning of the system and have no 'free' replacement
@@ -574,7 +574,7 @@ FILESEXTRAPATHS := "${THISDIR}/${PN}"
             </para>
 
             <para>  
-              Several methods exist within the Poky build system to satisfy the licensing
+              Several methods exist within the Yocto Project build system to satisfy the licensing
 	      requirements for an encumbered BSP.
               The following list describes them in preferential order:
             </para>
@@ -644,7 +644,7 @@ FILESEXTRAPATHS := "${THISDIR}/${PN}"
                   These prompts usually take the form of instructions
 		  needed to manually fetch the encumbered package(s)
 		  and md5 sums into the required directory 
-                  (e.g. the <filename>poky/build/downloads</filename>).
+                  (e.g. the <filename>yocto/build/downloads</filename>).
                   Once the manual package fetch has been
 		  completed, restart the build to continue where
 		  it left off.
