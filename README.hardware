@@ -239,30 +239,57 @@ software development of network attached storage (NAS) and digital media server
 applications. The MPC8315E-RDB features the PowerQUICC II Pro processor, which
 includes a built-in security accelerator.
 
+(Note: you may find it easier to order MPC8315E-RDBA; this appears to be the
+same board in an enclosure with accessories. In any case it is fully
+compatible with the instructions given here.)
+
 Setup instructions
 ------------------
 
 You will need the following:
-* nfs root setup on your workstation
-* tftp server installed on your workstation
+* NFS root setup on your workstation
+* TFTP server installed on your workstation
+* Null modem cable connected from your workstation to the first serial port
+  on the board
+* Ethernet connected to the first ethernet port on the board
 
-Load the kernel and boot it as follows:
+--- Preparation ---
 
- 1. Get the kernel (uImage.mpc8315erdb) and dtb (mpc8315erdb.dtb) files from
-    the Poky build tmp/deploy directory, and make them available on your tftp
-    server.
+Note: if you have altered your board's ethernet MAC address(es) from the
+defaults, or you need to do so because you want multiple boards on the same
+network, then you will need to change the values in the dts file (patch
+linux/arch/powerpc/boot/dts/mpc8315erdb.dts within the kernel source). If
+you have left them at the factory default then you shouldn't need to do
+anything here.
 
- 2. Set up the environment in U-Boot:
+--- Booting from NFS root ---
 
- =>setenv ipaddr <board ip>
- =>setenv serverip <tftp server ip>
- =>setenv bootargs root=/dev/nfs rw nfsroot=<nfsroot ip>:<rootfs path> ip=<board ip>:<server ip>:<gateway ip>:255.255.255.0:mpc8315e:eth0:off console=ttyS0,115200
+Load the kernel and dtb (device tree blob), and boot the system as follows:
 
- 3. Download kernel and dtb to boot kernel.
+ 1. Get the kernel (uImage-mpc8315e-rdb.bin) and dtb (uImage-mpc8315e-rdb.dtb)
+    files from the Poky build tmp/deploy directory, and make them available on
+    your TFTP server.
 
- =>tftp 800000 uImage.mpc8315erdb
- =>tftp 780000 mpc8315erdb.dtb
- =>bootm 800000 - 780000
+ 2. Connect the board's first serial port to your workstation and then start up
+    your favourite serial terminal so that you will be able to interact with
+    the serial console. If you don't have a favourite, picocom is suggested:
+
+  $ picocom /dev/ttyUSB0 -b 115200
+
+ 3. Power up or reset the board and press a key on the terminal when prompted
+    to get to the U-Boot command line
+
+ 4. Set up the environment in U-Boot:
+
+ => setenv ipaddr <board ip>
+ => setenv serverip <tftp server ip>
+ => setenv bootargs root=/dev/nfs rw nfsroot=<nfsroot ip>:<rootfs path> ip=<board ip>:<server ip>:<gateway ip>:255.255.255.0:mpc8315e:eth0:off console=ttyS0,115200
+
+ 5. Download the kernel and dtb, and boot:
+
+ => tftp 800000 uImage-mpc8315e-rdb.bin
+ => tftp 780000 uImage-mpc8315e-rdb.dtb
+ => bootm 800000 - 780000
 
 
 Ubiquiti Networks RouterStation Pro (routerstationpro)
