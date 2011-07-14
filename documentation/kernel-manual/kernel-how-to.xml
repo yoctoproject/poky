@@ -1008,12 +1008,19 @@ That's it. Configure and build.
             <title>Creating a BSP Based on an Existing Similar BSP</title>
 
             <para>
-                This section provides an example for creating a BSP
-                that is based on an existing, and hopefully, similar
-                one.  It assumes you will be using a local kernel
-                repository and will be pointing the kernel recipe at
-                that.  Follow these steps and keep in mind your
-                particular situation and differences:
+                This section provides an example for creating a BSP that is based on an existing, and hopefully, 
+                similar one.  
+                The example assumes you will be using a local kernel repository and you will be pointing the 
+                kernel recipes at that repository.  
+                Follow the steps in this section and keep in mind your particular situation and differences.
+            </para>
+
+
+            <para>
+                If you are interested in a more detailed example with complete transcripts showing how to 
+                create a BSP that is based on an existing similar BSP, see the information on the wiki 
+                page at <ulink url='https://wiki.yoctoproject.org/wiki/BKM:_starting_a_new_BSP'></ulink>.
+            </para>
 
             <orderedlist>
                 <listitem><para>
@@ -1058,27 +1065,37 @@ That's it. Configure and build.
                         <listitem><para>Copy the "emenlow" BSP layer to a new BSP layer named 
                         <filename>meta-mymachine</filename>.
                         Now you have two identical BSP layers &dash; but with different names.</para></listitem>
-                        <listitem><para>This example assumes you only need to change some machine
-                        configurations and inform the Yocto Project build process of the new layer.
-                        Consequently, modify the new layer's structure so that all it contains
-                        is the <filename>linux-yocto_git.bbappend</filename> file in the 
-                        <filename>meta-mymachine/recipes-kernel/linux</filename> directory
-                        and the <filename>emenlow.conf</filename> configuration file in the 
-                        <filename>meta-mymachine/conf/machine</filename> directory as well as the
-                        <filename>layer.conf</filename> file in the parent <filename>conf</filename> directory.
-                        </para></listitem>.
+                        <listitem><para>This example assumes the hardware for your new BSP is very similar to 
+                        the hardware used for <filename>meta-emenlow</filename>.
+                        And, you only need to change some machine configurations and inform the Yocto Project build 
+                        process of the new layer.
+                        Consequently, you just need to modify some files in the the new layer so that the Yocto Project
+                        build process uses the recipes and configurations in the new layer.
+                        Since you are basing your new layer on a copied existing layer you need to be sure to rename 
+                        any directories named "emenlow" to "mymachine".
+                        There is one in the <filename>recipes-bsp</filename> directory and one in the 
+                        <filename>recipes-graphics</filename> directory.</para></listitem>.
+                        <listitem><para>In the <filename>recipes-graphics</filename> directory make sure you locate and
+                        change all occurences of "emenlow" to "mymachine". 
+                        Several instances exist.</para></listitem>                       
                         <listitem><para>Rename the <filename>emenlow.conf</filename> file to <filename>mymachine.conf</filename>
                         and fix or remove any configurations.
                         You need to be sure that "mymachine" replaces "emenlow".
                         Note also that "linux-yocto" is the kernel specified in the configuration file.</para></listitem>
                         <listitem><para>Make sure the Yocto Project build process knows about the new BSP
-                        layer by adding the layer to the <filename>bblayers.conf</filename> configuration
+                        layer by adding the pathname to the new layer to the <filename>bblayers.conf</filename> configuration
                         file located in the Yocto Project build tree at <filename>build/conf/bblayers.conf</filename>. 
                         Adding the layer allows Bitbake to find the new layer.
-                        </para></listitem>
+
+                        <note>
+                            The above example creates a BSP layer named <filename>meta-mymachine</filename> that is 
+                            functionally identical to the BSP layer on which it was based - <filename>meta-emenlow</filename>.
+                            In a real-world scenario you would need to differentiate features and configurations to enable 
+                            your "similar" BSP layer to work on your target hardware.
+                        </note></para></listitem>
                     </orderedlist>
                 </para></listitem>
-                
+
                 <listitem><para>
                     Create a machine branch for your machine in a the Yocto Project git repository.
                 </para>
@@ -1090,7 +1107,7 @@ That's it. Configure and build.
                     Then, create a local clone of that bare clone.
                     Here are the commands:
                     <literallayout class='monospaced'>
-     $ git clone --bare git://git.yoctoproject.org/linux-yocto-2.6.37.git linux-yocto-2.6.37.git
+     $ git clone &dash;&dash;bare git://git.yoctoproject.org/linux-yocto-2.6.37.git linux-yocto-2.6.37.git
      $ git clone linux-yocto-2.6.37.git linux-yocto-2.6.37
                     </literallayout>
                 </para>
@@ -1106,7 +1123,7 @@ That's it. Configure and build.
                 <listitem><para>
                     In your new layer you need to edit the <filename>linux-yocto_git.bbappend</filename> 
                     file so that the compatible machine is "mymachine". 
-                    It is also convenient point to a cloned Yocto Project git repository that is local 
+                    It is also convenient to point to a cloned Yocto Project git repository that is local 
                     to your system for development purposes.
                     Thus, change the <filename>linux-yocto_git.bbappend</filename> file in your 
                     <filename>meta-mymachine</filename> layer to the following:
@@ -1148,7 +1165,7 @@ That's it. Configure and build.
                 <para>
                     You should now be able to build and boot an image with the new kernel:
                     <literallayout class='monospaced'>
-     $ bitbake core-image-sato-live
+     $ bitbake -k core-image-sato-live
                     </literallayout>
                 </para></listitem>
 
@@ -1173,12 +1190,11 @@ That's it. Configure and build.
                     <literallayout class='monospaced'>
      CONFIG_LOG_BUF_SHIFT=18
                     </literallayout>
+                </para>
 
                 <para>
                     These configuration fragments could then be picked up and
                     applied to the kernel .config by appending them to the kernel SRC_URI:
-                </para>
-
                     <literallayout class='monospaced'>
      SRC_URI_append_mymachine = " file://some.cfg \
                                   file://other.cfg \
@@ -1222,9 +1238,9 @@ That's it. Configure and build.
                     For example, in this case, commit the patch to the "yocto/standard/mymachine" branch, and during the 
                     next build it is applied from there.
                 </para></listitem>
-            </orderedlist>
-            </para>
+            </orderedlist> 
         </section>
+
 
         <section id='bsp-creating-bsp-without-a-local-kernel-repo'>
         <title>Creating a BSP Based on an Existing Similar BSP Without a Local Kernel Repository</title>
