@@ -1010,240 +1010,60 @@ That's it. Configure and build.
             <title>Creating a BSP Based on an Existing Similar BSP</title>
 
             <para>
-                This section provides an example for creating a BSP that is based on an existing, and hopefully, 
-                similar one.  
-                The example assumes you will be using a local kernel repository and you will be pointing the 
-                kernel recipes at that repository.  
-                Follow the steps in this section and keep in mind your particular situation and differences.
+                This section overviews the process of creating a BSP based on an 
+                existing similar BSP.
+                The information is introductory in nature and does not provide step-by-step examples. 
+                For detailed information on how to create a BSP given an existing similar BSP
+                see the Yocto Project Development Manual [NEED LINK] or the 
+                <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_creating_one_generic_Atom_BSP_from_another'></ulink>
+                wiki page.
             </para>
-
 
             <para>
-                If you are interested in a more detailed example with complete transcripts showing how to 
-                create a BSP that is based on an existing similar BSP, see the information on the wiki 
-                page at <ulink url='https://wiki.yoctoproject.org/wiki/BKM:_starting_a_new_BSP'></ulink>.
+                The basic steps you need to follow are:
+                <orderedlist>
+                    <listitem><para>Make sure you have the Yocto Project source tree available.
+                        You should either create a Yocto Project Git repository (recommended), or 
+                        you should get the Yocto Project release tarball and extract it.</para></listitem>
+                    <listitem><para>Choose an existing BSP available with the Yocto Project.
+                        Try to map your board features as closely to the features of a BSP that is  
+                        already supported and exists in the Yocto Project.  
+                        Starting with something as close as possible to your board makes developing 
+                        your BSP easier.  
+                        You can find all the BSPs that are supported and ship with the Yocto Project 
+                        on the Yocto Project's Download page at 
+                        <ulink url='http://www.yoctoproject.org/download'></ulink>.</para></listitem>
+                    <listitem><para>Be sure you have the Base BSP.
+                        You need to either have the Yocto Project Git repository set up or download
+                        the tarball of the base BSP.
+                        Either method gives you access to the BSP source files.</para></listitem>
+                    <listitem><para>Make a copy of the existing BSP, thus isolating your new BSP work.
+                        Copying the existing BSP structure gives you a new area in which to work.</para></listitem>
+                    <listitem><para>Make configuration and recipe changes to your new BSP.
+                        Configuration changes involve the files in the BSP's <filename>conf</filename>
+                        directory. 
+                        Changes include creating a machine-specific configuration file and editing the 
+                        <filename>layer.conf</filename> file.  
+                        The configuration changes identify the kernel you will be using.
+                        Recipe changes include removing, modifying, or adding new recipe files that 
+                        instruct the build process on what features to include in the image.</para></listitem>
+                    <listitem><para>Prepare for the build.
+                        Before you actually initiate the build you need to set up the build environment
+                        by sourcing the environment initialization script.  
+                        After setting up the environment you need to make some build configuration 
+                        changes to the <filename>local.conf</filename> and <filename>bblayers.conf</filename>
+                        files.</para></listitem>
+                    <listitem><para>Build the image.
+                        The Yocto Project uses the BitBake tool to create the image. 
+                        You need to decide on the type of image you are going to build (e.g. minimal, base, 
+                        core, sato, and so forth) and then start the build using the <filename>bitbake</filename>
+                        command.</para></listitem>
+                </orderedlist>
             </para>
-
-            <orderedlist>
-                <listitem><para>
-                    Identify a machine configuration file that matches your machine.
-                </para>
-                
-                <para>
-                    You can start with a machine configuration file in the Yocto Project source tree
-                    such as the <filename>atom-pc.conf</filename> in <filename>meta-yocto/conf/machine</filename>.
-                    Or, you can start with a machine configuration file from a BSP layer
-                    such as <filename>emenlow.conf</filename> in <filename>meta-emenlow/conf/machine</filename>.
-                </para>
-                
-                <para>
-                    The main difference between these two BSP machine configuration files is that "emenlow" is 
-                    in its own isolated BSP layer, while "atom-pc" is in a more encompassing layer 
-                    named <filename>meta-yocto</filename> that is part of the Yocto Project source tree.
-                    The "emenlow" configuration is in its own BSP layer because the target hardware
-                    needs extra machine-specific packages to support graphics and other features.  
-                    The "atom-pc" configuration file supports more basic hardware that does not need any 
-                    special packages - everything the hardware needs can be specified in the configuration file.  
-                    The "atom-pc" machine also supports all of Asus eee901, Acer Aspire One, Toshiba NB305, 
-                    and the Intel&reg; Embedded Development Board 1-N450 with no changes.
-                </para>
-  
-                <para>
-                    If you want to make minor changes to support a slightly different machine, you can
-                    create a new configuration file for the new machine and add it alongside the 
-                    configuration files.
-                    You might consider keeping common configurations for several machines in a separate file 
-                    and then including the other configuration files that have more specific configurations.
-                </para>
-                
-                <para>
-                    Similarly, you can also use multiple configuration files for different machines even 
-                    when the configuration files come from a separate and different layer.
-                </para>
- 
-                <para>
-                    As an example consider this:
-                    <orderedlist>
-                        <listitem><para>Copy the "emenlow" BSP layer to a new BSP layer named 
-                        <filename>meta-mymachine</filename>.
-                        Now you have two identical BSP layers &dash; but with different names.</para></listitem>
-                        <listitem><para>This example assumes the hardware for your new BSP is very similar to 
-                        the hardware used for <filename>meta-emenlow</filename>.
-                        And, you only need to change some machine configurations and inform the Yocto Project build 
-                        process of the new layer.
-                        Consequently, you just need to modify some files in the the new layer so that the Yocto Project
-                        build process uses the recipes and configurations in the new layer.
-                        Since you are basing your new layer on a copied existing layer you need to be sure to rename 
-                        any directories named "emenlow" to "mymachine".
-                        There is one in the <filename>recipes-bsp</filename> directory and one in the 
-                        <filename>recipes-graphics</filename> directory.</para></listitem>.
-                        <listitem><para>In the <filename>recipes-graphics</filename> directory make sure you locate and
-                        change all occurences of "emenlow" to "mymachine". 
-                        Several instances exist.</para></listitem>                       
-                        <listitem><para>Rename the <filename>emenlow.conf</filename> file to <filename>mymachine.conf</filename>
-                        and fix or remove any configurations.
-                        You need to be sure that "mymachine" replaces "emenlow".
-                        Note also that "linux-yocto" is the kernel specified in the configuration file.</para></listitem>
-                        <listitem><para>Make sure the Yocto Project build process knows about the new BSP
-                        layer by adding the pathname to the new layer to the <filename>bblayers.conf</filename> configuration
-                        file located in the Yocto Project build tree at <filename>build/conf/bblayers.conf</filename>. 
-                        Adding the layer allows BitBake to find the new layer.
-
-                        <note>
-                            The above example creates a BSP layer named <filename>meta-mymachine</filename> that is 
-                            functionally identical to the BSP layer on which it was based - <filename>meta-emenlow</filename>.
-                            In a real-world scenario you would need to differentiate features and configurations to enable 
-                            your "similar" BSP layer to work on your target hardware.
-                        </note></para></listitem>
-                    </orderedlist>
-                </para></listitem>
-
-                <listitem><para>
-                    Create a machine branch for your machine in a the Yocto Project Git repository.
-                </para>
-
-                <para>
-                    For the kernel to compile successfully, you need to create a branch in the 
-                    Yocto Project Git repository that is specifically named for your machine.  
-                    To create this branch, first create a bare clone of the Yocto Project Git repository.
-                    Then, create a local clone of that bare clone.
-                    Here are the commands:
-                    <literallayout class='monospaced'>
-     $ git clone &dash;&dash;bare git://git.yoctoproject.org/linux-yocto-2.6.37.git linux-yocto-2.6.37.git
-     $ git clone linux-yocto-2.6.37.git linux-yocto-2.6.37
-                    </literallayout>
-                </para>
-                
-                <para>
-                    Now be sure you are in the local clone and create a branch and push it to the bare clone:
-                    <literallayout class='monospaced'>
-     $ git checkout -b yocto/standard/mymachine origin/yocto/standard/base
-     $ git push origin yocto/standard/mymachine:yocto/standard/mymachine
-                    </literallayout>
-                </para></listitem>
-               
-                <listitem><para>
-                    In your new layer you need to edit the <filename>linux-yocto_git.bbappend</filename> 
-                    file so that the compatible machine is "mymachine". 
-                    It is also convenient to point to a cloned Yocto Project Git repository that is local 
-                    to your system for development purposes.
-                    Thus, change the <filename>linux-yocto_git.bbappend</filename> file in your 
-                    <filename>meta-mymachine</filename> layer to the following:
-                </para>       
-                
-                <para>
-                    <literallayout class='monospaced'>
-     FILESEXTRAPATHS := "${THISDIR}/${PN}"
-     COMPATIBLE_MACHINE_mymachine = "mymachine"
-
-     # It is often nice to have a clone of the kernel repository, to
-     # allow patches to be staged, branches created, and so forth.  Modify
-     # KSRC to point to your bare clone as appropriate.
-
-     KSRC ?= $MYWORK/linux-yocto-2.6.37.git
-
-     # KMACHINE is the branch to be built, or alternatively 
-     # KBRANCH can be directly set.
-     # KBRANCH is set to KMACHINE in the main linux-yocto_git.bb
-     # KBRANCH ?= "${LINUX_KERNEL_TYPE}/${KMACHINE}"
-
-     KMACHINE_mymachine  = "yocto/standard/mymachine"
-
-     SRC_URI = "git://${KSRC};nocheckout=1;branch=${KBRANCH},meta;name=machine,meta"
-                    </literallayout>
-                </para>
-
-                <para>
-                    After updating the <filename>linux-yocto_git.bbappend</filename> file,
-                    edit the <filename>build/conf/local.conf</filename> found
-                    in the Yocto Project build tree so that it selects your machine:
-                    <literallayout class='monospaced'>
-      #
-      MACHINE ?= "mymachine"
-      #
-                    </literallayout>
-                </para>
-               
-                <para>
-                    You should now be able to build and boot an image with the new kernel:
-                    <literallayout class='monospaced'>
-     $ bitbake -k core-image-sato-live
-                    </literallayout>
-                </para></listitem>
-
-                <listitem><para>
-                    Modify the kernel configuration for your machine.
-                </para>
-                
-                <para>
-                    At this point you will build a kernel with the default configuration file, which is probably 
-                    not what you want.
-                    If you just want to set some kernel configuration options, you can do that by 
-                    putting them in a file.
-                    For example, inserting the following into some <filename>.cfg</filename> file:
-                    <literallayout class='monospaced'>
-     CONFIG_NETDEV_1000=y
-     CONFIG_E1000E=y
-                    </literallayout>
-                </para>
-                
-                <para>
-                    And, another <filename>.cfg</filename> file would contain:
-                    <literallayout class='monospaced'>
-     CONFIG_LOG_BUF_SHIFT=18
-                    </literallayout>
-                </para>
-
-                <para>
-                    These configuration fragments could then be picked up and
-                    applied to the kernel .config by appending them to the kernel SRC_URI:
-                    <literallayout class='monospaced'>
-     SRC_URI_append_mymachine = " file://some.cfg \
-                                  file://other.cfg \
-                               "
-                    </literallayout>
-                </para>
-                
-                <para>
-                    You could also add these directly to the git repository <filename>meta</filename>
-                    branch as well.
-                    However, the former method is a simple starting point.
-                </para></listitem>
-                
-                <listitem><para>
-                    If you're also adding patches to the kernel, you can do the same thing.
-                    Put your patches in the SRC_URI as well (plus <filename>.cfg</filename> for their kernel 
-                    configuration options if needed).
-                </para>
-                
-                <para>
-                    Practically speaking, to generate the patches, you'd go to the source in the build tree:
-                    <literallayout class='monospaced'>
-     build/tmp/work/mymachine-poky-linux/linux-yocto-2.6.37+Git0+d1cd5c80ee97e81e130be8c3de3965b770f320d6_0+
-0431115c9d720fee5bb105f6a7411efb4f851d26-r13/linux
-                    </literallayout>
-                </para>
-                
-                <para>
-                    Then, modify the code there, using quilt to save the changes, and recompile until 
-                    it works:
-                    <literallayout class='monospaced'>
-     $ bitbake -c compile -f linux-yocto
-                    </literallayout>
-                </para></listitem>
-                
-                <listitem><para>
-                    Once you have the final patch from quilt, copy it to the 
-                    SRC_URI location.
-                    The patch is applied the next time you do a clean build.
-                    Of course, since you have a branch for the BSP in Git, it would be better to put it there instead.
-                    For example, in this case, commit the patch to the "yocto/standard/mymachine" branch, and during the 
-                    next build it is applied from there.
-                </para></listitem>
-            </orderedlist> 
         </section>
 
 
+<!--
         <section id='bsp-creating-bsp-without-a-local-kernel-repo'>
         <title>Creating a BSP Based on an Existing Similar BSP Without a Local Kernel Repository</title>
 
@@ -1276,7 +1096,8 @@ That's it. Configure and build.
         </section>
 
 
-<!--        <section id='bsp-creating-a-new-bsp'>
+
+        <section id='bsp-creating-a-new-bsp'>
             <title>BSP: Creating a New BSP</title>
 <para>
 Although it is obvious that the structure of a new BSP uses the migrated
