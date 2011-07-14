@@ -40,12 +40,24 @@
             in the product. 
             Those feature descriptions list all necessary patches,
             configuration, branching, tagging and feature divisions found in the kernel.
+            Thus, the Yocto Project kernel repository (or tree) is built.
+            The existence of this tree allows you to build images based on your configurations
+            and features.
         </para>
         <para>
             You can find the files used to describe all the valid features and BSPs in the Yocto Project
-            kernel in any clone of the kernel Git tree.  
-            The directory <filename>meta/cfg/kernel-cache/</filename> is a snapshot of all the kernel
-            configuration and feature descriptions (.scc) used to build the kernel repository.
+            kernel in any clone of the kernel Git tree.
+            For example, the following command clones the Yocto Project baseline kernel that 
+            branched off of linux.org version 2.6.37:
+            <literallayout class='monospaced'>
+     $ git clone http://git.yoctoproject.org/cgit/cgit.cgi/linux-yocto-2.6.37
+            </literallayout>  
+            After you switch to the <filename>meta</filename> branch within the repository
+            you can see a snapshot of all the kernel configuration and feature descriptions that are 
+            used to build the kernel repository.
+            These descriptions are in the form of <filename>.scc</filename> files. 
+        </para>
+        <para>
             You should realize, however, that browsing the snapshot of feature
             descriptions and patches is not an effective way to determine what is in a
             particular kernel branch. 
@@ -62,46 +74,56 @@
             and development.
         </para></note>
         <para>
-            The general flow for constructing a project-specific kernel tree is as follows:
-        <orderedlist>
-            <listitem><para>A top-level kernel feature is passed to the kernel build subsystem.
-            Normally, this is a BSP for a particular kernel type.</para></listitem>
+            The following steps describe what happens during tree construction given the introduction
+            of a new top-level kernel feature or BSP. 
+            These are the actions that effectively create the tree that includes the new feature, patch, 
+            or BSP:
+            <orderedlist>
+                <listitem><para>A top-level kernel feature is passed to the kernel build subsystem.
+                    Normally, this is a BSP for a particular kernel type.</para></listitem>
 
-            <listitem><para>The file that describes the top-level feature is located by searching
-            these system directories:</para>
+                <listitem><para>The file that describes the top-level feature is located by searching
+                    these system directories:
 
-                <itemizedlist>
-                    <listitem><para>The in-tree kernel-cache directories</para></listitem>
+                    <itemizedlist>
+                        <listitem><para>The in-tree kernel-cache directories, which are located
+                            in <filename>meta/cfg/kernel-cache</filename></para></listitem>
 <!--            <listitem><para>kernel-*-cache directories in layers</para></listitem> -->
-                    <listitem><para>Recipe SRC_URIs</para></listitem>
+                        <listitem><para>Areas pointed to by <filename>SRC_URI</filename> statements
+                            found in recipes</para></listitem>
 <!--            <listitem><para>configured and default templates</para></listitem> -->
-                </itemizedlist>
+                    </itemizedlist>
 
-            <para>For a typical build a feature description of the format:
-            &lt;bsp name&gt;-&lt;kernel type&gt;.scc is the target of the search.
-            </para></listitem>
+                    For a typical build, the target of the search is a 
+                    feature description in an <filename>.scc</filename> file
+                    whose name follows this format:
+                    <literallayout class='monospaced'>
+     &lt;bsp_name&gt;-&lt;kernel_type&gt;.scc
+                    </literallayout>
+                </para></listitem>
 
-            <listitem><para>Once located, the feature description is either compiled into a simple script
-            of actions, or an existing equivalent script that was part of the
-            shipped kernel is located.</para></listitem>
+                <listitem><para>Once located, the feature description is either compiled into a simple script
+                    of actions, or into an existing equivalent script that is already part of the
+                    shipped kernel.</para></listitem>
 
-            <listitem><para>Extra features are appended to the top-level feature description. 
-            These features can come from the KERNEL_FEATURES variable in recipes.</para></listitem>
+                <listitem><para>Extra features are appended to the top-level feature description. 
+                    These features can come from the <filename>KERNEL_FEATURES</filename> variable in 
+                    recipes.</para></listitem>
 
-            <listitem><para>Each extra feature is located, compiled and appended to the script from
-            step #3</para></listitem>
+                <listitem><para>Each extra feature is located, compiled and appended to the script 
+                    as described in step three.</para></listitem>
 
-            <listitem><para>The script is executed, and a meta-series is produced. 
-            The meta-series is a description of all the branches, tags, patches and configurations that
-            need to be applied to the base Git repository to completely create the
-            BSP source (build) branch.</para></listitem>
+                <listitem><para>The script is executed to produce a meta-series. 
+                    The meta-series is a description of all the branches, tags, patches and configurations that
+                    need to be applied to the base Git repository to completely create the
+                    source (build) branch for the new BSP or feature.</para></listitem>
 
-            <listitem><para>The base repository is cloned, and the actions
-            listed in the meta-series are applied to the tree.</para></listitem>
+                <listitem><para>The base repository is cloned, and the actions
+                    listed in the meta-series are applied to the tree.</para></listitem>
 
-            <listitem><para>The Git repository is left with the desired branch checked out and any
-            required branching, patching and tagging has been performed.</para></listitem>
-        </orderedlist>
+                <listitem><para>The Git repository is left with the desired branch checked out and any
+                    required branching, patching and tagging has been performed.</para></listitem>
+            </orderedlist>
         </para>
 
         <para>
