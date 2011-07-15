@@ -5,52 +5,123 @@
 
 <title>The Yocto Project Development Manual</title>
 
+<para>
+    WRITER NOTE: The goal of this manual is to provide an over-arching development guide for using the Yocto Project.  
+    The intent is to give the reader the “big picture” around development.  
+    Much of the information in the manual will be detailed in other manuals.  
+    For example, detailed information on Git, repositories and open-source in general can be found in many places.  
+    Another example is getting set up to use the Yocto Project, which our Yocto Project Quick Start covers.  
+    However, this manual needs to at least address it.  
+    One might ask “What becomes of the Poky Reference Manual?”  
+    This manual, over time, needs to develop into a pure reference manual where all procedural information 
+    eventually ends up in an appropriate guide.   
+    A good example of information perfect for the Poky Reference Manual is the appendix on variable 
+    definitions (glossary).
+</para>
+
 <section id='intro'>
     <title>Introduction</title>
+
     <para>
-        The Yocto Project presents the kernel as a fully patched, history-clean Git
-        repository. 
-        The Git tree represents the selected features, board support,
-        and configurations extensively tested by Yocto Project. 
-        The Yocto Project kernel allows the end user to leverage community
-        best practices to seamlessly manage the development, build and debug cycles.
-    </para>
-    <para>
-        This manual describes the Yocto Project kernel by providing information
-        on its history, organization, benefits, and use.
-        The manual consists of two sections:
-        <itemizedlist>
-            <listitem><para>Concepts - Describes concepts behind the kernel.
-                You will understand how the kernel is organized and why it is organized in 
-                the way it is.  You will understand the benefits of the kernel's organization 
-                and the mechanisms used to work with the kernel and how to apply it in your 
-                design process.</para></listitem>
-            <listitem><para>Using the Kernel - Describes best practices and "how-to" information
-                that lets you put the kernel to practical use.  Some examples are "How to Build a 
-                Project Specific Tree", "How to Examine Changes in a Branch", and "Saving Kernel
-                Modifications."</para></listitem>
-        </itemizedlist>
-    </para>
-    <para>
-        For more information on the kernel, see the following links:
-        <itemizedlist>
-            <listitem><para><ulink url='http://ldn.linuxfoundation.org/book/1-a-guide-kernel-development-process'></ulink></para></listitem>
-            <listitem><para><ulink url='http://userweb.kernel.org/~akpm/stuff/tpp.txt'></ulink></para></listitem>
-            <listitem><para><ulink url='http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob_plain;f=Documentation/HOWTO;hb=HEAD'></ulink></para></listitem> 
-        </itemizedlist>
-        <para> 
-        You can find more information on Yocto Project by visiting the website at
-        <ulink url='http://www.yoctoproject.org'></ulink>.
-        </para>
+        Welcome to the Yocto Project Development Guide!  
+        This guide provides an over-arching view of the development process within the Yocto Project.  
+        This guide is just that – a guide.  
+        It helps you understand the bigger picture involving development using the Yocto Project.  
     </para>
 </section>
 
+<section id='what-this-manual-provides'>
+    <title>What this Manual Provides</title>
 
+    <para>
+        The following list describes what you can get from this guide:
+        <itemizedlist>
+            <listitem><para>A general idea of and references to information that lets you get set 
+                up to develop using the Yocto Project.</para></listitem>
+            <listitem><para>Information to help developers that are new to the open source environment 
+                and to the distributed revision control system Git, which the Yocto Project 
+                uses.</para></listitem>
+            <listitem><para>An understanding of common end-to-end development models.</para></listitem>
+            <listitem><para>Development case overviews for both system development and user-space 
+                applications.</para></listitem>
+            <listitem><para>An overview and understanding of the emulation environment used with 
+                the Yocto Project (QEMU).</para></listitem>
+            <listitem><para>A discussion of target-level analysis techniques, tools, tips, 
+                and tricks.</para></listitem>
+            <listitem><para>Considerations for deploying your final product.</para></listitem>
+            <listitem><para>An understanding of basic kernel architecture and 
+                concepts.</para></listitem>
+            <listitem><para>Information that will help you migrate an existing project to the 
+                Yocto Project development environment.</para></listitem>
+        </itemizedlist>
+    </para>
+</section>
 
+<section id='what-this-manual-does-not-provide'>
+    <title>What this Manual Does Not Provide</title>
 
+    <para>
+        This manual will not give you the following:
+        <itemizedlist>
+            <listitem><para>Step-by-step instructions when these instructions exist in other Yocto 
+                Project documentation.  
+                For example, The Application Development Toolkit (ADT) User’s Guide contains detailed 
+                instruction on how to obtain and configure the Eclipse Yocto Plug-in.</para></listitem>
+            <listitem><para>Reference material.  
+                This type of material resides in an appropriate reference manual.  
+                For example, system variables are documented in the Poky Reference Manual.</para></listitem>
+            <listitem><para>Detailed public information that is not specific to the Yocto Project.  
+                For example, exhaustive information on how to use Git is better covered in the public 
+                domain than in this manual.</para></listitem>
+        </itemizedlist>
+    </para>
+</section>
 
-
-
+<section id='other-information'>
+    <title>Other Information</title>
+ 
+    <para>
+        Because this manual presents overview information for many different topics, you will
+        need to supplement it with other information.
+        The following list presents other sources of information you might find helpful:
+        <itemizedlist>
+            <listitem><para>The <ulink url='http://www.yoctoproject.org'>Yocto Project Website</ulink> - The 
+                home page for the Yocto Project
+                provides lots of information on the project as well as links to software
+                and documentation.</para></listitem>
+            <listitem><para>The <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html'>
+                Yocto Project Quick Start</ulink> - This short document lets you get started 
+                with the Yocto Project quickly and start building an image.</para></listitem>
+            <listitem><para>The <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html'>
+                Yocto Project Reference Manual</ulink> - This manual is the complete reference 
+                guide to the Yocto Project build component.  
+                The manual also contains a reference chapter on Board Support Package (BSP) 
+                layout.</para></listitem>
+            <listitem><para><ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html'>
+                Application Development Toolkit (ADT) User's Guide</ulink> - This guide provides 
+                information that lets you get going with the ADT to develop projects using the 
+                Yocto Project.</para></listitem>
+            <listitem><para><ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html'>
+                Board Support Package (BSP) Developer's Guide</ulink> - This guide defines the 
+                structure for BSP components.  
+                Having a commonly understood structure encourages standardization.</para></listitem>
+            <listitem><para><ulink url='http://www.yoctoproject.org/docs/1.1/kernel-manual/kernel-manual.html'>
+                Yocto Project Kernel Architecture and Use Manual</ulink> - This manual
+                describes the architecture of the Yocto Project kernel and provides some work flow 
+                examples.</para></listitem>
+            <listitem><para><ulink url='http://www.youtube.com/watch?v=3ZlOu-gLsh0'>
+                Yocto Eclipse Plug-in</ulink> - A step-by-step instructional video that
+                demonstrates how an application developer uses Yocto Plug-in features within 
+                the Eclipse IDE.</para></listitem>
+            <listitem><para><ulink url='http://wiki.yoctoproject.org/wiki/FAQ'>FAQ</ulink> - A 
+                list of commonly asked questions and their answers.</para></listitem>
+            <listitem><para><ulink url='http://www.yoctoproject.org/download/yocto/yocto-project-1.0-release-notes-poky-5.0'>
+                Release Notes</ulink> - Features, updates and known issues for the current 
+                release of the Yocto Project.</para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+            
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
