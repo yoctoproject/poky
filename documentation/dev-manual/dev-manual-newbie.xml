@@ -5,45 +5,526 @@
 
 <title>Working with Open Source Code</title>
 
-<section id='newbie-intro'>
-    <title>Introduction</title>
+<para>
+    This chapter presents information for users new or unfamiliar with working in an open source environment.  
+    Working in this type of environment is different than working in a closed, proprietary environment.  
+    The chapter also presents information specific to the Yocto Project environment.  
+    It specifically addresses licensing issues, code repositories, the open-source distributed version control 
+    system Git, and best practices within Yocto Project.
+</para>
+
+<note><para>
+    If you are a seasoned open source developer and are familiar with Git, you might just be interested 
+    in the Yocto Project specific information in this chapter.
+</para></note>
+
+<section id='open-source-philosophy'>
+    <title>Open Source Philosophy</title>
+
     <para>
-        The Yocto Project presents the kernel as a fully patched, history-clean Git
-        repository. 
-        The Git tree represents the selected features, board support,
-        and configurations extensively tested by Yocto Project. 
-        The Yocto Project kernel allows the end user to leverage community
-        best practices to seamlessly manage the development, build and debug cycles.
+        Open source philosophy is characterized by software development directed by peer production, 
+        bartering, and collaboration through a concerned community of developers.  
+        Contrast this to the more standard centralized development models used by commercial software 
+        companies where a finite set of developers produce a product for sale using a defined set 
+        of procedures that ultimately result in an end-product whose architecture and source material 
+        are closed to the public.
     </para>
+
     <para>
-        This manual describes the Yocto Project kernel by providing information
-        on its history, organization, benefits, and use.
-        The manual consists of two sections:
-        <itemizedlist>
-            <listitem><para>Concepts - Describes concepts behind the kernel.
-                You will understand how the kernel is organized and why it is organized in 
-                the way it is.  You will understand the benefits of the kernel's organization 
-                and the mechanisms used to work with the kernel and how to apply it in your 
-                design process.</para></listitem>
-            <listitem><para>Using the Kernel - Describes best practices and "how-to" information
-                that lets you put the kernel to practical use.  Some examples are "How to Build a 
-                Project Specific Tree", "How to Examine Changes in a Branch", and "Saving Kernel
-                Modifications."</para></listitem>
-        </itemizedlist>
+        Open source projects conceptually have differing concurrent agendas, approaches, and production.   
+        These facets of the development process can come from anyone in the public (community) that has a 
+        stake in the software project.  
+        The open source environment contains new copyright, licensing, domain, and consumer issues 
+        that differ from the more traditional development environment.  
+        In an open source environment the end-product, source material, and documentation are 
+        all available to the public at no cost.
     </para>
+
     <para>
-        For more information on the kernel, see the following links:
-        <itemizedlist>
-            <listitem><para><ulink url='http://ldn.linuxfoundation.org/book/1-a-guide-kernel-development-process'></ulink></para></listitem>
-            <listitem><para><ulink url='http://userweb.kernel.org/~akpm/stuff/tpp.txt'></ulink></para></listitem>
-            <listitem><para><ulink url='http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob_plain;f=Documentation/HOWTO;hb=HEAD'></ulink></para></listitem> 
-        </itemizedlist>
-        <para> 
-        You can find more information on Yocto Project by visiting the website at
-        <ulink url='http://www.yoctoproject.org'></ulink>.
-        </para>
+        A benchmark example of an open source project is the Linux Kernel, which was initially conceived 
+        and created by Finnish computer science student Linus Torvalds in 1991.  
+        Conversely, a good example of a non-open source project is the Windows family of operating 
+        systems developed by Microsoft Corporation.
+    </para>
+
+    <para>
+        Wikipedia has a good historical description of the Open Source Philosophy  
+        <ulink url='http://wn.wikipedia.org/wiki/Open_source'>here</ulink>. 
+    </para>
+
+    <para>
+        You can also find helpful information on how to participate in the Linux Community 
+        <ulink url='http://ldn.linuxfoundation.org/book/how-participate-linux-community'>here</ulink>.
     </para>
 </section>
+
+<section id='yocto-project-repositories'>
+    <title>Yocto Project Repositories</title>
+
+    <para>
+        The Yocto Project team maintains complete source repositories that allow further development 
+        of Yocto Project, its tools, Board Support Packages, and so forth.  
+        As a developer who uses Yocto Project, however, you need only to be able to access your 
+        kernel or application source code and any layers (modifications) on which you might be working.  
+    </para>
+
+    <para>
+        For any supported release of Yocto Project you can go to the Yocto Project website’s 
+        <ulink url='http://www.yoctoproject.org/download'>download page</ulink> and get a 
+        <filename>.bz2</filename> tarball of the release.  
+        You can also go to this site to download any supported BSP tarballs.
+    </para>
+
+    <para>
+        After obtaining the code, you can unpack the tarballs and have a working Git repository 
+        from which you can develop.  
+        Or, you can take steps to create local repositories of Yocto Project source code and metadata on 
+        your development system.  
+        See the information 
+        <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>here</ulink>
+        for information on how to set up these local Git repositories.
+    </para>
+
+    <note><para>
+        Should you be interested in locations of complete Yocto Project development code, there are 
+        two areas where this code is maintained:
+    <itemizedlist>
+        <listitem><para><emphasis><ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>Source Repositories:</ulink></emphasis>
+            This area contains IDE Plugins, Matchbox, Poky, Poky Support, Tools, Yocto Linux Kernel, and Yocto 
+            Metadata Layers.</para></listitem>
+        <listitem><para><emphasis><ulink url='http://autobuilder.yoctoproject.org/downloads/'>Index of /downloads:</ulink></emphasis>
+            This area contains an index of the Eclipse-plugin, miscellaneous support, poky, pseudo, and 
+            all released versions of Yocto Project. 
+            [WRITER NOTE: link will be http://downloads.yoctoproject.org.]</para></listitem>
+    </itemizedlist>
+    </para></note>
+</section>
+
+<section id='licensing'>
+    <title>Licensing</title>
+
+    <para>
+        Because open source projects are open to the public they have different licensing structures in place.  
+        License evolution for both Open Source and Free Software has an interesting history.  
+        If you are interested in the history you can find basic information here:
+    <itemizedlist>
+        <listitem><para><ulink url='http://en.wikipedia.org/wiki/Open-source_license'>Open source license history</ulink>
+            </para></listitem>
+        <listitem><para><ulink url='http://en.wikipedia.org/wiki/Free_software_license'>Free software license
+            history</ulink></para></listitem>
+    </itemizedlist>
+    </para>
+
+    <para>
+        In general, Yocto Project is broadly licensed under the Massachusetts Institute of Technology 
+        (MIT) License.  
+        MIT licensing permits the reuse of software within proprietary software as long as the 
+        license is distributed with that software.  
+        MIT is also compatible with the GNU General Public License (GPL).  
+        Patches to the Yocto Project follow the up-stream licensing scheme.
+    </para>
+
+    <para>
+        You can find information on the MIT License <ulink url='http://en.wikipedia.org/wiki/MIT_License'>here</ulink>.
+        You can find information on the GNU GPL <ulink url='http://en.wikipedia.org/wiki/GPL'>here</ulink>. 
+    </para>
+
+    <para>
+        When you build an image using Yocto Project the build process uses a known list of licenses to 
+        ensure compliance.  
+        Once the build completes the list of all licenses found and used during the build are 
+        kept in the resulting build directory at 
+        <filename>&lt;build_directory&gt;/tmp/deploy/images/licenses</filename>.  
+        If a module requires a license that is not in the base list then the build process 
+        generates a warning during the build.  
+        It is up to the developer to resolve potential licensing issues.
+    </para>
+
+    <para>
+        The base list of licenses used by the build process is a combination of the Software Package 
+        Data Exchange (SPDX) list and the Open Source Initiative (OSI) projects.  
+        <ulink url='http://spdx.org'>SPDX Group</ulink> is a working group of the Linux Foundation 
+        that maintains a specification 
+        for a standard format for communicating the components, licenses, and copyrights 
+        associated with a software package.  
+        <ulink url='http://opensource.org'>OSI</ulink> is a corporation dedicated to the Open Source 
+        Definition and the effort for reviewing 
+        and approving licenses that are OSD-conformant.  
+    </para>
+
+    <para>
+        You can find a list of the combined SPDX and OSI licenses that the Yocto Project uses 
+        <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/files/common-licenses'>here</ulink>.
+        The wiki page discusses the license infrastructure used by the Yocto Project.
+    </para>
+</section>
+
+<section id='git'>
+    <title>Git</title>
+
+    <para>
+        The Yocto Project uses Git, which is a free, open source distributed version control.  
+        Git supports distributed development, non-linear development, can handle large projects, 
+        cryptographic authentication of history, and toolkit design.  
+        It is best that you know how to work with Git if you are going to use Yocto Project for development.  
+    </para>
+
+    <para>
+        Git has an extensive set of commands that lets you manage and collaborate changes over the life 
+        of a project.  
+        Conveniently though, you can manage with a small set of basic operations and workflows 
+        once you understand the basic philosophy behind Git.  
+        You do not have to be an expert in Git to be functional.  
+        A good place to look for instruction on a minimal set of Git commands is 
+        <ulink url='http://git-scm.com/documentation'>here</ulink>.   
+        If you need to download Git you can do so 
+        <ulink url='http://git-scm.com/download'>here</ulink>. 
+    </para>
+
+    <para>
+        Git works by using branching techniques that track content change (not files) 
+        within a project (e.g. a new feature or updated documentation).  
+        Creating a tree-like structure based on project divergence allows for excellent historical 
+        information over the life of a project.  
+        This methodology also allows for an environment in which you can do lots of 
+        experimentation on your project as you develop changes or new features.  
+        For example, you can create a “branch”, experiment with some feature, and then 
+        if you like the feature you incorporate the branch into the tree.  
+        If you don’t, you cut the branch off by deleting it.  
+    </para>
+
+    <para>
+        If you don’t know much about Git it is strongly suggested that you educate            
+        yourself by visiting the links previously mentioned.
+    </para>
+
+    <para>
+        The following list briefly describes some basic Git operations as a way to get started.  
+        As with any set of commands, this list (in most cases) simply shows the base command and 
+        omits the many arguments they support.  
+        See the Git documentation for complete descriptions and strategies on how to use these commands:
+    <itemizedlist>
+        <listitem><para><emphasis>git init</emphasis> – Initializes an empty Git repository.  
+            You cannot use Git commands unless you have a <filename>.git</filename> repository.</para></listitem>
+        <listitem><para><emphasis>git clone</emphasis> – Creates a clone of a repository.  
+            During collaboration this command allows you to create a local repository that is on 
+            equal footing with a fellow developer’s repository.</para></listitem>
+        <listitem><para><emphasis>git add</emphasis> – Adds updated file contents to the index that 
+            Git uses to track changes.  
+            All files that have changed must be added before they can be committed.</para></listitem>
+        <listitem><para><emphasis>git commit</emphasis> – Creates a “commit” that documents the changes you made.  
+            Commits are used for historical purposes, for determining if a maintainer of a project 
+            will allow the change, and for ultimately pushing the change from your local Git repository 
+            into the project’s upstream (or master) repository.</para></listitem>
+        <listitem><para><emphasis>git status</emphasis> – Reports any modified files that possibly need 
+            added and committed.</para></listitem>
+        <listitem><para><emphasis>git checkout <filename>&lt;branch-name&gt;</filename></emphasis> - Changes 
+            your working branch.  This command is analogous to “cd”.</para></listitem>
+        <listitem><para><emphasis><filename>git checkout –b &lt;working-branch&gt;</filename></emphasis> - Creates 
+            a working branch on your local machine where you can isolate work.  
+            It is a good idea to use local branches when adding specific features or changes.  
+            This way if you don’t like what you have done you can easily get rid of the work.</para></listitem>
+        <listitem><para><emphasis>git branch</emphasis> – Reports existing branches and tells you which 
+            branch in which you are currently working.</para></listitem>
+        <listitem><para><emphasis>git pull</emphasis> – Retrieves information from an upstream Git 
+            repository and places it in your local Git repository.  
+            You use this command to make sure you are synchronized with the upstream repository 
+            from which the project’s maintainer uses to pull changes into the master repository.</para></listitem>
+        <listitem><para><emphasis>git push</emphasis> – Sends all your local changes you have committed 
+            to an upstream Git repository.  
+            The maintainer of the project draws from these repositories when adding your changes to the 
+            project’s master repository.</para></listitem>
+        <listitem><para><emphasis>git merge</emphasis> – Combines or adds changes from one local branch of 
+            your repository with another branch.  
+            When you create a local Git repository the default branch is named “master”.  
+            A typical workflow is to create a temporary branch for isolated work, make and commit your 
+            changes, switch to the master branch, merge the changes in the temporary branch with the 
+            master branch, and then delete the temporary branch</para></listitem>
+        <listitem><para><emphasis>git cherry-pick</emphasis> – Choose and apply specific commits from 
+            one branch into another branch.  
+            There are times when you might not be able to merge all the changes in one branch with 
+            another but need to pick out certain ones.</para></listitem>
+        <listitem><para><emphasis>gitk</emphasis> – Provides a GUI view of the branches and changes in 
+            your local Git repository.  
+            This command is a good way to see where things have diverged in your local repository.</para></listitem>
+        <listitem><para><emphasis>git log</emphasis> – Reports a history of your changes to the 
+            repository.</para></listitem>
+    </itemizedlist>
+    </para>
+</section>
+
+<section id='workflows'>
+    <title>Workflows</title>
+
+    <para>
+        This section provides some overview on workflows using Git.  
+        In particular, the information covers basic practices that describe roles and actions in a 
+        collaborative development environment.  
+        Again, if you are familiar with this type of development environment you might want to just skip the section. 
+    </para>
+
+    <para>
+        Following are the definitions for some terms used in the Yocto Project.
+        [WRITER NOTE: I need to move this list of definitions somewhere useful.]
+    <itemizedlist>
+        <listitem><para><emphasis>Image</emphasis> - An image is a collection of recipes created with 
+            Bitbake (baked).  Images run on specific hardware and use cases.</para></listitem>
+        <listitem><para><emphasis>Recipe</emphasis> - A set of instructions for building packages.  
+            A recipe describes where you get the source and which patches to apply.
+            Recipes describe dependencies for libraries or for other recipes and they 
+            also contain configuration and compilation options.  
+            Recipes also let you ‘install’ customizations.  
+            Recipes contain the logical unit of execution, the software/images to build and 
+            use the <filename>.bb</filename> file extension.</para></listitem>
+        <listitem><para><emphasis>BitBake</emphasis> - The task executor and scheduler used by Yocto Project
+            to build images. 
+            For more information on BitBake, see the <ulink url='http://bitbake.berlios.de/manual/'>
+            BitBake documentation</ulink>.</para></listitem>
+        <listitem><para><emphasis>Package</emphasis> - A collection of ‘baked’ recipes.  
+            You ‘bake’ something by running it through Bitbake.</para></listitem>
+        <listitem><para><emphasis>Layer</emphasis> - A logical collection of recipes representing the core, 
+            a BSP, or an application stack.</para></listitem>
+        <listitem><para><emphasis>Metadata</emphasis> - Information for a build that is generally 
+            architecture-independent.  
+            This information includes Task definitions in recipes, classes, and configuration 
+            information.</para></listitem>
+        <listitem><para><emphasis>Configuration File</emphasis>:  Configuration information in the 
+            <filename>.conf</filename> files provides global definition of variables.  
+            The <filename>build/conf/local.conf</filename> configuration file defines local user-defined variables.  
+            The <filename>distro/poky.conf</filename> configuration file defines Yocto ‘distro’ configuration 
+            variables.  
+            The <filename>machine/beagleboard.conf</filename> configuration file defines machine-specific variables.  
+            Configuration files end with a <filename>.conf</filename> filename extension.</para></listitem>
+        <listitem><para><emphasis>Classes</emphasis> - Files that encapsulate and inherit logic.  
+            Class files end with the <filename>.bbclass</filename> filename extension.</para></listitem>
+        <listitem><para><emphasis>Tasks</emphasis> - Arbitrary groups of software used to contain Recipes.  
+            You simply use Tasks to hold recipes that when build usually accomplished a single task.  
+            For example, a task could contain the recipes for a company’s proprietary or value-add software.  
+            Or the task could contain the recipes that enable graphics. 
+            A task is really just another recipe.  
+            Because task files are recipes, they end with the <filename>.bb</filename> filename 
+            extension.</para></listitem>
+        <listitem><para><emphasis>Common OE-Core</emphasis> - A core set of metadata originating 
+            with OpenEmbedded (OE) that is shared between OE and the Yocto Project.</para></listitem>
+    </itemizedlist>
+    </para>
+
+    <para>
+        A master Git repository exists that contains the project.  
+        Usually a key individual is responsible for this repository.  
+        It is the “upstream” repository where the final builds of the project occur.  
+        The maintainer is responsible for allowing changes in from other developers and for 
+        organizing the branch structure of the repository to reflect release strategies and so forth.  
+    </para>
+
+    <para>
+        The maintainer of the project also owns a contribution repository usually known as a “contrib” area.  
+        The contrib area temporarily holds changes to the project that have been submitted or committed 
+        by the development team.  
+        The maintainer determines if the changes are qualified to be moved into the master repository.
+    </para>
+
+    <para>
+        Developers create and maintain cloned repositories of the upstream master repository.  
+        These repositories are local to their development platforms and are used to develop changes.  
+        When a developer is satisfied with a particular feature or change they “push” the changes 
+        up to the contrib repository.  
+        Developers are responsible for keeping their local repository up-to-date with the master 
+        repository.  
+        They are also responsible for straightening out any conflicts that might arise within files 
+        that are being worked on simultaneously by more than one person.  
+        All this work is done locally on the developer’s machine before anything is pushed upstream 
+        and examined at the maintainer’s level.
+    </para>
+
+    <para>
+        A somewhat formal method exists by which developers commit changes and push them into the 
+        contrib area and subsequently request that the maintainer include them into the master repository.  
+        This process is called “submitting a patch” or “submitting a change.”  
+    </para>
+
+    <para>
+        To summarize the environment:  we have a single point of entry for changes into the project’s 
+        master repository, which is controlled by the project’s maintainer.  
+        And, we have a set of developers who independently develop, test, and submit changes 
+        upstream for the maintainer to examine.  
+        The maintainer then chooses which changes are going to become permanently a part of the project.  
+    </para>
+
+    <para>
+        [WRITER NOTE: Would like a figure here for Git workflow]
+    </para>
+
+    <para>
+        While each development environment is unique, there are some best practices or methods 
+        that help development run smoothly.  
+        The following list describes some of these practices.  
+        For more detailed information about these strategies see 
+        <ulink url='http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html'>Git Workflows</ulink>. 
+    <itemizedlist>
+        <listitem><para><emphasis>Small Changes</emphasis> - It is best to keep your changes you commit 
+            small as compared to bundling many disparate changes into a single commit.  
+            This practice not only keeps things manageable but also allows the maintainer 
+            to more easily include or refuse changes.</para></listitem>
+        <listitem><para><emphasis>Use Branches Liberally</emphasis> - It is very easy to create, use, and 
+            delete local branches in your working Git repository.  
+            You can name these branches anything you like.  
+            It is helpful to give them names associated with the particular feature or change 
+            on which you are working.  
+            Once you are done with a feature or change you simply discard the branch.</para></listitem>
+        <listitem><para><emphasis>Merge Changes</emphasis> - The Git merge command allows you to take the 
+            changes from one branch and fold them into another branch.  
+            This process is especially helpful when more than a single developer might be working 
+            on different parts of the same feature.  
+            Merging changes also automatically identifies any collisions or “conflicts” 
+            that might happen resulting from the same lines of code be altered by two different 
+            developers.</para></listitem>
+        <listitem><para><emphasis>Manage Branches</emphasis> - Because branches are easy to use, you should 
+            use a system where branches indicate varying levels of code readiness.  
+            For example, you can have a “work” branch to develop in, a “test” branch where the code or 
+            change is tested, a “stage” branch where changes are ready to be committed, and so forth.  
+            As your project develops, you can merge code across the branches to reflect ever-increasing 
+            stable states of the development.</para></listitem>
+        <listitem><para><emphasis>Use Push and Pull</emphasis> - The push-pull workflow is based on the 
+            concept of developers “pushing” local commits upstream to the remote repository, which is 
+            usually a contribution repository.  
+            It is also based on the developers “pulling” known states of the project down into their 
+            local development repositories.  
+            This workflow easily allows you to pull changes submitted by other developers from the 
+            upstream repository into your work area ensuring that you have the most recent software 
+            on which to develop.</para></listitem>
+        <listitem><para><emphasis>Patch Workflow</emphasis> - This workflow allows you to notify the 
+            maintainer through an email that you have a change (or patch) you would like considered 
+            for the master repository.  
+            To send this type of change you format the patch and then send the email using the Git commands 
+            <filename>git format-patch</filename> and <filename>git send-email</filename>. 
+            You can find information on how to submit later in this chapter.</para></listitem>
+    </itemizedlist>
+    </para>
+</section>
+
+<section id='tracking-bugs'>
+    <title>Tracking Bugs</title>
+
+    <para>
+        The Yocto Project uses Bugzilla to track bugs.  
+        This bug-tracking application works well for group development because it tracks bugs and code 
+        changes, can be used to communicate changes and problems with developers, can be used to 
+        submit and review patches, and can be used to manage quality assurance.  
+        You can find a good overview of Bugzilla <ulink url='http://www.bugzilla.org/about/'>here</ulink>.     
+    </para>
+
+    <para>
+        Sometimes it is helpful to submit, investigate, or track a bug against the Yocto Project itself.  
+        While normally this is a process relevant only to Yocto Project developers, you can find information 
+        for Bugzilla configuration and bug tracking procedures specific to the Yocto Project 
+        <ulink url='https://wiki.yoctoproject.org/wiki/Bugzilla_Configuration_and_Bug_Tracking'>here</ulink>.     
+    </para>
+
+    <para>
+        The Yocto Project uses its own version of the Bugzilla application.  
+        You can find the home page <ulink url='http://bugzilla.yoctoproject.org'>here</ulink>.  
+        You need to use this implementation of Bugzilla when logging a defect against anything released 
+        by the Yocto Project team.     
+    </para>
+
+    <para>
+        Here are some things to remember when dealing with bugs against the Yocto Project:   
+    <itemizedlist>
+        <listitem><para>The Yocto Project follows a naming bug-naming convention: 
+            <filename>[YOCTO &lt;number&gt;]</filename>, where <filename>&lt;number&gt;</filename> is the 
+            assigned defect ID used in Bugzilla.  
+            So, for example, a valid way to refer to a defect when creating a commit comment 
+            would be <filename>[YOCTO 1011]</filename>.   
+            This convention becomes important if you are submitting patches against the Yocto Project 
+            code itself (see the next section “How to Submit a Change”).</para></listitem>
+        <listitem><para>Defects for Yocto Project fall into one of four classifications:  Yocto Projects, 
+            Infrastructure, Poky, and Yocto Metadata Layers.</para></listitem>
+    </itemizedlist>
+    </para>
+</section>
+
+<section id='how-to-submit-a-change'>
+    <title>How to Submit a Change</title>
+
+    <para>
+        During the development process it is necessary to submit your changes to the maintainer 
+        of the project.  
+        Furthermore, in a collaborative environment it is necessary to have some sort of standard 
+        or method through which you submit changes.  
+        Otherwise, things would get quite chaotic.  
+    </para>
+
+    <para>
+        Sometimes you might find it necessary to submit a change or patch to the Yocto Project.  
+        If so, you must follow certain procedures.  
+        In particular, the headers in patches and the commit messages must follow a certain standard.  
+        The general process is the same as described earlier in this section.  
+        For complete details on how to create proper commit messages and patch headers see 
+        [WRITER NOTE:  I need the link to Mark's wiki page here that describes the process.]
+    </para>
+
+    <para>
+        Following are general instructions for both pushing changes upstream and for submitting changes as patches.
+    </para>
+
+    <section id='pushing-a-change-upstream'>
+        <title>Pushing a Change Upstream</title>
+
+        <para>
+            The basic flow for pushing a change to an upstream contrib repository is as follows:
+        <itemizedlist>
+            <listitem><para>Make your changes in your local repository.</para></listitem>
+            <listitem><para>Stage your commit (or change) by using the <filename>git add</filename>
+                command.</para></listitem>
+            <listitem><para>Commit the change by using the <filename>git commit</filename>
+                command and push it to an upstream contrib repository.  
+                Be sure to provide a commit message that follows the project’s commit standards.</para></listitem>
+            <listitem><para>Notify the maintainer that you have pushed a change.</para></listitem>
+        </itemizedlist>
+            You can find detailed information on how to push a change upstream 
+            <ulink url='http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#Developing-With-git'>
+            here</ulink>.
+        </para>
+    </section>
+
+    <section id='submitting-a-patch'>
+        <title>Submitting a Patch</title>
+
+        <para>
+            If you have a just a few changes you can commit them and then submit them as an email to the maintainer.
+            Here is the general procedure:
+        <itemizedlist>
+            <listitem><para>Make your changes in your local repository.</para></listitem>
+            <listitem><para>Stage your commit (or change) by using the <filename>git add</filename>
+                command.</para></listitem>
+            <listitem><para>Commit the change by using the <filename>git commit</filename> command.  
+                Be sure to provide a commit message that follows the project’s commit standards.</para></listitem>
+            <listitem><para>Format the commit by using the <filename>git-format-patch</filename>
+                command.  
+                This step produces a numbered series of files in the current directory – one for 
+                each commit.</para></listitem>
+            <listitem><para>Import the files into your mail client by using the 
+                <filename>git-send-email</filename> command.</para></listitem>
+            <listitem><para>Send the email by hand to the maintainer.</para></listitem>
+        </itemizedlist>
+             Be aware that there could be protocols and standards that you need to follow for your particular 
+             project.
+             You can find detailed information on the general process 
+             <ulink url='http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#sharing-development'>
+             here</ulink>. 
+        </para>
+    </section>
+</section>
+
+
+
+
+
+
+
+
+
 
 
 
