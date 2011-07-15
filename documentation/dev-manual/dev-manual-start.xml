@@ -5,52 +5,146 @@
 
 <title>Getting Started with the Yocto Project</title>
 
-<section id='start-intro'>
-    <title>Introduction</title>
+<para>
+    This chapter introduces the Yocto Project and gives you an idea of what you need to get started.  
+    You can find enough information to set your development host up and build or use images for 
+    hardware supported by the Yocto Project by reading the 
+    <ulink url='http://www.yoctoproject.org/docs/yocto-quick-start/yocto-project-qs.html'>
+    Yocto Project Quick Start</ulink> located on the <ulink url='http://www.yoctoproject.org'>
+    Yocto Project website</ulink>.
+</para>
+
+<para>
+    The remainder of this chapter summarizes what is in the Yocto Project Quick Start and provides 
+    some higher level concepts you might want to consider.
+</para>
+
+<section id='introducing-the-yocto-project'>
+    <title>Introducing the Yocto Project</title>
+
     <para>
-        The Yocto Project presents the kernel as a fully patched, history-clean Git
-        repository. 
-        The Git tree represents the selected features, board support,
-        and configurations extensively tested by Yocto Project. 
-        The Yocto Project kernel allows the end user to leverage community
-        best practices to seamlessly manage the development, build and debug cycles.
+        The Yocto Project is an open-source collaboration project focused on embedded Linux developers.  
+        The project provides a recent Linux kernel along with a set of system commands, libraries, 
+        and system components suitable for the embedded developer.  
+        The Yocto Project also features the Sato reference User Interface should you be dealing with 
+        devices with restricted screens.
     </para>
+
     <para>
-        This manual describes the Yocto Project kernel by providing information
-        on its history, organization, benefits, and use.
-        The manual consists of two sections:
-        <itemizedlist>
-            <listitem><para>Concepts - Describes concepts behind the kernel.
-                You will understand how the kernel is organized and why it is organized in 
-                the way it is.  You will understand the benefits of the kernel's organization 
-                and the mechanisms used to work with the kernel and how to apply it in your 
-                design process.</para></listitem>
-            <listitem><para>Using the Kernel - Describes best practices and "how-to" information
-                that lets you put the kernel to practical use.  Some examples are "How to Build a 
-                Project Specific Tree", "How to Examine Changes in a Branch", and "Saving Kernel
-                Modifications."</para></listitem>
-        </itemizedlist>
-    </para>
-    <para>
-        For more information on the kernel, see the following links:
-        <itemizedlist>
-            <listitem><para><ulink url='http://ldn.linuxfoundation.org/book/1-a-guide-kernel-development-process'></ulink></para></listitem>
-            <listitem><para><ulink url='http://userweb.kernel.org/~akpm/stuff/tpp.txt'></ulink></para></listitem>
-            <listitem><para><ulink url='http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob_plain;f=Documentation/HOWTO;hb=HEAD'></ulink></para></listitem> 
-        </itemizedlist>
-        <para> 
-        You can find more information on Yocto Project by visiting the website at
-        <ulink url='http://www.yoctoproject.org'></ulink>.
-        </para>
+        You can use the Yocto Project, which uses the BitBake build tool, to develop complete Linux 
+        images and user-space applications for architectures based on ARM, MIPS, PowerPC, x86 and x86-64.  
+        You can perform target-level testing and debugging as well as test in a hardware emulated environment.  
+        And, if you are an Eclipse user, you can install an Eclipse Yocto Plug-in to allow you to 
+        develop within that familiar environment.
     </para>
 </section>
 
+<section id='getting-setup'>
+    <title>Getting Setup</title>
 
+    <para>
+        Here is what you need to get set up to use the Yocto Project:
+        <itemizedlist>
+            <listitem><para><emphasis>Host System:</emphasis>  You need a recent release of Fedora, 
+                OpenSUSE, Debian, or Ubuntu.  
+                You should have a reasonably current Linux-based host system.  
+                You should also have about 100 gigabytes of free disk space if you plan on building 
+                images.</para></listitem>
+            <listitem><para><emphasis>Packages:</emphasis>  Depending on your host system (Debian-based or RPM-based),
+                you need certain packages.  
+                See the <ulink url='http://www.yoctoproject.org/docs/yocto-quick-start/yocto-project-qs.html#packages'>
+                "The Packages"</ulink> section in the Yocto Project Quick start for the exact package 
+                requirements.</para></listitem>
+            <listitem><para><emphasis>Yocto Project Release:</emphasis>  You need a release of the Yocto Project.  
+                You can get set up for this one of two ways depending on whether you are going to be contributing 
+                back into the Yocto Project source repository or not.
+                <itemizedlist>
+                    <listitem><para><emphasis>Tarball Extraction:</emphasis>  If you are not going to contribute 
+                        back into the Yocto Project you can simply download the Yocto Project release you want 
+                        from the website’s <ulink url='http://yoctoproject.org/download'>download page</ulink>.
+                        Once you have the tarball, just extract it into a directory of your choice.  
+                        If you are interested in supported Board Support Packages (BSPs) you can also download 
+                        these release tarballs from the same site and locate them in a directory of your 
+                        choice.</para></listitem>
+                    <listitem><para><emphasis>Git Method:</emphasis>  If you are going to be contributing
+                        back into the Yocto Project you should probably use Git commands to set up a local 
+                        Git repository of the Yocto Project.  
+                        Doing so creates a history of changes you might make and allows you to easily submit 
+                        changes upstream to the project.  
+                        For an example of how to set up your own local Git repository of Yocto Project,
+                        see this
+                        <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>
+                        wiki page</ulink>, which covers checking out the Yocto sources.</para></listitem>
+                </itemizedlist></para></listitem>
+            <listitem><para><emphasis>Supported Board Support Packages (BSPs):</emphasis>  The same considerations 
+                exist for BSPs.  
+                You can get set up for BSP development one of two ways:
+                <itemizedlist>
+                    <listitem><para><emphasis>Tarball Extraction:</emphasis>  You can download any released 
+                        BSP tarball from the same 
+                        <ulink url='http://yoctoproject.org/download'>download site</ulink>.  
+                        Once you have the tarball just extract it into a directory of your choice.</para></listitem>
+                    <listitem><para><emphasis>Git Method:</emphasis>  For an example of how to integrate 
+                        the metadata for BSPs into your local Yocto Project Git repository see this
+                        <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>
+                        wiki page</ulink>, which covers how to check out the meta-intel repository.</para></listitem>
+                </itemizedlist></para></listitem>
+            <listitem><para><emphasis>Eclipse Yocto Plug-in:</emphasis>  If you are developing using the 
+                Eclipse Integrated Development Environment (IDE) you will need this plug-in.  
+                See the 
+                <ulink url='http://www.yoctoproject.org/docs/adt-manual/adt-manual.html#setting-up-the-eclipse-ide'>
+                "Setting up the Eclipse IDE"</ulink> section in the Yocto Application Development Toolkit (ADT) 
+                User’s Guide for more information.</para></listitem>
+        </itemizedlist>
+    </para>
+</section>
 
+<section id='building-images'>
+    <title>Building Images</title>
 
+    <para>
+        The build process creates an entire Linux distribution, including the toolchain, from source.  
+        For more information on this topic, see the 
+        <ulink url='http://www.yoctoproject.org/docs/yocto-quick-start/yocto-project-qs.html#building-image'>
+        "Building an Image"</ulink> section in the Yocto Project Quick Start.
+    </para>
 
+    <para>
+        The build process is as follows:
+        <orderedlist>
+            <listitem><para>Make sure you have the Yocto Project files as described in the 
+                previous section.</para></listitem>
+            <listitem><para>Initialize the build environment by sourcing a build environment 
+                script.</para></listitem>
+            <listitem><para>Make sure the <filename>conf/local.conf</filename> configuration file is set 
+                up how you want it.  
+                This file defines the target machine architecture and and other build configurations.</para></listitem>
+            <listitem><para>Build the image using the BitBake command.  
+                If you want information on Bitbake, see the user manual at 
+                <ulink url='http://docs.openembedded.org/bitbake/html'></ulink>.</para></listitem>
+            <listitem><para>Optionally, you can run the image in the QEMU emulator.</para></listitem>
+        </orderedlist>
+    </para>
+</section>
 
+<section id='using-pre-built-binaries-and-qemu'>
+    <title>Using Pre-Built Binaries and QEMU</title>
 
+    <para>
+        Another option you have to get started is to use a pre-built binary.  
+        This scenario is ideal for developing software applications to run on your target hardware.  
+        To do this you need to install the stand-alone Yocto toolchain tarball and then download the 
+        pre-built kernel that you will boot using the QEMU emulator.  
+        Next, you must download the filesystem for your target machine’s architecture.  
+        Finally, you set up the environment to emulate the hardware then start the emulator.
+    </para>
+
+    <para>
+        You can find details on all these steps in the 
+        <ulink url='http://www.yoctoproject.org/docs/yocto-quick-start/yocto-project-qs.html#using-pre-built'>
+        "Using Pre-Built Binaries and QEMU"</ulink> section in the Yocto Project Quick Start. 
+    </para>
+</section>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
