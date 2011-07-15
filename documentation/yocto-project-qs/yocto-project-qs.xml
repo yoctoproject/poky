@@ -102,8 +102,8 @@
     <para>
         Another important Yocto Project feature is the Sato reference User Interface. 
         This optional GNOME mobile-based UI, which is intended for devices with
-        resolution but restricted size screens, sits neatly on top of a device using the 
-        GNOME Mobile Stack providing a well-defined user experience. 
+        restricted screen sizes, sits neatly on top of a device using the 
+        GNOME Mobile Stack and provides a well-defined user experience. 
         Implemented in its own layer, it makes it clear to developers how they can implement 
         their own UIs on top of Yocto Linux.
     </para>
@@ -119,7 +119,7 @@
     <itemizedlist>
         <listitem>
             <para>A host system running a supported Linux distribution (i.e. recent releases of
-                Fedora, OpenSUSE, Debian, and Ubuntu).
+                Fedora, openSUSE, Debian, and Ubuntu).
             <note>
                 For notes about using the Yocto Project on development systems that use 
                 older Linux distributions see 
@@ -145,7 +145,7 @@
             <itemizedlist>
                 <listitem><para>Ubuntu</para></listitem>
                 <listitem><para>Fedora</para></listitem>
-                <listitem><para>OpenSuse</para></listitem>
+                <listitem><para>openSUSE</para></listitem>
             </itemizedlist>
             </para>
         <para>
@@ -196,7 +196,7 @@
             </literallayout>
 
         <para>
-            The packages you need for an RPM-based host like Fedora and OpenSUSE, 
+            The packages you need for an RPM-based host like Fedora and openSUSE, 
             respectively, are as follows:
         </para>
 
@@ -471,15 +471,19 @@
          </para>
        
          <para>  
-             Most kernel files have the following form:
+             Most kernel files have one of the following forms:
          </para>
 
          <literallayout class='monospaced'>
-     *zImage*qemu&lt;<emphasis>arch</emphasis>&gt;*.bin
+     *zImage-&lt;<emphasis>kernel-rev</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;*.bin
+     vmlinux-&lt;<emphasis>kernel-rev</emphasis>&gt;-&lt;<emphasis>arch</emphasis>&gt;*.bin
 
      Where:
          &lt;<emphasis>arch</emphasis>&gt; is a string representing the target architecture: 
                 x86, x86-64, ppc, mips, or arm.
+
+         &lt;<emphasis>kernel-rev</emphasis>&gt; is the base Linux kernel revision 
+                (e.g. 2.6.37).
          </literallayout>
          </section>
 
@@ -493,7 +497,7 @@
          </para>
 
           <literallayout class='monospaced'>
-     yocto-image-&lt;<emphasis>profile</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;.rootfs.ext3
+     yocto-image-&lt;<emphasis>profile</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;.rootfs.ext3.bz2
      yocto-image-&lt;<emphasis>profile</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;.rootfs.tar.bz2
 
      Where:
@@ -542,13 +546,15 @@
 
          <para>
              Continuing with the example, the following two commands setup the emulation 
-             environment and launch QEMU.  
-             The kernel and filesystem are for a 32-bit target architecture.
+             environment and launch QEMU.
+             This example assumes the root filesystem tarball has been downloaded and expanded, and 
+             that the kernel and filesystem are for a 32-bit target architecture.
          </para>
 
          <literallayout class='monospaced'>
-     $ source /opt/poky/environment-setup-i686-poky-linux 
-     $ poky-qemu qemux86 zImage-2.6.34-qemux86-1.0.bin yocto-image-sdk-qemux86-1.0.rootfs.ext3
+     $ source /opt/poky/1.0/environment-setup-i686-poky-linux 
+     $ poky-qemu qemux86 bzImage-2.6.37-qemux86-1.0.bin \
+     yocto-image-sato-qemux86-1.0.rootfs.ext3
          </literallayout>
 
          <para>
