@@ -6,7 +6,7 @@ KMACHINE_beagleboard = "yocto/standard/beagleboard"
 SRCREV_machine_emenlow = "398d5adac19cb411cd80753e177769f6a666a7e7"
 SRCREV_machine_atom-pc = "fce17f046d3756045e4dfb49221d1cf60fcae329"
 SRCREV_machine_routerstationpro = "8f84c1aec0907766ab6d6ac79fcc3b7b9ce79b70"
-SRCREV_machine_mpc8315e-rdb = "2c54835ac49cd8abaf294009a00ccc516daa31cd"
+SRCREV_machine_mpc8315e-rdb = "bda049366dad5fc3c7ba229cd4633992581e7a1f"
 SRCREV_machine_beagleboard = "3ddb22772862a8223640fa97580569924f51bddc"
 
 COMPATIBLE_MACHINE_mpc8315e-rdb = "mpc8315e-rdb"
