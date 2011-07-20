@@ -58,8 +58,14 @@
         <para>
             Here are the basic steps involved in creating a BSP:
             <orderedlist>
-                <listitem><para>Be sure you are set up to use Yocto Project (see 
-                    <xref linkend='dev-manual-start'>Getting Started with the Yocto Project</xref>).</para></listitem>
+                <listitem><para>Be sure your host development system is set up to support 
+                    development using the Yocto Project. 
+                    See  
+                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>
+                    The Linux Distributions</ulink> section and  
+                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>
+                    The Packages</ulink> section both
+                    in the Yocto Project Quick Start for requirements.</para></listitem>
                 <listitem><para>Choose a BSP available with Yocto Project that most closely represents 
                     your hardware.</para></listitem>
                 <listitem><para>Get set up with a base BSP.</para></listitem>
@@ -85,19 +91,10 @@
             <title>Setting Up Yocto Project</title>
 
             <para>
-               For general host development system preparation such as package requirements and 
-               operating system requirements, see 
-               <xref linkend='dev-manual-start'>Getting Started with the Yocto Project</xref>)Chapter 2 of 
-               this manual or the 
-               <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html'>
-               Yocto Project Quick Start</ulink>.
-            </para>
-
-            <para>
                 You need to have the Yocto Project source tree available on your host system.  
-                You can get that through tarball extraction or by initializing and checking out the 
-                Yocto Project Git repository.  
-                Typically, checking out the Git repository is the method to use.  
+                You can get that through tarball extraction or by cloning the <filename>poky</filename>
+                Git repository.  
+                Typically, cloning the Git repository is the method to use.  
                 This allows you to maintain a complete history of changes and facilitates you 
                 contributing back to the Yocto Project.  
                 However, if you just want the source you can download the Yocto Project Release 
@@ -105,68 +102,48 @@
                 <ulink url='http://yoctoproject.org/download'>download page</ulink>.  
                 If you download the tarball you can extract it into any directory you want using the 
                 tar command.  
-                For example, the following commands extract the 1.0.1 release tarball into 
-                <filename>/usr/local/yocto</filename> with the Yocto Project source directory as 
-                <filename>poky.bernard.5.0.1.tar.bz2</filename>:
+                For example, the following command extracts the Yocto Project 1.0.1 release tarball 
+                (bernard 5.0.1) into 
+                the current working directory and sets up a Yocto Project source directory named 
+                <filename>bernard.5.0.1</filename>:
                 <literallayout class='monospaced'>
-     /usr/local/yocto$ tar xfj poky.bernard.5.0.1.tar.bz2
+     $ tar xfj poky.bernard.5.0.1.tar.bz2
                 </literallayout>
             </para>
 
             <para>
-                The following transcript shows how to initialize a Git repository and checkout the 
-                Yocto Project source tree:
+                The following transcript shows how to clone the <filename>poky</filename> Git repository
+                into the current working directory.  
+                The command creates the Git repository in a directory named <filename>poky</filename>:
                 <literallayout class='monospaced'>
-     /usr/local/yocto$ git init
-     Initialized empty Git repository in /usr/local/yocto/.git
-     /usr/local/yocto$ git remote add poky git://git.yoctoproject.org/poky.git
-     /usr/local/yocto$ git remote update
-     Fetching poky
-     remote: Counting objects: 106111, done.
-     remote: Compressing objects: 100% (36106/36106), done.
-     remote: Total 106111 (delta 72275), reused 99193 (delta 66808)
-     Receiving objects: 100% (106111/106111), 69.51 MiB | 518 KiB/s, done.
-     Resolving deltas: 100% (72275/72275), done.
-     From git://git.yoctoproject.org/poky
-      * [new branch]      1.1_M1     -> poky/1.1_M1
-      * [new branch]      1.1_M2     -> poky/1.1_M2
-      * [new branch]      bernard    -> poky/bernard
-      * [new branch]      blinky     -> poky/blinky
-      * [new branch]      clyde      -> poky/clyde
-      * [new branch]      elroy      -> poky/elroy
-      * [new branch]      green      -> poky/green
-      * [new branch]      laverne    -> poky/laverne
-      * [new branch]      master     -> poky/master
-      * [new branch]      pinky      -> poky/pinky
-      * [new branch]      purple     -> poky/purple
-      * [new tag]         1.1_M1.final -> 1.1_M1.final
-      * [new tag]         1.1_M2.rc1 -> 1.1_M2.rc1
-      * [new tag]         bernard-5.0.1 -> bernard-5.0.1
-      * [new tag]         pinky-3.1.2 -> pinky-3.1.2
-     From git://git.yoctoproject.org/poky
-      * [new tag]         1.1_M1.rc1 -> 1.1_M1.rc1
-      * [new tag]         1.1_M1.rc2 -> 1.1_M1.rc2
-      * [new tag]         bernard-1.0rc1 -> bernard-1.0rc1
-      * [new tag]         bernard-5.0 -> bernard-5.0
-      * [new tag]         bernard-5.0-alpha -> bernard-5.0-alpha
-      * [new tag]         bernard-5.0rc1 -> bernard-5.0rc1
-      * [new tag]         bernard-5.0rc2 -> bernard-5.0rc2
-      * [new tag]         laverne-4.0 -> laverne-4.0
-      * [new tag]         laverne-4.0.1 -> laverne-4.0.1
-      * [new tag]         m4         -> m4
-      * [new tag]         purple-3.2 -> purple-3.2
-      * [new tag]         purple-3.2.1 -> purple-3.2.1
+     $ git clone git://git.yoctoproject.org/poky
+     Initialized empty Git repository in /home/scottrif/poky/.git/
+     remote: Counting objects: 107624, done.
+     remote: Compressing objects: 100% (37128/37128), done.
+     remote: Total 107624 (delta 73393), reused 99851 (delta 67287)
+     Receiving objects: 100% (107624/107624), 69.74 MiB | 483 KiB/s, done.
+     Resolving deltas: 100% (73393/73393), done.
                 </literallayout>
             </para>
 
             <para>
-                Once you have the repository set up, you have many development branches from which 
-                you can work.  
+                Once you have the repository set up you have many development branches from which 
+                you can work. 
+                From inside the repository you can see the branch names and the tag names used 
+                in the Git repository using either of the following two commands:
+                <literallayout class='monospaced'>
+     $ git branch -a
+     $ git tag -l
+                </literallayout> 
                 For this example we are going to use the Yocto Project 1.0.1 Release, 
-                which maps to the <filename>Bernard 5.0.1</filename> tag in Git. 
+                which maps to the <filename>bernard</filename> branch in the repository. 
+                These commands create a local branch named <filename>bernard</filename>
+                that tracks the remote branch of the same name.
                 <literallayout class='monospaced'>
-     /usr/local/yocto$ git checkout -b Bernard-5.0.1 bernard-5.0.1
-     Switched to a new branch 'bernard-5.0.1'
+     
+     $ cd poky
+     $ git checkout -b bernard
+     Switched to a new branch 'bernard'
                 </literallayout>
             </para>
         </section>
@@ -211,58 +188,53 @@
             </para>
 
             <para>
-               If you are using tarball extraction then simply download the tarball for the base 
-               BSP you chose in the previous step and then extract it into any directory 
-               you choose using the tar command.  
-               Upon extraction, the BSP source directory (layer) will be named 
-               <filename>meta-&lt;BSP_name&gt;</filename>.  
-               The following command extracts the Crown Bay BSP into a directory named 
-               <filename>meta-crownbay</filename>:
+                If you are using tarball extraction then simply download the tarball for the base 
+                BSP you chose in the previous step and then extract it into any directory 
+                you choose using the tar command.  
+                Upon extraction, the BSP source directory (layer) will be named 
+                <filename>meta-&lt;BSP_name&gt;</filename>.  
+                The following command extracts the Crown Bay BSP into the current directory and names it 
+                <filename>meta-crownbay</filename>:
                 <literallayout class='monospaced'>
-     /usr/local$ tar xjf crownbay-noemgd-bernard-5.0.1.tar.bz2
+     $ tar xjf crownbay-noemgd-bernard-5.0.1.tar.bz2
                 </literallayout>
             </para>
 
             <para>
-               If you initialized a Yocto Project Git repository then you need to do the same for the 
-               BSP, which is located in the meta-intel Git repository.  
-               The meta-intel repository contains all the metadata that supports BSP creation.  
+                If you cloned a Yocto Project Git repository (<filename>poky</filename>)
+                then you need to do the same for the 
+                BSP, which is located in the <filename>meta-intel</filename> Git repository.  
+                The <filename>meta-intel</filename> repository contains all the metadata 
+                that supports BSP creation.  
             </para>
 
             <para>
-               The following transcript shows the steps to create and set up the meta-intel Git 
-               repository inside the Yocto Project Git repository:
+                The following transcript shows the steps to clone the <filename>meta-intel</filename>
+                Git repository inside the <filename>poky</filename> Git repository created earlier in this 
+                example.
+                While this example establishes the <filename>meta-intel</filename> Git repository inside
+                the <filename>poky</filename> Git repository, you are not required to have 
+                <filename>meta-intel</filename> inside of <filename>poky</filename>:
                 <literallayout class='monospaced'>
-     /usr/local/yocto$ mkdir meta-intel
-     /usr/local/yocto$ cd meta-intel
-     /usr/local/yocto/meta-intel$ git init
-     Initialized empty Git repository in /usr/local/yocto/meta-intel/.git/
-     /usr/local/yocto/meta-intel$ git remote add meta-intel \ git://git.yoctoproject.org/meta-intel.git
-     /usr/local/yocto/meta-intel$ git remote update
-     Fetching meta-intel
-     remote: Counting objects: 1240, done.
-     remote: Compressing objects: 100% (1008/1008), done.
-     remote: Total 1240 (delta 513), reused 85 (delta 27)
-     Receiving objects: 100% (1240/1240), 1.55 MiB | 510 KiB/s, done.
-     Resolving deltas: 100% (513/513), done.
-     From git://git.yoctoproject.org/meta-intel
-      * [new branch]      1.1_M1     -> meta-intel/1.1_M1
-      * [new branch]      1.1_M2     -> meta-intel/1.1_M2
-      * [new branch]      bernard    -> meta-intel/bernard
-      * [new branch]      dvhart/n450 -> meta-intel/dvhart/n450
-      * [new branch]      laverne    -> meta-intel/laverne
-      * [new branch]      master     -> meta-intel/master
+     $cd poky
+     $ git clone git://git.yoctoproject.org/meta-intel.git
+     Initialized empty Git repository in /home/scottrif/poky/meta-intel/.git/
+     remote: Counting objects: 1325, done.
+     remote: Compressing objects: 100% (1078/1078), done.
+     remote: Total 1325 (delta 546), reused 85 (delta 27)
+     Receiving objects: 100% (1325/1325), 1.56 MiB | 330 KiB/s, done.
+     Resolving deltas: 100% (546/546), done.
                 </literallayout>
             </para>
 
             <para>
-               Once you have the repository set up, you have many development branches from 
-               which you can work.  
-               For this example we are going to use Bernard 5.0. 
+                Because <filename>meta-intel</filename> is its own Git repository you will want
+                to be sure you are in the appropriate branch for your work.
+                For this example we are going to use the <filename>bernard</filename> branch. 
                 <literallayout class='monospaced'>
-     /usr/local/yocto/meta-intel$ git checkout -b Bernard-5.0.1 meta-intel/bernard
-     Branch Bernard-5.0.1 set up to track remote branch bernard from meta-intel.
-     Switched to a new branch 'bernard-5.0.1'
+     $ cd meta-intel
+     $ git checkout -b bernard
+     Switched to a new branch 'bernard'
                 </literallayout>
             </para>
         </section>
@@ -271,20 +243,20 @@
             <title>Making a Copy of the Base BSP to Create Your New BSP Layer</title>
 
             <para>
-               Now that you have the Yocto Project and base BSP source you need to create a 
-               new layer for your BSP.
+                Now that you have the Yocto Project and base BSP source you need to create a 
+                new layer for your BSP.
             </para>
 
             <para>
-               Layers are ideal for isolating and storing work for a given piece of hardware.  
-               A layer is really just a location or area in which you place the recipes for your BSP.  
-               In fact, a BSP is, in itself, a special type of layer.   
-               Consider an application as another example that illustrates a layer.  
-               Suppose you are creating an application that has library or other dependencies in 
-               order for it to compile and run.  
-               The layer, in this case, would be where all the recipes that define those dependencies 
-               are kept.  The key point for a layer is that it is an isolated area that contains 
-               all the relevant information for the project that the Yocto Project build system knows about.
+                Layers are ideal for isolating and storing work for a given piece of hardware.  
+                A layer is really just a location or area in which you place the recipes for your BSP.  
+                In fact, a BSP is, in itself, a special type of layer.   
+                Consider an application as another example that illustrates a layer.  
+                Suppose you are creating an application that has library or other dependencies in 
+                order for it to compile and run.  
+                The layer, in this case, would be where all the recipes that define those dependencies 
+                are kept.  The key point for a layer is that it is an isolated area that contains 
+                all the relevant information for the project that the Yocto Project build system knows about.
             </para>
 
             <note>
@@ -312,7 +284,8 @@
                 In the standard layout you will notice a suggested hierarchy for BSP kernel recipes, 
                 graphics recipes, and configuration information.  
                 You can see the standard layout for the Crown Bay BSP in this example by examining the 
-                directory structure of <filename>meta-crownbay</filename>.
+                directory structure of the <filename>meta-crownbay</filename> layer inside the 
+                <filename>meta-intel</filename> Git repository.
             </para>
 
             <para>
@@ -321,11 +294,12 @@
                 For this example the new layer is named <filename>meta-mymachine</filename>.  
                 The name must follow the BSP layer naming convention, which is 
                 <filename>meta-&lt;name&gt;</filename>.  
-                The following example assumes a meta-intel Git repository.  
+                The following example assumes your working directory is <filename>meta-intel</filename> 
+                inside the <filename>meta-intel</filename> Git repository.  
                 If you downloaded and expanded a Crown Bay tarball then you simply copy the resulting 
                 <filename>meta-crownbay</filename> directory structure to a location of your choice:
                 <literallayout class='monospaced'>
-     /usr/local/yocto/meta-intel$ cp -a meta-crownbay/ meta-mymachine 
+     $ cp -a meta-crownbay/ meta-mymachine 
                 </literallayout>
             </para>
         </section>
@@ -351,8 +325,8 @@
                 The following two commands result in a single machine configuration file named 
                 <filename>mymachine.conf</filename>.  
                 <literallayout class='monospaced'>
-     /usr/local/yocto/meta-intel$ rm meta-mymachine/conf/machine/crownbay.conf
-     /usr/local/yocto/meta-intel$ mv meta-mymachine/conf/machine/crownbay-noemgd.conf \
+     $ rm meta-mymachine/conf/machine/crownbay.conf
+     $ mv meta-mymachine/conf/machine/crownbay-noemgd.conf \
      meta-mymachine/conf/machine/mymachine.conf
                 </literallayout>
             </para>
@@ -373,9 +347,9 @@
                 statements we need to know which kernel we are using.  
                 The <filename>PREFERRED_PROVIDER_virtual/kernel</filename> statement in the file specifies 
                 the kernel we are going to use.  
-                We are going to use <filename>linux-yocto-stable</filename>.  
+                We are going to use <filename>linux-yocto</filename>.  
                 The <filename>SRCREV</filename> statement pairs point to the exact machine branch 
-                (commit) and <filename>meta</filename> branch in the Git repository.   
+                (commit) and <filename>meta</filename> branch in the <filename>poky</filename> Git repository.   
                 Right now the <filename>SRCREV</filename> variables are as follows in
                 <filename>mymachine.conf</filename>:
                 <literallayout class='monospaced'>
@@ -486,10 +460,8 @@
                 the remaining one that supports no EMGD.  
                 These commands take care of the new layer’s BSP recipes:
                 <literallayout class='monospaced'>
-     /usr/local/yocto/meta-intel$ rm -rf \
-     meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay
-     /usr/local/yocto/meta-intel$ mv \
-     meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay-noemgd/ \
+     $ rm -rf meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay
+     $ mv meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay-noemgd/ \
      meta-mymachine/recipes-bsp/formfactor/formfactor/mymachine
                 </literallayout>
             </para>
@@ -498,8 +470,7 @@
                 For this example we want to remove anything that supports EMGD.  
                 The following command cleans up the <filename>recipes-graphics</filename> directory:
                 <literallayout class='monospaced'>
-     /usr/local/yocto/meta-intel$ rm –rf \
-     meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-emgd*
+     $ rm –rf meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-emgd*
                 </literallayout>
             </para>
 
@@ -509,8 +480,7 @@
                 However, we still need to rename a directory in the layer.  
                 This command applies the final change to the <filename>recipes-graphics</filename> directory:
                 <literallayout class='monospaced'>
-     /usr/local/yocto/meta-intel$ mv \
-     meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay-noemgd \
+     $ mv meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay-noemgd \
      meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/mymachine
                 </literallayout>
             </para>
@@ -522,11 +492,9 @@
                 The other files all support the EMGD feature of Crown Bay.  
                 These commands clean up the directory:
                 <literallayout class='monospaced'>
-     /usr/local/yocto/meta-intel$ rm –rf meta-mymachine/recipes-kernel/linux/linux-yocto
-     /usr/local/yocto/meta-intel$ rm –rf \
-     meta-mymachine/recipes-kernel/linux/linux-yocto-stable
-     /usr/local/yocto/meta-intel$ rm \
-     meta-mymachine/recipes-kernel/linux/linux-yocto_git.bbappend
+     $ rm –rf meta-mymachine/recipes-kernel/linux/linux-yocto
+     $ rm –rf meta-mymachine/recipes-kernel/linux/linux-yocto-stable
+     $ rm meta-mymachine/recipes-kernel/linux/linux-yocto_git.bbappend
                 </literallayout>
             </para>
 
@@ -595,18 +563,20 @@
                <orderedlist>
                    <listitem><para>Get the environment ready for the build by sourcing the environment 
                        script. 
-                       The environment script is in the Yocto Project source directory and has the string 
+                       The environment script is in the Yocto Project source directory 
+                       (<filename>poky</filename> in this example) and has the string 
                        <filename>init-build-env</filename> in the file’s name.  
                        For this example, the following command gets the build environment ready:                       
                        <literallayout class='monospaced'>
-     /usr/local/yocto$ source oe-init-build-env yocto-build
+     $ source oe-init-build-env yocto-build
                        </literallayout>
                        When you source the script a build directory is created in the current 
                        working directory.  
                        In our example we were in the Yocto Project source directory.  
                        Thus, entering the previous command created the <filename>yocto-build</filename> directory.  
-                       If you do not provide a name for the build directory it defaults to build.  
-                       The build directory contains a <filename>conf</filename> directory that contains 
+                       If you do not provide a name for the build directory it defaults to 
+                       <filename>build</filename>.  
+                       The <filename>build</filename> directory contains a <filename>conf</filename> directory that has 
                        two configuration files you will need to check:  <filename>bblayers.conf</filename>
                        and <filename>local.conf</filename>.</para></listitem>
                    <listitem><para>Check and edit the resulting <filename>local.conf</filename> file.
@@ -625,11 +595,10 @@
                    <listitem><para>Update the <filename>bblayers.conf</filename> file so that it includes 
                        the path to your new BSP layer.  
                        In this example you need to include the pathname to <filename>meta-mymachine</filename>.
-                       For example, if you created a Yocto Project Git repository named 
-                       <filename>yocto</filename> in <filename>/usr/local</filename> then the 
+                       For this example the 
                        <filename>BBLAYERS</filename> variable in the file would need to include the following path:
                        <literallayout class='monospaced'>
-     /usr/local/yocto/meta-intel/meta-mymachine
+     $HOME/poky/meta-intel/meta-mymachine
                        </literallayout></para></listitem>
                </orderedlist>
             </para>
@@ -661,7 +630,7 @@
             <para>
                 You can find these recipes in the <filename>meta/recipes-core/images</filename> and 
                 <filename>meta/recipes-sato/images</filename> directories of the Yocto Project source 
-                tree or Git repository.  
+                tree (the <filename>poky</filename> Git repository in this example).  
                 Although the recipe names are somewhat explanatory, here is a list that describes them:
                 <itemizedlist>
                     <listitem><para><emphasis>Base</emphasis> – A foundational basic image without support 
@@ -709,7 +678,7 @@
                 For example, moving your working directory around could cause problems.  
                 Here is the command for this example:
                 <literallayout class='monospaced'>
-/usr/local/yocto/yocto-build$ bitbake –k poky-image-sato-live
+     $ bitbake –k poky-image-sato-live
                 </literallayout>
             </para>
 
@@ -806,48 +775,50 @@
             </para>
         </section>
 
-        <section id='modifying-a-kernel'>
-            <title>Modifying a Kernel</title>
+        <section id='modifying-a-kernel-example'>
+            <title>Modifying a Kernel Example</title>
 
             <para>
                 The remainder of this section presents a simple example that modifies a kernel.
                 For the purpose of this example we are going to base our new kernel on the current
                 Linux Yocto 2.6.37 release.
+            </para>
                 
             
 
 
 
 
-        <para>
-            [WRITER'S NOTE:  This section is a second example that focuses on just modifying the kernel.
-            I don't have any information on this yet.
-        </para>
+            <para>
+                [WRITER'S NOTE:  This section is a second example that focuses on just modifying the kernel.
+                I don't have any information on this yet.
+            </para>
 
-        <para>
-            Here are some points to consider though:
-            <itemizedlist>
-                <listitem><para>Reference Darren's presentation 
-                    <ulink url='http://events.linuxfoundation.org/events/embedded-linux-conference/hart'>
-                    here</ulink></para></listitem>
-                <listitem><para>Reference <xref linkend='dev-manual-start'>Getting Started with the Yocto Project</xref>
-                    section to get set up at minimum.</para></listitem>
-                <listitem><para>Are there extra steps I need specific to kernel development to get started?</para></listitem>
-                <listitem><para>What do I do to get set up?  
-                    Is it a matter of just installing YP and having some pieces together?  
-                    What are the pieces?</para></listitem>
-                <listitem><para>Where do I get the base kernel to start with?</para></listitem>
-                <listitem><para>Do I install the appropriate toolchain?</para></listitem>
-                <listitem><para>What kernel git repository do I use?</para></listitem>
-                <listitem><para>What is the conversion script?  
-                    What does it do?</para></listitem>
-                <listitem><para>What do I have to do to integrate the kernel layer?</para></listitem>
-                <listitem><para>What do I use to integrate the kernel layer?  
-                    HOB? 
-                    Do I just Bitbake it?</para></listitem>
-                <listitem><para>Using the System Image Creator.]</para></listitem>
-            </itemizedlist>
-        </para>
+            <para>
+                Here are some points to consider though:
+                <itemizedlist>
+                    <listitem><para>Reference Darren's presentation 
+                        <ulink url='http://events.linuxfoundation.org/events/embedded-linux-conference/hart'>
+                        here</ulink></para></listitem>
+                    <listitem><para>Reference <xref linkend='dev-manual-start'>Getting Started with the Yocto Project</xref>
+                        section to get set up at minimum.</para></listitem>
+                    <listitem><para>Are there extra steps I need specific to kernel development to get started?</para></listitem>
+                    <listitem><para>What do I do to get set up?  
+                        Is it a matter of just installing YP and having some pieces together?  
+                        What are the pieces?</para></listitem>
+                    <listitem><para>Where do I get the base kernel to start with?</para></listitem>
+                    <listitem><para>Do I install the appropriate toolchain?</para></listitem>
+                    <listitem><para>What kernel git repository do I use?</para></listitem>
+                    <listitem><para>What is the conversion script?  
+                        What does it do?</para></listitem>
+                    <listitem><para>What do I have to do to integrate the kernel layer?</para></listitem>
+                    <listitem><para>What do I use to integrate the kernel layer?  
+                        HOB? 
+                        Do I just Bitbake it?</para></listitem>
+                    <listitem><para>Using the System Image Creator.]</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
     </section>
 </section>
 
@@ -861,7 +832,8 @@
             <listitem><para>User-space Application Development scenario overview.</para></listitem>
             <listitem><para>Using the Yocto Eclipse Plug-in.</para></listitem>
             <listitem><para>Back-door support.</para></listitem>
-            <listitem><para>I feel there is more to this area than we have captured during our two review meetings.]</para></listitem>
+            <listitem><para>I feel there is more to this area than we have captured during our two 
+                review meetings.]</para></listitem>
         </itemizedlist>
     </para>
 </section>
