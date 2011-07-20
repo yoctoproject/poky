@@ -728,6 +728,98 @@
         <title>Modifying a Kernel</title>
 
         <para>
+            Kernel modification involves changing or adding configurations to an existing kernel, or 
+            adding recipes to the kernel that are needed to support specific hardware features.  
+            The process is similar to creating a Board Support Package (BSP) except that it does not
+            involve a BSP layer.
+        </para>
+
+        <para>
+            This section presents a brief overview of the kernel structure and then provides a simple 
+            example that shows how to modify the kernel.
+        </para>
+
+        <section id='yocto-project-kernel-overview'>
+            <title>Yocto Project Kernel Overview</title>
+
+            <para>
+                When one thinks of the source files for a kernel they usually think of a fixed structure 
+                of files that contain kernel patches.
+                The Yocto Project, however, employs mechanisims that in a sense result in a kernel source
+                generator.
+            </para>
+
+            <para>
+                The Yocto Project uses the source code management (SCM) tool Git to manage and track Yocto 
+                Project files.
+                Git employs branching strategies that effectively produce a tree-like structure whose 
+                branches represent diversions from more general code. 
+                For example, suppose two kernels are basically identical with the exception of a couple
+                different features in each.
+                In the Yocto Project kernel Git repository a main branch can contain the common or shared
+                parts of the kernel source and two branches that diverge from that common branch can 
+                each contain the features specific to the respective kernel.
+                The result is a tree whose "leaves" represent the end of a specific path that yields
+                a set of kernel source files necessary for a specific piece of hardware and its features.
+            </para>
+         
+            <para>
+                A big advantage to this scheme is the sharing of common features by keeping them in 
+                "larger" branches that are further up the tree.  
+                This practice eliminates redundant storage of similar features shared among kernels.
+            </para>
+
+            <para>
+                When you build the kernel on your development system all files needed for the build
+                are taken from the local tree (the Git repository) and gathered in a temporary work area
+                where they are subsequently used to create the unique kernel.
+                Thus, in a sense, the process uses a local, all-inclusive source tree to generate 
+                (or choose) the specific kernel source files you need for the build - a source 
+                generator if you will.
+            </para>
+
+            <para>
+                For a complete discussion of the Yocto Project kernel's architcture and its branching strategy,
+                see the <ulink url='http://www.yoctoproject.org/docs/1.1/kernel-manual/kernel-manual.html'>
+                The Yocto Project Kernel Architecture and Use Manual</ulink>.
+            </para>
+
+            <para>  
+                You can find a web interface to the Yocto Project source repository at 
+                <ulink url='http://git.yoctoproject.org/'></ulink>.  
+                Within the interface you will see groups of related source code, each of which can 
+                be cloned using Git to result in a working Git repository on your local system.
+                The Yocto Project supports four types of kernels in its source repositories at 
+                <ulink url='http://git.yoctoproject.org/'></ulink>:
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>linux-yocto-2.6.34</filename></emphasis> - The 
+                    stable Linux Yocto kernel that is based on the Linux 2.6.34 release.</para></listitem>
+                    <listitem><para><emphasis><filename>linux-yocto-2.6.37</filename></emphasis> - The current
+                    Linux Yocto kernel that is based on the Linux 2.6.37 release.</para></listitem>
+                    <listitem><para><emphasis><filename>linux-yocto-dev</filename></emphasis> - A development
+                    kernel based on the Linux 2.6.39-rc1 release.</para></listitem>
+                    <listitem><para><emphasis><filename>linux-2.6</filename></emphasis> - A kernel based on 
+                    minimal Linux mainline tracking.
+                    [WRITER'S NOTE: I don't know which Git repository the user needs to clone to get this
+                    repository on their development system.]</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='modifying-a-kernel'>
+            <title>Modifying a Kernel</title>
+
+            <para>
+                The remainder of this section presents a simple example that modifies a kernel.
+                For the purpose of this example we are going to base our new kernel on the current
+                Linux Yocto 2.6.37 release.
+                
+            
+
+
+
+
+        <para>
             [WRITER'S NOTE:  This section is a second example that focuses on just modifying the kernel.
             I don't have any information on this yet.
         </para>
