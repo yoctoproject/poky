@@ -10,7 +10,7 @@
     Working in this type of environment is different than working in a closed, proprietary environment.  
     The chapter also presents information specific to the Yocto Project environment.  
     It specifically addresses licensing issues, code repositories, the open-source distributed version control 
-    system Git, and best practices within Yocto Project.
+    system Git, and best practices using Yocto Project.
 </para>
 
 <note><para>
@@ -59,13 +59,27 @@
 </section>
 
 <section id='yocto-project-repositories'>
-    <title>Yocto Project Repositories</title>
+    <title>Yocto Project Source Repositories</title>
 
     <para>
-        The Yocto Project team maintains complete source repositories that allow further development 
-        of Yocto Project, its tools, Board Support Packages, and so forth.  
-        As a developer who uses Yocto Project, however, you need only to be able to access your 
-        kernel or application source code and any layers (modifications) on which you might be working.  
+        The Yocto Project team maintains complete source repositories for all Yocto Project files 
+        <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>here</ulink>.
+        This web-interface of the source is organized into categories by function such as
+        IDE Plugins, Matchbox, Poky, Yocto Linux Kernel, and so forth.
+        From the interface, you can click on any particular item in the "Name" column and 
+        see the URL at the bottom of the page that you need to set up a Git repository for 
+        that particular item.
+        The ability to create Git repositories of the Yocto Project source allows you to 
+        make changes, contribute to the history, and ultimately enhance the Yocto Project's 
+        tools, Board Support Packages, and so forth.
+    </para>
+
+    <para>  
+        Conversely, if you are a developer that is not interested in contributing back to the 
+        Yocto Project you have the ability to simply download and extract release tarballs
+        and use them within the Yocto Project environment.
+        All that is required is a particular release of Yocto Project, a kernel, and 
+        your application source code.  
     </para>
 
     <para>
@@ -73,31 +87,36 @@
         <ulink url='http://www.yoctoproject.org/download'>download page</ulink> and get a 
         <filename>.bz2</filename> tarball of the release.  
         You can also go to this site to download any supported BSP tarballs.
+        Unpacking the tarball gives you a hierarchical directory structure of Yocto Project 
+        files that lets you develop using the Yocto Project.
     </para>
 
     <para>
-        After obtaining the code, you can unpack the tarballs and have a working Git repository 
-        from which you can develop.  
-        Or, you can take steps to create local repositories of Yocto Project source code and metadata on 
-        your development system.  
-        See the information 
-        <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>here</ulink>
-        for information on how to set up these local Git repositories.
+        Once you are set up through either tarball extraction or creation of Git repositories, 
+        you are ready to develop.
     </para>
 
-    <note><para>
-        Should you be interested in locations of complete Yocto Project development code, there are 
-        two areas where this code is maintained:
-    <itemizedlist>
-        <listitem><para><emphasis><ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>Source Repositories:</ulink></emphasis>
-            This area contains IDE Plugins, Matchbox, Poky, Poky Support, Tools, Yocto Linux Kernel, and Yocto 
-            Metadata Layers.</para></listitem>
-        <listitem><para><emphasis><ulink url='http://autobuilder.yoctoproject.org/downloads/'>Index of /downloads:</ulink></emphasis>
-            This area contains an index of the Eclipse-plugin, miscellaneous support, poky, pseudo, and 
-            all released versions of Yocto Project. 
-            [WRITER NOTE: link will be http://downloads.yoctoproject.org.]</para></listitem>
-    </itemizedlist>
-    </para></note>
+    <para>
+        In summary, here is where you can get the Yocto Project files needed for development:
+        <itemizedlist>
+            <listitem><para><emphasis><ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>Source Repositories:</ulink></emphasis>
+                This area contains IDE Plugins, Matchbox, Poky, Poky Support, Tools, Yocto Linux Kernel, and Yocto 
+                Metadata Layers.
+                You can create Git repositories for each of these areas.</para></listitem>
+            <listitem><para><emphasis><ulink url='http://autobuilder.yoctoproject.org/downloads/'>Index of /downloads:</ulink></emphasis>
+                This area contains an index of the Eclipse-plugin, miscellaneous support, poky, pseudo, and 
+                all released versions of Yocto Project in the form of images or tarballs.
+                Downloading and extracting these files does not produce a Git repository but rather 
+                a snapshot of a particular release or image. 
+                [WRITER NOTE: link will be http://downloads.yoctoproject.org.]</para></listitem>
+            <listitem><para><emphasis><ulink url='http://www.yoctoproject.org/download'>Yocto Project Download Page</ulink></emphasis>
+                This page on the Yocto Project website allows you to download any Yocto Project
+                release of Board Support Package (BSP) in tarball form.
+                The tarballs are similar to those found in the 
+                <ulink url='http://autobuilder.yoctoproject.org/downloads/'>Index of /downloads:</ulink> area.
+            </para></listitem>
+        </itemizedlist>
+    </para>
 </section>
 
 <section id='licensing'>
@@ -130,12 +149,12 @@
     </para>
 
     <para>
-        When you build an image using Yocto Project the build process uses a known list of licenses to 
+        When you build an image using Yocto Project, the build process uses a known list of licenses to 
         ensure compliance.  
-        Once the build completes the list of all licenses found and used during the build are 
+        Once the build completes, the list of all licenses found and used during the build are 
         kept in the resulting build directory at 
         <filename>&lt;build_directory&gt;/tmp/deploy/images/licenses</filename>.  
-        If a module requires a license that is not in the base list then the build process 
+        If a module requires a license that is not in the base list, the build process 
         generates a warning during the build.  
         It is up to the developer to resolve potential licensing issues.
     </para>
