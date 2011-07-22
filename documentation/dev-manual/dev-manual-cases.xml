@@ -97,10 +97,23 @@
                 contributing back to the Yocto Project.  
                 However, if you just want a hierarchical file structure that contains the recipes
                 and metadata that let you develop you can download tarballs from the 
-                <ulink url='http://yoctoproject.org/download'>download page</ulink>.  
+                <ulink url='http://yoctoproject.org/download'>download page</ulink>.
+            </para>
+
+            <para>
+                Regardless of the method you use this manual will refer to the resulting 
+                hierarchical set of files as "the local Yocto Project files."
+            </para>
+
+            <para>
+                [WRITER'S NOTE: I need to substitute correct and actual filenames for the 
+                1.1 release throughout this example once they become available.]
+            </para>
+
+            <para>  
                 If you download a tarball you can extract it into any directory you want using the 
                 tar command.  
-                For example, the following command extracts the Yocto Project 1.1_M2 release tarball 
+                For example, the following command extracts the Yocto Project 1.1 release tarball 
                 into the current working directory and sets up a file structure whose top-level 
                 directory is named <filename>poky-1.1</filename>:
                 <literallayout class='monospaced'>
@@ -124,8 +137,8 @@
             </para>
 
             <para>
-                Once you have the repository set up you have many development branches from which 
-                you can work. 
+                Once you have the local <filename>poky</filename> Git repository set up, 
+                you have many development branches from which you can work. 
                 From inside the repository you can see the branch names and the tag names used 
                 in the Git repository using either of the following two commands:
                 <literallayout class='monospaced'>
@@ -133,8 +146,8 @@
      $ git tag -l
                 </literallayout> 
                 For this example we are going to use the Yocto Project 1.1 Release, 
-                which maps to the <filename>[NEED BRANCH]</filename> branch in the repository. 
-                These commands create a local branch named <filename>[NEED BRANCH]</filename>
+                which maps to the <filename>1.1</filename> branch in the repository. 
+                These commands create a local branch named <filename>1.1</filename>
                 that tracks the remote branch of the same name.
                 <literallayout class='monospaced'>
      
@@ -142,7 +155,6 @@
      $ git checkout -b 1.1 origin/1.1
      Switched to a new branch '1.1'
                 </literallayout>
-                [WRITER'S NOTE:  I NEED THE REAL BRANCH NAMES IN THE EXAMPLE.]
             </para>
         </section>
 
@@ -181,11 +193,11 @@
 
             <para>
                 You need to have the base BSP layer on your development system.  
-                Like the Yocto Project's <filename>poky</filename> Git repository you can get the BSP 
+                Like the local Yocto Project files, you can get the BSP 
                 layer one of two ways:  
                 download the BSP tarball and extract it, or set up a local Git repository that 
                 has the Yocto Project BSP layers.  
-                You should use the same method that you used to get the Yocto Project files earlier.
+                You should use the same method that you used to get the local Yocto Project files earlier.
             </para>
 
             <para>
@@ -202,14 +214,14 @@
             </para>
 
             <para>
-                If you cloned a Yocto Project Git repository (<filename>poky</filename>)
-                then you need to do the same for the 
-                BSP, which is located in Yocto Project's <filename>meta-intel</filename> Git repository.  
-                The <filename>meta-intel</filename> repository contains all the metadata 
+                If you cloned a <filename>poky</filename> Git repository
+                then you need to set up a different local Git repository 
+                (<filename>meta-intel</filename>) for the BSP.  
+                The <filename>meta-intel</filename> Git repository contains all the metadata 
                 that supports BSP creation.
                 When you set up the <filename>meta-intel</filename> Git repository you can 
                 set it up anywhere you want.
-                We will set up the <filename>meta-intel</filename> Git repository inside the 
+                We will set up the repository inside the 
                 <filename>poky</filename> Git repository in this example.  
             </para>
 
@@ -232,13 +244,12 @@
             <para>
                 Because <filename>meta-intel</filename> is its own Git repository you will want
                 to be sure you are in the appropriate branch for your work.
-                For this example we are going to use the <filename>[NEED BRANCH]</filename> branch. 
+                For this example we are going to use the <filename>1.1</filename> branch. 
                 <literallayout class='monospaced'>
      $ cd meta-intel
      $ git checkout -b 1.1 origin/1.1
      Switched to a new branch 'bernard'
                 </literallayout>
-                [WRITER'S NOTE:  I NEED THE REAL BRANCH NAMES IN THE EXAMPLE.]               
             </para>
         </section>
 
@@ -246,7 +257,7 @@
             <title>Making a Copy of the Base BSP to Create Your New BSP Layer</title>
 
             <para>
-                Now that you have the Yocto Project and base BSP files you need to create a 
+                Now that you have the local Yocto Project files and the base BSP files you need to create a 
                 new layer for your BSP.
             </para>
 
@@ -267,16 +278,11 @@
                 Yocto Project release: <filename>atom-pc</filename>, <filename>beagleboard</filename>,
                 <filename>mpc8315e</filename>, and <filename>routerstationpro</filename>.  
                 The recipes and configurations for these four BSPs are located and dispersed 
-                within <filename>meta-yocto</filename>, which can be found in the 
-                area you unpacked the Yocto Project release tarball or set up your local 
-                <filename>poky</filename> Git repository.  
+                within local Yocto Project files.
                 Consequently, they are not totally isolated in the spirit of layers unless you think 
                 of <filename>meta-yocto</filename> as a layer itself.  
-                On the other hand, the Yocto Project has isolated BSP layers within 
-                <filename>meta-intel</filename> Git repository for the Crown Bay, Emenlow, Jasper Forest, 
-                N450, and Sugar Bay.
-                If you are not using a <filename>meta-intel</filename> Git repository then you would 
-                downloaded a tarball for one of these isolated BSP layers.  
+                On the other hand, BSP layers for Crown Bay, Emenlow, Jasper Forest, 
+                N450, and Sugar Bay are isolated.
             </note>
 
             <para>
@@ -289,8 +295,7 @@
                 configuration information.  
                 You can see the standard layout for the Crown Bay BSP in this example by examining the 
                 directory structure of the <filename>meta-crownbay</filename> layer inside the 
-                <filename>meta-intel</filename> Git repository or the area where you unpacked the 
-                Crown Bay BSP tarball.
+                local Yocto Project files.
             </para>
 
             <para>
@@ -300,10 +305,11 @@
                 The name must follow the BSP layer naming convention, which is 
                 <filename>meta-&lt;name&gt;</filename>.  
                 The following example assumes your working directory is <filename>meta-intel</filename> 
-                inside the <filename>meta-intel</filename> Git repository.  
+                inside the local Yocto Project files.  
                 If you downloaded and expanded a Crown Bay tarball then you simply copy the resulting 
                 <filename>meta-crownbay</filename> directory structure to a location of your choice.
-                Good practice for a Git repository is to just copy the new layer alongside the existing
+                Good practice for a Git repository, however, is to just copy the new layer alongside 
+                the existing
                 BSP layers in the <filename>meta-intel</filename> Git repository:
                 <literallayout class='monospaced'>
      $ cp -a meta-crownbay/ meta-mymachine 
@@ -429,7 +435,7 @@
                 Now let's look at changes in <filename>recipes-core</filename>.
                 The file <filename>task-core-tools.bbappend</filename> in 
                 <filename>recipes-core/tasks</filename> appends the similarly named recipe
-                located in the <filename>poky</filename> Git repository at 
+                located in the local Yocto Project files at 
                 <filename>meta/recipes-core/tasks</filename>.
                 The "append" file in our layer right now is Crown Bay-specific and supports 
                 EMGD and non-EMGD.
@@ -454,13 +460,13 @@
                 Finally, let's look at <filename>recipes-kernel</filename> changes.
                 Recall that the BSP uses the <filename>linux-yocto</filename> kernel as determined
                 earlier in the <filename>mymachine.conf</filename>.
-                The recipe for that kernel is located is not located in the  
-                BSP layer but rather in the <filename>poky</filename> Git repository at 
+                The recipe for that kernel is not located in the  
+                BSP layer but rather in the local Yocto Project files at 
                 <filename>meta/recipes-kernel/linux</filename> and is 
                 named <filename>linux-yocto-2.6.37.bb</filename>.
                 The <filename>SRCREV_machine</filename> and <filename>SRCREV_meta</filename>
-                statements point to the exact commits in the <filename>poky</filename> Git repository 
-                that identify the right kernel for our hardware.
+                statements point to the exact commits used by the Yocto Project development team
+                in their source repositories that identify the right kernel for our hardware.
             </para>
  
             <para>
@@ -518,7 +524,8 @@
 
             <para>
                 If you are familiar with Git repositories you probably won’t have trouble locating the 
-                exact commit strings you need to change the <filename>SRCREV</filename> statements.  
+                exact commit strings in the Yocto Project source repositories you need to change 
+                the <filename>SRCREV</filename> statements.  
                 You can find all the <filename>machine</filename> and <filename>meta</filename> 
                 branch points (commits) for the <filename>linux-yocto-2.6.37</filename> kernel 
                 <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/linux-yocto-2.6.37'>here</ulink>.  
@@ -607,9 +614,8 @@
                <orderedlist>
                    <listitem><para>Get the environment ready for the build by sourcing the environment 
                        script. 
-                       The environment script is in the top-level of the <filename>poky</filename>
-                       Git repository or the top-level directory in which you unpacked the Yocto Project
-                       release tarball.
+                       The environment script is in the top-level of the local Yocto Project files
+                       directory structure.
                        The script has the string 
                        <filename>init-build-env</filename> in the file’s name.  
                        For this example, the following command gets the build environment ready:                       
