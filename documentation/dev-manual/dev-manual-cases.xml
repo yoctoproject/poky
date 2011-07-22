@@ -6,9 +6,10 @@
 <title>Development Cases</title>
 
 <para>
-    For the purposes of this manual we are going to focus on two common development cases or groupings:  
+    Many development cases exist for which you can use the Yocto Project. 
+    However, for the purposes of this manual we are going to focus on two common development cases or groupings:  
     System Development and User Application Development.  
-    System Development covers Board Support Package (BSP) development and kernel image modification.  
+    System Development covers Board Support Package (BSP) development and kernel modification.  
     User Application Development covers development of applications that you intend to run on some 
     target hardware.  
 </para>
@@ -46,14 +47,10 @@
             Thus, the package, when compiled into the new image, supports the operation of the board.  
         </para>
 
-        <para>
-            Packages consist of recipes.  
-            Recipes are sets of instructions for building a package.  
-            The recipes describe where to get source code and what patches to apply.  
-            Recipes also describe dependencies for libraries or for other recipes.  
-            They also contain configuration and compilation options.  
-            Recipes are logical units of execution.
-        </para>
+        <note>
+            For a brief list of terms used when describing the development process in the Yocto Project, 
+            see <xref linkend='yocto-project-terms'>Yocto Project Terms</xref> in this manual.
+        </note>
 
         <para>
             Here are the basic steps involved in creating a BSP:
@@ -74,8 +71,8 @@
                     for your recipes.</para></listitem>
                 <listitem><para>Make configuration and recipe changes to your new BSP layer.</para></listitem>
                 <listitem><para>Prepare for the build.</para></listitem>
-                <listitem><para>Select and configure the kernel. (WRITER'S NOTE:  Not sure on this step).</para></listitem>
-                <listitem><para>Identify the machine branch in the Git repository.</para></listitem>
+                <listitem><para>Select and configure the kernel.</para></listitem>
+                <listitem><para>Identify the machine branch.</para></listitem>
                 <listitem><para>Build the image.</para></listitem>
             </orderedlist>
                 You can view a video presentation of the BSP creation process 
@@ -92,30 +89,29 @@
             <title>Setting Up Yocto Project</title>
 
             <para>
-                You need to have the Yocto Project source tree available on your host system.  
-                You can get that through tarball extraction or by cloning the <filename>poky</filename>
+                You need to have the Yocto Project files available on your host system.  
+                You can get files through tarball extraction or by cloning the <filename>poky</filename>
                 Git repository.  
                 Typically, cloning the Git repository is the method to use.  
                 This allows you to maintain a complete history of changes and facilitates you 
                 contributing back to the Yocto Project.  
-                However, if you just want the source you can download the Yocto Project Release 
-                tarball from the 
+                However, if you just want a hierarchical file structure that contains the recipes
+                and metadata that let you develop you can download tarballs from the 
                 <ulink url='http://yoctoproject.org/download'>download page</ulink>.  
-                If you download the tarball you can extract it into any directory you want using the 
+                If you download a tarball you can extract it into any directory you want using the 
                 tar command.  
-                For example, the following command extracts the Yocto Project 1.0.1 release tarball 
-                (bernard 5.0.1) into 
-                the current working directory and sets up a Yocto Project source directory named 
-                <filename>bernard.5.0.1</filename>:
+                For example, the following command extracts the Yocto Project 1.1_M2 release tarball 
+                into the current working directory and sets up a file structure whose top-level 
+                directory is named <filename>poky-1.1</filename>:
                 <literallayout class='monospaced'>
-     $ tar xfj poky.bernard.5.0.1.tar.bz2
+     $ tar xfj poky-1.1.tar.bz2
                 </literallayout>
             </para>
 
             <para>
                 The following transcript shows how to clone the <filename>poky</filename> Git repository
                 into the current working directory.  
-                The command creates the Git repository in a directory named <filename>poky</filename>:
+                The command creates the repository in a directory named <filename>poky</filename>:
                 <literallayout class='monospaced'>
      $ git clone git://git.yoctoproject.org/poky
      Initialized empty Git repository in /home/scottrif/poky/.git/
@@ -143,8 +139,8 @@
                 <literallayout class='monospaced'>
      
      $ cd poky
-     $ git checkout -b bernard origin/bernard
-     Switched to a new branch 'bernard'
+     $ git checkout -b 1.1 origin/1.1
+     Switched to a new branch '1.1'
                 </literallayout>
                 [WRITER'S NOTE:  I NEED THE REAL BRANCH NAMES IN THE EXAMPLE.]
             </para>
@@ -164,18 +160,19 @@
 
             <para>
                 At this point you need to understand your target hardware well enough to determine which 
-                existing BSP most closely matches it.  
+                existing BSP it most closely matches.  
                 Things to consider are your hardware’s on-board features such as CPU type and graphics support.  
                 You should look at the README files for supported BSPs to get an idea of which one 
                 you could use.  
-                A generic Atom-based BSP to consider is the Crown Bay with no Intel® Embedded Media 
-                Graphics Driver (EMGD) support.  
-                That is the BSP that this example is going to use. 
+                A generic Atom-based BSP to consider is the Crown Bay that does not support
+                the Intel® Embedded Media Graphics Driver (EMGD).  
+                The remainder of this example uses that base BSP. 
             </para>
 
             <para>
                 To see the supported BSPs, go to the Yocto Project
-                <ulink url='http://www.yoctoproject.org/download'>download page</ulink> and click on “BSP Downloads.”
+                <ulink url='http://www.yoctoproject.org/download'>download page</ulink> and click 
+                on “BSP Downloads.”
             </para>
         </section>
 
@@ -184,13 +181,15 @@
 
             <para>
                 You need to have the base BSP layer on your development system.  
-                Like the Yocto Project source tree you can get the BSP layer one of two ways:  
-                download the tarball and extract it, or initialize a Git repository and check out the BSP.  
-                You should use the same method that you used for the Yocto Project source tree.
+                Like the Yocto Project's <filename>poky</filename> Git repository you can get the BSP 
+                layer one of two ways:  
+                download the BSP tarball and extract it, or set up a local Git repository that 
+                has the Yocto Project BSP layers.  
+                You should use the same method that you used to get the Yocto Project files earlier.
             </para>
 
             <para>
-                If you are using tarball extraction then simply download the tarball for the base 
+                If you are using tarball extraction, simply download the tarball for the base 
                 BSP you chose in the previous step and then extract it into any directory 
                 you choose using the tar command.  
                 Upon extraction, the BSP source directory (layer) will be named 
@@ -198,14 +197,14 @@
                 The following command extracts the Crown Bay BSP into the current directory and names it 
                 <filename>meta-crownbay</filename>:
                 <literallayout class='monospaced'>
-     $ tar xjf crownbay-noemgd-bernard-5.0.1.tar.bz2
+     $ tar xjf crownbay-noemgd-1.1.tar.bz2
                 </literallayout>
             </para>
 
             <para>
                 If you cloned a Yocto Project Git repository (<filename>poky</filename>)
                 then you need to do the same for the 
-                BSP, which is located in the <filename>meta-intel</filename> Git repository.  
+                BSP, which is located in Yocto Project's <filename>meta-intel</filename> Git repository.  
                 The <filename>meta-intel</filename> repository contains all the metadata 
                 that supports BSP creation.
                 When you set up the <filename>meta-intel</filename> Git repository you can 
@@ -236,7 +235,7 @@
                 For this example we are going to use the <filename>[NEED BRANCH]</filename> branch. 
                 <literallayout class='monospaced'>
      $ cd meta-intel
-     $ git checkout -b bernard origin/bernard
+     $ git checkout -b 1.1 origin/1.1
      Switched to a new branch 'bernard'
                 </literallayout>
                 [WRITER'S NOTE:  I NEED THE REAL BRANCH NAMES IN THE EXAMPLE.]               
@@ -247,7 +246,7 @@
             <title>Making a Copy of the Base BSP to Create Your New BSP Layer</title>
 
             <para>
-                Now that you have the Yocto Project and base BSP source you need to create a 
+                Now that you have the Yocto Project and base BSP files you need to create a 
                 new layer for your BSP.
             </para>
 
@@ -268,34 +267,36 @@
                 Yocto Project release: <filename>atom-pc</filename>, <filename>beagleboard</filename>,
                 <filename>mpc8315e</filename>, and <filename>routerstationpro</filename>.  
                 The recipes and configurations for these four BSPs are located and dispersed 
-                within <filename>meta-yocto</filename>, which can be found in the Yocto Project source directory.  
+                within <filename>meta-yocto</filename>, which can be found in the 
+                area you unpacked the Yocto Project release tarball or set up your local 
+                <filename>poky</filename> Git repository.  
                 Consequently, they are not totally isolated in the spirit of layers unless you think 
                 of <filename>meta-yocto</filename> as a layer itself.  
                 On the other hand, the Yocto Project has isolated BSP layers within 
-                <filename>meta-intel</filename> for the Crown Bay, Emenlow, Jasper Forest, N450, and 
-                Sugar Bay.  
-                [WRITER'S NOTE:  <filename>meta-yocto</filename>, <filename>meta</filename>, and 
-                <filename>meta-intel</filename> need some explanation.  
-                Not sure about the relationship of meta-yocto as compared to meta-intel.] 
+                <filename>meta-intel</filename> Git repository for the Crown Bay, Emenlow, Jasper Forest, 
+                N450, and Sugar Bay.
+                If you are not using a <filename>meta-intel</filename> Git repository then you would 
+                downloaded a tarball for one of these isolated BSP layers.  
             </note>
 
             <para>
                 When you set up a layer for a new BSP you should follow a standard layout.  
-                This layout is described in 
+                This layout is described in the
                 <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout'>
                 Example Filesystem Layout</ulink> section of the Board Support Package (BSP) Development
                 Guide.  
-                In the standard layout you will notice a suggested hierarchy for BSP kernel recipes, 
-                graphics recipes, and configuration information.  
+                In the standard layout you will notice a suggested structure for recipes and  
+                configuration information.  
                 You can see the standard layout for the Crown Bay BSP in this example by examining the 
                 directory structure of the <filename>meta-crownbay</filename> layer inside the 
-                <filename>meta-intel</filename> Git repository.
+                <filename>meta-intel</filename> Git repository or the area where you unpacked the 
+                Crown Bay BSP tarball.
             </para>
 
             <para>
                 To create your BSP layer you simply copy the <filename>meta-crownbay</filename>
                 layer to a new layer.  
-                For this example the new layer is named <filename>meta-mymachine</filename>.  
+                For this example the new layer will be named <filename>meta-mymachine</filename>.  
                 The name must follow the BSP layer naming convention, which is 
                 <filename>meta-&lt;name&gt;</filename>.  
                 The following example assumes your working directory is <filename>meta-intel</filename> 
@@ -358,7 +359,7 @@
                 <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout-layer'>
                 Layer Configuration File</ulink> section in the Board Support Packages (BSP) Development Guide
                 for more information on this configuration file.  
-                Basically, we are removing statements that support EMGD and changing the ones that support no EMGD. 
+                Basically, we are changing the existing statements to work with our BSP. 
             </para>
 
             <para>
@@ -385,20 +386,20 @@
                 The standard BSP structure has areas for BSP, graphics, core, and kernel recipes.  
                 When you create a BSP you use these areas for appropriate recipes and append files.  
                 Recipes take the form of <filename>.bb</filename> files.  
-                If you want to leverage off of existing recipes elsewhere in the Yocto Project 
-                source tree but change them you can use <filename>.bbappend</filename> files.  
-                All new recipes and append files for your layer go in the layer’s 
+                If you want to leverage the existing recipes the Yocto Project build system uses
+                but change those recipes you can use <filename>.bbappend</filename> files.  
+                All new recipes and append files for your layer must go in the layer’s 
                 <filename>recipes-bsp</filename>, <filename>recipes-kernel</filename>, 
                 <filename>recipes-core</filename>, and 
                 <filename>recipes-graphics</filename> directories.    
             </para>
 
             <para>
-                First, let us look at <filename>recipes-bsp</filename>.
+                First, let's look at <filename>recipes-bsp</filename>.
                 For this example we are not adding any new BSP recipes.  
                 And, we only need to remove the formfactor we do not want and change the name of 
-                the remaining one that supports no EMGD.  
-                These commands take care of the new layer’s BSP recipes:
+                the remaining one that doesn't support EMGD.  
+                These commands take care of the <filename>recipes-bsp</filename> recipes:
                 <literallayout class='monospaced'>
      $ rm &dash;rf meta-mymachine/recipes-graphics/xorg-xserver/*emgd*
      $ mv meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay-noemgd/ \
@@ -407,7 +408,7 @@
             </para>
 
             <para>
-                Now let us look at <filename>recipes-graphics</filename>.
+                Now let's look at <filename>recipes-graphics</filename>.
                 For this example we want to remove anything that supports EMGD and 
                 be sure to rename remaining directories appropriately.  
                 The following commands clean up the <filename>recipes-graphics</filename> directory:
@@ -421,14 +422,15 @@
 
             <para>
                 At this point the <filename>recipes-graphics</filename> directory just has files that 
-                support Video Electronics Standards Association (VESA) graphics modes.  
+                support Video Electronics Standards Association (VESA) graphics modes and not EMGD.  
             </para>
 
             <para>
-                Now let us look at changes in <filename>recipes-core</filename>.
+                Now let's look at changes in <filename>recipes-core</filename>.
                 The file <filename>task-core-tools.bbappend</filename> in 
                 <filename>recipes-core/tasks</filename> appends the similarly named recipe
-                located in the Yocto Project Git repository at <filename>meta/recipes-core/tasks</filename>.
+                located in the <filename>poky</filename> Git repository at 
+                <filename>meta/recipes-core/tasks</filename>.
                 The "append" file in our layer right now is Crown Bay-specific and supports 
                 EMGD and non-EMGD.
                 Here are the contents of the file:
@@ -449,16 +451,16 @@
             </para>
 
             <para>
-                Finally, let us look at <filename>recipes-kernel</filename> changes.
+                Finally, let's look at <filename>recipes-kernel</filename> changes.
                 Recall that the BSP uses the <filename>linux-yocto</filename> kernel as determined
                 earlier in the <filename>mymachine.conf</filename>.
                 The recipe for that kernel is located is not located in the  
-                BSP layer but rather in Yocto Project Git repository at 
+                BSP layer but rather in the <filename>poky</filename> Git repository at 
                 <filename>meta/recipes-kernel/linux</filename> and is 
                 named <filename>linux-yocto-2.6.37.bb</filename>.
                 The <filename>SRCREV_machine</filename> and <filename>SRCREV_meta</filename>
-                statements point to the exact commits in the Yocto Project Git repository from
-                which the source for the kernel can be found.
+                statements point to the exact commits in the <filename>poky</filename> Git repository 
+                that identify the right kernel for our hardware.
             </para>
  
             <para>
@@ -471,8 +473,8 @@
             </para>
 
             <para>
-                The <filename>SRCREV</filename> statements in the "append" file currently point
-                to the kernel that supports the Crown Bay BSP with and without EMGD support.
+                The <filename>SRCREV</filename> statements in the "append" file currently identify
+                the kernel that supports the Crown Bay BSP with and without EMGD support.
                 Here are the statements: 
                 <literallayout class='monospaced'>
      SRCREV_machine_pn-linux-yocto_crownbay ?= \
@@ -489,21 +491,20 @@
 
             <para>
                 You will notice that there are two pairs of <filename>SRCREV</filename> statements.  
-                The top pair points to a kernel that supports
+                The top pair identifies the kernel that supports
                 EMGD, which we don’t care about in this example.  
-                The bottom pair points to the kernel that we will use:  
+                The bottom pair identifies the kernel that we will use:  
                 <filename>linux-yocto</filename>.  
                 At this point though, the unique commit strings all are still associated with 
-                Crown Bay.
+                Crown Bay and not <filename>meta-mymachine</filename>.
             </para>
 
             <para>  
-                So the next changes we make modify this <filename>linux-yocto-2.6.37.bbappend</filename>
-                file.
-                First, we delete the two <filename>SRCREV</filename> statements that support 
+                To fix this situation in <filename>linux-yocto-2.6.37.bbappend</filename>
+                we delete the two <filename>SRCREV</filename> statements that support 
                 EMGD (the top pair).
-                Next, we change the remaining pair to specify <filename>mymachine</filename>
-                and then we insert the commit identifier to point to the kernel in which we 
+                We also change the remaining pair to specify <filename>mymachine</filename>
+                and insert the commit identifiers to identify the kernel in which we 
                 are interested, which will be based on the <filename>atom-pc-standard</filename>
                 kernel.
                 Here are the final <filename>SRCREV</filename> statements:
@@ -542,10 +543,10 @@
             </para>
 
             <para>
-                Also in the <filename>linux-yocto-2.6.47.bbappend</filename> file are 
+                Also in the <filename>linux-yocto-2.6.37.bbappend</filename> file are 
                 <filename>COMPATIBLE_MACHINE</filename>, <filename>KMACHINE</filename>, 
                 and <filename>KERNEL_FEATURES</filename> statements.  
-                Again, there are two sets of these: one for EMGD support and one for non-EMGD support.
+                Two sets of these exist: one set supports EMGD and one set does not.
                 Because we are not interested in supporting EMGD those three can be deleted.
                 The remaining three must be changed so that <filename>mymachine</filename> replaces
                 <filename>crownbay-noemgd</filename> and <filename>crownbay</filename>.
@@ -571,7 +572,7 @@
                 of any new recipes you might need.  
                 In this example, it was simply a matter of ridding the new layer 
                 <filename>meta-machine</filename> of any code that supported the EMGD features
-                and making sure we were pointing to the kernel that supports our example, which
+                and making sure we were identifying the kernel that supports our example, which
                 is the <filename>atom-pc-standard</filename> kernel.  
                 We did not introduce any new recipes to the layer. 
             </para>
@@ -606,8 +607,10 @@
                <orderedlist>
                    <listitem><para>Get the environment ready for the build by sourcing the environment 
                        script. 
-                       The environment script is in the Yocto Project source directory 
-                       (<filename>poky</filename> in this example) and has the string 
+                       The environment script is in the top-level of the <filename>poky</filename>
+                       Git repository or the top-level directory in which you unpacked the Yocto Project
+                       release tarball.
+                       The script has the string 
                        <filename>init-build-env</filename> in the file’s name.  
                        For this example, the following command gets the build environment ready:                       
                        <literallayout class='monospaced'>
@@ -615,7 +618,7 @@
                        </literallayout>
                        When you source the script a build directory is created in the current 
                        working directory.  
-                       In our example we were in the Yocto Project source directory.  
+                       In our example we were in the <filename>poky</filename> directory.  
                        Thus, entering the previous command created the <filename>yocto-build</filename> directory.  
                        If you do not provide a name for the build directory it defaults to 
                        <filename>build</filename>.  
@@ -672,9 +675,13 @@
             </para>
 
             <para>
+                [WRITER'S NOTE: Consider moving this to the Poky Reference Manual.]
+            </para>
+
+            <para>
                 You can find these recipes in the <filename>meta/recipes-core/images</filename> and 
-                <filename>meta/recipes-sato/images</filename> directories of the Yocto Project source 
-                tree (the <filename>poky</filename> Git repository in this example).  
+                <filename>meta/recipes-sato/images</filename> directories of your local Yocto Project 
+                file structure (Git repository or extracted release tarball).  
                 Although the recipe names are somewhat explanatory, here is a list that describes them:
                 <itemizedlist>
                     <listitem><para><emphasis>Base</emphasis> – A foundational basic image without support 
