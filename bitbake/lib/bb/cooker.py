@@ -135,7 +135,7 @@ class BBCooker:
         if not self.server_registration_cb:
             bb.data.setVar("BB_WORKERCONTEXT", "1", self.configuration.data)
 
-        bb.data.inheritFromOS(self.configuration.data)
+        bb.data.inheritFromOS(self.configuration.data, self.savedenv)
 
         try:
             self.parseConfigurationFiles(self.configuration.prefile,
