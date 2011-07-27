@@ -20,19 +20,194 @@
 </para>
 
 <section id='place-holder-section-one'>
-    <title>Place-Holder Section One</title>
+    <title>Place-Holder Section for Development in General</title>
 
     <para>
         Text needed here.
     </para>
-</section>
 
-<section id='place-holder-section-two'>
-    <title>Place-Holder Section Two</title>
+    <section id='developing-a-board-support-package-bsp-model'>
+        <title>Developing a Board Support Package (BSP)</title>
 
-    <para>
-        Text needed here.
-    </para>
+        <para>
+            A BSP is a package of recipes that when applied while building an image results in 
+            an image you can run on a particular board.  
+            Thus, the package, when compiled into the new image, supports the operation of the board.  
+        </para>
+
+        <note>
+            For a brief list of terms used when describing the development process in the Yocto Project, 
+            see <xref linkend='yocto-project-terms'>Yocto Project Terms</xref> in this manual.
+        </note>
+
+        <para>
+            The remainder of this section presents the basic steps to create a BSP basing it on an 
+            existing BSP that ships with the Yocto Project.
+            You can reference <xref linkend='dev-manual-bsp-appendix'>BSP Development Case</xref>
+            for a detailed example that uses the Crown Bay BSP as a base BSP from which to start.
+        </para>
+
+        <para>
+            Here are the basic steps involved in creating a BSP:
+            <orderedlist>
+                <listitem><para><emphasis>Set up your host development system to support 
+                    development using the Yocto Project</emphasis>:  See  
+                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>
+                    The Linux Distributions</ulink> section and  
+                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>
+                    The Packages</ulink> section both
+                    in the Yocto Project Quick Start for requirements.
+                    You will also need a release of Yocto Project installed on the host.</para></listitem>
+                <listitem><para><emphasis>Establish a local copy of the Yocto Project files on your 
+                    system</emphasis>:  You need to have the Yocto Project files available on your host system. 
+                    Having the Yocto Project files on your system gives you access to the build
+                    process and tools you need.
+                    For information on how to get these files, see the
+                    <xref linkend='getting-setup'>Getting Setup</xref> section in this manual.</para></listitem>
+                <listitem><para><emphasis>Choose a Yocto Project-supported BSP as your base BSP</emphasis>:  
+                    The Yocto Project ships with several BSPs that support various hardware.  
+                    It is best to base your new BSP on an existing BSP rather than create all the 
+                    recipes and configuration files from scratch.  
+                    While it is possible to create everything from scratch, basing your new BSP 
+                    on something that is close is much easier.  
+                    Or, at a minimum, it gives you some structure with which to start.</para>
+                    <para>At this point you need to understand your target hardware well enough to determine which 
+                    existing BSP it most closely matches.  
+                    Things to consider are your hardware’s on-board features such as CPU type and graphics support.  
+                    You should look at the README files for supported BSPs to get an idea of which one 
+                    you could use.  
+                    A generic Atom-based BSP to consider is the Crown Bay that does not support
+                    the Intel® Embedded Media Graphics Driver (EMGD).  
+                    The remainder of this example uses that base BSP.</para>
+                    <para>To see the supported BSPs, go to the Yocto Project
+                    <ulink url='http://www.yoctoproject.org/download'>download page</ulink> and click 
+                    on “BSP Downloads.”</para></listitem>
+                <listitem><para><emphasis>Establish a local copy of the base BSP files</emphasis>:  Having 
+                    the BSP files on your system gives you access to the build
+                    process and tools you need.
+                    For information on how to get these files, see 
+                    <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.</para></listitem>
+                <listitem><para><emphasis>Create your own BSP layer</emphasis>:  Layers are ideal for 
+                    isolating and storing work for a given piece of hardware.  
+                    A layer is really just a location or area in which you place the recipes for your BSP.  
+                    In fact, a BSP is, in itself, a special type of layer.   
+                    Consider an application as another example that illustrates a layer.  
+                    Suppose you are creating an application that has library or other dependencies in 
+                    order for it to compile and run.  
+                    The layer, in this case, would be where all the recipes that define those dependencies 
+                    are kept.  The key point for a layer is that it is an isolated area that contains 
+                    all the relevant information for the project that the Yocto Project build 
+                    system knows about.</para>
+                    <note>The Yocto Project supports four BSPs that are part of the 
+                    Yocto Project release: <filename>atom-pc</filename>, <filename>beagleboard</filename>,
+                    <filename>mpc8315e</filename>, and <filename>routerstationpro</filename>.  
+                    The recipes and configurations for these four BSPs are located and dispersed 
+                    within local Yocto Project files.
+                    Consequently, they are not totally isolated in the spirit of layers unless you think 
+                    of <filename>meta-yocto</filename> as a layer itself.  
+                    On the other hand, BSP layers for Crown Bay, Emenlow, Jasper Forest, 
+                    N450, and Sugar Bay are isolated.</note>
+                    <para>When you set up a layer for a new BSP you should follow a standard layout.  
+                    This layout is described in the
+                    <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout'>
+                    Example Filesystem Layout</ulink> section of the Board Support Package (BSP) Development
+                    Guide.  
+                    In the standard layout you will notice a suggested structure for recipes and  
+                    configuration information.  
+                    You can see the standard layout for the Crown Bay BSP in this example by examining the 
+                    directory structure of the <filename>meta-crownbay</filename> layer inside the 
+                    local Yocto Project files.</para></listitem>
+                <listitem><para><emphasis>Make configuration and recipe changes to your new BSP 
+                    layer</emphasis>:  The standard BSP layer structure organizes the files you need to edit in 
+                    <filename>conf</filename> and several <filename>recipes-*</filename> within the 
+                    BSP layer.</para>
+                    <para>Configuration changes identify where your new layer is on the local system
+                    and identify which kernel you are going to use.
+                    Recipe changes include altering recipes (<filename>.bb</filename> files), removing 
+                    recipes you don't use, and adding new recipes that you need to support your hardware.
+                    </para></listitem>
+                <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
+                    changes to your BSP layer there remains a few things 
+                    you need to do for the Yocto Project build system in order for it to create your image.  
+                    You need to get the build environment ready by sourcing an environment setup script 
+                    and you need to be sure two key configuration files are configured appropriately.</para>
+                    <para>The entire process for building an image is overviewed in the 
+                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>
+                    Building an Image</ulink> section of the Yocto Project Quick Start.    
+                    You might want to reference this information.</para></listitem>
+                <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project uses the BitBake 
+                    tool to build images based on the type of image 
+                    you want to create.  
+                    You can find more information on BitBake 
+                    <ulink url='http://bitbake.berlios.de/manual/'>here</ulink>.</para>
+                    <para>The build process supports several types of images to satisfy different needs.  
+                    When you issue the BitBake command you provide a “top-level” recipe that essentially 
+                    starts the process off of building the type of image you want.</para>
+                    <para>[WRITER'S NOTE: Consider moving this to the Poky Reference Manual.]</para>
+                    <para>You can find these recipes in the <filename>meta/recipes-core/images</filename> and 
+                    <filename>meta/recipes-sato/images</filename> directories of your local Yocto Project 
+                    file structure (Git repository or extracted release tarball).  
+                    Although the recipe names are somewhat explanatory, here is a list that describes them:
+                    <itemizedlist>
+                        <listitem><para><emphasis>Base</emphasis> – A foundational basic image without support 
+                            for X that can be reasonably used for customization.</para></listitem>
+                        <listitem><para><emphasis>Core</emphasis> – A foundational basic image with support for 
+                            X that can be reasonably used for customization.</para></listitem>
+                        <listitem><para><emphasis>Direct Disk</emphasis> – An image that you can copy directory to 
+                            the disk of the target device.</para></listitem>
+                        <listitem><para><emphasis>Live</emphasis> – An image you can run from a USB device or from 
+                            a CD without having to first install something.</para></listitem>
+                        <listitem><para><emphasis>Minimal</emphasis> – A small image without a GUI.  
+                            This image is not much more than a kernel with a shell.</para></listitem>
+                        <listitem><para><emphasis>Minimal Development</emphasis> – A Minimal image suitable for 
+                            development work.</para></listitem>
+                        <listitem><para><emphasis>Minimal Direct Disk</emphasis> – A Minimal Direct 
+                            Disk image.</para></listitem>
+                        <listitem><para><emphasis>Minimal RAM-based Initial Root Filesystem</emphasis> – 
+                            A minimal image 
+                            that has the <filename>initramfs</filename> as part of the kernel, which allows the 
+                            system to find the first “init” program more efficiently.</para></listitem>
+                        <listitem><para><emphasis>Minimal Live</emphasis> – A Minimal Live image.</para></listitem>
+                        <listitem><para><emphasis>Minimal MTD Utilities</emphasis> – A minimal image that has support 
+                            for the MTD utilities, which let the user interact with the MTD subsystem in 
+                            the kernel to perform operations on flash devices.</para></listitem>
+                        <listitem><para><emphasis>Sato</emphasis> – An image with Sato support, a mobile environment 
+                            and visual style that works well with mobile devices.</para></listitem>
+                        <listitem><para><emphasis>Sato Development</emphasis> – A Sato image suitable for 
+                            development work.</para></listitem>
+                        <listitem><para><emphasis>Sato Direct Disk</emphasis> – A Sato Direct 
+                            Disk image.</para></listitem>
+                        <listitem><para><emphasis>Sato Live</emphasis> – A Sato Live image.</para></listitem>
+                        <listitem><para><emphasis>Sato SDK</emphasis> – A Sato image that includes the Yocto Project 
+                            toolchain and development libraries.</para></listitem>
+                        <listitem><para><emphasis>Sato SDK Direct Disk</emphasis> – A Sato SDK Direct 
+                            Disk image.</para></listitem>
+                        <listitem><para><emphasis>Sato SDK Live</emphasis> – A Sato SDK Live 
+                            image.</para></listitem>
+                    </itemizedlist>
+                </para></listitem>
+            </orderedlist>
+        </para>
+
+        <para>
+            You can view a video presentation of the BSP creation process 
+            <ulink url='http://free-electrons.com/blog/elc-2011-videos'>here</ulink>.  
+            You can also find supplemental information in the 
+            <ulink url='http://yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html'>
+            Board Support Package (BSP) Development Guide</ulink>.
+            Finally, there is wiki page write up of the example located 
+            <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_creating_one_generic_Atom_BSP_from_another'>
+            here</ulink> you might find helpful.
+        </para>
+    </section>
+
+    <section id='place-holder-section-two'>
+        <title>Place-Holder Section For Application Development</title>
+
+        <para>
+            Text needed here.
+        </para>
+    </section>
 </section>
 
 </chapter>
