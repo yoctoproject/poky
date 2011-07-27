@@ -19,11 +19,42 @@
     (system development and application development)].
 </para>
 
-<section id='place-holder-section-one'>
-    <title>Place-Holder Section for Development in General</title>
+<para>
+    Many development models exist for which you can use the Yocto Project. 
+    However, for the purposes of this manual we are going to focus on two common ones:  
+    System Development and User Application Development.  
+    System Development covers Board Support Package (BSP) development and kernel modification.  
+    User Application Development covers development of applications that you intend to run on some 
+    target hardware.  
+</para>
+
+<para>
+    This chapter presents an overview of the primary models.
+    Supsequent appendices in the manual provide detailed explanations of the examples.
+</para>
+
+<para>
+    [WRITERS NOTE:  What is undetermined at this point is how much of the entire development process 
+    we include in this particular chapter.  
+    In other words, do we cover debugging and emulation steps here on a case-specific basis?  
+    Or, do we capture that information in the appropriate subsequent chapter by case?]
+</para>
+
+<section id='system-development-model'>
+    <title>System Development</title>
 
     <para>
-        Text needed here.
+        System development involves modification or creation of an image that you want to run on 
+        a specific hardware target.  
+        Usually when you want to create an image that runs on embedded hardware the image does 
+        not require the same amount of features that a full-fledged Linux distribution provides.  
+        Thus, you can create a much smaller image that is designed to just use the hardware 
+        features for your particular hardware.
+    </para>
+
+    <para>
+        To help you understand how system development works in the Yocto Project, this section 
+        covers two types of image development:  BSP creation and kernel modification.
     </para>
 
     <section id='developing-a-board-support-package-bsp-model'>
@@ -70,7 +101,7 @@
                     recipes and configuration files from scratch.  
                     While it is possible to create everything from scratch, basing your new BSP 
                     on something that is close is much easier.  
-                    Or, at a minimum, it gives you some structure with which to start.</para>
+                   Or, at a minimum, it gives you some structure with which to start.</para>
                     <para>At this point you need to understand your target hardware well enough to determine which 
                     existing BSP it most closely matches.  
                     Things to consider are your hardware’s on-board features such as CPU type and graphics support.  
@@ -82,13 +113,13 @@
                     <para>To see the supported BSPs, go to the Yocto Project
                     <ulink url='http://www.yoctoproject.org/download'>download page</ulink> and click 
                     on “BSP Downloads.”</para></listitem>
-                <listitem><para><emphasis>Establish a local copy of the base BSP files</emphasis>:  Having 
+                <listitem><para><emphasis>Establish a local copy of the base BSP files</emphasis>:  Having    
                     the BSP files on your system gives you access to the build
                     process and tools you need.
                     For information on how to get these files, see 
-                    <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.</para></listitem>
+                    <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.</para></listitem>    
                 <listitem><para><emphasis>Create your own BSP layer</emphasis>:  Layers are ideal for 
-                    isolating and storing work for a given piece of hardware.  
+                   isolating and storing work for a given piece of hardware.  
                     A layer is really just a location or area in which you place the recipes for your BSP.  
                     In fact, a BSP is, in itself, a special type of layer.   
                     Consider an application as another example that illustrates a layer.  
@@ -99,8 +130,8 @@
                     all the relevant information for the project that the Yocto Project build 
                     system knows about.</para>
                     <note>The Yocto Project supports four BSPs that are part of the 
-                    Yocto Project release: <filename>atom-pc</filename>, <filename>beagleboard</filename>,
-                    <filename>mpc8315e</filename>, and <filename>routerstationpro</filename>.  
+                   Yocto Project release: <filename>atom-pc</filename>, <filename>beagleboard</filename>,
+                   <filename>mpc8315e</filename>, and <filename>routerstationpro</filename>.  
                     The recipes and configurations for these four BSPs are located and dispersed 
                     within local Yocto Project files.
                     Consequently, they are not totally isolated in the spirit of layers unless you think 
@@ -109,7 +140,7 @@
                     N450, and Sugar Bay are isolated.</note>
                     <para>When you set up a layer for a new BSP you should follow a standard layout.  
                     This layout is described in the
-                    <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout'>
+                   <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout'>
                     Example Filesystem Layout</ulink> section of the Board Support Package (BSP) Development
                     Guide.  
                     In the standard layout you will notice a suggested structure for recipes and  
@@ -120,7 +151,7 @@
                 <listitem><para><emphasis>Make configuration and recipe changes to your new BSP 
                     layer</emphasis>:  The standard BSP layer structure organizes the files you need to edit in 
                     <filename>conf</filename> and several <filename>recipes-*</filename> within the 
-                    BSP layer.</para>
+                   BSP layer.</para>
                     <para>Configuration changes identify where your new layer is on the local system
                     and identify which kernel you are going to use.
                     Recipe changes include altering recipes (<filename>.bb</filename> files), removing 
@@ -165,10 +196,10 @@
                             Disk image.</para></listitem>
                         <listitem><para><emphasis>Minimal RAM-based Initial Root Filesystem</emphasis> – 
                             A minimal image 
-                            that has the <filename>initramfs</filename> as part of the kernel, which allows the 
+                           that has the <filename>initramfs</filename> as part of the kernel, which allows the 
                             system to find the first “init” program more efficiently.</para></listitem>
                         <listitem><para><emphasis>Minimal Live</emphasis> – A Minimal Live image.</para></listitem>
-                        <listitem><para><emphasis>Minimal MTD Utilities</emphasis> – A minimal image that has support 
+                       <listitem><para><emphasis>Minimal MTD Utilities</emphasis> – A minimal image that has support 
                             for the MTD utilities, which let the user interact with the MTD subsystem in 
                             the kernel to perform operations on flash devices.</para></listitem>
                         <listitem><para><emphasis>Sato</emphasis> – An image with Sato support, a mobile environment 
@@ -183,7 +214,7 @@
                         <listitem><para><emphasis>Sato SDK Direct Disk</emphasis> – A Sato SDK Direct 
                             Disk image.</para></listitem>
                         <listitem><para><emphasis>Sato SDK Live</emphasis> – A Sato SDK Live 
-                            image.</para></listitem>
+                           image.</para></listitem>
                     </itemizedlist>
                 </para></listitem>
             </orderedlist>
@@ -198,16 +229,24 @@
             Finally, there is wiki page write up of the example located 
             <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_creating_one_generic_Atom_BSP_from_another'>
             here</ulink> you might find helpful.
-        </para>
+       </para>
     </section>
 
-    <section id='place-holder-section-two'>
-        <title>Place-Holder Section For Application Development</title>
+    <section id='place-holder-section-kernel-development-model'>
+        <title>Place-Holder Section For Kernel Development Model</title>
 
         <para>
             Text needed here.
         </para>
     </section>
+</section>
+
+<section id='place-holder-section-two'>
+    <title>Place-Holder Section For Application Development</title>
+
+    <para>
+        Text needed here.
+    </para>
 </section>
 
 </chapter>
