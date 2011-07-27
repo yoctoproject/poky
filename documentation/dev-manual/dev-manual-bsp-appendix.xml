@@ -184,165 +184,191 @@
         Right now you have two identical BSP layers with different names:  
         <filename>meta-crownbay</filename> and <filename>meta-mymachine</filename>.  
         You need to change your configurations so that they work for your new BSP and 
-        your particular hardware.  
-        We will look first at the configurations, which are all done in the layer’s 
-        <filename>conf</filename> directory.
+        your particular hardware.
+        The following sections look at each of these areas of the BSP.
     </para>
 
-    <para>
-        First, since in this example the new BSP will not support EMGD we will get rid of the 
-        <filename>crownbay.conf</filename> file and then rename the 
-        <filename>crownbay-noemgd.conf</filename> file to <filename>mymachine.conf</filename>.  
-        Much of what we do in the configuration directory is designed to help the Yocto Project 
-        build system work with the new layer and to be able to find and use the right software.  
-        The following two commands result in a single machine configuration file named 
-        <filename>mymachine.conf</filename>.  
-        <literallayout class='monospaced'>
+    <section id='changing-the-bsp-configuration'>
+        <title>Changing the BSP Configuration</title>
+   
+        <para>  
+            We will look first at the configurations, which are all done in the layer’s 
+            <filename>conf</filename> directory.
+        </para>
+
+        <para>
+            First, since in this example the new BSP will not support EMGD we will get rid of the 
+            <filename>crownbay.conf</filename> file and then rename the 
+            <filename>crownbay-noemgd.conf</filename> file to <filename>mymachine.conf</filename>.  
+            Much of what we do in the configuration directory is designed to help the Yocto Project 
+            build system work with the new layer and to be able to find and use the right software.  
+            The following two commands result in a single machine configuration file named 
+            <filename>mymachine.conf</filename>.  
+            <literallayout class='monospaced'>
      $ rm meta-mymachine/conf/machine/crownbay.conf
      $ mv meta-mymachine/conf/machine/crownbay-noemgd.conf \
      meta-mymachine/conf/machine/mymachine.conf
-        </literallayout>
-    </para>
+            </literallayout>
+        </para>
 
-    <para>
-        The next step makes changes to <filename>mymachine.conf</filename> itself.  
-        The only changes needed for this example are changes to the comment lines.
-        Here we simply substitute the Crown Bay name with an appropriate name.
-    </para>
+        <para>
+            The next step makes changes to <filename>mymachine.conf</filename> itself.  
+            The only changes needed for this example are changes to the comment lines.
+            Here we simply substitute the Crown Bay name with an appropriate name.
+        </para>
 
-    <para>
-        Note that inside the <filename>mymachine.conf</filename> is the 
-        <filename>PREFERRED_PROVIDER_virtual/kernel</filename> statement. 
-        This statement identifies the kernel that the BSP is going to use.
-        In this case the BSP is using <filename>linux-yocto</filename>, which is the 
-        current Linux Yocto kernel based on the Linux 2.6.37 release. 
-    </para>
+        <para>
+            Note that inside the <filename>mymachine.conf</filename> is the 
+            <filename>PREFERRED_PROVIDER_virtual/kernel</filename> statement. 
+            This statement identifies the kernel that the BSP is going to use.
+            In this case the BSP is using <filename>linux-yocto</filename>, which is the 
+            current Linux Yocto kernel based on the Linux 2.6.37 release. 
+        </para>
 
-    <para>
-        The next configuration file in the new BSP layer we need to edit is <filename>layer.conf</filename>.
-        This file identifies build information needed for the new layer.  
-        You can see the 
-        <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout-layer'>
-        Layer Configuration File</ulink> section in the Board Support Packages (BSP) Development Guide
-        for more information on this configuration file.  
-        Basically, we are changing the existing statements to work with our BSP. 
-    </para>
+        <para>
+            The next configuration file in the new BSP layer we need to edit is <filename>layer.conf</filename>.
+            This file identifies build information needed for the new layer.  
+            You can see the 
+            <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout-layer'>
+            Layer Configuration File</ulink> section in the Board Support Packages (BSP) Development Guide
+            for more information on this configuration file.  
+            Basically, we are changing the existing statements to work with our BSP. 
+        </para>
 
-    <para>
-        The file contains these statements that reference the Crown Bay BSP:
-        <literallayout class='monospaced'>
+        <para>
+            The file contains these statements that reference the Crown Bay BSP:
+            <literallayout class='monospaced'>
      BBFILE_COLLECTIONS += "crownbay"
      BBFILE_PATTERN_crownbay := "^${LAYERDIR}/"
      BBFILE_PRIORITY_crownbay = "6"
-        </literallayout>
-    </para>
+            </literallayout>
+        </para>
 
-    <para>
-        Simply substitute the machine string name <filename>crownbay</filename>
-        with the new machine name <filename>mymachine</filename> to get the following:
-        <literallayout class='monospaced'>
+        <para>
+            Simply substitute the machine string name <filename>crownbay</filename>
+            with the new machine name <filename>mymachine</filename> to get the following:
+            <literallayout class='monospaced'>
      BBFILE_COLLECTIONS_mymachine += "mymachine"
      BBFILE_PATTERN_mymachine := "^${LAYERDIR}/"
      BBFILE_PRIORITY_mymachine = "6"
-        </literallayout>
-    </para>
+            </literallayout>
+        </para>
+    </section>
 
-    <para>
-        Now we will take a look at the recipes in your new layer.  
-        The standard BSP structure has areas for BSP, graphics, core, and kernel recipes.  
-        When you create a BSP you use these areas for appropriate recipes and append files.  
-        Recipes take the form of <filename>.bb</filename> files.  
-        If you want to leverage the existing recipes the Yocto Project build system uses
-        but change those recipes you can use <filename>.bbappend</filename> files.  
-        All new recipes and append files for your layer must go in the layer’s 
-        <filename>recipes-bsp</filename>, <filename>recipes-kernel</filename>, 
-        <filename>recipes-core</filename>, and 
-        <filename>recipes-graphics</filename> directories.    
-    </para>
+    <section id='changing-the-recipes-in-your-bsp'>
+        <title>Changing the Recipes in Your BSP</title>
 
-    <para>
-        First, let's look at <filename>recipes-bsp</filename>.
-        For this example we are not adding any new BSP recipes.  
-        And, we only need to remove the formfactor we do not want and change the name of 
-        the remaining one that doesn't support EMGD.  
-        These commands take care of the <filename>recipes-bsp</filename> recipes:
-        <literallayout class='monospaced'>
+        <para>
+            Now we will take a look at the recipes in your new layer.  
+            The standard BSP structure has areas for BSP, graphics, core, and kernel recipes.  
+            When you create a BSP you use these areas for appropriate recipes and append files.  
+            Recipes take the form of <filename>.bb</filename> files.  
+            If you want to leverage the existing recipes the Yocto Project build system uses
+            but change those recipes you can use <filename>.bbappend</filename> files.  
+            All new recipes and append files for your layer must go in the layer’s 
+            <filename>recipes-bsp</filename>, <filename>recipes-kernel</filename>, 
+            <filename>recipes-core</filename>, and 
+            <filename>recipes-graphics</filename> directories.    
+        </para>
+
+        <section id='changing-recipes-bsp'>
+            <title>Changing <filename>recipes-bsp</filename></title>
+
+            <para>
+                First, let's look at <filename>recipes-bsp</filename>.
+                For this example we are not adding any new BSP recipes.  
+                And, we only need to remove the formfactor we do not want and change the name of 
+                the remaining one that doesn't support EMGD.  
+                These commands take care of the <filename>recipes-bsp</filename> recipes:
+                <literallayout class='monospaced'>
      $ rm &dash;rf meta-mymachine/recipes-graphics/xorg-xserver/*emgd*
      $ mv meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay-noemgd/ \
      meta-mymachine/recipes-bsp/formfactor/formfactor/mymachine
-        </literallayout>
-    </para>
+                </literallayout>
+            </para>
+        </section>
 
-    <para>
-        Now let's look at <filename>recipes-graphics</filename>.
-        For this example we want to remove anything that supports EMGD and 
-        be sure to rename remaining directories appropriately.  
-        The following commands clean up the <filename>recipes-graphics</filename> directory:
-        <literallayout class='monospaced'>
+        <section id='changing-recipes-graphics'>
+            <title>Changing <filename>recipes-graphics</filename></title>
+
+            <para>
+                Now let's look at <filename>recipes-graphics</filename>.
+                For this example we want to remove anything that supports EMGD and 
+                be sure to rename remaining directories appropriately.  
+                The following commands clean up the <filename>recipes-graphics</filename> directory:
+                <literallayout class='monospaced'>
      $ rm &dash;rf meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-emgd*
      $ rm &dash;rf meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay
      $ mv meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay-noemgd \
         meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/mymachine   
-        </literallayout>
-    </para>
+                </literallayout>
+            </para>
 
-    <para>
-        At this point the <filename>recipes-graphics</filename> directory just has files that 
-        support Video Electronics Standards Association (VESA) graphics modes and not EMGD.  
-    </para>
+            <para>
+                At this point the <filename>recipes-graphics</filename> directory just has files that 
+                support Video Electronics Standards Association (VESA) graphics modes and not EMGD.  
+            </para>
+        </section>
 
-    <para>
-        Now let's look at changes in <filename>recipes-core</filename>.
-        The file <filename>task-core-tools.bbappend</filename> in 
-        <filename>recipes-core/tasks</filename> appends the similarly named recipe
-        located in the local Yocto Project files at 
-        <filename>meta/recipes-core/tasks</filename>.
-        The "append" file in our layer right now is Crown Bay-specific and supports 
-        EMGD and non-EMGD.
-        Here are the contents of the file:
-        <literallayout class='monospaced'>
+        <section id='changing-recipes-core'>
+            <title>Changing <filename>recipes-core</filename></title>
+
+            <para>
+                Now let's look at changes in <filename>recipes-core</filename>.
+                The file <filename>task-core-tools.bbappend</filename> in 
+                <filename>recipes-core/tasks</filename> appends the similarly named recipe
+                located in the local Yocto Project files at 
+                <filename>meta/recipes-core/tasks</filename>.
+                The "append" file in our layer right now is Crown Bay-specific and supports 
+                EMGD and non-EMGD.
+                Here are the contents of the file:
+                <literallayout class='monospaced'>
      RRECOMMENDS_task-core-tools-profile_append_crownbay = " systemtap"
      RRECOMMENDS_task-core-tools-profile_append_crownbay-noemgd = " systemtap"
-        </literallayout>
-    </para>
+                </literallayout>
+            </para>
 
-    <para>
-        The <filename>RRECOMMENDS</filename> statements list packages that 
-        extend usability.
-        The first <filename>RRECOMMENDS</filename> statement can be removed, while the 
-        second one can be changed to reflect <filename>meta-mymachine</filename>:
-        <literallayout class='monospaced'>
+            <para>
+                The <filename>RRECOMMENDS</filename> statements list packages that 
+                extend usability.
+                The first <filename>RRECOMMENDS</filename> statement can be removed, while the 
+                second one can be changed to reflect <filename>meta-mymachine</filename>:
+                <literallayout class='monospaced'>
      RRECOMMENDS_task-core-tools-profile_append_mymachine = " systemtap"
-        </literallayout>
-    </para>
+                </literallayout>
+            </para>
+        </section>
 
-    <para>
-        Finally, let's look at <filename>recipes-kernel</filename> changes.
-        Recall that the BSP uses the <filename>linux-yocto</filename> kernel as determined
-        earlier in the <filename>mymachine.conf</filename>.
-        The recipe for that kernel is not located in the  
-        BSP layer but rather in the local Yocto Project files at 
-        <filename>meta/recipes-kernel/linux</filename> and is 
-        named <filename>linux-yocto-2.6.37.bb</filename>.
-        The <filename>SRCREV_machine</filename> and <filename>SRCREV_meta</filename>
-        statements point to the exact commits used by the Yocto Project development team
-        in their source repositories that identify the right kernel for our hardware.
-    </para>
+        <section id='changing-recipes-kernel'>
+            <title>Changing <filename>recipes-kernel</filename></title>
+
+            <para>
+                Finally, let's look at <filename>recipes-kernel</filename> changes.
+                Recall that the BSP uses the <filename>linux-yocto</filename> kernel as determined
+                earlier in the <filename>mymachine.conf</filename>.
+                The recipe for that kernel is not located in the  
+                BSP layer but rather in the local Yocto Project files at 
+                <filename>meta/recipes-kernel/linux</filename> and is 
+                named <filename>linux-yocto-2.6.37.bb</filename>.
+                The <filename>SRCREV_machine</filename> and <filename>SRCREV_meta</filename>
+                statements point to the exact commits used by the Yocto Project development team
+                in their source repositories that identify the right kernel for our hardware.
+            </para>
  
-    <para>
-        However, in the <filename>meta-mymachine</filename> layer in 
-        <filename>recipes-kernel/linux</filename> resides a <filename>.bbappend</filename>
-        file named <filename>linux-yocto-2.6.37.bbappend</filename> that 
-        is appended to the recipe of the same name in <filename>meta/recipes-kernel/link</filename>.
-        Thus, the <filename>SRCREV</filename> statements in the "append" file override
-        the more general statements found in <filename>meta</filename>.
-    </para>
+            <para>
+                However, in the <filename>meta-mymachine</filename> layer in 
+                <filename>recipes-kernel/linux</filename> resides a <filename>.bbappend</filename>
+                file named <filename>linux-yocto-2.6.37.bbappend</filename> that 
+                is appended to the recipe of the same name in <filename>meta/recipes-kernel/link</filename>.
+                Thus, the <filename>SRCREV</filename> statements in the "append" file override
+                the more general statements found in <filename>meta</filename>.
+            </para>
 
-    <para>
-        The <filename>SRCREV</filename> statements in the "append" file currently identify
-        the kernel that supports the Crown Bay BSP with and without EMGD support.
-        Here are the statements: 
-        <literallayout class='monospaced'>
+            <para>
+                The <filename>SRCREV</filename> statements in the "append" file currently identify
+                the kernel that supports the Crown Bay BSP with and without EMGD support.
+                Here are the statements: 
+                <literallayout class='monospaced'>
      SRCREV_machine_pn-linux-yocto_crownbay ?= \
         "372c0ab135978bd8ca3a77c88816a25c5ed8f303"
      SRCREV_meta_pn-linux-yocto_crownbay ?= \
@@ -352,74 +378,74 @@
         "372c0ab135978bd8ca3a77c88816a25c5ed8f303"
      SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= \
         "d5d3c6480d61f83503ccef7fbcd765f7aca8b71b"
-        </literallayout>
-    </para>
+                </literallayout>
+            </para>
 
-    <para>
-        You will notice that there are two pairs of <filename>SRCREV</filename> statements.  
-        The top pair identifies the kernel that supports
-        EMGD, which we don’t care about in this example.  
-        The bottom pair identifies the kernel that we will use:  
-        <filename>linux-yocto</filename>.  
-        At this point though, the unique commit strings all are still associated with 
-        Crown Bay and not <filename>meta-mymachine</filename>.
-    </para>
+            <para>
+                You will notice that there are two pairs of <filename>SRCREV</filename> statements.  
+                The top pair identifies the kernel that supports
+                EMGD, which we don’t care about in this example.  
+                The bottom pair identifies the kernel that we will use:  
+                <filename>linux-yocto</filename>.  
+                At this point though, the unique commit strings all are still associated with 
+                Crown Bay and not <filename>meta-mymachine</filename>.
+            </para>
 
-    <para>  
-        To fix this situation in <filename>linux-yocto-2.6.37.bbappend</filename>
-        we delete the two <filename>SRCREV</filename> statements that support 
-        EMGD (the top pair).
-        We also change the remaining pair to specify <filename>mymachine</filename>
-        and insert the commit identifiers to identify the kernel in which we 
-        are interested, which will be based on the <filename>atom-pc-standard</filename>
-        kernel.
-        Here are the final <filename>SRCREV</filename> statements:
-        <literallayout class='monospaced'>
+            <para>  
+                To fix this situation in <filename>linux-yocto-2.6.37.bbappend</filename>
+                we delete the two <filename>SRCREV</filename> statements that support 
+               EMGD (the top pair).
+                We also change the remaining pair to specify <filename>mymachine</filename>
+                and insert the commit identifiers to identify the kernel in which we 
+                are interested, which will be based on the <filename>atom-pc-standard</filename>
+                kernel.
+                Here are the final <filename>SRCREV</filename> statements:
+                <literallayout class='monospaced'>
      SRCREV_machine_pn-linux-yocto-_mymachine ?= \ 
         "fce17f046d3756045e4dfb49221d1cf60fcae329"
      SRCREV_meta_pn-linux-yocto-stable_mymachine ?= \ 
         "84f1a422d7e21fbc23a687035bdf9d42471f19e0"
-        </literallayout>
-    </para>
+                </literallayout>
+            </para>
 
-    <para>
-        If you are familiar with Git repositories you probably won’t have trouble locating the 
-        exact commit strings in the Yocto Project source repositories you need to change 
-        the <filename>SRCREV</filename> statements.  
-        You can find all the <filename>machine</filename> and <filename>meta</filename> 
-        branch points (commits) for the <filename>linux-yocto-2.6.37</filename> kernel 
-        <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/linux-yocto-2.6.37'>here</ulink>.  
-    </para>
+            <para>
+                If you are familiar with Git repositories you probably won’t have trouble locating the 
+                exact commit strings in the Yocto Project source repositories you need to change 
+                the <filename>SRCREV</filename> statements.  
+                You can find all the <filename>machine</filename> and <filename>meta</filename> 
+                branch points (commits) for the <filename>linux-yocto-2.6.37</filename> kernel 
+                <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/linux-yocto-2.6.37'>here</ulink>.  
+            </para>
 
-    <para>
-        If you need a little more assistance after going to the link then do the following:
-        <orderedlist>
-            <listitem><para>Expand the list of branches by clicking <filename>[…]</filename></para></listitem>
-            <listitem><para>Click on the <filename>yocto/standard/common-pc/atom-pc</filename> 
-                branch</para></listitem>
-            <listitem><para>Click on the commit column header to view the top commit</para></listitem>
-            <listitem><para>Copy the commit string for use in the 
-                <filename>linux-yocto-2.6.37.bbappend</filename> file</para></listitem>
-        </orderedlist>
-    </para>
+            <para>
+                If you need a little more assistance after going to the link then do the following:
+                <orderedlist>
+                    <listitem><para>Expand the list of branches by clicking <filename>[…]</filename></para></listitem>
+                    <listitem><para>Click on the <filename>yocto/standard/common-pc/atom-pc</filename> 
+                        branch</para></listitem>
+                    <listitem><para>Click on the commit column header to view the top commit</para></listitem>
+                    <listitem><para>Copy the commit string for use in the 
+                        <filename>linux-yocto-2.6.37.bbappend</filename> file</para></listitem>
+                </orderedlist>
+            </para>
 
-    <para>
-        For the <filename>SRCREV</filename> statement that points to the <filename>meta</filename>
-        branch use the same procedure except expand the <filename>meta</filename>
-        branch in step 2 above.
-    </para>
+            <para>
+                For the <filename>SRCREV</filename> statement that points to the <filename>meta</filename>
+                branch use the same procedure except expand the <filename>meta</filename>
+                branch in step 2 above.
+            </para>
 
-    <para>
-        Also in the <filename>linux-yocto-2.6.37.bbappend</filename> file are 
-        <filename>COMPATIBLE_MACHINE</filename>, <filename>KMACHINE</filename>, 
-        and <filename>KERNEL_FEATURES</filename> statements.  
-        Two sets of these exist: one set supports EMGD and one set does not.
-        Because we are not interested in supporting EMGD those three can be deleted.
-        The remaining three must be changed so that <filename>mymachine</filename> replaces
-        <filename>crownbay-noemgd</filename> and <filename>crownbay</filename>.
-        Here is the final <filename>linux-yocto-2.6.37.bbappend</filename> file after all 
-        the edits:
-        <literallayout class='monospaced'>
+            <para>
+                Also in the <filename>linux-yocto-2.6.37.bbappend</filename> file are 
+                <filename>COMPATIBLE_MACHINE</filename>, <filename>KMACHINE</filename>, 
+                and <filename>KERNEL_FEATURES</filename> statements.  
+                Two sets of these exist: one set supports EMGD and one set does not.
+                Because we are not interested in supporting EMGD those three can be deleted.
+                The remaining three must be changed so that <filename>mymachine</filename> replaces
+                <filename>crownbay-noemgd</filename> and <filename>crownbay</filename>.
+                Here is the final <filename>linux-yocto-2.6.37.bbappend</filename> file after all 
+                the edits:
+                <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
      COMPATIBLE_MACHINE_mymachine = "mymachine"
@@ -430,24 +456,30 @@
         "fce17f046d3756045e4dfb49221d1cf60fcae329"
      SRCREV_meta_pn-linux-yocto_mymachine ?= \
         "84f1a422d7e21fbc23a687035bdf9d42471f19e0"
-        </literallayout>
-    </para>
+                </literallayout>
+            </para>
+        </section>
+    </section>
 
-    <para>
-        In summary, the edits to the layer’s recipe files result in removal of any files and 
-        statements that do not support your targeted hardware in addition to the inclusion 
-        of any new recipes you might need.  
-        In this example, it was simply a matter of ridding the new layer 
-        <filename>meta-machine</filename> of any code that supported the EMGD features
-        and making sure we were identifying the kernel that supports our example, which
-        is the <filename>atom-pc-standard</filename> kernel.  
-        We did not introduce any new recipes to the layer. 
-    </para>
+    <section id='bsp-recipe-change-summary'>
+        <title>BSP Recipe Change Summary</title>
 
-    <para>
-        Finally, it is also important to update the layer’s <filename>README</filename>
-        file so that the information in it reflects your BSP.
-    </para>
+        <para>
+            In summary, the edits to the layer’s recipe files result in removal of any files and 
+            statements that do not support your targeted hardware in addition to the inclusion 
+            of any new recipes you might need.  
+            In this example, it was simply a matter of ridding the new layer 
+            <filename>meta-machine</filename> of any code that supported the EMGD features
+            and making sure we were identifying the kernel that supports our example, which
+            is the <filename>atom-pc-standard</filename> kernel.  
+            We did not introduce any new recipes to the layer. 
+        </para>
+
+        <para>
+            Finally, it is also important to update the layer’s <filename>README</filename>
+            file so that the information in it reflects your BSP.
+        </para>
+    </section>
 </section>
 
 <section id='preparing-for-the-build-app'>
