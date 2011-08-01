@@ -59,7 +59,8 @@ XSLTOPTS = --stringparam html.stylesheet style.css \
            --stringparam  section.label.includes.component.label 1 \
            --xinclude
 ALLPREQ = html pdf tarball
-TARFILES = style.css dev-manual.html dev-manual.pdf figures/dev-title.png figures/bsp-dev-flow.png
+TARFILES = style.css dev-manual.html dev-manual.pdf figures/dev-title.png figures/bsp-dev-flow.png \
+           figures/index-downloads.png figures/source-repos.png figures/yp-download.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
