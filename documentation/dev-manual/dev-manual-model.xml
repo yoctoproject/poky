@@ -284,6 +284,26 @@
                 kernel to generate the new kernel image - a source generator if you will.
             </para>
 
+            <para>  
+                You can find a web interface to the Yocto Project source repository at 
+                <ulink url='http://git.yoctoproject.org/'></ulink>.  
+                Within the interface you will see groups of related source code, each of which can 
+                be cloned using Git to result in a working Git repository on your local system 
+                (referred to as the "local Yocto Project files" in this manual).
+                The Yocto Project supports four types of kernels in its source repositories at 
+                <ulink url='http://git.yoctoproject.org/'></ulink>:
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>linux-yocto-2.6.34</filename></emphasis> - The 
+                    stable Linux Yocto kernel that is based on the Linux 2.6.34 release.</para></listitem>
+                    <listitem><para><emphasis><filename>linux-yocto-2.6.37</filename></emphasis> - The current
+                    Linux Yocto kernel that is based on the Linux 2.6.37 release.</para></listitem>
+                    <listitem><para><emphasis><filename>linux-yocto-dev</filename></emphasis> - A development
+                    kernel based on the Linux 2.6.39-rc1 release.</para></listitem>
+                    <listitem><para><emphasis><filename>linux-2.6</filename></emphasis> - A kernel based on 
+                    minimal Linux mainline tracking.</para></listitem>
+                </itemizedlist>
+            </para>
+
             <para>
                 For a complete discussion of the Yocto Project kernel's architcture and its branching strategy,
                 see the <ulink url='http://www.yoctoproject.org/docs/1.1/kernel-manual/kernel-manual.html'>
@@ -303,10 +323,6 @@
             </para> -->
 
             <para>
-                [WRITER'S NOTE:  Need new flow illustration here]
-            </para>
-
-            <para>
                 <orderedlist>
                     <listitem><para><emphasis>Set up your host development system to support 
                         development using the Yocto Project</emphasis>:  See  
@@ -317,9 +333,8 @@
                         in the Yocto Project Quick Start for requirements.
                         You will also need a release of Yocto Project installed on the host.</para></listitem>
                     <listitem><para><emphasis>Establish a local copy of the Yocto Project files on your 
-                        system</emphasis>:  You need to have the Yocto Project files available on your host system. 
-                        Having the Yocto Project files on your system gives you access to the build
-                        process and tools you need.
+                        system</emphasis>:  Having the Yocto Project files on your system gives you access to 
+                        the build process and tools you need.
                         For information on how to get these files, see the bulleted item
                         <link linkend='local-yp-release'>Yocto Project Release</link> in  
                         <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.
@@ -339,30 +354,36 @@
                         all the relevant information for the project that the Yocto Project build 
                         system knows about.</para>
                         <para></para></listitem>
-                    <listitem><para><emphasis>Iteratively make kernel configuration changes
+                    <listitem><para><emphasis>Prepare to use the <filename>menuconfig</filename> tool</emphasis>:  
+                        The tool <filename>menuconfig</filename> used within Bitbake provides an 
+                        interactive method with which you can configure the kernel.
+                        In order to use <filename>menuconfig</filename> you need to first source an environment
+                        setup script found in the local <filename>poky</filename> Git repository.
+                        The script is named <filename>oe-init-build-env</filename>.</para></listitem>
+                    <listitem><para><emphasis>Make kernel configuration changes
                         to your local kernel layer</emphasis>:  Use <filename>menuconfig</filename>
                         to enable and disable the configurations to the Linux Yocto kernel.  
                         Using <filename>menuconfig</filename> allows you to develop and test the 
                         configuration changes you are making to the kernel.</para></listitem>                      
-                    <listitem><para><emphasis>Iteratively make kernel recipe changes to your new kernel 
-                        layer</emphasis>:  The standard layer structure organizes the files you need to edit in 
-                        <filename>conf</filename> and several <filename>recipes-*</filename> within the 
-                        layer.
+                    <listitem><para><emphasis>Make kernel recipe changes to your new kernel 
+                        layer</emphasis>:  The standard layer structure organizes recipe files you 
+                        need to edit in several <filename>recipes-*</filename> directories within the 
+                        kernel layer.
                         Recipe changes include altering recipes (<filename>.bb</filename> files), removing 
                         recipes you don't use, and adding new recipes that you need to support your hardware.
                         </para></listitem>
                     <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
                         changes to your kernel layer there remains a few things 
                         you need to do for the Yocto Project build system in order for it to create your image.  
-                        You need to get the build environment ready by sourcing an environment setup script 
-                        and you need to be sure two key configuration files are configured appropriately.</para>
+                        If you have not done so you need to get the build environment ready by sourcing 
+                        the environment setup script described earlier.
+                        You also need to be sure two key configuration files are configured appropriately.</para>
                         <para>The entire process for building an image is overviewed in the 
                         <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>
                         Building an Image</ulink> section of the Yocto Project Quick Start.    
                         You might want to reference this information.</para></listitem>
                     <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project uses the BitBake 
-                        tool to build images based on the type of image 
-                        you want to create.  
+                        tool to build images based on the type of image you want to create.  
                         You can find more information on BitBake 
                         <ulink url='http://bitbake.berlios.de/manual/'>here</ulink>.</para>
                         <para>The build process supports several types of images to satisfy different needs.  
@@ -411,39 +432,17 @@
                                image.</para></listitem>
                         </itemizedlist>
                     </para></listitem>
-                    <listitem><para><emphasis>Make your configuration and recipe changes available
-                        in the kernel layer</emphasis>:  Up to this point all the changes to the 
+                    <listitem><para><emphasis>Make your configuration changes available
+                        in the kernel layer</emphasis>:  Up to this point all the configuration changes to the 
                         kernel have been done and tested iteratively.  
                         Once they are tested and ready to go you can move them into the kernel layer, 
                         which allows you to distribute the layer.</para></listitem>
-                    <listitem><para><emphasis>Make your configuration and recipe changes to the 
+                    <listitem><para><emphasis>Push your configuration and recipe changes upstream to the 
                         linux Yocto Git repository (in-tree changes)</emphasis>:  If the changes you made
                         are suited for all Linux Yocto users you might want to push the changes up into 
                         the Linux Yocto Git repository so that they become part of the kernel tree
                         and available to everyone using the kernel.</para></listitem> 
                 </orderedlist>
-            </para>
-
-            <para>  
-                You can find a web interface to the Yocto Project source repository at 
-                <ulink url='http://git.yoctoproject.org/'></ulink>.  
-                Within the interface you will see groups of related source code, each of which can 
-                be cloned using Git to result in a working Git repository on your local system 
-                (referred to as the "local Yocto Project files" in this manual).
-                The Yocto Project supports four types of kernels in its source repositories at 
-                <ulink url='http://git.yoctoproject.org/'></ulink>:
-                <itemizedlist>
-                    <listitem><para><emphasis><filename>linux-yocto-2.6.34</filename></emphasis> - The 
-                    stable Linux Yocto kernel that is based on the Linux 2.6.34 release.</para></listitem>
-                    <listitem><para><emphasis><filename>linux-yocto-2.6.37</filename></emphasis> - The current
-                    Linux Yocto kernel that is based on the Linux 2.6.37 release.</para></listitem>
-                    <listitem><para><emphasis><filename>linux-yocto-dev</filename></emphasis> - A development
-                    kernel based on the Linux 2.6.39-rc1 release.</para></listitem>
-                    <listitem><para><emphasis><filename>linux-2.6</filename></emphasis> - A kernel based on 
-                    minimal Linux mainline tracking.
-                    [WRITER'S NOTE: I don't know which Git repository the user needs to clone to get this
-                    repository on their development system.]</para></listitem>
-                </itemizedlist>
             </para>
         </section>
     </section>
