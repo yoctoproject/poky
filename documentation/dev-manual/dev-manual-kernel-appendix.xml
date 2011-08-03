@@ -5,248 +5,355 @@
 
 <title>Kernel Modification Example</title>
 
+    <para>
+        Kernel modification involves changing or adding configurations to an existing kernel, or 
+        adding recipes to the kernel that are needed to support specific hardware features.  
+        The process is similar to creating a Board Support Package (BSP) except that it invloves
+        isolating your work in a kernel layer and the use of <filename>menuconfig</filename>
+        to help make configuration data easily identifiable.
+    </para>
+
+    <para>
+        This section presents a simple example that shows how to modify the kernel.
+        The example uses a three-step approach that is convenient for making kernel modifications.
+        <orderedlist>
+            <listitem><para>Iteratively determine and set kernel configurations and make 
+                kernel recipe changes.</para></listitem>
+            <listitem><para>Apply your configuration changes to your local kernel layer.
+                </para></listitem>
+            <listitem><para>Push your configuration and recipe changes upstream into the 
+                Yocto Project source repositories to make them available to the community.
+                </para></listitem>
+        </orderedlist>
+    </para>
+
+    <section id='modifying-a-kernel-example'>
+        <title>Modifying a Kernel Example</title>
+
         <para>
-            Kernel modification involves changing or adding configurations to an existing kernel, or 
-            adding recipes to the kernel that are needed to support specific hardware features.  
-            The process is similar to creating a Board Support Package (BSP) except that it invloves
-            isolating your work in a kernel layer and the use of <filename>menuconfig</filename>
-            to help make configuration data easily identifiable.
+            The example changes kernel configurations to support the VFAT filesystem and 
+            allow the user to print out a simple text file from the mounted VFAT filesystem.
+            The filesystem used will be an image filesystem rather than a filesystem on some 
+            external drive such as a USB stick or external drive.
+            The example uses the <filename>linux-yocto-2.6.37</filename> kernel.
         </para>
 
         <para>
-            This section presents a brief overview of the kernel structure and then provides a simple 
-            example that shows how to modify the kernel.
+            For a general flow of the example, see 
+            <xref linkend='kernel-modification-workflow'>Kernel Modification Workflow</xref>
+            earlier in this manual.
         </para>
 
-        <section id='yocto-project-kernel'>
-            <title>Yocto Project Kernel Overview</title>
+        <section id='setting-up-yocto-project-kernel-example'>
+            <title>Setting Up Yocto Project</title>
 
             <para>
-                When one thinks of the source files for a kernel they usually think of a fixed structure 
-                of files that contain kernel patches.
-                The Yocto Project, however, employs mechanisims that in a sense result in a kernel source
-                generator.
+                You need to have the Yocto Project files available on your host system.  
+                You can get files through tarball extraction or by cloning the <filename>poky</filename>
+                Git repository.  
+                See the bulleted item
+                <link linkend='local-yp-release'>Yocto Project Release</link> in
+                <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual
+                for information on how to get these files.
             </para>
 
             <para>
-                The Yocto Project uses the source code management (SCM) tool Git to manage and track Yocto 
-                Project files.
-                Git employs branching strategies that effectively produce a tree-like structure whose 
-                branches represent diversions from more general code. 
-                For example, suppose two kernels are basically identical with the exception of a couple
-                different features in each.
-                In the Yocto Project source repositories managed by Git a main branch can contain the 
-                common or shared
-                parts of the kernel source and two branches that diverge from that common branch can 
-                each contain the features specific to the respective kernel.
-                The result is a managed tree whose "leaves" represent the end of a specific path that yields
-                a set of kernel source files necessary for a specific piece of hardware and its features.
-            </para>
-         
-            <para>
-                A big advantage to this scheme is the sharing of common features by keeping them in 
-                "larger" branches that are further up the tree.  
-                This practice eliminates redundant storage of similar features shared among kernels.
-            </para>
-
-            <para>
-                When you build the kernel on your development system all files needed for the build
-                are taken from the Yocto Project source repositories pointed to by the 
-                <filename>SRC_URI</filename> variable and gathered in a temporary work area
-                where they are subsequently used to create the unique kernel.
-                Thus, in a sense, the process constructs a local source tree specific to your 
-                kernel to generate the new kernel image - a source generator if you will.
-            </para>
-
-            <para>
-                For a complete discussion of the Yocto Project kernel's architcture and its branching strategy,
-                see the <ulink url='http://www.yoctoproject.org/docs/1.1/kernel-manual/kernel-manual.html'>
-                The Yocto Project Kernel Architecture and Use Manual</ulink>.
-            </para>
-
-            <para>  
-                You can find a web interface to the Yocto Project source repository at 
-                <ulink url='http://git.yoctoproject.org/'></ulink>.  
-                Within the interface you will see groups of related source code, each of which can 
-                be cloned using Git to result in a working Git repository on your local system 
-                (referred to as the "local Yocto Project files" in this manual).
-                The Yocto Project supports four types of kernels in its source repositories at 
-                <ulink url='http://git.yoctoproject.org/'></ulink>:
-                <itemizedlist>
-                    <listitem><para><emphasis><filename>linux-yocto-2.6.34</filename></emphasis> - The 
-                    stable Linux Yocto kernel that is based on the Linux 2.6.34 release.</para></listitem>
-                    <listitem><para><emphasis><filename>linux-yocto-2.6.37</filename></emphasis> - The current
-                    Linux Yocto kernel that is based on the Linux 2.6.37 release.</para></listitem>
-                    <listitem><para><emphasis><filename>linux-yocto-dev</filename></emphasis> - A development
-                    kernel based on the Linux 2.6.39-rc1 release.</para></listitem>
-                    <listitem><para><emphasis><filename>linux-2.6</filename></emphasis> - A kernel based on 
-                    minimal Linux mainline tracking.
-                    [WRITER'S NOTE: I don't know which Git repository the user needs to clone to get this
-                    repository on their development system.]</para></listitem>
-                </itemizedlist>
+                Once you have the local <filename>poky</filename> Git repository set up, 
+                you have many development branches from which you can work. 
+                From inside the repository you can see the branch names and the tag names used 
+                in the Git repository using either of the following two commands:
+                <literallayout class='monospaced'>
+     $ git branch -a
+     $ git tag -l
+                </literallayout> 
+                For this example we are going to use the Yocto Project 1.1 Release, 
+                which maps to the <filename>1.1</filename> branch in the repository. 
+                These commands create a local branch named <filename>1.1</filename>
+                that tracks the remote branch of the same name.
+                <literallayout class='monospaced'>
+     $ cd poky
+     $ git checkout -b 1.1 origin/1.1
+     Switched to a new branch '1.1'
+                </literallayout>
             </para>
         </section>
 
-        <section id='modifying-a-kernel-example'>
-            <title>Modifying a Kernel Example</title>
+        <section id='getting-a-local-copy-of-the-kernel-files'>
+            <title>Getting a Local Copy of the Kernel Files</title>
 
             <para>
-                This section presents a simple example that illustrates kernel modification
-                based on the <filename>linux-yocto-2.6.37</filename> kernel.
-                The example uses the audio and mixer capabilities supported by the 
-                <ulink url='http://www.alsa-project.org/main/index.php/Main_Page'>Advanced Linux 
-                Sound Architecture (ALSA) Project</ulink>.
-                As the example progresses you will see how to do the following:
-                <itemizedlist>
-                    <listitem><para>Iteratively modify a base kernel locally.</para></listitem>      
-                    <listitem><para>Provide a recipe-based solution for your modified kernel.
-                    </para></listitem>
-                    <listitem><para>Proved an "in-tree" solution for your modified kernel
-                    (i.e. make the modifcations part of the Yocto Project).</para></listitem>
-                </itemizedlist>
+                You need to have a local copy of the Linux Yocto kernel files on your system.
+                Yocto Project files available on your host system.  
+                You must create a local Git repository of these files.
+                See the bulleted item
+                <link linkend='local-kernel-files'>Linux Yocto Kernel</link> in  
+                <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual
+                for information on how to get these files.
+            </para>
+        </section>
+
+        <section id='create-a-layer-for-your-kernel-work'>
+            <title>Create a Layer for Your Kernel Work</title>
+
+            <para>
+                It is always good to isolate your work using your own layer.
+                Doing so allows you to experiment and easily start over should things go wrong. 
+                This example uses a layer named <filename>meta-vfatsupport</filename>.
             </para>
 
             <para>
-                The example flows as follows:
+                When you set up a layer for kernel work you should follow general layout
+                guidelines layers. 
+                For example, if you were creating a BSP you would want to follow the layout
+                described in the
+                <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout'>
+                Example Filesystem Layout</ulink> section of the Board Support Package (BSP) Development
+                Guide.
+                For kernel layers, you can start with a skeleton layer 
+                named <filename>meta-skeleton</filename> found in your local 
+                Yocto Project file directory structure (the <filename>poky</filename> Git 
+                repository or the directory structure resulting from unpacking the Yocto Project
+                release tarball).
+            </para>
+
+            <para>  
+                To create your kernel layer simply copy the <filename>meta-skeleton</filename>
+                layer and rename it <filename>meta-vfatsupport</filename>. 
+                The following command sets up the layer inside the <filename>poky</filename>
+                Git repository:
+                <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ cp -r meta-skeleton meta-vfatsupport
+                </literallayout>
             </para>
 
             <para>
-                <itemizedlist>
-                    <listitem><para>Be sure your host development system is set up to support 
-                    development using the Yocto Project. 
-                    See  
-                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>
-                    The Linux Distributions</ulink> section and  
-                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>
-                    The Packages</ulink> section both
-                    in the Yocto Project Quick Start for requirements.
-                    You will also need a release of Yocto Project installed on the host.</para></listitem>
-                    <listitem><para>Set up your environment for optimal local kernel development.
-                    </para></listitem>
-                    <listitem><para>Create a layer to isolate your kernel work.</para></listitem>
-                    <listitem><para>Next item.</para></listitem>
-                    <listitem><para>Next item.</para></listitem>
-                    <listitem><para>Next item.</para></listitem>
-                    <listitem><para>Next item.</para></listitem>
-                </itemizedlist>        
+                In the new layer you will find areas for configuration changes 
+                (<filename>conf</filename>) and recipe changes (<filename>recipes-skeleton</filename>).
             </para>
 
-            <section id='setting-up-yocto-project-kernel-example'>
-                <title>Setting Up Yocto Project</title>
+            <para>
+                You need to modify the structure a bit for your work. 
+                These commands add some further structure and names that the Yocto Project build
+                environment expect:
+                <literallayout class='monospaced'>
+     $ mkdir meta-vfatsupport/images
+     $ mkdir meta-vfatsupport/recipes-bsp
+     $ mv meta-vfatsupport/recipes-skeleton meta-vfatsupport/recipes-kernel
+     $ mkdir meta-vfatsupport/recipes-kernel/linux
+     $ mkdir meta-vfatsupport/recipes-kernel/linux/linux-yocto
+                </literallayout>
+            </para>
 
-                <para>
-                    You need to have the Yocto Project files available on your host system.  
-                    The process is identical to that described in the 
-                    <xref linkend='getting-setup'>"Getting Setup"</xref> section earlier in this 
-                    manual.
-                    Be sure to either set up a local Git repository for <filename>poky</filename>
-                    or download and unpack the Yocto Project release tarball.  
-                </para>
-            </section>
+            <para>
+                The last piece you need for your layer is a 
+                <filename>linux-yocto_git.bbappend</filename> file inside
+                <filename>meta-vfatsupport/recipes-kernel/linux</filename>.
+                This file needs the following content to make the build process aware of the 
+                new layer's location:
+                <literallayout class='monospaced'>
+     FILESEXTRAPATHS := "${THISDIR}/${PN}"
+                </literallayout>
+            </para>
 
-            <section id='create-a-git-repository-of-poky-extras'>
-                <title>Create a Git Repository of <filename>poky-extras</filename></title>
+            <para>
+                [WRITER'S NOTE:  We need a better <filename>meta-skeleton</filename> layer 
+                that is part of <filename>poky</filename>.
+                It should have a structure that includes <filename>images</filename>,
+                <filename>recipes-bsp</filename>, <filename>recipes-kernel</filename>, and 
+                so forth.
+                For now this step of the example is brute-forcing the structure with shell 
+                commands to set up the minimum structure and include the 
+                <filename>.bbappend</filename> file.
+            </para>
+        </section>
 
-                <para>
-                    Everytime you change a configuration or add a recipe to the kernel you need to 
-                    do a fetch from the Linux Yocto kernel source repositories.
-                    This can get tedious and time consuming if you need to fetch the entire 
-                    Linux Yocto 2.6.37 Git repository down from the Internet everytime you make a change
-                    to the kernel.  
-                </para>
-
-                <para>
-                    You can get around this by setting up a <filename>meta-kernel-dev</filename>
-                    area on your local system.  
-                    This area contains "append" files for every kernel recipe, which also include
-                    a <filename>KSRC</filename> statement that points to the kernel source files.
-                    You can set up the environment so that the <filename>KSRC</filename> points to the
-                    <filename>meta-kernel-dev</filename>, thus pulling source from a local area.
-                    This setup can speed up development time. 
-                 </para>
-
-                 <para>
-                    To get set up you need to do two things: create a local Git repository 
-                    of the <filename>poky-extras</filename> repository, and create a bare clone of the 
-                    Linux Yocto 2.6.37 kernel Git repository.
-                 </para>
-
-                 <para>
-                    The following transcript shows how to clone the <filename>poky-extras</filename> 
-                    Git repository into the current working directory, which is <filename>poky</filename>
-                    in this example.  
-                    The command creates the repository in a directory named <filename>poky-extras</filename>:
-                    <literallayout class='monospaced'>
-     $ git clone git://git.yoctoproject.org/poky-extras
-     Initialized empty Git repository in /home/scottrif/poky/poky-extras/.git/
-     remote: Counting objects: 532, done.
-     remote: Compressing objects: 100% (472/472), done.
-     remote: Total 532 (delta 138), reused 307 (delta 39)
-     Receiving objects: 100% (532/532), 534.28 KiB | 362 KiB/s, done.
-     Resolving deltas: 100% (138/138), done.
-                    </literallayout>
-                </para>
-
-                <para>
-                    This transcript shows how to clone a bare Git repository of the Linux Yocto 
-                    2.6.37 kernel:
-                    <literallayout class='monospaced'>
-     $ git clone --bare git://git.yoctoproject.org/linux-yocto-2.6.37
-     Initialized empty Git repository in /home/scottrif/linux-yocto-2.6.37.git/
-     remote: Counting objects: 1886034, done.
-     remote: Compressing objects: 100% (314326/314326), done.
-     remote: Total 1886034 (delta 1570202), reused 1870335 (delta 1554798)
-     Receiving objects: 100% (1886034/1886034), 401.51 MiB | 714 KiB/s, done.
-     Resolving deltas: 100% (1570202/1570202), done.
-                    </literallayout>
-                </para>
-
-                <para>
-                    The bare clone of the Linux Yocto 2.6.37 kernel on your local system mirrors
-                    the upstream repository of the kernel.
-                    You can effectively point to this local clone now during development to avoid 
-                    having to fetch the entire Linux Yocto 2.6.37 kernel every time you make a 
-                    kernel change.
-                </para>
-            </section>
-
-            <section id='create-a-layer-for-your-kernel-work'>
-                <title>Create a Layer for Your Kernel Work</title>
-
-                <para>
-                    It is always good to isolate your work using your own layer.
-                    Doing so allows you to experiment and easily start over should things go wrong. 
-                    This example uses a layer named <filename>meta-amixer</filename>.
-                </para>
-
-                <para>
-                    When you set up a layer for kernel work you should follow the general layout
-                    guidelines as described for BSP layers. 
-                    This layout is described in the
-                    <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout'>
-                    Example Filesystem Layout</ulink> section of the Board Support Package (BSP) Development
-                    Guide.  
-                    In the standard layout you will notice a suggested structure for recipes and  
-                    configuration information.  
-                    [WRITER'S NOTE: The <filename>meta-elc</filename> example uses an 
-                    <filename>images</filename> directory.
-                    Currently, <filename>images</filename> is not part of the standard BSP layout.
-                    I need to find out from Darren if this directory is required for kernel work.]
-                </para>
-
-                <para>
-                    [WRITER'S NOTE:  I need a paragraph here describing how to set up the layer. 
-                    I am not sure if you should copy an existing BSP layer and modify from there.
-                    Or, if you should just look at a BSP layer and then create your own files.
-                    Email to Darren on this but no answer yet.]
-                </para>
-            </section>
-
-            <section id='making-changes-to-your-kernel-layer'>
-                <title>Making Changes to Your Kernel Layer</title>
+        <section id='prepare-to-use-menuconfig'>
+            <title>Prepare to use <filename>menuconfig</filename></title>
             
-                <para>
-                    In the standard layer structure you have several areas that you need to examine or 
+            <para>
+                The <filename>menuconfig</filename> tool provides an interactive method with which
+                to set kernel configurations.
+                In order to use <filename>menuconfig</filename> from within the BitBake environment
+                you need to source an environment setup script.
+                This script is located in the local Yocto Project file structure and is called
+                <filename>oe-init-build-env</filename>.
+            </para>
+
+            <para>
+                The following command sets up the environment:
+                <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ source oe-init-build-env
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='make-configuration-changes-to-the-kernel'>
+            <title>Make Configuration Changes to the Kernel</title>
+            
+            <para>
+                After setting up the environment to run <filename>menuconfig</filename> you are ready 
+                to use the tool to interactively change the kernel configuration.
+                In this example we are basing our changes on the <filename>linux-yocto-2.6.37</filename>
+                kernel.
+                The Yocto Project build environment recognizes this kernel as 
+                <filename>linux-yocto</filename>.
+                Thus, the following command from the shell in which you previously sourced the 
+                environment initialization script launches <filename>menuconfig</filename>:
+                <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c menuconfig
+                </literallayout>
+            </para>
+
+            <para>
+                [WRITER'S NOTE: Stuff from here down are crib notes]
+            </para>
+
+            <para>
+                Once menuconfig fires up you see all kinds of categories that you can interactively
+                investigate.
+                If they have an "M" in it then the feature is "modularized".
+                I guess that means that means that it needs to be manually linked in when the 
+                kernel is booted??? (Not sure).
+                If they have an "*" then the feature is automatically part of the kernel.]
+            </para>
+
+            <para>
+                So the tmp/work/ area was created in poky and there is a .config file in there and
+                a .config.old file.  
+                The old one must have been created when I exited from menuconfig after poking around 
+                a bit.
+                Nope - appears to just be created automatically.
+            </para>
+
+            <para>
+                A good practice is to first determine what configurations you have for the kernel.
+                You can see the results by looking in the .config file in the build/tmp/work/qemux86-poky-linux area
+                of the local YP files. 
+                There is a directory named linux-yocto-2.6.37* in the directory.
+                In that directory is a directory named linux-qemux86-standard-build.
+                In that directory you will find a file named .config that is the configuration file
+                for the kernel that will be used when you build the kernel.
+                You can open that file up and examine it. 
+                If you do a search for "VFAT" you will see that that particular configuration is not 
+                enabled for the kernel.
+                This means that you cannot print a VFAT text file, or for that matter, even mount one
+                from the image if you were to build it at this point.
+            </para>
+
+            <para>
+                You can prove the point by actually trying it at this point.
+                Here are the commands:
+                <literallayout class='monospaced'>
+     $ mkdir ~/vfat-test
+     $ cd ~/vfat-test
+     $ dd if=/dev/zero of=vfat.img bs=1024 count=5000  [creates a 5MB disk image]
+     5+0 records in
+     5+0 records out
+     5242880 bytes (5.2 MB) copied, 0.00798912 s, 656 MB/s
+     $ ls -lah   [lists the contents of the new image. l=long, a=all, h=human readable]
+     total 5.1M
+     drwxr-xr-x  2 srifenbark scottrif 4.0K 2011-08-01 08:18 .
+     drwxr-xr-x 66 srifenbark scottrif 4.0K 2011-08-01 08:14 ..
+     -rw-r--r--  1 srifenbark scottrif 5.0M 2011-08-01 08:18 vfat.img
+     $ mkfs.vfat vfat.img                      [formats the disk image]
+     mkfs.vfat 3.0.7 (24 Dec 2009)
+     $ mkdir mnt                               [mounts the disk image]
+     $ sudo su                                 [gives you root privilege]
+     # mount -o loop vfat.img mnt              [mounts it as a loop device]
+     # ls mnt                                  [shows nothing in mnt]
+     # mount                                   [lists the mounted filesystems - note/dev/loop0]
+     /dev/sda1 on / type ext4 (rw,errors=remount-ro)
+     proc on /proc type proc (rw,noexec,nosuid,nodev)
+     none on /sys type sysfs (rw,noexec,nosuid,nodev)
+     none on /sys/fs/fuse/connections type fusectl (rw)
+     none on /sys/kernel/debug type debugfs (rw)
+     none on /sys/kernel/security type securityfs (rw)
+     none on /dev type devtmpfs (rw,mode=0755)
+     none on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+     none on /dev/shm type tmpfs (rw,nosuid,nodev)
+     none on /var/run type tmpfs (rw,nosuid,mode=0755)
+     none on /var/lock type tmpfs (rw,noexec,nosuid,nodev)
+     none on /lib/init/rw type tmpfs (rw,nosuid,mode=0755)
+     binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,noexec,nosuid,nodev)
+     gvfs-fuse-daemon on /home/scottrif/.gvfs type fuse.gvfs-fuse-daemon (rw,nosuid,nodev,user=srifenbark)
+     /dev/loop0 on /home/scottrif/vfat-test/mnt type vfat (rw)
+     # echo "hello world" > mnt/hello.txt    [creates a text file in the mounted VFAT system]
+     # ls mnt                                [verifies the file is there]
+     hello.txt
+     # cat mnt/hello.txt                     [displays the contents of the file created]
+     hello world 
+     # umount mnt                            [unmounts the system and destroys the loop]
+     # exit                                  [gets out of privileged user mode]
+     exit
+
+     $ lsmod                                 [this stuff Darren did to show me ]
+     Module                  Size  Used by   [the status of modules in the regular linux kernel]
+     nls_iso8859_1           4633  0 
+     nls_cp437               6351  0 
+     vfat                   10866  0 
+     fat                    55350  1 vfat
+     snd_hda_codec_atihdmi     3023  1 
+     binfmt_misc             7960  1 
+     snd_hda_codec_realtek   279008  1 
+     ppdev                   6375  0 
+     snd_hda_intel          25805  2 
+     fbcon                  39270  71 
+     tileblit                2487  1 fbcon
+     font                    8053  1 fbcon
+     bitblit                 5811  1 fbcon
+     snd_hda_codec          85759  3 snd_hda_codec_atihdmi,snd_hda_codec_realtek,snd_hda_intel
+     softcursor              1565  1 bitblit
+     snd_seq_dummy           1782  0 
+     snd_hwdep               6924  1 snd_hda_codec
+     vga16fb                12757  0 
+     snd_pcm_oss            41394  0 
+     snd_mixer_oss          16299  1 snd_pcm_oss
+     snd_pcm                87946  3 snd_hda_intel,snd_hda_codec,snd_pcm_oss
+     vgastate                9857  1 vga16fb
+     snd_seq_oss            31191  0 
+     snd_seq_midi            5829  0 
+     snd_rawmidi            23420  1 snd_seq_midi
+     radeon                744506  3 
+     snd_seq_midi_event      7267  2 snd_seq_oss,snd_seq_midi
+     ttm                    61007  1 radeon
+     snd_seq                57481  6 snd_seq_dummy,snd_seq_oss,snd_seq_midi,snd_seq_midi_event
+     drm_kms_helper         30742  1 radeon
+     snd_timer              23649  2 snd_pcm,snd_seq
+     snd_seq_device          6888  5 snd_seq_dummy,snd_seq_oss,snd_seq_midi,snd_rawmidi,snd_seq
+     usb_storage            50377  0 
+     snd                    71283  16 \
+                                      snd_hda_codec_realtek,snd_hda_intel,snd_hda_codec, \
+                                      snd_hwdep,snd_pcm_oss,snd_mixer_oss,snd_pcm, \
+                                      snd_seq_oss,snd_rawmidi,snd_seq,snd_timer,snd_seq_device
+     soundcore               8052  1 snd
+     psmouse                65040  0 
+     drm                   198886  5 radeon,ttm,drm_kms_helper
+     i2c_algo_bit            6024  1 radeon
+     serio_raw               4918  0 
+     snd_page_alloc          8500  2 snd_hda_intel,snd_pcm
+     dell_wmi                2177  0 
+     dcdbas                  6886  0 
+     lp                      9336  0 
+     parport                37160  2 ppdev,lp
+     usbhid                 41116  0 
+     ohci1394               30260  0 
+     hid                    83888  1 usbhid
+     ieee1394               94771  1 ohci1394
+     tg3                   122382  0
+                </literallayout>
+            </para>
+        </section>
+    </section>
+</appendix>
+
+
+<!--
+
+EXTRA STUFF I MIGHT NEED BUT NOW SURE RIGHT NOW.
+
+In the standard layer structure you have several areas that you need to examine or 
                     modify.
                     For this example the layer contains four areas:
                     <itemizedlist>
@@ -375,10 +482,8 @@
                     The file can also contain <filename>KERNEL_FEATURES</filename> statements that specify
                     included kernel configurations that ship with the Yocto Project.
                 </para>
-            </section>
-        </section>
+-->
 
-</appendix>
 <!--
 vim: expandtab tw=80 ts=4
 -->
