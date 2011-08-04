@@ -234,6 +234,67 @@
             </para>
         </section>
 
+        <section id='is-vfat-supported'>
+            <title>Is VFAT Supported?</title>
+            
+            <para>
+                <literallayout class='monospaced'>
+I entered runqemu qemux86 and it fires upthis fires up the emulator and uses the
+image and filesystem in the build area created in the previous section.
+
+Then I copied over a pre-created and formated 5.2MB VFAT file named vfat.img.
+I did this with scp vfat.img root@192.168.7.2:
+The file is in the root directory.
+I had to do this because the mkfs.vfat vfat.img command does not work.
+mkfs is not recognized in the qemu terminal session.
+
+when I try mount -o loop -t vfat vfat.img mnt/ I get the error
+mount: can't set up loop device: No space left on device.
+This error is because the loop module is not currently in the kernel image.
+However, this module is available in the 
+build area in the tarball modules-2.6.37.6-yocto-starndard+-20-qemux86.tgz.
+You can add this to the kernel image by adding the 
+IMAGE_INSTALL += " kernel-module-loop" statement at the top of the local.conf
+file in the build area and then rebuilding the kernel using bitbake.
+It should just build whatever is necessary and not go through an entire build again.
+
+
+
+
+                The <filename>menuconfig</filename> tool provides an interactive method with which
+                to set kernel configurations.
+                In order to use <filename>menuconfig</filename> from within the BitBake environment
+                you need to source an environment setup script.
+                This script is located in the local Yocto Project file structure and is called
+                <filename>oe-init-build-env</filename>.
+            </para>
+
+            <para>
+                The following command sets up the environment:
+                <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ source oe-init-build-env
+     $ runqemu qemux86
+     Continuing with the following parameters:
+     KERNEL: [/home/scottrif/poky/build/tmp/deploy/images/bzImage-qemux86.bin]
+     ROOTFS: [/home/scottrif/poky/build/tmp/deploy/images/core-image-sato-qemux86.ext3]
+     FSTYPE: [ext3]
+     Setting up tap interface under sudo
+     Acquiring lockfile for tap0...
+     WARNING: distccd not present, no distcc support loaded.
+     Running qemu...
+     /home/scottrif/poky/build/tmp/sysroots/x86_64-linux/usr/bin/qemu 
+        -kernel /home/scottrif/poky/build/tmp/deploy/images/bzImage-qemux86.bin 
+        -net nic,vlan=0 -net tap,vlan=0,ifname=tap0,script=no,downscript=no 
+        -hda /home/scottrif/poky/build/tmp/deploy/images/core-image-sato-qemux86.ext3 
+        -show-cursor -usb -usbdevice wacom-tablet -vga vmware -enable-gl -no-reboot 
+        -m 128 --append "vga=0 root=/dev/hda rw mem=128M ip=192.168.7.2::192.168.7.1:255.255.255.0 oprofile.timer=1 "
+     Enabling opengl
+     vmsvga_value_write: guest runs Linux.
+                </literallayout>
+            </para>
+        </section>
+
         <section id='prepare-to-use-menuconfig'>
             <title>Prepare to use <filename>menuconfig</filename></title>
             
