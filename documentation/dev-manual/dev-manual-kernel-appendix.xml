@@ -168,6 +168,72 @@
             </para>
         </section>
 
+        <section id='be-sure-the-image-is-available'>
+            <title>Be Sure the Image is Available</title>
+            
+            <para>
+                For the example you need an image that you can use when you run the QEMU emulator.
+                By default, support of VFAT filesystems will not be supported in this image. 
+                The example will test that in a subsequent section.
+            </para>
+
+            <para>
+                In theory, you can get an image suitable for QEMU one of two ways:
+                <itemizedlist>
+                    <listitem><para>Download a pre-built kernel image and matching <filename>ext3</filename>
+                        file system from the Yocto Project 
+                        <ulink url='http://autobuilder.yoctoproject.org/downloads/'>Index of downloads</ulink>.
+                        See <link linkend='index-downloads'>Index of Downloads</link> earlier in the 
+                        manual for more information about this source repository.
+                        You can also see 
+                        <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#using-pre-built'>
+                        Using Pre-Build Binaries and QEMU</ulink>
+                        in the Yocto Project Quick Start for information on how to find and choose
+                        images ready to run in QEMU.</para></listitem>
+                    <listitem><para>Build an image and matching <filename>ext3</filename>
+                        filesystem using the <filename>poky</filename> Git repository on your local 
+                        development system.</para></listitem>
+                </itemizedlist>
+            </para>
+ 
+            <para>
+                This example continues by building the image.
+                If you want to see more on building an image in general, see
+                <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>
+                Building an Image</ulink> in the Yocto Project Quick Start.
+            </para>
+
+            <para>
+                The following steps result in a QEMU image and filesystem for 
+                an x86 (32-bit) target machine that can run in the emulator.
+               <orderedlist>
+                    <listitem><para><emphasis>Prepare the Build Environment</emphasis> - Source the 
+                        script to set up the build environment:
+                        <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ source oe-init-build-env
+                        </literallayout></para></listitem>
+                    <listitem><para><emphasis>Change Configurations to Speed Up the Build</emphasis> - If your
+                        development system supports multiple cores you can remove the comments in the 
+                        <filename>BB_NUMBER_THREADS</filename> and <filename>PARALLEL_MAKE</filename>
+                        statements and adjust the arguments to optimize the build time.  
+                        For example, a development host that has four cores could use 
+                        <filename>8</filename> and <filename>j 6</filename> to get the best use of 
+                        your host's multi-core and thread capabilities.</para></listitem>
+                    <listitem><para><emphasis>Start the Build</emphasis> - Use BitBake to start the 
+                        build:
+                        <literallayout class='monospaced'>
+     $ bitbake -k core-image-sato
+                        </literallayout>
+                        Depending on your host system's load and capabilities the build takes some time.
+                        Once it completes you will have the kernel image needed to continue the example.
+                        The image and filesystem reside in the build directory at
+                        <filename>poky/build/tmp/deploy/images</filename>.
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+
         <section id='prepare-to-use-menuconfig'>
             <title>Prepare to use <filename>menuconfig</filename></title>
             
