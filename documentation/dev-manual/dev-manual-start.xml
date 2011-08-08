@@ -75,7 +75,6 @@
                             <literallayout class='monospaced'>
      $ tar xfj poky-1.1.tar.bz2
                             </literallayout></para>
-
                         <para>This method does not produce a <filename>poky</filename> Git repository. 
                             You end up simply with a local snapshot of Yocto Project files that are based on the 
                             particular release in the tarball.</para></listitem>
@@ -108,20 +107,41 @@
                 </itemizedlist></para></listitem>
             <listitem id='local-kernel-files'><para><emphasis>Linux Yocto Kernel:</emphasis>  
                 If you are going to be making modifications to a supported Linux Yocto kernel you 
-                need a local copy of these files.
-                Creating a local Git repository of the files allows you access to the files locally 
-                and gives you opportunity to contribute changes upstream to the Yocto Project.</para>
-                <para>As an example, the following transcript shows how to clone the 
-                <filename>linux-yocto-2.6.37</filename> kernel Git repository: 
+                need to get set up so that you can edit local copies of the source.
+                This setup involves creating a bare clone of the Linux Yocto kernel and then cloning 
+                that repository.</para>
+                <para>As an example, the following transcript shows how to create the bare clone
+                of the <filename>linux-yocto-2.6.37</filename> kernel and then create a clone of 
+                that repository: 
                 <literallayout class='monospaced'>
-     $ git clone git://git.yoctoproject.org/linux-yocto-2.6.37
-     Initialized empty Git repository in /home/scottrif/linux-yocto-2.6.37/.git/
+     $ git clone --bare git://git.yoctoproject.org/linux-yocto-2.6.37 linux-yocto-2.6.37.git
+     Initialized empty Git repository in /home/scottrif/poky/linux-yocto-2.6.37.git/
      remote: Counting objects: 1886034, done.
      remote: Compressing objects: 100% (314326/314326), done.
      remote: Total 1886034 (delta 1570200), reused 1870337 (delta 1554798)
-     Receiving objects: 100% (1886034/1886034), 401.51 MiB | 3.99 MiB/s, done.
+     Receiving objects: 100% (1886034/1886034), 401.51 MiB | 3.27 MiB/s, done.
      Resolving deltas: 100% (1570200/1570200), done.
+                </literallayout></para>
+                <para>Now create a clone of the bare clone just created:
+                <literallayout class='monospaced'>
+     $ git clone linux-yocto-2.6.37.git linux-yocto-2.6.37
+     Initialized empty Git repository in /home/scottrif/poky/linux-yocto-2.6.37/.git/
      Checking out files: 100% (35188/35188), done.
+                </literallayout></para>
+                <para>The final repository you need for kernel development is the 
+                <filename>meta-kernel-dev</filename> Git repository.  
+                This repository allows you to configure the build system so that you point to your 
+                local area for the Linux Yocto kernel source files.  
+                Pointing to these files locally is much more efficient than requiring a download of the 
+                source files from upstream each time you build the kernel image:
+                <literallayout class='monospaced'>
+     $ git clone git://git.yoctoproject.org/poky-extras poky-extras
+     Initialized empty Git repository in /home/scottrif/poky/poky-extras/.git/
+     remote: Counting objects: 531, done.
+     remote: Compressing objects: 100% (471/471), done.
+     remote: Total 531 (delta 138), reused 307 (delta 39)
+     Receiving objects: 100% (531/531), 517.86 KiB, done.
+     Resolving deltas: 100% (138/138), done.
                 </literallayout></para></listitem>
            <listitem><para><emphasis>Supported Board Support Packages (BSPs):</emphasis>  The same considerations 
                 exist for BSPs.  
