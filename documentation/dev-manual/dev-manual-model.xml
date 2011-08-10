@@ -299,50 +299,57 @@
                         <link linkend='local-yp-release'>Yocto Project Release</link> in  
                         <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.
                         </para></listitem>
-                    <listitem><para><emphasis>Establish a local copy of the Linux Yocto kernel files on your 
-                        system</emphasis>:  In order to make modifications to the kernel you need a base
-                        kernel with which to work. 
-                        You can set up a local Git repository of the kernel on which you are basing your
-                        modifications.
+                    <listitem><para><emphasis>Setting up the <filename>poky-extras</filename> Git 
+                        repository</emphasis>:  This repository is the area for your configuration 
+                        fragments, new kernel recipes, and the kernel <filename>.bbappend</filename>
+                        file used during the build. 
+                        It is good practice to set this repository up inside the local Yocto
+                        Project files Git repository.
                         For information on how to get these files, see the bulleted item
+                        <link linkend='poky-extras-repo'>The 
+                        <filename>poky-extras</filename> Git Repository</link> in
+                        <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.
+                        </para></listitem>
+                    <listitem><para><emphasis>Establish a local copy of the Linux Yocto kernel files on your 
+                        system</emphasis>:  In order to make modifications to the kernel you need two things:
+                        a bare clone of the Linux Yocto kernel you are modifying and a copy of that 
+                        bare clone. 
+                        The bare clone is required by the build process and is the area to which you 
+                        push your kernel source changes. 
+                        The copy of the bare clone is a local Git repository that contains all the kernel's 
+                        source files. 
+                        You make your changes to the files in this copy of the bare clone.
+                        For information on how to set these two items up, see the bulleted item
                         <link linkend='local-kernel-files'>Linux Yocto Kernel</link> in  
                         <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.
                         </para></listitem>
-                    <listitem><para><emphasis>Establish a local kernel layer by copying the 
-                        <filename>meta-skeleton</filename> layer</emphasis>:  When you set up a kernel layer 
-                        for your changes you should follow a standard layout.  
-                        For kernel layers you can start with <filename>meta-skeleton</filename>, which 
-                        is a minimal, base kernel layer in the local Yocto Project files.
-                        You can examine <filename>meta-skeleton</filename>
-                        in the <filename>poky</filename> Git repository.</para>
-                        <para>A layer is really just a location or area in which you place configuration 
-                        fragments and recipes that modify your kernel.  
-                        The layer, in this case, would be where all the recipes that define those dependencies 
-                        are kept.  
-                        The key point for a layer is that it is an isolated area that contains 
-                        all the relevant information for the project that the Yocto Project build 
-                        system knows about.</para>
-                        <para></para></listitem>
-                    <listitem><para><emphasis>Prepare to use the <filename>menuconfig</filename> tool</emphasis>:  
-                        The tool <filename>menuconfig</filename> used within Bitbake provides an 
-                        interactive method with which you can configure the kernel.
-                        In order to use <filename>menuconfig</filename> you need to first source an environment
-                        setup script found in the local <filename>poky</filename> Git repository.
-                        The script is named <filename>oe-init-build-env</filename>.</para></listitem>
+                    <listitem><para><emphasis>Make changes to the kernel source code if 
+                        applicable</emphasis>:  Modifying the kernel does not always mean directly
+                        changing source files. 
+                        However, if you have to do this then you make the changes in the local 
+                        Git repository you set up to hold the source files (i.e. the copy of the 
+                        bare clone).
+                        Once the changes are made you need to use Git commands to commit the changes
+                        and then push them to the bare clone.</para></listitem>                      
                     <listitem><para><emphasis>Make kernel configuration changes
-                        to your local kernel layer</emphasis>:  Use <filename>menuconfig</filename>
-                        to enable and disable the configurations to the Linux Yocto kernel.  
+                        to your local kernel layer if applicable</emphasis>:  
+                        If your situation calls for changing the kernel's configuration you can 
+                        use <filename>menuconfig</filename>
+                        to enable and disable kernel configurations.  
                         Using <filename>menuconfig</filename> allows you to develop and test the 
                         configuration changes you are making to the kernel.</para></listitem>                      
-                    <listitem><para><emphasis>Make kernel recipe changes to your new kernel 
-                        layer</emphasis>:  The standard layer structure organizes recipe files you 
-                        need to edit in several <filename>recipes-*</filename> directories within the 
-                        kernel layer.
-                        Recipe changes include altering recipes (<filename>.bb</filename> files), removing 
-                        recipes you don't use, and adding new recipes that you need to support your hardware.
+                    <listitem><para><emphasis>Add new kernel recipes</emphasis>:  The standard 
+                        layer structure organizes recipe files inside the 
+                        <filename>meta-kernel-dev</filename> layer that is within the 
+                        <filename>poky-extras</filename> Git repository.
+                        If you need to add new kernel recipes you add them within this layer. 
+                        Also within this area you will find the <filename>.bbappend</filename> 
+                        file that appends information to the kernel's recipe file used during the 
+                        build.
                         </para></listitem>
                     <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
-                        changes to your kernel layer there remains a few things 
+                        changes to your kernel (configurations, source code changes, recipe additions, 
+                        or recipe changes) there remains a few things 
                         you need to do for the Yocto Project build system in order for it to create your image.  
                         If you have not done so you need to get the build environment ready by sourcing 
                         the environment setup script described earlier.
@@ -350,7 +357,9 @@
                         <para>The entire process for building an image is overviewed in the 
                         <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>
                         Building an Image</ulink> section of the Yocto Project Quick Start.    
-                        You might want to reference this information.</para></listitem>
+                        You might want to reference this information.
+                        Also, you should look at the detailed examples found in the appendices at 
+                        end of this manual.</para></listitem>
                     <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project uses the BitBake 
                         tool to build images based on the type of image you want to create.  
                         You can find more information on BitBake 
@@ -366,7 +375,9 @@
                         in the kernel layer</emphasis>:  Up to this point all the configuration changes to the 
                         kernel have been done and tested iteratively.  
                         Once they are tested and ready to go you can move them into the kernel layer, 
-                        which allows you to distribute the layer.</para></listitem>
+                        which allows you to distribute the layer.
+                        [WRITER'S NOTE:  Not sure if the layer is meta-kernel-dev or if it would be 
+                        a new layer copied from the work done there.]</para></listitem>
                     <listitem><para><emphasis>Push your configuration and recipe changes upstream to the 
                         linux Yocto Git repository (in-tree changes)</emphasis>:  If the changes you made
                         are suited for all Linux Yocto users you might want to push the changes up into 
