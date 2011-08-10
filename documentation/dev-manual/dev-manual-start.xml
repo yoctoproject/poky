@@ -109,10 +109,15 @@
                 If you are going to be making modifications to a supported Linux Yocto kernel you 
                 need to get set up so that you can edit local copies of the source.
                 This setup involves creating a bare clone of the Linux Yocto kernel and then cloning 
-                that repository.</para>
+                that repository.
+                You can create the bare clone and the copy of the bare clone anywhere you like.
+                For simplicity, it is recommended that you create these structures outside of the 
+                Yocto Project files Git repository.</para>
                 <para>As an example, the following transcript shows how to create the bare clone
-                of the <filename>linux-yocto-2.6.37</filename> kernel and then create a clone of 
-                that repository: 
+                of the <filename>linux-yocto-2.6.37</filename> kernel and then create a copy of 
+                that clone.
+                The bare clone is named <filename>linux-yocto-2.6.37.git</filename>, while the 
+                copy is named <filename>linux-yocto-2.6.37</filename>: 
                 <literallayout class='monospaced'>
      $ git clone --bare git://git.yoctoproject.org/linux-yocto-2.6.37 linux-yocto-2.6.37.git
      Initialized empty Git repository in /home/scottrif/poky/linux-yocto-2.6.37.git/
@@ -127,14 +132,23 @@
      $ git clone linux-yocto-2.6.37.git linux-yocto-2.6.37
      Initialized empty Git repository in /home/scottrif/poky/linux-yocto-2.6.37/.git/
      Checking out files: 100% (35188/35188), done.
-                </literallayout></para>
-                <para>The final repository you need for kernel development is the 
-                <filename>meta-kernel-dev</filename> Git repository.  
-                This repository allows you to configure the build system so that you point to your 
-                local area for the Linux Yocto kernel source files.  
-                Pointing to these files locally is much more efficient than requiring a download of the 
-                source files from upstream each time you build the kernel image:
+                </literallayout></para></listitem>
+            <listitem id='poky-extras-repo'><para><emphasis>
+                The <filename>poky-extras</filename> Git Repository</emphasis>:
+                The <filename>poky-extras</filename> Git repository contains metadata needed to 
+                build the kernel image.
+                In particular, it contains the kernel <filename>.bbappend</filename> files that you 
+                edit to point to your locally modified kernel source files and to build kernel
+                image. 
+                Pointing to these local files is much more efficient than requiring a download of the 
+                source files from upstream each time you make changes to the kernel.</para>
+                <para>It is good practice to create this Git repository inside the Yocto Project
+                files Git repository.
+                Following is an example that creates the <filename>poky-extras</filename> Git 
+                repository inside the Yocto Project files Git repository, which is named 
+                <filename>poky</filename> in this case:
                 <literallayout class='monospaced'>
+     $ cd ~/poky
      $ git clone git://git.yoctoproject.org/poky-extras poky-extras
      Initialized empty Git repository in /home/scottrif/poky/poky-extras/.git/
      remote: Counting objects: 531, done.
