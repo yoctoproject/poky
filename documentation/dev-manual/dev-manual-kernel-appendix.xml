@@ -7,9 +7,9 @@
 
     <para>
         Kernel modification involves changing or adding configurations to an existing kernel,  
-        adding recipes to the kernel that are needed to support specific hardware features, or even 
-        changing the source code itself.  
-        This section presents some simple examples that modify the kernel source code, 
+        changing or adding recipes to the kernel that are needed to support specific hardware features, 
+        or even altering the source code itself.  
+        This appendix presents simple examples that modify the kernel source code, 
         change the kernel configuration, and add a kernel source recipe.
 <!--        [WRITER'S NOTE:  I might want to work in information about applying a local
             change to a kernel layer and also pushing a change upstream into the tree]
@@ -35,24 +35,19 @@
             console.
         </para> 
 
-        <para>
-            For a general flow of the example, see 
-            <xref linkend='kernel-modification-workflow'>Kernel Modification Workflow</xref>
-            earlier in this manual.
-        </para>
-
         <section id='understanding-the-files-you-need'>
             <title>Understanding the Files You Need</title>
           
             <para>
-                Before you modify the kernel you need to know what Git repositories and file 
+                Before you modify the kernel, you need to know what Git repositories and file 
                 structures you need.
                 Briefly, you need the following: 
                 <itemizedlist>
                     <listitem><para>A local Yocto Project files Git repository</para></listitem>
                     <listitem><para>The <filename>poky-extras</filename> Git repository placed 
                         within the local Yocto Project files Git repository</para></listitem>  
-                    <listitem><para>A bare clone of the Linux Yocto kernel that you want to modify
+                    <listitem><para>A bare clone of the Linux Yocto kernel upstream Git 
+                        repository that you want to modify
                         </para></listitem>
                     <listitem><para>A copy of that bare clone in which you make your source 
                         modifcations</para></listitem>
@@ -60,7 +55,12 @@
             </para>
 
             <para> 
-                The following illustration summarizes what you need:
+                The following figure summarizes these four areas.  
+                Within each rectangular that represents a data structure an URL appears at the 
+                lower left-hand corner of the box.  
+                These URLs are the locations used in this example.
+                The figure also provides key statements and commands used during the kernel
+                modification process:
             </para>
 
             <para>
@@ -71,33 +71,52 @@
             <para>
                 Here is a brief description of the four areas:
                 <itemizedlist>
-                    <listitem><para><emphasis>Local Yocto Project Files:</emphasis> This Git 
-                        repository contains all the metadata that supports building images in the 
-                        Yocto Project build environment.
-                        Note that the Git repository in our example also contains the 
-                        <filename>poky-extras</filename> Git repository, which contains the 
-                        kernel metadata specific to building a kernel image.
+                    <listitem><para><emphasis>Local Yocto Project Files Git Repository:</emphasis> 
+                        This area contains all the metadata that supports building images in the 
+                        Yocto Project build environment - the local Yocto Project files.
                         The Local Yocto Project files Git repository also contains the build directory
-                        and configuration files that let you control the build.</para></listitem>
-                    <listitem><para><emphasis><filename>poky-extras</filename>:</emphasis> This 
-                        Git repository contains the <filename>meta-kernel-dev</filename> layer, 
-                        which is where you make changes that append to the kernel build recipes.
-                        You edit <filename>.bbappend</filename> files to point the build to your 
-                        local kernel source files and to define the kernel being built.
+                        and a configuration directory that let you control the build.
+                        Note also that in this example the repository also contains the 
+                        <filename>poky-extras</filename> Git repository.</para>
+                        <para>See the bulleted item
+                        <link linkend='local-yp-release'>Yocto Project Release</link> in
+                        <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual
+                        for information on how to get these files.</para></listitem>
+                    <listitem><para><emphasis><filename>poky-extras</filename> Git Repository:</emphasis> 
+                        This area contains the <filename>meta-kernel-dev</filename> layer, 
+                        which is where you make changes that append the kernel build recipes.
+                        You edit <filename>.bbappend</filename> files to locate your 
+                        local kernel source files and to identify the kernel being built.
                         This Git repository is a gathering place for extensions to the Linux Yocto 
                         (or really any) kernel recipes that faciliate the creation and development
-                        of kernel features, BSPs or configuration</para></listitem>                
-                    <listitem><para><emphasis>Bare Clone of the Linux Yocto Git Repository:</emphasis> 
-                        This bare Git repository tracks the upstream Git repository of the Linux Yocto kernel
-                        you are changing.
-                        As mentioned, when you build the Linux Yocto kernel image you point to this repository
-                        so that the build process can locate the locally changed source files.
-                        When you modify the kernel image you must work with a bare clone.
+                        of kernel features, BSPs or configurations.</para>
+                        <para>See the bulleted item
+                        <link linkend='poky-extras-repo'>The 
+                        <filename>poky-extras</filename> Git Repository</link> in
+                        <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual
+                        for information on how to get these files.</para></listitem>                
+                    <listitem><para><emphasis>Bare Clone of the Linux Yocto kernel:</emphasis> 
+                        This bare Git repository tracks the upstream Git repository of the Linux 
+                        Yocto kernel source code you are changing.
+                        When you modify the kernel you must work through a bare clone.
+                        All source code changes you make to the kernel must be committed and 
+                        pushed to the bare clone using Git commands.
+                        As mentioned, the <filename>.bbappend</filename> file in the 
+                        <filename>poky-extras</filename> repository points to the bare clone
+                        so that the build process can locate the locally changed source files.</para>
+                        <para>See the bulleted item
+                        <link linkend='local-kernel-files'>Linux Yocto Kernel</link> in  
+                        <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual
+                        for information on how to set up the bare clone.
                         </para></listitem>
                     <listitem><para><emphasis>Copy of the Linux Yocto Kernel Bare Clone:</emphasis>
                         This Git repository contains the actual source files that you modify.  
                         Any changes you make to files in this location need to ultimately be pushed
-                        to the bare clone using the <filename>git push</filename> command.
+                        to the bare clone using the <filename>git push</filename> command.</para>
+                        <para>See the bulleted item
+                        <link linkend='local-kernel-files'>Linux Yocto Kernel</link> in  
+                        <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual
+                        for information on how to set up the bare clone.
                         </para></listitem>
                 </itemizedlist>
             </para>
@@ -107,8 +126,10 @@
             <title>Setting Up the Local Yocto Project Files Git Repository</title>
 
             <para>
-                You can get files through tarball extraction or by cloning the <filename>poky</filename>
-                Git repository.  
+                You can get the local Yocto Project files through tarball extraction or by 
+                cloning the <filename>poky</filename> Git repository.  
+                This example uses <filename>poky</filename> as the root directory of the 
+                local Yocto Project files Git repository.
                 See the bulleted item
                 <link linkend='local-yp-release'>Yocto Project Release</link> in
                 <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual
@@ -116,7 +137,6 @@
             </para>
 
             <para>
-                This example assumes the name of the Git repository is <filename>poky</filename>.
                 Once you have the repository set up, 
                 you have many development branches from which you can work. 
                 From inside the repository you can see the branch names and the tag names used 
@@ -126,10 +146,10 @@
      $ git branch -a
      $ git tag -l
                 </literallayout> 
-                For this example, we are going to use the Yocto Project 1.1_M3 Release, 
+                This example uses the Yocto Project 1.1_M3 Release, 
                 which maps to the <filename>1.1_M3</filename> branch in the repository. 
-                These commands create a local branch named <filename>1.1_M3</filename>
-                that tracks the remote branch of the same name.
+                The following commands create and checkout the local <filename>1.1_M3</filename>
+                branch:
                 <literallayout class='monospaced'>
      $ git checkout -b 1.1_M3 origin/1.1_M3
      Branch 1.1_M3 set up to track remote branch 1.1_M3 from origin.
@@ -148,7 +168,7 @@
                 <link linkend='poky-extras-repo'>The 
                 <filename>poky-extras</filename> Git Repository</link> in
                 <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual
-                for information on how to get these files.
+                for information on how to get the <filename>poky-extras</filename> repository.
             </para>
         </section>
 
@@ -166,10 +186,12 @@
             </para>
 
             <para>
-                The bare clone exists simply as the receiving end of <filename>git push</filename>
+                The bare clone exists for the kernel build tools and simply as the receiving end 
+                of <filename>git push</filename>
                 commands after you make edits and commits inside the copy of the clone.
                 The copy (<filename>linux-yocto-2.6.37</filename> in this example) has to have 
                 a local branch created and checked out for your work.
+                This example uses <filename>common-pc-base</filename> as the local branch.
                 The following commands create and checkout the branch:
                 <literallayout class='monospaced'>
      $ cd ~/linux-yocto-2.6.37
@@ -184,8 +206,8 @@
             <title>Building and Booting the Default QEMU Kernel Image</title>
 
             <para>
-                In this example before we make changes to the kernel image we will build it first
-                and see how it boots inside the QEMU emulator.
+                Before we make changes to the kernel source files, this example first builds the 
+                default image and then boots it inside the QEMU emulator.
                 <note>
                     Because a full build can take hours, you should check two variables in the 
                     <filename>build</filename> directory that is created after you source the 
@@ -195,14 +217,14 @@
                     in the <filename>build/conf</filename> directory in the 
                     <filename>local.conf</filename> configuration file.
                     By default, these variables are commented out.
-                    If your host development system supports multi-core and multi-thread capabilities
+                    If your host development system supports multi-core and multi-thread capabilities,
                     you can uncomment these statements and set the variables to significantly shorten
                     the full build time.
                     As a guideline, set <filename>BB_NUMBER_THREADS</filename> to twice the number 
                     of cores your machine supports and set <filename>PARALLEL_MAKE</filename> to one and 
                     a half times the number of cores your machine supports.
                 </note>
-                These commands build the default <filename>qemux86</filename> image:
+                The following commands build the default <filename>qemux86</filename> image:
                 <literallayout class='monospaced'>
      $ cd ~/poky
      $ source oe-init-build-env
@@ -226,8 +248,11 @@
             </para>
 
             <para>
-                The <filename>source</filename> command sets up the build environment, while the 
-                following <filename>bitbake</filename> command starts the build.
+                The <filename>source</filename> command sets up the build environment and, 
+                if necessary, creates the build directory.
+                The following <filename>bitbake</filename> command starts the build.
+                <note>Be sure to check the settings in the <filename>local.conf</filename>
+                before starting the build.</note>
             </para>
 
             <para>  
@@ -239,12 +264,12 @@
             </para>
 
             <para>
-                As the image boots in the emulator, console messages and status appear across the 
-                terminal window.
-                Because the output scrolls by quickly it is difficult to read.
-                To examine the output you can log into the system using the 
+                As the image boots in the emulator, console message and status output appears
+                across the terminal window.
+                Because the output scrolls by quickly, it is difficult to read.
+                To examine the output, you log into the system using the 
                 login <filename>root</filename> with no password.
-                Once you are logged in, you can issue the following command to scroll through the 
+                Once you are logged in, issue the following command to scroll through the 
                 console output:
                 <literallayout class='monospaced'>
      # dmesg | less
@@ -263,10 +288,12 @@
             <para>
                 The file you change in this example is named <filename>calibrate.c</filename>
                 and is located in the <filename>linux-yocto-2.6.37</filename> Git repository
-                in <filename>init</filename>.
-                For this example simply insert several <filename>printk</filename> statements
+                (the copy of the bare clone) in <filename>init</filename>.
+                This example simply inserts several <filename>printk</filename> statements
                 at the beginning of the <filename>calibrate_delay</filename> function.
-                Now let's look at the changes to the source code.
+            </para>
+
+            <para>
                 Here is the unaltered code at the start of this function:
                 <literallayout class='monospaced'>
      void __cpuinit calibrate_delay(void)
@@ -283,8 +310,8 @@
            </para>
 
            <para>
-               This example uses the following five <filename>printk</filename> statements 
-               just after defining <filename>lps_precision</filename>:
+               Here is the altered code showing five new <filename>printk</filename> statements 
+               just after initializing <filename>lps_precision</filename>:
                 <literallayout class='monospaced'>
      void __cpuinit calibrate_delay(void)
      {
@@ -306,7 +333,7 @@
 
            <para>
                After making and saving your changes, you need to stage them for the push.
-               The following Git commands stage and commit your changes:
+               The following Git commands are one method of staging and committing your changes:
                <literallayout class='monospaced'>
      $ git add calibrate.c
      $ git commit --signoff
@@ -314,22 +341,17 @@
            </para>
 
            <para>
-               Once the source code has been modified you need to use Git to push the changes to 
+               Once the source code has been modified, you need to use Git to push the changes to 
                the bare clone.  
-               If you do not push the changes then the Yocto Project build system will not pick 
-               the changed source files.
+               If you do not push the changes, then the Yocto Project build system will not pick 
+               up the changed source files.
            </para>
 
            <para>
-               To push the changes do the following:
+               The following command pushes the changes to the bare clone:
                <literallayout class='monospaced'>
      $ git push origin common-pc-base:yocto/standard/common-pc/base
                </literallayout>
-           </para>
-  
-           <para>
-               For general information on how to push a change using Git, see [WRITER'S NOTE:  need
-               the link to the submitting a change section].
            </para>
        </section>
 
@@ -337,9 +359,9 @@
            <title>Changing Build Parameters for Your Build</title>
 
            <para>
-               At this point the source has been changed and pushed.
-               Now you need to define some variables used by the Yocto Project build system to locate your
-               source.
+               At this point, the source has been changed and pushed.
+               The example now defines some variables used by the Yocto Project build system 
+               to locate your kernel source.
                You essentially need to identify where to find the kernel recipe and the changed source code.
                You also need to be sure some basic configurations are in place that identify the 
                type of machine you are building and to help speed up the build should your host support
@@ -348,18 +370,17 @@
 
            <para>
                Do the following to make sure the build parameters are set up for the example.
-               Once you set up these build parameters they should not have to change unless you 
+               Once you set up these build parameters, they do not have to change unless you 
                change the target architecture of the machine you are building or you move
                the bare clone, copy of the clone, or the <filename>poky-extras</filename> repository:
                <itemizedlist>
                    <listitem><para><emphasis>Build for the Correct Target Architecture</emphasis> - The 
-                       <filename>local.conf</filename> in the build directory defines the build's 
+                       <filename>local.conf</filename> file in the build directory defines the build's 
                        target architecture.
-                       By default, 
-                       <filename>MACHINE</filename> is set to <filename>qemux86</filename>, which 
-                       specifies a 32-bit Intel Architecture target machine suitable for the 
-                       QEMU emulator.  
-                       So for this example, <filename>MACHINE</filename> is correctly configured.
+                       By default, <filename>MACHINE</filename> is set to 
+                       <filename>qemux86</filename>, which specifies a 32-bit Intel Architecture 
+                       target machine suitable for the QEMU emulator.  
+                       In this example, <filename>MACHINE</filename> is correctly configured.
                        </para></listitem>
                    <listitem><para><emphasis>Optimize Build Time</emphasis> - Also in the 
                        <filename>local.conf</filename> file are two variables that can speed your 
@@ -371,13 +392,14 @@
                        number of cores.</para></listitem>
                    <listitem><para><emphasis>Identify Your <filename>meta-kernel-dev</filename>
                        Layer</emphasis> - The <filename>BBLAYERS</filename> variable in the 
-                       <filename>bblayers.conf</filename> found in the 
+                       <filename>bblayers.conf</filename> file found in the 
                        <filename>poky/build/conf</filename> directory needs to have the path to your local
                        <filename>meta-kernel-dev</filename> layer.  
                        By default, the <filename>BBLAYERS</filename> variable contains paths to  
                        <filename>meta</filename> and <filename>meta-yocto</filename> in the 
                        <filename>poky</filename> Git repository.
                        Add the path to your <filename>meta-kernel-dev</filename> location.
+                       Be sure to substitute your user information in the statement.
                        Here is an example:
                        <literallayout class='monospaced'>
      BBLAYERS = " \
@@ -389,17 +411,18 @@
                    <listitem><para><emphasis>Identify Your Source Files</emphasis> - In the 
                        <filename>linux-yocto_2.6.37.bbappend</filename> file located in the 
                        <filename>poky-extras/meta-kernel-dev/recipes-kernel/linux</filename>
-                       directory you need to identify the location of the 
+                       directory, you need to identify the location of the 
                        local source code, which in this example is the bare clone named
                        <filename>linux-yocto-2.6.37.git</filename>.
-                       To do this, set the <filename>KSRC_linux_yocto</filename> to point to your
+                       To do this, set the <filename>KSRC_linux_yocto</filename> variable to point to your
                        local <filename>linux-yocto-2.6.37.git</filename> Git repository by adding the 
-                       following statement:
+                       following statement.
+                       Be sure to substitute your user information in the statement:
                        <literallayout class='monospaced'>
      KSRC_linux_yocto ?= /home/scottrif/linux-yocto-2.6.37.git
                        </literallayout></para></listitem>
                    <listitem><para><emphasis>Specify the Kernel Machine</emphasis> - Also in the 
-                       <filename>linux-yocto_2.6.37.bbappend</filename> you need to specify
+                       <filename>linux-yocto_2.6.37.bbappend</filename> file, you need to specify
                        the kernel machine with the following statement:
                        <literallayout class='monospaced'>
      KMACHINE_qemux86 = "yocto/standard/common-pc/base"
@@ -408,14 +431,14 @@
            </para>
 
            <note>
-               Before attempting to build the modified kernel there is one more set of changes you 
+               Before attempting to build the modified kernel, there is one more set of changes you 
                need to make in the <filename>meta-kernel-dev</filename> layer.
                Because all the kernel <filename>.bbappend</filename> files are parsed during the 
                build process regardless of whether you are using them or not, you should either 
                comment out the <filename>COMPATIBLE_MACHINE</filename> statements in all 
                <filename>.bbappend</filename> files, or you should simply remove all the files 
-               except the one your are using for the build (i.e. <filename>linux-yocto_2.6.37.bbappend</filename>
-               in this example).
+               except the one your are using for the build 
+               (i.e. <filename>linux-yocto_2.6.37.bbappend</filename> in this example).
            </note>            
        </section>
 
@@ -428,13 +451,17 @@
                 <orderedlist>
                     <listitem><para>Your environment should be set up since you previously sourced
                         the <filename>oe-init-build-env</filename> script.
-                        If it isn't, source the script again from the <filename>poky</filename>
-                        again.</para></listitem>
-                    <listitem><para>Be sure any old images are cleaned out by running the 
+                        If it isn't, source the script again from <filename>poky</filename>
+                        </para></listitem>
+                    <listitem><para>Be sure old images are cleaned out by running the 
                         <filename>cleanall</filename> BitBake task as follows:
                         <literallayout class='monospaced'>
      $ bitbake -c cleanall linux-yocto
-                        </literallayout></para></listitem>
+                        </literallayout></para>
+                        <para><note>Never remove by hand any files from the <filename>tmp/deploy</filename>
+                        directory insided the local Yocto Project files build directory.
+                        Always use the BitBake <filename>cleanall</filename> task to clear
+                        out previous builds.</note></para></listitem>
                     <listitem><para>Build the kernel image using this command:
                         <literallayout class='monospaced'>
      $ bitbake -k core-image-minimal
@@ -443,7 +470,7 @@
             </para>
 
             <para>
-                Next, boot the modified image in the QEMU emulator using this command:
+                Finally, boot the modified image in the QEMU emulator using this command:
                 <literallayout class='monospaced'>
      $ runqemu qemux86
                 </literallayout>
