@@ -7,7 +7,7 @@
 
 <para>
     This chapter helps you understand the Yocto Project as an open source development project.
-    In general, working in an open-source environment is very different than working in a closed, 
+    In general, working in an open-source environment is very different than working in a 
     proprietary environment.  
     Additionally, the Yocto Project uses specific tools and constructs as part of its development 
     environment.  
@@ -19,8 +19,8 @@
     <title>Open Source Philosophy</title>
 
     <para>
-        Open source philosophy is characterized by software development directed by peer production, 
-        bartering, and collaboration through a concerned community of developers.  
+        Open source philosophy is characterized by software development directed by peer production 
+        and collaboration through a concerned community of developers.  
         Contrast this to the more standard centralized development models used by commercial software 
         companies where a finite set of developers produce a product for sale using a defined set 
         of procedures that ultimately result in an end-product whose architecture and source material 
@@ -61,7 +61,7 @@
     <para>
         The Yocto Project team maintains complete source repositories for all Yocto Project files 
         <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>here</ulink>.
-        This web-interface of the source is organized into categories by function such as
+        This web-based source code browser is organized into categories by function such as
         IDE Plugins, Matchbox, Poky, Yocto Linux Kernel, and so forth.
         From the interface, you can click on any particular item in the "Name" column and 
         see the URL at the bottom of the page that you need to set up a Git repository for 
@@ -132,23 +132,22 @@
         environment might find helpful.
         Some terms are universal but are included here just in case:
     <itemizedlist>
-        <listitem><para><emphasis>Image</emphasis> - An image is a complete executable file that 
-            runs on specific hardware or in the QEMU emulator.
-            Images are collections of recipes created with the Bitbake tool in the Yocto Project
-            development environment.</para></listitem>
+        <listitem><para><emphasis>Image</emphasis> - An image is a collection of recipes created
+            with BitBake (baked) and made part of a root filesystem.</para></listitem>
         <listitem><para><emphasis>Recipe</emphasis> - A set of instructions for building packages.  
             A recipe describes where you get source code and which patches to apply.
             Recipes describe dependencies for libraries or for other recipes and they 
             also contain configuration and compilation options.  
-            Recipes also let you ‘install’ customizations.  
+            Recipes also let you customize how software is installed into images.  
             Recipes contain the logical unit of execution, the software/images to build and 
             use the <filename>.bb</filename> file extension.</para></listitem>
         <listitem><para><emphasis>BitBake</emphasis> - The task executor and scheduler used by Yocto Project
             to build images. 
             For more information on BitBake, see the <ulink url='http://bitbake.berlios.de/manual/'>
             BitBake documentation</ulink>.</para></listitem>
-        <listitem><para><emphasis>Package</emphasis> - A collection of ‘baked’ recipes.  
-            You ‘bake’ something by running it through Bitbake.</para></listitem>
+        <listitem><para><emphasis>Package</emphasis> - The output from a baked recipe.
+            A package is generally the compiled binaries produced from the recipe's sources.  
+            You ‘bake’ something by running it through BitBake.</para></listitem>
         <listitem><para><emphasis>Layer</emphasis> - A logical collection of recipes representing the core, 
             a BSP, or an application stack.</para></listitem>
         <listitem><para><emphasis>Metadata</emphasis> - Information for a build that is generally 
@@ -176,13 +175,13 @@
             A task is really just another recipe.  
             Because task files are recipes, they end with the <filename>.bb</filename> filename 
             extension.</para></listitem>
-        <listitem><para><emphasis>Common OE-Core</emphasis> - A core set of metadata originating 
+        <listitem><para><emphasis>OE-Core</emphasis> - A core set of metadata originating 
             with OpenEmbedded (OE) that is shared between OE and the Yocto Project.</para></listitem>
-        <listitem><para><emphasis>Up-stream</emphasis> - A reference to source code or repositories
+        <listitem><para><emphasis>Upstream</emphasis> - A reference to source code or repositories
             that are not local to the development system but located in a master area that is controlled
             by the maintainer of the source code.
             For example, in order for a developer to work on a particular piece of code they need to 
-            first get a copy of it from an "up-stream" source.</para></listitem>
+            first get a copy of it from an "upstream" source.</para></listitem>
     </itemizedlist>
     </para>
 </section>
@@ -208,7 +207,7 @@
         MIT licensing permits the reuse of software within proprietary software as long as the 
         license is distributed with that software.  
         MIT is also compatible with the GNU General Public License (GPL).  
-        Patches to the Yocto Project follow the up-stream licensing scheme.
+        Patches to the Yocto Project follow the upstream licensing scheme.
     </para>
 
     <para>
@@ -251,14 +250,13 @@
 
     <para>
         The Yocto Project uses Git, which is a free, open source distributed version control system.  
-        Git supports distributed development, non-linear development, can handle large projects, 
-        cryptographic authentication of history, and toolkit design.  
+        Git supports distributed development, non-linear development, and can handle large projects.  
         It is best that you know how to work with Git if you are going to use Yocto Project for development.  
     </para>
 
     <para>
-        Git has an extensive set of commands that lets you manage and collaborate changes over the life 
-        of a project.  
+        Git has an extensive set of commands that lets you manage changes and perform 
+        collaboration over the life of a project.  
         Conveniently though, you can manage with a small set of basic operations and workflows 
         once you understand the basic philosophy behind Git.  
         You do not have to be an expert in Git to be functional.  
@@ -358,18 +356,18 @@
         The Yocto Project files are maintained using Git in a "master" branch whose Git history 
         tracks every change and whose structure provides branches for all diverging functionality.
         This is typical for open-source projects, although Git does not have to be used.
-        For the Yocto Project a key individual is responsible for "master".  
+        For the Yocto Project a key individual called the "maintainer" is responsible for "master".  
         The "master" branch is the “upstream” repository where the final builds of the project occur.  
         The maintainer is responsible for allowing changes in from other developers and for 
         organizing the underlying branch structure to reflect release strategies and so forth.  
     </para>
 
     <para>
-        The maintainer of the project also owns a contribution repository usually known as a “contrib” area.  
-        The contrib area temporarily holds changes to the project that have been submitted or committed 
+        The project also has contribution repositories known as “contrib” areas.  
+        These areas temporarily hold changes to the project that have been submitted or committed 
         by the Yocto Project development team and by community members that contribute to the project.  
-        The maintainer determines if the changes are qualified to be moved into the "master" branch
-        of the Git repository.
+        The maintainer determines if the changes are qualified to be moved from the "contrib" areas
+        into the "master" branch of the Git repository.
     </para>
 
     <para>
@@ -377,12 +375,15 @@
         of the upstream "master" branch.  
         These repositories are local to their development platforms and are used to develop changes.  
         When a developer is satisfied with a particular feature or change they “push” the changes 
-        up to the "contrib" repository.  
+        to the appropriate "contrib" repository.
+    </para>
+
+    <para>  
         Developers are responsible for keeping their local repository up-to-date with "master".  
         They are also responsible for straightening out any conflicts that might arise within files 
         that are being worked on simultaneously by more than one person.  
-        All this work is done locally on the developer’s machine before anything is pushed upstream 
-        and examined at the maintainer’s level.
+        All this work is done locally on the developer’s machine before anything is pushed to a 
+        "contrib" area and examined at the maintainer’s level.
     </para>
 
     <para>
@@ -395,7 +396,7 @@
         To summarize the environment:  we have a single point of entry for changes into the project’s 
         "master" branch of the Git repository, which is controlled by the project’s maintainer.  
         And, we have a set of developers who independently develop, test, and submit changes 
-        upstream for the maintainer to examine.  
+        to "contrib" areas for the maintainer to examine.  
         The maintainer then chooses which changes are going to become permanently a part of the project.  
     </para>
 
@@ -435,13 +436,18 @@
             As your project develops, you can merge code across the branches to reflect ever-increasing 
             stable states of the development.</para></listitem>
         <listitem><para><emphasis>Use Push and Pull</emphasis> - The push-pull workflow is based on the 
-            concept of developers “pushing” local commits upstream to the remote repository, which is 
+            concept of developers “pushing” local commits to a remote repository, which is 
             usually a contribution repository.  
             It is also based on the developers “pulling” known states of the project down into their 
             local development repositories.  
             This workflow easily allows you to pull changes submitted by other developers from the 
             upstream repository into your work area ensuring that you have the most recent software 
-            on which to develop.</para></listitem>
+            on which to develop.
+            The Yocto Project has two scripts named <filename>create-pull-request</filename> and 
+            <filename>send-pull-request</filename> that ship with the release to facilitate this 
+            workflow.
+            You can find these scripts in the local Yocto Project files Git repository in
+            <filename>scripts</filename>.</para></listitem>
         <listitem><para><emphasis>Patch Workflow</emphasis> - This workflow allows you to notify the 
             maintainer through an email that you have a change (or patch) you would like considered 
             for the "master" branch of the Git repository.  
