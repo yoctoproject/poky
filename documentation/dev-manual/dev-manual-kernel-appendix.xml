@@ -495,14 +495,176 @@
         <title>Changing the Kernel Configuration</title>
 
         <para>
-            This section presents an example that changes the kernel configuration.
-            The example shows how to use <filename>menuconfig</filename> to quickly see 
-            and set configurations used by the kernel.
+            This example changes the default behavior (off) of the Symmetric Multi-processing Support 
+            (<filename>CONFIG_SMP</filename>) to on.  
+            It is a simple example that demonstrates how to reconfigure the kernel.
         </para>
 
-        <para>
-            [Example to be supplied]
-        </para>
+        <section id='getting-set-up-to-run-this-example'>
+            <title>Getting Set Up to Run this Example</title>
+
+            <para>
+                If you took the time to work through the example that modifies the kernel source code 
+                in <xref linkend='modifying-the-kernel-source-code'>Modifying the Kernel Source
+                Code</xref> you are set up to quickly work through this example.
+                If not, then work through the following list to prepare:
+                <itemizedlist>
+                    <listitem><para><emphasis>Understand the development environment:</emphasis>
+                        See <xref linkend='understanding-the-files-you-need'> 
+                        Understanding the Files You Need</xref> for information.</para></listitem>
+                    <listitem><para><emphasis>Set up the local Yocto Project files Git 
+                        repository:</emphasis>
+                        See <xref linkend='setting-up-the-local-yocto-project-files-git-repository'>
+                        Setting Up the Local Yocto Project Files Git Repository</xref> for 
+                        information.</para></listitem>
+                    <listitem><para><emphasis>Set up the <filename>poky-extras</filename> Git 
+                        repository:</emphasis>
+                        See <xref linkend='setting-up-the-poky-extras-git-repository'>
+                        Setting Up <filename>poky-extras</filename> Git repository</xref> for
+                        information.</para></listitem>
+                    <listitem><para><emphasis>Set up the the bare clone and its copy:</emphasis>
+                        See <xref linkend='setting-up-the-bare-clone-and-its-copy'>
+                        Setting Up the Bare Clone and its Copy</xref> for information.
+                        </para></listitem>
+                    <listitem><para><emphasis>Build the default QEMU kernel image:</emphasis>
+                        See <xref linkend='building-and-booting-the-default-qemu-kernel-image'>
+                        Building and Booting the Default QEMU Kernel image</xref> 
+                        for information.
+                        Do not boot the image in the QEMU emulator at this point.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='examining-the-default-config-smp-behavior'>
+            <title>Examining the Default <filename>CONFIG_SMP</filename> Behavior</title>
+
+            <para>
+                By default, <filename>CONFIG_SMP</filename> supports single processor machines.
+                To see this default setting from within the QEMU emulator boot your image using 
+                the emulator as follows:
+                <literallayout class='monospaced'>
+     $ runqemu qemux86
+                </literallayout>
+            </para>
+
+            <para>
+                Login to the machine using <filename>root</filename> with no password.
+                After logging in, enter the following command to see how many processors are 
+                being supported in the emulator.
+                The emulator reports support for a single processor:
+                <literallayout class='monospaced'>
+     # cat /proc/cpuinfo | grep processor 
+     processor       : 0
+     #
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='changing-the-config-smp-configuration-using-menuconfig'>
+            <title>Changing the <filename>CONFIG_SMP</filename> Configuration Using <filename>menuconfig</filename></title>
+
+            <para>
+                The <filename>menuconfig</filename> tool provides an interactive method with which
+                to set kernel configurations.
+                You need to run <filename>menuconfig</filename> inside the BitBake environment.
+                Thus, the environment must be set up using the <filename>oe-init-build-env</filename>
+                script found in the Yocto Project files Git repository build directory.
+                If you have not sourced this script do so with the following commands:
+                <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ source oe-init-build-env
+                </literallayout>
+            </para>
+
+            <para>
+                After setting up the environment to run <filename>menuconfig</filename>, you are ready 
+                to use the tool to interactively change the kernel configuration.
+                In this example we are basing our changes on the <filename>linux-yocto-3.0</filename>
+                kernel.
+                The Yocto Project build environment recognizes this kernel as 
+                <filename>linux-yocto</filename>.
+                Thus, the following command from the shell in which you previously sourced the 
+                environment initialization script launches <filename>menuconfig</filename>:
+                <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c menuconfig
+                </literallayout>
+            </para>
+                  
+            <para>
+                Once <filename>menuconfig</filename> launches, navigate through the user interface
+                to find the <filename>CONFIG_SMP</filename> configuration setting.
+                You can find it at <filename>Processor Type and Features</filename>.
+                The configuration selection is 
+                <filename>Symmetric Multi-processing Support</filename>.
+            </para>
+
+            <para>
+                Once you save the selection the <filename>.config</filename> configuration file
+                is updated. 
+                This is the file that the build system uses to configure the Linux Yocto kernel
+                when it is built. 
+                You can find and examine this file in the Yocto Project files Git repository in 
+                the build directory. 
+                This example uses the following:
+                <literallayout class='monospaced'>
+     ~/poky/build/tmp/work/qemux86-poky-linux/linux-yocto-2.6.37+git1+84f...r20/linux-qemux86-standard-build
+                </literallayout>
+            </para>
+
+            <para>
+                Within the <filename>.config</filename> you can see the following setting:
+                <literallayout class='monospaced'>
+     CONFIG_SMP=y
+                </literallayout>
+            </para>
+
+            <para>
+                A good method to isolate changed configurations is to use a combination of the 
+                <filename>menuconfig</filename> tool and simple shell commands.
+                Before changing configurations with <filename>menuconfig</filename> simply rename
+                the default <filename>.config</filename>, use <filename>menuconfig</filename> to make 
+                as many changes an you want and save them, then compare the renamed configuration 
+                file against the newly created file.
+                You can use the resulting differences as your base to create configuration fragments
+                to permanently save in your kernel layer.
+                For an example of this procedure, see [WRITER'S NOTE: need forwarding link to section].
+            </para>
+        </section>
+
+        <section id='recompiling-the-kernel-and-testing-the-new-configuration'>
+            <title>Recompiling the Kernel and Testing the New Configuration</title>
+
+            <para>
+                At this point you are ready to recompile your kernel image with 
+                the new setting in effect using the BitBake commands below:
+                <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c compile -f
+     $ bitbake linux-yocto
+                </literallayout>
+            </para>
+ 
+            <para>
+                Now run the QEMU emulator:
+                <literallayout class='monospaced'>
+     $ runqemu qemux86
+                </literallayout>
+            </para>
+
+            <para>
+                Login to the machine using <filename>root</filename> with no password
+                and test for the number of processors the kernel supports:
+                <literallayout class='monospaced'>
+     # cat /proc/cpuinfo | grep processor 
+     processor       : 0
+     processor       : 1
+     #
+                </literallayout>
+            </para>
+
+            <para>
+                From the output you can see that you have successfully reconfigured the kernel.
+            </para>
+        </section>
     </section>
 
     <section id='adding-kernel-recipes'>
@@ -516,7 +678,7 @@
         <para>
             [Example to be supplied]
         </para>
-    </section>
+    </section> 
 
 
 
@@ -584,40 +746,6 @@ It should just build whatever is necessary and not go through an entire build ag
         <section id='prepare-to-use-menuconfig'>
             <title>Prepare to use <filename>menuconfig</filename></title>
             
-            <para>
-                The <filename>menuconfig</filename> tool provides an interactive method with which
-                to set kernel configurations.
-                In order to use <filename>menuconfig</filename> from within the BitBake environment
-                you need to source an environment setup script.
-                This script is located in the local Yocto Project file structure and is called
-                <filename>oe-init-build-env</filename>.
-            </para>
-
-            <para>
-                The following command sets up the environment:
-                <literallayout class='monospaced'>
-     $ cd ~/poky
-     $ source oe-init-build-env
-                </literallayout>
-            </para>
-        </section>
-
-        <section id='make-configuration-changes-to-the-kernel'>
-            <title>Make Configuration Changes to the Kernel</title>
-            
-            <para>
-                After setting up the environment to run <filename>menuconfig</filename> you are ready 
-                to use the tool to interactively change the kernel configuration.
-                In this example we are basing our changes on the <filename>linux-yocto-2.6.37</filename>
-                kernel.
-                The Yocto Project build environment recognizes this kernel as 
-                <filename>linux-yocto</filename>.
-                Thus, the following command from the shell in which you previously sourced the 
-                environment initialization script launches <filename>menuconfig</filename>:
-                <literallayout class='monospaced'>
-     $ bitbake linux-yocto -c menuconfig
-                </literallayout>
-            </para>
 
             <para>
                 [WRITER'S NOTE: Stuff from here down are crib notes]
