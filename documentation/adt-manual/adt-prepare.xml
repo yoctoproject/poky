@@ -13,22 +13,25 @@
 
 <para> 
     This section describes how to be sure you meet these requirements.
-    Througout this section two important terms are used:
+    Throughout this section two important terms are used:
     <itemizedlist>
-        <listitem><para><emphasis>Yocto Project Source Tree:</emphasis>
+        <listitem><para><emphasis>The Yocto Project Files:</emphasis>
         This term refers to the directory structure created as a result of downloading 
-        and unpacking a Yocto Project release tarball.
-        The Yocto Project source tree contains BitBake, Documentation, Meta-data and 
-        other files. 
-        The name of the top-level directory of the Yocto Project source tree  
+        and unpacking a Yocto Project release tarball or setting up a Git repository
+        by cloning <filename>git://git.yoctoproject.org/poky</filename>.
+        The Yocto Project files contain BitBake, Documentation, metadata and 
+        other files that all support the development environment. 
+        The name of the top-level directory of the Yocto Project files  
         is derived from the Yocto Project release tarball.
         For example, downloading and unpacking <filename>poky-bernard-5.0.1.tar.bz2</filename>
         results in a Yocto Project source tree whose Yocto Project source directory is named 
-        <filename>poky-bernard-5.0.1</filename>.</para></listitem>
+        <filename>poky-bernard-5.0.1</filename>.
+        If you create a Git repository then you can name the repository anything you like. 
+        </para></listitem>
         <listitem><para><emphasis>Yocto Project Build Tree:</emphasis>
-        This term refers to the area where you run your builds.  
+        This term refers to the area where Yocto Project builds images.  
         The area is created when you source the Yocto Project setup environment script
-        that is found in the Yocto Project source directory 
+        that is found in the Yocto Project files area. 
         (e.g. <filename>poky-init-build-env</filename>).
         You can create the Yocto Project build tree anywhere you want on your 
         development system.
@@ -65,10 +68,10 @@
             <listitem><para><emphasis>Use an Existing Toolchain Tarball:</emphasis>
             Using this method you select and download an architecture-specific
             toolchain tarball and then hand-install the toolchain.
-            If you use this method you just get the cross-toolchain and QEMU - you do not 
+            If you use this method, you just get the cross-toolchain and QEMU - you do not 
             get any of the other mentioned benefits had you run the ADT Installer script.</para></listitem>
-            <listitem><para><emphasis>Use the Toolchain from Within a Yocto Project Build Tree:</emphasis>
-            If you already have a Yocto Project build tree you can install the cross-toolchain 
+            <listitem><para><emphasis>Use the Toolchain from within a Yocto Project Build Tree:</emphasis>
+            If you already have a Yocto Project build tree, you can install the cross-toolchain 
             using that tree.
             However, like the previous method mentioned, you only get the cross-toolchain and QEMU - you 
             do not get any of the other benefits without taking separate steps.</para></listitem>
@@ -79,7 +82,7 @@
         <title>Using the ADT Installer</title>
 
         <para>
-            To run the ADT Installer you need to first get the ADT Installer tarball and then run the ADT
+            To run the ADT Installer, you need to first get the ADT Installer tarball and then run the ADT
             Installer Script.
         </para>
 
@@ -96,12 +99,12 @@
             <para>
                 If you use BitBake to generate the ADT Installer tarball, you must 
                 source the Yocto Project environment setup script located in the Yocto Project
-                source directory before running the BitBake command that creates the tarball.
+                files before running the BitBake command that creates the tarball.
             </para>
 
             <para>
-                The following example commands download the Yocto Project release tarball, create the Yocto 
-                Project source tree, set up the environment while also creating the Yocto Project build tree, 
+                The following example commands download the Yocto Project release tarball, set up the Yocto 
+                Project files, set up the environment while also creating the Yocto Project build tree, 
                 and finally run the BitBake command that results in the tarball 
                 <filename>~/yocto-project/build/tmp/deploy/sdk/adt_installer.tar.bz2</filename>:
                 <literallayout class='monospaced'>
@@ -121,7 +124,7 @@
             <title>Configuring and Running the ADT Installer Script</title>
 
             <para>
-                Before running the ADT Installer script you need to unpack the tarball.
+                Before running the ADT Installer script, you need to unpack the tarball.
                 You can unpack the tarball in any directory you wish.
                 Unpacking it creates the directory <filename>adt-installer</filename>, 
                 which contains the ADT Installer script and its configuration file.
@@ -161,9 +164,9 @@
                     you should install NFS.
                     <note>
                     To boot QEMU images using our userspace NFS server, you need 
-                    to be running portmap or rpcbind. 
-                    If you are running rpcbind, you will also need to add the -i 
-                    option when rpcbind starts up. 
+                    to be running <filename>portmap</filename> or <filename>rpcbind</filename>. 
+                    If you are running <filename>rpcbind</filename>, you will also need to add the 
+                    <filename>-i</filename> option when <filename>rpcbind</filename> starts up. 
                     Please make sure you understand the security implications of doing this. 
                     Your firewall settings may also have to be modified to allow 
                     NFS booting to work.
@@ -180,7 +183,8 @@
                     For example, if you downloaded both <filename>minimal</filename> and 
                     <filename>sato-sdk</filename> images by setting <filename>YOCTOADT_ROOTFS_&lt;arch&gt;</filename>
                     to "minimal sato-sdk", then <filename>YOCTOADT_ROOTFS_&lt;arch&gt;</filename>
-                    must be set to either "minimal" or "sato-sdk".
+                    must be set to either <filename>minimal</filename> or 
+                    <filename>sato-sdk</filename>.
                     </para></listitem>
                     <listitem><para><filename>YOCTOADT_TARGET_SYSROOT_LOC_&lt;arch&gt;</filename> - The 
                     location on the development host where the target sysroot will be created.
@@ -204,7 +208,7 @@
             </note>
 
             <para>
-                Once the installer begins to run you are asked whether you want to run in 
+                Once the installer begins to run, you are asked whether you want to run in 
                 interactive or silent mode.  
                 If you want to closely monitor the installation then choose “I” for interactive 
                 mode rather than “S” for silent mode.  
@@ -227,9 +231,9 @@
     <section id='using-an-existing-toolchain-tarball'>
         <title>Using a Cross-Toolchain Tarball</title>
         <para>
-            If you want to simply install the cross-toolchain by hand you can do so by using an existing 
+            If you want to simply install the cross-toolchain by hand, you can do so by using an existing 
             cross-toolchain tarball.  
-            If you install the cross-toolchain by hand you will have to set up the target sysroot separately.
+            If you install the cross-toolchain by hand, you will have to set up the target sysroot separately.
         </para>
 
         <para>
@@ -238,28 +242,29 @@
                 <listitem><para>Go to  
                 <ulink url='http://autobuilder.yoctoproject.org/downloads/yocto-1.0/toolchain'></ulink> 
                 and find the folder that matches your host development system 
-                (i.e. 'i686' for 32-bit machines or 'x86_64' for 64-bit machines).</para>
+                (i.e. <filename>i686</filename> for 32-bit machines or 
+                <filename>x86_64</filename> for 64-bit machines).</para>
                 </listitem>
                 <listitem><para>Go into that folder and download the toolchain tarball whose name 
                 includes the appropriate target architecture.
                 For example, if your host development system is an Intel-based 64-bit system and 
-                you are going to use your cross-toolchain for an arm target go into the 
+                you are going to use your cross-toolchain for an arm target, go into the 
                 <filename>x86_64</filename> folder and download the following tarball:
                 <literallayout class='monospaced'>
      yocto-eglibc-x86_64-arm-toolchain-gmae-1.0.tar.bz2
                 </literallayout>
                 <note>
-                Alternatively you can build the toolchain tarball if you have a Yocto Project build tree.
+                Alternatively, you can build the toolchain tarball if you have a Yocto Project build tree.
                 Use the <filename>bitbake meta-toolchain</filename> command after you have 
                 sourced the <filename>poky-build-init script</filename> located in the Yocto Project 
-                source directory.  
-                When the <filename>bitbake</filename> command completes the toolchain tarball will 
+                files.  
+                When the <filename>bitbake</filename> command completes, the toolchain tarball will 
                 be in <filename>tmp/deploy/sdk</filename> in the Yocto Project build tree.
                 </note></para></listitem>
                 <listitem><para>Make sure you are in the root directory and then expand 
                 the tarball.  
                 The tarball expands into <filename>/opt/poky/$SDKVERSION</filename>.
-                Once the tarball in unpacked the cross-toolchain is installed.
+                Once the tarball in unpacked, the cross-toolchain is installed.
                 You will notice environment setup files for the cross-toolchain in the directory.
                 </para></listitem>
             </orderedlist>
@@ -274,14 +279,13 @@
             Follow these steps:
             <orderedlist>
                 <listitem><para>Source the environment setup script located in the Yocto Project
-                source directory.
+                files.
                 The script has the string <filename>init-build-env</filename>
                 as part of the name.</para></listitem> 
                 <listitem><para>At this point you should be sure that the 
                 <filename>MACHINE</filename> variable 
                 in the <filename>local.conf</filename> file is set for the target architecture.
-                You can find the <filename>local.conf</filename> file in the Yocto Project source
-                directory.
+                You can find the <filename>local.conf</filename> file in the Yocto Project files.
                 Comments within the <filename>local.conf</filename> file list the values you 
                 can use for the <filename>MACHINE</filename> variable.  
                 <note>You can populate the build tree with the cross-toolchains for more 
@@ -291,7 +295,7 @@
                 <listitem><para>Run <filename>bitbake meta-ide-support</filename> to complete the 
                 cross-toolchain installation.
                 <note>If you change your working directory after you source the environment 
-                setup script and before you run the BitBake command the command will not work. 
+                setup script and before you run the BitBake command, the command will not work. 
                 Be sure to run the BitBake command immediately after checking or editing the 
                 <filename>local.conf</filename> but without changing your working directory.</note>
                 Once BitBake finishes, the cross-toolchain is installed.
@@ -307,12 +311,12 @@
 <section id='setting-up-the-environment'>
     <title>Setting Up the Environment</title>
     <para>
-        Before you can use the cross-toolchain you need to set up the toolchain environment by 
+        Before you can use the cross-toolchain, you need to set up the toolchain environment by 
         sourcing the environment setup script.  
         If you used the ADT Installer or used an existing ADT tarball to install the ADT,
         then you can find this script in the <filename>/opt/poky/$SDKVERSION</filename>
         directory.  
-        If you used BitBake and the Yocto Project Build Tree to install the cross-toolchain
+        If you used BitBake and the Yocto Project Build Tree to install the cross-toolchain,
         then you can find the environment setup scripts in in the Yocto Project build tree 
         in the <filename>tmp</filename> directory.
     </para>
@@ -341,8 +345,9 @@
         <ulink url='http://www.yoctoproject.org/docs/yocto-quick-start/yocto-project-qs.html'></ulink>.
         <note> 
             Yocto Project provides basic kernels and filesystem images for several 
-            architectures (x86, x86-64, mips, powerpc, and arm) that you can use 
-            unaltered in the QEMU emulator.  
+            architectures (<filename>x86</filename>, <filename>x86-64</filename>, 
+            <filename>mips</filename>, <filename>powerpc</filename>, and <filename>arm</filename>) 
+            that you can use unaltered in the QEMU emulator.  
             These kernels and filesystem images reside in the Yocto Project release 
             area - <ulink url='http://autobuilder.yoctoproject.org/downloads/yocto-1.0/machines/'></ulink>
             and are ideal for experimentation within Yocto Project.
