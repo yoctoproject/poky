@@ -200,14 +200,14 @@
     <title>Debugging Build Failures</title>
 
     <para>
-        The exact method for debugging Poky depends on the nature of the 
+        The exact method for debugging Yocto Project build failures depends on the nature of the 
         problem and on the system's area from which the bug originates. 
         Standard debugging practices such as comparison against the last 
         known working version with examination of the changes and the re-application of steps 
         to identify the one causing the problem are
-        valid for Poky just as they are for any other system. 
+        valid for Yocto Project just as they are for any other system. 
         Even though it is impossible to detail every possible potential failure, 
-        here are some general tips to aid in debugging:
+        this section provides some general tips to aid in debugging.
     </para>
 
     <section id='usingpoky-debugging-taskfailures'>
@@ -326,6 +326,98 @@
             either the configuration (no package specified) or for a
             specific package when specified with the "-b" option.
         </para>
+    </section>
+    
+    <section id='recipe-logging-mechanisms'>
+        <title>Recipe Logging Mechanisms</title>
+        <para>
+            Best practices exist while writing recipes that both log build progress and 
+            act on build conditions such as warnings and errors. 
+            Depending whether you are creating recipes using Bash or Python, the mechanism 
+            differs:
+            <itemizedlist>
+                <listitem><para><emphasis>Python:</emphasis> For Python functions BitBake
+                    supports several loglevels: <filename>bb.fatal</filename>, 
+                    <filename>bb.error</filename>, <filename>bb.warn</filename>,
+                    <filename>bb.note</filename>, <filename>bb.plain</filename>,
+                    and <filename>bb.debug</filename>.</para></listitem>
+                <listitem><para><emphasis>Bash:</emphasis> For Bash functions you use the 
+                    <filename>echo</filename> command and prepend a diagnostic string that includes
+                    the loglevel followed by a colon character</para></listitem>
+            </itemizedlist>
+        </para>
+
+        <section id='logging-with-python'>
+            <title>Logging With Python</title>
+            <para>
+                When creating recipes using Python and inserting code that handles build logs
+                keep in mind the goal is to have informative logs while keeping the console as 
+                "silent" as possible. 
+                Also, if you want status messages in the log use the "debug" loglevel.
+            </para>
+
+            <para>
+                Following is sample code from a recipe written in Python.
+                The code handles logging for a function that determines the number of tasks 
+                needed to be run:
+                <literallayout class='monospaced'>
+     python do_listtasks() {
+         bb.debug(2, "Starting to figure out the task list")
+         if noteworthy_condition:
+             bb.note("There are 47 tasks to run")
+         bb.debug(2, "Got to point xyz")
+         if warning_trigger:
+             bb.warn("Detected warning_trigger, this might be a problem later.")
+         if recoverable_error:
+             bb.error("Hit recoverable_error, you really need to fix this!")
+         if fatal_error:
+             bb.fatal("fatal_error detected, unable to print the task list")
+         bb.plain("The tasks present are abc")
+         bb.debug(2, "Finished figureing out the tasklist")
+     }
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='logging-with-bash'>
+            <title>Logging With Bash</title>
+            <para>
+                When creating recipes using Bash and inserting code that handles build
+                logs you have the same goals - informative with minimal console output. 
+                Use the <filename>echo</filename> command and prepend the diagnostic string
+                with the appropriate loglevel floowed by the colon character.
+            </para>
+
+            <para>
+                For guidance on <filename>echo</filename> usage in Bash recipes, see the 
+                <filename>logging.bbclass</filename> file in the 
+                <filename>meta/classes</filename> directory of the Yocto Project files.
+            </para>
+
+            <para>
+                Following is sample code from a recipe written in Bash.
+                The code logs the progress of the <filename>do_my_function</filename> function.
+                <literallayout class='monospaced'>
+     do_my_function() {
+         echo "Running do_my_function()"
+         if [ exceptional_condition ]; then
+             echo "NOTE: hit exceptional_condition"
+         fi
+         echo "DEBUG: got to point xyz"
+         if [ warning_trigger ]; then
+             echo "WARNING: detected warning_trigger, this might cause a plroblem later."
+         fi
+         if [ recoverable_error ]; then
+             echo "ERROR: hit recoverable_error, correcting"
+         fi
+         if [ fatal_error ]; then
+             echo "FATAL: fatal_error detected"
+         fi
+         echo "Completed do_my_function"
+     }
+                </literallayout>
+            </para>
+        </section>
     </section>
     
     <section id='usingpoky-debugging-others'>
