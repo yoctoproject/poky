@@ -3,7 +3,7 @@
 
 <chapter id='bsp'>
 
-        <title>Board Support Packages (BSP) - Developers Guide</title>
+        <title>Board Support Packages (BSP) - Developer's Guide</title>
 
         <para>
             A Board Support Package (BSP) is a collection of information that
@@ -27,12 +27,12 @@
             of software support of hardware.
         </para>
 
-        <note><para>
+        <note>
             The information here does not provide an example of how to create a BSP.
             For information on how to create a BSP, see the Yocto Project Development Manual or the 
             <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_creating_one_generic_Atom_BSP_from_another'></ulink>
             wiki page.
-        </para></note>
+        </note>
 
         <para>
             The proposed format does have elements that are specific to the Yocto Project and 
@@ -81,8 +81,11 @@
 
             <para>
                 The base directory (<filename>meta-&lt;bsp_name&gt;</filename>) is the root of the BSP layer.
-                This root is what you add to the BBLAYERS variable in <filename>build/conf/bblayers.conf</filename>
-                so that the build system recognizes the BSP definition and from it can build an image.
+                This root is what you add to the <filename>BBLAYERS</filename>
+                variable in the <filename>build/conf/bblayers.conf</filename> file found in the 
+                Yocto Project file's build directory.
+                Adding the root allows the Yocto Project build system to recognize the BSP 
+                definition and from it build an image.
                 Here is an example:
                 <literallayout class='monospaced'>
      BBLAYERS = " \
@@ -94,6 +97,9 @@
                 For more detailed information on layers, see the 
                 <ulink url='http://www.yoctoproject.org/docs/poky-ref-manual/poky-ref-manual.html#usingpoky-changes-layers'>
                 BitBake Layers</ulink> section of the Yocto Project Reference Manual.
+                You can also see the detailed examples in the appendices of  
+                <ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html'>
+                The Yocto Project Development Manual</ulink>.
             </para>
 
             <para>
@@ -101,41 +107,41 @@
                 While you can use this basic form for the standard, realize that the actual structures
                 for specific BSPs could differ. 
 
-                <programlisting>
-meta-&lt;bsp_name&gt;/                                
-meta-&lt;bsp_name&gt;/&lt;bsp_license_file&gt;
-meta-&lt;bsp_name&gt;/README
-meta-&lt;bsp_name&gt;/binary/&lt;bootable_images&gt;
-meta-&lt;bsp_name&gt;/conf/layer.conf 
-meta-&lt;bsp_name&gt;/conf/machine/*.conf
-meta-&lt;bsp_name&gt;/recipes-bsp/*
-meta-&lt;bsp_name&gt;/recipes-graphics/*            
-meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_git.bbappend
-                </programlisting>
+                <literallayout class='monospaced'>
+     meta-&lt;bsp_name&gt;/                                
+     meta-&lt;bsp_name&gt;/&lt;bsp_license_file&gt;
+     meta-&lt;bsp_name&gt;/README
+     meta-&lt;bsp_name&gt;/binary/&lt;bootable_images&gt;
+     meta-&lt;bsp_name&gt;/conf/layer.conf 
+     meta-&lt;bsp_name&gt;/conf/machine/*.conf
+     meta-&lt;bsp_name&gt;/recipes-bsp/*
+     meta-&lt;bsp_name&gt;/recipes-graphics/*            
+     meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_git.bbappend
+                </literallayout>
             </para>
 
             <para>
-                Below is an example of the crownbay BSP:
+                Below is an example of the Crownbay BSP:
 
-                <programlisting>
-meta-crownbay/COPYING.MIT
-meta-crownbay/README
-meta-crownbay/binary/.gitignore
-meta-crownbay/conf/layer.conf
-meta-crownbay/conf/machine/crownbay.conf
-meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
-meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xcorg.conf
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin/.gitignore
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin_1.7.99.2.bb
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/crosscompile.patch
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/fix_open_max_preprocessor_error.patch
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/macro_tweak.patch
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/nodolt.patch
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd_1.7.99.2.bb
-meta-crownbay/recipes-kernel/linux/linux-yocto_git.bbappend
-                </programlisting>
+                <literallayout class='monospaced'>
+     meta-crownbay/COPYING.MIT
+     meta-crownbay/README
+     meta-crownbay/binary/.gitignore
+     meta-crownbay/conf/layer.conf
+     meta-crownbay/conf/machine/crownbay.conf
+     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
+     meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xcorg.conf
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin/.gitignore
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin_1.7.99.2.bb
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/crosscompile.patch
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/fix_open_max_preprocessor_error.patch
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/macro_tweak.patch
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/nodolt.patch
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd_1.7.99.2.bb
+     meta-crownbay/recipes-kernel/linux/linux-yocto_git.bbappend
+                </literallayout>
             </para>
 
             <para>
@@ -144,14 +150,18 @@ meta-crownbay/recipes-kernel/linux/linux-yocto_git.bbappend
 
             <section id="bsp-filelayout-license">
             <title>License Files</title>
-            <programlisting>
-meta-&lt;bsp_name&gt;/&lt;bsp_license_file&gt;
-            </programlisting>
+
+            <para>
+                You can find these files in the Yocto Project file's directory structure at:
+                <literallayout class='monospaced'>
+     meta-&lt;bsp_name&gt;/&lt;bsp_license_file&gt;
+                </literallayout>
+            </para>
 
             <para>
                 These optional files satisfy licensing requirements for the BSP.
                 The type or types of files here can vary depending on the licensing requirements.
-                For example, in the crownbay BSP all licensing requirements are handled with the 
+                For example, in the Crownbay BSP all licensing requirements are handled with the 
                 <filename>COPYING.MIT</filename> file.  
             </para>
 
@@ -163,9 +173,12 @@ meta-&lt;bsp_name&gt;/&lt;bsp_license_file&gt;
 
             <section id="bsp-filelayout-readme">
             <title>README File</title>
-            <programlisting>
-meta-&lt;bsp_name&gt;/README
-            </programlisting>
+            <para>
+                You can find these files in the Yocto Project file's directory structure at:
+                <literallayout class='monospaced'>
+     meta-&lt;bsp_name&gt;/README
+                </literallayout>
+            </para>
 
             <para>
                 This file provides information on how to boot the live images that are optionally 
@@ -182,9 +195,12 @@ meta-&lt;bsp_name&gt;/README
 
             <section id="bsp-filelayout-binary">
             <title>Pre-built User Binaries</title>
-            <programlisting>
-meta-&lt;bsp_name&gt;/binary/&lt;bootable_images&gt;
-            </programlisting>
+            <para>
+                You can find these files in the Yocto Project file's directory structure at:
+                <literallayout class='monospaced'>
+     meta-&lt;bsp_name&gt;/binary/&lt;bootable_images&gt;
+                </literallayout>
+            </para>
 
             <para>
                 This optional area contains useful pre-built kernels and user-space filesystem 
@@ -206,9 +222,12 @@ meta-&lt;bsp_name&gt;/binary/&lt;bootable_images&gt;
 
             <section id='bsp-filelayout-layer'>
             <title>Layer Configuration File</title>
-            <programlisting>
-meta-&lt;bsp_name&gt;/conf/layer.conf 
-            </programlisting>
+            <para>
+                You can find these files in the Yocto Project file's directory structure at:
+                <literallayout class='monospaced'>
+     meta-&lt;bsp_name&gt;/conf/layer.conf 
+                </literallayout>
+            </para>
 
             <para>
                 This file identifies the structure as a Yocto Project layer, identifies the  
@@ -219,18 +238,18 @@ meta-&lt;bsp_name&gt;/conf/layer.conf
             </para>
 
             <para>
-               <programlisting>
-# We have a conf directory, add to BBPATH
-BBPATH := "${BBPATH}:${LAYERDIR}"
+               <literallayout class='monospaced'>
+     # We have a conf directory, add to BBPATH
+     BBPATH := "${BBPATH}:${LAYERDIR}"
 
-# We have a recipes directory containing .bb and .bbappend files, add to BBFILES
-BBFILES := "${BBFILES} ${LAYERDIR}/recipes/*/*.bb \ 
-            ${LAYERDIR}/recipes/*/*.bbappend"
+     # We have a recipes directory containing .bb and .bbappend files, add to BBFILES
+     BBFILES := "${BBFILES} ${LAYERDIR}/recipes/*/*.bb \ 
+                 ${LAYERDIR}/recipes/*/*.bbappend"
 
-BBFILE_COLLECTIONS += "bsp"
-BBFILE_PATTERN_bsp := "^${LAYERDIR}/"
-BBFILE_PRIORITY_bsp = "5"
-                </programlisting>
+     BBFILE_COLLECTIONS += "bsp"
+     BBFILE_PATTERN_bsp := "^${LAYERDIR}/"
+     BBFILE_PRIORITY_bsp = "5"
+                </literallayout>
             </para>
 
             <para>
@@ -241,9 +260,12 @@ BBFILE_PRIORITY_bsp = "5"
 
             <section id="bsp-filelayout-machine">
             <title>Hardware Configuration Options</title>
-            <programlisting>
-meta-&lt;bsp_name&gt;/conf/machine/*.conf
-            </programlisting>
+            <para>
+                You can find these files in the Yocto Project file's directory structure at:
+                <literallayout class='monospaced'>
+     meta-&lt;bsp_name&gt;/conf/machine/*.conf
+                </literallayout>
+            </para>
 
             <para>
                 The machine files bind together all the information contained elsewhere
@@ -272,10 +294,10 @@ meta-&lt;bsp_name&gt;/conf/machine/*.conf
                 An example is <filename>tune-atom.inc</filename>:
             </para>
             <para>
-                <programlisting>
-BASE_PACKAGE_ARCH = "core2"
-TARGET_CC_ARCH = "-m32 -march=core2 -msse3 -mtune=generic -mfpmath=sse"
-                </programlisting>
+                <literallayout class='monospaced'>
+     BASE_PACKAGE_ARCH = "core2"
+     TARGET_CC_ARCH = "-m32 -march=core2 -msse3 -mtune=generic -mfpmath=sse"
+                </literallayout>
             </para>
             <para>
                 This example defines a new package architecture called "core2" and uses the
@@ -294,19 +316,22 @@ TARGET_CC_ARCH = "-m32 -march=core2 -msse3 -mtune=generic -mfpmath=sse"
 
             <section id='bsp-filelayout-misc-recipes'>
             <title>Miscellaneous Recipe Files</title>
-            <programlisting>
-meta-&lt;bsp_name&gt;/recipes-bsp/*
-            </programlisting>
+            <para>
+                You can find these files in the Yocto Project file's directory structure at:
+                <literallayout class='monospaced'>
+     meta-&lt;bsp_name&gt;/recipes-bsp/*
+                </literallayout> 
+            </para>
 
             <para>
                 This optional directory contains miscellaneous recipe files for the BSP.
                 Most notably would be the formfactor files.
-                For example, in the crownbay BSP there is a <filename>machconfig</filename> file and a
+                For example, in the Crownbay BSP there is a <filename>machconfig</filename> file and a
                 <filename>formfactor_0.0.bbappend</filename> file:
-                <programlisting>
-meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
-meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
-                </programlisting>
+                <literallayout class='monospaced'>
+     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
+     meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
+                </literallayout>
             </para>
 
             <note><para>
@@ -317,34 +342,40 @@ meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
 
             <section id='bsp-filelayout-recipes-graphics'>
             <title>Display Support Files</title>
-            <programlisting>
-meta-&lt;bsp_name&gt;/recipes-graphics/*            
-            </programlisting>
+            <para>
+                You can find these files in the Yocto Project file's directory structure at:
+                <literallayout class='monospaced'>
+     meta-&lt;bsp_name&gt;/recipes-graphics/*            
+                </literallayout>
+            </para>
 
             <para>
                 This optional directory contains recipes for the BSP if it has 
                 special requirements for graphics support.
                 All files that are needed for the BSP to support a display are kept here. 
-                For example, in the crownbay BSP several display support files exist:
-                <programlisting>
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xcorg.conf
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin/.gitignore
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin_1.7.99.2.bb
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/crosscompile.patch
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/fix_open_max_preprocessor_error.patch
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/macro_tweak.patch
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/nodolt.patch
-meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd_1.7.99.2.bb
-                </programlisting>
+                For example, in the Crownbay BSP several display support files exist:
+                <literallayout class='monospaced'>
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xcorg.conf
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin/.gitignore
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin_1.7.99.2.bb
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/crosscompile.patch
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/fix_open_max_preprocessor_error.patch
+     eta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/macro_tweak.patch
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/nodolt.patch
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd_1.7.99.2.bb
+                </literallayout>
             </para>
             </section>
 
             <section id='bsp-filelayout-kernel'>
             <title>Linux Kernel Configuration</title>
-            <programlisting>
-meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_git.bbappend
-            </programlisting>
+            <para>
+                You can find these files in the Yocto Project file's directory structure at:
+                <literallayout class='monospaced'>
+     meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_git.bbappend
+                </literallayout>
+            </para>
 
             <para>
                 This file appends your specific changes to the kernel you are using.
@@ -362,25 +393,25 @@ meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_git.bbappend
                 which is the preferred kernel to use for developing a new BSP using the Yocto Project.
                 In other words, you have selected the kernel in your 
                 <filename>&lt;bsp_name&gt;.conf</filename> file by adding the following statement:
-                <programlisting>
-PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-                </programlisting>
+                <literallayout class='monospaced'>
+     PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
+                </literallayout>
                 You would use the <filename>linux-yocto_git.bbappend</filename> file to append 
                 specific BSP settings to the kernel, thus configuring the kernel for your particular BSP.
             </para>
             <para>
-                Now take a look at the existing "crownbay" BSP.
+                Now take a look at the existing Crownbay BSP.
                 The append file used is:
-                <programlisting>
-meta-crownbay/recipes-kernel/linux/linux-yocto_git.bbappend
-                </programlisting>
+                <literallayout class='monospaced'>
+     meta-crownbay/recipes-kernel/linux/linux-yocto_git.bbappend
+                </literallayout>
                 The file contains the following:
-                <programlisting>
-FILESEXTRAPATHS := "${THISDIR}/${PN}"
-COMPATIBLE_MACHINE_crownbay = "crownbay"
-KMACHINE_crownbay = "yocto/standard/crownbay"
-                </programlisting>
-                This append file adds "crownbay" as a compatible machine,
+                <literallayout class='monospaced'>
+     FILESEXTRAPATHS := "${THISDIR}/${PN}"
+     COMPATIBLE_MACHINE_crownbay = "crownbay"
+     KMACHINE_crownbay = "yocto/standard/crownbay"
+                </literallayout>
+                This append file adds Crownbay as a compatible machine,
                 and additionally sets a Yocto Kernel-specific variable that identifies the name of the 
                 BSP branch to use in the Git repository to find configuration information.
             </para>
@@ -402,9 +433,9 @@ KMACHINE_crownbay = "yocto/standard/crownbay"
                 <filename class='directory'>/linux-yocto</filename> and then added 
                 a SRC_URI statement such as the following to the append file, those configuration
                 options will be picked up and applied when the kernel is built.
-                <programlisting>
-SRC_URI += "file://defconfig"
-                </programlisting>
+                <literallayout class='monospaced'>
+     SRC_URI += "file://defconfig"
+                </literallayout>
             </para>
             <para>
                 As mentioned earlier, you can group related configurations into multiple files and 
@@ -412,18 +443,19 @@ SRC_URI += "file://defconfig"
                 For example, you could group separate configurations specifically for Ethernet and graphics
                 into their own files and add those by using a SRC_URI statement like the 
                 following in your append file:
-                <programlisting>
-SRC_URI += "file://defconfig \
+                <literallayout class='monospaced'>
+     SRC_URI += "file://defconfig \
             file://eth.cfg \
             file://gfx.cfg"
-                </programlisting>
+                </literallayout>
             </para>
             <para>
                 The FILESEXTRAPATHS variable is in boilerplate form here in order to make it easy 
                 to do that.
                 It basically allows those configuration files to be found by the build process.
             </para>
-            <note><para>
+            <note>
+                <para>
                 Other methods exist to accomplish grouping and defining configuration options.
                 For example, you could directly add configuration options to the Yocto kernel 
                 <filename class='directory'>meta</filename> branch for your BSP.
@@ -432,116 +464,26 @@ SRC_URI += "file://defconfig \
                 For information on how to add these configurations directly, see the 
                 "Yocto Project Kernel Architecture and Use Manual" on the 
                 <ulink url="http://yoctoproject.org/community/documentation">Yocto Project website
-                Documentation Page</ulink> 
-            </para>
-            <para>
+                Documentation Page</ulink></para>
+                <para>
                 In general, however, the Yocto Project maintainers take care of moving the SRC_URI-specified 
                 configuration options to the <filename class='directory'>meta</filename> branch.
                 Not only is it easier for BSP developers to not have to worry about putting those 
                 configurations in the branch, but having the maintainers do it allows them to apply 
                 'global' knowledge about the kinds of common configuration options multiple BSPs in 
                 the tree are typically using.  
-                This allows for promotion of common configurations into common features.
-            </para></note>
+                This allows for promotion of common configurations into common features.</para>
+            </note>
             </section>
-
-<!--        <section id='bsp-filelayout-packages'>
-            <title>Other Software (meta-&lt;bsp_name&gt;/recipes-kernel/*)</title>
-
-            <para>
-                This section describes other pieces of software that the hardware might need for best
-                operation. 
-                Examples show some of the things you could encounter.  
-                The examples are standard <filename>.bb</filename> file recipes in the 
-                usual Poky format.  
-                You can include the source directly by referring to it in the source control system or 
-                the released tarballs of external software projects.
-                You only need to provide these types of files if the platform requires them.
-            </para>
-            <para>
-                The following file is a bootloader recipe that can be used to generate a new
-                bootloader binary. 
-                Sometimes these files are included in the final image format and are needed to re-flash hardware.
-            </para>
-            <para>
-               <programlisting>
-meta-Emenlow/recipes-kernel/bootloader/bootloader_0.1.bb
-               </programlisting>
-            </para>
-            <para>
-                These next two files are examples of a hardware driver and a hardware daemon that might need
-                to be included in images to make the hardware useful. 
-                Although the example uses "modem" there may be other components needed, such as firmware.
-            </para>
-            <para>
-               <programlisting>
-meta-Emenlow/recipes-Emenlow/modem/modem-driver_0.1.bb
-meta-Emenlow/recipes-Emenlow/modem/modem-daemon_0.1.bb
-               </programlisting>
-            </para>
-            <para>
-                Sometimes the device needs an image in a very specific format so that the update
-                mechanism can accept and re-flash it. 
-                Recipes to build the tools needed to do this can be included with the BSP.
-                Following is an example.
-            </para>
-            <para>
-               <programlisting>
-meta-Emenlow/recipes-Emenlow/image-creator/image-creator-native_0.1.bb
-               </programlisting>
-            </para>
-            </section>
-
-            <section id='bs-filelayout-bbappend'>
-            <title>Append BSP-Specific Information to Existing Recipes</title>
-            <para>
-                Suppose you have a recipe such as "pointercal" that requires machine-specific information.
-                At the same time, you have your new BSP code nicely partitioned into a layer through which  
-                you would also like to specify any machine-specific information associated with your new machine. 
-                Before the <filename>.bbappend</filename> extension was introduced, you would have to copy the whole
-                pointercal recipe and files into your layer and then add the single file for your machine.
-            </para>
-            <para>
-                With the <filename>.bbappend</filename> extension, however, your work becomes much easier.
-                This extension allows you to easily merge BSP-specific information with the original recipe.
-                Whenever BitBake finds any <filename>.bbappend</filename> files BitBake will include them after
-                it loads the associated <filename>.bb</filename> file but before any finalize 
-                or anonymous methods are run.
-                This allows the BSP layer to do whatever it might want to do to customize the original recipe.
-            </para>
-            <para>
-                If your recipe needs to reference extra files it can use the FILESEXTRAPATHS variable
-                to specify their location. 
-                The example below shows extra files contained in a folder called ${PN} (the package name).
-            </para>
-            <programlisting>
-FILESEXTRAPATHS := "${THISDIR}/${PN}"
-            </programlisting>
-            <para>
-            This technique allows the BSP to add machine-specific configuration files to the layer directory, 
-            which will be picked up by BitBake. 
-            For an example see <filename>meta-emenlow/packages/formfactor</filename>.
-            </para>
-            </section>
-
-            <section id="bsp-filelayout-prebuilds">
-            <title>Pre-build Data (meta-&lt;bsp_name&gt;/prebuilds/*)</title>
-            <para>
-                This location can contain precompiled representations of the source code 
-                contained elsewhere in the BSP layer. 
-                Assuming a compatible configuration is used, Poky can process and use these optional pre-compiled 
-                representations to provide much faster build times.
-            </para>
-            </section> -->
         </section>
 
         <section id='bsp-click-through-licensing'>
             <title>BSP 'Click-Through' Licensing Procedure</title>
 
-            <note><para> This section describes how
+            <note> This section describes how
 		click-through licensing is expected to work.
                 Currently, this functionality is not yet implemented.
-            </para></note>
+            </note>
 
             <para>
 	      In some cases, a BSP contains separately licensed IP
@@ -595,19 +537,6 @@ FILESEXTRAPATHS := "${THISDIR}/${PN}"
                   through a web form.
                 </para>
  
-<!--
-                  <ulink url='https://pokylinux.org/bsp-keys.html'>https://pokylinux.org/bsp-keys.html</ulink>
-		  and give the name of the BSP and your e-mail address in the web form.
-		</para>
-
-                COMMENT:  This link is not implemented at this point.  
-
-		<programlisting>
-		  [screenshot of dialog box]
-		</programlisting>
-
--->
-
 		<para>
 		  After agreeing to any applicable license terms, the
 		  BSP key(s) will be immediately sent to the address
@@ -615,9 +544,9 @@ FILESEXTRAPATHS := "${THISDIR}/${PN}"
 		  environment variables when building the image:
 		</para>
 
-		<programlisting>
-		  $ BSPKEY_&lt;keydomain&gt;=&lt;key&gt; bitbake core-image-sato
-		</programlisting>
+		<literallayout class='monospaced'>
+     $ BSPKEY_&lt;keydomain&gt;=&lt;key&gt; bitbake core-image-sato
+		</literallayout>
 
 		<para>
 		  These steps allow the encumbered image to be built
@@ -627,7 +556,8 @@ FILESEXTRAPATHS := "${THISDIR}/${PN}"
 		<para>
 		  Equivalently and probably more conveniently, a line
 		  for each key can instead be put into the user's
-		  <filename>local.conf</filename> file.
+		  <filename>local.conf</filename> file found in the Yocto Project file's
+                  build directory.
 		</para>
 
 		<para>
