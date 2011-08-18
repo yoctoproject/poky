@@ -86,7 +86,7 @@ XSLTOPTS = --stringparam html.stylesheet style.css \
            --stringparam  section.label.includes.component.label 1 \
            --xinclude
 ALLPREQ = html pdf tarball
-TARFILES = poky-ref-manual.html style.css figures/poky-title.png figures/ss-sato.png
+TARFILES = poky-ref-manual.html style.css figures/poky-title.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
