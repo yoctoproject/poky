@@ -6,21 +6,21 @@
 
 <para>
     Class files are used to abstract common functionality and share it amongst multiple 
-    <filename>.bb</filename> files. Any metadata usually found in a 
-    <filename>.bb</filename> file can also be placed in a class 
-    file. Class files are identified by the extension 
-    <filename>.bbclass</filename> and are usually placed 
+    <filename>.bb</filename> files. 
+    Any metadata usually found in a <filename>.bb</filename> file can also be placed in a class 
+    file. 
+    Class files are identified by the extension <filename>.bbclass</filename> and are usually placed 
     in a <filename>classes/</filename> directory beneath the 
-    <filename>meta*/</filename> directory or the directory pointed
-    by BUILDDIR (e.g. <filename>build/</filename>)in the same way as
-    <filename>.conf</filename> files in the <filename 
-    class="directory">conf</filename> directory. Class files are searched for 
-    in BBPATH in the same was as <filename>.conf</filename> files too.
+    <filename>meta*/</filename> directory found in the Yocto Project file's area
+    Class files can also be pointed to by BUILDDIR (e.g. <filename>build/</filename>)in the same way as
+    <filename>.conf</filename> files in the <filename>conf</filename> directory. 
+    Class files are searched for in <filename>BBPATH</filename>
+    using the same method by which <filename>.conf</filename> files are searched.
 </para>
 
 <para>
     In most cases inheriting the class is enough to enable its features, although 
-    for some classes you may need to set variables and/or override some of the 
+    for some classes you might need to set variables or override some of the 
     default behaviour.
 </para>
 
@@ -29,13 +29,14 @@
 
     <para>
         The base class is special in that every <filename>.bb</filename> 
-        file inherits it automatically. It contains definitions of standard basic 
+        file inherits it automatically. 
+        This class contains definitions for standard basic 
         tasks such as fetching, unpacking, configuring (empty by default), compiling 
-        (runs any Makefile present), installing (empty by default) and packaging 
-        (empty by default). These are often overridden or extended by other classes 
-        such as <filename>autotools.bbclass</filename> or 
-        <filename>package.bbclass</filename>. The class also contains some commonly
-        used functions such as <filename>oe_runmake</filename>.
+        (runs any <filename>Makefile</filename> present), installing (empty by default) and packaging 
+        (empty by default). 
+        These classes are often overridden or extended by other classes 
+        such as <filename>autotools.bbclass</filename> or <filename>package.bbclass</filename>. 
+        The class also contains some commonly used functions such as <filename>oe_runmake</filename>.
     </para>
 </section>
 
@@ -43,84 +44,71 @@
     <title>Autotooled Packages - <filename>autotools.bbclass</filename></title>
 
     <para>
-        Autotools (autoconf, automake, libtool) bring standardization. 
+        Autotools (<filename>autoconf</filename>, <filename>automake</filename>, 
+        and <filename>libtool</filename>) bring standardization. 
         This class defines a set of tasks (configure, compile etc.) that 
-        work for all autotooled packages.  
+        work for all Autotooled packages.  
         It should usually be enough to define a few standard variables as documented in the 
-        <link linkend='usingpoky-extend-addpkg-autotools'>simple autotools
-        example</link> section and then simply "inherit autotools". 
-        This class can also work with software that emulates autotools.
+        <link linkend='usingpoky-extend-addpkg-autotools'>Autotooled Package</link> section 
+        and then simply <filename>inherit autotools</filename>. 
+        This class can also work with software that emulates Autotools.
     </para>
 
     <para>
         It's useful to have some idea of how the tasks defined by this class work
         and what they do behind the scenes.
+        <itemizedlist>
+            <listitem><para><filename>do_configure</filename> &dash; regenerates the 
+                configure script (using <filename>autoreconf</filename>) and then launches it 
+                with a standard set of arguments used during cross-compilation. 
+                You can pass additional parameters to <filename>configure</filename> through the 
+                <filename><link linkend='var-EXTRA_OECONF'>EXTRA_OECONF</link></filename> variable.
+                </para></listitem>
+            <listitem><para><filename>do_compile</filename> &dash; runs <filename>make</filename> with 
+                arguments that specify the compiler and linker. 
+                You can pass additional arguments through 
+                the <filename><link linkend='var-EXTRA_OEMAKE'>EXTRA_OEMAKE</link></filename> variable.
+                </para></listitem>
+            <listitem><para><filename>do_install</filename> &dash; runs <filename>make install</filename> 
+                and passes a DESTDIR option, which takes its value from the standard 
+                <filename><link linkend='var-DESTDIR'>DESTDIR</link></filename> variable.
+                </para></listitem>
+        </itemizedlist>
     </para>
-
-    <itemizedlist>
-      <listitem>
-        <para>
-            <filename>do_configure</filename> &dash; regenerates the configure script (using autoreconf) 
-            and then launches it with a standard set of arguments used during
-            cross-compilation. 
-            You can pass additional parameters to 
-            <filename>configure</filename> through the 
-            <glossterm><link linkend='var-EXTRA_OECONF'>EXTRA_OECONF</link></glossterm> variable.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-            <filename>do_compile</filename> &dash; runs <filename>make</filename> with 
-            arguments that specify the compiler and linker. 
-            You can pass additional arguments through 
-            the <glossterm><link linkend='var-EXTRA_OEMAKE'>EXTRA_OEMAKE</link>
-            </glossterm> variable.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-            <filename>do_install</filename> &dash; runs <filename>make install</filename> 
-            and passes a <filename>DESTDIR</filename> 
-            option, which takes its value from the standard 
-            <glossterm><link linkend='var-DESTDIR'>DESTDIR</link></glossterm> variable.
-        </para>
-      </listitem>
-    </itemizedlist>
-
 </section>
 
 <section id='ref-classes-update-alternatives'>
     <title>Alternatives - <filename>update-alternatives.bbclass</filename></title>
 
     <para>
-        Several programs can fulfill the same or similar function and
-        be installed with the same name. 
-        For example, the <filename>ar</filename> 
-        command is available from the "busybox", "binutils" and "elfutils" packages. 
+        Several programs can fulfill the same or similar function and be installed with the same name. 
+        For example, the <filename>ar</filename> command is available from the 
+        <filename>busybox</filename>, <filename>binutils</filename> and 
+        <filename>elfutils</filename> packages. 
         The <filename>update-alternatives.bbclass</filename> class handles renaming the 
         binaries so that multiple packages can be installed without conflicts. 
         The <filename>ar</filename> command still works regardless of which packages are installed
         or subsequently removed. 
-        The class renames the conflicting binary in each package 
-        and symlinks the highest priority binary during installation or removal 
-        of packages.
+        The class renames the conflicting binary in each package and symlinks the highest 
+        priority binary during installation or removal of packages.
     </para>
     <para>
         Four variables control this class:
+        <itemizedlist>
+            <listitem><para><filename>ALTERNATIVE_NAME</filename> &dash; The name of the 
+                binary that is replaced (<filename>ar</filename> in this example).</para></listitem>
+            <listitem><para><filename>ALTERNATIVE_LINK</filename> &dash; The path to 
+                the resulting binary (<filename>/bin/ar</filename> in this example).</para></listitem>
+            <listitem><para><filename>ALTERNATIVE_PATH</filename> &dash; The path to the 
+                real binary (<filename>/usr/bin/ar.binutils</filename> in this example).</para></listitem>
+            <listitem><para><filename>ALTERNATIVE_PRIORITY</filename> &dash; The priority of 
+                the binary. 
+                The version with the most features should have the highest priority.</para></listitem>
+        </itemizedlist>
     </para>
-    <itemizedlist>
-        <listitem><para><filename>ALTERNATIVE_NAME</filename> &dash; The name of the 
-        binary that is replaced (<filename>ar</filename> in this example).</para></listitem>
-        <listitem><para><filename>ALTERNATIVE_LINK</filename> &dash; The path to 
-        the resulting binary (<filename>/bin/ar</filename> in this example).</para></listitem>
-        <listitem><para><filename>ALTERNATIVE_PATH</filename> &dash; The path to the 
-        real binary (<filename>/usr/bin/ar.binutils</filename> in this example).</para></listitem>
-        <listitem><para><filename>ALTERNATIVE_PRIORITY</filename> &dash; The priority of 
-        the binary. 
-        The version with the most features should have the highest priority.</para></listitem>
-    </itemizedlist>
+
     <para>
-	Currently, only one binary per package is supported.
+	Currently, the Yocto Project supports only one binary per package.
     </para>
 </section>
 
@@ -128,14 +116,15 @@
     <title>Initscripts - <filename>update-rc.d.bbclass</filename></title>
 
     <para>
-        This class uses update-rc.d to safely install an initscript on behalf of 
-        the package. Details such as making sure the initscript is stopped before 
-        a package is removed and started when the package is installed are taken 
-        care of. Three variables control this class, 
-        <link linkend='var-INITSCRIPT_PACKAGES'>INITSCRIPT_PACKAGES</link>, 
-        <link linkend='var-INITSCRIPT_NAME'>INITSCRIPT_NAME</link> and
-        <link linkend='var-INITSCRIPT_PARAMS'>INITSCRIPT_PARAMS</link>. See the 
-        links for details.
+        This class uses <filename>update-rc.d</filename> to safely install an 
+        initialization script on behalf of the package. 
+        The Yocto Project takes care of details such as making sure the script is stopped before 
+        a package is removed and started when the package is installed. 
+        Three variables control this class: 
+        <filename><link linkend='var-INITSCRIPT_PACKAGES'>INITSCRIPT_PACKAGES</link></filename>, 
+        <filename><link linkend='var-INITSCRIPT_NAME'>INITSCRIPT_NAME</link></filename> and
+        <filename><link linkend='var-INITSCRIPT_PARAMS'>INITSCRIPT_PARAMS</link></filename>.
+        See the variable links for details.
     </para>
 </section>
 
@@ -143,17 +132,17 @@
     <title>Binary config scripts - <filename>binconfig.bbclass</filename></title>
 
     <para>
-        Before pkg-config had become widespread, libraries shipped shell
+        Before <filename>pkg-config</filename> had become widespread, libraries shipped shell
         scripts to give information about the libraries and include paths needed 
-        to build software (usually named 'LIBNAME-config'). This class assists
-        any recipe using such scripts.
+        to build software (usually named <filename>LIBNAME-config</filename>).
+        This class assists any recipe using such scripts.
     </para>
 
     <para>
-        During staging Bitbake installs such scripts into the <filename 
-        class="directory">sysroots/</filename> directory. It also changes all
-        paths to point into the <filename>sysroots/</filename>
-        directory so all builds which use the script will use the correct 
+        During staging, Bitbake installs such scripts into the 
+        <filename>sysroots/</filename> directory. 
+        BitBake also changes all paths to point into the <filename>sysroots/</filename>
+        directory so all builds that use the script will use the correct 
         directories for the cross compiling layout.
     </para>
 </section>
@@ -163,8 +152,8 @@
 
     <para>
         This class renames packages so that they follow the Debian naming
-        policy, i.e. 'glibc' becomes 'libc6' and 'glibc-devel' becomes
-        'libc6-dev'.
+        policy (i.e. <filename>glibc</filename> becomes <filename>libc6</filename>
+        and <filename>glibc-devel</filename> becomes <filename>libc6-dev</filename>.
     </para>
 </section>
 
@@ -172,15 +161,15 @@
     <title>Pkg-config - <filename>pkgconfig.bbclass</filename></title>
 
     <para>
-        Pkg-config brought standardisation and this class aims to make its
-        integration smooth for all libraries which make use of it.
+        <filename>pkg-config</filename> brought standardization and this class aims to make its
+        integration smooth for all libraries that make use of it.
     </para>
 
     <para>
-        During staging Bitbake installs pkg-config data into the <filename 
-        class="directory">sysroots/</filename> directory. By making use of
-        sysroot functionality within pkgconfig this class no longer has to 
-        manipulate the files.
+        During staging, Bitbake installs <filename>pkg-config</filename> data into the 
+        <filename>sysroots/</filename> directory. 
+        By making use of sysroot functionality within <filename>pkg-config</filename>,
+        this class no longer has to manipulate the files.
     </para>
 </section>
 
@@ -188,126 +177,131 @@
     <title>Distribution of sources - <filename>src_distribute_local.bbclass</filename></title>
 
     <para>
-        Many software licenses require providing the sources for compiled
-        binaries. To simplify this process two classes were created:
+        Many software licenses require that source files be provided along with the binaries.
+        To simplify this process, two classes were created:
         <filename>src_distribute.bbclass</filename> and 
         <filename>src_distribute_local.bbclass</filename>.
     </para>
 
     <para>
-        Result of their work are <filename>tmp/deploy/source/</filename> 
-        subdirs with sources sorted by <glossterm><link linkend='var-LICENSE'>LICENSE</link>
-        </glossterm> field. If recipe lists few licenses (or has entries like "Bitstream Vera") source archive is put in each
-        license dir.
+        The results of these classes are <filename>tmp/deploy/source/</filename> 
+        subdirs with sources sorted by 
+        <filename><link linkend='var-LICENSE'>LICENSE</link></filename> field. 
+        If recipes list few licenses (or have entries like "Bitstream Vera"),
+        the source archive is placed in each license directory.
     </para>
 
     <para>
-        Src_distribute_local class has three modes of operating:
+        This class operates using three modes:
+        <itemizedlist>
+            <listitem><para><emphasis>copy:</emphasis> Copies the files to the 
+                distribute directory.</para></listitem>
+            <listitem><para><emphasis>symlink:</emphasis> Symlinks the files to the 
+                distribute directory.</para></listitem>
+            <listitem><para><emphasis>move+symlink:</emphasis> Moves the files into 
+                the distribute directory and then symlinks them back.</para></listitem>
+        </itemizedlist>
     </para>
-
-    <itemizedlist>
-        <listitem><para>copy - copies the files to the distribute dir</para></listitem>
-        <listitem><para>symlink - symlinks the files to the distribute dir</para></listitem>
-        <listitem><para>move+symlink - moves the files into distribute dir, and symlinks them back</para></listitem>
-    </itemizedlist>
 </section>
 
 <section id='ref-classes-perl'>
     <title>Perl modules - <filename>cpan.bbclass</filename></title>
 
     <para>
-        Recipes for Perl modules are simple - usually needs only
-        pointing to source archive and inheriting of proper bbclass.
-        Building is split into two methods dependly on method used by
-        module authors.
+        Recipes for Perl modules are simple.
+        These recipes usually only need to point to the source's archive and then inherit the 
+        proper <filename>.bbclass</filename> file.
+        Building is split into two methods dependling on which method the module authors used.
     </para>
     
     <para>
-        Modules which use old Makefile.PL based build system require
-        using of <filename>cpan.bbclass</filename> in their recipes.
+        Modules that use old <filename>Makefile.PL</filename>-based build system require
+        <filename>cpan.bbclass</filename> in their recipes.
     </para>
 
     <para>
-        Modules which use Build.PL based build system require
-        using of <filename>cpan_build.bbclass</filename> in their recipes.
+        Modules that use <filename>Build.PL</filename>-based build system require
+        using <filename>cpan_build.bbclass</filename> in their recipes.
     </para>
-
 </section>
 
 <section id='ref-classes-distutils'>
     <title>Python extensions - <filename>distutils.bbclass</filename></title>
 
     <para>
-        Recipes for Python extensions are simple - they usually only
-        require pointing to the source archive and inheriting the proper
-        bbclasses.
-        Building is split into two methods depending on the build method
-        used by the module authors.
+        Recipes for Python extensions are simple.
+        These recipes usually only need to point to the source's archive and then inherit
+        the proper <filename>.bbclass</filename> file.
+        Building is split into two methods dependling on which method the module authors used.
     </para>
 
     <para>
-        Extensions which use autotools based build system require use
-        of autotools and distutils-base bbclasses in their recipes.
+        Extensions that use an Autotools-based build system require Autotools and 
+        <filename>distutils</filename>-based <filename>.bbclasse</filename> files in their recipes.
     </para>
 
     <para>
-        Extensions which use distutils build system require use
-        of <filename>distutils.bbclass</filename> in their recipes.
+        Extensions that use <filename>distutils</filename>-based build systems require 
+        <filename>distutils.bbclass</filename> in their recipes.
     </para>
-
 </section>
 
 <section id='ref-classes-devshell'>
     <title>Developer Shell - <filename>devshell.bbclass</filename></title>
 
     <para>
-        This class adds the devshell task. Its usually up to distribution policy 
-        to include this class (Poky does). See the <link 
-        linkend='platdev-appdev-devshell'>developing with 'devshell' section</link> 
+        This class adds the <filename>devshell</filename> task. 
+        Distribution policy dictates whether to include this class as the Yocto Project does.
+        See the <link 
+        linkend='platdev-appdev-devshell'>Development Within a Development Shell</link> section 
         for more information about using devshell.
     </para>
-
 </section>
 
 <section id='ref-classes-package'>
     <title>Packaging - <filename>package*.bbclass</filename></title>
 
     <para>
-        The packaging classes add support for generating packages from a builds
-        output. The core generic functionality is in
-        <filename>package.bbclass</filename>, code specific to particular package
-        types is contained in various sub classes such as
-        <filename>package_deb.bbclass</filename>, <filename>package_ipk.bbclass</filename>
-        and <filename>package_rpm.bbclass</filename>. Most users will
-        want one or more of these classes and this is controlled by the <glossterm>
-        <link linkend='var-PACKAGE_CLASSES'>PACKAGE_CLASSES</link></glossterm> 
-        variable. The first class listed in this  variable will be used for image 
-        generation. Since images are generated from packages a packaging class is 
+        The packaging classes add support for generating packages from a build's
+        output. 
+        The core generic functionality is in <filename>package.bbclass</filename>.
+        The code specific 
+        to particular package types is contained in various sub-classes such as
+        <filename>package_deb.bbclass</filename>, <filename>package_ipk.bbclass</filename>,
+        and <filename>package_rpm.bbclass</filename>. 
+        Most users will want one or more of these classes.
+        You can control the list of resulting package formats by using the 
+        <filename><link linkend='var-PACKAGE_CLASSES'>PACKAGE_CLASSES</link></filename> 
+        variable. 
+        The first class listed in this  variable is be used for image generation. 
+        Since images are generated from packages, a packaging class is 
         needed to enable image generation.
     </para>
-
 </section>
 
 <section id='ref-classes-kernel'>
     <title>Building kernels - <filename>kernel.bbclass</filename></title>
 
     <para>
-        This class handles building of Linux kernels and the class contains code to know how to build both 2.4 and 2.6 kernel trees. All needed headers are
-        staged into <glossterm><link
-                linkend='var-STAGING_KERNEL_DIR'>STAGING_KERNEL_DIR</link></glossterm>
-        directory to allow building of out-of-tree modules using <filename>module.bbclass</filename>.
+        This class handles building Linux kernels. 
+        The class contains code to build all kernel trees. 
+        All needed headers are staged into the
+        <filename><link linkend='var-STAGING_KERNEL_DIR'>STAGING_KERNEL_DIR</link></filename>
+        directory to allow out-of-tree module builds using <filename>module.bbclass</filename>.
     </para>
+
     <para>
-        This means that each kernel module built is packaged separately and inter-module dependencies are
-        created by parsing the <filename>modinfo</filename> output. If all modules are
-        required then installing the "kernel-modules" package will install all
-        packages with modules and various other kernel packages such as "kernel-vmlinux".
+        This means that each built kernel module is packaged separately and inter-module 
+        dependencies are created by parsing the <filename>modinfo</filename> output. 
+        If all modules are required, then installing the <filename>kernel-modules</filename>
+        package installs all packages with modules and various other kernel packages 
+        such as <filename>kernel-vmlinux</filename>.
     </para>
 
     <para>
         Various other classes are used by the kernel and module classes internally including 
         <filename>kernel-arch.bbclass</filename>, <filename>module_strip.bbclass</filename>, 
-        <filename>module-base.bbclass</filename> and <filename>linux-kernel-base.bbclass</filename>.
+        <filename>module-base.bbclass</filename>, and <filename>linux-kernel-base.bbclass</filename>.
     </para>
 </section>
 
@@ -315,18 +309,20 @@
     <title>Creating images - <filename>image.bbclass</filename> and <filename>rootfs*.bbclass</filename></title>
 
     <para>
-        Those classes add support for creating images in many formats. First the
-        rootfs is created from packages by one of the <filename>rootfs_*.bbclass</filename> 
-        files (depending on package format used) and then image is created.
+        These classes add support for creating images in several formats. 
+        First, the root filesystem is created from packages using
+        one of the <filename>rootfs_*.bbclass</filename> 
+        files (depending on the package format used) and then the image is created.
+    </para>
 
-        The <glossterm><link
-                linkend='var-IMAGE_FSTYPES'>IMAGE_FSTYPES</link></glossterm>
-        variable controls which types of image to generate.
-        
-        The list of packages to install into the image is controlled by the
-        <glossterm><link
-                linkend='var-IMAGE_INSTALL'>IMAGE_INSTALL</link></glossterm>
-        variable.
+    <para>
+        The <filename><link linkend='var-IMAGE_FSTYPES'>IMAGE_FSTYPES</link></filename>
+        variable controls the types of images to generate.
+    </para>
+
+    <para>        
+        The <filename><link linkend='var-IMAGE_INSTALL'>IMAGE_INSTALL</link></filename>
+        variable controls the list of packages to install into the image.
     </para>
 </section>
 
@@ -334,11 +330,12 @@
     <title>Host System sanity checks - <filename>sanity.bbclass</filename></title>
 
     <para>
-        This class checks prerequisite software is present to
-        notify the users of potential problems that will affect their build. It
-        also performs basic checks of the user configuration from local.conf to
-        prevent common mistakes resulting in build failures. It's usually up to
-        distribution policy whether to include this class (Poky does).
+        This class checks to see if prerequisite software is present so that 
+        users can be notified of potential problems that might affect their build. 
+        The class also performs basic user configuration checks from 
+        the <filename>local.conf</filename> configuration file to
+        prevent common mistakes that cause build failures. 
+        Distribution policy usually whether to include this class as the Yocto Project does.
     </para>
 </section>
 
@@ -346,11 +343,11 @@
     <title>Generated output quality assurance checks - <filename>insane.bbclass</filename></title>
 
     <para>
-        This class adds a step to package generation which sanity checks the
-        packages generated by Poky. There are an ever increasing range of checks
-        it performs, checking for common problems which break builds/packages/images,
-        see the bbclass file for more information. It's usually up to distribution
-        policy whether to include this class (Poky does).
+        This class adds a step to the package generation process that sanity checks the
+        packages generated by the Yocto Project.
+        An ever-increasing range of checks are performed that check for 
+        common problems that break builds.
+        Distribution policy usually dictates whether to include this class as the Yocto Project does.
     </para>
 </section>
 
@@ -358,23 +355,28 @@
     <title>Autotools configuration data cache - <filename>siteinfo.bbclass</filename></title>
 
     <para>
-        Autotools can require tests which have to execute on the target hardware.
-        Since this isn't possible in general when cross compiling, siteinfo is
+        Autotools can require tests that must execute on the target hardware.
+        Since this is not possible in general when cross compiling, site information is
         used to provide cached test results so these tests can be skipped over but
-        the correct values used. The <link linkend='structure-meta-site'>meta/site directory</link>
-        contains test results sorted into different categories like architecture, endianess and
-        the libc used. Siteinfo provides a list of files containing data relevant to 
-        the current build in the <glossterm><link linkend='var-CONFIG_SITE'>CONFIG_SITE
-        </link></glossterm> variable which autotools will automatically pick up.
+        still make the correct values available.
+        The <filename><link linkend='structure-meta-site'>meta/site directory</link></filename>
+        contains test results sorted into different categories such as architecture, endianess, and
+        the libc used. 
+        Site information provides a list of files containing data relevant to 
+        the current build in the 
+        <filename><link linkend='var-CONFIG_SITE'>CONFIG_SITE</link></filename> variable 
+        that Autotools automatically picks up.
     </para>
+
     <para>
-        The class also provides variables like <glossterm><link 
-        linkend='var-SITEINFO_ENDIANESS'>SITEINFO_ENDIANESS</link></glossterm> 
-        and <glossterm><link linkend='var-SITEINFO_BITS'>SITEINFO_BITS</link>
-        </glossterm> which can be used elsewhere in the metadata.
+        The class also provides variables like 
+        <filename><link linkend='var-SITEINFO_ENDIANESS'>SITEINFO_ENDIANESS</link></filename> 
+        and <filename><link linkend='var-SITEINFO_BITS'>SITEINFO_BITS</link></filename> 
+        that can be used elsewhere in the metadata.
     </para>
+
     <para>
-        This class is included from <filename>base.bbclass</filename> and is hence always active.
+        Because this class is included from <filename>base.bbclass</filename>, it is always active.
     </para>
 </section>
 
@@ -382,8 +384,12 @@
     <title>Other Classes</title>
 
     <para>
-        Only the most useful/important classes are covered here but there are 
-        others, see the <filename>meta/classes</filename> directory for the rest. 
+        Thus far, this appendix has discussed only the most useful and important 
+        classes.
+        However, other classes exist within the <filename>meta/classes</filename> directory 
+        in the Yocto Project file's directory structure.
+        You can examine the <filename>.bbclass</filename> files directly for more 
+        information. 
     </para>
 </section>
 
