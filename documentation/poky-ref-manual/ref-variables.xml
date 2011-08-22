@@ -66,22 +66,26 @@
 
         <glossentry id='var-BB_NUMBER_THREADS'><glossterm>BB_NUMBER_THREADS</glossterm>
             <glossdef>
-                <para>The maximum number of tasks BitBake should run in parallel at any one time</para>
+                <para>The maximum number of tasks BitBake should run in parallel at any one time.
+                    If your host development system supports mulitiple cores a good rule of thumb
+                    is to set this variable to twice the number of cores.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-BBFILE_COLLECTIONS'><glossterm>BBFILE_COLLECTIONS</glossterm>
             <glossdef>
-                <para>Identifies layer-specific bbfiles, which contain recipes used by BitBake to build software.
+                <para>Identifies layer-specific <filename>.bbfiles</filename>, which contain recipes 
+                    used by BitBake to build software.
                     The Variable is appended with a layer name.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-BBFILE_PATTERN'><glossterm>BBFILE_PATTERN</glossterm>
             <glossdef>
-                <para>Variable that expands to match files from BBFILES in a particular layer.  BBFILE_PATTERN 
-                    is used in the <filename>conf/layer.conf</filename> file and must contain the name of the 
-                    specific layer (e.g. BBFILE_PATTERN_emenlow).</para>
+                <para>Variable that expands to match files from <filename>BBFILES</filename> in a particular layer.  
+                    This variable is used in the <filename>conf/layer.conf</filename> file and must 
+                    contain the name of the 
+                    specific layer (e.g. <filename>BBFILE_PATTERN_emenlow</filename>).</para>
             </glossdef>
         </glossentry>
 
@@ -90,19 +94,18 @@
                 <para>Assigns different priorities to recipe files in different layers.</para>
                 <para>This variable is useful in situations where the same package appears in
                     more than one layer. 
-                    Setting BBFILE_PRIORITY allows you to prioritize a
+                    Setting this variable allows you to prioritize a
                     layer against other layers that contain the same package - effectively
                     letting you control the precedence for the multiple layers. 
                     The precedence established through this variable stands regardless of a
-                    layer's package version (PV variable). 
-                    For example, a layer that has a package with a higher PV value but for 
-                    which the BBFILE_PRIORITY is set to have a lower precedence still has a 
+                    layer's package version (<filename>PV</filename> variable). 
+                    For example, a layer that has a package with a higher <filename>PV</filename> value but for 
+                    which the <filename>BBFILE_PRIORITY</filename> is set to have a lower precedence still has a 
                     lower precedence.</para>
-                <para>A larger value for the BBFILE_PRIORITY variable results in a higher
+                <para>A larger value for the <filename>BBFILE_PRIORITY</filename> variable results in a higher
                     precedence. 
-                    For example, the value 6 has a higher precedence than the
-                    value 5. 
-                    By default, the BBFILE_PRIORITY variable is set to the value 5.</para>
+                    For example, the value 6 has a higher precedence than the value 5. 
+                    By default, the <filename>BBFILE_PRIORITY</filename> variable is set to the value 5.</para>
             </glossdef>
         </glossentry>
 
@@ -114,27 +117,39 @@
 
         <glossentry id='var-BBPATH'><glossterm>BBPATH</glossterm>
             <glossdef>
-                <para>Used by Bitbake to locate bbclass and configuration files.  This variable is analogous to 
-                    the PATH variable.</para>
+                <para>Used by BitBake to locate <filename>.bbclass</filename> and configuration files.  
+                    This variable is analogous to the <filename>PATH</filename> variable.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-BBINCLUDELOGS'><glossterm>BBINCLUDELOGS</glossterm>
             <glossdef>
-                <para>Variable which controls how BitBake displays logs on build failure.</para>
+                <para>Variable that controls how BitBake displays logs on build failure.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-BBLAYERS'><glossterm>BBLAYERS</glossterm>
             <glossdef>
-                <para>Lists in the <filename>bblayers.conf</filename> file layers to enable in the Poky build.</para>
+                <para>Lists the layers to enable during the Yocto Project build. 
+                    This variable is defined in the <filename>bblayers.conf</filename> configuration 
+                    file in the Yocto Project build directory. 
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     BBLAYERS = " \
+       /home/scottrif/poky/meta \
+       /home/scottrif/poky/meta-yocto \
+       /home/scottrif/poky/meta-mykernel \
+       "
+                    </literallayout>
+                    This example enables three layers, one of which is a custom, user-defined layer 
+                    named <filename>meta-mykernel</filename>.
+                </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-BPN'><glossterm>BPN</glossterm>
             <glossdef>
-                <para>Bare name of package with any suffixes like -cross -native
-                removed.  </para>
+                <para>Bare name of package with any suffixes like -cross -native removed.</para>
             </glossdef>
         </glossentry>
 
@@ -145,8 +160,9 @@
         <glossentry id='var-CFLAGS'><glossterm>CFLAGS</glossterm>
             <glossdef>
                 <para>
-                    Flags passed to C compiler for the target system. Evaluates to the same 
-                    as <link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link>.
+                    Flags passed to C compiler for the target system. 
+                    This variable evaluates to the same as 
+                    <filename><link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link></filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -154,19 +170,21 @@
         <glossentry id='var-COMPATIBLE_MACHINE'><glossterm>COMPATIBLE_MACHINE</glossterm>
             <glossdef>
                 <para>A regular expression which evaluates to match the machines the recipe 
-                works with. It stops recipes being run on machines they're incompatible with, 
-                which is particularly useful with kernels. It also helps to increase parsing 
-                speed as further parsing of the recipe is skipped as if it found the current
-                machine is not compatible.</para>
+                    works with. 
+                    It stops recipes being run on machines for which they are not compatible. 
+                    This is particularly useful with kernels. 
+                    It also helps to increase parsing speed as further parsing of the recipe is skipped 
+                    if it is found the current machine is not compatible.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-CONFIG_SITE'><glossterm>CONFIG_SITE</glossterm>
             <glossdef>
                 <para>
-                    A list of files which contains autoconf test results relevant 
-                    to the current build. This variable is used by the autotools utilities 
-                    when running configure.
+                    A list of files that contains <filename>autoconf</filename> test results relevant 
+                    to the current build. 
+                    This variable is used by the Autotools utilities when running 
+                    <filename>configure</filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -177,16 +195,17 @@
 
         <glossentry id='var-D'><glossterm>D</glossterm>
             <glossdef>
-                <para>Destination directory</para>
+                <para>The destination directory.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DEBUG_BUILD'><glossterm>DEBUG_BUILD</glossterm>
             <glossdef>
                 <para>
-                    Build packages with debugging information. This influences the value 
-                    <link linkend='var-SELECTED_OPTIMIZATION'>SELECTED_OPTIMIZATION</link> 
-                    takes.
+                    Specifies to build packages with debugging information. 
+                    This influences the value of the 
+                    <filename><link linkend='var-SELECTED_OPTIMIZATION'>SELECTED_OPTIMIZATION</link></filename> 
+                    variable.
                 </para>
             </glossdef>
         </glossentry>
@@ -194,94 +213,91 @@
         <glossentry id='var-DEBUG_OPTIMIZATION'><glossterm>DEBUG_OPTIMIZATION</glossterm>
             <glossdef>
                 <para>
-                    The options to pass in <link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link>
-                    and <link linkend='var-CFLAGS'>CFLAGS</link> when compiling a system for debugging.
-                    This defaults to "-O -fno-omit-frame-pointer -g".
+                    The options to pass in 
+                    <filename><link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link></filename>
+                    and <filename><link linkend='var-CFLAGS'>CFLAGS</link></filename> when compiling 
+                    a system for debugging.
+                    This variable defaults to "-O -fno-omit-frame-pointer -g".
                 </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DEFAULT_PREFERENCE'><glossterm>DEFAULT_PREFERENCE</glossterm>
             <glossdef>
-                <para>Priority of recipe</para>
+                <para>Specifies the priority of recipes.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DEPENDS'><glossterm>DEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of build time dependencies for a given recipe. These indicate 
-                    recipes that must have staged before this recipe can configure.
+                    A list of build-time dependencies for a given recipe. 
+                    The variable indicates recipes that must have been staged before a 
+                    particular recipe can configure.
                 </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DESCRIPTION'><glossterm>DESCRIPTION</glossterm>
             <glossdef>
-                <para>Package description used by package
-                    managers</para>
+                <para>The package description used by package managers.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DESTDIR'><glossterm>DESTDIR</glossterm>
             <glossdef>
-                <para>Destination directory</para>
+                <para>the destination directory.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DISTRO'><glossterm>DISTRO</glossterm>
             <glossdef>
-                <para>Short name of distribution</para>
+                <para>The short name of the distribution.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DISTRO_EXTRA_RDEPENDS'><glossterm>DISTRO_EXTRA_RDEPENDS</glossterm>
             <glossdef>
-                <para>List of packages required by distribution.</para>
+                <para>The list of packages required by the distribution.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DISTRO_EXTRA_RRECOMMENDS'><glossterm>DISTRO_EXTRA_RRECOMMENDS</glossterm>
             <glossdef>
-                <para>List of packages which extend usability of
-                    image. Those packages will be automatically
-                    installed but can be removed by user.</para>
+                <para>The list of packages which extend usability of the image. 
+                    Those packages will automatically be installed but can be removed by user.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DISTRO_FEATURES'><glossterm>DISTRO_FEATURES</glossterm>
             <glossdef>
-                <para>Features of the distribution.</para>
+                <para>The features of the distribution.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DISTRO_NAME'><glossterm>DISTRO_NAME</glossterm>
             <glossdef>
-                <para>Long name of distribution</para>
+                <para>The long name of the distribution.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DISTRO_PN_ALIAS'><glossterm>DISTRO_PN_ALIAS</glossterm>
             <glossdef>
-                <para>Alias names of the recipe in various Linux distributions.  </para>
-                <para>More information in 
-                    <link
-                        linkend='usingpoky-configuring-DISTRO_PN_ALIAS'>
-                        Configuring the DISTRO_PN_ALIAS variable section
-                    </link>
-                </para>
+                <para>Alias names used for the recipe in various Linux distributions.</para>
+                <para>See <link linkend='usingpoky-configuring-DISTRO_PN_ALIAS'>
+                    Handling a Package Name Alias</link> section for more information.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DISTRO_VERSION'><glossterm>DISTRO_VERSION</glossterm>
             <glossdef>
-                <para>Version of distribution</para>
+                <para>the version of the distribution.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-DL_DIR'><glossterm>DL_DIR</glossterm>
             <glossdef>
-                <para>Directory where all fetched sources will be stored</para>
+                <para>The directory where all fetched sources will be stored.</para>
             </glossdef>
 
         </glossentry>
@@ -291,9 +307,9 @@
 
         <glossentry id='var-ENABLE_BINARY_LOCALE_GENERATION'><glossterm>ENABLE_BINARY_LOCALE_GENERATION</glossterm>
             <glossdef>
-                <para>Variable which control which locales for glibc are
-                to be generated during build (useful if target device
-                has 64M RAM or less)</para>
+                <para>Variable that controls which locales for <filename>glibc</filename> are
+                    to be generated during the build (useful if the target device has 64Mbytes
+                    of RAM or less).</para>
             </glossdef>
         </glossentry>
 
@@ -303,58 +319,58 @@
                     You set this variable in the <filename>local.conf</filename>
                     configuration file.
                     Note that some image features are also added using the 
-                    <link linkend='var-IMAGE_FEATURES'>IMAGE_FEATURES</link>
+                    <filename><link linkend='var-IMAGE_FEATURES'>IMAGE_FEATURES</link></filename>
                     variable generally configured in image recipes.
-                    You can use the EXTRA_IMAGE_FEATURES variable to add more features
-                    in addition to those.
+                    You can use this variable to add more features in addition to those.
                     Here are some exmaples of features you can add:</para>
                     <literallayout class='monospaced'>
-"dbg-pkgs" - Adds -dbg packages for all installed packages
-             including symbol information for debugging and 
-             profiling.
+     "dbg-pkgs" - Adds -dbg packages for all installed packages
+                  including symbol information for debugging and 
+                  profiling.
 
-"dev-pkgs" - Adds -dev packages for all installed packages.  
-             This is useful if you want to develop against 
-             the libraries in the image.
+     "dev-pkgs" - Adds -dev packages for all installed packages.  
+                  This is useful if you want to develop against 
+                  the libraries in the image.
 
-"tools-sdk" - Adds development tools such as gcc, make, 
-              pkgconfig and so forth.
+     "tools-sdk" - Adds development tools such as gcc, make, 
+                   pkgconfig and so forth.
 
-"tools-debug" - Adds debugging tools such as gdb and 
-                strace.
+     "tools-debug" - Adds debugging tools such as gdb and 
+                     strace.
 
-"tools-profile" - Adds profiling tools such as oprofile, 
-                  exmap, lttng and valgrind (x86 only).
+     "tools-profile" - Adds profiling tools such as oprofile, 
+                       exmap, lttng and valgrind (x86 only).
 
-"tools-testapps" - Adds useful testing tools such as ts_print, 
-                   aplay, arecord and so forth.
+     "tools-testapps" - Adds useful testing tools such as 
+                        ts_print, aplay, arecord and so 
+                        forth.
 
-"debug-tweaks" - Makes an image suitable for development.  
-                 For example, ssh root access has a blank 
-                 password.  There are other application 
-                 targets too, see meta/classes/poky-image.bbclass
-                 and meta/packages/tasks/task-poky.bb 
-                 for more details.
+     "debug-tweaks" - Makes an image suitable for development.  
+                      For example, ssh root access has a blank 
+                      password.  There are other application 
+                      targets too, see 
+                      meta/classes/poky-image.bbclass
+                      and meta/packages/tasks/task-poky.bb 
+                      for more details.
                     </literallayout> 
-
             </glossdef>
         </glossentry>
 
         <glossentry id='var-EXTRA_OECMAKE'><glossterm>EXTRA_OECMAKE</glossterm>
             <glossdef>
-                <para>Additional cmake options</para>
+                <para>Additional <filename>cmake</filename> options.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-EXTRA_OECONF'><glossterm>EXTRA_OECONF</glossterm>
             <glossdef>
-                <para>Additional 'configure' script options</para>
+                <para>Additional <filename>configure</filename> script options.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-EXTRA_OEMAKE'><glossterm>EXTRA_OEMAKE</glossterm>
             <glossdef>
-                <para>Additional GNU make options</para>
+                <para>Additional GNU <filename>make</filename> options.</para>
             </glossdef>
         </glossentry>
 
@@ -364,17 +380,19 @@
 
         <glossentry id='var-FILES'><glossterm>FILES</glossterm>
             <glossdef>
-                <para>list of directories/files which will be placed
-                    in packages</para>
+                <para>list of directories or files that are placed in packages.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-FULL_OPTIMIZATION'><glossterm>FULL_OPTIMIZATION</glossterm>
             <glossdef>
                 <para>
-                    The options to pass in <link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link>
-                    and <link linkend='var-CFLAGS'>CFLAGS</link> when compiling an optimised system.
-                    This defaults to "-fexpensive-optimizations -fomit-frame-pointer -frename-registers -O2".
+                    The options to pass in 
+                    <filename><link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link></filename>
+                    and <filename><link linkend='var-CFLAGS'>CFLAGS</link></filename>
+                    when compiling an optimised system.
+                    This variable defaults to 
+                    <filename>-fexpensive-optimizations -fomit-frame-pointer -frename-registers -O2</filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -398,53 +416,52 @@
 
         <glossentry id='var-IMAGE_FEATURES'><glossterm>IMAGE_FEATURES</glossterm>
             <glossdef>
-                <para><link linkend="ref-features-image">List of
-                features</link> present in resulting images.
-                Typically you configure this variable in image recipes.
+                <para>The list of features present in images.
+                Typically, you configure this variable in image recipes.
                 Note that you can add extra features to the image by using the
-                <link linkend='var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</link>
-                variable.</para>
+                <filename><link linkend='var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</link></filename> variable.
+                See the <link linkend="ref-features-image">Reference: Images</link> section for the 
+                list of features present in images built by the Yocto Project.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-IMAGE_FSTYPES'><glossterm>IMAGE_FSTYPES</glossterm>
             <glossdef>
-                <para>Formats of rootfs images which we want to have
-                    created</para>
+                <para>Formats of root filesystem images that you want to have created.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-IMAGE_INSTALL'><glossterm>IMAGE_INSTALL</glossterm>
             <glossdef>
-                <para>List of packages used to build image</para>
+                <para>The list of packages used to build images.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-INC_PR'><glossterm>INC_PR</glossterm>
             <glossdef>
                 <para>Defines the Package revision.  
-                    You manually combine values for INC_PR into the PR field of the parent recipe.
-                    When you change INC_PR you change the PR value for every person that includes the file.
-                </para>
+                    You manually combine values for <filename>INC_PR</filename> into the 
+                    <filename>PR</filename> field of the parent recipe.
+                    When you change this variable, you change the <filename>PR</filename>
+                    value for every person that includes the file.</para>
                 <para>
-                    The following example shows how to use INC_PR given a common <filename>.inc</filename>
-                    that defines the variable.
-                    Once defined, the variable can be used to set the PR value:
+                    The following example shows how to use the <filename>INC_PR</filename> variable
+                    given a common <filename>.inc</filename> file that defines the variable.
+                    Once defined, you can use the variable to set the <filename>PR</filename> value:
                 </para>
-                <programlisting>
-recipes-graphics/xorg-font/font-util_1.1.1.bb:PR - "$(INC_PR).1"
-recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR - "r1"
-recipes-graphics/xorg-font/encondings_1.0.3.bb:PR - "$(INC_PR).1"
-recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
-                </programlisting>
+                <literallayout class='monospaced'>
+ recipes-graphics/xorg-font/font-util_1.1.1.bb:PR - "$(INC_PR).1"
+ recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR - "r1"
+ recipes-graphics/xorg-font/encondings_1.0.3.bb:PR - "$(INC_PR).1"
+ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
+                </literallayout>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-INHIBIT_PACKAGE_STRIP'><glossterm>INHIBIT_PACKAGE_STRIP</glossterm>
             <glossdef>
                 <para>
-                    This variable causes the build to not strip binaries in
-                    resulting packages.
+                    Causes the build to not strip binaries in resulting packages.
                 </para>
             </glossdef>
         </glossentry>
@@ -453,9 +470,9 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-INHERIT'><glossterm>INHERIT</glossterm>
             <glossdef>
                 <para>
-                    This variable causes the named class to be inherited at 
-                    this point during parsing. Its only valid in configuration 
-                    files.
+                    Causes the named class to be inherited at 
+                    this point during parsing. 
+                    The variable is only valid in configuration files.
                 </para>
             </glossdef>
         </glossentry>
@@ -464,23 +481,24 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-INITSCRIPT_PACKAGES'><glossterm>INITSCRIPT_PACKAGES</glossterm>
             <glossdef>
                 <para>
-                    Scope: Used in recipes when using update-rc.d.bbclass. Optional, defaults to PN.
+                    A list of the packages that contain initscripts. 
+                    If multiple packages are specified, you need to append the package name 
+                    to the other <filename>INITSCRIPT_*</filename> as an override.</para>
+                 <para>
+                    This variable is used in recipes when using <filename>update-rc.d.bbclass</filename>.
+                    The variable is optional and defaults to <filename>PN</filename>.
                 </para>
-                <para>
-                    A list of the packages which contain initscripts. If multiple 
-                    packages are specified you need to append the package name 
-                    to the other INITSCRIPT_* as an override.
-                </para>
-            </glossdef>
+           </glossdef>
         </glossentry>
 
         <glossentry id='var-INITSCRIPT_NAME'><glossterm>INITSCRIPT_NAME</glossterm>
             <glossdef>
                 <para>
-                    Scope: Used in recipes when using update-rc.d.bbclass. Mandatory.
+                    The filename of the initscript (as installed to <filename>${etcdir}/init.d)</filename>.
                 </para>
                 <para>
-                    The filename of the initscript (as installed to ${etcdir}/init.d).
+                    This variable is used in recipes when using <filename>update-rc.d.bbclass</filename>.
+                    The variable is Mandatory.
                 </para>
             </glossdef>
         </glossentry>
@@ -488,13 +506,14 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-INITSCRIPT_PARAMS'><glossterm>INITSCRIPT_PARAMS</glossterm>
             <glossdef>
                 <para>
-                    Scope: Used in recipes when using update-rc.d.bbclass. Mandatory.
+                    Specifies the options to pass to <filename>update-rc.d</filename>.
+                    An example is <filename>start 99 5 2 . stop 20 0 1 6 .</filename>, which gives the script a 
+                    runlevel of 99, starts the script in initlevels 2 and 5, and 
+                    stops the script in levels 0, 1 and 6. 
                 </para>
                 <para>
-                    Specifies the options to pass to update-rc.d. An example is
-                     "start 99 5 2 . stop 20 0 1 6 ." which gives the script a 
-                    runlevel of 99, starts the script in initlevels 2 and 5 and 
-                     stops it in levels 0, 1 and 6. 
+                    The variable is mandatory and is used in recipes when using 
+                    <filename>update-rc.d.bbclass</filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -510,9 +529,10 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-KERNEL_IMAGETYPE'><glossterm>KERNEL_IMAGETYPE</glossterm>
             <glossdef>
                 <para>The type of kernel to build for a device, usually set by the 
-                machine configuration files and defaults to "zImage". This is used 
-                when building the kernel and is passed to "make" as the target to 
-                build.</para>
+                    machine configuration files and defaults to "zImage". 
+                    This variable is used 
+                    when building the kernel and is passed to <filename>make</filename> as the target to 
+                    build.</para>
             </glossdef>
         </glossentry>
 
@@ -522,33 +542,35 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
 
         <glossentry id='var-LAYERDIR'><glossterm>LAYERDIR</glossterm>
             <glossdef>
-                <para>When used inside a layer.conf gives the path of the
-                current layer. This variable requires immediate expansion
-                (see the Bitbake manual) as lazy expansion can result in
-                the expansion happening in the wrong directory and therefore
-                giving the wrong value.</para>
+                <para>When used inside the <filename>layer.conf</filename> configuration 
+                    file, this variable provides the path of the current layer. 
+                    This variable requires immediate expansion
+                    (see the BitBake manual) as lazy expansion can result in
+                    the expansion happening in the wrong directory and therefore
+                    giving the wrong value.</para>
             </glossdef>
         </glossentry>
+
         <glossentry id='var-LICENSE'><glossterm>LICENSE</glossterm>
             <glossdef>
-                <para>List of package source licenses.</para>
+                <para>The list of package source licenses.</para>
             </glossdef>
         </glossentry>
+
         <glossentry id='var-LIC_FILES_CHKSUM'><glossterm>LIC_FILES_CHKSUM</glossterm>
             <glossdef>
-                <para>Checksums of the license text in the recipe source code.
-                </para>
+                <para>Checksums of the license text in the recipe source code.</para>
                 <para>This variable tracks changes in license text of the source
-                code files. If the license text is changed, it will trigger the build
-                failure, which gives developer an opportunity to review any 
-                license change</para>
-                <para> This is an optional variable now, and the plan is to make
-                it a required variable in the future </para>
-                <para>See "meta/package/zlib/zlib_${PV}.bb" file for an example</para>
-
-                <para>More information in <link
-                    linkend='usingpoky-configuring-LIC_FILES_CHKSUM'>
-                    Configuring the LIC_FILES_CHKSUM variable section</link></para>
+                    code files. 
+                    If the license text is changed, it will trigger the build
+                    failure, which gives the developer an opportunity to review any 
+                    license change</para>
+                <para> 
+                    Currently, this variable is optional.
+                    The plan is to make it a required variable in the future.</para>
+                <para>For more information, see the
+                    <link linkend='usingpoky-configuring-LIC_FILES_CHKSUM'>
+                    Track License Change</link> section</para>
             </glossdef>
         </glossentry>
 
@@ -558,47 +580,47 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
 
          <glossentry id='var-MACHINE'><glossterm>MACHINE</glossterm>
             <glossdef>
-                <para>Target device</para>
+                <para>Specifies the target device.</para>
             </glossdef>
          </glossentry>
 
          <glossentry id='var-MACHINE_ESSENTIAL_RDEPENDS'><glossterm>MACHINE_ESSENTIAL_RDEPENDS</glossterm>
             <glossdef>
-                <para>List of packages required to boot device</para>
+                <para>Specifies the list of packages required to boot the device.</para>
             </glossdef>
          </glossentry>
 
          <glossentry id='var-MACHINE_ESSENTIAL_RRECOMMENDS'><glossterm>MACHINE_ESSENTIAL_RRECOMMENDS</glossterm>
             <glossdef>
-                <para>List of packages required to boot device (usually
-                    additional kernel modules)</para>
+                <para>Specifies the list of packages required to boot the device (usually
+                    additional kernel modules).</para>
             </glossdef>
         </glossentry>
 
          <glossentry id='var-MACHINE_EXTRA_RDEPENDS'><glossterm>MACHINE_EXTRA_RDEPENDS</glossterm>
             <glossdef>
-                <para>List of packages required to use device</para>
+                <para>Specifies the list of packages required to use the devices</para>
             </glossdef>
          </glossentry>
 
          <glossentry id='var-MACHINE_EXTRA_RRECOMMENDS'><glossterm>MACHINE_EXTRA_RRECOMMNEDS</glossterm>
             <glossdef>
-                <para>List of packages useful to use device (for example
+                <para>Specifies the list of packages useful to use the device (e.g.
                     additional kernel modules)</para>
             </glossdef>
          </glossentry>
 
          <glossentry id='var-MACHINE_FEATURES'><glossterm>MACHINE_FEATURES</glossterm>
             <glossdef>
-                <para>List of device features - defined in <link
-                    linkend='ref-features-machine'>machine
-                    features section</link></para>
+                <para>Specifies the list of device features.
+                    See the <link linkend='ref-features-machine'>Machine</link> section for 
+                    more information.</para>
             </glossdef>
          </glossentry>
 
         <glossentry id='var-MAINTAINER'><glossterm>MAINTAINER</glossterm>
             <glossdef>
-                <para>E-mail of distribution maintainer</para>
+                <para>The email address of the distribution maintainer.</para>
             </glossdef>
         </glossentry>
     </glossdiv>
@@ -613,74 +635,85 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
 
         <glossentry id='var-PACKAGE_ARCH'><glossterm>PACKAGE_ARCH</glossterm>
             <glossdef>
-                <para>Architecture of resulting package</para>
+                <para>The architecture of the resulting package.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PACKAGE_CLASSES'><glossterm>PACKAGE_CLASSES</glossterm>
             <glossdef>
-                <para>List of resulting packages formats</para>
+                <para>Specifies the list of resulting package formats.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PACKAGE_DESCRIPTION'><glossterm>PACKAGE_DESCRIPTION</glossterm>
             <glossdef>
-                <para>Long form description of binary package for packaging sytems such as ipkg, rpm or debian, inherits DESCRIPTION by default</para>
+                <para>The long form description of the binary package for packaging sytems such as 
+                    <filename>ipkg</filename>, <filename>rpm</filename> or <filename>debian</filename>.
+                    This variable inherits <filename>DESCRIPTION</filename> by default.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PACKAGE_EXTRA_ARCHS'><glossterm>PACKAGE_EXTRA_ARCHS</glossterm>
             <glossdef>
-                <para>List of architectures compatible with device
-                    CPU. Usable when build is done for few different
-                    devices with misc processors (like XScale and
-                    ARM926-EJS)</para>
+                <para>Specifies the list of architectures compatible with the device CPU.
+                    This variable is useful when you build for several different devices that use
+                    miscellaneous processors such as XScale and ARM926-EJS).</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PACKAGE_SUMMARY'><glossterm>PACKAGE_SUMMARY</glossterm>
             <glossdef>
-                <para>Short (72 char suggested) Summary of binary package for packaging sytems such as ipkg, rpm or debian, inherits DESCRIPTION by default</para>
+                <para>The short (72 character limit suggested) summary of the binary
+                package for packaging sytems such as <filename>ipkg</filename>, 
+                <filename>rpm</filename> or <filename>debian</filename>.
+                By default, this variable inherits <filename>DESCRIPTION</filename>.</para>
             </glossdef>
         </glossentry>
 
 
         <glossentry id='var-PACKAGES'><glossterm>PACKAGES</glossterm>
             <glossdef>
-                <para>List of packages to be created from recipe.
-                    The default value is "${PN}-dbg ${PN} ${PN}-doc ${PN}-dev"</para>
+                <para>The list of packages to be created from the recipe.
+                    The default value is <filename>${PN}-dbg ${PN} ${PN}-doc ${PN}-dev</filename>.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PARALLEL_MAKE'><glossterm>PARALLEL_MAKE</glossterm>
             <glossdef>
-                <para>Extra options that are passed to the make command during the 
-                    compile tasks. This is usually of the form '-j 4' where the number
-                    represents the maximum number of parallel threads make can run.</para>
+                <para>Specifies extra options that are passed to the <filename>make</filename> command during the 
+                    compile tasks. 
+                    This variable is usually in the form <filename>-j 4</filename>, where the number
+                    represents the maximum number of parallel threads make can run.
+                    If you development host supports multiple cores a good rule of thumb is to set 
+                    this variable to one and a half times the number of cores on the host.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PN'><glossterm>PN</glossterm>
             <glossdef>
-                <para>Name of package.
+                <para>The name of the package.
                     </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PR'><glossterm>PR</glossterm>
             <glossdef>
-                <para>Revision of package. The default value is "r0".
+                <para>The revision of the package. 
+                    The default value for this variable is "r0".
                     </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PV'><glossterm>PV</glossterm>
             <glossdef>
-                <para>Version of package.
-                    This is normally extracted from the recipe name, e.g. if the recipe is named 
-                    "expat_2.0.1.bb" then PV will be "2.0.1". PV is generally not overridden within 
+                <para>The version of the package.
+                    The version is normally extracted from the recipe name.
+                    For example, if the recipe is named 
+                    <filename>expat_2.0.1.bb</filename>, then <filename>PV</filename>
+                    will be <filename>2.0.1</filename>. 
+                    <filename>PV</filename> is generally not overridden within 
                     a recipe unless it is building an unstable version from a source code repository 
-                    (git, svn, etc.).
+                    (e.g. Git or Subversion).
                  </para>
             </glossdef>
         </glossentry>
@@ -688,8 +721,9 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-PE'><glossterm>PE</glossterm>
             <glossdef>
                 <para>
-                    Epoch of the package. The default value is "0". The field is used 
-                    to make upgrades possible when the versioning scheme changes in 
+                    the epoch of the package. 
+                    The default value is "0". 
+                    The field is used to make upgrades possible when the versioning scheme changes in 
                     some backwards incompatible way.
                 </para>
             </glossdef>
@@ -698,39 +732,46 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-PREFERRED_PROVIDER'><glossterm>PREFERRED_PROVIDER</glossterm>
             <glossdef>
                 <para>If multiple recipes provide an item, this variable
-                    determines which one should be given preference. It 
-                    should be set to the "$PN" of the recipe to be preferred.</para>
+                    determines which recipe should be given preference. 
+                    The variable should be set to the <filename>$PN</filename> of the recipe 
+                    to which you want to give precedence.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PREFERRED_VERSION'><glossterm>PREFERRED_VERSION</glossterm>
             <glossdef>
                 <para>
-                    If there are multiple versions of recipe available, this
-                    variable determines which one should be given preference. It
-                    should be set to the "$PV" of the recipe to be preferred.
+                    If there are multiple versions of recipes available, this
+                    variable determines which recipe should be given preference.
+                    The variable should be set to the <filename>$PV</filename> of the recipe 
+                    to whichy you want to give precedence.
                 </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-POKY_EXTRA_INSTALL'><glossterm>POKY_EXTRA_INSTALL</glossterm>
             <glossdef>
-                <para>List of packages to be added to the image. This should
-                only be set in <filename>local.conf</filename>.</para>
+                <para>Specifies the list of packages to be added to the image. 
+                    This variable should only be set in the <filename>local.conf</filename>
+                    configuration file found in the Yocto Project's build directory.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-POKYLIBC'><glossterm>POKYLIBC</glossterm>
             <glossdef>
-                <para>Libc implementation selector - glibc, eglibc, or uclibc can be selected.</para>
+                <para>The <filename>libc</filename> implementation selector. 
+                    You can select <filename>glibc</filename>, <filename>eglibc</filename>, 
+                    or <filename>uclibc</filename>.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-POKYMODE'><glossterm>POKYMODE</glossterm>
             <glossdef>
-                <para>Toolchain selector. It can be external toolchain
-                built from Poky or few supported combinations of
-                upstream GCC or CodeSourcery Labs toolchain.</para>
+                <para>The toolchain selector. 
+                    This variable has been replaced by <filename>TCMODE</filename>.
+                    The <filename>POKYMODE</filename> would select the external toolchain
+                    built from the Yocto Project or a few supported combinations of
+                    upstream GCC or CodeSourcery Labs toolchain.</para>
             </glossdef>
         </glossentry>
 
@@ -743,46 +784,46 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
 
         <glossentry id='var-RCONFLICTS'><glossterm>RCONFLICTS</glossterm>
             <glossdef>
-                <para>List of packages which conflict with this
-                    one. Package will not be installed if they are not
-                    removed first.</para>
+                <para>The list of packages that conflict with this package.
+                    Note that the package will not be installed if the conflicting packages are not
+                    first removed.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-RDEPENDS'><glossterm>RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of run-time dependencies for a package. These packages 
-                    need to be installed alongside the package it applies to so 
-                    the package will run correctly, an example is a perl script
-                    which would rdepend on perl. Since this variable applies to 
-                    output packages there would usually be an override attached 
-                    to this variable like RDEPENDS_${PN}-dev. Names in this field 
-                    should be as they are in <link linkend='var-PACKAGES'>PACKAGES
-                    </link> namespace before any renaming of the output package
-                    by classes like debian.bbclass.
+                    A list of run-time dependencies for a package. 
+                    These packages need to be installed alongside the package to which
+                    they apply. 
+                    This enables the package to run correctly. 
+                    For example, consider a Perl script, which depends on the Perl package. 
+                    Since this variable applies to 
+                    output packages, there would usually be an override attached 
+                    to this variable such as <filename>RDEPENDS_${PN}-dev</filename>. 
+                    Names in this field must appear as they appear in the
+                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> namespace before any 
+                    renaming of the output package by classes like <filename>debian.bbclass</filename>.
                 </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-ROOT_FLASH_SIZE'><glossterm>ROOT_FLASH_SIZE</glossterm>
             <glossdef>
-                <para>Size of rootfs in megabytes</para>
+                <para>The size of root filesystem as measured in megabytes.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-RRECOMMENDS'><glossterm>RRECOMMENDS</glossterm>
             <glossdef>
-                <para>List of packages which extend usability of the
-                    package. Those packages will be automatically
-                    installed but can be removed by user.</para>
+                <para>The list of packages that extend usability of the package. 
+                    The packages are automatically installed but can be removed by user.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-RREPLACES'><glossterm>RREPLACES</glossterm>
             <glossdef>
-                <para>List of packages which are replaced with this
-                    one.</para>
+                <para>The list of packages that are replaced with this package.</para>
             </glossdef>
         </glossentry>
 
@@ -793,25 +834,28 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-S'><glossterm>S</glossterm>
             <glossdef>
                 <para>
-                    Path to unpacked sources (by default:
-                    "${<link linkend='var-WORKDIR'>WORKDIR</link>}/${<link linkend='var-PN'>PN</link>}-${<link linkend='var-PV'>PV</link>}")
+                    The path to unpacked sources.
+                    By default, this path is 
+                    "${<link linkend='var-WORKDIR'>WORKDIR</link>}/${<link linkend='var-PN'>PN</link>}-${<link linkend='var-PV'>PV</link>}".
                 </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-SECTION'><glossterm>SECTION</glossterm>
             <glossdef>
-                <para>Section where package should be put - used
-                    by package managers</para>
+                <para>The section where package should be put.
+                    Package managers use this variable.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-SELECTED_OPTIMIZATION'><glossterm>SELECTED_OPTIMIZATION</glossterm>
             <glossdef>
                 <para>
-                    The variable takes the value of <link linkend='var-FULL_OPTIMIZATION'>FULL_OPTIMIZATION</link>
-                    unless <link linkend='var-DEBUG_BUILD'>DEBUG_BUILD</link> = "1" in which case 
-                    <link linkend='var-DEBUG_OPTIMIZATION'>DEBUG_OPTIMIZATION</link> is used.
+                    The variable takes the value of 
+                    <filename><link linkend='var-FULL_OPTIMIZATION'>FULL_OPTIMIZATION</link></filename>
+                    unless <filename><link linkend='var-DEBUG_BUILD'>DEBUG_BUILD</link></filename> = "1".
+                    In this case the value of 
+                    <filename><link linkend='var-DEBUG_OPTIMIZATION'>DEBUG_OPTIMIZATION</link></filename> is used.
                 </para>
             </glossdef>
         </glossentry>
@@ -819,24 +863,24 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
 
         <glossentry id='var-SERIAL_CONSOLE'><glossterm>SERIAL_CONSOLE</glossterm>
             <glossdef>
-                <para>Speed and device for serial port used to attach
-                    serial console. This is given to kernel as "console"
-                    param and after boot getty is started on that port
+                <para>The speed and device for the serial port used to attach the serial console. 
+                    This variable is given to the kernel as the "console"
+                    parameter and after booting occurs <filename>getty</filename> is started on that port
                     so remote login is possible.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-SSTATE_DIR'><glossterm>SSTATE_DIR</glossterm>
             <glossdef>
-                <para>Directory for the shared state.</para>
+                <para>The directory for the shared state.</para>
             </glossdef>
 
         </glossentry>
         <glossentry id='var-SHELLCMDS'><glossterm>SHELLCMDS</glossterm>
             <glossdef>
                 <para>
-                    A list of commands to run within the a shell, used by <glossterm><link
-                    linkend='var-TERMCMDRUN'>TERMCMDRUN</link></glossterm>.
+                    A list of commands to run within the shell. 
+                    The list is used by <filename><link linkend='var-TERMCMDRUN'>TERMCMDRUN</link></filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -844,8 +888,8 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-SITEINFO_ENDIANESS'><glossterm>SITEINFO_ENDIANESS</glossterm>
             <glossdef>
                 <para>
-                    Contains "le" for little-endian or "be" for big-endian depending 
-                    on the endian byte order of the target system.
+                    Specifies the endian byte order of the target system. 
+                    The variable is either "le" for little-endian or "be" for big-endian.
                 </para>
             </glossdef>
         </glossentry>
@@ -853,27 +897,27 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-SITEINFO_BITS'><glossterm>SITEINFO_BITS</glossterm>
             <glossdef>
                 <para>
-                    Contains "32" or "64" depending on the number of bits for the 
-                    CPU of the target system.
+                    Specifies the number of bits for the target system CPU.
+                    The variable is either "32" or "64".
                 </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-SRC_URI'><glossterm>SRC_URI</glossterm>
             <glossdef>
-                <para>List of source files (local or remote ones)</para>
+                <para>The list of source files - local or remote.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-SRC_URI_OVERRIDES_PACKAGE_ARCH'><glossterm>SRC_URI_OVERRIDES_PACKAGE_ARCH</glossterm>
             <glossdef>
                 <para>
-                    By default there is code which automatically detects whether 
-                    <glossterm><link linkend='var-SRC_URI'>SRC_URI</link></glossterm>  
-                    contains files which are machine specific and if this is the case it
-                    automatically changes 
-                    <glossterm><link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></glossterm>. 
-                    Setting this variable to "0" disables that behaviour.
+                    By default, the Yocto Project automatically detects whether 
+                    <filename><link linkend='var-SRC_URI'>SRC_URI</link></filename>  
+                    contains files that are machine-specific.
+                    If so, the Yocto Project automatically changes 
+                    <filename><link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></filename>. 
+                    Setting this variable to "0" disables this behaviour.
                 </para>
             </glossdef>
         </glossentry>
@@ -881,8 +925,8 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-SRCDATE'><glossterm>SRCDATE</glossterm>
             <glossdef>
                 <para>
-                    Date of source code used to build package (if it was fetched
-                    from SCM).
+                    The date of the source code used to build the package.
+                    This variable applies only if the source was fetched from a Source Code Manager (SCM).
                 </para>
             </glossdef>
         </glossentry>
@@ -890,8 +934,8 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-SRCREV'><glossterm>SRCREV</glossterm>
             <glossdef>
                 <para>
-                    Revision of source code used to build package (Subversion,
-                    GIT, Bazaar only).
+                    The revision of the source code used to build the package.
+                    This variable applies to Subversion, GitT, or Bazaar only.
                 </para>
             </glossdef>
         </glossentry>
@@ -899,7 +943,7 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-STAGING_KERNEL_DIR'><glossterm>STAGING_KERNEL_DIR</glossterm>
             <glossdef>
                 <para>
-                    Directory with kernel headers required to build out-of-tree
+                    The directory with kernel headers that are required to build out-of-tree
                     modules.
                 </para>
             </glossdef>
@@ -908,7 +952,7 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-STAMPS'><glossterm>STAMPS</glossterm>
             <glossdef>
                 <para>
-                    Directory (usually TMPDIR/stamps) with timestamps of
+                    The directory (usually <filename>TMPDIR/stamps</filename>) with timestamps of
                     executed tasks.
                 </para>
             </glossdef>
@@ -916,7 +960,10 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
 
         <glossentry id='var-SUMMARY'><glossterm>SUMMARY</glossterm>
             <glossdef>
-                <para>Short (72 char suggested) Summary of binary package for packaging systems such as ipkg, rpm or debian, inherits DESCRIPTION by default</para>
+                <para>The short (72 characters or less) summary of the binary package for packaging 
+                    systems such as <filename>ipkg</filename>, <filename>rpm</filename> or 
+                    <filename>debian</filename>.
+                    By default, this variable inherits <filename>DESCRIPTION</filename>.</para>
             </glossdef>
         </glossentry>
 
@@ -926,17 +973,18 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
 
         <glossentry id='var-TARGET_ARCH'><glossterm>TARGET_ARCH</glossterm>
             <glossdef>
-                <para>The architecture of the device we're building for. 
-                A number of values are possible but Poky primarily supports
-                "arm" and "i586".</para>
+                <para>The architecture of the device being built. 
+                While a number of values are possible, the Yocto Project primarily supports
+                <filename>arm</filename> and <filename>i586</filename>.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-TARGET_CFLAGS'><glossterm>TARGET_CFLAGS</glossterm>
             <glossdef>
                 <para>
-                    Flags passed to C compiler for the target system. Evaluates to the same 
-                    as <link linkend='var-CFLAGS'>CFLAGS</link>.
+                    Flags passed to the C compiler for the target system. 
+                    This variable evaluates to the same as 
+                    <filename><link linkend='var-CFLAGS'>CFLAGS</link></filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -944,29 +992,45 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
 
         <glossentry id='var-TARGET_FPU'><glossterm>TARGET_FPU</glossterm>
             <glossdef>
-                <para>Method of handling FPU code. For FPU-less targets
-                (most of ARM cpus) it has to be set to "soft" otherwise
-                kernel emulation will get used which will result in
-                performance penalty.</para>
+                <para>Specifies the method for handling FPU code. 
+                    For FPU-less targets, which include most ARM CPUs, the variable must be
+                    set to "soft".
+                    If not, the kernel emulation gets used, which results in a performance penalty.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-TARGET_OS'><glossterm>TARGET_OS</glossterm>
             <glossdef>
-                <para>Type of target operating system. Can be "linux"
-                for glibc based system, "linux-uclibc" for uClibc. For
-                ARM/EABI targets there are also "linux-gnueabi" and
-                "linux-uclibc-gnueabi" values possible.</para>
+                <para>Specifies the target's operating system. 
+                    The variable can be set to "linux" for <filename>glibc</filename>-based systems and
+                    "linux-uclibc" for <filename>uClibc</filename>. 
+                    For ARM/EABI targets, there are also "linux-gnueabi" and
+                    "linux-uclibc-gnueabi" values possible.</para>
             </glossdef>
         </glossentry>
+
+        <glossentry id='var-TCMODE'><glossterm>TCMODE</glossterm>
+            <glossdef>
+                <para>The toolchain selector. 
+                    This variable replaces <filename>POKYMODE</filename>.
+                    The variable determines which of the files in 
+                    <filename>meta/conf/distro/include/tcmode-*</filename> is used. 
+                    By default, <filename>TCMODE</filename> is set to "default", which 
+                    chooses <filename>tcmode-default.inc</filename>.</para>
+                <para>The variable is similar to <filename>TCLIBC</filename>, which controls the 
+                    <filename>libc</filename> used: <filename>eglibc</filename> or <filename>uclibc</filename>.
+                    </para>
+            </glossdef>
+        </glossentry> 
 
         <glossentry id='var-TERMCMD'><glossterm>TERMCMD</glossterm>
             <glossdef>
                 <para>
-                    This command is used by bitbake to lauch a terminal window with a 
-                    shell. The shell is unspecified so the user's default shell is used. 
-                    By default it is set to <command>gnome-terminal</command> but it can 
-                    be any X11 terminal application or terminal multiplexers like screen.
+                    This command is used by BitBake to lauch a terminal window with a 
+                    shell. 
+                    The shell is unspecified so the user's default shell is used. 
+                    By default, the variable is set to <filename>gnome-terminal</filename> but it can 
+                    be any X11 terminal application or terminal multiplexers-like screen.
                 </para>
             </glossdef>
         </glossentry>
@@ -974,9 +1038,11 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
         <glossentry id='var-TERMCMDRUN'><glossterm>TERMCMDRUN</glossterm>
             <glossdef>
                 <para>
-                    This command is similar to <glossterm><link
-                linkend='var-TERMCMD'>TERMCMD</link></glossterm> however instead of the users shell it runs the command specified by the <glossterm><link
-                linkend='var-SHELLCMDS'>SHELLCMDS</link></glossterm> variable.
+                    This variable is similar to 
+                    <filename><link linkend='var-TERMCMD'>TERMCMD</link></filename>.
+                    However, instead of running the user's shell, the command specified by 
+                    the <filename><link linkend='var-SHELLCMDS'>SHELLCMDS</link></filename> 
+                    variable is run.
                 </para>
             </glossdef>
         </glossentry>
@@ -993,8 +1059,8 @@ recipes-graphics/xorg-font/fiont-alias_1.0.2.bb:PR - "$(INC_PR).0"
 
         <glossentry id='var-WORKDIR'><glossterm>WORKDIR</glossterm>
             <glossdef>
-                <para>Path to directory in tmp/work/ where package
-                    will be built.</para>
+                <para>The path to directory in <filename>tmp/work/</filename> where 
+                    the package is built.</para>
             </glossdef>
         </glossentry>
 
