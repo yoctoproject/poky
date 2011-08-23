@@ -1006,13 +1006,14 @@
     </section>
 
     <section id="usingpoky-configuring-LIC_FILES_CHKSUM">
-        <title>Track License Change</title>
+        <title>Tracking License Changes</title>
 
         <para>
-            The license of an upstream project might change in the future.
-            The Yocto Project uses the 
-            <filename><link linkend='var-LIC_FILES_CHKSUM'>LIC_FILES_CHKSUM</link></filename> variable
-            to track license changes.
+            The license of an upstream project might change in the future. In order to prevent these changes
+            going unnoticed, the Yocto Project provides a 
+            <glossterm><link linkend='var-LIC_FILES_CHKSUM'>LIC_FILES_CHKSUM</link></glossterm>
+            variable to track changes to the license text. The checksums are validated at the end of the
+            configure step, and if the checksums do not match, the build will fail.
         </para>
 
         <section id="usingpoky-specifying-LIC_FILES_CHKSUM">
@@ -1020,14 +1021,12 @@
 
             <para>
                 The <filename>LIC_FILES_CHKSUM</filename>
-                variable contains checksums of the license text in the recipe source code. 
-                The Yocto Project uses checksums to track changes in the license text of the 
-                source code files.
-                Following is an example of <filename>LIC_FILES_CHKSUM</filename>:
+                variable contains checksums of the license text in the source code for the recipe.
+                Following is an example of how to specify <filename>LIC_FILES_CHKSUM</filename>:
                 <literallayout class='monospaced'>
-     LIC_FILES_CHKSUM = "file://COPYING; md5=xxxx \
-                         file://licfile1.txt; beginline=5; endline=29;md5=yyyy \
-                         file://licfile2.txt; endline=50;md5=zzzz \
+     LIC_FILES_CHKSUM = "file://COPYING;md5=xxxx \
+                         file://licfile1.txt;beginline=5;endline=29;md5=yyyy \
+                         file://licfile2.txt;endline=50;md5=zzzz \
                          ..."
                 </literallayout>
             </para>
@@ -1056,6 +1055,10 @@
                 <filename><link linkend='var-WORKDIR'>WORKDIR</link></filename>, which is the parent
                 of <filename>S</filename>.
             </para>
+            <para>
+                Note that this variable is mandatory for all recipes, unless the LICENSE variable is set to
+                "CLOSED".
+            </para>
         </section>
 
         <section id="usingpoky-LIC_FILES_CHKSUM-explanation-of-syntax">
@@ -1064,8 +1067,10 @@
                 As mentioned in the previous section, the 
                 <filename>LIC_FILES_CHKSUM</filename> variable lists all the 
                 important files that contain the license text for the source code. 
-                Using this variable, you can specify the line on which the license text starts and ends
-                by supplying "beginline" and "endline" parameters. 
+                It is possible to specify a checksum for an entire file, or a specific section of a
+                file (specified by beginning and ending line numbers with the "beginline" and "endline"
+                parameters respectively). The latter is useful for source files with license notice header,
+                README documents, etc.
                 If you do not use the "beginline" parameter, then it is assumed that the text begins on the 
                 first line of the file. 
                 Similarly, if you do not use the "endline" parameter, it is assumed that the license text 
@@ -1075,12 +1080,11 @@
             <para>
                 The "md5" parameter stores the md5 checksum of the license text. 
                 If the license text changes in any way as compared to this parameter
-                then a mis-match occurs. 
+                then a mismatch occurs.
                 This mismatch triggers a build failure and notifies the developer.
                 Notification allows the developer to review and address the license text changes.
-                Also note that if a mis-match occurs during the build, the correct md5 
-                checksum is placed in the build log and can be easily copied to a 
-                <filename>.bb</filename> file.
+                Also note that if a mismatch occurs during the build, the correct md5 
+                checksum is placed in the build log and can be easily copied to the recipe.
             </para>
 
             <para>
@@ -1089,7 +1093,7 @@
                 Generally, however, every project requires a few specifications for license tracking. 
                 Many projects have a "COPYING" file that stores the license information for all the source 
                 code files.
-                This practice allow you to just track the "COPYING" file as long as it is kept up to date. 
+                This practice allows you to just track the "COPYING" file as long as it is kept up to date. 
             </para>
 
             <tip>
