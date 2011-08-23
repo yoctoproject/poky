@@ -74,9 +74,10 @@
 
         <glossentry id='var-BBFILE_COLLECTIONS'><glossterm>BBFILE_COLLECTIONS</glossterm>
             <glossdef>
-                <para>Identifies layer-specific <filename>.bbfiles</filename>, which contain recipes 
-                    used by BitBake to build software.
-                    The variable is appended with a layer name.</para>
+                <para>Lists the names of configured layers. These names are used to find the other BBFILE_*
+                    variables. Typically each layer will append its name to this variable in its
+                    <filename>conf/layer.conf</filename> file.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -84,14 +85,14 @@
             <glossdef>
                 <para>Variable that expands to match files from <filename>BBFILES</filename> in a particular layer.  
                     This variable is used in the <filename>conf/layer.conf</filename> file and must 
-                    contain the name of the 
-                    specific layer (e.g. <filename>BBFILE_PATTERN_emenlow</filename>).</para>
+                    be suffixed with the name of the specific layer (e.g. 
+                    <filename>BBFILE_PATTERN_emenlow</filename>).</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-BBFILE_PRIORITY'><glossterm>BBFILE_PRIORITY</glossterm>
             <glossdef>
-                <para>Assigns different priorities to recipe files in different layers.</para>
+                <para>Assigns the priority for recipe files in each layer.</para>
                 <para>This variable is useful in situations where the same package appears in
                     more than one layer. 
                     Setting this variable allows you to prioritize a
@@ -104,14 +105,22 @@
                     lower precedence.</para>
                 <para>A larger value for the <filename>BBFILE_PRIORITY</filename> variable results in a higher
                     precedence. 
-                    For example, the value 6 has a higher precedence than the value 5. 
-                    By default, the <filename>BBFILE_PRIORITY</filename> variable is set to "5".</para>
+                    For example, the value 6 has a higher precedence than the
+                    value 5. 
+                    If not specified, the BBFILE_PRIORITY variable is set based on layer
+                    dependencies (see LAYERDEPENDS below). Tdefault priority if unspecified
+                    for a layer with no dependencies is the lowest defined priority + 1
+                    (or 1 if no priorities are defined).</para>
+                <tip>
+                    You can use the command "bitbake-layers show_layers" to list
+                    all configured layers along with their priorities.
+                </tip>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-BBFILES'><glossterm>BBFILES</glossterm>
             <glossdef>
-                <para>List of recipes used by BitBake to build software</para>
+                <para>List of recipe files used by BitBake to build software</para>
             </glossdef>
         </glossentry>
 
@@ -540,6 +549,20 @@
 
     <glossdiv id='var-glossary-l'><title>L</title>
 
+        <glossentry id='var-LAYERDEPENDS'><glossterm>LAYERDEPENDS</glossterm>
+            <glossdef>
+                <para>Lists the layers that this recipe depends upon, separated by spaces.
+                    Optionally a specific layer version may be specified for a dependency
+                    by adding it to the end of the layer name with a colon, e.g. "anotherlayer:3"
+                    (to be compared against LAYERVERSION_anotherlayer in this example).
+                    An error will be produced if any dependency is missing or
+                    the version numbers do not match exactly (if specified).
+                    This variable is used in the <filename>conf/layer.conf</filename> file 
+                    and must be suffixed with the name of the specific layer (e.g. 
+                    LAYERDEPENDS_mylayer).</para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-LAYERDIR'><glossterm>LAYERDIR</glossterm>
             <glossdef>
                 <para>When used inside the <filename>layer.conf</filename> configuration 
@@ -548,6 +571,17 @@
                     (see the BitBake manual) as lazy expansion can result in
                     the expansion happening in the wrong directory and therefore
                     giving the wrong value.</para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-LAYERVERSION'><glossterm>LAYERVERSION</glossterm>
+            <glossdef>
+                <para>Optionally specifies the version of a layer as a single number.
+                    This may be used within LAYERDEPENDS for another layer in order to
+                    depend on a specific version of the layer.
+                    This variable is used in the <filename>conf/layer.conf</filename> file 
+                    and must be suffixed with the name of the specific layer (e.g.
+                    LAYERVERSION_mylayer).</para>
             </glossdef>
         </glossentry>
 
