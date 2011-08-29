@@ -17,17 +17,20 @@
 # The command-line argument DOC represents the folder name in which a particular 
 # document is stored.  The command-line argument VER represents the distro 
 # version of the Yocto Release for which the manuals are being generated.
-# You must invoke the Makefile with the DOC and VER arguments.
+# To build the HTML and PDF versions of the manual you must invoke the Makefile
+# with the DOC argument.  If you are going to publish the manual then you 
+# you must invoke the Makefile with both the DOC and the VER argument.
+#
 # Examples:
 #
-#     make DOC=bsp-guide VER=1.1
-#     make DOC=yocto-project-qs VER=1.1
-#     make pdf DOC=yocto-project-qs VER=1.1
+#     make DOC=bsp-guide
+#     make DOC=yocto-project-qs
+#     make pdf DOC=poky-ref-manual
 #
-# The first example generates the HTML and PDF versions of the BSP Guide for 
-# the Yocto Project 1.1 Release.  The second example generates the HTML version
-# of the Quick Start.  The third example generates an error because you cannot
-# generate a PDF version of the Quick Start.
+# The first example generates the HTML and PDF versions of the BSP Guide.
+# The second example generates the HTML version only of the Quick Start.  Note that 
+# the Quick Start only has an HTML version available.  The third example generates 
+# both the PDF and HTML versions of the Yocto Project Reference Manual.
 #
 # Use the publish target to push the generated manuals to the Yocto Project 
 # website.  All files needed for the manual's HTML form are pushed as well as the 
@@ -36,6 +39,10 @@
 #
 #    make publish DOC=bsp-guide VER=1.1
 #    make publish DOC=adt-manual VER=1.1
+#
+# The first example publishes the 1.1 version of both the PDF and HTML versions of 
+# the BSP Guide.  The second example publishes the 1.1 version of both the PDF and 
+# HTML versions of the ADT Manual.
 #
 
 ifeq ($(DOC),bsp-guide)
