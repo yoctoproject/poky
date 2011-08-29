@@ -29,9 +29,14 @@
 
         <note>
             The information here does not provide an example of how to create a BSP.
-            For information on how to create a BSP, see the Yocto Project Development Manual or the 
-            <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_creating_one_generic_Atom_BSP_from_another'></ulink>
-            wiki page.
+            For examples on how to create a BSP, see the
+            <ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html#dev-manual-bsp-appendix'>
+            BSP Development Example</ulink> in  
+            <ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html'>
+            The Yocto Project Development Manual</ulink>.
+            You can also see the 
+            <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_creating_one_generic_Atom_BSP_from_another'>
+            wiki page</ulink>.
         </note>
 
         <para>
@@ -116,31 +121,46 @@
      meta-&lt;bsp_name&gt;/conf/machine/*.conf
      meta-&lt;bsp_name&gt;/recipes-bsp/*
      meta-&lt;bsp_name&gt;/recipes-graphics/*            
-     meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_git.bbappend
+     meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_&lt;kernel_rev&gt;.bbappend
                 </literallayout>
             </para>
 
             <para>
-                Below is an example of the Crownbay BSP:
+                Below is an example of the Crown Bay BSP:
 
                 <literallayout class='monospaced'>
      meta-crownbay/COPYING.MIT
      meta-crownbay/README
-     meta-crownbay/binary/.gitignore
+     meta-crownbay/binary
+     meta-crownbay/conf/
      meta-crownbay/conf/layer.conf
+     meta-crownbay/conf/machine/
      meta-crownbay/conf/machine/crownbay.conf
-     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
+     meta-crownbay/conf/machine/crownbay-noemgd.conf
+     meta-crownbay/recipes-bsp/
+     meta-crownbay/recipes-bsp/formfactor/
      meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xorg.conf
+     meta-crownbay/recipes-bsp/formfactor/formfactor/
+     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/
+     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
+     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/
+     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/machconfig
+     meta-crownbay/recipes-graphics/
+     meta-crownbay/recipes-graphics/xorg-xserver/
+     meta-crownbay/recipes-graphics/xorg-xserver/emgd-driver-bin_1.6.bb
      meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin/.gitignore
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin_1.7.99.2.bb
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/crosscompile.patch
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/fix_open_max_preprocessor_error.patch
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/macro_tweak.patch
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/nodolt.patch
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd_1.7.99.2.bb
-     meta-crownbay/recipes-kernel/linux/linux-yocto_git.bbappend
+     meta-crownbay/recipes-graphics/xorg-xserver/emgd-driver-bin-1.6/
+     meta-crownbay/recipes-graphics/xorg-xserver/emgd-driver-bin-1.6/.gitignore
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xorg.conf
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay-noemgd/
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay-noemgd/xorg.conf
+     meta-crownbay/recipes-kernel/
+     meta-crownbay/recipes-kernel/linux/
+     meta-crownbay/recipes-kernel/linux/linux-yocto_2.6.34.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto_2.6.37.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto_3.0.bbappend
                 </literallayout>
             </para>
 
@@ -161,7 +181,7 @@
             <para>
                 These optional files satisfy licensing requirements for the BSP.
                 The type or types of files here can vary depending on the licensing requirements.
-                For example, in the Crownbay BSP all licensing requirements are handled with the 
+                For example, in the Crown Bay BSP all licensing requirements are handled with the 
                 <filename>COPYING.MIT</filename> file.  
             </para>
 
@@ -223,14 +243,15 @@
             <section id='bsp-filelayout-layer'>
             <title>Layer Configuration File</title>
             <para>
-                You can find these files in the Yocto Project file's directory structure at:
+                You can find this file in the Yocto Project file's directory structure at:
                 <literallayout class='monospaced'>
-     meta-&lt;bsp_name&gt;/conf/layer.conf 
+     meta-&lt;bsp_name&gt;/conf/layer.conf
                 </literallayout>
             </para>
 
             <para>
-                This file identifies the structure as a Yocto Project layer, identifies the  
+                The <filename>conf/layer.conf</filename> file identifies the file structure as a Yocto 
+                Project layer, identifies the  
                 contents of the layer, and contains information about how Yocto Project should use it. 
                 Generally, a standard boilerplate file such as the following works.
                 In the following example you would replace "bsp" and "_bsp" with the actual name
@@ -272,12 +293,13 @@
                 in the BSP into a format that the Yocto Project build system can understand. 
                 If the BSP supports multiple machines, multiple machine configuration files
                 can be present. 
-                These filenames correspond to the values to which users have set the MACHINE variable.
+                These filenames correspond to the values to which users have set the 
+                <filename>MACHINE</filename> variable.
             </para>
 
             <para>
                 These files define things such as the kernel package to use
-                (PREFERRED_PROVIDER of virtual/kernel), the hardware drivers to
+                (<filename>PREFERRED_PROVIDER</filename> of virtual/kernel), the hardware drivers to
                 include in different types of images, any special software components
                 that are needed, any bootloader information, and also any special image
                 format requirements.
@@ -286,6 +308,15 @@
             <para>
                 At least one machine file is required for a BSP layer.
                 However, you can supply more than one file.
+                For example, in the Crown Bay BSP shown earlier in this section, the 
+                <filename>conf/machine</filename> directory contains two configuration files:
+                <filename>crownbay.conf</filename> and <filename>crownbay-noemgd.conf</filename>.
+                The <filename>crownbay.conf</filename> file is used for the Crown Bay BSP
+                that supports the <trademark class='registered'>Intel</trademark> Embedded
+                Media and Graphics Driver (<trademark class='registered'>Intel</trademark>
+                EMGD), while the <filename>crownbay-noemgd.conf</filename> file is used for the 
+                Crown Bay BSP that does not support the <trademark class='registered'>Intel</trademark>
+                EMGD.
             </para>
 
             <para>
@@ -326,10 +357,16 @@
             <para>
                 This optional directory contains miscellaneous recipe files for the BSP.
                 Most notably would be the formfactor files.
-                For example, in the Crownbay BSP there is a <filename>machconfig</filename> file and a
-                <filename>formfactor_0.0.bbappend</filename> file:
+                For example, in the Crown Bay BSP there is the 
+                <filename>formfactor_0.0.bbappend</filename> file, which is an append file used 
+                to augment the recipe that starts the build.  
+                Furthermore, there are machine-specific settings used during the build that are
+                defined by the <filename>machconfig</filename> files.
+                In the Crown Bay example, two <filename>machconfig</filename> files exist:
+                one that supports the Intel EMGD and one that does not:
                 <literallayout class='monospaced'>
      meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
+     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/machconfig
      meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
                 </literallayout>
             </para>
@@ -353,17 +390,13 @@
                 This optional directory contains recipes for the BSP if it has 
                 special requirements for graphics support.
                 All files that are needed for the BSP to support a display are kept here. 
-                For example, in the Crownbay BSP several display support files exist:
+                For example, the Crown Bay BSP contains the following files that support 
+                building a BSP that supports and does not support the Intel EMGD:
                 <literallayout class='monospaced'>
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xorg.conf
+     meta-crownbay/recipes-graphics/xorg-xserver/emgd-driver-bin_1.6.bb
      meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin/.gitignore
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd-bin_1.7.99.2.bb
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/crosscompile.patch
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/fix_open_max_preprocessor_error.patch
-     eta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/macro_tweak.patch
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd/nodolt.patch
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-emgd_1.7.99.2.bb
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xorg.conf
+     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay-noemgd/xorg.conf
                 </literallayout>
             </para>
             </section>
@@ -373,65 +406,98 @@
             <para>
                 You can find these files in the Yocto Project file's directory structure at:
                 <literallayout class='monospaced'>
-     meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_git.bbappend
+     meta-&lt;bsp_name&gt;/recipes-kernel/linux/linux-yocto_*.bbappend
                 </literallayout>
             </para>
 
             <para>
-                This file appends your specific changes to the kernel you are using.
+                These files append your specific changes to the kernel you are using.
             </para>
             <para>
-                For your BSP you typically want to use an existing Yocto Project kernel found in the 
+                For your BSP, you typically want to use an existing Yocto Project kernel found in the 
                 Yocto Project repository at <filename class='directory'>meta/recipes-kernel/linux</filename>.
-                You can append your specific changes to the kernel recipe by using an append file, 
-                which is located in the 
-                <filename class='directory'>meta-&lt;bsp_name&gt;/recipes-kernel/linux</filename> 
+                You can append your specific changes to the kernel recipe by using a
+                similarly named append file, which is located in the 
+                <filename>meta-&lt;bsp_name&gt;/recipes-kernel/linux</filename> 
                 directory.
             </para>
             <para>
-                Suppose you use a BSP that uses the <filename>linux-yocto_git.bb</filename> kernel, 
+                Suppose you use a BSP that uses the <filename>linux-yocto_3.0.bb</filename> kernel, 
                 which is the preferred kernel to use for developing a new BSP using the Yocto Project.
                 In other words, you have selected the kernel in your 
-                <filename>&lt;bsp_name&gt;.conf</filename> file by adding the following statement:
+                <filename>&lt;bsp_name&gt;.conf</filename> file by adding the following statements:
                 <literallayout class='monospaced'>
      PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
+     PREFERRED_VERSION_linux-yocto = "3.0%"
                 </literallayout>
-                You would use the <filename>linux-yocto_git.bbappend</filename> file to append 
+                You would use the <filename>linux-yocto_3.0.bbappend</filename> file to append 
                 specific BSP settings to the kernel, thus configuring the kernel for your particular BSP.
             </para>
             <para>
-                Now take a look at the existing Crownbay BSP.
+                As an example, look at the existing Crown Bay BSP.
                 The append file used is:
                 <literallayout class='monospaced'>
-     meta-crownbay/recipes-kernel/linux/linux-yocto_git.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto_3.0.bbappend
                 </literallayout>
                 The file contains the following:
                 <literallayout class='monospaced'>
-     FILESEXTRAPATHS := "${THISDIR}/${PN}"
+     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
      COMPATIBLE_MACHINE_crownbay = "crownbay"
-     KMACHINE_crownbay = "yocto/standard/crownbay"
+     KMACHINE_crownbay  = "yocto/standard/crownbay"
+     KERNEL_FEATURES_append_crownbay += " cfg/smp.scc"
+
+     COMPATIBLE_MACHINE_crownbay-noemgd = "crownbay-noemgd"
+     KMACHINE_crownbay-noemgd  = "yocto/standard/crownbay"
+     KERNEL_FEATURES_append_crownbay-noemgd += " cfg/smp.scc"
+
+     SRCREV_machine_pn-linux-yocto_crownbay ?= "6b4b9acde5fb0ff66ae58fa98274bfe631501499"
+     SRCREV_meta_pn-linux-yocto_crownbay ?= "5b535279e61197cb194bb2dfceb8b7a04128387c"
+
+     SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= "6b4b9acde5fb0ff66ae58fa98274bfe631501499"
+     SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= "5b535279e61197cb194bb2dfceb8b7a04128387c"
                 </literallayout>
-                This append file adds Crownbay as a compatible machine,
-                and additionally sets a Yocto Kernel-specific variable that identifies the name of the 
-                BSP branch to use in the Git repository to find configuration information.
+                This append file contains statements used to support the Crown Bay BSP that both
+                supports and does not support the Intel EMGD.
+                If, for example, you were going to build the BSP that did not support Intel EMGD, 
+                you would simply comment out or delete the statements that support building 
+                Crown Bay with Intel EMGD support.
+                So, the <filename>linux-yocto_3.0.bbappend</filename> could be as follows:
+                <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
+     COMPATIBLE_MACHINE_crownbay = "crownbay"
+     KMACHINE_crownbay  = "yocto/standard/crownbay"
+     KERNEL_FEATURES_append_crownbay += " cfg/smp.scc"
+
+     SRCREV_machine_pn-linux-yocto_crownbay ?= "6b4b9acde5fb0ff66ae58fa98274bfe631501499"
+     SRCREV_meta_pn-linux-yocto_crownbay ?= "5b535279e61197cb194bb2dfceb8b7a04128387c"
+                </literallayout>
+                The append file defines "crownbay" as the compatible machine,
+                defines the <filename>KMACHINE</filename>, points to some configuration fragments
+                to use by setting the <filename>KERNEL_FEATURES</filename> variable, and then points
+                to the specific commits in the Yocto Project files Git repository and the 
+                <filename>meta</filename> Git repository branches to identify the exact kernel needed 
+                to build the Crown Bay BSP.
             </para>
             <para>
                 One thing missing in this particular BSP, which you will typically need when 
-                developing a BSP, is the kernel configuration (.config) for your BSP.
+                developing a BSP, is the kernel configuration file (<filename>.config</filename>) for your BSP.
                 When developing a BSP, you probably have a kernel configuration file or a set of kernel
                 configuration files that, when taken together, define the kernel configuration for your BSP.
                 You can accomplish this definition by putting the configurations in a file or a set of files 
                 inside a directory located at the same level as your append file and having the same name 
                 as the kernel.
-                With all these conditions met simply reference those files in a SRC_URI statement in the append 
-                file.
+                With all these conditions met simply reference those files in a 
+                <filename>SRC_URI</filename> statement in the append file.
             </para>
             <para>
                 For example, suppose you had a set of configuration options in a file called 
                 <filename>defconfig</filename>.  
                 If you put that file inside a directory named 
-                <filename class='directory'>/linux-yocto</filename> and then added 
-                a SRC_URI statement such as the following to the append file, those configuration
+                <filename>/linux-yocto</filename> and then added 
+                a <filename>SRC_URI</filename> statement such as the following to the append file, 
+                those configuration
                 options will be picked up and applied when the kernel is built.
                 <literallayout class='monospaced'>
      SRC_URI += "file://defconfig"
@@ -439,9 +505,9 @@
             </para>
             <para>
                 As mentioned earlier, you can group related configurations into multiple files and 
-                name them all in the SRC_URI statement as well.
+                name them all in the <filename>SRC_URI</filename> statement as well.
                 For example, you could group separate configurations specifically for Ethernet and graphics
-                into their own files and add those by using a SRC_URI statement like the 
+                into their own files and add those by using a <filename>SRC_URI</filename> statement like the 
                 following in your append file:
                 <literallayout class='monospaced'>
      SRC_URI += "file://defconfig \
@@ -450,24 +516,24 @@
                 </literallayout>
             </para>
             <para>
-                The FILESEXTRAPATHS variable is in boilerplate form here in order to make it easy 
-                to do that.
+                The <filename>FILESEXTRAPATHS</filename> variable is in boilerplate form here 
+                in order to make it easy to do that.
                 It basically allows those configuration files to be found by the build process.
             </para>
             <note>
                 <para>
                 Other methods exist to accomplish grouping and defining configuration options.
                 For example, you could directly add configuration options to the Yocto kernel 
-                <filename class='directory'>meta</filename> branch for your BSP.
+                <filename>meta</filename> branch for your BSP.
                 The configuration options will likely end up in that location anyway if the BSP gets 
                 added to the Yocto Project. 
-                For information on how to add these configurations directly, see the 
-                "Yocto Project Kernel Architecture and Use Manual" on the 
-                <ulink url="http://yoctoproject.org/community/documentation">Yocto Project website
-                Documentation Page</ulink></para>
+                For information on how to add these configurations directly, see  
+                <ulink url='http://yoctoproject.org/docs/1.1/kernel-manual/kernel-manual.html'>
+                The Yocto Project Kernel Architecture and Use Manual</ulink>.</para>
                 <para>
-                In general, however, the Yocto Project maintainers take care of moving the SRC_URI-specified 
-                configuration options to the <filename class='directory'>meta</filename> branch.
+                In general, however, the Yocto Project maintainers take care of moving the 
+                <filename>SRC_URI</filename>-specified 
+                configuration options to the <filename>meta</filename> branch.
                 Not only is it easier for BSP developers to not have to worry about putting those 
                 configurations in the branch, but having the maintainers do it allows them to apply 
                 'global' knowledge about the kinds of common configuration options multiple BSPs in 
