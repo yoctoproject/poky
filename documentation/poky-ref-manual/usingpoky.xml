@@ -375,18 +375,26 @@
         <para>
             Best practices exist while writing recipes that both log build progress and 
             act on build conditions such as warnings and errors. 
-            Depending whether you are creating recipes using Bash or Python, the mechanism 
-            differs:
+            Both Python and Bash language bindings exist for the logging mechanism:
             <itemizedlist>
-                <listitem><para><emphasis>Python:</emphasis> For Python functions BitBake
+                <listitem><para><emphasis>Python:</emphasis> For Python functions, BitBake
                     supports several loglevels: <filename>bb.fatal</filename>, 
                     <filename>bb.error</filename>, <filename>bb.warn</filename>,
                     <filename>bb.note</filename>, <filename>bb.plain</filename>,
                     and <filename>bb.debug</filename>.</para></listitem>
-                <listitem><para><emphasis>Bash:</emphasis> For Bash functions you use the 
-                    <filename>echo</filename> command and prepend a diagnostic string that includes
-                    the loglevel followed by a colon character</para></listitem>
+                <listitem><para><emphasis>Bash:</emphasis> For Bash functions, the same set 
+                    of loglevels exist and are accessed with a similar syntax:
+                    <filename>bb.fatal</filename>, <filename>bb.error</filename>, 
+                    <filename>bb.warn</filename>, <filename>bb.note</filename>, 
+                    <filename>bb.plain</filename>, and <filename>bb.debug</filename>.</para></listitem>
             </itemizedlist>
+        </para>
+
+        <para>
+            For guidance on <filename>echo</filename> how logging is handled 
+            in both Python and Bash recipes, see the 
+            <filename>logging.bbclass</filename> file in the 
+            <filename>meta/classes</filename> directory of the Yocto Project files.
         </para>
 
         <section id='logging-with-python'>
@@ -426,14 +434,8 @@
             <para>
                 When creating recipes using Bash and inserting code that handles build
                 logs you have the same goals - informative with minimal console output. 
-                Use the <filename>echo</filename> command and prepend the diagnostic string
-                with the appropriate loglevel floowed by the colon character.
-            </para>
-
-            <para>
-                For guidance on <filename>echo</filename> usage in Bash recipes, see the 
-                <filename>logging.bbclass</filename> file in the 
-                <filename>meta/classes</filename> directory of the Yocto Project files.
+                The syntax you use for recipes written in Bash is similar to that of 
+                recipes written in Python described in the previous section.
             </para>
 
             <para>
@@ -441,21 +443,21 @@
                 The code logs the progress of the <filename>do_my_function</filename> function.
                 <literallayout class='monospaced'>
      do_my_function() {
-         echo "Running do_my_function()"
+         bbdebug 2 "Running do_my_function"
          if [ exceptional_condition ]; then
-             echo "NOTE: hit exceptional_condition"
+             bbnote "Hit exceptional_condition"
          fi
-         echo "DEBUG: got to point xyz"
+         bbdebug 2  "Got to point xyz"
          if [ warning_trigger ]; then
-             echo "WARNING: detected warning_trigger, this might cause a plroblem later."
+             warn "Detected warning_trigger, this might cause a problem later."
          fi
          if [ recoverable_error ]; then
-             echo "ERROR: hit recoverable_error, correcting"
+             error "Hit recoverable_error, correcting"
          fi
          if [ fatal_error ]; then
-             echo "FATAL: fatal_error detected"
+             fatal "fatal_error detected"
          fi
-         echo "Completed do_my_function"
+         debug 2 "Completed do_my_function"
      }
                 </literallayout>
             </para>
