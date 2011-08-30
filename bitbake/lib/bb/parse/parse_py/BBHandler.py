@@ -194,20 +194,20 @@ def feeder(lineno, s, fn, root, statements):
                 return
 
 
-    # Skip empty lines
-    if s == '':
-        return          
-
-    if s[0] == '#':
+    if s and s[0] == '#':
         if len(__residue__) != 0 and __residue__[0][0] != "#":
             bb.error("There is a comment on line %s of file %s (%s) which is in the middle of a multiline expression.\nBitbake used to ignore these but no longer does so, please fix your metadata as errors are likely as a result of this change." % (lineno, fn, s))
 
-    if s[-1] == '\\':
+    if s and s[-1] == '\\':
         __residue__.append(s[:-1])
         return
 
     s = "".join(__residue__) + s
     __residue__ = []
+
+    # Skip empty lines
+    if s == '':
+        return   
 
     # Skip comments
     if s[0] == '#':
