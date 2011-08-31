@@ -320,28 +320,22 @@
             </para>
 
             <para>
-                This directory could also contain shared hardware "tuning" definitions that are commonly used to
-                pass specific optimization flags to the compiler. 
-                An example is <filename>tune-atom.inc</filename>:
+                This <filename>crownbay.conf</filename> file could also include
+                a hardware "tuning" file that is commonly used to
+                define the the package architecture and specify 
+                optimization flags, which are carefully chosen to give best
+                performance on a given processor.
             </para>
+
             <para>
+                Tuning files are found in the <filename>meta/conf/machine/include</filename>
+                directory.
+                To use them, you simply include them in the machine configuration file. 
+                For example, the Crown Bay BSP <filename>crownbay.conf</filename> has the 
+                following statement:
                 <literallayout class='monospaced'>
-     BASE_PACKAGE_ARCH = "core2"
-     TARGET_CC_ARCH = "-m32 -march=core2 -msse3 -mtune=generic -mfpmath=sse"
+     include conf/machine/include/tune-atom.inc
                 </literallayout>
-            </para>
-            <para>
-                This example defines a new package architecture called "core2" and uses the
-                specified optimization flags, which are carefully chosen to give best
-                performance on atom processors.
-            </para>
-            <para>
-                The tune file would be included by the machine definition and can be
-                contained in the BSP or referenced from one of the standard core set of
-                files included with the Yocto Project.
-            </para>
-            <para>
-                Both the base package architecture file and the tune file are optional for a BSP layer.
             </para>
             </section>
 
@@ -457,12 +451,12 @@
      SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= "6b4b9acde5fb0ff66ae58fa98274bfe631501499"
      SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= "5b535279e61197cb194bb2dfceb8b7a04128387c"
                 </literallayout>
-                This append file contains statements used to support the Crown Bay BSP that both
-                supports and does not support the Intel EMGD.
-                If, for example, you were going to build the BSP that did not support Intel EMGD, 
-                you would simply comment out or delete the statements that support building 
-                Crown Bay with Intel EMGD support.
-                So, the <filename>linux-yocto_3.0.bbappend</filename> could be as follows:
+                This append file contains statements used to support the Crown Bay BSP for both
+                Intel EMGD and non-EMGD.
+                The build process, in this case, recognizes and uses only the statements that 
+                apply to the defined machine name - <filename>crownbay</filename> in this case.
+                So, the applicable statements in the <filename>linux-yocto_3.0.bbappend</filename> 
+                file are follows:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
@@ -473,7 +467,7 @@
      SRCREV_machine_pn-linux-yocto_crownbay ?= "6b4b9acde5fb0ff66ae58fa98274bfe631501499"
      SRCREV_meta_pn-linux-yocto_crownbay ?= "5b535279e61197cb194bb2dfceb8b7a04128387c"
                 </literallayout>
-                The append file defines "crownbay" as the compatible machine,
+                The append file defines <filename>crownbay</filename> as the compatible machine,
                 defines the <filename>KMACHINE</filename>, points to some configuration fragments
                 to use by setting the <filename>KERNEL_FEATURES</filename> variable, and then points
                 to the specific commits in the Yocto Project files Git repository and the 
