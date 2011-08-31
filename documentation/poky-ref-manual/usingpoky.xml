@@ -384,14 +384,14 @@
                     and <filename>bb.debug</filename>.</para></listitem>
                 <listitem><para><emphasis>Bash:</emphasis> For Bash functions, the same set 
                     of loglevels exist and are accessed with a similar syntax:
-                    <filename>bb.fatal</filename>, <filename>bb.error</filename>, 
-                    <filename>bb.warn</filename>, <filename>bb.note</filename>, 
-                    <filename>bb.plain</filename>, and <filename>bb.debug</filename>.</para></listitem>
+                    <filename>bbfatal</filename>, <filename>bberror</filename>, 
+                    <filename>bbwarn</filename>, <filename>bbnote</filename>, 
+                    <filename>bbplain</filename>, and <filename>bbdebug</filename>.</para></listitem>
             </itemizedlist>
         </para>
 
         <para>
-            For guidance on <filename>echo</filename> how logging is handled 
+            For guidance on how logging is handled 
             in both Python and Bash recipes, see the 
             <filename>logging.bbclass</filename> file in the 
             <filename>meta/classes</filename> directory of the Yocto Project files.
@@ -407,7 +407,7 @@
             </para>
 
             <para>
-                Following is sample code from a recipe written in Python.
+                Following is an example written in Python.
                 The code handles logging for a function that determines the number of tasks 
                 needed to be run:
                 <literallayout class='monospaced'>
@@ -439,7 +439,7 @@
             </para>
 
             <para>
-                Following is sample code from a recipe written in Bash.
+                Following is an example written in Bash.
                 The code logs the progress of the <filename>do_my_function</filename> function.
                 <literallayout class='monospaced'>
      do_my_function() {
@@ -449,15 +449,15 @@
          fi
          bbdebug 2  "Got to point xyz"
          if [ warning_trigger ]; then
-             warn "Detected warning_trigger, this might cause a problem later."
+             bbwarn "Detected warning_trigger, this might cause a problem later."
          fi
          if [ recoverable_error ]; then
-             error "Hit recoverable_error, correcting"
+             bberror "Hit recoverable_error, correcting"
          fi
          if [ fatal_error ]; then
-             fatal "fatal_error detected"
+             bbfatal "fatal_error detected"
          fi
-         debug 2 "Completed do_my_function"
+         bbdebug 2 "Completed do_my_function"
      }
                 </literallayout>
             </para>
