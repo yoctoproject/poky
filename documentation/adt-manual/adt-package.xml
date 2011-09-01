@@ -3,6 +3,7 @@
 
 <chapter id='adt-package'>
 <title>Optionally Customizing the Development Packages Installation</title>
+
     <para>
         Because the Yocto Project is suited for embedded Linux development, it is 
         likely that you will need to customize your development packages installation.  
@@ -13,32 +14,34 @@
 
 <section id='package-management-systems'>
     <title>Package Management Systems</title>
+
     <para>
         The Yocto Project supports the generation of sysroot files using 
         three different Package Management Systems (PMS):
-    <itemizedlist>
-        <listitem><para><emphasis>OPKG</emphasis> – A less well known PMS whose use 
-            originated in the OpenEmbedded and OpenWrt embedded Linux projects.  
-            This PMS works with files packaged in an <filename>.ipk</filename> format.
-            See <ulink url='http://en.wikipedia.org/wiki/Opkg'></ulink> for more 
-            information about OPKG.</para></listitem>
-        <listitem><para><emphasis>RPM</emphasis> – A more widely known PMS intended for GNU/Linux 
-            distributions.  
-            This PMS works with files packaged in an <filename>.rms</filename> format.
-            The Yocto Project currently installs through this PMS by default.  
-            See <ulink url='http://en.wikipedia.org/wiki/RPM_Package_Manager'></ulink>
-            for more information about RPM.</para></listitem>
-        <listitem><para><emphasis>Debian</emphasis> – The PMS for Debian-based systems 
-            is built on many PMS tools.  
-            The lower-level PMS tool <filename>dpkg</filename> forms the base of the Debian PMS.  
-            For information on dpkg see 
-            <ulink url='http://en.wikipedia.org/wiki/Dpkg'></ulink>.</para></listitem>
-    </itemizedlist>
+        <itemizedlist>
+            <listitem><para><emphasis>OPKG:</emphasis> A less well known PMS whose use 
+                originated in the OpenEmbedded and OpenWrt embedded Linux projects.  
+                This PMS works with files packaged in an <filename>.ipk</filename> format.
+                See <ulink url='http://en.wikipedia.org/wiki/Opkg'></ulink> for more 
+                information about OPKG.</para></listitem>
+            <listitem><para><emphasis>RPM:</emphasis> A more widely known PMS intended for GNU/Linux 
+                distributions.  
+                This PMS works with files packaged in an <filename>.rms</filename> format.
+                The Yocto Project currently installs through this PMS by default.  
+                See <ulink url='http://en.wikipedia.org/wiki/RPM_Package_Manager'></ulink>
+                for more information about RPM.</para></listitem>
+            <listitem><para><emphasis>Debian:</emphasis> The PMS for Debian-based systems 
+                is built on many PMS tools.  
+                The lower-level PMS tool <filename>dpkg</filename> forms the base of the Debian PMS.  
+                For information on dpkg see 
+                <ulink url='http://en.wikipedia.org/wiki/Dpkg'></ulink>.</para></listitem>
+        </itemizedlist>
     </para>
 </section>
 
 <section id='configuring-the-pms'>
     <title>Configuring the PMS</title>
+
     <para>
         Whichever PMS you are using, you need to be sure that the 
         <filename>PACKAGE_CLASSES</filename> variable in the <filename>conf/local.conf</filename>
@@ -48,10 +51,12 @@
         Additional values specify additional formats for convenience or testing.  
         See the configuration file for details.
     </para>
+
     <para>
         As an example, consider a scenario where you are using OPKG and you want to add 
         the <filename>libglade</filename> package to the target sysroot.
     </para>
+
     <para>
         First, you should generate the <filename>ipk</filename> file for the 
         <filename>libglade</filename> package and add it 
@@ -62,20 +67,21 @@
      $ bitbake package-index
         </literallayout>
     </para>
+
     <para>
         Next, source the environment setup script found in the Yocto Project files.  
         Follow that by setting up the installation destination to point to your 
         sysroot as <filename>&lt;sysroot_dir&gt;</filename>.  
-        Finally, have an <filename>opkg</filename> configuration file <filename>&lt;conf_file&gt;</filename>
+        Finally, have an OPKG configuration file <filename>&lt;conf_file&gt;</filename>
         that corresponds to the <filename>opkg</filename> repository you have just created. 
         The following command forms should now work:
         <literallayout class='monospaced'>
-     $ opkg-cl –f &lt;conf_file&gt; -o &lt;sysroot-dir&gt; update
-     $ opkg-cl –f &lt;cconf_file&gt; -o &lt;sysroot-dir&gt; \
+     $ opkg-cl –f &lt;conf_file&gt; -o &lt;sysroot_dir&gt; update
+     $ opkg-cl –f &lt;cconf_file&gt; -o &lt;sysroot_dir&gt; \
         --force-overwrite install libglade
-     $ opkg-cl –f &lt;cconf_file&gt; -o &lt;sysroot-dir&gt; \
+     $ opkg-cl –f &lt;cconf_file&gt; -o &lt;sysroot_dir&gt; \
         --force-overwrite install libglade-dbg
-     $ opkg-cl –f &lt;conf_file&gt; -o &lt;sysroot-dir&gt; \
+     $ opkg-cl –f &lt;conf_file&gt; -o &lt;sysroot_dir&gt; \
         --force-overwrite install libglade-dev
         </literallayout>
     </para>
