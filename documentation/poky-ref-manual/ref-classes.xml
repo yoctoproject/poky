@@ -265,17 +265,59 @@
         The packaging classes add support for generating packages from a build's
         output. 
         The core generic functionality is in <filename>package.bbclass</filename>.
-        The code specific 
-        to particular package types is contained in various sub-classes such as
+        The code specific to particular package types is contained in various sub-classes such as
         <filename>package_deb.bbclass</filename>, <filename>package_ipk.bbclass</filename>,
         and <filename>package_rpm.bbclass</filename>. 
         Most users will want one or more of these classes.
+    </para>
+ 
+    <para>
         You can control the list of resulting package formats by using the 
         <filename><link linkend='var-PACKAGE_CLASSES'>PACKAGE_CLASSES</link></filename> 
-        variable. 
-        The first class listed in this  variable is be used for image generation. 
+        variable defined in the <filename>local.conf</filename> configuration file 
+        found in the Yocto Project file's <filename>conf</filename> directory. 
+        When defining the variable, you can specify one or more package types.
         Since images are generated from packages, a packaging class is 
         needed to enable image generation.
+        The first class listed in this variable is used for image generation. 
+    </para>
+
+    <para>
+        The package class you choose can affect build-time performance and has space
+        ramifications.
+        In general, building a package with RPM takes about thirty percent more time as 
+        compared to using IPK to build the same or similar package.
+        This comparison takes into account a complete build of the package with all 
+        dependencies previously built.
+        The reason for this discrepancy is because the RPM package manager creates and 
+        processes more metadata than the IPK package manager.
+        Consequently, you might consider setting <filename>PACKAGE_CLASSES</filename>
+        to "package_ipk" if you are building smaller systems.
+    </para>
+
+    <para>
+        Keep in mind, however, that RPM starts to provide more abilities than IPK due to 
+        the fact that it processes more metadata.
+        For example, this information includes individual file types, file checksum generation
+        and evaluation on install, sparse file support, conflict detection and resolution
+        for multilib systems, ACID style upgrade, and repackaging abilities for rollbacks.
+    </para>
+
+    <para>
+        Another consideration for packages built using the RPM package manager is space.
+        For smaller systems, the extra space used for the Berkley Database and the amount 
+        of metadata can affect your ability to do on-device upgrades.
+    </para>
+
+    <para>
+        You can find additional information on the effects of the package class at these 
+        two Yocto Project mailing list links:
+        <itemizedlist>
+            <listitem><para><ulink url='https://lists.yoctoproject.org/pipermail/poky/2011-May/006362.html'>
+                https://lists.yoctoproject.org/pipermail/poky/2011-May/006362.html</ulink></para></listitem>
+            <listitem><para><ulink url='https://lists.yoctoproject.org/pipermail/poky/2011-May/006363.html'>
+                https://lists.yoctoproject.org/pipermail/poky/2011-May/006363.html</ulink></para></listitem>
+        </itemizedlist>
     </para>
 </section>
 
