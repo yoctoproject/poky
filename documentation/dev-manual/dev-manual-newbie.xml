@@ -509,18 +509,18 @@
 
     <para>
         Here are some things to remember when dealing with bugs against the Yocto Project:   
-    <itemizedlist>
-        <listitem><para>The Yocto Project follows a naming bug-naming convention: 
-            <filename>[YOCTO #&lt;number&gt;]</filename>, where <filename>&lt;number&gt;</filename> is the 
-            assigned defect ID used in Bugzilla.  
-            So, for example, a valid way to refer to a defect when creating a commit comment 
-            would be <filename>[YOCTO 1011]</filename>.   
-            This convention becomes important if you are submitting patches against the Yocto Project 
-            code itself.
-            See the following section for more information.</para></listitem>
-        <listitem><para>Defects for Yocto Project fall into one of four classifications:  Yocto Projects, 
-            Infrastructure, Poky, and Yocto Metadata Layers.</para></listitem>
-    </itemizedlist>
+        <itemizedlist>
+            <listitem><para>The Yocto Project follows a naming bug-naming convention: 
+                <filename>[YOCTO #&lt;number&gt;]</filename>, where <filename>&lt;number&gt;</filename> is the 
+                assigned defect ID used in Bugzilla.  
+                So, for example, a valid way to refer to a defect when creating a commit comment 
+                would be <filename>[YOCTO #1011]</filename>.   
+                This convention becomes important if you are submitting patches against the Yocto Project 
+                code itself.
+                See the following section for more information.</para></listitem>
+            <listitem><para>Defects for Yocto Project fall into one of four classifications:  Yocto Projects, 
+                Infrastructure, Poky, and Yocto Metadata Layers.</para></listitem>
+        </itemizedlist>
     </para>
 </section>
 
@@ -529,9 +529,9 @@
 
     <para>
         Contributions to the Yocto Project are very welcome. 
-        You should send patches to the Yocto Project mailing list to get it in front of the 
+        You should send patches to the Yocto Project mailing list to get them in front of the 
         Yocto Project Maintainer.  
-        When you send your patch, be sure to include a "signed-off-by:"
+        When you send a patch, be sure to include a "signed-off-by:"
         line in the same style as required by the Linux kernel. 
         Adding this line signifies the developer has agreed to the Developer's Certificate of Origin 1.1
         as follows:
@@ -577,31 +577,67 @@
     </para>
 
     <para>
-        When you submit a change or patch to the Yocto Project, you must follow certain procedures.  
-        In particular, the headers in patches and the commit messages must follow a certain standard.  
-        The general process is the same as described earlier in this chapter.  
-        For complete details on how to create proper commit messages and patch headers see 
-        [WRITER NOTE:  I need the link to Mark's wiki page here that describes the process.]
+        When you form a commit you must follow certain standards established by the 
+        Yocto Project development team. 
+        For each commit, do the following:
+        <itemizedlist>
+            <listitem><para>Provide a single-line, short summary of the change.
+                This summary is typically viewable by source control systems.
+                Thus, providing something short and descriptive that gives the reader 
+                a summary of the change is useful when viewing a list of many commits.
+                </para></listitem>
+            <listitem><para>If the change addresses a specific bug or issue that is 
+                associated with a bug-tracking ID, prefix the single-line commit summary 
+                with the bug or issue ID.  
+                For example, the Yocto Project tracks bugs using a bug-naming convention.
+                Any commits that address a bug must use a commit summary line in the 
+                following form:
+                <literallayout class='monospaced'>
+     YOCTO #&lt;bug-id&gt;:  &lt;Brief 40-character or less summary of the change&gt;
+                </literallayout></para></listitem>
+            <listitem><para>For the body of the commit message, provide detailed information
+                that describes what you changed, why you made the change, and the approach
+                you used.  
+                Provide as much detail as you want in the body of the commit message.
+                </para></listitem>
+        </itemizedlist>
     </para>
 
     <para>
         Following are general instructions for both pushing changes upstream and for submitting changes as patches.
-    </para>
+    </para> 
 
     <section id='pushing-a-change-upstream'>
-        <title>Pushing a Change Upstream</title>
+        <title>Pushing a Change Upstream and Requesting a Pull</title>
 
         <para>
             The basic flow for pushing a change to an upstream "contrib" Git repository is as follows:
-        <itemizedlist>
-            <listitem><para>Make your changes in your local Git repository.</para></listitem>
-            <listitem><para>Stage your commit (or change) by using the <filename>git add</filename>
-                command.</para></listitem>
-            <listitem><para>Commit the change by using the <filename>git commit</filename>
-                command and push it to the upstream "contrib" repository.  
-                Be sure to provide a commit message that follows the project’s commit standards.</para></listitem>
-            <listitem><para>Notify the maintainer that you have pushed a change.</para></listitem>
-        </itemizedlist>
+            <itemizedlist>
+                <listitem><para>Make your changes in your local Git repository.</para></listitem>
+                <listitem><para>Stage your commit (or change) by using the <filename>git add</filename>
+                    command.</para></listitem>
+                <listitem><para>Commit the change by using the <filename>git commit</filename>
+                    command and push it to the upstream "contrib" repository.  
+                    Be sure to provide a commit message that follows the project’s commit standards
+                    as described earlier.</para></listitem>
+                <listitem><para>Notify the maintainer that you have pushed a change by making a pull 
+                    request.
+                    The Yocto Project provides two scripts that conveniently let you generate and send
+                    pull requests to the Yocto Project.
+                    These scripts are <filename>create-pull-request</filename> and 
+                    <filename>send-pull-request</filename>.
+                    You can find these scripts in the <filename>scripts</filename> directory of the 
+                    Yocto Project file structure.</para>
+                    <para>For help on using these scripts, simply provide the 
+                    <filename>--help</filename> argument as follows:
+                    <literallayout class='monospaced'>
+     $ ~/poky/scripts/create-pull-request --help
+     $ ~/poky/scripts/send-pull-request --help
+                    </literallayout></para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>            
             You can find general Git information on how to push a change upstream 
             <ulink url='http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#Developing-With-git'>
             here</ulink>.
@@ -609,30 +645,56 @@
     </section>
 
     <section id='submitting-a-patch'>
-        <title>Submitting a Patch</title>
+        <title>Submitting a Patch Through Email</title>
 
         <para>
-            If you have a just a few changes you can commit them and then submit them as an email to the maintainer.
+            If you have a just a few changes, you can commit them and then submit them as an 
+            email to the maintainer.
             Here is a general procedure:
-        <itemizedlist>
-            <listitem><para>Make your changes in your local Git repository.</para></listitem>
-            <listitem><para>Stage your commit (or change) by using the <filename>git add</filename>
-                command.</para></listitem>
-            <listitem><para>Commit the change by using the <filename>git commit</filename> command.  
-                Be sure to provide a commit message that follows the project’s commit standards.</para></listitem>
-            <listitem><para>Format the commit by using the <filename>git format-patch</filename>
-                command.  
-                This step produces a numbered series of files in the current directory – one for 
-                each commit.</para></listitem>
-            <listitem><para>Import the files into your mail client by using the 
-                <filename>git-send-email</filename> command.</para></listitem>
-            <listitem><para>Send the email by hand to the maintainer.</para></listitem>
-        </itemizedlist>
-             Be aware that there could be protocols and standards that you need to follow for your particular 
-             project.
-             You can find general Git information for submitting a patch  
-             <ulink url='http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#sharing-development'>
-             here</ulink>. 
+            <itemizedlist>
+                <listitem><para>Make your changes in your local Git repository.</para></listitem>
+                <listitem><para>Stage your commit (or change) by using the <filename>git add</filename>
+                    command.</para></listitem>
+                <listitem><para>Commit the change by using the 
+                    <filename>git commit --signoff</filename> command.
+                    Using the <filename>--signoff</filename> option identifies you as the person 
+                    making the change.</para>
+                    <para>When you form a commit you must follow certain standards established by the 
+                    Yocto Project development team. 
+                    See the 
+                    <link linkend='how-to-submit-a-change'>How to Submit a Change</link> section
+                    earlier for Yocto Project commit message standards.</para></listitem>
+                <listitem><para>Format the commit into an email messsage.
+                    To format commits, use the <filename>git format-patch</filename> command.
+                    When you provide the command, you must include a revision list or a number of patches
+                    as part of the command.
+                    For example, these two commands each take the most recent single commit and 
+                    format it as an email message in the current directory:  
+                    <literallayout class='monospaced'>
+     $ git format-patch -1
+     $ git format-patch HEAD~
+                    </literallayout></para>
+                    <para>After the command is run, the current directory contains a 
+                    numbered <filename>.patch</filename> file for the commit.</para>
+                    <para>If you provide several commits as part of the command, it produces a numbered 
+                    series of files in the current directory – one for each commit.
+                    For information on the <filename>git format-patch</filename> command use the 
+                    <filename>man git-format-patch</filename> command.</para></listitem>
+                <listitem><para>Import the files into your mail client by using the 
+                    <filename>git send-email</filename> command.
+                    <note>In order to use <filename>git send-email</filename>, you must have the 
+                    the proper Git packages installed.
+                    For Ubuntu and Fedora the package is <filename>git-email</filename>.</note></para>
+                    <para>The <filename>git send-email</filename> command sends email by using a local
+                    or remote Mail Transport Agent (MTA) such as 
+                    <filename>msmtp</filename>, <filename>sendmail</filename>, or through a direct
+                    <filename>smtp</filename> configuration in your Git <filename>config</filename>
+                    file.</para>
+                    <para>The <filename>git send-email</filename> command has several options that let you 
+                    specify recipients and perform further editing of the email message.
+                    For information on how to use the <filename>git send-email</filename> command,
+                    use the <filename>man git-send-email</filename> command.</para></listitem>
+            </itemizedlist>
         </para>
     </section>
 </section>
