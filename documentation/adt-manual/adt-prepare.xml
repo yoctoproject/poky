@@ -37,9 +37,10 @@
                 <filename>poky-edison-6.0</filename>.
                 If you create a Git repository, then you can name the repository anything you like.</para>
                 <para>You can find instruction on how to set up the Yocto Project files on your 
-                host development system by reading the 
-                <ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html#getting-setup'>
-                Getting Setup</ulink> section in
+                host development system by reading 
+                the 
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html#getting-setup'>Getting
+                Setup</ulink>" section in
                 <ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html'>
                 The Yocto Project Development Manual</ulink>.</para></listitem>
             <listitem><para><emphasis>Yocto Project Build Tree:</emphasis>
@@ -213,8 +214,8 @@
             <note>
                 The ADT Installer requires the <filename>libtool</filename> package to complete.  
                 If you install the recommended packages as described in the 
-                <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>
-                Packages</ulink> section of 
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>Packages</ulink>"
+                section of 
                 <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html'>
                 The Yocto Project Quick Start</ulink>, then you will have libtool installed.
             </note>
@@ -254,7 +255,7 @@
                 <listitem><para>Go to  
                     <ulink url='http://autobuilder.yoctoproject.org/downloads/yocto-1.1/toolchain'></ulink> 
                     and find the folder that matches your host development system 
-                    (i.e. <filename>i686</filename> for 32-bit machines or 
+                    (i.e. <filename>i586</filename> for 32-bit machines or 
                     <filename>x86_64</filename> for 64-bit machines).</para></listitem>
                 <listitem><para>Go into that folder and download the toolchain tarball whose name 
                     includes the appropriate target architecture.
@@ -262,7 +263,7 @@
                     you are going to use your cross-toolchain for an ARM-based target, go into the 
                     <filename>x86_64</filename> folder and download the following tarball:
                     <literallayout class='monospaced'>
-     yocto-eglibc-x86_64-arm-toolchain-gmae-1.1.tar.bz2
+     yocto-eglibc-x86_64-i586-toolchain-gmae-1.1.tar.bz2
                    </literallayout>
                     <note>As an alternative to steps one and two, you can build the toolchain tarball 
                         if you have a Yocto Project build tree.
@@ -329,7 +330,16 @@
 
         <para>
             After installing the toolchain, you must locate the target sysroot tarball and unpack
-            it in a directory of your choice.
+            it in a directory of your choice.  
+        </para>
+
+        <para>
+            WRITER'S NOTE:  Right now I am a little fuzzy on just how you do this.  
+            I am not sure if you just grab what is in <filename>build/tmp/deploy/images</filename>
+            and then unpack it with the <filename>tar -xjvf [tarball] [directory]</filename> or 
+            if you have to run the tarball environment setup script found in 
+            <filename>build/tmp</filename> and then run the 
+            <filename>runqemu-extract-sdk [tarball] [directory]</filename> command.
         </para>
     </section>
 </section>
@@ -369,8 +379,7 @@
         hardware or the QEMU emulator.  
         That means you either have to build them or know where to get them.
         You can find a quick example of how to build an image in the 
-        <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>
-        Building an Image</ulink> section of   
+        "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" section of   
         <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html'>
         The Yocto Project Quick Start</ulink>.
         <note><para> 
@@ -389,6 +398,14 @@
             <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html'>
             The Yocto Project Reference Manual</ulink>.</para>
         </note>
+    </para>
+
+    <para>
+        WRITER'S NOTE:  It seems to me that you need to take steps to unpack the image filesystem
+        at this point.  
+        This would involve running the tarball environment setup script found in 
+        <filename>build/tmp</filename> and then running the 
+        <filename>runqemu-extract-sdk [tarball] [directory]</filename> command.
     </para>
 </section>
 
