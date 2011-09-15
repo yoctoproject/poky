@@ -138,14 +138,18 @@
     <title>Installing the Eclipse Yocto Plug-in</title>
 
         <para>
-            To install the Eclipse Yocto Plug-in, follow these special steps.  
-            The steps are WIP and are not final. 
-            Once they are final they will be replaced with the actual steps:
+            WRITER'S NOTE:  The steps in here are temporary. 
+            I need to replace them when the real procedure is available from Jessica Zhang.
+        </para>
+
+        <para>
+            To install the Eclipse Yocto Plug-in, follow these steps:
             <orderedlist>
                 <listitem><para>Open a shell and create a Git repository with:
                     <literallayout class='monospaced'>
      $ git clone git://git.yoctoproject.org/yocto-eclipse yocto-eclipse
-                    </literallayout></para></listitem>
+                    </literallayout>
+                    For this example, I created <filename>~/yocto-eclipse</filename>.</para></listitem>
                 <listitem><para>In Eclipse, select "Import" from the "File" menu.</para></listitem>
                 <listitem><para>Expand the "General" box and pick "existing projects into workspace".
                     </para></listitem>
@@ -164,9 +168,8 @@
      $ cd ~/eclipse
      $ ./eclipse -vmargs -XX:PermSize=256M
                     </literallayout>
-            What is shown is the default projects in the left pane. 
-            I should be able to right-click on one of these and run as an Eclipse application to 
-            bring up the Eclipse instance again with the Eclipse Yocto Plug-in working.
+            The left navigation pane shows the default projects. 
+            Right-click on one of these projects and run it as an Eclipse application.
             This brings up a second instance of Eclipse IDE that has the Yocto Plug-in.
        </para>            
     </section>
@@ -186,7 +189,7 @@
             To start, you need to do the following from within the Eclipse IDE:
             <itemizedlist>
                 <listitem><para>Choose <filename>Windows -&gt; Preferences</filename> to display 
-                    the Preferences Dialog</para></listitem>
+                    the <filename>Preferences</filename> Dialog</para></listitem>
                 <listitem><para>Click <filename>Yocto ADT</filename></para></listitem>
             </itemizedlist>
         </para>
@@ -349,21 +352,24 @@
 <title>Configuring the Cross-Toolchains</title>
 
     <para>
-        The previous section, "<link linkend='configuring-the-eclipse-yocto-plug-in'>Configuring 
+        The earlier section, "<link linkend='configuring-the-eclipse-yocto-plug-in'>Configuring 
         the Eclipse Yocto Plug-in</link>", sets up the default project 
         configurations.  
-        You can change these settings for a given project by following these steps:
+        You can override these settings for a given project by following these steps:
         <orderedlist>
-            <listitem><para>Select <filename>Window -&gt; Preferences</filename>:  
-                This selection brings up the <filename>Preferences</filename> Dialog.  
-                If the Yocto ADT Preferences are not automatically displayed, you can navigate to 
-                that dialog by selection <filename>Yocto ADT</filename> in the left-hand 
-                panel.</para>
-                <para>Yocto ADT Settings are inherited from the default project configuration.  
-                The information in this dialog is identical to that chosen earlier 
-                for the Cross Compiler Options and Target Options as described in the
-                "<link linkend='configuring-the-eclipse-yocto-plug-in'>Configuring the Eclipse 
-                Yocto Plug-in</link>" section.</para></listitem>
+            <listitem><para>Select <filename>Project -&gt; Change Yocto Project Settings</filename>:  
+                This selection brings up the <filename>Project Yocto Settings</filename> Dialog
+                and allows you to make changes specific to an individual project.  
+                </para>
+                <para>By default, the Cross Compiler Options and Target Options for a project
+                are inherited from settings you provide using the <filename>Preferences</filename>
+                Dialog as described earlier 
+                in the "<link linkend='configuring-the-eclipse-yocto-plug-in'>Configuring the Eclipse 
+                Yocto Plug-in</link>" section.
+                The <filename>Project Yocto Settings</filename>
+                Dialog allows you to override those default settings
+                for a given project.</para></listitem>
+            <listitem><para>Make your configurations for the project and click "OK".</para></listitem>
             <listitem><para>Select <filename>Project -&gt; Reconfigure Project</filename>:   
                 This selection reconfigures the project by running
                 <filename>autogen.sh</filename> in the workspace for your project.  
@@ -388,28 +394,22 @@
 <title>Starting QEMU in User Space NFS Mode</title>
 
     <para>
-        WRITER'S NOTE:  I might need to make sure the target sysroot is pointing to qemux86-sato
-        at this point.  
-        I am not sure it really inherits it from the Eclipse IDE settings.
-    </para>
-
-    <para>
         To start the QEMU emulator from within Eclipse, follow these steps:
         <orderedlist>
-            <listitem><para>Expose the <filename>Run -&gt; External Tools -&gt; External Tools 
-                Configurations...</filename> menu.
+            <listitem><para>Expose the <filename>Run -&gt; External Tools</filename> menu.
                 Your image should appear as a selectable menu item.
                 </para></listitem>
             <listitem><para>Select your image in the navigation pane to launch the 
                 emulator in a new window.</para></listitem>
-            <listitem><para>Enter your host root password in the shell window at the prompt.  
+            <listitem><para>If needed, enter your host root password in the shell window at the prompt.  
                 This sets up a <filename>Tap 0</filename> connection needed for running in user-space 
                 NFS mode.</para></listitem>
             <listitem><para>Wait for QEMU to launch.</para></listitem>
-            <listitem><para>Once QEMU launches you need to determine the IP Address 
-                for the user-space NFS.  
-                You can do that by going to a terminal in the QEMU and entering the 
-            <filename>ifconfig</filename> command.</para></listitem>
+            <listitem><para>Once QEMU launches, you can begin operating within that 
+                environment.
+                For example, you could determine the IP Address 
+                for the user-space NFS by using the <filename>ifconfig</filename> command.
+                </para></listitem>
         </orderedlist>
     </para>
 </section>
@@ -440,8 +440,8 @@
             <listitem><para>Click <filename>Next</filename>.</para></listitem>
             <listitem><para>Clear out the <filename>host name</filename> field and enter the IP Address 
                 determined earlier.</para></listitem>
-            <listitem><para>Click <filename>Finish</filename> to close the new connections 
-                Dialog.</para></listitem>
+            <listitem><para>Click <filename>Finish</filename> to close the 
+                <filename>New Connections</filename> Dialog.</para></listitem>
             <listitem><para>Use the drop-down menu now in the <filename>Connection</filename> field and pick 
                 the IP Address you entered.</para></listitem>
             <listitem><para>Click <filename>Debug</filename> to bring up a login screen 
