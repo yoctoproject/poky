@@ -194,7 +194,8 @@
         <para>
             If you want to simply install the cross-toolchain by hand, you can do so by using an existing 
             cross-toolchain tarball.  
-            If you install the cross-toolchain by hand, you will have to set up the target sysroot separately.
+            If you use this method to install the cross-toolchain and you still need to install the target 
+            sysroot, you will have to install sysroot separately.
         </para>
 
         <para>
@@ -213,14 +214,21 @@
                     <literallayout class='monospaced'>
      yocto-eglibc-x86_64-i586-toolchain-gmae-1.1.tar.bz2
                    </literallayout>
-                    <note>As an alternative to steps one and two, you can build the toolchain tarball 
+                   The cross-toolchain tarballs provided by the Yocto Project support development
+                   of GNOME platorms on mobile devices (GMAE).
+                    <note><para>As an alternative to steps one and two, you can build the toolchain tarball 
                         if you have a Yocto Project build tree.
-                        Use the <filename>bitbake meta-toolchain</filename> command after you have 
+                        If you need GMAE, you should use the <filename>bitbake meta-toolchain-gmae</filename>
+                        command. 
+                        The resulting tarball will support such development.
+                        However, if you not concerned with GMAE, 
+                        you can generate the tarball using <filename>bitbake meta-toolchain</filename>.</para>
+                        <para>Use the appropriate <filename>bitbake</filename> command only after you have 
                         sourced the <filename>oe-build-init script</filename> located in the Yocto 
                         Project files.  
                         When the <filename>bitbake</filename> command completes, the toolchain tarball will 
                         be in <filename>tmp/deploy/sdk</filename> in the Yocto Project build tree.
-                        </note></para></listitem>
+                        </para></note></para></listitem>
                 <listitem><para>Make sure you are in the root directory with root privileges and then expand 
                     the tarball.  
                     The tarball expands into <filename>/opt/poky/$SDKVERSION</filename>.
@@ -229,11 +237,6 @@
                     </para></listitem>
             </orderedlist>
         </para>
-
-        <para>
-            After installing the toolchain, you must locate the target sysroot tarball and unpack it
-            into a location of your choice.
-        </para>  
     </section>
 
     <section id='using-the-toolchain-from-within-the-build-tree'>
@@ -242,7 +245,14 @@
         <para>
             A final way of installing just the cross-toolchain is to use BitBake within an existing 
             Yocto Project build tree.
-            Follow these steps:
+            This method installs the toolchain into the Yocto Project build tree, not the 
+            <filename>/opt</filename> directory.
+            As with the previous method, if you need to install the target sysroot, you must 
+            do this separately.
+        </para>
+
+        <para>
+            Follow these steps to install the toolchain into the build tree:
             <orderedlist>
                 <listitem><para>Source the environment setup script located in the Yocto Project
                     files.
@@ -268,26 +278,13 @@
                         Be sure to run the <filename>bitbake</filename> command immediately 
                         after checking or editing the <filename>local.conf</filename> but without 
                         changing your working directory.</note>
-                    Once BitBake finishes, the cross-toolchain is installed.
+                    Once BitBake finishes, the cross-toolchain is installed within the Yocto Project
+                    build tree.
                     You will notice environment setup files for the cross-toolchain in the 
                     Yocto Project build tree in the <filename>tmp</filename> directory.
                     Setup script filenames contain the strings <filename>environment-setup</filename>.
                     </para></listitem>
             </orderedlist>
-        </para>
-
-        <para>
-            After installing the toolchain, you must locate the target sysroot tarball and unpack
-            it in a directory of your choice.  
-        </para>
-
-        <para>
-            WRITER'S NOTE:  Right now I am a little fuzzy on just how you do this.  
-            I am not sure if you just grab what is in <filename>build/tmp/deploy/images</filename>
-            and then unpack it with the <filename>tar -xjvf [tarball] [directory]</filename> or 
-            if you have to run the tarball environment setup script found in 
-            <filename>build/tmp</filename> and then run the 
-            <filename>runqemu-extract-sdk [tarball] [directory]</filename> command.
         </para>
     </section>
 </section>
@@ -301,9 +298,8 @@
         If you used the ADT Installer or used an existing ADT tarball to install the ADT,
         then you can find this script in the <filename>/opt/poky/$SDKVERSION</filename>
         directory.  
-        If you used BitBake and the Yocto Project Build Tree to install the cross-toolchain,
-        then you can find the environment setup scripts in in the Yocto Project build tree 
-        in the <filename>tmp</filename> directory.
+        If you installed the toolchain in the build tree, you can find the environment setup 
+        scripts in the Yocto Project build tree's <filename>tmp</filename> directory.
     </para>
 
     <para> 
@@ -324,18 +320,29 @@
 
     <para>
         You will need to have a kernel and filesystem image to boot using your 
-        hardware or the QEMU emulator.  
-        That means you either have to build them or know where to get them.
-        You can find a quick example of how to build an image in the 
-        "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" section of   
-        <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html'>
-        The Yocto Project Quick Start</ulink>.
-        <note><para> 
-            The Yocto Project provides basic kernels and filesystem images for several 
+        hardware or the QEMU emulator.
+        Furthermore, if you plan on booting your image using NFS or you want to use the root filesystem
+        as the target sysroot, you need to extract the root filesystem.
+        This section describes how to get set up with the kernel and filesystem images.
+    </para>
+
+    <section id='getting-the-images'>
+        <title>Getting the Images</title>
+
+        <para>
+            To get the kernel and filesystem images you either have to build them or download
+            pre-built versions.
+            You can find examples for both these situations in the 
+            "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#test-run'>A
+            Quick Test Run</ulink>" section of   
+            <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html'>
+            The Yocto Project Quick Start</ulink>.
+            <note><para> 
+            The Yocto Project provides basic kernel and filesystem images for several 
             architectures (<filename>x86</filename>, <filename>x86-64</filename>, 
             <filename>mips</filename>, <filename>powerpc</filename>, and <filename>arm</filename>) 
             that you can use unaltered in the QEMU emulator.  
-            These kernels and filesystem images reside in the Yocto Project release 
+            These kernel images reside in the Yocto Project release 
             area - <ulink url='http://autobuilder.yoctoproject.org/downloads/yocto-1.1/machines/'></ulink>
             and are ideal for experimentation within Yocto Project.</para>
             <para>If you plan on remotely deploying and debugging your application from within the 
@@ -345,16 +352,39 @@
             Reference: Images</ulink> in  
             <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html'>
             The Yocto Project Reference Manual</ulink>.</para>
-        </note>
-    </para>
+            </note>
+        </para>
+    </section>
 
-    <para>
-        WRITER'S NOTE:  It seems to me that you need to take steps to unpack the image filesystem
-        at this point.  
-        This would involve running the tarball environment setup script found in 
-        <filename>build/tmp</filename> and then running the 
-        <filename>runqemu-extract-sdk [tarball] [directory]</filename> command.
-    </para>
+    <section id='extracting-the-root-filesystem'>
+        <title>Extracting the Root Filesystem</title>
+
+        <para>
+            You must extract the root filesystem if you want to boot the image using NFS or you 
+            want to use the root filesystem as the target sysroot.
+            For example, the Eclipse IDE environment with the Eclipse Yocto Plug-in installed allows you 
+            to boot under NFS.
+            Another example is if you want to test your image against actual hardware with the 
+            root filesystem as the target sysroot. 
+        </para>
+
+        <para> 
+            To extract the root filesystem you use the <filename>runqemu-extract-sdk</filename> command on the 
+            filesystem image. 
+            For example, the following command extracts the root filesystem from a previously built
+            filesystem image tarball named  
+            <filename>core-image-sato-sdk-qemux86-2011091411831.rootfs.tar.bz2</filename>.
+            The example extracts the root filesystem into the <filename>$HOME/qemux86-sato</filename>
+            directory:
+            <literallayout class='monospaced'>
+     $ runqemu-extract-sdk \
+        tmp/deploy/images/core-image-sato-sdk-qemux86-2011091411831.rootfs.tar.bz2 \
+        $HOME/qemux86-sato
+            </literallayout>
+            In this case, you could now point to the target sysroot at 
+            <filename>$HOME/qemux86-sato</filename>.
+        </para>
+    </section>
 </section>
 
 </chapter>
