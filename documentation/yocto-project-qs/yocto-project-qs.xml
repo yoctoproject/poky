@@ -21,7 +21,7 @@
     <para>
         This short document will give you some basic information about the environment as well 
         as let you experience it in its simplest form.  
-        After reading this document you will have a basic understanding of what the Yocto Project is
+        After reading this document, you will have a basic understanding of what the Yocto Project is
         and how to use some of its core components.  
         This document steps you through a simple example showing you how to build a small image 
         and run it using the QEMU emulator.
@@ -29,7 +29,8 @@
     <para>
         For complete information on the Yocto Project, you should check out the 
         <ulink url='http://www.yoctoproject.org'>Yocto Project Website</ulink>.
-        You can find the latest builds, breaking news, full development documentation, and a 
+        Through the website, you can find the latest builds, breaking news, full development 
+        documentation, and a 
         rich Yocto Project Development Community into which you can tap.
     </para>
     <para>
@@ -74,7 +75,7 @@
      </mediaobject>
 
     <para>
-        Yocto Project:
+        Here are some highlights for the Yocto Project:
     </para>
 
     <itemizedlist>
@@ -85,7 +86,7 @@
             <para>Makes available system components such as X11, Matchbox, GTK+, Pimlico, Clutter,
             GuPNP and Qt (among others) so you can create a richer user interface experience on 
             devices that use displays or have a GUI.
-            For devices that don't have a GUI or display you simply would not employ these 
+            For devices that don't have a GUI or display, you simply would not employ these 
             components.</para>
         </listitem>
         <listitem>
@@ -100,9 +101,9 @@
 
     <para>
         The Yocto Project can generate images for many kinds of devices.  
-        However, the standard example machines target QEMU full system emulation for x86, ARM, MIPS,
-        and PPC-based architectures as well as specific hardware such as the Intel Desktop Board
-        DH55TC.  
+        However, the standard example machines target QEMU full-system emulation for x86, x86-64, ARM, MIPS,
+        and PPC-based architectures as well as specific hardware such as the 
+        <trademark class='registered'>Intel</trademark> Desktop Board DH55TC.  
         Because an image developed with the Yocto Project can boot inside a QEMU emulator, the 
         development environment works nicely as a test platform for developing embedded software.
     </para>
@@ -113,7 +114,7 @@
         restricted screen sizes, sits neatly on top of a device using the 
         GNOME Mobile Stack and provides a well-defined user experience. 
         Implemented in its own layer, it makes it clear to developers how they can implement 
-        their own UIs on top of Yocto Linux.
+        their own user interface on top of Yocto Linux.
     </para>
 </section>
 
@@ -186,7 +187,7 @@
         </para>
 
         <note><para>
-            If you are using a Fedora version prior to version 15 you will need to take some 
+            If you are using a Fedora version prior to version 15, you will need to take some 
             extra steps to enable <filename>sudo</filename>.
             See <ulink url='https://fedoraproject.org/wiki/Configuring_Sudo'></ulink> for details.
         </para></note>
@@ -232,7 +233,7 @@
         <title>Yocto Project Release</title>
             
         <para>
-            You can download the latest release images for the Yocto Project on the 
+            You can download the latest Yocto Project release by going to the 
             <ulink url="http://yoctoproject.org/download">Yocto Project Download page</ulink>.
             Just go to the page and click the "Yocto Downloads" link found in the "Download"
             navigation pane to the right to view all available Yocto Project releases. 
@@ -242,6 +243,17 @@
             <ulink url="http://autobuilder.yoctoproject.org/nightly/"></ulink>.  
             However, for this document a released version of Yocto Project is used.
         </para>
+
+        <para>
+            You can also get the Yocto Project files by setting up a Git repository on your host
+            development system. 
+            Doing so allows you to contribute back to the project.
+            For information on how to get set up using this method, see the 
+            "<ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html#local-yp-release'>Yocto 
+            Project Release</ulink>" item in  
+            <ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html'>The Yocto Project
+            Development Manual</ulink>.
+        </para>
     </section>
 </section>
 
@@ -249,16 +261,16 @@
     <title>A Quick Test Run</title>
 
     <para>
-        Now that you have your system requirements in order you can give Yocto Project a try.  
+        Now that you have your system requirements in order, you can give Yocto Project a try.  
         This section presents some steps that let you do the following:
     </para>
 
     <itemizedlist>
         <listitem>
-            <para>Build an image and run it in the emulator</para>
+            <para>Build an image and run it in the QEMU emulator</para>
         </listitem>
         <listitem>
-            <para>Or, use a pre-built image and run it in the emulator</para>
+            <para>Or, use a pre-built image and run it in the QEMU emulator</para>
         </listitem>
     </itemizedlist>
 
@@ -266,7 +278,8 @@
         <title>Building an Image</title>
  
         <para>
-            In the development environment you will need to build an image whenever you change hardware support, add or change system libraries, or add or change services that have dependencies.
+            In the development environment you will need to build an image whenever you change hardware 
+            support, add or change system libraries, or add or change services that have dependencies.
         </para>
 
         <mediaobject>
@@ -302,15 +315,17 @@
 
          <para>
              <literallayout class='monospaced'>
-     $ wget http://www.yoctoproject.org/downloads/poky/poky-bernard-5.0.1.tar.bz2
-     $ tar xjf poky-bernard-5.0.1.tar.bz2
-     $ source poky-bernard-5.0.1/poky-init-build-env poky-5.0.1-build
+     $ wget http://www.yoctoproject.org/downloads/poky/poky-einstein-6.0.tar.bz2
+     $ tar xjf poky-einstein-6.0.tar.bz2
+     $ source poky-einstein-6.0/oe-init-build-env einstein-6.0-build
              </literallayout>
          </para>
 
          <tip><para>
-             To help conserve disk space during builds you can add the following statement
-             to your <filename>local.conf</filename> file.  
+             To help conserve disk space during builds, you can add the following statement
+             to your <filename>local.conf</filename> file in the Yocto Project build
+             directory, which for this example 
+             is <filename>einstein-6.0-build</filename>.
              Adding this statement deletes the work directory used for building a package
              once the package is built.
              <literallayout class='monospaced'>
@@ -319,25 +334,55 @@
          </para></tip>
 
          <itemizedlist>
-             <listitem><para>The first two commands extract the Yocto Project files from the 
-             release tarball and place them into a subdirectory of your current directory.</para></listitem>
-             <listitem><para>The <command>source</command> command creates the 
-             <filename>poky-5.0.1-build</filename> directory and executes the <command>cd</command>
-             command to make <filename>poky-5.0.1-build</filename> the working directory.
-             The resulting build directory contains all the files created during the build.   
-             By default the target architecture is qemux86.
-             To change this default, edit the value of the MACHINE variable in the 
-             <filename>conf/local.conf</filename> file.</para></listitem>
+             <listitem><para>The first command retrieves the Yocto Project release tarball from the 
+                 source repositories. 
+                 Notice, the example uses the <filename>wget</filename> shell command.
+                 Alternatively, you can go to the 
+                 <ulink url='http://www.yoctoproject.org'>Yocto Project website</ulink> downloads
+                 area to retrieve the tarball.</para></listitem>
+             <listitem><para>The second command extracts the files from the tarball and places 
+                 them into a directory named <filename>poky-einstein-6.0</filename> in the current 
+                 directory. 
+               </para></listitem>
+             <listitem><para>The third command runs the Yocto Project environment setup script.
+                 Running this script defines Yocto Project build environment settings needed to 
+                 complete the build.
+                 The script also creates the Yocto Project
+                 build directory, which is <filename>einstein-6.0-build</filename> in this case.
+                 After the script runs, your current working directory is set 
+                 to the build directory.
+                 Later, when the build completes, the build directory contains all the files 
+                 created during the build.
+                 </para></listitem>
          </itemizedlist>
          <para>
              Take some time to examine your <filename>conf/local.conf</filename> file found in the
-             Yocto Project file's <filename>conf</filename>.  
-             The defaults should work fine.  
-             However, if you have a multi-core CPU you might want to set the variable
-             BB_NUMBER_THREADS equal to twice the number of processor cores your system has.
-             And, set the variable PARALLEL_MAKE equal to the number of processor cores.
+             Yocto Project build directory.
+             The defaults in the <filename>local.conf</filename> should work fine.
+             However, there are some variables of interest at which you might look.
+         </para>
+
+         <para>  
+             By default, the target architecture for the build is <filename>qemux86</filename>, 
+             which is an image that can be used in the QEMU emulator and is targeted for an
+             <trademark class='registered'>Intel</trademark> 32-bit based architecture.
+             To change this default, edit the value of the <filename>MACHINE</filename> variable in the 
+             <filename>conf/local.conf</filename> file in the build directory before 
+             launching the build.
+         </para>
+
+         <para>
+             Another couple of variables of interest are the 
+             <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink> and the 
+             <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink> variables.
+             By default, these variables are commented out. 
+             However, if you have a multi-core CPU you might want to remove the comment
+             and set the variable
+             <filename>BB_NUMBER_THREADS</filename> equal to twice the number of your 
+             host's processor cores.
+             Also, you could set the variable <filename>PARALLEL_MAKE</filename> equal to the number 
+             of processor cores.
              Setting these variables can significantly shorten your build time.
-             By default, these variables are commented out.
          </para>
 
         <para>
@@ -345,9 +390,9 @@
             the image. 
             By default, the Yocto Project build system uses the RPM package manager.
             You can control this configuration by using the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#var-PACKAGE_CLASSES'>PACKAGE_CLASSES</ulink></filename> variable.  
+            <filename><ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink></filename> variable.  
              For additional package manager selection information, see 
-             <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-classes-package'>Packaging - <filename>package*.bbclass</filename></ulink> in 
+             "<ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-classes-package'>Packaging - <filename>package*.bbclass</filename></ulink>" in 
              <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html'>
              The Yocto Project Reference Manual</ulink>.
         </para>
@@ -355,10 +400,9 @@
          <para>
              Continue with the following command to build an OS image for the target, which is 
              <filename>core-image-sato</filename> in this example.
-             For information on the <filename>&dash;k</filename> option use the 
-             <filename>bitbake --help</filename> command or see
-             <ulink url='http://www.yoctoproject.org/docs/poky-ref-manual/poky-ref-manual.html#usingpoky-components-bitbake'>
-             BitBake</ulink> section in the Yocto Project Reference Manual.
+             For information on the <filename>-k</filename> option use the 
+             <filename>bitbake --help</filename> command or see the
+             "<ulink url='http://www.yoctoproject.org/docs/poky-ref-manual/poky-ref-manual.html#usingpoky-components-bitbake'>BitBake</ulink>" section in the Yocto Project Reference Manual.
              <literallayout class='monospaced'>
      $ bitbake -k core-image-sato
              </literallayout>
@@ -383,15 +427,12 @@
 
     <section id='using-pre-built'>
         <title>Using Pre-Built Binaries and QEMU</title>
+ 
         <para>
-            If hardware, libraries and services are stable you can get started by using a pre-built binary 
-            of the image, kernel and toolchain and run it using the emulator QEMU.  
+            If hardware, libraries and services are stable, you can get started by using a pre-built binary 
+            of the image, kernel, and toolchain and run it using the QEMU emulator.  
             This scenario is useful for developing application software.
         </para>
-
-        <para></para>
-        <para></para>
-        <para></para>
 
         <mediaobject>
             <imageobject>
@@ -400,53 +441,38 @@
             <caption>
                 <para>Using a Pre-Built Image</para>
             </caption>
-         </mediaobject>
+        </mediaobject>
 
-         <para>
-             For this scenario you need to do several things:
-         </para>
+        <para>
+            For this scenario, you need to do several things:
+        </para>
 
-         <itemizedlist>
-             <listitem>
-                 <para>
-                     Install the stand-alone Yocto toolchain tarball.
-                 </para>
-             </listitem>
-             <listitem>
-                 <para>
-                     Download the pre-built kernel that will boot with QEMU.  
-                     You need to be sure to get the QEMU image that matches your target machine’s 
-                     architecture (e.g. x86, ARM, etc.).
-                 </para>
-             </listitem>
-             <listitem>
-                 <para>
-                     Download the filesystem image for your target machine's architecture.
-                 </para>
-             </listitem>
-             <listitem>
-                 <para>
-                     Set up the environment to emulate the hardware and then start the QEMU emulator.
-                 </para>
-             </listitem>
-
-         </itemizedlist>
+        <itemizedlist>
+            <listitem><para>Install the stand-alone Yocto toolchain tarball.</para></listitem>
+            <listitem><para>Download the pre-built image that will boot with QEMU.  
+                You need to be sure to get the QEMU image that matches your target machine’s 
+                architecture (e.g. x86, ARM, etc.).</para></listitem>
+            <listitem><para>Download the filesystem image for your target machine's architecture.
+                </para></listitem>
+            <listitem><para>Set up the environment to emulate the hardware and then start the QEMU emulator.
+                </para></listitem>
+        </itemizedlist>
 
         <section id='installing-the-toolchain'>
-        <title>Installing the Toolchain</title>
-         <para>
-             You can download the pre-built toolchain, which includes the <filename>runqemu</filename> 
-             script and support files, from 
-             <ulink url='http://yoctoproject.org/downloads/yocto-1.0/toolchain/'></ulink>.  
-             Toolchains are available for 32-bit and 64-bit development systems from the 
-             <filename>i686</filename> and <filename>x86_64</filename> folders, respectively. 
-             Each type of development system supports five target architectures.
-             The tarball files are named such that a string representing the host system appears 
-             first in the filename and then is immediately followed by a string representing
-             the target architecture.
-         </para>
+            <title>Installing the Toolchain</title>
+            <para>
+                You can download the pre-built toolchain, which includes the <filename>runqemu</filename> 
+                script and support files, from 
+                <ulink url='http://yoctoproject.org/downloads/yocto-1.1/toolchain/'></ulink>.  
+                Toolchains are available for 32-bit and 64-bit development systems from the 
+                <filename>i686</filename> and <filename>x86_64</filename> folders, respectively. 
+                Each type of development system supports five target architectures.
+                The tarball files are named such that a string representing the host system appears 
+                first in the filename and then is immediately followed by a string representing
+                the target architecture.
+            </para>
 
-         <literallayout class='monospaced'>
+            <literallayout class='monospaced'>
      yocto-eglibc&lt;<emphasis>host_system</emphasis>&gt;-&lt;<emphasis>arch</emphasis>&gt;-toolchain-gmae-&lt;<emphasis>release</emphasis>&gt;.tar.bz2
 
      Where:
@@ -457,50 +483,55 @@
                 i586, x86_64, powerpc, mips, or arm.
        
          &lt;<emphasis>release</emphasis>&gt; is the version of Yocto Project.
-         </literallayout>
+            </literallayout>
 
-         <para>       
-             For example, the following toolchain tarball is for a 64-bit development 
-             host system and a 32-bit target architecture:
-         </para>
+            <para>       
+                For example, the following toolchain tarball is for a 64-bit development 
+                host system and a 32-bit target architecture:
+            </para>
 
-         <literallayout class='monospaced'>
+            <literallayout class='monospaced'>
      yocto-eglibc-x86_64-i586-toolchain-gmae-1.1.tar.bz2
-         </literallayout>
+            </literallayout>
 
-         <para>
-             The toolchain tarballs are self-contained and must be installed into <filename>/opt/poky</filename>.
-             The following commands show how you install the toolchain tarball given a 64-bit development host system
-             and a 32-bit target architecture.
-             The example assumes the toolchain tarball is located in <filename>~/toolchains/</filename>:
-         </para>
+            <para>
+                The toolchain tarballs are self-contained and must be installed into <filename>/opt/poky</filename>.
+                The following commands show how you install the toolchain tarball given a 64-bit development host system
+                and a 32-bit target architecture.
+                The example assumes the toolchain tarball is located in <filename>~/toolchains/</filename>:
+            </para>
 
-         <para>
-             <literallayout class='monospaced'>
+            <para>
+                <literallayout class='monospaced'>
      $ cd /
      $ sudo tar -xvjf ~/toolchains/yocto-eglibc-x86_64-i586-toolchain-gmae-1.1.tar.bz2
-             </literallayout>
-         </para>
-         </section>
+                </literallayout>
+            </para>
+
+            <para>
+                For more information on how to install tarballs, see the 
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html#using-an-existing-toolchain-tarball'>Using a Cross-Toolchain Tarball</ulink>" and 
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html#using-the-toolchain-from-within-the-build-tree'>Using BitBake and the Yocto Project Build Tree</ulink>" sections in  
+                <ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html'>The Yocto Project 
+                Application Development Toolkit (ADT) Development Manual</ulink>.
+            </para>
+        </section>
 
         <section id='downloading-the-pre-built-linux-kernel'>
-        <title>Downloading the Pre-Built Linux Kernel</title>
-         <para>
-             You can download the pre-built Linux kernel and the filesystem image suitable for 
-             running in the emulator QEMU from 
-             <ulink url='http://yoctoproject.org/downloads/yocto-1.0/machines/qemu'></ulink>.
-             Be sure to use the kernel and filesystem image that matches the architecture you want 
-             to simulate.
-             Download areas exist for the five supported machine architectures:
-             <filename>qemuarm</filename>, <filename>qemumips</filename>, <filename>qemuppc</filename>,
-             <filename>qemux86</filename>, and <filename>qemux86_64</filename>.
-         </para>
-       
-         <para>  
-             Most kernel files have one of the following forms:
-         </para>
-
-         <literallayout class='monospaced'>
+            <title>Downloading the Pre-Built Linux Kernel</title>
+      
+            <para>
+                You can download the pre-built Linux kernel suitable for running in the QEMU emulator from 
+                <ulink url='http://yoctoproject.org/downloads/yocto-1.1/machines/qemu'></ulink>.
+                Be sure to use the kernel that matches the architecture you want to simulate.
+                Download areas exist for the five supported machine architectures:
+                <filename>qemuarm</filename>, <filename>qemumips</filename>, <filename>qemuppc</filename>,
+                <filename>qemux86</filename>, and <filename>qemux86_64</filename>.
+            </para>
+         
+            <para>  
+                Most kernel files have one of the following forms:
+                <literallayout class='monospaced'>
      *zImage-&lt;<emphasis>kernel-rev</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;-&lt;<emphasis>release</emphasis>&gt;*.bin
      vmlinux-&lt;<emphasis>kernel-rev</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;-&lt;<emphasis>release</emphasis>&gt;*.bin
 
@@ -512,21 +543,35 @@
                 x86, x86-64, ppc, mips, or arm.
 
          &lt;<emphasis>release</emphasis>&gt; is the version of Yocto Project. 
-         </literallayout>
-         </section>
+                </literallayout>
+            </para>
+
+            <para>
+                You can learn more about downloading a Yocto Project kernel in the 
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html#local-kernel-files'>Linux Yocto Kernel</ulink>" section of  
+                <ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html'>The 
+                Yocto Project Development Manual</ulink>.
+            </para>
+        </section>
 
         <section id='downloading-the-filesystem'>
-        <title>Downloading the Filesystem</title>
-         <para>
-             The filesystem image has two tarball forms: <filename>ext3</filename> and 
-             <filename>tar</filename>.
-             You must use the <filename>ext3</filename> form when booting an image using the 
-             QEMU emulator.
-             The <filename>tar</filename> form can be flattened out in your host development system
-             and used for Yocto Project build purposes.
-         </para>
+            <title>Downloading the Filesystem</title>
 
-          <literallayout class='monospaced'>
+            <para>
+                You can also download the filesystem image suitable for your target architecture from
+                <ulink url='http://yoctoproject.org/downloads/yocto-1.1/machines/qemu'></ulink>.
+                Again, be sure to use the filesystem that matches the architecture you want 
+                to simulate.
+            </para>
+
+            <para>
+                The filesystem image has two tarball forms: <filename>ext3</filename> and 
+                <filename>tar</filename>.
+                You must use the <filename>ext3</filename> form when booting an image using the 
+                QEMU emulator.
+                The <filename>tar</filename> form can be flattened out in your host development system
+                and used for Yocto Project build purposes.
+                <literallayout class='monospaced'>
      yocto-image-&lt;<emphasis>profile</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;-&lt;<emphasis>release</emphasis>&gt;.rootfs.ext3.bz2
      yocto-image-&lt;<emphasis>profile</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;-&lt;<emphasis>release</emphasis>&gt;.rootfs.tar.bz2
 
@@ -540,17 +585,17 @@
                 x86, x86-64, ppc, mips, or arm.
 
          &lt;<emphasis>release</emphasis>&gt; is the version of Yocto Project. 
-          </literallayout>
-         </section>
+                </literallayout>
+            </para>
+        </section>
 
         <section id='setting-up-the-environment-and-starting-the-qemu-emulator'>
-        <title>Setting Up the Environment and Starting the QEMU Emulator</title>
-         <para>
-             Before you start the QEMU emulator you need to set up the emulation environment.
-             The following command form sets up the emulation environment.
-         </para>
-
-         <literallayout class='monospaced'>
+            <title>Setting Up the Environment and Starting the QEMU Emulator</title>
+           
+            <para>
+                Before you start the QEMU emulator, you need to set up the emulation environment.
+                The following command form sets up the emulation environment.
+                <literallayout class='monospaced'>
      $ source /opt/poky/1.1/environment-setup-&lt;<emphasis>arch</emphasis>&gt;-poky-linux-&lt;<emphasis>if</emphasis>&gt; 
 
      Where:
@@ -559,13 +604,12 @@
 
          &lt;<emphasis>if</emphasis>&gt; is a string representing an embedded application binary interface.
               Not all setup scripts include this string.
-         </literallayout>
+                </literallayout>
+            </para>
 
-         <para>
-              Finally, this command form invokes the QEMU emulator 
-         </para>
-
-         <literallayout class='monospaced'>
+            <para>
+                Finally, this command form invokes the QEMU emulator 
+                <literallayout class='monospaced'>
      $ runqemu &lt;<emphasis>qemuarch</emphasis>&gt; &lt;<emphasis>kernel-image</emphasis>&gt; &lt;<emphasis>filesystem-image</emphasis>&gt;
 
      Where:
@@ -576,33 +620,32 @@
 
          &lt;<emphasis>filesystem-image</emphasis>&gt; is the .ext3 filesystem image.
 
-         </literallayout>
+                </literallayout>
+            </para>
 
-         <para>
-             Continuing with the example, the following two commands setup the emulation 
-             environment and launch QEMU.
-             This example assumes the root filesystem tarball has been downloaded and expanded, and 
-             that the kernel and filesystem are for a 32-bit target architecture.
-         </para>
-
-         <literallayout class='monospaced'>
+            <para>
+                Continuing with the example, the following two commands setup the emulation 
+                environment and launch QEMU.
+                This example assumes the root filesystem tarball has been downloaded and expanded, and 
+                that the kernel and filesystem are for a 32-bit target architecture.
+                <literallayout class='monospaced'>
      $ source /opt/poky/1.1/environment-setup-i686-poky-linux 
      $ runqemu qemux86 bzImage-3.0-qemux86-1.1.bin \
      yocto-image-sato-qemux86-1.1.rootfs.ext3
-         </literallayout>
+                </literallayout>
+            </para>
 
-         <para>
-             The environment in which QEMU launches varies depending on the filesystem image and on the 
-             target architecture.  For example, if you source the environment for the ARM target 
-             architecture and then boot the minimal QEMU image, the emulator comes up in a new 
-             shell in command-line mode.  However, if you boot the SDK image QEMU comes up with 
-             a GUI.
-         </para>
- 
-         <note><para>
-             Booting the PPC image results in QEMU launching in the same shell in command-line mode.
-         </para></note>
-         </section>     
+            <para>
+                The environment in which QEMU launches varies depending on the filesystem image and on the 
+                target architecture.  
+                For example, if you source the environment for the ARM target 
+                architecture and then boot the minimal QEMU image, the emulator comes up in a new 
+                shell in command-line mode.  
+                However, if you boot the SDK image, QEMU comes up with a GUI.
+                <note>Booting the PPC image results in QEMU launching in the same shell in 
+                command-line mode.</note>
+            </para>
+        </section>     
     </section>
 </section>
 
