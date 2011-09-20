@@ -9,16 +9,22 @@
     Many development models exist for which you can use the Yocto Project. 
     However, for the purposes of this manual we are going to focus on two common ones:  
     System Development and User Application Development.  
-    System Development covers Board Support Package (BSP) development and kernel modification.  
+    System Development covers Board Support Package (BSP) development and kernel modification
+    or configuration.  
     User Application Development covers development of applications that you intend to run on some 
     target hardware.  
 </para>
 
 <para>
     This chapter presents overviews of both system and application models.
-    If you want to reference specific examples of these development models, 
-    see <xref linkend='dev-manual-bsp-appendix'>BSP Development Example</xref> and 
-    <xref linkend='dev-manual-kernel-appendix'>Kernel Modification Example</xref>.
+    If you want to examine specific examples of the system development models, 
+    see the "<link linkend='dev-manual-bsp-appendix'>BSP Development Example</link>" 
+    appendix and the 
+    "<link linkend='dev-manual-kernel-appendix'>Kernel Modification Example</link>" appendix.
+    For a user-space application development example that uses the Eclipse IDE,
+    see the 
+    <ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html'>
+    The Yocto Project Application Development Toolkit (ADT) User's Guide</ulink>.
 </para>
 
 <section id='system-development-model'>
@@ -27,7 +33,7 @@
     <para>
         System development involves modification or creation of an image that you want to run on 
         a specific hardware target.  
-        Usually when you want to create an image that runs on embedded hardware the image does 
+        Usually, when you want to create an image that runs on embedded hardware, the image does 
         not require the same amount of features that a full-fledged Linux distribution provides.  
         Thus, you can create a much smaller image that is designed to just use the hardware 
         features for your particular hardware.
@@ -35,33 +41,33 @@
 
     <para>
         To help you understand how system development works in the Yocto Project, this section 
-        covers two types of image development:  BSP creation and kernel modification
-        (see <xref linkend='kernel-spot'></xref>).
+        covers two types of image development:  BSP creation and kernel modification or 
+        configuration.
     </para>
 
     <section id='developing-a-board-support-package-bsp'>
         <title>Developing a Board Support Package (BSP)</title>
 
         <para>
-            A BSP is a package of recipes that when applied during a build results in 
+            A BSP is a package of recipes that, when applied, during a build results in 
             an image you can run on a particular board.  
             Thus, the package, when compiled into the new image, supports the operation of the board.  
         </para>
 
         <note>
             For a brief list of terms used when describing the development process in the Yocto Project, 
-            see <xref linkend='yocto-project-terms'>Yocto Project Terms</xref> in this manual.
+            see the "<link linkend='yocto-project-terms'>Yocto Project Terms</link>" section.
         </note>
 
         <para>
             The remainder of this section presents the basic steps to create a BSP basing it on an 
             existing BSP that ships with the Yocto Project.
-            You can reference <xref linkend='dev-manual-bsp-appendix'>BSP Development Example</xref>
-            for a detailed example that uses the Crown Bay BSP as a base BSP from which to start.
+            You can reference the "<link linkend='dev-manual-bsp-appendix'>BSP Development Example</link>"
+            appendix for a detailed example that uses the Crown Bay BSP as a base BSP from which to start.
         </para>
 
         <para>
-            This illustration and the following list summarizes the BSP creation general workflow.
+            The following illustration and list summarize the BSP creation general workflow.
         </para>
 
         <para>
@@ -71,37 +77,38 @@
         <para>
             <orderedlist>
                 <listitem><para><emphasis>Set up your host development system to support 
-                    development using the Yocto Project</emphasis>:  See  
-                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>
-                    The Linux Distributions</ulink> section and  
-                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>
-                    The Packages</ulink> section both
+                    development using the Yocto Project</emphasis>:  See the
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>The Linux Distributions</ulink>" and the 
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>The Packages</ulink>" sections both
                     in the Yocto Project Quick Start for requirements.</para></listitem>
                 <listitem><para><emphasis>Establish a local copy of the Yocto Project files on your 
                     system</emphasis>:  You need to have the Yocto Project files available on your host system. 
                     Having the Yocto Project files on your system gives you access to the build
                     process and tools you need.
                     For information on how to get these files, see the
-                    <xref linkend='getting-setup'>Getting Setup</xref> section in this manual.</para></listitem>
+                    "<link linkend='getting-setup'>Getting Setup</link>" section.</para></listitem>
                 <listitem><para><emphasis>Establish a local copy of the base BSP files</emphasis>:  Having    
                     the BSP files on your system gives you access to the build
-                    process and tools you need.
-                    For information on how to get these files, see 
-                    <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.</para></listitem>    
+                    process and tools you need for creating a BSP.
+                    For information on how to get these files, see the
+                    "<link linkend='getting-setup'>Getting Setup</link>" section.</para></listitem>    
                 <listitem><para><emphasis>Choose a Yocto Project-supported BSP as your base BSP</emphasis>:  
                     The Yocto Project ships with several BSPs that support various hardware.  
                     It is best to base your new BSP on an existing BSP rather than create all the 
                     recipes and configuration files from scratch.  
                     While it is possible to create everything from scratch, basing your new BSP 
                     on something that is close is much easier.  
-                    Or, at a minimum, it gives you some structure with which to start.</para>
+                    Or, at a minimum, leveraging off an existing BSP
+                    gives you some structure with which to start.</para>
                     <para>At this point you need to understand your target hardware well enough to determine which 
                     existing BSP it most closely matches.  
-                    Things to consider are your hardware’s on-board features such as CPU type and graphics support.  
+                    Things to consider are your hardware’s on-board features, such as CPU type and graphics support.  
                     You should look at the README files for supported BSPs to get an idea of which one 
                     you could use.  
-                    A generic Atom-based BSP to consider is the Crown Bay that does not support
-                    the Intel® Embedded Media Graphics Driver (EMGD).  
+                    A generic <trademark class='registered'>Intel</trademark> 
+                    <trademark class='trade'>Atom</trademark>-based BSP to consider is the 
+                    Crown Bay that does not support the <trademark class='registered'>Intel</trademark> 
+                    Embedded Media Graphics Driver (EMGD).  
                     The remainder of this example uses that base BSP.</para>
                     <para>To see the supported BSPs, go to the Yocto Project
                     <ulink url='http://www.yoctoproject.org/download'>download page</ulink> and click 
@@ -110,35 +117,34 @@
                     isolating and storing work for a given piece of hardware.  
                     A layer is really just a location or area in which you place the recipes for your BSP.  
                     In fact, a BSP is, in itself, a special type of layer.   
-                    Consider an application as another example that illustrates a layer.  
+                    Another example that illustrates a layer is an application.  
                     Suppose you are creating an application that has library or other dependencies in 
                     order for it to compile and run.  
                     The layer, in this case, would be where all the recipes that define those dependencies 
-                    are kept.  The key point for a layer is that it is an isolated area that contains 
+                    are kept.  
+                    The key point for a layer is that it is an isolated area that contains 
                     all the relevant information for the project that the Yocto Project build 
                     system knows about.</para>
                     <note>The Yocto Project supports four BSPs that are part of the 
                     Yocto Project release: <filename>atom-pc</filename>, <filename>beagleboard</filename>,
                     <filename>mpc8315e</filename>, and <filename>routerstationpro</filename>.  
                     The recipes and configurations for these four BSPs are located and dispersed 
-                    within local Yocto Project files.
+                    within the local Yocto Project files.
                     Consequently, they are not totally isolated in the spirit of layers unless you think 
                     of <filename>meta-yocto</filename> as a layer itself.  
                     On the other hand, BSP layers for Crown Bay, Emenlow, Jasper Forest, 
                     N450, and Sugar Bay are isolated.</note>
-                    <para>When you set up a layer for a new BSP you should follow a standard layout.  
-                    This layout is described in the
-                    <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout'>
-                    Example Filesystem Layout</ulink> section of the Board Support Package (BSP) Development
-                    Guide.  
-                    In the standard layout you will notice a suggested structure for recipes and  
+                    <para>When you set up a layer for a new BSP, you should follow a standard layout.  
+                    This layout is described in the section
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout'>Example Filesystem Layout</ulink>" section of the Board Support Package (BSP) Development Guide.  
+                    In the standard layout, you will notice a suggested structure for recipes and  
                     configuration information.  
                     You can see the standard layout for the Crown Bay BSP in this example by examining the 
                     directory structure of the <filename>meta-crownbay</filename> layer inside the 
                     local Yocto Project files.</para></listitem>
                 <listitem><para><emphasis>Make configuration changes to your new BSP 
                     layer</emphasis>:  The standard BSP layer structure organizes the files you need to edit in 
-                    <filename>conf</filename> and several <filename>recipes-*</filename> within the 
+                    <filename>conf</filename> and several <filename>recipes-*</filename> directories within the 
                     BSP layer.
                     Configuration changes identify where your new layer is on the local system
                     and identify which kernel you are going to use.
@@ -148,22 +154,20 @@
                     recipes you don't use, and adding new recipes that you need to support your hardware.
                     </para></listitem>
                 <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
-                    changes to your BSP layer there remains a few things 
+                    changes to your BSP layer, there remains a few things 
                     you need to do for the Yocto Project build system in order for it to create your image.  
                     You need to get the build environment ready by sourcing an environment setup script 
                     and you need to be sure two key configuration files are configured appropriately.</para>
-                    <para>The entire process for building an image is overviewed in the 
-                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>
-                    Building an Image</ulink> section of the Yocto Project Quick Start.    
+                    <para>The entire process for building an image is overviewed in the section
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" section of the Yocto Project Quick Start.    
                     You might want to reference this information.</para></listitem>
                 <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project uses the BitBake 
                     tool to build images based on the type of image you want to create.  
                     You can find more information on BitBake 
                     <ulink url='http://bitbake.berlios.de/manual/'>here</ulink>.</para>
                     <para>The build process supports several types of images to satisfy different needs.  
-                    See 
-                    <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>
-                    Reference: Images</ulink> in the 
+                    See the 
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>Reference: Images</ulink>" appendix in the 
                     <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html'>
                     Yocto Project Reference Manual</ulink>for information on supported images.</para></listitem>
             </orderedlist>
@@ -175,9 +179,9 @@
             You can also find supplemental information in  
             <ulink url='http://yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html'>
             The Board Support Package (BSP) Development Guide</ulink>.
-            Finally, there is wiki page write up of the example located 
+            Finally, there is wiki page write up of the example also located 
             <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_creating_one_generic_Atom_BSP_from_another'>
-            here</ulink> you might find helpful.
+            here</ulink> that you might find helpful.
        </para>
     </section>
 
@@ -198,7 +202,8 @@
             For a complete discussion of the kernel, see  
             <ulink url='http://www.yoctoproject.org/docs/1.1/kernel-manual/kernel-manual.html'>
             The Yocto Project Kernel Architecture and Use Manual</ulink>.
-            You can reference <xref linkend='dev-manual-kernel-appendix'>Kernel Modification Example</xref>
+            You can reference the appendix 
+            "<link linkend='dev-manual-kernel-appendix'>Kernel Modification Example</link>"
             for a detailed example that changes the configuration of a kernel.
         </para>
 
@@ -210,6 +215,7 @@
                 of files that contain kernel patches.
                 The Yocto Project, however, employs mechanisims, that in a sense, result in a kernel source
                 generator.
+                By the end of this section, this analogy will become clearer.
             </para>
 
             <para>
@@ -365,17 +371,14 @@
                 <orderedlist>
                     <listitem><para><emphasis>Set up your host development system to support 
                         development using the Yocto Project</emphasis>:  See  
-                        <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>
-                        The Linux Distributions</ulink> section and  
-                        <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>
-                        The Packages</ulink> section both
+                        "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>The Linux Distributions</ulink>" and  
+                        "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>The Packages</ulink>" sections both
                         in the Yocto Project Quick Start for requirements.</para></listitem>
                     <listitem><para><emphasis>Establish a local copy of the Yocto Project files on your 
                         system</emphasis>:  Having the Yocto Project files on your system gives you access to 
                         the build process and tools you need.
                         For information on how to get these files, see the bulleted item
-                        <link linkend='local-yp-release'>Yocto Project Release</link> in  
-                        <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.
+                        "<link linkend='local-yp-release'>Yocto Project Release</link>" earlier in this manual.
                         </para></listitem>
                     <listitem><para><emphasis>Set up the <filename>poky-extras</filename> Git 
                         repository</emphasis>:  This repository is the area for your configuration 
@@ -384,85 +387,87 @@
                         It is good practice to set this repository up inside the local Yocto
                         Project files Git repository.
                         For information on how to get these files, see the bulleted item
-                        <link linkend='poky-extras-repo'>The 
-                        <filename>poky-extras</filename> Git Repository</link> in
-                        <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.
-                        </para></listitem>
+                        "<link linkend='poky-extras-repo'>The <filename>poky-extras</filename> Git Repository</link>"
+                        earlier in this manual.</para></listitem>
                     <listitem><para><emphasis>Establish a local copy of the Linux Yocto kernel files on your 
                         system</emphasis>:  In order to make modifications to the kernel you need two things:
-                        a bare clone of the Linux Yocto kernel you are modifying and a copy of that 
-                        bare clone. 
+                        a bare clone of the Linux Yocto kernel you are modifying and  
+                        a copy of that bare clone. 
                         The bare clone is required by the build process and is the area to which you 
-                        push your kernel source changes. 
+                        push your kernel source changes (pulling does not work with bare clones). 
                         The copy of the bare clone is a local Git repository that contains all the kernel's 
                         source files. 
                         You make your changes to the files in this copy of the bare clone.
                         For information on how to set these two items up, see the bulleted item
-                        <link linkend='local-kernel-files'>Linux Yocto Kernel</link> in  
-                        <xref linkend='getting-setup'>Getting Setup</xref> earlier in this manual.
-                        </para></listitem>
+                        "<link linkend='local-kernel-files'>Linux Yocto Kernel</link>" 
+                        earlier in this manual.</para></listitem>
                     <listitem><para><emphasis>Make changes to the kernel source code if 
                         applicable</emphasis>:  Modifying the kernel does not always mean directly
                         changing source files. 
-                        However, if you have to do this then you make the changes in the local 
+                        However, if you have to do this, you make the changes in the local 
                         Git repository you set up to hold the source files (i.e. the copy of the 
                         bare clone).
-                        Once the changes are made you need to use Git commands to commit the changes
+                        Once the changes are made, you need to use Git commands to commit the changes
                         and then push them to the bare clone.</para></listitem>                      
                     <listitem><para><emphasis>Make kernel configuration changes
                         to your local kernel layer if applicable</emphasis>:  
-                        If your situation calls for changing the kernel's configuration you can 
+                        If your situation calls for changing the kernel's configuration, you can 
                         use <filename>menuconfig</filename>
                         to enable and disable kernel configurations.  
-                        Using <filename>menuconfig</filename> allows you to develop and test the 
-                        configuration changes you are making to the kernel.</para></listitem>                      
+                        Using <filename>menuconfig</filename> allows you to interactively develop and test the 
+                        configuration changes you are making to the kernel.
+                        When saved, changes using <filename>menuconfig</filename> update the kernel's
+                        <filename>.config</filename>.
+                        As an alternative method to changing the kernel's configuration, you can simply
+                        edit the <filename>.config</filename> found in the Yocto Project build 
+                        directory at <filename>tmp/sysroots/&lt;machine-name&gt;/kernel</filename> 
+                        directly.</para></listitem>                      
                     <listitem><para><emphasis>Add new kernel recipes if applicable</emphasis>:  The standard 
                         layer structure organizes recipe files inside the 
                         <filename>meta-kernel-dev</filename> layer that is within the 
                         <filename>poky-extras</filename> Git repository.
-                        If you need to add new kernel recipes you add them within this layer. 
-                        Also within this area you will find the <filename>.bbappend</filename> 
+                        If you need to add new kernel recipes, you add them within this layer. 
+                        Also within this area, you will find the <filename>.bbappend</filename> 
                         file that appends information to the kernel's recipe file used during the 
                         build.
                         </para></listitem>
                     <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
                         changes to your kernel (configurations, source code changes, recipe additions, 
-                        or recipe changes) there remains a few things 
-                        you need to do for the Yocto Project build system in order for it to create your image.  
-                        If you have not done so you need to get the build environment ready by sourcing 
+                        or recipe changes), there remains a few things 
+                        you need to do in order for the Yocto Project build system to create your image.  
+                        If you have not done so, you need to get the build environment ready by sourcing 
                         the environment setup script described earlier.
                         You also need to be sure two key configuration files 
                         (<filename>local.conf</filename> and <filename>bblayers.conf</filename>)
                         are configured appropriately.</para>
                         <para>The entire process for building an image is overviewed in the 
-                        <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>
-                        Building an Image</ulink> section of the Yocto Project Quick Start.    
+                        "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" section of the Yocto Project Quick Start.    
                         You might want to reference this information.
                         Also, you should look at the detailed examples found in the appendices at 
-                        end of this manual.</para></listitem>
-                    <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project uses the BitBake 
+                        at the end of this manual.</para></listitem>
+                    <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project 
+                        build system Poky uses the BitBake 
                         tool to build images based on the type of image you want to create.  
                         You can find more information on BitBake 
                         <ulink url='http://bitbake.berlios.de/manual/'>here</ulink>.</para>
                         <para>The build process supports several types of images to satisfy different needs.  
-                        See 
-                        <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>
-                        Reference: Images</ulink> in the 
+                        See the appendix
+                        "<ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>Reference: Images</ulink>" in the 
                         <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html'>
                         Yocto Project Reference Manual</ulink> for information on supported 
                         images.</para></listitem>
                     <listitem><para><emphasis>Make your configuration changes available
-                        in the kernel layer</emphasis>:  Up to this point all the configuration changes to the 
+                        in the kernel layer</emphasis>:  Up to this point, all the configuration changes to the 
                         kernel have been done and tested iteratively.  
-                        Once they are tested and ready to go you can move them into the kernel layer, 
-                        which allows you to distribute the layer.
-                        [WRITER'S NOTE:  Not sure if the layer is meta-kernel-dev or if it would be 
-                        a new layer copied from the work done there.]</para></listitem>
-                    <listitem><para><emphasis>Push your configuration and recipe changes upstream to the 
-                        linux Yocto Git repository (in-tree changes)</emphasis>:  If the changes you made
-                        are suited for all Linux Yocto users you might want to push the changes up into 
-                        the Linux Yocto Git repository so that they become part of the kernel tree
-                        and available to everyone using the kernel.</para></listitem> 
+                        Once they are tested and ready to go, you can move them into the kernel layer, 
+                        which allows you to distribute the layer.</para></listitem>
+                    <listitem><para><emphasis>If applicable, share your in-tree changes</emphasis>:  
+                        If the changes you made
+                        are suited for all Linux Yocto users, you might want to push the changes to a 
+                        contribution area for the Linux Yocto Git repository. 
+                        Once the changes are pushed, you can request that they 
+                        be pulled into the master branch of the kernel tree. 
+                        Doing so makes them available to everyone using the kernel.</para></listitem> 
                 </orderedlist>
             </para>
         </section>
