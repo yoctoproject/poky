@@ -475,10 +475,141 @@
 </section>
 
 <section id='place-holder-section-two'>
-    <title>Place-Holder Section For Application Development</title>
+    <title>Application Development Workflow</title>
 
     <para>
-        Text needed here.
+        Application development involves creation of an application that you want to be able
+        to run on your target hardware, which is running a Linux Yocto image.
+        Much of this process involves standard application development practices that are 
+        not covered in detail in this manual. 
+        However, the Yocto Project provides an application development environment that 
+        facilitates quick integration of your application into its run-time environment. 
+        For example, you can employ cross-development toolchains designed for your target hardware
+        to compile and link your application. 
+        You can deploy your application to the actual hardware or to the QEMU emulator for testing.
+        You can even develop, deploy, and test your application all from within the popular
+        Eclipse IDE.
+    </para>
+
+    <para>
+        To help you understand how application development works in the Yocto Project, this section 
+        provides an overview of the general development process.
+        If you want to see a detailed example of the process as it is used from within the Eclipse 
+        IDE, see 
+        <ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html'>
+        The Application Development Toolkit (ADT) User's Manual</ulink>.
+    </para>
+
+    <para>
+        This illustration and the following list summarizes the application development general workflow.
+    </para>
+
+    <para>
+        <imagedata fileref="figures/app-dev-flow.png" width="7in" depth="7in" align="center" scalefit="1" />
+    </para> 
+
+    <para>
+        <orderedlist>
+            <listitem><para><emphasis>Set up your host development system to support 
+                development using the Yocto Project</emphasis>:  See  
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>The Linux Distributions</ulink>" and  
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>The Packages</ulink>" sections both
+                in the Yocto Project Quick Start for requirements.</para></listitem>
+            <listitem><para><emphasis>Establish a local copy of the Yocto Project files on your 
+                system</emphasis>:  Having the Yocto Project files on your system gives you access to 
+                the build process and tools you need.
+                For information on how to get these files, see the bulleted item
+                "<link linkend='local-yp-release'>Yocto Project Release</link>" earlier in this manual.
+                </para></listitem>
+            <listitem><para><emphasis>Set up the <filename>poky-extras</filename> Git 
+                repository</emphasis>:  This repository is the area for your configuration 
+                fragments, new kernel recipes, and the kernel <filename>.bbappend</filename>
+                file used during the build. 
+                It is good practice to set this repository up inside the local Yocto
+                Project files Git repository.
+                For information on how to get these files, see the bulleted item
+                "<link linkend='poky-extras-repo'>The <filename>poky-extras</filename> Git Repository</link>"
+                earlier in this manual.</para></listitem>
+            <listitem><para><emphasis>Establish a local copy of the Linux Yocto kernel files on your 
+                system</emphasis>:  In order to make modifications to the kernel you need two things:
+                a bare clone of the Linux Yocto kernel you are modifying and  
+                a copy of that bare clone. 
+                The bare clone is required by the build process and is the area to which you 
+                push your kernel source changes (pulling does not work with bare clones). 
+                The copy of the bare clone is a local Git repository that contains all the kernel's 
+                source files. 
+                You make your changes to the files in this copy of the bare clone.
+                For information on how to set these two items up, see the bulleted item
+                "<link linkend='local-kernel-files'>Linux Yocto Kernel</link>" 
+                earlier in this manual.</para></listitem>
+            <listitem><para><emphasis>Make changes to the kernel source code if 
+                applicable</emphasis>:  Modifying the kernel does not always mean directly
+                changing source files. 
+                However, if you have to do this, you make the changes in the local 
+                Git repository you set up to hold the source files (i.e. the copy of the 
+                bare clone).
+                Once the changes are made, you need to use Git commands to commit the changes
+                and then push them to the bare clone.</para></listitem>                      
+            <listitem><para><emphasis>Make kernel configuration changes
+                to your local kernel layer if applicable</emphasis>:  
+                If your situation calls for changing the kernel's configuration, you can 
+                use <filename>menuconfig</filename>
+                to enable and disable kernel configurations.  
+                Using <filename>menuconfig</filename> allows you to interactively develop and test the 
+                configuration changes you are making to the kernel.
+                When saved, changes using <filename>menuconfig</filename> update the kernel's
+                <filename>.config</filename>.
+                As an alternative method to changing the kernel's configuration, you can simply
+                edit the <filename>.config</filename> found in the Yocto Project build 
+                directory at <filename>tmp/sysroots/&lt;machine-name&gt;/kernel</filename> 
+                directly.</para></listitem>                      
+            <listitem><para><emphasis>Add new kernel recipes if applicable</emphasis>:  The standard 
+                layer structure organizes recipe files inside the 
+                <filename>meta-kernel-dev</filename> layer that is within the 
+                <filename>poky-extras</filename> Git repository.
+                If you need to add new kernel recipes, you add them within this layer. 
+                Also within this area, you will find the <filename>.bbappend</filename> 
+                file that appends information to the kernel's recipe file used during the 
+                build.
+                </para></listitem>
+            <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
+                changes to your kernel (configurations, source code changes, recipe additions, 
+                or recipe changes), there remains a few things 
+                you need to do in order for the Yocto Project build system to create your image.  
+                If you have not done so, you need to get the build environment ready by sourcing 
+                the environment setup script described earlier.
+                You also need to be sure two key configuration files 
+                (<filename>local.conf</filename> and <filename>bblayers.conf</filename>)
+                are configured appropriately.</para>
+                <para>The entire process for building an image is overviewed in the 
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" section of the Yocto Project Quick Start.    
+                You might want to reference this information.
+                 Also, you should look at the detailed examples found in the appendices at 
+                at the end of this manual.</para></listitem>
+            <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project 
+                build system Poky uses the BitBake 
+                tool to build images based on the type of image you want to create.  
+                You can find more information on BitBake 
+                <ulink url='http://bitbake.berlios.de/manual/'>here</ulink>.</para>
+                <para>The build process supports several types of images to satisfy different needs.  
+                See the appendix
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>Reference: Images</ulink>" in the 
+                <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html'>
+                Yocto Project Reference Manual</ulink> for information on supported 
+                images.</para></listitem>
+            <listitem><para><emphasis>Make your configuration changes available
+                in the kernel layer</emphasis>:  Up to this point, all the configuration changes to the 
+                kernel have been done and tested iteratively.  
+                Once they are tested and ready to go, you can move them into the kernel layer, 
+                which allows you to distribute the layer.</para></listitem>
+            <listitem><para><emphasis>If applicable, share your in-tree changes</emphasis>:  
+                If the changes you made
+                are suited for all Linux Yocto users, you might want to push the changes to a 
+                contribution area for the Linux Yocto Git repository. 
+                Once the changes are pushed, you can request that they 
+                be pulled into the master branch of the kernel tree. 
+                 Doing so makes them available to everyone using the kernel.</para></listitem> 
+        </orderedlist>
     </para>
 </section>
 
