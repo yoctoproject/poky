@@ -223,7 +223,7 @@ def exec_func_shell(function, d, runfile, cwd=None):
 
     with open(runfile, 'w') as script:
         script.write('#!/bin/sh -e\n')
-        if bb.msg.loggerVerbose:
+        if bb.msg.loggerDefaultVerbose:
             script.write("set -x\n")
         data.emit_func(function, script, d)
         if cwd:
@@ -234,7 +234,7 @@ def exec_func_shell(function, d, runfile, cwd=None):
 
     cmd = runfile
 
-    if bb.msg.loggerVerbose:
+    if bb.msg.loggerDefaultVerbose:
         logfile = LogTee(logger, sys.stdout)
     else:
         logfile = sys.stdout
