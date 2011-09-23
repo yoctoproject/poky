@@ -21,7 +21,8 @@
     see the "<link linkend='dev-manual-bsp-appendix'>BSP Development Example</link>" 
     appendix and the 
     "<link linkend='dev-manual-kernel-appendix'>Kernel Modification Example</link>" appendix.
-    For a user-space application development example that uses the Eclipse IDE,
+    For a user-space application development example that uses the 
+    <trademark class='trade'>Eclipse</trademark> IDE,
     see the 
     <ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html'>
     The Yocto Project Application Development Toolkit (ADT) User's Guide</ulink>.
@@ -364,7 +365,8 @@
             </para>
 
             <para>
-                <imagedata fileref="figures/kernel-dev-flow.png" width="6in" depth="7in" align="center" scalefit="1" />
+                <imagedata fileref="figures/kernel-dev-flow.png" 
+                    width="6in" depth="7.5in" align="center" scalefit="1" />
             </para> 
 
             <para>
@@ -480,137 +482,189 @@
     <para>
         Application development involves creation of an application that you want to be able
         to run on your target hardware, which is running a Linux Yocto image.
-        Much of this process involves standard application development practices that are 
-        not covered in detail in this manual. 
-        However, the Yocto Project provides an application development environment that 
-        facilitates quick integration of your application into its run-time environment. 
-        For example, you can employ cross-development toolchains designed for your target hardware
+        The Yocto Project provides an Application Development Toolkit (ADT) that 
+        facilitates quick development and integration of your application into its run-time environment. 
+        Using the ADT you can employ cross-development toolchains designed for your target hardware
         to compile and link your application. 
-        You can deploy your application to the actual hardware or to the QEMU emulator for testing.
-        You can even develop, deploy, and test your application all from within the popular
-        Eclipse IDE.
+        You can then deploy your application to the actual hardware or to the QEMU emulator for testing.
+        If you are familiar with the popular Eclipse IDE, you can use an Eclipse Yocto Plug-in to 
+        allow you to develop, deploy, and test your application all from within Eclipse.
     </para>
 
     <para>
-        To help you understand how application development works in the Yocto Project, this section 
-        provides an overview of the general development process.
-        If you want to see a detailed example of the process as it is used from within the Eclipse 
-        IDE, see 
-        <ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html'>
-        The Application Development Toolkit (ADT) User's Manual</ulink>.
+        While we strongly suggest using the Yocto Project ADT to develop your application, you might
+        not want to.  
+        If this is the case, you can still use pieces of the Yocto Project for your development process. 
+        However, because the process can vary greatly, this manual does not provide detail on the process.
     </para>
 
-    <para>
-        This illustration and the following list summarizes the application development general workflow.
-    </para>
+    <section id='workflow-using-the-adt-and-eclipse'>
+        <title>Workflow Using the ADT and <trademark class='trade'>Eclipse</trademark></title>
 
-    <para>
-        <imagedata fileref="figures/app-dev-flow.png" width="7in" depth="7in" align="center" scalefit="1" />
-    </para> 
+        <para>
+            To help you understand how application development works in the Yocto Project ADT
+            environment, this section 
+            provides an overview of the general development process.
+            If you want to see a detailed example of the process as it is used from within the Eclipse 
+            IDE, see 
+            <ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html'>
+            The Application Development Toolkit (ADT) User's Manual</ulink>.
+        </para>
 
-    <para>
-        <orderedlist>
-            <listitem><para><emphasis>Set up your host development system to support 
-                development using the Yocto Project</emphasis>:  See  
-                "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>The Linux Distributions</ulink>" and  
-                "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>The Packages</ulink>" sections both
-                in the Yocto Project Quick Start for requirements.</para></listitem>
-            <listitem><para><emphasis>Establish a local copy of the Yocto Project files on your 
-                system</emphasis>:  Having the Yocto Project files on your system gives you access to 
-                the build process and tools you need.
-                For information on how to get these files, see the bulleted item
-                "<link linkend='local-yp-release'>Yocto Project Release</link>" earlier in this manual.
-                </para></listitem>
-            <listitem><para><emphasis>Set up the <filename>poky-extras</filename> Git 
-                repository</emphasis>:  This repository is the area for your configuration 
-                fragments, new kernel recipes, and the kernel <filename>.bbappend</filename>
-                file used during the build. 
-                It is good practice to set this repository up inside the local Yocto
-                Project files Git repository.
-                For information on how to get these files, see the bulleted item
-                "<link linkend='poky-extras-repo'>The <filename>poky-extras</filename> Git Repository</link>"
-                earlier in this manual.</para></listitem>
-            <listitem><para><emphasis>Establish a local copy of the Linux Yocto kernel files on your 
-                system</emphasis>:  In order to make modifications to the kernel you need two things:
-                a bare clone of the Linux Yocto kernel you are modifying and  
-                a copy of that bare clone. 
-                The bare clone is required by the build process and is the area to which you 
-                push your kernel source changes (pulling does not work with bare clones). 
-                The copy of the bare clone is a local Git repository that contains all the kernel's 
-                source files. 
-                You make your changes to the files in this copy of the bare clone.
-                For information on how to set these two items up, see the bulleted item
-                "<link linkend='local-kernel-files'>Linux Yocto Kernel</link>" 
-                earlier in this manual.</para></listitem>
-            <listitem><para><emphasis>Make changes to the kernel source code if 
-                applicable</emphasis>:  Modifying the kernel does not always mean directly
-                changing source files. 
-                However, if you have to do this, you make the changes in the local 
-                Git repository you set up to hold the source files (i.e. the copy of the 
-                bare clone).
-                Once the changes are made, you need to use Git commands to commit the changes
-                and then push them to the bare clone.</para></listitem>                      
-            <listitem><para><emphasis>Make kernel configuration changes
-                to your local kernel layer if applicable</emphasis>:  
-                If your situation calls for changing the kernel's configuration, you can 
-                use <filename>menuconfig</filename>
-                to enable and disable kernel configurations.  
-                Using <filename>menuconfig</filename> allows you to interactively develop and test the 
-                configuration changes you are making to the kernel.
-                When saved, changes using <filename>menuconfig</filename> update the kernel's
-                <filename>.config</filename>.
-                As an alternative method to changing the kernel's configuration, you can simply
-                edit the <filename>.config</filename> found in the Yocto Project build 
-                directory at <filename>tmp/sysroots/&lt;machine-name&gt;/kernel</filename> 
-                directly.</para></listitem>                      
-            <listitem><para><emphasis>Add new kernel recipes if applicable</emphasis>:  The standard 
-                layer structure organizes recipe files inside the 
-                <filename>meta-kernel-dev</filename> layer that is within the 
-                <filename>poky-extras</filename> Git repository.
-                If you need to add new kernel recipes, you add them within this layer. 
-                Also within this area, you will find the <filename>.bbappend</filename> 
-                file that appends information to the kernel's recipe file used during the 
-                build.
-                </para></listitem>
-            <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
-                changes to your kernel (configurations, source code changes, recipe additions, 
-                or recipe changes), there remains a few things 
-                you need to do in order for the Yocto Project build system to create your image.  
-                If you have not done so, you need to get the build environment ready by sourcing 
-                the environment setup script described earlier.
-                You also need to be sure two key configuration files 
-                (<filename>local.conf</filename> and <filename>bblayers.conf</filename>)
-                are configured appropriately.</para>
-                <para>The entire process for building an image is overviewed in the 
-                "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" section of the Yocto Project Quick Start.    
-                You might want to reference this information.
-                 Also, you should look at the detailed examples found in the appendices at 
-                at the end of this manual.</para></listitem>
-            <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project 
-                build system Poky uses the BitBake 
-                tool to build images based on the type of image you want to create.  
-                You can find more information on BitBake 
-                <ulink url='http://bitbake.berlios.de/manual/'>here</ulink>.</para>
-                <para>The build process supports several types of images to satisfy different needs.  
-                See the appendix
-                "<ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>Reference: Images</ulink>" in the 
-                <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html'>
-                Yocto Project Reference Manual</ulink> for information on supported 
-                images.</para></listitem>
-            <listitem><para><emphasis>Make your configuration changes available
-                in the kernel layer</emphasis>:  Up to this point, all the configuration changes to the 
-                kernel have been done and tested iteratively.  
-                Once they are tested and ready to go, you can move them into the kernel layer, 
-                which allows you to distribute the layer.</para></listitem>
-            <listitem><para><emphasis>If applicable, share your in-tree changes</emphasis>:  
-                If the changes you made
-                are suited for all Linux Yocto users, you might want to push the changes to a 
-                contribution area for the Linux Yocto Git repository. 
-                Once the changes are pushed, you can request that they 
-                be pulled into the master branch of the kernel tree. 
-                 Doing so makes them available to everyone using the kernel.</para></listitem> 
-        </orderedlist>
-    </para>
+        <para>
+            This illustration and the following list summarizes the application development general workflow.
+        </para>
+
+        <para>
+            <imagedata fileref="figures/app-dev-flow.png" 
+                width="7in" depth="8in" align="center" scale="100" />
+        </para> 
+
+        <para>
+            <orderedlist>
+                <listitem><para><emphasis>Prepare the Host System for the Yocto Project</emphasis>:  
+                    See  
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#the-linux-distro'>The Linux Distributions</ulink>" and  
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#packages'>The Packages</ulink>" sections both
+                    in the Yocto Project Quick Start for requirements.</para></listitem>
+
+<!--
+WRITER NOTE:  The areas to get the kernel and root filesystem are located in the Index of 
+              downloads.  There are many forms of each.  The files that have "rootfs" are just the 
+              target root filesystems.  The file that is very small and starts with bzImage is just
+              the kernel image isolated so that it can be written to a special on-board area of 
+              flash memory.  Some systems require this.  In the machines directory there are  
+              files that combine the kernel image and the root filesystem.  These files are the ISO 
+              and HDDIMG files.  ISO images are designed to be deployed on a DVD or CD.  The ISO
+              images are designed to be deployed on a USB stick.  There might be some relics in 
+              the machine directory.  For example, there is the "emenlow-bernard-5.0.0.tar.bz2" 
+              file.  Nobody seems to know what this is.  If a developer needs the image and the 
+              root filesystem I think that they want the small kernel image and a matching root 
+              filesystem.  Although, Paul Eggleton says that the HDDIMG types could be used to 
+              develop on.  I am not sure that we can use one of those in the ADT though as they 
+              want you to point to the kernel image and the target root filesystem.  Maybe you 
+              could just point to the same spot.  I am not sure.
+-->
+
+                <listitem><para><emphasis>Secure the Linux Yocto Kernel Target Image</emphasis>:  
+                    You must have a target kernel image that has been built using the Yocto Project.</para>
+                    <para>Depending on whether the Yocto Project has a pre-built image that matches your target
+                    architecture and where you are going to run the image while you develop your application
+                    (QEMU or real hardware), the area you get the image from differs.
+                        <itemizedlist>
+                            <listitem><para>Download the image from  
+                                <ulink url='http://autobuilder.yoctoproject.org/downloads/yocto-1.0/machines/'>  
+                                <filename>machines</filename></ulink> if your target architecture is supported
+                                and you are going to develop and test your application on actual hardware. 
+                                </para></listitem>
+                            <listitem><para>Download the image from the 
+                                <ulink url='http://autobuilder.yoctoproject.org/downloads/yocto-1.0/machines/qemu/'>  
+                                <filename>machines/qemu</filename></ulink> if your target architecture is supported
+                                and you are going to develop and test your application using the QEMU 
+                                emulator.</para></listitem>
+                            <listitem><para>Build your image if you cannot find a pre-built image that matches
+                                your target architecture.
+                                If your target architecture is similar to a supported architecture, you can 
+                                modify the kernel image before you build it.
+                                See the 
+                                "<link linkend='kernel-modification-workflow'>Kernel Modification Workflow</link>"
+                                section earlier in this manual for information on how to create a modified 
+                                Linux Yocto kernel.</para></listitem>
+                        </itemizedlist></para>
+                    <para>For information on pre-built kernel image naming schemes for images 
+                    that can run on the QEMU emulator, see the
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html#using-pre-built'>Using Pre-Built Binaries and QEMU</ulink>"
+                    section in  
+                    <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html'>
+                    The Yocto Project Quick Start</ulink>.</para></listitem>
+                <listitem><para><emphasis>Install the ADT</emphasis>:  
+                    The ADT provides a target-specific cross-development toolchain, the root filesystem,
+                    the QEMU emulator, and other tools that can help you develop your application.
+                    While it is possible to get these pieces separately, the Yocto Project provides an 
+                    easy method.
+                    You can get these pieces by running an ADT installer script, which is configurable.
+                    For information on how to install the ADT, see the
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html#using-the-adt-installer'>Using the ADT Installer</ulink>" section in
+                    <ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html'>The Yocto Project
+                    Application Development (ADT) User's Manual</ulink>.</para></listitem>
+                <listitem><para><emphasis>If Applicable, Secure the Target Root Filesystem</emphasis>:  
+                    If you choose not to install the ADT using the ADT Installer,
+                    you need to find and download the 
+                    appropriate root filesystems.
+                    You can find these tarballs in the same areas used for the kernel images.
+                    Depending on the type of image you are running, the root filesystem you need differs. 
+                    For example, if you are developing an application that runs on an image that 
+                    supports Sato, you need to get root filesystem that supports Sato.
+                    </para></listitem>
+                <listitem><para><emphasis>Create and Build your Application</emphasis>:  
+                    At this point, you need to have source files for your application.
+                    Once you have the files, you can use the Eclipse IDE to import them and build the 
+                    project. 
+                    If you are not using Eclipse, you need to use the cross-development tools you have 
+                    installed to create the image.</para></listitem>                      
+                <listitem><para><emphasis>Deploy the Image with the Application</emphasis>:  
+                    If you are using the Eclipse IDE, you can deploy your image to the hardware or to 
+                    QEMU through the project's preferences.  
+                    If you are not using the Eclipse IDE, then you need to deploy the application using 
+                    other methods to the hardware.
+                    Or, if you are using QEMU, you need to use that tool and load your image in for testing. 
+                    </para></listitem>                      
+                <listitem><para><emphasis>Test and Debug the Application</emphasis>:  
+                    Once your application is deployed, you need to test it.
+                    Within the Eclipse IDE, you can use the debubbing environment along with the 
+                    set of user-space tools installed along with the ADT to debug your application. 
+                    Of course, the same user-space tools are available separately to use if you choose
+                    not to use the Eclipse IDE.</para></listitem>
+           </orderedlist>
+        </para>
+    </section>
+
+    <section id='workflow-without-adt'>
+        <title>Workflow Without ADT</title>
+
+        <para>
+            If you want to develop an application outside of the Yocto Project ADT environment, you 
+            can still employ the cross-development toolchain, the QEMU emulator, and a number of supported
+            target image files.  
+            You just need to follow these general steps:
+            <orderedlist>
+                <listitem><para><emphasis>Install the cross-development toolchain for your target hardware:</emphasis> 
+                    For information on how to install the toolchain, see the
+                    "<ulink url='http://www.yoctoproject/docs/1.1/adt-manual/adt-manual.html#using-an-existing-toolchain-tarball'>Using a Cross-Toolchain Tarball</ulink>" section in
+                    <ulink url='http://www.yoctoproject/docs/1.1/adt-manual/adt-manual.html'>The Yocto Project
+                    Application Development (ADT) User's Manual</ulink>.</para></listitem>
+                <listitem><para><emphasis>Download the Target Image:</emphasis>  The Yocto Project supports
+                    several target architectures and has many pre-built kernel images and root filesystem 
+                    images.</para>
+                    <para>If you are going to develop your application on hardware, go to the 
+                    <ulink url='http://autobuilder.yoctoproject.org/downloads/yocto-1.0/machines/'>  
+                    <filename>machines</filename></ulink> download area and choose a target machine area
+                    from which to download the kernel image and root filesystem.
+                    This download area could have several files in it that support development using   
+                    actual hardware. 
+                    For example, the area might contain <filename>.hddimg</filename> files that combine the 
+                    kernel image with the filesystem, boot loaders, etc.
+                    Be sure to get the files you need for your particular development process.</para>
+                    <para>If you are going to develop your application and then run and test it using the QEMU
+                    emulator, go to the 
+                    <ulink url='http://autobuilder.yoctoproject.org/downloads/yocto-1.0/machines/qemu/'>  
+                    <filename>machines/qemu</filename></ulink> download area.
+                    From this area, go down into the directory for your target architecture
+                    (e.g. <filename>qemux86_64</filename> for an 
+                    <trademark class='registered'>Intel</trademark>-based 64-bit architecture).
+                    Download kernel, root filesystem, and any other files you need for your process.
+                    <note>In order to use the root filesystem in QEMU, you need to extract it.
+                    See the 
+                    "<ulink url='http://www.yoctoproject.org/docs/1.1/adt-manual/adt-manual.html#extracting-the-root-filesystem'>Extracting the Root Filesystem</ulink>" section for information on how to extract the 
+                    root filesystem.</note></para></listitem>
+                <listitem><para><emphasis>Develop and Test your Application:</emphasis>  At this point, 
+                    you have the tools to develop your application.  
+                    If you need to separately install and use the QEMU emulator, you can go to 
+                    <ulink url='http://www.qemu.org'>QEMU Home Page</ulink> to download and learn about the 
+                    emulator.</para></listitem>
+            </orderedlist>
+        </para>
+    </section>
 </section>
 
 </chapter>
