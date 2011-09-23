@@ -28,7 +28,7 @@
 <title>Autotools-Based Projects</title>
 
     <para>
-        For an autotools-based project, you can use the cross-toolchain by just 
+        For an Autotools-based project, you can use the cross-toolchain by just 
         passing the appropriate host option to <filename>configure.sh</filename>.
         The host option you use is derived from the name of the environment setup 
         script in <filename>/opt/poky</filename> resulting from unpacking the 
@@ -47,6 +47,20 @@
         This single command updates your project and rebuilds it using the appropriate 
         cross-toolchain tools.
     </para>
+    <note>
+        If <filename>configure</filename> script results in problems recognizing the 
+        <filename>--with-libtool-sysroot=&lt;sysroot-dir&gt;</filename> option, 
+        regenerate the script to enable the support by doing the following and then 
+        re-running the script:
+        <literallayout class='monospaced'>
+     $ libtoolize --automake
+     $ aclocal -I ${OECORE_NATIVE_SYSROOT}/usr/share/aclocal \
+        [-I &lt;dir_containing_your_project-specific_m4_macros&gt;]
+     $ autoconf
+     $ autoheader
+     $ automake -a
+        </literallayout>
+    </note>       
 </section>
 
 <section id='makefile-based-projects'>
