@@ -888,11 +888,29 @@
                     This enables the package to run correctly. 
                     For example, consider a Perl script, which depends on the Perl package. 
                     Since this variable applies to 
-                    output packages, there would usually be an override attached 
-                    to this variable such as <filename>RDEPENDS_${PN}-dev</filename>. 
+                    output packages, there should always be an override attached 
+                    to this variable specifying the runtime package to which to add the 
+                    dependency (e.g. <filename>RDEPENDS_${PN}-dev</filename>). 
                     Names in this field must appear as they appear in the
                     <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> namespace before any 
                     renaming of the output package by classes like <filename>debian.bbclass</filename>.
+                </para>
+                <para>
+                    Some automatic handling occurs around the <filename>RDEPENDS</filename>
+                    variable:
+                    <itemizedlist>
+                        <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:  If a runtime
+                            package contains a shared library (<filename>.so</filename>), the build
+                            processes the library in order to determine other libraries to which it 
+                            is dynamically linked.  
+                            The build process adds these libraries to <filename>RDEPENDS</filename>
+                            to create the runtime package.</para></listitem>
+                        <listitem><para><emphasis><filename>pcdeps</filename></emphasis>:  If the package
+                            ships a <filename>pkg-config</filename> information file, the build process
+                            uses this file to add items to the <filename>RDEPENDS</filename>
+                            variable to create the runtime packages.
+                            </para></listitem>
+                    </itemizedlist>
                 </para>
             </glossdef>
         </glossentry>
