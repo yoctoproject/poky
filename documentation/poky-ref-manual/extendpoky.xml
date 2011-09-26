@@ -79,7 +79,8 @@
                 By default, the <filename>helloworld</filename>, <filename>helloworld-dbg</filename>,
                 and <filename>helloworld-dev</filename> packages are built. 
                 For information on how to customize the packaging process, see the
-                <link linkend='usingpoky-extend-addpkg-files'>Controlling Package Content</link> section.
+                "<link linkend='splitting-an-application-into-multiple-packages'>Splitting an Application
+                into Multiple Packages</link>" section.
             </para>
         </section>
 
@@ -174,8 +175,8 @@
             </para>
         </section>
 
-        <section id='usingpoky-extend-addpkg-files'>
-            <title>Controlling Package Content</title>
+        <section id='splitting-an-application-into-multiple-packages'>
+            <title>Splitting an Application into Multiple Packages</title>
 
             <para>                        
                 You can use the variables <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> and 
@@ -219,6 +220,59 @@
                 Files included by earlier packages are skipped by latter packages.
                 Thus, the main <filename><link linkend='var-PN'>PN</link></filename> package 
                 does not include the above listed files.
+            </para>
+        </section>
+
+        <section id='including-static-library-files'>
+            <title>Including Static Library Files</title>
+
+            <para>                        
+                If you are building a library and the library offers static linking, you can control
+                which static library files (<filename>*.a</filename> files) get included in the 
+                built library.  
+            </para>
+
+            <para>
+                The <filename>PACKAGES</filename> and <filename>FILES_*</filename> variables in the 
+                <filename>meta/conf/bitbake.conf</filename> configuration file define how files installed
+                by the <filename>do_install</filename> task are packaged.
+                By default, the <filename>PACKAGES</filename> variable contains 
+                <filename>${PN}-staticdev</filename>, which includes all static library files.
+                <note>
+                    Previously released versions of the Yocto Project defined the static library files 
+                    through <filename>${PN}-dev</filename>.
+                </note>
+                Following, is part of the BitBake configuration file. 
+                You can see where the static library files are defined:
+                <literallayout class='monospaced'>
+     PACKAGES = "${PN}-dbg ${PN} ${PN}-doc ${PN}-dev ${PN}-staticdev ${PN}-locale"
+     PACKAGES_DYNAMIC = "${PN}-locale-*"
+     FILES = ""
+
+     FILES_${PN} = "${bindir}/* ${sbindir}/* ${libexecdir}/* ${libdir}/lib*${SOLIBS} \
+                 ${sysconfdir} ${sharedstatedir} ${localstatedir} \
+                 ${base_bindir}/* ${base_sbindir}/* \
+                 ${base_libdir}/*${SOLIBS} \
+                 ${datadir}/${BPN} ${libdir}/${BPN}/* \
+                 ${datadir}/pixmaps ${datadir}/applications \
+                 ${datadir}/idl ${datadir}/omf ${datadir}/sounds \
+                 ${libdir}/bonobo/servers"
+
+     FILES_${PN}-doc = "${docdir} ${mandir} ${infodir} ${datadir}/gtk-doc \
+                 ${datadir}/gnome/help"
+     SECTION_${PN}-doc = "doc"
+     
+     FILES_${PN}-dev = "${includedir} ${libdir}/lib*${SOLIBSDEV} ${libdir}/*.la \
+                     ${libdir}/*.o ${libdir}/pkgconfig ${datadir}/pkgconfig \
+                     ${datadir}/aclocal ${base_libdir}/*.o"
+     SECTION_${PN}-dev = "devel"
+     ALLOW_EMPTY_${PN}-dev = "1"
+     RDEPENDS_${PN}-dev = "${PN} (= ${EXTENDPKGV})"
+     
+     FILES_${PN}-staticdev = "${libdir}/*.a ${base_libdir}/*.a"
+     SECTION_${PN}-staticdev = "devel"
+     RDEPENDS_${PN}-staticdev = "${PN}-dev (= ${EXTENDPKGV})"
+                </literallayout>
             </para>
         </section>
 
