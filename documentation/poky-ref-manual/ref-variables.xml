@@ -663,29 +663,142 @@
             </glossdef>
          </glossentry>
 
-         <glossentry id='var-MACHINE_ESSENTIAL_RDEPENDS'><glossterm>MACHINE_ESSENTIAL_RDEPENDS</glossterm>
+         <glossentry id='var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS'><glossterm>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</glossterm>
             <glossdef>
-                <para>Specifies the list of packages required to boot the device.</para>
+                <para>
+                    A list of packages that must be installed as part of the package being 
+                    built in order for the 
+                    resulting image to boot on the system. 
+                    The machine depends on these items - without them it will not boot.
+                    If a package in this list cannot be found during the build, the build
+                    will not complete.
+                    Some examples of these machine essentials are flash, screen, keyboard, mouse, 
+                    or touchscreen drivers (depending on the machine).
+                </para>
+                <para>
+                    For example, suppose you are building a runtime package that depends
+                    on a mouse driver.
+                    In this case, you would use the following 
+                    <filename>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</filename>
+                    statement:
+                    <literallayout class='monospaced'>
+     MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "&lt;mouse_driver&gt;"
+                    </literallayout>
+                </para>
             </glossdef>
          </glossentry>
 
-         <glossentry id='var-MACHINE_ESSENTIAL_RRECOMMENDS'><glossterm>MACHINE_ESSENTIAL_RRECOMMENDS</glossterm>
+         <glossentry id='var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS'><glossterm>MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</glossterm>
             <glossdef>
-                <para>Specifies the list of packages required to boot the device (usually
-                    additional kernel modules).</para>
+                <para>
+                    A list of packages that must be installed as part of the package being 
+                    built in order for the 
+                    resulting image to boot on the system. 
+                    The machine depends on these items - without them it will not boot.
+                    If a package in this list cannot be found during the build, the build
+                    will not complete.
+                </para>
+                <para>
+                    This variable is similar to the 
+                    <link linkend='var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS'>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</link>
+                    with the exception that the package being built does not have a build 
+                    dependency on the variable's list of packages.
+                </para>
+                <para> 
+                    Someone help me out here... How can this list be "recommended" yet part 
+                    of the machine essential list?
+                    Seems to me that anything that is machine essential pretty much needs to 
+                    be there.
+                    The rest of this section needs an appropriate example.
+                </para>
+                <para>
+                    Some examples of these machine essentials are flash, screen, keyboard, mouse, 
+                    or touchscreen drivers (depending on the machine).
+                </para>
+                <para>
+                    For example, suppose you are building a runtime package that depends
+                    on a mouse driver.
+                    In this case, you would use the following 
+                    <filename>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</filename>
+                    statement:
+                    <literallayout class='monospaced'>
+     MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "&lt;mouse_driver&gt;"
+                    </literallayout>
+                </para>
             </glossdef>
         </glossentry>
 
          <glossentry id='var-MACHINE_EXTRA_RDEPENDS'><glossterm>MACHINE_EXTRA_RDEPENDS</glossterm>
             <glossdef>
-                <para>Specifies the list of packages required to use the devices</para>
+                <para>
+                    A list of packages that should be installed as part of the package  
+                    being built in order for the 
+                    resulting image to boot on the system and achieve full functionality. 
+                    Although the machine does not need these items in order to boot, if you want the 
+                    extra functionality they provide the package being built depends on them
+                    being there.  
+                    If a package in this list cannot be found during the build, the build
+                    will not complete.
+                </para>
+                <para>
+                    I need a real-world example here....
+                </para>
+                <para>
+                    An example of a machine extra is a WiFi driver.
+                    The machine may or may not have a WiFi card.
+                    If it does, the package with the driver needs to be present for the card to work.
+                    However, if the machine does not have a WiFi card, the machine will still boot.
+                </para>
+                <para>
+                    For example, suppose you are building a runtime package that depends
+                    on a WiFi driver.
+                    In this case, you would use the following 
+                    <filename>MACHINE_EXTRA_RDEPENDS</filename>
+                    statement:
+                    <literallayout class='monospaced'>
+     MACHINE_EXTRA_RDEPENDS += "&lt;wifi_driver&gt;"
+                    </literallayout>
+                </para>
             </glossdef>
          </glossentry>
 
          <glossentry id='var-MACHINE_EXTRA_RRECOMMENDS'><glossterm>MACHINE_EXTRA_RRECOMMENDS</glossterm>
             <glossdef>
-                <para>Specifies the list of packages useful to use the device (e.g.
-                    additional kernel modules)</para>
+                <para>
+                    A list of packages that should be installed as part of the package  
+                    being built in order for the 
+                    machine to boot and achieve full functionality. 
+                    Although the machine does not need these items in order to boot, if you want the 
+                    extra functionality they provide the package being built should include
+                    them.  
+                </para>
+                <para>
+                    This variable is similar to the 
+                    <link linkend='var-MACHINE_EXTRA_RDEPENDS'>MACHINE_EXTRA_RDEPENDS</link>
+                    with the exception that the package being built does not have a build 
+                    dependency on the variable's list of packages.
+                    If a package in this list cannot be found during the build, the build
+                    will still continue.
+                </para>
+                <para>
+                    I need a real-world example to use here please....
+                </para>
+                <para>
+                    An example of a machine extra is a WiFi driver.
+                    The machine may or may not have a WiFi card.
+                    If it does, the package with the driver needs to be present for the card to work.
+                    However, if the machine does not have a WiFi card, the machine will still boot.
+                </para>
+                <para>
+                    For example, suppose you are building a runtime package that depends
+                    on a WiFi driver.
+                    In this case, you would use the following 
+                    <filename>MACHINE_EXTRA_RDEPENDS</filename>
+                    statement:
+                    <literallayout class='monospaced'>
+     MACHINE_EXTRA_RDEPENDS += "&lt;wifi_driver&gt;"
+                    </literallayout>
+                </para>
             </glossdef>
          </glossentry>
 
