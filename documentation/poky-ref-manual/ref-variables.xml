@@ -902,16 +902,28 @@
         <glossentry id='var-RDEPENDS'><glossterm>RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of run-time dependencies for a package. 
-                    These packages need to be installed alongside the package to which
-                    they apply. 
-                    This enables the package to run correctly. 
-                    For example, consider a Perl script, which depends on the Perl package. 
-                    Since this variable applies to 
-                    output packages, there should always be an override attached 
-                    to this variable specifying the runtime package to which to add the 
-                    dependency (e.g. <filename>RDEPENDS_${PN}-dev</filename>). 
-                    Names in this field must appear as they appear in the
+                    A list of packages that must be installed alongside a package being 
+                    built because the package being build has runtime dependencies on 
+                    them.
+                    In other words, in order for the package being built to run correctly, 
+                    it depends on these listed packages.
+                    If a package in this list cannot be found during the build, the build
+                    will not complete.
+                </para>
+                <para>
+                    Because the <filename>RDEPENDS</filename> variable applies to packages 
+                    being built, you should 
+                    always attach an override to the variable to specify the particular runtime package
+                    that has the dependency.
+                    For example, suppose you are building a development package that depends
+                    on the <filename>perl</filename> package.
+                    In this case, you would use the following <filename>RDEPENDS</filename>
+                    statement:
+                    <literallayout class='monospaced'>
+     RDEPENDS_${PN}-dev += "perl"
+                    </literallayout>
+                    In the example, the package name (<filename>${PN}-dev</filename>) must 
+                    appear as it would in the 
                     <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> namespace before any 
                     renaming of the output package by classes like <filename>debian.bbclass</filename>.
                 </para>
@@ -943,8 +955,40 @@
 
         <glossentry id='var-RRECOMMENDS'><glossterm>RRECOMMENDS</glossterm>
             <glossdef>
-                <para>The list of packages that extend usability of the package. 
-                    The packages are automatically installed but can be removed by user.</para>
+                <para>
+                    A list of packages that extend the usability of a package being 
+                    built.
+                    The package being built does not depend on this list of packages in 
+                    order to successfully built, but needs them for the extended usability.
+                    To specify runtime dependencies for packages, see the 
+                    <link linkend='var-RDEPENDS'>RDEPENDS</link> variable.
+                </para>
+                <para>
+                    The Yocto Project build process automatically installs the list of packages
+                    as part of the build package.
+                    However, you can remove them later if you want.
+                    If, during the build, a package from the list cannot be found, the build
+                    process continues without an error.
+                </para>
+                <para>
+                    Because the <filename>RRECOMMENDS</filename> variable applies to packages 
+                    being built, you should 
+                    always attach an override to the variable to specify the particular package
+                    whose usability is being extended.
+                    For example, suppose you are building a development package that is extended
+                    to support wireless functionality.
+                    In this case, you would use the following <filename>RRECOMMENDS</filename>
+                    statement:
+                    <literallayout class='monospaced'>
+     RRECOMMENDS_${PN}-dev += "&lt;wireless_package_name&gt;"
+                    </literallayout>
+                    In the example, the package name (<filename>${PN}-dev</filename>) must 
+                    appear as it would in the 
+                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> namespace before any 
+                    renaming of the output package by classes like <filename>debian.bbclass</filename>.
+                    Also, you would provide the actual name of the package that supports the wireless
+                    capabilities.
+                </para>
             </glossdef>
         </glossentry>
 
