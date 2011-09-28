@@ -666,23 +666,27 @@
          <glossentry id='var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS'><glossterm>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of packages that must be installed as part of the package being 
-                    built in order for the 
-                    resulting image to boot on the system. 
-                    The machine depends on these items - without them it will not boot.
-                    If a package in this list cannot be found during the build, the build
-                    will not complete.
-                    Some examples of these machine essentials are flash, screen, keyboard, mouse, 
-                    or touchscreen drivers (depending on the machine).
+                    A list of required packages to install as part of the package being
+                    built.
+                    The build process depends on these packages being present.
+                    Furthermore, because this is a "machine essential" variable, the list of 
+                    packages are essential for the machine to boot.
+                    The impact of this variable affects images based on <filename>task-core-boot</filename>,
+                    including the <filename>core-image-minimal</filename> image.
+                </para>
+                <para>
+                    This variable is similar to the 
+                    <link linkend='var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS'>MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</link>
+                    variable with the exception that the package being built has a build 
+                    dependency on the variable's list of packages.
+                    In other words, the image will not build if a file in this list is not found.
                 </para>
                 <para>
                     For example, suppose you are building a runtime package that depends
-                    on a mouse driver.
-                    In this case, you would use the following 
-                    <filename>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</filename>
-                    statement:
+                    on a certain disk driver.
+                    In this case, you would use the following:
                     <literallayout class='monospaced'>
-     MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "&lt;mouse_driver&gt;"
+     MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "&lt;disk_driver&gt;"
                     </literallayout>
                 </para>
             </glossdef>
@@ -691,38 +695,45 @@
          <glossentry id='var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS'><glossterm>MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of packages that must be installed as part of the package being 
-                    built in order for the 
-                    resulting image to boot on the system. 
-                    The machine depends on these items - without them it will not boot.
-                    If a package in this list cannot be found during the build, the build
-                    will not complete.
+                    A list of recommended packages to install as part of the package being 
+                    built. 
+                    The build process does not depend on these packages being present.
+                    Furthermore, because this is a "machine essential" variable, the list of 
+                    packages are essential for the machine to boot.
+                    The impact of this variable affects images based on <filename>task-core-boot</filename>,
+                    including the <filename>core-image-minimal</filename> image.
                 </para>
                 <para>
                     This variable is similar to the 
                     <link linkend='var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS'>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</link>
-                    with the exception that the package being built does not have a build 
+                    variable with the exception that the package being built does not have a build 
                     dependency on the variable's list of packages.
-                </para>
-                <para> 
-                    Someone help me out here... How can this list be "recommended" yet part 
-                    of the machine essential list?
-                    Seems to me that anything that is machine essential pretty much needs to 
-                    be there.
-                    The rest of this section needs an appropriate example.
+                    In other words, the image will build if a file in this list is not found.
+                    However, because this is one of the "essential" variables, the resulting image
+                    might not boot on the machine. 
+                    Or, if the machine does boot using the image, the machine might not be fully 
+                    functional.
                 </para>
                 <para>
-                    Some examples of these machine essentials are flash, screen, keyboard, mouse, 
+                    Consider an example where you have a custom kernel with a disk driver
+                    built into the kernel itself, rather than using the driver built as a module.
+                    If you include the package that has the driver module as part of 
+                    the variable's list, the 
+                    build process will not find that package.  
+                    However, because these packages are "recommends" packages, the build will 
+                    not fail due to the missing package.
+                    Not accounting for any other problems, the custom kernel would still boot the machine.
+                </para>
+                <para>
+                    Some example packages of these machine essentials are flash, screen, keyboard, mouse, 
                     or touchscreen drivers (depending on the machine).
                 </para>
                 <para>
                     For example, suppose you are building a runtime package that depends
                     on a mouse driver.
-                    In this case, you would use the following 
-                    <filename>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</filename>
-                    statement:
+                    In this case, you would use the following:
                     <literallayout class='monospaced'>
-     MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "&lt;mouse_driver&gt;"
+     MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "&lt;mouse_driver&gt;"
                     </literallayout>
                 </para>
             </glossdef>
@@ -731,30 +742,32 @@
          <glossentry id='var-MACHINE_EXTRA_RDEPENDS'><glossterm>MACHINE_EXTRA_RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of packages that should be installed as part of the package  
-                    being built in order for the 
-                    resulting image to boot on the system and achieve full functionality. 
-                    Although the machine does not need these items in order to boot, if you want the 
-                    extra functionality they provide the package being built depends on them
-                    being there.  
-                    If a package in this list cannot be found during the build, the build
-                    will not complete.
+                    A list of optional but non-machine essential packages to install as 
+                    part of the package being built.
+                    Even though these packages are not essential for the machine to boot,  
+                    the build process depends on them being present.
+                    The impact of this variable affects all images based on
+                    <filename>task-base</filename>, which does not include the 
+                    <filename>core-image-minimal</filename> or <filename>core-image-basic</filename> 
+                    images.
                 </para>
                 <para>
-                    I need a real-world example here....
+                    This variable is similar to the 
+                    <link linkend='var-MACHINE_EXTRA_RRECOMMENDS'>MACHINE_EXTRA_RRECOMMENDS</link>
+                    variable with the exception that the package being built has a build 
+                    dependency on the variable's list of packages.
+                    In other words, the image will not build if a file in this list is not found.
                 </para>
                 <para>
-                    An example of a machine extra is a WiFi driver.
-                    The machine may or may not have a WiFi card.
-                    If it does, the package with the driver needs to be present for the card to work.
-                    However, if the machine does not have a WiFi card, the machine will still boot.
-                </para>
-                <para>
-                    For example, suppose you are building a runtime package that depends
-                    on a WiFi driver.
-                    In this case, you would use the following 
-                    <filename>MACHINE_EXTRA_RDEPENDS</filename>
-                    statement:
+                    An example is a machine that might or might not have a WiFi card.
+                    The package containing the WiFi support is not essential for the 
+                    machine to boot the image.
+                    If it is not there, the machine will boot but not be able to use the 
+                    WiFi functionality.
+                    However, if you include the package with the WiFi support as part of the 
+                    variable's package list, the build 
+                    process depends on finding the package.
+                    In this case, you would use the following:
                     <literallayout class='monospaced'>
      MACHINE_EXTRA_RDEPENDS += "&lt;wifi_driver&gt;"
                     </literallayout>
@@ -765,38 +778,35 @@
          <glossentry id='var-MACHINE_EXTRA_RRECOMMENDS'><glossterm>MACHINE_EXTRA_RRECOMMENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of packages that should be installed as part of the package  
-                    being built in order for the 
-                    machine to boot and achieve full functionality. 
-                    Although the machine does not need these items in order to boot, if you want the 
-                    extra functionality they provide the package being built should include
-                    them.  
+                    A list of optional but non-machine essential packages to install as 
+                    part of the package being built.
+                    The package being built has no build dependency on the list of packages 
+                    with this variable.  
+                    The impact of this variable affects only images based on 
+                    <filename>task-base</filename>, which does not include the 
+                    <filename>core-image-minimal</filename> or <filename>core-image-basic</filename> 
+                    images.
                 </para>
                 <para>
                     This variable is similar to the 
                     <link linkend='var-MACHINE_EXTRA_RDEPENDS'>MACHINE_EXTRA_RDEPENDS</link>
-                    with the exception that the package being built does not have a build 
+                    variable with the exception that the package being built does not have a build 
                     dependency on the variable's list of packages.
-                    If a package in this list cannot be found during the build, the build
-                    will still continue.
+                    In other words, the image will build if a file in this list is not found.
                 </para>
                 <para>
-                    I need a real-world example to use here please....
-                </para>
-                <para>
-                    An example of a machine extra is a WiFi driver.
-                    The machine may or may not have a WiFi card.
-                    If it does, the package with the driver needs to be present for the card to work.
-                    However, if the machine does not have a WiFi card, the machine will still boot.
-                </para>
-                <para>
-                    For example, suppose you are building a runtime package that depends
-                    on a WiFi driver.
-                    In this case, you would use the following 
-                    <filename>MACHINE_EXTRA_RDEPENDS</filename>
-                    statement:
+                    An example is a machine that might or might not have a WiFi card.
+                    The package containing the WiFi support is not essential for the 
+                    machine to boot the image.
+                    If it is not there, the machine will boot but not be able to use the 
+                    WiFi functionality.
+                    You are free to either include or not include the 
+                    the package with the WiFi support as part of the 
+                    variable's package list, the build 
+                    process does not depend on finding the package.
+                    If you include the package, you would use the following:
                     <literallayout class='monospaced'>
-     MACHINE_EXTRA_RDEPENDS += "&lt;wifi_driver&gt;"
+     MACHINE_EXTRA_RRECOMMENDS += "&lt;wifi_driver&gt;"
                     </literallayout>
                 </para>
             </glossdef>
@@ -1015,9 +1025,9 @@
         <glossentry id='var-RDEPENDS'><glossterm>RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of packages that must be installed alongside a package being 
-                    built because the package being build has runtime dependencies on 
-                    them.
+                    A list of packages that must be installed as part of a package being built.
+                    The package being built has a runtime dependency on the packages in the 
+                    variable's list.
                     In other words, in order for the package being built to run correctly, 
                     it depends on these listed packages.
                     If a package in this list cannot be found during the build, the build
@@ -1072,13 +1082,13 @@
                     A list of packages that extend the usability of a package being 
                     built.
                     The package being built does not depend on this list of packages in 
-                    order to successfully built, but needs them for the extended usability.
+                    order to successfully build, but needs them for the extended usability.
                     To specify runtime dependencies for packages, see the 
                     <link linkend='var-RDEPENDS'>RDEPENDS</link> variable.
                 </para>
                 <para>
                     The Yocto Project build process automatically installs the list of packages
-                    as part of the build package.
+                    as part of the built package.
                     However, you can remove them later if you want.
                     If, during the build, a package from the list cannot be found, the build
                     process continues without an error.
@@ -1090,8 +1100,7 @@
                     whose usability is being extended.
                     For example, suppose you are building a development package that is extended
                     to support wireless functionality.
-                    In this case, you would use the following <filename>RRECOMMENDS</filename>
-                    statement:
+                    In this case, you would use the following:
                     <literallayout class='monospaced'>
      RRECOMMENDS_${PN}-dev += "&lt;wireless_package_name&gt;"
                     </literallayout>
@@ -1099,8 +1108,6 @@
                     appear as it would in the 
                     <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> namespace before any 
                     renaming of the output package by classes like <filename>debian.bbclass</filename>.
-                    Also, you would provide the actual name of the package that supports the wireless
-                    capabilities.
                 </para>
             </glossdef>
         </glossentry>
