@@ -46,12 +46,14 @@
             the baseline kernel is the most stable official release.</para></listitem>
             <listitem><para>Include major technological features as part of Yocto Project's up-rev 
             strategy.</para></listitem>
-            <listitem><para>Present a Git tree, that just like the upstream kernel.org tree, has a 
-            clear and continuous history.</para></listitem>
+            <listitem><para>Present a kernel Git repository that, similar to the upstream 
+            <filename>kernel.org</filename> tree, 
+            has a clear and continuous history.</para></listitem>
             <listitem><para>Deliver a key set of supported kernel types, where each type is tailored 
-            to a specific use case (i.e. networking, consumer, devices, and so forth).</para></listitem>
-            <listitem><para>Employ a Git branching strategy that from a customer's point of view
-            results in a linear path from the baseline kernel.org, through a select group of features and
+            to a specific use case (e.g. networking, consumer, devices, and so forth).</para></listitem>
+            <listitem><para>Employ a Git branching strategy that, from a developer's point of view,
+            results in a linear path from the baseline <filename>kernel.org</filename>, 
+            through a select group of features and
             ends with their BSP-specific commits.</para></listitem>
         </itemizedlist>
         </para>
@@ -60,27 +62,29 @@
     <section id='kernel-big-picture'>
         <title>Yocto Project Kernel Development and Maintenance Overview</title>
         <para>
-            Yocto Project kernel, like other kernels, is based off the Linux kernel release
+            The Yocto Project kernel, like other kernels, is based off the Linux kernel release
             from <ulink url='http://www.kernel.org'></ulink>.  
-            At the beginning of our major development cycle, we choose our Yocto Project kernel 
-            based on factors like release timing, the anticipated release timing of "final" (i.e. non "rc")
-            upstream kernel.org versions, and Yocto Project feature requirements.
-            Typically this will be a kernel that is in the
-            final stages of development by the community (i.e. still in the release
-            candidate or "rc" phase) and not yet a final release. 
-            But by being in the final stages of external development, we know that the 
-            kernel.org final release will clearly land within the early stages of 
+            At the beginning of a major development cycle, the Yocto Project team
+            chooses its Yocto Project kernel 
+            based on factors like release timing, the anticipated release timing of final
+            upstream <filename>kernel.org</filename> versions, and Yocto Project feature requirements.
+            Typically, the kernel chosen is in the
+            final stages of development by the community.
+            In other words, the kernel is in the release
+            candidate or "rc" phase and not yet a final release. 
+            But, by being in the final stages of external development, the team knows that the 
+            <filename>kernel.org</filename> final release will clearly be within the early stages of 
             the Yocto Project development window.
         </para>
         <para>
-            This balance allows us to deliver the most up-to-date kernel
-            as possible, while still ensuring that we have a stable official release as
-            our baseline kernel version.
+            This balance allows the team to deliver the most up-to-date kernel
+            as possible, while still ensuring that the team has a stable official release as
+            the baseline kernel version.
         </para>
         <para>
             The ultimate source for the Yocto Project kernel is a released kernel 
-            from kernel.org.
-            In addition to a foundational kernel from kernel.org the released 
+            from <filename>kernel.org</filename>.
+            In addition to a foundational kernel from <filename>kernel.org</filename>, the released 
             Yocto Project kernel contains a mix of important new mainline
             developments, non-mainline developments (when there is no alternative),
             Board Support Package (BSP) developments,
@@ -88,37 +92,21 @@
             These additions result in a commercially released Yocto Project kernel that caters 
             to specific embedded designer needs for targeted hardware.
         </para>
-<!--        <para>
-            The following figure represents the overall place the Yocto Project kernel fills.
-        </para>
         <para>
-        <imagedata fileref="figures/kernel-big-picture.png" width="6in" depth="6in" align="center" scale="100" />
-        </para>
-        <para>
-            In the figure the ultimate source for the Yocto Project kernel is a released kernel 
-            from kernel.org.
-            In addition to a foundational kernel from kernel.org the commercially released 
-            Yocto Project kernel contains a mix of important new mainline
-            developments, non-mainline developments, Board Support Package (BSP) developments,
-            and custom features.
-            These additions result in a commercially released Yocto Project kernel that caters 
-            to specific embedded designer needs for targeted hardware. 
-        </para> -->
-        <para>
-            Once a Yocto Project kernel is officially released the Yocto Project team goes into 
-            their next development cycle, or "uprev" cycle while continuing maintenance on the 
+            Once a Yocto Project kernel is officially released, the Yocto Project team goes into 
+            their next development cycle, or "uprev" cycle, while still continuing maintenance on the 
             released kernel.
             It is important to note that the most sustainable and stable way
             to include feature development upstream is through a kernel uprev process.
-            Back-porting of hundreds of individual fixes and minor features from various
-            kernel versions is not sustainable and can easily compromise quality. 
+            Back-porting hundreds of individual fixes and minor features from various
+            kernel versions is not sustainable and can easily compromise quality.
+        </para>
+        <para> 
             During the uprev cycle, the Yocto Project team uses an ongoing analysis of
             kernel development, BSP support, and release timing to select the best
-            possible kernel.org version.
+            possible <filename>kernel.org</filename> version.
             The team continually monitors community kernel
             development to look for significant features of interest.
-<!--            The illustration depicts this by showing the team looking back to kernel.org for new features, 
-            BSP features, and significant bug fixes. -->
             The team does consider back-porting large features if they have a significant advantage. 
             User or community demand can also trigger a back-port or creation of new
             functionality in the Yocto Project baseline kernel during the uprev cycle. 
@@ -130,7 +118,7 @@
             It is the Yocto Project team's policy to not back-port minor features to the released kernel. 
             They only consider back-porting significant technological jumps - and, that is done 
             after a complete gap analysis. 
-            The reason for this policy is that simply back-porting any small to medium sized change 
+            The reason for this policy is that back-porting any small to medium sized change 
             from an evolving kernel can easily create mismatches, incompatibilities and very 
             subtle errors.
         </para>
@@ -163,18 +151,23 @@
                 As mentioned earlier, a key goal of Yocto Project is to present the developer with 
                 a kernel that has a clear and continuous history that is visible to the user. 
                 The architecture and mechanisms used achieve that goal in a manner similar to the 
-                upstream kernel.org.
-                
+                upstream <filename>kernel.org</filename>.
             </para>
             <para>
                 You can think of the Yocto Project kernel as consisting of a baseline kernel with
                 added features logically structured on top of the baseline.
                 The features are tagged and organized by way of a branching strategy implemented by the 
-                source code manager (SCM) Git. 
+                source code manager (SCM) Git.
+                For information on Git as applied to the Yocto Project, see the
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html#git'>Git</ulink>"
+                section in <ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html'>The 
+                Yocto Project Development Manual</ulink>.
+            </para>
+            <para>
                 The result is that the user has the ability to see the added features and 
                 the commits that make up those features.
                 In addition to being able to see added features, the user can also view the history of what 
-                made up the baseline kernel as well.
+                made up the baseline kernel.
             </para>
             <para>
                 The following illustration shows the conceptual Yocto Project kernel.
@@ -183,18 +176,20 @@
                 <imagedata fileref="figures/kernel-architecture-overview.png" width="6in" depth="7in" align="center" scale="100" />
             </para>
             <para>
-                In the illustration, the "kernel.org Branch Point" marks the specific spot (or release) from 
-                which the Yocto Project kernel is created.  From this point "up" in the tree features and 
-                differences are organized and tagged.
+                In the illustration, the "<filename>kernel.org</filename> Branch Point" 
+                marks the specific spot (or release) from 
+                which the Yocto Project kernel is created.  
+                From this point "up" in the tree, features and differences are organized and tagged.
             </para>
             <para>
                 The "Yocto Project Baseline Kernel" contains functionality that is common to every kernel
-                type and BSP that is organized further up the tree.  Placing these common features in the 
+                type and BSP that is organized further up the tree.  
+                Placing these common features in the 
                 tree this way means features don't have to be duplicated along individual branches of the 
                 structure.
             </para>
             <para>
-                From the Yocto Project Baseline Kernel branch points represent specific functionality
+                From the Yocto Project Baseline Kernel, branch points represent specific functionality
                 for individual BSPs as well as real-time kernels.
                 The illustration represents this through three BSP-specific branches and a real-time 
                 kernel branch.  
@@ -209,8 +204,9 @@
                 kernel as they apply to a given BSP.
             </para>
             <para>
-                The resulting tree structure presents a clear path of markers (or branches) to the user
-                that for all practical purposes is the kernel needed for any given set of requirements.
+                The resulting tree structure presents a clear path of markers (or branches) to the 
+                developer that, for all practical purposes, is the kernel needed for any given set 
+                of requirements.
             </para>
         </section>
  
@@ -221,50 +217,52 @@
                 no longer shared and thus, needs to be isolated.
                 For example, board-specific incompatibilities would require different functionality
                 and would require a branch to separate the features. 
-                Likewise, for specific kernel features the same branching strategy is used.
+                Likewise, for specific kernel features, the same branching strategy is used.
+            </para>
+            <para>
                 This branching strategy results in a tree that has features organized to be specific 
                 for particular functionality, single kernel types, or a subset of kernel types.  
-                This strategy results in not having to store the same feature twice internally in the 
-                tree.
-                Rather we store the unique differences required to apply the feature onto the kernel type 
-                in question.
+                This strategy also results in not having to store the same feature twice 
+                internally in the tree.
+                Rather, the kernel team stores the unique differences required to apply the 
+                feature onto the kernel type in question.
+                <note>
+                    The Yocto Project team strives to place features in the tree such that they can be 
+                    shared by all boards and kernel types where possible.
+                    However, during development cycles or when large features are merged,
+                    the team cannot always follow this practice. 
+                    In those cases, the team uses isolated branches to merge features.
+                </note>
             </para>
-            <note><para>
-                The Yocto Project team strives to place features in the tree such that they can be 
-                shared by all boards and kernel types where possible.
-                However, during development cycles or when large features are merged this practice 
-                cannot always be followed. 
-                In those cases isolated branches are used for feature merging.
-            </para></note>
             <para>
                 BSP-specific code additions are handled in a similar manner to kernel-specific additions. 
                 Some BSPs only make sense given certain kernel types.
-                So, for these types, we create branches off the end of that kernel type for all 
+                So, for these types, the team creates branches off the end of that kernel type for all 
                 of the BSPs that are supported on that kernel type.  
                 From the perspective of the tools that create the BSP branch, the BSP is really no 
                 different than a feature.
                 Consequently, the same branching strategy applies to BSPs as it does to features.
-                So again, rather than store the BSP twice, only the unique differences for the BSP across
-                the supported multiple kernels are uniquely stored.
+                So again, rather than store the BSP twice, the team only stores the unique 
+                differences for the BSP across the supported multiple kernels.
             </para>
             <para>
                 While this strategy can result in a tree with a significant number of branches, it is
-                important to realize that from the user's point of view, there is a linear
-                path that travels from the baseline kernel.org, through a select group of features and
-                ends with their BSP-specific commits.
+                important to realize that from the developer's point of view, there is a linear
+                path that travels from the baseline <filename>kernel.org</filename>, through a select
+                group of features and ends with their BSP-specific commits.
                 In other words, the divisions of the kernel are transparent and are not relevant 
                 to the developer on a day-to-day basis.  
-                From the user's perspective, this is the "master" branch.
-                They do not need not be aware of the existence of any other branches at all.  
-                Of course there is value in the existence of these branches
+                From the developer's perspective, this path is the "master" branch.
+                The developer does not need not be aware of the existence of any other branches at all.  
+                Of course, there is value in the existence of these branches
                 in the tree, should a person decide to explore them. 
                 For example, a comparison between two BSPs at either the commit level or at the line-by-line 
-                code diff level is now a trivial operation.
+                code <filename>diff</filename> level is now a trivial operation.
             </para>
             <para>
                 Working with the kernel as a structured tree follows recognized community best practices. 
-                In particular, the kernel as shipped with the product should be
-                considered an 'upstream source' and viewed as a series of
+                In particular, the kernel as shipped with the product, should be
+                considered an "upstream source" and viewed as a series of
                 historical and documented modifications (commits). 
                 These modifications represent the development and stabilization done
                 by the Yocto Project kernel development team.
@@ -273,7 +271,7 @@
                 Because commits only change at significant release points in the product life cycle,
                 developers can work on a branch created
                 from the last relevant commit in the shipped Yocto Project kernel. 
-                As mentioned previously, the structure is transparent to the user
+                As mentioned previously, the structure is transparent to the developer
                 because the kernel tree is left in this state after cloning and building the kernel.
             </para>
         </section>
@@ -281,20 +279,26 @@
         <section id='source-code-manager-git'>
             <title>Source Code Manager - Git</title>
             <para>
-                The Source Code Manager (SCM) is Git and it is the obvious mechanism for meeting the 
-                previously mentioned goals.  
-                Not only is it the SCM for kernel.org but Git continues to grow in popularity and
-                supports many different work flows, front-ends and management techniques.
+                The Source Code Manager (SCM) is Git.
+                This SCM is the obvious mechanism for meeting the previously mentioned goals.  
+                Not only is it the SCM for <filename>kernel.org</filename> but,
+                Git continues to grow in popularity and supports many different work flows, 
+                front-ends and management techniques.
             </para>
             <para>
                 You can find documentation on Git at <ulink url='http://git-scm.com/documentation'></ulink>.
-                Also, the Yocto Project Development manual has an introduction to Git and describes a 
-                minimal set of commands that allow you to be functional with Git.
+                You can also get an introduction to Git as it applies to the Yocto Project in the
+                "<ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html#git'>Git</ulink>"
+                section in <ulink url='http://www.yoctoproject.org/docs/1.1/dev-manual/dev-manual.html'>The 
+                Yocto Project Development Manual</ulink>. 
+                This section overviews Git and describes a minimal set of commands that allow you to be 
+                functional using Git.
+                <note>
+                    You can use as much, or as little, of what Git has to offer to accomplish what
+                    you need for your project.
+                    You do not have to be a "Git Master" in order to use it with the Yocto Project.
+                </note>
             </para>
-            <note><para> 
-                It should be noted that you can use as much, or as little, of what Git has to offer 
-                as is appropriate to your project.
-            </para></note>
         </section>
     </section>
 
@@ -307,17 +311,19 @@
             present a simplified view of the kernel for ease of use.
         </para>
         <para>
-            The fundamental properties of the tools that manage and construct the
-            Yocto Project kernel are:
+            Fundamentally, the kernel tools that manage and construct the
+            Yocto Project kernel accomplish the following:
             <itemizedlist>
                 <listitem><para>Group patches into named, reusable features.</para></listitem>
-                <listitem><para>Allow top down control of included features.</para></listitem>
-                <listitem><para>Bind kernel configuration to kernel patches and features.</para></listitem>
+                <listitem><para>Allow top-down control of included features.</para></listitem>
+                <listitem><para>Bind kernel configurations to kernel patches and features.</para></listitem>
                 <listitem><para>Present a seamless Git repository that blends Yocto Project value 
-                    with the kernel.org history and development.</para></listitem>
+                    with the <filename>kernel.org</filename> history and development.</para></listitem>
             </itemizedlist>
         </para>
 <!--<para>
+WRITER NOTE: Put this in for post 1.1 if possible:
+
 The tools that construct a kernel tree will be discussed later in this 
 document. The following tools form the foundation of the Yocto Project 
 kernel toolkit:
