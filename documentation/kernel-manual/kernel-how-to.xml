@@ -140,14 +140,14 @@
         <para>
             Once a local Git repository of the Linux Yocto kernel exists on a development system, 
             you can consider the compilation phase of kernel development - building a kernel image.
-            Some prerequisites exist that must be met before starting the compilation
-            phase of the kernel build system:
+            Some prerequisites exist that are validated by the build process before compilation
+            starts:
         </para>
 
         <itemizedlist>
-            <listitem><para>The <filename>SRC_URI</filename> must point to the kernel Git 
+            <listitem><para>The <filename>SRC_URI</filename> points to the kernel Git 
                 repository.</para></listitem>
-            <listitem><para>A BSP build branch must exist.
+            <listitem><para>A BSP build branch exists.
                 This branch has the following form:
                 <literallayout class='monospaced'>
      &lt;kernel_type&gt;/&lt;bsp_name&gt;
@@ -155,15 +155,14 @@
         </itemizedlist>
 
         <para>
-            You can typically meet these prerequisites by running the tree construction/patching phase 
-            of the build system.
-            However, other means do exist.
-            For examples of alternate workflows such as bootstrapping a BSP, see 
+            The Yocto Project makes sure these conditions exist before attempting compilation.
+            Other means, however, do exist, such as as bootstrapping a BSP, see 
             the "<link linkend='workflow-examples'>Workflow Examples</link>".
         </para>
 
         <para>
-            Before building a kernel, the build process configures the kernel by processing all of the
+            Before building a kernel, the build process verifies the tree 
+            and configures the kernel by processing all of the
             configuration "fragments" specified by feature descriptions in the <filename>.scc</filename>
             files. 
             As the features are compiled, associated kernel configuration fragments are noted
