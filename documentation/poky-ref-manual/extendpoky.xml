@@ -1072,6 +1072,126 @@
         </para>
     </section>
 
+    <section id="building-multiple-architecture-libraries-into-one-image">
+        <title>Building Multiple Architecture Libraries into One Image</title>
+            
+        <para>
+            By taking steps you can create a single image that contains more than 
+            one library for different architectures. 
+            This feature is called "Multilib".
+            This section overviews the process only. 
+            For more detail on how to implement this feature, see the
+            <ulink url='https://wiki.yoctoproject.org/wiki/Multilib'>Multilib</ulink> wiki 
+            page.
+        </para>
+
+        <section id='preparing-to-use-multilib'>
+            <title>Preparing to use Multilib</title>
+
+            <para>
+                In order to implement Multilib, you need to prepare your recipes and packages as
+                follows:
+                <itemizedlist>
+                    <listitem><para>Use the <filename>BBCLASSEXTEND</filename> variable to enable
+                        a recipe for Multilib.  
+                        See the <filename>meta/conf/multilib.conf</filename> configuration file
+                        in the Yocto Project Files directory to see how this variable is used.
+                        </para></listitem>
+                    <listitem><para>Define a global variable <filename>${MLPREFIX}</filename> 
+                        to specify the libraries (e.g. "<filename>lib32-'</filename>" or 
+                        "<filename>lib64-</filename>").</para></listitem>
+                    <listitem><para>Rename your recipe to be <filename>${MLPREFIX}${PN}</filename>.
+                        </para></listitem>
+                    <listitem><para>For any recipe that uses Multilib and specifies lists of
+                        recipes or packages with variables such as <filename>DEPENDS</filename>, 
+                        <filename>RDEPENDS</filename>,
+                        <filename>RPROVIDES</filename>, <filename>RRECOMMENDS</filename>, 
+                        <filename>PACKAGES</filename>, <filename>PACKAGES_DYNAMIC</filename>, 
+                        map those recipes or packages with <filename>${MLPREFIX}</filename>.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Next, be sure that the correct cross-toolchain parameters are used
+                by setting <filename>DEFAULTTUNE_virtclass-multilib-xxx</filename>
+                in the <filename>local.conf</filename> configuration file in the 
+                Yocto Project build directory.
+            </para>
+
+            <para>
+                If you are using the RPM Package Management System, you need to consider the
+                following:
+                <itemizedlist>
+                    <listitem><para>Define the unique architecure for the Multilib packages, along with
+                        creating a unique deploy folder under <filename>tmp/deploy/rpm</filename> in 
+                        the Yocto Project build directory.
+                        For example, consider <filename>lib32</filename> in a 
+                        <filename>qemux86-64</filename> image.
+                        The possible architectures in the system are "all", "qemux86_64", "lib32_qemux86_64", 
+                        and "lib32_x86".</para></listitem>
+                    <listitem><para>Because the <filename>${MLPREFIX}</filename> is stripped from 
+                        <filename>${PN}</filename> during RPM packaging, the naming for a normal 
+                        RPM package and a Multilib RPM package in a <filename>qemux86-64</filename>
+                        system resolves to something similar to <filename>bash-4.1-r2.x86_64.rpm</filename> and 
+                        <filename>bash-4.1.r2.lib32_x86.rpm</filename>, respectively.</para></listitem>
+                    <listitem><para>When installing a Multilib image, the RPM backend first installs
+                        the base image and then installs the Multilib libraries.</para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                If you are using the IPK Package Management System, you need to consider the
+                following:
+                <itemizedlist>
+                    <listitem><para><filename>${MLPREFIX}</filename> is not stripped from 
+                        <filename>${PN}</filename> during IPK packaging, the naming for a normal 
+                        RPM package and a Multilib IPK package in a <filename>qemux86-64</filename>
+                        system resolves to something like <filename>bash_4.1-r2.x86_64.ipk</filename> and 
+                        <filename>lib32-bash_4.1-rw_x86.ipk</filename>, respectively.</para></listitem>
+                    <listitem><para>The IPK deploy folder is not modified with 
+                        <filename>${MLPREFIX}</filename> because packages with and without
+                        the Multilib feature can exist in the same folder due to the 
+                        <filename>${PN}</filename> differences.</para></listitem>
+                    <listitem><para>IPK defines a sanity check for Multilib installation using certain 
+                        rules for file comparison, overridden, etc.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section> 
+
+        <section id='using-multilib'>
+            <title>Using Multilib</title>
+
+            <para>
+                After you have set up the recipies and configurations to use the Multilib feature, 
+                you are ready to build the image.
+                Follow these steps:
+                <orderedlist>
+                    <listitem><para>Make changes in your <filename>local.conf</filename>
+                        configuration file in the Yocto Project build directory.
+                        Here is an example:
+                        <literallayout class='monospaced'>
+     MULTILIB_IMAGE(INSTALL = "lib32-connman"
+     require conf/multilib.con
+     MULTILIBS = "multilib:lib32"
+     DEFAULTTUNE_virtclass-multilib-lib32 = "x86"
+                        </literallayout></para></listitem>
+                    <listitem><para>Build the image using the BitBake command.
+                        For example:
+                        <literallayout class='monospaced'>
+     $ bitbake core-image-sato
+                        </literallayout>
+                        If you want to build a particular recipe only, 
+                        use the BitBake command and specify the recipe only.
+                        For example:
+                        <literallayout class='monospaced'>
+     $ bitbake lib32-connman
+                        </literallayout></para></listitem>
+                </orderedlist>
+            </para>
+        </section> 
+    </section>
+
     <section id="usingpoky-configuring-LIC_FILES_CHKSUM">
         <title>Tracking License Changes</title>
 
