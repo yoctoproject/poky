@@ -336,24 +336,72 @@
             Quick Test Run</ulink>" section of   
             <ulink url='http://www.yoctoproject.org/docs/1.1/yocto-project-qs/yocto-project-qs.html'>
             The Yocto Project Quick Start</ulink>.
-            <note><para> 
+        </para>
+
+        <para> 
             The Yocto Project provides basic kernel and filesystem images for several 
             architectures (<filename>x86</filename>, <filename>x86-64</filename>, 
             <filename>mips</filename>, <filename>powerpc</filename>, and <filename>arm</filename>) 
             that you can use unaltered in the QEMU emulator.  
             These kernel images reside in the Yocto Project release 
             area - <ulink url='http://www.yoctoproject.org/downloads/yocto-1.1/machines/'></ulink>
-            and are ideal for experimentation within Yocto Project.</para>
-            <para>If you plan on remotely deploying and debugging your application from within the 
-            Eclipse IDE, you must have an image that contains the Yocto Target Communication
-            Framework (TCF) agent (<filename>tcf-agent</filename>), which is the 
-            <filename>core-image-sato-sdk</filename> image.
-            For information on the image types you can build using the Yocto Project, see
-            <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>
-            Reference: Images</ulink> in  
+            and are ideal for experimentation within Yocto Project.
+            For information on the image types you can build using the Yocto Project, see the
+            "<ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>Reference: Images</ulink>" appendix in  
             <ulink url='http://www.yoctoproject.org/docs/1.1/poky-ref-manual/poky-ref-manual.html'>
-            The Yocto Project Reference Manual</ulink>.</para>
-            </note>
+            The Yocto Project Reference Manual</ulink>.
+        </para>
+
+        <para>
+            If you plan on remotely deploying and debugging your application from within the 
+            Eclipse IDE, you must have an image that contains the Yocto Target Communication
+            Framework (TCF) agent (<filename>tcf-agent</filename>). 
+            By default, the Yocto Project provides only one pre-built image that contains the 
+            <filename>tcf-agent</filename>.
+            And, that image is <filename>core-image-sato-sdk</filename>.
+        </para>
+
+        <para>
+            If you want to use a different image type that contains the <filename>tcf-agent</filename>, 
+            you can do so one of two ways:
+            <itemizedlist>
+                <listitem><para>Modify the <filename>conf/local.conf</filename> configuration in 
+                    the Yocto Project build directory and then rebuild the image.
+                    With this method you need to modify the <filename>EXTRA_IMAGE_FEATURES</filename>
+                    variable to have the value of "tools-debug" before rebuilding the image. 
+                    Once the image is rebuilt, the <filename>tcf-agent</filename> will be included
+                    in the image and is launched automatically after the boot.</para></listitem>
+                <listitem><para>Manually build the <filename>tcf-agent</filename>.
+                    To build the agent, follow these steps:
+                    <orderedlist>
+                        <listitem><para>Be sure the ADT is installed as described in the 
+                            "<link linkend='installing-the-adt'>Installing the ADT</link>" section.
+                            </para></listitem>
+                        <listitem><para>Set up the cross-development environment as described in the 
+                            "<link linkend='setting-up-the-cross-development-environment'>Setting 
+                            Up the Cross-Development Environment</link>" section.</para></listitem>
+                        <listitem><para>Get the <filename>tcf-agent</filename> source code, which is 
+                            stored using the Subversion SCM, using the following command:
+                            <literallayout class='monospaced'>
+     $ svn checkout svn://dev.eclipse.org/svnroot/dsdp/org.eclipse.tm.tcf/trunk/agent \
+        &lt;-r #rev_number&gt;
+                            </literallayout></para></listitem>
+                        <listitem><para>Modify the <filename>Makefile.inc</filename> file
+                            for the cross-compilation environment by setting the 
+                            <filename>OPSYS</filename> and <filename>MACHINE</filename>
+                            variables according to your target.</para></listitem>
+                        <listitem><para>Use the cross-development tools to build the 
+                            <filename>tcf-agent</filename>.  
+                            Before you "Make" the file, be sure your cross-tools are set up first.
+                            See the "<link linkend='makefile-based-projects'>Makefile-Based Projects</link>"
+                            section for information on how to make sure the cross-tools are set up
+                            correctly.</para>
+                            <para>If the build is successful, the <filename>tcf-agent</filename> output will 
+                            be <filename>obj/$(OPSYS)/$(MACHINE)/Debug/agent</filename>.</para></listitem>
+                        <listitem><para>Deploy the agent into the image's root filesystem.</para></listitem>
+                    </orderedlist>
+                </para></listitem>
+            </itemizedlist>
         </para>
     </section>
 
