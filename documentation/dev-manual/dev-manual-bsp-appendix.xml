@@ -40,14 +40,14 @@
      $ git branch -a
      $ git tag -l
         </literallayout> 
-        For this example we are going to use the Yocto Project 1.1 Release, 
-        which maps to the <filename>1.1</filename> branch in the repository. 
-        These commands create a local branch named <filename>1.1</filename>
+        For this example we are going to use the Yocto Project 1.1 Release, which is code
+        named "edison". 
+        These commands create a local branch named <filename>edison</filename>
         that tracks the remote branch of the same name.
         <literallayout class='monospaced'>
      $ cd poky
-     $ git checkout -b 1.1 origin/1.1
-     Switched to a new branch '1.1'
+     $ git checkout -b edison origin/edison
+     Switched to a new branch 'edison'
         </literallayout>
     </para>
 </section>
@@ -56,7 +56,8 @@
     <title>Choosing a Base BSP</title>
 
     <para>
-        For this example, the base BSP is the Intel Atom Processor E660 with Intel Platform 
+        For this example, the base BSP is the <trademark class='registered'>Intel</trademark>
+        <trademark class='trade'>Atom</trademark> Processor E660 with Intel Platform 
         Controller Hub EG20T Development Kit, which is otherwise referred to as "Crown Bay."
         The BSP layer is <filename>meta-crownbay</filename>.
     </para>
@@ -73,7 +74,7 @@
 
     <para>
         You need to have the base BSP layer on your development system.  
-        Like the local Yocto Project files, you can get the BSP 
+        Similar to the local Yocto Project files, you can get the BSP 
         layer one of two ways:  
         download the BSP tarball and extract it, or set up a local Git repository that 
         has the Yocto Project BSP layers.  
@@ -83,7 +84,7 @@
     </para>
         
     <para>
-        This example assumes a local <filename>meta-intel</filename> Git repository
+        This example assumes the local <filename>meta-intel</filename> Git repository is
         inside the local <filename>poky</filename> Git repository.
         The <filename>meta-intel</filename> Git repository contains all the metadata 
         that supports BSP creation.
@@ -92,11 +93,11 @@
     <para>
         Because <filename>meta-intel</filename> is its own Git repository, you will want
         to be sure you are in the appropriate branch for your work.
-        For this example we are going to use the <filename>1.1</filename> branch. 
+        For this example we are going to use the <filename>edison</filename> branch. 
         <literallayout class='monospaced'>
      $ cd meta-intel
-     $ git checkout -b 1.1 origin/1.1
-     Switched to a new branch 'bernard'
+     $ git checkout -b edison origin/edison
+     Switched to a new branch 'edison'
         </literallayout>
     </para>
 </section>
@@ -105,14 +106,14 @@
     <title>Making a Copy of the Base BSP to Create Your New BSP Layer</title>
 
     <para>
-        Now that you have the local Yocto Project files and the base BSP files you need to create a 
+        Now that you have the local Yocto Project files and the base BSP files, you need to create a 
         new layer for your BSP.
-        To create your BSP layer you simply copy the <filename>meta-crownbay</filename>
+        To create your BSP layer, you simply copy the <filename>meta-crownbay</filename>
         layer to a new layer.
     </para>
 
     <para>  
-        For this example the new layer will be named <filename>meta-mymachine</filename>.  
+        For this example, the new layer will be named <filename>meta-mymachine</filename>.  
         The name must follow the BSP layer naming convention, which is 
         <filename>meta-&lt;name&gt;</filename>.  
         The following example assumes your working directory is <filename>meta-intel</filename> 
@@ -148,7 +149,7 @@
         </para>
 
         <para>
-            First, since in this example the new BSP will not support EMGD we will get rid of the 
+            First, since in this example the new BSP will not support EMGD, we will get rid of the 
             <filename>crownbay.conf</filename> file and then rename the 
             <filename>crownbay-noemgd.conf</filename> file to <filename>mymachine.conf</filename>.  
             Much of what we do in the configuration directory is designed to help the Yocto Project 
@@ -172,7 +173,7 @@
             Note that inside the <filename>mymachine.conf</filename> is the 
             <filename>PREFERRED_PROVIDER_virtual/kernel</filename> statement. 
             This statement identifies the kernel that the BSP is going to use.
-            In this case the BSP is using <filename>linux-yocto</filename>, which is the 
+            In this case, the BSP is using <filename>linux-yocto</filename>, which is the 
             current Linux Yocto kernel based on the Linux 3.0 release. 
         </para>
 
@@ -180,8 +181,9 @@
             The next configuration file in the new BSP layer we need to edit is <filename>layer.conf</filename>.
             This file identifies build information needed for the new layer.  
             You can see the 
-            <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout-layer'>
-            Layer Configuration File</ulink> section in the Board Support Packages (BSP) Development Guide
+            "<ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout-layer'>Layer Configuration File</ulink>" section in  
+            <ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html'>The Board 
+            Support Packages (BSP) Development Guide</ulink>
             for more information on this configuration file.  
             Basically, we are changing the existing statements to work with our BSP. 
         </para>
@@ -212,10 +214,10 @@
         <para>
             Now we will take a look at the recipes in your new layer.  
             The standard BSP structure has areas for BSP, graphics, core, and kernel recipes.  
-            When you create a BSP you use these areas for appropriate recipes and append files.  
+            When you create a BSP, you use these areas for appropriate recipes and append files.  
             Recipes take the form of <filename>.bb</filename> files.  
             If you want to leverage the existing recipes the Yocto Project build system uses
-            but change those recipes you can use <filename>.bbappend</filename> files.  
+            but change those recipes, you can use <filename>.bbappend</filename> files.  
             All new recipes and append files for your layer must go in the layer’s 
             <filename>recipes-bsp</filename>, <filename>recipes-kernel</filename>, 
             <filename>recipes-core</filename>, and 
@@ -321,14 +323,14 @@
                 Here are the statements: 
                 <literallayout class='monospaced'>
      SRCREV_machine_pn-linux-yocto_crownbay ?= \
-        "372c0ab135978bd8ca3a77c88816a25c5ed8f303"
+        "2247da9131ea7e46ed4766a69bb1353dba22f873"
      SRCREV_meta_pn-linux-yocto_crownbay ?= \
-        "d5d3c6480d61f83503ccef7fbcd765f7aca8b71b"
+        "67a46a608f47c19f16995be7de7b272025864b1b"
 
      SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= \
-        "372c0ab135978bd8ca3a77c88816a25c5ed8f303"
+        "2247da9131ea7e46ed4766a69bb1353dba22f873"
      SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= \
-        "d5d3c6480d61f83503ccef7fbcd765f7aca8b71b"
+        "67a46a608f47c19f16995be7de7b272025864b1b"
                 </literallayout>
             </para>
 
@@ -345,7 +347,7 @@
             <para>  
                 To fix this situation in <filename>linux-yocto_3.0.bbappend</filename>
                 we delete the two <filename>SRCREV</filename> statements that support 
-               EMGD (the top pair).
+                EMGD (the top pair).
                 We also change the remaining pair to specify <filename>mymachine</filename>
                 and insert the commit identifiers to identify the kernel in which we 
                 are interested, which will be based on the <filename>atom-pc-standard</filename>
@@ -353,9 +355,9 @@
                 Here are the final <filename>SRCREV</filename> statements:
                 <literallayout class='monospaced'>
      SRCREV_machine_pn-linux-yocto_mymachine ?= \ 
-        "fce17f046d3756045e4dfb49221d1cf60fcae329"
+        "06c798f25a19281d7fa944b14366dd75820ba009"
      SRCREV_meta_pn-linux-yocto_mymachine ?= \ 
-        "84f1a422d7e21fbc23a687035bdf9d42471f19e0"
+        "67a46a608f47c19f16995be7de7b272025864b1b"
                 </literallayout>
             </para>
 
@@ -364,9 +366,8 @@
                 exact commit strings in the Yocto Project source repositories you need to change 
                 the <filename>SRCREV</filename> statements.  
                 You can find all the <filename>machine</filename> and <filename>meta</filename> 
-                branch points (commits) for the <filename>linux-yocto-3.0</filename> kernel 
-                <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/linux-yocto-2.6.37'>here</ulink>
-                [WRITER's NOTE:  Need new link to the 3.0 source repo area when it is available].  
+                branch points (commits) for the <filename>linux-yocto-3.0</filename> kernel at
+                <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/linux-yocto-3.0'></ulink>.  
             </para>
 
             <para>
@@ -405,9 +406,9 @@
      KERNEL_FEATURES_append_mymachine += " cfg/smp.scc"
 
      SRCREV_machine_pn-linux-yocto_mymachine ?= \
-        "fce17f046d3756045e4dfb49221d1cf60fcae329"
+        "06c798f25a19281d7fa944b14366dd75820ba009"
      SRCREV_meta_pn-linux-yocto_mymachine ?= \
-        "84f1a422d7e21fbc23a687035bdf9d42471f19e0"
+        "67a46a608f47c19f16995be7de7b272025864b1b"
                 </literallayout>
             </para>
         </section>
@@ -502,7 +503,7 @@
         For example, moving your working directory around could cause problems.  
         Here is the command for this example:
         <literallayout class='monospaced'>
-     $ bitbake –k core-image-sato-live
+     $ bitbake -k core-image-sato
         </literallayout>
     </para>
 
