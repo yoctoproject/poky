@@ -181,7 +181,7 @@
             <para>
                 Once the installation completes, the ADT, which includes the cross-toolchain, is installed.
                 You will notice environment setup files for the cross-toolchain in 
-                <filename>/opt/poky/$SDKVERSION</filename>,
+                <filename>/opt/poky/1.1</filename>,
                 and image tarballs in the <filename>adt-installer</filename>
                 directory according to your installer configurations, and the target sysroot located
                 according to the <filename>YOCTOADT_TARGET_SYSROOT_LOC_&lt;arch&gt;</filename> variable
@@ -204,7 +204,7 @@
             Follow these steps:
             <orderedlist>
                 <listitem><para>Go to  
-                    <ulink url='http://autobuilder.yoctoproject.org/downloads/yocto-1.1/toolchain'></ulink> 
+                    <ulink url='http://www.yoctoproject.org/downloads/yocto-1.1/toolchain'></ulink> 
                     and find the folder that matches your host development system 
                     (i.e. <filename>i586</filename> for 32-bit machines or 
                     <filename>x86_64</filename> for 64-bit machines).</para></listitem>
@@ -214,10 +214,8 @@
                     you are going to use your cross-toolchain for an Intel-based 32-bit target, go into the 
                     <filename>x86_64</filename> folder and download the following tarball:
                     <literallayout class='monospaced'>
-     yocto-eglibc-x86_64-i586-toolchain-gmae-1.1.tar.bz2
-                   </literallayout>
-                   The cross-toolchain tarballs provided by the Yocto Project support development
-                   of GNOME platforms on mobile devices (GMAE).
+     yocto-eglibc-x86_64-i586-toolchain-1.1.tar.bz2
+                    </literallayout>
                     <note><para>As an alternative to steps one and two, you can build the toolchain tarball 
                         if you have a Yocto Project build tree.
                         If you need GMAE, you should use the <filename>bitbake meta-toolchain-gmae</filename>
@@ -233,7 +231,7 @@
                         </para></note></para></listitem>
                 <listitem><para>Make sure you are in the root directory with root privileges and then expand 
                     the tarball.  
-                    The tarball expands into <filename>/opt/poky/$SDKVERSION</filename>.
+                    The tarball expands into <filename>/opt/poky/1.1</filename>.
                     Once the tarball is expanded, the cross-toolchain is installed.
                     You will notice environment setup files for the cross-toolchain in the directory.
                     </para></listitem>
@@ -260,8 +258,8 @@
                     files.</para></listitem> 
                 <listitem><para>At this point, you should be sure that the 
                     <filename>MACHINE</filename> variable 
-                    in the <filename>local.conf</filename> file found in the Yocto Project 
-                    file structure's <filename>conf</filename> directory 
+                    in the <filename>local.conf</filename> file found in the 
+                    <filename>conf</filename> directory of the Yocto Project build directory
                     is set for the target architecture.
                     Comments within the <filename>local.conf</filename> file list the values you 
                     can use for the <filename>MACHINE</filename> variable.  
@@ -274,12 +272,12 @@
                     cross-toolchain installation.
                     <note>If change out of your working directory after you 
                         <filename>source</filename> the environment setup script and before you run
-                        the BitBake command, the command might not work. 
+                        the <filename>bitbake</filename> command, the command might not work. 
                         Be sure to run the <filename>bitbake</filename> command immediately 
                         after checking or editing the <filename>local.conf</filename> but without 
                         changing out of your working directory.</note>
-                    Once BitBake finishes, the cross-toolchain is installed within the Yocto Project
-                    build tree.
+                    Once the <filename>bitbake</filename> command finishes, 
+                    the tarball for the cross-toolchain is generated within the Yocto Project build tree.
                     You will notice environment setup files for the cross-toolchain in the 
                     Yocto Project build tree in the <filename>tmp</filename> directory.
                     Setup script filenames contain the strings <filename>environment-setup</filename>.
@@ -294,12 +292,12 @@
 
     <para>
         Before you can develop using the cross-toolchain, you need to set up the 
-        cross-development environment by sourcing the environment setup script.  
+        cross-development environment by sourcing the toolchain's environment setup script.  
         If you used the ADT Installer or used an existing ADT tarball to install the ADT,
-        then you can find this script in the <filename>/opt/poky/$SDKVERSION</filename>
+        then you can find this script in the <filename>/opt/poky/1.1</filename>
         directory.  
         If you installed the toolchain in the build tree, you can find the environment setup 
-        scripts in the Yocto Project build tree's <filename>tmp</filename> directory.
+        script for the toolchain in the Yocto Project build tree's <filename>tmp</filename> directory.
     </para>
 
     <para> 
@@ -307,7 +305,7 @@
         which you are developing.  
         Environment setup scripts begin with the string “<filename>environment-setup</filename>”
         and include as part of their name the architecture.  
-        For example, the environment setup script for a 64-bit IA-based architecture would 
+        For example, the toolchain environment setup script for a 64-bit IA-based architecture would 
         be the following: 
         <literallayout class='monospaced'>
      /opt/poky/1.1/environment-setup-x86_64-poky-linux
