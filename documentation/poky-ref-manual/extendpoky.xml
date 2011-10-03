@@ -1073,14 +1073,36 @@
     </section>
 
     <section id="building-multiple-architecture-libraries-into-one-image">
-        <title>Building Multiple Architecture Libraries into One Image</title>
-            
+        <title>Combining Multiple versions of Library Files into One Image</title>
+
         <para>
-            By taking steps you can create a single image that contains more than 
-            one library for different architectures. 
-            This feature is called "Multilib".
-            This section overviews the process only. 
-            For more detail on how to implement this feature, see the
+            The build system offers the ability to build libraries with different
+            target optimizations or architecture formats and combine these together
+            into one system image. 
+            You can link different binaries in the image 
+            against the different libraries as needed for specific use cases.
+            This feature is called "Multilib."
+        </para>
+
+        <para>
+            An example would be where you have most of a system compiled in 32-bit
+            mode using 32-bit libraries, but you have something large, like a database
+            engine, that needs to be a 64-bit application and use 64-bit libraries.
+            Multilib allows you to get the best of both 32-bit and 64-bit libraries.
+        </para>
+
+        <para>
+            While the Multilib feature is most commonly used for 32 and 64-bit differences,
+            the approach the build system uses facilitates different target optimizations. 
+            You could compile some binaries to use one set of libraries and other binaries
+            to use other different sets of libraries.
+            The libraries could differ in architecture, compiler options, or other 
+            optimizations.
+        </para>
+
+        <para>
+            This section overviews the Multilib process only. 
+            For more details on how to implement Multilib, see the 
             <ulink url='https://wiki.yoctoproject.org/wiki/Multilib'>Multilib</ulink> wiki 
             page.
         </para>
@@ -1089,105 +1111,127 @@
             <title>Preparing to use Multilib</title>
 
             <para>
-                In order to implement Multilib, you need to prepare your recipes and packages as
-                follows:
-                <itemizedlist>
-                    <listitem><para>Use the <filename>BBCLASSEXTEND</filename> variable to enable
-                        a recipe for Multilib.  
-                        See the <filename>meta/conf/multilib.conf</filename> configuration file
-                        in the Yocto Project Files directory to see how this variable is used.
-                        </para></listitem>
-                    <listitem><para>Define a global variable <filename>${MLPREFIX}</filename> 
-                        to specify the libraries (e.g. "<filename>lib32-'</filename>" or 
-                        "<filename>lib64-</filename>").</para></listitem>
-                    <listitem><para>Rename your recipe to be <filename>${MLPREFIX}${PN}</filename>.
-                        </para></listitem>
-                    <listitem><para>For any recipe that uses Multilib and specifies lists of
-                        recipes or packages with variables such as <filename>DEPENDS</filename>, 
-                        <filename>RDEPENDS</filename>,
-                        <filename>RPROVIDES</filename>, <filename>RRECOMMENDS</filename>, 
-                        <filename>PACKAGES</filename>, <filename>PACKAGES_DYNAMIC</filename>, 
-                        map those recipes or packages with <filename>${MLPREFIX}</filename>.
-                        </para></listitem>
-                </itemizedlist>
+                User-specific requirements drive the Multilib feature,
+                Consequently, there is no one "out-of-the-box" configuration that likely
+                exists to meet your needs.
             </para>
 
             <para>
-                Next, be sure that the correct cross-toolchain parameters are used
-                by setting <filename>DEFAULTTUNE_virtclass-multilib-xxx</filename>
-                in the <filename>local.conf</filename> configuration file in the 
-                Yocto Project build directory.
+                In order to enable Multilib, you first need to ensure your recipe is
+                extended to support multiple libraries. 
+                Many standard recipes are already extended and support multiple libraries.
+                You can check in the <filename>meta/conf/multilib.conf</filename>
+                configuration file in the Yocto Project files directory to see how this is 
+                done using the <filename>BBCLASSEXTEND</filename> variable.
+                Eventually, all recipes will be covered and this list will be unneeded.
             </para>
-
+  
             <para>
-                If you are using the RPM Package Management System, you need to consider the
-                following:
-                <itemizedlist>
-                    <listitem><para>Define the unique architecure for the Multilib packages, along with
-                        creating a unique deploy folder under <filename>tmp/deploy/rpm</filename> in 
-                        the Yocto Project build directory.
-                        For example, consider <filename>lib32</filename> in a 
-                        <filename>qemux86-64</filename> image.
-                        The possible architectures in the system are "all", "qemux86_64", "lib32_qemux86_64", 
-                        and "lib32_x86".</para></listitem>
-                    <listitem><para>Because the <filename>${MLPREFIX}</filename> is stripped from 
-                        <filename>${PN}</filename> during RPM packaging, the naming for a normal 
-                        RPM package and a Multilib RPM package in a <filename>qemux86-64</filename>
-                        system resolves to something similar to <filename>bash-4.1-r2.x86_64.rpm</filename> and 
-                        <filename>bash-4.1.r2.lib32_x86.rpm</filename>, respectively.</para></listitem>
-                    <listitem><para>When installing a Multilib image, the RPM backend first installs
-                        the base image and then installs the Multilib libraries.</para></listitem>
-                </itemizedlist>
+                For the most part, the Multilib class extension works automatically to
+                extend the package name from <filename>${PN}</filename> to
+                <filename>${MLPREFIX}${PN}</filename>, where <filename>MLPREFIX</filename>
+                is the particular multilib (e.g. "lib32-" or "lib64-"). 
+                Standard variables such as <filename>DEPENDS</filename>, 
+                <filename>RDEPENDS</filename>, <filename>RPROVIDES</filename>, 
+                <filename>RRECOMMENDS</filename>, <filename>PACKAGES</filename>, and 
+                <filename>PACKAGES_DYNAMIC</filename> are automatically extended by the system.
+                If you are extending any manual code in the recipe, you can use the 
+                <filename>${MLPREFIX}</filename> variable to ensure those names are extended 
+                correctly. 
+                This automatic extension code resides in <filename>multilib.bbclass</filename>.
             </para>
-
-            <para>
-                If you are using the IPK Package Management System, you need to consider the
-                following:
-                <itemizedlist>
-                    <listitem><para><filename>${MLPREFIX}</filename> is not stripped from 
-                        <filename>${PN}</filename> during IPK packaging, the naming for a normal 
-                        RPM package and a Multilib IPK package in a <filename>qemux86-64</filename>
-                        system resolves to something like <filename>bash_4.1-r2.x86_64.ipk</filename> and 
-                        <filename>lib32-bash_4.1-rw_x86.ipk</filename>, respectively.</para></listitem>
-                    <listitem><para>The IPK deploy folder is not modified with 
-                        <filename>${MLPREFIX}</filename> because packages with and without
-                        the Multilib feature can exist in the same folder due to the 
-                        <filename>${PN}</filename> differences.</para></listitem>
-                    <listitem><para>IPK defines a sanity check for Multilib installation using certain 
-                        rules for file comparison, overridden, etc.</para></listitem>
-                </itemizedlist>
-            </para>
-        </section> 
+        </section>
 
         <section id='using-multilib'>
             <title>Using Multilib</title>
 
             <para>
-                After you have set up the recipies and configurations to use the Multilib feature, 
-                you are ready to build the image.
-                Follow these steps:
-                <orderedlist>
-                    <listitem><para>Make changes in your <filename>local.conf</filename>
-                        configuration file in the Yocto Project build directory.
-                        Here is an example:
-                        <literallayout class='monospaced'>
-     MULTILIB_IMAGE(INSTALL = "lib32-connman"
-     require conf/multilib.con
+                After you have set up the recipes, you need to define the actual
+                combination of multiple libraries you want to build. 
+                You accomplish this through your <filename>local.conf</filename>
+                configuration file in the Yocto Project build directory. 
+                An example configuration would be as follows:
+                <literallayout class='monospaced'>
+     MACHINE = "qemux86-64"
+     require conf/multilib.conf
      MULTILIBS = "multilib:lib32"
      DEFAULTTUNE_virtclass-multilib-lib32 = "x86"
-                        </literallayout></para></listitem>
-                    <listitem><para>Build the image using the BitBake command.
-                        For example:
-                        <literallayout class='monospaced'>
+     MULTILIB_IMAGE_INSTALL = "lib32-connman"
+                </literallayout>
+                This example enables an
+                additional library named <filename>lib32</filename> alongside the 
+                normal target packages.
+                When combining these "lib32" alternatives, the example uses "x86" for tuning.
+                For information on this particular tuning, see
+                <filename>meta/conf/machine/include/ia32/arch-ia32.inc</filename>.
+            </para>
+
+            <para>
+                The example then includes <filename>lib32-connman</filename>
+                in all the images, which illustrates one method of including a 
+                multiple library dependency. 
+                You can use a normal image build to include this dependency,
+                for example:
+                <literallayout class='monospaced'>
      $ bitbake core-image-sato
-                        </literallayout>
-                        If you want to build a particular recipe only, 
-                        use the BitBake command and specify the recipe only.
-                        For example:
-                        <literallayout class='monospaced'>
-     $ bitbake lib32-connman
-                        </literallayout></para></listitem>
-                </orderedlist>
+                </literallayout>
+                You can also build Multilib packages specifically with a command like this:
+                <literallayout class='monospaced'>
+     $  bitbake lib32-connman
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='additional-implementation-details'>
+            <title>Additional Implementation Details</title>
+
+            <para>
+                Different packaging systems have different levels of native Multilib
+                support. 
+                For the RPM Package Management System, the following implementation details 
+                exist:
+                <itemizedlist>
+                    <listitem><para>A unique architecture is defined for the Multilib packages,
+                        along with creating a unique deploy folder under 
+                        <filename>tmp/deploy/rpm</filename> in the Yocto
+                        Project build directory. 
+                        For example, consider <filename>lib32</filename> in a 
+                        <filename>qemux86-64</filename> image. 
+                        The possible architectures in the system are "all", "qemux86_64",
+                        "lib32_qemux86_64", and "lib32_x86".</para></listitem>
+                    <listitem><para>The <filename>${MLPREFIX}</filename> variable is stripped from 
+                        <filename>${PN}</filename> during RPM packaging.
+                        The naming for a normal RPM package and a Multilib RPM package in a
+                        <filename>qemux86-64</filename> system resolves to something similar to
+                        <filename>bash-4.1-r2.x86_64.rpm</filename> and 
+                        <filename>bash-4.1.r2.lib32_x86.rpm</filename>, respectively.
+                        </para></listitem>
+                    <listitem><para>When installing a Multilib image, the RPM backend first 
+                        installs the base image and then installs the Multilib libraries.
+                        </para></listitem>
+                    <listitem><para>The build system relies on RPM to resolve the identical files in the 
+                        two (or more) Multilib packages.</para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                For the IPK Package Management System, the following implementation details exist:
+                <itemizedlist>
+                    <listitem><para>The <filename>${MLPREFIX}</filename> is not stripped from 
+                        <filename>${PN}</filename> during IPK packaging.
+                        The naming for a normal RPM package and a Multilib IPK package in a
+                        <filename>qemux86-64</filename> system resolves to something like 
+                        <filename>bash_4.1-r2.x86_64.ipk</filename> and
+                        <filename>lib32-bash_4.1-rw_x86.ipk</filename>, respectively.
+                        </para></listitem>
+                    <listitem><para>The IPK deploy folder is not modified with 
+                        <filename>${MLPREFIX}</filename> because packages with and without 
+                        the Multilib feature can exist in the same folder due to the 
+                        <filename>${PN}</filename> differences.</para></listitem>
+                    <listitem><para>IPK defines a sanity check for Multilib installation 
+                        using certain rules for file comparison, overridden, etc.
+                        </para></listitem>
+                </itemizedlist>
             </para>
         </section> 
     </section>
