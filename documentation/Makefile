@@ -69,7 +69,8 @@ ALLPREQ = html pdf tarball
 TARFILES = style.css dev-manual.html dev-manual.pdf figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
            figures/kernel-example-repos.png figures/kernel-overview-1.png figures/kernel-overview-2.png \
-           figures/kernel-overview-3.png figures/source-repos.png figures/yp-download.png
+           figures/kernel-overview-3.png figures/source-repos.png figures/yp-download.png \
+           figures/wip.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
