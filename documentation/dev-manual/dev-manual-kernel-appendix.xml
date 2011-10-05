@@ -506,6 +506,23 @@
             <para>
                 If you took the time to work through the example that modifies the kernel source code 
                 in "<link linkend='modifying-the-kernel-source-code'>Modifying the Kernel Source
+                Code</link>" you should already have the Yocto Project files set up on your 
+                host machine.
+            </para>
+
+            <para>
+                If you don't have the Yocto Project files established on your system, 
+                See "<link linkend='setting-up-the-local-yocto-project-files-git-repository'>Setting 
+                Up the Local Yocto Project Files Git Repository</link>" for 
+                information.
+                To reconfigure the kernel, this is the only Git repository you need to have set up. 
+            </para>
+
+<!--
+
+            <para>
+                If you took the time to work through the example that modifies the kernel source code 
+                in "<link linkend='modifying-the-kernel-source-code'>Modifying the Kernel Source
                 Code</link>" you are already set up to quickly work through this example.
                 If not, then work through the following list to prepare:
                 <itemizedlist>
@@ -530,7 +547,7 @@
                         and Booting the Default QEMU Kernel image</link>" for information.
                         Do not boot the image in the QEMU emulator at this point.</para></listitem>
                 </itemizedlist>
-            </para>
+            </para> -->
         </section>
 
         <section id='examining-the-default-config-smp-behavior'>
@@ -541,7 +558,7 @@
                 To see this default setting from within the QEMU emulator, boot your image using 
                 the emulator as follows:
                 <literallayout class='monospaced'>
-     $ runqemu qemux86
+     $ runqemu qemux86 qemuparams="-smp 2"
                 </literallayout>
             </para>
 
@@ -627,12 +644,19 @@
             <para>
                 A good method to isolate changed configurations is to use a combination of the 
                 <filename>menuconfig</filename> tool and simple shell commands.
-                Before changing configurations with <filename>menuconfig</filename>, simply rename
-                the default <filename>.config</filename>, use <filename>menuconfig</filename> to make 
+                Before changing configurations with <filename>menuconfig</filename>, copy the 
+                existing <filename>.config</filename> and rename it to something else,
+                use <filename>menuconfig</filename> to make 
                 as many changes an you want and save them, then compare the renamed configuration 
                 file against the newly created file.
                 You can use the resulting differences as your base to create configuration fragments
                 to permanently save in your kernel layer.
+                <note>
+                    Be sure to make a copy of the <filename>.config</filename> and don't just
+                    rename it. 
+                    The Yocto Project build system needs an existing <filename>.config</filename>
+                    from which to work.
+                </note>
             </para>
         </section>
 
@@ -651,7 +675,7 @@
             <para>
                 Now run the QEMU emulator:
                 <literallayout class='monospaced'>
-     $ runqemu qemux86
+     $ runqemu qemux86 qemuparams="-smp 2"
                 </literallayout>
             </para>
 
