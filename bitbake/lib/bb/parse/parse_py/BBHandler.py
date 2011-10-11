@@ -193,7 +193,6 @@ def feeder(lineno, s, fn, root, statements):
             if lineno == IN_PYTHON_EOF:
                 return
 
-
     if s and s[0] == '#':
         if len(__residue__) != 0 and __residue__[0][0] != "#":
             bb.error("There is a comment on line %s of file %s (%s) which is in the middle of a multiline expression.\nBitbake used to ignore these but no longer does so, please fix your metadata as errors are likely as a result of this change." % (lineno, fn, s))
