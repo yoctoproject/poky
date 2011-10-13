@@ -1,7 +1,7 @@
 require python.inc
 DEPENDS = "python-native db gdbm openssl readline sqlite3 zlib"
 DEPENDS_sharprom = "python-native db readline zlib gdbm openssl"
-PR = "${INC_PR}.2"
+PR = "${INC_PR}.3"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=38fdd546420fab09ac6bd3d8a1c83eb6"
 
 DISTRO_SRC_URI ?= "file://sitecustomize.py"
@@ -17,6 +17,7 @@ SRC_URI = "\
   file://06-avoid_usr_lib_termcap_path_in_linking.patch \
   file://07-linux3-regen-fix.patch \
   file://99-ignore-optimization-flag.patch \
+  file://fix-cgi-http-server.patch \
   ${DISTRO_SRC_URI} \
 "
 
