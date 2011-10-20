@@ -191,7 +191,7 @@
 
         <para>
             Kernel modification involves changing the Linux Yocto kernel, which could involve changing
-            configuration variables as well as adding new kernel recipes.  
+            configuration options as well as adding new kernel recipes.  
             Configuration changes can be added in the form of configuration fragments, while recipe
             modification comes through the kernel's <filename>recipes-kernel</filename> area
             in a kernel layer you create.
@@ -212,8 +212,8 @@
             <title>Kernel Overview</title>
 
             <para>
-                When one thinks of the source files for a kernel they usually think of a fixed structure 
-                of files that contain kernel patches.
+                Traditionally, when one thinks of a patched kernel, they think of a base kernel
+                source tree and a fixed structure that conains kernel patches.
                 The Yocto Project, however, employs mechanisims, that in a sense, result in a kernel source
                 generator.
                 By the end of this section, this analogy will become clearer.
@@ -239,8 +239,8 @@
             </para>
 
             <para>
-                The kernels are maintained using the Git application that, in a sense, structures
-                them in a "tree" complete with branches and leaves.
+                The kernels are maintained using the Git revision control system
+                that structures them using the familiar "tree", "branch", and "leaf" scheme.
                 Branches represent diversions from general code to more specific code, while leaves
                 represent the end-points for a complete and unique kernel whose source files 
                 when gathered from the root of the tree to the leaf accumulate to create the files
@@ -253,7 +253,7 @@
 
             <para>
                 Within the figure, the "Kernel.org Branch Point" represents the point in the tree
-                where a supported base kernel diverges from the Linux kernel.
+                where a supported base kernel is modified from the Linux kernel.
                 For example, this could be the branch point for the <filename>linux-yocto-3.0</filename>
                 kernel.
                 Thus, everything further to the right in the structure is based on the 
@@ -267,7 +267,7 @@
 
             <para>
                 The overall result is a Git-maintained repository from which all the supported
-                Yocto Project kernels can be derived for all the supported Yocto Project devices.
+                Yocto Project kernel types can be derived for all the supported Yocto Project devices.
                 A big advantage to this scheme is the sharing of common features by keeping them in 
                 "larger" branches within the tree.  
                 This practice eliminates redundant storage of similar features shared among kernels.
@@ -390,7 +390,10 @@
                         Project files Git repository.
                         For information on how to get these files, see the bulleted item
                         "<link linkend='poky-extras-repo'>The <filename>poky-extras</filename> Git Repository</link>"
-                        earlier in this manual.</para></listitem>
+                        earlier in this manual.
+                        <note>While it is certainly possible to modify the kernel without involving
+                            a local Git repository, the suggested workflow for kernel modification
+                            using the Yocto Project does use a Git repository.</note></para></listitem>
                     <listitem><para><emphasis>Establish a local copy of the Linux Yocto kernel files on your 
                         system</emphasis>:  In order to make modifications to the kernel you need two things:
                         a bare clone of the Linux Yocto kernel you are modifying and  
@@ -412,7 +415,7 @@
                         Once the changes are made, you need to use Git commands to commit the changes
                         and then push them to the bare clone.</para></listitem>                      
                     <listitem><para><emphasis>Make kernel configuration changes
-                        to your local kernel layer if applicable</emphasis>:  
+                        if applicable</emphasis>:  
                         If your situation calls for changing the kernel's configuration, you can 
                         use <filename>menuconfig</filename>
                         to enable and disable kernel configurations.  
@@ -420,11 +423,18 @@
                         configuration changes you are making to the kernel.
                         When saved, changes using <filename>menuconfig</filename> update the kernel's
                         <filename>.config</filename>.
-                        As an alternative method to changing the kernel's configuration, you can simply
-                        edit the <filename>.config</filename> found in the Yocto Project build 
-                        directory at <filename>tmp/sysroots/&lt;machine-name&gt;/kernel</filename> 
-                        directly.</para></listitem>                      
-                    <listitem><para><emphasis>Add new kernel recipes if applicable</emphasis>:  The standard 
+                        Try to resist the temptation of directly editing the <filename>.config</filename> 
+                        file found in the Yocto Project build directory at 
+                        <filename>tmp/sysroots/&lt;machine-name&gt;/kernel</filename>.
+                        Doing so, can produce unexpected results when the Yocto Project build system 
+                        regenerates the configuration file.</para>
+                        <para>Once you are satisfied with the configuration changes made using 
+                        <filename>menuconfig</filename>, you can directly examine the 
+                        <filename>.config</filename> file against a saved original and gather those
+                        changes into a config fragment to be placed inside a  
+                        <filename>.bbappend</filename></para></listitem>                      
+                    <listitem><para><emphasis>Add or extend kernel recipes if applicable</emphasis>:  
+                        The standard 
                         layer structure organizes recipe files inside the 
                         <filename>meta-kernel-dev</filename> layer that is within the 
                         <filename>poky-extras</filename> Git repository.
@@ -465,10 +475,10 @@
                         which allows you to distribute the layer.</para></listitem>
                     <listitem><para><emphasis>If applicable, share your in-tree changes</emphasis>:  
                         If the changes you made
-                        are suited for all Linux Yocto users, you might want to push the changes to a 
-                        contribution area for the Linux Yocto Git repository. 
-                        Once the changes are pushed, you can request that they 
-                        be pulled into the master branch of the kernel tree. 
+                        are suited for all Linux Yocto users, you might want to send them on for inclusion
+                        into the Linux Yocto Git repository. 
+                        If the changes are accepted, the Yocto Project Maintainer pulls them into 
+                        the master branch of the kernel tree. 
                         Doing so makes them available to everyone using the kernel.</para></listitem> 
                 </orderedlist>
             </para>
