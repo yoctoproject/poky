@@ -369,7 +369,7 @@
             will allow the change, and for ultimately pushing the change from your local Git repository 
             into the project’s upstream (or master) repository.</para></listitem>
         <listitem><para><emphasis><filename>git status</filename>:</emphasis> Reports any modified files that 
-            possibly need added and committed.</para></listitem>
+            possibly need to be added and committed.</para></listitem>
         <listitem><para><emphasis><filename>git checkout &lt;branch-name&gt;</filename>:</emphasis> Changes 
             your working branch.  
             This command is analogous to “cd”.</para></listitem>
@@ -423,7 +423,7 @@
         In particular, the information covers basic practices that describe roles and actions in a 
         collaborative development environment.  
         Again, if you are familiar with this type of development environment, you might want to just 
-        skip the section. 
+        skip this section.
     </para>
 
     <para>
@@ -436,7 +436,7 @@
         The maintainer is responsible for allowing changes in from other developers and for 
         organizing the underlying branch structure to reflect release strategies and so forth.  
         <note>You can see who is the maintainer for Yocto Project files by examining the 
-        <filename>distro_tracking_fields</filename> file in the Yocto Project 
+        <filename>distro_tracking_fields.inc</filename> file in the Yocto Project
         <filename>meta/conf/distro/include</filename> directory.</note>  
     </para>
 
@@ -475,7 +475,7 @@
         "master" branch of the Git repository, which is controlled by the project’s maintainer.  
         And, we have a set of developers who independently develop, test, and submit changes 
         to "contrib" areas for the maintainer to examine.  
-        The maintainer then chooses which changes are going to become permanently a part of the project.  
+        The maintainer then chooses which changes are going to become a permanent part of the project.
     </para>
 
     <para>
@@ -489,12 +489,15 @@
         For more detailed information about these strategies see 
         <ulink url='http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html'>Git Workflows</ulink>. 
         <itemizedlist>
-            <listitem><para><emphasis>Make Small Changes:</emphasis> It is best to keep your changes you commit 
+            <listitem><para><emphasis>Make Small Changes:</emphasis> It is best to keep the changes you commit
                 small as compared to bundling many disparate changes into a single commit.  
                 This practice not only keeps things manageable but also allows the maintainer 
                 to more easily include or refuse changes.</para>
                 <para>It is also good practice to leave the repository in a state that allows you to 
-                still successfully build your project.</para></listitem>
+                still successfully build your project.  In other words, do not commit half of a feature,
+                then add the other half in a separate, later commit.  
+                Each commit should take you from one buildable project state to another 
+                buildable state.</para></listitem>
             <listitem><para><emphasis>Use Branches Liberally:</emphasis> It is very easy to create, use, and 
                 delete local branches in your working Git repository.  
                 You can name these branches anything you like.  
@@ -527,7 +530,7 @@
                 <filename>send-pull-request</filename> that ship with the release to facilitate this 
                 workflow.
                 You can find these scripts in the local Yocto Project files Git repository in
-                <filename>scripts</filename>.</para></listitem>
+                the <filename>scripts</filename> directory.</para></listitem>
             <listitem><para><emphasis>Patch Workflow:</emphasis> This workflow allows you to notify the 
                 maintainer through an email that you have a change (or patch) you would like considered 
                 for the "master" branch of the Git repository.  
@@ -615,7 +618,7 @@
     </para>
 
     <para>  
-        When you send a patch, be sure to include a "signed-off-by:"
+        When you send a patch, be sure to include a "Signed-off-by:"
         line in the same style as required by the Linux kernel. 
         Adding this line signifies the developer has agreed to the Developer's Certificate of Origin 1.1
         as follows:
@@ -661,7 +664,7 @@
     </para>
 
     <para>
-        When you form a commit, you must follow certain standards established by the 
+        When you create a commit, you must follow certain standards established by the
         Yocto Project development team. 
         For each commit, you must provide a single-line summary of the change and you 
         almost always provide a more detailed description of what you did (i.e. the body 
