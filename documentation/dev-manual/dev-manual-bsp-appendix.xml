@@ -10,8 +10,11 @@
     The example assumes the following:
     <itemizedlist>
         <listitem><para>No previous preparation or use of the Yocto Project.</para></listitem>
-        <listitem><para>Use of the Crown Bay Board Support Package (BSP) as a base BSP from 
-            which to work from.</para></listitem>  
+        <listitem><para>Use of the Crown Bay Board Support Package (BSP) as a "base" BSP from 
+            which to work.  
+            The example begins with the Crown Bay BSP as the starting point
+            but ends by building a new 'atom-pc' BSP, which was based on the Crown Bay BSP.
+            </para></listitem>  
         <listitem><para>Shell commands assume <filename>bash</filename></para></listitem>
         <listitem><para>Example was developed on an Intel-based Core i7 platform running 
             Ubuntu 10.04 LTS released in April of 2010.</para></listitem>        
@@ -24,10 +27,30 @@
     <para>
         You need to have the Yocto Project files available on your host system.  
         You can get files through tarball extraction or by cloning the <filename>poky</filename>
-        Git repository.  
-        See the bulleted item
-        "<link linkend='local-yp-release'>Yocto Project Release</link>" 
-        for information on how to get these files.
+        Git repository.
+        The following paragraphs describe both methods.
+        For additional information, see the bulleted item
+        "<link linkend='local-yp-release'>Yocto Project Release</link>".
+    </para>
+
+    <para>
+        As mentioned, one way to get the Yocto Project files is to use Git to clone the 
+        <filename>poky</filename> repository:
+        <literallayout class='monospaced'>
+     $ git clone git://git.yoctoproject.org/poky
+     $ cd poky
+        </literallayout> 
+        Alternatively, you can start with the downloaded Poky "edison" tarball:
+        <literallayout class='monospaced'>
+     $ tar xfj poky-edison-6.0.tar.bz2
+     $ cd poky
+        </literallayout> 
+        <note>If you're using the tarball method, you can ignore all the following steps that
+        ask you to carry out Git operations.  
+        You already have the results of those operations
+        in the form of the edison release tarballs.
+        Consequently, there is nothing left to do other than extract those tarballs into the 
+        proper locations.</note>
     </para>
 
     <para>
@@ -44,7 +67,6 @@
         These commands create a local branch named <filename>edison</filename>
         that tracks the remote branch of the same name.
         <literallayout class='monospaced'>
-     $ cd poky
      $ git checkout -b edison origin/edison
      Switched to a new branch 'edison'
         </literallayout>
@@ -58,7 +80,12 @@
         For this example, the base BSP is the <trademark class='registered'>Intel</trademark>
         <trademark class='trade'>Atom</trademark> Processor E660 with Intel Platform 
         Controller Hub EG20T Development Kit, which is otherwise referred to as "Crown Bay."
-        The BSP layer is <filename>meta-crownbay</filename>.
+        The BSP layer is <filename>meta-crownbay</filename>.  
+        The base BSP is simply the BSP
+        we will be using as a starting point, so don't worry if you don't actually have Crown Bay
+        hardware.
+        The remainder of the example transforms the base BSP into a BSP that should be
+        able to boot on generic atom-pc (netbook) hardware.
     </para>
 
     <para>
@@ -73,27 +100,52 @@
     <para>
         You need to have the base BSP layer on your development system.  
         Similar to the local Yocto Project files, you can get the BSP 
-        layer one of two ways:  
+        layer a couple of different ways:  
         download the BSP tarball and extract it, or set up a local Git repository that 
         has the Yocto Project BSP layers.  
         You should use the same method that you used to get the local Yocto Project files earlier.
         See "<link linkend='getting-setup'>Getting Setup</link>" for information on how to get 
         the BSP files.
     </para>
-        
+
     <para>
-        This example assumes the local <filename>meta-intel</filename> Git repository is
-        inside the local <filename>poky</filename> Git repository.
-        The <filename>meta-intel</filename> Git repository contains all the metadata 
-        that supports BSP creation.
+        This example assumes the BSP layer will be located within a directory named
+        <filename>meta-intel</filename> contained within the <filename>poky</filename>
+        parent directory.  
+        The following steps will automatically create the
+        <filename>meta-intel</filename> directory and the contained meta-crownbay
+        starting point in both the Git and the tarball cases.
     </para>
 
     <para>
+        If you're using the Git method, you could do the following to create
+        the starting layout after you have made sure you are in the <filename>poky</filename>
+        directory created in the previous steps:
+        <literallayout class='monospaced'>
+     $ git clone git://git.yoctoproject.org/meta-intel.git
+     $ cd meta-intel
+        </literallayout> 
+        Alternatively, you can start with the downloaded <filename>meta-intel</filename>
+        edison tarball.
+        Again, be sure that you are already in the <filename>poky</filename> directory
+        as described previously:
+        <literallayout class='monospaced'>
+     $ tar xfj crownbay-noemgd-edison-6.0.0.tar.bz2
+     $ cd meta-intel
+        </literallayout> 
+    </para>
+        
+    <para>
+        The <filename>meta-intel</filename> directory contains all the metadata 
+        that supports BSP creation.  
+        If you're using the Git method, the following
+        step will switch to the edison metadata.
+        If you're using the tarball method, you already have the correct metadata and can 
+        skip to the next step.
         Because <filename>meta-intel</filename> is its own Git repository, you will want
         to be sure you are in the appropriate branch for your work.
         For this example we are going to use the <filename>edison</filename> branch. 
         <literallayout class='monospaced'>
-     $ cd meta-intel
      $ git checkout -b edison origin/edison
      Switched to a new branch 'edison'
         </literallayout>
@@ -112,15 +164,12 @@
 
     <para>  
         For this example, the new layer will be named <filename>meta-mymachine</filename>.  
-        The name must follow the BSP layer naming convention, which is 
+        The name should follow the BSP layer naming convention, which is 
         <filename>meta-&lt;name&gt;</filename>.  
-        The following example assumes your working directory is <filename>meta-intel</filename> 
+        The following assumes your working directory is <filename>meta-intel</filename> 
         inside the local Yocto Project files.  
-        If you downloaded and expanded a Crown Bay tarball then you simply copy the resulting 
-        <filename>meta-crownbay</filename> directory structure to a location of your choice.
-        Good practice for a Git repository, however, is to just copy the new layer alongside 
-        the existing
-        BSP layers in the <filename>meta-intel</filename> Git repository:
+        To start your new layer, just copy the new layer alongside the existing
+        BSP layers in the <filename>meta-intel</filename> directory:
         <literallayout class='monospaced'>
      $ cp -a meta-crownbay/ meta-mymachine 
         </literallayout>
@@ -162,9 +211,14 @@
         </para>
 
         <para>
-            The next step makes changes to <filename>mymachine.conf</filename> itself.  
-            The only changes needed for this example are changes to the comment lines.
-            Here we simply substitute the Crown Bay name with an appropriate name.
+            Next, we need to make changes to the <filename>mymachine.conf</filename> itself.
+            The only changes we want to make for this example are to the comment lines.  
+            Changing comments, of course, is never strictly necessary, but it's alway good form to make
+            them reflect reality as much as possible.
+
+            Here, simply substitute the Crown Bay name with an appropriate name for the BSP 
+            (<filename>mymachine</filename> in this case) and change the description to 
+            something that describes your hardware.
         </para>
 
         <para>
@@ -176,7 +230,8 @@
         </para>
 
         <para>
-            The next configuration file in the new BSP layer we need to edit is <filename>layer.conf</filename>.
+            The next configuration file in the new BSP layer we need to edit is
+            <filename>meta-mymachine/conf/layer.conf</filename>.
             This file identifies build information needed for the new layer.  
             You can see the 
             "<ulink url='http://www.yoctoproject.org/docs/1.1/bsp-guide/bsp-guide.html#bsp-filelayout-layer'>Layer Configuration File</ulink>" section in  
@@ -232,7 +287,7 @@
                 the remaining one that doesn't support EMGD.  
                 These commands take care of the <filename>recipes-bsp</filename> recipes:
                 <literallayout class='monospaced'>
-     $ rm -rf meta-mymachine/recipes-graphics/xorg-xserver/*emgd*
+     $ rm -rf meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay
      $ mv meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay-noemgd/ \
      meta-mymachine/recipes-bsp/formfactor/formfactor/mymachine
                 </literallayout>
@@ -248,7 +303,6 @@
                 be sure to rename remaining directories appropriately.  
                 The following commands clean up the <filename>recipes-graphics</filename> directory:
                 <literallayout class='monospaced'>
-     $ rm -rf meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-emgd*
      $ rm -rf meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay
      $ mv meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay-noemgd \
         meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/mymachine   
@@ -304,6 +358,10 @@
                 The <filename>SRCREV_machine</filename> and <filename>SRCREV_meta</filename>
                 statements point to the exact commits used by the Yocto Project development team
                 in their source repositories that identify the right kernel for our hardware.
+                In other words, the <filename>SRCREV</filename> values are simply Git commit 
+                IDs that identify which commit on each
+                of the kernel branches (machine and meta) will be checked out and used to build
+                the kernel.
             </para>
  
             <para>
@@ -323,12 +381,12 @@
      SRCREV_machine_pn-linux-yocto_crownbay ?= \
         "2247da9131ea7e46ed4766a69bb1353dba22f873"
      SRCREV_meta_pn-linux-yocto_crownbay ?= \
-        "67a46a608f47c19f16995be7de7b272025864b1b"
+        "d05450e4aef02c1b7137398ab3a9f8f96da74f52"
 
      SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= \
         "2247da9131ea7e46ed4766a69bb1353dba22f873"
      SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= \
-        "67a46a608f47c19f16995be7de7b272025864b1b"
+        "d05450e4aef02c1b7137398ab3a9f8f96da74f52"
                 </literallayout>
             </para>
 
@@ -343,24 +401,49 @@
             </para>
 
             <para>  
-                To fix this situation in <filename>linux-yocto_3.0.bbappend</filename>
+                To fix this situation in <filename>linux-yocto_3.0.bbappend</filename>,
                 we delete the two <filename>SRCREV</filename> statements that support 
                 EMGD (the top pair).
                 We also change the remaining pair to specify <filename>mymachine</filename>
                 and insert the commit identifiers to identify the kernel in which we 
                 are interested, which will be based on the <filename>atom-pc-standard</filename>
                 kernel.
+                In this case, because we're working with the edison branch of everything, we
+                need to use the <filename>SRCREV</filename> values for the atom-pc branch
+                that are associated with the edison release.  
+                To find those values, we need to find the <filename>SRCREV</filename>
+                values that edison uses for the atom-pc branch, which we find in the
+                <filename>poky/meta-yocto/recipes-kernel/linux/linux-yocto_3.0.bbappend</filename>
+                file.
+            </para>
+
+            <para>  
+                The machine <filename>SRCREV</filename> we want is in the 
+                <filename>SRCREV_machine_atom-pc</filename> variable.  
+                The meta <filename>SRCREV</filename> isn't specified in this file, so it must be 
+                specified in the base kernel recipe in the
+                <filename>poky/meta/recipes-kernel/linux/linux-yocto_3.0.bb</filename>
+                file, in the <filename>SRCREV_meta variable</filename> found there.  
+                It happens to be the same as the value we already inherited from the 
+                <filename>meta-crownbay</filename> BSP.
                 Here are the final <filename>SRCREV</filename> statements:
                 <literallayout class='monospaced'>
      SRCREV_machine_pn-linux-yocto_mymachine ?= \ 
-        "06c798f25a19281d7fa944b14366dd75820ba009"
+        "1e18e44adbe79b846e382370eb29bc4b8cd5a1a0"
      SRCREV_meta_pn-linux-yocto_mymachine ?= \ 
-        "67a46a608f47c19f16995be7de7b272025864b1b"
+        "d05450e4aef02c1b7137398ab3a9f8f96da74f52"
                 </literallayout>
             </para>
 
             <para>
-                If you are familiar with Git repositories you probably won’t have trouble locating the 
+                In this example, we're using the <filename>SRCREV</filename> values we 
+                found already captured in the edison release because we're creating a BSP based on 
+                edison.  
+                If, instead, we had based our BSP on the master branches, we would want to use 
+                the most recent <filename>SRCREV</filename> values taken directly from the kernel repo.
+                We will not be doing that for this example.
+                However, if you do base a future BSP on master and
+                if you are familiar with Git repositories, you probably won’t have trouble locating the 
                 exact commit strings in the Yocto Project source repositories you need to change 
                 the <filename>SRCREV</filename> statements.  
                 You can find all the <filename>machine</filename> and <filename>meta</filename> 
@@ -394,19 +477,25 @@
                 Because we are not interested in supporting EMGD those three can be deleted.
                 The remaining three must be changed so that <filename>mymachine</filename> replaces
                 <filename>crownbay-noemgd</filename> and <filename>crownbay</filename>.
+                Because we are using the atom-pc branch for this new BSP, we can also find
+                the exact branch we need for the KMACHINE variable in our new BSP from the value
+                we find in the
+                <filename>poky/meta-yocto/recipes-kernel/linux/linux-yocto_3.0.bbappend</filename>
+                file we looked at in a previous step.  
+                In this case, the value we want is in the KMACHINE_atom-pc variable in that file.
                 Here is the final <filename>linux-yocto_3.0.bbappend</filename> file after all 
                 the edits:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
      COMPATIBLE_MACHINE_mymachine = "mymachine"
-     KMACHINE_mymachine  = "yocto/standard/mymachine"
+     KMACHINE_mymachine  = "yocto/standard/common-pc/atom-pc"
      KERNEL_FEATURES_append_mymachine += " cfg/smp.scc"
 
      SRCREV_machine_pn-linux-yocto_mymachine ?= \
-        "06c798f25a19281d7fa944b14366dd75820ba009"
+        "1e18e44adbe79b846e382370eb29bc4b8cd5a1a0"
      SRCREV_meta_pn-linux-yocto_mymachine ?= \
-        "67a46a608f47c19f16995be7de7b272025864b1b"
+        "d05450e4aef02c1b7137398ab3a9f8f96da74f52"
                 </literallayout>
             </para>
         </section>
@@ -492,7 +581,7 @@
 </section>
 
 <section id='building-the-image-app'>
-    <title>Building the Image</title>
+    <title>Building and Booting the Image</title>
 
     <para>
         To build the image for our <filename>meta-mymachine</filename> BSP enter the following command 
@@ -512,6 +601,65 @@
         at the console.  
         If the build results in any type of error you should check for misspellings in the 
         files you changed or problems with your host development environment such as missing packages.
+    </para>
+
+    <para>
+        Finally, once you have an image, you can try booting it from a device
+        (e.g. a USB device).
+        To prepare a bootable USB device, insert a USB flash drive into your build system and
+        copy the <filename>.hddimage</filename>, located in the 
+        <filename>poky/build/tmp/deploy/images</filename>
+        directory after a successful build to the flash drive.  
+        Assuming the USB flash drive takes device <filename>/dev/sdf</filename>, 
+        use <filename>dd</filename> to copy the live image to it.  
+        For example:
+        <literallayout class='monospaced'>
+     # dd if=core-image-sato-mymachine-20111101223904.hddimg of=/dev/sdf
+     # sync
+     # eject /dev/sdf
+        </literallayout>
+        You should now have a bootable USB flash device.  
+    </para>
+
+    <para>
+        Insert the device
+        into a bootable USB socket on the target, and power it on.  
+        The system should boot to the Sato graphical desktop.
+    </para>
+
+    <para>
+        For reference, the sato image produced by the previous steps for edison 
+        should look like the following in terms of size.
+        If your sato image is much different from this,
+        you probably made a mistake in one of the above steps:
+        <literallayout class='monospaced'>
+     358715392 2011-11-01 19:11 core-image-sato-mymachine-20111101223904.hddimg
+        </literallayout>
+        <note>The previous instructions are also present in the README that was copied
+        from meta-crownbay, which should also be updated to reflect the specifics of your
+        new BSP.  
+        That file and the <filename>README.hardware</filename> file in the top-level 
+        <filename>poky</filename> directory
+        also provides some suggestions for things to try if booting fails and produces
+        strange error messages.</note>
+    </para>
+
+    <para>
+        Because this new image is not in any way tailored to the system you're
+        booting it on, which is assumed to be some sort of atom-pc (netbook) system for this
+        example, it might not be completely functional though it should at least boot to a text
+        prompt.  
+        Specifically, it might fail to boot into graphics without some tweaking.  
+        If this ends up being the case, a possible next step would be to replace the 
+        <filename>mymachine.conf</filename>
+        contents with the contents of <filename>atom-pc.conf</filename> and replace 
+        <filename>xorg.conf</filename> with <filename>atom-pc xorg.conf</filename>
+        in <filename>meta-yocto</filename> and see if it fares any better.  
+        In any case, following the previous steps should
+        probably give you a buildable and bootable image.  
+        Getting things working like you want
+        them to for your hardware will normally require some amount of experimentation with
+        configuration settings.
     </para>
 </section>
 </appendix>
