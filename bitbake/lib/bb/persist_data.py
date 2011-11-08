@@ -112,7 +112,7 @@ class SQLData(object):
         bb.utils.mkdirhier(os.path.dirname(filename))
 
         self.filename = filename
-        self.connection = sqlite3.connect(filename, timeout=5,
+        self.connection = sqlite3.connect(filename, timeout=30,
                                           isolation_level=None)
         self.cursor = self.connection.cursor()
         self._tables = {}
