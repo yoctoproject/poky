@@ -68,12 +68,12 @@ Intel Atom based PCs and devices (atom-pc)
 
 The atom-pc MACHINE is tested on the following platforms:
 
-  o Asus eee901
+  o Asus EeePC 901
   o Acer Aspire One
   o Toshiba NB305
   o Intel Embedded Development Board 1-N450 (Black Sand)
 
-and is likely to work on many unlisted atom based devices. The MACHINE type
+and is likely to work on many unlisted Atom based devices. The MACHINE type
 supports ethernet, wifi, sound, and i915 graphics by default in addition to
 common PC input devices, busses, and so on.
 
@@ -83,26 +83,18 @@ straightforward with a caveat for USB devices. The following examples assume the
 target boot device is /dev/sdb, be sure to verify this and use the correct
 device as the following commands are run as root and are not reversable.
 
-Hard Disk:
-  1. Build a directdisk image format. This will generate proper partition tables
-     that will in turn be written to the physical media. For example:
-
-     $ bitbake core-image-minimal-directdisk
-  
-  2. Use the "dd" utility to write the image to the raw block device. For example:
-
-     # dd if=core-image-minimal-directdisk-atom-pc.hdddirect of=/dev/sdb
-
 USB Device:
-  1. Build an hddimg image format. This is a simple filesystem without partition
-     tables and is suitable for USB keys. For example:
+  1. Build a live image. This image type consists of a simple filesystem
+     without a partition table, which is suitable for USB keys, and with the
+     default setup for the atom-pc machine, this image type is built
+     automatically for any image you build. For example:
 
-     $ bitbake core-image-minimal-live
+     $ bitbake core-image-minimal
 
   2. Use the "dd" utility to write the image to the raw block device. For
      example:
 
-     # dd if=core-image-minimal-live-atom-pc.hddimg of=/dev/sdb
+     # dd if=core-image-minimal-atom-pc.hddimg of=/dev/sdb
 
   If the device fails to boot with "Boot error" displayed, it is likely the BIOS
   cannot understand the physical layout of the disk (or rather it expects a
@@ -126,7 +118,7 @@ USB Device:
 
      b. Copy the contents of the poky image to the USB-ZIP mode device:
 
-     # mount -o loop core-image-minimal-live-atom-pc.hddimg  /tmp/image
+     # mount -o loop core-image-minimal-atom-pc.hddimg  /tmp/image
      # mount /dev/sdb4 /tmp/usbkey
      # cp -rf /tmp/image/* /tmp/usbkey
 
