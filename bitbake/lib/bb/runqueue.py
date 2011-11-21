@@ -1203,12 +1203,13 @@ class RunQueueExecuteTasks(RunQueueExecute):
                 if task in self.rq.scenequeue_covered:
                     continue
                 if len(self.rqdata.runq_revdeps[task]) > 0 and self.rqdata.runq_revdeps[task].issubset(self.rq.scenequeue_covered):
-                    found = True
+                    ok = True
                     for revdep in self.rqdata.runq_revdeps[task]:
                         if self.rqdata.runq_fnid[task] != self.rqdata.runq_fnid[revdep]:
-                            found = False
+                            ok = False
                             break
-                    if found:
+                    if ok:
+                        found = True
                         self.rq.scenequeue_covered.add(task)
 
         # Detect when the real task needs to be run anyway by looking to see
