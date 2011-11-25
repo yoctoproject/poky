@@ -136,16 +136,16 @@ class BBCooker:
         self.loadConfigurationData()
 
         if not self.configuration.cmd:
-            self.configuration.cmd = bb.data.getVar("BB_DEFAULT_TASK", self.configuration.data, True) or "build"
+            self.configuration.cmd = self.configuration.data.getVar("BB_DEFAULT_TASK", True) or "build"
 
         # Take a lock so only one copy of bitbake can run against a given build
         # directory at a time
-        lockfile = bb.data.expand("${TOPDIR}/bitbake.lock", self.configuration.data)
+        lockfile = self.configuration.data.expand("${TOPDIR}/bitbake.lock")
         self.lock = bb.utils.lockfile(lockfile, False, False)
         if not self.lock:
             bb.fatal("Only one copy of bitbake should be run against a build directory")
 
-        bbpkgs = bb.data.getVar('BBPKGS', self.configuration.data, True)
+        bbpkgs = self.configuration.data.getVar('BBPKGS', True)
         if bbpkgs and len(self.configuration.pkgs_to_build) == 0:
             self.configuration.pkgs_to_build.extend(bbpkgs.split())
 
@@ -174,7 +174,7 @@ class BBCooker:
         self.configuration.data = bb.data.init()
 
         if not self.server_registration_cb:
-            bb.data.setVar("BB_WORKERCONTEXT", "1", self.configuration.data)
+            self.configuration.data.setVar("BB_WORKERCONTEXT", "1")
 
         filtered_keys = bb.utils.approved_variables()
         bb.data.inheritFromOS(self.configuration.data, self.savedenv, filtered_keys)
@@ -189,13 +189,13 @@ class BBCooker:
             sys.exit(1)
 
         if not self.configuration.cmd:
-            self.configuration.cmd = bb.data.getVar("BB_DEFAULT_TASK", self.configuration.data, True) or "build"
+            self.configuration.cmd = self.configuration.data.getVar("BB_DEFAULT_TASK", True) or "build"
 
     def parseConfiguration(self):
 
 
         # Change nice level if we're asked to
-        nice = bb.data.getVar("BB_NICE_LEVEL", self.configuration.data, True)
+        nice = self.configuration.data.getVar("BB_NICE_LEVEL", True)
         if nice:
             curnice = os.nice(0)
             nice = int(nice) - curnice
@@ -293,7 +293,7 @@ class BBCooker:
             # this showEnvironment() code path doesn't use the cache
             self.parseConfiguration()
             self.status = bb.cache.CacheData(self.caches_array)
-            self.handleCollections( bb.data.getVar("BBFILE_COLLECTIONS", self.configuration.data, 1) )
+            self.handleCollections( self.configuration.data.getVar("BBFILE_COLLECTIONS", 1) )
 
             fn = self.matchFile(buildfile)
         elif len(pkgs_to_build) == 1:
@@ -597,7 +597,7 @@ class BBCooker:
         bb.data.expandKeys(localdata)
 
         # Handle PREFERRED_PROVIDERS
-        for p in (bb.data.getVar('PREFERRED_PROVIDERS', localdata, True) or "").split():
+        for p in (localdata.getVar('PREFERRED_PROVIDERS', True) or "").split():
             try:
                 (providee, provider) = p.split(':')
             except:
@@ -645,8 +645,8 @@ class BBCooker:
         # Generate a list of parsed configuration files by searching the files
         # listed in the __depends and __base_depends variables with a .conf suffix.
         conffiles = []
-        dep_files = bb.data.getVar('__depends', self.configuration.data) or set()
-        dep_files.union(bb.data.getVar('__base_depends', self.configuration.data) or set())
+        dep_files = self.configuration.data.getVar('__depends') or set()
+        dep_files.union(self.configuration.data.getVar('__base_depends') or set())
 
         for f in dep_files:
             if f[0].endswith(".conf"):
@@ -674,7 +674,7 @@ class BBCooker:
 
         matches = []
         p = re.compile(re.escape(filepattern))
-        bbpaths = bb.data.getVar('BBPATH', self.configuration.data, True).split(':')
+        bbpaths = self.configuration.data.getVar('BBPATH', True).split(':')
         for path in bbpaths:
             dirpath = os.path.join(path, directory)
             if os.path.exists(dirpath):
@@ -696,7 +696,7 @@ class BBCooker:
 
         data = self.configuration.data
         # iterate configs
-        bbpaths = bb.data.getVar('BBPATH', data, True).split(':')
+        bbpaths = data.getVar('BBPATH', True).split(':')
         for path in bbpaths:
             confpath = os.path.join(path, "conf", var)
             if os.path.exists(confpath):
@@ -801,16 +801,16 @@ class BBCooker:
             parselog.debug(2, "Found bblayers.conf (%s)", layerconf)
             data = _parse(layerconf, data)
 
-            layers = (bb.data.getVar('BBLAYERS', data, True) or "").split()
+            layers = (data.getVar('BBLAYERS', True) or "").split()
 
             data = bb.data.createCopy(data)
             for layer in layers:
                 parselog.debug(2, "Adding layer %s", layer)
-                bb.data.setVar('LAYERDIR', layer, data)
+                data.setVar('LAYERDIR', layer)
                 data = _parse(os.path.join(layer, "conf", "layer.conf"), data)
                 data.expandVarref('LAYERDIR')
 
-            bb.data.delVar('LAYERDIR', data)
+            data.delVar('LAYERDIR')
 
         if not data.getVar("BBPATH", True):
             raise SystemExit("The BBPATH variable is not set")
@@ -828,8 +828,8 @@ class BBCooker:
 
         # Nomally we only register event handlers at the end of parsing .bb files
         # We register any handlers we've found so far here...
-        for var in bb.data.getVar('__BBHANDLERS', data) or []:
-            bb.event.register(var, bb.data.getVar(var, data))
+        for var in data.getVar('__BBHANDLERS') or []:
+            bb.event.register(var, data.getVar(var))
 
         if data.getVar("BB_WORKERCONTEXT", False) is None:
             bb.fetch.fetcher_init(data)
@@ -848,7 +848,7 @@ class BBCooker:
             min_prio = 0
             for c in collection_list:
                 # Get collection priority if defined explicitly
-                priority = bb.data.getVar("BBFILE_PRIORITY_%s" % c, self.configuration.data, 1)
+                priority = self.configuration.data.getVar("BBFILE_PRIORITY_%s" % c, 1)
                 if priority:
                     try:
                         prio = int(priority)
@@ -861,7 +861,7 @@ class BBCooker:
                     collection_priorities[c] = None
 
                 # Check dependencies and store information for priority calculation
-                deps = bb.data.getVar("LAYERDEPENDS_%s" % c, self.configuration.data, 1)
+                deps = self.configuration.data.getVar("LAYERDEPENDS_%s" % c, 1)
                 if deps:
                     depnamelist = []
                     deplist = deps.split()
@@ -880,7 +880,7 @@ class BBCooker:
 
                         if dep in collection_list:
                             if depver:
-                                layerver = bb.data.getVar("LAYERVERSION_%s" % dep, self.configuration.data, 1)
+                                layerver = self.configuration.data.getVar("LAYERVERSION_%s" % dep, 1)
                                 if layerver:
                                     try:
                                         lver = int(layerver)
@@ -913,7 +913,7 @@ class BBCooker:
             # Calculate all layer priorities using calc_layer_priority and store in bbfile_config_priorities
             for c in collection_list:
                 calc_layer_priority(c)
-                regex = bb.data.getVar("BBFILE_PATTERN_%s" % c, self.configuration.data, 1)
+                regex = self.configuration.data.getVar("BBFILE_PATTERN_%s" % c, 1)
                 if regex == None:
                     parselog.error("BBFILE_PATTERN_%s not defined" % c)
                     continue
@@ -928,9 +928,9 @@ class BBCooker:
         """
         Setup any variables needed before starting a build
         """
-        if not bb.data.getVar("BUILDNAME", self.configuration.data):
-            bb.data.setVar("BUILDNAME", time.strftime('%Y%m%d%H%M'), self.configuration.data)
-        bb.data.setVar("BUILDSTART", time.strftime('%m/%d/%Y %H:%M:%S', time.gmtime()), self.configuration.data)
+        if not self.configuration.data.getVar("BUILDNAME"):
+            self.configuration.data.setVar("BUILDNAME", time.strftime('%Y%m%d%H%M'))
+        self.configuration.data.setVar("BUILDSTART", time.strftime('%m/%d/%Y %H:%M:%S', time.gmtime()))
 
     def matchFiles(self, bf):
         """
@@ -977,7 +977,7 @@ class BBCooker:
         # buildFile() doesn't use the cache
         self.parseConfiguration()
         self.status = bb.cache.CacheData(self.caches_array)
-        self.handleCollections( bb.data.getVar("BBFILE_COLLECTIONS", self.configuration.data, 1) )
+        self.handleCollections( self.configuration.data.getVar("BBFILE_COLLECTIONS", 1) )
 
         # If we are told to do the None task then query the default task
         if (task == None):
@@ -1021,7 +1021,7 @@ class BBCooker:
         taskdata = bb.taskdata.TaskData(self.configuration.abort)
         taskdata.add_provider(self.configuration.data, self.status, item)
 
-        buildname = bb.data.getVar("BUILDNAME", self.configuration.data)
+        buildname = self.configuration.data.getVar("BUILDNAME")
         bb.event.fire(bb.event.BuildStarted(buildname, [item]), self.configuration.event_data)
 
         # Execute the runqueue
@@ -1098,7 +1098,7 @@ class BBCooker:
 
         self.buildSetVars()
 
-        buildname = bb.data.getVar("BUILDNAME", self.configuration.data)
+        buildname = self.configuration.data.getVar("BUILDNAME")
         bb.event.fire(bb.event.BuildStarted(buildname, targets), self.configuration.event_data)
 
         localdata = data.createCopy(self.configuration.data)
@@ -1132,16 +1132,16 @@ class BBCooker:
                 del self.status
             self.status = bb.cache.CacheData(self.caches_array)
 
-            ignore = bb.data.getVar("ASSUME_PROVIDED", self.configuration.data, 1) or ""
+            ignore = self.configuration.data.getVar("ASSUME_PROVIDED", 1) or ""
             self.status.ignored_dependencies = set(ignore.split())
 
             for dep in self.configuration.extra_assume_provided:
                 self.status.ignored_dependencies.add(dep)
 
-            self.handleCollections( bb.data.getVar("BBFILE_COLLECTIONS", self.configuration.data, 1) )
+            self.handleCollections( self.configuration.data.getVar("BBFILE_COLLECTIONS", 1) )
 
             (filelist, masked) = self.collect_bbfiles()
-            bb.data.renameVar("__depends", "__base_depends", self.configuration.data)
+            self.configuration.data.renameVar("__depends", "__base_depends")
 
             self.parser = CookerParser(self, filelist, masked)
             self.state = state.parsing
@@ -1232,7 +1232,7 @@ class BBCooker:
                     if g not in newfiles:
                         newfiles.append(g)
 
-        bbmask = bb.data.getVar('BBMASK', self.configuration.data, 1)
+        bbmask = self.configuration.data.getVar('BBMASK', 1)
 
         if bbmask:
             try:

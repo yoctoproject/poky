@@ -91,7 +91,7 @@ def register_idle_function(self, function, data):
 cooker = bb.cooker.BBCooker(config, register_idle_function, initialenv)
 config_data = cooker.configuration.data
 cooker.status = config_data
-cooker.handleCollections(bb.data.getVar("BBFILE_COLLECTIONS", config_data, 1))
+cooker.handleCollections(config_data.getVar("BBFILE_COLLECTIONS", 1))
 
 fn, cls = bb.cache.Cache.virtualfn2realfn(buildfile)
 buildfile = cooker.matchFile(fn)
@@ -108,9 +108,9 @@ if taskname.endswith("_setscene"):
 if hashdata:
     bb.parse.siggen.set_taskdata(hashdata["hashes"], hashdata["deps"])
     for h in hashdata["hashes"]:
-        bb.data.setVar("BBHASH_%s" % h, hashdata["hashes"][h], the_data)
+        the_data.setVar("BBHASH_%s" % h, hashdata["hashes"][h])
     for h in hashdata["deps"]:
-        bb.data.setVar("BBHASHDEPS_%s" % h, hashdata["deps"][h], the_data)
+        the_data.setVar("BBHASHDEPS_%s" % h, hashdata["deps"][h])
 
 ret = 0
 if dryrun != "True":
