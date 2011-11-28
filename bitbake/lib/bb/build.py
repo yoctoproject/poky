@@ -153,8 +153,6 @@ def exec_func(func, d, dirs = None):
         bb.utils.mkdirhier(adir)
 
     ispython = flags.get('python')
-    if flags.get('fakeroot') and not flags.get('task'):
-        bb.fatal("Function %s specifies fakeroot but isn't a task?!" % func)
 
     lockflag = flags.get('lockfiles')
     if lockflag:
@@ -223,9 +221,9 @@ def exec_func_shell(function, d, runfile, cwd=None):
 
     with open(runfile, 'w') as script:
         script.write('#!/bin/sh -e\n')
-        if bb.msg.loggerDefaultVerbose:
-            script.write("set -x\n")
         data.emit_func(function, script, d)
+
+        script.write("set -x\n")
         if cwd:
             script.write("cd %s\n" % cwd)
         script.write("%s\n" % function)
@@ -233,6 +231,10 @@ def exec_func_shell(function, d, runfile, cwd=None):
     os.chmod(runfile, 0775)
 
     cmd = runfile
+    if d.getVarFlag(function, 'fakeroot'):
+        fakerootcmd = d.getVar('FAKEROOT', True)
+        if fakerootcmd:
+            cmd = [fakerootcmd, runfile]
 
     if bb.msg.loggerDefaultVerbose:
         logfile = LogTee(logger, sys.stdout)

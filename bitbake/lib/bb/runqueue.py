@@ -1173,8 +1173,7 @@ class RunQueueExecute:
                     logger.critical(str(exc))
                 os._exit(1)
             try:
-                if not self.cooker.configuration.dry_run:
-                    ret = bb.build.exec_task(fn, taskname, the_data)
+                ret = bb.build.exec_task(fn, taskname, the_data)
                 os._exit(ret)
             except:
                 os._exit(1)
@@ -1356,6 +1355,12 @@ class RunQueueExecuteTasks(RunQueueExecute):
                 logger.debug(2, "Stamp current task %s (%s)", task,
                                 self.rqdata.get_user_idstring(task))
                 self.task_skip(task)
+                return True
+            elif self.cooker.configuration.dry_run:
+                self.runq_running[task] = 1
+                self.runq_buildable[task] = 1
+                self.stats.taskActive()
+                self.task_complete(task)
                 return True
 
             taskdep = self.rqdata.dataCache.task_deps[fn]
@@ -1647,9 +1652,6 @@ class RunQueueExecuteScenequeue(RunQueueExecute):
                              task, self.rqdata.get_user_idstring(realtask))
                 self.task_skip(task)
                 return True
-
-            logger.info("Running setscene task %d of %d (%s:%s)" % (self.stats.completed + self.stats.active + self.stats.failed + 1,
-                                                                         self.stats.total, fn, taskname))
 
             startevent = sceneQueueTaskStarted(task, self.stats, self.rq)
             bb.event.fire(startevent, self.cfgData)
