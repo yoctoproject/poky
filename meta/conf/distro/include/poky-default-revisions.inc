@@ -198,4 +198,4 @@ SRCDATE_yaffs2-utils-native ??= "20071107"
 SRCDATE_yaffs2-utils ??= "20071107"
 SRCREV_pn-zaurusd ??= "426"
 SRCREV_pn-zypper ??= "2c5bb6ceb99ecd950ef993e43d77bf0569ea0582"
-
+SRCREV_pn-u-boot ??= "19b54a701811220221fc4d5089a2bb18892018ca"

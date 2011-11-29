@@ -6,7 +6,6 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=1707d6db1d42237583f50183a5651ecb \
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-git/${MACHINE}"
 
-SRCREV = "v2011.03"
 PV = "v2011.03+git${SRCPV}"
 PR="r3"
 
