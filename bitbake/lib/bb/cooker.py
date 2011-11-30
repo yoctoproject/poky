@@ -135,9 +135,6 @@ class BBCooker:
         self.configuration.data = None
         self.loadConfigurationData()
 
-        if not self.configuration.cmd:
-            self.configuration.cmd = self.configuration.data.getVar("BB_DEFAULT_TASK", True) or "build"
-
         # Take a lock so only one copy of bitbake can run against a given build
         # directory at a time
         lockfile = self.configuration.data.expand("${TOPDIR}/bitbake.lock")
