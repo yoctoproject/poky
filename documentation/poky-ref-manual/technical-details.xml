@@ -151,10 +151,384 @@
 
     <para>
         By design, the Yocto Project builds everything from scratch unless it can determine that
-        a given task's inputs have not changed.  
-        While building from scratch ensures that everything is current, it does also
-        mean that a lot of time could be spent rebuiding things that don't necessarily need built.
+        parts don't need to be rebuilt.
+        Fundamentally, building from scratch is an attraction as it means all parts are 
+        built fresh and there is no possibility of stale data causing problems. 
+        When developers hit problems, they typically default back to building from scratch
+        so they know the state of things from the start.
     </para>
+
+    <para>  
+        Building an image from scratch is both an advantage and a disadvantage to the process. 
+        As mentioned in the previous paragraph, building from scratch ensures that 
+        everything is current and starts from a known state.
+        However, building from scratch also takes much longer as it generally means 
+        rebuiding things that don't necessarily need rebuilt.
+    </para>
+
+    <para>
+        The Yocto Project implements shared state code that supports incremental builds.
+        The implementation of the shared state code answers the following questions that
+        were fundamental roadblocks within the Yocto Project incremental build support system:
+        <itemizedlist>
+            <listitem>What pieces of the system have changed and what pieces have not changed?</listitem>
+            <listitem>How are changed pieces of software removed and replaced?</listitem>
+            <listitem>How are pre-built components that don't need to be rebuilt from scratch
+                used when they are available?</listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        For the first question, the build system detects changes in the "inputs" to a given task by 
+        creating a checksum (or signature) of the task's inputs. 
+        If the checksum changes, the system assumes the inputs have changed and the task needs to be 
+        rerun.
+        For the second question, the shared state (sstate) code tracks which tasks add which output
+        to the build process. 
+        This means the output from a given task can be removed, upgraded or otherwise manipulated.
+        The third question is partly addressed by the solution for the second question
+        assuming the build system can fetch the sstate objects from remote locations and 
+        install them if they are deemed to be valid.
+    </para>
+
+    <para>
+        The rest of this section goes into detail about the overall incremental build
+        architecture, the checksums (signatures), shared state, and some tips and tricks.
+    </para>
+
+    <section id='overall-architecture'>
+        <title>Overall Architecture</title>
+
+        <para>
+            When determining what parts of the system need to be built, the Yocto Project 
+            uses a per-task basis and does not use a per-recipe basis.
+            You might wonder why using a per-task basis is preferred over a per-recipe basis.
+            To help explain, consider having the IPK packaging backend enabled and then switching to DEB. 
+            In this case, <filename>do_install</filename> and <filename>do_package</filename>
+            output are still valid.
+            However, with a per-recipe approach, the build would not include the 
+            <filename>.deb</filename> files.        
+            Consequently, you would have to invalidate the whole build and rerun it. 
+            Rerunning everything is not the best situation.
+            Also in this case, the core must be "taught" much about specific tasks. 
+            This methodology does not scale well and does not allow users to easily add new tasks 
+            in layers or as external recipes without touching the packaged-staging core.
+        </para>
+    </section>
+
+    <section id='checksums'>
+        <title>Checksums (Signatures)</title>
+
+        <para>
+            The Yocto Project uses a checksum, which is a unique signature of a task's 
+            inputs, to determine if a task needs to be run again. 
+            Because it is a change in a task's inputs that trigger a rerun, the process
+            needs to detect all the inputs to a given task. 
+            For shell tasks, this turns out to be fairly easy because
+            the build process generates a "run" shell script for each task and 
+            it is possible to create a checksum that gives you a good idea of when 
+            the task's data changes.
+        </para>
+
+        <para>
+            To complicate the problem, there are things that should not be included in 
+            the checksum. 
+            First, there is the actual specific build path of a given task - 
+            the <filename>WORKDIR</filename>. 
+            It does not matter if the working directory changes because it should not 
+            affect the output for target packages.
+            Also, the build process has the objective of making native/cross packages relocatable. 
+            The checksum therefore needs to exclude <filename>WORKDIR</filename>.
+            The simplistic approach for excluding the worknig directory is to set 
+            <filename>WORKDIR</filename> to some fixed value and create the checksum
+            for the "run" script. 
+        </para>
+
+        <para>
+            Another problem results from the "run" scripts containing functions that 
+            might or might not get called.  
+            The Yocto Project contains code that figures out dependencies between shell 
+            functions.
+            This code is used to prune the "run" scripts down to the minimum set, 
+            thereby alleviating this problem and making the "run" scripts much more 
+            readable as a bonus.
+        </para>
+
+        <para>
+            So far we have solutions for shell scripts.
+            What about python tasks?
+            Handling these tasks are more difficult but the the same approach 
+            applies.
+            The process needs to figure out what variables a python function accesses 
+            and what functions it calls.
+            Again, the Yocto Project contains code that first figures out the variable and function 
+            dependencies, and then creates a checksum for the data used as the input to 
+            the task.
+        </para>
+
+        <para>
+            Like the <filename>WORKDIR</filename> case, situations exist where dependencies 
+            should be ignored.
+            For these cases, you can instruct the build process to ignore a dependency
+            by using a line like the following:
+            <literallayout class='monospaced'>
+     PACKAGE_ARCHS[vardepsexclude] = "MACHINE"
+            </literallayout>
+            This example ensures that the <filename>PACKAGE_ARCHS</filename> variable does not 
+            depend on the value of <filename>MACHINE</filename>, even if it does reference it.
+        </para>
+           
+        <para>
+            Equally, there are cases where we need to add in dependencies
+            BitBake is not able to find.
+            You can accomplish this by using a line like the following:
+            <literallayout class='monospaced'>
+      PACKAGE_ARCHS[vardeps] = "MACHINE"
+            </literallayout>
+            This example explicitly adds the <filename>MACHINE</filename> variable as a 
+            dependency for <filename>PACKAGE_ARCHS</filename>.
+        </para>
+
+        <para> 
+            Consider a case with inline python, for example, where BitBake is not
+            able to figure out dependencies. 
+            When running in debug mode (i.e. using <filename>-DDD</filename>), BitBake 
+            produces output when it discovers something for which it cannot figure out
+            dependencies. 
+            The Yocto Project team has currently not managed to cover those dependencies 
+            in detail and is aware of the need to fix this situation.
+        </para>
+
+        <para>
+            Thus far, this section has limited discussion to the direct inputs into a 
+            task.
+            Information based on direct inputs is referred to as the "basehash" in the code.
+            However, there is still the question of a task's indirect inputs, the things that 
+            were already built and present in the build directory. 
+            The checksum (or signature) for a particular task needs to add the hashes of all the
+            tasks the particular task depends upon. 
+            Choosing which dependencies to add is a policy decision.
+            However, the effect is to generate a master checksum that combines the 
+            basehash and the hashes of the task's dependencies.
+        </para>
+
+        <para>
+            While figuring out the dependencies and creating these checksums is good,
+            what does the Yocto Project build system do with the checksum information? 
+            The build system uses a signature handler that is responsible for 
+            processing the checksum information.
+            By default, there is a dummy "noop" signature handler enabled in BitBake.
+            This means that behaviour is unchanged from previous versions. 
+            OECore uses the "basic" signature handler through this setting in the
+            <filename>bitbake.conf</filename> file:
+            <literallayout class='monospaced'>
+     BB_SIGNATURE_HANDLER ?= "basic"
+            </literallayout>
+            Also within the BitBake configuration file, we can give BitBake
+            some extra information to help it handle this information.
+            The following statements effectively result in a list of global
+            list of variable dependency excludes - variables never included in 
+            any checksum:
+            <literallayout class='monospaced'>
+     BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH"
+     BB_HASHBASE_WHITELIST += "DL_DIR SSTATE_DIR THISDIR FILESEXTRAPATHS"
+     BB_HASHBASE_WHITELIST += "FILE_DIRNAME HOME LOGNAME SHELL TERM USER"
+     BB_HASHBASE_WHITELIST += "FILESPATH USERNAME STAGING_DIR_HOST STAGING_DIR_TARGET"
+     BB_HASHTASK_WHITELIST += "(.*-cross$|.*-native$|.*-cross-initial$| \
+         .*-cross-intermediate$|^virtual:native:.*|^virtual:nativesdk:.*)"
+            </literallayout>
+            This example is actually where <filename>WORKDIR</filename>
+            is excluded since <filename>WORKDIR</filename> is constructed as a
+            path within <filename>TMPDIR</filename>, which is on the whitelist.
+        </para>
+
+        <para>
+            The <filename>BB_HASHTASK_WHITELIST</filename> covers dependent tasks and 
+            excludes certain kinds of tasks from the dependency chains. 
+            The effect of the previous example is to isolate the native, target,
+            and cross components.
+            So, for example, toolchain changes do not force a rebuild of the whole system.
+        </para>
+
+        <para>
+            The end result of the "basic" handler is to make some dependency and
+            hash information available to the build. 
+            This includes:
+            <literallayout class='monospaced'>
+     BB_BASEHASH_task-&lt;taskname&gt; - the base hashes for each task in the recipe
+     BB_BASEHASH_&lt;filename:taskname&gt; - the base hashes for each dependent task
+     BBHASHDEPS_&lt;filename:taskname&gt; - The task dependencies for each task
+     BB_TASKHASH - the hash of the currently running task
+            </literallayout>
+            There is also a "basichash" <filename>BB_SIGNATURE_HANDLER</filename>,
+            which is the same as the basic version but adds the task hash to the stamp files. 
+            This results in any metadata change that changes the task hash,
+            automatically causing the task to be run again. 
+            This removes the need to bump <filename>PR</filename>
+            values and changes to metadata automatically ripple across the build.
+            Currently, this behavior is not the default behavior.
+            However, it is likely that the Yocto Project team will go forward with this 
+            behavior in the future since all the functionality exists. 
+            The reason for the delay is the potential impact to the distribution feed 
+            creation as they need increasing <filename>PR</filename> fields
+            and the Yocto Project currently lacks a mechanism to automate incrementing 
+            this field.
+        </para>
+    </section>
+
+    <section id='shared-state'>
+        <title>Shared State</title>
+
+        <para>
+            Checksums and dependencies as discussed in the previous section solves half the 
+            problem.
+            The other part of the problem is being able to use checksum information during the build
+            and being able to reuse or rebuild specific components.
+        </para>
+
+        <para>
+            The shared state class (<filename>sstate.bbclass</filename>) 
+            is a relatively generic implementation of how to
+            "capture" a snapshot of a given task. 
+            The idea is that the build process does not care about the source of a
+            task's output.
+            Output could be freshly built or it could be downloaded and unpacked from
+            somewhere - the build process doesn't need to worry about its source.
+        </para>
+
+        <para>
+            There are two types of output, one is just about creating a directory
+            in <filename>WORKDIR</filename>.
+            A good example is the output of either <filename>do_install</filename> or 
+            <filename>do_package</filename>. 
+            The other type of output occurs when a set of data is merged into a shared directory 
+            tree such as the sysroot.
+        </para>
+
+        <para>
+            The Yocto Project team has tried to keep the details of the implementation hidden in 
+            <filename>sstate.bbclass</filename>. 
+            From a user's perspective, adding shared state wrapping to a task
+            is as simple as this <filename>do_deploy</filename> example taken from 
+            <filename>do_deploy.bbclass</filename>:
+            <literallayout class='monospaced'>
+     DEPLOYDIR = "${WORKDIR}/deploy-${PN}"
+     SSTATETASKS += "do_deploy"
+     do_deploy[sstate-name] = "deploy"
+     do_deploy[sstate-inputdirs] = "${DEPLOYDIR}"
+     do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}"
+
+     python do_deploy_setscene () {
+         sstate_setscene(d)
+     }
+     addtask do_deploy_setscene
+            </literallayout>
+            In the example, we add some extra flags to the task, a name field ("deploy"), an
+            input directory where the task sends data, and the output
+            directory where the data from the task should eventually be copied. 
+            We also add a <filename>_setscene</filename> variant of the task and add the task
+            name to the <filename>SSTATETASKS</filename> list.
+        </para>
+
+        <para>
+            If you have a directory whose contents you need to preserve, 
+            you can do this with a line like the following:
+            <literallayout class='monospaced'>
+     do_package[sstate-plaindirs] = "${PKGD} ${PKGDEST}"
+            </literallayout>
+            This method, as well as the following example, also works for mutliple directories.
+            <literallayout class='monospaced'>
+     do_package[sstate-inputdirs] = "${PKGDESTWORK} ${SHLIBSWORKDIR}"
+     do_package[sstate-outputdirs] = "${PKGDATA_DIR} ${SHLIBSDIR}"
+     do_package[sstate-lockfile] = "${PACKAGELOCK}"
+            </literallayout>
+            These methods also include the ability to take a lockfile when manipulating
+            shared state directory structures since some cases are sensitive to file
+            additions or removals.
+        </para>
+
+        <para>
+            Behind the scenes, the shared state code works by looking in 
+            <filename>SSTATE_DIR</filename> and  
+            <filename>SSTATE_MIRRORS</filename> for shared state files. 
+            Here is an example:
+            <literallayout class='monospaced'>
+     SSTATE_MIRRORS ?= "\
+     file://.* http://someserver.tld/share/sstate/ \n \
+     file://.* file:///some/local/dir/sstate/"
+            </literallayout>
+        </para>
+
+        <para>
+            The shared state package validity can be detected just by looking at the
+            filename since the filename contains the task checksum (or signature) as
+            described earlier in this section. 
+            If a valid shared state package is found, the build process downloads it 
+            and uses it to accelerate the task.
+        </para>
+
+        <para>
+            The build processes uses the <filename>*_setscene</filename> tasks
+            for the task acceleration phase.
+            BitBake goes through this phase before the main execution code and tries
+            to accelerate any tasks for which it can find shared state packages. 
+            If a shared state package for a task is available, the shared state
+            package is used.
+            This means the task and any tasks on which it is dependent are not 
+            executed.
+        </para>
+
+        <para>
+            As a real world example, the aim is when building an IPK-based image,
+            only the <filename>do_package_write_ipk</filename> tasks would have their 
+            shared state packages fetched and extracted. 
+            Since the sysroot is not used, it would never get extracted. 
+            This is another reason to prefer the task-based approach over a 
+            recipe-based approach, which would have to install the output from every task.
+        </para>
+    </section>
+
+    <section id='tips-and-tricks'>
+        <title>Tips and Tricks</title>
+
+        <para>
+            The code in the Yocto Project that supports incremental builds is not 
+            simple code. 
+            Consequently, when things go wrong, debugging needs to be straightforward. 
+            Because of this, the Yocto Project team included strong debugging
+            tools.
+        </para>
+
+        <para>
+            First, whenever a shared state package is written out, so is a
+            corresponding <filename>.siginfo</filename> file. 
+            This practice results in a pickled python database of all
+            the metadata that went into creating the hash for a given shared state
+            package.
+        </para>
+
+        <para>
+            Second, if BitBake is run with the <filename>--dump-signatures</filename>
+            (or <filename>-S</filename>) option, BitBake dumps out 
+            <filename>.siginfo</filename> files in
+            the stamp directory for every task it would have executed instead of
+            building the target package specified.
+        </para>
+
+        <para>
+            Finally, there is a <filename>bitbake-diffsigs</filename> command that
+            can process these <filename>.siginfo</filename> files. 
+            If one file is specified, it will dump out the dependency
+            information in the file. 
+            If two files are specified, it will compare the
+            two files and dump out the differences between the two.
+            This allows the question of "What changed between X and Y?" to be
+            answered easily.
+        </para>
+    </section>
+</section>
+
+<!--
 
     <para>
         The Yocto Project build process uses a shared state caching scheme to avoid having to 
@@ -222,6 +596,7 @@
         <ulink url='http://git.yoctoproject.org/cgit.cgi/poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54'>commit</ulink>.
     </note>
 </section>
+-->
 
 </chapter>
 <!-- 
