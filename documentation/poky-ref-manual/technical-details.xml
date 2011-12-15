@@ -150,9 +150,9 @@
     <title>Shared State Cache</title>
 
     <para>
-        By design, the Yocto Project builds everything from scratch unless it can determine that
-        parts don't need to be rebuilt.
-        Fundamentally, building from scratch is an attraction as it means all parts are 
+        By design, the Yocto Project build system builds everything from scratch unless 
+        BitBake can determine that parts don't need to be rebuilt.
+        Fundamentally, building from scratch is attractive as it means all parts are 
         built fresh and there is no possibility of stale data causing problems. 
         When developers hit problems, they typically default back to building from scratch
         so they know the state of things from the start.
@@ -200,7 +200,7 @@
         <title>Overall Architecture</title>
 
         <para>
-            When determining what parts of the system need to be built, the Yocto Project 
+            When determining what parts of the system need to be built, BitBake 
             uses a per-task basis and does not use a per-recipe basis.
             You might wonder why using a per-task basis is preferred over a per-recipe basis.
             To help explain, consider having the IPK packaging backend enabled and then switching to DEB. 
@@ -220,9 +220,9 @@
         <title>Checksums (Signatures)</title>
 
         <para>
-            The Yocto Project uses a checksum, which is a unique signature of a task's 
+            The shared state code uses a checksum, which is a unique signature of a task's 
             inputs, to determine if a task needs to be run again. 
-            Because it is a change in a task's inputs that trigger a rerun, the process
+            Because it is a change in a task's inputs that triggers a rerun, the process
             needs to detect all the inputs to a given task. 
             For shell tasks, this turns out to be fairly easy because
             the build process generates a "run" shell script for each task and 
@@ -247,8 +247,8 @@
         <para>
             Another problem results from the "run" scripts containing functions that 
             might or might not get called.  
-            The Yocto Project contains code that figures out dependencies between shell 
-            functions.
+            The incremental build solution contains code that figures out dependencies 
+            between shell functions.
             This code is used to prune the "run" scripts down to the minimum set, 
             thereby alleviating this problem and making the "run" scripts much more 
             readable as a bonus.
@@ -257,13 +257,12 @@
         <para>
             So far we have solutions for shell scripts.
             What about python tasks?
-            Handling these tasks are more difficult but the the same approach 
-            applies.
+            The same approach applies even though these tasks are more difficult.
             The process needs to figure out what variables a python function accesses 
             and what functions it calls.
-            Again, the Yocto Project contains code that first figures out the variable and function 
-            dependencies, and then creates a checksum for the data used as the input to 
-            the task.
+            Again, the incremental build solution contains code that first figures out 
+            the variable and function dependencies, and then creates a checksum for the data 
+            used as the input to the task.
         </para>
 
         <para>
@@ -279,8 +278,7 @@
         </para>
            
         <para>
-            Equally, there are cases where we need to add in dependencies
-            BitBake is not able to find.
+            Equally, there are cases where we need to add dependencies BitBake is not able to find.
             You can accomplish this by using a line like the following:
             <literallayout class='monospaced'>
       PACKAGE_ARCHS[vardeps] = "MACHINE"
@@ -300,13 +298,12 @@
         </para>
 
         <para>
-            Thus far, this section has limited discussion to the direct inputs into a 
-            task.
+            Thus far, this section has limited discussion to the direct inputs into a task.
             Information based on direct inputs is referred to as the "basehash" in the code.
             However, there is still the question of a task's indirect inputs, the things that 
             were already built and present in the build directory. 
             The checksum (or signature) for a particular task needs to add the hashes of all the
-            tasks the particular task depends upon. 
+            tasks on which the particular task depends. 
             Choosing which dependencies to add is a policy decision.
             However, the effect is to generate a master checksum that combines the 
             basehash and the hashes of the task's dependencies.
@@ -327,7 +324,7 @@
             Also within the BitBake configuration file, we can give BitBake
             some extra information to help it handle this information.
             The following statements effectively result in a list of global
-            list of variable dependency excludes - variables never included in 
+            variable dependency excludes - variables never included in 
             any checksum:
             <literallayout class='monospaced'>
      BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH"
@@ -346,7 +343,7 @@
             The <filename>BB_HASHTASK_WHITELIST</filename> covers dependent tasks and 
             excludes certain kinds of tasks from the dependency chains. 
             The effect of the previous example is to isolate the native, target,
-            and cross components.
+            and cross-components.
             So, for example, toolchain changes do not force a rebuild of the whole system.
         </para>
 
@@ -380,7 +377,7 @@
         <title>Shared State</title>
 
         <para>
-            Checksums and dependencies as discussed in the previous section solves half the 
+            Checksums and dependencies, as discussed in the previous section, solve half the 
             problem.
             The other part of the problem is being able to use checksum information during the build
             and being able to reuse or rebuild specific components.
@@ -388,10 +385,8 @@
 
         <para>
             The shared state class (<filename>sstate.bbclass</filename>) 
-            is a relatively generic implementation of how to
-            "capture" a snapshot of a given task. 
-            The idea is that the build process does not care about the source of a
-            task's output.
+            is a relatively generic implementation of how to "capture" a snapshot of a given task. 
+            The idea is that the build process does not care about the source of a task's output.
             Output could be freshly built or it could be downloaded and unpacked from
             somewhere - the build process doesn't need to worry about its source.
         </para>
@@ -431,8 +426,8 @@
         </para>
 
         <para>
-            If you have a directory whose contents you need to preserve, 
-            you can do this with a line like the following:
+            If you have a directory whose contents you need to preserve, you can do this with 
+            a line like the following:
             <literallayout class='monospaced'>
      do_package[sstate-plaindirs] = "${PKGD} ${PKGDEST}"
             </literallayout>
@@ -483,7 +478,7 @@
             only the <filename>do_package_write_ipk</filename> tasks would have their 
             shared state packages fetched and extracted. 
             Since the sysroot is not used, it would never get extracted. 
-            This is another reason to prefer the task-based approach over a 
+            This is another reason why a task-based approach is preferred over a 
             recipe-based approach, which would have to install the output from every task.
         </para>
     </section>
@@ -515,13 +510,13 @@
                         (or <filename>-S</filename>) option, BitBake dumps out 
                         <filename>.siginfo</filename> files in
                         the stamp directory for every task it would have executed instead of
-                        building the target package specified.</para></listitem>
+                        building the specified target package.</para></listitem>
                     <listitem><para>There is a <filename>bitbake-diffsigs</filename> command that
                         can process these <filename>.siginfo</filename> files. 
                         If one file is specified, it will dump out the dependency
                         information in the file. 
-                        If two files are specified, it will compare the
-                        two files and dump out the differences between the two.
+                        If two files are specified, it will compare the two files and dump out 
+                        the differences between the two.
                         This allows the question of "What changed between X and Y?" to be
                         answered easily.</para></listitem>
                 </itemizedlist>
@@ -532,18 +527,18 @@
             <title>Invalidating Shared State</title>
 
             <para>
-                The Yocto Project shared state code uses checksums and shared state memory 
-                cache to avoide building tasks that don't need built.
+                The shared state code uses checksums and shared state memory 
+                cache to avoid unnecessarily rebuilding tasks.
                 As with all schemes, this one has some drawbacks.
-                It is possible that you could make implicit changes that are not factored into the checksum 
-                calculation, but do affect a task's output. 
+                It is possible that you could make implicit changes that are not factored 
+                into the checksum calculation, but do affect a task's output. 
                 A good example is perhaps when a tool changes its output.
                 Let's say that the output of <filename>rpmdeps</filename> needed to change.
                 The result of the change should be that all the "package", "package_write_rpm",
                 and "package_deploy-rpm" shared state cache items would become invalid.
                 But, because this is a change that is external to the code and therefore implicit,
                 the associated shared state cache items do not become invalidated.
-                In this case, the build process would use the cache items rather than running the 
+                In this case, the build process would use the cached items rather than running the 
                 task again. 
                 Obviously, these types of implicit changes can cause problems.
             </para>
@@ -565,8 +560,8 @@
             </para>
 
             <note>
-                For an example of a commit that makes a cosmetic change to invalidate an sstate, 
-                see this
+                For an example of a commit that makes a cosmetic change to invalidate 
+                a shared state, see this
                 <ulink url='http://git.yoctoproject.org/cgit.cgi/poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54'>commit</ulink>.
             </note>
         </section>                
