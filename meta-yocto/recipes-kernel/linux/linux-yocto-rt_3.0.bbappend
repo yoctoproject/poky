@@ -19,7 +19,7 @@ SRCREV_machine_pn-linux-yocto-rt_mpc8315e-rdb = "0b805cce57f61a244eb3b8fce460b14
 #SRCREV_machine_pn-linux-yocto-rt_beagleboard = 
 
 # routerstationpro support - preempt-rt kernel build failure
-#COMPATIBLE_MACHINE_routerstationpro = "routerstationpro"
-#KMACHINE_routerstationpro = "routerstationpro"
-#KBRANCH_routerstationpro = "yocto/standard/preempt-rt/base"
-#SRCREV_machine_pn-linux-yocto-rt_routerstationpro = "7e1e5b6c8a13c615feb0d7b6d37988a094aae98f"
+COMPATIBLE_MACHINE_routerstationpro = "routerstationpro"
+KMACHINE_routerstationpro = "routerstationpro"
+KBRANCH_routerstationpro = "yocto/standard/preempt-rt/routerstationpro"
+SRCREV_machine_pn-linux-yocto-rt_routerstationpro = "43dcdffebb64d9ce2f5cdcb18bb74bd9c301133f"
