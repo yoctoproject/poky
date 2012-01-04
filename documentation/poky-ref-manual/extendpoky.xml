@@ -9,8 +9,7 @@
         software packages, extending or customizing images or porting the Yocto Project to
         new hardware (adding a new machine). 
         The chapter also describes ways to modify package source code, combine multiple 
-        versions of library files into a single image, track license changes, and handle
-        a package name alias.
+        versions of library files into a single image, and handle a package name alias.
         Finally, the chapter contains advice about how to make changes to the 
         Yocto Project to achieve the best results.
     </para>
@@ -917,111 +916,6 @@
                 </itemizedlist>
             </para>
         </section> 
-    </section>
-
-    <section id="usingpoky-configuring-LIC_FILES_CHKSUM">
-        <title>Tracking License Changes</title>
-
-        <para>
-            The license of an upstream project might change in the future. In order to prevent these changes
-            going unnoticed, the Yocto Project provides a 
-            <filename><link linkend='var-LIC_FILES_CHKSUM'>LIC_FILES_CHKSUM</link></filename>
-            variable to track changes to the license text. The checksums are validated at the end of the
-            configure step, and if the checksums do not match, the build will fail.
-        </para>
-
-        <section id="usingpoky-specifying-LIC_FILES_CHKSUM">
-            <title>Specifying the <filename>LIC_FILES_CHKSUM</filename> Variable</title>
-
-            <para>
-                The <filename>LIC_FILES_CHKSUM</filename>
-                variable contains checksums of the license text in the source code for the recipe.
-                Following is an example of how to specify <filename>LIC_FILES_CHKSUM</filename>:
-                <literallayout class='monospaced'>
-     LIC_FILES_CHKSUM = "file://COPYING;md5=xxxx \
-                         file://licfile1.txt;beginline=5;endline=29;md5=yyyy \
-                         file://licfile2.txt;endline=50;md5=zzzz \
-                         ..."
-                </literallayout>
-            </para>
-
-            <para>
-                The Yocto Project uses the 
-                <filename><link linkend='var-S'>S</link></filename> variable as the 
-                default directory used when searching files listed in 
-                <filename>LIC_FILES_CHKSUM</filename>.
-                The previous example employs the default directory.
-            </para>
-
-            <para>
-                You can also use relative paths as shown in the following example: 
-                <literallayout class='monospaced'>
-     LIC_FILES_CHKSUM = "file://src/ls.c;startline=5;endline=16;\
-                                         md5=bb14ed3c4cda583abc85401304b5cd4e"
-     LIC_FILES_CHKSUM = "file://../license.html;md5=5c94767cedb5d6987c902ac850ded2c6"
-                </literallayout>
-            </para>
-
-            <para>
-                In this example, the first line locates a file in 
-                <filename><link linkend='var-S'>S</link>/src/ls.c</filename>. 
-                The second line refers to a file in 
-                <filename><link linkend='var-WORKDIR'>WORKDIR</link></filename>, which is the parent
-                of <filename>S</filename>.
-            </para>
-            <para>
-                Note that this variable is mandatory for all recipes, unless the 
-                <filename>LICENSE</filename> variable is set to "CLOSED".
-            </para>
-        </section>
-
-        <section id="usingpoky-LIC_FILES_CHKSUM-explanation-of-syntax">
-            <title>Explanation of Syntax</title>
-            <para>
-                As mentioned in the previous section, the 
-                <filename>LIC_FILES_CHKSUM</filename> variable lists all the 
-                important files that contain the license text for the source code. 
-                It is possible to specify a checksum for an entire file, or a specific section of a
-                file (specified by beginning and ending line numbers with the "beginline" and "endline"
-                parameters, respectively). 
-                The latter is useful for source files with a license notice header,
-                README documents, and so forth.
-                If you do not use the "beginline" parameter, then it is assumed that the text begins on the 
-                first line of the file. 
-                Similarly, if you do not use the "endline" parameter, it is assumed that the license text 
-                ends with the last line of the file. 
-            </para>
-
-            <para>
-                The "md5" parameter stores the md5 checksum of the license text. 
-                If the license text changes in any way as compared to this parameter
-                then a mismatch occurs.
-                This mismatch triggers a build failure and notifies the developer.
-                Notification allows the developer to review and address the license text changes.
-                Also note that if a mismatch occurs during the build, the correct md5 
-                checksum is placed in the build log and can be easily copied to the recipe.
-            </para>
-
-            <para>
-                There is no limit to how many files you can specify using the 
-                <filename>LIC_FILES_CHKSUM</filename> variable.
-                Generally, however, every project requires a few specifications for license tracking. 
-                Many projects have a "COPYING" file that stores the license information for all the source 
-                code files.
-                This practice allows you to just track the "COPYING" file as long as it is kept up to date. 
-            </para>
-
-            <tip>
-                If you specify an empty or invalid "md5" parameter, BitBake returns an md5 mis-match 
-                error and displays the correct "md5" parameter value during the build. 
-                The correct parameter is also captured in the build log. 
-            </tip>
-
-            <tip>
-                If the whole file contains only license text, you do not need to use the "beginline" and 
-                "endline" parameters. 
-            </tip>
-        </section>
     </section>
 
     <section id="usingpoky-configuring-DISTRO_PN_ALIAS">
