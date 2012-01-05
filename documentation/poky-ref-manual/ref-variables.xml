@@ -510,6 +510,87 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-IMAGE_OVERHEAD_FACTOR'><glossterm>IMAGE_OVERHEAD_FACTOR</glossterm>
+            <glossdef>
+                <para>
+                    Defines a multiplier that the build system might apply to the initial image
+                    size to create free disk space in the image as overhead.
+                    By default, the build process uses a multiplier of 1.3 for this variable. 
+                    This default value results in 30% free disk space added to the image when this 
+                    method is used to determine the final generated image size. 
+                    See <filename><link linkend='var-IMAGE_ROOTFS_SIZE'>IMAGE_ROOTFS_SIZE</link></filename>
+                    for information on how the build system determines the overall image size.
+                </para>
+
+                <para>
+                    The default 30% free disk space typically gives the image enough room to boot 
+                    and allows for basic post installs while still leaving a small amount of 
+                    free disk space. 
+                    If 30% free space is inadequate, you can increase the default value.
+                    For example, the following setting gives you 50% free space added to the image:
+                    <literallayout class='monospaced'>
+     IMAGE_OVERHEAD_FACTOR = "1.5"
+                    </literallayout>
+                </para>
+
+                <para>
+                    Alternatively, you can ensure a specific amount of free disk space is added
+                    to the image by using     
+                    <filename><link linkend='var-IMAGE_ROOTFS_EXTRA_SPACE'>IMAGE_ROOTFS_EXTRA_SPACE</link></filename>
+                    the variable.
+                </para>
+            </glossdef>
+        </glossentry> 
+
+        <glossentry id='var-IMAGE_ROOTFS_EXTRA_SPACE'><glossterm>IMAGE_ROOTFS_EXTRA_SPACE</glossterm>
+            <glossdef>
+                <para>
+                    Defines additional free disk space created in the image in Kbytes.
+                    By default, this variable is set to "0".
+                    This free disk space is added to the image after the build system determines
+                    the image size as described in 
+                    <filename><link linkend='var-IMAGE_ROOTFS_SIZE'>IMAGE_ROOTFS_SIZE</link></filename>.
+                </para>
+
+                <para>
+                    This variable is particularly useful when you want to ensure that a 
+                    specific amount of free disk space is available on a device after an image 
+                    is installed and running. 
+                    For example, to be sure 5 Gbytes of free disk space is available, set the 
+                    variable as follows:
+                    <literallayout class='monospaced'>
+     IMAGE_ROOTFS_EXTRA_SPACE = "5242880"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry> 
+
+        <glossentry id='var-IMAGE_ROOTFS_SIZE'><glossterm>IMAGE_ROOTFS_SIZE</glossterm>
+            <glossdef>
+                <para>
+                    Defines the size in Kbytes for the generated image.
+                    The Yocto Project build system determines the final size for the generated 
+                    image using an algorithm that takes into account the initial disk space used
+                    for the generated image, a requested size for the image, and requested 
+                    additional free disk space to be added to the image.
+                    Programatically, the build system determines the final size of the 
+                    generated image as follows:
+                    <literallayout class='monospaced'>
+    if (du * overhead) &lt; IMAGE_ROOTFS_SIZE:
+	IMAGE_ROOTFS_SIZE = IMAGE_ROOTFS_SIZE + xspace
+    else:
+	IMAGE_ROOTFS_SIZE = (du * overhead) + xspace
+                    </literallayout>
+                    In the above example, <filename>overhead</filename> is defined by the 
+                    <filename><link linkend='var-IMAGE_OVERHEAD_FACTOR'>IMAGE_OVERHEAD_FACTOR</link></filename>
+                    variable, <filename>xspace</filename> is defined by the 
+                    <filename><link linkend='var-IMAGE_ROOTFS_EXTRA_SPACE'>IMAGE_ROOTFS_EXTRA_SPACE</link></filename>
+                    variable, and <filename>du</filename> is the results of the disk usage command 
+                    on the initially generated image.                    
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-INC_PR'><glossterm>INC_PR</glossterm>
             <glossdef>
                 <para>Defines the Package revision.  
