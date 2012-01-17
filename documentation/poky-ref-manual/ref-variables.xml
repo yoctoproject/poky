@@ -513,11 +513,21 @@
         <glossentry id='var-IMAGE_OVERHEAD_FACTOR'><glossterm>IMAGE_OVERHEAD_FACTOR</glossterm>
             <glossdef>
                 <para>
-                    Defines a multiplier that the build system might apply to the initial image
-                    size to create free disk space in the image as overhead.
+                    Defines a multiplier that the build system applies to the initial image
+                    size for cases when the multiplier times the returned disk usage value
+                    for the image is greater than the sum of 
+                    <filename><link linkend='var-IMAGE_ROOTFS_SIZE'>IMAGE_ROOTFS_SIZE</link></filename>
+                    and 
+                    <filename><link linkend='var-IMAGE_ROOTFS_EXTRA_SPACE'>IMAGE_ROOTFS_EXTRA_SPACE</link></filename>.
+                    The result of the multiplier applied to the initial image size creates
+                    free disk space in the image as overhead.
                     By default, the build process uses a multiplier of 1.3 for this variable. 
                     This default value results in 30% free disk space added to the image when this 
-                    method is used to determine the final generated image size. 
+                    method is used to determine the final generated image size.
+                    You should be aware that post install scripts and the package management
+                    system uses disk space inside this overhead area. 
+                    Consequently, the multiplier does not produce an image with 
+                    all the theoretical free disk space.                     
                     See <filename><link linkend='var-IMAGE_ROOTFS_SIZE'>IMAGE_ROOTFS_SIZE</link></filename>
                     for information on how the build system determines the overall image size.
                 </para>
@@ -576,17 +586,31 @@
                     Programatically, the build system determines the final size of the 
                     generated image as follows:
                     <literallayout class='monospaced'>
-    if (du * overhead) &lt; IMAGE_ROOTFS_SIZE:
-	IMAGE_ROOTFS_SIZE = IMAGE_ROOTFS_SIZE + xspace
+    if (image-du * overhead) &lt; rootfs-size:
+	internal-rootfs-size = rootfs-size + xspace
     else:
-	IMAGE_ROOTFS_SIZE = (du * overhead) + xspace
+	internal-rootfs-size = (image-du * overhead) + xspace
+
+    where:
+
+      image-du = Returned value of the du command on
+                 the image.
+      
+      overhead = IMAGE_OVERHEAD_FACTOR
+
+      rootfs-size = IMAGE_ROOTFS_SIZE
+
+      internal-rootfs-size = Initial root filesystem
+                             size before any modifications.
+
+      xspace = IMAGE_ROOTFS_EXTRA_SPACE
                     </literallayout>
-                    In the above example, <filename>overhead</filename> is defined by the 
+<!--                    In the above example, <filename>overhead</filename> is defined by the 
                     <filename><link linkend='var-IMAGE_OVERHEAD_FACTOR'>IMAGE_OVERHEAD_FACTOR</link></filename>
                     variable, <filename>xspace</filename> is defined by the 
                     <filename><link linkend='var-IMAGE_ROOTFS_EXTRA_SPACE'>IMAGE_ROOTFS_EXTRA_SPACE</link></filename>
                     variable, and <filename>du</filename> is the results of the disk usage command 
-                    on the initially generated image.                    
+                    on the initially generated image. -->                   
                 </para>
             </glossdef>
         </glossentry>
