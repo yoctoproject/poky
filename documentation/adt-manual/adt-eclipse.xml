@@ -53,10 +53,12 @@
         <para>
             Once you have downloaded the tarball, extract it into a clean 
             directory.
-            For example, the following command unpacks and installs the Eclipse IDE
+            For example, the following commands unpack and install the Eclipse IDE
+            tarball found in the <filename>Downloads</filename> area 
             into a clean directory using the default name <filename>eclipse</filename>:
             <literallayout class='monospaced'>
-     $ tar -xzvf ~/Downloads/Eclipse-SDK-3.7-linux-gtk-x86_64.tar.gz
+     $ cd ~
+     $ tar -xzvf ~/Downloads/eclipse-SDK-3.7.1-linux-gtk-x86_64.tar.gz
             </literallayout>
         </para>
 
@@ -138,30 +140,36 @@
     </section>
 
     <section id='installing-the-eclipse-yocto-plug-in'>
-    <title>Installing the Eclipse Yocto Plug-in</title>
+    <title>Installing or Accessing the Eclipse Yocto Plug-in</title>
 
         <para>
-            You can install the Eclipse Yocto Plug-in one of three methods: as new software
-            from within the Eclipse IDE, from the Yocto Project source repositories, or as a built zip file.
+            You can install the Eclipse Yocto Plug-in into the Eclipse application
+            one of two ways:  using the Eclipse IDE and installing the plug-in as new software, or
+            using a built zip file.
+            If you don't want to permanently install the plug-in but just want to try it out
+            within the Eclipse environment, you can import the plug-in project from the 
+            Yocto Project source repositories.
         </para>
 
         <section id='new-software'>
-        <title>New Software</title>
+        <title>Installing the Plug-in as New Software</title>
 
             <para>
-                To install the Eclipse Yocto Plug-in directly into the Eclipse IDE, 
+                To install the Eclipse Yocto Plug-in as new software directly into the Eclipse IDE, 
                 follow these steps:
                 <orderedlist>
                     <listitem><para>Start up the Eclipse IDE.</para></listitem>
                     <listitem><para>In Eclipse, select "Install New Software" from the "Help" menu.</para></listitem>
                     <listitem><para>Click "Add..." in the "Work with:" area.</para></listitem>
                     <listitem><para>Enter 
-                        <filename>http://www.yoctoproject.org/downloads/eclipse-plugin/1.1</filename> 
+                        <filename>http://downloads.yoctoproject.org/releases/eclipse-plugin/1.1</filename> 
                         in the URL field and provide a meaningful name in the "Name" field.</para></listitem>
                     <listitem><para>Click "OK" to have the entry added to the "Work with:" 
                         drop-down list.</para></listitem>
                     <listitem><para>Select the entry for the plug-in from the "Work with:" drop-down 
                         list.</para></listitem>
+                    <listitem><para>Check the box next to <filename>Development tools and SDKs for Yocto Linux</filename>.
+                        </para></listitem>
                     <listitem><para>Complete the remaining software installation steps and 
                         then restart the Eclipse IDE to finish the installation of the plug-in.
                         </para></listitem>
@@ -169,46 +177,8 @@
             </para>
         </section>
 
-
-        <section id='yocto-project-source'>
-        <title>Yocto Project Source</title>
-
-            <para>
-                To install the Eclipse Yocto Plug-in from the Yocto Project source repositories, 
-                follow these steps:
-                <orderedlist>
-                    <listitem><para>Open a shell and create a Git repository with:
-                        <literallayout class='monospaced'>
-     $ git clone git://git.yoctoproject.org/eclipse-poky yocto-eclipse
-                        </literallayout>
-                        For this example, the repository is named 
-                        <filename>~/yocto-eclipse</filename>.</para></listitem>
-                    <listitem><para>In Eclipse, select "Import" from the "File" menu.</para></listitem>
-                    <listitem><para>Expand the "General" box and pick "existing projects into workspace".
-                        </para></listitem>
-                    <listitem><para>Select the root directory and browse to "~/yocto-eclipse/plugins".
-                        </para></listitem>
-                    <listitem><para>There will be three things there.
-                        Select each one and install one at a time.
-                        Do all three.</para></listitem>
-                    <listitem><para>Restart everything.</para></listitem>
-                </orderedlist>
-            </para>
-
-            <para>
-                At this point you should be able to invoke Eclipse from the shell using the following:
-                <literallayout class='monospaced'>
-     $ cd ~/eclipse
-     $ ./eclipse -vmargs -XX:PermSize=256M
-                </literallayout>
-                The left navigation pane shows the default projects. 
-                Right-click on one of these projects and run it as an Eclipse application.
-                This brings up a second instance of Eclipse IDE that has the Yocto Plug-in.
-           </para>
-       </section>
-
        <section id='zip-file-method'>
-       <title>Zip File Method</title>
+       <title>Installing the Plug-in from a Zip File</title>
             <para>
                 To install the Eclipse Yocto Plug-in by building and installing a plug-in 
                 zip file, follow these steps:
@@ -247,22 +217,57 @@
                         </para></listitem>
                     <listitem><para>Click "Add".</para></listitem>
                     <listitem><para>Provide anything you want in the "Name" field.</para></listitem>
-                    <listitem><para>For the "Archive" field, select the ZIP file you built in step 
-                        4.
+                    <listitem><para>Click "Archive" and browse to the ZIP file you built 
+                        in step four.  
                         This ZIP file should not be "unzipped", and must be the 
                         <filename>*archive.zip</filename> file created by running the 
                         <filename>build.sh</filename> script.</para></listitem>
-                    <listitem><para>Select the new entry in the installation window and complete
+                    <listitem><para>Check the box next to the new entry in the installation window and complete
                         the installation.</para></listitem>
                     <listitem><para>Restart the Eclipse IDE if necessary.</para></listitem>
                 </orderedlist>
             </para>
 
             <para>
-                At this point you should be able to configure the Eclipse Yocto Plug-in as described in
-                the next section.
+                At this point you should be able to configure the Eclipse Yocto Plug-in as described in the
+                "<link linkend='configuring-the-eclipse-yocto-plug-in'>Configuring the Eclipse Yocto Plug-in</link>"
+                section.</para>
+        </section>            
+
+        <section id='yocto-project-source'>
+        <title>Importing the Plug-in Project into the Eclipse Environment</title>
+            <para>
+                Importing the Eclipse Yocto Plug-in project from the Yocto Project source repositories
+                is useful when you want to try out the latest plug-in from the tip of plug-in's 
+                development tree.
+                It is important to understand when you import the plug-in you are not installing 
+                it into the Eclipse application.
+                Rather, you are importing the project and just using it.
+                To import the plug-in project, follow these steps:
+                <orderedlist>
+                    <listitem><para>Open a shell and create a Git repository with:
+                        <literallayout class='monospaced'>
+     $ git clone git://git.yoctoproject.org/eclipse-poky yocto-eclipse
+                        </literallayout>
+                        For this example, the repository is named 
+                        <filename>~/yocto-eclipse</filename>.</para></listitem>
+                    <listitem><para>In Eclipse, select "Import" from the "File" menu.</para></listitem>
+                    <listitem><para>Expand the "General" box and select "existing projects into workspace"
+                        and then click "Next".</para></listitem>
+                    <listitem><para>Select the root directory and browse to "~/yocto-eclipse/plugins".
+                        </para></listitem>
+                    <listitem><para>There will be three things there.
+                        Select each one and install one at a time.
+                        Do all three.</para></listitem>
+                </orderedlist>
+            </para>
+
+            <para>
+                The left navigation pane in the Eclipse application shows the default projects. 
+                Right-click on one of these projects and run it as an Eclipse application.
+                This brings up a second instance of Eclipse IDE that has the Yocto Plug-in.
            </para>
-       </section>            
+       </section>
     </section>
 
     <section id='configuring-the-eclipse-yocto-plug-in'>
