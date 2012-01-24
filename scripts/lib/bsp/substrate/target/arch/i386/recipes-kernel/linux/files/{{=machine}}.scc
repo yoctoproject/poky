@@ -1,0 +1,30 @@
+kconf hardware {{=machine}}.cfg
+
+include features/intel-e1xxxx/intel-e100.scc
+include features/intel-e1xxxx/intel-e1xxxx.scc
+
+{{ if xserver == "y" and xserver_choice == "xserver_emgd": }}
+include features/drm-emgd/drm-emgd.scc
+
+{{ if xserver == "y" and xserver_choice == "xserver_i915": }}
+include features/i915/i915.scc
+
+include features/dmaengine/dmaengine.scc
+include features/serial/8250.scc
+include features/hpet/hpet.scc
+include features/ericsson-3g/f5521gw.scc
+
+{{ if xserver == "y" and xserver_choice == "xserver_vesa" or xserver_choice == "xserver_emgd": }}
+include features/framebuffer/vesafb.scc
+
+include cfg/usb-mass-storage.scc
+include cfg/boot-live.scc
+include features/power/intel.scc
+
+include features/logbuf/size-normal.scc
+
+include features/latencytop/latencytop.scc
+include features/profiling/profiling.scc
+
+kconf hardware user-config.cfg
+include user-patches.scc

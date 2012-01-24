@@ -1,0 +1,17 @@
+kconf hardware {{=machine}}.cfg
+
+include features/serial/8250.scc
+{{ if xserver == "y" and xserver_choice == "xserver_vesa": }}
+include cfg/vesafb.scc
+{{ if xserver == "y" and xserver_choice == "xserver_i915": }}
+include features/i915/i915.scc
+include cfg/usb-mass-storage.scc
+include features/power/intel.scc
+
+include features/logbuf/size-normal.scc
+
+include features/latencytop/latencytop.scc
+include features/profiling/profiling.scc
+
+kconf hardware user-config.cfg
+include user-patches.scc

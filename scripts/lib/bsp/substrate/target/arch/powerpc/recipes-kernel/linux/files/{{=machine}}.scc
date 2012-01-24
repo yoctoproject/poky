@@ -1,0 +1,11 @@
+kconf hardware {{=machine}}.cfg
+
+include cfg/usb-mass-storage.scc
+include cfg/vfat.scc
+{{ if kernel_choice == "linux-yocto_3.0" or kernel_choice == "linux-yocto-rt_3.0": }}
+include features/dmaengine/dmaengine.scc
+{{ if kernel_choice == "linux-yocto_3.2" or kernel_choice == "linux-yocto-rt_3.2": }}
+include cfg/dmaengine/dmaengine.scc
+
+kconf hardware user-config.cfg
+include user-patches.scc
