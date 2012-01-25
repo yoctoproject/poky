@@ -248,8 +248,8 @@
                     of cores your machine supports and set <filename>PARALLEL_MAKE</filename> to one and 
                     a half times the number of cores your machine supports.
                 </note>
-                The following two commands build the default <filename>qemux86</filename> image and 
-                <filename>source</filename> build environment setup script.
+                The following two commands <filename>source</filename> the build environment setup script
+                and build the default <filename>qemux86</filename> image.
                 If necessary, the script creates the build directory:
                 <literallayout class='monospaced'>
      $ cd ~/poky
@@ -532,46 +532,94 @@
                 in "<link linkend='modifying-the-kernel-source-code'>Modifying the Kernel Source
                 Code</link>" you should already have the Yocto Project files set up on your 
                 host machine.
+                If this is the case, go to then next section titled
+                "<link linkend='examining-the-default-config-smp-behavior'>Examining the Default
+                <filename>CONFIG_SMP</filename> Behavior</link>" and continue with the 
+                example.
             </para>
 
             <para>
                 If you don't have the Yocto Project files established on your system, 
-                See "<link linkend='setting-up-the-local-yocto-project-files-git-repository'>Setting 
-                Up the Local Yocto Project Files Git Repository</link>" for 
-                information.
-                To reconfigure the kernel, this is the only Git repository you need to have set up. 
+                you can get them through tarball extraction or by 
+                cloning the <filename>poky</filename> Git repository.  
+                This example uses <filename>poky</filename> as the root directory of the 
+                local Yocto Project files Git repository.
+                See the bulleted item
+                "<link linkend='local-yp-release'>Yocto Project Release</link>"
+                for information on how to get these files.
             </para>
 
-<!--
+            <para>
+                Once you have the repository set up, 
+                you have many development branches from which you can work. 
+                From inside the repository you can see the branch names and the tag names used 
+                in the Git repository using either of the following two commands:
+                <literallayout class='monospaced'>
+     $ cd poky
+     $ git branch -a
+     $ git tag -l
+                </literallayout> 
+                This example uses the Yocto Project 1.1.1 Release code named "edison", 
+                which maps to the <filename>edison</filename> branch in the repository. 
+                The following commands create and checkout the local <filename>edison</filename>
+                branch:
+                <literallayout class='monospaced'>
+     $ git checkout -b edison origin/edison
+     Branch edison set up to track remote branch edison from origin.
+     Switched to a new branch 'edison'
+                </literallayout>
+            </para>
 
             <para>
-                If you took the time to work through the example that modifies the kernel source code 
-                in "<link linkend='modifying-the-kernel-source-code'>Modifying the Kernel Source
-                Code</link>" you are already set up to quickly work through this example.
-                If not, then work through the following list to prepare:
-                <itemizedlist>
-                    <listitem><para><emphasis>Understand the development environment:</emphasis>
-                        See "<link linkend='understanding-the-files-you-need'>Understanding 
-                        the Files You Need</link>" for information.</para></listitem>
-                    <listitem><para><emphasis>Set up the local Yocto Project files Git 
-                        repository:</emphasis>
-                        See "<link linkend='setting-up-the-local-yocto-project-files-git-repository'>Setting 
-                        Up the Local Yocto Project Files Git Repository</link>" for 
-                        information.</para></listitem>
-                    <listitem><para><emphasis>Set up the <filename>poky-extras</filename> Git 
-                        repository:</emphasis>
-                        See "<link linkend='setting-up-the-poky-extras-git-repository'>Setting 
-                        Up <filename>poky-extras</filename> Git repository</link>" for
-                        information.</para></listitem>
-                    <listitem><para><emphasis>Set up the the bare clone and its copy:</emphasis>
-                        See "<link linkend='setting-up-the-bare-clone-and-its-copy'>Setting Up the 
-                        Bare Clone and its Copy</link>" for information.</para></listitem>
-                    <listitem><para><emphasis>Build the default QEMU kernel image:</emphasis>
-                        See "<link linkend='building-and-booting-the-default-qemu-kernel-image'>Building 
-                        and Booting the Default QEMU Kernel image</link>" for information.
-                        Do not boot the image in the QEMU emulator at this point.</para></listitem>
-                </itemizedlist>
-            </para> -->
+                Next, you need to build the default <filename>qemux86</filename> image that you 
+                can boot using QEMU.
+                <note>
+                    Because a full build can take hours, you should check two variables in the 
+                    <filename>build</filename> directory that is created after you source the 
+                    <filename>oe-init-build-env</filename> script.
+                    You can find these variables
+                    <filename>BB_NUMBER_THREADS</filename> and <filename>PARALLEL_MAKE</filename>
+                    in the <filename>build/conf</filename> directory in the 
+                    <filename>local.conf</filename> configuration file.
+                    By default, these variables are commented out.
+                    If your host development system supports multi-core and multi-thread capabilities,
+                    you can uncomment these statements and set the variables to significantly shorten
+                    the full build time.
+                    As a guideline, set <filename>BB_NUMBER_THREADS</filename> to twice the number 
+                    of cores your machine supports and set <filename>PARALLEL_MAKE</filename> to one and 
+                    a half times the number of cores your machine supports.
+                </note>
+                The following two commands <filename>source</filename> the build environment setup script
+                and build the default <filename>qemux86</filename> image.
+                If necessary, the script creates the build directory:
+                <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ source oe-init-build-env
+
+          ### Shell environment set up for builds. ###
+
+     You can now run 'bitbake &lt;target&gt;'
+
+     Common targets are:
+         core-image-minimal
+         core-image-sato
+         meta-toolchain
+         meta-toolchain-sdk
+         adt-installer
+         meta-ide-support
+
+     You can also run generated qemu images with a command like 'runqemu qemux86'
+                </literallayout>
+            </para>
+
+            <para>
+                The following <filename>bitbake</filename> command starts the build:
+                <literallayout class='monospaced'>
+     $ bitbake -k core-image-minimal
+                </literallayout>
+                <note>Be sure to check the settings in the <filename>local.conf</filename>
+                before starting the build.</note>
+            </para>
         </section>
 
         <section id='examining-the-default-config-smp-behavior'>
