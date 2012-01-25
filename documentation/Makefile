@@ -1,48 +1,61 @@
 # This is a single Makefile to handle all generated Yocto Project documents.
 # The Makefile needs to live in the documents directory and all figures used
-# in any manuals must be PNG files and live in the individual book's figures
-# directory.
+# in any manuals must be .PNG files and live in the individual book's figures
+# directory.  Note that the figures for the Yocto Project Development Manual
+# differ between the 'master' and 'edison' branches.
 #
 # The Makefile has these targets:
 #
-#    pdf: generates a PDF version of a manual.  Not valid for the Quick Start
-#    html: generates an HTML version of a manual.
-#    tarball: creates a tarball for the doc files.
+#    pdf:      generates a PDF version of a manual.  Not valid for the Quick Start
+#    html:     generates an HTML version of a manual.
+#    tarball:  creates a tarball for the doc files.
 #    validate: validates 
-#    publish: pushes generated files to the Yocto Project website
-#    clean: removes files
+#    publish:  pushes generated files to the Yocto Project website
+#    clean:    removes files
 #
 # The Makefile generates an HTML and PDF version of every document except the
 # Yocto Project Quick Start.  The Quick Start is in HTML form only.  The variable
-# The command-line argument DOC represents the folder name in which a particular 
-# document is stored.  The command-line argument VER represents the distro 
-# version of the Yocto Release for which the manuals are being generated.
+# DOC is used to indicate the folder name for a given manual. The variable
+# VER represents the distro version of the Yocto Release for which the manuals 
+# are being generated.  The variable BRANCH is used to indicate the 'edison'
+# branch and is used only when DOC=dev-manual (making the YP Development
+# Manual).  
+#
 # To build the HTML and PDF versions of the manual you must invoke the Makefile
 # with the DOC argument.  If you are going to publish the manual then you 
 # you must invoke the Makefile with both the DOC and the VER argument.
+# If you are building the 'edison' version of the YP DEvelopment Manual then
+# you must use the DOC and BRANCH arguments.  
 #
 # Examples:
 #
 #     make DOC=bsp-guide
 #     make DOC=yocto-project-qs
 #     make pdf DOC=poky-ref-manual
+#     make DOC=dev-manual BRANCH=edison
 #
 # The first example generates the HTML and PDF versions of the BSP Guide.
 # The second example generates the HTML version only of the Quick Start.  Note that 
 # the Quick Start only has an HTML version available.  The third example generates 
-# both the PDF and HTML versions of the Yocto Project Reference Manual.
+# both the PDF and HTML versions of the Yocto Project Reference Manual. The 
+# last example generates both the PDF and HTML 'edison' versions of the YP 
+# Development Manual.
 #
 # Use the publish target to push the generated manuals to the Yocto Project 
 # website.  All files needed for the manual's HTML form are pushed as well as the 
 # PDF version (if applicable).  
 # Examples:
 #
-#    make publish DOC=bsp-guide VER=1.1
-#    make publish DOC=adt-manual VER=1.1
+#    make publish DOC=bsp-guide VER=1.2
+#    make publish DOC=adt-manual VER=1.2
+#    make publish DOC=dev-manual VER=1.1.1 BRANCH=edison
+#    make publish DOC=dev-manual VER=1.2 
 #
-# The first example publishes the 1.1 version of both the PDF and HTML versions of 
-# the BSP Guide.  The second example publishes the 1.1 version of both the PDF and 
-# HTML versions of the ADT Manual.
+# The first example publishes the 1.2 version of both the PDF and HTML versions of 
+# the BSP Guide.  The second example publishes the 1.2 version of both the PDF and 
+# HTML versions of the ADT Manual. The third example publishes the PDF and HTML
+# 'edison' versions of the YP Development Manual.  Finally, the last example publishes
+# the PDF and HTML 'master' versions of the YP Development Manual. 
 #
 
 ifeq ($(DOC),bsp-guide)
@@ -71,14 +84,27 @@ ALLPREQ = html pdf tarball
 # message for .PNG files that are not present when building a particular branch.  The 
 # list of files is all-inclusive for all branches.
 #
+
+	ifeq ($(BRANCH),edison)
 TARFILES = style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
-           figures/kernel-example-repos.png figures/kernel-example-repos-edison.png \
+           figures/kernel-example-repos-edison.png \
            figures/kernel-overview-1.png figures/kernel-overview-2.png \
-           figures/kernel-overview-3.png figures/kernel-overview-3-edison.png \
+           figures/kernel-overview-3-edison.png \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
+	else
+TARFILES = style.css dev-manual.html dev-manual.pdf \
+           figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
+           figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
+           figures/kernel-example-repos.png \
+           figures/kernel-overview-1.png figures/kernel-overview-2.png \
+           figures/kernel-overview-3.png \
+           figures/source-repos.png figures/yp-download.png \
+           figures/wip.png
+	endif
+
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
