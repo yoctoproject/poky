@@ -472,6 +472,64 @@
             <title>Customizing Images Using <filename>local.conf</filename></title>
 
             <para>
+                While not recommended, it is possible to include or exclude packages in the 
+                image by setting variables in the <filename>conf/local.conf</filename> file in 
+                the Yocto Project build directory.
+                <note>
+                    The best way to add packages to an image is to create a layer that contains
+                    recipes to specifically add the packages.
+                    Using variables with the <filename>local.conf</filename> to add things 
+                    to images could result in ordering problems or even leave you with a 
+                    build system that seemingly adds "random" packages to the image.
+                    For example, if you use the same or a copied <filename>local.conf</filename>
+                    for another project, you might have forgotten about something you added
+                    for a previous project.
+                </note>  
+                This section describes some of the ways you could include or exclude packages 
+                in the image through use of the <filename>conf/local.conf</filename> file.
+            </para>
+
+            <section id='adding-packages'>
+                <title>Adding Packages</title>
+
+                <para>
+                    Following are some methods to add packages to the image through the 
+                    use of variables in the <filename>conf/local.conf</filename>:
+                    <itemizedlist>
+                        <listitem><para><emphasis><filename>IMAGE_INSTALL_append</filename> - </emphasis>
+                        Some explanation</para></listitem>
+                        <listitem><para><emphasis><filename>POKY_EXTRA_append</filename> - </emphasis>
+                        Some explanation</para></listitem>
+                        <listitem><para><emphasis><filename>POKY_EXTRA_INSTALL</filename> - </emphasis>
+                        Some explanation</para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
+
+            <section id='excluding-packages'>
+                <title>Excluding Packages</title>
+
+                <para>
+                    It is possible to filter or mask out recipe and recipe append files such that 
+                    BitBake ignores them.  
+                    You can do this by providing an expression with the 
+                    <filename>BBMASK</filename> variable. 
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     BBMASK = ".*/meta-mymachine/recipes-maybe/"
+                    </literallayout>
+                    Here, all <filename>.bb</filename> and <filename>.bbappend</filename> files
+                    in the directory that matches the expression are ignored during the build
+                    process.
+                </para>
+            </section>
+<!--
+THIS IS THE ORIGINAL STUFF
+
+        <section id='usingpoky-extend-customimage-localconf'>
+            <title>Customizing Images Using <filename>local.conf</filename></title>
+
+            <para>
                 It is possible to customize image contents by using variables used by distribution 
                 maintainers in the <filename>local.conf</filename> found in the Yocto Project 
                 build directory.
@@ -489,9 +547,8 @@
             <para>
                 However, since the 
                 <filename><link linkend='var-DISTRO_EXTRA_RDEPENDS'>DISTRO_EXTRA_RDEPENDS</link></filename> 
-                variable is for
-                distribution maintainers, adding packages using this method is not as simple as adding 
-                them using a custom <filename>.bb</filename> file. 
+                variable is for distribution maintainers, adding packages using this method is not 
+                as simple as adding them using a custom <filename>.bb</filename> file. 
                 Using the <filename>local.conf</filename> file method could result in some packages 
                 needing to be recreated.
                 For example, if packages were previously created and the image was rebuilt, then the packages
@@ -512,6 +569,7 @@
      $ bitbake core-image-sato
                 </literallayout>
             </para>
+        </section> -->
         </section>
     </section>
 
