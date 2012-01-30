@@ -472,37 +472,58 @@
             <title>Customizing Images Using <filename>local.conf</filename></title>
 
             <para>
-                While not recommended, it is possible to include or exclude packages in the 
-                image by setting variables in the <filename>conf/local.conf</filename> file in 
-                the Yocto Project build directory.
-                <note>
-                    The best way to add packages to an image is to create a layer that contains
-                    recipes to specifically add the packages.
-                    Using variables with the <filename>local.conf</filename> to add things 
-                    to images could result in ordering problems or even leave you with a 
-                    build system that seemingly adds "random" packages to the image.
-                    For example, if you use the same or a copied <filename>local.conf</filename>
-                    for another project, you might have forgotten about something you added
-                    for a previous project.
-                </note>  
-                This section describes some of the ways you could include or exclude packages 
-                in the image through use of the <filename>conf/local.conf</filename> file.
+                It is possible to customize image contents by using variables from your
+                local configuration in your <filename>conf/local.conf</filename> file. 
+                Because it is limited to local use, this method generally only allows you to 
+                add packages and is not as flexible as creating your own customized image.
+                When you add packages using local variables this way, you need to realize that 
+                these variable changes affect all images at the same time and might not be
+                what you require.
             </para>
 
             <section id='adding-packages'>
                 <title>Adding Packages</title>
 
                 <para>
-                    Following are some methods to add packages to the image through the 
-                    use of variables in the <filename>conf/local.conf</filename>:
-                    <itemizedlist>
-                        <listitem><para><emphasis><filename>IMAGE_INSTALL_append</filename> - </emphasis>
-                        Some explanation</para></listitem>
-                        <listitem><para><emphasis><filename>POKY_EXTRA_append</filename> - </emphasis>
-                        Some explanation</para></listitem>
-                        <listitem><para><emphasis><filename>POKY_EXTRA_INSTALL</filename> - </emphasis>
-                        Some explanation</para></listitem>
-                    </itemizedlist>
+                    The simplest way to add extra packages to all images is by using the 
+                    <filename><link linkend='var-IMAGE_INSTALL'>IMAGE_INSTALL</link></filename>
+                    variable with the <filename>_append</filename> operator:
+                    <literallayout class='monospaced'>
+     IMAGE_INSTALL_append = " strace"
+                    </literallayout>
+                    Use of the syntax is important.
+                    Specifically, the space between the quote and the package name, which is
+                    <filename>strace</filename> in this example.
+                    This space is required since the <filename>_append</filename>
+                    operator does not add the space.
+                </para>
+
+                <para>
+                    Furthermore, you must use <filename>_append</filename> instead of the <filename>+=</filename> 
+                    operator if you want to avoid ordering issues. 
+                    The reason for this is because doing so uncondtionally appends to the variable and 
+                    avoids ordering problems due to the variable being set in image recipes and 
+                    <filename>.bbclass</filename> files with operators like <filename>?=</filename>.
+                    Using <filename>_append</filename> ensures the operation takes affect.
+                </para>
+
+                <para>
+                    As shown in its simplest use, <filename>IMAGE_INSTALL_append</filename> affects
+                    all images.
+                    It is possible to extend the syntax so that the variable applies to a specific image only.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     IMAGE_INSTALL_append_pn-core-image-minimal = " strace"
+                    </literallayout>
+                    This example adds <filename>strace</filename> to <filename>core-image-minimal</filename>
+                    only.
+                </para>
+
+                <para>
+                    You can add packages using a similar approach through the  
+                    <filename><link linkend='var-POKY_EXTRA_INSTALL'>POKY_EXTRA_INSTALL</link></filename> 
+                    variable.
+                    If you use this variable, only <filename>core-image-*</filename> images are affected.
                 </para>
             </section>
 
@@ -513,7 +534,7 @@
                     It is possible to filter or mask out recipe and recipe append files such that 
                     BitBake ignores them.  
                     You can do this by providing an expression with the 
-                    <filename>BBMASK</filename> variable. 
+                    <filename><link linkend='var-BBMASK'>BBMASK</link></filename> variable. 
                     Here is an example:
                     <literallayout class='monospaced'>
      BBMASK = ".*/meta-mymachine/recipes-maybe/"
@@ -523,53 +544,6 @@
                     process.
                 </para>
             </section>
-<!--
-THIS IS THE ORIGINAL STUFF
-
-        <section id='usingpoky-extend-customimage-localconf'>
-            <title>Customizing Images Using <filename>local.conf</filename></title>
-
-            <para>
-                It is possible to customize image contents by using variables used by distribution 
-                maintainers in the <filename>local.conf</filename> found in the Yocto Project 
-                build directory.
-                This method only allows the addition of packages and is not recommended.
-            </para>
-
-            <para>
-                For example, to add the <filename>strace</filename> package into the image,
-                you would add this package to the <filename>local.conf</filename> file:
-                <literallayout class='monospaced'>
-     DISTRO_EXTRA_RDEPENDS += "strace"
-                </literallayout>
-            </para>
-
-            <para>
-                However, since the 
-                <filename><link linkend='var-DISTRO_EXTRA_RDEPENDS'>DISTRO_EXTRA_RDEPENDS</link></filename> 
-                variable is for distribution maintainers, adding packages using this method is not 
-                as simple as adding them using a custom <filename>.bb</filename> file. 
-                Using the <filename>local.conf</filename> file method could result in some packages 
-                needing to be recreated.
-                For example, if packages were previously created and the image was rebuilt, then the packages
-                would need to be recreated.
-            </para>
-
-            <para>
-                Cleaning <filename>task-*</filename> packages are required because they use the
-                <filename>DISTRO_EXTRA_RDEPENDS</filename> variable. 
-                You do not have to build them by hand because Yocto Project images depend on the 
-                packages they contain.
-                This means dependencies are automatically built when the image builds. 
-                For this reason we do not use the <filename>rebuild</filename> task.
-                In this case the <filename>rebuild</filename> task does not care about
-                dependencies - it only rebuilds the specified package.
-                <literallayout class='monospaced'>
-     $ bitbake -c clean task-boot task-base task-poky
-     $ bitbake core-image-sato
-                </literallayout>
-            </para>
-        </section> -->
         </section>
     </section>
 

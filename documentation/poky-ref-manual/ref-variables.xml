@@ -533,7 +533,44 @@
 
         <glossentry id='var-IMAGE_INSTALL'><glossterm>IMAGE_INSTALL</glossterm>
             <glossdef>
-                <para>The list of packages used to build images.</para>
+                <para>
+                    Specifies the packages to install into an image.
+                    The <filename>IMAGE_INSTALL</filename> variable is a mechanism for an image
+                    recipe and you should use it with care to avoid ordering issues.
+                </para>
+
+                <para>
+                    Image recipes set <filename>IMAGE_INSTALL</filename> to specify the 
+                    packages to install into an image through <filename>image.bbclass</filename>.
+                    Additionally, "helper" classes exist, such as <filename>core-image.bbclass</filename>,
+                    that can take 
+                    <filename><link linkend='var-IMAGE_FEATURE'>IMAGE_FEATURE</link></filename> lists
+                    and turn these into auto-generated entries in 
+                    <filename>IMAGE_INSTALL</filename> in addition to its default contents.
+                </para>
+
+                <para>
+                    Using <filename>IMAGE_INSTALL</filename> with the <filename>+=</filename>
+                    operator from the <filename>/conf/local.conf</filename> file or from within 
+                    an image recipe is not recommended as it can cause ordering issues. 
+                    Since <filename>core-image.bbclass</filename> sets <filename>IMAGE_INSTALL</filename> 
+                    to a default value using the <filename>?=</filename> operator, using a  
+                    <filename>+=</filename> operation against <filename>IMAGE_INSTALL</filename> 
+                    previously from the <filename>/conf/local.conf</filename> will almost always fail.
+                    Furthermore, the same operation from with an image recipe may or may not 
+                    succeed depending on the specific situation.
+                    In both these cases, the behavior is contrary to how most users expect 
+                    the <filename>+=</filename> append operator to work. 
+                </para>
+
+                <para>
+                    When you use this variable, it is best to use it as follows:
+                    <literallayout class='monospaced'>
+     IMAGE_INSTALL_append " package-name"
+                    </literallayout>
+                    Be sure to include the space between the quotation character and the start of the
+                    package name.
+                </para>
             </glossdef>
         </glossentry>
 
