@@ -344,7 +344,42 @@
 
         <glossentry id='var-DL_DIR'><glossterm>DL_DIR</glossterm>
             <glossdef>
-                <para>The directory where all fetched sources will be stored.</para>
+                <para>
+                    The central download directory used by the build process to store downloads.
+                    You can set this directory by defining the <filename>DL_DIR</filename>
+                    variable in the <filename>/conf/local.conf</filename> file.
+                    This directory is self-maintaining and you should not have
+                    to touch it. 
+                    By default, the directory is <filename>downloads</filename> in the 
+                    Yocto Project build directory.
+                    <literallayout class='monospaced'>
+     #DL_DIR ?= "${TOPDIR}/downloads"
+                    </literallayout>
+                    To specify a different download directory, simply uncomment the line
+                    and provide your directory.
+                </para>
+
+                <para>
+                    During a first build, the system downloads many different source code 
+                    tarballs from various upstream projects. 
+                    Downloading can take a while, particularly if your network
+                    connection is slow. 
+                    Tarballs are all stored in the directory defined by 
+                    <filename>DL_DIR</filename> and the build system looks there first 
+                    to find source tarballs. 
+                    <note>
+                        When wiping and rebuilding, you can preserve this directory to speed 
+                        up this part of subsequent builds. 
+                    </note>
+                </para>
+
+                <para>
+                    You can safely share this directory between multiple builds on the 
+                    same development machine.  
+                    For additional information on how the build process gets source files, see
+                    <link linkend='how-does-the-yocto-project-obtain-source-code-and-will-it-work-behind-my-firewall-or-proxy-server'>this entry</link> in
+                    The FAQ appendix of this manual.
+                </para>
             </glossdef>
 
         </glossentry>
