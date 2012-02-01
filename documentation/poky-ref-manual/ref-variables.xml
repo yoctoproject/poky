@@ -224,6 +224,56 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-CONFFILES'><glossterm>CONFFILES</glossterm>
+            <glossdef>
+                <para>
+                    Identifies editable or configurable files that are part of a package.
+                    If the Package Management System (PMS) is updating packages as part of 
+                    the final image packaging, it is possible that files you want unchanged
+                    get overwritten.
+                    In other words, editable files might exist in the package that you do not 
+                    want reset as part of the package update process.
+                    You can use the <filename>CONFFILES</filename> variable to list the files in the 
+                    package that wish to prevent PMS from overwriting during this update process.
+                    The <filename>CONFFILES</filename> variable essentially tells the PMS about 
+                    files in the package that you do not want updated as part of the package 
+                    update process.
+                </para>
+
+                <para>  
+                    To use the <filename>CONFFILES</filename> variable, provide a package name
+                    override that identifies the package.
+                    Then, provide a list of space-separated files or paths that identify the 
+                    editable files you want the PMS to exclude from the update process.
+                    Here is an example:
+                    <literallayout class='monospaced'>                       
+     CONFFILES_${PN} += "/dir1/" "dir2/" "file1" "file2"
+                    </literallayout>
+                </para>
+
+                <para>
+                    A relationship exists between the <filename>CONFFILES</filename> and 
+                    <filename><link linkend='var-FILES'>FILES</link></filename> variables.
+                    The files listed with <filename>CONFFILES</filename> must be a subset of 
+                    the files listed with <filename>FILES</filename>.
+                    Because the files you provide with <filename>CONFFILES</filename> are simply
+                    being identified so that the PMS will not overwrite them, it makes sense that
+                    the files must already be included as part of the package through the 
+                    <filename>FILES</filename> variable.
+                </para>
+
+                <note>
+                    When specifying paths as part of the <filename>CONFFILES</filename> variable, 
+                    it is good practice to use the base, architecture-dependant, and 
+                    architecture-independant variables in the pathnames 
+                    rather than hard-coding the pathnames. 
+                    You can find a list of these variables at the top of the 
+                    <filename>/meta/conf/bitbake.conf</filename> file in the Yocto Project
+                    files directory.
+                </note>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-CONFIG_SITE'><glossterm>CONFIG_SITE</glossterm>
             <glossdef>
                 <para>
@@ -484,7 +534,36 @@
 
         <glossentry id='var-FILES'><glossterm>FILES</glossterm>
             <glossdef>
-                <para>The list of directories or files that are placed in packages.</para>
+                <para>
+                    The list of directories or files that are placed in packages.
+                    If some of these files are editable and you know they should not be 
+                    overwritten during the package update process by the Package Management
+                    System (PMS), you can identify these files so that the PMS will not 
+                    overwrite them. 
+                    See the <filename><link linkend='var-CONFFILES'>CONFFILES</link></filename> 
+                    variable for information on how to identify these files to the PMS.
+                </para>
+
+                <para>  
+                    To use the <filename>FILES</filename> variable, provide a package name
+                    override that identifies the package.
+                    Then, provide a list of space-separated files or paths that identify the 
+                    files you want included as part of the package.
+                    Here is an example:
+                    <literallayout class='monospaced'>                       
+     FILES_${PN} += "/dir1/" "dir2/" "file1" "file2"
+                    </literallayout>
+                </para>
+
+                <note>
+                    When specifying paths as part of the <filename>FILES</filename> variable, 
+                    it is good practice to use the base, architecture-dependant, and 
+                    architecture-independant variables in the pathnames 
+                    rather than hard-coding the pathnames. 
+                    You can find a list of these variables at the top of the 
+                    <filename>/meta/conf/bitbake.conf</filename> file in the Yocto Project
+                    files directory.
+                </note>
             </glossdef>
         </glossentry>
 
