@@ -670,17 +670,18 @@
                     Since <filename>core-image.bbclass</filename> sets <filename>IMAGE_INSTALL</filename> 
                     to a default value using the <filename>?=</filename> operator, using a  
                     <filename>+=</filename> operation against <filename>IMAGE_INSTALL</filename> 
-                    previously from the <filename>/conf/local.conf</filename> will almost always fail.
+                    will result in unexpected behavior when used in 
+                    <filename>/conf/local.conf</filename>.
                     Furthermore, the same operation from with an image recipe may or may not 
                     succeed depending on the specific situation.
                     In both these cases, the behavior is contrary to how most users expect 
-                    the <filename>+=</filename> append operator to work. 
+                    the <filename>+=</filename> operator to work. 
                 </para>
 
                 <para>
                     When you use this variable, it is best to use it as follows:
                     <literallayout class='monospaced'>
-     IMAGE_INSTALL_append " package-name"
+     IMAGE_INSTALL_append = " package-name"
                     </literallayout>
                     Be sure to include the space between the quotation character and the start of the
                     package name.
