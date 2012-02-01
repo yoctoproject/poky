@@ -55,21 +55,37 @@
 
     <para>
         Once you have the local <filename>poky</filename> Git repository set up, 
-        you have many development branches from which you can work. 
-        From inside the repository you can see the branch names and the tag names used 
-        in the Git repository using either of the following two commands:
+        you have all the development branches available to you from which you can work. 
+        However, you need to be sure that your local repository reflects the specific
+        snapshot of the release you are interested in.
+        From inside the repository you can see the development branches that represent
+        areas of development that have diverged from the main (master) branch.  
+        You can also see the tag names used to mark snapshots of stable releases or 
+        points in the repository.
+        Use the following commands to list out the branches and the tags in the repository, 
+        respectively.
         <literallayout class='monospaced'>
      $ git branch -a
      $ git tag -l
         </literallayout> 
-        For this example we are going to use the Yocto Project 1.1 Release, which is code
+        For this example, we are going to use the Yocto Project 1.1 Release, which is code
         named "edison". 
-        These commands create a local branch named <filename>edison</filename>
-        that tracks the remote branch of the same name.
+        To make sure we have a local area (branch in Git terms) on our machine that tracks
+        the snapshot of the 1.1 release, we can use the following commands:
         <literallayout class='monospaced'>
-     $ git checkout -b edison origin/edison
+     $ cd ~/poky
+     $ git fetch --tags
+     $ git checkout edison-6.0 -b edison
      Switched to a new branch 'edison'
         </literallayout>
+        The <filename>git fetch --tags</filename> is somewhat redundant since you just set 
+        up the repository and should have all the tags.
+        The <filename>fetch</filename> command makes sure all the tags are available in your
+        local repository.
+        The Git <filename>checkout</filename> command with the <filename>-b</filename> option
+        creates a local branch for you named <filename>edison</filename>.
+        Your local branch tracks the Yocto Project 1.1 released tarball marked with the 
+        <filename>edison-6.0</filename> tag in the source repositories.
     </para>
 </section>
 
