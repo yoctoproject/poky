@@ -235,28 +235,25 @@
                     In other words, editable files might exist in the package that you do not 
                     want reset as part of the package update process.
                     You can use the <filename>CONFFILES</filename> variable to list the files in the 
-                    package that wish to prevent PMS from overwriting during this update process.
-                    The <filename>CONFFILES</filename> variable essentially tells the PMS about 
-                    files in the package that you do not want updated as part of the package 
-                    update process.
+                    package that you wish to prevent the PMS from overwriting during this update process.
                 </para>
 
                 <para>  
                     To use the <filename>CONFFILES</filename> variable, provide a package name
                     override that identifies the package.
-                    Then, provide a list of space-separated files that identify the 
-                    editable files you want the PMS to exclude from the update process.
+                    Then, provide a space-separated list of files.
                     Here is an example:
                     <literallayout class='monospaced'>                       
-  CONFFILES_${PN} += "${bindir}/file1 ${bindir}/file2"
+  CONFFILES_${PN} += "${sysconfdir}/file1 \
+     ${sysconfdir}/file2 ${sysconfdir}/file3"
                     </literallayout>
                 </para>
 
                 <para>
                     A relationship exists between the <filename>CONFFILES</filename> and 
                     <filename><link linkend='var-FILES'>FILES</link></filename> variables.
-                    The files listed with <filename>CONFFILES</filename> must be a subset of 
-                    the files listed with <filename>FILES</filename>.
+                    The files listed within <filename>CONFFILES</filename> must be a subset of 
+                    the files listed within <filename>FILES</filename>.
                     Because the configuration files you provide with <filename>CONFFILES</filename> 
                     are simply being identified so that the PMS will not overwrite them, 
                     it makes sense that
@@ -538,7 +535,7 @@
                 <para>
                     To use the <filename>FILES</filename> variable, provide a package name
                     override that identifies the package.
-                    Then, provide a list of space-separated files or paths that identify the 
+                    Then, provide a space-separated list of files or paths that identifies the 
                     files you want included as part of the package.
                     Here is an example:
                     <literallayout class='monospaced'>                       
@@ -558,7 +555,7 @@
                 </note>
 
                 <para>
-                    If some of files you provide with the <filename>FILES</filename> variable
+                    If some of the files you provide with the <filename>FILES</filename> variable
                     are editable and you know they should not be 
                     overwritten during the package update process by the Package Management
                     System (PMS), you can identify these files so that the PMS will not 
