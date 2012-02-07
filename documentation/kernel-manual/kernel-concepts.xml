@@ -306,75 +306,63 @@
     <section id='kernel-configuration'>
         <title>Kernel Configuration</title>
         <para>
-            Kernel configuration, along with kernel features, defines how a kernel image is 
-            built. 
+            Kernel configuration, along with kernel features, defines how a Linux Yocto
+            kernel image is built. 
             Through configuration settings, you can customize a Linux Yocto kernel to be
             specific to particular hardware.
             For example, you can specify sound support or networking support.
             This section describes basic concepts behind Kernel configuration within the 
-            Yocto Project.
+            Yocto Project and references you to other areas for specific configuration
+            applications.
         </para>
 
         <para>
-            WRITER NOTES:
-        </para>
-
-        <para>
-            A package consists of tasks and BitBake, in most cases, behaves by fetching, unpacking,
-            patching, configuring, compiling, installing, packaging, writing, and building.
-            Configuration is part of the standard BitBake process.
-
-        <para>
-            Explain how <filename>.config</filename> is used when the kernel image is built.
-            Describe the role of <filename>menuconfig</filename> regarding the 
-            <filename>.config</filename>.
-            Locate the <filename>.config</filename> for the user.
-            Not recommended to edit the <filename>.config</filename> file directly.
-            You can use BitBake to build and invoke the <filename>menuconfig</filename>
-            tool.
-        </para>
-
-        <para>
-            Introduce the configuration fragment.
-            Step through the life of a configuration fragment from idea or need to 
-            change something in the kernel to how it is used when the kernel image is built.
-            Describe how configuration fragments are created and where they live.
-            Make sure the syntax of configuration fragments is understood.
-        </para>
-
-        <para>
-            Talk in general how the user creates a configuration fragment.
-            Point to example B.2 of the YP Development Manual as a way to use 
-            <filename>menuconfig</filename>.
-        </para>
-
-        <para>
-            The tool <filename>menuconfig</filename> allows you to choose the features of the
-            Linux Yocto kernel that will be compiled.
-            This tool is a convenient method to alter the <filename>.config</filename> file.
-            You can use a simple interface to scroll through kernel features and disable
-            and enable configruation variables.  
-            When you save your changes, the contents of the <filename>.config</filename>
-            are altered.  
-            You can get general information on <filename>menuconfig</filename> at
-            <ulink url='http://en.wikipedia.org/wiki/Menuconfig'></ulink>.
-        </para>
-
-        <para>
-            The Yocto Project employs <filename>menuconfig</filename> by invoking it through
-            BitBake as follows after making sure the environment setup script has been sourced:
-            <literallayout class='monospaced'>
+            Conceptually, Linux Yocto kernel configuration occurs similarly to that needed for any
+            Linux kernel.
+            The Linux Yocto kernel build process uses a <filename>.config</filename>, which 
+            is created through the Linux Kernel Coinfiguration (LKC) tool.
+            You can directly set various configurations in the 
+            <filename>.config</filename> file by using the <filename>menuconfig</filename> 
+            tool as built by BitBake.
+            You can also affect the configurations in the file by using configuration fragments.
+            <note>
+                It is not recommended that you edit the <filename>.config</filename> file directly.
+            </note>
+            Here is are some brief descriptions of the ways you can affect the 
+            <filename>.config</filename> file:
+            <itemizedlist>
+                <listitem><para><emphasis>The <filename>menuconfig</filename> Tool:</emphasis> 
+                    One of many front-ends that allows you to define kernel configurations.  
+                    Some others are <filename>make config</filename>, 
+                    <filename>make nconfig</filename>, and <filename>make gconfig</filename>.
+                    In the Yocto Project environment, you must use BitBake to build the 
+                    <filename>menuconfig</filename> tool before you can use it to define
+                    configurations:
+                    <literallayout class='monospaced'>
      $ bitbake linux-yocto -c menuconfig
-            </literallayout>
-            You can see how <filename>menuconfig</filename> is used to change a simple 
-            kernel configuration in the 
-            "<ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#changing-the-config-smp-configuration-using-menuconfig'>Changing the&nbsp;&nbsp;<filename>CONFIG_SMP</filename>
-            Configuration Using&nbsp;&nbsp;<filename>menuconfig</filename></ulink>" section of 
-            The Yocto Project Development Manual.
-        </para>    
-
-        <para>
-            END WRITER NOTES
+                    </literallayout>
+                    After the tool is built, you can interact with it normally.
+                    You can see how <filename>menuconfig</filename> is used to change a simple 
+                    kernel configuration in the 
+                    "<ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#changing-the-config-smp-configuration-using-menuconfig'>Changing the&nbsp;&nbsp;<filename>CONFIG_SMP</filename> Configuration Using&nbsp;&nbsp;<filename>menuconfig</filename></ulink>" 
+                    section of The Yocto Project Development Manual.
+                    For general information on <filename>menuconfig</filename>, see
+                    <ulink url='http://en.wikipedia.org/wiki/Menuconfig'></ulink>.
+                    </para></listitem>
+                <listitem><para><emphasis>Configuration Fragments:</emphasis> A file with a 
+                    list of kernel options just as they would appear syntactically in the 
+                    <filename>.config</filename> file.
+                    Configuration fragments are typically logical groupings and are assembled
+                    by the Yocto Project build system to produce input used by the LKC
+                    that ultimately generates the <filename>.config</filename> file.</para>
+                    <para>The 
+                    <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-KERNEL_FEATURES'>KERNEL_FEATURES</ulink></filename>
+                    variable can be used to list configuration fragments.
+                    For further discussion on applying configuration fragments, see the 
+                    "<ulink url='http://www.yoctoproject.org/docs/latest/bsp-guide/bsp-guide.html#linux-kernel-configuration'>Linux Kernel Configuration</ulink>"
+                    section in the Yocto Project Board Support Package (BSP) Guide.
+                    </para></listitem>
+            </itemizedlist>
         </para>
     </section> 
 
