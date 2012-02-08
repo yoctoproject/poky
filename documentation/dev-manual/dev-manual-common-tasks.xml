@@ -561,6 +561,52 @@
     <section id="platdev-newmachine">
         <title>Porting the Yocto Project to a New Machine</title>
 
+<!--
+WRITER NOTES:
+
+I had this chat with Richard:
+
+scottrif: Terminology question:  We speak of "New Machines" or "Adding a New Machine" 
+          in YP.  Are "Machines" restricted to architectures? In poky/meta/conf/machine we have .conf 
+          files for the five architectures.  What exactly does the term "Machine" mean?
+
+      RP: no, each architecture has multiple different machines. A "machine" can correspond 
+          to a particular reference board or hardware product
+          we just have one reference machine per architecture
+          We're  a little vague sometimes as "machine" can refer to either an individual platform,
+          or in some cases a set of different platforms with common structure
+          (e.g. netbooks)
+
+scottrif: So our reference machines we supply are the five qemu* machines? 
+
+      RP: in oe-core, plus one "real" target in meta-yocto
+          (per arch)
+
+scottrif: I see four in meta-yocto/conf/machine.  Shouldn't there be five if there is one 
+          "real" target per architecture?
+
+      RP: yes, we don't have one for x86_64 :/
+
+scottrif: I think it is a bit difficult to map our four poky/meta-yocto/conf/machines to one of our 
+          five architectures.  Some have key words in there that identify the architecture but 
+          beagleboard and atom-pc don't.
+          We have a section that describes adding a Machine Configuration file to Yocto and 
+          it states that TARGET_ARCH is one of the most important variables that need to be 
+          set in the .conf file.  The four I am looking at don't have that variable.
+
+      RP: That has changed a little now. You need to include the appropriate tune file
+          which will set it for you
+          People had a tendency not to set all the right pieces so it got abstracted
+
+scottrif: Got it.  I see them in poky/meta/conf/machine/include.
+
+SOME CONCLUSIONS:
+
+I need to define the term machine.  It is confusing.  Then, this section needs to be cleared up
+so that there are some definite steps on how to do this.  I need more detail here.
+
+-->
+
         <para>
             Adding a new machine to the Yocto Project is a straightforward process. 
             This section provides information that gives you an idea of the changes you must make.
