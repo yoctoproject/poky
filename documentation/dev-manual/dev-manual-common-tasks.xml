@@ -749,20 +749,50 @@ so that there are some definite steps on how to do this.  I need more detail her
     <section id="usingpoky-modifing-packages">
         <title>Modifying Package Source Code</title>
         <para>
-            Although the Yocto Project is usually used to build software, you can use it to modify software. 
+            Although the Yocto Project is typically used to build software, you might
+            find it helpful during development to modify the temporary package source code 
+            found within the 
+            <link linkend='yocto-project-build-directory'>Yocto Project's Build Directory</link>. 
+            For example, suppose you are developing a patch and you need to experiment a bit
+            to figure out your solution.
+            After you have initially built the package, you can iteratively tweak the 
+            source code, which is located in the Yocto Project build directory, and then 
+            you can force a re-compile and test your altered code.
+            Once you settle on a solution, you can then copy the updated source code 
+            to its more permanent location. 
         </para>
 
         <para>
-            During a build, source is available in the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'>WORKDIR</ulink></filename> directory.
-            The actual location depends on the type of package and the architecture of the target device. 
-            For a standard recipe not related to 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-MACHINE'>MACHINE</ulink></filename>, the location is
-            <filename>tmp/work/PACKAGE_ARCH-poky-TARGET_OS/PN-PV-PR/</filename>.
-            For target device-dependent packages, you should use the <filename>MACHINE</filename>
-            variable instead of 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PACKAGE_ARCH'>PACKAGE_ARCH</ulink></filename> 
-            in the directory name.
+            During a build, this temporary source code is available in the Yocto 
+            Project build directory, which is defined by the <filename>TMPDIR</filename> variable.
+            The actual location within the build directory 
+            for the package source code depends on the package name and 
+            the architecture of the target device.
+            Here is the source code location for packages that are not target device-dependent:
+            <literallayout class='monospaced'>
+     ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
+            </literallayout>
+            Assuming a Yocto Project Files top-level directory named <filename>poky</filename>
+            and a default Yocto Project build directory of <filename>poky/build</filename>, here
+            is an example temporary package source code location for the 
+            <filename>v86d</filename> package:
+            <literallayout class='monospaced'>
+     ~/poky/build/tmp/work/qemux86-poky-linux/v86-01.9-r0
+            </literallayout>
+        </para>
+
+        <para>
+            If your package is target device-dependent, the source code location varies slightly:
+            <literallayout class='monospaced'>
+     ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
+            </literallayout>
+            Again, assuming a Yocto Project Files top-level directory named <filename>poky</filename>
+            and a default Yocto Project build directory of <filename>poky/build</filename>, here
+            is an example temporary package source code location for the 
+            <filename>acl</filename> package that is dependent upon a MIPS-based device:
+            <literallayout class='monospaced'>
+     ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2
+            </literallayout>
         </para>
 
         <tip>
@@ -772,21 +802,19 @@ so that there are some definite steps on how to do this.  I need more detail her
         </tip>
 
         <para>
-            After building a package, you can modify the package source code without problems. 
-            The easiest way to test your changes is by calling the 
-            <filename>compile</filename> task as shown in the following example:
+            Once you have modified the package source code, the easiest way to test your changes 
+            is by calling the <filename>compile</filename> task as shown in the following example:
             <literallayout class='monospaced'>
-     $ bitbake -c compile -f NAME_OF_PACKAGE
+     $ bitbake -c compile -f &lt;name_of_package&gt;
             </literallayout>
         </para>
 
         <para>
             The <filename>-f</filename> or <filename>--force</filename>
             option forces re-execution of the specified task.
-            You can call other tasks this way as well. 
-            But note that all the modifications in 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'>WORKDIR</ulink></filename>
-            are gone once you execute <filename>-c clean</filename> for a package.
+            You can call other tasks this way as well.
+            <note>All the modifications you make to the temporary package source code
+            disappear once you <filename>-c clean</filename> for the package.</note>
         </para>
     </section>
 
