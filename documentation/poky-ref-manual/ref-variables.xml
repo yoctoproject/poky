@@ -1774,8 +1774,62 @@
 
         <glossentry id='var-WORKDIR'><glossterm>WORKDIR</glossterm>
             <glossdef>
-                <para>The path to directory in <filename>tmp/work/</filename> where 
-                    the package is built.</para>
+                <para>
+                    The pathname of the working directory in which the Yocto Project build system  
+                    builds packages.
+                    This directory is located within the
+                    <link linkend='var-TMPDIR'>TMPDIR</link> directory structure and changes
+                    as different packages are built.
+                </para>
+
+                <para>
+                    The actual <filename>WORKDIR</filename> directory depends on several things:
+                    <itemizedlist>
+                        <listitem>The temporary directory - <link linkend='var-TMPDIR'>TMPDIR</link></listitem>
+                        <listitem>The package architecture - <link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></listitem>
+                        <listitem>The target machine - <link linkend='var-MACHINE'>MACHINE</link></listitem>
+                        <listitem>The target operating system - <link linkend='var-TARGET_OS'>TARGET_OS</link></listitem>
+                        <listitem>The package name - <link linkend='var-PN'>PN</link></listitem>
+                        <listitem>The package version - <link linkend='var-PV'>PV</link></listitem>
+                        <listitem>The package revision - <link linkend='var-PR'>PR</link></listitem>
+                    </itemizedlist>
+                </para>
+
+                <para>
+                    For packages that are not dependent on a particular machine, 
+                    <filename>WORKDIR</filename> is defined as follows:
+                    <literallayout class='monospaced'>
+ ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
+                    </literallayout>
+                    As an example, assume a 
+                    <ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#yocto-project-files'>
+                    Yocto Project Files</ulink> top-level directory named <filename>poky</filename> 
+                    and a default 
+                    <ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#yocto-project-build-directory'>
+                    Yocto Project Build Birectory</ulink> of <filename>poky/build</filename>.
+                    In this case, the working directory the build system uses to build 
+                    the <filename>v86d</filename> package is the following:
+                    <literallayout class='monospaced'>
+     ~/poky/build/tmp/work/qemux86-poky-linux/v86d-01.9-r0
+                    </literallayout>
+                </para>
+
+                <para>
+                    For packages that are dependent on a particular machine, <filename>WORKDIR</filename>
+                    is defined slightly different:
+                    <literallayout class='monospaced'>
+ ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
+                    </literallayout>
+                    As an example, again assume a Yocto Project Files top-level directory 
+                    named <filename>poky</filename> and a default Yocto Project build directory 
+                    of <filename>poky/build</filename>.
+                    In this case, the working directory the build system uses to build
+                    the <filename>acl</filename> package, which is dependent on a 
+                    MIPS-based device, is the following:
+                    <literallayout class='monospaced'>
+     ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2
+                    </literallayout>
+                </para>
             </glossdef>
         </glossentry>
 
