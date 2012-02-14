@@ -1036,6 +1036,171 @@ so that there are some definite steps on how to do this.  I need more detail her
         </section> 
     </section>
 
+    <section id='configuring-the-kernel'>
+        <title>Configuring the Kernel</title>
+
+        <para>
+            Configuring the Linux Yocto kernel consists of making sure the <filename>.config</filename>
+            file has all the right information in it for the image you are building.
+            You can use the <filename>menuconfig</filename> tool and configuration fragments to 
+            make sure your <filename>.config</filename> file is just how you need it. 
+            This section describes how to use <filename>menuconfig</filename>, create and use 
+            configuration fragments, and how to interatively tweak your <filename>.config</filename>
+            file to create the leanest kernel configuration file possible.
+        </para>
+
+        <para>
+            For concepts on kernel configuration, see the
+            "<ulink url='http://www.yoctoproject.org/docs/latest/kernel-manual/kernel-manual.html#kernel-configuration'>Kernel Configuration</ulink>"
+            section in the Yocto Project Kernel Architecture and Use Manual.
+        </para>
+
+        <section id='using-menuconfig'>
+            <title>Using&nbsp;&nbsp;<filename>menuconfig</filename></title>
+ 
+            <para>
+                The easiest way to define kernel configurations is to set them through the
+                <filename>menuconfig</filename> tool.
+                For general information on <filename>menuconfig</filename>, see
+                <ulink url='http://en.wikipedia.org/wiki/Menuconfig'></ulink>.
+            </para>
+
+            <para>
+                To use the <filename>menuconfig</filename> tool in the Yocto Project development
+                environment, you must build the tool using BitBake.
+                The following commands build and invoke <filename>menuconfig</filename> assuming the 
+                Yocto Project files top-level directory is <filename>~/poky</filename>:
+                <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ source oe-init-build-env
+     $ bitbake linux-yocto -c menuconfig
+                </literallayout>
+                Once <filename>menuconfig</filename> comes up, its standard interface allows you to 
+                examine and configure all the kernel configuration parameters.
+                Once you have made your changes, simply exit the tool and save your changes to 
+                create an updated version of the <filename>.config</filename> configuration file.
+            </para>
+
+            <para>
+                For an example that shows how to change the <filename>SMP_CONFIG</filename> parameter
+                using <filename>menuconfig</filename>, see the 
+                "<link linkend='changing-the-config-smp-configuration-using-menuconfig'>Changing
+                the <filename>CONFIG_SMP</filename> Configuration Using <filename>menuconfig</filename></link>" 
+                section.
+            </para>
+        </section>
+
+        <section id='creating-config-fragments'>
+            <title>Creating Config Fragments</title>
+
+            <para>
+                Configuration fragments are simply kernel options that appear in a file.
+                Syntactically, the configuration statement is identical to what would appear
+                in the <filename>.config</filename>.
+                For example, issuing the following from the shell would create a config fragment
+                file named <filename>my_smp.cfg</filename> that enables multi-processor support
+                within the kernel:
+                <literallayout class='monospaced'>
+     $ echo "CONFIG_SMP=y" >> my_smp.cfg
+                </literallayout>
+            </para>
+
+            <para>
+                Where do you put your configuration files?
+                You can place these configuration files in the same area to which the 
+                <filename>SRC_URI</filename> points.
+                The Yocto Project build process will pick up the configuration and add it to the 
+                kernel's configuration.
+                For example, assume you add the following to your 
+                <filename>linux-yocto_3.0.bbappend</filename> file:
+                <literallayout class='monospaced'>
+     file://my_smp.cfg
+                </literallayout>
+                You would put the config fragment file <filename>my_smp.cfg</filename> in your 
+                layer right beneath the directory containing the 
+                <filename>linux-yocto_3.0.bbappend</filename> file and the build system 
+                will pick up and apply the fragment.
+            </para>
+        </section>
+
+        <section id='fine-tuning-the-kernel-configuration-file'>
+            <title>Fine-tuning the Kernel Configuration File</title>
+
+            <para>
+                You can make sure the <filename>.config</filename> is as lean or efficient as 
+                possible by reading the output of the kernel configuration fragment audit,
+                noting any issues, making changes to correct the issues, and then repeating.
+            </para>
+
+            <para>
+                As part of the Linux Yocto kernel build process, the 
+                <filename>kernel_configcheck</filename> task runs.
+                This task validates the kernel configuration by checking the final 
+                <filename>.config</filename> file against the input files.
+                During the check, the task produces warning messages for the following 
+                issues:
+                <itemizedlist>
+                    <listitem><para>Requested options that did not make the final 
+                        <filename>.config</filename> file.</para></listitem>
+                    <listitem><para>Configuration items that appear twice in the same 
+                        configuration fragment.</para></listitem>
+                    <listitem><para>Configuration items tagged as 'required' were overridden.
+                        </para></listitem>
+                    <listitem><para>A board overrides a non-board specific option.</para></listitem>
+                    <listitem><para>Listed options not valid for the kernel being processed. 
+                        In other words, the option does not appear anywhere.</para></listitem>
+                </itemizedlist>
+                <note>
+                    The <filename>kernel_configcheck</filename> task can also optionally report
+                    if an option is overridden during processing.
+                </note>
+            </para>
+
+            <para>
+                For each output warning, a message points to the file
+                that contains a list of the options and a pointer to the config
+                fragment that defines them.
+                Collectively, the files are the key to streamlining the configiguration.
+            </para>
+
+            <para>
+                To streamline the configuration, do the following:
+                <orderedlist>
+                    <listitem><para>Start with a full configuration that you know
+                        works - it builds and boots successfully.
+                        This configuration file will be your baseline.</para></listitem>
+                    <listitem><para>Separately run the <filename>configme</filename> and 
+                        <filename>kernel_configcheck</filename> tasks.</para></listitem>
+                    <listitem><para>Take the resulting list of files from the 
+                        <filename>kernel_configcheck</filename> task warnings and do the following:
+                        <itemizedlist>
+                            <listitem><para>Drop values that are redefined in the fragment but do not
+                                change the final <filename>.config</filename> file.</para></listitem>
+                            <listitem><para>Analyze and potentially drop values from the 
+                                <filename>.config</filename> file that override required 
+                                configurations.</para></listitem>
+                            <listitem><para>Analyze and potentially remove non-board specific options.
+                                </para></listitem>
+                            <listitem><para>Remove repeated and invalid options.</para></listitem>
+                        </itemizedlist></para></listitem>
+                    <listitem><para>After you have worked through the output of the kernel configuration 
+                        audit, you can re-run the <filename>configme</filename> 
+                        and <filename>kernel_configcheck</filename> tasks to see the results of your 
+                        changes. 
+                        If you have more issues, you can deal with them as described in the 
+                        previous step.</para></listitem>
+                </orderedlist> 
+            </para>
+
+            <para>
+                Iteratively working through steps two through four eventually yields 
+                a minimal, streamlined configuration file.
+                Once you have the best <filename>.config</filename>, you can build the Linux
+                Yocto kernel.
+            </para>
+        </section>
+    </section>
+
     <section id="usingpoky-configuring-DISTRO_PN_ALIAS">
         <title>Handling a Package Name Alias</title>
         <para>
