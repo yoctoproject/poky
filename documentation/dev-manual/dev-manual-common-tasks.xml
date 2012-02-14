@@ -775,11 +775,11 @@ so that there are some definite steps on how to do this.  I need more detail her
      ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
             </literallayout>
             Assuming a Yocto Project Files top-level directory named <filename>poky</filename>
-            and a default Yocto Project build directory of <filename>poky/build</filename>, here
-            is an example temporary package source code location for the 
-            <filename>v86d</filename> package:
+            and a default Yocto Project build directory of <filename>poky/build</filename>, 
+            the following is the temporary package source code location for the 
+            <filename>acl</filename> package:
             <literallayout class='monospaced'>
-     ~/poky/build/tmp/work/qemux86-poky-linux/v86d-01.9-r0
+     ~/poky/build/tmp/work/i586-poky-linux/acl-2.2.51-r3
             </literallayout>
         </para>
 
@@ -789,19 +789,13 @@ so that there are some definite steps on how to do this.  I need more detail her
      ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
             </literallayout>
             Again, assuming a Yocto Project Files top-level directory named <filename>poky</filename>
-            and a default Yocto Project build directory of <filename>poky/build</filename>, here
-            is an example temporary package source code location for the 
-            <filename>acl</filename> package that is dependent upon a MIPS-based device:
+            and a default Yocto Project build directory of <filename>poky/build</filename>, the 
+            following is the temporary package source code location for the 
+            <filename>acl</filename> package that is being built for a MIPS-based device:
             <literallayout class='monospaced'>
      ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2
             </literallayout>
         </para>
-
-        <tip>
-            Be sure the package recipe sets the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink></filename> variable to something
-            other than the standard <filename>WORKDIR/PN-PV/</filename> value.
-        </tip>
 
         <para>
             Once you have modified the package source code, the easiest way to test your changes 
@@ -816,7 +810,13 @@ so that there are some definite steps on how to do this.  I need more detail her
             option forces re-execution of the specified task.
             You can call other tasks this way as well.
             <note>All the modifications you make to the temporary package source code
-            disappear once you <filename>-c clean</filename> for the package.</note>
+            disappear once you <filename>-c clean</filename> or 
+            <filename>-c cleanall</filename> with BitBake for the package.
+            Modifications will also disappear if you use the <filename>rm_work</filename>
+            feature as described in the
+            "<ulink url='http://www.yoctoproject.org/docs/latest/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" section
+            of the Yocto Project Quick Start.
+            </note>
         </para>
     </section>
 
