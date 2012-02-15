@@ -748,128 +748,143 @@ so that there are some definite steps on how to do this.  I need more detail her
 
     <section id="usingpoky-modifing-packages">
         <title>Modifying Package Source Code</title>
-        <para>
-            Although the Yocto Project is typically used to build software, you might
-            find it helpful during development to modify the temporary package source code 
-            found within the 
-            <link linkend='yocto-project-build-directory'>Yocto Project's Build Directory</link>. 
-            For example, suppose you are developing a patch and you need to experiment a bit
-            to figure out your solution.
-            After you have initially built the package, you can iteratively tweak the 
-            source code, which is located in the Yocto Project build directory, and then 
-            you can force a re-compile and test your altered code.
-            Once you settle on a solution, you can then copy the updated source code 
-            to its more permanent location. 
-        </para>
 
         <para>
-            During a build, this temporary source code is available in the Yocto 
-            Project build directory, which is defined by the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TMPDIR'>TMPDIR</ulink></filename> variable.
-            The actual location within the build directory for the package source code 
-            is defined by the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'>WORKDIR</ulink></filename>
-            variable and depends on the package name and the architecture of the target device.
-            Here is the source code location for packages that are not target device-dependent:
-            <literallayout class='monospaced'>
+            This section describes how to modify package source code in the 
+            <link linkend='yocto-project-build-directory'>Yocto Project's Build Directory</link> 
+            and also how to then use 
+            <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink> to manage 
+            the resulting patches.
+        </para>
+
+        <section id='working-with-source-code-in-the-build-directory'>
+            <title>Working with Source Code in the Build Directory</title>
+
+            <para>
+                Although the Yocto Project is typically used to build software, you might
+                find it helpful during development to modify the temporary package source code 
+                found within the Yocto Project's Build Directory. 
+                For example, suppose you are developing a patch and you need to experiment a bit
+                to figure out your solution.
+                After you have initially built the package, you can iteratively tweak the 
+                source code, which is located in the Yocto Project build directory, and then 
+                you can force a re-compile and test your altered code.
+                Once you settle on a solution, you can then copy the updated source code 
+                to its more permanent location.
+            </para>
+
+            <para>
+                During a build, this temporary source code is available in the Yocto 
+                Project build directory, which is defined by the 
+                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TMPDIR'>TMPDIR</ulink></filename> variable.
+                The actual location within the build directory for the package source code 
+                is defined by the 
+                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'>WORKDIR</ulink></filename>
+                variable and depends on the package name and the architecture of the target device.
+                Here is the source code location for packages that are not target device-dependent:
+                <literallayout class='monospaced'>
      ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
-            </literallayout>
-            Assuming a Yocto Project Files top-level directory named <filename>poky</filename>
-            and a default Yocto Project build directory of <filename>poky/build</filename>, 
-            the following is the temporary package source code location for the 
-            <filename>acl</filename> package:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Assuming a Yocto Project Files top-level directory named <filename>poky</filename>
+                and a default Yocto Project build directory of <filename>poky/build</filename>, 
+                the following is the temporary package source code location for the 
+                <filename>acl</filename> package:
+                <literallayout class='monospaced'>
      ~/poky/build/tmp/work/i586-poky-linux/acl-2.2.51-r3
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            If your package is target device-dependent, the source code location varies slightly:
-            <literallayout class='monospaced'>
+            <para>
+                If your package is target device-dependent, the source code location varies slightly:
+                <literallayout class='monospaced'>
      ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
-            </literallayout>
-            Again, assuming a Yocto Project Files top-level directory named <filename>poky</filename>
-            and a default Yocto Project build directory of <filename>poky/build</filename>, the 
-            following is the temporary package source code location for the 
-            <filename>acl</filename> package that is being built for a MIPS-based device:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Again, assuming a Yocto Project Files top-level directory named <filename>poky</filename>
+                and a default Yocto Project build directory of <filename>poky/build</filename>, the 
+                following is the temporary package source code location for the 
+                <filename>acl</filename> package that is being built for a MIPS-based device:
+                <literallayout class='monospaced'>
      ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            Once you have modified the package source code, the easiest way to test your changes 
-            is by calling the <filename>compile</filename> task as shown in the following example:
-            <literallayout class='monospaced'>
+            <para>
+                Once you have modified the package source code, the easiest way to test your changes 
+                is by calling the <filename>compile</filename> task as shown in the following example:
+                <literallayout class='monospaced'>
      $ bitbake -c compile -f &lt;name_of_package&gt;
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            The <filename>-f</filename> or <filename>--force</filename>
-            option forces re-execution of the specified task.
-            You can call other tasks this way as well.
-            <note>All the modifications you make to the temporary package source code
-            disappear once you <filename>-c clean</filename> or 
-            <filename>-c cleanall</filename> with BitBake for the package.
-            Modifications will also disappear if you use the <filename>rm_work</filename>
-            feature as described in the
-            "<ulink url='http://www.yoctoproject.org/docs/latest/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" section
-            of the Yocto Project Quick Start.
-            </note>
-        </para>
-    </section>
+            <para>
+                The <filename>-f</filename> or <filename>--force</filename>
+                option forces re-execution of the specified task.
+                You can call other tasks this way as well.
+                <note>All the modifications you make to the temporary package source code
+                disappear once you <filename>-c clean</filename> or 
+                <filename>-c cleanall</filename> with BitBake for the package.
+                Modifications will also disappear if you use the <filename>rm_work</filename>
+                feature as described in the
+                "<ulink url='http://www.yoctoproject.org/docs/latest/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" section
+                of the Yocto Project Quick Start.
+                </note>
+            </para>
+        </section>
 
-    <section id="usingpoky-modifying-packages-quilt">
-        <title>Modifying Package Source Code with Quilt</title>
+        <section id="usingpoky-modifying-packages-quilt">
+            <title>Modifying Package Source Code with Quilt</title>
             
-        <para>
-            By default Poky uses <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink>
-            to manage patches in the <filename>do_patch</filename> task. 
-            This is a powerful tool that you can use to track all modifications to package sources.
-        </para>
+            <para>
+                By default, the Yocto Project build system (Poky) uses 
+                <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink>
+                to manage patches while executing the <filename>do_patch</filename> task.
+                Quilt is a powerful tool that you can use to track all modifications to package sources.
+            </para>
 
-        <para>
-            Before modifying source code, it is important to notify Quilt so it can track the changes 
-            into the new patch file:
-            <literallayout class='monospaced'>
+            <para>
+                Before modifying source code, it is important to notify Quilt so it can track the changes 
+                into the new patch file:
+                <literallayout class='monospaced'>
      $ quilt new NAME-OF-PATCH.patch
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            After notifying Quilt, add all modified files into that patch:
-            <literallayout class='monospaced'>
+            <para>
+                After notifying Quilt, add all modified files into that patch:
+                <literallayout class='monospaced'>
      $ quilt add file1 file2 file3
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            You can now start editing. 
-            Once you are done editing, you need to use Quilt to generate the final patch that 
-            will contain all your modifications.
-            <literallayout class='monospaced'>
+            <para>
+                You can now start editing the source code. 
+                Once you are done editing, you need to use Quilt to generate the final patch that 
+                contains all your modifications.
+                <literallayout class='monospaced'>
      $ quilt refresh
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            You can find the resulting patch file in the
-            <filename>patches/</filename> subdirectory of the source 
-            (<filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink></filename>) directory. 
-            For future builds, you should copy the patch into the Yocto Project metadata and add it into the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename> of a recipe.  
-            Here is an example:
-            <literallayout class='monospaced'>
+            <para>
+                You can find the resulting patch file in the
+                <filename>patches/</filename> subdirectory of the source 
+                (<filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink></filename>) directory. 
+                For future builds, you should copy the patch into the 
+                <link linkend='yocto-project-files'>Yocto Project Files</link> metadata and add it 
+                into the 
+                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename> of the recipe.  
+                Here is an example:
+                <literallayout class='monospaced'>
      SRC_URI += "file://NAME-OF-PATCH.patch"
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            Finally, don't forget to 'bump' the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PR'>PR</ulink></filename>
-            value in the same recipe since the resulting packages have changed.
-        </para>
+            <para>
+                Finally, don't forget to 'bump' the 
+                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PR'>PR</ulink></filename>
+                value in the same recipe since the resulting packages have changed.
+            </para>
+        </section>
     </section>
 
     <section id="building-multiple-architecture-libraries-into-one-image">
