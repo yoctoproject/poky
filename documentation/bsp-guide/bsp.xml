@@ -61,32 +61,52 @@
             are separate components that happen to be combined in certain end products.
         </para>
 
-        <section id="bsp-filelayout">
-            <title>Example Filesystem Layout</title>
+        <section id='bsp-layers'>
+            <title>BSP Layers</title>
 
             <para>
-                The BSP consists of a file structure inside a base directory, which uses the following 
-                naming convention:
+                The BSP consists of a file structure inside a base directory.
+                Collectively, you can think of the base directory and the file structure 
+                as a BSP Layer.
+                BSP Layers use the following naming convention:
                 <literallayout class='monospaced'>
      meta-&lt;bsp_name&gt;
                 </literallayout>
+                "bsp_name" is a placeholder for the machine or platform name.
             </para>
 
             <para>
-                "bsp_name" is a placeholder for the machine or platform name.
-                Here are some example base directory names:
+                The Yocto Project organizes BSP Layers within the Yocto Metadata Layers area 
+                of the Yocto Project Source Repositories at 
+                <ulink url='http://git.yoctoproject.org/cgit.cgi'></ulink>.
+                If you examine the source repositories, you will find many BSP Layers.
+                Here are a few:
                 <literallayout class='monospaced'>
+     meta-baryon
+     meta-fsl-ppc
+     meta-intel
+     meta-selinux
+     meta-ti
+                </literallayout>
+                It is worth noting that the <filename>meta-intel</filename> BSP Layer contains 
+                within itself several other BSP Layers, which makes it sort of a "super" layer.
+                Following is a sampling of the BSP Layers that the <filename>meta-intel</filename> 
+                BSP Layer contains:
+                <literallayout class='monospaced'>
+     meta-cedartrail
+     meta-crownbay
      meta-emenlow
-     meta-n450
-     meta-beagleboard
+     meta-fishriver
+     meta-fri2
                 </literallayout>
             </para>
 
             <para>
-                The base directory (<filename>meta-&lt;bsp_name&gt;</filename>) is the root of the BSP layer.
+                The layer's base directory (<filename>meta-&lt;bsp_name&gt;</filename>) is the root 
+                of the BSP Layer.
                 This root is what you add to the <filename>BBLAYERS</filename>
                 variable in the <filename>build/conf/bblayers.conf</filename> file found in the 
-                Yocto Project file's build directory.
+                <ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#yocto-project-build-directory'>Yocto Project Build Directory</ulink>.
                 Adding the root allows the Yocto Project build system to recognize the BSP 
                 definition and from it build an image.
                 Here is an example:
@@ -97,16 +117,24 @@
         /usr/local/src/yocto/meta-&lt;bsp_name&gt; \
         "
                 </literallayout>
+            </para>
+
+            <para>
                 For more detailed information on layers, see the 
-                "<ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#usingpoky-changes-layers'>BitBake Layers</ulink>" 
-                section of the Yocto Project Reference Manual.
+                "<ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#usingpoky-changes-layers'>Bitbake Layers</ulink>" 
+                section of the Yocto Project Development Manual.
                 You can also see the detailed examples in the appendices of  
                 <ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html'>
                 The Yocto Project Development Manual</ulink>.
             </para>
+        </section>
+
+
+        <section id="bsp-filelayout">
+            <title>Example Filesystem Layout</title>
 
             <para>
-                Below is the common form for the file structure inside a base directory.
+                Below is the common form for the file structure inside a BSP Layer.
                 While you can use this basic form for the standard, realize that the actual structures
                 for specific BSPs could differ. 
 
