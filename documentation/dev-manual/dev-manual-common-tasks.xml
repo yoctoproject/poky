@@ -860,16 +860,16 @@ so that there are some definite steps on how to do this.  I need more detail her
                         That directory is defined by the 
                         <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink>
                         variable.</para></listitem>
-                    <listitem><para><emphasis>Notify Quilt:</emphasis>
-                        Before modifying source code, it is important to notify Quilt so it can track changes 
-                        into a new patch file.
+                    <listitem><para><emphasis>Create a New Patch:</emphasis>
+                        Before modifying source code, you need to create a new patch.
                         To create a new patch file, use <filename>quilt new</filename> as below:
                         <literallayout class='monospaced'>
      $ quilt new my_changes.patch
                         </literallayout></para></listitem>
-                    <listitem><para><emphasis>Add Files:</emphasis>
-                        After creating the patch, add the files you will be modifying into that patch
-                        as follows:
+                    <listitem><para><emphasis>Notify Quilt and Add Files:</emphasis>
+                        After creating the patch, you need to notify Quilt about the files you will 
+                        be changing.
+                        Add the files you will be modifying into the patch you just created:
                         <literallayout class='monospaced'>
      $ quilt add file1.c file2.c file3.c
                         </literallayout></para></listitem>
@@ -905,9 +905,11 @@ so that there are some definite steps on how to do this.  I need more detail her
                         <para>You can find the resulting patch file in the <filename>patches/</filename> 
                         subdirectory of the source (<filename>S</filename>) directory.</para></listitem>
                     <listitem><para><emphasis>Copy the Patch File:</emphasis> 
-                        For future builds, you should copy the patch file into the 
-                        <link linkend='yocto-project-files'>Yocto Project Files</link> metadata and add it 
-                        into the 
+                        For simplicity, copy the patch file into a directory named <filename>files</filename>,
+                        which you can create in the same directory as the recipe.
+                        Placing the patch here guarantees that the Yocto Project build system will find
+                        the patch.
+                        Next, add the patch into the  
                         <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename> 
                         of the recipe.  
                         Here is an example:
@@ -933,15 +935,11 @@ so that there are some definite steps on how to do this.  I need more detail her
                 "<link linkend='git'>Git</link>" section.
             </para>
 
-            <para>
-                The steps in this section assume that you have already created a local Git repository of 
-                the <link linkend='yocto-project-files'>Yocto Project Files</link> and have checked them 
-                out into an appropriate local working branch.
-                If you need more explanation on setting up the Yocto Project Files, see the 
-                "<link linkend='getting-setup'>Getting Setup</link>" section.
-                Also, if you need information on Git workflows in general, see the 
-                <link linkend='workflows'>Workflows</link> section.
-            </para>
+            <note>
+                This workflow uses Git only for its ability to manage local changes to the source code 
+                and produce patches independent of any version control used on the Yocto Project 
+                Files.
+            </note>
 
             <para>
                 Follow these general steps:
@@ -958,6 +956,26 @@ so that there are some definite steps on how to do this.  I need more detail her
                         That directory is defined by the 
                         <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink>
                         variable.</para></listitem>
+                    <listitem><para><emphasis>Initialize a Git Repository:</emphasis>
+                        Use the <filename>git init</filename> command to initialize a new local repository
+                        that is based on your source code directory:
+                        <literallayout class='monospaced'>
+     $ git init
+                        </literallayout></para></listitem>
+                    <listitem><para><emphasis>Stage all the files:</emphasis>
+                        Use the <filename>git add *</filename> command to stage all the files in the source
+                        code directory so that they can be committed:
+                        <literallayout class='monospaced'>
+     $ git add *
+                        </literallayout></para></listitem>
+                    <listitem><para><emphasis>Commit the Source Files:</emphasis>
+                        Use the <filename>git commit</filename> command to initially commit all the files in 
+                        the source code directory:
+                        <literallayout class='monospaced'>
+     $ git commit
+                        </literallayout>
+                        At this point, your Git repository is aware of all the source code files.
+                        Any edits you now make to files will be tracked by Git.</para></listitem>
                     <listitem><para><emphasis>Edit the Files:</emphasis>
                         Make the changes to the temporary source code.</para></listitem>
                     <listitem><para><emphasis>Test Your Changes:</emphasis>
@@ -979,7 +997,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                         section of the Yocto Project Quick Start.
                         </note></para></listitem>
                     <listitem><para><emphasis>See the List of Files You Changed:</emphasis>
-                        Use the Git <filename>status</filename> command to see what files you have actually edited. 
+                        Use the <filename>git status</filename> command to see what files you have actually edited. 
                         The ability to have Git track the files you have changed is an advantage that this
                         workflow has over the Quilt workflow.
                         Here is the Git command to list your changed files:
@@ -987,22 +1005,22 @@ so that there are some definite steps on how to do this.  I need more detail her
      $ git status
                         </literallayout></para></listitem>
                     <listitem><para><emphasis>Stage the Modified Files:</emphasis>
-                        Use the Git <filename>add</filename> command to stage the changed files so they
+                        Use the <filename>git add</filename> command to stage the changed files so they
                         can be committed as follows:
                         <literallayout class='monospaced'>
      $ git add file1.c file2.c file3.c
                         </literallayout></para></listitem>
                     <listitem><para><emphasis>Commit the Staged Files and View Your Changes:</emphasis>
-                        Use the Git <filename>commit</filename> command to commit the changes to the 
+                        Use the <filename>git commit</filename> command to commit the changes to the 
                         local repository.  
-                        Once you have committed the files, you can use the Git <filename>log</filename>
+                        Once you have committed the files, you can use the <filename>git log</filename>
                         command to see your changes:
                         <literallayout class='monospaced'>
      $ git commit
      $ git log
                         </literallayout></para></listitem>
                     <listitem><para><emphasis>Generate the Patch:</emphasis>
-                        Once the changes are committed, you use the Git <filename>format-patch</filename>
+                        Once the changes are committed, use the <filename>git format-patch</filename>
                         command to generate a patch file:
                         <literallayout class='monospaced'>
      $ git format-patch HEAD~1
@@ -1012,12 +1030,14 @@ so that there are some definite steps on how to do this.  I need more detail her
                         <para>At this point, the patch file has all your edits made 
                         to the <filename>file1.c</filename>, <filename>file2.c</filename>, and 
                         <filename>file3.c</filename> files.
-                        You can find the resulting patch file in the <filename>patches/</filename> 
-                        subdirectory of the source (<filename>S</filename>) directory.</para></listitem>
+                        You can find the resulting patch file in the current directory.
+                        The patch file ends with <filename>.patch</filename>.</para></listitem>
                     <listitem><para><emphasis>Copy the Patch File:</emphasis> 
-                        For future builds, you should copy the patch file into the 
-                        <link linkend='yocto-project-files'>Yocto Project Files</link> metadata and add it 
-                        into the 
+                        For simplicity, copy the patch file into a directory named <filename>files</filename>,
+                        which you can create in the same directory as the recipe.
+                        Placing the patch here guarantees that the Yocto Project build system will find
+                        the patch.
+                        Next, add the patch into the  
                         <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename> 
                         of the recipe.  
                         Here is an example:
