@@ -355,19 +355,20 @@
                 If the BSP supports multiple machines, multiple machine configuration files
                 can be present. 
                 These filenames correspond to the values to which users have set the 
-                <filename>MACHINE</filename> variable.
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-MACHINE'><filename>MACHINE</filename></ulink> variable.
             </para>
 
             <para>
                 These files define things such as the kernel package to use
-                (<filename>PREFERRED_PROVIDER</filename> of virtual/kernel), the hardware drivers to
+                (<ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER</filename></ulink>
+                of virtual/kernel), the hardware drivers to
                 include in different types of images, any special software components
                 that are needed, any bootloader information, and also any special image
                 format requirements.
             </para>
 
             <para>
-                At least one machine file is required for a BSP layer.
+                Each BSP Layer requires at least one machine file.
                 However, you can supply more than one file.
                 For example, in the Crown Bay BSP shown earlier in this section, the 
                 <filename>conf/machine</filename> directory contains two configuration files:
@@ -383,19 +384,27 @@
             <para>
                 This <filename>crownbay.conf</filename> file could also include
                 a hardware "tuning" file that is commonly used to
-                define the the package architecture and specify 
+                define the package architecture and specify 
                 optimization flags, which are carefully chosen to give best
                 performance on a given processor.
             </para>
 
             <para>
                 Tuning files are found in the <filename>meta/conf/machine/include</filename>
-                directory.
-                To use them, you simply include them in the machine configuration file. 
+                directory of the 
+                <ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#yocto-project-files'>Yocto Project Files</ulink>.
+                Tuning files can also reside in the BSP Layer itself.  
+                For example, the <filename>ia32-base.inc</filename> file resides in the 
+                <filename>meta-intel</filename> BSP Layer in <filename>conf/machine/include</filename>.
+            </para>
+
+            <para>
+                To use an include file, you simply include them in the machine configuration file. 
                 For example, the Crown Bay BSP <filename>crownbay.conf</filename> has the 
-                following statement:
+                following statements:
                 <literallayout class='monospaced'>
      include conf/machine/include/tune-atom.inc
+     include conf/machine/include/ia32-base.inc
                 </literallayout>
             </para>
             </section>
