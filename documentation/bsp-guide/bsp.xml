@@ -304,28 +304,39 @@
                 Project layer, identifies the  
                 contents of the layer, and contains information about how Yocto Project should use it. 
                 Generally, a standard boilerplate file such as the following works.
-                In the following example you would replace "bsp" and "_bsp" with the actual name
-                of the BSP (i.e. &lt;bsp_name&gt; from the example template).
+                In the following example, you would replace "<filename>bsp</filename>" and 
+                "<filename>_bsp</filename>" with the actual name
+                of the BSP (i.e. <filename>&lt;bsp_name&gt;</filename> from the example template).
             </para>
 
             <para>
                <literallayout class='monospaced'>
-     # We have a conf directory, add to BBPATH
+     # We have a conf and classes directory, add to BBPATH
      BBPATH := "${BBPATH}:${LAYERDIR}"
 
-     # We have a recipes directory containing .bb and .bbappend files, add to BBFILES
+     # We have a recipes directory, add to BBFILES
      BBFILES := "${BBFILES} ${LAYERDIR}/recipes/*/*.bb \ 
                  ${LAYERDIR}/recipes/*/*.bbappend"
 
      BBFILE_COLLECTIONS += "bsp"
      BBFILE_PATTERN_bsp := "^${LAYERDIR}/"
-     BBFILE_PRIORITY_bsp = "5"
+     BBFILE_PRIORITY_bsp = "6"
+                </literallayout>
+            </para>
+
+            <para>
+                To illustrate the string substitutions, here are the last three statements from the Crown 
+                Bay <filename>conf/layer.conf</filename> file:
+               <literallayout class='monospaced'>
+     BBFILE_COLLECTIONS += "crownbay"
+     BBFILE_PATTERN_crownbay := "^${LAYERDIR}/"
+     BBFILE_PRIORITY_crownbay = "6"
                 </literallayout>
             </para>
 
             <para>
                 This file simply makes BitBake aware of the recipes and configuration directories.
-                This file must exist so that the Yocto Project build system can recognize the BSP.
+                The file must exist so that the Yocto Project build system can recognize the BSP.
             </para>
             </section>
 
