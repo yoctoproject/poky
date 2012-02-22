@@ -780,6 +780,9 @@ so that there are some definite steps on how to do this.  I need more detail her
                 <literallayout class='monospaced'>
      S = ${WORKDIR}/${BP}
                 </literallayout>
+                You should be aware that many recipes override the <filename>S</filename> variable.
+                For example, recipes that fetch their source from Git usually set 
+                <filename>S</filename> to <filename>${WORKDIR}/git</filename>.
                 <note>
                     <filename>BP</filename> represents the "Base Package", which is the base package
                     name and the package version:
@@ -790,39 +793,31 @@ so that there are some definite steps on how to do this.  I need more detail her
             </para>
 
             <para>
-                The actual location within the build directory for the temporary source code 
-                depends on the package name and the architecture of the target device, 
-                which are part of the 
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'><filename>WORKDIR</filename></ulink> variable's definition.
-            </para>
-
-            <para>
-                Here is the temporary source code location for packages whose targets are not 
-                device-dependent.
-                This location comprises <filename>WORKDIR</filename>:
+                The path to the work directory for the recipe 
+                (<ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'><filename>WORKDIR</filename></ulink>) depends
+                on the package name and the architecture of the target device.
+                For example, here is the work directory for packages whose targets are not device-dependent:
                 <literallayout class='monospaced'>
      ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
                 </literallayout>
-                Let's look at an example.
+                Let's look at an example without variables.
                 Assuming a Yocto Project Files top-level directory named <filename>poky</filename>
                 and a default Yocto Project build directory of <filename>poky/build</filename>, 
-                the following is the temporary source code location for the 
-                <filename>acl</filename> package:
+                the following is the work directory for the <filename>acl</filename> package:
                 <literallayout class='monospaced'>
      ~/poky/build/tmp/work/i586-poky-linux/acl-2.2.51-r3
                 </literallayout>
             </para>
 
             <para>
-                If your package is dependent on the target device, the temporary 
-                source code location varies slightly:
+                If your package is dependent on the target device, the work directory varies slightly:
                 <literallayout class='monospaced'>
      ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
                 </literallayout>
                 Again, assuming a Yocto Project Files top-level directory named <filename>poky</filename>
                 and a default Yocto Project build directory of <filename>poky/build</filename>, the 
-                following is the temporary source code location for the 
-                <filename>acl</filename> package that is being built for a MIPS-based device:
+                following is the work directory for the <filename>acl</filename> package that is being 
+                built for a MIPS-based device:
                 <literallayout class='monospaced'>
      ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2
                 </literallayout>
@@ -844,7 +839,7 @@ so that there are some definite steps on how to do this.  I need more detail her
             </note>
 
             <para>
-                Now that you know where to locate the temporary source files, you can use a 
+                Now that you know where to locate the work directory, you can use a 
                 Quilt or Git workflow to make your edits, test the changes, and preserve the 
                 changes in the form of patches.
             </para>
@@ -869,10 +864,10 @@ so that there are some definite steps on how to do this.  I need more detail her
                         Yocto Project build directory.  
                         See the 
                         "<link linkend='finding-the-temporary-source-code'>Finding the Temporary Source Code</link>"
-                        section to learn how to locate temporary source code for a 
+                        section to learn how to locate the work directory for a 
                         particular package.</para></listitem>
                     <listitem><para><emphasis>Change Your Working Directory:</emphasis>
-                        You need to be in the directory that has the temporary source code.
+                        You need to be in the work directory that has the source code.
                         That directory is defined by the 
                         <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink>
                         variable.</para></listitem>
@@ -965,16 +960,16 @@ so that there are some definite steps on how to do this.  I need more detail her
                         Yocto Project build directory.  
                         See the 
                         "<link linkend='finding-the-temporary-source-code'>Finding the Temporary Source Code</link>"
-                        section to learn how to locate temporary source code for a 
+                        section to learn how to locate the work directory for a 
                         particular package.</para></listitem>
                     <listitem><para><emphasis>Change Your Working Directory:</emphasis>
-                        You need to be in the directory that has the temporary source code.
+                        You need to be in the work directory.
                         That directory is defined by the 
                         <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink>
                         variable.</para></listitem>
                     <listitem><para><emphasis>Initialize a Git Repository:</emphasis>
                         Use the <filename>git init</filename> command to initialize a new local repository
-                        that is based on your source code directory:
+                        that is based on the work directory:
                         <literallayout class='monospaced'>
      $ git init
                         </literallayout></para></listitem>
@@ -986,7 +981,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                         </literallayout></para></listitem>
                     <listitem><para><emphasis>Commit the Source Files:</emphasis>
                         Use the <filename>git commit</filename> command to initially commit all the files in 
-                        the source code directory:
+                        the work directory:
                         <literallayout class='monospaced'>
      $ git commit
                         </literallayout>
