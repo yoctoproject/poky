@@ -773,7 +773,10 @@ so that there are some definite steps on how to do this.  I need more detail her
                 During a build, the unpacked temporary source code used by recipes 
                 to build packages is available in the Yocto Project build directory as 
                 defined by the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink></filename> variable:
+                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink></filename> variable.
+                Below is the default value for the <filename>S</filename> variable as defined in the 
+                <filename>/conf/local.conf</filename> configuration file in the Yocto 
+                Project's Build Directory:
                 <literallayout class='monospaced'>
      S = ${WORKDIR}/${PN}-${PV}
                 </literallayout>
@@ -781,9 +784,15 @@ so that there are some definite steps on how to do this.  I need more detail her
 
             <para>
                 The actual location within the build directory for the temporary source code 
-                depends on the package name and the architecture of the target device.
+                depends on the package name and the architecture of the target device, 
+                which are part of the 
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'><filename>WORKDIR</filename></ulink> variable's definition.
+            </para>
+
+            <para>
                 Here is the temporary source code location for packages whose targets are not 
-                device-dependent:
+                device-dependent.
+                This location comprises <filename>WORKDIR</filename>:
                 <literallayout class='monospaced'>
      ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
                 </literallayout>
@@ -815,15 +824,15 @@ so that there are some definite steps on how to do this.  I need more detail her
             <note>
                 To better understand how the Yocto Project build system resolves directories during the 
                 build process, see the glossary entries for the
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'>WORKDIR</ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TMPDIR'>TMPDIR</ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TOPDIR'>TOPDIR</ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PACKAGE_ARCH'>PACKAGE_ARCH</ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TARGET_OS'>TARGET_OS</ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PN'>PN</ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PV'>PV</ulink>,
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'><filename>WORKDIR</filename></ulink>,
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TMPDIR'><filename>TMPDIR</filename></ulink>,
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TOPDIR'><filename>TOPDIR</filename></ulink>,
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>,
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TARGET_OS'><filename>TARGET_OS</filename></ulink>,
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PN'><filename>PN</filename></ulink>,
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PV'><filename>PV</filename></ulink>,
                 and
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PR'>PR</ulink>
+                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PR'><filename>PR</filename></ulink>
                 variables in the Yocto Project Reference Manual.
             </note>
 
