@@ -427,7 +427,10 @@
                 Furthermore, there are machine-specific settings used during the build that are
                 defined by the <filename>machconfig</filename> files.
                 In the Crown Bay example, two <filename>machconfig</filename> files exist:
-                one that supports the Intel EMGD and one that does not:
+                one that supports the 
+                <trademark class='registered'>Intel</trademark> Embedded
+                Media and Graphics Driver (<trademark class='registered'>Intel</trademark>
+                EMGD) and one that does not:
                 <literallayout class='monospaced'>
      meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
      meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/machconfig
@@ -507,14 +510,14 @@
             </para>
             <para>
                 For your BSP, you typically want to use an existing Yocto Project kernel found in the 
-                Yocto Project repository at <filename>meta/recipes-kernel/linux</filename>.
+                <ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#yocto-project-files'>Yocto 
+                Project Files</ulink> at <filename>meta/recipes-kernel/linux</filename>.
                 You can append your specific changes to the kernel recipe by using a
-                similarly named append file, which is located in the 
-                <filename>meta-&lt;bsp_name&gt;/recipes-kernel/linux</filename> 
-                directory.
+                similarly named append file, which is located in BSP Layer (e.g. 
+                the <filename>meta-&lt;bsp_name&gt;/recipes-kernel/linux</filename> directory).
             </para>
             <para>
-                Suppose you use a BSP that uses the <filename>linux-yocto_3.0.bb</filename> kernel, 
+                Suppose the BSP uses the <filename>linux-yocto_3.0.bb</filename> kernel, 
                 which is the preferred kernel to use for developing a new BSP using the Yocto Project.
                 In other words, you have selected the kernel in your 
                 <filename>&lt;bsp_name&gt;.conf</filename> file by adding the following statements:
@@ -533,7 +536,7 @@
                 </literallayout>
                 The following listing shows the file.
                 Be aware that the actual commit ID strings in this example listing might be different
-                than the actual strings in the file from the Yocto Project <filename>meta-intel</filename>
+                than the actual strings in the file from the <filename>meta-intel</filename>
                 Git source repository.
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
@@ -552,8 +555,8 @@
      SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= "63c65842a3a74e4bd3128004ac29b5639f16433f"
      SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= "59314a3523e360796419d76d78c6f7d8c5ef2593"
                 </literallayout>
-                This append file contains statements used to support the Crown Bay BSP for both
-                Intel EMGD and non-EMGD.
+                This append file contains statements used to support the Crown Bay BSP for both 
+                <trademark class='registered'>Intel</trademark> EMGD and the VESA graphics.
                 The build process, in this case, recognizes and uses only the statements that 
                 apply to the defined machine name - <filename>crownbay</filename> in this case.
                 So, the applicable statements in the <filename>linux-yocto_3.0.bbappend</filename> 
@@ -571,7 +574,7 @@
                 The append file defines <filename>crownbay</filename> as the compatible machine,
                 defines the <filename>KMACHINE</filename>, points to some configuration fragments
                 to use by setting the <filename>KERNEL_FEATURES</filename> variable, and then points
-                to the specific commits in the Yocto Project files Git repository and the 
+                to the specific commits in the Yocto Project Files Git repository and the 
                 <filename>meta</filename> Git repository branches to identify the exact kernel needed 
                 to build the Crown Bay BSP.
             </para>
