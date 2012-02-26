@@ -147,3 +147,38 @@
 #                           commercial_libomxil \
 #                           commercial_mpeg2dec \
 #                           commercial_qmmp"
+
+
+#
+# Disk space monitor, take action when the disk space or the amount of
+# inode is running low, it is enabled when BB_DISKMON_DIRS is set.
+#
+# Set the directories to monitor for disk usage, if more than one
+# directories are mounted in the same device, then only one directory
+# would be monitored since the monitor is based on the device.
+# The format is:
+# "action,directory,minimum_space,minimum_free_inode"
+#
+# The "action" must be set and should be one of:
+# ABORT: Immediately abort
+# STOPTASKS: The new tasks can't be executed any more, will stop the build
+#           when the running tasks have been done.
+# WARN: show warnings (see BB_DISKMON_WARNINTERVAL for more information)
+#
+# The "directory" must be set, any directory is OK.
+#
+# Either "minimum_space" or "minimum_free_inode" (or both of them)
+# should be set, otherwise the monitor would not be enabled,
+# the unit can be G, M, K or none, but do NOT use GB, MB or KB
+# (B is not needed).
+#BB_DISKMON_DIRS = "STOPTASKS,${TMPDIR},1G,100K WARN,${SSTATE_DIR},1G,100K"
+#
+# Set disk space and inode interval (only works when the action is "WARN",
+# the unit can be G, M, or K, but do NOT use the GB, MB or KB
+# (B is not needed), the format is:
+# "disk_space_interval,disk_inode_interval", the default value is
+# "50M,5K" which means that it would warn when the free space is
+# lower than the minimum space(or inode), and would repeat the warning
+# when the disk space reduces 50M (or the amount of inode reduces 5k).
+#BB_DISKMON_WARNINTERVAL = "50M,5K"
+
