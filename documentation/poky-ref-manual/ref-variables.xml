@@ -16,7 +16,7 @@
 
     <para>
        <link linkend='var-AUTHOR'>A</link> 
-       <link linkend='var-BAD_RECOMMENDATIONS'>B</link> 
+       <link linkend='var-B'>B</link> 
        <link linkend='var-CFLAGS'>C</link> 
        <link linkend='var-D'>D</link> 
        <link linkend='var-ENABLE_BINARY_LOCALE_GENERATION'>E</link> 
@@ -64,12 +64,56 @@
 
     <glossdiv id='var-glossary-b'><title>B</title>
 
+        <glossentry id='var-B'><glossterm>B</glossterm>
+            <glossdef>
+                <para>
+                    The directory in which the Yocto Project build system places
+                    generated objects during a recipe's build process.
+                    By default, this directory is the same as the <link linkend='var-S'><filename>S</filename></link>
+                    directory:
+                    <literallayout class='monospaced'>
+     B = ${WORKDIR}/${BPN}-{PV}/
+                    </literallayout>
+                    You can separate the source directory (<filename>S</filename>) and the directory pointed to 
+                    by the <filename>B</filename> variable.
+                    In general, <filename>autotools</filename>, recipes such as <filename>gcc</filename>, 
+                    and some kernel recipes separate these directories by default.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-BAD_RECOMMENDATIONS'><glossterm>BAD_RECOMMENDATIONS</glossterm>
             <glossdef>
-                <para>A list of packages not to install despite being recommended by a recipe.
+                <para>
+                    A list of packages not to install despite being recommended by a recipe.
                     Support for this variable exists only for images that use the 
-                    <filename>ipkg</filename> packaging system.</para>
+                    <filename>ipkg</filename> packaging system.
+                </para>
             </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BBCLASSEXTEND'><glossterm>BBCLASSEXTEND</glossterm>
+            <glossdef>
+                <para>
+                    Allows you to extend a recipe so that it builds variants of the software.
+                    Common variants for recipes exist such as "natives" like <filename>quilt-native</filename>,
+                    which is a copy of quilt built to run on the build system;
+                    "crosses" such as <filename>gcc-cross</filename>,
+                    which is a compiler built to run on the build machine but produces binaries
+                    that run on the target <link linkend='var-MACHINE'><filename>MACHINE</filename></link>;
+                    "nativesdk", which targets the SDK machine instead of <filename>MACHINE</filename>;
+                    and "mulitlibs" in the form "<filename>multilib:&lt;multilib_name&gt;</filename>".
+                </para>
+
+                <para>
+                    To build a different variant of the recipe with a minimal amount of code, it usually
+                    is as simple as adding the following to your recipe:
+                    <literallayout class='monospaced'>
+     BBCLASSEXTEND = "native nativesdk"
+     BBCLASSEXTEND = "multilib:&lt;multilib_name&gt;"
+                    </literallayout>
+                </para>
+             </glossdef>
         </glossentry>
 
         <glossentry id='var-BBMASK'><glossterm>BBMASK</glossterm>
