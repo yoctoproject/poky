@@ -519,6 +519,66 @@
     </para>
 </section>
 
+<section id='ref-classes-externalsrc'>
+    <title>Using External Source - <filename>externalsrc.bbclass</filename></title>
+
+    <para>
+        You can use this class to build software from source code that is external to the 
+        Yocto Project build system.  
+        In other words, your source code resides in an external tree outside of the Yocto Project.
+        Building software from an external source tree means that the normal fetch, unpack, and 
+        patch process is not used.
+    </para>
+
+    <para>
+        To use the class, you need to define the 
+        <link linkend='var-S'><filename>S</filename></link> variable to point to the directory that contains the source files. 
+        You also need to have your recipe inherit the <filename>externalsrc.bbclass</filename> class.
+    </para>
+
+    <para>
+        This class expects the source code to support recipe builds that use the 
+        <link linkend='var-B'><filename>B</filename></link> variable to point to the directory in 
+        which the Yocto Project build system places the generated objects built from the recipes.
+        By default, the <filename>B</filename> directory is set to the following, which is separate from the 
+        source directory (<filename>S</filename>):
+        <literallayout class='monospaced'>
+     ${WORKDIR}/${BPN}-{PV}/
+        </literallayout>
+        See the glossary entries for the
+        <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>, 
+        <link linkend='var-BPN'><filename>BPN</filename></link>, 
+        <link linkend='var-PV'><filename>PV</filename></link>,
+        <link linkend='var-S'><filename>S</filename></link>, and 
+        <link linkend='var-B'><filename>B</filename></link> for more information.
+    </para>
+
+    <para>
+        You can build object files in the external tree by setting the
+        <filename>B</filename> variable equal to <filename>"${S}"</filename>.
+        However, this practice does not work well if you use the source for more than one variant
+        (i.e., "natives" such as <filename>quilt-native</filename>, 
+        or "crosses" such as <filename>gcc-cross</filename>).
+        So, be sure there are no "native", "cross", or "multilib" variants of the recipe.
+    </para>
+
+    <para>
+        If you do want to build different variants of a recipe, you can use the 
+        <link linkend='var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></link> variable. 
+        When you do, the <link linkend='var-B'><filename>B</filename></link> variable must support the 
+        recipe's ability to build variants in different working directories.
+        Alternatively, you can make sure that separate recipes exist that each 
+        use the <filename>BBCLASSEXTEND</filename> variable to build each variant.
+        The separate recipes can inherit a single target recipe.
+    </para>
+
+    <para>
+        For information on how to use this class, see the 
+        "<ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#building-software-from-an-external-source'>Building
+        Software from an External Source</ulink>" section in the Yocto Project Development Manual.
+    </para>
+</section>
+
 <section id='ref-classes-others'>
     <title>Other Classes</title>
 
