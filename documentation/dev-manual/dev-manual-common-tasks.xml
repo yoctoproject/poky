@@ -1436,6 +1436,61 @@ so that there are some definite steps on how to do this.  I need more detail her
         </para>
     </section>
 
+    <section id="building-software-from-an-external-source">
+        <title>Building Software from an External Source</title>
+
+        <para>
+            By default, the Yocto Project build system does its work from within the 
+            <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link>.  
+            The build process involves fetching the source files, unpacking them, and then patching them
+            if necessary before the build takes place.
+        </para>
+
+        <para>
+            Situations exist where you might want to build software from source files that are external to 
+            and thus outside of the <link linkend='yocto-project-files'>Yocto Project Files</link>.
+            For example, suppose you have a project that includes a new BSP with a heavily customized 
+            kernel, a very minimal image, and some new user-space recipes.
+            And, you want to minimize the exposure to the Yocto Project build system to the 
+            development team so that they can focus on their project and maintain everyone's workflow
+            as much as possible.
+            In this case, you want a kernel source directory on the development machine where the 
+            development occurs.
+            You want the recipe's 
+            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+            variable to point to the external directory and use it as is, not copy it.  
+        </para>
+
+        <para>
+            To build from software that comes from an external source, all you need to do is
+            change your recipe so that it inherits the 
+            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#ref-classes-externalsrc'><filename>externalsrc.bbclass</filename></ulink> 
+            class and then sets the 
+            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'><filename>S</filename></ulink>
+            variable to point to your external source code.
+            Here are the statements to put in your recipe:
+            <literallayout class='monospaced'>
+     inherit externalsrc
+     S = "/some/path/to/your/package/source"
+            </literallayout>
+        </para>
+
+        <para>
+            It is important to know that the <filename>externalsrc.bbclass</filename> assumes that the 
+            source directory <filename>S</filename> and the build directory 
+            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-B'><filename>B</filename></ulink>
+            are different even though by default these directories are the same.
+            This assumption is important because it supports building different variants of the recipe
+            by using the 
+            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual#var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></ulink>
+            variable.
+            You could allow the build directory to be the same as the source directory but you would 
+            not be able to build more than one variant of the recipe.
+            Consequently, if you are building multiple variants of the recipe, you need to establish a 
+            build directory that is different than the source directory.
+        </para>
+    </section>
+
     <section id="usingpoky-changes">
         <title>Making and Maintaining Changes</title>
         <para>
