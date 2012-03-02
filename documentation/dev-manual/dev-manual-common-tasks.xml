@@ -14,6 +14,122 @@
         Yocto Project to achieve the best results.
     </para>
 
+    <section id="usingpoky-changes-layers">
+        <title>BitBake Layers</title>
+        <para>
+            Often, developers want to extend the Yocto Project either by adding packages
+            or by overriding files contained within the Yocto Project to add their own
+            functionality. 
+            BitBake has a powerful mechanism called
+            "layers", which provides a way to handle this extension in a fully
+            supported and non-invasive fashion.
+        </para>
+
+        <para>
+            The Yocto Project files include several additional layers such as 
+            <filename>meta-rt</filename> and <filename>meta-yocto</filename>
+            that demonstrate this functionality.
+            The <filename>meta-rt</filename> layer is not enabled by default.
+            However, the <filename>meta-yocto</filename> layer is.
+        </para>
+
+        <para>
+            To enable a layer, you simply add the layer's path to the 
+            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBLAYERS'>BBLAYERS</ulink></filename> 
+            variable in your 
+            <filename>conf/bblayers.conf</filename> file, which is found in the 
+            <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link>. 
+            The following example shows how to enable the <filename>meta-rt</filename>:
+            <literallayout class='monospaced'>
+     LCONF_VERSION = "1"
+
+     BBFILES ?= ""
+     BBLAYERS = " \
+       /path/to/poky/meta \
+       /path/to/poky/meta-yocto \
+       /path/to/poky/meta-rt \
+       "
+            </literallayout>
+        </para>
+
+        <para>
+            BitBake parses each <filename>conf/layer.conf</filename> file for each layer in 
+            <filename>BBLAYERS</filename>
+            and adds the recipes, classes and configurations contained within the layer to 
+            the Yocto Project.
+            To create your own layer, independent of the Yocto Project files, 
+            simply create a directory with a <filename>conf/layer.conf</filename> file and
+            add the directory to your <filename>bblayers.conf</filename> file.
+        </para>
+
+        <para>
+            The <filename>meta-yocto/conf/layer.conf</filename> file demonstrates the 
+            required syntax:
+            <literallayout class='monospaced'>
+     # We have a conf and classes directory, add to BBPATH
+     BBPATH := "${BBPATH}:${LAYERDIR}"
+
+     # We have a packages directory, add to BBFILES
+     BBFILES := "${BBFILES} ${LAYERDIR}/recipes-*/*/*.bb \
+                 ${LAYERDIR}/recipes-*/*/*.bbappend"
+
+     BBFILE_COLLECTIONS += "yocto"
+     BBFILE_PATTERN_yocto := "^${LAYERDIR}/"
+     BBFILE_PRIORITY_yocto = "5" 
+            </literallayout>
+        </para>
+
+        <para>
+            In the previous example, the recipes for the layers are added to 
+            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILES'>BBFILES</ulink></filename>. 
+            The 
+            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_COLLECTIONS'>BBFILE_COLLECTIONS</ulink></filename>
+            variable is then appended with the layer name. 
+            The 
+            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_PATTERN'>BBFILE_PATTERN</ulink></filename> 
+            variable immediately expands with a regular expression used to match files from 
+            <filename>BBFILES</filename> into
+            a particular layer, in this case by using the base pathname.
+            The 
+            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename> 
+            variable 
+            then assigns different priorities to the files in different layers. 
+            Applying priorities is useful in situations where the same package might appear in multiple
+            layers and allows you to choose what layer should take precedence.
+        </para>
+
+        <para>
+            Note the use of the 
+            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-LAYERDIR'>LAYERDIR</ulink></filename> 
+            variable with the immediate expansion operator.
+            The <filename>LAYERDIR</filename> variable expands to the directory of the current layer and
+            requires the immediate expansion operator so that BitBake does not wait to expand the variable 
+            when it's parsing a different directory.
+        </para>
+
+        <para>
+            BitBake can locate where other <filename>.bbclass</filename> and configuration files 
+            are applied through the <filename>BBPATH</filename> environment variable. 
+            For these cases, BitBake uses the first file with the matching name found in 
+            <filename>BBPATH</filename>.
+            This is similar to the way the <filename>PATH</filename> variable is used for binaries. 
+            We recommend, therefore, that you use unique <filename>.bbclass</filename>
+            and configuration file names in your custom layer.
+        </para>
+
+        <para>
+            We also recommend the following:
+            <itemizedlist>
+                <listitem><para>Store custom layers in a Git repository that uses the 
+                    <filename>meta-prvt-XXXX</filename> format.</para></listitem>
+                <listitem><para>Clone the repository alongside other <filename>meta</filename>
+                    directories in the Yocto Project source files area.</para></listitem>
+            </itemizedlist>
+            Following these recommendations keeps your Yocto Project files area and 
+            its configuration entirely inside the Yocto Project's core base.
+        </para>
+    </section>
+
     <section id='usingpoky-extend-addpkg'>
         <title>Adding a Package</title>
 
@@ -1507,122 +1623,6 @@ so that there are some definite steps on how to do this.  I need more detail her
             between the Yocto Project core and a given developer's changes. 
             The following section provides more advice on managing changes to the Yocto Project.
         </para>
-
-        <section id="usingpoky-changes-layers">
-          <title>BitBake Layers</title>
-          <para>
-                Often, developers want to extend the Yocto Project either by adding packages
-                or by overriding files contained within the Yocto Project to add their own
-                functionality. 
-                BitBake has a powerful mechanism called
-                "layers", which provides a way to handle this extension in a fully
-                supported and non-invasive fashion.
-           </para>
-
-           <para>
-               The Yocto Project files include several additional layers such as 
-               <filename>meta-rt</filename> and <filename>meta-yocto</filename>
-               that demonstrate this functionality.
-               The <filename>meta-rt</filename> layer is not enabled by default.
-               However, the <filename>meta-yocto</filename> layer is.
-           </para>
-
-           <para>
-               To enable a layer, you simply add the layer's path to the 
-               <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBLAYERS'>BBLAYERS</ulink></filename> 
-               variable in your 
-               <filename>conf/bblayers.conf</filename> file, which is found in the 
-               <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link>. 
-               The following example shows how to enable the <filename>meta-rt</filename>:
-               <literallayout class='monospaced'>
-     LCONF_VERSION = "1"
-
-      BBFILES ?= ""
-      BBLAYERS = " \
-       /path/to/poky/meta \
-       /path/to/poky/meta-yocto \
-       /path/to/poky/meta-rt \
-       "
-               </literallayout>
-           </para>
-
-          <para>
-               BitBake parses each <filename>conf/layer.conf</filename> file for each layer in 
-               <filename>BBLAYERS</filename>
-               and adds the recipes, classes and configurations contained within the layer to 
-               the Yocto Project.
-               To create your own layer, independent of the Yocto Project files, 
-               simply create a directory with a <filename>conf/layer.conf</filename> file and
-               add the directory to your <filename>bblayers.conf</filename> file.
-          </para>
-
-          <para>
-               The <filename>meta-yocto/conf/layer.conf</filename> file demonstrates the 
-               required syntax:
-               <literallayout class='monospaced'>
-     # We have a conf and classes directory, add to BBPATH
-     BBPATH := "${BBPATH}:${LAYERDIR}"
-
-     # We have a packages directory, add to BBFILES
-     BBFILES := "${BBFILES} ${LAYERDIR}/recipes-*/*/*.bb \
-                 ${LAYERDIR}/recipes-*/*/*.bbappend"
-
-     BBFILE_COLLECTIONS += "yocto"
-     BBFILE_PATTERN_yocto := "^${LAYERDIR}/"
-     BBFILE_PRIORITY_yocto = "5" 
-               </literallayout>
-          </para>
-
-          <para>
-                In the previous example, the recipes for the layers are added to 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILES'>BBFILES</ulink></filename>. 
-                The 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_COLLECTIONS'>BBFILE_COLLECTIONS</ulink></filename>
-                variable is then appended with the layer name. 
-                The 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_PATTERN'>BBFILE_PATTERN</ulink></filename> 
-                variable immediately expands with a regular expression used to match files from 
-                <filename>BBFILES</filename> into
-                a particular layer, in this case by using the base pathname.
-                The 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename> 
-                variable 
-                then assigns different priorities to the files in different layers. 
-                Applying priorities is useful in situations where the same package might appear in multiple
-                layers and allows you to choose what layer should take precedence.
-            </para>
-
-            <para>
-                Note the use of the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-LAYERDIR'>LAYERDIR</ulink></filename> 
-                variable with the immediate expansion operator.
-                The <filename>LAYERDIR</filename> variable expands to the directory of the current layer and
-                requires the immediate expansion operator so that BitBake does not wait to expand the variable 
-                when it's parsing a different directory.
-            </para>
-
-            <para>
-                BitBake can locate where other <filename>.bbclass</filename> and configuration files 
-                are applied through the <filename>BBPATH</filename> environment variable. 
-                For these cases, BitBake uses the first file with the matching name found in 
-                <filename>BBPATH</filename>.
-                This is similar to the way the <filename>PATH</filename> variable is used for binaries. 
-                We recommend, therefore, that you use unique <filename>.bbclass</filename>
-                and configuration file names in your custom layer.
-            </para>
-
-            <para>
-                We also recommend the following:
-                <itemizedlist>
-                    <listitem><para>Store custom layers in a Git repository that uses the 
-                        <filename>meta-prvt-XXXX</filename> format.</para></listitem>
-                    <listitem><para>Clone the repository alongside other <filename>meta</filename>
-                        directories in the Yocto Project source files area.</para></listitem>
-                </itemizedlist>
-                Following these recommendations keeps your Yocto Project files area and 
-                its configuration entirely inside the Yocto Project's core base.
-            </para>
-        </section>
 
         <section id="usingpoky-changes-commits">
             <title>Committing Changes</title>
