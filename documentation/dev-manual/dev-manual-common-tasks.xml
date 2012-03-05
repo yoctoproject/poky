@@ -342,6 +342,56 @@
                 Future versions of BitBake might address this.</para>
             </note>
         </section>
+
+        <section id='managing-layers'>
+            <title>Managing Layers</title>
+
+            <para>
+                You can use the BitBake layer management tool to provide a view into the structure of 
+                recipes across a multi-layer project.
+                Being able to generate output that reports on configured layers with their paths and 
+                priorities and on <filename>.bbappend</filename> files and their applicable recipes
+                can help to reveal potential problems.
+            </para>
+
+            <para>
+                Use the following form when running the layer management tool.
+                <literallayout class='monospaced'>
+     $ bitbake-layers &lt;command&gt; [arguments]
+
+     Available commands:
+       flatten
+         flattens layer configuration into a separate output directory.
+       help
+         display general help or help on a specified command
+       show_appends
+         list bbappend files and recipe files they apply to
+       show_layers
+         show current configured layers
+       show_overlayed
+         list overlayed recipes (where there is a recipe in another layer that has a higher layer priority)
+       help
+         display general help or help on a specified command
+                </literallayout>
+            </para>
+
+            <para>
+                Flattening your layer configuration builds a "flattened" directory that contains
+                the contents of all layers, with any overlayed recipes removed and any
+                recipe append files (<filename>.bbappend</filename>) appended to the corresponding recipes.
+                You might have to perform some manual cleanup of the flattened layer as follows:
+                <itemizedlist>
+                    <listitem><para>Non-recipe files (such as patches) are overwritten.
+                        The flatten command shows a warning for these files.</para></listitem>
+                    <listitem><para>Anything beyond the normal layer setup has been added to 
+                        the <filename>layer.conf</filename> file.
+                        Only the lowest priority layer's <filename>layer.conf</filename> is used.
+                        </para></listitem>
+                    <listitem><para>Overridden and appended items from <filename>.bbappend</filename>
+                        files never need to be cleaned up.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
     </section>
 
     <section id='usingpoky-extend-addpkg'>
