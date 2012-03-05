@@ -22,4 +22,4 @@ SRCREV_machine_pn-linux-yocto-rt_mpc8315e-rdb = "2f9d925f5681eaae7f341cc1270c739
 COMPATIBLE_MACHINE_routerstationpro = "routerstationpro"
 KMACHINE_routerstationpro = "routerstationpro"
 KBRANCH_routerstationpro = "yocto/standard/preempt-rt/routerstationpro"
-SRCREV_machine_pn-linux-yocto-rt_routerstationpro = "ac9de3df165099542c26a5c0a60cac4fb9965cb2"
+SRCREV_machine_pn-linux-yocto-rt_routerstationpro = "855fb36f410e5ed1b42a2cb9d4f10c55e5a510c1"
