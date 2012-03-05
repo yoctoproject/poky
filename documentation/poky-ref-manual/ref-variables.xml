@@ -613,6 +613,71 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-FILESEXTRAPATHS'><glossterm>FILESEXTRAPATHS</glossterm>
+            <glossdef>
+                <para>
+                    Extends the search path the Yocto Project build system uses when 
+                    looking for files and patches as it processes recipes. 
+                    The directories BitBake uses when it processes recipes is defined by the
+                    <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link> variable. 
+                    You can add directories to the search path by defining the 
+                    <filename>FILESEXTRAPATHS</filename> variable.
+                </para>
+
+                <para>
+                    To add paths to the search order, provide a list of directories and separate
+                    each path using a colon character as follows:
+                    <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend := "path_1:path_2:path_3:"
+                    </literallayout>
+                    Typically, you want your directories search first. 
+                    To make sure that happens, use <filename>_prepend</filename> and 
+                    the immediate expansion (<filename>:=</filename>) operator as shown in the 
+                    previous example.
+                    Finally, to maintain the integrity of the <filename>FILESPATH</filename> variable, 
+                    you must inclued the appropriate beginning or ending (as needed) colon character.
+                </para>
+
+                <para>
+                    The <filename>FILESEXTRAPATHS</filename> variable is intended for use in 
+                    <filename>.bbappend</filename> files to include any additional files provided in that layer. 
+                    You typically accomplish this with the following:
+                    <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-FILESPATH'><glossterm>FILESPATH</glossterm>
+            <glossdef>
+                <para>
+                    The default set of directories the Yocto Project build system uses
+                    when searching for patches and files.
+                    During the build process, BitBake searches each directory in 
+                    <filename>FILESPATH</filename> in the specified order when looking for 
+                    files and patches specified by each <filename>file://</filename> URI in a recipe.
+                </para>
+
+                <para>
+                    The default value for the <filename>FILESPATH</filename> variable is defined
+                    in the <filename>base.bbclass</filename> class found in 
+                    <filename>meta/classes</filename> in the 
+                    <ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#yocto-project-files'>Yocto Project Files</ulink>:
+                    <literallayout class='monospaced'>
+FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
+   "${FILE_DIRNAME}/${P}", "${FILE_DIRNAME}/${PN}", \
+   "${FILE_DIRNAME}/${BP}", "${FILE_DIRNAME}/${BPN}", \
+   "${FILE_DIRNAME}/files", "${FILE_DIRNAME}" ], d)}"
+                    </literallayout>
+                    Do not hand-edit the <filename>FILESPATH</filename> variable. 
+                    If you want to extend the set of pathnames that BitBake uses when searching for 
+                    files and patches, use the 
+                    <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link> variable.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-FILESYSTEM_PERMS_TABLES'><glossterm>FILESYSTEM_PERMS_TABLES</glossterm>
             <glossdef>
                 <para>Allows you to define your own file permissions settings table as part of
