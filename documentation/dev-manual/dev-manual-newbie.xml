@@ -53,6 +53,70 @@
     </para>
 </section>
 
+<section id="usingpoky-changes-collaborate">
+    <title>Using The Yocto Project in a Team Environment</title>
+
+    <para>
+        It might not be immediately clear how you can use the Yocto Project in a team environment, 
+        or scale it for a large team of developers. 
+        The specifics of any situation determine the best solution.
+        Granted that the Yocto Project offers immense flexibility regarding this, practices do exist 
+        that experience has shown work well.
+    </para>
+
+    <para>
+        The core component of any development effort with the Yocto Project is often an 
+        automated build and testing framework along with an image generation process. 
+        You can use these core components to check that the metadata can be built, 
+        highlight when commits break the build, and provide up-to-date images that 
+        allow developers to test the end result and use it as a base platform for further 
+        development. 
+        Experience shows that buildbot is a good fit for this role. 
+        What works well is to configure buildbot to make two types of builds:
+        incremental and full (from scratch).  
+        See <ulink url='http://autobuilder.yoctoproject.org:8010/'>the buildbot for the 
+        Yocto Project</ulink> for an example implementation that uses buildbot.
+    </para>
+
+    <para>
+        You can tie incremental builds to a commit hook that triggers the build
+        each time a commit is made to the metadata.  
+        This practice results in useful acid tests that determine whether a given commit 
+        breaks the build in some serious way. 
+        Associating a build to a commit can catch a lot of simple errors.
+        Furthermore, the tests are fast so developers can get quick feedback on changes.
+    </para>
+
+    <para>
+        Full builds build and test everything from the ground up. 
+        These types of builds usually happen at predetermined times like during the 
+        night when the machine load is low.
+    </para>
+
+    <para>
+        Most teams have many pieces of software undergoing active development at any given time. 
+        You can derive large benefits by putting these pieces under the control of a source 
+        control system that is compatible with the Yocto Project (i.e. Git or Subversion (SVN).
+        You can then set the autobuilder to pull the latest revisions of the packages 
+        and test the latest commits by the builds.
+        This practice quickly highlights issues. 
+        The Yocto Project easily supports testing configurations that use both a 
+        stable known good revision and a floating revision.
+        The Yocto Project can also take just the changes from specific source control branches.
+        This capability allows you to track and test specific changes.
+    </para>
+
+    <para>
+        Perhaps the hardest part of setting this up is defining the software project or 
+        the Yocto Project metadata policies that surround the different source control systems.
+        Of course circumstances will be different in each case.
+        However, this situation reveals one of the Yocto Project's advantages - 
+        the system itself does not
+        force any particular policy on users, unlike a lot of build systems. 
+        The system allows the best policies to be chosen for the given circumstances.
+    </para>
+</section>
+
 <section id='yocto-project-repositories'>
     <title>Yocto Project Source Repositories</title>
 
@@ -797,6 +861,8 @@
 
     <para>
         Contributions to the Yocto Project are very welcome. 
+        Because the Yocto Project is extremely configurable and flexible, we recognize that developers 
+        will want to extend, configure or optimize it for their specific uses.
         You should send patches to the appropriate Yocto Project mailing list to get them 
         in front of the Yocto Project Maintainer.
         For a list of the Yocto Project mailing lists, see the
@@ -866,7 +932,10 @@
     <para>
         In a collaborative environment, it is necessary to have some sort of standard 
         or method through which you submit changes.  
-        Otherwise, things could get quite chaotic.  
+        Otherwise, things could get quite chaotic.
+        One general practice to follow is to make small, controlled changes to the 
+        Yocto Project.
+        Keeping changes small and isolated lets you best keep pace with future Yocto Project changes.
     </para>
 
     <para>
