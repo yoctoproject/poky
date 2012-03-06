@@ -77,7 +77,8 @@
                         you need.
                         You can see the
                         <ulink url='http://www.openembedded.org/wiki/LayerIndex'><filename>LayerIndex</filename></ulink>
-                        to determine what types of layers already exist in the Yocto Project.</para></listitem>
+                        for a list of layers from the OpenEmbedded community that can be used in the 
+                        Yocto Project.</para></listitem>
                     <listitem><para><emphasis>Create a Directory:</emphasis> Create the directory 
                         for your layer.
                         Traditionally, prepend the name of the folder with the string
@@ -113,12 +114,14 @@
                         variable is then appended with the layer name. 
                         The 
                         <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_PATTERN'>BBFILE_PATTERN</ulink></filename> 
-                        variable immediately expands with a regular expression used to match files from 
-                        <filename>BBFILES</filename> into a particular layer, in this case by using 
-                        the base pathname.
+                        variable is set to a regular expression and is used to match files
+                        from <filename>BBFILES</filename> into a particular layer.
+                        In this case, immediate expansion of 
+                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-LAYERDIR'>LAYERDIR</ulink></filename> 
+                        sets <filename>BBFILES_PATTERN</filename> to the layer's path.
                         The 
                         <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename> 
-                        variable then assigns different priorities to the files in different layers. 
+                        variable then assigns a priority to the layer. 
                         Applying priorities is useful in situations where the same package might appear in multiple
                         layers and allows you to choose what layer should take precedence.</para>
                         <para>Note the use of the 
@@ -127,8 +130,9 @@
                         The <filename>LAYERDIR</filename> variable expands to the directory of the current layer and
                         requires the immediate expansion operator so that BitBake does not wait to expand the variable 
                         when it's parsing a different directory.</para>
-                        <para>BitBake can locate where other <filename>.bbclass</filename> and configuration files 
-                        are applied through the <filename>BBPATH</filename> environment variable. 
+                        <para>BitBake locates included <filename>.bbclass</filename>, configuration,
+                        and other files using the <filename>include</filename> and <filename>require</filename>
+                        statements by way of the <filename>BBPATH</filename> environment variable. 
                         For these cases, BitBake uses the first file with the matching name found in 
                         <filename>BBPATH</filename>.
                         This is similar to the way the <filename>PATH</filename> variable is used for binaries. 
@@ -218,9 +222,6 @@
                 During the processing of each <filename>conf/layer.conf</filename> file, BitBake adds the 
                 recipes, classes and configurations contained within the particular layer to the Yocto 
                 Project.
-                To create your own layer, independent of the Yocto Project files, 
-                simply create a directory with a <filename>conf/layer.conf</filename> file and
-                add the directory to your <filename>bblayers.conf</filename> file.
             </para>
         </section>
 
@@ -242,9 +243,9 @@
                 This means the original recipe and append file names are version number specific.
                 If the underlying recipe is renamed to update to a newer version, the 
                 corresponding <filename>.bbappend</filename> file must be renamed as well.
-                During the build process, BitBake displays warnings on starting if it detects a 
+                During the build process, BitBake displays an error on starting if it detects a 
                 <filename>.bbappend</filename> file that does not have an underlying recipe 
-                with the proper name.
+                with a matching name.
             </para>
 
             <para>
@@ -299,8 +300,10 @@
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
                 </literallayout>
-                Using the immediate expansion assignment operator <filename>:=</filename> and the trailing colon
-                are important so that the resulting list of pathnames is syntactically correct.
+                Using the immediate expansion assignment operator <filename>:=</filename> is important because 
+                of the reference to <filename>THISDIR</filename>.
+                The trailing colon character is important as it ensures that items in the list remain 
+                colon-separated.
                 <note>BitBake automatically defines the <filename>THISDIR</filename> variable.
                     You should never set this variable yourself.
                     Using <filename>_prepend</filename> ensures your path will be searched prior to other 
@@ -358,37 +361,40 @@
                 Use the following form when running the layer management tool.
                 <literallayout class='monospaced'>
      $ bitbake-layers &lt;command&gt; [arguments]
-
-     Available commands:
-       flatten
-         flattens layer configuration into a separate output directory.
-       help
-         display general help or help on a specified command
-       show_appends
-         list bbappend files and recipe files they apply to
-       show_layers
-         show current configured layers
-       show_overlayed
-         list overlayed recipes (where there is a recipe in another layer that has a higher layer priority)
-       help
-         display general help or help on a specified command
                 </literallayout>
-            </para>
-
-            <para>
-                Flattening your layer configuration builds a "flattened" directory that contains
-                the contents of all layers, with any overlayed recipes removed and any
-                recipe append files (<filename>.bbappend</filename>) appended to the corresponding recipes.
-                You might have to perform some manual cleanup of the flattened layer as follows:
+                The following list describes the available commands:
                 <itemizedlist>
-                    <listitem><para>Non-recipe files (such as patches) are overwritten.
-                        The flatten command shows a warning for these files.</para></listitem>
-                    <listitem><para>Anything beyond the normal layer setup has been added to 
-                        the <filename>layer.conf</filename> file.
-                        Only the lowest priority layer's <filename>layer.conf</filename> is used.
+                    <listitem><para><filename><emphasis>flatten:</emphasis></filename>
+                        Flattens the layer configuration into a separate output directory.
+                        Flattening your layer configuration builds a "flattened" directory that contains
+                        the contents of all layers, with any overlayed recipes removed and any
+                        recipe append files (<filename>.bbappend</filename>) appended to the corresponding recipes.
+                        You might have to perform some manual cleanup of the flattened layer as follows:
+                        <itemizedlist>
+                            <listitem><para>Non-recipe files (such as patches) are overwritten.
+                                The flatten command shows a warning for these files.</para></listitem>
+                            <listitem><para>Anything beyond the normal layer setup has been added to 
+                                the <filename>layer.conf</filename> file.
+                                Only the lowest priority layer's <filename>layer.conf</filename> is used.
+                                </para></listitem>
+                            <listitem><para>Overridden and appended items from <filename>.bbappend</filename>
+                                files need to be cleaned up.
+                                For example, the contents of each <filename>.bbappend</filename> end up in the 
+                                flattened recipe.
+                                However, if there are appended or changed variable values, you need to tidy 
+                                these up yourself.</para></listitem>
+                        </itemizedlist></para></listitem>
+                    <listitem><para><filename><emphasis>help:</emphasis></filename>
+                        Displays general help or help on a specified command.</para></listitem>
+                    <listitem><para><filename><emphasis>show_appends:</emphasis></filename>
+                        Lists <filename>.bbappend</filename> files and the recipe files to which
+                        they apply.</para></listitem>
+                    <listitem><para><filename><emphasis>show_layers:</emphasis></filename>
+                        Show the current configured layers.</para></listitem>
+                    <listitem><para><filename><emphasis>show_overlayed:</emphasis></filename>
+                        Lists overlayed recipes.  
+                        Overlayed recipes appear in another layer that has a higher layer priority.
                         </para></listitem>
-                    <listitem><para>Overridden and appended items from <filename>.bbappend</filename>
-                        files never need to be cleaned up.</para></listitem>
                 </itemizedlist>
             </para>
         </section>
