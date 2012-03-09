@@ -1,5 +1,6 @@
 <!DOCTYPE appendix PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <appendix id='dev-manual-bsp-appendix'>
 
@@ -45,10 +46,10 @@
         Alternatively, you can start with the downloaded Poky "edison" tarball.
         These commands unpack the tarball into a Yocto Project File directory structure.
         By default, the top-level directory of the file structure is named
-        <filename>poky-edison-6.0</filename>:
+        <filename>poky-&YOCTO_POKY;</filename>:
         <literallayout class='monospaced'>
-     $ tar xfj poky-edison-6.0.tar.bz2
-     $ cd poky-edison-6.0
+     $ tar xfj &YOCTO_POKY_TARBALL;
+     $ cd &YOCTO_POKY;
         </literallayout> 
         <note><para>If you're using the tarball method, you can ignore all the following steps that
         ask you to carry out Git operations.  
@@ -85,24 +86,24 @@
      $ git branch -a
      $ git tag -l
         </literallayout> 
-        For this example, we are going to use the Yocto Project 1.1 Release, which is code
-        named "edison". 
+        For this example, we are going to use the Yocto Project &DISTRO; Release, which is code
+        named "&DISTRO_NAME;". 
         To make sure we have a local area (branch in Git terms) on our machine that 
-        reflects the 1.1 release, we can use the following commands:
+        reflects the &DISTRO; release, we can use the following commands:
         <literallayout class='monospaced'>
      $ cd ~/poky
      $ git fetch --tags
-     $ git checkout edison-6.0 -b edison
-     Switched to a new branch 'edison'
+     $ git checkout &DISTRO_NAME;-&POKYVERSION; -b &DISTRO_NAME;
+     Switched to a new branch '&DISTRO_NAME;'
         </literallayout>
         The <filename>git fetch --tags</filename> is somewhat redundant since you just set 
         up the repository and should have all the tags.
         The <filename>fetch</filename> command makes sure all the tags are available in your
         local repository.
         The Git <filename>checkout</filename> command with the <filename>-b</filename> option
-        creates a local branch for you named <filename>edison</filename>.
-        Your local branch begins in the same state as the Yocto Project 1.1 released tarball 
-        marked with the <filename>edison-6.0</filename> tag in the source repositories.
+        creates a local branch for you named <filename>&DISTRO_NAME;</filename>.
+        Your local branch begins in the same state as the Yocto Project &DISTRO; released tarball 
+        marked with the <filename>&DISTRO_NAME;-&POKYVERSION;</filename> tag in the source repositories.
     </para>
 </section> 
 
@@ -160,14 +161,14 @@
         </literallayout> 
         Alternatively, you can start with the downloaded Crown Bay tarball.
         You can download the edison version of the BSP tarball from the
-        <ulink url='http://www.yoctoproject.org/download'>Download</ulink> page of the 
+        <ulink url='&YOCTO_HOME_URL;/download'>Download</ulink> page of the 
         Yocto Project website. 
         Here is the specific link for the tarball needed for this example:
-        <ulink url='http://downloads.yoctoproject.org/releases/yocto/yocto-1.1/machines/crownbay-noemgd/crownbay-noemgd-edison-6.0.0.tar.bz2'></ulink>.
+        <ulink url='&YOCTO_MACHINES_DL_URL;/crownbay-noemgd/crownbay-noemgd-&DISTRO_NAME;-6.0.0.tar.bz2'></ulink>.
         Again, be sure that you are already in the <filename>poky</filename> directory
         as described previously before installing the tarball:
         <literallayout class='monospaced'>
-     $ tar xfj crownbay-noemgd-edison-6.0.0.tar.bz2
+     $ tar xfj crownbay-noemgd-&DISTRO_NAME;-6.0.0.tar.bz2
      $ cd meta-intel
         </literallayout> 
     </para>
@@ -181,10 +182,10 @@
         skip to the next step.
         Because <filename>meta-intel</filename> is its own Git repository, you will want
         to be sure you are in the appropriate branch for your work.
-        For this example we are going to use the <filename>edison</filename> branch. 
+        For this example we are going to use the <filename>&DISTRO_NAME;</filename> branch. 
         <literallayout class='monospaced'>
-     $ git checkout -b edison origin/edison
-     Switched to a new branch 'edison'
+     $ git checkout -b &DISTRO_NAME; origin/&DISTRO_NAME;
+     Switched to a new branch '&DISTRO_NAME;'
         </literallayout>
     </para>
 </section>
@@ -271,7 +272,7 @@
             <filename>meta-mymachine/conf/layer.conf</filename>.
             This file identifies build information needed for the new layer.  
             You can see the 
-            "<ulink url='http://www.yoctoproject.org/docs/latest/bsp-guide/bsp-guide.html#bsp-filelayout-layer'>Layer Configuration File</ulink>" section
+            "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-filelayout-layer'>Layer Configuration File</ulink>" section
             in The Board Support Packages (BSP) Development Guide for more information on this configuration file.  
             Basically, we are changing the existing statements to work with our BSP. 
         </para>
@@ -483,7 +484,7 @@
                 the <filename>SRCREV</filename> statements.  
                 You can find all the <filename>machine</filename> and <filename>meta</filename> 
                 branch points (commits) for the <filename>linux-yocto-3.0</filename> kernel at
-                <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/linux-yocto-3.0'></ulink>.  
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/linux-yocto-3.0'></ulink>.  
             </para>
 
             <para>
@@ -610,7 +611,7 @@
 
     <para>
         The appendix 
-        <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#ref-variables-glos'>
+        <ulink url='&YOCTO_DOCS_REF_URL;#ref-variables-glos'>
         Reference: Variables Glossary</ulink> in the Yocto Project Reference Manual has more information 
          on configuration variables.
     </para>

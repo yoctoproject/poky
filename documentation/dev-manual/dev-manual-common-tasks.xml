@@ -1,5 +1,6 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <chapter id='extendpoky'>
 
@@ -60,8 +61,8 @@
                 and then explore that folder, you will discover many BSP layers within the 
                 <filename>meta-intel</filename> layer.
                 For more information on BSP layers, see the 
-                "<ulink url='http://www.yoctoproject.org/docs/latest/bsp-guide/bsp-guide.html#bsp-layers'>BSP Layers</ulink>"
-                section in the Yocto Project Development Manual.
+                "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
+                section in the Yocto Project Board Support Package (BSP) Developer's Guide.
             </para>
         </section>
 
@@ -76,7 +77,7 @@
                         you should be sure someone has not already created a layer containing the metadata 
                         you need.
                         You can see the
-                        <ulink url='http://www.openembedded.org/wiki/LayerIndex'><filename>LayerIndex</filename></ulink>
+                        <ulink url='&OE_HOME_URL;/wiki/LayerIndex'><filename>LayerIndex</filename></ulink>
                         for a list of layers from the OpenEmbedded community that can be used in the 
                         Yocto Project.</para></listitem>
                     <listitem><para><emphasis>Create a Directory:</emphasis> Create the directory 
@@ -108,24 +109,24 @@
      BBFILE_PRIORITY_yocto = "5" 
                         </literallayout></para>
                         <para>In the previous example, the recipes for the layers are added to 
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILES'>BBFILES</ulink></filename>. 
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'>BBFILES</ulink></filename>. 
                         The 
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_COLLECTIONS'>BBFILE_COLLECTIONS</ulink></filename>
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_COLLECTIONS'>BBFILE_COLLECTIONS</ulink></filename>
                         variable is then appended with the layer name. 
                         The 
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_PATTERN'>BBFILE_PATTERN</ulink></filename> 
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PATTERN'>BBFILE_PATTERN</ulink></filename> 
                         variable is set to a regular expression and is used to match files
                         from <filename>BBFILES</filename> into a particular layer.
                         In this case, immediate expansion of 
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-LAYERDIR'>LAYERDIR</ulink></filename> 
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename> 
                         sets <filename>BBFILES_PATTERN</filename> to the layer's path.
                         The 
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename> 
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename> 
                         variable then assigns a priority to the layer. 
                         Applying priorities is useful in situations where the same package might appear in multiple
                         layers and allows you to choose what layer should take precedence.</para>
                         <para>Note the use of the 
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-LAYERDIR'>LAYERDIR</ulink></filename> 
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename> 
                         variable with the immediate expansion operator.
                         The <filename>LAYERDIR</filename> variable expands to the directory of the current layer and
                         requires the immediate expansion operator so that BitBake does not wait to expand the variable 
@@ -199,7 +200,7 @@
             <para>
                 Before the Yocto Project build system can use your new layer, you need to enable it.
                 To enable your layer, simply add your layer's path to the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBLAYERS'>BBLAYERS</ulink></filename> 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'>BBLAYERS</ulink></filename> 
                 variable in your <filename>conf/bblayers.conf</filename> file, which is found in the 
                 <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link>. 
                 The following example shows how to enable a layer named <filename>meta-mylayer</filename>:
@@ -290,12 +291,12 @@
      PRINC = "1"
                 </literallayout>
                 This example adds or overrides files in 
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
                 within a bbappend by extending the path BitBake uses to search for files. 
                 The most reliable way to do this is by prepending the 
                 <filename>FILESEXTRAPATHS</filename> variable.
                 For example, if you have your files in a directory that is named the same as your package 
-                (<ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PN'><filename>PN</filename></ulink>),
+                (<ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink>),
                 you can add this directory by adding the following to your bbappend file:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
@@ -328,7 +329,7 @@
 
             <para>
                 To specify the layer's priority manually, use the 
-                <ulink url='http://yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBFILE_PRIORITY'><filename>BBFILE_PRIORITY</filename></ulink>
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'><filename>BBFILE_PRIORITY</filename></ulink>
                 variable.
                 For example:
                 <literallayout class='monospaced'>
@@ -338,7 +339,7 @@
 
             <note>
                 <para>It is possible for a recipe with a lower version number 
-                <ulink url='http://yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PV'><filename>PV</filename></ulink>
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
                 in a layer that has a higher priority to take precedence.</para>
                 <para>Also, the layer priority does not currently affect the precedence order of 
                 <filename>.conf</filename> or <filename>.bbclass</filename> files.
@@ -409,7 +410,8 @@
             variables.
             For information on variables that are useful for recipes and for information about recipe naming
             issues, see the 
-            "<ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#ref-varlocality-recipe-required'>Required</ulink>" section of the Yocto Project Reference Manual.
+            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-varlocality-recipe-required'>Required</ulink>" 
+            section of the Yocto Project Reference Manual.
         </para>
 
         <para>
@@ -434,12 +436,14 @@
                 Building an application from a single file that is stored locally (e.g. under 
                 <filename>files/</filename>) requires a recipe that has the file listed in 
                 the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename> variable. 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>
+                variable. 
                 Additionally, you need to manually write the <filename>do_compile</filename> and
                 <filename>do_install</filename> tasks.
-                The <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink></filename> variable defines the 
+                The <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink></filename> 
+                variable defines the 
                 directory containing the source code, which is set to 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'>
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'>
                 WORKDIR</ulink></filename> in this case - the directory BitBake uses for the build.
                 <literallayout class='monospaced'>
      DESCRIPTION = "Simple helloworld application"
@@ -477,7 +481,7 @@
             <para>
                 Applications that use Autotools such as <filename>autoconf</filename> and 
                 <filename>automake</filename> require a recipe that has a source archive listed in 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename> and 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename> and 
                 also inherits Autotools, which instructs BitBake to use the
                 <filename>autotools.bbclass</filename> file, which contains the definitions of all the steps
                 needed to build an Autotool-based application.
@@ -500,9 +504,9 @@
 
             <para>
                 The variable 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-LIC_FILES_CHKSUM'>LIC_FILES_CHKSUM</ulink></filename> 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM'>LIC_FILES_CHKSUM</ulink></filename> 
                 is used to track source license changes as described in the
-                "<ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#usingpoky-configuring-LIC_FILES_CHKSUM'>Track License Change</ulink>" section. 
+                "<ulink url='&YOCTO_DOCS_REF_URL;#usingpoky-configuring-LIC_FILES_CHKSUM'>Track License Change</ulink>" section. 
                 You can quickly create Autotool-based recipes in a manner similar to the previous example.
             </para>
         </section>
@@ -512,11 +516,13 @@
 
             <para>
                 Applications that use GNU <filename>make</filename> also require a recipe that has
-                the source archive listed in <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename>. 
+                the source archive listed in 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>. 
                 You do not need to add a <filename>do_compile</filename> step since by default BitBake 
                 starts the <filename>make</filename> command to compile the application. 
                 If you need additional <filename>make</filename> options you should store them in the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-EXTRA_OEMAKE'>EXTRA_OEMAKE</ulink></filename> variable.
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OEMAKE'>EXTRA_OEMAKE</ulink></filename>
+                variable.
                 BitBake passes these options into the <filename>make</filename> GNU invocation. 
                 Note that a <filename>do_install</filename> task is still required.
                 Otherwise BitBake runs an empty <filename>do_install</filename> task by default. 
@@ -526,7 +532,7 @@
                 Some applications might require extra parameters to be passed to the compiler.
                 For example, the application might need an additional header path. 
                 You can accomplish this by adding to the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-CFLAGS'>CFLAGS</ulink></filename> variable.
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink></filename> variable.
                 The following example shows this:
                 <literallayout class='monospaced'>
      CFLAGS_prepend = "-I ${S}/include "
@@ -568,9 +574,9 @@
 
             <para>                        
                 You can use the variables 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PACKAGES'>PACKAGES</ulink></filename> and 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-FILES'>FILES</ulink></filename> to split an application into 
-                multiple packages.
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename> and 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'>FILES</ulink></filename> 
+                to split an application into multiple packages.
             </para>
 
             <para>
@@ -600,17 +606,17 @@
                 In the previous example, we want to ship the <filename>sxpm</filename>
                 and <filename>cxpm</filename> binaries in separate packages. 
                 Since <filename>bindir</filename> would be packaged into the main 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PN'>PN</ulink></filename> 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'>PN</ulink></filename> 
                 package by default, we prepend the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PACKAGES'>PACKAGES</ulink>
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink>
                 </filename> variable so additional package names are added to the start of list. 
                 This results in the extra 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-FILES'>FILES</ulink></filename>_*
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'>FILES</ulink>_*</filename>
                 variables then containing information that define which files and
                 directories go into which packages. 
                 Files included by earlier packages are skipped by latter packages.
                 Thus, the main 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PN'>PN</ulink></filename> package 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'>PN</ulink></filename> package 
                 does not include the above listed files.
             </para>
         </section>
@@ -677,7 +683,7 @@
                 <filename>PACKAGENAME</filename> as the name of the package you want to attach to the 
                 <filename>postinst</filename> script.
                 Normally 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PN'>PN</ulink></filename>
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'>PN</ulink></filename>
                 can be used, which automatically expands to PACKAGENAME.
                 A post-installation function has the following structure:
                 <literallayout class='monospaced'>
@@ -716,7 +722,7 @@
 
             <para>
                 The previous example delays execution until the image boots again because the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-D'>D</ulink></filename> 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'>D</ulink></filename> 
                 variable points
                 to the directory containing the image when the root filesystem is created at build time but
                 is unset when executed on the first boot. 
@@ -749,7 +755,8 @@
                 By creating a custom image, a developer has total control
                 over the contents of the image. 
                 It is important to use the correct names of packages in the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename> variable. 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename> 
+                variable. 
                 You must use the OpenEmbedded notation and not the Debian notation for the names 
                 (e.g. <filename>eglibc-dev</filename> instead of <filename>libc6-dev</filename>).
             </para>
@@ -775,13 +782,13 @@
                 A good example of a tasks package is 
                 <filename>meta/recipes-sato/tasks/task-poky.bb</filename>. 
                 The 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PACKAGES'>PACKAGES</ulink></filename> 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename> 
                 variable lists the task packages to build along with the complementary
                 <filename>-dbg</filename> and <filename>-dev</filename> packages. 
                 For each package added, you can use 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-RDEPENDS'>RDEPENDS</ulink></filename>
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'>RDEPENDS</ulink></filename>
                 and 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-RRECOMMENDS'>RRECOMMENDS</ulink></filename> 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'>RRECOMMENDS</ulink></filename> 
                 entries to provide a list of packages the parent task package should contain. 
                 Following is an example:
                 <literallayout class='monospaced'>
@@ -819,7 +826,7 @@
                 To build an image using these task packages, you need to add 
                 <filename>task-custom-apps</filename> and/or 
                 <filename>task-custom-tools</filename> to 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>.
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>.
                 For other forms of image dependencies see the other areas of this section.
             </para>
         </section>
@@ -831,7 +838,7 @@
             <para>
                 Ultimately users might want to add extra image features to the set used by 
                 Yocto Project with the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-IMAGE_FEATURES'>IMAGE_FEATURES</ulink></filename>
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'>IMAGE_FEATURES</ulink></filename>
                 variable. 
                 To create these features, the best reference is 
                 <filename>meta/classes/core-image.bbclass</filename>, which shows how the 
@@ -840,12 +847,12 @@
                 <filename>IMAGE_FEATURES</filename>
                 variable and then maps that into a set of tasks or packages. 
                 Based on this information the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-IMAGE_INSTALL'> IMAGE_INSTALL</ulink></filename> 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'> IMAGE_INSTALL</ulink></filename> 
                 variable is generated automatically. 
                 Users can add extra features by extending the class or creating a custom class for use 
                 with specialized image <filename>.bb</filename> files.
                 You can also add more features by configuring the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</ulink></filename>
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</ulink></filename>
                 variable in the <filename>local.conf</filename> file found in the Yocto Project
                 files located in the build directory.
             </para>
@@ -882,7 +889,7 @@
 
                 <para>
                     The simplest way to add extra packages to all images is by using the 
-                    <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>
                     variable with the <filename>_append</filename> operator:
                     <literallayout class='monospaced'>
      IMAGE_INSTALL_append = " strace"
@@ -917,7 +924,7 @@
 
                 <para>
                     You can add packages using a similar approach through the  
-                    <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-POKY_EXTRA_INSTALL'>POKY_EXTRA_INSTALL</ulink></filename> 
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-POKY_EXTRA_INSTALL'>POKY_EXTRA_INSTALL</ulink></filename> 
                     variable.
                     If you use this variable, only <filename>core-image-*</filename> images are affected.
                 </para>
@@ -930,7 +937,7 @@
                     It is possible to filter or mask out recipe and recipe append files such that 
                     BitBake ignores them.  
                     You can do this by providing an expression with the 
-                    <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-BBMASK'>BBMASK</ulink></filename> 
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBMASK'>BBMASK</ulink></filename> 
                     variable. 
                     Here is an example:
                     <literallayout class='monospaced'>
@@ -1006,7 +1013,7 @@ so that there are some definite steps on how to do this.  I need more detail her
         <para>
             For a complete example that shows how to add a new machine to the Yocto Project, 
             see the 
-            "<ulink url='http://www.yoctoproject.org/docs/latest/dev-manual/dev-manual.html#dev-manual-bsp-appendix'>BSP Development Example</ulink>" 
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#dev-manual-bsp-appendix'>BSP Development Example</ulink>" 
             in Appendix A.
         </para>
 
@@ -1022,11 +1029,11 @@ so that there are some definite steps on how to do this.  I need more detail her
             <para>
                 The most important variables to set in this file are as follows:
                 <itemizedlist>
-                    <listitem><para><filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TARGET_ARCH'>
+                    <listitem><para><filename><ulink url='&YOCTO_DOCS_REF_URL;#var-TARGET_ARCH'>
                         TARGET_ARCH</ulink></filename> (e.g. "arm")</para></listitem>
-                    <listitem><para><filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PREFERRED_PROVIDER'>
+                    <listitem><para><filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER'>
                         PREFERRED_PROVIDER</ulink></filename>_virtual/kernel (see below)</para></listitem>
-                    <listitem><para><filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-MACHINE_FEATURES'>
+                    <listitem><para><filename><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES'>
                         MACHINE_FEATURES</ulink></filename> (e.g. "kernel26 apm screen wifi")</para></listitem>
                 </itemizedlist>
             </para>
@@ -1034,11 +1041,11 @@ so that there are some definite steps on how to do this.  I need more detail her
             <para> 
                 You might also need these variables:
                 <itemizedlist>
-                    <listitem><para><filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SERIAL_CONSOLE'>
+                    <listitem><para><filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SERIAL_CONSOLE'>
                         SERIAL_CONSOLE</ulink></filename> (e.g. "115200 ttyS0")</para></listitem>
-                    <listitem><para><filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-KERNEL_IMAGETYPE'>
+                    <listitem><para><filename><ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_IMAGETYPE'>
                         KERNEL_IMAGETYPE</ulink></filename> (e.g. "zImage")</para></listitem>
-                    <listitem><para><filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-IMAGE_FSTYPES'>
+                    <listitem><para><filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FSTYPES'>
                         IMAGE_FSTYPES</ulink></filename> (e.g. "tar.gz jffs2")</para></listitem>
                 </itemizedlist>
             </para>
@@ -1065,9 +1072,9 @@ so that there are some definite steps on how to do this.  I need more detail her
             <para>
                 If you are creating a new recipe, normal recipe-writing rules apply for setting 
                 up a 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename>. 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>. 
                 Thus, you need to specify any necessary patches and set 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink></filename> to point at the source code. 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink></filename> to point at the source code. 
                 You need to create a <filename>configure</filename> task that configures the 
                 unpacked kernel with a defconfig.
                 You can do this by using a <filename>make defconfig</filename> command or,
@@ -1085,7 +1092,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                 used for other machines in a given kernel. 
                 A possible way to do this is by listing the file in the 
                 <filename>SRC_URI</filename> and adding the machine to the expression in 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-COMPATIBLE_MACHINE'>COMPATIBLE_MACHINE</ulink></filename>:
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'>COMPATIBLE_MACHINE</ulink></filename>:
                 <literallayout class='monospaced'>
      COMPATIBLE_MACHINE = '(qemux86|qemumips)'
                 </literallayout>
@@ -1159,7 +1166,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                 During a build, the unpacked temporary source code used by recipes 
                 to build packages is available in the Yocto Project Build Directory as 
                 defined by the 
-                <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink></filename> variable.
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink></filename> variable.
                 Below is the default value for the <filename>S</filename> variable as defined in the 
                 <filename>meta/conf/bitbake.conf</filename> configuration file in the 
                 <link linkend='yocto-project-files'>Yocto Project Files</link>:
@@ -1180,7 +1187,7 @@ so that there are some definite steps on how to do this.  I need more detail her
 
             <para>
                 The path to the work directory for the recipe 
-                (<ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'><filename>WORKDIR</filename></ulink>) depends
+                (<ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink>) depends
                 on the package name and the architecture of the target device.
                 For example, here is the work directory for packages whose targets are not device-dependent:
                 <literallayout class='monospaced'>
@@ -1212,15 +1219,15 @@ so that there are some definite steps on how to do this.  I need more detail her
             <note>
                 To better understand how the Yocto Project build system resolves directories during the 
                 build process, see the glossary entries for the
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-WORKDIR'><filename>WORKDIR</filename></ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TMPDIR'><filename>TMPDIR</filename></ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TOPDIR'><filename>TOPDIR</filename></ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-TARGET_OS'><filename>TARGET_OS</filename></ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PN'><filename>PN</filename></ulink>,
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PV'><filename>PV</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-TOPDIR'><filename>TOPDIR</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-TARGET_OS'><filename>TARGET_OS</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>,
                 and
-                <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PR'><filename>PR</filename></ulink>
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
                 variables in the Yocto Project Reference Manual.
             </note>
 
@@ -1255,7 +1262,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                     <listitem><para><emphasis>Change Your Working Directory:</emphasis>
                         You need to be in the directory that has the temporary source code.
                         That directory is defined by the 
-                        <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink>
                         variable.</para></listitem>
                     <listitem><para><emphasis>Create a New Patch:</emphasis>
                         Before modifying source code, you need to create a new patch.
@@ -1287,7 +1294,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                         <filename>-c cleanall</filename> with BitBake for the package.
                         Modifications will also disappear if you use the <filename>rm_work</filename>
                         feature as described in the
-                        "<ulink url='http://www.yoctoproject.org/docs/latest/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" 
+                        "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>" 
                         section of the Yocto Project Quick Start.
                         </note></para></listitem>
                     <listitem><para><emphasis>Generate the Patch:</emphasis>
@@ -1307,7 +1314,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                         Placing the patch here guarantees that the Yocto Project build system will find
                         the patch.
                         Next, add the patch into the  
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename> 
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename> 
                         of the recipe.  
                         Here is an example:
                         <literallayout class='monospaced'>
@@ -1315,7 +1322,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                         </literallayout></para></listitem>
                     <listitem><para><emphasis>Increment the Package Revision Number:</emphasis>
                         Finally, don't forget to 'bump' the 
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PR'>PR</ulink></filename>
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'>PR</ulink></filename>
                         value in the same recipe since the resulting packages have changed.</para></listitem>
                 </orderedlist>
             </para>
@@ -1351,7 +1358,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                     <listitem><para><emphasis>Change Your Working Directory:</emphasis>
                         You need to be in the directory that has the temporary source code.
                         That directory is defined by the 
-                        <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'>S</ulink>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink>
                         variable.</para></listitem>
                     <listitem><para><emphasis>Initialize a Git Repository:</emphasis>
                         Use the <filename>git init</filename> command to initialize a new local repository
@@ -1390,7 +1397,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                         <filename>-c cleanall</filename> with BitBake for the package.
                         Modifications will also disappear if you use the <filename>rm_work</filename>
                         feature as described in the
-                        "<ulink url='http://www.yoctoproject.org/docs/latest/yocto-project-qs/yocto-project-qs.html#building-image'>Building an Image</ulink>" 
+                        "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>" 
                         section of the Yocto Project Quick Start.
                         </note></para></listitem>
                     <listitem><para><emphasis>See the List of Files You Changed:</emphasis>
@@ -1435,7 +1442,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                         Placing the patch here guarantees that the Yocto Project build system will find
                         the patch.
                         Next, add the patch into the  
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'>SRC_URI</ulink></filename> 
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename> 
                         of the recipe.  
                         Here is an example:
                         <literallayout class='monospaced'>
@@ -1443,7 +1450,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                         </literallayout></para></listitem>
                     <listitem><para><emphasis>Increment the Package Revision Number:</emphasis>
                         Finally, don't forget to 'bump' the 
-                        <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PR'>PR</ulink></filename>
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'>PR</ulink></filename>
                         value in the same recipe since the resulting packages have changed.</para></listitem>
                 </orderedlist>
             </para>
@@ -1481,7 +1488,7 @@ so that there are some definite steps on how to do this.  I need more detail her
         <para>
             This section overviews the Multilib process only. 
             For more details on how to implement Multilib, see the 
-            <ulink url='https://wiki.yoctoproject.org/wiki/Multilib'>Multilib</ulink> wiki 
+            <ulink url='&YOCTO_WIKI_URL;/wiki/Multilib'>Multilib</ulink> wiki 
             page.
         </para>
 
@@ -1630,7 +1637,7 @@ so that there are some definite steps on how to do this.  I need more detail her
 
         <para>
             For concepts on kernel configuration, see the
-            "<ulink url='http://www.yoctoproject.org/docs/latest/kernel-manual/kernel-manual.html#kernel-configuration'>Kernel Configuration</ulink>"
+            "<ulink url='&YOCTO_DOCS_KERNEL_URL;#kernel-configuration'>Kernel Configuration</ulink>"
             section in the Yocto Project Kernel Architecture and Use Manual.
         </para>
 
@@ -1804,7 +1811,7 @@ so that there are some definite steps on how to do this.  I need more detail her
         <para>
             If a committed change results in changing the package output,
             then the value of the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PR'>PR</ulink></filename> 
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'>PR</ulink></filename> 
             variable needs to be increased 
             (or "bumped") as part of that commit. 
             This means that for new recipes you must be sure to add the <filename>PR</filename>
@@ -1817,7 +1824,7 @@ so that there are some definite steps on how to do this.  I need more detail her
         <para>
             If you are sharing a common <filename>.inc</filename> file with multiple recipes, 
             you can also use the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-INC_PR'>INC_PR</ulink></filename> 
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-INC_PR'>INC_PR</ulink></filename> 
             variable to ensure that 
             the recipes sharing the <filename>.inc</filename> file are rebuilt when the 
             <filename>.inc</filename> file itself is changed. 
@@ -1830,7 +1837,7 @@ so that there are some definite steps on how to do this.  I need more detail her
 
         <para> 
             When upgrading the version of a package, assuming the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PV'>PV</ulink></filename> 
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'>PV</ulink></filename> 
             changes, the <filename>PR</filename> variable should be reset to "r0"
             (or "$(INC_PR).0" if you are using <filename>INC_PR</filename>).
         </para>
@@ -1839,7 +1846,7 @@ so that there are some definite steps on how to do this.  I need more detail her
             Usually, version increases occur only to packages.
             However, if for some reason <filename>PV</filename> changes but does not 
             increase, you can increase the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-PE'>PE</ulink></filename> 
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PE'>PE</ulink></filename> 
             variable (Package Epoch).
             The <filename>PE</filename> variable defaults to "0".
         </para>
@@ -1876,7 +1883,7 @@ so that there are some definite steps on how to do this.  I need more detail her
             If the package exists under a different name in a different distribution, you get a 
             <filename>distro_check</filename> mismatch.  
             You can resolve this problem by defining a per-distro recipe name alias using the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-DISTRO_PN_ALIAS'>DISTRO_PN_ALIAS</ulink></filename> 
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_PN_ALIAS'>DISTRO_PN_ALIAS</ulink></filename> 
             variable.
         </para>
 
@@ -1928,16 +1935,16 @@ so that there are some definite steps on how to do this.  I need more detail her
             In this case, you want a kernel source directory on the development machine where the 
             development occurs.
             You want the recipe's 
-            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
             variable to point to the external directory and use it as is, not copy it.  
         </para>
 
         <para>
             To build from software that comes from an external source, all you need to do is
             change your recipe so that it inherits the 
-            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#ref-classes-externalsrc'><filename>externalsrc.bbclass</filename></ulink> 
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-externalsrc'><filename>externalsrc.bbclass</filename></ulink> 
             class and then sets the 
-            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-S'><filename>S</filename></ulink>
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
             variable to point to your external source code.
             Here are the statements to put in your recipe:
             <literallayout class='monospaced'>
@@ -1949,11 +1956,11 @@ so that there are some definite steps on how to do this.  I need more detail her
         <para>
             It is important to know that the <filename>externalsrc.bbclass</filename> assumes that the 
             source directory <filename>S</filename> and the build directory 
-            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual.html#var-B'><filename>B</filename></ulink>
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink>
             are different even though by default these directories are the same.
             This assumption is important because it supports building different variants of the recipe
             by using the 
-            <ulink url='http://www.yoctoproject.org/docs/latest/poky-ref-manual/poky-ref-manual#var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></ulink>
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></ulink>
             variable.
             You could allow the build directory to be the same as the source directory but you would 
             not be able to build more than one variant of the recipe.
