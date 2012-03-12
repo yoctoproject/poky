@@ -119,7 +119,7 @@
                         from <filename>BBFILES</filename> into a particular layer.
                         In this case, immediate expansion of 
                         <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename> 
-                        sets <filename>BBFILES_PATTERN</filename> to the layer's path.
+                        sets <filename>BBFILE_PATTERN</filename> to the layer's path.
                         The 
                         <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename> 
                         variable then assigns a priority to the layer. 
@@ -131,9 +131,10 @@
                         The <filename>LAYERDIR</filename> variable expands to the directory of the current layer and
                         requires the immediate expansion operator so that BitBake does not wait to expand the variable 
                         when it's parsing a different directory.</para>
-                        <para>BitBake locates included <filename>.bbclass</filename>, configuration,
-                        and other files using the <filename>include</filename> and <filename>require</filename>
-                        statements by way of the <filename>BBPATH</filename> environment variable. 
+                        <para>Through the use of the <filename>BBPATH</filename> environment variable,
+                        BitBake locates <filename>.bbclass</filename> files, configuration
+                        files, and files that are included with <filename>include</filename> 
+                        and <filename>require</filename> statements. 
                         For these cases, BitBake uses the first file with the matching name found in 
                         <filename>BBPATH</filename>.
                         This is similar to the way the <filename>PATH</filename> variable is used for binaries. 
@@ -365,6 +366,21 @@
                 </literallayout>
                 The following list describes the available commands:
                 <itemizedlist>
+                    <listitem><para><filename><emphasis>help:</emphasis></filename>
+                        Displays general help or help on a specified command.</para></listitem>
+                    <listitem><para><filename><emphasis>show-layers:</emphasis></filename>
+                        Show the current configured layers.</para></listitem>
+                    <listitem><para><filename><emphasis>show-recipes:</emphasis></filename>
+                        Lists available recipes and the layers that provide them.  
+                        </para></listitem>
+                    <listitem><para><filename><emphasis>show-overlayed:</emphasis></filename>
+                        Lists overlayed recipes.  
+                        A recipe is overlayed when a recipe with the same name exists in another layer 
+                        that has a higher layer priority.
+                        </para></listitem>
+                    <listitem><para><filename><emphasis>show-appends:</emphasis></filename>
+                        Lists <filename>.bbappend</filename> files and the recipe files to which
+                        they apply.</para></listitem>
                     <listitem><para><filename><emphasis>flatten:</emphasis></filename>
                         Flattens the layer configuration into a separate output directory.
                         Flattening your layer configuration builds a "flattened" directory that contains
@@ -380,22 +396,35 @@
                                 </para></listitem>
                             <listitem><para>Overridden and appended items from <filename>.bbappend</filename>
                                 files need to be cleaned up.
-                                For example, the contents of each <filename>.bbappend</filename> end up in the 
+                                The contents of each <filename>.bbappend</filename> end up in the 
                                 flattened recipe.
                                 However, if there are appended or changed variable values, you need to tidy 
-                                these up yourself.</para></listitem>
+                                these up yourself.
+                                Consider the following example.
+                                Here, the <filename>bitbake-layers</filename> command adds the line
+                                <filename>#### bbappended ...</filename> so that you know where the following
+                                lines originate:
+                                <literallayout class='monospaced'>
+     ...
+     DESCRIPTION = "A useful utility"
+     ...
+     EXTRA_OECONF = "--enable-something"
+     ...
+
+     #### bbappended from meta-anotherlayer ####
+
+     DESCRIPTION = "Customized utility"
+     EXTRA_OECONF += "--enable-somethingelse"
+                                </literallayout>
+                                Ideally, you would tidy up these utilities as follows:
+                                <literallayout class='monospaced'>
+     ...
+     DESCRIPTION = "Customized utility"
+     ...
+     EXTRA_OECONF = "--enable-something --enable-somethingelse"
+     ...
+                                </literallayout></para></listitem>
                         </itemizedlist></para></listitem>
-                    <listitem><para><filename><emphasis>help:</emphasis></filename>
-                        Displays general help or help on a specified command.</para></listitem>
-                    <listitem><para><filename><emphasis>show_appends:</emphasis></filename>
-                        Lists <filename>.bbappend</filename> files and the recipe files to which
-                        they apply.</para></listitem>
-                    <listitem><para><filename><emphasis>show_layers:</emphasis></filename>
-                        Show the current configured layers.</para></listitem>
-                    <listitem><para><filename><emphasis>show_overlayed:</emphasis></filename>
-                        Lists overlayed recipes.  
-                        Overlayed recipes appear in another layer that has a higher layer priority.
-                        </para></listitem>
                 </itemizedlist>
             </para>
         </section>
