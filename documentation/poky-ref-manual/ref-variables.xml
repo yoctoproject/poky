@@ -16,7 +16,7 @@
 
 
     <para>
-       <link linkend='var-AUTHOR'>A</link> 
+       <link linkend='var-ALLOW_EMPTY'>A</link> 
        <link linkend='var-B'>B</link> 
        <link linkend='var-CFLAGS'>C</link> 
        <link linkend='var-D'>D</link> 
@@ -45,6 +45,27 @@
     </para>
 
     <glossdiv id='var-glossary-a'><title>A</title> 
+
+         <glossentry id='var-ALLOW_EMPTY'><glossterm>ALLOW_EMPTY</glossterm>
+            <glossdef>
+                <para>
+                   Specifies if an output package should still be produced if it is empty.
+                   By default, BitBake does not produce empty packages.
+                   This default behavior can cause issues when there is an 
+                   <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link> or 
+                   some other runtime hard-requirement on the existence of the package.
+                </para>
+
+                <para>
+                   Like all package-controlling variables, you must always use them in 
+                   conjunction with a package name override.
+                   Here is an example:
+                   <literallayout class='monospaced'>
+     ALLOW_EMPTY_${PN}
+                   </literallayout>
+                </para>
+            </glossdef>
+         </glossentry>
 
          <glossentry id='var-AUTHOR'><glossterm>AUTHOR</glossterm>
             <glossdef>
@@ -146,7 +167,7 @@
         <glossentry id='var-BB_NUMBER_THREADS'><glossterm>BB_NUMBER_THREADS</glossterm>
             <glossdef>
                 <para>The maximum number of tasks BitBake should run in parallel at any one time.
-                    If your host development system supports mulitiple cores a good rule of thumb
+                    If your host development system supports multiple cores a good rule of thumb
                     is to set this variable to twice the number of cores.</para>
             </glossdef>
         </glossentry>
@@ -638,7 +659,7 @@
                     the immediate expansion (<filename>:=</filename>) operator as shown in the 
                     previous example.
                     Finally, to maintain the integrity of the <filename>FILESPATH</filename> variable, 
-                    you must inclued the appropriate beginning or ending (as needed) colon character.
+                    you must include the appropriate beginning or ending (as needed) colon character.
                 </para>
 
                 <para>
@@ -718,7 +739,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                     The options to pass in 
                     <filename><link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link></filename>
                     and <filename><link linkend='var-CFLAGS'>CFLAGS</link></filename>
-                    when compiling an optimised system.
+                    when compiling an optimized system.
                     This variable defaults to 
                     "-fexpensive-optimizations -fomit-frame-pointer -frename-registers -O2".
                 </para>
@@ -1682,7 +1703,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                     contains files that are machine-specific.
                     If so, the Yocto Project automatically changes 
                     <filename><link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></filename>. 
-                    Setting this variable to "0" disables this behaviour.
+                    Setting this variable to "0" disables this behavior.
                 </para>
             </glossdef>
         </glossentry>
