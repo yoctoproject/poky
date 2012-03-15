@@ -117,7 +117,7 @@
             The term "package" can also be used to describe recipes.
             However, since the same word is used for the packaged output from the Yocto 
             Project (i.e. <filename>.ipk</filename> or <filename>.deb</filename> files), 
-            this document avoids using the term "package" when refering to recipes.
+            this document avoids using the term "package" when referring to recipes.
         </para>
     </section>
 
@@ -165,7 +165,7 @@
         As mentioned in the previous paragraph, building from scratch ensures that 
         everything is current and starts from a known state.
         However, building from scratch also takes much longer as it generally means 
-        rebuiding things that don't necessarily need rebuilt.
+        rebuilding things that don't necessarily need rebuilt.
     </para>
 
     <para>
@@ -241,7 +241,7 @@
             affect the output for target packages.
             Also, the build process has the objective of making native/cross packages relocatable. 
             The checksum therefore needs to exclude <filename>WORKDIR</filename>.
-            The simplistic approach for excluding the worknig directory is to set 
+            The simplistic approach for excluding the working directory is to set 
             <filename>WORKDIR</filename> to some fixed value and create the checksum
             for the "run" script. 
         </para>
@@ -301,77 +301,73 @@
 
         <para>
             Thus far, this section has limited discussion to the direct inputs into a task.
-            Information based on direct inputs is referred to as the "basehash" in the code.
-            However, there is still the question of a task's indirect inputs, the things that 
-            were already built and present in the build directory. 
-            The checksum (or signature) for a particular task needs to add the hashes of all the
-            tasks on which the particular task depends. 
-            Choosing which dependencies to add is a policy decision.
-            However, the effect is to generate a master checksum that combines the 
-            basehash and the hashes of the task's dependencies.
+            Information based on direct inputs is referred to as the "basehash" in the
+            code. 
+            However, there is still the question of a task's indirect inputs - the
+            things that were already built and present in the build directory. 
+            The checksum (or signature) for a particular task needs to add the hashes 
+            of all the tasks on which the particular task depends. 
+            Choosing which dependencies to add is a policy decision. 
+            However, the effect is to generate a master checksum that combines the basehash 
+            and the hashes of the task's dependencies.
         </para>
 
         <para>
-            While figuring out the dependencies and creating these checksums is good,
-            what does the Yocto Project build system do with the checksum information? 
-            The build system uses a signature handler that is responsible for 
-            processing the checksum information.
-            By default, there is a dummy "noop" signature handler enabled in BitBake.
-            This means that behaviour is unchanged from previous versions. 
-            OECore uses the "basic" signature handler through this setting in the
-            <filename>bitbake.conf</filename> file:
+            At the code level, there are a variety of ways both the basehash and the
+            dependent task hashes can be influenced. 
+            Within the BitBake configuration file, we can give BitBake some extra information 
+            to help it construct the basehash.
+            The following statements effectively result in a list of global variable
+            dependency excludes - variables never included in any checksum:
             <literallayout class='monospaced'>
-     BB_SIGNATURE_HANDLER ?= "basic"
+  BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH"
+  BB_HASHBASE_WHITELIST += "DL_DIR SSTATE_DIR THISDIR FILESEXTRAPATHS"
+  BB_HASHBASE_WHITELIST += "FILE_DIRNAME HOME LOGNAME SHELL TERM USER"
+  BB_HASHBASE_WHITELIST += "FILESPATH USERNAME STAGING_DIR_HOST STAGING_DIR_TARGET"
             </literallayout>
-            Also within the BitBake configuration file, we can give BitBake
-            some extra information to help it handle this information.
-            The following statements effectively result in a list of global
-            variable dependency excludes - variables never included in 
-            any checksum:
-            <literallayout class='monospaced'>
-     BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH"
-     BB_HASHBASE_WHITELIST += "DL_DIR SSTATE_DIR THISDIR FILESEXTRAPATHS"
-     BB_HASHBASE_WHITELIST += "FILE_DIRNAME HOME LOGNAME SHELL TERM USER"
-     BB_HASHBASE_WHITELIST += "FILESPATH USERNAME STAGING_DIR_HOST STAGING_DIR_TARGET"
-     BB_HASHTASK_WHITELIST += "(.*-cross$|.*-native$|.*-cross-initial$| \
-         .*-cross-intermediate$|^virtual:native:.*|^virtual:nativesdk:.*)"
-            </literallayout>
-            This example is actually where <filename>WORKDIR</filename>
-            is excluded since <filename>WORKDIR</filename> is constructed as a
-            path within <filename>TMPDIR</filename>, which is on the whitelist.
+            The previous example actually excludes 
+            <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
+            since it is actually constructed as a path within 
+            <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>, which is on 
+            the whitelist. 
         </para>
 
         <para>
-            The <filename>BB_HASHTASK_WHITELIST</filename> covers dependent tasks and 
-            excludes certain kinds of tasks from the dependency chains. 
-            The effect of the previous example is to isolate the native, target,
-            and cross-components.
-            So, for example, toolchain changes do not force a rebuild of the whole system.
+            The rules for deciding which hashes of dependent tasks to include through
+            dependency chains are more complex and are generally accomplished with a 
+            python function. 
+            The code in <filename>meta/lib/oe/sstatesig.py</filename> shows two examples
+            of this and also illustrates how you can insert your own policy into the system 
+            if so desired.
+            This file defines the two basic signature generators <filename>OE-Core</filename>
+            uses:  "OEBasic" and "OEBasicHash". 
+            By default, there is a dummy "noop" signature handler enabled in BitBake. 
+            This means that behavior is unchanged from previous versions. 
+            <filename>OE-Core</filename> uses the "OEBasic" signature handler by default
+            through this setting in the <filename>bitbake.conf</filename> file:
+            <literallayout class='monospaced'>
+  BB_SIGNATURE_HANDLER ?= "OEBasic"
+            </literallayout>
+            The "OEBasicHash" <filename>BB_SIGNATURE_HANDLER</filename> is the same as the 
+            "OEBasic" version but adds the task hash to the stamp files. 
+            This results in any metadata change that changes the task hash, automatically 
+            causing the task to be run again. 
+            This removes the need to bump <link linkend='var-PR'><filename>PR</filename></link>
+            values and changes to metadata automatically ripple across the build. 
+            Currently, this behavior is not the default behavior for <filename>OE-Core</filename>
+            but is the default in <filename>poky</filename>.
         </para>
 
         <para>
-            The end result of the "basic" handler is to make some dependency and
-            hash information available to the build. 
-            This includes:
+            It is also worth noting that the end result of these signature generators is to
+            make some dependency and hash information available to the build. 
+            This information includes:
             <literallayout class='monospaced'>
-     BB_BASEHASH_task-&lt;taskname&gt; - the base hashes for each task in the recipe
-     BB_BASEHASH_&lt;filename:taskname&gt; - the base hashes for each dependent task
-     BBHASHDEPS_&lt;filename:taskname&gt; - The task dependencies for each task
-     BB_TASKHASH - the hash of the currently running task
+  BB_BASEHASH_task-&lt;taskname&gt; - the base hashes for each task in the recipe
+  BB_BASEHASH_&lt;filename:taskname&gt; - the base hashes for each dependent task
+  BBHASHDEPS_&lt;filename:taskname&gt; - The task dependencies for each task
+  BB_TASKHASH - the hash of the currently running task
             </literallayout>
-            There is also a "basichash" <filename>BB_SIGNATURE_HANDLER</filename>,
-            which is the same as the basic version but adds the task hash to the stamp files. 
-            This results in any metadata change that changes the task hash,
-            automatically causing the task to be run again. 
-            This removes the need to bump <filename>PR</filename>
-            values and changes to metadata automatically ripple across the build.
-            Currently, this behavior is not the default behavior.
-            However, it is likely that the Yocto Project team will go forward with this 
-            behavior in the future since all the functionality exists. 
-            The reason for the delay is the potential impact to the distribution feed 
-            creation as they need increasing <filename>PR</filename> fields
-            and the Yocto Project currently lacks a mechanism to automate incrementing 
-            this field.
         </para>
     </section>
 
@@ -433,7 +429,7 @@
             <literallayout class='monospaced'>
      do_package[sstate-plaindirs] = "${PKGD} ${PKGDEST}"
             </literallayout>
-            This method, as well as the following example, also works for mutliple directories.
+            This method, as well as the following example, also works for multiple directories.
             <literallayout class='monospaced'>
      do_package[sstate-inputdirs] = "${PKGDESTWORK} ${SHLIBSWORKDIR}"
      do_package[sstate-outputdirs] = "${PKGDATA_DIR} ${SHLIBSDIR}"
@@ -555,7 +551,7 @@
                 Once you are aware of such a change, you can take steps to invalidate the cache 
                 and force the task to run. 
                 The step to take is as simple as changing a function's comments in the source code. 
-                For example, to invalidate package shared state files, change the comment statments
+                For example, to invalidate package shared state files, change the comment statements
                 of <filename>do_package</filename> or the comments of one of the functions it calls.
                 The change is purely cosmetic, but it causes the checksum to be recalculated and  
                 forces the task to be run again.
@@ -576,7 +572,7 @@
     <para>
         This section describes the mechanism by which the Yocto Project build system 
         tracks changes to licensing text.
-        The section also describes how to enable commercially licensed receipes, 
+        The section also describes how to enable commercially licensed recipes, 
         which by default are disabled.
     </para>
 
