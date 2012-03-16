@@ -19,6 +19,15 @@
         Amongst other things, the Yocto Project uses the Poky build system to 
         construct complete Linux images.
     </para>
+
+    <para>
+        If you know all about open-source development, Linux development environments, Git source
+        repositories and the like and you just want some quick information that lets you try out
+        the Yocto Project, skip right to the "<link linkend='super-user'>Super User</link>" section at 
+        the end of this quick start.
+        Otherwise, keep reading...
+    </para>
+
     <para>
         This short document will give you some basic information about the environment and 
         let you experience it in its simplest form.  
@@ -27,6 +36,7 @@
         This document steps you through a simple example showing you how to build a small image 
         and run it using the QEMU emulator.
     </para>
+
     <para>
         For more detailed information on the Yocto Project, you should check out these resources:
         <itemizedlist>
@@ -667,6 +677,150 @@
                 command-line mode.</note>
             </para>
         </section>     
+    </section>
+</section>
+
+<section id='super-user'>
+    <title>Super User 
+</title>
+
+    <para>
+        This section 
+        <footnote>
+            <para>
+                Kudos and thanks to Robert P. J. Day of 
+                <ulink url='http://www.crashcourse.ca'>CrashCourse</ulink> for providing the basis
+                for this "expert" section with information from one of his
+                <ulink url='http://www.crashcourse.ca/wiki/index.php/Yocto_Project_Quick_Start'>wiki</ulink>
+                pages.
+            </para>
+        </footnote>
+        gives you a very fast description of how to use the Yocto Project to build images 
+        for a BeagleBoard xM starting from scratch. 
+        The steps were performed on a 64-bit Ubuntu 10.04 system.
+    </para>
+
+    <section id='getting-yocto'>
+        <title>Getting the Yocto Project</title>
+
+        <para>
+            Get the <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-files'>Yocto Project Files</ulink>
+            one of two ways:
+            <itemizedlist>
+                <listitem><para><emphasis>Tarball:</emphasis> 
+                    Use if you want the latest stable release:
+                    <literallayout class='monospaced'>
+     $ wget &YOCTO_RELEASE_DL_URL;.&YOCTO_POKY_TARBALL;
+     $ tar xvjf &YOCTO_POKY_TARBALL;
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Git Repository:</emphasis>
+                    Use if you want to work with cutting edge development content:
+                    <literallayout class='monospaced'>
+     $ git clone &YOCTO_GIT_URL;.poky.git
+                    </literallayout></para></listitem>
+            </itemizedlist>
+            The remainder of the section assumes the Git repository method.
+        </para>
+    </section>
+
+    <section id='setting-up-your-host'>
+        <title>Setting Up Your Host</title>
+
+        <para>
+            You need some packages for everything to work. 
+            Rather than duplicate them here, look at the "<link linkend='packages'>The Packages</link>"
+            section earlier in this quick start.
+        </para>
+    </section>
+
+    <section id='initializing-the-build-environment'>
+        <title>Initializing the Build Environment</title>
+
+        <para>
+            From the parent directory of the Yocto Project Files, initialize your environment 
+            and provide a meaningful 
+            <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-build-directory'>Yocto Project Build Directory</ulink>
+            name:
+            <literallayout class='monospaced'>
+     $ source git/oe-init-build-env mybuilds
+            </literallayout>
+            At this point, the <filename>mybuilds</filename> directory has been created for you 
+            and it is now your current working directory.
+            If you don't provide your own directory name it defaults to <filename>build</filename>.
+        </para>
+    </section>
+
+    <section id='configuring-the-local.conf-file'>
+        <title>Configuring the local.conf File</title>
+
+        <para>
+            Initializing the build environment creates a <filename>local.conf</filename> configuration file
+            in the build directory.
+            You need to manually edit this file to specify the machine you are building and to optimize
+            your build time.
+            Here are the minimal changes to make:
+            <literallayout class='monospaced'>
+     BB_NUMBER_THREADS = "8"
+     PARALLEL_MAKE = "-j 8"
+     MACHINE ?= "beagleboard"
+            </literallayout>
+            Briefly, set <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink> 
+            and <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink> to
+            twice your host processor's number of cores.
+        </para>
+
+        <para>
+            A good deal that goes into a Yocto Project build is simply downloading all of the source 
+            tarballs. 
+            Maybe you have been working with another build system (OpenEmbedded, Angstrom, etc) for which 
+            you've built up a sizable directory of source tarballs.
+            Or perhaps someone else has such a directory for which you have read access. 
+            If so, you can save time by adding the <filename>PREMIRRORS</filename>
+            statement to your configuration file so that local directories are first checked for existing 
+            tarballs before running out to the net:
+            <literallayout class='monospaced'>
+     PREMIRRORS_prepend = "\
+     git://.*/.* file:///home/you/dl/ \n \
+     svn://.*/.* file:///home/you/dl/ \n \
+     cvs://.*/.* file:///home/you/dl/ \n \
+     ftp://.*/.* file:///home/you/dl/ \n \
+     http://.*/.* file:///home/you/dl/ \n \
+     https://.*/.* file:///home/you/dl/ \n"
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='building-the-image'>
+        <title>Building the Image</title>
+
+        <para>
+            At this point, you need to select an image to build for the BeagleBoard xM.
+            If this is your first build using the Yocto Project, you should try the smallest and simplest
+            image:
+            <literallayout class='monospaced'>
+     $ bitbake core-image-minimal
+            </literallayout>
+            Now you just wait for the build to finish.
+        </para>
+
+        <para>
+            Here are some variations on the build process that could be helpful:
+            <itemizedlist>
+                <listitem><para>Fetch all the necessary sources without starting the build:
+                    <literallayout class='monospaced'>
+     $ bitbake -c fetchall core-image-minimal
+                    </literallayout>
+                    This variation guarantees that you have all the sources for that BitBake target 
+                    should you to disconnect from the net and want to do the build later offline.
+                    </para></listitem>
+                <listitem><para>Specify to continue the build even if BitBake encounters an error.
+                    By default, BitBake aborts the build when it encounters an error.
+                    This command keeps a faulty build going:
+                    <literallayout class='monospaced'>
+     $ bitbake -k core-image-minimal
+                    </literallayout></para></listitem>
+            </itemizedlist>
+        </para>
     </section>
 </section>
 
