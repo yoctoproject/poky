@@ -685,44 +685,190 @@
         <title>Enabling Commercially Licensed Recipes</title>
 
         <para>
-            By default, the Yocto Project build system disables components that 
-            have commercial licensing requirements.
-            The following four statements in the
-            <filename>$HOME/poky/meta/conf/distro/poky.conf</filename> file
-            disable components:
+            By default, the Yocto Project build system disables
+            components that have commercial or other special licensing
+            requirements.  
+            Such requirements are defined on a
+            recipe-by-recipe basis through the <filename>LICENSE_FLAGS</filename> variable
+            definition in the affected recipe.  
+            For instance, the
+            <filename>$HOME/poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly</filename>
+            recipe contains the following statement:
             <literallayout class='monospaced'>
-     COMMERCIAL_LICENSE ?= "lame gst-fluendo-mp3 libmad mpeg2dec ffmpeg qmmp"
+     LICENSE_FLAGS = "commercial"
+            </literallayout>
+            This next example shows a recipe in another layer:
+            <literallayout class='monospaced'>
+     LICENSE_FLAGS = "license_${PN}_${PV}"
+            </literallayout>
+	        In order for a component restricted by a <filename>LICENSE_FLAGS</filename>
+	        definition to be enabled and included in an image, it
+	        needs to have a matching entry in the global
+	        <filename>LICENSE_FLAGS_WHITELIST</filename> variable, which is a variable
+	        typically defined in your <filename>local.conf</filename> file.  
+            For example, to enable
+	        the <filename>$HOME/poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly</filename>
+	        package, you could add either the string
+	        "commercial_gst-plugins-ugly" or the more general string
+	        "commercial" to <filename>LICENSE_FLAGS_WHITELIST</filename>.
+            See the
+            "<link linkend='license-flag-matching'>License Flag Matching</link>" section
+            for a full explanation of how <filename>LICENSE_FLAGS</filename> matching works.
+            Here is the example:
+            <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly"
+            </literallayout>
+	        Likewise, to additionally enable the package containing
+	        <filename>LICENSE_FLAGS = "license_${PN}_${PV}"</filename>, and assuming
+	        that the actual recipe name was <filename>emgd_1.10.bb</filename>,
+	        the following string would enable that package as well as
+	        the original <filename>gst-plugins-ugly</filename> package:
+            <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly license_emgd_1.10"
+            </literallayout>
+	        As a convenience, you do not need to specify the complete license string
+	        in the whitelist for every package.
+            you can use an abbreviated form, which consists
+	        of just the first portion or portions of the license string before
+	        the initial underscore character or characters.
+            A partial string will match
+	        any license that contains the given string as the first
+	        portion of its license.  
+            For example, the following
+	        whitelist string will also match both of the packages
+	        previously mentioned as well as any other packages that have
+	        licenses starting with "commercial" or "license".
+            <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial license"
+            </literallayout>
+        </para>
+
+        <section id="license-flag-matching">
+            <title>License Flag Matching</title>
+       
+            <para>
+		        The definition of 'matching' in reference to a
+		        recipe's <filename>LICENSE_FLAGS</filename> setting is simple.
+                However, some things exist that you should know about in order to
+                correctly and effectively use it.
+            </para>
+
+            <para>
+                Before a flag
+                defined by a particular recipe is tested against the
+                contents of the <filename>LICENSE_FLAGS_WHITELIST</filename> variable, the
+                string <filename>_${PN}</filename> (with 
+                <link linkend='var-PN'><filename>PN</filename></link> expanded of course) is
+                appended to the flag, thus automatically making each
+                <filename>LICENSE_FLAGS</filename> value recipe-specific.
+                That string is
+                then matched against the whitelist.
+                So if you specify <filename>LICENSE_FLAGS = "commercial"</filename> in recipe
+		        "foo" for example, the string <filename>"commercial_foo"</filename>
+                would normally be what is specified in the whitelist in order for it to
+                match.
+            </para>
+
+            <para>
+                You can broaden the match by
+                putting any "_"-separated beginning subset of a
+                <filename>LICENSE_FLAGS</filename> flag in the whitelist, which will also
+                match.  
+                For example, simply specifying "commercial" in
+                the whitelist would match any expanded <filename>LICENSE_FLAGS</filename>
+                definition starting with "commercial" such as
+                "commercial_foo" and "commercial_bar", which are the
+                strings that would be automatically generated for
+                hypothetical "foo" and "bar" recipes assuming those
+                recipes had simply specified the following:
+                <literallayout class='monospaced'>
+     LICENSE_FLAGS = "commercial"
+                </literallayout>
+            </para>
+
+            <para>
+                Broadening the match allows for a range of specificity for the items
+                in the whitelist, from more general to perfectly
+                specific.  
+                So you have the choice of exhaustively
+                enumerating each license flag in the whitelist to
+                allow only those specific recipes into the image, or
+                of using a more general string to pick up anything
+                matching just the first component or components of the specified
+                string.
+            </para>
+
+            <para>
+                This scheme works even if the flag already
+                has <filename>_${PN}</filename> appended - the extra <filename>_${PN}</filename> is
+                redundant, but does not affect the outcome.  
+                For example, a license flag of "commercial_1.2_foo" would
+                turn into "commercial_1.2_foo_foo" and would match
+                both the general "commercial" and the specific
+                "commercial_1.2_foo", as expected.
+                The flag would also match
+                "commercial_1.2_foo_foo" and "commercial_1.2", which
+                does not make much sense regarding use in the whitelist.
+            </para>
+  
+            <para>  
+                For a versioned string, you could instead specify
+                "commercial_foo_1.2", which would turn into
+                "commercial_foo_1.2_foo".
+                And, as expected, this flag allows
+                you to pick up this package along with
+                anything else "commercial" when you specify "commercial"
+                in the whitelist.
+                Or, the flag allows you to pick up this package along with anything "commercial_foo"
+                regardless of version when you use "commercial_foo" in the whitelist.
+                Finally, you can be completely specific about the package and version and specify
+                "commercial_foo_1.1" package and version.
+            </para>
+        </section>
+
+        <section id="other-variables-related-to-commercial-licenses">
+            <title>Other Variables Related to Commercial Licenses</title>
+
+            <para>
+                Other helpful variables related to commercial
+                license handling exist and are defined in the
+                <filename>$HOME/poky/meta/conf/distro/include/default-distrovars.inc</filename> file:
+                <literallayout class='monospaced'>
      COMMERCIAL_AUDIO_PLUGINS ?= ""
      COMMERCIAL_VIDEO_PLUGINS ?= ""
-     COMMERCIAL_QT ?= "qmmp"
-            </literallayout>
-        </para> 
-
-        <para>
-            If you want to enable these components, you can do so by making sure you have
-            the following statements in the configuration file:
-            <literallayout class='monospaced'>
+     COMMERCIAL_QT = ""
+                </literallayout>
+                If you want to enable these components, you can do so by making sure you have
+                the following statements in your <filename>local.conf</filename> configuration file:
+                <literallayout class='monospaced'>
      COMMERCIAL_AUDIO_PLUGINS = "gst-plugins-ugly-mad \
         gst-plugins-ugly-mpegaudioparse"
      COMMERCIAL_VIDEO_PLUGINS = "gst-plugins-ugly-mpeg2dec \
         gst-plugins-ugly-mpegstream gst-plugins-bad-mpegvideoparse"
-     COMMERCIAL_LICENSE = ""
-     COMMERCIAL_QT = ""
-            </literallayout>
-        </para>
+     COMMERCIAL_QT ?= "qmmp"
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly commercial_gst-plugins-bad commercial_qmmp"
+                </literallayout>
+                Of course, you could also create a matching whitelist
+                for those components using the more general "commercial"
+                in the whitelist, but that would also enable all the
+                other packages with <filename>LICENSE_FLAGS</filename> containing
+                "commercial", which you may or may not want:
+                <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial"
+                </literallayout>
+            </para>
 
-        <para>
-            Excluding a package name from the 
-            <filename>COMMERCIAL_LICENSE</filename> or 
-            <filename>COMMERCIAL_QT</filename> statement enables that package.  
-        </para>
-
-        <para>
-            Specifying audio and video plug-ins as part of the 
-            <filename>COMMERCIAL_AUDIO_PLUGINS</filename> and 
-            <filename>COMMERCIAL_VIDEO_PLUGINS</filename> statements includes 
-            the plug-ins into built images - thus adding support for media formats.
-        </para>
+            <para>
+                Specifying audio and video plug-ins as part of the 
+                <filename>COMMERCIAL_AUDIO_PLUGINS</filename> and 
+                <filename>COMMERCIAL_VIDEO_PLUGINS</filename> statements
+                or commercial qt components as part of
+                the <filename>COMMERCIAL_QT</filename> statement (along
+                with the enabling <filename>LICENSE_FLAGS_WHITELIST</filename>) includes the
+                plug-ins or components into built images, thus adding
+                support for media formats or components.
+            </para>
+        </section>
     </section>
 </section>
 </chapter>
