@@ -656,126 +656,118 @@
             </section>
         </section>
 
-        <section id='bsp-licensing'>
+        <section id='bsp-licensing-considerations'>
             <title>BSP Licensing Considerations</title>
+
             <para>
-	      In some cases, a BSP contains separately licensed IP
-	      (Intellectual Property) for a component or components
-	      that impose upon the user a requirement to accept the
-	      terms of a commercial or other type of license that
-	      requires some kind of explicit EULA (End User License
-	      Agreement).  Once the license is accepted the Yocto
-	      Project build system can then build and include the
-	      corresponding component in the final BSP image, or if
-	      the BSP is available in the form of an already built
-	      image, the user will be able to download the image after
-	      agreeing to the license or EULA.
-            </para>
-            <para>
-	      Some affected components might be essential to the
-	      normal functioning of the system and have no 'free'
-	      replacement (i.e. the resulting system would be
-	      non-functional without them).  On the other hand, other
-	      components might be simply 'good-to-have' or purely
-	      elective, or if essential nonetheless have a 'free'
-	      (possibly less-capable) version that could be used as a
-	      in the BSP recipe.
+                In some cases, a BSP contains separately licensed Intellectual Property (IP)
+                for a component or components.
+                For these cases, you are required to accept the terms of a commercial or other 
+                type of license that requires some kind of explicit End User License Agreement (EULA).  
+                Once the license is accepted, the Yocto Project build system can then build and 
+                include the corresponding component in the final BSP image.
+                If the BSP is available as a pre-built image, you can download the image after
+                agreeing to the license or EULA.
             </para>
 
             <para>
-	      For cases where you can substitute something and still
-              maintain functionality, the Yocto Project website's
-              <ulink url='&YOCTO_HOME_URL;/download/all?keys=&amp;download_type=1&amp;download_version='>BSP
-              Download Page</ulink> makes available 'de-featured' BSPs
-              that are completely free of any IP encumbrances.  For
-              these cases you can use the substitution directly and
-              without any further licensing requirements.  If present,
-              these fully 'de-featured' BSPs are named appropriately
-              different as compared to the names of the respective
-              encumbered BSPs.  If available, these substitutions are
-              the simplest and most preferred options.  This, of
-              course, assumes the resulting functionality meets
-              requirements.
+                You could find that some separately licensed components that are essential 
+                for normal operation of the system might not have an unencumbered (or free)
+                substitute.
+                Without these essential components, the system would be non-functional.
+                Then again, you might find that other licensed components that are simply 
+                'good-to-have' or purely elective do have an unencumbered, free replacement 
+                component that you can use rather than agreeing to the separately licensed component.
+                Even for components essential to the system, you might find an unencumbered component 
+                that is not identical but will work as a less-capable version of the 
+                licensed version in the BSP recipe.
             </para>
 
             <para>
-	      If however, a non-encumbered version is unavailable or
-              the 'free' version would provide unsuitable
-              functionality or quality, you can use an encumbered
-              version.
+                For cases where you can substitute a free component and still
+                maintain the system's functionality, the Yocto Project website's
+                <ulink url='&YOCTO_HOME_URL;/download/all?keys=&amp;download_type=1&amp;download_version='>BSP
+                Download Page</ulink> makes available de-featured BSPs
+                that are completely free of any IP encumbrances. 
+                For these cases, you can use the substitution directly and
+                without any further licensing requirements.  
+                If present, these fully de-featured BSPs are named appropriately
+                different as compared to the names of the respective
+                encumbered BSPs.  
+                If available, these substitutions are your
+                simplest and most preferred options.  
+                Use of these substitutions of course assumes the resulting functionality meets
+                system requirements.
             </para>
 
-            <para> A couple different methods exist within the Yocto
-              Project build system to satisfy the licensing
-              requirements for an encumbered BSP.  The following list
-              describes them in order of preference:
+            <para>
+                If however, a non-encumbered version is unavailable or
+                it provides unsuitable functionality or quality, you can use an encumbered
+                version.
             </para>
 
-	    <orderedlist>
-            <listitem>
-		<para>
-		  Yocto recipes that have commercial or other types of
-                  specially-licensed packages define a variable named
-                  LICENSE_FLAGS.  For each of those recipes, a user
-                  can specify a matching license string in a
-                  local.conf variable named LICENSE_FLAGS_WHITELIST.
-                  This signifies that the user agrees to the license,
-                  and the corresponding recipe can then be built and
-                  included in the image.  See Section 3.3.2. in The
-                  Yocto Project Reference Manual for details on these
-                  variables and how to make use of them.
-                </para>
+            <para> 
+                A couple different methods exist within the Yocto
+                Project build system to satisfy the licensing
+                requirements for an encumbered BSP.  
+                The following list describes them in order of preference:
+	        <orderedlist>
+                    <listitem><para><emphasis>Use the <filename>LICENSE_FLAGS</filename> variable
+                        to define the Yocto Project recipes that have commercial or other types of
+                        specially-licensed packages:</emphasis>  
+                        For each of those recipes, you can 
+                        specify a matching license string in a
+                        <filename>local.conf</filename> variable named 
+                        <filename>LICENSE_FLAGS_WHITELIST</filename>.
+                        Specifying the matching license string signifies that you agree to the license.
+                        Thus, the build system can build the corresponding recipe and include 
+                        the component in the image.
+                        See the 
+                        "<ulink url='&YOCTO_DOCS_REF_URL;#enabling-commercially-licensed-recipes'>Enabling 
+                        Commercially Licensed Recipes</ulink>" section in the Yocto Project Reference
+                        Manual for details on how to use these variables.</para>
+                        <para>If you build as you normally would, without
+		        specifying any recipes in the
+		        <filename>LICENSE_FLAGS_WHITELIST</filename>, the build stops and
+		        provides you with the list of recipes that you have
+		        tried to include in the image that need entries in
+		        the <filename>LICENSE_FLAGS_WHITELIST</filename>.  
+		        Once you enter the appropriate license flags into the whitelist,
+		        restart the build to continue where it left off.
+		        During the build, the prompt will not appear again
+		        since you have satisfied the requirement.</para>
+                        <para>Once the appropriate license flags are whitelisted
+		        in the <filename>LICENSE_FLAGS_WHITELIST</filename> variable, you 
+		        can build the encumbered image with no change at all
+		        to the normal build process.</para></listitem> 
+                    <listitem><para><emphasis>Get a pre-built version of the BSP:</emphasis>
+                        You can get this type of BSP by visiting the Yocto Project website's
+                        <ulink url='&YOCTO_HOME_URL;/download'>Download</ulink>
+                        page and clicking on "BSP Downloads".
+                        You can download BSP tarballs that contain proprietary components
+                        after agreeing to the licensing
+                        requirements of each of the individually encumbered
+                        packages as part of the download process.  
+                        Obtaining the BSP this way allows you to access an encumbered
+                        image immediately after agreeing to the
+                        click-through license agreements presented by the
+                        website.  
+                        Note that if you want to build the image
+                        yourself using the recipes contained within the BSP
+                        tarball, you will still need to create an
+                        appropriate <filename>LICENSE_FLAGS_WHITELIST</filename> to match the
+                        encumbered recipes in the BSP.</para></listitem>
+	        </orderedlist>
+            </para>
 
-		<para>
-		  If you build as you normally would, without
-                  specifying any recipes in the
-                  LICENSE_FLAGS_WHITELIST, the build will stop and
-                  provide you with the list of recipes that you've
-                  tried to include in the image which need entries in
-                  the LICENSE_FLAGS_WHITELIST.  Once the appropriate
-                  license flags have been entered into the whitelist,
-                  restart the build to continue where it left off.
-                  During the build the prompt will not appear again
-                  since you have satisfied the requirement.
-		</para>
- 
-		<para>
-		  Once the appropriate license flags are whitelisted
-		  in the LICENSE_FLAGS_WHITELIST variable, the
-		  encumbered image can be built with no change at all
-		  to the normal build process.
-		</para>
-              </listitem> 
-              <listitem>
-		<para>
-		  Get a pre-built version of the BSP.  You can do this
-                  by visiting the Yocto Project website's
-                  <ulink url='&YOCTO_HOME_URL;/download'>Download</ulink>
-                  page and clicking on "BSP Downloads".  BSP tarballs
-                  that contain proprietary components can be
-                  downloaded after agreeing to the licensing
-                  requirements of each of the individually encumbered
-                  packages as part of the download process.  Obtaining
-                  the BSP this way allows you to access an encumbered
-                  image immediately after agreeing to the
-                  click-through license agreements presented by the
-                  website.  Note that if you want to build the image
-                  yourself using the recipes contained within the BSP
-                  tarball, you will still need to create an
-                  appropriate LICENSE_FLAGS_WHITELIST to match the
-                  encumbered recipes in the BSP.
-                </para>
-              </listitem>
-	    </orderedlist>
-	    <para>
-	      Note also that the pre-compiled images are bundled with
-	      a time-limited kernel which will run for only a
-	      predetermined amount of time (10 days) before it forces
-	      the system to reboot.  This is meant as a discouragement
-	      to directly redistributing the image as-is, and means
-	      that you'll have to eventually rebuild the image if you
-	      want to remove that restriction.
-            </para> 
+            <note>
+                Pre-compiled images are bundled with
+                a time-limited kernel that runs for a
+                predetermined amount of time (10 days) before it forces
+                the system to reboot.  
+                This limitation is meant to discourage direct redistribution
+                of the image.
+                You must eventually rebuild the image if you want to remove this restriction.
+            </note> 
         </section>
-
 </chapter>
