@@ -41,7 +41,7 @@
     <title>Installing the Eclipse IDE</title>
 
         <para>
-            It is recommended that you have the Indigo 3.7 version of the 
+            It is recommended that you have the Indigo 3.7.2 version of the 
             Eclipse IDE installed on your development system.  
             If you don’t have this version, you can find it at 
             <ulink url='&ECLIPSE_MAIN_URL;'></ulink>.  
@@ -106,6 +106,8 @@
                 <listitem><para>Expand the box next to <filename>Programming Languages</filename>
                     and select the <filename>Autotools Support for CDT (incubation)</filename>
                     and <filename>C/C++ Development Tools</filename> boxes.</para></listitem>
+                <listitem><para>Expand the box next to "Linux Tools" and select the 
+                    "LTTng - Linux Tracing Toolkit(incubation)" boxes.</para></listitem>
                 <listitem><para>Complete the installation and restart the Eclipse IDE.</para></listitem>
                 <listitem><para>After the Eclipse IDE restarts and from the Workbench, select 
                     "Install New Software" from the "Help" pull-down menu.</para></listitem>
@@ -144,19 +146,19 @@
     <title>Installing or Accessing the Eclipse Yocto Plug-in</title>
 
         <para>
-            You can install the Eclipse Yocto Plug-in into the Eclipse application
-            one of two ways:  using the Eclipse IDE and installing the plug-in as new software, or
-            using a built zip file.
+            You can install the Eclipse Yocto Plug-in into the Eclipse IDE
+            one of two ways:  use the Yocto Project update site to install the pre-built plug-in,
+            or build and install the plug-in from the latest source code.
             If you don't want to permanently install the plug-in but just want to try it out
             within the Eclipse environment, you can import the plug-in project from the 
             Yocto Project source repositories.
         </para>
 
         <section id='new-software'>
-        <title>Installing the Plug-in as New Software</title>
+        <title>Installing the Pre-built Plug-in from the Yocto Project Eclipse Update Site</title>
 
             <para>
-                To install the Eclipse Yocto Plug-in as new software directly into the Eclipse IDE, 
+                To install the Eclipse Yocto Plug-in from the update site, 
                 follow these steps:
                 <orderedlist>
                     <listitem><para>Start up the Eclipse IDE.</para></listitem>
@@ -179,10 +181,9 @@
         </section>
 
        <section id='zip-file-method'>
-       <title>Installing the Plug-in from a Zip File</title>
+       <title>Installing the Plug-in Using the Latest Source Code</title>
             <para>
-                To install the Eclipse Yocto Plug-in by building and installing a plug-in 
-                zip file, follow these steps:
+                To install the Eclipse Yocto Plug-in from the latest source code, follow these steps:
                 <orderedlist>
                     <listitem><para>Open a shell and create a Git repository with:
                         <literallayout class='monospaced'>
@@ -257,9 +258,9 @@
                         and then click "Next".</para></listitem>
                     <listitem><para>Select the root directory and browse to 
                         <filename>~/yocto-eclipse/plugins</filename>.</para></listitem>
-                    <listitem><para>There will be three things there.
-                        Select each one and install one at a time.
-                        Do all three.</para></listitem>
+                    <listitem><para>Three plug-ins exist: "org.yocto.bc.ui", "org.yocto.sdk.ide", and
+                        "org.yocto.sdk.remotetools". 
+                        Select and import all of them.</para></listitem>
                 </orderedlist>
             </para>
 
@@ -585,11 +586,11 @@
                 <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/oprofileui/'></ulink>.
                 <note>The <filename>oprofile-server</filename> is installed by default on 
                 the <filename>core-image-sato-sdk</filename> image.</note></para></listitem>
-            <listitem><para><emphasis><filename>Lttng-ust</filename>:</emphasis> Selecting this tool runs 
-                <filename>usttrace</filename> on the remote target, transfers the output data back to the 
-                local host machine, and uses <filename>lttv-gui</filename> to graphically display the output.  
-                The <filename>lttv-gui</filename> must be installed on the local host machine to use this tool.  
-                For information on how to use <filename>lttng</filename> to trace an application, see 
+            <listitem><para><emphasis><filename>Lttng-ust</filename>:</emphasis> Selecting this tool runs
+                <filename>usttrace</filename> on the remote target, transfers the output data back 
+                to the local host machine, and uses the <filename>lttng</filename> Eclipse plug-in to 
+                graphically display the output. 
+                For information on how to use <filename>lttng</filename> to trace an application, see
                 <ulink url='http://lttng.org/files/ust/manual/ust.html'></ulink>.</para>
                 <para>For <filename>Application</filename>, you must supply the absolute path name of the 
                 application to be traced by user mode <filename>lttng</filename>.  
@@ -597,7 +598,32 @@
                 <filename>usttrace /path/to/foo</filename> on the remote target to trace the 
                 program <filename>/path/to/foo</filename>.</para>
                 <para><filename>Argument</filename> is passed to <filename>usttrace</filename>
-                running on the remote target.</para></listitem>
+                running on the remote target.</para>
+                <para>Before you use the <filename>lttng-ust</filename> tool, you need to setup 
+                the <filename>lttng</filename> Eclipse plug-in and create a <filename>lttng</filename>
+                project.
+                Do the following:
+                <orderedlist>
+                    <listitem><para>Follow these 
+                        <ulink url='http://wiki.eclipse.org/Linux_Tools_Project/LTTng#Downloading_and_installing_the_LTTng_parser_library'>instructions</ulink>
+                        to download and install the <filename>lttng</filename> parser library.
+                        </para></listitem>
+                    <listitem><para>Select <filename>Window -> Open Perspective -> Other</filename>
+                        and then select <filename>LTTng</filename>.</para></listitem>
+                    <listitem><para>Click <filename>OK</filename> to change the Eclipse perspective 
+                        into the <filename>LTTng</filename> perspective.</para></listitem>
+                    <listitem><para>Create a new <filename>LTTng</filename> project by selecting 
+                        <filename>File -> New -> Project</filename>.</para></listitem>
+                    <listitem><para>Choose <filename>LTTng -> LTTng Project</filename>.</para></listitem>
+                    <listitem><para>Click <filename>YoctoTools -> lttng-ust</filename> to start user mode 
+                        <filename>lttng</filename> on the remote target.</para></listitem>
+                </orderedlist></para>
+                <para>After the output data has been transferred from the remote target back to the local
+                host machine, new traces will be imported into the selected <filename>LTTng</filename> project.
+                Then you can go to the <filename>LTTng</filename> project, right click the imported 
+                trace, and set the trace type as the <filename>LTTng</filename> kernel trace.
+                Finally, right click the imported trace and select <filename>Open</filename>
+                to display the data graphically.</para></listitem>
             <listitem><para><emphasis><filename>PowerTOP</filename>:</emphasis> Selecting this tool runs 
                 <filename>powertop</filename> on the remote target machine and displays the results in a 
                 new view called <filename>powertop</filename>.</para>
