@@ -583,8 +583,8 @@
         leaving the system underutilized. 
         Now consider the x86_64 psABI.
         This ABI is newer and uses 64-bits for data sizes and program pointers.
-        The extra bits increase the footprint size of the programs, libraries, memory, and file system size 
-        requirements.
+        The extra bits increase the footprint size of the programs, libraries, 
+        and also increases the memory and file system size requirements.
         Executing under the x32 psABI enables user programs to utilize CPU and system resources 
         more efficiently while keeping the memory footprint of the applications low.
         Extra bits are used for registers but not for addressing mechanisms. 
@@ -594,16 +594,16 @@
         <title>Support</title>
 
         <para>
-            While the x32 psABI is not fully implemented with this release of the Yocto Project, 
-            it is partially functional.
+            While the x32 psABI specifications are not fully finalized, this Yocto Project
+            release supports current development specifications of x32 psABI.
             As of this release of the Yocto Project, x32 psABI support exists as follows:
             <itemizedlist>
-                <listitem><para>You can create packages and images using an x32 psABI on x86_64 architecture targets. 
+                <listitem><para>You can create packages and images in x32 psABI format on x86_64 architecture targets. 
                     </para></listitem>
                 <listitem><para>You can use the x32 psABI support through the <filename>meta-x32</filename>
                     layer on top of the OE-core/Yocto layer.</para></listitem>
-                <listitem><para>You can use the toolchain for building x32 psABI program binaries and kernel support 
-                    from the <filename>experimental/meta-x32</filename> layer.</para></listitem>
+                <listitem><para>The toolchain from the <filename>experimental/meta-x32</filename> layer 
+                    is used for building x32 psABI program binaries.</para></listitem>
                 <listitem><para>You can successfully build many recipes with the x32 toolchain.</para></listitem>
                 <listitem><para>You can create and boot <filename>core-image-minimal</filename> and 
                     <filename>core-image-sato</filename> images.</para></listitem>
@@ -615,18 +615,18 @@
         <title>Future Development and Limitations</title>
 
         <para>
-            For this release of the Yocto Project, the x32 psABI kernel and library interfaces 
-            and their use are not finalized.
+            As of this Yocto Project release, the x32 psABI kernel and library interfaces 
+            specifications are not finalized.
         </para>
 
         <para>
-            Plans for the x32 psABI in the Yocto Project include the following:
+            Future Plans for the x32 psABI in the Yocto Project include the following:
             <itemizedlist>
-                <listitem><para>Enhance and fix recipes so they fully 
-                    support x32 toolchains and binaries.</para></listitem>
-                <listitem><para>Complete RPM Package Manager (RPM) support for x32 binaries.</para></listitem>
+                <listitem><para>Enhance and fix the few remaining recipes so they  
+                    work with and support x32 toolchains.</para></listitem>
+                <listitem><para>Enhance RPM Package Manager (RPM) support for x32 binaries.</para></listitem>
                 <listitem><para>Support larger images.</para></listitem>
-                <listitem><para>Integrate x32 toolchain and kernel changes from 
+                <listitem><para>Integrate x32 recipes, toolchain, and kernel changes from 
                     <filename>experimental/meta-x32</filename> into OE-core.</para></listitem>
             </itemizedlist>
         </para>
@@ -636,17 +636,16 @@
         <title>Using x32 Right Now</title>
 
         <para>
-            Despite the fact that the x32 psABI is incomplete for this release of the Yocto Project, you can 
-            use it to some degree.
-            Follow these steps to use the x32 spABI:
+            Despite the fact the x32 psABI support is in developement state for this release of the 
+            Yocto Project, you can follow these steps to use the x32 spABI:
             <itemizedlist>
                 <listitem><para>Add the <filename>experimental/meta-x32</filename> layer to your local
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-files'>Yocto Project Files</ulink>
-                    Git repository.  
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-build-directory'>Yocto Project 
+                    Build Directory</ulink>.  
                     You can find the <filename>experimental/meta-x32</filename> source repository at
                     <ulink url='&YOCTO_GIT_URL;'></ulink>.</para></listitem>
                 <listitem><para>Edit your <filename>conf/bblayers.conf</filename> file so that it includes
-                    the <filename>experimental/meta-x32</filename>.
+                    the <filename>meta-x32</filename>.
                     Here is an example:
                     <literallayout class='monospaced'>
      BBLAYERS ?= " \
@@ -656,7 +655,7 @@
      "
                     </literallayout></para></listitem>
                 <listitem><para>Enable the x32 psABI tuning file for <filename>x86_64</filename>
-                    machines by editing the <filename>conf/local.conf</filename> as follows:
+                    machines by editing the <filename>conf/local.conf</filename> like this:
                     <literallayout class='monospaced'>
       MACHINE = "qemux86-64"
       DEFAULTTUNE = "x86-64-x32"
@@ -665,12 +664,12 @@
       #MACHINE = "atom-pc"
       #DEFAULTTUNE = "core2-64-x32"
                     </literallayout></para></listitem> 
-                <listitem><para>Use BitBake to build an image that supports the x32 psABI.  
+                <listitem><para>As usual, use BitBake to build an image that supports the x32 psABI.  
                     Here is an example:
                     <literallayout class='monospaced'>
      $ bitake core-image-sato
                     </literallayout></para></listitem>
-                <listitem><para>Run your image using QUEM:
+                <listitem><para>As usual, run your image using QUEM:
                     <literallayout class='monospaced'>
      $ runqemu qemux86-64 core-image-sato
                     </literallayout></para></listitem>
