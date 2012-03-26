@@ -76,35 +76,10 @@
             </para>
 
             <para>
-                The Yocto Project organizes BSP Layers within the Yocto Metadata Layers area 
-                of the Yocto Project Source Repositories at 
-                <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.
-                If you examine the source repositories, you will find many BSP Layers.
-                Here are a few:
-                <literallayout class='monospaced'>
-     meta-baryon
-     meta-fsl-ppc
-     meta-intel
-     meta-selinux
-     meta-ti
-                </literallayout>
-                It is worth noting that the <filename>meta-intel</filename> BSP Layer contains 
-                within itself several other BSP Layers, which makes it sort of a "super" BSP layer.
-                Following is a sampling of the BSP Layers that the <filename>meta-intel</filename> 
-                BSP Layer contains:
-                <literallayout class='monospaced'>
-     meta-cedartrail
-     meta-crownbay
-     meta-emenlow
-     meta-fishriver
-     meta-fri2
-                </literallayout>
-            </para>
-
-            <para>
                 The layer's base directory (<filename>meta-&lt;bsp_name&gt;</filename>) is the root 
                 of the BSP Layer.
-                This root is what you add to the <filename>BBLAYERS</filename>
+                This root is what you add to the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'><filename>BBLAYERS</filename></ulink>
                 variable in the <filename>conf/bblayers.conf</filename> file found in the 
                 <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-build-directory'>Yocto Project Build Directory</ulink>.
                 Adding the root allows the Yocto Project build system to recognize the BSP 
@@ -117,6 +92,18 @@
         /usr/local/src/yocto/meta-&lt;bsp_name&gt; \
         "
                 </literallayout>
+            </para>
+
+            <para>
+                Some BSPs require additional layers on
+                top of the BSP's root layer in order to be functional.
+                For these cases, you also need to add those layers to the
+                <filename>BBLAYERS</filename> variable in order to build the BSP.  
+                You must also specify in the "Dependiencies" section of the BSP's 
+                <filename>README</filename> file any requirements for additional 
+                layers and, preferably, any
+                build instructions that might be contained elsewhere
+                in the <filename>README</filename> file.
             </para>
 
             <para>
