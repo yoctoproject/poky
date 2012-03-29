@@ -599,71 +599,47 @@
                 what you require.
             </para>
 
-            <section id='adding-packages'>
-                <title>Adding Packages</title>
-
-                <para>
-                    The simplest way to add extra packages to all images is by using the 
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>
-                    variable with the <filename>_append</filename> operator:
-                    <literallayout class='monospaced'>
+            <para>
+                The simplest way to add extra packages to all images is by using the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>
+                variable with the <filename>_append</filename> operator:
+                <literallayout class='monospaced'>
      IMAGE_INSTALL_append = " strace"
-                    </literallayout>
-                    Use of the syntax is important.
-                    Specifically, the space between the quote and the package name, which is
-                    <filename>strace</filename> in this example.
-                    This space is required since the <filename>_append</filename>
-                    operator does not add the space.
-                </para>
+                </literallayout>
+                Use of the syntax is important.
+                Specifically, the space between the quote and the package name, which is
+                <filename>strace</filename> in this example.
+                This space is required since the <filename>_append</filename>
+                operator does not add the space.
+            </para>
 
-                <para>
-                    Furthermore, you must use <filename>_append</filename> instead of the <filename>+=</filename> 
-                    operator if you want to avoid ordering issues. 
-                    The reason for this is because doing so unconditionally appends to the variable and 
-                    avoids ordering problems due to the variable being set in image recipes and 
-                    <filename>.bbclass</filename> files with operators like <filename>?=</filename>.
-                    Using <filename>_append</filename> ensures the operation takes affect.
-                </para>
+            <para>
+                Furthermore, you must use <filename>_append</filename> instead of the <filename>+=</filename> 
+                operator if you want to avoid ordering issues. 
+                The reason for this is because doing so unconditionally appends to the variable and 
+                avoids ordering problems due to the variable being set in image recipes and 
+                <filename>.bbclass</filename> files with operators like <filename>?=</filename>.
+                Using <filename>_append</filename> ensures the operation takes affect.
+            </para>
 
-                <para>
-                    As shown in its simplest use, <filename>IMAGE_INSTALL_append</filename> affects
-                    all images.
-                    It is possible to extend the syntax so that the variable applies to a specific image only.
-                    Here is an example:
-                    <literallayout class='monospaced'>
+            <para>
+                As shown in its simplest use, <filename>IMAGE_INSTALL_append</filename> affects
+                all images.
+                It is possible to extend the syntax so that the variable applies to a specific image only.
+                Here is an example:
+                <literallayout class='monospaced'>
      IMAGE_INSTALL_append_pn-core-image-minimal = " strace"
-                    </literallayout>
-                    This example adds <filename>strace</filename> to <filename>core-image-minimal</filename>
-                    only.
-                </para>
+                </literallayout>
+                This example adds <filename>strace</filename> to <filename>core-image-minimal</filename>
+                only.
+            </para>
 
-                <para>
-                    You can add packages using a similar approach through the  
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-CORE_IMAGE_EXTRA_INSTALL'>CORE_IMAGE_EXTRA_INSTALL</ulink></filename> 
-                    variable.
-                    If you use this variable, only <filename>core-image-*</filename> images are affected.
-                </para>
-            </section>
-
-            <section id='excluding-packages'>
-                <title>Excluding Packages</title>
-
-                <para>
-                    It is possible to filter or mask out <filename>.bb</filename> and 
-                    <filename>.bbappend</filename> files such that BitBake ignores them during 
-                    the build.  
-                    You can do this by providing an expression with the 
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBMASK'>BBMASK</ulink></filename> 
-                    variable. 
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     BBMASK = ".*/meta-mymachine/recipes-maybe/"
-                    </literallayout>
-                    Here, all <filename>.bb</filename> and <filename>.bbappend</filename> files
-                    in the directory that matches the expression are ignored during the build
-                    process.
-                </para>
-            </section>
+            <para>
+                You can add packages using a similar approach through the  
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-CORE_IMAGE_EXTRA_INSTALL'>CORE_IMAGE_EXTRA_INSTALL</ulink></filename> 
+                variable.
+                If you use this variable, only <filename>core-image-*</filename> images are affected.
+            </para>
         </section>
     </section>
 
@@ -2011,6 +1987,26 @@ so that there are some definite steps on how to do this.  I need more detail her
             not be able to build more than one variant of the recipe.
             Consequently, if you are building multiple variants of the recipe, you need to establish a 
             build directory that is different than the source directory.
+        </para>
+    </section>
+
+    <section id='excluding-packages-from-the-build'>
+        <title>Excluding Packages From the Build</title>
+
+        <para>
+            It is possible to filter or mask out <filename>.bb</filename> and 
+            <filename>.bbappend</filename> files such that BitBake ignores them during 
+            the build.  
+            You can do this by providing an expression with the 
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBMASK'>BBMASK</ulink></filename> 
+            variable. 
+            Here is an example:
+            <literallayout class='monospaced'>
+     BBMASK = ".*/meta-mymachine/recipes-maybe/"
+            </literallayout>
+            Here, all <filename>.bb</filename> and <filename>.bbappend</filename> files
+            in the directory that match the expression are ignored during the build
+            process - BitBake does not even parse them.
         </para>
     </section>
 </chapter>
