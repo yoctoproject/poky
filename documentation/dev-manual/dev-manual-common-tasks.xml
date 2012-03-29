@@ -445,6 +445,228 @@
         </section>
     </section>
 
+    <section id='usingpoky-extend-customimage'>
+        <title>Customizing Images</title>
+
+        <para>
+            You can customize Yocto Project images to satisfy particular requirements. 
+            This section describes several methods and provides guidelines for each.
+        </para>
+
+        <section id='usingpoky-extend-customimage-custombb'>
+            <title>Customizing Images Using Custom .bb Files</title>
+
+            <para>
+                One way to get additional software into an image is to create a custom image. 
+                The following example shows the form for the two lines you need:
+                <literallayout class='monospaced'>
+     IMAGE_INSTALL = "task-core-x11-base package1 package2"
+
+     inherit core-image
+                </literallayout>
+            </para>
+
+            <para>
+                By creating a custom image, a developer has total control
+                over the contents of the image. 
+                It is important to use the correct names of packages in the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename> 
+                variable. 
+                You must use the OpenEmbedded notation and not the Debian notation for the names 
+                (e.g. <filename>eglibc-dev</filename> instead of <filename>libc6-dev</filename>).
+            </para>
+
+            <para>
+                The other method for creating a custom image is to modify an existing image. 
+                For example, if a developer wants to add <filename>strace</filename> into 
+                the <filename>core-image-sato</filename> image, they can use the following recipe:
+                <literallayout class='monospaced'>
+     require core-image-sato.bb
+
+     IMAGE_INSTALL += "strace"
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='usingpoky-extend-customimage-customtasks'>
+            <title>Customizing Images Using Custom Tasks</title>
+
+            <para>
+                For complex custom images, the best approach is to create a custom task package
+                that is used to build the image or images. 
+                A good example of a tasks package is 
+                <filename>meta/recipes-sato/tasks/task-poky.bb</filename>. 
+                The 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename> 
+                variable lists the task packages to build along with the complementary
+                <filename>-dbg</filename> and <filename>-dev</filename> packages. 
+                For each package added, you can use 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'>RDEPENDS</ulink></filename>
+                and 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'>RRECOMMENDS</ulink></filename> 
+                entries to provide a list of packages the parent task package should contain. 
+                Following is an example:
+                <literallayout class='monospaced'>
+     DESCRIPTION = "My Custom Tasks"
+
+     PACKAGES = "\
+         task-custom-apps \
+         task-custom-apps-dbg \
+         task-custom-apps-dev \
+         task-custom-tools \
+         task-custom-tools-dbg \
+         task-custom-tools-dev \
+         "
+
+     RDEPENDS_task-custom-apps = "\
+         dropbear \
+         portmap \
+         psplash"
+
+     RDEPENDS_task-custom-tools = "\
+         oprofile \
+         oprofileui-server \
+         lttng-control \
+         lttng-viewer"
+
+     RRECOMMENDS_task-custom-tools = "\
+         kernel-module-oprofile"
+                </literallayout>
+            </para>
+
+            <para>
+                In the previous example, two task packages are created with their dependencies and their
+                recommended package dependencies listed: <filename>task-custom-apps</filename>, and 
+                <filename>task-custom-tools</filename>. 
+                To build an image using these task packages, you need to add 
+                <filename>task-custom-apps</filename> and/or 
+                <filename>task-custom-tools</filename> to 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>.
+                For other forms of image dependencies see the other areas of this section.
+            </para>
+        </section>
+
+        <section id='usingpoky-extend-customimage-imagefeatures'>
+            <title>Customizing Images Using Custom <filename>IMAGE_FEATURES</filename> and 
+                <filename>EXTRA_IMAGE_FEATURES</filename></title>
+
+            <para>
+                Ultimately users might want to add extra image features to the set used by 
+                Yocto Project with the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'>IMAGE_FEATURES</ulink></filename>
+                variable. 
+                To create these features, the best reference is 
+                <filename>meta/classes/core-image.bbclass</filename>, which shows how the 
+                Yocto Project achieves this. 
+                In summary, the file looks at the contents of the 
+                <filename>IMAGE_FEATURES</filename>
+                variable and then maps that into a set of tasks or packages. 
+                Based on this information the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'> IMAGE_INSTALL</ulink></filename> 
+                variable is generated automatically. 
+                Users can add extra features by extending the class or creating a custom class for use 
+                with specialized image <filename>.bb</filename> files.
+                You can also add more features by configuring the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</ulink></filename>
+                variable in the <filename>local.conf</filename> file found in the Yocto Project
+                files located in the build directory.
+            </para>
+
+            <para>
+                The Yocto Project ships with two SSH servers you can use in your images: 
+                Dropbear and OpenSSH. 
+                Dropbear is a minimal SSH server appropriate for resource-constrained environments,
+                while OpenSSH is a well-known standard SSH server implementation.
+                By default, the <filename>core-image-sato</filename> image is configured to use Dropbear.
+                The <filename>core-image-basic</filename> and <filename>core-image-lsb</filename>
+                images both include OpenSSH.
+                To change these defaults, edit the <filename>IMAGE_FEATURES</filename> variable
+                so that it sets the image you are working with to include 
+                <filename>ssh-server-dropbear</filename> or <filename>ssh-server-openssh</filename>.
+            </para>
+        </section>
+
+        <section id='usingpoky-extend-customimage-localconf'>
+            <title>Customizing Images Using <filename>local.conf</filename></title>
+
+            <para>
+                It is possible to customize image contents by using variables from your
+                local configuration in your <filename>conf/local.conf</filename> file. 
+                Because it is limited to local use, this method generally only allows you to 
+                add packages and is not as flexible as creating your own customized image.
+                When you add packages using local variables this way, you need to realize that 
+                these variable changes affect all images at the same time and might not be
+                what you require.
+            </para>
+
+            <section id='adding-packages'>
+                <title>Adding Packages</title>
+
+                <para>
+                    The simplest way to add extra packages to all images is by using the 
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>
+                    variable with the <filename>_append</filename> operator:
+                    <literallayout class='monospaced'>
+     IMAGE_INSTALL_append = " strace"
+                    </literallayout>
+                    Use of the syntax is important.
+                    Specifically, the space between the quote and the package name, which is
+                    <filename>strace</filename> in this example.
+                    This space is required since the <filename>_append</filename>
+                    operator does not add the space.
+                </para>
+
+                <para>
+                    Furthermore, you must use <filename>_append</filename> instead of the <filename>+=</filename> 
+                    operator if you want to avoid ordering issues. 
+                    The reason for this is because doing so unconditionally appends to the variable and 
+                    avoids ordering problems due to the variable being set in image recipes and 
+                    <filename>.bbclass</filename> files with operators like <filename>?=</filename>.
+                    Using <filename>_append</filename> ensures the operation takes affect.
+                </para>
+
+                <para>
+                    As shown in its simplest use, <filename>IMAGE_INSTALL_append</filename> affects
+                    all images.
+                    It is possible to extend the syntax so that the variable applies to a specific image only.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     IMAGE_INSTALL_append_pn-core-image-minimal = " strace"
+                    </literallayout>
+                    This example adds <filename>strace</filename> to <filename>core-image-minimal</filename>
+                    only.
+                </para>
+
+                <para>
+                    You can add packages using a similar approach through the  
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-CORE_IMAGE_EXTRA_INSTALL'>CORE_IMAGE_EXTRA_INSTALL</ulink></filename> 
+                    variable.
+                    If you use this variable, only <filename>core-image-*</filename> images are affected.
+                </para>
+            </section>
+
+            <section id='excluding-packages'>
+                <title>Excluding Packages</title>
+
+                <para>
+                    It is possible to filter or mask out <filename>.bb</filename> and 
+                    <filename>.bbappend</filename> files such that BitBake ignores them during 
+                    the build.  
+                    You can do this by providing an expression with the 
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBMASK'>BBMASK</ulink></filename> 
+                    variable. 
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     BBMASK = ".*/meta-mymachine/recipes-maybe/"
+                    </literallayout>
+                    Here, all <filename>.bb</filename> and <filename>.bbappend</filename> files
+                    in the directory that matches the expression are ignored during the build
+                    process.
+                </para>
+            </section>
+        </section>
+    </section>
+
     <section id='usingpoky-extend-addpkg'>
         <title>Adding a Package</title>
 
@@ -771,228 +993,6 @@
                 to the directory containing the image when the root filesystem is created at build time but
                 is unset when executed on the first boot. 
             </para>
-        </section>
-    </section>
-
-    <section id='usingpoky-extend-customimage'>
-        <title>Customizing Images</title>
-
-        <para>
-            You can customize Yocto Project images to satisfy particular requirements. 
-            This section describes several methods and provides guidelines for each.
-        </para>
-
-        <section id='usingpoky-extend-customimage-custombb'>
-            <title>Customizing Images Using Custom .bb Files</title>
-
-            <para>
-                One way to get additional software into an image is to create a custom image. 
-                The following example shows the form for the two lines you need:
-                <literallayout class='monospaced'>
-     IMAGE_INSTALL = "task-core-x11-base package1 package2"
-
-     inherit core-image
-                </literallayout>
-            </para>
-
-            <para>
-                By creating a custom image, a developer has total control
-                over the contents of the image. 
-                It is important to use the correct names of packages in the 
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename> 
-                variable. 
-                You must use the OpenEmbedded notation and not the Debian notation for the names 
-                (e.g. <filename>eglibc-dev</filename> instead of <filename>libc6-dev</filename>).
-            </para>
-
-            <para>
-                The other method for creating a custom image is to modify an existing image. 
-                For example, if a developer wants to add <filename>strace</filename> into 
-                the <filename>core-image-sato</filename> image, they can use the following recipe:
-                <literallayout class='monospaced'>
-     require core-image-sato.bb
-
-     IMAGE_INSTALL += "strace"
-                </literallayout>
-            </para>
-        </section>
-
-        <section id='usingpoky-extend-customimage-customtasks'>
-            <title>Customizing Images Using Custom Tasks</title>
-
-            <para>
-                For complex custom images, the best approach is to create a custom task package
-                that is used to build the image or images. 
-                A good example of a tasks package is 
-                <filename>meta/recipes-sato/tasks/task-poky.bb</filename>. 
-                The 
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename> 
-                variable lists the task packages to build along with the complementary
-                <filename>-dbg</filename> and <filename>-dev</filename> packages. 
-                For each package added, you can use 
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'>RDEPENDS</ulink></filename>
-                and 
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'>RRECOMMENDS</ulink></filename> 
-                entries to provide a list of packages the parent task package should contain. 
-                Following is an example:
-                <literallayout class='monospaced'>
-     DESCRIPTION = "My Custom Tasks"
-
-     PACKAGES = "\
-         task-custom-apps \
-         task-custom-apps-dbg \
-         task-custom-apps-dev \
-         task-custom-tools \
-         task-custom-tools-dbg \
-         task-custom-tools-dev \
-         "
-
-     RDEPENDS_task-custom-apps = "\
-         dropbear \
-         portmap \
-         psplash"
-
-     RDEPENDS_task-custom-tools = "\
-         oprofile \
-         oprofileui-server \
-         lttng-control \
-         lttng-viewer"
-
-     RRECOMMENDS_task-custom-tools = "\
-         kernel-module-oprofile"
-                </literallayout>
-            </para>
-
-            <para>
-                In the previous example, two task packages are created with their dependencies and their
-                recommended package dependencies listed: <filename>task-custom-apps</filename>, and 
-                <filename>task-custom-tools</filename>. 
-                To build an image using these task packages, you need to add 
-                <filename>task-custom-apps</filename> and/or 
-                <filename>task-custom-tools</filename> to 
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>.
-                For other forms of image dependencies see the other areas of this section.
-            </para>
-        </section>
-
-        <section id='usingpoky-extend-customimage-imagefeatures'>
-            <title>Customizing Images Using Custom <filename>IMAGE_FEATURES</filename> and 
-                <filename>EXTRA_IMAGE_FEATURES</filename></title>
-
-            <para>
-                Ultimately users might want to add extra image features to the set used by 
-                Yocto Project with the 
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'>IMAGE_FEATURES</ulink></filename>
-                variable. 
-                To create these features, the best reference is 
-                <filename>meta/classes/core-image.bbclass</filename>, which shows how the 
-                Yocto Project achieves this. 
-                In summary, the file looks at the contents of the 
-                <filename>IMAGE_FEATURES</filename>
-                variable and then maps that into a set of tasks or packages. 
-                Based on this information the 
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'> IMAGE_INSTALL</ulink></filename> 
-                variable is generated automatically. 
-                Users can add extra features by extending the class or creating a custom class for use 
-                with specialized image <filename>.bb</filename> files.
-                You can also add more features by configuring the 
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</ulink></filename>
-                variable in the <filename>local.conf</filename> file found in the Yocto Project
-                files located in the build directory.
-            </para>
-
-            <para>
-                The Yocto Project ships with two SSH servers you can use in your images: 
-                Dropbear and OpenSSH. 
-                Dropbear is a minimal SSH server appropriate for resource-constrained environments,
-                while OpenSSH is a well-known standard SSH server implementation.
-                By default, the <filename>core-image-sato</filename> image is configured to use Dropbear.
-                The <filename>core-image-basic</filename> and <filename>core-image-lsb</filename>
-                images both include OpenSSH.
-                To change these defaults, edit the <filename>IMAGE_FEATURES</filename> variable
-                so that it sets the image you are working with to include 
-                <filename>ssh-server-dropbear</filename> or <filename>ssh-server-openssh</filename>.
-            </para>
-        </section>
-
-        <section id='usingpoky-extend-customimage-localconf'>
-            <title>Customizing Images Using <filename>local.conf</filename></title>
-
-            <para>
-                It is possible to customize image contents by using variables from your
-                local configuration in your <filename>conf/local.conf</filename> file. 
-                Because it is limited to local use, this method generally only allows you to 
-                add packages and is not as flexible as creating your own customized image.
-                When you add packages using local variables this way, you need to realize that 
-                these variable changes affect all images at the same time and might not be
-                what you require.
-            </para>
-
-            <section id='adding-packages'>
-                <title>Adding Packages</title>
-
-                <para>
-                    The simplest way to add extra packages to all images is by using the 
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>
-                    variable with the <filename>_append</filename> operator:
-                    <literallayout class='monospaced'>
-     IMAGE_INSTALL_append = " strace"
-                    </literallayout>
-                    Use of the syntax is important.
-                    Specifically, the space between the quote and the package name, which is
-                    <filename>strace</filename> in this example.
-                    This space is required since the <filename>_append</filename>
-                    operator does not add the space.
-                </para>
-
-                <para>
-                    Furthermore, you must use <filename>_append</filename> instead of the <filename>+=</filename> 
-                    operator if you want to avoid ordering issues. 
-                    The reason for this is because doing so unconditionally appends to the variable and 
-                    avoids ordering problems due to the variable being set in image recipes and 
-                    <filename>.bbclass</filename> files with operators like <filename>?=</filename>.
-                    Using <filename>_append</filename> ensures the operation takes affect.
-                </para>
-
-                <para>
-                    As shown in its simplest use, <filename>IMAGE_INSTALL_append</filename> affects
-                    all images.
-                    It is possible to extend the syntax so that the variable applies to a specific image only.
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     IMAGE_INSTALL_append_pn-core-image-minimal = " strace"
-                    </literallayout>
-                    This example adds <filename>strace</filename> to <filename>core-image-minimal</filename>
-                    only.
-                </para>
-
-                <para>
-                    You can add packages using a similar approach through the  
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-CORE_IMAGE_EXTRA_INSTALL'>CORE_IMAGE_EXTRA_INSTALL</ulink></filename> 
-                    variable.
-                    If you use this variable, only <filename>core-image-*</filename> images are affected.
-                </para>
-            </section>
-
-            <section id='excluding-packages'>
-                <title>Excluding Packages</title>
-
-                <para>
-                    It is possible to filter or mask out <filename>.bb</filename> and 
-                    <filename>.bbappend</filename> files such that BitBake ignores them during 
-                    the build.  
-                    You can do this by providing an expression with the 
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBMASK'>BBMASK</ulink></filename> 
-                    variable. 
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     BBMASK = ".*/meta-mymachine/recipes-maybe/"
-                    </literallayout>
-                    Here, all <filename>.bb</filename> and <filename>.bbappend</filename> files
-                    in the directory that matches the expression are ignored during the build
-                    process.
-                </para>
-            </section>
         </section>
     </section>
 
