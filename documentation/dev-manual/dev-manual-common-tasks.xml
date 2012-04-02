@@ -788,25 +788,51 @@
      SECTION = "base"
      DEPENDS = "zlib lzo e2fsprogs util-linux"
      HOMEPAGE = "http://www.linux-mtd.infradead.org/"
-     LICENSE = "GPLv2"
+     LICENSE = "GPLv2+"
      LIC_FILES_CHKSUM = "file://COPYING;md5=0636e73ff0215e8d672dc4c32c317bb3 \
-                         file://include/common.h;beginline=1;endline=17;md5=ba05b07912a44ea2bf81ce409380049c"
+                    file://include/common.h;beginline=1;endline=17;md5=ba05b07912a44ea2bf81ce409380049c"
 
-     SRC_URI = "git://git.infradead.org/mtd-utils.git;protocol=git;tag=v${PV}"
+     SRC_URI = "git://git.infradead.org/mtd-utils.git;protocol=git;tag=995cfe51b0a3cf32f381c140bf72b21bf91cef1b \
+	     	file://add-exclusion-to-mkfs-jffs2-git-2.patch"
 
      S = "${WORKDIR}/git/"
 
-     EXTRA_OEMAKE = "'CC=${CC}' 'CFLAGS=${CFLAGS} -I${S}/include -DWITHOUT_XATTR' \
-                     'BUILDDIR=${S}'"
+     PR = "r1"
+
+     EXTRA_OEMAKE = "'CC=${CC}' 'RANLIB=${RANLIB}' 'AR=${AR}' \
+        'CFLAGS=${CFLAGS} -I${S}/include -DWITHOUT_XATTR' 'BUILDDIR=${S}'"
 
      do_install () {
-             oe_runmake install DESTDIR=${D} SBINDIR=${sbindir} MANDIR=${mandir} \
-                                INCLUDEDIR=${includedir}
-             install -d ${D}${includedir}/mtd/
-             for f in ${S}/include/mtd/*.h; do
-                     install -m 0644 $f ${D}${includedir}/mtd/
-             done
+	     oe_runmake install DESTDIR=${D} SBINDIR=${sbindir} MANDIR=${mandir} \
+            INCLUDEDIR=${includedir}
+	     install -d ${D}${includedir}/mtd/
+	     for f in ${S}/include/mtd/*.h; do
+	     	install -m 0644 $f ${D}${includedir}/mtd/
+	     done
      }
+
+     PARALLEL_MAKE = ""
+
+     BBCLASSEXTEND = "native"
+                </literallayout>
+            </para>
+
+            <para>
+                If your sources are available as a tarball instead of a Git repository, you
+                will need to provide the URL to the tarball as well as an 
+                <filename>md5</filename> or <filename>sha256</filename> sum of
+                the download. 
+                Here is an example:
+                <literallayout class='monospaced'>
+     SRC_URI="ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-1.4.9.tar.bz2"
+     SRC_URI[md5sum]="82b8e714b90674896570968f70ca778b"
+                </literallayout>
+                You can generate the <filename>md5</filename> or <filename>sha256</filename> sums 
+                by using the <filename>md5sum</filename> or <filename>sha256sum</filename> commands
+                with the target file as the only argument. 
+                Here is an example:
+                <literallayout class='monospaced'>
+     $ md5sum mtd-utils-1.4.9.tar.bz2 82b8e714b90674896570968f70ca778b mtd-utils-1.4.9.tar.bz2
                 </literallayout>
             </para>
         </section>
