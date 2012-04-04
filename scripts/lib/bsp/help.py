@@ -83,7 +83,7 @@ yocto_bsp_usage = """
 
  usage: yocto-bsp [--version] [--help] COMMAND [ARGS]
 
- The most commonly used 'yocto-bsp' commands are:
+ Current 'yocto-bsp' commands are:
     create            Create a new Yocto BSP
     list              List available values for options and BSP properties
 
@@ -336,7 +336,7 @@ yocto_kernel_usage = """
 
  usage: yocto-kernel [--version] [--help] COMMAND [ARGS]
 
- The most commonly used 'yocto-kernel' commands are:
+ Current 'yocto-kernel' commands are:
    config list       List the modifiable set of bare kernel config options for a BSP
    config add        Add or modify bare kernel config options for a BSP
    config rm         Remove bare kernel config options from a BSP
