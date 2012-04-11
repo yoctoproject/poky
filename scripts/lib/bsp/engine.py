@@ -1222,8 +1222,7 @@ def yocto_bsp_create(machine, arch, scripts_path, bsp_output_dir, codedump, prop
     context = create_context(machine, arch, scripts_path)
     target_files = expand_targets(context, bsp_output_dir)
 
-    if not properties:
-        input_lines = gather_inputlines(target_files)
+    input_lines = gather_inputlines(target_files)
 
     program_lines = []
 
@@ -1316,6 +1315,44 @@ def yocto_bsp_list_properties(arch, scripts_path, properties_file):
     print_dict(properties)
 
 
+def split_nested_property(property):
+    """
+    A property name of the form x.y describes a nested property
+    i.e. the property y is contained within x and can be addressed
+    using standard JSON syntax for nested properties.  Note that if a
+    property name itself contains '.', it should be contained in
+    double quotes.
+    """
+    splittable_property = ""
+    in_quotes = False
+    for c in property:
+        if c == '.' and not in_quotes:
+            splittable_property += '\n'
+            continue
+        if c == '"':
+            in_quotes = not in_quotes
+        splittable_property += c
+
+    split_properties = splittable_property.split('\n')
+
+    if len(split_properties) > 1:
+        return split_properties
+
+    return None
+
+
+def find_input_line_group(substring, input_lines):
+    """
+    Find and return the InputLineGroup containing the specified substring.
+    """
+    for line in input_lines:
+        if isinstance(line, InputLineGroup):
+            if substring in line.group[0].line:
+                return line
+
+    return None
+
+
 def find_input_line(name, input_lines):
     """
     Find the input line with the specified name.
@@ -1329,6 +1366,8 @@ def find_input_line(name, input_lines):
         if isinstance(line, InputLine):
             try:
                 if line.props["name"] == name:
+                    return line
+                if line.props["name"] + "_" + line.props["nameappend"] == name:
                     return line
             except KeyError:
                 pass
@@ -1363,6 +1402,17 @@ def yocto_bsp_list_property_values(arch, property, scripts_path, properties_file
 
     properties = get_properties(input_lines)
 
+    nested_properties = split_nested_property(property)
+    if nested_properties:
+        # currently the outer property of a nested property always
+        # corresponds to an input line group
+        input_line_group = find_input_line_group(nested_properties[0], input_lines)
+        if input_line_group:
+            input_lines[:] = input_line_group.group[1:]
+            # The inner property of a nested property name is the
+            # actual property name we want, so reset to that
+            property = nested_properties[1]
+
     input_line = find_input_line(property, input_lines)
     if not input_line:
         print "Couldn't find values for property %s" % property
@@ -1376,6 +1426,8 @@ def yocto_bsp_list_property_values(arch, property, scripts_path, properties_file
     elif type == "choicelist" or type == "checklist":
         try:
             gen_fn = input_line.props["gen"]
+            if nested_properties:
+                context["filename"] = nested_properties[0]
             values_list = input_line.gen_choices_list(context, False)
         except KeyError:
             for choice in input_line.choices:

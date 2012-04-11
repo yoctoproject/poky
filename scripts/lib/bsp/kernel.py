@@ -657,7 +657,7 @@ def find_giturl(context):
     bbs = glob.glob(bbglob)
     for kernel in bbs:
         filename = os.path.splitext(os.path.basename(kernel))[0]
-        if filename == filebase:
+        if filename in filebase:
             giturl = extract_giturl(kernel)
             return giturl
     
