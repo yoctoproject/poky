@@ -188,7 +188,8 @@
                     <listitem><para>Store custom layers in a Git repository that uses the 
                         <filename>meta-&lt;layer_name&gt;</filename> format.</para></listitem>
                     <listitem><para>Clone the repository alongside other <filename>meta</filename>
-                        directories in the Yocto Project source files area.</para></listitem>
+                        directories in  
+                        <link linkend='yocto-project-files'>Yocto Project Files</link>.</para></listitem>
                  </itemizedlist>
                  Following these recommendations keeps your Yocto Project files area and 
                  its configuration entirely inside the Yocto Project's core base.
@@ -269,14 +270,14 @@
                 append file both from the 
                 <link linkend='yocto-project-files'>Yocto Project Files</link>.
                 Here is the main formfactor recipe, which is named <filename>formfactor_0.0.bb</filename> and  
-                located in the meta layer at <filename>meta/bsp-recipes/formfactor</filename>:
+                located in the meta layer at <filename>meta/recipes-bsp/formfactor</filename>:
                 <literallayout class='monospaced'>
      DESCRIPTION = "Device formfactor information"
      SECTION = "base"
      LICENSE = "MIT"
      LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=3f40d7994397109285ec7b81fdeb3b58 \
-                    file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
-     PR = "r19"
+                         file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
+     PR = "r20"
 
      SRC_URI = "file://config file://machconfig"
      S = "${WORKDIR}"
@@ -290,7 +291,7 @@
              install -m 0644 ${S}/config ${D}${sysconfdir}/formfactor/
      	if [ -s "${S}/machconfig" ]; then
      	        install -m 0644 ${S}/machconfig ${D}${sysconfdir}/formfactor/
-	     fi
+     	fi
      }
                 </literallayout>
                 Here is the append file, which is named <filename>formfactor_0.0.bbappend</filename> and is from the 
