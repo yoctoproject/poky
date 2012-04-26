@@ -82,7 +82,8 @@ ALLPREQ = html pdf tarball
 #
 # Note that the tarfile might produce the "Cannot stat: No such file or directory" error
 # message for .PNG files that are not present when building a particular branch.  The 
-# list of files is all-inclusive for all branches.
+# list of files is all-inclusive for all branches.  Note, if you don't provide a BRANCH
+# option, it defaults to the latest stuff.  This would be appropriate for "master" branch.
 #
 
 	ifeq ($(BRANCH),edison)
@@ -94,13 +95,22 @@ TARFILES = style.css dev-manual.html dev-manual.pdf \
            figures/kernel-overview-3-edison.png \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
-	else
+	else ifeq ($(BRANCH),denzil)
 TARFILES = style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
            figures/kernel-example-repos.png \
            figures/kernel-overview-1.png figures/kernel-overview-2.png \
-           figures/kernel-overview-3.png \
+           figures/kernel-overview-3-denzil.png \
+           figures/source-repos.png figures/yp-download.png \
+           figures/wip.png
+        else
+TARFILES = style.css dev-manual.html dev-manual.pdf \
+           figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
+           figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
+           figures/kernel-example-repos.png \
+           figures/kernel-overview-1.png figures/kernel-overview-2.png \
+           figures/kernel-overview-3-denzil.png \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
 	endif
