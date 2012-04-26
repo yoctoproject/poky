@@ -422,14 +422,14 @@
                 Here are the statements: 
                 <literallayout class='monospaced'>
      SRCREV_machine_pn-linux-yocto_crownbay ?= \
-        "2247da9131ea7e46ed4766a69bb1353dba22f873"
+        "211fc7f4d10ec2b82b424286aabbaff9254b7cbd"
      SRCREV_meta_pn-linux-yocto_crownbay ?= \
-        "d05450e4aef02c1b7137398ab3a9f8f96da74f52"
+        "514847185c78c07f52e02750fbe0a03ca3a31d8f"
 
      SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= \
-        "2247da9131ea7e46ed4766a69bb1353dba22f873"
+        "211fc7f4d10ec2b82b424286aabbaff9254b7cbd"
      SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= \
-        "d05450e4aef02c1b7137398ab3a9f8f96da74f52"
+        "514847185c78c07f52e02750fbe0a03ca3a31d8f"
                 </literallayout>
             </para>
 
@@ -466,15 +466,13 @@
                 The meta <filename>SRCREV</filename> isn't specified in this file, so it must be 
                 specified in the base kernel recipe in the
                 <filename>poky/meta/recipes-kernel/linux/linux-yocto_3.2.bb</filename>
-                file, in the <filename>SRCREV_meta variable</filename> found there.  
-                It happens to be the same as the value we already inherited from the 
-                <filename>meta-crownbay</filename> BSP.
+                file, in the <filename>SRCREV_meta</filename>  variable found there.  
                 Here are the final <filename>SRCREV</filename> statements:
                 <literallayout class='monospaced'>
-     SRCREV_machine_pn-linux-yocto_mymachine ?= \ 
-        "1e18e44adbe79b846e382370eb29bc4b8cd5a1a0"
-     SRCREV_meta_pn-linux-yocto_mymachine ?= \ 
-        "d05450e4aef02c1b7137398ab3a9f8f96da74f52"
+     SRCREV_machine_pn-linux-yocto_mymachine ?= \
+        "f29531a41df15d74be5ad47d958e4117ca9e489e"
+     SRCREV_meta_pn-linux-yocto_mymachine ?= \
+        "b14a08f5c7b469a5077c10942f4e1aec171faa9d"
                 </literallayout>
             </para>
 
@@ -498,7 +496,7 @@
                 If you need a little more assistance after going to the link then do the following:
                 <orderedlist>
                     <listitem><para>Expand the list of branches by clicking <filename>[…]</filename></para></listitem>
-                    <listitem><para>Click on the <filename>yocto/standard/common-pc/atom-pc</filename> 
+                    <listitem><para>Click on the <filename>standard/default/common-pc/atom-pc</filename> 
                         branch</para></listitem>
                     <listitem><para>Click on the commit column header to view the top commit</para></listitem>
                     <listitem><para>Copy the commit string for use in the 
@@ -515,30 +513,31 @@
             <para>
                 Also in the <filename>linux-yocto_3.2.bbappend</filename> file are 
                 <filename>COMPATIBLE_MACHINE</filename>, <filename>KMACHINE</filename>, 
-                and <filename>KERNEL_FEATURES</filename> statements.  
+                <filename>KBRANCH</filename>, and <filename>KERNEL_FEATURES</filename> statements.  
                 Two sets of these exist: one set supports EMGD and one set does not.
-                Because we are not interested in supporting EMGD those three can be deleted.
-                The remaining three must be changed so that <filename>mymachine</filename> replaces
+                Because we are not interested in supporting EMGD those four can be deleted.
+                The remaining four must be changed so that <filename>mymachine</filename> replaces
                 <filename>crownbay-noemgd</filename> and <filename>crownbay</filename>.
-                Because we are using the atom-pc branch for this new BSP, we can also find
-                the exact branch we need for the KMACHINE variable in our new BSP from the value
+                Because we are using the <filename>atom-pc</filename> branch for this new BSP, we can also find
+                the exact branch we need for the <filename>KMACHINE</filename> variable in our new BSP from the value
                 we find in the
                 <filename>poky/meta-yocto/recipes-kernel/linux/linux-yocto_3.2.bbappend</filename>
                 file we looked at in a previous step.  
-                In this case, the value we want is in the KMACHINE_atom-pc variable in that file.
+                In this case, the value we want is in the <filename>KMACHINE_atom-pc</filename> variable in that file.
                 Here is the final <filename>linux-yocto_3.2.bbappend</filename> file after all 
                 the edits:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
      COMPATIBLE_MACHINE_mymachine = "mymachine"
-     KMACHINE_mymachine  = "yocto/standard/common-pc/atom-pc"
+     KMACHINE_mymachine  = "atom-pc"
+     KBRANCH_mymachine  = "standard/default/common-pc/atom-pc"
      KERNEL_FEATURES_append_mymachine += " cfg/smp.scc"
 
      SRCREV_machine_pn-linux-yocto_mymachine ?= \
-        "1e18e44adbe79b846e382370eb29bc4b8cd5a1a0"
+        "f29531a41df15d74be5ad47d958e4117ca9e489e"
      SRCREV_meta_pn-linux-yocto_mymachine ?= \
-        "d05450e4aef02c1b7137398ab3a9f8f96da74f52"
+        "b14a08f5c7b469a5077c10942f4e1aec171faa9d"
                 </literallayout>
             </para>
         </section>
