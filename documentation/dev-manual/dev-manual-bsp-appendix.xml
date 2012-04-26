@@ -397,7 +397,7 @@
                 The recipe for that kernel is not located in the  
                 BSP layer but rather in the local Yocto Project files at 
                 <filename>meta/recipes-kernel/linux</filename> and is 
-                named <filename>linux-yocto_3.0.bb</filename>.
+                named <filename>linux-yocto_3.2.bb</filename>.
                 The <filename>SRCREV_machine</filename> and <filename>SRCREV_meta</filename>
                 statements point to the exact commits used by the Yocto Project development team
                 in their source repositories that identify the right kernel for our hardware.
@@ -410,7 +410,7 @@
             <para>
                 However, in the <filename>meta-mymachine</filename> layer in 
                 <filename>recipes-kernel/linux</filename> resides a <filename>.bbappend</filename>
-                file named <filename>linux-yocto_3.0.bbappend</filename> that 
+                file named <filename>linux-yocto_3.2.bbappend</filename> that 
                 appends information to the recipe of the same name in <filename>meta/recipes-kernel/linux</filename>.
                 Thus, the <filename>SRCREV</filename> statements in the append file override
                 the more general statements found in <filename>meta</filename>.
@@ -444,7 +444,7 @@
             </para>
 
             <para>  
-                To fix this situation in <filename>linux-yocto_3.0.bbappend</filename>,
+                To fix this situation in <filename>linux-yocto_3.2.bbappend</filename>,
                 we delete the two <filename>SRCREV</filename> statements that support 
                 EMGD (the top pair).
                 We also change the remaining pair to specify <filename>mymachine</filename>
@@ -456,7 +456,7 @@
                 that are associated with the &DISTRO_NAME; release.  
                 To find those values, we need to find the <filename>SRCREV</filename>
                 values that &DISTRO_NAME; uses for the atom-pc branch, which we find in the
-                <filename>poky/meta-yocto/recipes-kernel/linux/linux-yocto_3.0.bbappend</filename>
+                <filename>poky/meta-yocto/recipes-kernel/linux/linux-yocto_3.2.bbappend</filename>
                 file.
             </para>
 
@@ -465,7 +465,7 @@
                 <filename>SRCREV_machine_atom-pc</filename> variable.  
                 The meta <filename>SRCREV</filename> isn't specified in this file, so it must be 
                 specified in the base kernel recipe in the
-                <filename>poky/meta/recipes-kernel/linux/linux-yocto_3.0.bb</filename>
+                <filename>poky/meta/recipes-kernel/linux/linux-yocto_3.2.bb</filename>
                 file, in the <filename>SRCREV_meta variable</filename> found there.  
                 It happens to be the same as the value we already inherited from the 
                 <filename>meta-crownbay</filename> BSP.
@@ -490,8 +490,8 @@
                 exact commit strings in the Yocto Project source repositories you need to change 
                 the <filename>SRCREV</filename> statements.  
                 You can find all the <filename>machine</filename> and <filename>meta</filename> 
-                branch points (commits) for the <filename>linux-yocto-3.0</filename> kernel at
-                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/linux-yocto-3.0'></ulink>.  
+                branch points (commits) for the <filename>linux-yocto-3.2</filename> kernel at
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/linux-yocto-3.2'></ulink>.  
             </para>
 
             <para>
@@ -502,7 +502,7 @@
                         branch</para></listitem>
                     <listitem><para>Click on the commit column header to view the top commit</para></listitem>
                     <listitem><para>Copy the commit string for use in the 
-                        <filename>linux-yocto_3.0.bbappend</filename> file</para></listitem>
+                        <filename>linux-yocto_3.2.bbappend</filename> file</para></listitem>
                 </orderedlist>
             </para>
 
@@ -513,7 +513,7 @@
             </para>
 
             <para>
-                Also in the <filename>linux-yocto_3.0.bbappend</filename> file are 
+                Also in the <filename>linux-yocto_3.2.bbappend</filename> file are 
                 <filename>COMPATIBLE_MACHINE</filename>, <filename>KMACHINE</filename>, 
                 and <filename>KERNEL_FEATURES</filename> statements.  
                 Two sets of these exist: one set supports EMGD and one set does not.
@@ -523,10 +523,10 @@
                 Because we are using the atom-pc branch for this new BSP, we can also find
                 the exact branch we need for the KMACHINE variable in our new BSP from the value
                 we find in the
-                <filename>poky/meta-yocto/recipes-kernel/linux/linux-yocto_3.0.bbappend</filename>
+                <filename>poky/meta-yocto/recipes-kernel/linux/linux-yocto_3.2.bbappend</filename>
                 file we looked at in a previous step.  
                 In this case, the value we want is in the KMACHINE_atom-pc variable in that file.
-                Here is the final <filename>linux-yocto_3.0.bbappend</filename> file after all 
+                Here is the final <filename>linux-yocto_3.2.bbappend</filename> file after all 
                 the edits:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
