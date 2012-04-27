@@ -99,7 +99,7 @@ TARFILES = style.css dev-manual.html dev-manual.pdf \
 TARFILES = style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
-           figures/kernel-example-repos.png \
+           figures/kernel-example-repos-denzil.png \
            figures/kernel-overview-1.png figures/kernel-overview-2.png \
            figures/kernel-overview-3-denzil.png \
            figures/source-repos.png figures/yp-download.png \
@@ -108,7 +108,7 @@ TARFILES = style.css dev-manual.html dev-manual.pdf \
 TARFILES = style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
-           figures/kernel-example-repos.png \
+           figures/kernel-example-repos-denzil.png \
            figures/kernel-overview-1.png figures/kernel-overview-2.png \
            figures/kernel-overview-3-denzil.png \
            figures/source-repos.png figures/yp-download.png \
