@@ -37,7 +37,12 @@ def find_bblayers(scripts_path):
     """
     Find and return a sanitized list of the layers found in BBLAYERS.
     """
-    bblayers_conf = os.path.join(scripts_path, "../build/conf/bblayers.conf")
+    try:
+        builddir = os.environ["BUILDDIR"]
+    except KeyError:
+        print "BUILDDIR not found, exiting. (Did you forget to source oe-init-build-env?)"
+        sys.exit(1)
+    bblayers_conf = os.path.join(builddir, "conf/bblayers.conf")
 
     layers = []
 
