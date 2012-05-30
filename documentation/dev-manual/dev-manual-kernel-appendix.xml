@@ -442,15 +442,19 @@
            </para>
 
            <note>
-               Before attempting to build the modified kernel, there is one more set of changes you 
+               <para>Before attempting to build the modified kernel, there is one more set of changes you 
                need to make in the <filename>meta-kernel-dev</filename> layer.
                Because all the kernel <filename>.bbappend</filename> files are parsed during the 
                build process regardless of whether you are using them or not, you should either 
                comment out the <filename>COMPATIBLE_MACHINE</filename> statements in all 
-               unused <filename>.bbappend</filename> files.
-               Alternatively, you can simply remove all the files 
+               unused <filename>.bbappend</filename> files, or simply remove (or rename) all the files 
                except the one your are using for the build 
-               (i.e. <filename>linux-yocto_3.2.bbappend</filename> in this example).
+               (i.e. <filename>linux-yocto_3.2.bbappend</filename> in this example).</para>
+               <para>If you do not make one of these two adjustments, your machine will be compatible
+               with all the kernel recipes in the <filename>meta-kernel-dev</filename> layer. 
+               When your machine is comapatible with all the kernel recipes, the build attempts
+               to build all kernels in the layer.
+               You could end up with build errors blocking your work.</para>
            </note>            
        </section>
 
