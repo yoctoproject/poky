@@ -1644,6 +1644,8 @@ class CookerParser(object):
                     yield result
 
     def parse_next(self):
+        result = []
+        parsed = None
         try:
             parsed, result = self.results.next()
         except StopIteration:
