@@ -31,6 +31,7 @@ import os
 import shutil
 from tags import *
 import glob
+import subprocess
 
 
 def find_bblayers(scripts_path):
@@ -678,7 +679,7 @@ def base_branches(context):
     print "Getting branches from remote repo %s..." % giturl
 
     gitcmd = "git ls-remote %s *heads* 2>&1" % (giturl)
-    tmp = os.popen(gitcmd).read()
+    tmp = subprocess.Popen(gitcmd, shell=True, stdout=subprocess.PIPE).stdout.read()
 
     branches = []
 
@@ -708,7 +709,7 @@ def all_branches(context):
     print "Getting branches from remote repo %s..." % giturl
 
     gitcmd = "git ls-remote %s *heads* 2>&1" % (giturl)
-    tmp = os.popen(gitcmd).read()
+    tmp = subprocess.Popen(gitcmd, shell=True, stdout=subprocess.PIPE).stdout.read()
 
     branches = []
 
