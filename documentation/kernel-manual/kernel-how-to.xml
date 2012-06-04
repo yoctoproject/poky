@@ -308,32 +308,35 @@
                 <title>Show a Particular Feature or Branch Change</title>
 
                 <para>
-                    Significant features or branches are tagged in the Yocto Project tree to divide
-                    changes. 
-                    Remember to first determine (or add) the tag of interest.  
+                    Developers use tags in the Yocto Project tree to divide changes for significant 
+                    features or branches. 
+                    Once you know a particular tag, you can use Git commands 
+                    to show changes associated with the tag and find the branches that contain
+                    the feature.  
                     <note>
                         Because BSP branch, <filename>kernel.org</filename>, and feature tags are all 
                         present, there could be many tags.
                     </note>
+                    The <filename>git show &lt;tag&gt;</filename> command shows changes that are tagged by 
+                    a feature.
+                    Here is an example that shows changes tagged by the <filename>systemtap</filename>
+                    feature:
                     <literallayout class='monospaced'>
-     # show the changes tagged by a feature
-     &gt; git show &lt;tag&gt; 
-        &gt; eg: git show yaffs2
-
-     # determine which branches contain a feature
-     &gt; git branch --contains &lt;tag&gt;
-
-     # show the changes in a kernel type
-     &gt; git whatchanged yocto/base..&lt;kernel type&gt;
-        &gt; eg: git whatchanged yocto/base..yocto/standard/base
+     $ git show systemtap
+                    </literallayout>
+                    You can use the <filename>git branch --contains &lt;tag&gt;</filename> command
+                    to show the branches that contain a particular feature.
+                    This command shows the branches that contain the <filename>systemtap</filename>
+                    feature:
+                    <literallayout class='monospaced'>
+     $ git branch --contains systemtap
                     </literallayout>
                 </para>
 
                 <para>
-                    You can use many other comparisons to isolate BSP changes.
+                    You can use many other comparisons to isolate BSP and kernel changes.
                     For example, you can compare against <filename>kernel.org</filename> tags 
-                    (e.g. v2.6.27.18, etc), or
-                    you can compare against subsystems (e.g. <filename>git whatchanged mm</filename>).
+                    such as the <filename>v3.4</filename> tag.
                 </para>
             </section>
         </section>
