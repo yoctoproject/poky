@@ -46,6 +46,8 @@ FILES_${PN}-pkgmgt = "${bindir}/package-manager \
 
 EXTRA_OECMAKE += " -DLIB=${@os.path.basename('${libdir}')}"
 
+LDFLAGS += "-lpthread"
+
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 AVOID_CONSTRUCTOR = ""
