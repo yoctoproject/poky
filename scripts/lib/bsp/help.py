@@ -115,6 +115,18 @@ yocto_bsp_create_usage = """
  'properties' that will be used to fill out the BSP-specific portions
  of the BSP.  The possible values for the 'karch' paramter can be
  listed via 'yocto-bsp list karch'.
+
+ NOTE: Once created, you should add your new layer to your
+ bblayers.conf file in order for it to be subsequently seen and
+ modified by the yocto-kernel tool.
+
+ See 'yocto bsp help create' for more detailed instructions.
+
+ NOTE: For x86- and x86_64-based BSPs, the generated BSP assumes the
+ presence of the meta-intel layer. Ensure the meta-intel layer is
+ present and added to bblayers.conf.
+
+ See 'yocto bsp help create' for more detailed instructions.
 """
 
 yocto_bsp_create_help = """
@@ -156,12 +168,40 @@ DESCRIPTION
     current directory, and is useful for debugging.
 
     NOTE: Once created, you should add your new layer to your
-    bblayers.conf file in order for it to be subsquently seen and
+    bblayers.conf file in order for it to be subsequently seen and
     modified by the yocto-kernel tool.
 
-    NOTE for x86- and x86_64-based BSPs: The generated BSP assumes the
-    presence of the of the meta-intel layer, so you should also have a
-    meta-intel layer present and added to your bblayers.conf as well.
+    For example, assuming your poky repo is at /path/to/poky, your new
+    BSP layer is at /path/to/poky/meta-mybsp, and your build directory
+    is /path/to/build:
+
+    $ gedit /path/to/build/conf/bblayers.conf
+
+    BBLAYERS ?= " \\
+      /path/to/poky/meta \\
+      /path/to/poky/meta-yocto \\
+      /path/to/poky/meta-mybsp \\
+      "
+
+    NOTE: For x86- and x86_64-based BSPs, the generated BSP assumes
+    the presence of the meta-intel layer. Ensure the meta-intel layer
+    is present and added to bblayers.conf.
+
+    For example, assuming your poky repo is at /path/to/poky, your new
+    BSP layer is at /path/to/poky/meta-mybsp, and your build directory
+    is /path/to/build:
+
+    $ cd /path/to/poky
+    $ git clone git://git.yoctoproject.org/meta-intel.git
+
+    $ gedit /path/to/build/conf/bblayers.conf
+
+    BBLAYERS ?= " \\
+      /path/to/poky/meta \\
+      /path/to/poky/meta-yocto \\
+      /path/to/poky/meta-intel \\
+      /path/to/poky/meta-mybsp \\
+      "
 """
 
 yocto_bsp_list_usage = """
