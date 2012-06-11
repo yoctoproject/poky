@@ -297,20 +297,85 @@
     <title>Using Pre-Built Binaries and QEMU</title>
 
     <para>
-        Another option you have to get started is to use pre-built binaries.  
-        This scenario is ideal for developing software applications to run on your target hardware.  
-        To do this, you need to install the stand-alone Yocto Project cross-toolchain tarball and 
-        then download the pre-built kernel that you will boot in the QEMU emulator.  
-        Next, you must download and extract the target root filesystem for your target 
-        machine’s architecture.  
-        Finally, you set up the environment to emulate the hardware and then start the QEMU emulator.
+        Another option you have to get started is to use pre-built binaries. 
+        The Yocto Project provides many types of binaries with each release. 
+        See the <ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Reference: Images</ulink>
+        section for descriptions of the types of binaries that ship with a Yocto Project
+        release.
     </para>
 
     <para>
+        Using a pre-built binary is ideal for developing software applications to run on your 
+        target hardware.  
+        To do this, you need to be able to access the appropriate cross-toolchain tarball for 
+        the architecture on which you are developing.  
+        If you are using an SDK type image, the image ships with the complete toolchain native to 
+        the architecture. 
+        If you are not using an SDK type image, you need to separately download and 
+        install the stand-alone Yocto Project cross-toolchain tarball.
+    </para>
+
+    <para>
+        Regardless of the type of image you are using, you need to download the pre-built kernel 
+        that you will boot in the QEMU emulator and then download and extract the target root 
+        filesystem for your target machine’s architecture.
+        You can get architecture-specific binaries and filesystem from
+        <ulink url='&YOCTO_MACHINES_DL_URL;'>machines</ulink>.
+        You can get stand-alone toolchains from
+        <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'>toolchains</ulink>.
+        Once you have all your files, you set up the environment to emulate the hardware 
+        by sourcing an environment setup script. 
+        Finally, you start the QEMU emulator.
         You can find details on all these steps in the 
         "<ulink url='&YOCTO_DOCS_QS_URL;#using-pre-built'>Using Pre-Built Binaries and QEMU</ulink>"
         section of the Yocto Project Quick Start. 
     </para>
+
+    <para> 
+        Using QEMU to emulate your hardware can result in speed issues
+        depending on the target and host architecture mix.
+        For example, using the <filename>qemux86</filename> image in the emulator 
+        on an Intel-based 32-bit (x86) host machine is fast because the target and 
+        host architectures match.
+        On the other hand, using the <filename>qemuarm</filename> image on the same Intel-based
+        host can be slower.
+        But, you still achieve faithful emulation of ARM-specific issues. 
+    </para>
+
+    <para>
+        To speed things up, the QEMU images support using <filename>distcc</filename>
+        to call a cross-compiler outside the emulated system. 
+        If you used <filename>runqemu</filename> to start QEMU, and the
+        <filename>distccd</filename> application is present on the host system, any 
+        BitBake cross-compiling toolchain available from the build system is automatically
+        used from within QEMU simply by calling <filename>distcc</filename>.
+        You can accomplish this by defining the cross-compiler variable 
+        (e.g. <filename>export CC="distcc"</filename>).
+        Alternatively, if you are using a suitable SDK image or the appropriate
+        stand-alone toolchain is present in <filename>/opt/poky</filename>,
+        the toolchain is also automatically used.
+    </para>
+
+    <note>
+        Several mechanisms exist that let you connect to the system running on the 
+        QEMU emulator:
+        <itemizedlist>
+            <listitem><para>QEMU provides a framebuffer interface that makes standard 
+                consoles available.</para></listitem>
+            <listitem><para>Generally, headless embedded devices have a serial port.
+                If so, you can configure the operating system of the running image
+                to use that port to run a console. 
+                The connection uses standard IP networking.</para></listitem>
+            <listitem><para>The QEMU images have a Dropbear secure shell (ssh) server 
+                that runs with the root password disabled.
+                This allows you to use standard <filename>ssh</filename> and 
+                <filename>scp</filename> commands.</para></listitem>
+            <listitem><para>The QEMU images also contain an embedded Network Files
+                System (NFS) server that exports the image's root filesystem.
+                This allows you to make the filesystem available to the 
+                host.</para></listitem>
+        </itemizedlist>
+    </note>
 </section>
 </chapter>
 <!--
