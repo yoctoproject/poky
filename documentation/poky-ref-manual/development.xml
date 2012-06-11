@@ -97,65 +97,6 @@
          </para>
          </section>
 
-        <section id="platdev-appdev-qemu">
-        <title>External Development Using the QEMU Emulator</title>
-        <para>
-            Running Poky QEMU images is covered in the 
-            "<ulink url='&YOCTO_DOCS_QS_URL;#test-run'>A Quick Test Run</ulink>"
-            section of the Yocto Project Quick Start.
-        </para>
-        <para>
-            The QEMU images shipped with the Yocto Project contain complete toolchains
-            native to their target architectures.
-            This support allows you to develop applications within QEMU similar to the way 
-            you would using a normal host development system.
-        </para>
-
-        <para> 
-            Speed can be an issue depending on the target and host architecture mix.
-            For example, using the <filename>qemux86</filename> image in the emulator 
-            on an Intel-based 32-bit (x86) host machine is fast because the target and 
-            host architectures match.
-            On the other hand, using the <filename>qemuarm</filename> image on the same Intel-based
-            host can be slower.
-            But, you still achieve faithful emulation of ARM-specific issues. 
-        </para>
-
-        <para>
-            To speed things up, the QEMU images support using <filename>distcc</filename>
-            to call a cross-compiler outside the emulated system. 
-            If you used <filename>runqemu</filename> to start QEMU, and 
-            <filename>distccd</filename> is present on the host system, any BitBake cross-compiling 
-            toolchain available from the build system is automatically
-            used from within QEMU simply by calling <filename>distcc</filename>.
-            You can accomplish this by defining the cross-compiler variable 
-            (e.g. <filename>export CC="distcc"</filename>).
-            Alternatively, if a suitable SDK/toolchain is present in 
-            <filename>/opt/poky</filename> the toolchain is also automatically used.
-        </para>
-
-        <para>
-            Several mechanisms exist that let you connect to the system running on the 
-            QEMU emulator:
-            <itemizedlist>
-                <listitem><para>QEMU provides a framebuffer interface that makes standard 
-                    consoles available.</para></listitem>
-                <listitem><para>Generally, headless embedded devices have a serial port.
-                    If so, you can configure the operating system of the running image
-                    to use that port to run a console. 
-                    The connection uses standard IP networking.</para></listitem>
-                <listitem><para>The QEMU images have a Dropbear secure shell (ssh) server 
-                    that runs with the root password disabled.
-                    This allows you to use standard <filename>ssh</filename> and 
-                    <filename>scp</filename> commands.</para></listitem>
-                <listitem><para>The QEMU images also contain an embedded Network Files
-                    System (NFS) server that exports the image's root filesystem.
-                    This allows you to make the filesystem available to the 
-                    host.</para></listitem>
-            </itemizedlist>
-        </para>
-        </section>              
-
         <section id="platdev-appdev-insitu">
         <title>Development Using Yocto Project Directly</title>
         <para>
