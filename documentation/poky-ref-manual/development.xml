@@ -15,64 +15,6 @@
         This chapter describes each development method.
     </para>
 
-        <section id="platdev-appdev-insitu">
-        <title>Development Using Yocto Project Directly</title>
-        <para>
-            Working directly with the Yocto Project is a fast and effective development technique.
-            The idea is that you can directly edit files in a working directory
-            (<filename><link linkend='var-WORKDIR'>WORKDIR</link></filename>) 
-            or the source directory (<filename><link linkend='var-S'>S</link></filename>) 
-            and then force specific tasks to rerun in order to test the changes. 
-            An example session working on the matchbox-desktop package might 
-            look like this:
-        </para>
-
-        <para>
-            <literallayout class='monospaced'>
-     $ bitbake matchbox-desktop
-     $ sh
-     $ cd tmp/work/armv5te-poky-linux-gnueabi/matchbox-desktop-2.0+svnr1708-r0/
-     $ cd matchbox-desktop-2
-     $ vi src/main.c
-           .
-           .
-      [Make your changes]
-           .
-           .
-     $ exit
-     $ bitbake matchbox-desktop -c compile -f
-     $ bitbake matchbox-desktop
-            </literallayout>
-        </para>
-
-        <para>
-            This example builds the <filename>matchbox-desktop</filename> package, 
-            creates a new terminal, changes into the work directory for the package,
-            changes a file, exits out of the terminal, and then recompiles the 
-            package. 
-            Instead of using <filename>sh</filename>,
-            you can also use two different terminals. 
-            However, the risk of using two terminals is that a command like 
-            <filename>unpack</filename> could destroy your changes in the
-            work directory.  
-            Consequently, you need to work carefully.
-        </para>
-
-        <para>
-            It is useful when making changes directly to the work directory files to do
-            so using the Quilt tool as detailed in the 
-            "<ulink url='&YOCTO_DOCS_DEV_URL;#using-a-quilt-workflow'>Using a Quilt Workflow</ulink>" section in the Yocto Project Development Manual. 
-            Using Quilt, you can copy patches into the recipe directory and use the patches directly 
-            through use of the <filename><link linkend='var-SRC_URI'>SRC_URI</link></filename> variable.
-        </para>
-
-        <para>
-            For a review of the skills used in this section, see the 
-            "<link linkend='usingpoky-components-bitbake'>BitBake</link>" and 
-            "<link linkend='usingpoky-debugging-taskrunning'>Running Specific Tasks</link>" sections.
-        </para>
-        </section>
-
         <section id="platdev-appdev-devshell">
         <title>Development Within a Development Shell</title>
 
