@@ -1,12 +1,13 @@
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" 
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <article id='intro'>
    <imagedata fileref="figures/yocto-project-transp.png" width="6in" depth="1in" align="right" scale="25" />
 
 <section id='fake-title'>
-    <title>Yocto Project Quick Start</title>
-    <para>Copyright &copy; 2010-2012 Linux Foundation</para>
+    <title>The Yocto Project Quick Start</title>
+    <para>Copyright &copy; &COPYRIGHT_YEAR; Linux Foundation</para>
 </section>
 
 <section id='welcome'>
@@ -18,6 +19,7 @@
         Amongst other things, the Yocto Project uses the Poky build system to 
         construct complete Linux images.
     </para>
+
     <para>
         This short document will give you some basic information about the environment as well 
         as let you experience it in its simplest form.  
@@ -26,26 +28,28 @@
         This document steps you through a simple example showing you how to build a small image 
         and run it using the QEMU emulator.
     </para>
+
     <para>
-        For complete information on the Yocto Project, you should check out the 
-        <ulink url='http://www.yoctoproject.org'>Yocto Project Website</ulink>.
-        Through the website, you can find the latest builds, breaking news, full development 
-        documentation, and a 
-        rich Yocto Project Development Community into which you can tap.
-    </para>
-    <para>
-        Finally, you might find the Frequently Asked Questions (FAQ) for the Yocto Project
-        at <ulink url='https://wiki.yoctoproject.org/wiki/FAQ'>Yocto Project FAQ</ulink> and 
-        the FAQ appendix located in  
-        <ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html'>
-        The Yocto Project Reference Manual</ulink> helpful.
+        For more detailed information on the Yocto Project, you should check out these resources:
+        <itemizedlist>
+            <listitem><para><emphasis>Website:</emphasis> The <ulink url='&YOCTO_HOME_URL;'>Yocto Project Website</ulink>
+                provides the latest builds, breaking news, full development documentation, and a rich Yocto 
+                Project Development Community into which you can tap.
+                </para></listitem>
+            <listitem><para><emphasis>FAQs:</emphasis> Lists commonly asked Yocto Project questions and answers.
+                You can find two FAQs: <ulink url='&YOCTO_WIKI_URL;/wiki/FAQ'>Yocto Project FAQ</ulink> on 
+                a wiki, and the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#faq'>FAQ</ulink> appendix in the 
+                The Yocto Project Reference Manual.
+                </para></listitem>
+        </itemizedlist>
     </para>
     <note>
         Due to production processes, there could be differences between the Yocto Project
         documentation bundled in the release tarball and the 
-        <ulink url='http://www.yoctoproject.org/docs/1.1.1/yocto-project-qs/yocto-project-qs.html'>
+        <ulink url='&YOCTO_DOCS_QS_URL;'>
         Yocto Project Quick Start</ulink> on
-        the <ulink url='http://www.yoctoproject.org'>Yocto Project</ulink> website.
+        the <ulink url='&YOCTO_HOME_URL;'>Yocto Project</ulink> website.
         For the latest version of this manual, see the manual on the website.
     </note>
 </section>
@@ -156,11 +160,11 @@
                 <listitem><para>openSUSE</para></listitem>
             </itemizedlist>
             For a list of the distributions under validation and their status, see the
-            <ulink url='https://wiki.yoctoproject.org/wiki/Distribution_Support'>Distribution
+            <ulink url='&YOCTO_WIKI_URL;/wiki/Distribution_Support'>Distribution
             Support</ulink> wiki page.
             <note>
                 For notes about using the Yocto Project on a RHEL 4-based host, see the
-                <ulink url='https://wiki.yoctoproject.org/wiki/BuildingOnRHEL4'>BuildingOnRHEL4</ulink>
+                <ulink url='&YOCTO_WIKI_URL;/wiki/BuildingOnRHEL4'>BuildingOnRHEL4</ulink>
                 wiki page.
             </note>
             </para>
@@ -174,12 +178,12 @@
             If you attempt to use a distribution not in the above list, you may or may not have success - you 
             are venturing into untested territory.
             Refer to  
-            <ulink url='http://openembedded.net/index.php?title=OEandYourDistro&amp;action=historysubmit&amp;diff=4309&amp;okdid=4225'>OE and Your Distro</ulink> and 
-            <ulink url='http://openembedded.net/index.php?title=Required_software&amp;action=historysubmit&amp;diff=4311&amp;oldid=4251'>Required Software</ulink> 
+            <ulink url='&OE_HOME_URL;/index.php?title=OEandYourDistro&amp;action=historysubmit&amp;diff=4309&amp;okdid=4225'>OE and Your Distro</ulink> and 
+            <ulink url='&OE_HOME_URL;/index.php?title=Required_software&amp;action=historysubmit&amp;diff=4311&amp;oldid=4251'>Required Software</ulink> 
             for information for other distributions used with the OpenEmbedded project, which might be
             a starting point for exploration.
             If you go down this path, you should expect problems.
-            When you do, please go to <ulink url='http://bugzilla.yoctoproject.org'>Yocto Project Bugzilla</ulink>
+            When you do, please go to <ulink url='&YOCTO_BUGZILLA_URL;'>Yocto Project Bugzilla</ulink>
             and submit a bug.
             We are interested in hearing about your experience.
         </para></note>
@@ -213,8 +217,8 @@
 
                 <literallayout class='monospaced'>
      $ sudo apt-get install sed wget cvs subversion git-core coreutils \
-     unzip texi2html texinfo libsdl1.2-dev docbook-utils gawk \
-     python-pysqlite2 diffstat help2man make gcc build-essential \
+     unzip texi2html texinfo libsdl1.2-dev docbook-utils gawk fop \
+     python-pysqlite2 diffstat help2man make gcc build-essential xsltproc \
      g++ desktop-file-utils chrpath libgl1-mesa-dev libglu1-mesa-dev \
      mercurial autoconf automake groff libtool xterm
                 </literallayout>
@@ -232,7 +236,7 @@
      $ sudo yum groupinstall "development tools"
      $ sudo yum install python m4 make wget curl ftp hg tar bzip2 gzip \
      unzip python-psyco perl texinfo texi2html diffstat openjade \
-     docbook-style-dsssl sed docbook-style-xsl docbook-dtds \
+     docbook-style-dsssl sed docbook-style-xsl docbook-dtds fop xsltproc \
      docbook-utils sed bc eglibc-devel ccache pcre pcre-devel quilt \
      groff linuxdoc-tools patch linuxdoc-tools cmake help2man \
      perl-ExtUtils-MakeMaker tcl-devel gettext chrpath ncurses apr \
@@ -258,8 +262,8 @@
             </para>
 
                 <literallayout class='monospaced'>
-     $ sudo zypper install python gcc gcc-c++ libtool \
-     subversion git chrpath automake make wget help2man \
+     $ sudo zypper install python gcc gcc-c++ libtool fop \
+     subversion git chrpath automake make wget help2man xsltproc \
      diffstat texinfo mercurial freeglut-devel libSDL-devel
                 </literallayout>
         </section>
@@ -270,13 +274,13 @@
             
         <para>
             You can download the latest Yocto Project release by going to the 
-            <ulink url="http://yoctoproject.org/download">Yocto Project Download page</ulink>.
+            <ulink url="&YOCTO_HOME_URL;/download">Yocto Project Download page</ulink>.
             Just go to the page and click the "Yocto Downloads" link found in the "Download"
             navigation pane to the right to view all available Yocto Project releases. 
             Then, click the "Yocto Release" link for the release you want from the list to 
             begin the download. 
             Nightly and developmental builds are also maintained at
-            <ulink url="http://autobuilder.yoctoproject.org/nightly/"></ulink>.  
+            <ulink url="&YOCTO_AB_NIGHTLY_URL;"></ulink>.  
             However, for this document a released version of Yocto Project is used.
         </para>
 
@@ -285,10 +289,8 @@
             development system. 
             Doing so allows you to contribute back to the project.
             For information on how to get set up using this method, see the 
-            "<ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html#local-yp-release'>Yocto 
-            Project Release</ulink>" item in  
-            <ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html'>The Yocto Project
-            Development Manual</ulink>.
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#local-yp-release'>Yocto 
+            Project Release</ulink>" item in The Yocto Project Development Manual.
         </para>
     </section>
 </section>
@@ -297,7 +299,7 @@
     <title>A Quick Test Run</title>
 
     <para>
-        Now that you have your system requirements in order, you can give Yocto Project a try.  
+        Now that you have your system requirements in order, you can give the Yocto Project a try.  
         This section presents some steps that let you do the following:
     </para>
 
@@ -343,28 +345,28 @@
              By default, the Yocto Project searches for source code using a pre-determined order
              through a set of locations.
              If you encounter problems with the Yocto Project finding and downloading source code, see
-             the FAQ entry "How does Poky obtain source code and will it work behind my
+             the FAQ entry "How does the Yocto Project build system obtain source code and will it work behind my
              firewall or proxy server?" in  
-             <ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html'>
+             <ulink url='&YOCTO_DOCS_REF_URL;#faq'>
              The Yocto Project Reference Manual</ulink>.
          </para></note>
 
          <para>
              <literallayout class='monospaced'>
-     $ wget http://downloads.yoctoproject.org/releases/yocto/yocto-1.1.1/poky-edison-6.0.1.tar.bz2
-     $ tar xjf poky-edison-6.0.1.tar.bz2
-     $ source poky-edison-6.0.1/oe-init-build-env edison-6.0.1-build
+     $ wget &YOCTO_POKY_DL_URL;
+     $ tar xjf &YOCTO_POKY;.tar.bz2
+     $ source &OE_INIT_PATH; &YOCTO_POKY;-build
              </literallayout>
          </para>
 
          <tip><para>
              To help conserve disk space during builds, you can add the following statement
              to your project's configuration file, which for this example
-             is <filename>edison-6.0.1-build/conf/local.conf</filename>.
+             is <filename>&YOCTO_POKY;-build/conf/local.conf</filename>.
              Adding this statement deletes the work directory used for building a package
              once the package is built.
              <literallayout class='monospaced'>
-     INHERIT += rm_work
+     INHERIT += "rm_work"
              </literallayout>
          </para></tip>
 
@@ -373,16 +375,16 @@
                  release tarball from the source repositories using the
                  <filename>wget</filename> command.
                  Alternatively, you can go to the 
-                 <ulink url='http://www.yoctoproject.org/download'>Yocto Project website</ulink>
-                 Downloads page to retrieve the tarball.</para></listitem>
+                 <ulink url='&YOCTO_HOME_URL;/download'>Yocto Project website's Downloads page</ulink>
+                 to retrieve the tarball.</para></listitem>
              <listitem><para>The second command extracts the files from the tarball and places 
-                 them into a directory named <filename>poky-edison-6.0.1</filename> in the current 
+                 them into a directory named <filename>&YOCTO_POKY;</filename> in the current 
                  directory.</para></listitem>
              <listitem><para>The third command runs the Yocto Project environment setup script.
                  Running this script defines Yocto Project build environment settings needed to 
                  complete the build.
                  The script also creates the Yocto Project
-                 build directory, which is <filename>edison-6.0.1-build</filename> in this case.
+                 build directory, which is <filename>&YOCTO_POKY;-build</filename> in this case.
                  After the script runs, your current working directory is set 
                  to the build directory.
                  Later, when the build completes, the build directory contains all the files 
@@ -406,15 +408,12 @@
 
          <para>
              Another couple of variables of interest are the 
-             <ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink> and the 
-             <ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink> variables.
+             <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink> and the 
+             <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink> variables.
              By default, these variables are commented out. 
              However, if you have a multi-core CPU you might want to uncomment
-             the lines and set the variable
-             <filename>BB_NUMBER_THREADS</filename> equal to twice the number of your 
+             the lines and set both variables equal to twice the number of your 
              host's processor cores.
-             Also, you could set the variable <filename>PARALLEL_MAKE</filename> equal to 
-             1.5 times the number of processor cores.
              Setting these variables can significantly shorten your build time.
          </para>
 
@@ -423,11 +422,10 @@
             the image. 
             By default, the Yocto Project build system uses the RPM package manager.
             You can control this configuration by using the 
-            <filename><ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink></filename> variable.  
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink></filename> variable.  
              For additional package manager selection information, see 
-             "<ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html#ref-classes-package'>Packaging - <filename>package*.bbclass</filename></ulink>" in 
-             <ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html'>
-             The Yocto Project Reference Manual</ulink>.
+             "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-package'>Packaging - <filename>package*.bbclass</filename></ulink>" 
+             in The Yocto Project Reference Manual.
         </para>
 
          <para>
@@ -435,16 +433,16 @@
              <filename>core-image-sato</filename> in this example.
              For information on the <filename>-k</filename> option use the 
              <filename>bitbake --help</filename> command or see the
-             "<ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html#usingpoky-components-bitbake'>BitBake</ulink>" section in 
-             <ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html'>The Yocto Project Reference Manual</ulink>.
+             "<ulink url='&YOCTO_DOCS_REF_URL;#usingpoky-components-bitbake'>BitBake</ulink>" section in 
+             The Yocto Project Reference Manual.
              <literallayout class='monospaced'>
      $ bitbake -k core-image-sato
              </literallayout>
              <note><para>
                  BitBake requires Python 2.6 or 2.7.  For more information on this requirement, 
-                 see the FAQ appendix in  
-                 <ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html'>
-                 The Yocto Project Reference Manual</ulink>.
+                 see the 
+                 <ulink url='&YOCTO_DOCS_REF_URL;#faq'>FAQ</ulink> in The Yocto Project Reference 
+                 Manual.
              </para></note>
              The final command runs the image:
              <literallayout class='monospaced'>
@@ -482,7 +480,7 @@
         </para>
 
         <itemizedlist>
-            <listitem><para>Install the stand-alone Yocto toolchain tarball.</para></listitem>
+            <listitem><para>Install the appropriate stand-alone Yocto toolchain tarball.</para></listitem>
             <listitem><para>Download the pre-built image that will boot with QEMU.  
                 You need to be sure to get the QEMU image that matches your target machine’s 
                 architecture (e.g. x86, ARM, etc.).</para></listitem>
@@ -497,9 +495,9 @@
             <para>
                 You can download the pre-built toolchain, which includes the <filename>runqemu</filename> 
                 script and support files, from the appropriate directory under
-                <ulink url='http://downloads.yoctoproject.org/releases/yocto/yocto-1.1.1/toolchain/'></ulink>.  
+                <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'></ulink>.  
                 Toolchains are available for 32-bit and 64-bit development systems from the 
-                <filename>i686</filename> and <filename>x86_64</filename> directories, respectively. 
+                <filename>i686</filename> and <filename>x86-64</filename> directories, respectively. 
                 Each type of development system supports five target architectures.
                 The tarball files are named such that a string representing the host system appears 
                 first in the filename and then is immediately followed by a string representing
@@ -507,7 +505,7 @@
             </para>
 
             <literallayout class='monospaced'>
-     poky-eglibc&lt;<emphasis>host_system</emphasis>&gt;-&lt;<emphasis>arch</emphasis>&gt;-toolchain-gmae-&lt;<emphasis>release</emphasis>&gt;.tar.bz2
+     poky-eglibc-&lt;<emphasis>host_system</emphasis>&gt;-&lt;<emphasis>arch</emphasis>&gt;-toolchain-gmae-&lt;<emphasis>release</emphasis>&gt;.tar.bz2
 
      Where:
          &lt;<emphasis>host_system</emphasis>&gt; is a string representing your development system: 
@@ -525,7 +523,7 @@
             </para>
 
             <literallayout class='monospaced'>
-     poky-eglibc-x86_64-i586-toolchain-gmae-1.1.1.tar.bz2
+     poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.tar.bz2
             </literallayout>
 
             <para>
@@ -538,16 +536,15 @@
             <para>
                 <literallayout class='monospaced'>
      $ cd /
-     $ sudo tar -xvjf ~/toolchains/poky-eglibc-x86_64-i586-toolchain-gmae-1.1.1.tar.bz2
+     $ sudo tar -xvjf ~/toolchains/poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.tar.bz2
                 </literallayout>
             </para>
 
             <para>
                 For more information on how to install tarballs, see the 
-                "<ulink url='http://www.yoctoproject.org/docs/1.1.1/adt-manual/adt-manual.html#using-an-existing-toolchain-tarball'>Using a Cross-Toolchain Tarball</ulink>" and 
-                "<ulink url='http://www.yoctoproject.org/docs/1.1.1/adt-manual/adt-manual.html#using-the-toolchain-from-within-the-build-tree'>Using BitBake and the Yocto Project Build Tree</ulink>" sections in  
-                <ulink url='http://www.yoctoproject.org/docs/1.1.1/adt-manual/adt-manual.html'>The Yocto Project 
-                Application Development Toolkit (ADT) User's Guide</ulink>.
+                "<ulink url='&YOCTO_DOCS_ADT_URL;#using-an-existing-toolchain-tarball'>Using a Cross-Toolchain Tarball</ulink>" and 
+                "<ulink url='&YOCTO_DOCS_ADT_URL;#using-the-toolchain-from-within-the-build-tree'>Using BitBake and the Yocto Project Build Tree</ulink>" sections in The Yocto Project Application Development Toolkit (ADT) 
+                User's Guide.
             </para>
         </section>
 
@@ -556,11 +553,11 @@
       
             <para>
                 You can download the pre-built Linux kernel suitable for running in the QEMU emulator from 
-                <ulink url='http://downloads.yoctoproject.org/releases/yocto/yocto-1.1.1/machines/qemu'></ulink>.
+                <ulink url='&YOCTO_QEMU_DL_URL;'></ulink>.
                 Be sure to use the kernel that matches the architecture you want to simulate.
                 Download areas exist for the five supported machine architectures:
                 <filename>qemuarm</filename>, <filename>qemumips</filename>, <filename>qemuppc</filename>,
-                <filename>qemux86</filename>, and <filename>qemux86_64</filename>.
+                <filename>qemux86</filename>, and <filename>qemux86-64</filename>.
             </para>
          
             <para>  
@@ -577,9 +574,8 @@
 
             <para>
                 You can learn more about downloading a Yocto Project kernel in the 
-                "<ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html#local-kernel-files'>Linux Yocto Kernel</ulink>" section of  
-                <ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html'>The 
-                Yocto Project Development Manual</ulink>.
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#local-kernel-files'>Linux Yocto Kernel</ulink>" section of  
+                The Yocto Project Development Manual.
             </para>
         </section>
 
@@ -588,7 +584,7 @@
 
             <para>
                 You can also download the filesystem image suitable for your target architecture from
-                <ulink url='http://downloads.yoctoproject.org/releases/yocto/yocto-1.1.1/machines/qemu'></ulink>.
+                <ulink url='&YOCTO_QEMU_DL_URL;'></ulink>.
                 Again, be sure to use the filesystem that matches the architecture you want 
                 to simulate.
             </para>
@@ -599,7 +595,7 @@
                 You must use the <filename>ext3</filename> form when booting an image using the 
                 QEMU emulator.
                 The <filename>tar</filename> form can be flattened out in your host development system
-                and used for Yocto Project build purposes.
+                and used for build purposes with the Yocto Project.
                 <literallayout class='monospaced'>
      core-image-&lt;<emphasis>profile</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;.ext3
      core-image-&lt;<emphasis>profile</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;.tar.bz2
@@ -608,7 +604,7 @@
          &lt;<emphasis>profile</emphasis>&gt; is the filesystem image's profile:
                    lsb, lsb-dev, lsb-sdk, lsb-qt3, minimal, minimal-dev, sato, sato-dev, or sato-sdk.
                    For information on these types of image profiles, see
-                   <ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>Reference: Images</ulink> in the Yocto Project Reference Manual.
+                   <ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Reference: Images</ulink> in the Yocto Project Reference Manual.
 
          &lt;<emphasis>arch</emphasis>&gt; is a string representing the target architecture: 
                 x86, x86-64, ppc, mips, or arm.
@@ -623,7 +619,7 @@
                 Before you start the QEMU emulator, you need to set up the emulation environment.
                 The following command form sets up the emulation environment.
                 <literallayout class='monospaced'>
-     $ source /opt/poky/1.1.1/environment-setup-&lt;<emphasis>arch</emphasis>&gt;-poky-linux-&lt;<emphasis>if</emphasis>&gt; 
+     $ source &YOCTO_ADTPATH_DIR;/environment-setup-&lt;<emphasis>arch</emphasis>&gt;-poky-linux-&lt;<emphasis>if</emphasis>&gt; 
 
      Where:
          &lt;<emphasis>arch</emphasis>&gt; is a string representing the target architecture: 
@@ -653,12 +649,13 @@
             <para>
                 Continuing with the example, the following two commands setup the emulation 
                 environment and launch QEMU.
-                This example assumes the toolchain tarball has been downloaded and expanded
-                into <filename>/opt/poky</filename> and  
-                that the kernel and filesystem are for a 32-bit target architecture.
+                This example assumes the root filesystem (<filename>.ext3</filename> file) and 
+                the pre-built kernel image file both reside in your home directory. 
+                The kernel and filesystem are for a 32-bit target architecture.
                 <literallayout class='monospaced'>
-     $ source /opt/poky/1.1.1/environment-setup-i586-poky-linux 
-     $ runqemu qemux86 bzImage-3.0-qemux86-1.1.1.bin \
+     $ cd $HOME
+     $ source &YOCTO_ADTPATH_DIR;/environment-setup-i586-poky-linux 
+     $ runqemu qemux86 bzImage-qemux86.bin \
      core-image-sato-qemux86.ext3
                 </literallayout>
             </para>
