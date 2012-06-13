@@ -1,5 +1,6 @@
 <!DOCTYPE appendix PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <appendix id='ref-bitbake'>
 
@@ -35,7 +36,7 @@
             The first thing BitBake does is look for the <filename>bitbake.conf</filename> file.
             The Yocto Project keeps this file in the Yocto Project file's <filename>meta/conf/</filename>
             directory.
-            BitBake finds it by examining the <filename>BBPATH</filename> environment 
+            BitBake finds it by examining its <filename>BBPATH</filename> environment 
             variable and looking for the <filename>meta/conf/</filename> 
             directory.
         </para>
@@ -53,7 +54,7 @@
             and the machine configuration file 
             (set by the 
             <filename><link linkend='var-MACHINE'>MACHINE</link></filename> variable).  
-            The <filename>DISTRO</filename> and <filename>MACHINE</filename> environment 
+            The <filename>DISTRO</filename> and <filename>MACHINE</filename> BitBake environment 
             variables are both usually set in 
             the <filename>local.conf</filename> file. 
             Valid distribution 
@@ -86,7 +87,7 @@
             <filename>meta/recipes-*/</filename> directory within Poky. 
             Adding extra content to <filename>BBFILES</filename> is best achieved through the use of 
             BitBake layers as described in the 
-            <link linkend='usingpoky-changes-layers'>BitBake Layers</link> section.
+            "<link linkend='usingpoky-changes-layers'>BitBake Layers</link>" section.
         </para>
 
         <para>
@@ -207,17 +208,16 @@
             It is worth noting that you can greatly speed up the build time by properly setting 
             the <filename>BB_NUMBER_THREADS</filename> variable.  
             See the
-            <ulink url='http://www.yoctoproject.org/docs/1.1.1/yocto-project-qs/yocto-project-qs.html#building-image'>
-            Building an Image</ulink> section in the 
-            <ulink url='http://www.yoctoproject.org/docs/1.1.1/yocto-project-qs/yocto-project-qs.html'>
-            Yocto Project Quick Start</ulink> for more information.
+            "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>"
+            section in the Yocto Project Quick Start for more information.
         </para>
 
         <para>
             As each task completes, a timestamp is written to the directory specified by the 
             <filename><link linkend='var-STAMPS'>STAMPS</link></filename> variable (usually 
             <filename>build/tmp/stamps/*/</filename>). 
-            On subsequent runs, BitBake looks at the <filename>STAMPS</filename> directory and does not rerun 
+            On subsequent runs, BitBake looks at the <filename>/build/tmp/stamps</filename>
+            directory and does not rerun
             tasks that are already completed unless a timestamp is found to be invalid. 
             Currently, invalid timestamps are only considered on a per 
             <filename>.bb</filename> file basis.
@@ -301,7 +301,7 @@
             variable so that the shared state code ignores the dependency when it creates
             checksums.
             For information on this process, see the <filename>BB_HASHBASE_WHITELIST</filename>
-            example in <xref linkend='checksums'>Checksums (Signatures)</xref>.
+            example in the "<link linkend='checksums'>Checksums (Signatures)</link>" section.
         </note>
     </section>
 
@@ -401,8 +401,8 @@ Options:
             This feature works using the <filename><link linkend='var-SRCREV'>SRCREV</link></filename> 
             variable. 
             See the 
-            <link linkend='platdev-appdev-srcrev'>Development Within Yocto Project for a Package that Uses 
-            an External SCM</link> section for more information.
+            "<link linkend='platdev-appdev-srcrev'>Development Within Yocto Project for a Package that Uses 
+            an External SCM</link>" section for more information.
         </para>
 
     </section>
