@@ -1,5 +1,6 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <chapter id='kernel-how-to'>
 
@@ -10,8 +11,8 @@
     <title>Introduction</title>
     <para>
         This chapter describes how to accomplish tasks involving the kernel's tree structure. 
-        This information is designed to help the developer that wants to modify the Yocto Project kernel
-        and contribute changes upstream to the Yocto Project.
+        The information is designed to help the developer that wants to modify the Yocto 
+        Project kernel and contribute changes upstream to the Yocto Project.
         The information covers the following:
         <itemizedlist> 
             <listitem><para>Tree construction</para></listitem>
@@ -24,10 +25,11 @@
     <section id='tree-construction'>
         <title>Tree Construction</title>
         <para>
-            This section describes construction of the Yocto Project kernel repositories as accomplished
-            by the Yocto Project team to create kernel repositories, which are found at
-            <ulink url='http://git.yoctoproject.org/cgit.cgi'>http://git.yoctoproject.org/cgit.cgi</ulink>,
-            that can be shipped as part of a Yocto Project release. 
+            This section describes construction of the Yocto Project kernel repositories 
+            as accomplished by the Yocto Project team to create kernel repositories.
+            These kernel repositories are found at
+            <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>&YOCTO_GIT_URL;/cgit.cgi</ulink>
+            and can be shipped as part of a Yocto Project release. 
             The team creates these repositories by
             compiling and executing the set of feature descriptions for every BSP/feature
             in the product. 
@@ -50,19 +52,25 @@
             </literallayout>
             For another example of how to set up a local Git repository of the Linux Yocto 
             kernel files, see the 
-            "<ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html#local-kernel-files'>Linux Yocto Kernel</ulink>" bulleted item in  
-            <ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html'>The Yocto Project Development Manual</ulink>.
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#local-kernel-files'>Linux Yocto Kernel</ulink>" bulleted item in The Yocto Project Development Manual.
         </para>
         <para>  
-            Once the Git repository is set up on your local machine, you can switch to the 
-            <filename>meta</filename> branch within the repository.
-            Here, you can see a snapshot of all the kernel configuration and feature descriptions that are 
-            used to build the kernel repository.
+            Once you have cloned the kernel Git repository on your local machine, you can 
+            switch to the <filename>meta</filename> branch within the repository.
+            Here is an example that assumes the local Git repository for the kernel is in 
+            a top-level directory named <filename>linux-yocto-3.0</filename>:
+            <literallayout class='monospaced'>
+     $ cd ~/linux-yocto-3.0
+     $ git checkout -b meta origin/meta
+            </literallayout>
+            Once you have checked out and switched to the <filename>meta</filename> branch,
+            you can see a snapshot of all the kernel configuration and feature descriptions that are 
+            used to build that particular kernel repository.
             These descriptions are in the form of <filename>.scc</filename> files. 
         </para>
         <para>
-            You should realize, however, that browsing your local snapshot of feature
-            descriptions and patches is not an effective way to determine what is in a
+            You should realize, however, that browsing your local kernel repository
+            for feature descriptions and patches is not an effective way to determine what is in a
             particular kernel branch. 
             Instead, you should use Git directly to discover the changes in a branch.
             Using Git is an efficient and flexible way to inspect changes to the kernel.  
@@ -76,10 +84,12 @@
             </note>
         </para>
         <para>
-            The following steps describe what happens when the Yocto kernel team constructs
-            the kernel tree given the introduction of a new top-level kernel feature or BSP. 
-            These are the actions that effectively create the tree that includes the new feature, patch, 
-            or BSP:
+            The following steps describe what happens when the Yocto Project Team constructs
+            the Yocto Linux kernel source Git repository (or tree) found at 
+            <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink> given the 
+            introduction of a new top-level kernel feature or BSP. 
+            These are the actions that effectively create the tree 
+            that includes the new feature, patch or BSP:
             <orderedlist>
                 <listitem><para>A top-level kernel feature is passed to the kernel build subsystem.
                     Normally, this feature is a BSP for a particular kernel type.</para></listitem>
@@ -126,10 +136,11 @@
                 Any add-ons and configuration data are applied to the end of an existing branch. 
                 The full repository generation that is found in the 
                 official Yocto Project kernel repositories at
-                <ulink url='http://git.yoctoproject.org/cgit.cgi'>http://git.yoctoproject.org/cgit.cgi</ulink>
+                <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>http://git.yoctoproject.org/cgit.cgi</ulink>
                 is the combination of all supported boards and configurations.</para>
                 <para>The technique the Yocto Project team uses is flexible and allows for seamless 
-                blending of an immutable history with additional deployment specific patches. 
+                blending of an immutable history with additional patches specific to a 
+                deployment. 
                 Any additions to the kernel become an integrated part of the branches.</para>
             </note>
         </para>
@@ -226,10 +237,8 @@
             You can find Git documentation at 
             <ulink url='http://git-scm.com/documentation'></ulink>.
             You can find a simple overview of using Git with the Yocto Project in the 
-            "<ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html#git'>Git</ulink>"
-            section of  
-            <ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html'>The Yocto 
-            Project Development Manual</ulink>.
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink>"
+            section of The Yocto Project Development Manual.
         </para>
 
         <section id='change-inspection-kernel-changes-commits'>
@@ -244,8 +253,8 @@
                 In projects that have a collection of directories that
                 contain patches to the kernel, it is possible to inspect or "grep" the contents 
                 of the directories to get a general feel for the changes. 
-                This sort of patch inspection is not an efficient way to determine what has been done to the
-                kernel.
+                This sort of patch inspection is not an efficient way to determine what has been 
+                done to the kernel.
                 The reason it is inefficient is because there are many optional patches that are 
                 selected based on the kernel type and the feature description.
                 Additionally, patches could exist in directories that are not included in the search.
@@ -299,9 +308,11 @@
                 <title>Show a Particular Feature or Branch Change</title>
 
                 <para>
-                    Significant features or branches are tagged in the Yocto Project tree to divide
-                    changes. 
-                    Remember to first determine (or add) the tag of interest.  
+                    Developers use tags in the Yocto Project tree to divide changes for significant 
+                    features or branches. 
+                    Once you know a particular tag, you can use Git commands 
+                    to show changes associated with the tag and find the branches that contain
+                    the feature.  
                     <note>
                         Because BSP branch, <filename>kernel.org</filename>, and feature tags are all 
                         present, there could be many tags.
@@ -354,10 +365,10 @@
                 The Yocto Project provides scripts that help you work in a collaborative development 
                 environment.  
                 For information on these scripts, see the
-                "<ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html#pushing-a-change-upstream'>Pushing a Change Upstream and Requesting a Pull</ulink>" and   
-                "<ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html#submitting-a-patch'>Submitting a Patch Through Email</ulink>" sections in    
-                <ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html'>The 
-                Yocto Project Development Manual</ulink>".
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#pushing-a-change-upstream'>Pushing a Change 
+                Upstream and Requesting a Pull</ulink>" and   
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#submitting-a-patch'>Submitting a Patch Through 
+                Email</ulink>" sections in The Yocto Project Development Manual.
             </para>
 
             <para>
@@ -637,9 +648,8 @@
                     The messages used to commit changes are a large part of these standards.
                     Consequently, be sure that the headers for each commit have the required information.
                     For information on how to follow the Yocto Project commit message standards, see the
-                    "<ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html#how-to-submit-a-change'>How to Submit a Change</ulink>" section in  
-                    <ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html'>The 
-                    Yocto Project Development Manual</ulink>".
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change'>How to Submit a 
+                    Change</ulink>" section in The Yocto Project Development Manual.
                 </para>
 
                 <para>
@@ -741,7 +751,8 @@
                 </para>
 
                 <para>
-                    The following commands illustrate how you can condense and merge two BSPs into a second SCM:
+                    The following commands illustrate how you can condense and merge two BSPs into a 
+                    second SCM:
                     <literallayout class='monospaced'>
      &gt; git checkout yocto/standard/common-pc/base
      &gt; git merge yocto/standard/common-pc-64/base
@@ -772,10 +783,9 @@
                 existing similar BSP.
                 The information is introductory in nature and does not provide step-by-step examples. 
                 For detailed information on how to create a BSP given an existing similar BSP, see
-                the "<ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html#dev-manual-bsp-appendix'>BSP Development Example</ulink>" appendix in  
-                <ulink url='http://www.yoctoproject.org/docs/1.1.1/dev-manual/dev-manual.html'>The 
-                Yocto Project Development Manual</ulink>, or see the 
-                <ulink url='https://wiki.yoctoproject.org/wiki/Transcript:_creating_one_generic_Atom_BSP_from_another'>Transcript:_creating_one_generic_Atom_BSP_from_another</ulink>
+                the "<ulink url='&YOCTO_DOCS_DEV_URL;#dev-manual-bsp-appendix'>BSP Development 
+                Example</ulink>" appendix in the Yocto Project Development Manual, or see the 
+                <ulink url='&YOCTO_WIKI_URL;/wiki/Transcript:_creating_one_generic_Atom_BSP_from_another'>Transcript:_creating_one_generic_Atom_BSP_from_another</ulink>
                 wiki page.
             </para>
 
@@ -792,7 +802,7 @@
                         your BSP easier.  
                         You can find all the BSPs that are supported and ship with the Yocto Project 
                         on the Yocto Project's Download page at 
-                        <ulink url='http://www.yoctoproject.org/download'></ulink>.</para></listitem>
+                        <ulink url='&YOCTO_HOME_URL;/download'></ulink>.</para></listitem>
                     <listitem><para><emphasis>Be sure you have the Base BSP:</emphasis>
                         You need to either have the Yocto Project Git repository set up or download
                         the tarball of the base BSP.
