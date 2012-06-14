@@ -1,5 +1,6 @@
 <!DOCTYPE appendix PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <appendix id='dev-manual-kernel-appendix'>
 
@@ -149,14 +150,14 @@
      $ git branch -a
      $ git tag -l
                 </literallayout> 
-                This example uses the Yocto Project 1.1.1 Release code named "edison", 
-                which maps to the <filename>edison</filename> branch in the repository. 
-                The following commands create and checkout the local <filename>edison</filename>
+                This example uses the Yocto Project &DISTRO; Release code named "&DISTRO_NAME;", 
+                which maps to the <filename>&DISTRO_NAME;</filename> branch in the repository. 
+                The following commands create and checkout the local <filename>&DISTRO_NAME;</filename>
                 branch:
                 <literallayout class='monospaced'>
-     $ git checkout -b edison origin/edison
-     Branch edison set up to track remote branch edison from origin.
-     Switched to a new branch 'edison'
+     $ git checkout -b &DISTRO_NAME; origin/&DISTRO_NAME;
+     Branch &DISTRO_NAME; set up to track remote branch &DISTRO_NAME; from origin.
+     Switched to a new branch '&DISTRO_NAME;'
                 </literallayout>
             </para>
         </section>
@@ -244,9 +245,9 @@
                     If your host development system supports multi-core and multi-thread capabilities,
                     you can uncomment these statements and set the variables to significantly shorten
                     the full build time.
-                    As a guideline, set <filename>BB_NUMBER_THREADS</filename> to twice the number 
-                    of cores your machine supports and set <filename>PARALLEL_MAKE</filename> to one and 
-                    a half times the number of cores your machine supports.
+                    As a guideline, set both <filename>BB_NUMBER_THREADS</filename> and 
+                    <filename>PARALLEL_MAKE</filename> to twice the number 
+                    of cores your machine supports.
                 </note>
                 The following two commands <filename>source</filename> the build environment setup script
                 and build the default <filename>qemux86</filename> image.
@@ -411,9 +412,8 @@
                        build time if your host supports multi-core and multi-thread capabilities:
                        <filename>BB_NUMBER_THREADS</filename> and <filename>PARALLEL_MAKE</filename>.
                        If the host system has multiple cores then you can optimize build time 
-                       by setting <filename>BB_NUMBER_THREADS</filename> to twice the number of 
-                       cores and setting <filename>PARALLEL_MAKE</filename> to one and a half times the 
-                       number of cores.</para></listitem>
+                       by setting both these variables to twice the number of 
+                       cores.</para></listitem>
                    <listitem><para><emphasis>Identify Your <filename>meta-kernel-dev</filename>
                        Layer:</emphasis> The <filename>BBLAYERS</filename> variable in the 
                        <filename>bblayers.conf</filename> file found in the 
@@ -455,15 +455,19 @@
            </para>
 
            <note>
-               Before attempting to build the modified kernel, there is one more set of changes you 
+               <para>Before attempting to build the modified kernel, there is one more set of changes you 
                need to make in the <filename>meta-kernel-dev</filename> layer.
                Because all the kernel <filename>.bbappend</filename> files are parsed during the 
                build process regardless of whether you are using them or not, you should either 
                comment out the <filename>COMPATIBLE_MACHINE</filename> statements in all 
-               unused <filename>.bbappend</filename> files.
-               Alternatively, you can simply remove all the files 
+               unused <filename>.bbappend</filename> files, or simply remove (or rename) all the files 
                except the one your are using for the build 
-               (i.e. <filename>linux-yocto_3.0.bbappend</filename> in this example).
+               (i.e. <filename>linux-yocto_3.0.bbappend</filename> in this example).</para>
+               <para>If you do not make one of these two adjustments, your machine will be compatible
+               with all the kernel recipes in the <filename>meta-kernel-dev</filename> layer. 
+               When your machine is comapatible with all the kernel recipes, the build attempts
+               to build all kernels in the layer.
+               You could end up with build errors blocking your work.</para>
            </note>            
        </section>
 
@@ -477,18 +481,21 @@
                     <listitem><para>Your environment should be set up since you previously sourced
                         the <filename>oe-init-build-env</filename> script.
                         If it isn't, source the script again from <filename>poky</filename>.
-                        </para></listitem>
-                    <listitem><para>Be sure old images are cleaned out by running the 
-                        <filename>cleanall</filename> BitBake task as follows:
                         <literallayout class='monospaced'>
      $ cd ~/poky
+     $ source oe-init-build-env
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>Be sure old images are cleaned out by running the 
+                        <filename>cleanall</filename> BitBake task as follows from your build directory:
+                        <literallayout class='monospaced'>
      $ bitbake -c cleanall linux-yocto
                         </literallayout></para>
                         <para><note>Never remove any files by hand from the <filename>tmp/deploy</filename>
                         directory insided the local Yocto Project files build directory.
                         Always use the BitBake <filename>cleanall</filename> task to clear
                         out previous builds.</note></para></listitem>
-                    <listitem><para>Build the kernel image using this command:
+                    <listitem><para>Next, build the kernel image using this command:
                         <literallayout class='monospaced'>
      $ bitbake -k core-image-minimal
                         </literallayout></para></listitem>
@@ -532,9 +539,9 @@
                 in "<link linkend='modifying-the-kernel-source-code'>Modifying the Kernel Source
                 Code</link>" you should already have the Yocto Project files set up on your 
                 host machine.
-                If this is the case, go to then next section titled
+                If this is the case, go to the next section, which is titled
                 "<link linkend='examining-the-default-config-smp-behavior'>Examining the Default
-                <filename>CONFIG_SMP</filename> Behavior</link>" and continue with the 
+                <filename>CONFIG_SMP</filename> Behavior</link>", and continue with the 
                 example.
             </para>
 
@@ -559,14 +566,14 @@
      $ git branch -a
      $ git tag -l
                 </literallayout> 
-                This example uses the Yocto Project 1.1.1 Release code named "edison", 
-                which maps to the <filename>edison</filename> branch in the repository. 
-                The following commands create and checkout the local <filename>edison</filename>
+                This example uses the Yocto Project &DISTRO; Release code named "&DISTRO_NAME;", 
+                which maps to the <filename>&DISTRO_NAME;</filename> branch in the repository. 
+                The following commands create and checkout the local <filename>&DISTRO_NAME;</filename>
                 branch:
                 <literallayout class='monospaced'>
-     $ git checkout -b edison origin/edison
-     Branch edison set up to track remote branch edison from origin.
-     Switched to a new branch 'edison'
+     $ git checkout -b &DISTRO_NAME; origin/&DISTRO_NAME;
+     Branch &DISTRO_NAME; set up to track remote branch &DISTRO_NAME; from origin.
+     Switched to a new branch '&DISTRO_NAME;'
                 </literallayout>
             </para>
 
@@ -623,7 +630,7 @@
         </section>
 
         <section id='examining-the-default-config-smp-behavior'>
-            <title>Examining the Default <filename>CONFIG_SMP</filename> Behavior</title>
+            <title>Examining the Default&nbsp;&nbsp;<filename>CONFIG_SMP</filename> Behavior</title>
 
             <para>
                 By default, <filename>CONFIG_SMP</filename> supports single processor machines.
@@ -650,7 +657,7 @@
         </section>
 
         <section id='changing-the-config-smp-configuration-using-menuconfig'>
-            <title>Changing the <filename>CONFIG_SMP</filename> Configuration Using <filename>menuconfig</filename></title>
+            <title>Changing the&nbsp;&nbsp;<filename>CONFIG_SMP</filename> Configuration Using&nbsp;&nbsp;<filename>menuconfig</filename></title>
 
             <para>
                 The <filename>menuconfig</filename> tool provides an interactive method with which
@@ -694,16 +701,19 @@
                 is updated. 
                 This is the file that the build system uses to configure the Linux Yocto kernel
                 when it is built. 
-                You can find and examine this file in the Yocto Project files Git repository in 
+                You can find and examine this file in the Yocto Project Files Git repository in 
                 the build directory. 
-                This example uses the following.
-                Note that this example directory is artificially split and many of the characters 
-                in the actually filename are omitted in order to make it more
-                readable:
+                This example uses the following:
                 <literallayout class='monospaced'>
      ~/poky/build/tmp/work/qemux86-poky-linux/linux-yocto-3.0.10+git1+d38...
         ...3a9ac596f7a-r3/linux-qemux86-standard-build
                 </literallayout>
+                <note>
+                    The previous example directory is artificially split and many of the characters 
+                    in the actual filename are omitted in order to make it more readable.
+                    Also, depending on the kernel you are using, the exact pathname might differ 
+                    slightly.
+                </note>
             </para>
 
             <para>
