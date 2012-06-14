@@ -1,5 +1,6 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <chapter id='dev-manual-newbie'>
 
@@ -7,11 +8,11 @@
 
 <para>
     This chapter helps you understand the Yocto Project as an open source development project.
-    In general, working in an open source environment is very different as compared to working in a 
-    proprietary environment.  
+    In general, working in an open source environment is very different from working in a 
+    closed, proprietary environment.  
     Additionally, the Yocto Project uses specific tools and constructs as part of its development 
     environment.  
-    The chapter specifically addresses open source philosophy, licensing issues, code repositories, 
+    This chapter specifically addresses open source philosophy, licensing issues, code repositories, 
     the open source distributed version control system Git, and best practices using the Yocto Project.
 </para>
 
@@ -20,10 +21,10 @@
 
     <para>
         Open source philosophy is characterized by software development directed by peer production 
-        and collaboration through a concerned community of developers.  
+        and collaboration through an active community of developers.
         Contrast this to the more standard centralized development models used by commercial software 
         companies where a finite set of developers produce a product for sale using a defined set 
-        of procedures that ultimately result in an end-product whose architecture and source material 
+        of procedures that ultimately result in an end product whose architecture and source material
         are closed to the public.
     </para>
 
@@ -33,7 +34,7 @@
         stake in the software project.  
         The open source environment contains new copyright, licensing, domain, and consumer issues 
         that differ from the more traditional development environment.  
-        In an open source environment, the end-product, source material, and documentation are 
+        In an open source environment, the end product, source material, and documentation are
         all available to the public at no cost.
     </para>
 
@@ -58,7 +59,7 @@
 
     <para>
         The Yocto Project team maintains complete source repositories for all Yocto Project files 
-        <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>here</ulink>.
+        at <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi'></ulink>.
         This web-based source code browser is organized into categories by function such as
         IDE Plugins, Matchbox, Poky, Yocto Linux Kernel, and so forth.
         From the interface, you can click on any particular item in the "Name" column and 
@@ -73,13 +74,13 @@
         Conversely, if you are a developer that is not interested in contributing back to the 
         Yocto Project, you have the ability to simply download and extract release tarballs
         and use them within the Yocto Project environment.
-        All that is required is a particular release of Yocto Project, a kernel, and 
+        All that is required is a particular release of the Yocto Project and 
         your application source code.  
     </para>
 
     <para>
         For any supported release of Yocto Project, you can go to the Yocto Project website’s 
-        <ulink url='http://www.yoctoproject.org/download'>download page</ulink> and get a 
+        <ulink url='&YOCTO_HOME_URL;/download'>download page</ulink> and get a 
         tarball of the release.  
         You can also go to this site to download any supported BSP tarballs.
         Unpacking the tarball gives you a hierarchical directory structure of Yocto Project 
@@ -94,15 +95,15 @@
     <para>
         In summary, here is where you can get the Yocto Project files needed for development:
         <itemizedlist>
-            <listitem><para><emphasis><ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>Source Repositories:</ulink></emphasis>
+            <listitem><para><emphasis><ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi'>Source Repositories:</ulink></emphasis>
                 This area contains IDE Plugins, Matchbox, Poky, Poky Support, Tools, Yocto Linux Kernel, and Yocto 
                 Metadata Layers.
                 You can create Git repositories for each of these areas.</para>
                 <para>
                 <imagedata fileref="figures/source-repos.png" align="center" width="6in" depth="4in" />
                 </para></listitem>
-            <listitem><para><anchor id='index-downloads' /><emphasis><ulink url='http://downloads.yoctoproject.org/releases/'>Index of /releases:</ulink></emphasis>
-                This area contains an index releases such as 
+            <listitem><para><anchor id='index-downloads' /><emphasis><ulink url='&YOCTO_DL_URL;/releases/'>Index of /releases:</ulink></emphasis>
+                This area contains index releases such as 
                 the <trademark class='trade'>Eclipse</trademark>
                 Yocto Plug-in, miscellaneous support, Poky, pseudo, cross-development toolchains,
                 and all released versions of Yocto Project in the form of images or tarballs.
@@ -111,11 +112,11 @@
                 <para>
                 <imagedata fileref="figures/index-downloads.png" align="center" width="6in" depth="4in" />
                 </para></listitem>
-            <listitem><para><emphasis><ulink url='http://www.yoctoproject.org/download'>Yocto Project Download Page</ulink></emphasis>
+            <listitem><para><emphasis><ulink url='&YOCTO_HOME_URL;/download'>Yocto Project Download Page</ulink></emphasis>
                 This page on the Yocto Project website allows you to download any Yocto Project
                 release or Board Support Package (BSP) in tarball form.
                 The tarballs are similar to those found in the 
-                <ulink url='http://downloads.yoctoproject.org/releases/'>Index of /releases:</ulink> area.</para>
+                <ulink url='&YOCTO_DL_URL;/releases/'>Index of /releases:</ulink> area.</para>
                 <para>
                 <imagedata fileref="figures/yp-download.png" align="center" width="6in" depth="4in" />
             </para></listitem>
@@ -305,7 +306,7 @@
 
     <para>
         You can find a list of the combined SPDX and OSI licenses that the Yocto Project uses 
-        <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/files/common-licenses'>here</ulink>.
+        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/files/common-licenses'>here</ulink>.
         This wiki page discusses the license infrastructure used by the Yocto Project.
     </para>
 </section>
@@ -316,7 +317,10 @@
     <para>
         The Yocto Project uses Git, which is a free, open source distributed version control system.  
         Git supports distributed development, non-linear development, and can handle large projects.  
-        It is best that you know how to work with Git if you are going to use Yocto Project for development.  
+        It is best that you have some fundamental understanding of how Git tracks projects and 
+        how to work with Git if you are going to use Yocto Project for development. 
+        This section provides a quick overview of how Git works and provides you with a summary
+        of some essential Git commands.
     </para>
 
     <para>
@@ -423,7 +427,7 @@
         In particular, the information covers basic practices that describe roles and actions in a 
         collaborative development environment.  
         Again, if you are familiar with this type of development environment, you might want to just 
-        skip the section. 
+        skip this section.
     </para>
 
     <para>
@@ -436,7 +440,7 @@
         The maintainer is responsible for allowing changes in from other developers and for 
         organizing the underlying branch structure to reflect release strategies and so forth.  
         <note>You can see who is the maintainer for Yocto Project files by examining the 
-        <filename>distro_tracking_fields</filename> file in the Yocto Project 
+        <filename>distro_tracking_fields.inc</filename> file in the Yocto Project
         <filename>meta/conf/distro/include</filename> directory.</note>  
     </para>
 
@@ -475,7 +479,7 @@
         "master" branch of the Git repository, which is controlled by the project’s maintainer.  
         And, we have a set of developers who independently develop, test, and submit changes 
         to "contrib" areas for the maintainer to examine.  
-        The maintainer then chooses which changes are going to become permanently a part of the project.  
+        The maintainer then chooses which changes are going to become a permanent part of the project.
     </para>
 
     <para>
@@ -489,12 +493,15 @@
         For more information about Git workflows, see the workflow topics in the 
         <ulink url='http://book.git-scm.com'>Git Community Book</ulink>. 
         <itemizedlist>
-            <listitem><para><emphasis>Make Small Changes:</emphasis> It is best to keep your changes you commit 
+            <listitem><para><emphasis>Make Small Changes:</emphasis> It is best to keep the changes you commit
                 small as compared to bundling many disparate changes into a single commit.  
                 This practice not only keeps things manageable but also allows the maintainer 
                 to more easily include or refuse changes.</para>
                 <para>It is also good practice to leave the repository in a state that allows you to 
-                still successfully build your project.</para></listitem>
+                still successfully build your project.  In other words, do not commit half of a feature,
+                then add the other half in a separate, later commit.  
+                Each commit should take you from one buildable project state to another 
+                buildable state.</para></listitem>
             <listitem><para><emphasis>Use Branches Liberally:</emphasis> It is very easy to create, use, and 
                 delete local branches in your working Git repository.  
                 You can name these branches anything you like.  
@@ -527,7 +534,7 @@
                 <filename>send-pull-request</filename> that ship with the release to facilitate this 
                 workflow.
                 You can find these scripts in the local Yocto Project files Git repository in
-                <filename>scripts</filename>.</para></listitem>
+                the <filename>scripts</filename> directory.</para></listitem>
             <listitem><para><emphasis>Patch Workflow:</emphasis> This workflow allows you to notify the 
                 maintainer through an email that you have a change (or patch) you would like considered 
                 for the "master" branch of the Git repository.  
@@ -548,7 +555,7 @@
         changes, can be used to communicate changes and problems with developers, can be used to 
         submit and review patches, and can be used to manage quality assurance. 
         The home page for the Yocto Project implementation of Bugzilla is   
-        <ulink url='http://bugzilla.yoctoproject.org'>http://bugzilla.yoctoproject.org</ulink>.
+        <ulink url='&YOCTO_BUGZILLA_URL;'>&YOCTO_BUGZILLA_URL;</ulink>.
     </para>
 
     <para>
@@ -559,7 +566,7 @@
         Bugzilla.
         You can find more information on defect management, bug tracking, and feature request
         processes all accomplished through the Yocto Project Bugzilla on the wiki page
-        <ulink url='https://wiki.yoctoproject.org/wiki/Bugzilla_Configuration_and_Bug_Tracking'>here</ulink>.     
+        <ulink url='&YOCTO_WIKI_URL;/wiki/Bugzilla_Configuration_and_Bug_Tracking'>here</ulink>.     
         <orderedlist>
             <listitem><para>Always use the Yocto Project implementation of Bugzilla to submit
                 a bug.</para></listitem>
@@ -602,27 +609,28 @@
 
     <para>
         Contributions to the Yocto Project are very welcome. 
+        Because the Yocto Project is extremely configurable and flexible, we recognize that developers 
+        will want to extend, configure or optimize it for their specific uses.
         You should send patches to the appropriate Yocto Project mailing list to get them 
         in front of the Yocto Project Maintainer.
         For a list of the Yocto Project mailing lists, see the
-        "<ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html#resources-mailinglist'>Mailing lists</ulink>" section in 
-        <ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html'> The 
-        Yocto Project Reference Manual</ulink>.
+        "<ulink url='&YOCTO_DOCS_REF_URL;#resources-mailinglist'>Mailing lists</ulink>" section in 
+        The Yocto Project Reference Manual.
     </para>
 
     <para>
-        Following is some guidance on which mailing list to use for what type of defect:
+        The following is some guidance on which mailing list to use for what type of defect:
         <itemizedlist>
             <listitem><para>For defects against the Yocto Project build system Poky, send 
                 your patch to the  
-                <ulink url='http://lists.yoctoproject.org/listinfo/poky'></ulink> mailing list. 
+                <ulink url='&YOCTO_LISTS_URL;/listinfo/poky'></ulink> mailing list. 
                 This mailing list corresponds to issues that are not specific to the Yocto Project but
                 are part of the OE-core.
                 For example, a defect against anything in the <filename>meta</filename> layer 
                 or the BitBake Manual could be sent to this mailing list.</para></listitem>
             <listitem><para>For defects against Yocto-specific layers, tools, and Yocto Project 
                 documentation use the 
-                <ulink url='http://lists.yoctoproject.org/listinfo/yocto'></ulink> mailing list.
+                <ulink url='&YOCTO_LISTS_URL;/listinfo/yocto'></ulink> mailing list.
                 This mailing list corresponds to Yocto-specific areas such as 
                 <filename>meta-yocto</filename>, <filename>meta-intel</filename>, 
                 <filename>linux-yocto</filename>, and <filename>documentation</filename>.</para></listitem>
@@ -630,7 +638,7 @@
     </para>
 
     <para>  
-        When you send a patch, be sure to include a "signed-off-by:"
+        When you send a patch, be sure to include a "Signed-off-by:"
         line in the same style as required by the Linux kernel. 
         Adding this line signifies the developer has agreed to the Developer's Certificate of Origin 1.1
         as follows:
@@ -672,11 +680,14 @@
     <para>
         In a collaborative environment, it is necessary to have some sort of standard 
         or method through which you submit changes.  
-        Otherwise, things could get quite chaotic.  
+        Otherwise, things could get quite chaotic.
+        One general practice to follow is to make small, controlled changes to the 
+        Yocto Project.
+        Keeping changes small and isolated lets you best keep pace with future Yocto Project changes.
     </para>
 
     <para>
-        When you form a commit, you must follow certain standards established by the 
+        When you create a commit, you must follow certain standards established by the
         Yocto Project development team. 
         For each commit, you must provide a single-line summary of the change and you 
         almost always provide a more detailed description of what you did (i.e. the body 
@@ -710,7 +721,7 @@
     <para>
         You can find more guidance on creating well-formed commit messages at this OpenEmbedded 
         wiki page:
-        <ulink url='http://www.openembedded.org/wiki/Commit_Patch_Message_Guidelines'></ulink>.
+        <ulink url='&OE_HOME_URL;/wiki/Commit_Patch_Message_Guidelines'></ulink>.
     </para>
 
     <para>
@@ -774,7 +785,7 @@
                     See the earlier section
                     "<link linkend='how-to-submit-a-change'>How to Submit a Change</link>" 
                     for Yocto Project commit message standards.</para></listitem>
-                <listitem><para>Format the commit into an email messsage.
+                <listitem><para>Format the commit into an email message.
                     To format commits, use the <filename>git format-patch</filename> command.
                     When you provide the command, you must include a revision list or a number of patches
                     as part of the command.
@@ -789,6 +800,11 @@
                     <para>If you provide several commits as part of the command, 
                     the <filename>git format-patch</filename> command produces a numbered 
                     series of files in the current directory – one for each commit.
+                    If you have more than one patch, you should also use the 
+                    <filename>--cover</filename> option with the command, which generates a 
+                    cover letter as the first "patch" in the series.  
+                    You can then edit the cover letter to provide a description for 
+                    the series of patches.
                     For information on the <filename>git format-patch</filename> command, 
                     see <filename>GIT_FORMAT_PATCH(1)</filename> displayed using the  
                     <filename>man git-format-patch</filename> command.</para></listitem>
@@ -801,7 +817,15 @@
                     or remote Mail Transport Agent (MTA) such as 
                     <filename>msmtp</filename>, <filename>sendmail</filename>, or through a direct
                     <filename>smtp</filename> configuration in your Git <filename>config</filename>
-                    file.</para>
+                    file.
+                    If you are submitting patches through email only, it is very important
+                    that you submit them without any whitespace or HTML formatting that 
+                    either you or your mailer introduces.
+                    The maintainer that receives your patches needs to be able to save and 
+                    apply them directly from your emails.
+                    A good way to verify that what you are sending will be applicable by the 
+                    maintainer is to do a dry run and send them to yourself and then 
+                    save and apply them as the maintainer would.</para>
                     <para>The <filename>git send-email</filename> command is the preferred method
                     for sending your patches since there is no risk of compromising whitespace
                     in the body of the message, which can occur when you use your own mail client.
