@@ -1,5 +1,6 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <chapter id='adt-prepare'>
 
@@ -56,9 +57,9 @@
             <para>
                 The ADT Installer is contained in the ADT Installer tarball.
                 You can download the tarball into any directory from the 
-                <ulink url='http://downloads.yoctoproject.org/releases'>Index of Releases</ulink>, specifically
+                <ulink url='&YOCTO_DL_URL;/releases'>Index of Releases</ulink>, specifically
                 at  
-                <ulink url='http://downloads.yoctoproject.org/releases/yocto/yocto-1.1.1/adt_installer'></ulink>.
+                <ulink url='&YOCTO_ADTINSTALLER_DL_URL;'></ulink>.
                 Or, you can use BitBake to generate the tarball inside the existing Yocto Project 
                 build tree.
             </para>
@@ -81,9 +82,9 @@
      $ cd ~
      $ mkdir yocto-project
      $ cd yocto-project
-     $ wget http://downloads.yoctoproject.org/releases/yocto/yocto-1.1.1/poky-edison-6.0.1.tar.bz2
-     $ tar xjf poky-edison-6.0.1.tar.bz2
-     $ source poky-edison-6.0.1/oe-init-build-env
+     $ wget &YOCTO_RELEASE_DL_URL;/&YOCTO_POKY_TARBALL;
+     $ tar xjf &YOCTO_POKY_TARBALL;
+     $ source &OE_INIT_PATH;
      $ bitbake adt-installer
                 </literallayout>
             </para>
@@ -100,7 +101,7 @@
                 a top-level directory named <filename>adt-installer</filename>:
                 <literallayout class='monospaced'>
      $ cd ~
-     $ cp ~/yocto-project/build/tmp/deploy/sdk/adt_installer.tar.bz2 $HOME
+     $ cp ~/poky/build/tmp/deploy/sdk/adt_installer.tar.bz2 $HOME
      $ tar -xjf adt_installer.tar.bz2
                 </literallayout>
                 Unpacking it creates the directory <filename>adt-installer</filename>, 
@@ -165,20 +166,17 @@
 
             <para>
                 After you have configured the <filename>adt_installer.conf</filename> file, 
-                run the installer for this example using the following commands:
+                run the installer using the following command:
                 <literallayout class='monospaced'>
-     $ cd ~/adt-installer
      $ ./adt_installer
                 </literallayout>
             </para>
 
             <note>
                 The ADT Installer requires the <filename>libtool</filename> package to complete.  
-                If you install the recommended packages as described in the 
-                "<ulink url='http://www.yoctoproject.org/docs/1.1.1/yocto-project-qs/yocto-project-qs.html#packages'>Packages</ulink>"
-                section of 
-                <ulink url='http://www.yoctoproject.org/docs/1.1.1/yocto-project-qs/yocto-project-qs.html'>
-                The Yocto Project Quick Start</ulink>, then you will have libtool installed.
+                If you install the recommended packages as described in  
+                "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Packages</ulink>"
+                section of The Yocto Project Quick Start, then you will have libtool installed.
             </note>
 
             <para>
@@ -192,7 +190,7 @@
             <para>
                 Once the installation completes, the ADT, which includes the cross-toolchain, is installed.
                 You will notice environment setup files for the cross-toolchain in 
-                <filename>/opt/poky/1.1.1</filename>,
+                <filename>&YOCTO_ADTPATH_DIR;</filename>,
                 and image tarballs in the <filename>adt-installer</filename>
                 directory according to your installer configurations, and the target sysroot located
                 according to the <filename>YOCTOADT_TARGET_SYSROOT_LOC_&lt;arch&gt;</filename> variable
@@ -215,17 +213,17 @@
             Follow these steps:
             <orderedlist>
                 <listitem><para>Go to  
-                    <ulink url='http://downloads.yoctoproject.org/releases/yocto/yocto-1.1.1/toolchain'></ulink> 
+                    <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'></ulink> 
                     and find the folder that matches your host development system 
                     (i.e. <filename>i686</filename> for 32-bit machines or 
-                    <filename>x86_64</filename> for 64-bit machines).</para></listitem>
+                    <filename>x86-64</filename> for 64-bit machines).</para></listitem>
                 <listitem><para>Go into that folder and download the toolchain tarball whose name 
                     includes the appropriate target architecture.
                     For example, if your host development system is an Intel-based 64-bit system and 
                     you are going to use your cross-toolchain for an Intel-based 32-bit target, go into the 
                     <filename>x86_64</filename> folder and download the following tarball:
                     <literallayout class='monospaced'>
-     poky-eglibc-x86_64-i586-toolchain-1.1.1.tar.bz2
+     poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.tar.bz2
                     </literallayout>
                     <note><para>As an alternative to steps one and two, you can build the toolchain tarball 
                         if you have a Yocto Project build tree.
@@ -242,15 +240,9 @@
                         </para></note></para></listitem>
                 <listitem><para>Make sure you are in the root directory with root privileges and then expand 
                     the tarball.  
-                    The tarball expands into <filename>/opt/poky/1.1.1</filename>.
+                    The tarball expands into <filename>&YOCTO_ADTPATH_DIR;</filename>.
                     Once the tarball is expanded, the cross-toolchain is installed.
                     You will notice environment setup files for the cross-toolchain in the directory.
-                    Here is an example where the tarball exists in the user's <filename>Downloads</filename>
-                    directory:
-                    <literallayout class='monospaced'>
-     # cd /
-     # tar -xjf /home/scottrif/Downloads/poky-eglibc-x86_64-i586-toolchain-gmae-1.1.tar.bz2
-                    </literallayout>     
                     </para></listitem>
             </orderedlist>
         </para>
@@ -287,7 +279,7 @@
                         command.</note></para></listitem>
                 <listitem><para>Run <filename>bitbake meta-ide-support</filename> to complete the 
                     cross-toolchain installation.
-                    <note>If you change out of your working directory after you 
+                    <note>If change out of your working directory after you 
                         <filename>source</filename> the environment setup script and before you run
                         the <filename>bitbake</filename> command, the command might not work. 
                         Be sure to run the <filename>bitbake</filename> command immediately 
@@ -311,21 +303,21 @@
         Before you can develop using the cross-toolchain, you need to set up the 
         cross-development environment by sourcing the toolchain's environment setup script.  
         If you used the ADT Installer or used an existing ADT tarball to install the ADT,
-        then you can find this script in the <filename>/opt/poky/1.1.1</filename>
+        then you can find this script in the <filename>&YOCTO_ADTPATH_DIR;</filename>
         directory.  
         If you installed the toolchain in the build tree, you can find the environment setup 
         script for the toolchain in the Yocto Project build tree's <filename>tmp</filename> directory.
     </para>
 
     <para> 
-        Be sure to source the environment setup script that matches the architecture for 
+        Be sure to run the environment setup script that matches the architecture for 
         which you are developing.  
         Environment setup scripts begin with the string “<filename>environment-setup</filename>”
         and include as part of their name the architecture.  
-        For example, the command to source the toolchain environment setup script 
-        for a 64-bit IA-based machine would be the following: 
+        For example, the toolchain environment setup script for a 64-bit IA-based architecture would 
+        be the following: 
         <literallayout class='monospaced'>
-     $ source /opt/poky/1.1.1/environment-setup-x86_64-poky-linux
+     &YOCTO_ADTPATH_DIR;/environment-setup-x86_64-poky-linux
         </literallayout>
     </para>
 </section>
@@ -347,8 +339,8 @@
             To get the kernel and filesystem images, you either have to build them or download
             pre-built versions.
             You can find examples for both these situations in the 
-            "<ulink url='http://www.yoctoproject.org/docs/1.1.1/yocto-project-qs/yocto-project-qs.html#test-run'>A
-            Quick Test Run</ulink>" section of The Yocto Project Quick Start.
+            "<ulink url='&YOCTO_DOCS_QS_URL;#test-run'>A Quick Test Run</ulink>" section of   
+            The Yocto Project Quick Start.
         </para>
 
         <para> 
@@ -357,10 +349,11 @@
             <filename>mips</filename>, <filename>powerpc</filename>, and <filename>arm</filename>) 
             that you can use unaltered in the QEMU emulator.  
             These kernel images reside in the Yocto Project release 
-            area - <ulink url='http://downloads.yoctoproject.org/releases/yocto/yocto-1.1.1/machines/'></ulink>
+            area - <ulink url='&YOCTO_MACHINES_DL_URL;'></ulink>
             and are ideal for experimentation within Yocto Project.
             For information on the image types you can build using the Yocto Project, see the
-            "<ulink url='http://www.yoctoproject.org/docs/1.1.1/poky-ref-manual/poky-ref-manual.html#ref-images'>Reference: Images</ulink>" appendix in The Yocto Project Reference Manual.
+            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Reference: Images</ulink>" appendix in  
+            The Yocto Project Reference Manual.
         </para>
 
         <para>
@@ -391,11 +384,11 @@
                         <listitem><para>Set up the cross-development environment as described in the 
                             "<link linkend='setting-up-the-cross-development-environment'>Setting 
                             Up the Cross-Development Environment</link>" section.</para></listitem>
-                        <listitem><para>Get the <filename>tcf-agent</filename> source code, which is 
-                            stored using the Subversion SCM, using the following command:
+                        <listitem><para>Get the <filename>tcf-agent</filename> source code using
+                            the following commands:
                             <literallayout class='monospaced'>
-     $ svn checkout svn://dev.eclipse.org/svnroot/dsdp/org.eclipse.tm.tcf/trunk/agent \
-        &lt;-r #rev_number&gt;
+     $ git clone http://git.eclipse.org/gitroot/tcf/org.eclipse.tcf.agent.git
+     $ cd agent
                             </literallayout></para></listitem>
                         <listitem><para>Modify the <filename>Makefile.inc</filename> file
                             for the cross-compilation environment by setting the 
@@ -432,9 +425,8 @@
             To extract the root filesystem, first <filename>source</filename>
             the cross-development environment setup script and then 
             use the <filename>runqemu-extract-sdk</filename> command on the 
-            filesystem image tarball. 
-            For example, the following commands set up the environment by sourcing 
-            the setup script from within the build directory and then extracting
+            filesystem image. 
+            For example, the following commands set up the environment and then extract
             the root filesystem from a previously built filesystem image tarball named  
             <filename>core-image-sato-sdk-qemux86.tar.bz2</filename>.
             The example extracts the root filesystem into the <filename>$HOME/qemux86-sato</filename>
