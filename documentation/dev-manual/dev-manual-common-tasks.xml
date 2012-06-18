@@ -1726,6 +1726,484 @@ so that there are some definite steps on how to do this.  I need more detail her
             process.
         </para>
     </section>
+
+    <section id="platdev-gdb-remotedebug">
+        <title>Debugging With the GNU Project Debugger (GDB) Remotely</title>
+
+        <para>
+            GDB allows you to examine running programs, which in turn help you to understand and fix problems. 
+            It also allows you to perform post-mortem style analysis of program crashes. 
+            GDB is available as a package within the Yocto Project and by default is 
+            installed in sdk images.
+            See the "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Reference: Images</ulink>" appendix 
+            in the Yocto Project Reference Manual for a description of these images. 
+            You can find information on GDB at <ulink url="http://sourceware.org/gdb/"/>.
+        </para>
+
+        <tip>
+            For best results, install <filename>-dbg</filename> packages for the applications 
+            you are going to debug.
+            Doing so makes available extra debug symbols that give you more meaningful output.
+        </tip>
+
+        <para>
+            Sometimes, due to memory or disk space constraints, it is not possible
+            to use GDB directly on the remote target to debug applications. 
+            These constraints arise because GDB needs to load the debugging information and the 
+            binaries of the process being debugged. 
+            Additionally, GDB needs to perform many computations to locate information such as function 
+            names, variable names and values, stack traces and so forth - even before starting the 
+            debugging process. 
+            These extra computations place more load on the target system and can alter the
+            characteristics of the program being debugged.
+        </para>
+
+        <para>
+            To help get past the previously mentioned constraints, you can use Gdbserver.
+            Gdbserver runs on the remote target and does not load any debugging information 
+            from the debugged process.
+            Instead, a GDB instance processes the debugging information that is run on a 
+            remote computer - the host GDB. 
+            The host GDB then sends control commands to Gdbserver to make it stop or start the debugged 
+            program, as well as read or write memory regions of that debugged program. 
+            All the debugging information loaded and processed as well    
+            as all the heavy debugging is done by the host GDB.
+            Offloading these processes gives the Gdbserver running on the target a chance to remain 
+            small and fast.
+        </para>
+
+        <para>
+            Because the host GDB is responsible for loading the debugging information and 
+            for doing the necessary processing to make actual debugging happen, the 
+            user has to make sure the host can access the unstripped binaries complete
+            with their debugging information and also be sure the target is compiled with no optimizations. 
+            The host GDB must also have local access to all the libraries used by the 
+            debugged program. 
+            Because Gdbserver does not need any local debugging information, the binaries on
+            the remote target can remain stripped. 
+            However, the binaries must also be compiled without optimization 
+            so they match the host's binaries.
+        </para>
+
+        <para>
+            To remain consistent with GDB documentation and terminology, the binary being debugged 
+            on the remote target machine is referred to as the "inferior" binary.
+            For documentation on GDB see the  
+            <ulink url="http://sourceware.org/gdb/documentation/">GDB site</ulink>.
+        </para>
+
+        <section id="platdev-gdb-remotedebug-launch-gdbserver">
+            <title>Launching Gdbserver on the Target</title>
+
+            <para>
+                First, make sure Gdbserver is installed on the target. 
+                If it is not, install the package <filename>gdbserver</filename>, which needs the 
+                <filename>libthread-db1</filename> package.
+            </para>
+
+            <para>
+                As an example, to launch Gdbserver on the target and make it ready to "debug" a 
+                program located at <filename>/path/to/inferior</filename>, connect
+                to the target and launch:
+                <literallayout class='monospaced'>
+     $ gdbserver localhost:2345 /path/to/inferior
+                </literallayout>
+                Gdbserver should now be listening on port 2345 for debugging
+                commands coming from a remote GDB process that is running on the host computer.
+                Communication between Gdbserver and the host GDB are done using TCP. 
+                To use other communication protocols, please refer to the  
+                <ulink url='http://www.gnu.org/software/gdb/'>Gdbserver documentation</ulink>.
+            </para>
+        </section>
+
+        <section id="platdev-gdb-remotedebug-launch-gdb">
+            <title>Launching GDB on the Host Computer</title>
+
+            <para>
+                Running GDB on the host computer takes a number of stages.
+                This section describes those stages.
+            </para>
+
+            <section id="platdev-gdb-remotedebug-launch-gdb-buildcross">
+                <title>Building the Cross-GDB Package</title>
+                <para>
+                    A suitable GDB cross-binary is required that runs on your host computer but
+                    also knows about the the ABI of the remote target. 
+                    You can get this binary from the the Yocto Project meta-toolchain.
+                    Here is an example:
+                    <literallayout class='monospaced'> 
+     /usr/local/poky/eabi-glibc/arm/bin/arm-poky-linux-gnueabi-gdb
+                    </literallayout> 
+                    where <filename>arm</filename> is the target architecture and 
+                    <filename>linux-gnueabi</filename> the target ABI.
+                </para>
+
+                <para>
+                    Alternatively, the Yocto Project can build the <filename>gdb-cross</filename> binary. 
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     $ bitbake gdb-cross
+                    </literallayout>
+                    Once the binary is built, you can find it here: 
+                    <literallayout class='monospaced'>
+     tmp/sysroots/&lt;host-arch&gt;/usr/bin/&lt;target-abi&gt;-gdb 
+                    </literallayout>
+                </para>
+            </section>
+
+            <section id="platdev-gdb-remotedebug-launch-gdb-inferiorbins">
+                <title>Making the Inferior Binaries Available</title>
+
+                <para>
+                    The inferior binary (complete with all debugging symbols) as well as any
+                    libraries (and their debugging symbols) on which the inferior binary depends
+                    need to be available.
+                    There are a number of ways you can make these available.
+                </para>
+
+                <para>
+                    Perhaps the easiest way is to have an 'sdk' image that corresponds to the plain
+                    image installed on the device. 
+                    In the case of <filename>core-image-sato</filename>, 
+                    <filename>core-image-sato-sdk</filename> would contain suitable symbols. 
+                    Because the sdk images already have the debugging symbols installed, it is just a 
+                    question of expanding the archive to some location and then informing GDB. 
+                </para>
+
+                <para>
+                    Alternatively, Yocto Project can build a custom directory of files for a specific 
+                    debugging purpose by reusing its <filename>tmp/rootfs</filename> directory.
+                    This directory contains the contents of the last built image. 
+                    This process assumes two things:
+                    <itemizedlist>
+                        <listitem><para>The image running on the target was the last image to 
+                        be built by the Yocto Project.</para></listitem>
+                        <listitem><para>The package (<filename>foo</filename> in the following 
+                        example) that contains the inferior binary to be debugged has been built 
+                        without optimization and has debugging information available.</para></listitem>
+                    </itemizedlist>
+                </para>
+
+                <para>
+                    The following steps show how to build the custom directory of files:
+                    <orderedlist>
+                        <listitem><para>Install the package (<filename>foo</filename> in this case) to 
+                            <filename>tmp/rootfs</filename>:
+                            <literallayout class='monospaced'>
+     $ tmp/sysroots/i686-linux/usr/bin/opkg-cl -f \
+     tmp/work/&lt;target-abi&gt;/core-image-sato-1.0-r0/temp/opkg.conf -o \
+     tmp/rootfs/ update
+                            </literallayout></para></listitem>
+                        <listitem><para>Install the debugging information:
+                            <literallayout class='monospaced'>
+     $ tmp/sysroots/i686-linux/usr/bin/opkg-cl -f \
+     tmp/work/&lt;target-abi&gt;/core-image-sato-1.0-r0/temp/opkg.conf \
+     -o tmp/rootfs install foo
+
+     $ tmp/sysroots/i686-linux/usr/bin/opkg-cl -f \
+     tmp/work/&lt;target-abi&gt;/core-image-sato-1.0-r0/temp/opkg.conf \
+     -o tmp/rootfs install foo-dbg
+                            </literallayout></para></listitem>
+                    </orderedlist>
+                </para>
+            </section>
+
+            <section id="platdev-gdb-remotedebug-launch-gdb-launchhost">
+                <title>Launch the Host GDB</title>
+
+                <para>
+                    To launch the host GDB, you run the <filename>cross-gdb</filename> binary and provide 
+                    the inferior binary as part of the command line.  
+                    For example, the following command form continues with the example used in 
+                    the previous section.  
+                    This command form loads the <filename>foo</filename> binary
+                    as well as the debugging information:
+                    <literallayout class='monospaced'>
+     $ &lt;target-abi&gt;-gdb rootfs/usr/bin/foo
+                    </literallayout>
+                    Once the GDB prompt appears, you must instruct GDB to load all the libraries
+                    of the inferior binary from <filename>tmp/rootfs</filename> as follows:
+                    <literallayout class='monospaced'>
+     $ set solib-absolute-prefix /path/to/tmp/rootfs
+                    </literallayout>
+                    The pathname <filename>/path/to/tmp/rootfs</filename> must either be
+                    the absolute path to <filename>tmp/rootfs</filename> or the location at which 
+                    binaries with debugging information reside.
+                </para>
+
+                <para>
+                    At this point you can have GDB connect to the Gdbserver that is running 
+                    on the remote target by using the following command form:
+                    <literallayout class='monospaced'>
+     $ target remote remote-target-ip-address:2345
+                    </literallayout>
+                    The <filename>remote-target-ip-address</filename> is the IP address of the
+                    remote target where the Gdbserver is running. 
+                    Port 2345 is the port on which the GDBSERVER is running.
+                </para>
+            </section>
+
+            <section id="platdev-gdb-remotedebug-launch-gdb-using">
+                <title>Using the Debugger</title>
+
+                <para>
+                    You can now proceed with debugging as normal - as if you were debugging
+                    on the local machine.
+                    For example, to instruct GDB to break in the "main" function and then 
+                    continue with execution of the inferior binary use the following commands
+                    from within GDB:
+                    <literallayout class='monospaced'>
+     (gdb) break main
+     (gdb) continue
+                    </literallayout>
+                </para>
+
+                <para>
+                    For more information about using GDB, see the project's online documentation at 
+                    <ulink url="http://sourceware.org/gdb/download/onlinedocs/"/>.
+                </para>
+            </section>
+        </section>
+    </section>
+
+    <section id="platdev-oprofile">
+        <title>Profiling with OProfile</title>
+
+        <para>
+            <ulink url="http://oprofile.sourceforge.net/">OProfile</ulink> is a 
+            statistical profiler well suited for finding performance 
+            bottlenecks in both userspace software and in the kernel. 
+            This profiler provides answers to questions like "Which functions does my application spend 
+            the most time in when doing X?" 
+            Because the Yocto Project is well integrated with OProfile, it makes profiling applications on target 
+            hardware straightforward.
+        </para>
+
+        <para>
+            To use OProfile, you need an image that has OProfile installed. 
+            The easiest way to do this is with <filename>tools-profile</filename> in the
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'>IMAGE_FEATURES</ulink></filename> variable. 
+            You also need debugging symbols to be available on the system where the analysis
+            takes place. 
+            You can gain access to the symbols by using <filename>dbg-pkgs</filename> in the
+            <filename>IMAGE_FEATURES</filename> variable or by
+            installing the appropriate <filename>-dbg</filename> packages. 
+        </para>
+
+        <para>
+            For successful call graph analysis, the binaries must preserve the frame 
+            pointer register and should also be compiled with the 
+            <filename>-fno-omit-framepointer</filename> flag. 
+            In the Yocto Project you can achieve this by setting the 
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SELECTED_OPTIMIZATION'>SELECTED_OPTIMIZATION</ulink></filename>
+            variable to 
+            <filename>-fexpensive-optimizations -fno-omit-framepointer -frename-registers -O2</filename>. 
+            You can also achieve it by setting the
+            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DEBUG_BUILD'>DEBUG_BUILD</ulink></filename> 
+            variable to "1" in the <filename>local.conf</filename> configuration file.
+            If you use the <filename>DEBUG_BUILD</filename> variable you will also add extra debug information 
+            that can make the debug packages large.
+        </para>
+
+        <section id="platdev-oprofile-target">
+            <title>Profiling on the Target</title>
+
+            <para>
+                Using OProfile you can perform all the profiling work on the target device. 
+                A simple OProfile session might look like the following:
+            </para>
+
+            <para>
+                <literallayout class='monospaced'>
+     # opcontrol --reset
+     # opcontrol --start --separate=lib --no-vmlinux -c 5
+              .
+              .
+        [do whatever is being profiled]
+              .
+              .
+     # opcontrol --stop
+     $ opreport -cl
+                </literallayout>
+            </para>
+
+            <para>
+                In this example, the <filename>reset</filename> command clears any previously profiled data.
+                The next command starts OProfile.
+                The options used when starting the profiler separate dynamic library data 
+                within applications, disable kernel profiling, and enable callgraphing up to
+                five levels deep.    
+                <note>
+                    To profile the kernel, you would specify the 
+                    <filename>--vmlinux=/path/to/vmlinux</filename> option.
+                    The <filename>vmlinux</filename> file is usually in the Yocto Project file's 
+                    <filename>/boot/</filename> directory and must match the running kernel.
+                </note>
+            </para>
+
+            <para> 
+                After you perform your profiling tasks, the next command stops the profiler. 
+                After that, you can view results with the <filename>opreport</filename> command with options
+                to see the separate library symbols and callgraph information.
+            </para>
+
+            <para>
+                Callgraphing logs information about time spent in functions and about a function's
+                calling function (parent) and called functions (children).
+                The higher the callgraphing depth, the more accurate the results.  
+                However, higher depths also increase the logging overhead.
+                Consequently, you should take care when setting the callgraphing depth. 
+                <note>
+                    On ARM, binaries need to have the frame pointer enabled for callgraphing to work.
+                    To accomplish this use the <filename>-fno-omit-framepointer</filename> option 
+                    with <filename>gcc</filename>.
+                </note>
+            </para>
+
+            <para>
+                For more information on using OProfile, see the OProfile 
+                online documentation at 
+                <ulink url="http://oprofile.sourceforge.net/docs/"/>.
+            </para>
+        </section>
+
+        <section id="platdev-oprofile-oprofileui">
+            <title>Using OProfileUI</title>
+
+            <para>
+                A graphical user interface for OProfile is also available. 
+                You can download and build this interface from the Yocto Project at
+                <ulink url="&YOCTO_GIT_URL;/cgit.cgi/oprofileui/"></ulink>. 
+                If the "tools-profile" image feature is selected, all necessary binaries
+                are installed onto the target device for OProfileUI interaction.
+            </para>
+
+            <para>
+                Even though the Yocto Project usually includes all needed patches on the target device, you 
+                might find you need other OProfile patches for recent OProfileUI features.
+                If so, see the <ulink url='&YOCTO_GIT_URL;/cgit.cgi/oprofileui/tree/README'>
+                OProfileUI README</ulink> for the most recent information.
+            </para>
+
+            <section id="platdev-oprofile-oprofileui-online">
+                <title>Online Mode</title>
+
+                <para>
+                    Using OProfile in online mode assumes a working network connection with the target 
+                    hardware. 
+                    With this connection, you just need to run "oprofile-server" on the device. 
+                    By default, OProfile listens on port 4224. 
+                    <note>
+                        You can change the port using the <filename>--port</filename> command-line 
+                        option.
+                    </note>
+                </para>
+
+                <para>
+                    The client program is called <filename>oprofile-viewer</filename> and its UI is relatively 
+                    straightforward.
+                    You access key functionality through the buttons on the toolbar, which
+                    are duplicated in the menus.
+                    Here are the buttons:
+                    <itemizedlist>
+                        <listitem><para><emphasis>Connect:</emphasis> Connects to the remote host.
+                            You can also supply the IP address or hostname.</para></listitem>
+                        <listitem><para><emphasis>Disconnect:</emphasis> Disconnects from the target.
+                            </para></listitem>
+                        <listitem><para><emphasis>Start:</emphasis> Starts profiling on the device.
+                            </para></listitem>
+                        <listitem><para><emphasis>Stop:</emphasis> Stops profiling on the device and 
+                            downloads the data to the local host. 
+                            Stopping the profiler generates the profile and displays it in the viewer.
+                            </para></listitem>
+                        <listitem><para><emphasis>Download:</emphasis> Downloads the data from the 
+                            target and generates the profile, which appears in the viewer.</para></listitem>
+                        <listitem><para><emphasis>Reset:</emphasis> Resets the sample data on the device. 
+                            Resetting the data removes sample information collected from previous
+                            sampling runs. 
+                            Be sure you reset the data if you do not want to include old sample information.
+                            </para></listitem>
+                        <listitem><para><emphasis>Save:</emphasis> Saves the data downloaded from the
+                            target to another directory for later examination.</para></listitem>
+                        <listitem><para><emphasis>Open:</emphasis> Loads previously saved data.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+
+                <para>
+                    The client downloads the complete 'profile archive' from
+                    the target to the host for processing. 
+                    This archive is a directory that contains the sample data, the object files, 
+                    and the debug information for the object files. 
+                    The archive is then converted using the <filename>oparchconv</filename> script, which is 
+                    included in this distribution.
+                    The script uses <filename>opimport</filename> to convert the archive from
+                    the target to something that can be processed on the host.
+                </para>
+
+                <para>
+                    Downloaded archives reside in the Yocto Project's build directory in 
+                    <filename>/tmp</filename> and are cleared up when they are no longer in use.
+                </para>
+
+                <para>
+                    If you wish to perform kernel profiling, you need to be sure 
+                    a <filename>vmlinux</filename> file that matches the running kernel is available. 
+                    In the Yocto Project, that file is usually located in 
+                    <filename>/boot/vmlinux-KERNELVERSION</filename>, where 
+                    <filename>KERNEL-version</filename> is the version of the kernel. 
+                    The Yocto Project generates separate <filename>vmlinux</filename> packages for each kernel
+                    it builds.
+                    Thus, it should just be a question of making sure a matching package is 
+                    installed (e.g. <filename>opkg install kernel-vmlinux</filename>. 
+                    The files are automatically installed into development and profiling images 
+                    alongside OProfile. 
+                    A configuration option exists within the OProfileUI settings page that you can use to 
+                    enter the location of the <filename>vmlinux</filename> file. 
+                </para>
+
+                <para>
+                    Waiting for debug symbols to transfer from the device can be slow, and it
+                    is not always necessary to actually have them on the device for OProfile use. 
+                    All that is needed is a copy of the filesystem with the debug symbols present 
+                    on the viewer system. 
+                    The "<link linkend='platdev-gdb-remotedebug-launch-gdb'>Launching GDB on the Host Computer</link>"
+                    section covers how to create such a directory with 
+                    the Yocto Project and how to use the OProfileUI Settings dialog to specify the location.
+                    If you specify the directory, it will be used when the file checksums 
+                    match those on the system you are profiling.
+                </para>
+            </section>
+
+            <section id="platdev-oprofile-oprofileui-offline">
+                <title>Offline Mode</title>
+
+                <para>
+                    If network access to the target is unavailable, you can generate
+                    an archive for processing in <filename>oprofile-viewer</filename> as follows:
+                    <literallayout class='monospaced'>
+     # opcontrol --reset
+     # opcontrol --start --separate=lib --no-vmlinux -c 5
+            .
+            .
+     [do whatever is being profiled]
+            .
+            .
+     # opcontrol --stop
+     # oparchive -o my_archive
+                    </literallayout>
+                </para>
+
+                <para>
+                    In the above example, <filename>my_archive</filename> is the name of the 
+                    archive directory where you would like the profile archive to be kept. 
+                    After the directory is created, you can copy it to another host and load it
+                    using <filename>oprofile-viewer</filename> open functionality.
+                    If necessary, the archive is converted.
+                </para>
+            </section>
+        </section>
+    </section>
 </chapter>
 
 <!-- 
