@@ -20,25 +20,14 @@ SRC_URI = "git://git.yoctoproject.org/linux-yocto-3.2;protocol=git;nocheckout=1;
 # building a device tree as part of kern headers
 KERNEL_DEVICETREE = ""
 
-set_arch() {
-	case ${TARGET_ARCH} in
-		arm*)     ARCH=arm ;;
-		i*86*)    ARCH=i386 ;;
-		ia64*)    ARCH=ia64 ;;
-		mips*)    ARCH=mips ;;
-		powerpc*) ARCH=powerpc ;;
-		x86_64*)  ARCH=x86_64 ;;
-	esac
-}
+inherit kernel-arch
 
 do_configure() {
-	set_arch
-	oe_runmake allnoconfig ARCH=$ARCH
+	oe_runmake allnoconfig
 }
 
 do_install() {
-	set_arch
-	oe_runmake headers_install INSTALL_HDR_PATH=${D}${exec_prefix} ARCH=$ARCH
+	oe_runmake headers_install INSTALL_HDR_PATH=${D}${exec_prefix}
 
         # The ..install.cmd conflicts between various configure runs
         find ${D}${includedir} -name ..install.cmd | xargs rm -f
