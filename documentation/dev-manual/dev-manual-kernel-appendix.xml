@@ -656,6 +656,8 @@
             </para>
         </section>
 
+
+
         <section id='changing-the-config-smp-configuration-using-menuconfig'>
             <title>Changing the&nbsp;&nbsp;<filename>CONFIG_SMP</filename> Configuration Using&nbsp;&nbsp;<filename>menuconfig</filename></title>
 
@@ -679,11 +681,20 @@
                 kernel.
                 The Yocto Project build environment recognizes this kernel as 
                 <filename>linux-yocto</filename>.
-                Thus, the following command from the shell in which you previously sourced the 
-                environment initialization script launches <filename>menuconfig</filename>:
+                Thus, the following commands from the shell in which you previously sourced the 
+                environment initialization script cleans the shared state memory and 
+                the <filename>WORKDIR</filename> direcotry and then builds and 
+                launches <filename>menuconfig</filename>:
                 <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c cleansstate
      $ bitbake linux-yocto -c menuconfig
                 </literallayout>
+                <note>Due to a bug in the release, it is necessary to clean the shared state
+                    memory in order for configurations made using <filename>menuconfig</filename>
+                    to take effect.
+                    For information on the bug, see 
+                    <ulink url='&YOCTO_BUGZILLA_URL;/show_bug.cgi?id=2256'></ulink>.
+                </note>
             </para>
                   
             <para>
