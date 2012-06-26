@@ -184,16 +184,18 @@
 
 # Archiving source code configuration
 #
-# The following variables control which files to archive and
-# the type to archive to generate.
-# The content to archive
-# "original":    Copy source code package from downloads if existing. 
-# Archive source code after do_unpack if not found in downloads 
-# "patched":    Archive source code package after do_patch
-# "configured": Archive source code package after do_configure 
-# ARCHIVER_MODE[choices] = "none original patched configured"
+# The following variables control which files to archive and the type to archive to generate.
+# There are three basic class defintions of common operations that might be desired and these
+# can be enabled by uncommenting one of the following lines:
+#
+# INHERIT += "archive-original-source"
+# INHERIT += "archive-patched-source"
+#INHERIT =+ "archive-configured-source"
+#
 # Type of archive:
-# ARCHIVER_MODE[type] = "tar srpm"
+# SOURCE_ARCHIVE_PACKAGE_TYPE = 'srpm'
+#SOURCE_ARCHIVE_PACKAGE_TYPE ?= 'tar'
+#
 # Whether to include WORKDIR/temp, .bb and .inc files:
 # 'logs_with_scripts' include WORKDIR/temp directory and .bb and .inc files
 # 'logs' only include WORKDIR/temp
@@ -201,8 +203,11 @@
 # There are three basic class defintions of common operations 
 # that might be desired and these can be enabled by 
 # uncommenting five of the following lines:
+# ARCHIVER_MODE[filter] ?= "yes no"
+# Filter packages according to license
 #ARCHIVER_MODE ?= "original"
 #ARCHIVER_MODE[type] ?= "tar"
 #ARCHIVER_MODE[log_type] ?= "logs_with_scripts"
+#ARCHIVER_MODE[filter] ?= "no"
 #ARCHIVER_CLASS = "${@'archive-${ARCHIVER_MODE}-source' if ARCHIVER_MODE != 'none' else ''}"
 #INHERIT += "${ARCHIVER_CLASS}"
