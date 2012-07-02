@@ -34,8 +34,8 @@
              get the changes upstream and applied in the affected recipes.</para></listitem>
          <listitem><para><emphasis>Image Development using Hob:</emphasis>
              You can use the <ulink url='&YOCTO_HOME_URL;/projects/hob'>Hob</ulink> to build 
-             custom operating system images within the Yocto Project build environment.
-             Hob provides an efficient interface to the Yocto Project build system.</para></listitem>
+             custom operating system images within the build environment.
+             Hob provides an efficient interface to the OpenEmbedded build system.</para></listitem>
      </itemizedlist>
 </para>
 
@@ -94,18 +94,20 @@
                     and the 
                     "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Packages</ulink>" sections both
                     in the Yocto Project Quick Start for requirements.</para></listitem>
-                <listitem><para><emphasis>Establish a local copy of the Yocto Project files on your 
-                    system</emphasis>:  You need to have the Yocto Project files available on your host system. 
-                    Having the Yocto Project files on your system gives you access to the build
+                <listitem><para><emphasis>Establish a local copy of the project files on your 
+                    system</emphasis>:  You need this <link linkend='source-directory'>source 
+                    directory</link> available on your host system. 
+                    Having these files on your system gives you access to the build
                     process and to the tools you need.
-                    For information on how to get these files, see the
+                    For information on how to set up the source directory, see the
                     "<link linkend='getting-setup'>Getting Setup</link>" section.</para></listitem>
                 <listitem><para><emphasis>Establish a local copy of the base BSP files</emphasis>:  Having    
                     the BSP files on your system gives you access to the build
                     process and to the tools you need for creating a BSP.
                     For information on how to get these files, see the
                     "<link linkend='getting-setup'>Getting Setup</link>" section.</para></listitem>    
-                <listitem><para><emphasis>Choose a Yocto Project-supported BSP as your base BSP</emphasis>:  
+                <listitem><para><emphasis>Choose a BSP that is supported by the Yocto Project 
+                    as your base BSP</emphasis>:  
                     The Yocto Project ships with several BSPs that support various hardware.  
                     It is best to base your new BSP on an existing BSP rather than create all the 
                     recipes and configuration files from scratch.  
@@ -138,7 +140,7 @@
                     The layer, in this case, would be where all the recipes that define those dependencies 
                     are kept.  
                     The key point for a layer is that it is an isolated area that contains 
-                    all the relevant information for the project that the Yocto Project build 
+                    all the relevant information for the project that the OpenEmbedded build 
                     system knows about.
                     For more information on layers, see the 
                     "<link linkend='understanding-and-creating-layers'>Understanding and Creating Layers</link>"
@@ -146,11 +148,11 @@
                     For more information on BSP layers, see the
                     "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>" section in the 
                     Yocto Project Board Support Package (BSP) Developer's Guide.</para>
-                    <note>The Yocto Project supports four BSPs that are part of the 
+                    <note>Four BSPs exist that are part of the 
                     Yocto Project release: <filename>atom-pc</filename>, <filename>beagleboard</filename>,
                     <filename>mpc8315e</filename>, and <filename>routerstationpro</filename>.  
                     The recipes and configurations for these four BSPs are located and dispersed 
-                    within the <link linkend='yocto-project-files'>Yocto Project Files</link>.
+                    within the <link linkend='source-directory'>source directory</link>.
                     On the other hand, BSP layers for Crown Bay, Emenlow, Jasper Forest, 
                     N450, Cedar Trail, Fish River, Fish River Island II, Romley, sys940x, tlk, 
                     and Sugar Bay exist in their own separate layers within the larger 
@@ -163,7 +165,7 @@
                     configuration information.  
                     You can see the standard layout for the Crown Bay BSP in this example by examining the 
                     directory structure of the <filename>meta-crownbay</filename> layer inside the 
-                    local Yocto Project files.</para></listitem>
+                    source directory.</para></listitem>
                 <listitem><para><emphasis>Make configuration changes to your new BSP 
                     layer</emphasis>:  The standard BSP layer structure organizes the files you need 
                     to edit in <filename>conf</filename> and several <filename>recipes-*</filename>
@@ -177,15 +179,15 @@
                     </para></listitem>
                 <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
                     changes to your BSP layer, there remains a few things 
-                    you need to do for the Yocto Project build system in order for it to create your image.  
+                    you need to do for the OpenEmbedded build system in order for it to create your image.  
                     You need to get the build environment ready by sourcing an environment setup script 
                     and you need to be sure two key configuration files are configured appropriately.</para>
                     <para>The entire process for building an image is overviewed in the section
                     "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>" section 
                     of the Yocto Project Quick Start.    
                     You might want to reference this information.</para></listitem>
-                <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project uses the BitBake 
-                    tool to build images based on the type of image you want to create.  
+                <listitem><para><emphasis>Build the image</emphasis>:  The OpenEmbedded build system 
+                    uses the BitBake tool to build images based on the type of image you want to create.  
                     You can find more information on BitBake 
                     <ulink url='http://bitbake.berlios.de/manual/'>here</ulink>.</para>
                     <para>The build process supports several types of images to satisfy different needs.  
@@ -295,7 +297,7 @@
 
             <para>
                 The overall result is a Git-maintained repository from which all the supported
-                Yocto Project kernel types can be derived for all the supported Yocto Project devices.
+                kernel types can be derived for all the supported devices.
                 A big advantage to this scheme is the sharing of common features by keeping them in 
                 "larger" branches within the tree.  
                 This practice eliminates redundant storage of similar features shared among kernels.
@@ -313,7 +315,7 @@
             <para>
                 Storage of all the available kernel source code is one thing, while representing the 
                 code on your host development system is another.  
-                Conceptually, you can think of the Yocto Project kernel source repositories as all the 
+                Conceptually, you can think of the kernel source repositories as all the 
                 source files necessary for all the supported kernels. 
                 As a developer, you are just interested in the source files for the kernel on 
                 on which you are working.
@@ -358,7 +360,7 @@
             <para>
                 What happens during the build?  
                 When you build the kernel on your development system all files needed for the build
-                are taken from the Yocto Project source repositories pointed to by the 
+                are taken from the source repositories pointed to by the 
                 <filename>SRC_URI</filename> variable and gathered in a temporary work area
                 where they are subsequently used to create the unique kernel.
                 Thus, in a sense, the process constructs a local source tree specific to your 
@@ -375,7 +377,7 @@
             </para> 
 
             <para>
-                Again, for a complete discussion of the Yocto Project kernel's architcture and its 
+                Again, for a complete discussion of the Yocto Project kernel's architecture and its 
                 branching strategy,
                 see <ulink url='&YOCTO_DOCS_KERNEL_URL;'>
                 The Yocto Project Kernel Architecture and Use Manual</ulink>.
@@ -404,18 +406,19 @@
                         "<ulink url='&YOCTO_DOCS_QS_URL;#the-linux-distro'>The Linux Distributions</ulink>" and  
                         "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Packages</ulink>" sections both
                         in the Yocto Project Quick Start for requirements.</para></listitem>
-                    <listitem><para><emphasis>Establish a local copy of the Yocto Project files on your 
-                        system</emphasis>:  Having the Yocto Project files on your system gives you access to 
-                        the build process and tools you need.
+                    <listitem><para><emphasis>Establish a local copy of project files on your 
+                        system</emphasis>:  Having the <link linkend='source-directory'>source
+                        directory</link> on your system gives you access to the build process and tools 
+                        you need.
                         For information on how to get these files, see the bulleted item
                         "<link linkend='local-yp-release'>Yocto Project Release</link>" earlier in this manual.
                         </para></listitem>
-                    <listitem><para><emphasis>Set up the <filename>poky-extras</filename> Git 
-                        repository</emphasis>:  This repository is the area for your configuration 
+                    <listitem><para><emphasis>Set up a local copy of the <filename>poky-extras</filename> Git 
+                        repository</emphasis>:  This local repository is the area for your configuration 
                         fragments, new kernel recipes, and the kernel <filename>.bbappend</filename>
                         file used during the build. 
-                        It is good practice to set this repository up inside the local Yocto
-                        Project files Git repository.
+                        It is good practice to set this repository up inside your local 
+                        source directory.
                         For information on how to get these files, see the bulleted item
                         "<link linkend='poky-extras-repo'>The <filename>poky-extras</filename> Git Repository</link>"
                         earlier in this manual.
@@ -453,9 +456,9 @@
                         <filename>.config</filename>.
                         Try to resist the temptation of directly editing the <filename>.config</filename> 
                         file found in the 
-                        <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link> at 
+                        <link linkend='build-directory'>build directory</link> at 
                         <filename>tmp/sysroots/&lt;machine-name&gt;/kernel</filename>.
-                        Doing so, can produce unexpected results when the Yocto Project build system 
+                        Doing so, can produce unexpected results when the OpenEmbedded build system 
                         regenerates the configuration file.</para>
                         <para>Once you are satisfied with the configuration changes made using 
                         <filename>menuconfig</filename>, you can directly examine the 
@@ -465,7 +468,7 @@
                     <listitem><para><emphasis>Add or extend kernel recipes if applicable</emphasis>:  
                         The standard 
                         layer structure organizes recipe files inside the 
-                        <filename>meta-kernel-dev</filename> layer that is within the 
+                        <filename>meta-kernel-dev</filename> layer that is within the local
                         <filename>poky-extras</filename> Git repository.
                         If you need to add new kernel recipes, you add them within this layer. 
                         Also within this area, you will find the <filename>.bbappend</filename> 
@@ -475,7 +478,7 @@
                     <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
                         changes to your kernel (configurations, source code changes, recipe additions, 
                         or recipe changes), there remains a few things 
-                        you need to do in order for the Yocto Project build system (BitBake) to create your image.  
+                        you need to do in order for the build system to create your image.  
                         If you have not done so, you need to get the build environment ready by sourcing 
                         the environment setup script described earlier.
                         You also need to be sure two key configuration files 
@@ -487,8 +490,8 @@
                         You might want to reference this information.
                         Also, you should look at the detailed examples found in the appendices at 
                         at the end of this manual.</para></listitem>
-                    <listitem><para><emphasis>Build the image</emphasis>:  The Yocto Project 
-                        build system Poky uses the BitBake 
+                    <listitem><para><emphasis>Build the image</emphasis>:  The OpenEmbedded 
+                        build system uses the BitBake 
                         tool to build images based on the type of image you want to create.  
                         You can find more information on BitBake 
                         <ulink url='http://bitbake.berlios.de/manual/'>here</ulink>.</para>
@@ -514,7 +517,7 @@
     </section>
 </section>
 
-<section id='place-holder-section-two'>
+<section id='application-development-workflow'>
     <title>Application Development Workflow</title>
 
     <para>
@@ -530,7 +533,7 @@
     </para>
 
     <para>
-        While we strongly suggest using the Yocto Project ADT to develop your application, you might
+        While we strongly suggest using the ADT to develop your application, you might
         not want to.  
         If this is the case, you can still use pieces of the Yocto Project for your development process. 
         However, because the process can vary greatly, this manual does not provide detail on the process.
@@ -540,8 +543,7 @@
         <title>Workflow Using the ADT and <trademark class='trade'>Eclipse</trademark></title>
 
         <para>
-            To help you understand how application development works in the Yocto Project ADT
-            environment, this section 
+            To help you understand how application development works using the ADT, this section 
             provides an overview of the general development process.
             If you want to see a detailed example of the process as it is used from within the Eclipse 
             IDE, see 
@@ -550,7 +552,7 @@
         </para>
 
         <para>
-            This illustration and the following list summarizes the application development general workflow.
+            The following illustration and list summarize the application development general workflow.
         </para>
 
         <para>
@@ -565,27 +567,9 @@
                     "<ulink url='&YOCTO_DOCS_QS_URL;#the-linux-distro'>The Linux Distributions</ulink>" and  
                     "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Packages</ulink>" sections both
                     in the Yocto Project Quick Start for requirements.</para></listitem>
-
-<!--
-WRITER NOTE:  The areas to get the kernel and root filesystem are located in the Index of 
-              downloads.  There are many forms of each.  The files that have "rootfs" are just the 
-              target root filesystems.  The file that is very small and starts with bzImage is just
-              the kernel image isolated so that it can be written to a special on-board area of 
-              flash memory.  Some systems require this.  In the machines directory there are  
-              files that combine the kernel image and the root filesystem.  These files are the ISO 
-              and HDDIMG files.  ISO images are designed to be deployed on a DVD or CD.  The ISO
-              images are designed to be deployed on a USB stick.  There might be some relics in 
-              the machine directory.  For example, there is the "emenlow-bernard-5.0.0.tar.bz2" 
-              file.  Nobody seems to know what this is.  If a developer needs the image and the 
-              root filesystem I think that they want the small kernel image and a matching root 
-              filesystem.  Although, Paul Eggleton says that the HDDIMG types could be used to 
-              develop on.  I am not sure that we can use one of those in the ADT though as they 
-              want you to point to the kernel image and the target root filesystem.  Maybe you 
-              could just point to the same spot.  I am not sure.
--->
-
                 <listitem><para><emphasis>Secure the Linux Yocto Kernel Target Image</emphasis>:  
-                    You must have a target kernel image that has been built using the Yocto Project.</para>
+                    You must have a target kernel image that has been built using the OpenEmbeded
+                    build system.</para>
                     <para>Depending on whether the Yocto Project has a pre-built image that matches your target
                     architecture and where you are going to run the image while you develop your application
                     (QEMU or real hardware), the area from which you get the image differs.
@@ -616,7 +600,7 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
                 <listitem><para><emphasis>Install the ADT</emphasis>:  
                     The ADT provides a target-specific cross-development toolchain, the root filesystem,
                     the QEMU emulator, and other tools that can help you develop your application.
-                    While it is possible to get these pieces separately, the Yocto Project provides an 
+                    While it is possible to get these pieces separately, the ADT Installer provides an 
                     easy method.
                     You can get these pieces by running an ADT installer script, which is configurable.
                     For information on how to install the ADT, see the
@@ -707,14 +691,14 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
     <title>Modifying Temporary Source Code</title>
 
     <para>
-        Although the Yocto Project is typically used to build software, you might
+        You might
         find it helpful during development to modify the temporary source code used by recipes
         to build packages.
         For example, suppose you are developing a patch and you need to experiment a bit
         to figure out your solution.
         After you have initially built the package, you can iteratively tweak the 
         source code, which is located in the 
-        <link linkend='yocto-project-build-directory'>Yocto Project's Build Directory</link>, and then 
+        <link linkend='build-directory'>build directory</link>, and then 
         you can force a re-compile and quickly test your altered code.
         Once you settle on a solution, you can then preserve your changes in the form of 
         patches.
@@ -728,12 +712,12 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
 
         <para>
             During a build, the unpacked temporary source code used by recipes 
-            to build packages is available in the Yocto Project Build Directory as 
+            to build packages is available in the build directory as 
             defined by the 
             <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink></filename> variable.
             Below is the default value for the <filename>S</filename> variable as defined in the 
             <filename>meta/conf/bitbake.conf</filename> configuration file in the 
-            <link linkend='yocto-project-files'>Yocto Project Files</link>:
+            <link linkend='source-directory'>source directory</link>:
             <literallayout class='monospaced'>
      S = ${WORKDIR}/${BP}
             </literallayout>
@@ -758,8 +742,8 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
      ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
             </literallayout>
             Let's look at an example without variables.
-            Assuming a Yocto Project Files top-level directory named <filename>poky</filename>
-            and a default Yocto Project Build Directory of <filename>poky/build</filename>, 
+            Assuming a top-level source directory named <filename>poky</filename>
+            and a default build directory of <filename>poky/build</filename>, 
             the following is the work directory for the <filename>acl</filename> package:
             <literallayout class='monospaced'>
      ~/poky/build/tmp/work/i586-poky-linux/acl-2.2.51-r3
@@ -771,8 +755,8 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
             <literallayout class='monospaced'>
      ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
             </literallayout>
-            Again, assuming a Yocto Project Files top-level directory named <filename>poky</filename>
-            and a default Yocto Project Build Directory of <filename>poky/build</filename>, the 
+            Again, assuming top-level source directory named <filename>poky</filename>
+            and a default build directory of <filename>poky/build</filename>, the 
             following is the work directory for the <filename>acl</filename> package that is being 
             built for a MIPS-based device:
             <literallayout class='monospaced'>
@@ -781,7 +765,7 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
         </para>
 
         <note>
-            To better understand how the Yocto Project build system resolves directories during the 
+            To better understand how the OpenEmbedded build system resolves directories during the 
             build process, see the glossary entries for the
             <ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink>,
             <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>,
@@ -817,8 +801,8 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
             Follow these general steps:
             <orderedlist>
                 <listitem><para><emphasis>Find the Source Code:</emphasis>
-                    The temporary source code used by the Yocto Project build system is kept in the 
-                    Yocto Project Build Directory.  
+                    The temporary source code used by the OpenEmbedded build system is kept in the 
+                    build directory.  
                     See the 
                     "<link linkend='finding-the-temporary-source-code'>Finding the Temporary Source Code</link>"
                     section to learn how to locate the directory that has the temporary source code for a 
@@ -875,7 +859,7 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
                 <listitem><para><emphasis>Copy the Patch File:</emphasis> 
                     For simplicity, copy the patch file into a directory named <filename>files</filename>,
                     which you can create in the same directory as the recipe.
-                    Placing the patch here guarantees that the Yocto Project build system will find
+                    Placing the patch here guarantees that the OpenEmbedded build system will find
                     the patch.
                     Next, add the patch into the  
                     <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename> 
@@ -904,16 +888,15 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
 
         <note>
             This workflow uses Git only for its ability to manage local changes to the source code 
-            and produce patches independent of any version control used on the Yocto Project 
-            Files.
+            and produce patches independent of any version control system used with the Yocto Project.
         </note>
 
         <para>
             Follow these general steps:
             <orderedlist>
                 <listitem><para><emphasis>Find the Source Code:</emphasis>
-                    The temporary source code used by the Yocto Project build system is kept in the 
-                    Yocto Project Build Directory.  
+                    The temporary source code used by the OpenEmbedded build system is kept in the 
+                    build directory.  
                     See the 
                     "<link linkend='finding-the-temporary-source-code'>Finding the Temporary Source Code</link>"
                     section to learn how to locate the directory that has the temporary source code for a 
@@ -1002,7 +985,7 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
                 <listitem><para><emphasis>Copy the Patch File:</emphasis> 
                     For simplicity, copy the patch file into a directory named <filename>files</filename>,
                     which you can create in the same directory as the recipe.
-                    Placing the patch here guarantees that the Yocto Project build system will find
+                    Placing the patch here guarantees that the OpenEmbedded build system will find
                     the patch.
                     Next, add the patch into the  
                     <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename> 
@@ -1024,11 +1007,11 @@ WRITER NOTE:  The areas to get the kernel and root filesystem are located in the
     <title>Image Development Using Hob</title>
 
     <para>
-        The <ulink url='&YOCTO_HOME_URL;/projects/hob'>Hob</ulink> is a graphical user interface for the Yocto 
-        Project build system based on BitBake.
+        The <ulink url='&YOCTO_HOME_URL;/projects/hob'>Hob</ulink> is a graphical user interface for the 
+        OpenEmbedded build system, which is based on BitBake.
         You can use the Hob to build custom operating system images within the Yocto Project build environment.
         Hob simply provides a friendly interface over the build system used during system development.
-        In other words, building images with the Hob lets you take care of common Yocto Project build tasks more easily.
+        In other words, building images with the Hob lets you take care of common build tasks more easily.
     </para>
 
     <para>

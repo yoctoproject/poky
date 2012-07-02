@@ -24,14 +24,15 @@
 
     <para>
         The Yocto Project is an open-source collaboration project focused on embedded Linux development.  
-        The project currently provides a build system, which is sometimes referred to as "Poky",
-        and provides various ancillary tools suitable for the embedded developer.  
-        The Yocto Project also features the Sato reference User Interface, which is optimized for 
+        The project currently provides a build system, which is 
+        referred to as the OpenEmbedded build system in the Yocto Project documentation.
+        The Yocto Project provides various ancillary tools suitable for the embedded developer  
+        and also features the Sato reference User Interface, which is optimized for 
         stylus driven, low-resolution screens.
     </para>
 
     <para>
-        You can use the Yocto Project build system, which uses 
+        You can use the OpenEmbedded build system, which uses 
         <ulink url='http://bitbake.berlios.de/manual/'>BitBake</ulink>, to develop complete Linux 
         images and associated user-space applications for architectures based on ARM, MIPS, PowerPC, 
         x86 and x86-64.  
@@ -53,56 +54,50 @@
             <listitem><para><emphasis>Host System:</emphasis>  You should have a reasonably current 
                 Linux-based host system.
                 You will have the best results with a recent release of Fedora, 
-                OpenSUSE, or Ubuntu as these releases are frequently tested against the Yocto Project
+                OpenSUSE, Ubuntu, or CentOS as these releases are frequently tested against the Yocto Project
                 and officially supported.  
                 You should also have about 100 gigabytes of free disk space for building images.
                 </para></listitem>
-            <listitem><para><emphasis>Packages:</emphasis>  The Yocto Project requires certain packages
-                exist on your development system (e.g. Python 2.6 or 2.7).  
+            <listitem><para><emphasis>Packages:</emphasis>  The OpenEmbedded build system
+                requires certain packages exist on your development system (e.g. Python 2.6 or 2.7).  
                 See "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Packages</ulink>" 
                 section in the Yocto Project Quick Start for the exact package
                 requirements and the installation commands to install them 
                 for the supported distributions.</para></listitem>
             <listitem id='local-yp-release'><para><emphasis>Yocto Project Release:</emphasis>  
                 You need a release of the Yocto Project.  
-                You can get set up with local 
-                <link linkend='yocto-project-files'>Yocto Project Files</link> one of two ways 
-                depending on whether you 
-                are going to be contributing back into the Yocto Project source repository or not.
+                You set up a with local <link linkend='source-directory'>source directory</link>
+                one of two ways depending on whether you 
+                are going to contribute back into the Yocto Project or not.
                 <note>
-                    Regardless of the method you use, this manual refers to the resulting 
-                    hierarchical set of files as the "Yocto Project Files" or the "Yocto Project File
-                    Structure."
+                    Regardless of the method you use, this manual refers to the resulting local
+                    hierarchical set of files as the "source directory."
                 </note>
                 <itemizedlist>
                     <listitem><para><emphasis>Tarball Extraction:</emphasis>  If you are not going to contribute 
-                        back into the Yocto Project, you can simply download the Yocto Project release you want 
+                        back into the Yocto Project, you can simply download a Yocto Project release you want 
                         from the website’s <ulink url='&YOCTO_HOME_URL;/download'>download page</ulink>.
                         Once you have the tarball, just extract it into a directory of your choice.</para>
                         <para>For example, the following command extracts the Yocto Project &DISTRO; 
                         release tarball 
-                        into the current working directory and sets up the Yocto Project file structure
-                        with a top-level directory named <filename>&YOCTO_POKY;</filename>:
+                        into the current working directory and sets up the local source directory
+                        with a top-level folder named <filename>&YOCTO_POKY;</filename>:
                         <literallayout class='monospaced'>
      $ tar xfj &YOCTO_POKY_TARBALL;
                         </literallayout></para>
-                        <para>This method does not produce a Git repository. 
-                        Instead, you simply end up with a local snapshot of the 
-                        Yocto Project files that are based on the particular release in the 
-                        tarball.</para></listitem>
+                        <para>This method does not produce a local Git repository. 
+                        Instead, you simply end up with a snapshot of the release.</para></listitem>
                     <listitem><para><emphasis>Git Repository Method:</emphasis>  If you are going to be contributing
                         back into the Yocto Project or you simply want to keep up
                         with the latest developments, you should use Git commands to set up a local
-                        Git repository of the Yocto Project Files.
-                        Doing so creates a Git repository with a complete history of changes and allows 
+                        Git repository of the upstream <filename>poky</filename> source repository.
+                        Doing so creates a repository with a complete history of changes and allows 
                         you to easily submit your changes upstream to the project.
                         Because you cloned the repository, you have access to all the Yocto Project development
                         branches and tag names used in the upstream repository.</para>
-                        <para>The following transcript shows how to clone the Yocto Project Files'  
+                        <para>The following transcript shows how to clone the <filename>poky</filename>  
                         Git repository into the current working directory.
-                        <note>The name of the Yocto Project Files Git repository in the Yocto Project Files
-                        Source Repositories is <filename>poky</filename>.
-                        You can view the Yocto Project Source Repositories at
+                        <note>You can view the Yocto Project Source Repositories at
                         <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink></note>  
                         The command creates the local repository in a directory named <filename>poky</filename>.
                         For information on Git used within the Yocto Project, see the
@@ -131,7 +126,7 @@
                 copying that cloned repository.
                 You can create the bare clone and the copy of the bare clone anywhere you like.
                 For simplicity, it is recommended that you create these structures outside of the 
-                Yocto Project Files Git repository.</para>
+                source directory (usually <filename>poky</filename>).</para>
                 <para>As an example, the following transcript shows how to create the bare clone
                 of the <filename>linux-yocto-3.2</filename> kernel and then create a copy of 
                 that clone.
@@ -166,15 +161,14 @@
                 edit to point to your locally modified kernel source files and to build the kernel
                 image. 
                 Pointing to these local files is much more efficient than requiring a download of the 
-                source files from upstream each time you make changes to the kernel.</para>
+                kernel's source files from upstream each time you make changes to the kernel.</para>
                 <para>You can find the <filename>poky-extras</filename> Git Repository in the 
                 "Yocto Metadata Layers" area of the Yocto Project Source Repositories at 
                 <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.
-                It is good practice to create this Git repository inside the Yocto Project
-                files Git repository.</para>
+                It is good practice to create this Git repository inside the source directory.</para>
                 <para>Following is an example that creates the <filename>poky-extras</filename> Git 
-                repository inside the Yocto Project files Git repository, which is named 
-                <filename>poky</filename> in this case:
+                repository inside the source directory, which is named <filename>poky</filename> 
+                in this case:
                 <literallayout class='monospaced'>
      $ git clone git://git.yoctoproject.org/poky-extras poky-extras
      Initialized empty Git repository in /home/scottrif/poky/poky-extras/.git/
@@ -194,7 +188,7 @@
                 layer.  
                 You can get set up for BSP development one of two ways: tarball extraction or
                 with a local Git repository.
-                It is a good idea to use the same method used to set up the Yocto Project Files.
+                It is a good idea to use the same method that you used to set up the source directory.
                 Regardless of the method you use, the Yocto Project uses the following BSP layer 
                 naming scheme:
                 <literallayout class='monospaced'> 
@@ -220,16 +214,16 @@
                         Again, this method just produces a snapshot of the BSP layer in the form
                         of a hierarchical directory structure.</para></listitem>
                     <listitem><para><emphasis>Git Repository Method:</emphasis>  If you are working 
-                        with a Yocto Project Files Git repository, you should also use this method 
+                        with a local Git repository for your source directory, you should also use this method 
                         to set up the <filename>meta-intel</filename> Git repository.
                         You can locate the <filename>meta-intel</filename> Git repository in the 
                         "Yocto Metadata Layers" area of the Yocto Project Source Repositories at
                         <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.</para>
                         <para>Typically, you set up the <filename>meta-intel</filename> Git repository inside
-                        the Yocto Project Files Git repository.
+                        the source directory.
                         For example, the following transcript shows the steps to clone the 
                         <filename>meta-intel</filename>
-                        Git repository inside the <filename>poky</filename> Git repository.
+                        Git repository inside the local <filename>poky</filename> Git repository.
                         <literallayout class='monospaced'>
      $ git clone git://git.yoctoproject.org/meta-intel.git
      Initialized empty Git repository in /home/scottrif/poky/meta-intel/.git/
@@ -268,13 +262,13 @@
     <para>
         The build process is as follows:
         <orderedlist>
-            <listitem><para>Make sure you have the Yocto Project files as described in the 
+            <listitem><para>Make sure you have set up the source directory described in the 
                 previous section.</para></listitem>
             <listitem><para>Initialize the build environment by sourcing a build environment 
                 script.</para></listitem>
             <listitem><para>Optionally ensure the <filename>conf/local.conf</filename> configuration file,
                 which is found in the 
-                <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link>, 
+                <link linkend='build-directory'>build directory</link>, 
                 is set up how you want it.  
                 This file defines many aspects of the build environment including 
                 the target machine architecture through the 

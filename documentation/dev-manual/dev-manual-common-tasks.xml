@@ -7,7 +7,7 @@
 <title>Common Tasks</title>
     <para>
         This chapter describes standard tasks such as adding new
-        software packages, extending or customizing images, and porting the Yocto Project to
+        software packages, extending or customizing images, and porting work to
         new hardware (adding a new machine). 
         The chapter also describes how to combine multiple 
         versions of library files into a single image, how to handle a package name alias, and
@@ -18,7 +18,7 @@
         <title>Understanding and Creating Layers</title>
 
         <para>
-            The Yocto Project build system supports organizing <link linkend='metadata'>metadata</link> 
+            The OpenEmbedded build system supports organizing <link linkend='metadata'>metadata</link> 
             into multiple layers. 
             Layers allow you to isolate different types of customizations from each other.
             You might find it tempting to keep everything in one layer when working on a single project.
@@ -43,13 +43,13 @@
         </para>
 
         <section id='yocto-project-layers'>
-            <title>Yocto Project Layers</title>
+            <title>Layers</title>
 
             <para>
-                The Yocto Project contains several layers right out of the box.
-                You can easily identify a layer in the Yocto Project by the name of its folder.
+                The source directory contains several layers right out of the box.
+                You can easily identify a layer in the source directory by its folder name.
                 Folders that are layers begin with the string <filename>meta</filename>.
-                For example, when you set up the <link linkend='yocto-project-files'>Yocto Project Files</link>
+                For example, when you set up the <link linkend='source-directory'>source directory</link>
                 structure, you will see several layers: <filename>meta</filename>, <filename>meta-demoapps</filename>,
                 <filename>meta-skeleton</filename>, and <filename>meta-yocto</filename>.
                 Each of these folders is a layer.
@@ -69,7 +69,7 @@
             <title>Creating Your Own Layer</title>
 
             <para>
-                It is very easy to create your own layer to use with the Yocto Project.
+                It is very easy to create your own layer to use with the OpenEmbedded build system.
                 Follow these general steps to create your layer:
                 <orderedlist>
                     <listitem><para><emphasis>Check Existing Layers:</emphasis> Before creating a new layer, 
@@ -170,13 +170,14 @@
                         If this is the case, you need to address that deficiency instead of overlaying
                         the include file.
                         For example, consider how Qt 4 database support plugins are configured.
-                        The Yocto Project does not have MySQL or PostgreSQL, however OpenEmbedded's
+                        The source directory does not have 
+                        MySQL or PostgreSQL, however OpenEmbedded's
                         layer <filename>meta-oe</filename> does.
                         Consequently, <filename>meta-oe</filename> uses <filename>.bbappend</filename>
                         files to modify the <filename>QT_SQL_DRIVER_FLAGS</filename> variable to enable 
                         the appropriate plugins. 
                         This variable was added to the <filename>qt4.inc</filename> include file in 
-                        The Yocto Project specifically to allow the <filename>meta-oe</filename> layer
+                        the source directory specifically to allow the <filename>meta-oe</filename> layer
                         to be able to control which plugins are built.</para></listitem>
                 </itemizedlist> 
             </para>
@@ -187,10 +188,10 @@
                     <listitem><para>Store custom layers in a Git repository that uses the 
                         <filename>meta-&lt;layer_name&gt;</filename> format.</para></listitem>
                     <listitem><para>Clone the repository alongside other <filename>meta</filename>
-                        directories in  
-                        <link linkend='yocto-project-files'>Yocto Project Files</link>.</para></listitem>
+                        directories in the 
+                        <link linkend='source-directory'>source directory</link>.</para></listitem>
                  </itemizedlist>
-                 Following these recommendations keeps your Yocto Project files area and 
+                 Following these recommendations keeps your source directory and 
                  its configuration entirely inside the Yocto Project's core base.
             </para>
         </section>
@@ -199,11 +200,11 @@
             <title>Enabling Your Layer</title>
 
             <para>
-                Before the Yocto Project build system can use your new layer, you need to enable it.
+                Before the OpenEmbedded build system can use your new layer, you need to enable it.
                 To enable your layer, simply add your layer's path to the 
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'>BBLAYERS</ulink></filename> 
                 variable in your <filename>conf/bblayers.conf</filename> file, which is found in the 
-                <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link>. 
+                <link linkend='build-directory'>build directory</link>. 
                 The following example shows how to enable a layer named <filename>meta-mylayer</filename>:
                 <literallayout class='monospaced'>
      LCONF_VERSION = "1"
@@ -222,8 +223,8 @@
                 <filename>BBLAYERS</filename> variable within the <filename>conf/bblayers.conf</filename>
                 file.
                 During the processing of each <filename>conf/layer.conf</filename> file, BitBake adds the 
-                recipes, classes and configurations contained within the particular layer to the Yocto 
-                Project.
+                recipes, classes and configurations contained within the particular layer to the source
+                directory.
             </para>
         </section>
 
@@ -267,7 +268,7 @@
             <para>
                 As an example, consider the main formfactor recipe and a corresponding formfactor 
                 append file both from the 
-                <link linkend='yocto-project-files'>Yocto Project Files</link>.
+                <link linkend='source-directory'>source directory</link>.
                 Here is the main formfactor recipe, which is named <filename>formfactor_0.0.bb</filename> and  
                 located in the meta layer at <filename>meta/recipes-bsp/formfactor</filename>:
                 <literallayout class='monospaced'>
@@ -450,7 +451,7 @@
         <title>Customizing Images</title>
 
         <para>
-            You can customize Yocto Project images to satisfy particular requirements. 
+            You can customize images to satisfy particular requirements. 
             This section describes several methods and provides guidelines for each.
         </para>
 
@@ -552,13 +553,11 @@
                 <filename>EXTRA_IMAGE_FEATURES</filename></title>
 
             <para>
-                Ultimately users might want to add extra image features to the set used by 
-                Yocto Project with the 
+                Ultimately users might want to add extra image features to the set by using the 
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'>IMAGE_FEATURES</ulink></filename>
                 variable. 
                 To create these features, the best reference is 
-                <filename>meta/classes/core-image.bbclass</filename>, which shows how the 
-                Yocto Project achieves this. 
+                <filename>meta/classes/core-image.bbclass</filename>, which shows how to achieve this. 
                 In summary, the file looks at the contents of the 
                 <filename>IMAGE_FEATURES</filename>
                 variable and then maps that into a set of tasks or packages. 
@@ -569,8 +568,8 @@
                 with specialized image <filename>.bb</filename> files.
                 You can also add more features by configuring the 
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</ulink></filename>
-                variable in the <filename>local.conf</filename> file found in the Yocto Project
-                files located in the build directory.
+                variable in the <filename>local.conf</filename> file found in the source directory
+                located in the build directory.
             </para>
 
             <para>
@@ -648,7 +647,7 @@
         <title>Adding a Package</title>
 
         <para>
-            To add a package into the Yocto Project you need to write a recipe for it. 
+            To add a package you need to write a recipe for it. 
             Writing a recipe means creating a <filename>.bb</filename> file that sets some
             variables.
             For information on variables that are useful for recipes and for information about recipe naming
@@ -662,7 +661,7 @@
             whether someone else has written one already. 
             OpenEmbedded is a good place to look as it has a wider scope and range of packages.
             Because the Yocto Project aims to be compatible with OpenEmbedded, most recipes 
-            you find there should work in Yocto Project.
+            you find there should work for you.
         </para>
 
         <para>
@@ -1001,53 +1000,7 @@
     </section>
 
     <section id="platdev-newmachine">
-        <title>Porting the Yocto Project to a New Machine</title>
-
-<!--
-WRITER NOTES:
-
-I had this chat with Richard:
-
-scottrif: Terminology question:  We speak of "New Machines" or "Adding a New Machine" 
-          in YP.  Are "Machines" restricted to architectures? In poky/meta/conf/machine we have .conf 
-          files for the five architectures.  What exactly does the term "Machine" mean?
-
-      RP: no, each architecture has multiple different machines. A "machine" can correspond 
-          to a particular reference board or hardware product
-          we just have one reference machine per architecture
-          We're  a little vague sometimes as "machine" can refer to either an individual platform,
-          or in some cases a set of different platforms with common structure
-          (e.g. netbooks)
-
-scottrif: So our reference machines we supply are the five qemu* machines? 
-
-      RP: in oe-core, plus one "real" target in meta-yocto
-          (per arch)
-
-scottrif: I see four in meta-yocto/conf/machine.  Shouldn't there be five if there is one 
-          "real" target per architecture?
-
-      RP: yes, we don't have one for x86_64 :/
-
-scottrif: I think it is a bit difficult to map our four poky/meta-yocto/conf/machines to one of our 
-          five architectures.  Some have key words in there that identify the architecture but 
-          beagleboard and atom-pc don't.
-          We have a section that describes adding a Machine Configuration file to Yocto and 
-          it states that TARGET_ARCH is one of the most important variables that need to be 
-          set in the .conf file.  The four I am looking at don't have that variable.
-
-      RP: That has changed a little now. You need to include the appropriate tune file
-          which will set it for you
-          People had a tendency not to set all the right pieces so it got abstracted
-
-scottrif: Got it.  I see them in poky/meta/conf/machine/include.
-
-SOME CONCLUSIONS:
-
-I need to define the term machine.  It is confusing.  Then, this section needs to be cleared up
-so that there are some definite steps on how to do this.  I need more detail here.
-
--->
+        <title>Adding a New Machine</title>
 
         <para>
             Adding a new machine to the Yocto Project is a straightforward process. 
@@ -1060,7 +1013,7 @@ so that there are some definite steps on how to do this.  I need more detail her
         </para>
 
         <para>
-            For a complete example that shows how to add a new machine to the Yocto Project, 
+            For a complete example that shows how to add a new machine, 
             see the 
             "<ulink url='&YOCTO_DOCS_DEV_URL;#dev-manual-bsp-appendix'>BSP Development Example</ulink>" 
             in Appendix A.
@@ -1072,7 +1025,8 @@ so that there are some definite steps on how to do this.  I need more detail her
             <para>
                 To add a machine configuration you need to add a <filename>.conf</filename> file
                 with details of the device being added to the <filename>conf/machine/</filename> file.
-                The name of the file determines the name the Yocto Project uses to reference the new machine.
+                The name of the file determines the name the OpenEmbedded build system
+                uses to reference the new machine.
             </para>
 
             <para>
@@ -1110,12 +1064,12 @@ so that there are some definite steps on how to do this.  I need more detail her
             <title>Adding a Kernel for the Machine</title>
 
             <para>
-                The Yocto Project needs to be able to build a kernel for the machine. 
+                The OpenEmbedded build system needs to be able to build a kernel for the machine. 
                 You need to either create a new kernel recipe for this machine, or extend an 
                 existing recipe. 
                 You can find several kernel examples in the 
-                Yocto Project file's <filename>meta/recipes-kernel/linux</filename>
-                directory that you can use as references.
+                source directory at <filename>meta/recipes-kernel/linux</filename>
+                that you can use as references.
             </para>
 
             <para>
@@ -1153,8 +1107,8 @@ so that there are some definite steps on how to do this.  I need more detail her
 
             <para>
                 A formfactor configuration file provides information about the 
-                target hardware for which the Yocto Project is building and information that 
-                the Yocto Project cannot obtain from other sources such as the kernel.  
+                target hardware for which the image is being built and information that 
+                the build system cannot obtain from other sources such as the kernel.  
                 Some examples of information contained in a formfactor configuration file include 
                 framebuffer orientation, whether or not the system has a keyboard, 
                 the positioning of the keyboard in relation to the screen, and 
@@ -1162,9 +1116,9 @@ so that there are some definite steps on how to do this.  I need more detail her
             </para>
 
             <para>
-                The Yocto Project uses reasonable defaults in most cases, but if customization is 
+                The build system uses reasonable defaults in most cases, but if customization is 
                 necessary you need to create a <filename>machconfig</filename> file 
-                in the Yocto Project file's <filename>meta/recipes-bsp/formfactor/files</filename>
+                in the <filename>meta/recipes-bsp/formfactor/files</filename>
                 directory.
                 This directory contains directories for specific machines such as 
                 <filename>qemuarm</filename> and <filename>qemux86</filename>.
@@ -1237,7 +1191,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                 extended to support multiple libraries. 
                 Many standard recipes are already extended and support multiple libraries.
                 You can check in the <filename>meta/conf/multilib.conf</filename>
-                configuration file in the Yocto Project files directory to see how this is 
+                configuration file in the source directory to see how this is 
                 done using the <filename>BBCLASSEXTEND</filename> variable.
                 Eventually, all recipes will be covered and this list will be unneeded.
             </para>
@@ -1266,7 +1220,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                 combination of multiple libraries you want to build. 
                 You accomplish this through your <filename>local.conf</filename>
                 configuration file in the 
-                <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link>. 
+                <link linkend='build-directory'>build directory</link>. 
                 An example configuration would be as follows:
                 <literallayout class='monospaced'>
      MACHINE = "qemux86-64"
@@ -1311,7 +1265,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                     <listitem><para>A unique architecture is defined for the Multilib packages,
                         along with creating a unique deploy folder under 
                         <filename>tmp/deploy/rpm</filename> in the 
-                        <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link>. 
+                        <link linkend='build-directory'>build directory</link>. 
                         For example, consider <filename>lib32</filename> in a 
                         <filename>qemux86-64</filename> image. 
                         The possible architectures in the system are "all", "qemux86_64",
@@ -1386,7 +1340,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                 To use the <filename>menuconfig</filename> tool in the Yocto Project development
                 environment, you must build the tool using BitBake.
                 The following commands build and invoke <filename>menuconfig</filename> assuming the 
-                Yocto Project files top-level directory is <filename>~/poky</filename>:
+                source directory top-level folder is <filename>~/poky</filename>:
                 <literallayout class='monospaced'>
      $ cd ~/poky
      $ source oe-init-build-env
@@ -1426,7 +1380,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                 Where do you put your configuration files?
                 You can place these configuration files in the same area pointed to by  
                 <filename>SRC_URI</filename>.
-                The Yocto Project build process will pick up the configuration and add it to the 
+                The OpenEmbedded build system will pick up the configuration and add it to the 
                 kernel's configuration.
                 For example, assume you add the following to your 
                 <filename>linux-yocto_3.0.bbappend</filename> file:
@@ -1608,7 +1562,7 @@ so that there are some definite steps on how to do this.  I need more detail her
         <para>
             Sometimes a package name you are using might exist under an alias or as a similarly named
             package in a different distribution.
-            The Yocto Project implements a <filename>distro_check</filename>
+            The OpenEmbedded build system implements a <filename>distro_check</filename>
             task that automatically connects to major distributions
             and checks for these situations. 
             If the package exists under a different name in a different distribution, you get a 
@@ -1631,17 +1585,17 @@ so that there are some definite steps on how to do this.  I need more detail her
         
         <para>
             If you have more than one distribution alias, separate them with a space.
-            Note that the Yocto Project currently automatically checks the 
+            Note that the build system currently automatically checks the 
             Fedora, OpenSuSE, Debian, Ubuntu, 
             and Mandriva distributions for source package recipes without having to specify them 
             using the <filename>DISTRO_PN_ALIAS</filename> variable.
             For example, the following command generates a report that lists the Linux distributions
-            that include the sources for each of the Yocto Project recipes.
+            that include the sources for each of the recipes.
             <literallayout class='monospaced'>
      $ bitbake world -f -c distro_check
             </literallayout>
             The results are stored in the <filename>build/tmp/log/distro_check-${DATETIME}.results</filename> 
-            file found in the Yocto Project files area.
+            file found in the source directory.
         </para>
     </section>
 
@@ -1649,18 +1603,18 @@ so that there are some definite steps on how to do this.  I need more detail her
         <title>Building Software from an External Source</title>
 
         <para>
-            By default, the Yocto Project build system does its work from within the 
-            <link linkend='yocto-project-build-directory'>Yocto Project Build Directory</link>.  
+            By default, the OpenEmbedded build system does its work from within the 
+            <link linkend='build-directory'>build directory</link>.  
             The build process involves fetching the source files, unpacking them, and then patching them
             if necessary before the build takes place.
         </para>
 
         <para>
             Situations exist where you might want to build software from source files that are external to 
-            and thus outside of the <link linkend='yocto-project-files'>Yocto Project Files</link>.
+            and thus outside of the <link linkend='source-directory'>source directory</link>.
             For example, suppose you have a project that includes a new BSP with a heavily customized 
             kernel, a very minimal image, and some new user-space recipes.
-            And, you want to minimize the exposure to the Yocto Project build system to the 
+            And, you want to minimize the exposure to the build system to the 
             development team so that they can focus on their project and maintain everyone's workflow
             as much as possible.
             In this case, you want a kernel source directory on the development machine where the 
@@ -1829,7 +1783,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                 <para>
                     A suitable GDB cross-binary is required that runs on your host computer but
                     also knows about the the ABI of the remote target. 
-                    You can get this binary from the the Yocto Project meta-toolchain.
+                    You can get this binary from the meta-toolchain.
                     Here is an example:
                     <literallayout class='monospaced'> 
      /usr/local/poky/eabi-glibc/arm/bin/arm-poky-linux-gnueabi-gdb
@@ -1839,7 +1793,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                 </para>
 
                 <para>
-                    Alternatively, the Yocto Project can build the <filename>gdb-cross</filename> binary. 
+                    Alternatively, you can use BitBake to build the <filename>gdb-cross</filename> binary. 
                     Here is an example:
                     <literallayout class='monospaced'>
      $ bitbake gdb-cross
@@ -1871,13 +1825,14 @@ so that there are some definite steps on how to do this.  I need more detail her
                 </para>
 
                 <para>
-                    Alternatively, Yocto Project can build a custom directory of files for a specific 
+                    Alternatively, the OpenEmbedded build system can build a custom directory of files 
+                    for a specific 
                     debugging purpose by reusing its <filename>tmp/rootfs</filename> directory.
                     This directory contains the contents of the last built image. 
                     This process assumes two things:
                     <itemizedlist>
                         <listitem><para>The image running on the target was the last image to 
-                        be built by the Yocto Project.</para></listitem>
+                        be built.</para></listitem>
                         <listitem><para>The package (<filename>foo</filename> in the following 
                         example) that contains the inferior binary to be debugged has been built 
                         without optimization and has debugging information available.</para></listitem>
@@ -1975,8 +1930,8 @@ so that there are some definite steps on how to do this.  I need more detail her
             bottlenecks in both userspace software and in the kernel. 
             This profiler provides answers to questions like "Which functions does my application spend 
             the most time in when doing X?" 
-            Because the Yocto Project is well integrated with OProfile, it makes profiling applications on target 
-            hardware straightforward.
+            Because the OpenEmbedded build system is well integrated with OProfile, it makes profiling 
+            applications on target hardware straightforward.
         </para>
 
         <para>
@@ -1994,7 +1949,7 @@ so that there are some definite steps on how to do this.  I need more detail her
             For successful call graph analysis, the binaries must preserve the frame 
             pointer register and should also be compiled with the 
             <filename>-fno-omit-framepointer</filename> flag. 
-            In the Yocto Project you can achieve this by setting the 
+            You can achieve this by setting the 
             <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SELECTED_OPTIMIZATION'>SELECTED_OPTIMIZATION</ulink></filename>
             variable to 
             <filename>-fexpensive-optimizations -fno-omit-framepointer -frename-registers -O2</filename>. 
@@ -2036,7 +1991,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                 <note>
                     To profile the kernel, you would specify the 
                     <filename>--vmlinux=/path/to/vmlinux</filename> option.
-                    The <filename>vmlinux</filename> file is usually in the Yocto Project file's 
+                    The <filename>vmlinux</filename> file is usually in the source directory in the 
                     <filename>/boot/</filename> directory and must match the running kernel.
                 </note>
             </para>
@@ -2079,7 +2034,7 @@ so that there are some definite steps on how to do this.  I need more detail her
             </para>
 
             <para>
-                Even though the Yocto Project usually includes all needed patches on the target device, you 
+                Even though the source directory usually includes all needed patches on the target device, you 
                 might find you need other OProfile patches for recent OProfileUI features.
                 If so, see the <ulink url='&YOCTO_GIT_URL;/cgit.cgi/oprofileui/tree/README'>
                 OProfileUI README</ulink> for the most recent information.
@@ -2142,18 +2097,18 @@ so that there are some definite steps on how to do this.  I need more detail her
                 </para>
 
                 <para>
-                    Downloaded archives reside in the Yocto Project's build directory in 
+                    Downloaded archives reside in the build directory in 
                     <filename>/tmp</filename> and are cleared up when they are no longer in use.
                 </para>
 
                 <para>
                     If you wish to perform kernel profiling, you need to be sure 
                     a <filename>vmlinux</filename> file that matches the running kernel is available. 
-                    In the Yocto Project, that file is usually located in 
+                    In the source directory, that file is usually located in 
                     <filename>/boot/vmlinux-KERNELVERSION</filename>, where 
                     <filename>KERNEL-version</filename> is the version of the kernel. 
-                    The Yocto Project generates separate <filename>vmlinux</filename> packages for each kernel
-                    it builds.
+                    The OpenEmbedded build system generates separate <filename>vmlinux</filename> 
+                    packages for each kernel it builds.
                     Thus, it should just be a question of making sure a matching package is 
                     installed (e.g. <filename>opkg install kernel-vmlinux</filename>. 
                     The files are automatically installed into development and profiling images 
@@ -2169,7 +2124,7 @@ so that there are some definite steps on how to do this.  I need more detail her
                     on the viewer system. 
                     The "<link linkend='platdev-gdb-remotedebug-launch-gdb'>Launching GDB on the Host Computer</link>"
                     section covers how to create such a directory with 
-                    the Yocto Project and how to use the OProfileUI Settings dialog to specify the location.
+                    the source directory and how to use the OProfileUI Settings dialog to specify the location.
                     If you specify the directory, it will be used when the file checksums 
                     match those on the system you are profiling.
                 </para>
