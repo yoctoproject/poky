@@ -10,7 +10,7 @@
 <section id='actions-org'>
     <title>Introduction</title>
     <para>
-        This chapter describes how to accomplish tasks involving the kernel's tree structure. 
+        This chapter describes how to accomplish tasks involving a kernel's tree structure. 
         The information is designed to help the developer that wants to modify the Yocto 
         Project kernel and contribute changes upstream to the Yocto Project.
         The information covers the following:
@@ -25,7 +25,7 @@
     <section id='tree-construction'>
         <title>Tree Construction</title>
         <para>
-            This section describes construction of the Yocto Project kernel repositories 
+            This section describes construction of the Yocto Project kernel source repositories 
             as accomplished by the Yocto Project team to create kernel repositories.
             These kernel repositories are found at
             <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>&YOCTO_GIT_URL;/cgit.cgi</ulink>
@@ -34,25 +34,27 @@
             compiling and executing the set of feature descriptions for every BSP/feature
             in the product. 
             Those feature descriptions list all necessary patches,
-            configuration, branching, tagging and feature divisions found in the kernel.
+            configuration, branching, tagging and feature divisions found in a kernel.
             Thus, the Yocto Project kernel repository (or tree) is built.
         </para>
         <para>
             The existence of this tree allows you to access and clone a particular 
-            Linux Yocto kernel repository and use it to build images based on their configurations
+            Yocto Project kernel repository and use it to build images based on their configurations
             and features.
         </para>
         <para>
             You can find the files used to describe all the valid features and BSPs 
-            in the Yocto Project kernel in any clone of the Linux Yocto kernel source repository Git tree.
+            in the Yocto Project kernel in any clone of the Yocto Project kernel source repository 
+            Git tree.
             For example, the following command clones the Yocto Project baseline kernel that 
             branched off of <filename>linux.org</filename> version 3.4:
             <literallayout class='monospaced'>
      $ git clone git://git.yoctoproject.org/linux-yocto-3.4
             </literallayout>
-            For another example of how to set up a local Git repository of the Linux Yocto 
+            For another example of how to set up a local Git repository of the Yocto Project
             kernel files, see the 
-            "<ulink url='&YOCTO_DOCS_DEV_URL;#local-kernel-files'>Linux Yocto Kernel</ulink>" bulleted item in The Yocto Project Development Manual.
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#local-kernel-files'>Linux Yocto Kernel</ulink>" bulleted 
+            item in The Yocto Project Development Manual.
         </para>
         <para>  
             Once you have cloned the kernel Git repository on your local machine, you can 
@@ -85,7 +87,7 @@
         </para>
         <para>
             The following steps describe what happens when the Yocto Project Team constructs
-            the Yocto Linux kernel source Git repository (or tree) found at 
+            the Yocto Project kernel source Git repository (or tree) found at 
             <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink> given the 
             introduction of a new top-level kernel feature or BSP. 
             These are the actions that effectively create the tree 
@@ -130,7 +132,7 @@
         </para>
         <para>
             The kernel tree is now ready for developer consumption to be locally cloned,
-            configured, and built into a Linux Yocto kernel specific to some target hardware. 
+            configured, and built into a Yocto Project kernel specific to some target hardware. 
             <note><para>The generated <filename>meta-*</filename> directories add to the kernel 
                 as shipped with the Yocto Project release. 
                 Any add-ons and configuration data are applied to the end of an existing branch. 
@@ -149,7 +151,7 @@
     <section id='build-strategy'>
         <title>Build Strategy</title>
         <para>
-            Once a local Git repository of the Linux Yocto kernel exists on a development system, 
+            Once a local Git repository of the Yocto Project kernel exists on a development system, 
             you can consider the compilation phase of kernel development - building a kernel image.
             Some prerequisites exist that are validated by the build process before compilation
             starts:
@@ -166,7 +168,7 @@
         </itemizedlist>
 
         <para>
-            The Yocto Project makes sure these conditions exist before attempting compilation.
+            The OpenEmbedded build system makes sure these conditions exist before attempting compilation.
             Other means, however, do exist, such as as bootstrapping a BSP, see 
             the "<link linkend='workflow-examples'>Workflow Examples</link>".
         </para>
@@ -308,7 +310,7 @@
                 <title>Show a Particular Feature or Branch Change</title>
 
                 <para>
-                    Developers use tags in the Yocto Project tree to divide changes for significant 
+                    Developers use tags in the Yocto Project kernel tree to divide changes for significant 
                     features or branches. 
                     Once you know a particular tag, you can use Git commands 
                     to show changes associated with the tag and find the branches that contain
@@ -523,7 +525,7 @@
                     "permanent" and you should not modify them.
                     If the commits need to be changed, you can incrementally do so with new commits.
                     These practices follow standard Git workflow and the <filename>kernel.org</filename> best 
-                    practices, which Yocto Project recommends.
+                    practices, which is recommended.
                     <note>
                         It is recommended to tag or branch before adding changes to a Yocto Project
                         BSP or before creating a new one.
@@ -691,7 +693,7 @@
                     However, if the patches are manually applied to a secondary tree and then 
                     that tree is checked into the SCM, you can lose change information such as 
                     commit logs.
-                    The Yocto Project does not recommend this process.
+                    This process is not recommended.
                 </para>
 
                 <para>
@@ -708,14 +710,14 @@
             <para>
                 This section describes kernel development in an SCM other than Git, 
                 which is not the same as exporting changes to another SCM described earlier.
-                For this scenario, you use the Yocto Project build system to 
+                For this scenario, you use the OpenEmbedded build system to 
                 develop the kernel in a different SCM.
                 The following must be true for you to accomplish this:
                 <itemizedlist>
                     <listitem><para>The delivered Yocto Project kernel must be exported into the second
                         SCM.</para></listitem>
                     <listitem><para>Development must be exported from that secondary SCM into a 
-                        format that can be used by the Yocto Project build system.</para></listitem>
+                        format that can be used by the OpenEmbedded build system.</para></listitem>
                 </itemizedlist>
             </para>
 
@@ -791,9 +793,10 @@
             <para>
                 The basic steps you need to follow are:
                 <orderedlist>
-                    <listitem><para><emphasis>Make sure you have the Yocto Project source tree available:</emphasis>
-                        You should either create a Yocto Project Git repository (recommended), or 
-                        you should get the Yocto Project release tarball and extract it.</para></listitem>
+                    <listitem><para><emphasis>Make sure you have set up a local source directory:</emphasis>
+                        You must create a local <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source
+                        directory</ulink> by either creating a Git repository (recommended) or 
+                        extracting a Yocto Project release tarball.</para></listitem>
                     <listitem><para><emphasis>Choose an existing BSP available with the Yocto Project:</emphasis>
                         Try to map your board features as closely to the features of a BSP that is  
                         already supported and exists in the Yocto Project.  
@@ -803,12 +806,12 @@
                         on the Yocto Project's Download page at 
                         <ulink url='&YOCTO_HOME_URL;/download'></ulink>.</para></listitem>
                     <listitem><para><emphasis>Be sure you have the Base BSP:</emphasis>
-                        You need to either have the Yocto Project Git repository set up or download
-                        the tarball of the base BSP.
+                        You need to either have a local Git repository of the base BSP set up or 
+                        have downloaded and extracted the files from a release BSP tarball.
                         Either method gives you access to the BSP source files.</para></listitem>
                     <listitem><para><emphasis>Make a copy of the existing BSP, thus isolating your new 
                         BSP work:</emphasis>
-                        Copying the existing BSP structure gives you a new area in which to work.</para></listitem>
+                        Copying the existing BSP file structure gives you a new area in which to work.</para></listitem>
                     <listitem><para><emphasis>Make configuration and recipe changes to your new BSP:</emphasis>
                         Configuration changes involve the files in the BSP's <filename>conf</filename>
                         directory. 
@@ -824,7 +827,7 @@
                         changes to the <filename>local.conf</filename> and <filename>bblayers.conf</filename>
                         files.</para></listitem>
                     <listitem><para><emphasis>Build the image:</emphasis>
-                        The Yocto Project uses the BitBake tool to create the image. 
+                        The OpenEmbedded build system uses BitBake to create the image. 
                         You need to decide on the type of image you are going to build (e.g. minimal, base, 
                         core, sato, and so forth) and then start the build using the <filename>bitbake</filename>
                         command.</para></listitem>
