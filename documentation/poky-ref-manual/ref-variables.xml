@@ -8,7 +8,7 @@
 <title>Reference: Variables Glossary</title>
 
 <para>
-    This section lists common variables used in the Yocto Project and gives an overview
+    This section lists common variables used in the OpenEmbedded build system and gives an overview
     of their function and contents.
 </para>
 
@@ -89,7 +89,7 @@
         <glossentry id='var-B'><glossterm>B</glossterm>
             <glossdef>
                 <para>
-                    The directory in which the Yocto Project build system places
+                    The directory in which the OpenEmbedded build system places
                     generated objects during a recipe's build process.
                     By default, this directory is the same as the <link linkend='var-S'><filename>S</filename></link>
                     directory:
@@ -99,7 +99,7 @@
                     You can separate the source directory (<filename>S</filename>) and the directory pointed to 
                     by the <filename>B</filename> variable.
                     Most autotools-based recipes support separating these directories.
-                    The Yocto Project defaults to using separate directories for <filename>gcc</filename>
+                    The build system defaults to using separate directories for <filename>gcc</filename>
                     and some kernel recipes.
                 </para>
             </glossdef>
@@ -160,7 +160,7 @@
                     </literallayout></para>
                 <para>Use the <filename>BBMASK</filename> variable from within the 
                     <filename>conf/local.conf</filename> file found 
-                    in the Yocto Project build directory.</para>
+                    in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.</para>
             </glossdef>
         </glossentry>
 
@@ -243,9 +243,9 @@
 
         <glossentry id='var-BBLAYERS'><glossterm>BBLAYERS</glossterm>
             <glossdef>
-                <para>Lists the layers to enable during the Yocto Project build. 
+                <para>Lists the layers to enable during the build. 
                     This variable is defined in the <filename>bblayers.conf</filename> configuration 
-                    file in the Yocto Project build directory. 
+                    file in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>. 
                     Here is an example:
                     <literallayout class='monospaced'>
      BBLAYERS = " \
@@ -335,8 +335,8 @@
                     <filename>/etc</filename> or <filename>${bindir}</filename> rather 
                     than <filename>/usr/bin</filename>.
                     You can find a list of these variables at the top of the 
-                    <filename>/meta/conf/bitbake.conf</filename> file in the Yocto Project
-                    files directory.
+                    <filename>/meta/conf/bitbake.conf</filename> file in the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>.
                 </note>
             </glossdef>
         </glossentry>
@@ -358,7 +358,7 @@
                     Specifies the list of packages to be added to the image. 
                     This variable should only be set in the <filename>local.conf</filename>
                     configuration file found in the 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-build-directory'>Yocto Project Build Directory</ulink>.
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
                 </para>
 
                 <para>
@@ -479,7 +479,7 @@
                     This directory is self-maintaining and you should not have
                     to touch it. 
                     By default, the directory is <filename>downloads</filename> in the 
-                    Yocto Project build directory.
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
                     <literallayout class='monospaced'>
      #DL_DIR ?= "${TOPDIR}/downloads"
                     </literallayout>
@@ -635,8 +635,8 @@
                     <filename>/etc</filename> or <filename>${bindir}</filename> rather 
                     than <filename>/usr/bin</filename>.
                     You can find a list of these variables at the top of the 
-                    <filename>/meta/conf/bitbake.conf</filename> file in the Yocto Project
-                    files directory.
+                    <filename>/meta/conf/bitbake.conf</filename> file in the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>.
                 </note>
 
                 <para>
@@ -655,7 +655,7 @@
         <glossentry id='var-FILESEXTRAPATHS'><glossterm>FILESEXTRAPATHS</glossterm>
             <glossdef>
                 <para>
-                    Extends the search path the Yocto Project build system uses when 
+                    Extends the search path the OpenEmbedded build system uses when 
                     looking for files and patches as it processes recipes. 
                     The directories BitBake uses when it processes recipes is defined by the
                     <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link> variable. 
@@ -691,7 +691,7 @@
         <glossentry id='var-FILESPATH'><glossterm>FILESPATH</glossterm>
             <glossdef>
                 <para>
-                    The default set of directories the Yocto Project build system uses
+                    The default set of directories the OpenEmbedded build system uses
                     when searching for patches and files.
                     During the build process, BitBake searches each directory in 
                     <filename>FILESPATH</filename> in the specified order when looking for 
@@ -702,7 +702,7 @@
                     The default value for the <filename>FILESPATH</filename> variable is defined
                     in the <filename>base.bbclass</filename> class found in 
                     <filename>meta/classes</filename> in the 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-files'>Yocto Project Files</ulink>:
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>:
                     <literallayout class='monospaced'>
 FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
    "${FILE_DIRNAME}/${P}", "${FILE_DIRNAME}/${PN}", \
@@ -727,16 +727,17 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                     possible.
                 </para>
                 <para>
-                    By default, the Yocto Project uses the <filename>fs-perms.txt</filename>, which
-                    is located in the <filename>meta/files</filename> directory of the Yocto Project
-                    files directory.
+                    By default, the OpenEmbedded build system uses the <filename>fs-perms.txt</filename>, which
+                    is located in the <filename>meta/files</filename> folder in the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>.
                     If you create your own file permissions setting table, you should place it in your
                     layer or the distros layer. 
                 </para>
                 <para>
                     You define the <filename>FILESYSTEM_PERMS_TABLES</filename> variable in the 
-                    <filename>conf/local.conf</filename> file, which is found in the Yocto Project's 
-                    build directory, to point to your custom <filename>fs-perms.txt</filename>.
+                    <filename>conf/local.conf</filename> file, which is found in the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>, to 
+                    point to your custom <filename>fs-perms.txt</filename>.
                     You can specify more than a single file permissions setting table.
                     The paths you specify to these files must be defined within the 
                     <filename>BBPATH</filename> variable.  
@@ -785,7 +786,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                 Note that you can add extra features to the image by using the
                 <filename><link linkend='var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</link></filename> variable.
                 See the "<link linkend="ref-features-image">Reference: Images</link>" section for the 
-                list of features present in images built by the Yocto Project.</para>
+                list of features present in images built by the OpenEmbedded build system.</para>
             </glossdef>
         </glossentry>
 
@@ -908,7 +909,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
             <glossdef>
                 <para>
                     Defines the size in Kbytes for the generated image.
-                    The Yocto Project build system determines the final size for the generated 
+                    The OpenEmbedded build system determines the final size for the generated 
                     image using an algorithm that takes into account the initial disk space used
                     for the generated image, a requested size for the image, and requested 
                     additional free disk space to be added to the image.
@@ -1035,8 +1036,8 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
 
         <glossentry id='var-KERNEL_FEATURES'><glossterm>KERNEL_FEATURES</glossterm>
             <glossdef>
-                <para>Includes additional metadata from the Linux Yocto kernel Git repository.
-                    In the Yocto Project build system, the default Board Support Packages (BSPs)
+                <para>Includes additional metadata from the Yocto Project kernel Git repository.
+                    In the OpenEmbedded build system, the default Board Support Packages (BSPs)
                     metadata is provided through 
                     the <filename>KMACHINE</filename> and <filename>KBRANCH</filename> variables.
                     You can use the <filename>KERNEL_FEATURES</filename> variable to further 
@@ -1049,7 +1050,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                     In this way, you can provide validated, but optional, sets of kernel
                     configurations and features.</para>
                 <para>For example, the following adds <filename>netfilter</filename> to all 
-                    the Linux Yocto kernels and adds sound support to the <filename>qemux86</filename>
+                    the Yocto Project kernels and adds sound support to the <filename>qemux86</filename>
                     machine:
                     <literallayout class='monospaced'>
      # Add netfilter to all linux-yocto kernels
@@ -1137,7 +1138,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
         <glossentry id='var-LICENSE_DIR'><glossterm>LICENSE_DIR</glossterm>
             <glossdef>
                 <para>Path to additional licenses used during the build.
-                    By default, the Yocto Project uses <filename>COMMON_LICENSE_DIR</filename>  
+                    By default, the OpenEmbedded build system uses <filename>COMMON_LICENSE_DIR</filename>  
                     to define the directory that holds common license text used during the build. 
                     The <filename>LICENSE_DIR</filename> variable allows you to extend that
                     location to other areas that have additional licenses: 
@@ -1341,7 +1342,8 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
         <glossentry id='var-PACKAGE_CLASSES'><glossterm>PACKAGE_CLASSES</glossterm>
             <glossdef>
                 <para>This variable, which is set in the <filename>local.conf</filename> configuration
-                    file found in the Yocto Project file's <filename>conf</filename> directory,
+                    file found in the <filename>conf</filename> folder of the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>,
                     specifies the package manager to use when packaging data.
                     You can provide one or more arguments for the variable with the first 
                     argument being the package manager used to create images:
@@ -1534,7 +1536,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                     <filename><link linkend='var-RDEPENDS'>RDEPENDS</link></filename> variable.
                 </para>
                 <para>
-                    The Yocto Project build process automatically installs the list of packages
+                    The OpenEmbedded build process automatically installs the list of packages
                     as part of the built package.
                     However, you can remove them later if you want.
                     If, during the build, a package from the list cannot be found, the build
@@ -1572,8 +1574,8 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
         <glossentry id='var-S'><glossterm>S</glossterm>
             <glossdef>
                 <para>
-                    The location in the <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-build-directory'>
-                    Yocto Project Build Directory</ulink> where unpacked package source code resides.
+                    The location in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>
+                    where unpacked package source code resides.
                     This location is within the working directory 
                     (<filename><link linkend='var-WORKDIR'>WORKDIR</link></filename>), which 
                     is not static.
@@ -1585,9 +1587,10 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
  ${WORKDIR}/${PN}-${PV}
                     </literallayout>
                     As an example, assume a 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-files'>
-                    Yocto Project Files</ulink> top-level directory named <filename>poky</filename> 
-                    and a default Yocto Project Build Directory of <filename>poky/build</filename>.
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink> top-level 
+                    folder named <filename>poky</filename> 
+                    and a default <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>
+                    at <filename>poky/build</filename>.
                     In this case, the working directory the build system uses to build 
                     the <filename>db</filename> package is the following:
                     <literallayout class='monospaced'>
@@ -1661,10 +1664,10 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
             <glossdef>
                 <para></para>
                 <para>
-                    By default, the Yocto Project automatically detects whether 
+                    By default, the OpenEmbedded build system automatically detects whether 
                     <filename><link linkend='var-SRC_URI'>SRC_URI</link></filename>  
                     contains files that are machine-specific.
-                    If so, the Yocto Project automatically changes 
+                    If so, the build system automatically changes 
                     <filename><link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></filename>. 
                     Setting this variable to "0" disables this behavior.
                 </para>
@@ -1728,7 +1731,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
         <glossentry id='var-TARGET_ARCH'><glossterm>TARGET_ARCH</glossterm>
             <glossdef>
                 <para>The architecture of the device being built. 
-                While a number of values are possible, the Yocto Project primarily supports
+                While a number of values are possible, the OpenEmbedded build system primarily supports
                 <filename>arm</filename> and <filename>i586</filename>.</para>
             </glossdef>
         </glossentry>
@@ -1790,11 +1793,11 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                 </para>
                 <para>
                     The <filename>TCMODE</filename> variable selects the external toolchain
-                    built from the Yocto Project or a few supported combinations of
+                    built using the OpenEmbedded build system or a few supported combinations of
                     the upstream GCC or CodeSourcery Labs toolchain.
                     The variable determines which of the <filename>tcmode-*</filename> files in 
                     the <filename>meta/conf/distro/include</filename> directory, which is found in the
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-files'>Yocto Project Files</ulink>,
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>,
                     is used. 
                 </para>
                 <para>
@@ -1811,20 +1814,18 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
         <glossentry id='var-TMPDIR'><glossterm>TMPDIR</glossterm>
             <glossdef>
                 <para>
-                    This variable is the temporary directory the Yocto Project build system 
+                    This variable is the temporary directory the OpenEmbedded build system 
                     uses when it does its work building images. 
                     By default, the <filename>TMPDIR</filename> variable is named 
                     <filename>tmp</filename> within the 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-build-directory'>
-                    Yocto Project Build Directory</ulink>.
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
                 </para>
 
                 <para>
                     If you want to establish this directory in a location other than the
                     default, you can uncomment the following statement in the 
                     <filename>conf/local.conf</filename> file in the 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-files'>
-                    Yocto Project Files</ulink>:
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>:
                     <literallayout class='monospaced'>
      #TMPDIR = "${TOPDIR}/tmp"
                     </literallayout> 
@@ -1836,10 +1837,9 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
             <glossdef>
                 <para>
                     This variable is the 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-build-directory'>
-                    Yocto Project Build Directory</ulink>.
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
                     BitBake automatically sets this variable.
-                    The Yocto Project build system uses the build directory when building images. 
+                    The OpenEmbedded build system uses the build directory when building images. 
                 </para>
             </glossdef>
         </glossentry>
@@ -1857,7 +1857,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
         <glossentry id='var-WORKDIR'><glossterm>WORKDIR</glossterm>
             <glossdef>
                 <para>
-                    The pathname of the working directory in which the Yocto Project build system  
+                    The pathname of the working directory in which the OpenEmbedded build system  
                     builds packages.
                     This directory is located within the
                     <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link> directory structure and changes
@@ -1884,11 +1884,10 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
  ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
                     </literallayout>
                     As an example, assume a 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-files'>
-                    Yocto Project Files</ulink> top-level directory named <filename>poky</filename> 
-                    and a default 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-build-directory'>
-                    Yocto Project Build Directory</ulink> of <filename>poky/build</filename>.
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink> top-level 
+                    folder name <filename>poky</filename> and a default 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink> 
+                    at <filename>poky/build</filename>.
                     In this case, the working directory the build system uses to build 
                     the <filename>v86d</filename> package is the following:
                     <literallayout class='monospaced'>
@@ -1902,9 +1901,9 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                     <literallayout class='monospaced'>
  ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
                     </literallayout>
-                    As an example, again assume a Yocto Project Files top-level directory 
-                    named <filename>poky</filename> and a default Yocto Project build directory 
-                    of <filename>poky/build</filename>.
+                    As an example, again assume a source directory top-level folder 
+                    named <filename>poky</filename> and a default build directory 
+                    at <filename>poky/build</filename>.
                     In this case, the working directory the build system uses to build
                     the <filename>acl</filename> package, which is dependent on a 
                     MIPS-based device, is the following:
