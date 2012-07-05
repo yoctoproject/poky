@@ -3,7 +3,7 @@
 [<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <article id='intro'>
-   <imagedata fileref="figures/yocto-project-transp.png" width="6in" depth="1in" align="right" scale="25" />
+   <imagedata fileref="figures/yocto-project-trans.png" width="6in" depth="1in" align="right" scale="25" />
 
 <section id='fake-title'>
     <title>The Yocto Project Quick Start</title>
@@ -16,8 +16,9 @@
         Welcome to the Yocto Project!  
         The Yocto Project is an open-source collaboration project focused on embedded Linux
         developers.
-        Amongst other things, the Yocto Project uses the Poky build system to 
-        construct complete Linux images.
+        Among other things, the Yocto Project uses a build system based on the Poky project
+        to construct complete Linux images.
+        The Poky project, in turn, draws from and contributes back to the OpenEmbedded project.
     </para>
 
     <para>
@@ -42,7 +43,7 @@
         After reading this document, you will have a basic understanding of what the Yocto Project is
         and how to use some of its core components.  
         This document steps you through a simple example showing you how to build a small image 
-        and run it using the QEMU emulator.
+        and run it using the Quick EMUlator (QEMU emulator).
     </para>
 
     <para>
@@ -55,8 +56,8 @@
             <listitem><para><emphasis>FAQs:</emphasis> Lists commonly asked Yocto Project questions and answers.
                 You can find two FAQs: <ulink url='&YOCTO_WIKI_URL;/wiki/FAQ'>Yocto Project FAQ</ulink> on 
                 a wiki, and the 
-                <ulink url='&YOCTO_DOCS_REF_URL;#faq'>FAQ</ulink> appendix in the 
-                The Yocto Project Reference Manual.
+                <ulink url='&YOCTO_DOCS_REF_URL;#faq'>FAQ</ulink> appendix in  
+                the Yocto Project Reference Manual.
                 </para></listitem>
             <listitem><para><emphasis>Developer Screencast:</emphasis> The 
                 <ulink url='http://vimeo.com/36450321'>Getting Started with the Yocto Project - New
@@ -66,9 +67,8 @@
     </para>
     <note>
         Due to production processes, there could be differences between the Yocto Project
-        documentation bundled in the release tarball and the 
-        <ulink url='&YOCTO_DOCS_QS_URL;'>
-        Yocto Project Quick Start</ulink> on
+        documentation bundled in a released tarball and the 
+        <ulink url='&YOCTO_DOCS_QS_URL;'>Yocto Project Quick Start</ulink> on
         the <ulink url='&YOCTO_HOME_URL;'>Yocto Project</ulink> website.
         For the latest version of this manual, see the manual on the website.
     </note>
@@ -77,16 +77,13 @@
 <section id='yp-intro'>
     <title>Introducing the Yocto Project Development Environment</title>
     <para>
-        The Yocto Project through the Poky build system provides an open source development 
+        The Yocto Project through the OpenEmbedded build system provides an open source development 
         environment targeting the ARM, MIPS, PowerPC and x86 architectures for a variety of 
         platforms including x86-64 and emulated ones.
         You can use components from the Yocto Project to design, develop, build, debug, simulate,
         and test the complete software stack using Linux, the X Window System, GNOME Mobile-based
         application frameworks, and Qt frameworks.
     </para>
-
-    <para></para>
-    <para></para>
 
     <mediaobject>
         <imageobject>
@@ -138,7 +135,7 @@
         restricted screen sizes, sits neatly on top of a device using the 
         GNOME Mobile Stack and provides a well-defined user experience. 
         Implemented in its own layer, it makes it clear to developers how they can implement 
-        their own user interface on top of Yocto Linux.
+        their own user interface on top of a Linux image created with the Yocto Project.
     </para>
 </section>
 
@@ -152,7 +149,7 @@
     <itemizedlist>
         <listitem>
             <para>A host system running a supported Linux distribution (i.e. recent releases of
-                Fedora, openSUSE, CentOS, Debian, and Ubuntu).
+                Fedora, openSUSE, CentOS, and Ubuntu).
                 If the host system supports multiple cores and threads, you can configure the 
                 Yocto Project build system to decrease the time needed to build images
                 significantly.
@@ -162,7 +159,7 @@
             <para>The right packages.</para>
         </listitem>
         <listitem>
-            <para>A release of Yocto Project.</para>
+            <para>A release of the Yocto Project.</para>
         </listitem>
     </itemizedlist>
 
@@ -190,7 +187,7 @@
             </note>
             </para>
         <para>
-            The build system should be able to run on any modern distribution with Python 2.6 or 2.7.
+            The OpenEmbedded build system should be able to run on any modern distribution with Python 2.6 or 2.7.
             Earlier releases of Python are known to not work and the system does not support Python 3 at this time.
             This document assumes you are running one of the previously noted distributions on your Linux-based 
             host systems.
@@ -232,7 +229,7 @@
      unzip texi2html texinfo libsdl1.2-dev docbook-utils fop gawk \
      python-pysqlite2 diffstat make gcc build-essential xsltproc \
      g++ desktop-file-utils chrpath libgl1-mesa-dev libglu1-mesa-dev \
-     autoconf automake groff libtool xterm libxml-parser-perl
+     autoconf automake groff libtool xterm libxml-parser-perl dblatex
                 </literallayout>
         </section>
 
@@ -253,7 +250,7 @@
      groff linuxdoc-tools patch cmake \
      perl-ExtUtils-MakeMaker tcl-devel gettext chrpath ncurses apr \
      SDL-devel mesa-libGL-devel mesa-libGLU-devel gnome-doc-utils \
-     autoconf automake libtool xterm
+     autoconf automake libtool xterm dblatex
                 </literallayout>
 
         </section>
@@ -269,7 +266,7 @@
                 <literallayout class='monospaced'>
      $ sudo zypper install python gcc gcc-c++ libtool fop \
      subversion git chrpath automake make wget xsltproc \
-     diffstat texinfo freeglut-devel libSDL-devel
+     diffstat texinfo freeglut-devel libSDL-devel dblatex
                 </literallayout>
         </section>
 
@@ -291,7 +288,7 @@
        groff linuxdoc-tools patch cmake \
        tcl-devel gettext ncurses apr \
        SDL-devel mesa-libGL-devel mesa-libGLU-devel gnome-doc-utils \
-       autoconf automake libtool xterm
+       autoconf automake libtool xterm dblatex
                 </literallayout>
             <note><para>
                 Depending on the CentOS version you are using, other requirements and dependencies
@@ -320,12 +317,13 @@
         </para>
 
         <para>
-            You can also get the Yocto Project files by setting up a Git repository on your host
-            development system. 
-            Doing so allows you to contribute back to the project.
+            You can also get the Yocto Project files you need by setting up (cloning in Git terms)
+            a local copy of the <filename>poky</filename> Git repository on your host development 
+            system. 
+            Doing so allows you to contribute back to the Yocto Project project.
             For information on how to get set up using this method, see the 
             "<ulink url='&YOCTO_DOCS_DEV_URL;#local-yp-release'>Yocto 
-            Project Release</ulink>" item in The Yocto Project Development Manual.
+            Project Release</ulink>" item in the Yocto Project Development Manual.
         </para>
     </section>
 </section>
@@ -366,24 +364,22 @@
 
          <para>
              Use the following commands to build your image.  
-             The build process creates an entire Linux distribution, including the toolchain, from source.
+             The OpenEmbedded build process creates an entire Linux distribution, including the toolchain, 
+             from source.
          </para>
 
          <note><para>
-             The build process using Sato currently consumes 
-             about 50GB of disk space.
+             The build process using Sato currently consumes about 50GB of disk space.
              To allow for variations in the build process and for future package expansion, we 
              recommend having at least 100GB of free disk space.
          </para></note>
 
          <note><para>
-             By default, the Yocto Project searches for source code using a pre-determined order
+             By default, the build process searches for source code using a pre-determined order
              through a set of locations.
-             If you encounter problems with the Yocto Project finding and downloading source code, see
-             the FAQ entry "How does the Yocto Project build system obtain source code and will it work behind my
-             firewall or proxy server?" in  
-             <ulink url='&YOCTO_DOCS_REF_URL;#faq'>
-             The Yocto Project Reference Manual</ulink>.
+             If you encounter problems with the build process finding and downloading source code, see the 
+             "<ulink url='&YOCTO_DOCS_REF_URL;#how-does-the-yocto-project-obtain-source-code-and-will-it-work-behind-my-firewall-or-proxy-server'>How does the OpenEmbedded build system obtain source code and will it work behind my
+             firewall or proxy server?</ulink>" in the Yocto Project Reference Manual.
          </para></note>
 
          <para>
@@ -416,10 +412,11 @@
                  them into a directory named <filename>&YOCTO_POKY;</filename> in the current 
                  directory.</para></listitem>
              <listitem><para>The third command runs the Yocto Project environment setup script.
-                 Running this script defines Yocto Project build environment settings needed to 
+                 Running this script defines OpenEmbedded build environment settings needed to 
                  complete the build.
-                 The script also creates the Yocto Project
-                 build directory, which is <filename>&YOCTO_POKY;-build</filename> in this case.
+                 The script also creates the 
+                 <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>",
+                 which is <filename>&YOCTO_POKY;-build</filename> in this case.
                  After the script runs, your current working directory is set 
                  to the build directory.
                  Later, when the build completes, the build directory contains all the files 
@@ -455,12 +452,12 @@
         <para>
             Another consideration before you build is the package manager used when creating 
             the image. 
-            By default, the Yocto Project build system uses the RPM package manager.
+            By default, the OpenEmbedded build system uses the RPM package manager.
             You can control this configuration by using the 
             <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink></filename> variable.  
              For additional package manager selection information, see 
              "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-package'>Packaging - <filename>package*.bbclass</filename></ulink>" 
-             in The Yocto Project Reference Manual.
+             in the Yocto Project Reference Manual.
         </para>
 
          <para>
@@ -469,14 +466,14 @@
              For information on the <filename>-k</filename> option use the 
              <filename>bitbake --help</filename> command or see the
              "<ulink url='&YOCTO_DOCS_REF_URL;#usingpoky-components-bitbake'>BitBake</ulink>" section in 
-             The Yocto Project Reference Manual.
+             the Yocto Project Reference Manual.
              <literallayout class='monospaced'>
      $ bitbake -k core-image-sato
              </literallayout>
              <note><para>
                  BitBake requires Python 2.6 or 2.7.  For more information on this requirement, 
                  see the 
-                 <ulink url='&YOCTO_DOCS_REF_URL;#faq'>FAQ</ulink> in The Yocto Project Reference 
+                 <ulink url='&YOCTO_DOCS_REF_URL;#faq'>FAQ</ulink> in the Yocto Project Reference 
                  Manual.
              </para></note>
              The final command runs the image:
@@ -515,7 +512,7 @@
         </para>
 
         <itemizedlist>
-            <listitem><para>Install the appropriate stand-alone Yocto toolchain tarball.</para></listitem>
+            <listitem><para>Install the appropriate stand-alone toolchain tarball.</para></listitem>
             <listitem><para>Download the pre-built image that will boot with QEMU.  
                 You need to be sure to get the QEMU image that matches your target machine’s 
                 architecture (e.g. x86, ARM, etc.).</para></listitem>
@@ -528,13 +525,14 @@
         <section id='installing-the-toolchain'>
             <title>Installing the Toolchain</title>
             <para>
-                You can download the pre-built toolchain, which includes the <filename>runqemu</filename> 
+                You can download a tarball with the pre-built toolchain, which includes the 
+                <filename>runqemu</filename> 
                 script and support files, from the appropriate directory under
                 <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'></ulink>.  
                 Toolchains are available for 32-bit and 64-bit development systems from the 
                 <filename>i686</filename> and <filename>x86-64</filename> directories, respectively. 
                 Each type of development system supports five target architectures.
-                The tarball files are named such that a string representing the host system appears 
+                The names of the tarballs are such that a string representing the host system appears 
                 first in the filename and then is immediately followed by a string representing
                 the target architecture.
             </para>
@@ -578,7 +576,7 @@
             <para>
                 For more information on how to install tarballs, see the 
                 "<ulink url='&YOCTO_DOCS_ADT_URL;#using-an-existing-toolchain-tarball'>Using a Cross-Toolchain Tarball</ulink>" and 
-                "<ulink url='&YOCTO_DOCS_ADT_URL;#using-the-toolchain-from-within-the-build-tree'>Using BitBake and the Yocto Project Build Tree</ulink>" sections in The Yocto Project Application Development Toolkit (ADT) 
+                "<ulink url='&YOCTO_DOCS_ADT_URL;#using-the-toolchain-from-within-the-build-tree'>Using BitBake and the Yocto Project Build Tree</ulink>" sections in the Yocto Project Application Development Toolkit (ADT) 
                 User's Guide.
             </para>
         </section>
@@ -610,7 +608,7 @@
             <para>
                 You can learn more about downloading a Yocto Project kernel in the 
                 "<ulink url='&YOCTO_DOCS_DEV_URL;#local-kernel-files'>Linux Yocto Kernel</ulink>" section of  
-                The Yocto Project Development Manual.
+                the Yocto Project Development Manual.
             </para>
         </section>
 
@@ -733,7 +731,7 @@
         <title>Getting the Yocto Project</title>
 
         <para>
-            Get the <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-files'>Yocto Project Files</ulink>
+            Set up your <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>
             one of two ways:
             <itemizedlist>
                 <listitem><para><emphasis>Tarball:</emphasis> 
@@ -766,9 +764,9 @@
         <title>Initializing the Build Environment</title>
 
         <para>
-            From the parent directory of the Yocto Project Files, initialize your environment 
+            From the parent directory of local source directory, initialize your environment 
             and provide a meaningful 
-            <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-build-directory'>Yocto Project Build Directory</ulink>
+            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>
             name:
             <literallayout class='monospaced'>
      $ source poky/oe-init-build-env mybuilds
