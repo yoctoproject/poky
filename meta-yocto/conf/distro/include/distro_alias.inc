@@ -1,7 +1,7 @@
 #
 # This is a list for tracking status of package relative to Major
 # distributions such as Fedora, Ubuntu, Debian, ... The package 
-# name is the major distribution equivlant to the name used in oe-core
+# name is the major distribution equivalent to the name used in oe-core
 #
 # The format is as a bitbake variable override for each recipe
 #

@@ -1,6 +1,6 @@
 # This is a "burndown" list of recipes that need to be reviewed
 # and corrected based on their color they may have some issues.
-# If a recipe is fixed and OK, then their entry can be removed.
+# If a recipe is fixed and OK, then its entry can be removed.
 #
 # The format is as a bitbake variable override for each recipe
 #
@@ -13,7 +13,7 @@
 # Please keep this list in alphabetical order.
 #
 
-# Default for all recipes not speficied here
+# Default for all recipes not specified here
 RECIPE_COLOR = "green"
 
 RECIPE_COLOR_pn-aaina = "red"
