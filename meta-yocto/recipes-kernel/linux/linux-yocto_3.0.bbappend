@@ -3,10 +3,10 @@ KBRANCH_routerstationpro = "yocto/standard/routerstationpro"
 KBRANCH_mpc8315e-rdb = "yocto/standard/fsl-mpc8315e-rdb"
 KBRANCH_beagleboard = "yocto/standard/beagleboard"
 
-SRCREV_machine_atom-pc ?= "45d64709c00fce6e9b76a638c4ca6f30a8e9d25a"
-SRCREV_machine_routerstationpro ?= "af74f58ef6ffdc68cc77d314ad31bd6a322309d3"
-SRCREV_machine_mpc8315e-rdb ?= "0c781e306559d5e9816e202a60aa2543f4eea39e"
-SRCREV_machine_beagleboard ?= "567c989c90ce5f2c62f6ef788be763150b65a0fb"
+SRCREV_machine_atom-pc ?= "834c2a69c87ee7211932f8ec5102a472828abcb1"
+SRCREV_machine_routerstationpro ?= "1c17c082b6ee565acc176cde5be835ac4269817b"
+SRCREV_machine_mpc8315e-rdb ?= "f2312437b52dda4499310aacb4c561ba8b8cbeb7"
+SRCREV_machine_beagleboard ?= "3ab688a78cac7b2e32afc83376a53370f2bd13b7"
 
 
 COMPATIBLE_MACHINE_mpc8315e-rdb = "mpc8315e-rdb"
