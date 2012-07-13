@@ -516,22 +516,22 @@
                 the <filename>meta-&lt;bsp_name&gt;/recipes-kernel/linux</filename> directory).
             </para>
             <para>
-                Suppose the BSP uses the <filename>linux-yocto_3.0.bb</filename> kernel, 
-                which is the preferred kernel to use for developing a new BSP using the Yocto Project.
+                Suppose you are using the <filename>linux-yocto_3.2.bb</filename> recipe to build
+                the kernel.
                 In other words, you have selected the kernel in your 
                 <filename>&lt;bsp_name&gt;.conf</filename> file by adding the following statements:
                 <literallayout class='monospaced'>
      PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-     PREFERRED_VERSION_linux-yocto = "3.0%"
+     PREFERRED_VERSION_linux-yocto = "3.2%"
                 </literallayout>
-                You would use the <filename>linux-yocto_3.0.bbappend</filename> file to append 
+                You would use the <filename>linux-yocto_3.2.bbappend</filename> file to append 
                 specific BSP settings to the kernel, thus configuring the kernel for your particular BSP.
             </para>
             <para>
                 As an example, look at the existing Crown Bay BSP.
                 The append file used is:
                 <literallayout class='monospaced'>
-     meta-crownbay/recipes-kernel/linux/linux-yocto_3.0.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto_3.2.bbappend
                 </literallayout>
                 The following listing shows the file.
                 Be aware that the actual commit ID strings in this example listing might be different
@@ -541,34 +541,34 @@
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
      COMPATIBLE_MACHINE_crownbay = "crownbay"
-     KMACHINE_crownbay  = "yocto/standard/crownbay"
-     KERNEL_FEATURES_append_crownbay += " cfg/smp.scc"
+     KMACHINE_crownbay  = "crownbay"
+     KBRANCH_crownbay  = "standard/default/crownbay"
 
      COMPATIBLE_MACHINE_crownbay-noemgd = "crownbay-noemgd"
-     KMACHINE_crownbay-noemgd  = "yocto/standard/crownbay"
-     KERNEL_FEATURES_append_crownbay-noemgd += " cfg/smp.scc"
+     KMACHINE_crownbay-noemgd  = "crownbay"
+     KBRANCH_crownbay-noemgd  = "standard/default/crownbay"
 
-     SRCREV_machine_pn-linux-yocto_crownbay ?= "63c65842a3a74e4bd3128004ac29b5639f16433f"
-     SRCREV_meta_pn-linux-yocto_crownbay ?= "59314a3523e360796419d76d78c6f7d8c5ef2593"
+     SRCREV_machine_pn-linux-yocto_crownbay ?= "48101e609711fcfe8d5e737a37a5a69f4bd57d9a"
+     SRCREV_meta_pn-linux-yocto_crownbay ?= "5b4c9dc78b5ae607173cc3ddab9bce1b5f78129b"
 
-     SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= "63c65842a3a74e4bd3128004ac29b5639f16433f"
-     SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= "59314a3523e360796419d76d78c6f7d8c5ef2593"
+     SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= "48101e609711fcfe8d5e737a37a5a69f4bd57d9a"
+     SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= "5b4c9dc78b5ae607173cc3ddab9bce1b5f78129b"
                 </literallayout>
                 This append file contains statements used to support the Crown Bay BSP for both 
                 <trademark class='registered'>Intel</trademark> EMGD and the VESA graphics.
                 The build process, in this case, recognizes and uses only the statements that 
                 apply to the defined machine name - <filename>crownbay</filename> in this case.
-                So, the applicable statements in the <filename>linux-yocto_3.0.bbappend</filename> 
+                So, the applicable statements in the <filename>linux-yocto_3.2.bbappend</filename> 
                 file are follows:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
      COMPATIBLE_MACHINE_crownbay = "crownbay"
-     KMACHINE_crownbay  = "yocto/standard/crownbay"
-     KERNEL_FEATURES_append_crownbay += " cfg/smp.scc"
+     KMACHINE_crownbay  = "crownbay"
+     KBRANCH_crownbay  = "standard/default/crownbay"
 
-     SRCREV_machine_pn-linux-yocto_crownbay ?= "63c65842a3a74e4bd3128004ac29b5639f16433f"
-     SRCREV_meta_pn-linux-yocto_crownbay ?= "59314a3523e360796419d76d78c6f7d8c5ef2593"
+     SRCREV_machine_pn-linux-yocto_crownbay ?= "48101e609711fcfe8d5e737a37a5a69f4bd57d9a"
+     SRCREV_meta_pn-linux-yocto_crownbay ?= "5b4c9dc78b5ae607173cc3ddab9bce1b5f78129b"
                 </literallayout>
                 The append file defines <filename>crownbay</filename> as the compatible machine and
                 defines the <filename>KMACHINE</filename>.
