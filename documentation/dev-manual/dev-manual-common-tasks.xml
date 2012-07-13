@@ -1681,6 +1681,30 @@
         </para>
     </section>
 
+    <section id="platdev-appdev-srcrev">
+        <title>Using an External SCM</title>
+
+        <para>
+            If you're working on a recipe that pulls from an external Source Code Manager (SCM), it 
+            is possible to have the OpenEmbedded build system notice new changes added to the 
+            SCM and then build the package that depends on them using the latest version. 
+            This only works for SCMs from which it is possible to get a sensible revision number for changes.
+            Currently, you can do this with Apache Subversion (SVN), Git, and Bazaar (BZR) repositories.
+        </para>
+
+        <para>
+            To enable this behavior, simply add the following to the <filename>local.conf</filename>
+            configuration file found in the 
+            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>:
+            <literallayout class='monospaced'>
+     SRCREV_pn-&lt;PN&gt; = "${AUTOREV}"
+            </literallayout>
+            where <filename>PN</filename> 
+            is the name of the package for which you want to enable automatic source 
+            revision updating.
+        </para>
+    </section>
+
     <section id="platdev-gdb-remotedebug">
         <title>Debugging With the GNU Project Debugger (GDB) Remotely</title>
 
