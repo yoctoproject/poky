@@ -505,10 +505,10 @@
             </para>
 
             <para>
-                These files append your specific changes to the kernel you are using.
+                These files append your specific changes to the main kernel recipe you are using.
             </para>
             <para>
-                For your BSP, you typically want to use an existing Yocto Project kernel found in the 
+                For your BSP, you typically want to use an existing Yocto Project kernel recipe found in the 
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink> 
                 at <filename>meta/recipes-kernel/linux</filename>.
                 You can append your specific changes to the kernel recipe by using a
@@ -516,22 +516,22 @@
                 the <filename>meta-&lt;bsp_name&gt;/recipes-kernel/linux</filename> directory).
             </para>
             <para>
-                Suppose you are using the <filename>linux-yocto_3.2.bb</filename> recipe to build
+                Suppose you are using the <filename>linux-yocto_3.4.bb</filename> recipe to build
                 the kernel.
                 In other words, you have selected the kernel in your 
                 <filename>&lt;bsp_name&gt;.conf</filename> file by adding the following statements:
                 <literallayout class='monospaced'>
      PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-     PREFERRED_VERSION_linux-yocto = "3.2%"
+     PREFERRED_VERSION_linux-yocto = "3.4%"
                 </literallayout>
-                You would use the <filename>linux-yocto_3.2.bbappend</filename> file to append 
+                You would use the <filename>linux-yocto_3.4.bbappend</filename> file to append 
                 specific BSP settings to the kernel, thus configuring the kernel for your particular BSP.
             </para>
             <para>
                 As an example, look at the existing Crown Bay BSP.
                 The append file used is:
                 <literallayout class='monospaced'>
-     meta-crownbay/recipes-kernel/linux/linux-yocto_3.2.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto_3.4.bbappend
                 </literallayout>
                 The following listing shows the file.
                 Be aware that the actual commit ID strings in this example listing might be different
@@ -558,7 +558,7 @@
                 <trademark class='registered'>Intel</trademark> EMGD and the VESA graphics.
                 The build process, in this case, recognizes and uses only the statements that 
                 apply to the defined machine name - <filename>crownbay</filename> in this case.
-                So, the applicable statements in the <filename>linux-yocto_3.2.bbappend</filename> 
+                So, the applicable statements in the <filename>linux-yocto_3.4.bbappend</filename> 
                 file are follows:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
@@ -570,41 +570,42 @@
      SRCREV_machine_pn-linux-yocto_crownbay ?= "48101e609711fcfe8d5e737a37a5a69f4bd57d9a"
      SRCREV_meta_pn-linux-yocto_crownbay ?= "5b4c9dc78b5ae607173cc3ddab9bce1b5f78129b"
                 </literallayout>
-                The append file defines <filename>crownbay</filename> as the compatible machine and
-                defines the <filename>KMACHINE</filename>.
-                The file also points to some configuration fragments to use by setting the 
-                <filename>KERNEL_FEATURES</filename> variable.
-                The location for the configuration fragments is the kernel tree itself in the 
-                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink> 
-                under <filename>linux/meta</filename>.
-                Finally, the append file points to the specific commits in the 
+                The append file defines <filename>crownbay</filename> as the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>
+                and defines the <filename>KMACHINE</filename>.
+                The file also uses the optional 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KBRANCH'><filename>KBRANCH</filename></ulink> variable
+                to ensure the build process uses the <filename>standard/default/crownbay</filename>
+                kernel branch.
+                Finally, the append file points to the specific top commits in the 
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink> Git 
                 repository and the <filename>meta</filename> Git repository branches to identify the 
                 exact kernel needed to build the Crown Bay BSP.
             </para>
+
             <para>
                 One thing missing in this particular BSP, which you will typically need when 
                 developing a BSP, is the kernel configuration file (<filename>.config</filename>) for your BSP.
                 When developing a BSP, you probably have a kernel configuration file or a set of kernel
                 configuration files that, when taken together, define the kernel configuration for your BSP.
                 You can accomplish this definition by putting the configurations in a file or a set of files 
-                inside a directory located at the same level as your append file and having the same name 
-                as the kernel.
-                With all these conditions met simply reference those files in a 
+                inside a directory located at the same level as your kernel's append file and having the same 
+                name as the kernel's main recipe file.
+                With all these conditions met, simply reference those files in a 
                 <filename>SRC_URI</filename> statement in the append file.
             </para>
+
             <para>
                 For example, suppose you had a set of configuration options in a file called 
-                <filename>myconfig</filename>.  
-                If you put that file inside a directory named 
-                <filename>/linux-yocto</filename> and then added 
+                <filename>myconfig.cfg</filename>.  
+                If you put that file inside a directory named <filename>/linux-yocto</filename> and then added 
                 a <filename>SRC_URI</filename> statement such as the following to the append file, 
-                those configuration
-                options will be picked up and applied when the kernel is built.
+                those configuration options will be picked up and applied when the kernel is built.
                 <literallayout class='monospaced'>
-     SRC_URI += "file://myconfig"
+     SRC_URI += "file://myconfig.cfg"
                 </literallayout>
             </para>
+
             <para>
                 As mentioned earlier, you can group related configurations into multiple files and 
                 name them all in the <filename>SRC_URI</filename> statement as well.
@@ -612,11 +613,12 @@
                 into their own files and add those by using a <filename>SRC_URI</filename> statement like the 
                 following in your append file:
                 <literallayout class='monospaced'>
-     SRC_URI += "file://myconfig \
+     SRC_URI += "file://myconfig.cfg \
             file://eth.cfg \
             file://gfx.cfg"
                 </literallayout>
             </para>
+
             <para>
                 The <filename>FILESEXTRAPATHS</filename> variable is in boilerplate form in the 
                 previous example in order to make it easy to do that.
@@ -625,32 +627,36 @@
                 The <filename>FILESEXTRAPATHS</filename> variable enables the build process to
                 find those configuration files.
             </para>
+
             <note>
                 <para>
-                Other methods exist to accomplish grouping and defining configuration options.
-                For example, if you are working with a local clone of the kernel repository, 
-                you could checkout the kernel's <filename>meta</filename> branch, make your changes, 
-                and then push the changes to the local bare clone of the kernel.
-                The result is that you directly add configuration options to the  
-                <filename>meta</filename> branch for your BSP.
-                The configuration options will likely end up in that location anyway if the BSP gets 
-                added to the Yocto Project. 
-                For an example showing how to change the BSP configuration, see the
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#changing-the-bsp-configuration'>Changing the BSP Configuration</ulink>" 
-                section in the Yocto Project Development Manual.
-                For a better understanding of working with a local clone of the kernel repository
-                and a local bare clone of the kernel, see the
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#modifying-the-kernel-source-code'>Modifying the Kernel
-                Source Code</ulink>" section also in the Yocto Project Development Manual.</para>
+                    Other methods exist to accomplish grouping and defining configuration options.
+                    For example, if you are working with a local clone of the kernel repository, 
+                    you could checkout the kernel's <filename>meta</filename> branch, make your changes, 
+                    and then push the changes to the local bare clone of the kernel.
+                    The result is that you directly add configuration options to the  
+                    <filename>meta</filename> branch for your BSP.
+                    The configuration options will likely end up in that location anyway if the BSP gets 
+                    added to the Yocto Project. 
+                    For an example showing how to change the BSP configuration, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#changing-the-bsp-configuration'>Changing the BSP Configuration</ulink>" 
+                    section in the Yocto Project Development Manual.
+                    For a better understanding of working with a local clone of the kernel repository
+                    and a local bare clone of the kernel, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#modifying-the-kernel-source-code'>Modifying the Kernel
+                    Source Code</ulink>" section also in the Yocto Project Development Manual.
+                </para>
+
                 <para>
-                In general, however, the Yocto Project maintainers take care of moving the 
-                <filename>SRC_URI</filename>-specified 
-                configuration options to the kernel's <filename>meta</filename> branch.
-                Not only is it easier for BSP developers to not have to worry about putting those 
-                configurations in the branch, but having the maintainers do it allows them to apply 
-                'global' knowledge about the kinds of common configuration options multiple BSPs in 
-                the tree are typically using.  
-                This allows for promotion of common configurations into common features.</para>
+                    In general, however, the Yocto Project maintainers take care of moving the 
+                    <filename>SRC_URI</filename>-specified 
+                    configuration options to the kernel's <filename>meta</filename> branch.
+                    Not only is it easier for BSP developers to not have to worry about putting those 
+                   configurations in the branch, but having the maintainers do it allows them to apply 
+                    'global' knowledge about the kinds of common configuration options multiple BSPs in 
+                    the tree are typically using.  
+                    This allows for promotion of common configurations into common features.
+                </para>
             </note>
             </section>
         </section>
