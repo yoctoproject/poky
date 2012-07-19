@@ -1362,18 +1362,29 @@
         </section>
 
         <section id='creating-config-fragments'>
-            <title>Creating Config Fragments</title>
+            <title>Creating Configuration Fragments</title>
 
             <para>
-                Configuration fragments are simply kernel options that appear in a file.
+                Configuration fragments are simply kernel options that appear in a file
+                placed where the OpenEmbedded build system can find and apply them.
                 Syntactically, the configuration statement is identical to what would appear
-                in the <filename>.config</filename>.
-                For example, issuing the following from the shell would create a config fragment
+                in the <filename>.config</filename> file, which is in the 
+                <link linkend='build-directory'>build directory</link> in 
+                <filename>tmp/work/&lt;arch&gt;-poky-linux/linux-yocto-&lt;release-specific-string&gt;/linux-&lt;arch&gt;-&lt;build-type&gt;</filename>.
+            </para>
+
+            <para>
+                It is simple to create a configuration fragment.  
+                For example, issuing the following from the shell creates a configuration fragment
                 file named <filename>my_smp.cfg</filename> that enables multi-processor support
                 within the kernel:
                 <literallayout class='monospaced'>
      $ echo "CONFIG_SMP=y" >> my_smp.cfg
                 </literallayout>
+                <note>
+                    All configuration files must use the <filename>.cfg</filename> extension in order
+                    for the OpenEmbedded build system to recognize them as a configuration fragment.
+                </note>
             </para>
 
             <para>
@@ -1382,15 +1393,28 @@
                 <filename>SRC_URI</filename>.
                 The OpenEmbedded build system will pick up the configuration and add it to the 
                 kernel's configuration.
-                For example, assume you add the following to your 
-                <filename>linux-yocto_3.0.bbappend</filename> file:
+                For example, suppose you had a set of configuration options in a file called 
+                <filename>myconfig.cfg</filename>.  
+                If you put that file inside a directory named <filename>/linux-yocto</filename> 
+                that resides in the same directory as the kernel's append file and then add 
+                a <filename>SRC_URI</filename> statement such as the following to the kernel's append file, 
+                those configuration options will be picked up and applied when the kernel is built.
                 <literallayout class='monospaced'>
-     file://my_smp.cfg
+     SRC_URI += "file://myconfig.cfg"
                 </literallayout>
-                You would put the config fragment file <filename>my_smp.cfg</filename> in a 
-                sub-directory with the same root name (<filename>linux-yocto</filename>)
-                beneath the directory that contains your <filename>linux-yocto_3.0.bbappend</filename> 
-                file and the build system will pick up and apply the fragment.
+            </para>
+
+            <para>
+                As mentioned earlier, you can group related configurations into multiple files and 
+                name them all in the <filename>SRC_URI</filename> statement as well.
+                For example, you could group separate configurations specifically for Ethernet and graphics
+                into their own files and add those by using a <filename>SRC_URI</filename> statement like the 
+                following in your append file:
+                <literallayout class='monospaced'>
+     SRC_URI += "file://myconfig.cfg \
+            file://eth.cfg \
+            file://gfx.cfg"
+                </literallayout>
             </para>
         </section>
 
