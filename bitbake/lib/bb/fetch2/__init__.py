@@ -525,12 +525,8 @@ def try_mirror_url(newuri, origud, ud, ld, check = False):
         raise
 
     except bb.fetch2.BBFetchException as e:
-        if isinstance(e, ChecksumError):
-            logger.warn("Mirror checksum failure for url %s (original url: %s)\nCleaning and trying again." % (newuri, origud.url))
-            logger.warn(str(e))
-        else:
-            logger.debug(1, "Mirror fetch failure for url %s (original url: %s)" % (newuri, origud.url))
-            logger.debug(1, str(e))
+        logger.debug(1, "Mirror fetch failure for url %s (original url: %s)" % (newuri, origud.url))
+        logger.debug(1, str(e))
         try:
             ud.method.clean(ud, ld)
         except UnboundLocalError:
