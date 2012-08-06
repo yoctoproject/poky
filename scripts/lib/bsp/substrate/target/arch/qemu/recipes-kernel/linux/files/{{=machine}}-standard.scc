@@ -13,18 +13,15 @@ define KARCH mips
 
 {{ if qemuarch == "i386": }}
 include {{=map_standard_kbranch(need_new_kbranch, new_kbranch, existing_kbranch)}}
-branch {{=machine}}
 {{ if qemuarch == "x86_64": }}
 include {{=map_standard_kbranch(need_new_kbranch, new_kbranch, existing_kbranch)}}
-branch {{=machine}}
 {{ if qemuarch == "arm": }}
 include bsp/arm-versatile-926ejs/arm-versatile-926ejs-standard
-branch {{=machine}}
 {{ if qemuarch == "powerpc": }}
 include bsp/qemu-ppc32/qemu-ppc32-standard
-branch {{=machine}}
 {{ if qemuarch == "mips": }}
 include bsp/mti-malta32/mti-malta32-be-standard
+{{ if need_new_kbranch == "y": }}
 branch {{=machine}}
 
 include {{=machine}}.scc
