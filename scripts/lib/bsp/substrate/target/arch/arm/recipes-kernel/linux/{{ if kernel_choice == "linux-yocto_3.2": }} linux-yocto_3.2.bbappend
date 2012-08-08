@@ -35,5 +35,5 @@ SRC_URI += "file://{{=machine}}-standard.scc \
 
 # uncomment and replace these SRCREVs with the real commit ids once you've had
 # the appropriate changes committed to the upstream linux-yocto repo
-#SRCREV_machine_pn-linux-yocto_{{=machine}} ?= "417fc778a86e81303bab5883b919ee422ec51c04"
-#SRCREV_meta_pn-linux-yocto_{{=machine}} ?= "138bf5b502607fe40315c0d76822318d77d97e01"
+#SRCREV_machine_pn-linux-yocto_{{=machine}} ?= "0ec416edf0b0cab3e919c0a1c167a883f8b344a2"
+#SRCREV_meta_pn-linux-yocto_{{=machine}} ?= "486f7aec824b4127e91ef53228823e996b3696f0"
