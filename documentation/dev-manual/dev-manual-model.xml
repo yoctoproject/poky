@@ -525,7 +525,7 @@
     <title>Application Development Workflow</title>
 
     <para>
-        Application development involves creation of an application that you want to be able
+        Application development involves creating an application that you want 
         to run on your target hardware, which is running a kernel image created using the 
         OpenEmbedded build system.
         The Yocto Project provides an Application Development Toolkit (ADT) and 
@@ -538,8 +538,8 @@
     </para>
 
     <para>
-        While we strongly suggest using the ADT to develop your application, you might
-        not want to.  
+        While we strongly suggest using the ADT to develop your application, this option might not 
+        be best for you.  
         If this is the case, you can still use pieces of the Yocto Project for your development process. 
         However, because the process can vary greatly, this manual does not provide detail on the process.
     </para>
@@ -597,7 +597,7 @@
                         </itemizedlist></para>
                     <para>For information on pre-built kernel image naming schemes for images 
                     that can run on the QEMU emulator, see the
-                    "<ulink url='&YOCTO_DOCS_QS_URL;#using-pre-built'>Using Pre-Built Binaries and QEMU</ulink>"
+                    "<ulink url='&YOCTO_DOCS_QS_URL;#downloading-the-pre-built-linux-kernel'>Downloading the Pre-Built Linux Kernel</ulink>"
                     section in the Yocto Project Quick Start.</para></listitem>
                 <listitem><para><emphasis>Install the ADT</emphasis>:  
                     The ADT provides a target-specific cross-development toolchain, the root filesystem,
@@ -635,7 +635,7 @@
                     Once your application is deployed, you need to test it.
                     Within the Eclipse IDE, you can use the debubbing environment along with the 
                     set of user-space tools installed along with the ADT to debug your application. 
-                    Of course, the same user-space tools are available separately to use if you choose
+                    Of course, the same user-space tools are available separately if you choose
                     not to use the Eclipse IDE.</para></listitem>
            </orderedlist>
         </para>
@@ -646,7 +646,14 @@
 
         <para>
             The Eclipse IDE is a popular development environment and it fully supports 
-            development using the Yocto Project.  
+            development using the Yocto Project.
+            <note>This release of the Yocto Project supports both the Juno and Indigo versions
+                of the Eclipse IDE.
+                Thus, the following information provides setup information for both versions.
+            </note>
+        </para>
+
+        <para>  
             When you install and configure the Eclipse Yocto Project Plug-in into 
             the Eclipse IDE, you maximize your Yocto Project experience.  
             Installing and configuring the Plug-in results in an environment that 
@@ -686,9 +693,18 @@
                 <title>Installing the Eclipse IDE</title>
 
                 <para>
-                    It is recommended that you have the Indigo 3.7.2 version of the 
+                    It is recommended that you have the Juno 4.2 version of the 
                     Eclipse IDE installed on your development system.  
-                    If you don’t have this version, you can find it at 
+                    However, if you currently have the Indigo 3.7.2 version installed and you do 
+                    not want to upgrade the IDE, you can configure Indigo to work with the 
+                    Yocto Project.
+                    See the
+                    "<link linkend='configuring-the-eclipse-ide-indigo'>Configuring the Eclipse IDE (Indigo)</link>"
+                    section.
+                </para>
+
+                <para>
+                    If you don’t have the Juno 4.2 Eclipse IDE installed, you can find the tarball at 
                     <ulink url='&ECLIPSE_MAIN_URL;'></ulink>.  
                     From that site, choose the Eclipse Classic version particular to your development
                     host.  
@@ -704,22 +720,23 @@
                     into a clean directory using the default name <filename>eclipse</filename>:
                     <literallayout class='monospaced'>
      $ cd ~
-     $ tar -xzvf ~/Downloads/eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz
+     $ tar -xzvf ~/Downloads/eclipse-SDK-4.2-linux-gtk-x86_64.tar.gz
                     </literallayout>
                 </para>
 
                 <para>
-                    One issue exists that you need to be aware of regarding the Java 
+                    If you have the Indigo 3.7.2 Eclipse IDE already installed and you want to use that
+                    version, one issue exists that you need to be aware of regarding the Java 
                     Virtual machine’s garbage collection (GC) process.  
                     The GC process does not clean up the permanent generation 
                     space (PermGen).  
                     This space stores metadata descriptions of classes.  
                     The default value is set too small and it could trigger an 
                     out-of-memory error such as the following:
-            <literallayout class='monospaced'>
+                    <literallayout class='monospaced'>
      Java.lang.OutOfMemoryError: PermGen space
-                   </literallayout>
-               </para>
+                    </literallayout>
+                </para>
 
                 <para>
                     This error causes the application to hang.
@@ -727,20 +744,67 @@
 
                 <para>
                     To fix this issue, you can use the <filename>--vmargs</filename>
-                    option when you start Eclipse to increase the size of the permanent generation space:
+                    option when you start the Indigo 3.7.2 Eclipse IDE 
+                    to increase the size of the permanent generation space:
                     <literallayout class='monospaced'>
      eclipse --vmargs --XX:PermSize=256M
                     </literallayout>
                 </para>
             </section>
 
-            <section id='configuring-the-eclipse-ide'>
-                <title>Configuring the Eclipse IDE</title>
+            <section id='configuring-the-eclipse-ide-juno'>
+                <title>Configuring the Eclipse IDE (Juno)</title>
+
+                <para>
+                    This section presents the steps needed to configure the Juno 4.2 Eclipse IDE.
+                    If you are using Indigo 3.7.2, see the 
+                    "<link linkend='configuring-the-eclipse-ide-indigo'>Configuring the Eclipse IDE (Indigo)</link>".
+                </para>
 
                 <para>
                     Before installing and configuring the Eclipse Yocto Plug-in, you need to configure
-                    the Eclipse IDE.  
-                    Follow these general steps to configure Eclipse:
+                    the Juno 4.2 Eclipse IDE.  
+                    Follow these general steps:
+                    <orderedlist>
+                        <listitem><para>Start the Eclipse IDE.</para></listitem>
+                        <listitem><para>Make sure you are in your Workbench and select 
+                            "Install New Software" from the "Help" pull-down menu.
+                            </para></listitem>
+                        <listitem><para>Select <filename>Juno - &ECLIPSE_JUNO_URL;</filename>
+                            from the "Work with:" pull-down menu.</para></listitem>
+                        <listitem><para>Expand the box next to "Linux Tools" and select the 
+                            "LTTng - Linux Tracing Toolkit" boxes.</para></listitem>
+                        <listitem><para>Expand the box next to "Mobile and Device Development" and select the 
+                            following boxes:
+                            <itemizedlist>
+                                <listitem><para><filename>C/C++ Remote Launch</filename></para></listitem>
+                                <listitem><para><filename>Remote System Explorer End-user Runtime</filename></para></listitem>
+                                <listitem><para><filename>Remote System Explorer User Actions</filename></para></listitem>
+                                <listitem><para><filename>Target Management Terminal</filename></para></listitem>
+                                <listitem><para><filename>TCF Remote System Explorer add-in</filename></para></listitem>
+                                <listitem><para><filename>TCF Target Explorer</filename></para></listitem>
+                            </itemizedlist></para></listitem>
+                        <listitem><para>Expand the box next to <filename>Programming Languages</filename>
+                            and select the <filename>Autotools Support for CDT</filename>
+                            and <filename>C/C++ Development Tools</filename> boxes.</para></listitem>
+                        <listitem><para>Complete the installation and restart the Eclipse IDE.</para></listitem>
+                    </orderedlist>
+                </para>
+            </section>
+
+            <section id='configuring-the-eclipse-ide-indigo'>
+                <title>Configuring the Eclipse IDE (Indigo)</title>
+
+                <para>
+                    This section presents the steps needed to configure the Indigo 3.7.2 Eclipse IDE.
+                    If you are using Juno 4.2, see the 
+                    "<link linkend='configuring-the-eclipse-ide-juno'>Configuring the Eclipse IDE (Juno)</link>".
+                </para>
+
+                <para>
+                    Before installing and configuring the Eclipse Yocto Plug-in, you need to configure
+                    the Indigo 3.7.2 Eclipse IDE.  
+                    Follow these general steps:
                     <orderedlist>
                         <listitem><para>Start the Eclipse IDE.</para></listitem>
                         <listitem><para>Make sure you are in your Workbench and select 
