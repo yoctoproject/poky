@@ -27,7 +27,7 @@
         <para>
             This section describes construction of the Yocto Project kernel source repositories 
             as accomplished by the Yocto Project team to create kernel repositories.
-            These kernel repositories are found at
+            These kernel repositories are found under the heading "Yocto Linux Kernel" at
             <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>&YOCTO_GIT_URL;/cgit.cgi</ulink>
             and can be shipped as part of a Yocto Project release. 
             The team creates these repositories by
@@ -53,8 +53,8 @@
             </literallayout>
             For another example of how to set up a local Git repository of the Yocto Project
             kernel files, see the 
-            "<ulink url='&YOCTO_DOCS_DEV_URL;#local-kernel-files'>Linux Yocto Kernel</ulink>" bulleted 
-            item in The Yocto Project Development Manual.
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#local-kernel-files'>Yocto Project Kernel</ulink>" bulleted 
+            item in the Yocto Project Development Manual.
         </para>
         <para>  
             Once you have cloned the kernel Git repository on your local machine, you can 
@@ -114,8 +114,9 @@
                     of actions, or into an existing equivalent script that is already part of the
                     shipped kernel.</para></listitem>
                 <listitem><para>Extra features are appended to the top-level feature description. 
-                    These features can come from the <filename>KERNEL_FEATURES</filename> variable in 
-                    recipes.</para></listitem>
+                    These features can come from the 
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES'><filename>KERNEL_FEATURES</filename></ulink>
+                    variable in recipes.</para></listitem>
                 <listitem><para>Each extra feature is located, compiled and appended to the script 
                     as described in step three.</para></listitem>
                 <listitem><para>The script is executed to produce a series of <filename>meta-*</filename>
@@ -211,7 +212,7 @@
         </para>
 
         <para>
-            What this means, is that all the generated files for a particular machine or BSP are now in 
+            This behavior means that all the generated files for a particular machine or BSP are now in 
             the build tree directory.  
             The files include the final <filename>.config</filename> file, all the <filename>.o</filename>
             files, the <filename>.a</filename> files, and so forth.
@@ -224,7 +225,7 @@
         <title>Workflow Examples</title>
 
         <para>
-            As previously noted, the Yocto Project kernel has built in Git integration.
+            As previously noted, the Yocto Project kernel has built-in Git integration.
             However, these utilities are not the only way to work with the kernel repository.
             The Yocto Project has not made changes to Git or to other tools that
             would invalidate alternate workflows. 
@@ -240,7 +241,7 @@
             <ulink url='http://git-scm.com/documentation'></ulink>.
             You can find a simple overview of using Git with the Yocto Project in the 
             "<ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink>"
-            section of The Yocto Project Development Manual.
+            section of the Yocto Project Development Manual.
         </para>
 
         <section id='change-inspection-kernel-changes-commits'>
@@ -419,10 +420,10 @@
      # bulk export of ALL modifications without separation or division
      # of the changes 
 
-     &gt; git add .
-     &gt; git commit -s -a -m &gt;commit message&lt; 
+     $ git add .
+     $ git commit -s -a -m &lt;msg&gt; 
         or
-     &gt; git commit -s -a # and interact with $EDITOR
+     $ git commit -s -a # and interact with $EDITOR
                     </literallayout>
                 </para>
 
@@ -459,15 +460,15 @@
 
                     <literallayout class='monospaced'>
      # edit a file
-     &gt; vi &gt;path&lt;/file
+     $ vi &lt;path&gt;/file
      # stage the change
-     &gt; git add &gt;path&lt;/file
+     $ git add &lt;path&gt;/file
      # commit the change
-     &gt; git commit -s
+     $ git commit -s
      # remove a file
-     &gt; git rm &gt;path&lt;/file
+     $ git rm &lt;path&gt;/file
      # commit the change
-     &gt; git commit -s
+     $ git commit -s
 
      ... etc.
                     </literallayout>
@@ -494,25 +495,25 @@
                     associated with development by using the following commands:
 
                     <literallayout class='monospaced'>
-     &gt; Git add &gt;path&lt;/file
-     &gt; Git commit --amend
-     &gt; Git rebase or Git rebase -i
+     $ Git add &lt;path&gt;/file
+     $ Git commit --amend
+     $ Git rebase or Git rebase -i
                     </literallayout>
                 </para>
 
                 <para>   
                     Again, assuming that the changes have not been pushed upstream, and that
-                    no pending works-in-progress exists (use <filename>git status</filename> to check), then
+                    no pending works-in-progress exist (use <filename>git status</filename> to check), then
                     you can revert (undo) commits by using the following commands:
 
                     <literallayout class='monospaced'>
      # remove the commit, update working tree and remove all
      # traces of the change
-     &gt; git reset --hard HEAD^
+     $ git reset --hard HEAD^
      # remove the commit, but leave the files changed and staged for re-commit
-     &gt; git reset --soft HEAD^
+     $ git reset --soft HEAD^
      # remove the commit, leave file change, but not staged for commit
-     &gt; git reset --mixed HEAD^
+     $ git reset --mixed HEAD^
                     </literallayout>
                 </para>
 
@@ -540,7 +541,7 @@
                     <para>
                         This section describes how you can extract committed changes from a working directory
                         by exporting them as patches.
-                        Once extracted, you can use the patches for upstream submission, 
+                        Once the changes have been extracted, you can use the patches for upstream submission, 
                         place them in a Yocto Project template for automatic kernel patching,
                         or apply them in many other common uses.
                     </para>
@@ -560,7 +561,7 @@
      # began. It can also be the parent branch if a branch was created
      # before development began.
 
-     &gt; git format-patch -o &lt;dir&gt; &lt;first commit&gt;..&lt;last commit&gt;
+     $ git format-patch -o &lt;dir&gt; &lt;first commit&gt;..&lt;last commit&gt;
                         </literallayout>
                     </para>
 
@@ -570,14 +571,14 @@
      # Identify commits of interest.
 
      # If the tree was tagged before development
-     &gt; git format-patch -o &lt;save dir&gt; &lt;tag&gt;
+     $ git format-patch -o &lt;save dir&gt; &lt;tag&gt;
 
      # If no tags are available
-     &gt; git format-patch -o &lt;save dir&gt; HEAD^  # last commit
-     &gt; git format-patch -o &lt;save dir&gt; HEAD^^ # last 2 commits
-     &gt; git whatchanged # identify last commit
-     &gt; git format-patch -o &lt;save dir&gt; &lt;commit id&gt;
-     &gt; git format-patch -o &lt;save dir&gt; &lt;rev-list&gt;
+     $ git format-patch -o &lt;save dir&gt; HEAD^  # last commit
+     $ git format-patch -o &lt;save dir&gt; HEAD^^ # last 2 commits
+     $ git whatchanged # identify last commit
+     $ git format-patch -o &lt;save dir&gt; &lt;commit id&gt;
+     $ git format-patch -o &lt;save dir&gt; &lt;rev-list&gt;
                         </literallayout>
                     </para> 
                 </section> 
@@ -588,14 +589,14 @@
                     <para>
                         This section describes how you can export changes from a working directory 
                         by pushing the changes into a master repository or by making a pull request.
-                        Once you have pushed the changes in the master repository, you can then 
+                        Once you have pushed the changes to the master repository, you can then 
                         pull those same changes into a new kernel build at a later time.
                     </para>
  
                     <para>
                         Use this command form to push the changes:
                         <literallayout class='monospaced'>
-     &gt; git push ssh://&lt;master_server&gt;/&lt;path_to_repo&gt;
+     $ git push ssh://&lt;master_server&gt;/&lt;path_to_repo&gt;
         &lt;local_branch&gt;:&lt;remote_branch&gt;
                         </literallayout>
                     </para>
@@ -605,13 +606,13 @@
                         <filename>yocto/standard/common-pc/base</filename> to the remote branch with the same name 
                         in the master repository <filename>//git.mycompany.com/pub/git/kernel-3.4</filename>.
                         <literallayout class='monospaced'>
-     &gt; git push ssh://git.mycompany.com/pub/git/kernel-3.4 \
+     $ git push ssh://git.mycompany.com/pub/git/kernel-3.4 \
         yocto/standard/common-pc/base:yocto/standard/common-pc/base
                         </literallayout>
                     </para>
 
                     <para>
-                        A pull request entails using <filename>git request-pull</filename> to compose 
+                        A pull request entails using the <filename>git request-pull</filename> command to compose 
                         an email to the
                         maintainer requesting that a branch be pulled into the master repository, see
                         <ulink url='http://github.com/guides/pull-requests'></ulink> for an example.
@@ -673,8 +674,8 @@
                     The following is an example of dumping patches for external submission:
                     <literallayout class='monospaced'>
      # dump the last 4 commits 
-     &gt; git format-patch --thread -n -o ~/rr/ HEAD^^^^
-     &gt; git send-email --compose --subject '[RFC 0/N] &lt;patch series summary&gt;' \
+     $ git format-patch --thread -n -o ~/rr/ HEAD^^^^
+     $ git send-email --compose --subject '[RFC 0/N] &lt;patch series summary&gt;' \
       --to foo@yoctoproject.org --to bar@yoctoproject.org \
       --cc list@yoctoproject.org  ~/rr
      # the editor is invoked for the 0/N patch, and when complete the entire
@@ -741,9 +742,9 @@
                     import the <filename>yocto/standard/common-pc/base</filename>
                     kernel into a secondary SCM:
                     <literallayout class='monospaced'>
-     &gt; git checkout yocto/standard/common-pc/base
-     &gt; cd .. ; echo linux/.git &gt; .cvsignore
-     &gt; cvs import -m "initial import" linux MY_COMPANY start
+     $ git checkout yocto/standard/common-pc/base
+     $ cd .. ; echo linux/.git &gt; .cvsignore
+     $ cvs import -m "initial import" linux MY_COMPANY start
                     </literallayout>
                 </para>
 
@@ -755,11 +756,11 @@
                     The following commands illustrate how you can condense and merge two BSPs into a 
                     second SCM:
                     <literallayout class='monospaced'>
-     &gt; git checkout yocto/standard/common-pc/base
-     &gt; git merge yocto/standard/common-pc-64/base
+     $ git checkout yocto/standard/common-pc/base
+     $ git merge yocto/standard/common-pc-64/base
      # resolve any conflicts and commit them
-     &gt; cd .. ; echo linux/.git &gt; .cvsignore
-     &gt; cvs import -m "initial import" linux MY_COMPANY start
+     $ cd .. ; echo linux/.git &gt; .cvsignore
+     $ cvs import -m "initial import" linux MY_COMPANY start
                     </literallayout>
                 </para>
             </section>
@@ -843,7 +844,7 @@
                 string, this simply means that modifications in the source
                 directory have not been committed.
                 <literallayout class='monospaced'>
-     &gt; git status
+     $ git status
                 </literallayout>
             </para>
 
@@ -857,8 +858,8 @@
             <para>
                 To brute force pickup and commit all such pending changes, enter the following:
                 <literallayout class='monospaced'>
-     &gt; git add .
-     &gt; git commit -s -a -m "getting rid of -dirty"
+     $ git add .
+     $ git commit -s -a -m "getting rid of -dirty"
                 </literallayout>
             </para>
 
