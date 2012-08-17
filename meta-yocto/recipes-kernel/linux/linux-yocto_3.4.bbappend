@@ -10,6 +10,6 @@ SRCREV_machine_beagleboard ?= "c77666c1d4c4be4be4b2046c3ff25bf1db34eb21"
 
 
 COMPATIBLE_MACHINE_mpc8315e-rdb = "mpc8315e-rdb"
-# COMPATIBLE_MACHINE_routerstationpro = "routerstationpro"
+COMPATIBLE_MACHINE_routerstationpro = "routerstationpro"
 # COMPATIBLE_MACHINE_beagleboard = "beagleboard"
 COMPATIBLE_MACHINE_atom-pc = "atom-pc"
