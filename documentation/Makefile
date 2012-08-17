@@ -59,13 +59,13 @@
 #
 
 ifeq ($(DOC),bsp-guide)
-XSLTOPTS = --stringparam html.stylesheet style.css \
+XSLTOPTS = --stringparam html.stylesheet bsp-style.css \
            --stringparam  chapter.autolabel 1 \
            --stringparam  section.autolabel 1 \
            --stringparam  section.label.includes.component.label 1 \
            --xinclude
 ALLPREQ = html pdf tarball
-TARFILES = style.css bsp-guide.html bsp-guide.pdf figures/bsp-title.png
+TARFILES = bsp-style.css bsp-guide.html bsp-guide.pdf figures/bsp-title.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
@@ -73,7 +73,7 @@ STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),dev-manual)
-XSLTOPTS = --stringparam html.stylesheet style.css \
+XSLTOPTS = --stringparam html.stylesheet dev-style.css \
            --stringparam  chapter.autolabel 1 \
            --stringparam  section.autolabel 1 \
            --stringparam  section.label.includes.component.label 1 \
@@ -87,7 +87,7 @@ ALLPREQ = html pdf tarball
 #
 
 	ifeq ($(BRANCH),edison)
-TARFILES = style.css dev-manual.html dev-manual.pdf \
+TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
            figures/kernel-example-repos-edison.png \
@@ -96,7 +96,7 @@ TARFILES = style.css dev-manual.html dev-manual.pdf \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
 	else ifeq ($(BRANCH),denzil)
-TARFILES = style.css dev-manual.html dev-manual.pdf \
+TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
            figures/kernel-example-repos-denzil.png \
@@ -105,7 +105,7 @@ TARFILES = style.css dev-manual.html dev-manual.pdf \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
         else
-TARFILES = style.css dev-manual.html dev-manual.pdf \
+TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
            figures/kernel-example-repos-denzil.png \
@@ -122,24 +122,79 @@ STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),yocto-project-qs)
-XSLTOPTS = --stringparam html.stylesheet style.css \
+XSLTOPTS = --stringparam html.stylesheet qs-style.css \
            --xinclude
 ALLPREQ = html tarball
-TARFILES = yocto-project-qs.html style.css figures/yocto-environment.png figures/building-an-image.png figures/using-a-pre-built-image.png figures/yocto-project-transp.png
+TARFILES = yocto-project-qs.html qs-style.css figures/yocto-environment.png figures/building-an-image.png figures/using-a-pre-built-image.png figures/yocto-project-transp.png
 MANUALS = $(DOC)/$(DOC).html
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
 
+ifeq ($(DOC),mega-manual)
+XSLTOPTS = --stringparam html.stylesheet mega-style.css \
+           --stringparam  chapter.autolabel 1 \
+           --stringparam  section.autolabel 1 \
+           --stringparam  section.label.includes.component.label 1 \
+           --xinclude
+ALLPREQ = html tarball
+
+	ifeq ($(BRANCH),edison)
+TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures/building-an-image.png  \
+	figures/using-a-pre-built-image.png \
+	figures/poky-title.png \
+	figures/adt-title.png figures/bsp-title.png \
+	figures/kernel-title.png figures/kernel-architecture-overview.png \
+	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
+	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
+	figures/kernel-example-repos-edison.png \
+	figures/kernel-overview-1.png figures/kernel-overview-2.png \
+	figures/kernel-overview-3-edison.png \
+	figures/source-repos.png figures/yp-download.png \
+	figures/wip.png
+	else ifeq ($(BRANCH),denzil)
+TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures/building-an-image.png  \
+	figures/using-a-pre-built-image.png \
+	figures/poky-title.png \
+	figures/adt-title.png figures/bsp-title.png \
+	figures/kernel-title.png figures/kernel-architecture-overview.png \
+	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
+	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
+	figures/kernel-example-repos-denzil.png \
+	figures/kernel-overview-1.png figures/kernel-overview-2.png \
+	figures/kernel-overview-3-denzil.png \
+	figures/source-repos.png figures/yp-download.png \
+	figures/wip.png
+        else
+TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures/building-an-image.png  \
+	figures/using-a-pre-built-image.png \
+	figures/poky-title.png \
+	figures/adt-title.png figures/bsp-title.png \
+	figures/kernel-title.png figures/kernel-architecture-overview.png \
+	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
+	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
+	figures/kernel-example-repos-denzil.png \
+	figures/kernel-overview-1.png figures/kernel-overview-2.png \
+	figures/kernel-overview-3-denzil.png \
+	figures/source-repos.png figures/yp-download.png \
+	figures/wip.png
+	endif
+
+MANUALS = $(DOC)/$(DOC).html
+FIGURES = figures
+STYLESHEET = $(DOC)/*.css
+
+endif
+
 ifeq ($(DOC),poky-ref-manual)
-XSLTOPTS = --stringparam html.stylesheet style.css \
+XSLTOPTS = --stringparam html.stylesheet ref-style.css \
            --stringparam  chapter.autolabel 1 \
            --stringparam  appendix.autolabel A \
            --stringparam  section.autolabel 1 \
            --stringparam  section.label.includes.component.label 1 \
            --xinclude
 ALLPREQ = html pdf tarball
-TARFILES = poky-ref-manual.html style.css figures/poky-title.png
+TARFILES = poky-ref-manual.html ref-style.css figures/poky-title.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
@@ -147,28 +202,28 @@ endif
 
 
 ifeq ($(DOC),adt-manual)
-XSLTOPTS = --stringparam html.stylesheet style.css \
+XSLTOPTS = --stringparam html.stylesheet adt-style.css \
            --stringparam  chapter.autolabel 1 \
            --stringparam  appendix.autolabel A \
            --stringparam  section.autolabel 1 \
            --stringparam  section.label.includes.component.label 1 \
            --xinclude
 ALLPREQ = html pdf tarball
-TARFILES = adt-manual.html adt-manual.pdf style.css figures/adt-title.png
+TARFILES = adt-manual.html adt-manual.pdf adt-style.css figures/adt-title.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),kernel-manual)
-XSLTOPTS = --stringparam html.stylesheet style.css \
+XSLTOPTS = --stringparam html.stylesheet kernel-style.css \
            --stringparam  chapter.autolabel 1 \
            --stringparam  appendix.autolabel A \
            --stringparam  section.autolabel 1 \
            --stringparam  section.label.includes.component.label 1 \
            --xinclude
 ALLPREQ = html pdf tarball
-TARFILES = kernel-manual.html kernel-manual.pdf style.css figures/kernel-title.png figures/kernel-architecture-overview.png
+TARFILES = kernel-manual.html kernel-manual.pdf kernel-style.css figures/kernel-title.png figures/kernel-architecture-overview.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
@@ -188,7 +243,14 @@ ifeq ($(DOC),yocto-project-qs)
 	@echo " "
 	@echo "ERROR: You cannot generate a PDF file for the Yocto Project Quick Start"
 	@echo " "
+
+else ifeq ($(DOC),mega-manual)
+	@echo " "
+	@echo "ERROR: You cannot generate a PDF file for the single HTML manual"
+	@echo " "
+
 else
+
 	cd $(DOC); ../tools/poky-docbook-to-pdf $(DOC).xml ../template; cd ..
 endif
     
