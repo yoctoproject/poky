@@ -122,9 +122,9 @@ yocto_bsp_create_usage = """
 
  See 'yocto bsp help create' for more detailed instructions.
 
- NOTE: For x86- and x86_64-based BSPs, the generated BSP assumes the
- presence of the meta-intel layer. Ensure the meta-intel layer is
- present and added to bblayers.conf.
+ NOTE: For x86-based BSPs that select the EMGD xserver, the generated
+ BSP assumes the presence of the meta-intel layer. Ensure the
+ meta-intel layer is present and added to bblayers.conf.
 
  See 'yocto bsp help create' for more detailed instructions.
 """
@@ -183,9 +183,9 @@ DESCRIPTION
       /path/to/poky/meta-mybsp \\
       "
 
-    NOTE: For x86- and x86_64-based BSPs, the generated BSP assumes
-    the presence of the meta-intel layer. Ensure the meta-intel layer
-    is present and added to bblayers.conf.
+    NOTE: For x86-based BSPs that select the EMGD xserver, the
+    generated BSP assumes the presence of the meta-intel layer. Ensure
+    the meta-intel layer is present and added to bblayers.conf.
 
     For example, assuming your poky repo is at /path/to/poky, your new
     BSP layer is at /path/to/poky/meta-mybsp, and your build directory
