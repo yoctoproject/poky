@@ -719,7 +719,6 @@ RECIPE_MAINTAINER_pn-xproxymanagementprotocol = "Laurentiu Palcu <laurentiu.palc
 RECIPE_MAINTAINER_pn-xrandr = "Laurentiu Palcu <laurentiu.palcu@intel.com>"
 RECIPE_MAINTAINER_pn-xrdb = "Laurentiu Palcu <laurentiu.palcu@intel.com>"
 RECIPE_MAINTAINER_pn-xrestop = "Laurentiu Palcu <laurentiu.palcu@intel.com>"
-RECIPE_MAINTAINER_pn-xserver-kdrive = "Kai Kang <kai.kang@windriver.com>"
 RECIPE_MAINTAINER_pn-xserver-nodm-init = "Laurentiu Palcu <laurentiu.palcu@intel.com>"
 RECIPE_MAINTAINER_pn-xserver-xf86-config = "Laurentiu Palcu <laurentiu.palcu@intel.com>"
 RECIPE_MAINTAINER_pn-xserver-xorg = "Laurentiu Palcu <laurentiu.palcu@intel.com>"
