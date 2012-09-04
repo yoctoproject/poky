@@ -3,10 +3,10 @@ KBRANCH_routerstationpro = "standard/routerstationpro"
 KBRANCH_mpc8315e-rdb = "standard/fsl-mpc8315e-rdb"
 KBRANCH_beagleboard = "standard/beagleboard"
 
-SRCREV_machine_atom-pc ?= "c77666c1d4c4be4be4b2046c3ff25bf1db34eb21"
-SRCREV_machine_routerstationpro ?= "2c4707476e4295ee58c3e7963b9028ab98bf41e5"
-SRCREV_machine_mpc8315e-rdb ?= "f10500e9faad3f9f799137a3159ff5c836c88227"
-SRCREV_machine_beagleboard ?= "c77666c1d4c4be4be4b2046c3ff25bf1db34eb21"
+SRCREV_machine_atom-pc ?= "0985844fa6235422c67ef269952fa4e765f252f9"
+SRCREV_machine_routerstationpro ?= "a2907c57acfb8fa71095a3ce5b20994ff859dbc5"
+SRCREV_machine_mpc8315e-rdb ?= "363a6f7e0c95aabec779a7ea3474662d191b935c"
+SRCREV_machine_beagleboard ?= "0985844fa6235422c67ef269952fa4e765f252f9"
 
 
 COMPATIBLE_MACHINE_mpc8315e-rdb = "mpc8315e-rdb"
