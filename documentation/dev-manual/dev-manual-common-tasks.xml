@@ -465,7 +465,7 @@
                 One way to get additional software into an image is to create a custom image. 
                 The following example shows the form for the two lines you need:
                 <literallayout class='monospaced'>
-     IMAGE_INSTALL = "task-core-x11-base package1 package2"
+     IMAGE_INSTALL = "packagegroup-core-x11-base package1 package2"
 
      inherit core-image
                 </literallayout>
@@ -494,58 +494,60 @@
         </section>
 
         <section id='usingpoky-extend-customimage-customtasks'>
-            <title>Customizing Images Using Custom Tasks</title>
+            <title>Customizing Images Using Custom Package Groups</title>
 
             <para>
-                For complex custom images, the best approach is to create a custom task package
+                For complex custom images, the best approach is to create a custom package group recipe
                 that is used to build the image or images. 
-                A good example of a tasks package is 
-                <filename>meta/recipes-core/tasks/task-core-boot.bb</filename>
+                A good example of a package group recipe is 
+                <filename>meta/recipes-core/packagegroups/packagegroup-core-boot.bb</filename>.
                 The 
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename> 
-                variable lists the task packages to build along with the complementary
-                <filename>-dbg</filename> and <filename>-dev</filename> packages. 
-                For each package added, you can use 
+                variable lists the package group packages you wish to produce. <filename>inherit packagegroup</filename>
+                sets appropriate default values and automatically adds <filename>-dev</filename>
+                and <filename>-dbg</filename> complementary
+                packages for every package specified in <filename>PACKAGES</filename>. 
+                Note that the inherit line should be towards
+                the top of the recipe, certainly before you set <filename>PACKAGES</filename>.
+                For each package you specify in <filename>PACKAGES</filename>, you can use 
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'>RDEPENDS</ulink></filename>
                 and 
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'>RRECOMMENDS</ulink></filename> 
                 entries to provide a list of packages the parent task package should contain. 
                 Following is an example:
                 <literallayout class='monospaced'>
-     DESCRIPTION = "My Custom Tasks"
+     DESCRIPTION = "My Custom Package Groups"
+
+     inherit packagegroup
 
      PACKAGES = "\
-         task-custom-apps \
-         task-custom-apps-dbg \
-         task-custom-apps-dev \
-         task-custom-tools \
-         task-custom-tools-dbg \
-         task-custom-tools-dev \
+         packagegroup-custom-apps \
+         packagegroup-custom-tools \
          "
 
-     RDEPENDS_task-custom-apps = "\
+     RDEPENDS_packagegroup-custom-apps = "\
          dropbear \
          portmap \
          psplash"
 
-     RDEPENDS_task-custom-tools = "\
+     RDEPENDS_packagegroup-custom-tools = "\
          oprofile \
          oprofileui-server \
          lttng-control \
          lttng-viewer"
 
-     RRECOMMENDS_task-custom-tools = "\
+     RRECOMMENDS_packagegroup-custom-tools = "\
          kernel-module-oprofile"
                 </literallayout>
             </para>
 
             <para>
-                In the previous example, two task packages are created with their dependencies and their
-                recommended package dependencies listed: <filename>task-custom-apps</filename>, and 
-                <filename>task-custom-tools</filename>. 
-                To build an image using these task packages, you need to add 
-                <filename>task-custom-apps</filename> and/or 
-                <filename>task-custom-tools</filename> to 
+                In the previous example, two package group packages are created with their dependencies and their
+                recommended package dependencies listed: <filename>packagegroup-custom-apps</filename>, and 
+                <filename>packagegroup-custom-tools</filename>. 
+                To build an image using these packagegroup packages, you need to add 
+                <filename>packagegroup-custom-apps</filename> and/or 
+                <filename>packagegroup-custom-tools</filename> to 
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>.
                 For other forms of image dependencies see the other areas of this section.
             </para>
