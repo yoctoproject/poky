@@ -61,7 +61,7 @@
                    conjunction with a package name override.
                    Here is an example:
                    <literallayout class='monospaced'>
-     ALLOW_EMPTY_${PN}
+     ALLOW_EMPTY_${PN} = "1"
                    </literallayout>
                 </para>
             </glossdef>
@@ -76,9 +76,13 @@
 
         <glossentry id='var-AUTOREV'><glossterm>AUTOREV</glossterm>
             <glossdef>
-                <para>Specifies to use the current (newest) source revision.
-                    This variable is with the <filename><link linkend='var-SRCREV'>SRCREV</link></filename>
-                    variable.</para>
+                <para>When <filename><link linkend='var-SRCREV'>SRCREV</link></filename>
+                    is set to the value of this variable, it specifies that the latest
+                    source revision in the repository should be used. Here is an example:
+                    <literallayout class='monospaced'>
+     SRCREV = "${AUTOREV}"
+                    </literallayout>
+                </para>
             </glossdef>
         </glossentry>
 
@@ -1478,7 +1482,7 @@ recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
 
         <glossentry id='var-PACKAGE_ARCH'><glossterm>PACKAGE_ARCH</glossterm>
             <glossdef>
-                <para>The architecture of the resulting package.</para>
+                <para>The architecture of the resulting package or packages.</para>
             </glossdef>
         </glossentry>
 
@@ -1541,14 +1545,17 @@ recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
 
         <glossentry id='var-PN'><glossterm>PN</glossterm>
             <glossdef>
-                <para>The name of the package.
+                <para>The name of the recipe. The name is normally extracted from the recipe file name.
+                    For example, if the recipe is named 
+                    <filename>expat_2.0.1.bb</filename>, then the default value of <filename>PN</filename>
+                    will be "expat". 
                     </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-PR'><glossterm>PR</glossterm>
             <glossdef>
-                <para>The revision of the package. 
+                <para>The revision of the recipe. 
                     The default value for this variable is "r0".
                     </para>
             </glossdef>
@@ -1556,13 +1563,13 @@ recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
 
         <glossentry id='var-PV'><glossterm>PV</glossterm>
             <glossdef>
-                <para>The version of the package.
-                    The version is normally extracted from the recipe name.
+                <para>The version of the recipe.
+                    The version is normally extracted from the recipe filename.
                     For example, if the recipe is named 
-                    <filename>expat_2.0.1.bb</filename>, then <filename>PV</filename>
-                    will be <filename>2.0.1</filename>. 
+                    <filename>expat_2.0.1.bb</filename>, then the default value of <filename>PV</filename> 
+                    will be "2.0.1". 
                     <filename>PV</filename> is generally not overridden within 
-                    a recipe unless it is building an unstable version from a source code repository 
+                    a recipe unless it is building an unstable (i.e. development) version from a source code repository 
                     (e.g. Git or Subversion).
                  </para>
             </glossdef>
@@ -1571,7 +1578,7 @@ recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
         <glossentry id='var-PE'><glossterm>PE</glossterm>
             <glossdef>
                 <para>
-                    the epoch of the package. 
+                    the epoch of the recipe. 
                     The default value is "0". 
                     The field is used to make upgrades possible when the versioning scheme changes in 
                     some backwards incompatible way.
@@ -1586,7 +1593,7 @@ recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
                     determines which recipe should be given preference. 
                     The variable must always be suffixed with the name of the 
                     provided item, and should be set to the 
-                    <filename>$PN</filename> of the recipe 
+                    <filename>PN</filename> of the recipe 
                     to which you want to give precedence.
                     Here is an example:
                     <literallayout class='monospaced'>
@@ -1601,9 +1608,9 @@ recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
                 <para>
                     If there are multiple versions of recipes available, this
                     variable determines which recipe should be given preference.
-                    The variable must always be suffixed with the <filename>$PN</filename> 
+                    The variable must always be suffixed with the <filename>PN</filename> 
                     for which to select, and should be set to the 
-                    <filename>$PV</filename> to which you want to give precedence.
+                    <filename>PV</filename> to which you want to give precedence.
                     You can use the "<filename>%</filename>" character as a wildcard
                     to match any number of characters, which can be useful when 
                     specifying versions that contain long revision number that could 
@@ -1626,9 +1633,17 @@ recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
 
         <glossentry id='var-RCONFLICTS'><glossterm>RCONFLICTS</glossterm>
             <glossdef>
-                <para>The list of packages that conflict with this package.
+                <para>The list of packages that conflict with a package.
                     Note that the package will not be installed if the conflicting packages are not
                     first removed.</para>
+                <para>
+                   Like all package-controlling variables, you must always use them in 
+                   conjunction with a package name override.
+                   Here is an example:
+                   <literallayout class='monospaced'>
+     RCONFLICTS_${PN} = "another-conflicting-package-name"
+                   </literallayout>
+                </para>
             </glossdef>
         </glossentry>
 
