@@ -21,6 +21,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+import glib
 import gtk
 import copy
 import os
@@ -644,7 +645,7 @@ class Builder(gtk.Window):
 
     def show_error_dialog(self, msg):
         lbl = "<b>Error</b>\n"
-        lbl = lbl + "%s\n\n" % msg
+        lbl = lbl + "%s\n\n" % glib.markup_escape_text(msg)
         dialog = CrumbsMessageDialog(self, lbl, gtk.STOCK_DIALOG_ERROR)
         button = dialog.add_button("Close", gtk.RESPONSE_OK)
         HobButton.style_button(button)
@@ -816,7 +817,7 @@ class Builder(gtk.Window):
         self.build_failed()
 
     def handler_no_provider_cb(self, running_build, msg):
-        dialog = CrumbsMessageDialog(self, msg, gtk.STOCK_DIALOG_INFO)
+        dialog = CrumbsMessageDialog(self, glib.markup_escape_text(msg), gtk.STOCK_DIALOG_INFO)
         button = dialog.add_button("Close", gtk.RESPONSE_OK)
         HobButton.style_button(button)
         dialog.run()
