@@ -309,7 +309,7 @@ class AdvancedSettingDialog (CrumbsDialog):
 
     def __init__(self, title, configuration, all_image_types,
             all_package_formats, all_distros, all_sdk_machines,
-            max_threads, enable_proxy, parent, flags, buttons=None):
+            max_threads, parent, flags, buttons=None):
         super(AdvancedSettingDialog, self).__init__(title, parent, flags, buttons)
 
         # class members from other objects
@@ -320,7 +320,6 @@ class AdvancedSettingDialog (CrumbsDialog):
         self.all_distros = all_distros
         self.all_sdk_machines = all_sdk_machines
         self.max_threads = max_threads
-        self.enable_proxy = enable_proxy
 
         # class members for internal use
         self.distro_combo = None
@@ -356,7 +355,8 @@ class AdvancedSettingDialog (CrumbsDialog):
         data += ("SDK_MACHINE: "          + self._get_sorted_value(self.configuration.curr_sdk_machine))
         data += ("TOOLCHAIN_BUILD: "      + self._get_sorted_value(self.configuration.toolchain_build))
         data += ("IMAGE_FSTYPES: "        + self._get_sorted_value(self.configuration.image_fstypes))
-        if self.enable_proxy:
+        data += ("ENABLE_PROXY: "         + self._get_sorted_value(self.configuration.enable_proxy))
+        if self.configuration.enable_proxy:
             data += ("ALL_PROXY: "            + self._get_sorted_value(self.configuration.all_proxy))
             data += ("HTTP_PROXY: "           + self._get_sorted_value(self.configuration.http_proxy))
             data += ("HTTPS_PROXY: "          + self._get_sorted_value(self.configuration.https_proxy))
@@ -531,55 +531,55 @@ class AdvancedSettingDialog (CrumbsDialog):
         advanced_vbox.pack_start(sub_vbox, expand=False, fill=False)
         self.proxy_checkbox = gtk.CheckButton("Enable proxy")
         self.proxy_checkbox.set_tooltip_text("Check this box to setup the proxy you specified")
-        self.proxy_checkbox.set_active(self.enable_proxy)
+        self.proxy_checkbox.set_active(self.configuration.enable_proxy)
         self.proxy_checkbox.connect("toggled", self.proxy_checkbox_toggled_cb)
         sub_vbox.pack_start(self.proxy_checkbox, expand=False, fill=False)
 
         label = self.gen_label_widget("<span weight=\"bold\">Set all proxy:</span>")
         tooltip = "Set the all proxy that will be used if the proxy for a URL isn't specified."
         proxy_widget, self.all_proxy_text = self.gen_entry_widget(self.configuration.all_proxy, self, tooltip, False)
-        self.all_proxy_text.set_editable(self.enable_proxy)
-        self.all_proxy_text.set_sensitive(self.enable_proxy)
+        self.all_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.all_proxy_text.set_sensitive(self.configuration.enable_proxy)
         sub_vbox.pack_start(label, expand=False, fill=False)
         sub_vbox.pack_start(proxy_widget, expand=False, fill=False)
 
         label = self.gen_label_widget("<span weight=\"bold\">Set http proxy:</span>")
         tooltip = "Set the http proxy that will be used in do_fetch() source code"
         proxy_widget, self.http_proxy_text = self.gen_entry_widget(self.configuration.http_proxy, self, tooltip, False)
-        self.http_proxy_text.set_editable(self.enable_proxy)
-        self.http_proxy_text.set_sensitive(self.enable_proxy)
+        self.http_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.http_proxy_text.set_sensitive(self.configuration.enable_proxy)
         sub_vbox.pack_start(label, expand=False, fill=False)
         sub_vbox.pack_start(proxy_widget, expand=False, fill=False)
 
         label = self.gen_label_widget("<span weight=\"bold\">Set https proxy:</span>")
         tooltip = "Set the https proxy that will be used in do_fetch() source code"
         proxy_widget, self.https_proxy_text = self.gen_entry_widget(self.configuration.https_proxy, self, tooltip, False)
-        self.https_proxy_text.set_editable(self.enable_proxy)
-        self.https_proxy_text.set_sensitive(self.enable_proxy)
+        self.https_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.https_proxy_text.set_sensitive(self.configuration.enable_proxy)
         sub_vbox.pack_start(label, expand=False, fill=False)
         sub_vbox.pack_start(proxy_widget, expand=False, fill=False)
 
         label = self.gen_label_widget("<span weight=\"bold\">Set ftp proxy:</span>")
         tooltip = "Set the ftp proxy that will be used in do_fetch() source code"
         proxy_widget, self.ftp_proxy_text = self.gen_entry_widget(self.configuration.ftp_proxy, self, tooltip, False)
-        self.ftp_proxy_text.set_editable(self.enable_proxy)
-        self.ftp_proxy_text.set_sensitive(self.enable_proxy)
+        self.ftp_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.ftp_proxy_text.set_sensitive(self.configuration.enable_proxy)
         sub_vbox.pack_start(label, expand=False, fill=False)
         sub_vbox.pack_start(proxy_widget, expand=False, fill=False)
 
         label = self.gen_label_widget("<span weight=\"bold\">Set git proxy:</span>")
         tooltip = "Set the git proxy that will be used in do_fetch() source code"
         proxy_widget, self.git_proxy_text = self.gen_entry_widget(self.configuration.git_proxy_host + ':' + self.configuration.git_proxy_port, self, tooltip, False)
-        self.git_proxy_text.set_editable(self.enable_proxy)
-        self.git_proxy_text.set_sensitive(self.enable_proxy)
+        self.git_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.git_proxy_text.set_sensitive(self.configuration.enable_proxy)
         sub_vbox.pack_start(label, expand=False, fill=False)
         sub_vbox.pack_start(proxy_widget, expand=False, fill=False)
 
         label = self.gen_label_widget("<span weight=\"bold\">Set cvs proxy:</span>")
         tooltip = "Set the cvs proxy that will be used in do_fetch() source code"
         proxy_widget, self.cvs_proxy_text = self.gen_entry_widget(self.configuration.cvs_proxy_host + ':' + self.configuration.cvs_proxy_port, self, tooltip, False)
-        self.cvs_proxy_text.set_editable(self.enable_proxy)
-        self.cvs_proxy_text.set_sensitive(self.enable_proxy)
+        self.cvs_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.cvs_proxy_text.set_sensitive(self.configuration.enable_proxy)
         sub_vbox.pack_start(label, expand=False, fill=False)
         sub_vbox.pack_start(proxy_widget, expand=False, fill=False)
 
@@ -600,19 +600,19 @@ class AdvancedSettingDialog (CrumbsDialog):
         return advanced_vbox
 
     def proxy_checkbox_toggled_cb(self, button):
-        self.enable_proxy = self.proxy_checkbox.get_active()
-        self.all_proxy_text.set_editable(self.enable_proxy)
-        self.all_proxy_text.set_sensitive(self.enable_proxy)
-        self.http_proxy_text.set_editable(self.enable_proxy)
-        self.http_proxy_text.set_sensitive(self.enable_proxy)
-        self.https_proxy_text.set_editable(self.enable_proxy)
-        self.https_proxy_text.set_sensitive(self.enable_proxy)
-        self.ftp_proxy_text.set_editable(self.enable_proxy)
-        self.ftp_proxy_text.set_sensitive(self.enable_proxy)
-        self.git_proxy_text.set_editable(self.enable_proxy)
-        self.git_proxy_text.set_sensitive(self.enable_proxy)
-        self.cvs_proxy_text.set_editable(self.enable_proxy)
-        self.cvs_proxy_text.set_sensitive(self.enable_proxy)
+        self.configuration.enable_proxy = self.proxy_checkbox.get_active()
+        self.all_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.all_proxy_text.set_sensitive(self.configuration.enable_proxy)
+        self.http_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.http_proxy_text.set_sensitive(self.configuration.enable_proxy)
+        self.https_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.https_proxy_text.set_sensitive(self.configuration.enable_proxy)
+        self.ftp_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.ftp_proxy_text.set_sensitive(self.configuration.enable_proxy)
+        self.git_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.git_proxy_text.set_sensitive(self.configuration.enable_proxy)
+        self.cvs_proxy_text.set_editable(self.configuration.enable_proxy)
+        self.cvs_proxy_text.set_sensitive(self.configuration.enable_proxy)
 
     def response_cb(self, dialog, response_id):
         package_format = []

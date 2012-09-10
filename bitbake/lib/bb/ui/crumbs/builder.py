@@ -71,6 +71,7 @@ class Configuration:
         self.all_proxy = self.http_proxy = self.ftp_proxy = self.https_proxy = ""
         self.git_proxy_host = self.git_proxy_port = ""
         self.cvs_proxy_host = self.cvs_proxy_port = ""
+        self.enable_proxy = None
 
     def clear_selection(self):
         self.selected_image = None
@@ -100,6 +101,9 @@ class Configuration:
         self.default_task = params["default_task"]
 
         # proxy settings
+        self.enable_proxy = params["http_proxy"] != "" or params["https_proxy"] != "" or params["ftp_proxy"] != "" \
+            or params["git_proxy_host"] != "" or params["git_proxy_port"] != ""                                    \
+            or params["cvs_proxy_host"] != "" or params["cvs_proxy_port"] != "" or params["all_proxy"] != ""
         self.all_proxy = params["all_proxy"]
         self.http_proxy = params["http_proxy"]
         self.ftp_proxy = params["ftp_proxy"]
@@ -147,6 +151,7 @@ class Configuration:
         self.selected_recipes = template.getVar("DEPENDS").split()
         self.selected_packages = template.getVar("IMAGE_INSTALL").split()
         # proxy
+        self.enable_proxy = eval(template.getVar("enable_proxy"))
         self.all_proxy = template.getVar("all_proxy")
         self.http_proxy = template.getVar("http_proxy")
         self.ftp_proxy = template.getVar("ftp_proxy")
@@ -184,6 +189,7 @@ class Configuration:
             template.setVar("DEPENDS", self.selected_recipes)
             template.setVar("IMAGE_INSTALL", self.user_selected_packages)
         # proxy
+        template.setVar("enable_proxy", self.enable_proxy)
         template.setVar("all_proxy", self.all_proxy)
         template.setVar("http_proxy", self.http_proxy)
         template.setVar("ftp_proxy", self.ftp_proxy)
@@ -213,7 +219,6 @@ class Parameters:
         self.all_sdk_machines = []
         self.all_layers = []
         self.image_names = []
-        self.enable_proxy = False
 
         # for build log to show
         self.bb_version = ""
@@ -582,13 +587,20 @@ class Builder(gtk.Window):
         self.handler.set_extra_inherit("packageinfo")
         self.handler.set_extra_inherit("image_types")
         # set proxies
-        if self.parameters.enable_proxy:
+        if self.configuration.enable_proxy == True:
             self.handler.set_http_proxy(self.configuration.http_proxy)
             self.handler.set_https_proxy(self.configuration.https_proxy)
             self.handler.set_ftp_proxy(self.configuration.ftp_proxy)
             self.handler.set_all_proxy(self.configuration.all_proxy)
             self.handler.set_git_proxy(self.configuration.git_proxy_host, self.configuration.git_proxy_port)
             self.handler.set_cvs_proxy(self.configuration.cvs_proxy_host, self.configuration.cvs_proxy_port)
+        elif self.configuration.enable_proxy == False:
+            self.handler.set_http_proxy('')
+            self.handler.set_https_proxy('')
+            self.handler.set_ftp_proxy('')
+            self.handler.set_all_proxy('')
+            self.handler.set_git_proxy('', '')
+            self.handler.set_cvs_proxy('', '')
 
     def update_recipe_model(self, selected_image, selected_recipes):
         self.recipe_model.set_selected_image(selected_image)
@@ -1010,7 +1022,6 @@ class Builder(gtk.Window):
             all_distros = self.parameters.all_distros,
             all_sdk_machines = self.parameters.all_sdk_machines,
             max_threads = self.parameters.max_threads,
-            enable_proxy = self.parameters.enable_proxy,
             parent = self,
             flags = gtk.DIALOG_MODAL
                     | gtk.DIALOG_DESTROY_WITH_PARENT
@@ -1022,7 +1033,6 @@ class Builder(gtk.Window):
         response = dialog.run()
         settings_changed = False
         if response == gtk.RESPONSE_YES:
-            self.parameters.enable_proxy = dialog.enable_proxy
             self.configuration = dialog.configuration
             self.save_defaults() # remember settings
             settings_changed = dialog.settings_changed
