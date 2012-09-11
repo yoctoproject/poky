@@ -29,6 +29,12 @@ SRC_URI[sha256sum] = "7705b14d9b8e4df4a0b1790980e618084261e8daef0672a1aa7a830a0f
 
 S = "${WORKDIR}/qemu-${PV}"
 
+PR = "r1"
+
+SRC_URI_append_virtclass-nativesdk = "\
+    file://relocatable_sdk.patch \
+    "
+
 do_configure_prepend_virtclass-nativesdk() {
 	if [ "${@base_contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}" = "" ] ; then
 		# Undo the -lX11 added by linker-flags.patch
