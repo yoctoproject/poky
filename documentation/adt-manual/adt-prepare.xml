@@ -29,8 +29,7 @@
     <note>
         <para>Avoid mixing installation methods when installing toolchains for different architectures.
         For example, avoid using the ADT Installer to install some toolchains and then hand-installing
-        cross-development toolchains from downloaded tarballs to install toolchains
-        for different architectures. 
+        cross-development toolchains by running the toolchain installer for different architectures. 
         Mixing installation methods can result in situations where the ADT Installer becomes
         unreliable and might not install the toolchain.</para>
         <para>If you must mix installation methods, you might avoid problems by deleting 
@@ -46,9 +45,9 @@
                 For example, you can configure the installation to install the QEMU emulator
                 and the user-space NFS, specify which root filesystem profiles to download, 
                 and define the target sysroot location.</para></listitem>
-            <listitem><para><emphasis>Use an Existing Toolchain Tarball:</emphasis>
+            <listitem><para><emphasis>Use an Existing Toolchain:</emphasis>
                 Using this method, you select and download an architecture-specific
-                toolchain tarball and then hand-install the toolchain.
+                toolchain installer and then run the script to hand-install the toolchain.
                 If you use this method, you just get the cross-toolchain and QEMU - you do not 
                 get any of the other mentioned benefits had you run the ADT Installer script.</para></listitem>
             <listitem><para><emphasis>Use the Toolchain from within the Build Directory:</emphasis>
@@ -226,8 +225,8 @@
         <title>Using a Cross-Toolchain Tarball</title>
 
         <para>
-            If you want to simply install the cross-toolchain by hand, you can do so by using an existing 
-            cross-toolchain tarball.  
+            If you want to simply install the cross-toolchain by hand, you can do so by running the 
+            toolchain installer.  
             If you use this method to install the cross-toolchain and you still need to install the target 
             sysroot, you will have to extract and install sysroot separately.
             For information on how to do this, see the 
@@ -242,30 +241,41 @@
                     and find the folder that matches your host development system 
                     (i.e. <filename>i686</filename> for 32-bit machines or 
                     <filename>x86-64</filename> for 64-bit machines).</para></listitem>
-                <listitem><para>Go into that folder and download the toolchain tarball whose name 
+                <listitem><para>Go into that folder and download the toolchain installer whose name 
                     includes the appropriate target architecture.
                     For example, if your host development system is an Intel-based 64-bit system and 
                     you are going to use your cross-toolchain for an Intel-based 32-bit target, go into the 
-                    <filename>x86_64</filename> folder and download the following tarball:
+                    <filename>x86_64</filename> folder and download the following installer:
                     <literallayout class='monospaced'>
-     poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.tar.bz2
+     poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.sh
                     </literallayout>
-                    <note><para>As an alternative to steps one and two, you can build the toolchain tarball 
+                    <note><para>As an alternative to steps one and two, you can build the toolchain installer 
                         if you have a <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
                         If you need GMAE, you should use the <filename>bitbake meta-toolchain-gmae</filename>
                         command. 
-                        The resulting tarball will support such development.
+                        The resulting installation script when run will support such development.
                         However, if you are not concerned with GMAE, 
-                        you can generate the tarball using <filename>bitbake meta-toolchain</filename>.</para>
+                        you can generate the toolchain installer using
+                        <filename>bitbake meta-toolchain</filename>.</para>
                         <para>Use the appropriate <filename>bitbake</filename> command only after you have 
                         sourced the <filename>oe-build-init-env</filename> script located in the source
                         directory.  
-                        When the <filename>bitbake</filename> command completes, the tarball will 
+                        When the <filename>bitbake</filename> command completes, the toolchain installer will 
                         be in <filename>tmp/deploy/sdk</filename> in the build directory.
-                        </para></note></para></listitem>
-                <listitem><para>Make sure you are in the root directory with root privileges and then expand 
-                    the tarball.  
-                    The tarball expands into <filename>&YOCTO_ADTPATH_DIR;</filename>.
+                        </para></note>
+                    </para></listitem>
+                <listitem><para>Once you have the installer, run it to install the toolchain. 
+                    The following command shows how to run the installer given a toolchain tarball 
+                    for a 64-bit development host system and a 32-bit target architecture.
+                    The example assumes the toolchain installer is located in <filename>~/Downloads/</filename>.
+                    <literallayout class='monospaced'>
+     $ ~/Downloads/poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.sh
+                    </literallayout>
+                    <note>
+                        If you do not have write permissions for the directory into which you are installing 
+                        the toolchain, the toolchain installer notifies you and exits.  
+                        Be sure you have write permissions in the directory and run the installer again.
+                    </note>
                     Once the tarball is expanded, the cross-toolchain is installed.
                     You will notice environment setup files for the cross-toolchain in the directory.
                     </para></listitem>
