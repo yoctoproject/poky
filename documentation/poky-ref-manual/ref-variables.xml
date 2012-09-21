@@ -1587,6 +1587,25 @@ recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PRINC'><glossterm>PRINC</glossterm>
+            <glossdef>
+                <para>Causes the <filename>PR</filename> variable to dynamically increment.
+                    This incrementation increases the value of a recipe's revision 
+                    (<filename>PR</filename>) while minimizing the impact of layer ordering.</para>
+                <para>In order to ensure multiple <filename>.bbappend</filename> files can co-exist, 
+                    <filename>PRINC</filename> should be self referencing.
+                    The variable defaults to 0.</para>
+                <para>Following is an example that increments <filename>PR</filename> by two:
+                    <literallayout class='monospaced'>
+     PRINC := "${@int(PRINC) + 2}"
+                    </literallayout>
+                    It is adviseable not to use strings such as ".= '.1'" with the variable because
+                    this usage is very sensitive to layer ordering. 
+                    Explicit assignments should be avoided as they cannot adequately represent multiple 
+                    <filename>.bbappend</filename> files.</para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PV'><glossterm>PV</glossterm>
             <glossdef>
                 <para>The version of the recipe.
