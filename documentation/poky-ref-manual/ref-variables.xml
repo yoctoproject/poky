@@ -963,23 +963,66 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
 
         <glossentry id='var-INC_PR'><glossterm>INC_PR</glossterm>
             <glossdef>
-                <para>Defines the Package revision.  
-                    You manually combine values for <filename>INC_PR</filename> into the 
-                    <link linkend='var-PR'><filename>PR</filename></link> field of the parent recipe.
-                    When you change this variable, you change the <filename>PR</filename>
-                    value for every person that includes the file.</para>
+                <para>Helps define the recipe revision for recipes that share
+                    a common <filename>include</filename> file.
+                    You can think of this variable as part of the recipe revision 
+                    as set from within an include file.</para>
+                <para>Suppose, for example, you have a set of recipes that 
+                    are used across several projects.
+                    And, within each of those recipes the revision
+                    (its <filename>PR</filename> value) is set accordingly.
+                    In this case, when the revision of those recipes changes
+                    the burden is on you to find all those recipes and 
+                    be sure that they get changed to reflect the updated 
+                    version of the recipe.
+                    In this scenario, it can get complicated when recipes
+                    used in many places and that provide common functionality 
+                    are upgraded to a new revision.</para>
+                <para>A more efficient way of dealing with this situation is
+                    to set the <filename>INC_PR</filename> variable inside
+                    the <filename>include</filename> files that the recipes
+                    share and then expand the <filename>INC_PR</filename>
+                    variable within the recipes to help 
+                    define the recipe revision.
+                    </para>
                 <para>
-                    The following example shows how to use the <filename>INC_PR</filename> variable
-                    given a common <filename>.inc</filename> file that defines the variable.
-                    Once defined, you can use the variable to set the 
-                    <filename>PR</filename> value:
-                </para>
-                <literallayout class='monospaced'>
+                    The following provides an example that shows how to use 
+                    the <filename>INC_PR</filename> variable
+                    given a common <filename>include</filename> file that 
+                    defines the variable.
+                    Once the variable is defined in the 
+                    <filename>include</filename> file, you can use the 
+                    variable to set the <filename>PR</filename> values in
+                    each recipe. 
+                    You will notice that when you set a recipe's  
+                    <filename>PR</filename> you can provide more granular
+                    revisioning by appending values to the 
+                    <filename>INC_PR</filename> variable:
+                    <literallayout class='monospaced'>
+recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
 recipes-graphics/xorg-font/encodings_1.0.4.bb:PR = "${INC_PR}.1"
 recipes-graphics/xorg-font/font-util_1.3.0.bb:PR = "${INC_PR}.0"
 recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
-recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
-                </literallayout>
+                    </literallayout>
+                    The first line of the example establishes the baseline 
+                    revision to be used for all recipes that use the 
+                    <filename>include</filename> file.
+                    The remaining lines in the example are from individual
+                    recipes and show how the <filename>PR</filename> value
+                    is set.</para>
+                <para>You will notice that each statement setting the 
+                    <filename>PR</filename> appends further definition of the
+                    revision (e.g. <filename>.1</filename>, <filename>.0</filename>,
+                    and <filename>.3</filename>).
+                    It is still up to you be sure that the exact revision 
+                    of the recipe is being used.
+                    So, for example, if the <filename>encodings_1.0.4.bb</filename>
+                    recipe was updated to a <filename>.5</filename> revision, 
+                    you would have to change the <filename>PR</filename> 
+                    variable in the recipe as follows:
+                    <literallayout class='monospaced'>
+recipes-graphics/xorg-font/encodings_1.0.4.bb:PR = "${INC_PR}.5"
+                    </literallayout></para>
             </glossdef>
         </glossentry>
 
