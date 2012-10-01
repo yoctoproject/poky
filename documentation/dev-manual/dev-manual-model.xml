@@ -1577,8 +1577,9 @@ directory.</para></listitem>
             For example, recipes that fetch their source from Git usually set 
             <filename>S</filename> to <filename>${WORKDIR}/git</filename>.
             <note>
-                <filename>BP</filename> represents the "Base Package", which is the base package
-                name and the package version:
+                The
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-BP'><filename>BP</filename></ulink>
+                represents the base recipe name, which consists of the name and version:
                 <literallayout class='monospaced'>
      BP = ${BPN}-${PV}
                 </literallayout>
@@ -1588,8 +1589,9 @@ directory.</para></listitem>
         <para>
             The path to the work directory for the recipe 
             (<ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink>) depends
-            on the package name and the architecture of the target device.
-            For example, here is the work directory for packages whose targets are not device-dependent:
+            on the recipe name and the architecture of the target device.
+            For example, here is the work directory for recipes and resulting packages that are
+            not device-dependent:
             <literallayout class='monospaced'>
      ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
             </literallayout>
@@ -1597,14 +1599,16 @@ directory.</para></listitem>
             Assuming a top-level <link linkend='source-directory'>Source Directory</link>
             named <filename>poky</filename>
             and a default build directory of <filename>poky/build</filename>, 
-            the following is the work directory for the <filename>acl</filename> package:
+            the following is the work directory for the <filename>acl</filename> recipe that 
+            creates the <filename>acl</filename> package:
             <literallayout class='monospaced'>
      ~/poky/build/tmp/work/i586-poky-linux/acl-2.2.51-r3
             </literallayout>
         </para>
 
         <para>
-            If your package is dependent on the target device, the work directory varies slightly:
+            If your resulting package is dependent on the target device, 
+            the work directory varies slightly:
             <literallayout class='monospaced'>
      ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
             </literallayout>
@@ -1633,9 +1637,9 @@ directory.</para></listitem>
         </note>
 
         <para>
-            Now that you know where to locate the directory that has the temporary source code, you can use a 
-            Quilt or Git workflow to make your edits, test the changes, and preserve the 
-            changes in the form of patches.
+            Now that you know where to locate the directory that has the temporary source code, 
+            you can use a Quilt or Git workflow to make your edits, test the changes, 
+            and preserve the changes in the form of patches.
         </para>
     </section>
 
