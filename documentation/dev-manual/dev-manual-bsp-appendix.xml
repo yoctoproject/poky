@@ -11,10 +11,10 @@
     The example assumes the following:
     <itemizedlist>
         <listitem><para>No previous preparation or use of the Yocto Project.</para></listitem>
-        <listitem><para>Use of the Crown Bay Board Support Package (BSP) as a "base" BSP from 
+        <listitem><para>Use of the Fish River Island 2 Board Support Package (BSP) as a "base" BSP from 
             which to work.  
-            The example begins with the Crown Bay BSP as the starting point
-            but ends by building a new 'atom-pc' BSP, which was based on the Crown Bay BSP.
+            The example begins with the Fish River Island 2 BSP as the starting point
+            but ends by building a new 'atom-pc' BSP, which was based on the Fish River Island 2 BSP.
             </para></listitem>  
         <listitem><para>Shell commands assume <filename>bash</filename></para></listitem>
         <listitem><para>Example was developed on an Intel-based Core i7 platform running 
@@ -113,10 +113,10 @@
     <para>
         For this example, the base BSP is the <trademark class='registered'>Intel</trademark>
         <trademark class='trade'>Atom</trademark> Processor E660 with Intel Platform 
-        Controller Hub EG20T Development Kit, which is otherwise referred to as "Crown Bay."
-        The BSP layer is <filename>meta-crownbay</filename>.  
+        Controller Hub EG20T Development Kit, which is otherwise referred to as "Fish River Island 2."
+        The BSP layer is <filename>meta-fri2</filename>.  
         The base BSP is simply the BSP
-        we will be using as a starting point, so don't worry if you don't actually have Crown Bay
+        we will be using as a starting point, so don't worry if you don't actually have Fish River Island 2
         hardware.
         The remainder of the example transforms the base BSP into a BSP that should be
         able to boot on generic atom-pc (netbook) hardware.
@@ -149,7 +149,7 @@
         parent directory.  
         The following steps will automatically create the
         <filename>meta-intel</filename> directory and the contained 
-        <filename>meta-crownbay</filename> starting point in both the Git and the tarball cases.
+        <filename>meta-fri2</filename> starting point in both the Git and the tarball cases.
     </para>
 
     <para>
@@ -160,16 +160,16 @@
      $ git clone git://git.yoctoproject.org/meta-intel.git
      $ cd meta-intel
         </literallayout> 
-        Alternatively, you can start with the downloaded Crown Bay tarball.
+        Alternatively, you can start with the downloaded Fish River Island 2 tarball.
         You can download the &DISTRO_NAME; version of the BSP tarball from the
         <ulink url='&YOCTO_HOME_URL;/download'>Downloads</ulink> page of the 
         Yocto Project website. 
         Here is the specific link for the tarball needed for this example:
-        <ulink url='&YOCTO_MACHINES_DL_URL;/crownbay-noemgd/crownbay-noemgd-&DISTRO_NAME;-&POKYVERSION;.tar.bz2'></ulink>.
+        <ulink url='&YOCTO_MACHINES_DL_URL;/fri2-noemgd/fri2-noemgd-&DISTRO_NAME;-&POKYVERSION;.tar.bz2'></ulink>.
         Again, be sure that you are already in the <filename>poky</filename> directory
         as described previously before installing the tarball:
         <literallayout class='monospaced'>
-     $ tar xfj crownbay-noemgd-&DISTRO_NAME;-&POKYVERSION;.tar.bz2
+     $ tar xfj fri2-noemgd-&DISTRO_NAME;-&POKYVERSION;.tar.bz2
      $ cd meta-intel
         </literallayout> 
     </para>
@@ -199,7 +199,7 @@
     <para>
         Now that you have set up the Source Directory and included the base BSP files, you need to 
         create a new layer for your BSP.
-        To create your BSP layer, you simply copy the <filename>meta-crownbay</filename>
+        To create your BSP layer, you simply copy the <filename>meta-fri2</filename>
         layer to a new layer.
     </para>
 
@@ -212,7 +212,7 @@
         To start your new layer, just copy the new layer alongside the existing
         BSP layers in the <filename>meta-intel</filename> directory:
         <literallayout class='monospaced'>
-     $ cp -a meta-crownbay/ meta-mymachine 
+     $ cp -a meta-fri2/ meta-mymachine 
         </literallayout>
     </para>
 </section>
@@ -222,7 +222,7 @@
 
     <para>
         Right now you have two identical BSP layers with different names:  
-        <filename>meta-crownbay</filename> and <filename>meta-mymachine</filename>.  
+        <filename>meta-fri2</filename> and <filename>meta-mymachine</filename>.  
         You need to change your configurations so that they work for your new BSP and 
         your particular hardware.
         The following sections look at each of these areas of the BSP.
@@ -238,15 +238,15 @@
 
         <para>
             First, since in this example the new BSP will not support EMGD, we will get rid of the 
-            <filename>crownbay.conf</filename> file and then rename the 
-            <filename>crownbay-noemgd.conf</filename> file to <filename>mymachine.conf</filename>.  
+            <filename>fri2.conf</filename> file and then rename the 
+            <filename>fri2-noemgd.conf</filename> file to <filename>mymachine.conf</filename>.  
             Much of what we do in the configuration directory is designed to help the OpenEmbedded 
             build system work with the new layer and to be able to find and use the right software.  
             The following two commands result in a single machine configuration file named 
             <filename>mymachine.conf</filename>.  
             <literallayout class='monospaced'>
-     $ rm meta-mymachine/conf/machine/crownbay.conf
-     $ mv meta-mymachine/conf/machine/crownbay-noemgd.conf \
+     $ rm meta-mymachine/conf/machine/fri2.conf
+     $ mv meta-mymachine/conf/machine/fri2-noemgd.conf \
      meta-mymachine/conf/machine/mymachine.conf
             </literallayout>
         </para>
@@ -254,10 +254,10 @@
         <para>
             Next, we need to make changes to the <filename>mymachine.conf</filename> itself.
             The only changes we want to make for this example are to the comment lines.  
-            Changing comments, of course, is never strictly necessary, but it's alway good form to make
+            Changing comments, of course, is never strictly necessary, but it's always good form to make
             them reflect reality as much as possible.
 
-            Here, simply substitute the Crown Bay name with an appropriate name for the BSP 
+            Here, simply substitute the Fish River Island 2 name with an appropriate name for the BSP 
             (<filename>mymachine</filename> in this case) and change the description to 
             something that describes your hardware.
         </para>
@@ -267,7 +267,7 @@
             <filename>PREFERRED_VERSION_linux-yocto</filename> statement. 
             This statement identifies the kernel that the BSP is going to use.
             In this case, the BSP is using <filename>linux-yocto</filename>, which is the 
-            current Yocto Project kernel based on the Linux 3.2 release. 
+            current Yocto Project kernel based on the Linux 3.4 release. 
         </para>
 
         <para>
@@ -281,18 +281,18 @@
         </para>
 
         <para>
-            The file contains these statements that reference the Crown Bay BSP:
+            The file contains these statements that reference the Fish River Island 2 BSP:
             <literallayout class='monospaced'>
-     BBFILE_COLLECTIONS += "crownbay"
-     BBFILE_PATTERN_crownbay := "^${LAYERDIR}/"
-     BBFILE_PRIORITY_crownbay = "6"
+     BBFILE_COLLECTIONS += "fri2"
+     BBFILE_PATTERN_fri2 := "^${LAYERDIR}/"
+     BBFILE_PRIORITY_fri2 = "6"
 
-     LAYERDEPENDS_crownbay = "intel"
+     LAYERDEPENDS_fri2 = "intel"
             </literallayout>
         </para>
 
         <para>
-            Simply substitute the machine string name <filename>crownbay</filename>
+            Simply substitute the machine string name <filename>fri2</filename>
             with the new machine name <filename>mymachine</filename> to get the following:
             <literallayout class='monospaced'>
      BBFILE_COLLECTIONS += "mymachine"
@@ -331,8 +331,8 @@
                 the remaining one that doesn't support EMGD.  
                 These commands take care of the <filename>recipes-bsp</filename> recipes:
                 <literallayout class='monospaced'>
-     $ rm -rf meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay
-     $ mv meta-mymachine/recipes-bsp/formfactor/formfactor/crownbay-noemgd/ \
+     $ rm -rf meta-mymachine/recipes-bsp/formfactor/formfactor/fri2
+     $ mv meta-mymachine/recipes-bsp/formfactor/formfactor/fri2-noemgd/ \
      meta-mymachine/recipes-bsp/formfactor/formfactor/mymachine
                 </literallayout>
             </para>
@@ -347,8 +347,8 @@
                 be sure to rename remaining directories appropriately.  
                 The following commands clean up the <filename>recipes-graphics</filename> directory:
                 <literallayout class='monospaced'>
-     $ rm -rf meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay
-     $ mv meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay-noemgd \
+     $ rm -rf meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/fri2
+     $ mv meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/fri2-noemgd \
         meta-mymachine/recipes-graphics/xorg-xserver/xserver-xf86-config/mymachine   
                 </literallayout>
             </para>
@@ -369,7 +369,7 @@
                 The recipe for that kernel is not located in the  
                 BSP layer but rather in the Source Directory at 
                 <filename>meta/recipes-kernel/linux</filename> and is 
-                named <filename>linux-yocto_3.2.bb</filename>.
+                named <filename>linux-yocto_3.4.bb</filename>.
                 The <filename>SRCREV_machine</filename> and <filename>SRCREV_meta</filename>
                 statements point to the exact commits used by the Yocto Project development team
                 in their source repositories that identify the right kernel for our hardware.
@@ -382,30 +382,38 @@
             <para>
                 However, in the <filename>meta-mymachine</filename> layer in 
                 <filename>recipes-kernel/linux</filename> resides a <filename>.bbappend</filename>
-                file named <filename>linux-yocto_3.2.bbappend</filename> that 
-                appends information to the recipe of the same name in <filename>meta/recipes-kernel/linux</filename>.
+                file named <filename>linux-yocto_3.4.bbappend</filename> that 
+                appends the information to the recipe of the same name 
+                that is found in <filename>meta/recipes-kernel/linux</filename>.
                 Thus, the <filename>SRCREV</filename> statements in the append file override
                 the more general statements found in <filename>meta</filename>.
             </para>
 
             <para>
                 The <filename>SRCREV</filename> statements in the append file currently identify
-                the kernel that supports the Crown Bay BSP with and without EMGD support.
+                the kernel that supports the Fish River Island 2 BSP with and without EMGD support.
                 Here are the statements:
                 <note>The commit ID strings used in this manual might not match the actual commit
-                    ID strings found in the <filename>linux-yocto_3.2.bbappend</filename> file.
+                    ID strings found in the <filename>linux-yocto_3.4.bbappend</filename> file.
                     For the example, this difference does not matter.</note> 
                 <literallayout class='monospaced'>
-     SRCREV_machine_pn-linux-yocto_crownbay ?= \
-        "211fc7f4d10ec2b82b424286aabbaff9254b7cbd"
-     SRCREV_meta_pn-linux-yocto_crownbay ?= \
-        "514847185c78c07f52e02750fbe0a03ca3a31d8f"
+     SRCREV_machine_pn-linux-yocto_fri2 ?= \
+        "59c3ff750831338d05ab67d5efd7fc101c451aff"
+     #SRCREV_meta_pn-linux-yocto_fri2 ?= \
+        "c5bddf8ea379406ffec550528e17b777a0eba24b"
 
-     SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= \
-        "211fc7f4d10ec2b82b424286aabbaff9254b7cbd"
-     SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= \
-        "514847185c78c07f52e02750fbe0a03ca3a31d8f"
+     SRCREV_machine_pn-linux-yocto_fri2-noemgd ?= \
+        "59c3ff750831338d05ab67d5efd7fc101c451aff"
+     #SRCREV_meta_pn-linux-yocto_fir2-noemgd ?= \
+        "c5bddf8ea379406ffec550528e17b777a0eba24b"
                 </literallayout>
+                <note>The <filename>SRCREV_meta_pn-linux-yocto_fir2-noemgd</filename>
+                   statements in the Fish River Island 2 append file are identical to those in the 
+                   general <filename>linux-yocto_3.4.bbappend</filename> recipe, which is 
+                   found in <filename>meta/recipes-kernel/linux</filename>.
+                   For this reason they are commented out in the Fish River Island 2 
+                   append file.
+                   In this case, there is no need to override the statements.</note>
             </para>
 
             <para>
@@ -415,11 +423,12 @@
                 The bottom pair identifies the kernel that we will use:  
                 <filename>linux-yocto</filename>.  
                 At this point though, the unique commit strings all are still associated with 
-                Crown Bay and not <filename>meta-mymachine</filename>.
+                Fish River Island 2 and not <filename>meta-mymachine</filename>.
             </para>
 
             <para>  
-                To fix this situation in <filename>linux-yocto_3.2.bbappend</filename>,
+                To fix this situation in <filename>linux-yocto_3.4.bbappend</filename>
+                for <filename>mymachine</filename>,
                 we delete the two <filename>SRCREV</filename> statements that support 
                 EMGD (the top pair).
                 We also change the remaining pair to specify <filename>mymachine</filename>
@@ -428,26 +437,34 @@
                 kernel.
                 In this case, because we're working with the &DISTRO_NAME; branch of everything, we
                 need to use the <filename>SRCREV</filename> values for the atom-pc branch
-                that are associated with the &DISTRO_NAME; release.  
-                To find those values, we need to find the <filename>SRCREV</filename>
-                values that &DISTRO_NAME; uses for the atom-pc branch, which we find in the
-                <filename>poky/meta-yocto-bsp/recipes-kernel/linux/linux-yocto_3.2.bbappend</filename>
+                that are associated with the &DISTRO_NAME; release. 
+            </para>
+
+            <para> 
+                To find the machine value, we need to find the <filename>SRCREV</filename>
+                value that &DISTRO_NAME; uses for the atom-pc branch, which we find in the
+                <filename>poky/meta-yocto-bsp/recipes-kernel/linux/linux-yocto_3.4.bbappend</filename>
                 file.
+                The machine <filename>SRCREV</filename> we want is in the 
+                <filename>SRCREV_machine_atom-pc</filename> variable.
             </para>
 
             <para>  
-                The machine <filename>SRCREV</filename> we want is in the 
-                <filename>SRCREV_machine_atom-pc</filename> variable.  
-                The meta <filename>SRCREV</filename> isn't specified in this file, so it must be 
-                specified in the base kernel recipe in the
-                <filename>poky/meta/recipes-kernel/linux/linux-yocto_3.2.bb</filename>
-                file, in the <filename>SRCREV_meta</filename>  variable found there.  
+                The meta <filename>SRCREV</filename> isn't specified in this file, so if you    
+                needed it, you would find it in the base kernel recipe in the
+                <filename>poky/meta/recipes-kernel/linux/linux-yocto_3.4.bb</filename>.
+                Recall that for this example the commit ID's for the <filename>SRCREV</filename>
+                meta statements are identical and are do not have to be used in the 
+                <filename>mymachine</filename> append file.
+            </para>
+
+            <para>  
                 Here are the final <filename>SRCREV</filename> statements:
                 <literallayout class='monospaced'>
      SRCREV_machine_pn-linux-yocto_mymachine ?= \
-        "f29531a41df15d74be5ad47d958e4117ca9e489e"
-     SRCREV_meta_pn-linux-yocto_mymachine ?= \
-        "b14a08f5c7b469a5077c10942f4e1aec171faa9d"
+        "0985844fa6235422c67ef269952fa4e765f252f9"
+     #SRCREV_meta_pn-linux-yocto_mymachine ?= \
+        "463299bc2e533e1bd38b0053ae7b210980f269c3"
                 </literallayout>
             </para>
 
@@ -463,8 +480,8 @@
                 exact commit strings in the Yocto Project source repositories you need to change 
                 the <filename>SRCREV</filename> statements.  
                 You can find all the <filename>machine</filename> and <filename>meta</filename> 
-                branch points (commits) for the <filename>linux-yocto-3.2</filename> kernel at
-                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/linux-yocto-3.2'></ulink>.  
+                branch points (commits) for the <filename>linux-yocto-3.4</filename> kernel at
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/linux-yocto-3.4'></ulink>.  
             </para>
 
             <para>
@@ -475,7 +492,7 @@
                         branch</para></listitem>
                     <listitem><para>Click on the commit column header to view the top commit</para></listitem>
                     <listitem><para>Copy the commit string for use in the 
-                        <filename>linux-yocto_3.2.bbappend</filename> file</para></listitem>
+                        <filename>linux-yocto_3.4.bbappend</filename> file</para></listitem>
                 </orderedlist>
             </para>
 
@@ -486,7 +503,7 @@
             </para>
 
             <para>
-                Also in the <filename>linux-yocto_3.2.bbappend</filename> file are 
+                Also in the <filename>linux-yocto_3.4.bbappend</filename> file are 
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>, 
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>, 
                 and 
@@ -494,16 +511,19 @@
                 Two sets of these exist: one set supports EMGD and one set does not.
                 Because we are not interested in supporting EMGD those three can be deleted.
                 The remaining three must be changed so that <filename>mymachine</filename> replaces
-                <filename>crownbay-noemgd</filename> and <filename>crownbay</filename>.
+                <filename>fri2-noemgd</filename> and <filename>fri2</filename>.
+            </para>
+
+            <para>
                 Because we are using the <filename>atom-pc</filename> branch for this new BSP, we can also find
                 the exact branch we need for the <filename>KMACHINE</filename>  
                 and <filename>KBRANCH</filename> variables in our new BSP from the value
                 we find in the
-                <filename>poky/meta-yocto/recipes-kernel/linux/linux-yocto_3.2.bbappend</filename>
+                <filename>poky/meta-yocto-bsp/recipes-kernel/linux/linux-yocto_3.4.bbappend</filename>
                 file we looked at in a previous step.  
                 In this case, the values we want are in the <filename>KMACHINE_atom-pc</filename> variable
                 and the <filename>KBRANCH_atom-pc</filename> variables in that file.
-                Here is the final <filename>linux-yocto_3.2.bbappend</filename> file after all 
+                Here is the final <filename>linux-yocto_3.4.bbappend</filename> file after all 
                 the edits:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
@@ -672,7 +692,7 @@
      260538368 2012-04-27 01:44 core-image-sato-mymachine-20120427025051.hddimg
         </literallayout>
         <note>The previous instructions are also present in the README that was copied
-        from meta-crownbay, which should also be updated to reflect the specifics of your
+        from meta-fri2, which should also be updated to reflect the specifics of your
         new BSP.  
         That file and the <filename>README.hardware</filename> file in the top-level 
         <filename>poky</filename> directory
