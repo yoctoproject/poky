@@ -385,12 +385,14 @@
                 file named <filename>linux-yocto_3.4.bbappend</filename> that 
                 appends the information to the recipe of the same name 
                 that is found in <filename>meta/recipes-kernel/linux</filename>.
-                Thus, the <filename>SRCREV</filename> statements in the append file override
-                the more general statements found in <filename>meta</filename>.
+                Thus, the <filename>SRCREV</filename> statements in our 
+                <filename>mymachine</filename> append file override
+                the more general statements found in the more general recipe.
             </para>
 
             <para>
-                The <filename>SRCREV</filename> statements in the append file currently identify
+                The <filename>SRCREV</filename> statements in the 
+                <filename>mymachine</filename> append file currently identify
                 the kernel that supports the Fish River Island 2 BSP with and without EMGD support.
                 Here are the statements:
                 <note>The commit ID strings used in this manual might not match the actual commit
@@ -408,12 +410,13 @@
         "c5bddf8ea379406ffec550528e17b777a0eba24b"
                 </literallayout>
                 <note>The <filename>SRCREV_meta_pn-linux-yocto_fir2-noemgd</filename>
-                   statements in the Fish River Island 2 append file are identical to those in the 
-                   general <filename>linux-yocto_3.4.bbappend</filename> recipe, which is 
-                   found in <filename>meta/recipes-kernel/linux</filename>.
-                   For this reason they are commented out in the Fish River Island 2 
-                   append file.
-                   In this case, there is no need to override the statements.</note>
+                   statements in the <filename>mymachine</filename> append file, 
+                   which originated from the Fish River Island 2 BSP, are 
+                   commented out.
+                   The reason they are not used is because the commit IDs are identical to 
+                   those in the general <filename>linux-yocto_3.4.bbappend</filename> recipe, 
+                   which is found in <filename>meta/recipes-kernel/linux</filename>.
+                   </note>
             </para>
 
             <para>
@@ -454,17 +457,18 @@
                 needed it, you would find it in the base kernel recipe in the
                 <filename>poky/meta/recipes-kernel/linux/linux-yocto_3.4.bb</filename>.
                 Recall that for this example the commit ID's for the <filename>SRCREV</filename>
-                meta statements are identical and are do not have to be used in the 
+                meta statements are identical and do not have to be used in the 
                 <filename>mymachine</filename> append file.
             </para>
 
             <para>  
-                Here are the final <filename>SRCREV</filename> statements:
+                Here are the final <filename>SRCREV</filename> statements for the 
+                <filename>mymachine</filename> append file:
                 <literallayout class='monospaced'>
      SRCREV_machine_pn-linux-yocto_mymachine ?= \
         "0985844fa6235422c67ef269952fa4e765f252f9"
      #SRCREV_meta_pn-linux-yocto_mymachine ?= \
-        "463299bc2e533e1bd38b0053ae7b210980f269c3"
+        "c5bddf8ea379406ffec550528e17b777a0eba24b"
                 </literallayout>
             </para>
 
@@ -473,7 +477,8 @@
                 found already captured in the &DISTRO_NAME; release because we're creating a BSP based on 
                 &DISTRO_NAME;.  
                 If, instead, we had based our BSP on the master branches, we would want to use 
-                the most recent <filename>SRCREV</filename> values taken directly from the kernel repo.
+                the most recent <filename>SRCREV</filename> values taken directly from the kernel's
+                repository.
                 We will not be doing that for this example.
                 However, if you do base a future BSP on master and
                 if you are familiar with Git repositories, you probably won’t have trouble locating the 
