@@ -56,6 +56,7 @@
      BBLAYERS = " \
         /usr/local/src/yocto/meta \
         /usr/local/src/yocto/meta-yocto \
+        /usr/local/src/yocto/meta-yocto-bsp \
         /usr/local/src/yocto/meta-&lt;bsp_name&gt; \
         "
                 </literallayout>
@@ -1017,7 +1018,7 @@
 
             <para>
                 The following sections describe the common location and help features as well 
-                as provides details for the 
+                as provide details for the 
                 <filename>yocto-bsp</filename> and <filename>yocto-kernel</filename> tools.
             </para>
 
@@ -1049,30 +1050,27 @@
                     The most immediately useful function is to get help on both tools.
                     The built-in help system makes it easy to drill down at
                     any time and view the syntax required for any specific command.
-                    Simply enter the name of the command, or the command along with 
-                    <filename>help</filename> to display a list of the available sub-commands. 
-                    Here is an example:
+                    Simply enter the name of the command with the <filename>help</filename>
+                    switch:
                     <literallayout class='monospaced'>
-     $ yocto-bsp
      $ yocto-bsp help
+     Usage: 
 
-     Usage:
+      Create a customized Yocto BSP layer.
 
-     Create a customized Yocto BSP layer.
+      usage: yocto-bsp [--version] [--help] COMMAND [ARGS]
 
-     usage: yocto-bsp [--version] [--help] COMMAND [ARGS]
+      Current 'yocto-bsp' commands are:
+         create            Create a new Yocto BSP
+         list              List available values for options and BSP properties
 
-     The most commonly used 'yocto-bsp' commands are:
-     create            Create a new Yocto BSP
-     list              List available values for options and BSP properties
-
-     See 'yocto-bsp help COMMAND' for more information on a specific command.
+      See 'yocto-bsp help COMMAND' for more information on a specific command.
 
 
      Options:
-     --version    show program's version number and exit
-     -h, --help   show this help message and exit
-     -D, --debug  output debug information
+       --version    show program's version number and exit
+       -h, --help   show this help message and exit
+       -D, --debug  output debug information
                     </literallayout>
                 </para>
 
@@ -1082,19 +1080,20 @@
                     <literallayout class='monospaced'>
      $ yocto-bsp create
 
-     Usage:
+     Usage: 
 
-     Create a new Yocto BSP
-     usage: yocto-bsp create &lt;bsp-name&gt; &lt;karch&gt; [-o &lt;DIRNAME&gt; | --outdir &lt;DIRNAME&gt;]
+      Create a new Yocto BSP
+
+      usage: yocto-bsp create &lt;bsp-name&gt; &lt;karch&gt; [-o &lt;DIRNAME&gt; | --outdir &lt;DIRNAME&gt;]
              [-i &lt;JSON PROPERTY FILE&gt; | --infile &lt;JSON PROPERTY_FILE&gt;]
 
-                 This command creates a Yocto BSP based on the specified parameters.
-                 The new BSP will be a new BSP layer contained by default within
-                 the top-level directory specified as 'meta-bsp-name'.  The -o option
-                 can be used to place the BSP layer in a directory with a different
-                 name and location.
+      This command creates a Yocto BSP based on the specified parameters.
+      The new BSP will be a new Yocto BSP layer contained by default within
+      the top-level directory specified as 'meta-bsp-name'.  The -o option
+      can be used to place the BSP layer in a directory with a different
+      name and location.
 
-                 ...
+      ...
                     </literallayout>
                 </para>
 
@@ -1105,33 +1104,26 @@
      $ yocto-bsp help create
 
      NAME
-     yocto-bsp create - Create a new Yocto BSP
+         yocto-bsp create - Create a new Yocto BSP
 
      SYNOPSIS
-     yocto-bsp create &lt;bsp-name&gt; &lt;karch&gt; [-o &lt;DIRNAME&gt; | --outdir &lt;DIRNAME&gt;]
+         yocto-bsp create &lt;bsp-name&gt; &lt;karch&gt; [-o &lt;DIRNAME&gt; | --outdir &lt;DIRNAME&gt;]
              [-i &lt;JSON PROPERTY FILE&gt; | --infile &lt;JSON PROPERTY_FILE&gt;]
 
      DESCRIPTION
-     This command creates a Yocto BSP based on the specified
-     parameters.  The new BSP will be a new Yocto BSP layer contained
-     by default within the top-level directory specified as
-     'meta-bsp-name'.  The -o option can be used to place the BSP layer
-     in a directory with a different name and location.
-			    
-     The value of the 'karch' parameter determines the set of files
-     that will be generated for the BSP, along with the specific set of
-     'properties' that will be used to fill out the BSP-specific
-     portions of the BSP.
-			    
-     ...
-			    
-     NOTE: Once created, you should add your new layer to your
-     bblayers.conf file in order for it to be subsequently seen and
-     modified by the yocto-kernel tool.
-			    
-     NOTE for x86- and x86_64-based BSPs: The generated BSP assumes the
-     presence of the of the meta-intel layer, so you should also have a
-     meta-intel layer present and added to your bblayers.conf as well.
+         This command creates a Yocto BSP based on the specified
+         parameters.  The new BSP will be a new Yocto BSP layer contained
+         by default within the top-level directory specified as
+         'meta-bsp-name'.  The -o option can be used to place the BSP layer
+         in a directory with a different name and location.
+
+         The value of the 'karch' parameter determines the set of files
+         that will be generated for the BSP, along with the specific set of
+         'properties' that will be used to fill out the BSP-specific
+         portions of the BSP.  The possible values for the 'karch' paramter
+         can be listed via 'yocto-bsp list karch'.
+
+         ...
                     </literallayout>
                 </para>
 
@@ -1158,33 +1150,33 @@
                     For the current set of BSPs, the script prompts you for various important
                     parameters such as:
                     <itemizedlist>
-                        <listitem><para>which kernel to use</para></listitem>
-                        <listitem><para>which branch of that kernel to use (or re-use)</para></listitem>
-                        <listitem><para>whether or not to use X, and if so, which drivers to use</para></listitem>
-                        <listitem><para>whether to turn on SMP</para></listitem>
-                        <listitem><para>whether the BSP has a keyboard</para></listitem>
-                        <listitem><para>whether the BSP has a touchscreen</para></listitem>
-                        <listitem><para>any remaining configurable items associated with the BSP</para></listitem>
+                        <listitem><para>The kernel to use</para></listitem>
+                        <listitem><para>The branch of that kernel to use (or re-use)</para></listitem>
+                        <listitem><para>Whether or not to use X, and if so, which drivers to use</para></listitem>
+                        <listitem><para>Whether to turn on SMP</para></listitem>
+                        <listitem><para>Whether the BSP has a keyboard</para></listitem>
+                        <listitem><para>Whether the BSP has a touchscreen</para></listitem>
+                        <listitem><para>Remaining configurable items associated with the BSP</para></listitem>
                     </itemizedlist>
                 </para>
 
                 <para>
                     You use the <filename>yocto-bsp create</filename> sub-command to create 
                     a new BSP layer. 
-                    This command requires you to specify a particular architecture on which to 
-                    base the BSP.
+                    This command requires you to specify a particular kernel architecture 
+                    (<filename>karch</filename>) on which to base the BSP.
                     Assuming you have sourced the environment, you can use the 
                     <filename>yocto-bsp list karch</filename> sub-command to list the
                     architectures available for BSP creation as follows:
                     <literallayout class='monospaced'>
      $ yocto-bsp list karch
      Architectures available:
-         arm
-         powerpc
-         i386
-         mips
-         x86_64
          qemu
+         x86_64
+         i386
+         powerpc
+         arm
+         mips
                     </literallayout>
                 </para>
 
@@ -1205,53 +1197,46 @@
                     the prompts appear in brackets.
                     Pressing enter without supplying anything on the command line or pressing enter
                     and providing an invalid response causes the script to accept the default value.
+                    Once the script completes, the new <filename>meta-myarm</filename> BSP layer
+                    is created in the current working directory. 
+                    This example assumes you have source the &OE_INIT_FILE; and are currently
+                    in the top-level folder of the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                 </para>
 
                 <para>
                     Following is the complete example:
                     <literallayout class='monospaced'>
      $ yocto-bsp create myarm qemu
-     Which qemu architecture would you like to use? [default: x86]
-             1) common 32-bit x86
-             2) common 64-bit x86
-             3) common 32-bit ARM
-             4) common 32-bit PowerPC
-             5) common 32-bit MIPS
+     Which qemu architecture would you like to use? [default: i386]
+	     1) i386    (32-bit)
+	     2) x86_64  (64-bit)
+	     3) ARM     (32-bit)
+	     4) PowerPC (32-bit)
+	     5) MIPS    (32-bit)
      3
-     Would you like to use the default (3.2) kernel? (Y/n)
-     Do you need a new machine branch for this BSP (the alternative is to re-use an existing branch)? [Y/n]
-     Getting branches from remote repo git://git.yoctoproject.org/linux-yocto-3.2...
-     Please choose a machine branch to base this BSP on => [default: standard/default/common-pc]
-             1) base
+     Would you like to use the default (3.4) kernel? (y/n) [default: y]
+     Do you need a new machine branch for this BSP (the alternative is to re-use an existing branch)? [y/n] [default: y]
+     Getting branches from remote repo git://git.yoctoproject.org/linux-yocto-3.4.git...
+     Please choose a machine branch to base your new BSP branch on: [default: standard/base]
+             1) standard/arm-versatile-926ejs
              2) standard/base
-             3) standard/default/arm-versatile-926ejs
-             4) standard/default/base
-             5) standard/default/beagleboard
-             6) standard/default/cedartrailbsp (copy).xml
-             7) standard/default/common-pc-64/base
-             8) standard/default/common-pc-64/jasperforest
-             9) standard/default/common-pc-64/romley
-             10) standard/default/common-pc-64/sugarbay
-             11) standard/default/common-pc/atom-pc
-             12) standard/default/common-pc/base
-             13) standard/default/crownbay
-             14) standard/default/emenlow
-             15) standard/default/fishriver
-             16) standard/default/fri2
-             17) standard/default/fsl-mpc8315e-rdb
-             18) standard/default/mti-malta32-be
-             19) standard/default/mti-malta32-le
-             20) standard/default/preempt-rt
-             21) standard/default/qemu-ppc32
-             22) standard/default/routerstationpro
-             23) standard/preempt-rt/base
-             24) standard/preempt-rt/qemu-ppc32
-             25) standard/preempt-rt/routerstationpro
-             26) standard/tiny
-     3
-     Do you need SMP support? (Y/n)
-     Does your BSP have a touchscreen? (y/N)
-     Does your BSP have a keyboard? (Y/n)
+             3) standard/beagleboard
+             4) standard/cedartrail
+             5) standard/crownbay
+             6) standard/emenlow
+             7) standard/fishriver
+             8) standard/fri2
+             9) standard/fsl-mpc8315e-rdb
+             10) standard/mti-malta32
+             11) standard/mti-malta64
+             12) standard/qemuppc
+             13) standard/routerstationpro
+             14) standard/sys940x
+     1
+     Would you like SMP support? (y/n) [default: y]
+     Does your BSP have a touchscreen? (y/n) [default: n]
+     Does your BSP have a keyboard? (y/n) [default: y]
      New qemu BSP created in meta-myarm
                     </literallayout>
                     Let's take a closer look at the example now:
@@ -1261,10 +1246,10 @@
                             In the example, we use the <filename>arm</filename> architecture.
                             </para></listitem>
                         <listitem><para>The script then prompts you for the kernel.
-                            The default kernel is 3.2 and is acceptable.  
+                            The default 3.4 kernel is acceptable.  
                             So, the example accepts the default.
                             If you enter 'n', the script prompts you to further enter the kernel
-                            you do want to use (e.g. 3.0, 3.2_preempt-rt, etc.).</para></listitem>
+                            you do want to use (e.g. 3.0, 3.2_preempt-rt, and so forth.).</para></listitem>
                         <listitem><para>Next, the script asks whether you would like to have a new 
                             branch created especially for your BSP in the local 
                             <ulink url='&YOCTO_DOCS_DEV_URL;#local-kernel-files'>Linux Yocto Kernel</ulink> 
@@ -1277,25 +1262,20 @@
                             The reason a new branch is the default is that typically
                             new BSPs do require BSP-specific patches.
                             The tool thus assumes that most of time a new branch is required.
-                            <note>In the current implementation, creation or re-use of a branch does 
-                            not actually matter.
-                            The reason is because the generated BSPs assume that patches and 
-                            configurations live in recipe-space, which is something that can be done 
-                            with or without a dedicated branch.  
-                            Generated BSPs, however, are different.
-                            This difference becomes significant once the tool's 'publish' functionality 
-                            is implemented.</note></para></listitem>
-                        <listitem><para>Regardless of which choice is made in the previous step, 
+                            </para></listitem>
+                        <listitem><para>Regardless of which choice you make in the previous step, 
                             you are now given the opportunity to select a particular machine branch on
-                            which to base your new BSP-specific machine branch on 
+                            which to base your new BSP-specific machine branch 
                             (or to re-use if you had elected to not create a new branch).  
                             Because this example is generating an <filename>arm</filename> BSP, the example 
-                            uses <filename>#3</filename> at the prompt, which selects the arm-versatile branch.
+                            uses <filename>#1</filename> at the prompt, which selects the arm-versatile branch.
                             </para></listitem>
                         <listitem><para>The remainder of the prompts are routine. 
                             Defaults are accepted for each.</para></listitem>
                         <listitem><para>By default, the script creates the new BSP Layer in the 
-                            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
+                            current working directory of the 
+                            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>, 
+                            which is <filename>poky</filename> in this case.
                             </para></listitem>
                     </orderedlist> 
                 </para>
@@ -1308,6 +1288,7 @@
      BBLAYERS = " \
         /usr/local/src/yocto/meta \
         /usr/local/src/yocto/meta-yocto \
+        /usr/local/src/yocto/meta-yocto-bsp \
         /usr/local/src/yocto/meta-myarm \
         "
                     </literallayout> 
@@ -1339,21 +1320,28 @@
                     is to use the <filename>yocto-kernel</filename> built-in help as follows:
                     <literallayout class='monospaced'>
      $ yocto-kernel
-     Usage:
+     Usage: 
 
-     Modify and list Yocto BSP kernel config items and patches.
+      Modify and list Yocto BSP kernel config items and patches.
 
-     usage: yocto-kernel [--version] [--help] COMMAND [ARGS]
+      usage: yocto-kernel [--version] [--help] COMMAND [ARGS]
 
-     The most commonly used 'yocto-kernel' commands are:
-     config list       List the modifiable set of bare kernel config options for a BSP
-     config add        Add or modify bare kernel config options for a BSP 
-     config rm         Remove bare kernel config options from a BSP
-     patch list        List the patches associated with a BSP
-     patch add         Patch the Yocto kernel for a BSP
-     patch rm          Remove patches from a BSP
+      Current 'yocto-kernel' commands are:
+        config list       List the modifiable set of bare kernel config options for a BSP
+        config add        Add or modify bare kernel config options for a BSP
+        config rm         Remove bare kernel config options from a BSP
+        patch list        List the patches associated with a BSP
+        patch add         Patch the Yocto kernel for a BSP
+        patch rm          Remove patches from a BSP
 
-     See 'yocto-kernel help COMMAND' for more information on a specific command.
+      See 'yocto-kernel help COMMAND' for more information on a specific command.
+
+
+
+     Options:
+       --version    show program's version number and exit
+       -h, --help   show this help message and exit
+       -D, --debug  output debug information
                     </literallayout>
                 </para>
 
