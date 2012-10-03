@@ -13,10 +13,12 @@
         <listitem><para><emphasis>System Development:</emphasis>
              System Development covers Board Support Package (BSP) development and kernel 
              modification or configuration.
-             If you want to examine specific examples of the system development models, 
-             see the "<link linkend='dev-manual-bsp-appendix'>BSP Development Example</link>" 
-             appendix and the 
-             "<link linkend='dev-manual-kernel-appendix'>Kernel Modification Example</link>" appendix.
+             If you want to examine a specific example of the kernel modification and 
+             configuration model, 
+             see the "<link linkend='dev-manual-kernel-appendix'>Kernel Modification Example</link>" appendix.
+             For an example on how to create a BSP, see the 
+             "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a New BSP Layer Using the yocto-bsp Script</ulink>"
+             section in the Yocto Project Board Support Package (BSP) Developer's Guide.
              </para></listitem>
          <listitem><para><emphasis>User Application Development:</emphasis>
              User Application Development covers development of applications that you intend 
@@ -80,9 +82,11 @@
 
         <para>
             The remainder of this section presents the basic steps used to create a BSP 
-            based on an existing BSP that ships with the Yocto Project.
-            You can reference the "<link linkend='dev-manual-bsp-appendix'>BSP Development Example</link>"
-            appendix for a detailed example that uses the Crown Bay BSP as a base BSP from which to start.
+            using the Yocto Project's 
+            <ulink url='&YOCTO_DOCS_BSP_URL;#using-the-yocto-projects-bsp-tools'>BSP Tools</ulink>.
+            For an example that shows how to create a new layer using the tools, see the
+            "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a New BSP Layer Using the yocto-bsp Script</ulink>"
+             section in the Yocto Project Board Support Package (BSP) Developer's Guide.
         </para>
 
         <para>
@@ -108,37 +112,23 @@
                     process and to the tools you need.
                     For information on how to set up the Source Directory, see the
                     "<link linkend='getting-setup'>Getting Setup</link>" section.</para></listitem>
-                <listitem><para><emphasis>Establish a local copy of the base BSP files</emphasis>:  Having    
-                    the BSP files on your system gives you access to the build
+                <listitem><para><emphasis>Establish the <filename>meta-intel</filename>
+                    repository on your system</emphasis>:  Having local copies of the 
+                    supported BSP layers on your system gives you access to the build
                     process and to the tools you need for creating a BSP.
                     For information on how to get these files, see the
                     "<link linkend='getting-setup'>Getting Setup</link>" section.</para></listitem>    
-                <listitem><para><emphasis>Choose a BSP that is supported by the Yocto Project 
-                    as your base BSP</emphasis>:  
-                    The Yocto Project ships with several BSPs that support various hardware.  
-                    It is best to base your new BSP on an existing BSP rather than create all the 
-                    recipes and configuration files from scratch.  
-                    While it is possible to create everything from scratch, basing your new BSP 
-                    on something that is close is much easier.  
-                    Or, at a minimum, leveraging off an existing BSP
-                    gives you some structure with which to start.</para>
-                    <para>At this point you need to understand your target hardware well enough to determine which 
-                    existing BSP it most closely matches.  
-                    Things to consider are your hardware’s on-board features, such as CPU type and graphics support.  
-                    You should look at the README files for supported BSPs to get an idea of which one 
-                    you could use.  
-                    A generic <trademark class='registered'>Intel</trademark> 
-                    <trademark class='trade'>Atom</trademark>-based BSP to consider is the 
-                    Crown Bay that does not support the <trademark class='registered'>Intel</trademark> 
-                    Embedded Media Graphics Driver (EMGD).  
-                    The remainder of this example uses that base BSP.</para>
-                    <para>To see the supported BSPs, go to the 
-                    <ulink url='&YOCTO_HOME_URL;/download'>Downloads</ulink> page on the Yocto Project
-                    website and click on “BSP Downloads.”</para></listitem>
-                <listitem><para><emphasis>Create your own BSP layer</emphasis>:  Layers are ideal for 
+                <listitem><para><emphasis>Create your own BSP layer using the 
+                    <ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'><filename>yocto-bsp</filename></ulink> script</emphasis>:  
+                    Layers are ideal for 
                     isolating and storing work for a given piece of hardware.  
                     A layer is really just a location or area in which you place the recipes for your BSP.
-                    In fact, a BSP is, in itself, a special type of layer.   
+                    In fact, a BSP is, in itself, a special type of layer.
+                    The simplest way to create a new BSP layer that is compliant with the 
+                    Yocto Project is to use the <filename>yocto-bsp</filename> script. 
+                    For information about that script, see the 
+                    "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a New BSP Layer Using the yocto-bsp Script</ulink>" 
+                    section in the Yocto Project Board Support (BSP) Developer's Guide.   
                     </para>
                     <para>
                     Another example that illustrates a layer is an application.  
@@ -170,25 +160,34 @@
                     section of the Board Support Package (BSP) Development Guide.  
                     In the standard layout, you will notice a suggested structure for recipes and  
                     configuration information.  
-                    You can see the standard layout for the Crown Bay BSP in this example by examining the 
-                    directory structure of the <filename>meta-crownbay</filename> layer inside the 
-                    Source Directory.</para></listitem>
+                    You can see the standard layout for a BSP by examining 
+                    any supported BSP found in the <filename>meta-intel</filename> layer inside
+                    the Source Directory.</para></listitem>
                 <listitem><para><emphasis>Make configuration changes to your new BSP 
                     layer</emphasis>:  The standard BSP layer structure organizes the files you need 
                     to edit in <filename>conf</filename> and several <filename>recipes-*</filename>
                     directories within the BSP layer.
                     Configuration changes identify where your new layer is on the local system
                     and identify which kernel you are going to use.
+                    When you run the <filename>yocto-bsp</filename> script you are able to interactively
+                    configure many things for the BSP (e.g. keyboard, touchscreen, and so forth).
                     </para></listitem>
                 <listitem><para><emphasis>Make recipe changes to your new BSP layer</emphasis>:  Recipe 
                     changes include altering recipes (<filename>.bb</filename> files), removing 
-                    recipes you don't use, and adding new recipes that you need to support your hardware.
+                    recipes you don't use, and adding new recipes or append files 
+                    (<filename>.bbappend</filename>) that you need to support your hardware.
                     </para></listitem>
                 <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
                     changes to your BSP layer, there remains a few things 
                     you need to do for the OpenEmbedded build system in order for it to create your image.  
                     You need to get the build environment ready by sourcing an environment setup script 
-                    and you need to be sure two key configuration files are configured appropriately.</para>
+                    and you need to be sure two key configuration files are configured appropriately:
+                    the <filename>conf/local.conf</filename> and the 
+                    <filename>conf/bblayers.conf</filename> file.
+                    You must make the OpenEmbedded build system aware of your new layer.
+                    See the 
+                    "<link linkend='enabling-your-layer'>Enabling Your Layer</link>" section
+                    for information on how to let the build system know about your new layer.</para>
                     <para>The entire process for building an image is overviewed in the section
                     "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>" section 
                     of the Yocto Project Quick Start.    
