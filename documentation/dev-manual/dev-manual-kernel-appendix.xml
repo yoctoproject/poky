@@ -76,16 +76,18 @@
                     <listitem><para><emphasis>Local Source Directory:</emphasis> 
                         This area contains all the metadata that supports building images 
                         using the OpenEmbedded build system.
-                        In this example, the Source Directory also 
-                        contains the build directory, which contains the configuration directory 
+                        In this example, the 
+                        <link linkend='source-directory'>Source Directory</link> also 
+                        contains the 
+                        <link linkend='build-directory'>Build Directory</link>, 
+                        which contains the configuration directory 
                         that lets you control the build.
                         Also in this example, the Source Directory contains local copies of the 
                         <filename>poky-extras</filename> Git repository.</para>
                         <para>See the bulleted item
                         "<link linkend='local-yp-release'>Yocto Project Release</link>"
                         for information on how to get these files on your local system.</para></listitem>
-                    <listitem><para><emphasis>Local copies of the<filename>poky-extras</filename> 
-                        Git Repository:</emphasis> 
+                    <listitem><para><emphasis>Local copies of the&nbsp;<filename>poky-extras</filename>&nbsp;Git Repository:</emphasis> 
                         This area contains the <filename>meta-kernel-dev</filename> layer, 
                         which is where you make changes that append the kernel build recipes.
                         You edit <filename>.bbappend</filename> files to locate your 
@@ -132,7 +134,9 @@
             <title>Setting Up the Local Source Directory</title>
 
             <para>
-                You can set up the Source Directory through tarball extraction or by 
+                You can set up the 
+                <link linkend='source-directory'>Source Directory</link>
+                through tarball extraction or by 
                 cloning the <filename>poky</filename> Git repository.  
                 This example uses <filename>poky</filename> as the root directory of the 
                 local Source Directory.
@@ -179,11 +183,12 @@
                 Because this example uses the Yocto Project &DISTRO; Release code 
                 named "&DISTRO_NAME;", which maps to the <filename>&DISTRO_NAME;</filename> 
                 branch in the repository, you need to be sure you are using that 
-                branch for <filename>poky-extra</filename>.
+                branch for <filename>poky-extras</filename>.
                 The following commands create and checkout the local 
                 branch you are using for the <filename>&DISTRO_NAME;</filename>
                 branch:
                 <literallayout class='monospaced'>
+     $ cd ~/poky/poky-extras
      $ git checkout -b &DISTRO_NAME; origin/&DISTRO_NAME;
      Branch &DISTRO_NAME; set up to track remote branch &DISTRO_NAME; from origin.
      Switched to a new branch '&DISTRO_NAME;'
@@ -195,7 +200,7 @@
             <title>Setting Up the Bare Clone and its Copy</title>
 
             <para>
-                This example modifies the <filename>linux-yocto-3.2</filename> kernel.
+                This example modifies the <filename>linux-yocto-3.4</filename> kernel.
                 Thus, you need to create a bare clone of that kernel and then make a copy of the 
                 bare clone.
                 See the bulleted item
@@ -207,17 +212,16 @@
                 The bare clone exists for the kernel build tools and simply as the receiving end 
                 of <filename>git push</filename>
                 commands after you make edits and commits inside the copy of the clone.
-                The copy (<filename>my-linux-yocto-3.2-work</filename> in this example) has to have 
+                The copy (<filename>my-linux-yocto-3.4-work</filename> in this example) has to have 
                 a local branch created and checked out for your work.
                 This example uses <filename>common-pc-base</filename> as the local branch.
                 The following commands create and checkout the branch:
                 <literallayout class='monospaced'>
-     $ cd ~/my-linux-yocto-3.2-work
-     $ git checkout -b common-pc-base origin/standard/default/common-pc/base
-     Checking out files: 100% (532/532), done.
-     Branch common-pc-base set up to track remote branch 
-        standard/default/common-pc/base from origin.
-     Switched to a new branch 'common-pc-base'
+     $ cd ~/my-linux-yocto-3.4-work
+     $ git checkout -b standard-common-pc-base origin/standard/common-pc/base
+     Branch standard-common-pc-base set up to track remote branch 
+        standard/common-pc/base from origin.
+     Switched to a new branch 'standard-common-pc-base'
                 </literallayout>
             </para>
         </section>
@@ -249,11 +253,36 @@
                 If necessary, the script creates the build directory:
                 <literallayout class='monospaced'>
      $ cd ~/poky
-     $ source oe-init-build-env
+     $ source &OE_INIT_FILE;
+     You had no conf/local.conf file. This configuration file has therefore been
+     created for you with some default values. You may wish to edit it to use a 
+     different MACHINE (target hardware) or enable parallel build options to take 
+     advantage of multiple cores for example. See the file for more information as 
+     common configuration options are commented.
 
-          ### Shell environment set up for builds. ###
+     The Yocto Project has extensive documentation about OE including a reference manual
+     which can be found at:
+         http://yoctoproject.org/documentation
 
-     You can now run 'bitbake &lt;target&gt;'
+     For more information about OpenEmbedded see their website:
+         http://www.openembedded.org/
+
+     You had no conf/bblayers.conf file. The configuration file has been created for
+     you with some default values. To add additional metadata layers into your
+     configuration please add entries to this file.
+
+     The Yocto Project has extensive documentation about OE including a reference manual
+     which can be found at:
+         http://yoctoproject.org/documentation
+
+     For more information about OpenEmbedded see their website:
+         http://www.openembedded.org/
+
+
+
+     ### Shell environment set up for builds. ###
+
+     You can now run 'bitbake &lt;target&gt;>'
 
      Common targets are:
          core-image-minimal
