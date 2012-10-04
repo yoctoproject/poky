@@ -24,13 +24,15 @@
 # manuals are being generated.  The variable BRANCH is used to indicate the 
 # branch (edison or denzil) and is used only when DOC=dev-manual or 
 # DOC=mega-manual.  If you do not specify a BRANCH, the default branch used 
-# will be for the latest Yocto Project release.  
+# will be for the latest Yocto Project release.  If you build for either 
+# edison or denzil, you must use BRANCH. You do not need to use BRANCH for
+# any release beyond denzil.  
 #
 # To build a manual, you must invoke Makefile with the DOC argument.  If you 
 # are going to publish the manual, then you must invoke Makefile with both the 
-# DOC and the VER argument.  If you are building a particular version of the 
-# Yocto Project Development Manual or you are building any version of the 
-# mega-manual, you must use the DOC and BRANCH arguments.  
+# DOC and the VER argument.  Furthermore, if you are building or publishing
+# the edison or denzil versions of the Yocto Poject Development Manual or 
+# the mega-manual, you must also use the BRANCH argument.  
 #
 # Examples:
 #
@@ -47,7 +49,8 @@
 # fourth example generates both the PDF and HTML 'edison' versions of the YP 
 # Development Manual.  The last exmample generates the HTML version of the 
 # mega-manual and uses the 'denzil' branch when choosing figures for the 
-# tarball of figures.
+# tarball of figures.  Any example that does not use the BRANCH argument 
+# builds the current version of the manual set.
 #
 # Use the publish target to push the generated manuals to the Yocto Project 
 # website.  All files needed for the manual's HTML form are pushed as well as the 
@@ -57,16 +60,13 @@
 #    make publish DOC=bsp-guide VER=1.3
 #    make publish DOC=adt-manual VER=1.3
 #    make publish DOC=dev-manual VER=1.1.1 BRANCH=edison
-#    make publish DOC=dev-manual VER=1.2 
-#    make publish DOC=mega-manual VER=1.3 BRANCH=denzil
+#    make publish DOC=dev-manual VER=1.2 BRANCH=denzil 
 #
-# The first example publishes the 1.2 version of both the PDF and HTML versions of 
-# the BSP Guide.  The second example publishes the 1.2 version of both the PDF and 
+# The first example publishes the 1.3 version of both the PDF and HTML versions of 
+# the BSP Guide.  The second example publishes the 1.3 version of both the PDF and 
 # HTML versions of the ADT Manual. The third example publishes the PDF and HTML
 # 'edison' versions of the YP Development Manual.  The fourth example publishes
-# the PDF and HTML 'master' versions of the YP Development Manual.  The last
-# example publishes the 1.3 version of the mega-manual (HTML-only) and the 
-# version generated and published is based on the 'denzil' branch.
+# the PDF and HTML 'denzil' versions of the YP Development Manual.
 #
 
 ifeq ($(DOC),bsp-guide)
@@ -115,22 +115,13 @@ TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/kernel-overview-3-denzil.png \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
-	else ifeq ($(BRANCH),danny)
-TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
-           figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
-           figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
-           figures/kernel-example-repos-danny.png \
-           figures/kernel-overview-1.png figures/kernel-overview-2.png \
-           figures/kernel-overview-3-denzil.png \
-           figures/source-repos.png figures/yp-download.png \
-           figures/wip.png
         else
 TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
-           figures/kernel-example-repos-danny.png \
-           figures/kernel-overview-1.png figures/kernel-overview-2.png \
-           figures/kernel-overview-3-denzil.png \
+           figures/kernel-example-repos-generic.png \
+           figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
+           figures/kernel-overview-3-generic.png \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
 	endif
@@ -185,19 +176,6 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
 	figures/kernel-overview-3-denzil.png \
 	figures/source-repos.png figures/yp-download.png \
 	figures/wip.png
-	else ifeq ($(BRANCH),danny)
-TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures/building-an-image.png  \
-	figures/using-a-pre-built-image.png \
-	figures/poky-title.png \
-	figures/adt-title.png figures/bsp-title.png \
-	figures/kernel-title.png figures/kernel-architecture-overview.png \
-	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
-	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
-	figures/kernel-example-repos-danny.png \
-	figures/kernel-overview-1.png figures/kernel-overview-2.png \
-	figures/kernel-overview-3-denzil.png \
-	figures/source-repos.png figures/yp-download.png \
-	figures/wip.png
         else
 TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures/building-an-image.png  \
 	figures/using-a-pre-built-image.png \
@@ -206,9 +184,9 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
 	figures/kernel-title.png figures/kernel-architecture-overview.png \
 	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
 	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
-	figures/kernel-example-repos-danny.png \
-	figures/kernel-overview-1.png figures/kernel-overview-2.png \
-	figures/kernel-overview-3-denzil.png \
+	figures/kernel-example-repos-generic.png \
+	figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
+	figures/kernel-overview-3-generic.png \
 	figures/source-repos.png figures/yp-download.png \
 	figures/wip.png
 	endif
