@@ -115,11 +115,20 @@ TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/kernel-overview-3-denzil.png \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
+	else ifeq ($(BRANCH),danny)
+TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
+           figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
+           figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
+           figures/kernel-example-repos-danny.png \
+           figures/kernel-overview-1.png figures/kernel-overview-2.png \
+           figures/kernel-overview-3-denzil.png \
+           figures/source-repos.png figures/yp-download.png \
+           figures/wip.png
         else
 TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
-           figures/kernel-example-repos-denzil.png \
+           figures/kernel-example-repos-danny.png \
            figures/kernel-overview-1.png figures/kernel-overview-2.png \
            figures/kernel-overview-3-denzil.png \
            figures/source-repos.png figures/yp-download.png \
@@ -176,6 +185,19 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
 	figures/kernel-overview-3-denzil.png \
 	figures/source-repos.png figures/yp-download.png \
 	figures/wip.png
+	else ifeq ($(BRANCH),danny)
+TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures/building-an-image.png  \
+	figures/using-a-pre-built-image.png \
+	figures/poky-title.png \
+	figures/adt-title.png figures/bsp-title.png \
+	figures/kernel-title.png figures/kernel-architecture-overview.png \
+	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
+	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
+	figures/kernel-example-repos-danny.png \
+	figures/kernel-overview-1.png figures/kernel-overview-2.png \
+	figures/kernel-overview-3-denzil.png \
+	figures/source-repos.png figures/yp-download.png \
+	figures/wip.png
         else
 TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures/building-an-image.png  \
 	figures/using-a-pre-built-image.png \
@@ -184,7 +206,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
 	figures/kernel-title.png figures/kernel-architecture-overview.png \
 	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
 	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
-	figures/kernel-example-repos-denzil.png \
+	figures/kernel-example-repos-danny.png \
 	figures/kernel-overview-1.png figures/kernel-overview-2.png \
 	figures/kernel-overview-3-denzil.png \
 	figures/source-repos.png figures/yp-download.png \
