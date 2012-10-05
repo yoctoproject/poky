@@ -235,7 +235,7 @@
                 <note>
                     Because a full build can take hours, you should check two variables in the 
                     <filename>build</filename> directory that is created after you source the 
-                    <filename>oe-init-build-env</filename> script.
+                    <filename>&OE_INIT_FILE;</filename> script.
                     You can find these variables
                     <filename>BB_NUMBER_THREADS</filename> and <filename>PARALLEL_MAKE</filename>
                     in the <filename>build/conf</filename> directory in the 
@@ -337,7 +337,7 @@
 
             <para>
                 The file you change in this example is named <filename>calibrate.c</filename>
-                and is located in the <filename>my-linux-yocto-3.2-work</filename> Git repository
+                and is located in the <filename>my-linux-yocto-3.4-work</filename> Git repository
                 (the copy of the bare clone) in <filename>init</filename>.
                 This example simply inserts several <filename>printk</filename> statements
                 at the beginning of the <filename>calibrate_delay</filename> function.
@@ -401,7 +401,7 @@
            <para>
                The following command pushes the changes to the bare clone:
                <literallayout class='monospaced'>
-     $ git push origin common-pc-base:standard/default/common-pc/base
+     $ git push origin standard-common-pc-base:standard/default/common-pc/base
                </literallayout>
            </para>
        </section>
@@ -461,17 +461,17 @@
        "
                        </literallayout></para></listitem>
                    <listitem><para><emphasis>Identify Your Source Files:</emphasis> In the 
-                       <filename>linux-yocto_3.2.bbappend</filename> file located in the 
+                       <filename>linux-yocto_3.4.bbappend</filename> file located in the 
                        <filename>poky-extras/meta-kernel-dev/recipes-kernel/linux</filename>
                        directory, you need to identify the location of the 
                        local source code, which in this example is the bare clone named
-                       <filename>linux-yocto-3.2.git</filename>.
+                       <filename>linux-yocto-3.4.git</filename>.
                        To do this, set the <filename>KSRC_linux_yocto</filename> variable to point to your
-                       local <filename>linux-yocto-3.2.git</filename> Git repository by adding the 
+                       local <filename>linux-yocto-3.4.git</filename> Git repository by adding the 
                        following statement.
                        Be sure to substitute your user information in the statement:
                        <literallayout class='monospaced'>
-     KSRC_linux_yocto_3_2 ?= "/home/scottrif/linux-yocto-3.2.git"
+     KSRC_linux_yocto_3_2 ?= "/home/scottrif/linux-yocto-3.4.git"
                        </literallayout></para></listitem>
                </itemizedlist>
            </para>
@@ -484,7 +484,7 @@
                comment out the <filename>COMPATIBLE_MACHINE</filename> statements in all 
                unused <filename>.bbappend</filename> files, or simply remove (or rename) all the files 
                except the one your are using for the build 
-               (i.e. <filename>linux-yocto_3.2.bbappend</filename> in this example).</para>
+               (i.e. <filename>linux-yocto_3.4.bbappend</filename> in this example).</para>
                <para>If you do not make one of these two adjustments, your machine will be compatible
                with all the kernel recipes in the <filename>meta-kernel-dev</filename> layer. 
                When your machine is comapatible with all the kernel recipes, the build attempts
@@ -501,11 +501,11 @@
                 Do the following:
                 <orderedlist>
                     <listitem><para>Your environment should be set up since you previously sourced
-                        the <filename>oe-init-build-env</filename> script.
+                        the <filename>&OE_INIT_FILE;</filename> script.
                         If it isn't, source the script again from <filename>poky</filename>.
                         <literallayout class='monospaced'>
      $ cd ~/poky
-     $ source oe-init-build-env
+     $ source &OE_INIT_FILE;
                         </literallayout>
                         </para></listitem>
                     <listitem><para>Be sure old images are cleaned out by running the 
@@ -605,7 +605,7 @@
                 <note>
                     Because a full build can take hours, you should check two variables in the 
                     <filename>build</filename> directory that is created after you source the 
-                    <filename>oe-init-build-env</filename> script.
+                    <filename>&OE_INIT_FILE;</filename> script.
                     You can find these variables
                     <filename>BB_NUMBER_THREADS</filename> and <filename>PARALLEL_MAKE</filename>
                     in the <filename>build/conf</filename> directory in the 
@@ -623,7 +623,7 @@
                 If necessary, the script creates the build directory:
                 <literallayout class='monospaced'>
      $ cd ~/poky
-     $ source oe-init-build-env
+     $ source &OE_INIT_FILE;
 
           ### Shell environment set up for builds. ###
 
@@ -699,19 +699,19 @@
                 The <filename>menuconfig</filename> tool provides an interactive method with which
                 to set kernel configurations.
                 You need to run <filename>menuconfig</filename> inside the Yocto BitBake environment.
-                Thus, the environment must be set up using the <filename>oe-init-build-env</filename>
+                Thus, the environment must be set up using the <filename>&OE_INIT_FILE;</filename>
                 script found in the build directory.
                 If you have not sourced this script do so with the following commands:
                 <literallayout class='monospaced'>
      $ cd ~/poky
-     $ source oe-init-build-env
+     $ source &OE_INIT_FILE;
                 </literallayout>
             </para>
 
             <para>
                 After setting up the environment to run <filename>menuconfig</filename>, you are ready 
                 to use the tool to interactively change the kernel configuration.
-                In this example, we are basing our changes on the <filename>linux-yocto-3.2</filename>
+                In this example, we are basing our changes on the <filename>linux-yocto-3.4</filename>
                 kernel.
                 The OpenEmbedded build system recognizes this kernel as 
                 <filename>linux-yocto</filename>.
@@ -742,7 +742,7 @@
                 You can find and examine this file in the build directory. 
                 This example uses the following:
                 <literallayout class='monospaced'>
-     ~/poky/build/tmp/work/qemux86-poky-linux/linux-yocto-3.2.11+git1+84f...
+     ~/poky/build/tmp/work/qemux86-poky-linux/linux-yocto-3.4.11+git1+84f...
         ...656ed30-r1/linux-qemux86-standard-build
                 </literallayout>
                 <note>
