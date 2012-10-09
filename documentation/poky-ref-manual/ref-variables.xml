@@ -280,7 +280,15 @@
 
         <glossentry id='var-BPN'><glossterm>BPN</glossterm>
             <glossdef>
-                <para>Bare name of package with any suffixes like -cross -native removed.</para>
+                <para>The bare name of the recipe or package.
+                    This variable is a version of the <link linkend='var-PN'>PN</link> variable 
+                    but has common suffixes and prefixes such as "-native", "-cross" and "multilib" 
+                    removed.
+                    The exact list of suffixes removed is specified by the 
+                    <link linkend='var-SPECIAL_PKGSUFFIX'>SPECIAL_PKGSUFFIX</link> variable.
+                    The exact list of prefixes removed is specified by the 
+                    <link linkend='var-MLPREFIX'>MLPREFIX</link> variable.
+                    Prefixes are removed for multilib and nativesdk cases.</para>
             </glossdef>
         </glossentry>
 
@@ -1515,6 +1523,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>The email address of the distribution maintainer.</para>
             </glossdef>
         </glossentry>
+
+        <glossentry id='var-MLPREFIX'><glossterm>MLPREFIX</glossterm>
+            <glossdef>
+                <para>
+                    Specifies a prefix has been added to
+                    <link linkend='var-PN'>PN</link> to create a special version 
+                    of a recipe or package, such as a multilib version.
+                    The variable is used in places where the prefix needs to be 
+                    added to or removed from a the name (e.g. the
+                    <link linkend='var-BPN'>BPN</link> variable).
+                    <filename>MLPREFIX</filename> gets set when a prefix has been 
+                    added to <filename>PN</filename>. 
+                </para>
+            </glossdef>
+        </glossentry>
     </glossdiv>
 
 <!--            <glossdiv id='var-glossary-n'><title>N</title>-->
@@ -1930,6 +1953,17 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Specifies the number of bits for the target system CPU.
                     The value should be either "32" or "64".
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SPECIAL_PKGSUFFIX'><glossterm>SPECIAL_PKGSUFFIX</glossterm>
+            <glossdef>
+                <para>
+                    A list of prefixes for <link linkend='var-PN'>PN</link> used by the 
+                    OpenEmbedded build system to create variants of recipes or packages.
+                    The list specifies the prefixes to strip off during certain circumstances
+                    such as the generation of the <link linkend='var-BPN'>BPN</link> variable.
                 </para>
             </glossdef>
         </glossentry>
