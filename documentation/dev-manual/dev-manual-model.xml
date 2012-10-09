@@ -8,7 +8,8 @@
 
 <para>
     Many development models exist for which you can use the Yocto Project. 
-    This chapter overviews the following methods:
+    This chapter overviews simple methods that use tools provided by the 
+    Yocto Project:
     <itemizedlist>
         <listitem><para><emphasis>System Development:</emphasis>
              System Development covers Board Support Package (BSP) development and kernel 
@@ -322,8 +323,8 @@
             </note>
 
             <para>
-                Storage of all the available kernel source code is one thing, while representing the 
-                code on your host development system is another.  
+                Upstream storage of all the available kernel source code is one thing, while 
+                representing and using the code on your host development system is another.  
                 Conceptually, you can think of the kernel source repositories as all the 
                 source files necessary for all the supported kernels. 
                 As a developer, you are just interested in the source files for the kernel on 
@@ -332,39 +333,14 @@
             </para>
 
             <para>
-                You make kernel source code available on your host development system by using 
-                Git to create a bare clone of the Yocto Project kernel Git repository 
-                in which you are interested.
-                Then, you use Git again to clone a copy of that bare clone.  
-                This copy represents the directory structure on your host system that is particular
-                to the kernel you want.  
-                The files in the copy of the bare clone are the files you actually modify 
-                to change the kernel.
-                See the <link linkend='local-kernel-files'>Yocto Project Kernel</link> item earlier
-                in this manual for an example of how to set up the kernel source directory
-                structure on your host system.
-            </para>
-
-            <para>
-                This next figure illustrates how the kernel source files might be arranged on 
-                your host system.
-            </para>
-
-            <para>
-                <imagedata fileref="figures/kernel-overview-3-generic.png" 
-                    width="6in" depth="4in" align="center" scale="100" />
-            </para> 
-
-            <para>
-                In the previous figure, the file structure on the left represents the bare clone 
-                set up to track the Yocto Project kernel Git repository. 
-                The structure on the right represents the copy of the bare clone. 
-                When you make modifcations to the kernel source code, this is the area in which 
-                you work.
-                Once you make corrections, you must use Git to push the committed changes to the 
-                bare clone.
-<!--                The example in <xref linkend='modifying-the-kernel-source-code'>
-                Modifying the Kernel Source Code</xref> provides a detailed example. -->
+                Kernel source code is available on your host system a couple of different
+                ways.
+                If you are working in the kernel all the time, you probably would want
+                to set up your own local Git repository of the kernel tree.
+                If you just need to make some patches to the kernel, you can get at 
+                temporary kernel source files extracted and used during the OpenEmbedded
+                build system. 
+                We will just talk about working with the temporary source code.
             </para>
 
             <para>
@@ -407,7 +383,7 @@
 
             <para>
                 <imagedata fileref="figures/kernel-dev-flow.png" 
-                    width="6in" depth="7.5in" align="center" scalefit="1" />
+                    width="6in" depth="5in" align="center" scalefit="1" />
             </para> 
 
             <para>
@@ -424,43 +400,39 @@
                         For information on how to get these files, see the bulleted item
                         "<link linkend='local-yp-release'>Yocto Project Release</link>" earlier in this manual.
                         </para></listitem>
-                    <listitem><para><emphasis>Set up a local copy of the <filename>poky-extras</filename> Git 
-                        repository</emphasis>:  This local repository is the area for your configuration 
-                        fragments, new kernel recipes, and the kernel <filename>.bbappend</filename>
-                        file used during the build. 
-                        It is good practice to set this repository up inside your local 
-                        <link linkend='source-directory'>Source Directory</link>.
-                        For information on how to get these files, see the bulleted item
-                        "<link linkend='poky-extras-repo'>The <filename>poky-extras</filename> Git Repository</link>"
-                        earlier in this manual.
-                        <note>While it is certainly possible to modify the kernel without involving
-                            a local Git repository, the suggested workflow for kernel modification
-                            using the Yocto Project does use a Git repository.</note></para></listitem>
-                    <listitem><para><emphasis>Establish a local copy of the Yocto Project kernel files on your 
-                        system</emphasis>:  In order to make modifications to the kernel you need two things:
-                        a bare clone of the Yocto Project kernel you are modifying and  
-                        a copy of that bare clone. 
-                        The bare clone is required by the build process and is the area to which you 
-                        push your kernel source changes (pulling does not work with bare clones). 
-                        The copy of the bare clone is a local Git repository that contains all the kernel's 
-                        source files. 
-                        You make your changes to the files in this copy of the bare clone.
-                        For information on how to set these two items up, see the bulleted item
-                        "<link linkend='local-kernel-files'>Yocto Project Kernel</link>" 
-                        earlier in this manual.</para></listitem>
+                    <listitem><para><emphasis>Establish the temporary kernel source files</emphasis>:  
+                        Temporary kernel source files are kept in the Build Directory created by the 
+                        OpenEmbedded build system when you run BitBake.
+                        If you have never built the kernel you are interested in, you need to run 
+                        an initial build to establish local kernel source files.</para>
+                        <para>If you are building an image for the first time, you need to get the build 
+                        environment ready by sourcing 
+                        the environment setup script.
+                        You also need to be sure two key configuration files 
+                        (<filename>local.conf</filename> and <filename>bblayers.conf</filename>)
+                        are configured appropriately.</para>
+                        <para>The entire process for building an image is overviewed in the 
+                        "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>" 
+                        section of the Yocto Project Quick Start.    
+                        You might want to reference this information.
+                        You can find more information on BitBake in the user manual, which is found in the
+                        <filename>bitbake/doc/manual</filename> directory of the 
+                        <link linkend='source-directory'>Source Directory</link>.</para>
+                        <para>The build process supports several types of images to satisfy different needs.  
+                        See the "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>" chapter in 
+                        the Yocto Project Reference Manual for information on supported images.
+                        </para></listitem>
                     <listitem><para><emphasis>Make changes to the kernel source code if 
                         applicable</emphasis>:  Modifying the kernel does not always mean directly
                         changing source files. 
-                        However, if you have to do this, you make the changes in the local 
-                        Git repository you set up to hold the source files (i.e. the copy of the 
-                        bare clone).
-                        Once the changes are made, you need to use Git commands to commit the changes
-                        and then push them to the bare clone.</para></listitem>                      
+                        However, if you have to do this, you make the changes to the files in the 
+                        Build directory.</para></listitem>                      
                     <listitem><para><emphasis>Make kernel configuration changes
                         if applicable</emphasis>:  
                         If your situation calls for changing the kernel's configuration, you can 
-                        use <filename>menuconfig</filename>
+                        use the <filename>yocto-kernel</filename> script or <filename>menuconfig</filename>
                         to enable and disable kernel configurations.  
+                        Using the script lets you interactively set up kernel configurations.
                         Using <filename>menuconfig</filename> allows you to interactively develop and test the 
                         configuration changes you are making to the kernel.
                         When saved, changes using <filename>menuconfig</filename> update the kernel's
@@ -476,55 +448,8 @@
                         <filename>.config</filename> file against a saved original and gather those
                         changes into a config fragment to be referenced from within the kernel's   
                         <filename>.bbappend</filename> file.</para></listitem>                      
-                    <listitem><para><emphasis>Add or extend kernel recipes if applicable</emphasis>:  
-                        The standard 
-                        layer structure organizes recipe files inside the 
-                        <filename>meta-kernel-dev</filename> layer that is within the local
-                        <filename>poky-extras</filename> Git repository.
-                        If you need to add new kernel recipes, you add them within this layer. 
-                        Also within this area, you will find the <filename>.bbappend</filename> 
-                        file that appends information to the kernel's recipe file used during the 
-                        build.
-                        </para></listitem>
-                    <listitem><para><emphasis>Prepare for the build</emphasis>:  Once you have made all the 
-                        changes to your kernel (configurations, source code changes, recipe additions, 
-                        or recipe changes), there remains a few things 
-                        you need to do in order for the build system to create your image.  
-                        If you have not done so, you need to get the build environment ready by sourcing 
-                        the environment setup script described earlier.
-                        You also need to be sure two key configuration files 
-                        (<filename>local.conf</filename> and <filename>bblayers.conf</filename>)
-                        are configured appropriately.</para>
-                        <para>The entire process for building an image is overviewed in the 
-                        "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>" 
-                        section of the Yocto Project Quick Start.    
-                        You might want to reference this information.
-                        Also, you should look at the detailed examples found in the appendices at 
-                        at the end of this manual.</para></listitem>
-                    <listitem><para><emphasis>Build the image</emphasis>:  The OpenEmbedded 
-                        build system uses the BitBake 
-                        tool to build images based on the type of image you want to create.  
-                        You can find more information on BitBake in the user manual, which is found in the
-                        <filename>bitbake/doc/manual</filename> directory of the 
-                        <link linkend='source-directory'>Source Directory</link>.</para>
-                        <para>The build process supports several types of images to satisfy different needs.  
-                        See the "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>" chapter in 
-                        the Yocto Project Reference Manual for information on supported images.</para></listitem>
-                    <listitem><para><emphasis>Make your configuration changes available
-                        in the kernel layer</emphasis>:  Up to this point, all the configuration changes to the 
-                        kernel have been done and tested iteratively.  
-                        Once they are tested and ready to go, you can move them into the kernel layer, 
-                        which allows you to distribute the layer.</para></listitem>
-                    <listitem><para><emphasis>If applicable, share your in-tree changes</emphasis>:  
-                        If the changes you made
-                        are suited for all Yocto Project kernel users, you might want to send them on 
-                        for inclusion into the upstream kernel's Git repository. 
-                        If the changes are accepted, the Yocto Project Maintainer pulls them into 
-                        the master branch of the kernel tree. 
-                        Doing so makes them available to everyone using the kernel.</para>
-                        <para>For information on how to submit a change to the Yocto Project, see the
-                        "<link linkend='how-to-submit-a-change'>How to Submit a Change</link>" section
-                        earlier in this manual.</para></listitem> 
+                    <listitem><para><emphasis>Rebuild the kernel image with your changes</emphasis>:  
+                        Rebuilding the kernel image applies your changes.</para></listitem>
                 </orderedlist>
             </para>
         </section>
