@@ -315,7 +315,7 @@
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
  
-     PRINC = "1"
+     PRINC := "${@int(PRINC) + 1}"
                 </literallayout>
                 This example adds or overrides files in 
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
@@ -1605,7 +1605,7 @@
         <title>Patching the Kernel</title>
   
         <para>
-            Kernel modification involves changing or adding configurations to an existing kernel,  
+            Patching the kernel involves changing or adding configurations to an existing kernel,  
             changing or adding recipes to the kernel that are needed to support specific hardware features, 
             or even altering the source code itself.  
             <note>
@@ -1618,15 +1618,15 @@
         </para>
 
         <para>
-            This example adds some simple QEMU emulator console output at boot time by 
-            adding <filename>printk</filename> statements to the kernel's
+            This example creates a simple patch by adding some QEMU emulator console 
+            output at boot time through <filename>printk</filename> statements in the kernel's
             <filename>calibrate.c</filename> source code file.
-            Booting the modified image causes the added messages to appear on the emulator's
-            console.
+            Applying the patch and booting the modified image causes the added 
+            messages to appear on the emulator's console.
         </para> 
 
-        <section id='finding-the-kernel-source-files'>
-            <title>Finding the Kernel Source Files</title>
+        <section id='creating-the-patch'>
+            <title>Creating the Patch</title>
 
             <para>
                 Describe how to find the source files in the build area.  
@@ -1635,305 +1635,6 @@
             </para>
         </section> 
 
-        <section id='understanding-the-files-you-need'>
-            <title>Understanding the Files You Need</title>
-          
-            <para>
-                Before you modify the kernel, you need to know what Git repositories and file 
-                structures you need.
-                Briefly, you need the following: 
-                <itemizedlist>
-                    <listitem><para>A local 
-                        <link linkend='source-directory'>Source Directory</link> for the 
-                        poky Git repository</para></listitem>
-                    <listitem><para>Local copies of the
-                        <link linkend='poky-extras-repo'><filename>poky-extras</filename></link>
-                        Git repository placed within the Source Directory.</para></listitem>  
-                    <listitem><para>A bare clone of the 
-                        <link linkend='local-kernel-files'>Yocto Project Kernel</link> upstream Git 
-                        repository to which you want to push your modifications.
-                        </para></listitem>
-                    <listitem><para>A copy of that bare clone in which you make your source 
-                        modifications</para></listitem>
-                </itemizedlist>
-            </para>
-
-            <para> 
-                The following figure summarizes these four areas.  
-                Within each rectangular that represents a data structure, a  
-                host development directory pathname appears at the 
-                lower left-hand corner of the box.  
-                These pathnames are the locations used in this example.
-                The figure also provides key statements and commands used during the kernel
-                modification process:
-            </para>
-
-            <para>
-                <imagedata fileref="figures/kernel-example-repos-generic.png" width="7in" depth="5in" 
-                    align="center" scale="100" />
-            </para>
-
-            <para>
-                Here is a brief description of the four areas:
-                <itemizedlist>
-                    <listitem><para><emphasis>Local Source Directory:</emphasis> 
-                        This area contains all the metadata that supports building images 
-                        using the OpenEmbedded build system.
-                        In this example, the 
-                        <link linkend='source-directory'>Source Directory</link> also 
-                        contains the 
-                        <link linkend='build-directory'>Build Directory</link>, 
-                        which contains the configuration directory 
-                        that lets you control the build.
-                        Also in this example, the Source Directory contains local copies of the 
-                        <filename>poky-extras</filename> Git repository.</para>
-                        <para>See the bulleted item
-                        "<link linkend='local-yp-release'>Yocto Project Release</link>"
-                        for information on how to get these files on your local system.</para></listitem>
-                    <listitem><para><emphasis>Local copies of the&nbsp;<filename>poky-extras</filename>&nbsp;Git Repository:</emphasis> 
-                        This area contains the <filename>meta-kernel-dev</filename> layer, 
-                        which is where you make changes that append the kernel build recipes.
-                        You edit <filename>.bbappend</filename> files to locate your 
-                        local kernel source files and to identify the kernel being built.
-                        This Git repository is a gathering place for extensions to the Yocto Project
-                        (or really any) kernel recipes that faciliate the creation and development
-                        of kernel features, BSPs or configurations.</para>
-                        <para>See the bulleted item
-                        "<link linkend='poky-extras-repo'>The 
-                        <filename>poky-extras</filename> Git Repository</link>" 
-                        for information on how to get these files.</para></listitem>                
-                    <listitem><para><emphasis>Bare Clone of the Yocto Project kernel:</emphasis> 
-                        This bare Git repository tracks the upstream Git repository of the Linux 
-                        Yocto kernel source code you are changing.
-                        When you modify the kernel you must work through a bare clone.
-                        All source code changes you make to the kernel must be committed and 
-                        pushed to the bare clone using Git commands.
-                        As mentioned, the <filename>.bbappend</filename> file in the 
-                        <filename>poky-extras</filename> repository points to the bare clone
-                        so that the build process can locate the locally changed source files.</para>
-                        <para>See the bulleted item
-                        "<link linkend='local-kernel-files'>Yocto Project Kernel</link>"
-                        for information on how to set up the bare clone.
-                        </para></listitem>
-                    <listitem><para><emphasis>Copy of the Yocto Project Kernel Bare Clone:</emphasis>
-                        This Git repository contains the actual source files that you modify.  
-                        Any changes you make to files in this location need to ultimately be pushed
-                        to the bare clone using the <filename>git push</filename> command.</para>
-                        <para>See the bulleted item
-                        "<link linkend='local-kernel-files'>Yocto Project Kernel</link>"
-                        for information on how to set up the bare clone.
-                        <note>Typically, Git workflows follow a scheme where changes made to a local area 
-                        are pulled into a Git repository.
-                        However, because the <filename>git pull</filename> command does not work 
-                        with bare clones, this workflow pushes changes to the 
-                        repository even though you could use other more complicated methods to
-                        get changes into the bare clone.</note>
-                        </para></listitem>
-                </itemizedlist>
-            </para>
-        </section>
-
-        <section id='setting-up-the-local-yocto-project-files-git-repository'>
-            <title>Setting Up the Local Source Directory</title>
-
-            <para>
-                You can set up the 
-                <link linkend='source-directory'>Source Directory</link>
-                through tarball extraction or by 
-                cloning the <filename>poky</filename> Git repository.  
-                This example uses <filename>poky</filename> as the root directory of the 
-                local Source Directory.
-                See the bulleted item
-                "<link linkend='local-yp-release'>Yocto Project Release</link>"
-                for information on how to get these files.
-            </para>
-
-            <para>
-                Once you have Source Directory set up, 
-                you have many development branches from which you can work. 
-                From inside the local repository you can see the branch names and the tag names used 
-                in the upstream Git repository by using either of the following commands:
-                <literallayout class='monospaced'>
-     $ cd poky
-     $ git branch -a
-     $ git tag -l
-                </literallayout> 
-                This example uses the Yocto Project &DISTRO; Release code named "&DISTRO_NAME;", 
-                which maps to the <filename>&DISTRO_NAME;</filename> branch in the repository. 
-                The following commands create and checkout the local <filename>&DISTRO_NAME;</filename>
-                branch:
-                <literallayout class='monospaced'>
-     $ git checkout -b &DISTRO_NAME; origin/&DISTRO_NAME;
-     Branch &DISTRO_NAME; set up to track remote branch &DISTRO_NAME; from origin.
-     Switched to a new branch '&DISTRO_NAME;'
-                </literallayout>
-            </para>
-        </section>
-
-        <section id='setting-up-the-poky-extras-git-repository'>
-            <title>Setting Up the Local poky-extras Git Repository</title>
-
-            <para>
-                This example creates a local copy of the <filename>poky-extras</filename> Git 
-                repository inside the <filename>poky</filename> Source Directory.
-                See the bulleted item "<link linkend='poky-extras-repo'>The 
-                <filename>poky-extras</filename> Git Repository</link>" 
-                for information on how to set up a local copy of the
-                <filename>poky-extras</filename> repository.
-            </para>
-
-            <para>
-                Because this example uses the Yocto Project &DISTRO; Release code 
-                named "&DISTRO_NAME;", which maps to the <filename>&DISTRO_NAME;</filename> 
-                branch in the repository, you need to be sure you are using that 
-                branch for <filename>poky-extras</filename>.
-                The following commands create and checkout the local 
-                branch you are using for the <filename>&DISTRO_NAME;</filename>
-                branch:
-                <literallayout class='monospaced'>
-     $ cd ~/poky/poky-extras
-     $ git checkout -b &DISTRO_NAME; origin/&DISTRO_NAME;
-     Branch &DISTRO_NAME; set up to track remote branch &DISTRO_NAME; from origin.
-     Switched to a new branch '&DISTRO_NAME;'
-                </literallayout>
-            </para>
-        </section>
-
-        <section id='setting-up-the-bare-clone-and-its-copy'>
-            <title>Setting Up the Bare Clone and its Copy</title>
-
-            <para>
-                This example modifies the <filename>linux-yocto-3.4</filename> kernel.
-                Thus, you need to create a bare clone of that kernel and then make a copy of the 
-                bare clone.
-                See the bulleted item
-                "<link linkend='local-kernel-files'>Yocto Project Kernel</link>" 
-                for information on how to do that.
-            </para>
-
-            <para>
-                The bare clone exists for the kernel build tools and simply as the receiving end 
-                of <filename>git push</filename>
-                commands after you make edits and commits inside the copy of the clone.
-                The copy (<filename>my-linux-yocto-3.4-work</filename> in this example) has to have 
-                a local branch created and checked out for your work.
-                This example uses <filename>common-pc-base</filename> as the local branch.
-                The following commands create and checkout the branch:
-                <literallayout class='monospaced'>
-     $ cd ~/my-linux-yocto-3.4-work
-     $ git checkout -b standard-common-pc-base origin/standard/common-pc/base
-     Branch standard-common-pc-base set up to track remote branch 
-        standard/common-pc/base from origin.
-     Switched to a new branch 'standard-common-pc-base'
-                </literallayout>
-            </para>
-        </section>
-
-        <section id='building-and-booting-the-default-qemu-kernel-image'>
-            <title>Building and Booting the Default QEMU Kernel Image</title>
-
-            <para>
-                Before we make changes to the kernel source files, this example first builds the 
-                default image and then boots it inside the QEMU emulator.
-                <note>
-                    Because a full build can take hours, you should check two variables in the 
-                    <filename>build</filename> directory that is created after you source the 
-                    <filename>&OE_INIT_FILE;</filename> script.
-                    You can find these variables
-                    <filename>BB_NUMBER_THREADS</filename> and <filename>PARALLEL_MAKE</filename>
-                    in the <filename>build/conf</filename> directory in the 
-                    <filename>local.conf</filename> configuration file.
-                    By default, these variables are commented out.
-                    If your host development system supports multi-core and multi-thread capabilities,
-                    you can uncomment these statements and set the variables to significantly shorten
-                    the full build time.
-                    As a guideline, set both <filename>BB_NUMBER_THREADS</filename> and 
-                    <filename>PARALLEL_MAKE</filename> to twice the number 
-                    of cores your machine supports.
-                </note>
-                The following two commands <filename>source</filename> the build environment setup script
-                and build the default <filename>qemux86</filename> image.
-                If necessary, the script creates the build directory:
-                <literallayout class='monospaced'>
-     $ cd ~/poky
-     $ source &OE_INIT_FILE;
-     You had no conf/local.conf file. This configuration file has therefore been
-     created for you with some default values. You may wish to edit it to use a 
-     different MACHINE (target hardware) or enable parallel build options to take 
-     advantage of multiple cores for example. See the file for more information as 
-     common configuration options are commented.
-
-     The Yocto Project has extensive documentation about OE including a reference manual
-     which can be found at:
-         http://yoctoproject.org/documentation
-
-     For more information about OpenEmbedded see their website:
-         http://www.openembedded.org/
-
-     You had no conf/bblayers.conf file. The configuration file has been created for
-     you with some default values. To add additional metadata layers into your
-     configuration please add entries to this file.
-
-     The Yocto Project has extensive documentation about OE including a reference manual
-     which can be found at:
-         http://yoctoproject.org/documentation
-
-     For more information about OpenEmbedded see their website:
-         http://www.openembedded.org/
-
-
-
-     ### Shell environment set up for builds. ###
-
-     You can now run 'bitbake &lt;target&gt;>'
-
-     Common targets are:
-         core-image-minimal
-         core-image-sato
-         meta-toolchain
-         meta-toolchain-sdk
-         adt-installer
-         meta-ide-support
-
-     You can also run generated qemu images with a command like 'runqemu qemux86'
-                </literallayout>
-            </para>
-
-            <para>
-                The following <filename>bitbake</filename> command starts the build:
-                <literallayout class='monospaced'>
-     $ bitbake -k core-image-minimal
-                </literallayout>
-                <note>Be sure to check the settings in the <filename>local.conf</filename>
-                before starting the build.</note>
-            </para>
-
-            <para>  
-                After the build completes, you can start the QEMU emulator using the resulting image
-                <filename>qemux86</filename> as follows:
-                <literallayout class='monospaced'>
-     $ runqemu qemux86
-                </literallayout>
-            </para>
-
-            <para>
-                As the image boots in the emulator, console message and status output appears
-                across the terminal window.
-                Because the output scrolls by quickly, it is difficult to read.
-                To examine the output, you log into the system using the 
-                login <filename>root</filename> with no password.
-                Once you are logged in, issue the following command to scroll through the 
-                console output:
-                <literallayout class='monospaced'>
-     # dmesg | less
-                </literallayout>
-            </para>
-
-            <para>
-                Take note of the output as you will want to look for your inserted print command output
-                later in the example.
-            </para>
-        </section>
 
         <section id='changing-the-source-code-and-pushing-it-to-the-bare-clone'>
             <title>Changing the Source Code and Pushing it to the Bare Clone</title>
@@ -2149,13 +1850,6 @@
             </para>
         </section>
     </section>
-
-
-
-
-
-
-
 
     <section id="usingpoky-changes-updatingimages">
         <title>Updating Existing Images</title>
