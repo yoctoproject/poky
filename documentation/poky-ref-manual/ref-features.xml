@@ -171,6 +171,61 @@
             </itemizedlist>
         </para>
     </section>
+
+    <section id='ref-features-backfill'>
+        <title>Feature Backfilling</title>
+
+        <para>
+            Sometimes, it is necessary for a new feature to be added to control existing
+            functionality that was previously enabled by default and not able to be disabled.
+            In order to ensure that the feature remains enabled for users with existing
+            configurations that upgrade to a new version of the core metadata without that 
+            configuration having to be changed, while still allowing others who want to turn
+            the feature off to do so, the backfilling mechanism was introduced. 
+            This 
+            functionality is available for <filename><link linkend='var-DISTRO_FEATURES'>DISTRO_FEATURES</link></filename>
+            and <filename><link linkend='var-MACHINE_FEATURES'>MACHINE_FEATURES</link></filename>.
+        </para>
+
+        <para>
+            An example is the "pulseaudio" distro feature. 
+            Previously, PulseAudio support
+            was enabled within the Qt and GStreamer frameworks.
+            However some users desired
+            to be able to disable this. 
+            To allow this to be disabled without affecting 
+            existing configurations in which PulseAudio support should remain enabled,
+            "pulseaudio" was added to 
+            <filename><link linkend='var-DISTRO_FEATURES_BACKFILL'>DISTRO_FEATURES_BACKFILL</link></filename>
+            within <filename>meta/conf/bitbake.conf</filename>.
+            This means that "pulseaudio"
+            is automatically added to <filename>DISTRO_FEATURES</filename> without the distro
+            configuration needing to be updated to do so itself.
+            Those who do not want PulseAudio support can add "pulseaudio" to
+            <filename><link linkend='var-DISTRO_FEATURES_BACKFILL_CONSIDERED'>DISTRO_FEATURES_BACKFILL_CONSIDERED</link></filename>
+            in their distro <filename>.conf</filename> file and this will disable adding "pulseaudio" to
+            <filename>DISTRO_FEATURES</filename>.
+        </para>
+
+        <para>
+            Another example is the "rtc" machine feature. 
+            Previously, real time clock (RTC)
+            support was enabled for all target devices.
+            However certain targets do not have
+            this capability. 
+            To allow this to be disabled by such machines without affecting
+            other machines in which RTC support should remain enabled, "rtc" was added to 
+            <filename><link linkend='var-MACHINE_FEATURES_BACKFILL'>MACHINE_FEATURES_BACKFILL</link></filename>
+            within <filename>meta/conf/bitbake.conf</filename>.
+            This means that "rtc"
+            is automatically added to <filename>MACHINE_FEATURES</filename> without the
+            machine configuration needing to be updated to do so itself.
+            For machines that not need RTC support can add "rtc" to
+            <filename><link linkend='var-MACHINE_FEATURES_BACKFILL_CONSIDERED'>MACHINE_FEATURES_BACKFILL_CONSIDERED</link></filename>
+            in their machine <filename>.conf</filename> file and this will disable adding "rtc" to
+            <filename>MACHINE_FEATURES</filename>.
+        </para>
+    </section>
 </chapter>
 
 <!-- 
