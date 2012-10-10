@@ -1605,6 +1605,39 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PACKAGECONFIG'><glossterm>PACKAGECONFIG</glossterm>
+            <glossdef>
+                <para>
+                    This variable provides a means of enabling or disabling features of a recipe
+                    on a per-recipe basis. 
+                    The <filename>PACKAGECONFIG</filename>
+                    variable itself specifies a space-separated list of the features
+                    to enable, while the named flags set on the variable specify
+                    for each feature the additional build dependencies 
+                    (<filename><link linkend='var-DEPENDS'>DEPENDS</link></filename>)
+                    that should be added if the feature is enabled, and any extra arguments
+                    that should be added to the configure script argument list
+                    (<filename><link linkend='var-EXTRA_OECONF'>EXTRA_OECONF</link></filename>)
+                    if the feature is enabled or disabled.
+                </para>
+                <para>
+                    For example, the following taken from the <filename>librsvg</filename>
+                    recipe will add <filename>--with-croco</filename> to the
+                    configure script arguments and <filename>libcroco</filename> to
+                    <filename><link linkend='var-DEPENDS'>DEPENDS</link></filename>
+                    by default.
+                    However, if "croco" is removed from <filename>PACKAGECONFIG</filename>
+                    (for example, by using a <filename>.bbappend</filename> file in another layer), then
+                    <filename>--without-croco</filename> will be added to the configure
+                    script arguments instead:
+                    <literallayout class='monospaced'>
+     PACKAGECONFIG ??= "croco"
+     PACKAGECONFIG[croco] = "--with-croco,--without-croco,libcroco"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PACKAGES'><glossterm>PACKAGES</glossterm>
             <glossdef>
                 <para>The list of packages to be created from the recipe.
