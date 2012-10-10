@@ -1625,30 +1625,77 @@
             messages to appear on the emulator's console.
         </para> 
 
+        <section id='create-a-layer-for-your-changes'>
+            <title>Create a Layer for your Changes</title>
+
+            <para>
+                The first step is to isolate your changes into a layer:
+                <literallayout class='monospaced'>
+     $cd ~/poky
+     $mkdir meta-mylayer
+                </literallayout>
+                Creating a directory that follows the Yocto Project layer naming 
+                conventions sets up the area for your layer.  
+                The layer is where you place your configuration files, append
+                files, and patch files. 
+                To learn more about creating a layer and filling it with the 
+                files you need, see the "<link linkend='understanding-and-creating-layers'>Understanding
+                and Creating Layers</link>" section.                
+            </para>
+        </section>
+
+        <section id='finding-the-kernel-source-code'>
+            <title>Finding the Kernel Source Code</title>
+
+            <para>
+                Each time you build a kernel image, the kernel source code is fetched 
+                and unpacked into a temporary location in the <link linkend='build-directory'>Build Directory</link>.
+                See the "<link linkend='finding-the-temporary-source-code'>Finding the Temporary Source Code</link>" 
+                section for a description of where the OpenEmbedded build system places
+                kernel source files during a build.
+                Following is where machine-specific source code is temporarily stored
+                during the build:
+                <literallayout class='monospaced'>
+     ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
+                </literallayout>
+                Assuming a recent build for the <filename>qemux86</filename> machine 
+                based on the Linux 3.4 kernel, a  
+                <link linkend='source-directory'>Source Directory</link> named <filename>poky</filename>, and
+                the existence of a default <filename>build</filename> directory, the directory that 
+                holds the temporary source code would be here:
+                <literallayout class='monospaced'>
+     ~/poky/build/tmp/work/qemux86-poky-linux/linux-yocto-3.4.11+git1+5bdc...85f-r4.3
+                </literallayout>
+                Within the <filename>linux</filename> directory, you find the source directories.
+            </para>
+
+            <para>
+                For this example, we are going to patch the <filename>init/calibrate.c</filename> file
+                and add some simple console <filename>printk</filename> statements that we can 
+                see when we boot the image using QEMU.
+            </para>
+        </section> 
+
         <section id='creating-the-patch'>
             <title>Creating the Patch</title>
 
             <para>
-                Describe how to find the source files in the build area.  
-                We are not assuming they are using their own kernel tree.
-
-            </para>
-        </section> 
-
-
-        <section id='changing-the-source-code-and-pushing-it-to-the-bare-clone'>
-            <title>Changing the Source Code and Pushing it to the Bare Clone</title>
-
-            <para>
-                The file you change in this example is named <filename>calibrate.c</filename>
-                and is located in the <filename>my-linux-yocto-3.4-work</filename> Git repository
-                (the copy of the bare clone) in <filename>init</filename>.
-                This example simply inserts several <filename>printk</filename> statements
-                at the beginning of the <filename>calibrate_delay</filename> function.
+                Two methods exist by which you can create the patch: Git workflow and Quilt workflow.
+                For kernel patches, the Git workflow is more appropriate. 
+                This section assumes the Git workflow.
             </para>
 
             <para>
-                Here is the unaltered code at the start of this function:
+                To create the patch for the <filename>calibrate.c</filename>, follow the steps
+                outlined in the 
+                "<link linkend='using-a-git-workflow'>Using a Git Workflow</link>" 
+                section.
+                For the steps used to edit the source file, do the following:
+            </para>
+
+            <para>
+                Locate the <filename>void __cpuinit calibrate_delay(void)</filename>
+                function:
                 <literallayout class='monospaced'>
      void __cpuinit calibrate_delay(void)
      {
@@ -1660,12 +1707,11 @@
                .
                .
                .
-               </literallayout>
-           </para>
+                </literallayout>
+            </para>
 
-           <para>
-               Here is the altered code showing five new <filename>printk</filename> statements 
-               near the top of the function:
+            <para>
+                Alter the code as follows:
                 <literallayout class='monospaced'>
      void __cpuinit calibrate_delay(void)
      {
@@ -1683,51 +1729,47 @@
                .
                .
                .
-               </literallayout>
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='get-your-layer-setup-for-the-build'>
+            <title>Get Your Layer Setup for the Build</title>
+
+           <para>
+               At this point, you have a patch file in the same directory as your original 
+               <filename>calibrate.c</filename>.
+               Move it to your layer and place it in a separate folder having the same 
+               name as the recipe, which is <filename>linux-yocto</filename> in this case. 
            </para>
 
            <para>
-               After making and saving your changes, you need to stage them for the push.
-               The following Git commands are one method of staging and committing your changes:
+               Next, you need to set up your <filename>conf</filename> directory in your layer. 
+               Create the <filename>conf</filename> and create the <filename>layer.conf</filename>
+               file. 
+               You can find information on this in the 
+               "<link linkend='creating-your-own-layer'>Creating Your Own Layer</link>" 
+               section. 
+               Here is what your <filename>layer.conf</filename> should look like for this 
+               example:
                <literallayout class='monospaced'>
-     $ git add calibrate.c
-     $ git commit --signoff
-               </literallayout>
-           </para>
+     # We have a conf and classes directory, add to BBPATH
+     BBPATH := "${LAYERDIR}:${BBPATH}"
 
-           <para>
-               Once the source code has been modified, you need to use Git to push the changes to 
-               the bare clone.  
-               If you do not push the changes, then the OpenEmbedded build system will not pick 
-               up the changed source files.
-           </para>
+     # We have a packages directory, add to BBFILES
+     BBFILES := "${BBFILES} ${LAYERDIR}/recipes-*/*/*.bb \
+                 ${LAYERDIR}/recipes-*/*/*.bbappend"
 
-           <para>
-               The following command pushes the changes to the bare clone:
-               <literallayout class='monospaced'>
-     $ git push origin standard-common-pc-base:standard/default/common-pc/base
-               </literallayout>
-           </para>
-       </section>
-
-       <section id='changing-build-parameters-for-your-build'>
-           <title>Changing Build Parameters for Your Build</title>
-
-           <para>
-               At this point, the source has been changed and pushed.
-               The example now defines some variables used by the OpenEmbedded build system 
-               to locate your kernel source.
-               You essentially need to identify where to find the kernel recipe and the changed source code.
-               You also need to be sure some basic configurations are in place that identify the 
-               type of machine you are building and to help speed up the build should your host support
-               multiple-core and thread capabilities.
+     BBFILE_COLLECTIONS += "mylayer"
+     BBFILE_PATTERN_mylayer := "^${LAYERDIR}/"
+     BBFILE_PRIORITY_mylayer = "5"
+               </literallayout> 
            </para>
 
            <para>
                Do the following to make sure the build parameters are set up for the example.
                Once you set up these build parameters, they do not have to change unless you 
-               change the target architecture of the machine you are building or you move
-               the bare clone, copy of the clone, or the <filename>poky-extras</filename> repository:
+               change the target architecture of the machine you are building:
                <itemizedlist>
                    <listitem><para><emphasis>Build for the Correct Target Architecture:</emphasis> The 
                        <filename>local.conf</filename> file in the build directory defines the build's 
@@ -1745,15 +1787,16 @@
                        If the host system has multiple cores then you can optimize build time 
                        by setting both these variables to twice the number of 
                        cores.</para></listitem>
-                   <listitem><para><emphasis>Identify Your <filename>meta-kernel-dev</filename>
+                   <listitem><para><emphasis>Identify Your <filename>meta-mylayer</filename>
                        Layer:</emphasis> The <filename>BBLAYERS</filename> variable in the 
                        <filename>bblayers.conf</filename> file found in the 
                        <filename>poky/build/conf</filename> directory needs to have the path to your local
-                       <filename>meta-kernel-dev</filename> layer.  
+                       <filename>meta-mylayer</filename> layer.  
                        By default, the <filename>BBLAYERS</filename> variable contains paths to  
-                       <filename>meta</filename> and <filename>meta-yocto</filename> in the 
+                       <filename>meta</filename>, <filename>meta-yocto</filename>, and 
+                       <filename>meta-yocto-bsp</filename> in the 
                        <filename>poky</filename> Git repository.
-                       Add the path to your <filename>meta-kernel-dev</filename> location.
+                       Add the path to your <filename>meta-mylayer</filename> location.
                        Be sure to substitute your user information in the statement.
                        Here is an example:
                        <literallayout class='monospaced'>
@@ -1761,43 +1804,27 @@
        /home/scottrif/poky/meta \
        /home/scottrif/poky/meta-yocto \
        /home/scottrif/poky/meta-yocto-bsp \
-       /home/scottrif/poky/poky-extras/meta-kernel-dev \
+       /home/scottrif/poky/meta-mylayer \
        "
                        </literallayout></para></listitem>
-                   <listitem><para><emphasis>Identify Your Source Files:</emphasis> In the 
-                       <filename>linux-yocto_3.4.bbappend</filename> file located in the 
-                       <filename>poky-extras/meta-kernel-dev/recipes-kernel/linux</filename>
-                       directory, you need to identify the location of the 
-                       local source code, which in this example is the bare clone named
-                       <filename>linux-yocto-3.4.git</filename>.
-                       To do this, set the <filename>KSRC_linux_yocto</filename> variable to point to your
-                       local <filename>linux-yocto-3.4.git</filename> Git repository by adding the 
-                       following statement.
-                       Also, be sure the <filename>SRC_URI</filename> variable is pointing to
-                       your kernel source files by removing the comment.
-                       Finally, be sure to substitute your user information in the statement:
+                   <listitem><para><emphasis>Create a bbappend File:</emphasis> You need to have
+                       an append file to the main 3.4 kernel recipe.
+                       Locate the append file in your <filename>meta-mylayer</filename> layer.
+                       It needs to be in a <filename>meta-mylayer/recipes-kernel/linux</filename> directory.
+                       Create the directory and use the following for the append file.
+                       This example assumes patch file is named <filename>0001-documentation-calibrate.c.patch</filename>:
                        <literallayout class='monospaced'>
-     KSRC_linux_yocto_3_4 ?= "/home/scottrif/linux-yocto-3.4.git"
-     SRC_URI = "git://${KSRC_linux_yocto_3_4};protocol=file;nocheckout=1;branch=${KBRANCH},meta;name=machine,meta"
-                       </literallayout></para></listitem>
+     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
+     SRC_URI += "file://0001-documentation-calibrate.c.patch"
+
+     PRINC := "${@int(PRINC) + 1}"                       
+                       </literallayout>
+                       The <filename>FILESEXTRAPATHS</filename> and <filename>SRC_URI</filename>
+                       statements ensure the OpenEmbedded build system picks up the patch file.
+                       </para></listitem>
                </itemizedlist>
            </para>
-
-           <note>
-               <para>Before attempting to build the modified kernel, there is one more set of changes you 
-               need to make in the <filename>meta-kernel-dev</filename> layer.
-               Because all the kernel <filename>.bbappend</filename> files are parsed during the 
-               build process regardless of whether you are using them or not, you should either 
-               comment out the <filename>COMPATIBLE_MACHINE</filename> statements in all 
-               unused <filename>.bbappend</filename> files, or simply remove (or rename) all the files 
-               except the one your are using for the build 
-               (i.e. <filename>linux-yocto_3.4.bbappend</filename> in this example).</para>
-               <para>If you do not make one of these two adjustments, your machine will be compatible
-               with all the kernel recipes in the <filename>meta-kernel-dev</filename> layer. 
-               When your machine is comapatible with all the kernel recipes, the build attempts
-               to build all kernels in the layer.
-               You could end up with build errors blocking your work.</para>
-           </note>            
        </section>
 
         <section id='building-and-booting-the-modified-qemu-kernel-image'>
@@ -1826,7 +1853,7 @@
                         out previous builds.</note></para></listitem>
                     <listitem><para>Next, build the kernel image using this command:
                         <literallayout class='monospaced'>
-     $ bitbake -k core-image-minimal
+     $ bitbake -k linux-yocto
                         </literallayout></para></listitem>
                     <listitem><para>Finally, boot the modified image in the QEMU emulator 
                         using this command:
