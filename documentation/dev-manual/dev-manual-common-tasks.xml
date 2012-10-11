@@ -1623,7 +1623,15 @@
             <filename>calibrate.c</filename> source code file.
             Applying the patch and booting the modified image causes the added 
             messages to appear on the emulator's console.
-        </para> 
+        </para>
+
+        <para>
+            The example assumes a clean build exists for the <filename>x86qemu</filename>
+            machine in a Source Directory named <filename>poky</filename>.
+            Furthermore, the <link linkend='build-directory'>Build Directory</link> is 
+            <filename>build</filename> and is located in <filename>poky</filename> and  
+            the kernel is based on the Linux 3.4 kernel.
+        </para>
 
         <section id='create-a-layer-for-your-changes'>
             <title>Create a Layer for your Changes</title>
@@ -1635,7 +1643,7 @@
      $mkdir meta-mylayer
                 </literallayout>
                 Creating a directory that follows the Yocto Project layer naming 
-                conventions sets up the area for your layer.  
+                conventions sets up the area for your changes.  
                 The layer is where you place your configuration files, append
                 files, and patch files. 
                 To learn more about creating a layer and filling it with the 
@@ -1658,20 +1666,18 @@
                 <literallayout class='monospaced'>
      ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
                 </literallayout>
-                Assuming a recent build for the <filename>qemux86</filename> machine 
-                based on the Linux 3.4 kernel, a  
-                <link linkend='source-directory'>Source Directory</link> named <filename>poky</filename>, and
-                the existence of a default <filename>build</filename> directory, the directory that 
-                holds the temporary source code would be here:
+                For this example, the directory that 
+                holds the temporary source code is here:
                 <literallayout class='monospaced'>
      ~/poky/build/tmp/work/qemux86-poky-linux/linux-yocto-3.4.11+git1+5bdc...85f-r4.3
                 </literallayout>
-                Within the <filename>linux</filename> directory, you find the source directories.
+                Within the <filename>linux</filename> directory, you find directories for 
+                the source.
             </para>
 
             <para>
                 For this example, we are going to patch the <filename>init/calibrate.c</filename> file
-                and add some simple console <filename>printk</filename> statements that we can 
+                by adding some simple console <filename>printk</filename> statements that we can 
                 see when we boot the image using QEMU.
             </para>
         </section> 
@@ -1686,11 +1692,11 @@
             </para>
 
             <para>
-                To create the patch for the <filename>calibrate.c</filename>, follow the steps
-                outlined in the 
+                To create the patch for the <filename>calibrate.c</filename>, follow steps
+                3 through 12 outlined in the 
                 "<link linkend='using-a-git-workflow'>Using a Git Workflow</link>" 
                 section.
-                For the steps used to edit the source file, do the following:
+                For step 6 (Edit the Files), do the following:
             </para>
 
             <para>
@@ -1737,16 +1743,30 @@
             <title>Get Your Layer Setup for the Build</title>
 
            <para>
-               At this point, you have a patch file in the same directory as your original 
-               <filename>calibrate.c</filename>.
-               Move it to your layer and place it in a separate folder having the same 
-               name as the recipe, which is <filename>linux-yocto</filename> in this case. 
+               At this point, you have a patch file in the kernel's source code directory.
+               The patch file is named according to the commit's summary line and ends
+               with <filename>.patch</filename>.
+               For this example, it is named <filename>0001-calibrate.c.patch</filename>.
            </para>
 
            <para>
-               Next, you need to set up your <filename>conf</filename> directory in your layer. 
-               Create the <filename>conf</filename> and create the <filename>layer.conf</filename>
-               file. 
+               You need to move the patch file to your layer next. 
+               The patch file needs to reside in the 
+               <filename>meta-mylayer/recipes-kernel/linux/linux-yocto</filename> directory. 
+               Create this directory path within your layer and move the patch file.
+               This directory path mirrors that used by the main kernel recipe in 
+               the Source Directory (<filename>poky</filename>).
+               <literallayout class='monospaced'>
+     $ cd ~/poky/meta-mylayer
+     $ mkdir recipes-kernel
+     $ mkdir recipes-kernel/linux
+     $ mkdir recipes-kernel/linux/linux-yocto
+               </literallayout> 
+           </para>
+
+           <para>
+               Next, you need to create a <filename>conf</filename> directory in your layer 
+               and within it create the <filename>layer.conf</filename> file. 
                You can find information on this in the 
                "<link linkend='creating-your-own-layer'>Creating Your Own Layer</link>" 
                section. 
@@ -1807,12 +1827,14 @@
        /home/scottrif/poky/meta-mylayer \
        "
                        </literallayout></para></listitem>
-                   <listitem><para><emphasis>Create a bbappend File:</emphasis> You need to have
-                       an append file to the main 3.4 kernel recipe.
-                       Locate the append file in your <filename>meta-mylayer</filename> layer.
-                       It needs to be in a <filename>meta-mylayer/recipes-kernel/linux</filename> directory.
-                       Create the directory and use the following for the append file.
-                       This example assumes patch file is named <filename>0001-documentation-calibrate.c.patch</filename>:
+                   <listitem><para><emphasis>Create a bbappend File:</emphasis> You need to create
+                       an append file for the main 3.4 kernel recipe.
+                       Create the append file in the <filename>linux</filename> directory you  
+                       created earlier within your layer. 
+                       Assuming the patch file is named 
+                       <filename>0001-documentation-calibrate.c.patch</filename>, your append
+                       file, which must be named <filename>linux-yocto_3.4.bbappend</filename>,
+                       has these statements:
                        <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
