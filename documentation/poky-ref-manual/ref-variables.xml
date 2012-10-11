@@ -200,14 +200,14 @@
         <glossentry id='var-BBFILE_PRIORITY'><glossterm>BBFILE_PRIORITY</glossterm>
             <glossdef>
                 <para>Assigns the priority for recipe files in each layer.</para>
-                <para>This variable is useful in situations where the same package appears in
+                <para>This variable is useful in situations where the same recipe appears in
                     more than one layer. 
                     Setting this variable allows you to prioritize a
-                    layer against other layers that contain the same package - effectively
+                    layer against other layers that contain the same recipe - effectively
                     letting you control the precedence for the multiple layers. 
                     The precedence established through this variable stands regardless of a
-                    layer's package version (<filename>PV</filename> variable). 
-                    For example, a layer that has a package with a higher <filename>PV</filename> value but for 
+                    recipe's version (<filename>PV</filename> variable). 
+                    For example, a layer that has a recipe with a higher <filename>PV</filename> value but for 
                     which the <filename>BBFILE_PRIORITY</filename> is set to have a lower precedence still has a 
                     lower precedence.</para>
                 <para>A larger value for the <filename>BBFILE_PRIORITY</filename> variable results in a higher
@@ -269,7 +269,7 @@
         <glossentry id='var-BP'><glossterm>BP</glossterm>
             <glossdef>
                 <para>The base recipe name and version but without any special 
-                    package name suffix (i.e. <filename>-native</filename>, <filename>lib64-</filename>,
+                    recipe name suffix (i.e. <filename>-native</filename>, <filename>lib64-</filename>,
                     and so forth).
                     <filename>BP</filename> is comprised of the following:
                     <literallayout class="monospaced">
@@ -837,7 +837,8 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
 
         <glossentry id='var-HOMEPAGE'><glossterm>HOMEPAGE</glossterm>
             <glossdef>
-                <para>Website where more info about package can be found</para>
+                <para>Website where more information about the software the recipe is building
+                    can be found.</para>
             </glossdef>
         </glossentry>
 
@@ -2420,7 +2421,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     The pathname of the working directory in which the OpenEmbedded build system  
-                    builds packages.
+                    builds a recipe.
                     This directory is located within the
                     <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link> directory structure and changes
                     as different packages are built.
@@ -2433,9 +2434,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                         <listitem>The package architecture - <link linkend='var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></link></listitem>
                         <listitem>The target machine - <link linkend='var-MACHINE'><filename>MACHINE</filename></link></listitem>
                         <listitem>The target operating system - <link linkend='var-TARGET_OS'><filename>TARGET_OS</filename></link></listitem>
-                        <listitem>The package name - <link linkend='var-PN'><filename>PN</filename></link></listitem>
-                        <listitem>The package version - <link linkend='var-PV'><filename>PV</filename></link></listitem>
-                        <listitem>The package revision - <link linkend='var-PR'><filename>PR</filename></link></listitem>
+                        <listitem>The recipe name - <link linkend='var-PN'><filename>PN</filename></link></listitem>
+                        <listitem>The recipe version - <link linkend='var-PV'><filename>PV</filename></link></listitem>
+                        <listitem>The recipe revision - <link linkend='var-PR'><filename>PR</filename></link></listitem>
                     </itemizedlist>
                 </para>
 
@@ -2467,7 +2468,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     named <filename>poky</filename> and a default build directory 
                     at <filename>poky/build</filename>.
                     In this case, the working directory the build system uses to build
-                    the <filename>acl</filename> package, which is dependent on a 
+                    the <filename>acl</filename> recipe, which is being built for a 
                     MIPS-based device, is the following:
                     <literallayout class='monospaced'>
      ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2
