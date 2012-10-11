@@ -173,7 +173,7 @@
                         deficiency in the include file in the layer to which it originally belongs.
                         If this is the case, you need to address that deficiency instead of overlaying
                         the include file.
-                        For example, consider how Qt 4 database support plugins are configured.
+                        For example, consider how Qt 4 database support plug-ins are configured.
                         The source directory does not have 
                         MySQL or PostgreSQL, however OpenEmbedded's
                         layer <filename>meta-oe</filename> does.
@@ -1848,7 +1848,7 @@
      $ bitbake -c cleanall linux-yocto
                         </literallayout></para>
                         <para><note>Never remove any files by hand from the <filename>tmp/deploy</filename>
-                        directory insided the build directory.
+                        directory inside the build directory.
                         Always use the BitBake <filename>cleanall</filename> task to clear
                         out previous builds.</note></para></listitem>
                     <listitem><para>Next, build the kernel image using this command:
@@ -2593,6 +2593,214 @@
                     If necessary, the archive is converted.
                 </para>
             </section>
+        </section>
+    </section>
+
+    <section id='maintaining-open-source-license-compliance-during-your-products-lifecycle'>
+        <title>Maintaining Open Source License Compliance During Your Product's Lifecycle</title>
+
+        <para>
+            One of the concerns for a development organization using open source
+            software is how to maintain compliance with various open source
+            licensing during the lifecycle of the product.
+            While this section is not meant to be legal advice or to 
+            comprehensively cover all scenarios, it is meant to 
+            present methods that you can use to 
+            meet the compliance requirements during a software
+            release.
+        </para>
+
+        <para>
+            With hundreds of different open source licenses that the Yocto 
+            Project tracks, it is difficult to know the requirements of each 
+            and every license.
+            However, we can cover the requirements of all of the known licenses, by
+            assuming that there there are three main areas of concern:
+            <itemizedlist>
+                <listitem><para>Source code must be provided.</para></listitem>
+                <listitem><para>License text for the software must be 
+                    provided.</para></listitem>
+                <listitem><para>Compilation scripts and modifications to the 
+                    source code must be provided.
+                    </para></listitem>
+            </itemizedlist>
+            There are other requirements beyond the scope of these
+            three and the methods described in this section 
+            (e.g. the mechanism through which source code is distributed).
+        </para>
+
+        <para>
+            The remainder of this section describes methods supported to meet the
+            previously mentioned three requirements.
+            Once you take steps to meet these requirements, 
+            and prior to releasing images, sources, and the build system,
+            you should audit all artifacts to ensure completeness.
+            The Yocto Project generates a license manifest during 
+            image creation that is located 
+            in <filename>${DEPLOY_DIR}/licenses/&lt;image_name-datestamp&gt;</filename>
+            to assist with any audits.
+        </para>
+
+        <section id='providing-the-source-code'>
+            <title>Providing the Source Code</title>
+
+            <para>
+                Compliance needs to begin when you generate the 
+                final image. 
+                The first thing you should look at is the requirement that
+                tops the list for most compliance groups - providing
+                the source.
+                The Yocto Project has a few ways of meeting this
+                requirement. 
+            </para>
+
+            <para>
+                One of the easiest ways to meet this requirement is
+                to provide the entire 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink>
+                used by the build. 
+                This method, however, has a few issues.
+                The most obvious is the size of the directory since it includes
+                all sources used in teh build and not just the ones to be released. 
+                But, the more serious issue for most companies is accidental 
+                release of proprietary software. 
+                The Yocto Project provides an archiver class to help.
+            </para>
+
+            <para>
+                Before you employ <filename>DL_DIR</filename> or the 
+                archiver class, you need to decide how you choose to
+                provide source. 
+                The source archiver class can generate tarballs 
+                and SRPMs and can create them with various levels of compliance. 
+                One way of doing this is to release just the original source 
+                as a tarball.
+                You can do this by adding the following to the 
+                <filename>local.conf</filename> file found in the 
+                <link linkend='build-directory'>Build Directory</link>:
+                <literallayout class='monospaced'>
+     ARCHIVER_MODE ?= "original"
+     ARCHIVER_CLASS = "${@'archive-${ARCHIVER_MODE}-source' if
+     ARCHIVER_MODE != 'none' else ''}"
+     INHERIT += "${ARCHIVER_CLASS}"
+     SOURCE_ARCHIVE_PACKAGE_TYPE = "tar"
+                </literallayout>
+                During the creation of your image, all needed source 
+                is placed within subdirectories of 
+                <filename>DEPLOY_DIR/sources</filename> based on the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE'><filename>LICENSE</filename></ulink>
+                for each recipe. 
+                Releasing an entire directory ensures compliance.
+                It is important to note that the size of the directory can
+                get large. 
+            </para>
+
+            <para>
+                A way to help mitigate the size issue is to only release
+                tarballs for licenses that require the release of
+                source. 
+                Let's assume you are only concerned with GPL code as 
+                identified with the following:
+                <literallayout class='monospaced'>
+     $ cd poky/build/tmp/deploy/sources
+     $ mkdir ~/gpl_source_release
+     $ for x in `ls|grep GPL`; do cp -R $x/* ~/gpl_source_release; done
+                </literallayout>
+                At this point, you could create a tarball from the 
+                <filename>gpl_source_release</filename> directory and
+                provide that to the end user.
+                This method achieves full source compliance for GPL.
+            </para>
+        </section>
+
+        <section id='providing-license-text'>
+            <title>Providing License Text</title>
+
+            <para>
+                One requirement that is often overlooked is inclusion 
+                of license text.
+                This requirement also needs to be dealt with prior to 
+                generating the final image.
+                Some licenses require the license text to accompany
+                the binary. 
+                You can achieve this by adding the following to your
+                <filename>local.conf</filename> file:
+                <literallayout class='monospaced'>
+     COPY_LIC_MANIFEST = "1"
+     COPY_LIC_DIRS = "1"
+                </literallayout>
+                Adding these statements to the configuration file ensures
+                that the licenses collected during package generation
+                are included on your image.
+            </para>
+        </section>
+
+        <section id='providing-compilation-scripts-and-source-code-modifications'>
+            <title>Providing Compilation Scripts and Source Code Modifications</title>
+
+            <para>
+                At this point, we have addressed all we need to address 
+                prior to generating the image.
+                The next two requirements are addressed during the final
+                packaging of the release.
+            </para>
+
+            <para>
+                Providing compilation scripts and source code modifications
+                can be addressed with one step.
+                All you need to do is ensure that you release the version of 
+                the OpenEmbedded build system and the layers used during the build.
+            </para>
+
+            <para>
+                If the deployment team has a 
+                <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP layer</ulink>
+                and a distro layer, and those those layers are used to patch, 
+                compile, package, or modify (in any way) any open source 
+                software included in your released images, you
+                must release those layers. 
+                One way of doing that is with a clean
+                checkout of the version of the Yocto Project and layers used 
+                during your build.
+                Here is an example:
+                <literallayout class='monospaced'>
+     # We built using the &DISTRO_NAME; branch of the poky repo
+     $ git clone -b &DISTRO_NAME; git://git.yoctoproject.org/poky
+     $ cd poky
+     # We built using the release_branch for our layers
+     $ git clone -b release_branch git://git.mycompany.com/meta-my-bsp-layer
+     $ git clone -b release_branch git://git.mycompany.com/meta-my-software-layer
+     # clean up the .git repos
+     $ find . -name ".git" -type d -exec rm -rf {} \;
+                </literallayout>
+                One thing a development organization might want to consider 
+                for end-user convenience is to modify 
+                <filename>meta-yocto/conf/bblayers.conf.sample</filename> to
+                ensure that when the end user utilizes the released build 
+                system to build an image, the development organization's 
+                layers are included in the <filename>bblayers.conf</filename>
+                file automatically:
+                <literallayout class='monospaced'>
+     # LAYER_CONF_VERSION is increased each time build/conf/bblayers.conf
+     # changes incompatibly
+     LCONF_VERSION = "6"
+
+     BBPATH = "${TOPDIR}"
+     BBFILES ?= ""
+
+     BBLAYERS ?= " \
+       ##COREBASE##/meta \
+       ##COREBASE##/meta-yocto \
+       ##COREBASE##/meta-yocto-bsp \
+       ##COREBASE##/meta-my-bsp-layer \
+       ##COREBASE##/meta-my-software-layer \
+       "
+                </literallayout>
+                Creating a tarball from the top-level 
+                <link linkend='source-directory'>Source Directory</link>
+                (e.g. <filename>poky</filename>) at this point ensures
+                that you include the scripts and the modifications.
+            </para>
         </section>
     </section>
 </chapter>
