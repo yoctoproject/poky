@@ -2636,8 +2636,8 @@
             With hundreds of different open source licenses that the Yocto 
             Project tracks, it is difficult to know the requirements of each 
             and every license.
-            However, we can cover the requirements of all of the known licenses, by
-            assuming that there there are three main areas of concern:
+            However, we can begin to cover the requirements of the major FLOSS licenses, by
+            assuming that there are three main areas of concern:
             <itemizedlist>
                 <listitem><para>Source code must be provided.</para></listitem>
                 <listitem><para>License text for the software must be 
@@ -2649,6 +2649,10 @@
             There are other requirements beyond the scope of these
             three and the methods described in this section 
             (e.g. the mechanism through which source code is distributed).
+            As different organizations have different methods of complying with 
+            open source licensing, this section is not meant to imply that 
+            there is only one single way to meet your compliance obligations, 
+            but rather to describe one method of achieving compliance.
         </para>
 
         <para>
@@ -2667,7 +2671,7 @@
             <title>Providing the Source Code</title>
 
             <para>
-                Compliance needs to begin when you generate the 
+                Compliance activities should begin before you generate the 
                 final image. 
                 The first thing you should look at is the requirement that
                 tops the list for most compliance groups - providing
@@ -2683,20 +2687,24 @@
                 used by the build. 
                 This method, however, has a few issues.
                 The most obvious is the size of the directory since it includes
-                all sources used in teh build and not just the ones to be released. 
+                all sources used in the build and not just the source used in 
+                the released image. 
+                It will include toolchain source, and other artifacts which 
+                you would not generally release. 
                 But, the more serious issue for most companies is accidental 
                 release of proprietary software. 
-                The Yocto Project provides an archiver class to help.
+                The Yocto Project provides an archiver class to help avoid
+                some of these concerns.
             </para>
 
             <para>
                 Before you employ <filename>DL_DIR</filename> or the 
                 archiver class, you need to decide how you choose to
                 provide source. 
-                The source archiver class can generate tarballs 
-                and SRPMs and can create them with various levels of compliance. 
-                One way of doing this is to release just the original source 
-                as a tarball.
+                The source archiver class can generate tarballs and SRPMs 
+                and can create them with various levels of compliance in mind. 
+                One way of doing this (but certainly not the only way) is to 
+                release just the original source as a tarball.
                 You can do this by adding the following to the 
                 <filename>local.conf</filename> file found in the 
                 <link linkend='build-directory'>Build Directory</link>:
@@ -2712,7 +2720,8 @@
                 <filename>DEPLOY_DIR/sources</filename> based on the 
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE'><filename>LICENSE</filename></ulink>
                 for each recipe. 
-                Releasing an entire directory ensures compliance.
+                Releasing the entire directory ensures compliance with 
+                requirements concerning providing the unmodified source.
                 It is important to note that the size of the directory can
                 get large. 
             </para>
@@ -2731,7 +2740,8 @@
                 At this point, you could create a tarball from the 
                 <filename>gpl_source_release</filename> directory and
                 provide that to the end user.
-                This method achieves full source compliance for GPL.
+                This method would be a step toward achieving compliance 
+                with section 3a of GPLv2 and with section 6 of GPLv3.
             </para>
         </section>
 
@@ -2754,6 +2764,11 @@
                 Adding these statements to the configuration file ensures
                 that the licenses collected during package generation
                 are included on your image.
+                As the source archiver has already archived the original 
+                unmodified source which would contain the license files, 
+                you would have already met the requirements for inclusion 
+                of the license information with source as defined by the GPL 
+                and other open source licenses.
             </para>
         </section>
 
@@ -2780,7 +2795,8 @@
                 and a distro layer, and those those layers are used to patch, 
                 compile, package, or modify (in any way) any open source 
                 software included in your released images, you
-                must release those layers. 
+                must release those layers as required by section 3 of GPLv2 
+                and section 1 of GPLv3. 
                 One way of doing that is with a clean
                 checkout of the version of the Yocto Project and layers used 
                 during your build.
@@ -2818,10 +2834,11 @@
        ##COREBASE##/meta-my-software-layer \
        "
                 </literallayout>
-                Creating a tarball from the top-level 
-                <link linkend='source-directory'>Source Directory</link>
-                (e.g. <filename>poky</filename>) at this point ensures
-                that you include the scripts and the modifications.
+                Creating and providing an archive of the 
+                <link linkend='source-directory'>Source Directory</link> 
+                (e.g. <filename>poky</filename>) ensures that you have met your 
+                requirements to include the scripts to control compilation 
+                as well as any modifications to the original source.
             </para>
         </section>
     </section>
