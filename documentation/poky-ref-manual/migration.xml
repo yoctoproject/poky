@@ -1,0 +1,235 @@
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
+
+<chapter id='migration'>
+<title>Migrating to a Newer Yocto Project Release</title>
+
+    <para>
+        This chapter provides information you can use to migrate work to a 
+        newer Yocto Project release.  You can find the same information in the 
+        release notes for a given release.
+    </para>
+
+<section id='moving-to-the-yocto-project-1.3-release'>
+    <title>Moving to the Yocto Project 1.3 Release</title>
+
+    <para>
+        This section provides migration information for moving to the 
+        Yocto Project 1.3 Release.
+    </para>
+
+    <section id='1.3-local-configuration'>
+        <title>Local Configuration</title>
+
+        <para>
+            Differences include changes for 
+            <link linkend='var-SSTATE_MIRRORS'><filename>SSTATE_MIRRORS</filename></link>
+            and <filename>bblayers.conf</filename>.
+        </para>
+
+        <section id='migration-1.3-sstate-mirrors'>
+            <title>SSTATE_MIRRORS</title>
+
+            <para>
+                The shared state cache (sstate-cache) as pointed to by 
+                <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link> by default 
+                now has two-character subdirectories to prevent there being an issue with too 
+                many files in the same directory.
+                Also, native sstate-cache packages will go into a subdirectory named using 
+                the distro ID string. 
+                If you copy the newly structured sstate-cache to a mirror location 
+                (either local or remote) and then point to it in 
+                <link linkend='var-SSTATE_MIRRORS'><filename>SSTATE_MIRRORS</filename></link>,
+                you need to append "PATH" to the end of the mirror URL so that 
+                the path used by BitBake before the mirror substitution is 
+                appended to the path used to access the mirror. 
+                Here is an example:
+                <literallayout class='monospaced'>
+     SSTATE_MIRRORS = "file://.* http://someserver.tld/share/sstate/PATH"
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='migration-1.3-bblayers-conf'>
+            <title>bblayers.conf</title>
+
+            <para>
+                The <filename>meta-yocto</filename> layer has been split into 
+                two parts: <filename>meta-yocto</filename> and 
+                <filename>meta-yocto-bsp</filename>, corresponding to the 
+                Poky reference distro configuration and the reference
+                hardware Board Support Packages (BSPs), respectively. 
+                When running BitBake or Hob for the first time after upgrading, 
+                your <filename>conf/bblayers.conf</filename> file will be 
+                updated to handle this change and you will be asked to 
+                re-run/restart for the changes to take effect.
+            </para>
+        </section>
+    </section>
+
+    <section id='1.3-recipes'>
+        <title>Recipes</title>
+
+        <para>
+            Differences include changes for the following:
+            <itemizedlist>
+                <listitem><para>Python function whitespace</para></listitem>
+                <listitem><para><filename>proto=</filename> in <filename>SRC_URI</filename></para></listitem>
+                <listitem><para><filename>nativesdk</filename></para></listitem>
+                <listitem><para>Task recipes</para></listitem>
+                <listitem><para><filename>IMAGE_FEATURES</filename></para></listitem>
+                <listitem><para>Removed recipes</para></listitem>
+            </itemizedlist>
+        </para>
+
+        <section id='migration-1.3-python-function-whitespace'>
+            <title>Python Function Whitespace</title>
+
+            <para>
+                All Python functions must now use four spaces for indentation. 
+                Previously, an inconsistent mix of spaces and tabs existed,
+                which made extending these functions using 
+                <filename>_append</filename> or <filename>_prepend</filename>
+                complicated given that Python treats whitespace as 
+                syntactically significant. 
+                If you are defining or extending any Python functions (e.g.
+                <filename>populate_packages</filename>, <filename>do_unpack</filename>,
+                <filename>do_patch</filename> and so forth) in custom recipes
+                or classes, you need to ensure you are using consistent 
+                four-space indentation.
+            </para>
+        </section>
+
+        <section id='migration-1.3-proto=-in-src-uri'>
+            <title>proto= in SRC_URI</title>
+
+            <para>
+                Any use of <filename>proto=</filename> in 
+                <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
+                needs to be changed to <filename>protocol=</filename>.
+                In particular, this applies to the following URIs:
+                <itemizedlist>
+                    <listitem><para><filename>svn://</filename></para></listitem>
+                    <listitem><para><filename>bzr://</filename></para></listitem>
+                    <listitem><para><filename>hg://</filename></para></listitem>
+                    <listitem><para><filename>osc://</filename></para></listitem>
+                </itemizedlist>
+                Other URIs were already using <filename>protocol=</filename>.
+                This change improves consistency.
+            </para>
+        </section>
+
+        <section id='migration-1.3-nativesdk'>
+            <title>nativesdk</title>
+
+            <para>
+                The suffix <filename>nativesdk</filename> is now implemented
+                as a prefix, which simplifies a lot of the packaging code for 
+                <filename>nativesdk</filename> recipes. 
+                All custom <filename>nativesdk</filename> recipes and any 
+                references need to be updated to use 
+                <filename>nativesdk-*</filename> instead of 
+                <filename>*-nativesdk</filename>.
+            </para>
+        </section>
+
+        <section id='migration-1.3-task-recipes'>
+            <title>Task Recipes</title>
+
+            <para>
+                "Task" recipes are now known as "Package groups" and have 
+                been renamed from <filename>task-*.bb</filename> to 
+                <filename>packagegroup-*.bb</filename>. 
+                Existing references to the previous <filename>task-*</filename>
+                names should work in most cases as there is an automatic 
+                upgrade path for most packages.
+                However, you should update references in your own recipes and 
+                configurations as they could be removed in future releases. 
+                You should also rename any custom <filename>task-*</filename>
+                recipes to <filename>packagegroup-*</filename>, and change 
+                them to inherit <filename>packagegroup</filename> instead of 
+                <filename>task</filename>, as well as taking the opportunity 
+                to remove anything now handled by 
+                <filename>packagegroup.bbclass</filename>, such as providing
+                <filename>-dev</filename> and <filename>-dbg</filename>
+                packages, setting 
+                <link linkend='var-LIC_FILES_CHKSUM'><filename>LIC_FILES_CHKSUM</filename></link>, 
+                and so forth.
+                See the 
+                "<link linkend='ref-classes-packagegroup'>Package Groups - packagegroup.bbclass</link>"
+                section for further details.
+            </para>
+        </section>
+
+        <section id='migration-1.3-image-features'>
+            <title>IMAGE_FEATURES</title>
+
+            <para>
+                Image recipes that previously included "apps-console-core" 
+                in <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>
+                should now include "splash" instead to enable the boot-up 
+                splash screen.
+                Retaining "apps-console-core" will still include the splash 
+                screen generates a warning.
+                The "apps-x11-core" and "apps-x11-games" 
+                <filename>IMAGE_FEATURES</filename> features have been removed.
+            </para>
+        </section>
+
+        <section id='migration-1.3-removed-recipes'>
+            <title>Removed Recipes</title>
+
+            <para>
+                The following recipes have been removed. 
+                For most of them, it is unlikely that you would have any 
+                references to them in your own metadata.
+                However, you should check your metadata against this list to be sure:
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>libx11-trim</filename></emphasis>: 
+                        Replaced by <filename>libx11</filename>, which has a negligible 
+                        size difference as compared with modern Xorg.</para></listitem>
+                    <listitem><para><emphasis><filename>xserver-xorg-lite</filename></emphasis>: 
+                        Use <filename>xserver-xorg</filename>, which has a negligible 
+                        size difference when DRI and GLX modules are not installed.</para></listitem>
+                    <listitem><para><emphasis><filename>xserver-kdrive</filename></emphasis>: 
+                        Effectively unmaintained for many years.</para></listitem>
+                    <listitem><para><emphasis><filename>mesa-xlib</filename></emphasis>: 
+                        No longer serves any purpose.</para></listitem>
+                    <listitem><para><emphasis><filename>galago</filename></emphasis>: 
+                        Replaced by telepathy.</para></listitem>
+                    <listitem><para><emphasis><filename>gail</filename></emphasis>: 
+                        Functionality was integrated into GTK+ 2.13.</para></listitem>
+                    <listitem><para><emphasis><filename>eggdbus</filename></emphasis>: 
+                        No longer needed.</para></listitem>
+                    <listitem><para><emphasis><filename>gcc-*-intermediate</filename></emphasis>: 
+                        The build has been restructured to avoid the need for 
+                        this step.</para></listitem>
+                    <listitem><para><emphasis><filename>libgsmd</filename></emphasis>: 
+                        Unmaintained for many years and now provided by 
+                        <filename>ofono</filename> instead.</para></listitem>
+                    <listitem><para><emphasis>contacts, dates, tasks, eds-tools</emphasis>: 
+                        Largely unmaintained PIM application suite.
+                        It has been moved to <filename>meta-gnome</filename>
+                        in <filename>meta-openembedded</filename>.</para></listitem>
+                </itemizedlist>
+                In addition to the previously listed changes, the 
+                <filename>meta-demoapps</filename> directory has also been removed
+                because the recipes in it were not being maintained and many 
+                had become obsolete or broken.
+                Additionally, these recipes were not parsed in the default configuration.
+                Many of these recipes are already provided in an updated and 
+                maintained form within OpenEmbedded community layers such as 
+                <filename>meta-oe</filename> and <filename>meta-gnome</filename>.
+                For the remainder, you can now find them in the 
+                <filename>meta-extras</filename> repository in the 
+                Yocto Project source repositories at 
+                <ulink url='http://git.yoctoproject.org'></ulink>.
+            </para>
+        </section>        
+    </section>
+</section>
+</chapter>
+<!-- 
+vim: expandtab tw=80 ts=4 
+-->
