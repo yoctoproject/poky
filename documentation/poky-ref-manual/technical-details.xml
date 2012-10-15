@@ -442,14 +442,24 @@
 
         <para>
             Behind the scenes, the shared state code works by looking in 
-            <filename>SSTATE_DIR</filename> and  
-            <filename>SSTATE_MIRRORS</filename> for shared state files. 
+            <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link> and  
+            <link linkend='var-SSTATE_MIRRORS'><filename>SSTATE_MIRRORS</filename></link>
+            for shared state files. 
             Here is an example:
             <literallayout class='monospaced'>
      SSTATE_MIRRORS ?= "\
-     file://.* http://someserver.tld/share/sstate/ \n \
-     file://.* file:///some/local/dir/sstate/"
+     file://.* http://someserver.tld/share/sstate/PATH \n \
+     file://.* file:///some/local/dir/sstate/PATH"
             </literallayout>
+            <note> 
+                The shared state directory (<filename>SSTATE_DIR</filename>) is 
+                organized into two-character subdirectories, where the subdirectory 
+                names are based on the first two characters of the hash.
+                If the shared state directory structure for a mirror has the 
+                same structure as <filename>SSTATE_DIR</filename>, you must
+                specify "PATH" as part of the URI to enable the build system
+                to map to the appropriate subdirectory.
+            </note>
         </para>
 
         <para>
