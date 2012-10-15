@@ -2242,6 +2242,43 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-SSTATE_MIRRORS'><glossterm>SSTATE_MIRRORS</glossterm>
+            <glossdef>
+                <para>
+                    Configures the OpenEmbedded build system to search other 
+                    mirror locations for prebuilt cache data objects before 
+                    building out the data.
+                    This variable works like fetcher 
+                    <filename>MIRRORS</filename>/<filename>PREMIRRORS</filename>
+                    and points to the cache locations to check for the shared 
+                    objects.
+                </para>
+
+                <para>
+                    You can specify a filesystem directory or a remote URL such 
+                    as HTTP or FTP.
+                    The locations you specify need to contain the shared state
+                    cache (sstate-cache) results from previous builds.
+                    The sstate-cache you point to can also be from builds on 
+                    other machines. 
+                </para>
+
+                <para>
+                    If a mirror uses the same structure as 
+                    <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link>, 
+                    you need to add 
+                    "PATH" at the end as shown in the examples below. 
+                    The build system substitues the correct path within the 
+                    directory structure.
+                    <literallayout class='monospaced'>
+     SSTATE_MIRRORS ?= "\
+     file://.* http://someserver.tld/share/sstate/PATH \n \
+     file://.* file:///some/local/dir/sstate/PATH"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-STAGING_KERNEL_DIR'><glossterm>STAGING_KERNEL_DIR</glossterm>
             <glossdef>
                 <para>
