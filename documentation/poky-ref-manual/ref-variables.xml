@@ -592,6 +592,24 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-EXTENDPE'><glossterm>EXTENDPE</glossterm>
+            <glossdef>
+                <para>
+                    Used with file and pathnames to create a prefix for a recipe's
+                    version based on the recipe's 
+                    <link linkend='var-PE'><filename>PE</filename></link> value.
+                    If <filename>PE</filename> is set and greater than zero for a recipe,
+                    <filename>EXTENDPE</filename> becomes that value (e.g if 
+                    <filename>PE</filename> is equal to "1" then <filename>EXTENDPE</filename>
+                    becomes "1_").  
+                    If a recipe's <filename>PE</filename> is not set (the default) or is equal to 
+                    zero, <filename>EXTENDPE</filename> becomes "".</para>
+                    <para>See the <link linkend='var-STAMP'><filename>STAMP</filename></link> 
+                    variable for an example.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-EXTRA_IMAGE_FEATURES'><glossterm>EXTRA_IMAGE_FEATURES</glossterm>
             <glossdef>
                 <para>Allows extra packages to be added to the generated images.
@@ -1609,6 +1627,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
             </glossdef>
         </glossentry>
+
+        <glossentry id='var-MULTIMACH_TARGET_SYS'><glossterm>MULTIMACH_TARGET_SYS</glossterm>
+            <glossdef>
+                <para>
+                    Used to separate files for different machines such that you can build
+                    for multiple target machines using the same output directories.
+                    See the <link linkend='var-STAMP'><filename>STAMP</filename></link> variable
+                    for an example.
+                </para>
+            </glossdef>
+        </glossentry>
+
     </glossdiv>
 
 <!--            <glossdiv id='var-glossary-n'><title>N</title>-->
@@ -2290,8 +2320,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-STAMP'><glossterm>STAMP</glossterm>
             <glossdef>
                 <para>
-                    The directory (usually <filename>TMPDIR/stamps</filename>) with timestamps of
-                    executed tasks.
+                    Specifies the main part of the pathname and filename for stamp
+                    files for a particular recipe.
+                    <filename>STAMP</filename> is more than just the directory.
+                    <literallayout class='monospaced'>
+     STAMP = "${TMPDIR}/stamps/${MULTIMACH_TARGET_SYS}/${PN}-${EXTENDPE}${PV}-${PR}"
+                    </literallayout>
+                    See <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>, 
+                    <link linkend='var-MULTIMACH_TARGET_SYS'><filename>MULTIMACH_TARGET_SYS</filename></link>,
+                    <link linkend='var-PN'><filename>PN</filename></link>,
+                    <link linkend='var-EXTENDPE'><filename>EXTENDPE</filename></link>,
+                    <link linkend='var-PV'><filename>PV</filename></link>, and
+                    <link linkend='var-PR'><filename>PR</filename></link> for related variable
+                    information.
                 </para>
             </glossdef>
         </glossentry>
