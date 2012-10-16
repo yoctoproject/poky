@@ -1620,6 +1620,9 @@
             Furthermore, the <link linkend='build-directory'>Build Directory</link> is 
             <filename>build</filename> and is located in <filename>poky</filename> and  
             the kernel is based on the Linux 3.4 kernel.
+            For general information on how to configure the most efficient build, see the 
+            "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>" section
+            in the Yocto Project Quick Start.
         </para>
 
         <section id='create-a-layer-for-your-changes'>
@@ -1654,11 +1657,6 @@
                 section and the 
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink> variable
                 for more information about where source is kept during a build.
-                For this example, the directory that 
-                holds the temporary source code is here:
-                <literallayout class='monospaced'>
-     ~/poky/build/tmp/work/qemux86-poky-linux/linux-yocto-3.4.11+git1+5bdc...85f-r4.3/linux
-                </literallayout>
             </para>
 
             <para>
@@ -1693,6 +1691,9 @@
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink> variables
                             represent the version and revision for the 
                             <filename>linux-yocto</filename> recipe.
+                            The <filename>PV</filename> variable includes the Git meta and machine
+                            hashes, which make the directory name longer than you might
+                            expect.
                         </note></para></listitem>
                     <listitem><para><emphasis>Edit the source file</emphasis>:
                         Edit the <filename>init/calibrate.c</filename> file to have the 
@@ -1717,20 +1718,19 @@
                         </literallayout></para></listitem>
                     <listitem><para><emphasis>Stage and commit your changes</emphasis>:
                         These Git commands list out the changed file, stage it, and then 
-                        commit the files:
+                        commit the file:
                         <literallayout class='monospaced'>
      $ git status
      $ git add init/calibrate.c
-     $ git commit
+     $ git commit -m "calibrate: Add printk example"
                         </literallayout></para></listitem>
                     <listitem><para><emphasis>Generate the patch file</emphasis>:
                         This Git command creates the a patch file named
-                        <filename>0001-calibrate.c.patch</filename> in the current directory.
+                        <filename>0001-calibrate: Add printk example.patch</filename> 
+                        in the current directory.
                         <literallayout class='monospaced'>
      $ git format-patch HEAD~1
                         </literallayout>
-                        <note>The name of the patch file is based on your commit summary
-                            line.</note>
                         </para></listitem>
                 </orderedlist>
             </para>
@@ -1776,7 +1776,7 @@
                         <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-     SRC_URI += "file://0001-calibrate.c.patch"
+     SRC_URI += "file://0001-calibrate: Add printk example.patch"
 
      PRINC := "${@int(PRINC) + 1}"                       
                         </literallayout>
@@ -1784,7 +1784,7 @@
                         statements enable the OpenEmbedded build system to find the patch file.
                         </para></listitem>
                     <listitem><para><emphasis>Put the patch file in your layer</emphasis>:
-                        Move the <filename>0001-calibrate.c.patch</filename> file to 
+                        Move the <filename>0001-calibrate: Add printk example.patch</filename> file to 
                         the <filename>meta-mylayer/recipes-kernel/linux/linux-yocto</filename>
                         directory.</para></listitem>
                 </orderedlist>
@@ -1799,22 +1799,14 @@
                 Once you set up these build parameters, they do not have to change unless you 
                 change the target architecture of the machine you are building:
                 <itemizedlist>
-                    <listitem><para><emphasis>Build for the Correct Target Architecture:</emphasis> The 
-                        <filename>local.conf</filename> file in the build directory defines the build's 
-                        target architecture.
+                    <listitem><para><emphasis>Build for the Correct Target Architecture:</emphasis> Your
+                        selected <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                        definition within the <filename>local.conf</filename> file in the build directory 
+                        specifies the target architecture used when building the Linux kernel.
                         By default, <filename>MACHINE</filename> is set to 
                         <filename>qemux86</filename>, which specifies a 32-bit 
                         <trademark class='registered'>Intel</trademark> Architecture 
-                        target machine suitable for the QEMU emulator.  
-                        In this example, <filename>MACHINE</filename> is correctly configured.
-                        </para></listitem>
-                    <listitem><para><emphasis>Optimize Build Time:</emphasis> Also in the 
-                        <filename>local.conf</filename> file are two variables that can speed your 
-                        build time if your host supports multi-core and multi-thread capabilities:
-                        <filename>BB_NUMBER_THREADS</filename> and <filename>PARALLEL_MAKE</filename>.
-                        If the host system has multiple cores then you can optimize build time 
-                        by setting both these variables to twice the number of 
-                        cores.</para></listitem>
+                        target machine suitable for the QEMU emulator.</para></listitem>
                     <listitem><para><emphasis>Identify Your <filename>meta-mylayer</filename>
                         Layer:</emphasis> The <filename>BBLAYERS</filename> variable in the 
                         <filename>bblayers.conf</filename> file found in the 
@@ -1847,22 +1839,23 @@
                     <listitem><para><emphasis>Be sure your build environment is initialized</emphasis>:
                         Your environment should be set up since you previously sourced
                         the <filename>&OE_INIT_FILE;</filename> script.
-                        If it isn't, source the script again from <filename>poky</filename>.
+                        If it is not, source the script again from <filename>poky</filename>.
                         <literallayout class='monospaced'>
      $ cd ~/poky
      $ source &OE_INIT_FILE;
                         </literallayout>
                         </para></listitem>
                     <listitem><para><emphasis>Clean up</emphasis>:
-                        Be sure old images are cleaned out by running the 
-                        <filename>cleanall</filename> BitBake task as follows from your build directory:
+                        Be sure to clean the shared state out by running the 
+                        <filename>cleansstate</filename> BitBake task as follows from your build directory:
                         <literallayout class='monospaced'>
-     $ bitbake -c cleanall linux-yocto
+     $ bitbake -c cleansstate linux-yocto
                         </literallayout></para>
                         <para><note>Never remove any files by hand from the <filename>tmp/deploy</filename>
                         directory inside the build directory.
-                        Always use the BitBake <filename>cleanall</filename> task to clear
-                        out previous builds.</note></para></listitem>
+                        Always use the various BitBake clean tasks to clear out previous 
+                        build artifacts.
+                        </note></para></listitem>
                     <listitem><para><emphasis>Build the image</emphasis>:
                         Next, build the kernel image using this command:
                         <literallayout class='monospaced'>
