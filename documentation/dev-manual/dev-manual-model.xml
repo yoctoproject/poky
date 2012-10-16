@@ -1271,44 +1271,48 @@ directory.</para></listitem>
                         <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/oprofileui/'></ulink>.
                         <note>The <filename>oprofile-server</filename> is installed by default on 
                         the <filename>core-image-sato-sdk</filename> image.</note></para></listitem>
-                    <listitem><para><emphasis><filename>Lttng-ust</filename>:</emphasis> Selecting this tool runs
-                        <filename>usttrace</filename> on the remote target, transfers the output data back 
-                        to the local host machine, and uses the <filename>lttng</filename> Eclipse plug-in to 
-                        graphically display the output. 
-                        For information on how to use <filename>lttng</filename> to trace an application, see
-                        <ulink url='http://lttng.org/documentation'></ulink>.</para>
-                        <para>For <filename>Application</filename>, you must supply the absolute path name of the 
-                        application to be traced by user mode <filename>lttng</filename>.  
-                        For example, typing <filename>/path/to/foo</filename> triggers 
-                        <filename>usttrace /path/to/foo</filename> on the remote target to trace the 
-                        program <filename>/path/to/foo</filename>.</para>
-                        <para><filename>Argument</filename> is passed to <filename>usttrace</filename>
-                        running on the remote target.</para>
-                        <para>Before you use the <filename>lttng-ust</filename> tool, you need to setup 
-                        the <filename>lttng</filename> Eclipse plug-in and create a <filename>lttng</filename>
-                        project.
+                    <listitem><para><emphasis><filename>Lttng2.0 ust trace import</filename>:</emphasis> 
+                        Selecting this tool transfers the remote target's 
+                        <filename>Lttng</filename> tracing data back to the local host machine
+                        and uses the <filename>Lttng</filename> Eclipse plug-in to graphically 
+                        display the output. 
+                        For information on how to use <filename>Lttng</filename> to trace an application, 
+                        see <ulink url='http://lttng.org/documentation'></ulink>.
+                        <note>Do not use <filename>Lttng-user space (legacy)</filename> tool.
+                            This tool no longer has any upstream support.</note>
+                        </para>
+                        <para>Before you use the <filename>Lttng2.0 ust trace import</filename> tool, 
+                        you need to setup the <filename>Lttng</filename> Eclipse plug-in and create a 
+                        <filename>Tracing</filename> project.
                         Do the following:
                         <orderedlist>
-                            <listitem><para>Follow the instructions from the  
-                                <ulink url='http://wiki.eclipse.org/Linux_Tools_Project/LTTng2/User_Guide'>Linux Tools Projec/LTTng2/User Guide</ulink>
-                                to download and install the <filename>lttng</filename> parser library.
-                                </para></listitem>
                             <listitem><para>Select <filename>Window -> Open Perspective -> Other</filename>
-                                and then select <filename>LTTng</filename>.</para></listitem>
+                                and then select <filename>Tracing</filename>.</para></listitem>
                             <listitem><para>Click <filename>OK</filename> to change the Eclipse perspective 
-                                into the <filename>LTTng</filename> perspective.</para></listitem>
-                            <listitem><para>Create a new <filename>LTTng</filename> project by selecting 
+                                into the <filename>Tracing</filename> perspective.</para></listitem>
+                            <listitem><para>Create a new <filename>Tracing</filename> project by selecting 
                                 <filename>File -> New -> Project</filename>.</para></listitem>
-                            <listitem><para>Choose <filename>LTTng -> LTTng Project</filename>.</para></listitem>
-                            <listitem><para>Click <filename>YoctoTools -> lttng-ust</filename> to start user mode 
-                                <filename>lttng</filename> on the remote target.</para></listitem>
-                        </orderedlist></para>
-                        <para>After the output data has been transferred from the remote target back to the local
-                        host machine, new traces will be imported into the selected <filename>LTTng</filename> project.
-                        Then you can go to the <filename>LTTng</filename> project, right click the imported 
-                        trace, and set the trace type as the <filename>LTTng</filename> kernel trace.
-                        Finally, right click the imported trace and select <filename>Open</filename>
-                        to display the data graphically.</para></listitem>
+                            <listitem><para>Choose <filename>Tracing -> Tracing Project</filename>.
+                                </para></listitem>
+                            <listitem><para>Generate your tracing data on the remote target.
+                                </para></listitem>
+                            <listitem><para>Click 
+                                <filename>Yocto Project Tools -> Lttng2.0 ust trace import</filename>
+                                to start the data import process.</para></listitem>
+                            <listitem><para>Specify your remote connection name.</para></listitem>
+                            <listitem><para>For the Ust directory path, specify the location of 
+                                your remote tracing data.
+                                Make sure the location ends with <filename>ust</filename> (e.g. 
+                                <filename>/usr/mysession/ust</filename>.</para></listitem>
+                            <listitem><para>Click <filename>OK</filename> to complete the import process.
+                                The data is now in the local tracing project you created.</para></listitem>
+                            <listitem><para>Right click on the data and then use the menu to 
+                                <filename>Select Trace Type... -> Common Trace Format -> Generic CTF Trace</filename> 
+                                to map the tracing type.</para></listitem>
+                            <listitem><para>Right click the mouse and select <filename>Open</filename>
+                                to bring up the Eclipse <filename>Lttng</filename> Trace Viewer so you 
+                                view the tracing data.</para></listitem>
+                        </orderedlist></para></listitem>
                     <listitem><para><emphasis><filename>PowerTOP</filename>:</emphasis> Selecting this tool runs 
                         <filename>powertop</filename> on the remote target machine and displays the results in a 
                         new view called <filename>powertop</filename>.</para>
@@ -1540,10 +1544,12 @@ directory.</para></listitem>
             </literallayout>
             Again, assuming top-level Source Directory named <filename>poky</filename>
             and a default build directory of <filename>poky/build</filename>, the 
-            following is the work directory for the <filename>acl</filename> package that is being 
+            following are the work and temporary source directories, respectively,
+            for the <filename>acl</filename> package that is being 
             built for a MIPS-based device:
             <literallayout class='monospaced'>
      ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2
+     ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2/acl-2.2.51
             </literallayout>
         </para>
 
@@ -1593,7 +1599,7 @@ directory.</para></listitem>
                 <listitem><para><emphasis>Change Your Working Directory:</emphasis>
                     You need to be in the directory that has the temporary source code.
                     That directory is defined by the 
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
                     variable.</para></listitem>
                 <listitem><para><emphasis>Create a New Patch:</emphasis>
                     Before modifying source code, you need to create a new patch.
@@ -1602,14 +1608,16 @@ directory.</para></listitem>
      $ quilt new my_changes.patch
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Notify Quilt and Add Files:</emphasis>
-                    After creating the patch, you need to notify Quilt about the files you will 
-                    be changing.
-                    Add the files you will be modifying into the patch you just created:
+                    After creating the patch, you need to notify Quilt about the files 
+                    you plan to edit.
+                    You notify Quilt by adding the files to the patch you just created:
                     <literallayout class='monospaced'>
      $ quilt add file1.c file2.c file3.c
-                    </literallayout></para></listitem>
+                    </literallayout>
+                    </para></listitem>
                 <listitem><para><emphasis>Edit the Files:</emphasis>
-                    Make the changes to the temporary source code.</para></listitem>
+                    Make your changes in the temporary source code to the files you added
+                    to the patch.</para></listitem>
                 <listitem><para><emphasis>Test Your Changes:</emphasis>
                     Once you have modified the source code, the easiest way to test your changes 
                     is by calling the <filename>compile</filename> task as shown in the following example:
@@ -1641,7 +1649,9 @@ directory.</para></listitem>
                     subdirectory of the source (<filename>S</filename>) directory.</para></listitem>
                 <listitem><para><emphasis>Copy the Patch File:</emphasis> 
                     For simplicity, copy the patch file into a directory named <filename>files</filename>,
-                    which you can create in the same directory as the recipe.
+                    which you can create in the same directory that holds the recipe 
+                    (<filename>.bb</filename>) file or the 
+                    append (<filename>.bbappend</filename>) file.
                     Placing the patch here guarantees that the OpenEmbedded build system will find
                     the patch.
                     Next, add the patch into the  
@@ -1687,33 +1697,24 @@ directory.</para></listitem>
                 <listitem><para><emphasis>Change Your Working Directory:</emphasis>
                     You need to be in the directory that has the temporary source code.
                     That directory is defined by the 
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink>
-                    variable. 
-                    If you are working with a kernel, you need to be in the 
-                    <filename>${S}/linux</filename> directory.</para></listitem>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
+                    variable.</para></listitem>
                 <listitem><para><emphasis>If needed, initialize a Git Repository:</emphasis>
-                    If you are not already in a Git repository, use the 
-                    <filename>git init</filename> command to initialize a new local repository
-                    that is based on the work directory:
+                    If the recipe you are working with does not use a Git fetcher, 
+                    you need to set up a Git repository as follows:
                     <literallayout class='monospaced'>
      $ git init
-                    </literallayout></para></listitem>
-                <listitem><para><emphasis>Stage all the files:</emphasis>
-                    Use the <filename>git add *</filename> command to stage all the files in the source
-                    code directory so that they can be committed:
-                    <literallayout class='monospaced'>
      $ git add *
-                    </literallayout></para></listitem>
-                <listitem><para><emphasis>Commit the Source Files:</emphasis>
-                    Use the <filename>git commit</filename> command to initially commit all the files in 
-                    the work directory:
-                    <literallayout class='monospaced'>
      $ git commit
                     </literallayout>
+                    The above Git commands initialize a Git repository that is based on the 
+                    files in your current working directory, stage all the files, and commit
+                    the files. 
                     At this point, your Git repository is aware of all the source code files.
-                    Any edits you now make to files will be tracked by Git.</para></listitem>
+                    Any edits you now make to files can be committed later and will be tracked by 
+                    Git.</para></listitem>
                 <listitem><para><emphasis>Edit the Files:</emphasis>
-                    Make the changes to the temporary source code.</para></listitem>
+                    Make your changes to the temporary source code.</para></listitem>
                 <listitem><para><emphasis>Test Your Changes:</emphasis>
                     Once you have modified the source code, the easiest way to test your changes 
                     is by calling the <filename>compile</filename> task as shown in the following example:
@@ -1725,8 +1726,8 @@ directory.</para></listitem>
                     If you find problems with your code, you can just keep editing and 
                     re-testing iteratively until things work as expected.
                     <note>All the modifications you make to the temporary source code
-                    disappear once you <filename>-c clean</filename> or 
-                    <filename>-c cleanall</filename> with BitBake for the package.
+                    disappear once you <filename>-c clean</filename>, <filename>-c cleansstate</filename>,
+                    or <filename>-c cleanall</filename> with BitBake for the package.
                     Modifications will also disappear if you use the <filename>rm_work</filename>
                     feature as described in the
                     "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>" 
@@ -1742,11 +1743,9 @@ directory.</para></listitem>
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Stage the Modified Files:</emphasis>
                     Use the <filename>git add</filename> command to stage the changed files so they
-                    can be committed as follows.
-                    Again, for this discussion assume the files changed are in the <filename>linux</filename>
-                    directory:
+                    can be committed as follows:
                     <literallayout class='monospaced'>
-     $ git add &lt;somepath&gt;/file1.c &lt;somepath&gt;/file2.c &lt;somepath&gt;/file3.c
+     $ git add file1.c file2.c file3.c
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Commit the Staged Files and View Your Changes:</emphasis>
                     Use the <filename>git commit</filename> command to commit the changes to the 
@@ -1754,9 +1753,11 @@ directory.</para></listitem>
                     Once you have committed the files, you can use the <filename>git log</filename>
                     command to see your changes:
                     <literallayout class='monospaced'>
-     $ git commit
+     $ git commit -m "&lt;commit-summary-message&gt;"
      $ git log
-                    </literallayout></para></listitem>
+                    </literallayout>
+                    <note>The name of the patch file created in the next step is based on your 
+                        <filename>commit-summary-message</filename>.</note></para></listitem>
                 <listitem><para><emphasis>Generate the Patch:</emphasis>
                     Once the changes are committed, use the <filename>git format-patch</filename>
                     command to generate a patch file:
@@ -1768,11 +1769,14 @@ directory.</para></listitem>
                     <para>At this point, the patch file has all your edits made 
                     to the <filename>file1.c</filename>, <filename>file2.c</filename>, and 
                     <filename>file3.c</filename> files.
-                    You can find the resulting patch file in the current directory.
+                    You can find the resulting patch file in the current directory and it 
+                    is named according to the <filename>git commit</filename> summary line.
                     The patch file ends with <filename>.patch</filename>.</para></listitem>
                 <listitem><para><emphasis>Copy the Patch File:</emphasis> 
                     For simplicity, copy the patch file into a directory named <filename>files</filename>,
-                    which you can create in the same directory as the recipe.
+                    which you can create in the same directory that holds the recipe 
+                    (<filename>.bb</filename>) file or the 
+                    append (<filename>.bbappend</filename>) file.
                     Placing the patch here guarantees that the OpenEmbedded build system will find
                     the patch.
                     Next, add the patch into the  
