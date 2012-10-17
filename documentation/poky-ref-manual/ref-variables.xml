@@ -1415,11 +1415,42 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
          <glossentry id='var-MACHINE'><glossterm>MACHINE</glossterm>
             <glossdef>
                 <para>
-                    Specifies the target device. 
-                    This variable corresponds to a file with the
-                    extension <filename>.conf</filename> located in a 
-                    <filename>conf/machine</filename> directory
-                    within the metadata that contains the target device configuration.
+                    Specifies the target device for which the image is built.
+                    You define <filename>MACHINE</filename> in the 
+                    <filename>local.conf</filename> file found in the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                    By default, <filename>MACHINE</filename> is set to 
+                    "qemux86", which is a basic x86 architecture to be run on 
+                    the emulator (QEMU):
+                    <literallayout class='monospaced'>
+     MACHINE ?= "qemux86"
+                    </literallayout> 
+                    The variable corresponds to a machine configuration file of the 
+                    same name, through which machine-specific configurations are set.
+                    Thus, when <filename>MACHINE</filename> is set to "qemux86" there
+                    exists the corresponding <filename>qemux86.conf</filename> machine
+                    configuration file, which can be found in the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+                    in <filename>meta/conf/machine</filename>.
+                </para>
+                    
+                <para>
+                    The possible settings for <filename>MACHINE</filename> that ship with 
+                    the Yocto Project as defined in the <filename>local.conf</filename>
+                    include the following:
+                    <literallayout class='monospaced'>
+     MACHINE ?= "qemuarm"
+     MACHINE ?= "qemumips"
+     MACHINE ?= "qemuppc"
+     MACHINE ?= "qemux86"
+     MACHINE ?= "qemux86-64"
+     MACHINE ?= "atom-pc"
+     MACHINE ?= "beagleboard"
+     MACHINE ?= "mpc8315e-rdb"
+     MACHINE ?= "routerstationpro"
+                    </literallayout>
+                    The last four are target machines for hardware boards used 
+                    for demonstration.
                 </para>
             </glossdef>
          </glossentry>
@@ -1433,7 +1464,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The build process depends on these packages being present.
                     Furthermore, because this is a "machine essential" variable, the list of 
                     packages are essential for the machine to boot.
-                    The impact of this variable affects images based on <filename>packagegroup-core-boot</filename>,
+                    The impact of this variable affects images based on 
+                    <filename>packagegroup-core-boot</filename>,
                     including the <filename>core-image-minimal</filename> image.
                 </para>
                 <para>
@@ -1444,11 +1476,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     In other words, the image will not build if a file in this list is not found.
                 </para>
                 <para>
-                    For example, suppose the machine for which you are building requires
-                    a specific program to be run during boot to initialise the hardware.
-                    In this case, assuming the package name for the program was
-                    <filename>example-init</filename>, you would use the following in the
-                    <filename>.conf</filename> file for the machine:
+                    As an example, suppose the machine for which you are building requires
+                    <filename>example-init</filename> to be run during boot to initialize the hardware.
+                    In this case, you would use the following in the machine's
+                    <filename>.conf</filename> configuration file:
                     <literallayout class='monospaced'>
      MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "example-init"
                     </literallayout>
@@ -1463,9 +1494,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     A list of recommended machine-specific packages to install as part of
                     the image being built.
                     The build process does not depend on these packages being present.
-                    Furthermore, because this is a "machine essential" variable, the list of 
+                    However, because this is a "machine essential" variable, the list of 
                     packages are essential for the machine to boot.
-                    The impact of this variable affects images based on <filename>packagegroup-core-boot</filename>,
+                    The impact of this variable affects images based on 
+                    <filename>packagegroup-core-boot</filename>,
                     including the <filename>core-image-minimal</filename> image.
                 </para>
                 <para>
@@ -1480,16 +1512,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
                 <para>
                     Consider an example where you have a custom kernel where a specific touchscreen
-                    driver is required for the machine to be usable, but may be built as a module or
+                    driver is required for the machine to be usable.
+                    However, the driver can be built as a module or
                     into the kernel depending on the kernel configuration.
                     If the driver is built as a module, you want it to be installed.
-                    However if
-                    the driver is built into the kernel you still want the build to succeed.
+                    But, when the driver is built into the kernel, you still want the 
+                    build to succeed.
                     This variable sets up a "recommends" relationship so that in the latter case,
                     the build will not fail due to the missing package.
                     To accomplish this, assuming the package for the module was called
                     <filename>kernel-module-ab123</filename>, you would use the
-                    following in the <filename>.conf</filename> file for the machine:
+                    following in the machine's <filename>.conf</filename> configuration 
+                    file:
                     <literallayout class='monospaced'>
      MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "kernel-module-ab123"
                     </literallayout>
@@ -1504,16 +1538,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
          <glossentry id='var-MACHINE_EXTRA_RDEPENDS'><glossterm>MACHINE_EXTRA_RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of machine-specific packages that are not essential for booting to install as 
-                    part of the image being built.
-                    The build process for more fully-featured images depends on them being present.
-                    The impact of this variable affects all images based on
+                    A list of machine-specific packages to install as part of the 
+                    image being built that are not essential for the machine to boot.
+                    However, the build process for more fully-featured images 
+                    depends on the packages being present.
+                </para>
+                <para>
+                    This variable affects all images based on
                     <filename>packagegroup-base</filename>, which does not include the 
                     <filename>core-image-minimal</filename> or <filename>core-image-basic</filename> 
                     images.
                 </para>
                 <para>
-                    This variable is similar to the 
+                    The variable is similar to the 
                     <filename><link linkend='var-MACHINE_EXTRA_RRECOMMENDS'>MACHINE_EXTRA_RRECOMMENDS</link></filename>
                     variable with the exception that the image being built has a build 
                     dependency on the variable's list of packages.
@@ -1541,11 +1578,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para></para>
                 <para>
-                    A list of machine-specific packages that are not essential for booting
-                    to install as part of the image being built, if present.
-                    The image being built has no build dependency on the list of packages 
-                    with this variable.  
-                    The impact of this variable affects only images based on 
+                    A list of machine-specific packages to install as part of the 
+                    image being built that are not essential for booting the machine.
+                    The image being built has no build dependency on this list of packages.
+                </para>
+                <para>
+                    This variable affects only images based on 
                     <filename>packagegroup-base</filename>, which does not include the 
                     <filename>core-image-minimal</filename> or <filename>core-image-basic</filename> 
                     images.
@@ -1577,9 +1615,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
          <glossentry id='var-MACHINE_FEATURES'><glossterm>MACHINE_FEATURES</glossterm>
             <glossdef>
-                <para>Specifies the list of device features.
-                    See the "<link linkend='ref-features-machine'>Machine</link>" section for 
-                    more information.</para>
+                <para>Specifies the list of hardware features the 
+                    <link linkend='var-MACHINE'>MACHINE</link> supports.
+                    For a list of valid features you can provide, see the 
+                    "<link linkend='ref-features-machine'>Machine</link>" section.</para>
             </glossdef>
          </glossentry>
 
