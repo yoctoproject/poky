@@ -631,6 +631,7 @@ def extract_giturl(file):
     Extract the git url of the kernel repo from the kernel recipe's
     SRC_URI.
     """
+    url = None
     f = open(file, "r")
     lines = f.readlines()
     for line in lines:
@@ -641,10 +642,15 @@ def extract_giturl(file):
                 line = line[1:].strip()
                 if line.startswith("\""):
                     line = line[1:].strip()
-                    fields = line.split(";")
-                    if fields:
-                        return fields[0]
-    return None
+                    prot = "git"
+                    for s in line.split(";"):
+                        if s.startswith("git://"):
+                            url = s
+                        if s.startswith("protocol="):
+                            prot = s.split("=")[1]
+                    if url:
+                        url = prot + url[3:]
+    return url
 
 
 def find_giturl(context):
