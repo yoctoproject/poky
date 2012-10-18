@@ -176,54 +176,87 @@
         <title>Feature Backfilling</title>
 
         <para>
-            Sometimes, it is necessary for a new feature to be added to control existing
-            functionality that was previously enabled by default and not able to be disabled.
-            In order to ensure that the feature remains enabled for users with existing
-            configurations that upgrade to a new version of the core metadata without that 
-            configuration having to be changed, while still allowing others who want to turn
-            the feature off to do so, the backfilling mechanism was introduced. 
-            This 
-            functionality is available for <filename><link linkend='var-DISTRO_FEATURES'>DISTRO_FEATURES</link></filename>
-            and <filename><link linkend='var-MACHINE_FEATURES'>MACHINE_FEATURES</link></filename>.
+            Sometimes it is necessary to add a new feature option to the 
+            <link linkend='var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></link>
+            or <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>
+            lists and have it affect all configurations.
+            For example, suppose new functionality is developed and it must be enabled
+            by default for all configurations.
         </para>
 
         <para>
-            An example is the "pulseaudio" distro feature. 
-            Previously, PulseAudio support
-            was enabled within the Qt and GStreamer frameworks.
-            However some users desired
-            to be able to disable this. 
-            To allow this to be disabled without affecting 
-            existing configurations in which PulseAudio support should remain enabled,
-            "pulseaudio" was added to 
-            <filename><link linkend='var-DISTRO_FEATURES_BACKFILL'>DISTRO_FEATURES_BACKFILL</link></filename>
-            within <filename>meta/conf/bitbake.conf</filename>.
-            This means that "pulseaudio"
-            is automatically added to <filename>DISTRO_FEATURES</filename> without the distro
-            configuration needing to be updated to do so itself.
-            Those who do not want PulseAudio support can add "pulseaudio" to
-            <filename><link linkend='var-DISTRO_FEATURES_BACKFILL_CONSIDERED'>DISTRO_FEATURES_BACKFILL_CONSIDERED</link></filename>
-            in their distro <filename>.conf</filename> file and this will disable adding "pulseaudio" to
-            <filename>DISTRO_FEATURES</filename>.
-        </para>
+            Sometimes it is also necessary to disable (remove) a feature
+            option, which has been previously enabled by default, from the machine or distro lists. 
+            For example, perhaps a mandatory distro feature becomes optional.
+            How can you remove the feature option from the 
+            <filename>DISTRO_FEATURES</filename> list
+            without disturbing all the existing configurations that still 
+            might need the feature?
+            Feature backfilling allows you "backfill" the feature into all the 
+            configurations and then lets you selectively prevent the feature from 
+            being added to <filename>MACHINE_FEATURES</filename> and 
+            <filename>DISTRO_FEATURES</filename> lists.
+        </para>      
 
         <para>
-            Another example is the "rtc" machine feature. 
-            Previously, real time clock (RTC)
-            support was enabled for all target devices.
-            However certain targets do not have
-            this capability. 
-            To allow this to be disabled by such machines without affecting
-            other machines in which RTC support should remain enabled, "rtc" was added to 
-            <filename><link linkend='var-MACHINE_FEATURES_BACKFILL'>MACHINE_FEATURES_BACKFILL</link></filename>
-            within <filename>meta/conf/bitbake.conf</filename>.
-            This means that "rtc"
-            is automatically added to <filename>MACHINE_FEATURES</filename> without the
-            machine configuration needing to be updated to do so itself.
-            For machines that not need RTC support can add "rtc" to
-            <filename><link linkend='var-MACHINE_FEATURES_BACKFILL_CONSIDERED'>MACHINE_FEATURES_BACKFILL_CONSIDERED</link></filename>
-            in their machine <filename>.conf</filename> file and this will disable adding "rtc" to
-            <filename>MACHINE_FEATURES</filename>.
+            Here are two examples to help illustrate feature backfilling:
+            <itemizedlist>
+                <listitem><para><emphasis>The "pulseaudio" distro feature option</emphasis>: 
+                    Previously, PulseAudio support was enabled within the Qt and 
+                    GStreamer frameworks.
+                    However, you might need to disable the feature for your 
+                    distro.
+                    You can disable the feature without affecting 
+                    other existing distro configurations that need PulseAudio support
+                    by doing the following:
+                    <itemizedlist>
+                        <listitem><para>Add "pulseaudio" to 
+                            <link linkend='var-DISTRO_FEATURES_BACKFILL'><filename>DISTRO_FEATURES_BACKFILL</filename></link>
+                            within your <filename>meta/conf/bitbake.conf</filename> file.
+                            Adding the feature option causes the build process 
+                            to automatically add "pulseaudio" to 
+                            <filename>DISTRO_FEATURES</filename> without the need to 
+                            update any distro configurations.
+                            This step by itself enables the feature
+                            for all distros and consequently ensures that existing 
+                            configurations that still need the feature are 
+                            undisturbed.</para></listitem>
+                        <listitem><para>Add "pulseaudio" to
+                            <link linkend='var-DISTRO_FEATURES_BACKFILL_CONSIDERED'><filename>DISTRO_FEATURES_BACKFILL_CONSIDERED</filename></link>
+                            in your distro's <filename>.conf</filename> file.
+                            Adding the feature option to this variable when it also
+                            exists in the <filename>DISTRO_FEATURES_BACKFILL</filename>
+                            variable prevents the build system from adding the feature option to 
+                            <filename>DISTRO_FEATURES</filename>, effectively disabling
+                            the feature for that particular distro.</para></listitem>
+                    </itemizedlist></para></listitem>
+                <listitem><para><emphasis>The "rtc" machine feature option</emphasis>: 
+                    Previously, real time clock (RTC) support was enabled for all 
+                    target devices.
+                    However, your target device does not have this capability.
+                    You can disable RTC support for your device without 
+                    affecting other machines where RTC support should remain enabled
+                    by doing the following:
+                    <itemizedlist>
+                        <listitem><para>Add "rtc" to <filename>MACHINE_FEATURES_BACKFILL</filename>
+                            within your <filename>meta/conf/bitbake.conf</filename>.
+                            Adding the feature option causes the build process 
+                            to automatically add "rtc" to 
+                            <filename>MACHINE_FEATURES</filename> without the need to
+                            update any machine configurations.
+                            This step by itself enables RTC support for all machines
+                            and consequently ensures that existing configurations
+                            that still need the feature are undisturbed.</para></listitem>
+                        <listitem><para>Add "rtc" to
+                            <filename>MACHINE_FEATURES_BACKFILL_CONSIDERED</filename>
+                            in your machine's <filename>.conf</filename> file.
+                            Adding the feature option to this variable when it also
+                            exists in the <filename>MACHINE_FEATURES_BACKFILL</filename>
+                            variable prevents the build system from adding the feature option to 
+                            <filename>MACHINE_FEATURES</filename>, effectively disabling
+                            RTC support for feature that particular machine.</para></listitem>
+                    </itemizedlist></para></listitem>
+            </itemizedlist>
         </para>
     </section>
 </chapter>
