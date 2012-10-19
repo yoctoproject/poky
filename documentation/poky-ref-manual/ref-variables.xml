@@ -435,9 +435,11 @@
         <glossentry id='var-DEPENDS'><glossterm>DEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of build-time dependencies for a given recipe. 
-                    The variable indicates recipes that must have been staged before a 
-                    particular recipe can configure.
+                    Lists a recipe's build-time dependencies
+                    (i.e. other recipe files). 
+                    The system ensures that all the dependencies listed 
+                    have been built and have their contents in the appropriate 
+                    sysroots before the recipe's configure task is executed.
                 </para>
             </glossdef>
         </glossentry>
@@ -2002,45 +2004,61 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RDEPENDS'><glossterm>RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of packages that must be installed as part of a package being built.
-                    The package being built has a runtime dependency on the packages in the 
-                    variable's list.
-                    In other words, in order for the package being built to run correctly, 
-                    it depends on these listed packages.
-                    If a package in this list cannot be found during the build, the build
-                    will not complete.
+                    Lists a package's run-time dependencies (i.e. other packages)                    
+                    that must be installed for the package to be built.
+                    In other words, in order for the package to be built and 
+                    run correctly, it depends on the listed packages.
+                    If a package in this list cannot be found, it is probable 
+                    that a dependency error would occur before the build.
                 </para>
+
                 <para>
-                    Because the <filename>RDEPENDS</filename> variable applies to packages 
-                    being built, you should 
-                    always attach an override to the variable to specify the particular runtime package
-                    that has the dependency.
-                    For example, suppose you are building a development package that depends
-                    on the <filename>perl</filename> package.
-                    In this case, you would use the following <filename>RDEPENDS</filename>
-                    statement:
+                    The names of the variables you list with 
+                    <filename>RDEPENDS</filename> must be the names of other 
+                    packages as listed in the 
+                    <link linkend='var-PACKAGES'><filename>PACKAGES</filename></link>
+                    variable.
+                    You should not list recipe names (<filename>PN</filename>).
+                </para> 
+
+                <para>
+                    Because the <filename>RDEPENDS</filename> variable applies 
+                    to packages being built, you should 
+                    always attach a package name to the variable to specify the 
+                    particular run-time package that has the dependency.
+                    For example, suppose you are building a development package 
+                    that depends on the <filename>perl</filename> package.
+                    In this case, you would use the following 
+                    <filename>RDEPENDS</filename> statement:
                     <literallayout class='monospaced'>
      RDEPENDS_${PN}-dev += "perl"
                     </literallayout>
-                    In the example, the package name (<filename>${PN}-dev</filename>) must 
-                    appear as it would in the 
-                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> namespace before any 
-                    renaming of the output package by classes like <filename>debian.bbclass</filename>.
+                    In the example, the package name 
+                    (<filename>${PN}-dev</filename>) must appear as it would 
+                    in the 
+                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> 
+                    namespace before any renaming of the output package by 
+                    classes like <filename>debian.bbclass</filename>.
                 </para>
+
                 <para>
-                    Some automatic handling occurs around the <filename>RDEPENDS</filename>
-                    variable:
+                    In many cases you do not need to explicitly add dependencies 
+                    to <filename>RDEPENDS</filename> since some automatic 
+                    handling occurs:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:  If a runtime
-                            package contains a shared library (<filename>.so</filename>), the build
-                            processes the library in order to determine other libraries to which it 
-                            is dynamically linked.  
-                            The build process adds these libraries to <filename>RDEPENDS</filename>
-                            to create the runtime package.</para></listitem>
-                        <listitem><para><emphasis><filename>pcdeps</filename></emphasis>:  If the package
-                            ships a <filename>pkg-config</filename> information file, the build process
-                            uses this file to add items to the <filename>RDEPENDS</filename>
-                            variable to create the runtime packages.
+                        <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:  If 
+                            a run-time package contains a shared library 
+                            (<filename>.so</filename>), the build
+                            processes the library in order to determine other 
+                            libraries to which it is dynamically linked.  
+                            The build process adds these libraries to 
+                            <filename>RDEPENDS</filename> when creating the run-time 
+                            package.</para></listitem>
+                        <listitem><para><emphasis><filename>pcdeps</filename></emphasis>:  If 
+                            the package ships a <filename>pkg-config</filename> 
+                            information file, the build process uses this file 
+                            to add items to the <filename>RDEPENDS</filename>
+                            variable to create the run-time packages.
                             </para></listitem>
                     </itemizedlist>
                 </para>
