@@ -120,8 +120,7 @@ TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
            figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
            figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
-           figures/source-repos.png figures/yp-download.png \
-           figures/wip.png
+           figures/source-repos.png figures/yp-download.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
@@ -183,8 +182,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
 	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
 	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
 	figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
-	figures/source-repos.png figures/yp-download.png \
-	figures/wip.png
+	figures/source-repos.png figures/yp-download.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
