@@ -178,38 +178,35 @@
         <title>Feature Backfilling</title>
 
         <para>
-            Sometimes it is necessary to control functionality enabled by features 
-            that are listed with  
+            Sometimes it is necessary in the OpenEmbedded build system to extend
             <link linkend='var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></link>
-            and <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>. 
-            For example, some functionality exists that is enabled
-            by default for all configurations.
-            For these cases, the metadata, as shipped with the Yocto Project, ensures 
-            the feature is "backfilled" into all the specific distro
-            and machine configurations.
-            You can see how this is done by finding the 
+            or <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>
+            to control functionality that was previously enabled and not able 
+            to be disabled. 
+            For these cases, we need to add an
+            additional feature item to appear in one of these variables, 
+            but we do not want to force developers who have existing values 
+            of the variables in their configuration to add the new feature 
+            in order to retain the same overall level of functionality. 
+            Thus, the OpenEmbedded build system has a mechanism to
+            automatically "backfill" these added features into existing 
+            distro or machine configurations. 
+            You can see the list of features for which this is done by
+            finding the 
             <link linkend='var-DISTRO_FEATURES_BACKFILL'><filename>DISTRO_FEATURES_BACKFILL</filename></link>
             and <link linkend='var-MACHINE_FEATURES_BACKFILL'><filename>MACHINE_FEATURES_BACKFILL</filename></link>
             variables in the <filename>meta/conf/bitbake.conf</filename> file.
         </para>
 
         <para>
-            Because certain functionality is enabled across all configurations as 
-            described in the previous paragraph, it also becomes necessary 
-            to give the developer the ability to disable (remove) a feature
-            from a particular configuration. 
-            For example, suppose you have a machine feature that needs to be 
-            disabled but the metadata has backfilled it across all configurations as enabled.
-            You need to be able to remove the feature from your configuration's
-            <filename>MACHINE_FEATURES</filename> 
-            without disturbing existing configurations that still 
-            might need the functionality?
-        </para>
-
-        <para>
-            Feature backfilling allows you to selectively prevent a feature from 
-            being backfilled to <filename>MACHINE_FEATURES</filename>, 
-            <filename>DISTRO_FEATURES</filename>, or both.
+            Because such features are backfilled by default into all 
+            configurations as described in the previous paragraph, developers 
+            who wish to disable the new features need to be able to selectively 
+            prevent the backfilling from occurring.
+            They can do this by adding the undesired feature or features to the
+            <link linkend='var-DISTRO_FEATURES_BACKFILL_CONSIDERED'><filename>DISTRO_FEATURES_BACKFILL_CONSIDERED</filename></link> 
+            or <link linkend='var-MACHINE_FEATURES_BACKFILL_CONSIDERED'><filename>MACHINE_FEATURES_BACKFILL_CONSIDERED</filename></link>
+            variables for distro features and machine features respectively.
         </para>
 
         <para>
@@ -226,7 +223,7 @@
                     You can disable the feature without affecting 
                     other existing distro configurations that need PulseAudio support
                     by adding "pulseaudio" to
-                    <link linkend='var-DISTRO_FEATURES_BACKFILL_CONSIDERED'><filename>DISTRO_FEATURES_BACKFILL_CONSIDERED</filename></link>
+                    DISTRO_FEATURES_BACKFILL_CONSIDERED
                     in your distro's <filename>.conf</filename> file.
                     Adding the feature to this variable when it also
                     exists in the <filename>DISTRO_FEATURES_BACKFILL</filename>
@@ -243,7 +240,7 @@
                     You can disable RTC support for your device without 
                     affecting other machines that need RTC support 
                     by adding the feature to your machine's 
-                    <link linkend='var-MACHINE_FEATURES_BACKFILL_CONSIDERED'><filename>MACHINE_FEATURES_BACKFILL_CONSIDERED</filename></link>
+                    MACHINE_FEATURES_BACKFILL_CONSIDERED
                     list in the machine's <filename>.conf</filename> file.
                     Adding the feature to this variable when it also
                     exists in the <filename>MACHINE_FEATURES_BACKFILL</filename>
