@@ -19,8 +19,7 @@
         </para>
 
         <para>
-            This chapter (or document if you are reading the BSP Developer's Guide) 
-            talks about BSP Layers, defines a structure for components
+            This guide presents information about BSP Layers, defines a structure for components
             so that BSPs follow a commonly understood layout, discusses how to customize
             a recipe for a BSP, addresses BSP licensing, and provides information that
             shows you how to create and manage a 
@@ -48,7 +47,7 @@
                 This root is what you add to the 
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'><filename>BBLAYERS</filename></ulink>
                 variable in the <filename>conf/bblayers.conf</filename> file found in the 
-                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                 Adding the root allows the OpenEmbedded build system to recognize the BSP 
                 definition and from it build an image.
                 Here is an example:
@@ -84,8 +83,6 @@
                 For more detailed information on layers, see the 
                 "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>" 
                 section of the Yocto Project Development Manual.
-                You can also see the detailed examples in the appendices of the
-                <ulink url='&YOCTO_DOCS_DEV_URL;'>Yocto Project Development Manual</ulink>.
             </para>
         </section>
 
@@ -183,9 +180,10 @@
      meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay-noemgd/xorg.conf
      meta-crownbay/recipes-kernel/
      meta-crownbay/recipes-kernel/linux/
-     meta-crownbay/recipes-kernel/linux/linux-yocto-rt_3.0.bbappend
-     meta-crownbay/recipes-kernel/linux/linux-yocto_2.6.37.bbappend
-     meta-crownbay/recipes-kernel/linux/linux-yocto_3.0.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto-rt_3.2.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto-rt_3.4.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto_3.2.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto_3.4.bbappend
                 </literallayout>
             </para>
 
@@ -496,11 +494,17 @@
                 Suppose you are using the <filename>linux-yocto_3.4.bb</filename> recipe to build
                 the kernel.
                 In other words, you have selected the kernel in your 
-                <filename>&lt;bsp_name&gt;.conf</filename> file by adding the following statements:
+                <filename>&lt;bsp_name&gt;.conf</filename> file by adding these types 
+                of statements:
                 <literallayout class='monospaced'>
      PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
      PREFERRED_VERSION_linux-yocto = "3.4%"
                 </literallayout>
+                <note>
+                    When the preferred provider is assumed by default, the 
+                    <filename>PREFERRED_PROVIDER</filename> statement does not appear in the 
+                    <filename>&lt;bsp_name&gt;.conf</filename> file.
+                </note>
                 You would use the <filename>linux-yocto_3.4.bbappend</filename> file to append 
                 specific BSP settings to the kernel, thus configuring the kernel for your particular BSP.
             </para>
@@ -519,17 +523,22 @@
 
      COMPATIBLE_MACHINE_crownbay = "crownbay"
      KMACHINE_crownbay  = "crownbay"
-     KBRANCH_crownbay  = "standard/default/crownbay"
+     KBRANCH_crownbay  = "standard/crownbay"
 
      COMPATIBLE_MACHINE_crownbay-noemgd = "crownbay-noemgd"
      KMACHINE_crownbay-noemgd  = "crownbay"
-     KBRANCH_crownbay-noemgd  = "standard/default/crownbay"
+     KBRANCH_crownbay-noemgd  = "standard/crownbay"
 
-     SRCREV_machine_pn-linux-yocto_crownbay ?= "48101e609711fcfe8d5e737a37a5a69f4bd57d9a"
-     SRCREV_meta_pn-linux-yocto_crownbay ?= "5b4c9dc78b5ae607173cc3ddab9bce1b5f78129b"
+     SRCREV_machine_pn-linux-yocto_crownbay ?= "449f7f520350700858f21a5554b81cc8ad23267d"
+     SRCREV_meta_pn-linux-yocto_crownbay ?= "9e3bdb7344054264b750e53fbbb6394cc1c942ac"
+     SRCREV_emgd_pn-linux-yocto_crownbay ?= "86643bdd8cbad616a161ab91f51108cf0da827bc"
 
-     SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= "48101e609711fcfe8d5e737a37a5a69f4bd57d9a"
-     SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= "5b4c9dc78b5ae607173cc3ddab9bce1b5f78129b"
+     SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= "449f7f520350700858f21a5554b81cc8ad23267d"
+     SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= "9e3bdb7344054264b750e53fbbb6394cc1c942ac"
+
+     KSRC_linux_yocto_3_4 ?= "git.yoctoproject.org/linux-yocto-3.4.git"
+     SRC_URI_crownbay = "git://git.yoctoproject.org/linux-yocto-3.4.git;protocol=git;nocheckout=1;branch=${KBRANCH},meta,emgd-1.14;name=machine,meta,emgd"
+     SRC_URI_crownbay-noemgd = "git://git.yoctoproject.org/linux-yocto-3.4.git;protocol=git;nocheckout=1;branch=${KBRANCH},meta;name=machine,meta"
                 </literallayout>
                 This append file contains statements used to support the Crown Bay BSP for both 
                 <trademark class='registered'>Intel</trademark> EMGD and the VESA graphics.
@@ -542,10 +551,11 @@
 
      COMPATIBLE_MACHINE_crownbay = "crownbay"
      KMACHINE_crownbay  = "crownbay"
-     KBRANCH_crownbay  = "standard/default/crownbay"
+     KBRANCH_crownbay  = "standard/crownbay"
 
-     SRCREV_machine_pn-linux-yocto_crownbay ?= "48101e609711fcfe8d5e737a37a5a69f4bd57d9a"
-     SRCREV_meta_pn-linux-yocto_crownbay ?= "5b4c9dc78b5ae607173cc3ddab9bce1b5f78129b"
+     SRCREV_machine_pn-linux-yocto_crownbay ?= "449f7f520350700858f21a5554b81cc8ad23267d"
+     SRCREV_meta_pn-linux-yocto_crownbay ?= "9e3bdb7344054264b750e53fbbb6394cc1c942ac"
+     SRCREV_emgd_pn-linux-yocto_crownbay ?= "86643bdd8cbad616a161ab91f51108cf0da827bc"
                 </literallayout>
                 The append file defines <filename>crownbay</filename> as the 
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>
@@ -557,10 +567,16 @@
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KBRANCH'><filename>KBRANCH</filename></ulink> variable
                 to ensure the build process uses the <filename>standard/default/crownbay</filename>
                 kernel branch.
-                Finally, the append file points to the specific top commits in the 
+                Finally, the append file points to specific commits in the 
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink> Git 
                 repository and the <filename>meta</filename> Git repository branches to identify the 
                 exact kernel needed to build the Crown Bay BSP.
+                <note>
+                    For <filename>crownbay</filename>, a specific commit is also needed to point
+                    to the branch that supports EMGD graphics. 
+                    At a minimum, every BSP points to the 
+                    <filename>machine</filename> and <filename>meta</filename> commits.
+                </note>
             </para>
 
             <para>
@@ -724,15 +740,15 @@
                             You must specify which license to use since there is no 
                             default license if one is not specified.
                             See the 
-                            <ulink url='&YOCTO_GIT_URL;/cgit.cgi/meta-intel/tree/meta-fishriver/COPYING.MIT'><filename>COPYING.MIT</filename></ulink>
-                            file for the Fish River BSP in the <filename>meta-fishriver</filename> BSP layer 
+                            <ulink url='&YOCTO_GIT_URL;/cgit.cgi/meta-intel/tree/meta-fri2/COPYING.MIT'><filename>COPYING.MIT</filename></ulink>
+                            file for the Fish River Island 2 BSP in the <filename>meta-fri2</filename> BSP layer 
                             as an example.</para></listitem>
                         <listitem><para><emphasis>README File:</emphasis>
                             You must include a <filename>README</filename> file in the 
                             <filename>meta-&lt;bsp_name&gt;</filename> directory.
                             See the 
-                            <ulink url='&YOCTO_GIT_URL;/cgit.cgi/meta-intel/tree/meta-fishriver/README'><filename>README</filename></ulink>
-                            file for the Fish River BSP in the <filename>meta-fishriver</filename> BSP layer 
+                            <ulink url='&YOCTO_GIT_URL;/cgit.cgi/meta-intel/tree/meta-fri2/README'><filename>README</filename></ulink>
+                            file for the Fish River Island 2 BSP in the <filename>meta-fri2</filename> BSP layer 
                             as an example.</para>
                             <para>At a minimum, the <filename>README</filename> file should 
                             contain the following:
@@ -772,8 +788,8 @@
                             generate the binary images contained in the 
                             <filename>/binary</filename> directory, if present.
                             See the 
-                            <ulink url='&YOCTO_GIT_URL;/cgit.cgi/meta-intel/tree/meta-fishriver/README.sources'><filename>README.sources</filename></ulink>
-                            file for the Fish River BSP in the <filename>meta-fishriver</filename> BSP layer 
+                            <ulink url='&YOCTO_GIT_URL;/cgit.cgi/meta-intel/tree/meta-fri2/README.sources'><filename>README.sources</filename></ulink>
+                            file for the Fish River Island 2 BSP in the <filename>meta-fri2</filename> BSP layer 
                             as an example.</para></listitem>
                         <listitem><para><emphasis>Layer Configuration File:</emphasis>
                             You must include a <filename>conf/layer.conf</filename> in the
@@ -839,7 +855,7 @@
                             Basing your recipes on these kernels reduces the costs for maintaining 
                             the BSP and increases its scalability.
                             See the <filename>Yocto Linux Kernel</filename> category in the 
-                            <ulink url='&YOCTO_GIT_URL;/cgit.cgi'><filename>Yocto Source Repositories</filename></ulink>
+                            <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>Source Repositories</ulink>
                             for these kernels.</para></listitem>
                     </itemizedlist>
                 </para>
