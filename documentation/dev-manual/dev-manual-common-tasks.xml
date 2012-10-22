@@ -208,7 +208,7 @@
                 To enable your layer, simply add your layer's path to the 
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'>BBLAYERS</ulink></filename> 
                 variable in your <filename>conf/bblayers.conf</filename> file, which is found in the 
-                <link linkend='build-directory'>build directory</link>. 
+                <link linkend='build-directory'>Build Directory</link>. 
                 The following example shows how to enable a layer named <filename>meta-mylayer</filename>:
                 <literallayout class='monospaced'>
      LCONF_VERSION = "6"
@@ -315,7 +315,7 @@
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
  
-     PRINC := "${@int(PRINC) + 1}"
+     PRINC := "${@int(PRINC) + 2}"
                 </literallayout>
                 This example adds or overrides files in 
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
@@ -581,7 +581,7 @@
                 You can also add more features by configuring the 
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</ulink></filename>
                 variable in the <filename>local.conf</filename> file found in the Source Directory
-                located in the build directory.
+                located in the Build Directory.
             </para>
 
             <para>
@@ -1240,7 +1240,7 @@
                 combination of multiple libraries you want to build. 
                 You accomplish this through your <filename>local.conf</filename>
                 configuration file in the 
-                <link linkend='build-directory'>build directory</link>. 
+                <link linkend='build-directory'>Build Directory</link>. 
                 An example configuration would be as follows:
                 <literallayout class='monospaced'>
      MACHINE = "qemux86-64"
@@ -1285,7 +1285,7 @@
                     <listitem><para>A unique architecture is defined for the Multilib packages,
                         along with creating a unique deploy folder under 
                         <filename>tmp/deploy/rpm</filename> in the 
-                        <link linkend='build-directory'>build directory</link>. 
+                        <link linkend='build-directory'>Build Directory</link>. 
                         For example, consider <filename>lib32</filename> in a 
                         <filename>qemux86-64</filename> image. 
                         The possible architectures in the system are "all", "qemux86_64",
@@ -1407,7 +1407,7 @@
                 Saving the selections updates the <filename>.config</filename> configuration file.
                 This is the file that the OpenEmbedded build system uses to configure the 
                 kernel during the build. 
-                You can find and examine this file in the build directory in 
+                You can find and examine this file in the Build Directory in 
                 <filename>tmp/work/</filename>.
                 The actual <filename>.config</filename> is located in the area where the 
                 specific kernel is built.
@@ -1463,7 +1463,7 @@
                 placed where the OpenEmbedded build system can find and apply them.
                 Syntactically, the configuration statement is identical to what would appear
                 in the <filename>.config</filename> file, which is in the 
-                <link linkend='build-directory'>build directory</link> in 
+                <link linkend='build-directory'>Build Directory</link> in 
                 <filename>tmp/work/&lt;arch&gt;-poky-linux/linux-yocto-&lt;release-specific-string&gt;/linux-&lt;arch&gt;-&lt;build-type&gt;</filename>.
             </para>
 
@@ -1801,7 +1801,7 @@
                 <itemizedlist>
                     <listitem><para><emphasis>Build for the Correct Target Architecture:</emphasis> Your
                         selected <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
-                        definition within the <filename>local.conf</filename> file in the build directory 
+                        definition within the <filename>local.conf</filename> file in the Build Directory 
                         specifies the target architecture used when building the Linux kernel.
                         By default, <filename>MACHINE</filename> is set to 
                         <filename>qemux86</filename>, which specifies a 32-bit 
@@ -1847,12 +1847,12 @@
                         </para></listitem>
                     <listitem><para><emphasis>Clean up</emphasis>:
                         Be sure to clean the shared state out by running the 
-                        <filename>cleansstate</filename> BitBake task as follows from your build directory:
+                        <filename>cleansstate</filename> BitBake task as follows from your Build Directory:
                         <literallayout class='monospaced'>
      $ bitbake -c cleansstate linux-yocto
                         </literallayout></para>
                         <para><note>Never remove any files by hand from the <filename>tmp/deploy</filename>
-                        directory inside the build directory.
+                        directory inside the Build Directory.
                         Always use the various BitBake clean tasks to clear out previous 
                         build artifacts.
                         </note></para></listitem>
@@ -2022,7 +2022,7 @@
 
         <para>
             By default, the OpenEmbedded build system does its work from within the 
-            <link linkend='build-directory'>build directory</link>.  
+            <link linkend='build-directory'>Build Directory</link>.  
             The build process involves fetching the source files, unpacking them, and then patching them
             if necessary before the build takes place.
         </para>
@@ -2058,17 +2058,17 @@
 
         <para>
             It is important to know that the <filename>externalsrc.bbclass</filename> assumes that the 
-            source directory <filename>S</filename> and the build directory 
+            source directory <filename>S</filename> and the Build Directory 
             <ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink>
             are different even though by default these directories are the same.
             This assumption is important because it supports building different variants of the recipe
             by using the 
             <ulink url='&YOCTO_DOCS_REF_URL;#var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></ulink>
             variable.
-            You could allow the build directory to be the same as the source directory but you would 
+            You could allow the Build Directory to be the same as the source directory but you would 
             not be able to build more than one variant of the recipe.
             Consequently, if you are building multiple variants of the recipe, you need to establish a 
-            build directory that is different than the source directory.
+            Build Directory that is different than the source directory.
         </para>
     </section>
 
@@ -2114,7 +2114,7 @@
         <para>
             To enable this behavior, simply add the following to the <filename>local.conf</filename>
             configuration file found in the 
-            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>:
+            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
             <literallayout class='monospaced'>
      SRCREV_pn-&lt;PN&gt; = "${AUTOREV}"
             </literallayout>
@@ -2545,7 +2545,7 @@
                 </para>
 
                 <para>
-                    Downloaded archives reside in the build directory in 
+                    Downloaded archives reside in the Build Directory in 
                     <filename>/tmp</filename> and are cleared up when they are no longer in use.
                 </para>
 
