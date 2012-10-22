@@ -52,7 +52,7 @@
                 get any of the other mentioned benefits had you run the ADT Installer script.</para></listitem>
             <listitem><para><emphasis>Use the Toolchain from within the Build Directory:</emphasis>
                 If you already have a 
-                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>, 
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>, 
                 you can build the cross-toolchain within the directory.
                 However, like the previous method mentioned, you only get the cross-toolchain and QEMU - you 
                 do not get any of the other benefits without taking separate steps.</para></listitem>
@@ -77,21 +77,21 @@
                 at  
                 <ulink url='&YOCTO_ADTINSTALLER_DL_URL;'></ulink>.
                 Or, you can use BitBake to generate the tarball inside the existing 
-                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
             </para>
 
             <para>
                 If you use BitBake to generate the ADT Installer tarball, you must 
                 <filename>source</filename> the environment setup script 
                 (<filename>&OE_INIT_FILE;</filename>) located 
-                in the source directory before running the <filename>bitbake</filename>
+                in the Source Directory before running the <filename>bitbake</filename>
                 command that creates the tarball.
             </para>
 
             <para>
                 The following example commands download the Poky tarball, set up the 
-                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>, 
-                set up the environment while also creating the default build directory, 
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>, 
+                set up the environment while also creating the default Build Directory, 
                 and run the <filename>bitbake</filename> command that results in the tarball 
                 <filename>~/yocto-project/build/tmp/deploy/sdk/adt_installer.tar.bz2</filename>:
                 <literallayout class='monospaced'>
@@ -251,7 +251,7 @@
      poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.sh
                     </literallayout>
                     <note><para>As an alternative to steps one and two, you can build the toolchain installer 
-                        if you have a <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
+                        if you have a <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                         If you need GMAE, you should use the <filename>bitbake meta-toolchain-gmae</filename>
                         command. 
                         The resulting installation script when run will support such development.
@@ -259,10 +259,10 @@
                         you can generate the toolchain installer using
                         <filename>bitbake meta-toolchain</filename>.</para>
                         <para>Use the appropriate <filename>bitbake</filename> command only after you have 
-                        sourced the <filename>oe-build-init-env</filename> script located in the source
-                        directory.  
+                        sourced the <filename>&OE_INIT_PATH;</filename> script located in the Source
+                        Directory.  
                         When the <filename>bitbake</filename> command completes, the toolchain installer will 
-                        be in <filename>tmp/deploy/sdk</filename> in the build directory.
+                        be in <filename>tmp/deploy/sdk</filename> in the Build Directory.
                         </para></note>
                     </para></listitem>
                 <listitem><para>Once you have the installer, run it to install the toolchain.
@@ -292,7 +292,7 @@
         <para>
             A final way of making the cross-toolchain available is to use BitBake 
             to generate the toolchain within an existing 
-            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>.
+            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
             This method does not install the toolchain into the 
             <filename>/opt</filename> directory.
             As with the previous method, if you need to install the target sysroot, you must 
@@ -300,20 +300,20 @@
         </para>
 
         <para>
-            Follow these steps to generate the toolchain into the build directory:
+            Follow these steps to generate the toolchain into the Build Directory:
             <orderedlist>
                 <listitem><para>Source the environment setup script 
                     <filename>&OE_INIT_FILE;</filename> located in the 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>source directory</ulink>.
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                     </para></listitem> 
                 <listitem><para>At this point, you should be sure that the 
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink> variable 
                     in the <filename>local.conf</filename> file found in the 
-                    <filename>conf</filename> directory of the build directory
+                    <filename>conf</filename> directory of the Build Directory
                     is set for the target architecture.
                     Comments within the <filename>local.conf</filename> file list the values you 
                     can use for the <filename>MACHINE</filename> variable.  
-                    <note>You can populate the build directory with the cross-toolchains for more 
+                    <note>You can populate the Build Directory with the cross-toolchains for more 
                         than a single architecture.  
                         You just need to edit the <filename>MACHINE</filename> variable in the 
                         <filename>local.conf</filename> file and re-run the BitBake 
@@ -327,9 +327,9 @@
                         after checking or editing the <filename>local.conf</filename> but without 
                         changing out of your working directory.</note>
                     Once the <filename>bitbake</filename> command finishes, 
-                    the cross-toolchain is generated and populated within the build directory.
+                    the cross-toolchain is generated and populated within the Build Directory.
                     You will notice environment setup files for the cross-toolchain in the 
-                    build directory in the <filename>tmp</filename> directory.
+                    Build Directory in the <filename>tmp</filename> directory.
                     Setup script filenames contain the strings <filename>environment-setup</filename>.</para>
                     <para>Be aware that when you use this method to install the toolchain you still need
                     to separately extract and install the sysroot filesystem.
@@ -351,9 +351,9 @@
         then you can find this script in the <filename>&YOCTO_ADTPATH_DIR;</filename>
         directory.  
         If you installed the toolchain in the 
-        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>, 
+        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>, 
         you can find the environment setup 
-        script for the toolchain in the build directory's <filename>tmp</filename> directory.
+        script for the toolchain in the Build Directory's <filename>tmp</filename> directory.
     </para>
 
     <para> 
@@ -426,7 +426,7 @@
             you can do so one of two ways:
             <itemizedlist>
                 <listitem><para>Modify the <filename>conf/local.conf</filename> configuration in 
-                    the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>build directory</ulink>
+                    the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
                     and then rebuild the image.
                     With this method, you need to modify the 
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
