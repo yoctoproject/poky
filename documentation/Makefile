@@ -176,7 +176,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
         else
 TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures/building-an-image.png  \
 	figures/using-a-pre-built-image.png \
-	figures/poky-title.png \
+	figures/poky-title.png figures/buildhistory.png figures/buildhistory-web.png \
 	figures/adt-title.png figures/bsp-title.png \
 	figures/kernel-title.png figures/kernel-architecture-overview.png \
 	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
@@ -199,7 +199,8 @@ XSLTOPTS = --stringparam html.stylesheet ref-style.css \
            --stringparam  section.label.includes.component.label 1 \
            --xinclude
 ALLPREQ = html pdf tarball
-TARFILES = poky-ref-manual.html ref-style.css figures/poky-title.png
+TARFILES = poky-ref-manual.html ref-style.css figures/poky-title.png \
+	figures/buildhistory.png figures/buildhistory-web.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css

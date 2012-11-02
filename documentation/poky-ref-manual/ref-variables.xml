@@ -120,6 +120,158 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-BB_DISKMON_DIRS'><glossterm>BB_DISKMON_DIRS</glossterm>
+            <glossdef>
+                <para>
+                    Monitors disk space and available inodes during the build
+                    and allows you to control the build based on these 
+                    parameters.
+                </para>
+
+                <para>
+                    Disk space monitoring is disabled by default.
+                    To enable monitoring, add the <filename>BB_DISKMON_DIRS</filename>
+                    variable to your <filename>conf/local.conf</filename> file found in the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                    Use the following form:
+                    <literallayout class='monospaced'>
+     BB_DISKMON_DIRS = "&lt;action&gt;,&lt;dir&gt;,&lt;threshold&gt; [...]"
+                  
+     where:
+
+        &lt;action&gt; is:
+           ABORT:     Immediately abort the build when
+                      a threshold is broken.
+           STOPTASKS: Stop the build after the currently
+                      executing tasks have finished when 
+                      a threshold is broken.
+           WARN:      Issue a warning but continue the 
+                      build when a threshold is broken.
+                      Subsequent warnings are issued as 
+                      defined by the 
+                      <link linkend='var-BB_DISKMON_WARNINTERVAL'>BB_DISKMON_WARNINTERVAL</link> variable,
+                      which must be defined in the 
+                      conf/local.conf file.
+
+        &lt;dir&gt; is:
+           Any directory you choose. You can specify one or 
+           more directories to monitor by separating the 
+           groupings with a space.  If two directories are 
+           on the same device, only the first directory
+           is monitored.
+
+        &lt;threshold&gt; is:
+           Either the minimum available disk space, 
+           the minimum number of free inodes, or 
+           both.  You must specify at least one.  To 
+           omit one or the other, simply omit the value.
+           Specify the threshold using G, M, K for Gbytes, 
+           Mbytes, and Kbytes, respectively. If you do 
+           not specify G, M, or K, Kbytes is assumed by 
+           default.  Do not use GB, MB, or KB.
+                    </literallayout>
+                </para>
+
+                <para>
+                    Here are some examples:
+                    <literallayout class='monospaced'>
+     BB_DISKMON_DIRS = "ABORT,${TMPDIR},1G,100K WARN,${SSTATE_DIR},1G,100K"
+     BB_DISKMON_DIRS = "STOPTASKS,${TMPDIR},1G"
+     BB_DISKMON_DIRS = "ABORT,${TMPDIR},,100K"
+                    </literallayout>
+                    The first example works only if you also provide 
+                    the <link linkend='var-BB_DISKMON_WARNINTERVAL'><filename>BB_DISKMON_WARNINTERVAL</filename></link> variable
+                    in the <filename>conf/local.conf</filename>.
+                    This example causes the build system to immediately
+                    abort when either the disk space in <filename>${TMPDIR}</filename> drops
+                    below 1 Gbyte or the available free inodes drops below
+                    100 Kbytes.
+                    Because two directories are provided with the variable, the 
+                    build system also issue a 
+                    warning when the disk space in the 
+                    <filename>${SSTATE_DIR}</filename> directory drops
+                    below 1 Gbyte or the number of free inodes drops
+                    below 100 Kbytes.
+                    Subsequent warnings are issued during intervals as 
+                    defined by the <filename>BB_DISKMON_WARNINTERVAL</filename>
+                    variable.
+                </para>
+
+                <para>
+                    The second example stops the build after all currently 
+                    executing tasks complete when the minimum disk space
+                    in the <filename>${TMPDIR}</filename> directory drops 
+                    below 1 Gbyte.  
+                    No disk monitoring occurs for the free inodes in this case. 
+                </para>
+
+                <para>
+                    The final example immediately aborts the build when the 
+                    number of free inodes in the <filename>${TMPDIR}</filename> directory
+                    drops below 100 Kbytes. 
+                    No disk space monitoring for the directory itself occurs
+                    in this case.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BB_DISKMON_WARNINTERVAL'><glossterm>BB_DISKMON_WARNINTERVAL</glossterm>
+            <glossdef>
+                <para>
+                    Defines the disk space and free inode warning intervals.
+                    To set these intervals, define the variable in your 
+                    <filename>conf/local.conf</filename> file in the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                </para>
+
+                <para>
+                    If you are going to use the 
+                    <filename>BB_DISKMON_WARNINTERVAL</filename> variable, you must 
+                    also use the 
+                    <link linkend='var-BB_DISKMON_DIRS'><filename>BB_DISKMON_DIRS</filename></link> variable
+                    and define its action as "WARN".
+                    During the build, subsequent warnings are issued each time 
+                    disk space or number of free inodes further reduces by  
+                    the respective interval.
+                </para>
+
+                <para>
+                    Use the following form:
+                    <literallayout class='monospaced'>
+     BB_DISKMON_WARNINTERVAL = "&lt;disk_space_interval&gt;,&lt;disk_inode_interval&gt;"
+                  
+     where:
+
+        &lt;disk_space_interval&gt; is:
+           An interval of memory expressed in either 
+           G, M, or K for Gbytes, Mbytes, or Kbytes, 
+           respectively. You cannot use GB, MB, or KB.  
+
+        &lt;disk_inode_interval&gt; is:
+           An interval of free inodes expressed in either
+           G, M, or K for Gbytes, Mbytes, or Kbytes, 
+           respectively. You cannot use GB, MB, or KB.  
+                    </literallayout>
+                </para>
+
+                <para>
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     BB_DISKMON_DIRS = "WARN,${SSTATE_DIR},1G,100K"
+     BB_DISKMON_WARNINTERVAL = "50M,5K"
+                    </literallayout>
+                    These variables cause the OpenEmbedded build system to  
+                    issue subsequent warnings each time the available 
+                    disk space further reduces by 50 Mbytes or the number 
+                    of free inodes further reduces by 5 Kbytes in the 
+                    <filename>${SSTATE_DIR}</filename> directory.
+                    Subsequent warnings based on the interval occur each time 
+                    a respective interval is reached beyond the intial warning
+                    (i.e. 1 Gbytes and 100 Kbytes).
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-BBCLASSEXTEND'><glossterm>BBCLASSEXTEND</glossterm>
             <glossdef>
                 <para>
