@@ -1908,113 +1908,343 @@
         </para>
     </section>
 
-    <section id="usingpoky-changes-prbump">
-        <title>Incrementing a Package Revision Number</title>
+    <section id='working-with-packages'>
+        <title>Working with Packages</title>
 
         <para>
-            If a committed change results in changing the package output,
-            then the value of the 
-            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'>PR</ulink></filename> 
-            variable needs to be increased 
-            (or "bumped") as part of that commit. 
-            For new recipes you should add the <filename>PR</filename>
-            variable and set its initial value equal to "r0", which is the default.  
-            Even though the default value is "r0", the practice of adding it to a new recipe makes 
-            it harder to forget to bump the variable when you make changes 
-            to the recipe in future.
+            This section describes a few tasks that involve packages:
+            <itemizedlist>
+                <listitem><para>Incrementing a package revision number
+                    </para></listitem>
+                <listitem><para>Handling a package name alias
+                    </para></listitem>
+                <listitem><para>Handling option module packaging
+                    </para></listitem>
+            </itemizedlist>
         </para>
 
-        <para>
-            If you are sharing a common <filename>.inc</filename> file with multiple recipes, 
-            you can also use the 
-            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-INC_PR'>INC_PR</ulink></filename> 
-            variable to ensure that 
-            the recipes sharing the <filename>.inc</filename> file are rebuilt when the 
-            <filename>.inc</filename> file itself is changed. 
-            The <filename>.inc</filename> file must set <filename>INC_PR</filename>
-            (initially to "r0"), and all recipes referring to it should set <filename>PR</filename>
-            to "$(INC_PR).0" initially, incrementing the last number when the recipe is changed.
-            If the <filename>.inc</filename> file is changed then its 
-            <filename>INC_PR</filename> should be incremented.
-        </para>
+        <section id="usingpoky-changes-prbump">
+            <title>Incrementing a Package Revision Number</title>
 
-        <para> 
-            When upgrading the version of a package, assuming the 
-            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'>PV</ulink></filename> 
-            changes, the <filename>PR</filename> variable should be reset to "r0"
-            (or "$(INC_PR).0" if you are using <filename>INC_PR</filename>).
-        </para>
+            <para>
+                If a committed change results in changing the package output,
+                then the value of the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'>PR</ulink></filename> 
+                variable needs to be increased 
+                (or "bumped") as part of that commit. 
+                For new recipes you should add the <filename>PR</filename>
+                variable and set its initial value equal to "r0", which is the default.  
+                Even though the default value is "r0", the practice of adding it to a new recipe makes 
+                it harder to forget to bump the variable when you make changes 
+                to the recipe in future.
+            </para>
 
-        <para>
-            Usually, version increases occur only to packages.
-            However, if for some reason <filename>PV</filename> changes but does not 
-            increase, you can increase the 
-            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PE'>PE</ulink></filename> 
-            variable (Package Epoch).
-            The <filename>PE</filename> variable defaults to "0".
-        </para>
+            <para>
+                If you are sharing a common <filename>.inc</filename> file with multiple recipes, 
+                you can also use the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-INC_PR'>INC_PR</ulink></filename> 
+                variable to ensure that 
+                the recipes sharing the <filename>.inc</filename> file are rebuilt when the 
+                <filename>.inc</filename> file itself is changed. 
+                The <filename>.inc</filename> file must set <filename>INC_PR</filename>
+                (initially to "r0"), and all recipes referring to it should set <filename>PR</filename>
+                to "$(INC_PR).0" initially, incrementing the last number when the recipe is changed.
+                If the <filename>.inc</filename> file is changed then its 
+                <filename>INC_PR</filename> should be incremented.
+            </para>
 
-        <para>
-            Version numbering strives to follow the 
-            <ulink url='http://www.debian.org/doc/debian-policy/ch-controlfields.html'>
-            Debian Version Field Policy Guidelines</ulink>.
-            These guidelines define how versions are compared and what "increasing" a version means.
-        </para>
+            <para> 
+                When upgrading the version of a package, assuming the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'>PV</ulink></filename> 
+                changes, the <filename>PR</filename> variable should be reset to "r0"
+                (or "$(INC_PR).0" if you are using <filename>INC_PR</filename>).
+            </para>
 
-        <para>
-            There are two reasons for following the previously mentioned guidelines.
-            First, to ensure that when a developer updates and rebuilds, they get all the changes to
-            the repository and do not have to remember to rebuild any sections.
-            Second, to ensure that target users are able to upgrade their
-            devices using package manager commands such as <filename>opkg upgrade</filename> 
-            (or similar commands for dpkg/apt or rpm-based systems). 
-        </para>
+            <para>
+                Usually, version increases occur only to packages.
+                However, if for some reason <filename>PV</filename> changes but does not 
+                increase, you can increase the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PE'>PE</ulink></filename> 
+                variable (Package Epoch).
+                The <filename>PE</filename> variable defaults to "0".
+            </para>
 
-        <para>
-            The goal is to ensure the Yocto Project has packages that can be upgraded in all cases.
-        </para>
-    </section>
+            <para>
+                Version numbering strives to follow the 
+                <ulink url='http://www.debian.org/doc/debian-policy/ch-controlfields.html'>
+                Debian Version Field Policy Guidelines</ulink>.
+                These guidelines define how versions are compared and what "increasing" a version means.
+            </para>
 
-    <section id="usingpoky-configuring-DISTRO_PN_ALIAS">
-        <title>Handling a Package Name Alias</title>
-        <para>
-            Sometimes a package name you are using might exist under an alias or as a similarly named
-            package in a different distribution.
-            The OpenEmbedded build system implements a <filename>distro_check</filename>
-            task that automatically connects to major distributions
-            and checks for these situations. 
-            If the package exists under a different name in a different distribution, you get a 
-            <filename>distro_check</filename> mismatch.  
-            You can resolve this problem by defining a per-distro recipe name alias using the 
-            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_PN_ALIAS'>DISTRO_PN_ALIAS</ulink></filename> 
-            variable.
-        </para>
+            <para>
+                There are two reasons for following the previously mentioned guidelines.
+                First, to ensure that when a developer updates and rebuilds, they get all the changes to
+                the repository and do not have to remember to rebuild any sections.
+                Second, to ensure that target users are able to upgrade their
+                devices using package manager commands such as <filename>opkg upgrade</filename> 
+                (or similar commands for dpkg/apt or rpm-based systems). 
+            </para>
 
-        <para>
-            Following is an example that shows how you specify the <filename>DISTRO_PN_ALIAS</filename>
-            variable:
-            <literallayout class='monospaced'>
+            <para>
+                The goal is to ensure the Yocto Project has packages that can be upgraded in all cases.
+            </para>
+        </section>
+
+        <section id="usingpoky-configuring-DISTRO_PN_ALIAS">
+            <title>Handling a Package Name Alias</title>
+            <para>
+                Sometimes a package name you are using might exist under an alias or as a similarly named
+                package in a different distribution.
+                The OpenEmbedded build system implements a <filename>distro_check</filename>
+                task that automatically connects to major distributions
+                and checks for these situations. 
+                If the package exists under a different name in a different distribution, you get a 
+                <filename>distro_check</filename> mismatch.  
+                You can resolve this problem by defining a per-distro recipe name alias using the 
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_PN_ALIAS'>DISTRO_PN_ALIAS</ulink></filename> 
+                variable.
+            </para>
+
+            <para>
+                Following is an example that shows how you specify the <filename>DISTRO_PN_ALIAS</filename>
+                variable:
+                <literallayout class='monospaced'>
      DISTRO_PN_ALIAS_pn-PACKAGENAME = "distro1=package_name_alias1 \
                                        distro2=package_name_alias2 \
                                        distro3=package_name_alias3 \
                                        ..."
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
         
-        <para>
-            If you have more than one distribution alias, separate them with a space.
-            Note that the build system currently automatically checks the 
-            Fedora, OpenSuSE, Debian, Ubuntu, 
-            and Mandriva distributions for source package recipes without having to specify them 
-            using the <filename>DISTRO_PN_ALIAS</filename> variable.
-            For example, the following command generates a report that lists the Linux distributions
-            that include the sources for each of the recipes.
-            <literallayout class='monospaced'>
+            <para>
+                If you have more than one distribution alias, separate them with a space.
+                Note that the build system currently automatically checks the 
+                Fedora, OpenSuSE, Debian, Ubuntu, 
+                and Mandriva distributions for source package recipes without having to specify them 
+                using the <filename>DISTRO_PN_ALIAS</filename> variable.
+                For example, the following command generates a report that lists the Linux distributions
+                that include the sources for each of the recipes.
+                <literallayout class='monospaced'>
      $ bitbake world -f -c distro_check
-            </literallayout>
-            The results are stored in the <filename>build/tmp/log/distro_check-${DATETIME}.results</filename> 
-            file found in the Source Directory.
-        </para>
+                </literallayout>
+                The results are stored in the <filename>build/tmp/log/distro_check-${DATETIME}.results</filename> 
+                file found in the Source Directory.
+            </para>
+        </section>
+
+        <section id='handling-optional-module-packaging'>
+            <title>Handling Optional Module Packaging</title>
+
+            <para>
+                Many pieces of software split functionality into optional 
+                modules (or plugins) and the plugins that are built 
+                might depend on configuration options. 
+                To avoid having to duplicate the logic that determines what
+                modules are available in your recipe or to avoid having 
+                to package each module by hand, the OpenEmbedded build system 
+                provides functionality to handle module packaging dynamically.
+            </para>
+
+            <para>
+                To handle optional modual packaging, you need to do two things:
+                <itemizedlist>
+                    <listitem><para>Ensure the module packaging is actually
+                        done</para></listitem>
+                    <listitem><para>Ensure that any dependencies on optional 
+                        modules from other recipes are satisfied by your recipe
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <section id='making-sure-the-packaging-is-done'>
+                <title>Making Sure the Packaging is Done</title>
+
+                <para>
+                    To ensure the module packaging actually gets done, you use
+                    the <filename>do_split_packages</filename> function within 
+                    the <filename>populate_packages</filename> python function 
+                    in your recipe.
+                    The <filename>do_split_packages</filename> function
+                    searches for a pattern of files or directories under a 
+                    specified path and creates a package for each one it finds
+                    by appending to the <filename>PACKAGES</filename> variable 
+                    and setting the appropriate values for 
+                    <filename>FILES_packagename</filename>, 
+                    <filename>RDEPENDS_packagename</filename>, 
+                    <filename>DESCRIPTION_packagename</filename>, and so forth.
+                    Here is an example from the <filename>lighttpd</filename> 
+                    recipe:
+                    <literallayout class='monospaced'>
+     python populate_packages_prepend () {
+         lighttpd_libdir = d.expand('${libdir}')
+         do_split_packages(d, lighttpd_libdir, '^mod_(.*)\.so$',
+                          'lighttpd-module-%s', 'Lighttpd module for %s', 
+                           extra_depends='')
+     }
+                    </literallayout>
+                    The previous example specifies a number of things in the 
+                    call to <filename>do_split_packages</filename>.
+                    <itemizedlist>
+                        <listitem><para>A directory within the files installed 
+                            by your recipe through <filename>do_install</filename>
+                            in which to search.</para></listitem>
+                        <listitem><para>A regular expression to match module 
+                            files in that directory.
+                            In the example, note the parentheses () that mark 
+                            the part of the expression from which the module 
+                            name should be derived.</para></listitem>
+                        <listitem><para>A pattern to use for the package names.
+                            </para></listitem>
+                        <listitem><para>A description for each package.
+                            </para></listitem>
+                        <listitem><para>An empty string for 
+                            <filename>extra_depends</filename>, which disables 
+                            the default dependency on the main 
+                            <filename>lighttpd</filename> package. 
+                            Thus, if a file in <filename>${libdir}</filename>
+                            called <filename>mod_alias.so</filename> is found, 
+                            a package called <filename>lighttpd-module-alias</filename>
+                            is created for it and the <filename>DESCRIPTION</filename>
+                            is set to "Lighttpd module for alias".</para></listitem>
+                    </itemizedlist>
+                </para>
+
+                <para>
+                    Often, packaging modules is as simple as the previous 
+                    example.
+                    However, more advanced options exist that you can employ 
+                    to <filename>do_split_packages</filename> to modify its 
+                    behavior.
+                    And, if you need to, you can add more logic by specifying 
+                    a hook function that is called for each package. 
+                    It is also perfectly acceptable to call 
+                    <filename>do_split_packages</filename> multiple times if 
+                    you have more than one set of modules to package.
+                </para>
+
+                <para>
+                    For more examples that show how to use 
+                    <filename>do_split_packages</filename>, see the 
+                    <filename>connman.inc</filename> file in the 
+                    <filename>meta/recipes-connectivity/connman/</filename>
+                    directory of the <filename>poky</filename> source repository.
+                    You can also find examples in 
+                    <filename>meta/classes/kernel.bbclass</filename>.
+                 </para>
+
+                 <para>
+                     Following is a reference that shows 
+                     <filename>do_split_packages</filename> mandatory and 
+                     optional arguments:
+                     <literallayout class='monospaced'>
+     Mandatory arguments
+
+     root 
+        The path in which to search 
+     file_regex 
+        Regular expression to match searched files. 
+        Use parentheses () to mark the part of this 
+        expression that should be used to derive the 
+        module name (to be substituted where %s is 
+        used in other function arguments as noted below) 
+     output_pattern 
+        Pattern to use for the package names. Must 
+        include %s. 
+     description 
+        Description to set for each package. Must 
+        include %s. 
+
+     Optional arguments
+
+     postinst 
+        Postinstall script to use for all packages 
+        (as a string) 
+     recursive 
+        True to perform a recursive search - default 
+        False 
+     hook 
+        A hook function to be called for every match. 
+        The function will be called with the following 
+        arguments (in the order listed):
+
+        f
+           Full path to the file/directory match 
+        pkg
+           The package name 
+        file_regex
+           As above 
+        output_pattern
+           As above 
+        modulename
+           The module name derived using file_regex 
+
+     extra_depends 
+        Extra runtime dependencies (RDEPENDS) to be 
+        set for all packages. The default value of None 
+        causes a dependency on the main package 
+        (${PN}) - if you do not want this, pass empty 
+        string '' for this parameter. 
+     aux_files_pattern 
+        Extra item(s) to be added to FILES for each 
+        package. Can be a single string item or a list 
+        of strings for multiple items. Must include %s. 
+     postrm 
+        postrm script to use for all packages (as a 
+        string) 
+     allow_dirs 
+        True to allow directories to be matched - 
+        default False 
+     prepend 
+        If True, prepend created packages to PACKAGES 
+        instead of the default False which appends them 
+     match_path 
+        match file_regex on the whole relative path to 
+        the root rather than just the file name 
+     aux_files_pattern_verbatim 
+        Extra item(s) to be added to FILES for each 
+        package, using the actual derived module name 
+        rather than converting it to something legal 
+        for a package name. Can be a single string item 
+        or a list of strings for multiple items. Must 
+        include %s. 
+     allow_links 
+        True to allow symlinks to be matched - default 
+        False 
+                     </literallayout>
+                 </para>
+            </section> 
+
+            <section id='satisfying-dependencies'>
+                <title>Satisfying Dependencies</title>
+
+                <para>
+                    The second part for handling optional module packaging
+                    is to ensure that any dependencies on optional modules
+                    from other recipes are satisfied by your recipe. 
+                    You can be sure these dependencies are satisfied by 
+                    using the 
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES_DYNAMIC'><filename>PACKAGES_DYNAMIC</filename></ulink> variable. 
+                    Here is an example that continues with the 
+                    <filename>lighttpd</filename> recipe shown earlier:
+                    <literallayout class='monospaced'>
+     PACKAGES_DYNAMIC = "lighttpd-module-.*"
+                    </literallayout>
+                    The name specified in the regular expression can of 
+                    course be anything.
+                    In this example, it is <filename>lighttpd-module-</filename> 
+                    and is specified as the prefix to ensure that any 
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>
+                    and <ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'><filename>RRECOMMENDS</filename></ulink>
+                    on a package name starting with the prefix are satisfied
+                    during build time. 
+                    If you are using <filename>do_split_packages</filename>
+                    as described in the previous section, the value you put in 
+                    <filename>PACKAGES_DYNAMIC</filename> should correspond to 
+                    the name pattern specified in the call to 
+                    <filename>do_split_packages</filename>.
+                </para>
+            </section>
+        </section>
     </section>
 
     <section id="building-software-from-an-external-source">

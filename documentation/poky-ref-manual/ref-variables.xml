@@ -2012,6 +2012,38 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PACKAGES_DYNAMIC'><glossterm>PACKAGES_DYNAMIC</glossterm>
+            <glossdef>
+                <para>
+                    A promise that your recipe satisfies runtime dependencies 
+                    for optional modules that are found in other recipes.
+                    <filename>PACKAGES_DYNAMIC</filename>
+                    does not actually satisfy the dependencies, it only states that 
+                    they should be satisfied. 
+                    For example, if a hard, runtime dependency 
+                    (<filename>RDEPENDS</filename>) of another package is satisfied 
+                    at build time through the <filename>PACKAGES_DYNAMIC</filename>
+                    variable, but a package with the module name is never actually 
+                    produced, then the other package will be broken.
+                    Thus, if you attempt to include that package in an image,
+                    you will get a dependency failure from the packaging system 
+                    during <filename>do_rootfs</filename>. 
+                    Typically, if there is a chance that such a situation can
+                    occur and the package that is not created is valid 
+                    without the dependency being satisfied, then you should use 
+                    <filename>RRECOMMENDS</filename> (a soft runtime dependency) 
+                    instead of <filename>RDEPENDS</filename>.
+                </para>
+
+                <para> 
+                    For an example of how to use the <filename>PACKAGES_DYNAMIC</filename>
+                    variable when you are splitting packages, see the 
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#handling-optional-module-packaging'>Handling Optional Module Packaging</ulink>" section
+                    in the Yocto Project Development Manual.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PARALLEL_MAKE'><glossterm>PARALLEL_MAKE</glossterm>
             <glossdef>
                 <para>Specifies extra options that are passed to the <filename>make</filename> command during the 
