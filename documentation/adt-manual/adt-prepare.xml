@@ -128,13 +128,16 @@
      $ cp ~/poky/build/tmp/deploy/sdk/adt_installer.tar.bz2 $HOME
      $ tar -xjf adt_installer.tar.bz2
                 </literallayout>
-                Unpacking it creates the directory <filename>adt-installer</filename>, 
-                which contains the ADT Installer script (<filename>adt_installer</filename>)
-                and its configuration file (<filename>adt_installer.conf</filename>).
+                Unpacking the tarball creates the directory <filename>adt-installer</filename>, 
+                which contains the ADT Installer script (<filename>adt_installer</filename>),
+                its configuration file (<filename>adt_installer.conf</filename>), a
+                <filename>scripts</filename> directory, and an <filename>opkg</filename> 
+                directory.
             </para>
 
             <para>
-                Before you run the script, however, you should examine the ADT Installer configuration 
+                Before you run the ADT Installer script, however, you should examine 
+                the ADT Installer configuration 
                 file and be sure you are going to get what you want.  
                 Your configurations determine which kernel and filesystem image are downloaded.
             </para>
@@ -152,7 +155,22 @@
                         <filename>YOCTOADT_REPO</filename>, you need to be sure that the 
                         directory structure follows the same layout as the reference directory 
                         set up at <ulink url='http://adtrepo.yoctoproject.org'></ulink>.  
-                        Also, your repository needs to be accessible through HTTP.</para></listitem>
+                        Also, your repository needs to be accessible through HTTP.</para>
+                        <para>Additionally, you will need to edit a second configuration file
+                        located in the <filename>adt-installer/opkg</filename> directory.
+                        The configuration file you edit depends on your host development
+                        system.
+                        For 64-bit systems, edit the <filename>opkg-sdk-x86_64.conf</filename>
+                        file.
+                        If your host development system is 32-bit, edit the 
+                        <filename>opkg-sdk-i686.conf</filename> file.
+                        For both cases, you need to make sure you are pointing to 
+                        the IPKG-based packages specified by the 
+                        <filename>YOCTOADT_REPO</filename>.
+                        Here is an example for a 64-bit development system:
+                        <literallayout class='monospaced'>
+     src yp-x86_64-nativesdk http://my_repo/yp-1.3.1/adt-ipk/x86_64-nativesdk
+                        </literallayout></para></listitem>
                     <listitem><para><filename>YOCTOADT_TARGETS</filename>: The machine 
                         target architectures for which you want to set up cross-development 
                         environments.</para></listitem>
