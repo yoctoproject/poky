@@ -29,39 +29,168 @@
 <title>Autotools-Based Projects</title>
 
     <para>
-        For an Autotools-based project, you can use the cross-toolchain by just 
-        passing the appropriate host option to <filename>configure.sh</filename>.
-        The host option you use is derived from the name of the environment setup 
-        script in <filename>/opt/poky</filename> resulting from installation of the 
-        cross-toolchain tarball.
-        For example, the host option for an ARM-based target that uses the GNU EABI 
-        is <filename>armv5te-poky-linux-gnueabi</filename>.
-        Note that the name of the script is 
-        <filename>environment-setup-armv5te-poky-linux-gnueabi</filename>.
-        Thus, the following command works:
-        <literallayout class='monospaced'>
+        Once you have a suitable cross-toolchain installed, it is very easy to 
+        develop a project outside of the OpenEmbedded build system.
+        This section presents a simple "Helloworld" example that shows how 
+        to set up, compile, and run the project.
+    </para>
+
+    <section id='creating-and-running-a-project-based-on-gnu-autotools'>
+        <title>Creating and Running a Project Based on GNU Autotools</title>
+
+        <para>
+            Follow these steps to create a simple autotools-based project:
+            <orderedlist>
+                <listitem><para><emphasis>Create your directory:</emphasis>
+                    Create a clean directory for your project and then make 
+                    that directory your working location:
+                    <literallayout class='monospaced'>
+     $ mkdir $HOME/helloworld
+     $ cd $HOME/helloworld
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Populate the directory:</emphasis>
+                    Create <filename>hello.c</filename>, <filename>Makefile.am</filename>,
+                    and <filename>configure.in</filename> files as follows:
+                    <itemizedlist>
+                        <listitem><para>For <filename>hello.c</filename>, include
+                            these lines:
+                            <literallayout class='monospaced'>
+     #include &lt;stdio.h&gt;
+
+     main()
+        {
+           printf("Hello World!\n");
+        }
+                            </literallayout></para></listitem>
+                        <listitem><para>For <filename>Makefile.am</filename>,
+                            include these lines:
+                            <literallayout class='monospaced'>
+     bin_PROGRAMS = hello
+     hello_SOURCES = hello.c
+                            </literallayout></para></listitem>
+                        <listitem><para>For <filename>configure.in</filename>,
+                            include these lines:
+                            <literallayout class='monospaced'>
+     AC_INIT(hello.c)
+     AM_INIT_AUTOMAKE(hello,0.1)
+     AC_PROG_CC
+     AC_CONFIG_HEADERS(config.h)
+     AC_PROG_INSTALL
+     AC_OUTPUT(Makefile)
+                            </literallayout></para></listitem>
+                    </itemizedlist></para></listitem>
+                <listitem><para><emphasis>Source the cross-toolchain 
+                    environment setup file:</emphasis>
+                    Installation of the cross-toolchain creates a cross-toolchain
+                    environment setup script in <filename>/opt/poky/&lt;release&gt;</filename>.
+                    Before you can use the tools to develop your project, you must 
+                    source this setup script.
+                    The script begins with the string "environment-setup" and contains
+                    the machine architecture, which is followed by the string 
+                    "poky-linux".
+                    Here is an example for an environment setup using the 
+                    32-bit Intel x86 Architecture and using the 
+                    &DISTRO_NAME; Yocto Project release:
+                    <literallayout class='monospaced'>
+     $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Generate the local <filename>aclocal.m4</filename>
+                    files and create the configure script:</emphasis>
+                    The following GNU Autotools generate the local 
+                    <filename>aclocal.m4</filename> files and create the 
+                    configure script:
+                    <literallayout class='monospaced'>
+     $ aclocal
+     $ autoconf
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Generate files needed by GNU
+                    coding standards:</emphasis>
+                    GNU coding standards require certain files in order for the 
+                    project to be compliant. 
+                    This command creates those files:
+                    <literallayout class='monospaced'>
+     $ touch NEWS README AUTHORS ChangLog
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Generate the <filename>configure</filename>
+                    file:</emphasis>
+                    This command generates the <filename>configure</filename>:
+                    <literallayout class='monospaced'>
+     $ automake -a
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Cross-compile the project:</emphasis>
+                    This command compiles the project using the cross-compiler:
+                    <literallayout class='monospaced'>
+     $ ./configure ${CONFIGURE_FLAGS}
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Make and install the project:</emphasis>
+                    These two commands generate and install the project into the 
+                    destination directory:
+                    <literallayout class='monospaced'>
+     $ make
+     $ make install DESTDIR=./tmp
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Verify the installation:</emphasis>
+                    This command is a simple way to verify the installation
+                    of your project. 
+                    Running the command prints the architecture on which 
+                    the binary file can run.
+                    This architecture should be the same architecture that 
+                    the installed cross-toolchain supports.
+                    <literallayout class='monospaced'>
+     $ file ./tmp/usr/local/bin/hello
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Execute your project:</emphasis>
+                    To execute the project in the shell, simply enter the name. 
+                    You could also copy the binary to the actual target hardware
+                    and run the project there as well:
+                    <literallayout class='monospaced'>
+     $ ./hello
+                    </literallayout>
+                    As expected, the project displays the "Hello World!" message.
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+
+    <section id='passing-host-options'>
+        <title>Passing Host Options</title>
+
+        <para>
+            For an Autotools-based project, you can use the cross-toolchain by just 
+            passing the appropriate host option to <filename>configure.sh</filename>.
+            The host option you use is derived from the name of the environment setup 
+            script in <filename>/opt/poky</filename> resulting from installation of the 
+            cross-toolchain tarball.
+            For example, the host option for an ARM-based target that uses the GNU EABI 
+            is <filename>armv5te-poky-linux-gnueabi</filename>.
+            You will notice that the name of the script is 
+            <filename>environment-setup-armv5te-poky-linux-gnueabi</filename>.
+            Thus, the following command works:
+            <literallayout class='monospaced'>
      $ configure --host=armv5te-poky-linux-gnueabi \
         --with-libtool-sysroot=&lt;sysroot-dir&gt;
-        </literallayout>
-    </para>
-    <para>
-        This single command updates your project and rebuilds it using the appropriate 
-        cross-toolchain tools.
-    </para>
-    <note>
-        If <filename>configure</filename> script results in problems recognizing the 
-        <filename>--with-libtool-sysroot=&lt;sysroot-dir&gt;</filename> option, 
-        regenerate the script to enable the support by doing the following and then 
-        re-running the script:
-        <literallayout class='monospaced'>
+            </literallayout>
+        </para>
+
+        <para>
+            This single command updates your project and rebuilds it using the appropriate 
+            cross-toolchain tools.
+            <note>
+                If <filename>configure</filename> script results in problems recognizing the 
+                <filename>--with-libtool-sysroot=&lt;sysroot-dir&gt;</filename> option, 
+                regenerate the script to enable the support by doing the following and then 
+                re-running the script:
+                <literallayout class='monospaced'>
      $ libtoolize --automake
      $ aclocal -I ${OECORE_NATIVE_SYSROOT}/usr/share/aclocal \
         [-I &lt;dir_containing_your_project-specific_m4_macros&gt;]
      $ autoconf
      $ autoheader
      $ automake -a
-        </literallayout>
-    </note>       
+                </literallayout>
+            </note>    
+        </para>
+    </section>   
 </section>
 
 <section id='makefile-based-projects'>
