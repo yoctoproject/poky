@@ -1859,9 +1859,40 @@ directory.</para></listitem>
     </para>
 
     <para>
-        This command opens a terminal with a shell prompt within the OpenEmbedded build environment. 
-        The default shell is xterm.
-        The following occurs:
+        This command spawns a terminal with a shell prompt within the OpenEmbedded build environment. 
+        The <ulink url='&YOCTO_DOCS_REF_URL;#var-OE_TERMINAL'><filename>OE_TERMINAL</filename></ulink>
+        controls what type of shell is opened.
+        You can define the variable in the <filename>conf/local.conf</filename> 
+        configuration file in the <link linkend='build-directory'>Build Directory</link>.
+    </para>
+ 
+    <para>
+        Current available terminals are:
+        <literallayout class='monospaced'>
+     auto
+     gnome
+     xfce
+     rxvt
+     screen
+     konsole (KDE 3.x only)
+     none
+        </literallayout>
+        The default terminal type is "auto" and causes 
+        the OpenEmbedded build system to attempt to spawn terminals in a 
+        priority order until one is found that is available on the host 
+        development system.
+        For the case of an X terminal, <filename>DISPLAY</filename> must also 
+        be defined.
+    </para>
+
+    <para>
+        If <filename>OE_TERMINAL</filename> is set to "none", the system 
+        never spawns a terminal under any circumstances. 
+        Use this setting when you are doing automated builds.
+    </para>
+
+    <para>
+        For spawned terminals, the following occurs:
         <itemizedlist>
             <listitem><para>The <filename>PATH</filename> variable includes the 
                 cross-toolchain.</para></listitem>
@@ -1870,6 +1901,9 @@ directory.</para></listitem>
                 <listitem><para>The <filename>configure</filename> command finds the 
                 Yocto Project site files as well as any other necessary files.</para></listitem>
         </itemizedlist>
+    </para>
+
+    <para>
         Within this environment, you can run <filename>configure</filename>
         or <filename>compile</filename> commands as if they were being run by 
         the OpenEmbedded build system itself.
