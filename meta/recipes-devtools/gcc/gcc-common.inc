@@ -7,7 +7,7 @@ NATIVEDEPS = ""
 
 inherit autotools gettext
 
-FILESPATH = "${FILE_DIRNAME}/gcc-${PV}"
+FILESDIR = "${@os.path.dirname(d.getVar('FILE',1))}/gcc-${PV}"
 
 def get_gcc_fpu_setting(bb, d):
     if d.getVar('ARMPKGSFX_EABI', True) == "hf" and d.getVar('TRANSLATED_TARGET_ARCH', True) == "arm":
