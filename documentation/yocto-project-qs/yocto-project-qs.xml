@@ -812,20 +812,20 @@
         <para>
             A good deal that goes into a Yocto Project build is simply downloading all of the source 
             tarballs. 
-            Maybe you have been working with another build system (OpenEmbedded, Angstrom, etc) for which 
+            Maybe you have been working with another build system (OpenEmbedded or Angstrom) for which 
             you've built up a sizable directory of source tarballs.
             Or perhaps someone else has such a directory for which you have read access. 
             If so, you can save time by adding the <filename>PREMIRRORS</filename>
-            statement to your configuration file so that local directories are first checked for existing 
-            tarballs before running out to the net:
+            statement to your configuration file so that the build process checks
+            local directories first for existing tarballs before checking the 
+            Internet.
+            Here is an efficient way to set it up in your <filename>local.conf</filename>
+            file:
             <literallayout class='monospaced'>
-     PREMIRRORS_prepend = "\
-     git://.*/.* file:///home/you/dl/ \n \
-     svn://.*/.* file:///home/you/dl/ \n \
-     cvs://.*/.* file:///home/you/dl/ \n \
-     ftp://.*/.* file:///home/you/dl/ \n \
-     http://.*/.* file:///home/you/dl/ \n \
-     https://.*/.* file:///home/you/dl/ \n"
+     SOURCE_MIRROR_URL ?= "file:///home/you/your-download-dir/"
+     INHERIT += "own-mirrors"
+     BB_GENERATE_MIRROR_TARBALLS = "1"
+     # BB_NO_NETWORK = "1"
             </literallayout>
         </para>
     </section>
