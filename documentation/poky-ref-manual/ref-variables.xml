@@ -2034,32 +2034,59 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-PACKAGECONFIG'><glossterm>PACKAGECONFIG</glossterm>
             <glossdef>
                 <para>
-                    This variable provides a means of enabling or disabling features of a recipe
-                    on a per-recipe basis. 
+                    This variable provides a means of enabling or disabling 
+                    features of a recipe on a per-recipe basis. 
                     The <filename>PACKAGECONFIG</filename>
-                    variable itself specifies a space-separated list of the features
-                    to enable, while the named flags set on the variable specify
-                    for each feature the additional build dependencies 
-                    (<filename><link linkend='var-DEPENDS'>DEPENDS</link></filename>)
-                    that should be added if the feature is enabled, and any extra arguments
-                    that should be added to the configure script argument list
-                    (<filename><link linkend='var-EXTRA_OECONF'>EXTRA_OECONF</link></filename>)
-                    if the feature is enabled or disabled.
+                    variable itself specifies a space-separated list of the 
+                    features to enable or disable.
+                    The features themselves are specified as flags on the 
+                    <filename>PACKAGECONFIG</filename> variable.
+                    You can provide up to four arguments, which are separated by
+                    commas, to determine the behavior of each feature 
+                    when it is enabled or disabled.
+                    You can omit any argument you like but must retain the 
+                    separating commas (see the examples further down).
+                    The arguments specify the following:
+                    <orderedlist>
+                        <listitem><para>Extra arguments 
+                            (<link linkend='var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></link>)
+                            that should be added to the configure script argument list 
+                            if the feature is enabled.</para></listitem>
+                        <listitem><para>Extra arguments (<filename>EXTRA_OECONF</filename>)
+                            that should be added if the feature is disabled.
+                            </para></listitem>
+                        <listitem><para>Additional build dependencies 
+                            (<link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>)
+                            that should be added if the feature is enabled.
+                            </para></listitem>
+                        <listitem><para>Additional runtime dependencies 
+                            (<link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>)
+                            that should be added if the feature is enabled.
+                            </para></listitem>
+                    </orderedlist>
                 </para>
+
                 <para>
-                    For example, the following taken from the <filename>librsvg</filename>
-                    recipe will add <filename>--with-croco</filename> to the
-                    configure script arguments and <filename>libcroco</filename> to
-                    <filename><link linkend='var-DEPENDS'>DEPENDS</link></filename>
-                    by default.
-                    However, if "croco" is removed from <filename>PACKAGECONFIG</filename>
-                    (for example, by using a <filename>.bbappend</filename> file in another layer), then
-                    <filename>--without-croco</filename> will be added to the configure
-                    script arguments instead:
-                    <literallayout class='monospaced'>
+                    Consider the following example taken from the 
+                    <filename>librsvg</filename> recipe.
+                    In this example the feature is <filename>croco</filename>, which 
+                    has three arguments that determine the feature's' behavior.
+                        <literallayout class='monospaced'>
      PACKAGECONFIG ??= "croco"
      PACKAGECONFIG[croco] = "--with-croco,--without-croco,libcroco"
-                    </literallayout>
+                        </literallayout>
+                    The <filename>--with-croco</filename> and 
+                    <filename>libcroco</filename> arguments apply only if 
+                    the feature is enabled.
+                    In this case, <filename>--with-croco</filename> is 
+                    added to the configure script argument list and 
+                    <filename>libcroco</filename> is added to 
+                    <filename><link linkend='var-DEPENDS'>DEPENDS</link></filename>.
+                    On the other hand, if the feature is disabled say through
+                    a <filename>.bbappend</filename> file in another layer, then
+                    the second argument <filename>--without-croco</filename> is 
+                    added to the configure script rather than 
+                    <filename>--with-croco</filename>.
                 </para>
             </glossdef>
         </glossentry>
