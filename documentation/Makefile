@@ -225,9 +225,10 @@ endif
 
 ifeq ($(DOC),adt-manual)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf tarball
-TARFILES = adt-manual.html adt-manual.pdf adt-style.css figures/adt-title.png
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
+ALLPREQ = html pdf eclipse tarball
+TARFILES = adt-manual.html adt-manual.pdf adt-style.css figures/adt-title.png \
+			eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
