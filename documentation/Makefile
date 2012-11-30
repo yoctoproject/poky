@@ -70,11 +70,7 @@
 #
 
 ifeq ($(DOC),bsp-guide)
-XSLTOPTS = --stringparam html.stylesheet bsp-style.css \
-           --stringparam  chapter.autolabel 1 \
-           --stringparam  section.autolabel 1 \
-           --stringparam  section.label.includes.component.label 1 \
-           --xinclude
+XSLTOPTS = --xinclude
 ALLPREQ = html pdf tarball
 TARFILES = bsp-style.css bsp-guide.html bsp-guide.pdf figures/bsp-title.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
