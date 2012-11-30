@@ -326,6 +326,29 @@ else
 endif
 
 
+eclipse: BASE_DIR = html/$(DOC)/
+
+eclipse:
+ifneq ($(DOC),adt-manual)
+	@echo " "
+	@echo "ERROR: You can only create eclipse documentation of the"
+	@echo "       Yocto Project Application Development Toolkit (ADT)"
+	@echo "       User's Guide"
+	@echo " "
+else
+	@echo " "
+	@echo "******** Building eclipse help of "$(DOC)
+	@echo " "
+	cd $(DOC) && \
+		xsltproc $(XSLTOPTS) \
+				--stringparam base.dir '$(BASE_DIR)' \
+				-o eclipse/$(DOC).html \
+				$(DOC)-eclipse-customization.xsl $(DOC).xml && \
+		mv eclipse/toc.xml eclipse/$(DOC)-toc.xml && \
+		cp -rf $(FIGURES) eclipse/$(BASE_DIR)/$(FIGURES) && \
+		cd ..
+endif
+
 tarball: html
 	@echo " "
 	@echo "******** Creating Tarball of document files"
