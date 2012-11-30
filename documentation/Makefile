@@ -84,11 +84,7 @@ STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),dev-manual)
-XSLTOPTS = --stringparam html.stylesheet dev-style.css \
-           --stringparam  chapter.autolabel 1 \
-           --stringparam  section.autolabel 1 \
-           --stringparam  section.label.includes.component.label 1 \
-           --xinclude
+XSLTOPTS = --xinclude
 ALLPREQ = html pdf tarball
 #
 # Note that the tarfile might produce the "Cannot stat: No such file or directory" error
