@@ -71,9 +71,10 @@
 
 ifeq ($(DOC),bsp-guide)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf tarball
-TARFILES = bsp-style.css bsp-guide.html bsp-guide.pdf figures/bsp-title.png
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
+ALLPREQ = html pdf eclipse tarball
+TARFILES = bsp-style.css bsp-guide.html bsp-guide.pdf figures/bsp-title.png \
+           eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 
