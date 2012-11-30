@@ -11,6 +11,8 @@
 #              or the mega-manual (single, large HTML file comprised of all
 #              Yocto Project manuals).
 #    html:     generates an HTML version of a manual.
+#    eclipse:  generates an HTML version of a manual that can be used as
+#              eclipse help (including necessary metadata files).
 #    tarball:  creates a tarball for the doc files.
 #    validate: validates
 #    publish:  pushes generated files to the Yocto Project website
@@ -321,19 +323,9 @@ eclipse: eclipse-generate eclipse-resolve-links
 .PHONY : eclipse-generate eclipse-resolve-links
 
 eclipse-generate:
-ifeq ($(filter $(DOC), adt-manual bsp-guide dev-manual kernel-manual poky-ref-manual yocto-project-qs),)
+ifeq ($(DOC),mega-manual)
 	@echo " "
-	@echo "ERROR: You can only create eclipse documentation"
-	@echo "       of the following documentation parts:"
-	@echo " "
-	@echo "       - The Yocto Project Application Developer's Guide (adt-manual)"
-	@echo "       - The Yocto Project Board Support Package"
-	@echo "                           Developer's Guide (bsp-guide)"
-	@echo "       - The Yocto Project Development Manual (dev-manual)"
-	@echo "       - The Yocto Project Kernel Architecture and"
-	@echo "                           Use Manual (kernel-manual)"
-	@echo "		  - The Yocto Project Reference Manual (poky-ref-manual)"
-	@echo "       - The Yocto Project Quick Start (yocto-project-qs)"
+	@echo "ERROR: You cannot generate eclipse documentation for the mega-manual"
 	@echo " "
 else
 	@echo " "
