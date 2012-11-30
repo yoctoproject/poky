@@ -314,7 +314,7 @@ endif
 eclipse: BASE_DIR = html/$(DOC)/
 
 eclipse:
-ifeq ($(filter $(DOC), adt-manual bsp-guide dev-manual kernel-manual poky-ref-manual),)
+ifeq ($(filter $(DOC), adt-manual bsp-guide dev-manual kernel-manual poky-ref-manual yocto-project-qs),)
 	@echo " "
 	@echo "ERROR: You can only create eclipse documentation"
 	@echo "       of the following documentation parts:"
@@ -326,6 +326,7 @@ ifeq ($(filter $(DOC), adt-manual bsp-guide dev-manual kernel-manual poky-ref-ma
 	@echo "       - The Yocto Project Kernel Architecture and"
 	@echo "                           Use Manual (kernel-manual)"
 	@echo "		  - The Yocto Project Reference Manual (poky-ref-manual)"
+	@echo "       - The Yocto Project Quick Start (yocto-project-qs)"
 	@echo " "
 else
 	@echo " "
