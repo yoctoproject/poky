@@ -224,12 +224,7 @@ endif
 
 
 ifeq ($(DOC),adt-manual)
-XSLTOPTS = --stringparam html.stylesheet adt-style.css \
-           --stringparam  chapter.autolabel 1 \
-           --stringparam  appendix.autolabel A \
-           --stringparam  section.autolabel 1 \
-           --stringparam  section.label.includes.component.label 1 \
-           --xinclude
+XSLTOPTS = --xinclude
 ALLPREQ = html pdf tarball
 TARFILES = adt-manual.html adt-manual.pdf adt-style.css figures/adt-title.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
