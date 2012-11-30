@@ -326,11 +326,13 @@ endif
 eclipse: BASE_DIR = html/$(DOC)/
 
 eclipse:
-ifneq ($(DOC),adt-manual)
+ifeq ($(filter $(DOC), adt-manual dev-manual),)
 	@echo " "
-	@echo "ERROR: You can only create eclipse documentation of the"
-	@echo "       Yocto Project Application Development Toolkit (ADT)"
-	@echo "       User's Guide"
+	@echo "ERROR: You can only create eclipse documentation"
+	@echo "       of the following documentation parts:"
+	@echo " "
+	@echo "       - The Yocto Project Application Developer's Guide (adt-manual)"
+	@echo "       - The Yocto Project Development Manual (dev-manual)"
 	@echo " "
 else
 	@echo " "
