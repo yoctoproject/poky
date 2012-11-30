@@ -202,12 +202,7 @@ STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),ref-manual)
-XSLTOPTS = --stringparam html.stylesheet ref-style.css \
-           --stringparam  chapter.autolabel 1 \
-           --stringparam  appendix.autolabel A \
-           --stringparam  section.autolabel 1 \
-           --stringparam  section.label.includes.component.label 1 \
-           --xinclude
+XSLTOPTS = --xinclude
 ALLPREQ = html pdf tarball
 TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/buildhistory.png figures/buildhistory-web.png
