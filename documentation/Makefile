@@ -124,8 +124,7 @@ STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),yocto-project-qs)
-XSLTOPTS = --stringparam html.stylesheet qs-style.css \
-           --xinclude
+XSLTOPTS = --xinclude
 ALLPREQ = html tarball
 TARFILES = yocto-project-qs.html qs-style.css figures/yocto-environment.png figures/building-an-image.png figures/using-a-pre-built-image.png figures/yocto-project-transp.png
 MANUALS = $(DOC)/$(DOC).html

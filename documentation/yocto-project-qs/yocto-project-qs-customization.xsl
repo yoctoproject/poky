@@ -4,5 +4,5 @@
   <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/xhtml/docbook.xsl" />
 
   <xsl:param name="generate.toc" select="'article nop'"></xsl:param>
-
+  <xsl:param name="html.stylesheet" select="'qs-style.css'" />
 </xsl:stylesheet>
