@@ -259,10 +259,11 @@ endif
 
 ifeq ($(DOC),kernel-dev)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf tarball
+ALLPREQ = html pdf eclipse tarball
 TARFILES = kernel-dev.html kernel-dev.pdf kernel-dev-style.css figures/kernel-dev-title.png \
-           figures/kernel-architecture-overview.png
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
+           figures/kernel-architecture-overview.png \
+           eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
