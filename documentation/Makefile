@@ -316,7 +316,11 @@ endif
 
 eclipse: BASE_DIR = html/$(DOC)/
 
-eclipse:
+eclipse: eclipse-generate eclipse-resolve-links
+
+.PHONY : eclipse-generate eclipse-resolve-links
+
+eclipse-generate:
 ifeq ($(filter $(DOC), adt-manual bsp-guide dev-manual kernel-manual poky-ref-manual yocto-project-qs),)
 	@echo " "
 	@echo "ERROR: You can only create eclipse documentation"
@@ -342,8 +346,18 @@ else
 				$(DOC)-eclipse-customization.xsl $(DOC).xml && \
 		mv eclipse/toc.xml eclipse/$(DOC)-toc.xml && \
 		cp -rf $(FIGURES) eclipse/$(BASE_DIR)/$(FIGURES) && \
-		cd ..
+		cd ..;
+
+	$(call modify-eclipse)
 endif
+
+eclipse-resolve-links:
+	@echo " "
+	@echo "******** Using eclipse-help.sed to process external links"
+	@echo " "
+	$(foreach FILE, \
+		$(wildcard $(DOC)/eclipse/html/$(DOC)/*.html), \
+		$(shell sed -i -f tools/eclipse-help.sed $(FILE)))
 
 tarball: html
 	@echo " "
