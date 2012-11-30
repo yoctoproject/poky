@@ -258,12 +258,7 @@ STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),kernel-dev)
-XSLTOPTS = --stringparam html.stylesheet kernel-dev-style.css \
-           --stringparam  chapter.autolabel 1 \
-           --stringparam  appendix.autolabel A \
-           --stringparam  section.autolabel 1 \
-           --stringparam  section.label.includes.component.label 1 \
-           --xinclude
+XSLTOPTS = --xinclude
 ALLPREQ = html pdf tarball
 TARFILES = kernel-dev.html kernel-dev.pdf kernel-dev-style.css figures/kernel-dev-title.png \
            figures/kernel-architecture-overview.png
