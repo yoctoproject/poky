@@ -217,10 +217,15 @@
      BBFILES ?= ""
 
      BBLAYERS ?= " \
-       /path/to/poky/meta \
-       /path/to/poky/meta-yocto \
-       /path/to/poky/meta-yocto-bsp \
-       /path/to/poky/meta-mylayer \
+       $HOME/poky/meta \
+       $HOME/poky/meta-yocto \
+       $HOME/poky/meta-yocto-bsp \
+       $HOME/poky/meta-mylayer \
+       "
+
+     BBLAYERS_NON_REMOVABLE ?= " \
+       $HOME/poky/meta \
+       $HOME/poky/meta-yocto \
        "                
                 </literallayout>
             </para>
@@ -232,14 +237,6 @@
                 During the processing of each <filename>conf/layer.conf</filename> file, BitBake adds the 
                 recipes, classes and configurations contained within the particular layer to the source
                 directory.
-                <note>
-                    Removing the <filename>meta-yocto</filename> layer exposes a bug for the 
-                    current release of the Yocto Project.
-                    If for some reason you do remove this layer from the 
-                    <filename>bblayers.conf</filename>, you must set the 
-                    <filename>LCONF_VERSION</filename> variable to "5".
-                    See <ulink url='https://bugzilla.yoctoproject.org/show_bug.cgi?id=3176'>[YOCTO_#3176]</ulink>
-                    for more information.</note>
             </para>
         </section>
 
@@ -1816,14 +1813,18 @@
                         <filename>meta</filename>, <filename>meta-yocto</filename>, and 
                         <filename>meta-yocto-bsp</filename> in the 
                         <filename>poky</filename> Git repository.
-                        Add the path to your <filename>meta-mylayer</filename> location.
-                        Be sure to substitute your user information in the statement:
+                        Add the path to your <filename>meta-mylayer</filename> location:
                         <literallayout class='monospaced'>
-     BBLAYERS = " \
-       /home/&lt;user&gt;/poky/meta \
-       /home/&lt;user&gt;/poky/meta-yocto \
-       /home/&lt;user&gt;/poky/meta-yocto-bsp \
-       /home/&lt;user&gt;/poky/meta-mylayer \
+     BBLAYERS ?= " \
+       $HOME/poky/meta \
+       $HOME/poky/meta-yocto \
+       $HOME/poky/meta-yocto-bsp \
+       $HOME/poky/meta-mylayer \
+       "
+
+     BBLAYERS_NON_REMOVABLE ?= " \
+       $HOME/poky/meta \
+       $HOME/poky/meta-yocto \
        "
                         </literallayout></para></listitem>
                 </itemizedlist>
@@ -3048,11 +3049,15 @@
      BBFILES ?= ""
 
      BBLAYERS ?= " \
-       ##COREBASE##/meta \
-       ##COREBASE##/meta-yocto \
-       ##COREBASE##/meta-yocto-bsp \
-       ##COREBASE##/meta-my-bsp-layer \
-       ##COREBASE##/meta-my-software-layer \
+       $HOME/poky/meta \
+       $HOME/poky/meta-yocto \
+       $HOME/poky/meta-yocto-bsp \
+       $HOME/poky/meta-mylayer \
+       "
+
+     BBLAYERS_NON_REMOVABLE ?= " \
+       $HOME/poky/meta \
+       $HOME/poky/meta-yocto \
        "
                 </literallayout>
                 Creating and providing an archive of the metadata layers
