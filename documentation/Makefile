@@ -337,7 +337,7 @@ else
 				-o eclipse/$(DOC).html \
 				$(DOC)-eclipse-customization.xsl $(DOC).xml && \
 		mv eclipse/toc.xml eclipse/$(DOC)-toc.xml && \
-		cp -rf $(FIGURES) eclipse/$(BASE_DIR)/$(FIGURES) && \
+		cp -rf $(FIGURES) eclipse/$(BASE_DIR) && \
 		cd ..;
 
 	$(call modify-eclipse)
