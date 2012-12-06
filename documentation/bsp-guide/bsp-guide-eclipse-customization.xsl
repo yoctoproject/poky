@@ -9,6 +9,7 @@
 	  href="http://docbook.sourceforge.net/release/xsl/current/eclipse/eclipse3.xsl" />
 
   <xsl:param name="chunker.output.indent" select="'yes'"/>
+  <xsl:param name="chunk.quietly" select="1"/>
   <xsl:param name="chunk.first.sections" select="1"/>
   <xsl:param name="chunk.section.depth" select="10"/>
   <xsl:param name="use.id.as.filename" select="1"/>

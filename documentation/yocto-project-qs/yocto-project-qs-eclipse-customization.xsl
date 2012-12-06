@@ -10,6 +10,7 @@
   <xsl:import href="yocto-project-qs-titlepage.xsl"/>
 
   <xsl:param name="chunker.output.indent" select="'yes'"/>
+  <xsl:param name="chunk.quietly" select="1"/>
   <xsl:param name="use.id.as.filename" select="1"/>
   <xsl:param name="ulink.target" select="'_self'" />
   <xsl:param name="base.dir" select="'html/yocto-project-qs/'"/>
