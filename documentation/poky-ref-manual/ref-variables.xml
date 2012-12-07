@@ -16,48 +16,48 @@
 
 
     <para>
-       <link linkend='var-ALLOW_EMPTY'>A</link> 
-       <link linkend='var-B'>B</link> 
-       <link linkend='var-CFLAGS'>C</link> 
-       <link linkend='var-D'>D</link> 
-       <link linkend='var-ENABLE_BINARY_LOCALE_GENERATION'>E</link> 
-       <link linkend='var-FILES'>F</link> 
+       <link linkend='var-ALLOW_EMPTY'>A</link>
+       <link linkend='var-B'>B</link>
+       <link linkend='var-CFLAGS'>C</link>
+       <link linkend='var-D'>D</link>
+       <link linkend='var-ENABLE_BINARY_LOCALE_GENERATION'>E</link>
+       <link linkend='var-FILES'>F</link>
 <!--               <link linkend='var-glossary-g'>G</link> -->
-       <link linkend='var-HOMEPAGE'>H</link> 
-       <link linkend='var-IMAGE_FEATURES'>I</link> 
+       <link linkend='var-HOMEPAGE'>H</link>
+       <link linkend='var-IMAGE_FEATURES'>I</link>
 <!--               <link linkend='var-glossary-j'>J</link> -->
        <link linkend='var-KBRANCH'>K</link>
-       <link linkend='var-LAYERDIR'>L</link> 
-       <link linkend='var-MACHINE'>M</link> 
+       <link linkend='var-LAYERDIR'>L</link>
+       <link linkend='var-MACHINE'>M</link>
 <!--               <link linkend='var-glossary-n'>N</link> -->
        <link linkend='var-OE_TERMINAL'>O</link>
-       <link linkend='var-P'>P</link> 
+       <link linkend='var-P'>P</link>
 <!--               <link linkend='var-glossary-q'>Q</link> -->
-       <link linkend='var-RCONFLICTS'>R</link> 
-       <link linkend='var-S'>S</link> 
-       <link linkend='var-T'>T</link> 
+       <link linkend='var-RCONFLICTS'>R</link>
+       <link linkend='var-S'>S</link>
+       <link linkend='var-T'>T</link>
 <!--               <link linkend='var-glossary-u'>U</link> -->
 <!--               <link linkend='var-glossary-v'>V</link> -->
-       <link linkend='var-WORKDIR'>W</link> 
+       <link linkend='var-WORKDIR'>W</link>
 <!--               <link linkend='var-glossary-x'>X</link> -->
 <!--               <link linkend='var-glossary-y'>Y</link> -->
 <!--               <link linkend='var-glossary-z'>Z</link>-->
     </para>
 
-    <glossdiv id='var-glossary-a'><title>A</title> 
+    <glossdiv id='var-glossary-a'><title>A</title>
 
          <glossentry id='var-ALLOW_EMPTY'><glossterm>ALLOW_EMPTY</glossterm>
             <glossdef>
                 <para>
                    Specifies if an output package should still be produced if it is empty.
                    By default, BitBake does not produce empty packages.
-                   This default behavior can cause issues when there is an 
-                   <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link> or 
+                   This default behavior can cause issues when there is an
+                   <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link> or
                    some other runtime hard-requirement on the existence of the package.
                 </para>
 
                 <para>
-                   Like all package-controlling variables, you must always use them in 
+                   Like all package-controlling variables, you must always use them in
                    conjunction with a package name override.
                    Here is an example:
                    <literallayout class='monospaced'>
@@ -69,7 +69,7 @@
 
          <glossentry id='var-AUTHOR'><glossterm>AUTHOR</glossterm>
             <glossdef>
-                <para>The email address used to contact the original author or authors in 
+                <para>The email address used to contact the original author or authors in
                     order to send patches, forward bugs, etc.</para>
             </glossdef>
          </glossentry>
@@ -86,7 +86,7 @@
             </glossdef>
         </glossentry>
 
-    </glossdiv> 
+    </glossdiv>
 
     <glossdiv id='var-glossary-b'><title>B</title>
 
@@ -101,7 +101,7 @@
                     <literallayout class='monospaced'>
      B = ${WORKDIR}/${BPN}-{PV}/
                     </literallayout>
-                    You can separate the (<filename>S</filename>) directory and the directory pointed to 
+                    You can separate the (<filename>S</filename>) directory and the directory pointed to
                     by the <filename>B</filename> variable.
                     Most autotools-based recipes support separating these directories.
                     The build system defaults to using separate directories for <filename>gcc</filename>
@@ -114,7 +114,7 @@
             <glossdef>
                 <para>
                     A list of packages not to install despite being recommended by a recipe.
-                    Support for this variable exists only when using the 
+                    Support for this variable exists only when using the
                     <filename>ipk</filename> packaging backend.
                 </para>
             </glossdef>
@@ -124,50 +124,50 @@
             <glossdef>
                 <para>
                     Monitors disk space and available inodes during the build
-                    and allows you to control the build based on these 
+                    and allows you to control the build based on these
                     parameters.
                 </para>
 
                 <para>
                     Disk space monitoring is disabled by default.
                     To enable monitoring, add the <filename>BB_DISKMON_DIRS</filename>
-                    variable to your <filename>conf/local.conf</filename> file found in the 
+                    variable to your <filename>conf/local.conf</filename> file found in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                     Use the following form:
                     <literallayout class='monospaced'>
      BB_DISKMON_DIRS = "&lt;action&gt;,&lt;dir&gt;,&lt;threshold&gt; [...]"
-                  
+
      where:
 
         &lt;action&gt; is:
            ABORT:     Immediately abort the build when
                       a threshold is broken.
            STOPTASKS: Stop the build after the currently
-                      executing tasks have finished when 
+                      executing tasks have finished when
                       a threshold is broken.
-           WARN:      Issue a warning but continue the 
+           WARN:      Issue a warning but continue the
                       build when a threshold is broken.
-                      Subsequent warnings are issued as 
-                      defined by the 
+                      Subsequent warnings are issued as
+                      defined by the
                       <link linkend='var-BB_DISKMON_WARNINTERVAL'>BB_DISKMON_WARNINTERVAL</link> variable,
-                      which must be defined in the 
+                      which must be defined in the
                       conf/local.conf file.
 
         &lt;dir&gt; is:
-           Any directory you choose. You can specify one or 
-           more directories to monitor by separating the 
-           groupings with a space.  If two directories are 
+           Any directory you choose. You can specify one or
+           more directories to monitor by separating the
+           groupings with a space.  If two directories are
            on the same device, only the first directory
            is monitored.
 
         &lt;threshold&gt; is:
-           Either the minimum available disk space, 
-           the minimum number of free inodes, or 
-           both.  You must specify at least one.  To 
+           Either the minimum available disk space,
+           the minimum number of free inodes, or
+           both.  You must specify at least one.  To
            omit one or the other, simply omit the value.
-           Specify the threshold using G, M, K for Gbytes, 
-           Mbytes, and Kbytes, respectively. If you do 
-           not specify G, M, or K, Kbytes is assumed by 
+           Specify the threshold using G, M, K for Gbytes,
+           Mbytes, and Kbytes, respectively. If you do
+           not specify G, M, or K, Kbytes is assumed by
            default.  Do not use GB, MB, or KB.
                     </literallayout>
                 </para>
@@ -179,36 +179,36 @@
      BB_DISKMON_DIRS = "STOPTASKS,${TMPDIR},1G"
      BB_DISKMON_DIRS = "ABORT,${TMPDIR},,100K"
                     </literallayout>
-                    The first example works only if you also provide 
+                    The first example works only if you also provide
                     the <link linkend='var-BB_DISKMON_WARNINTERVAL'><filename>BB_DISKMON_WARNINTERVAL</filename></link> variable
                     in the <filename>conf/local.conf</filename>.
                     This example causes the build system to immediately
                     abort when either the disk space in <filename>${TMPDIR}</filename> drops
                     below 1 Gbyte or the available free inodes drops below
                     100 Kbytes.
-                    Because two directories are provided with the variable, the 
-                    build system also issue a 
-                    warning when the disk space in the 
+                    Because two directories are provided with the variable, the
+                    build system also issue a
+                    warning when the disk space in the
                     <filename>${SSTATE_DIR}</filename> directory drops
                     below 1 Gbyte or the number of free inodes drops
                     below 100 Kbytes.
-                    Subsequent warnings are issued during intervals as 
+                    Subsequent warnings are issued during intervals as
                     defined by the <filename>BB_DISKMON_WARNINTERVAL</filename>
                     variable.
                 </para>
 
                 <para>
-                    The second example stops the build after all currently 
+                    The second example stops the build after all currently
                     executing tasks complete when the minimum disk space
-                    in the <filename>${TMPDIR}</filename> directory drops 
-                    below 1 Gbyte.  
-                    No disk monitoring occurs for the free inodes in this case. 
+                    in the <filename>${TMPDIR}</filename> directory drops
+                    below 1 Gbyte.
+                    No disk monitoring occurs for the free inodes in this case.
                 </para>
 
                 <para>
-                    The final example immediately aborts the build when the 
+                    The final example immediately aborts the build when the
                     number of free inodes in the <filename>${TMPDIR}</filename> directory
-                    drops below 100 Kbytes. 
+                    drops below 100 Kbytes.
                     No disk space monitoring for the directory itself occurs
                     in this case.
                 </para>
@@ -219,26 +219,26 @@
             <glossdef>
                 <para>
                     Defines the disk space and free inode warning intervals.
-                    To set these intervals, define the variable in your 
-                    <filename>conf/local.conf</filename> file in the 
+                    To set these intervals, define the variable in your
+                    <filename>conf/local.conf</filename> file in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                 </para>
 
                 <para>
-                    If you are going to use the 
-                    <filename>BB_DISKMON_WARNINTERVAL</filename> variable, you must 
-                    also use the 
+                    If you are going to use the
+                    <filename>BB_DISKMON_WARNINTERVAL</filename> variable, you must
+                    also use the
                     <link linkend='var-BB_DISKMON_DIRS'><filename>BB_DISKMON_DIRS</filename></link> variable
                     and define its action as "WARN".
-                    During the build, subsequent warnings are issued each time 
-                    disk space or number of free inodes further reduces by  
+                    During the build, subsequent warnings are issued each time
+                    disk space or number of free inodes further reduces by
                     the respective interval.
                 </para>
 
                 <para>
                     If you do not provide a <filename>BB_DISKMON_WARNINTERVAL</filename>
-                    variable and you do use <filename>BB_DISKMON_DIRS</filename> with 
-                    the "WARN" action, the disk monitoring interval defaults to 
+                    variable and you do use <filename>BB_DISKMON_DIRS</filename> with
+                    the "WARN" action, the disk monitoring interval defaults to
                     the following:
                     <literallayout class='monospaced'>
      BB_DISKMON_WARNINTERVAL = "50M,5K"
@@ -246,22 +246,22 @@
                 </para>
 
                 <para>
-                    When specifying the variable in your configuration file, 
+                    When specifying the variable in your configuration file,
                     use the following form:
                     <literallayout class='monospaced'>
      BB_DISKMON_WARNINTERVAL = "&lt;disk_space_interval&gt;,&lt;disk_inode_interval&gt;"
-                  
+
      where:
 
         &lt;disk_space_interval&gt; is:
-           An interval of memory expressed in either 
-           G, M, or K for Gbytes, Mbytes, or Kbytes, 
-           respectively. You cannot use GB, MB, or KB.  
+           An interval of memory expressed in either
+           G, M, or K for Gbytes, Mbytes, or Kbytes,
+           respectively. You cannot use GB, MB, or KB.
 
         &lt;disk_inode_interval&gt; is:
            An interval of free inodes expressed in either
-           G, M, or K for Gbytes, Mbytes, or Kbytes, 
-           respectively. You cannot use GB, MB, or KB.  
+           G, M, or K for Gbytes, Mbytes, or Kbytes,
+           respectively. You cannot use GB, MB, or KB.
                     </literallayout>
                 </para>
 
@@ -271,12 +271,12 @@
      BB_DISKMON_DIRS = "WARN,${SSTATE_DIR},1G,100K"
      BB_DISKMON_WARNINTERVAL = "50M,5K"
                     </literallayout>
-                    These variables cause the OpenEmbedded build system to  
-                    issue subsequent warnings each time the available 
-                    disk space further reduces by 50 Mbytes or the number 
-                    of free inodes further reduces by 5 Kbytes in the 
+                    These variables cause the OpenEmbedded build system to
+                    issue subsequent warnings each time the available
+                    disk space further reduces by 50 Mbytes or the number
+                    of free inodes further reduces by 5 Kbytes in the
                     <filename>${SSTATE_DIR}</filename> directory.
-                    Subsequent warnings based on the interval occur each time 
+                    Subsequent warnings based on the interval occur each time
                     a respective interval is reached beyond the intial warning
                     (i.e. 1 Gbytes and 100 Kbytes).
                 </para>
@@ -310,24 +310,24 @@
         <glossentry id='var-BBMASK'><glossterm>BBMASK</glossterm>
             <glossdef>
                 <para>Prevents BitBake from processing recipes and recipe append files.
-                    You can use the <filename>BBMASK</filename> variable to "hide" 
+                    You can use the <filename>BBMASK</filename> variable to "hide"
                     these <filename>.bb</filename> and <filename>.bbappend</filename> files.
                     BitBake ignores any recipe or recipe append files that match the expression.
                     It is as if BitBake does not see them at all.
-                    Consequently, matching files are not parsed or otherwise used by 
+                    Consequently, matching files are not parsed or otherwise used by
                     BitBake.</para>
                 <para>The value you provide is passed to python's regular expression compiler.
-                    For complete syntax information, see python's documentation at 
+                    For complete syntax information, see python's documentation at
                     <ulink url='http://docs.python.org/release/2.3/lib/re-syntax.html'></ulink>.
-                    The expression is compared against the full paths to the files. 
+                    The expression is compared against the full paths to the files.
                     For example, the following uses a complete regular expression to tell
-                    BitBake to ignore all recipe and recipe append files in the 
+                    BitBake to ignore all recipe and recipe append files in the
                     <filename>.*/meta-ti/recipes-misc/</filename> directory:
                     <literallayout class='monospaced'>
      BBMASK = ".*/meta-ti/recipes-misc/"
                     </literallayout></para>
-                <para>Use the <filename>BBMASK</filename> variable from within the 
-                    <filename>conf/local.conf</filename> file found 
+                <para>Use the <filename>BBMASK</filename> variable from within the
+                    <filename>conf/local.conf</filename> file found
                     in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.</para>
             </glossdef>
         </glossentry>
@@ -342,9 +342,9 @@
 
         <glossentry id='var-BBFILE_COLLECTIONS'><glossterm>BBFILE_COLLECTIONS</glossterm>
             <glossdef>
-                <para>Lists the names of configured layers. 
+                <para>Lists the names of configured layers.
                     These names are used to find the other <filename>BBFILE_*</filename>
-                    variables. 
+                    variables.
                     Typically, each layer will append its name to this variable in its
                     <filename>conf/layer.conf</filename> file.
                 </para>
@@ -353,9 +353,9 @@
 
         <glossentry id='var-BBFILE_PATTERN'><glossterm>BBFILE_PATTERN</glossterm>
             <glossdef>
-                <para>Variable that expands to match files from <filename>BBFILES</filename> in a particular layer.  
-                    This variable is used in the <filename>conf/layer.conf</filename> file and must 
-                    be suffixed with the name of the specific layer (e.g. 
+                <para>Variable that expands to match files from <filename>BBFILES</filename> in a particular layer.
+                    This variable is used in the <filename>conf/layer.conf</filename> file and must
+                    be suffixed with the name of the specific layer (e.g.
                     <filename>BBFILE_PATTERN_emenlow</filename>).</para>
             </glossdef>
         </glossentry>
@@ -364,21 +364,21 @@
             <glossdef>
                 <para>Assigns the priority for recipe files in each layer.</para>
                 <para>This variable is useful in situations where the same recipe appears in
-                    more than one layer. 
+                    more than one layer.
                     Setting this variable allows you to prioritize a
                     layer against other layers that contain the same recipe - effectively
-                    letting you control the precedence for the multiple layers. 
+                    letting you control the precedence for the multiple layers.
                     The precedence established through this variable stands regardless of a
-                    recipe's version (<filename>PV</filename> variable). 
-                    For example, a layer that has a recipe with a higher <filename>PV</filename> value but for 
-                    which the <filename>BBFILE_PRIORITY</filename> is set to have a lower precedence still has a 
+                    recipe's version (<filename>PV</filename> variable).
+                    For example, a layer that has a recipe with a higher <filename>PV</filename> value but for
+                    which the <filename>BBFILE_PRIORITY</filename> is set to have a lower precedence still has a
                     lower precedence.</para>
                 <para>A larger value for the <filename>BBFILE_PRIORITY</filename> variable results in a higher
-                    precedence. 
-                    For example, the value 6 has a higher precedence than the value 5. 
+                    precedence.
+                    For example, the value 6 has a higher precedence than the value 5.
                     If not specified, the <filename>BBFILE_PRIORITY</filename> variable is set based on layer
                     dependencies (see the
-                    <filename><link linkend='var-LAYERDEPENDS'>LAYERDEPENDS</link></filename> variable for 
+                    <filename><link linkend='var-LAYERDEPENDS'>LAYERDEPENDS</link></filename> variable for
                     more information.
                     The default priority, if unspecified
                     for a layer with no dependencies, is the lowest defined priority + 1
@@ -398,7 +398,7 @@
 
         <glossentry id='var-BBPATH'><glossterm>BBPATH</glossterm>
             <glossdef>
-                <para>Used by BitBake to locate <filename>.bbclass</filename> and configuration files.  
+                <para>Used by BitBake to locate <filename>.bbclass</filename> and configuration files.
                     This variable is analogous to the <filename>PATH</filename> variable.</para>
             </glossdef>
         </glossentry>
@@ -411,9 +411,9 @@
 
         <glossentry id='var-BBLAYERS'><glossterm>BBLAYERS</glossterm>
             <glossdef>
-                <para>Lists the layers to enable during the build. 
-                    This variable is defined in the <filename>bblayers.conf</filename> configuration 
-                    file in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>. 
+                <para>Lists the layers to enable during the build.
+                    This variable is defined in the <filename>bblayers.conf</filename> configuration
+                    file in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                     Here is an example:
                     <literallayout class='monospaced'>
      BBLAYERS = " \
@@ -428,7 +428,7 @@
        /home/scottrif/poky/meta-yocto \
        "
                     </literallayout>
-                    This example enables four layers, one of which is a custom, user-defined layer 
+                    This example enables four layers, one of which is a custom, user-defined layer
                     named <filename>meta-mykernel</filename>.
                 </para>
             </glossdef>
@@ -464,7 +464,7 @@ Core layer for images cannot be removed
 
         <glossentry id='var-BP'><glossterm>BP</glossterm>
             <glossdef>
-                <para>The base recipe name and version but without any special 
+                <para>The base recipe name and version but without any special
                     recipe name suffix (i.e. <filename>-native</filename>, <filename>lib64-</filename>,
                     and so forth).
                     <filename>BP</filename> is comprised of the following:
@@ -495,8 +495,8 @@ Core layer for images cannot be removed
         <glossentry id='var-CFLAGS'><glossterm>CFLAGS</glossterm>
             <glossdef>
                 <para>
-                    Flags passed to C compiler for the target system. 
-                    This variable evaluates to the same as 
+                    Flags passed to C compiler for the target system.
+                    This variable evaluates to the same as
                     <filename><link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link></filename>.
                 </para>
             </glossdef>
@@ -504,7 +504,7 @@ Core layer for images cannot be removed
 
         <glossentry id='var-COMBINED_FEATURES'><glossterm>COMBINED_FEATURES</glossterm>
             <glossdef>
-                <para>A set of features common between 
+                <para>A set of features common between
                     <link linkend='var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></link>
                     and <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
                     See the glossary descriptions for these variables for more information.</para>
@@ -513,11 +513,11 @@ Core layer for images cannot be removed
 
         <glossentry id='var-COMPATIBLE_MACHINE'><glossterm>COMPATIBLE_MACHINE</glossterm>
             <glossdef>
-                <para>A regular expression which evaluates to match the machines the recipe 
-                    works with. 
-                    It stops recipes being run on machines for which they are not compatible. 
-                    This is particularly useful with kernels. 
-                    It also helps to increase parsing speed as further parsing of the recipe is skipped 
+                <para>A regular expression which evaluates to match the machines the recipe
+                    works with.
+                    It stops recipes being run on machines for which they are not compatible.
+                    This is particularly useful with kernels.
+                    It also helps to increase parsing speed as further parsing of the recipe is skipped
                     if it is found the current machine is not compatible.</para>
             </glossdef>
         </glossentry>
@@ -527,46 +527,46 @@ Core layer for images cannot be removed
                 <para>
                     Identifies editable or configurable files that are part of a package.
                     If the Package Management System (PMS) is being used to update
-                    packages on the target system, it is possible that 
+                    packages on the target system, it is possible that
                     configuration files you have changed after the original installation
                     and that you now want to remain unchanged are overwritten.
-                    In other words, editable files might exist in the package that you do not 
+                    In other words, editable files might exist in the package that you do not
                     want reset as part of the package update process.
-                    You can use the <filename>CONFFILES</filename> variable to list the files in the 
+                    You can use the <filename>CONFFILES</filename> variable to list the files in the
                     package that you wish to prevent the PMS from overwriting during this update process.
                 </para>
 
-                <para>  
+                <para>
                     To use the <filename>CONFFILES</filename> variable, provide a package name
                     override that identifies the resulting package.
                     Then, provide a space-separated list of files.
                     Here is an example:
-                    <literallayout class='monospaced'>                       
+                    <literallayout class='monospaced'>
   CONFFILES_${PN} += "${sysconfdir}/file1 \
      ${sysconfdir}/file2 ${sysconfdir}/file3"
                     </literallayout>
                 </para>
 
                 <para>
-                    A relationship exists between the <filename>CONFFILES</filename> and 
+                    A relationship exists between the <filename>CONFFILES</filename> and
                     <filename><link linkend='var-FILES'>FILES</link></filename> variables.
-                    The files listed within <filename>CONFFILES</filename> must be a subset of 
+                    The files listed within <filename>CONFFILES</filename> must be a subset of
                     the files listed within <filename>FILES</filename>.
-                    Because the configuration files you provide with <filename>CONFFILES</filename> 
-                    are simply being identified so that the PMS will not overwrite them, 
+                    Because the configuration files you provide with <filename>CONFFILES</filename>
+                    are simply being identified so that the PMS will not overwrite them,
                     it makes sense that
-                    the files must already be included as part of the package through the 
+                    the files must already be included as part of the package through the
                     <filename>FILES</filename> variable.
                 </para>
 
                 <note>
-                    When specifying paths as part of the <filename>CONFFILES</filename> variable, 
-                    it is good practice to use appropriate path variables. 
-                    For example, <filename>${sysconfdir}</filename> rather than 
-                    <filename>/etc</filename> or <filename>${bindir}</filename> rather 
+                    When specifying paths as part of the <filename>CONFFILES</filename> variable,
+                    it is good practice to use appropriate path variables.
+                    For example, <filename>${sysconfdir}</filename> rather than
+                    <filename>/etc</filename> or <filename>${bindir}</filename> rather
                     than <filename>/usr/bin</filename>.
-                    You can find a list of these variables at the top of the 
-                    <filename>/meta/conf/bitbake.conf</filename> file in the 
+                    You can find a list of these variables at the top of the
+                    <filename>/meta/conf/bitbake.conf</filename> file in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                 </note>
             </glossdef>
@@ -575,9 +575,9 @@ Core layer for images cannot be removed
         <glossentry id='var-CONFIG_SITE'><glossterm>CONFIG_SITE</glossterm>
             <glossdef>
                 <para>
-                    A list of files that contains <filename>autoconf</filename> test results relevant 
-                    to the current build. 
-                    This variable is used by the Autotools utilities when running 
+                    A list of files that contains <filename>autoconf</filename> test results relevant
+                    to the current build.
+                    This variable is used by the Autotools utilities when running
                     <filename>configure</filename>.
                 </para>
             </glossdef>
@@ -586,9 +586,9 @@ Core layer for images cannot be removed
         <glossentry id='var-CORE_IMAGE_EXTRA_INSTALL'><glossterm>CORE_IMAGE_EXTRA_INSTALL</glossterm>
             <glossdef>
                 <para>
-                    Specifies the list of packages to be added to the image. 
+                    Specifies the list of packages to be added to the image.
                     This variable should only be set in the <filename>local.conf</filename>
-                    configuration file found in the 
+                    configuration file found in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                 </para>
 
@@ -611,9 +611,9 @@ Core layer for images cannot be removed
         <glossentry id='var-DEBUG_BUILD'><glossterm>DEBUG_BUILD</glossterm>
             <glossdef>
                 <para>
-                    Specifies to build packages with debugging information. 
-                    This influences the value of the 
-                    <filename><link linkend='var-SELECTED_OPTIMIZATION'>SELECTED_OPTIMIZATION</link></filename> 
+                    Specifies to build packages with debugging information.
+                    This influences the value of the
+                    <filename><link linkend='var-SELECTED_OPTIMIZATION'>SELECTED_OPTIMIZATION</link></filename>
                     variable.
                 </para>
             </glossdef>
@@ -622,9 +622,9 @@ Core layer for images cannot be removed
         <glossentry id='var-DEBUG_OPTIMIZATION'><glossterm>DEBUG_OPTIMIZATION</glossterm>
             <glossdef>
                 <para>
-                    The options to pass in 
+                    The options to pass in
                     <filename><link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link></filename>
-                    and <filename><link linkend='var-CFLAGS'>CFLAGS</link></filename> when compiling 
+                    and <filename><link linkend='var-CFLAGS'>CFLAGS</link></filename> when compiling
                     a system for debugging.
                     This variable defaults to "-O -fno-omit-frame-pointer -g".
                 </para>
@@ -641,9 +641,9 @@ Core layer for images cannot be removed
             <glossdef>
                 <para>
                     Lists a recipe's build-time dependencies
-                    (i.e. other recipe files). 
-                    The system ensures that all the dependencies listed 
-                    have been built and have their contents in the appropriate 
+                    (i.e. other recipe files).
+                    The system ensures that all the dependencies listed
+                    have been built and have their contents in the appropriate
                     sysroots before the recipe's configure task is executed.
                 </para>
             </glossdef>
@@ -652,8 +652,8 @@ Core layer for images cannot be removed
         <glossentry id='var-DESCRIPTION'><glossterm>DESCRIPTION</glossterm>
             <glossdef>
                 <para>The package description used by package managers.
-                      If not set, <filename>DESCRIPTION</filename> takes 
-                      the value of the 
+                      If not set, <filename>DESCRIPTION</filename> takes
+                      the value of the
                       <link linkend='var-SUMMARY'><filename>SUMMARY</filename></link>
                       variable.
                 </para>
@@ -669,11 +669,11 @@ Core layer for images cannot be removed
         <glossentry id='var-DISTRO'><glossterm>DISTRO</glossterm>
             <glossdef>
                 <para>
-                    The short name of the distribution. 
+                    The short name of the distribution.
                     This variable corresponds to a file with the
                     extension <filename>.conf</filename>
                     located in a <filename>conf/distro</filename> directory
-                    within the metadata that contains the distribution configuration. 
+                    within the metadata that contains the distribution configuration.
                     The
                     value must not contain spaces, and is typically all lower-case.
                 </para>
@@ -689,11 +689,11 @@ Core layer for images cannot be removed
             <glossdef>
                 <para>
                     Specifies a list of distro-specific packages to add to all images.
-                    This variable takes affect through 
-                    <filename>packagegroup-base</filename> so the 
-                    variable only really applies to the more full-featured 
+                    This variable takes affect through
+                    <filename>packagegroup-base</filename> so the
+                    variable only really applies to the more full-featured
                     images that include <filename>packagegroup-base</filename>.
-                    You can use this variable to keep distro policy out of 
+                    You can use this variable to keep distro policy out of
                     generic images.
                     As with all other distro variables, you set this variable
                     in the distro <filename>.conf</filename> file.
@@ -704,10 +704,10 @@ Core layer for images cannot be removed
         <glossentry id='var-DISTRO_EXTRA_RRECOMMENDS'><glossterm>DISTRO_EXTRA_RRECOMMENDS</glossterm>
             <glossdef>
                 <para>
-                    Specifies a list of distro-specific packages to add to all images 
-                    if the packages exist. 
+                    Specifies a list of distro-specific packages to add to all images
+                    if the packages exist.
                     The packages might not exist or be empty (e.g. kernel modules).
-                    The list of packages are automatically installed but can be 
+                    The list of packages are automatically installed but can be
                     removed by the user.
                 </para>
             </glossdef>
@@ -725,18 +725,18 @@ Core layer for images cannot be removed
 
         <glossentry id='var-DISTRO_FEATURES_BACKFILL'><glossterm>DISTRO_FEATURES_BACKFILL</glossterm>
             <glossdef>
-                <para>Features to be added to 
+                <para>Features to be added to
                     <filename><link linkend='var-DISTRO_FEATURES'>DISTRO_FEATURES</link></filename>
-                    if not also present in 
+                    if not also present in
                     <filename><link linkend='var-DISTRO_FEATURES_BACKFILL_CONSIDERED'>DISTRO_FEATURES_BACKFILL_CONSIDERED</link></filename>.
                 </para>
 
                 <para>
                     This variable is set in the <filename>meta/conf/bitbake.conf</filename> file.
-                    It is not intended to be user-configurable. 
-                    It is best to just reference the variable to see which distro features are 
+                    It is not intended to be user-configurable.
+                    It is best to just reference the variable to see which distro features are
                     being backfilled for all distro configurations.
-                    See the <link linkend='ref-features-backfill'>Feature backfilling</link> section for 
+                    See the <link linkend='ref-features-backfill'>Feature backfilling</link> section for
                     more information.
                 </para>
             </glossdef>
@@ -749,7 +749,7 @@ Core layer for images cannot be removed
                     that should not backfilled (i.e. added to
                     <filename><link linkend='var-DISTRO_FEATURES'>DISTRO_FEATURES</link></filename>)
                     during the build.
-                    See the "<link linkend='ref-features-backfill'>Feature Backfilling</link>" section for 
+                    See the "<link linkend='ref-features-backfill'>Feature Backfilling</link>" section for
                     more information.
                     </para>
             </glossdef>
@@ -764,9 +764,9 @@ Core layer for images cannot be removed
         <glossentry id='var-DISTRO_PN_ALIAS'><glossterm>DISTRO_PN_ALIAS</glossterm>
             <glossdef>
                 <para>Alias names used for the recipe in various Linux distributions.</para>
-                <para>See the  
+                <para>See the
                     "<ulink url='&YOCTO_DOCS_DEV_URL;#usingpoky-configuring-DISTRO_PN_ALIAS'>Handling
-                    a Package Name Alias</ulink>" section in the Yocto Project Development 
+                    a Package Name Alias</ulink>" section in the Yocto Project Development
                     Manual for more information.</para>
             </glossdef>
         </glossentry>
@@ -784,8 +784,8 @@ Core layer for images cannot be removed
                     You can set this directory by defining the <filename>DL_DIR</filename>
                     variable in the <filename>/conf/local.conf</filename> file.
                     This directory is self-maintaining and you should not have
-                    to touch it. 
-                    By default, the directory is <filename>downloads</filename> in the 
+                    to touch it.
+                    By default, the directory is <filename>downloads</filename> in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                     <literallayout class='monospaced'>
      #DL_DIR ?= "${TOPDIR}/downloads"
@@ -795,22 +795,22 @@ Core layer for images cannot be removed
                 </para>
 
                 <para>
-                    During a first build, the system downloads many different source code 
-                    tarballs from various upstream projects. 
+                    During a first build, the system downloads many different source code
+                    tarballs from various upstream projects.
                     Downloading can take a while, particularly if your network
-                    connection is slow. 
-                    Tarballs are all stored in the directory defined by 
-                    <filename>DL_DIR</filename> and the build system looks there first 
-                    to find source tarballs. 
+                    connection is slow.
+                    Tarballs are all stored in the directory defined by
+                    <filename>DL_DIR</filename> and the build system looks there first
+                    to find source tarballs.
                     <note>
-                        When wiping and rebuilding, you can preserve this directory to speed 
-                        up this part of subsequent builds. 
+                        When wiping and rebuilding, you can preserve this directory to speed
+                        up this part of subsequent builds.
                     </note>
                 </para>
 
                 <para>
-                    You can safely share this directory between multiple builds on the 
-                    same development machine.  
+                    You can safely share this directory between multiple builds on the
+                    same development machine.
                     For additional information on how the build process gets source files
                     when working behind a firewall or proxy server, see the
                     "<link linkend='how-does-the-yocto-project-obtain-source-code-and-will-it-work-behind-my-firewall-or-proxy-server'>FAQ</link>"
@@ -836,15 +836,15 @@ Core layer for images cannot be removed
             <glossdef>
                 <para>
                     Used with file and pathnames to create a prefix for a recipe's
-                    version based on the recipe's 
+                    version based on the recipe's
                     <link linkend='var-PE'><filename>PE</filename></link> value.
                     If <filename>PE</filename> is set and greater than zero for a recipe,
-                    <filename>EXTENDPE</filename> becomes that value (e.g if 
+                    <filename>EXTENDPE</filename> becomes that value (e.g if
                     <filename>PE</filename> is equal to "1" then <filename>EXTENDPE</filename>
-                    becomes "1_").  
-                    If a recipe's <filename>PE</filename> is not set (the default) or is equal to 
+                    becomes "1_").
+                    If a recipe's <filename>PE</filename> is not set (the default) or is equal to
                     zero, <filename>EXTENDPE</filename> becomes "".</para>
-                    <para>See the <link linkend='var-STAMP'><filename>STAMP</filename></link> 
+                    <para>See the <link linkend='var-STAMP'><filename>STAMP</filename></link>
                     variable for an example.
                 </para>
             </glossdef>
@@ -855,38 +855,38 @@ Core layer for images cannot be removed
                 <para>Allows extra packages to be added to the generated images.
                     You set this variable in the <filename>local.conf</filename>
                     configuration file.
-                    Note that some image features are also added using the 
+                    Note that some image features are also added using the
                     <filename><link linkend='var-IMAGE_FEATURES'>IMAGE_FEATURES</link></filename>
                     variable generally configured in image recipes.
                     You can use this variable to add more features in addition to those.
                     Here are some examples of features you can add:</para>
                     <literallayout class='monospaced'>
 "dbg-pkgs" - Adds -dbg packages for all installed packages
-             including symbol information for debugging and 
+             including symbol information for debugging and
              profiling.
 
-"dev-pkgs" - Adds -dev packages for all installed packages.  
-             This is useful if you want to develop against 
+"dev-pkgs" - Adds -dev packages for all installed packages.
+             This is useful if you want to develop against
              the libraries in the image.
 
-"tools-sdk" - Adds development tools such as gcc, make, 
+"tools-sdk" - Adds development tools such as gcc, make,
               pkgconfig and so forth.
 
-"tools-debug" - Adds debugging tools such as gdb and 
+"tools-debug" - Adds debugging tools such as gdb and
                 strace.
 
-"tools-profile" - Adds profiling tools such as oprofile, 
+"tools-profile" - Adds profiling tools such as oprofile,
                   exmap, lttng and valgrind (x86 only).
 
-"tools-testapps" - Adds useful testing tools such as 
-                   ts_print, aplay, arecord and so 
+"tools-testapps" - Adds useful testing tools such as
+                   ts_print, aplay, arecord and so
                    forth.
 
-"debug-tweaks" - Makes an image suitable for development.  
-                 For example, ssh root access has a blank 
-                 password.  You should remove this feature 
-                 before you produce a production image.  
-                    </literallayout> 
+"debug-tweaks" - Makes an image suitable for development.
+                 For example, ssh root access has a blank
+                 password.  You should remove this feature
+                 before you produce a production image.
+                    </literallayout>
 
                  <para>There are other valid features too, see the
                  <link linkend='ref-features-image'>Images</link>
@@ -901,12 +901,12 @@ Core layer for images cannot be removed
                 </para>
                 <para>Sometimes a recipe is required to build the final image but is not
                     needed in the root filesystem.
-                    You can use the <filename>EXTRA_IMAGEDEPENDS</filename> variable to 
-                    list these recipes and thus, specify the dependencies. 
+                    You can use the <filename>EXTRA_IMAGEDEPENDS</filename> variable to
+                    list these recipes and thus, specify the dependencies.
                     A typical example is a required bootloader in a machine configuration.
                 </para>
                 <note>
-                    To add packages to the root filesystem, see the various 
+                    To add packages to the root filesystem, see the various
                     <filename>*DEPENDS</filename> and <filename>*RECOMMENDS</filename>
                     variables.
                 </note>
@@ -944,32 +944,32 @@ Core layer for images cannot be removed
                 <para>
                     To use the <filename>FILES</filename> variable, provide a package name
                     override that identifies the resulting package.
-                    Then, provide a space-separated list of files or paths that identifies the 
+                    Then, provide a space-separated list of files or paths that identifies the
                     files you want included as part of the resulting package.
                     Here is an example:
-                    <literallayout class='monospaced'>                       
+                    <literallayout class='monospaced'>
   FILES_${PN} += "${bindir}/mydir1/ ${bindir}/mydir2/myfile"
                     </literallayout>
                 </para>
 
                 <note>
-                    When specifying paths as part of the <filename>FILES</filename> variable, 
-                    it is good practice to use appropriate path variables. 
-                    For example, <filename>${sysconfdir}</filename> rather than 
-                    <filename>/etc</filename> or <filename>${bindir}</filename> rather 
+                    When specifying paths as part of the <filename>FILES</filename> variable,
+                    it is good practice to use appropriate path variables.
+                    For example, <filename>${sysconfdir}</filename> rather than
+                    <filename>/etc</filename> or <filename>${bindir}</filename> rather
                     than <filename>/usr/bin</filename>.
-                    You can find a list of these variables at the top of the 
-                    <filename>/meta/conf/bitbake.conf</filename> file in the 
+                    You can find a list of these variables at the top of the
+                    <filename>/meta/conf/bitbake.conf</filename> file in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                 </note>
 
                 <para>
                     If some of the files you provide with the <filename>FILES</filename> variable
-                    are editable and you know they should not be 
+                    are editable and you know they should not be
                     overwritten during the package update process by the Package Management
-                    System (PMS), you can identify these files so that the PMS will not 
-                    overwrite them. 
-                    See the <filename><link linkend='var-CONFFILES'>CONFFILES</link></filename> 
+                    System (PMS), you can identify these files so that the PMS will not
+                    overwrite them.
+                    See the <filename><link linkend='var-CONFFILES'>CONFFILES</link></filename>
                     variable for information on how to identify these files to the PMS.
                 </para>
 
@@ -979,11 +979,11 @@ Core layer for images cannot be removed
         <glossentry id='var-FILESEXTRAPATHS'><glossterm>FILESEXTRAPATHS</glossterm>
             <glossdef>
                 <para>
-                    Extends the search path the OpenEmbedded build system uses when 
-                    looking for files and patches as it processes recipes. 
+                    Extends the search path the OpenEmbedded build system uses when
+                    looking for files and patches as it processes recipes.
                     The directories BitBake uses when it processes recipes is defined by the
-                    <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link> variable. 
-                    You can add directories to the search path by defining the 
+                    <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link> variable.
+                    You can add directories to the search path by defining the
                     <filename>FILESEXTRAPATHS</filename> variable.
                 </para>
 
@@ -993,17 +993,17 @@ Core layer for images cannot be removed
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "path_1:path_2:path_3:"
                     </literallayout>
-                    Typically, you want your directories searched first. 
-                    To make sure that happens, use <filename>_prepend</filename> and 
-                    the immediate expansion (<filename>:=</filename>) operator as shown in the 
+                    Typically, you want your directories searched first.
+                    To make sure that happens, use <filename>_prepend</filename> and
+                    the immediate expansion (<filename>:=</filename>) operator as shown in the
                     previous example.
-                    Finally, to maintain the integrity of the <filename>FILESPATH</filename> variable, 
+                    Finally, to maintain the integrity of the <filename>FILESPATH</filename> variable,
                     you must include the appropriate beginning or ending (as needed) colon character.
                 </para>
 
                 <para>
-                    The <filename>FILESEXTRAPATHS</filename> variable is intended for use in 
-                    <filename>.bbappend</filename> files to include any additional files provided in that layer. 
+                    The <filename>FILESEXTRAPATHS</filename> variable is intended for use in
+                    <filename>.bbappend</filename> files to include any additional files provided in that layer.
                     You typically accomplish this with the following:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
@@ -1017,15 +1017,15 @@ Core layer for images cannot be removed
                 <para>
                     The default set of directories the OpenEmbedded build system uses
                     when searching for patches and files.
-                    During the build process, BitBake searches each directory in 
-                    <filename>FILESPATH</filename> in the specified order when looking for 
+                    During the build process, BitBake searches each directory in
+                    <filename>FILESPATH</filename> in the specified order when looking for
                     files and patches specified by each <filename>file://</filename> URI in a recipe.
                 </para>
 
                 <para>
                     The default value for the <filename>FILESPATH</filename> variable is defined
-                    in the <filename>base.bbclass</filename> class found in 
-                    <filename>meta/classes</filename> in the 
+                    in the <filename>base.bbclass</filename> class found in
+                    <filename>meta/classes</filename> in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>:
                     <literallayout class='monospaced'>
 FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
@@ -1033,9 +1033,9 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
    "${FILE_DIRNAME}/${BP}", "${FILE_DIRNAME}/${BPN}", \
    "${FILE_DIRNAME}/files", "${FILE_DIRNAME}" ], d)}"
                     </literallayout>
-                    Do not hand-edit the <filename>FILESPATH</filename> variable. 
-                    If you want to extend the set of pathnames that BitBake uses when searching for 
-                    files and patches, use the 
+                    Do not hand-edit the <filename>FILESPATH</filename> variable.
+                    If you want to extend the set of pathnames that BitBake uses when searching for
+                    files and patches, use the
                     <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link> variable.
                 </para>
             </glossdef>
@@ -1045,29 +1045,29 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
             <glossdef>
                 <para>Allows you to define your own file permissions settings table as part of
                     your configuration for the packaging process.
-                    For example, suppose you need a consistent set of custom permissions for 
+                    For example, suppose you need a consistent set of custom permissions for
                     a set of groups and users across an entire work project.
-                    It is best to do this in the packages themselves but this is not always 
+                    It is best to do this in the packages themselves but this is not always
                     possible.
                 </para>
                 <para>
                     By default, the OpenEmbedded build system uses the <filename>fs-perms.txt</filename>, which
-                    is located in the <filename>meta/files</filename> folder in the 
+                    is located in the <filename>meta/files</filename> folder in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                     If you create your own file permissions setting table, you should place it in your
-                    layer or the distros layer. 
+                    layer or the distros layer.
                 </para>
                 <para>
-                    You define the <filename>FILESYSTEM_PERMS_TABLES</filename> variable in the 
-                    <filename>conf/local.conf</filename> file, which is found in the 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>, to 
+                    You define the <filename>FILESYSTEM_PERMS_TABLES</filename> variable in the
+                    <filename>conf/local.conf</filename> file, which is found in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>, to
                     point to your custom <filename>fs-perms.txt</filename>.
                     You can specify more than a single file permissions setting table.
-                    The paths you specify to these files must be defined within the 
-                    <filename>BBPATH</filename> variable.  
+                    The paths you specify to these files must be defined within the
+                    <filename>BBPATH</filename> variable.
                 </para>
                 <para>
-                    For guidance on how to create your own file permissions settings table file, 
+                    For guidance on how to create your own file permissions settings table file,
                     examine the existing <filename>fs-perms.txt</filename>.
                 </para>
             </glossdef>
@@ -1076,11 +1076,11 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
         <glossentry id='var-FULL_OPTIMIZATION'><glossterm>FULL_OPTIMIZATION</glossterm>
             <glossdef>
                 <para>
-                    The options to pass in 
+                    The options to pass in
                     <filename><link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link></filename>
                     and <filename><link linkend='var-CFLAGS'>CFLAGS</link></filename>
                     when compiling an optimized system.
-                    This variable defaults to 
+                    This variable defaults to
                     "-fexpensive-optimizations -fomit-frame-pointer -frename-registers -O2".
                 </para>
             </glossdef>
@@ -1110,7 +1110,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                 Typically, you configure this variable in an image recipe.
                 Note that you can also add extra features to the image by using the
                 <filename><link linkend='var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</link></filename> variable.
-                See the "<link linkend="ref-features-image">Images</link>" section for the 
+                See the "<link linkend="ref-features-image">Images</link>" section for the
                 full list of features that can be included in images built by the
                 OpenEmbedded build system.</para>
             </glossdef>
@@ -1131,28 +1131,28 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                 </para>
 
                 <para>
-                    Image recipes set <filename>IMAGE_INSTALL</filename> to specify the 
+                    Image recipes set <filename>IMAGE_INSTALL</filename> to specify the
                     packages to install into an image through <filename>image.bbclass</filename>.
                     Additionally, "helper" classes exist, such as <filename>core-image.bbclass</filename>,
-                    that can take 
+                    that can take
                     <filename><link linkend='var-IMAGE_FEATURES'>IMAGE_FEATURES</link></filename> lists
-                    and turn these into auto-generated entries in 
+                    and turn these into auto-generated entries in
                     <filename>IMAGE_INSTALL</filename> in addition to its default contents.
                 </para>
 
                 <para>
                     Using <filename>IMAGE_INSTALL</filename> with the <filename>+=</filename>
-                    operator from the <filename>/conf/local.conf</filename> file or from within 
-                    an image recipe is not recommended as it can cause ordering issues. 
-                    Since <filename>core-image.bbclass</filename> sets <filename>IMAGE_INSTALL</filename> 
-                    to a default value using the <filename>?=</filename> operator, using a  
-                    <filename>+=</filename> operation against <filename>IMAGE_INSTALL</filename> 
-                    will result in unexpected behavior when used in 
+                    operator from the <filename>/conf/local.conf</filename> file or from within
+                    an image recipe is not recommended as it can cause ordering issues.
+                    Since <filename>core-image.bbclass</filename> sets <filename>IMAGE_INSTALL</filename>
+                    to a default value using the <filename>?=</filename> operator, using a
+                    <filename>+=</filename> operation against <filename>IMAGE_INSTALL</filename>
+                    will result in unexpected behavior when used in
                     <filename>/conf/local.conf</filename>.
-                    Furthermore, the same operation from with an image recipe may or may not 
+                    Furthermore, the same operation from with an image recipe may or may not
                     succeed depending on the specific situation.
-                    In both these cases, the behavior is contrary to how most users expect 
-                    the <filename>+=</filename> operator to work. 
+                    In both these cases, the behavior is contrary to how most users expect
+                    the <filename>+=</filename> operator to work.
                 </para>
 
                 <para>
@@ -1171,27 +1171,27 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                 <para>
                     Defines a multiplier that the build system applies to the initial image
                     size for cases when the multiplier times the returned disk usage value
-                    for the image is greater than the sum of 
+                    for the image is greater than the sum of
                     <filename><link linkend='var-IMAGE_ROOTFS_SIZE'>IMAGE_ROOTFS_SIZE</link></filename>
-                    and 
+                    and
                     <filename><link linkend='var-IMAGE_ROOTFS_EXTRA_SPACE'>IMAGE_ROOTFS_EXTRA_SPACE</link></filename>.
                     The result of the multiplier applied to the initial image size creates
                     free disk space in the image as overhead.
-                    By default, the build process uses a multiplier of 1.3 for this variable. 
-                    This default value results in 30% free disk space added to the image when this 
+                    By default, the build process uses a multiplier of 1.3 for this variable.
+                    This default value results in 30% free disk space added to the image when this
                     method is used to determine the final generated image size.
                     You should be aware that post install scripts and the package management
-                    system uses disk space inside this overhead area. 
-                    Consequently, the multiplier does not produce an image with 
-                    all the theoretical free disk space.                     
+                    system uses disk space inside this overhead area.
+                    Consequently, the multiplier does not produce an image with
+                    all the theoretical free disk space.
                     See <filename><link linkend='var-IMAGE_ROOTFS_SIZE'>IMAGE_ROOTFS_SIZE</link></filename>
                     for information on how the build system determines the overall image size.
                 </para>
 
                 <para>
-                    The default 30% free disk space typically gives the image enough room to boot 
-                    and allows for basic post installs while still leaving a small amount of 
-                    free disk space. 
+                    The default 30% free disk space typically gives the image enough room to boot
+                    and allows for basic post installs while still leaving a small amount of
+                    free disk space.
                     If 30% free space is inadequate, you can increase the default value.
                     For example, the following setting gives you 50% free space added to the image:
                     <literallayout class='monospaced'>
@@ -1201,12 +1201,12 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
 
                 <para>
                     Alternatively, you can ensure a specific amount of free disk space is added
-                    to the image by using     
+                    to the image by using
                     <filename><link linkend='var-IMAGE_ROOTFS_EXTRA_SPACE'>IMAGE_ROOTFS_EXTRA_SPACE</link></filename>
                     the variable.
                 </para>
             </glossdef>
-        </glossentry> 
+        </glossentry>
 
         <glossentry id='var-IMAGE_ROOTFS_EXTRA_SPACE'><glossterm>IMAGE_ROOTFS_EXTRA_SPACE</glossterm>
             <glossdef>
@@ -1214,32 +1214,32 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
                     Defines additional free disk space created in the image in Kbytes.
                     By default, this variable is set to "0".
                     This free disk space is added to the image after the build system determines
-                    the image size as described in 
+                    the image size as described in
                     <filename><link linkend='var-IMAGE_ROOTFS_SIZE'>IMAGE_ROOTFS_SIZE</link></filename>.
                 </para>
 
                 <para>
-                    This variable is particularly useful when you want to ensure that a 
-                    specific amount of free disk space is available on a device after an image 
-                    is installed and running. 
-                    For example, to be sure 5 Gbytes of free disk space is available, set the 
+                    This variable is particularly useful when you want to ensure that a
+                    specific amount of free disk space is available on a device after an image
+                    is installed and running.
+                    For example, to be sure 5 Gbytes of free disk space is available, set the
                     variable as follows:
                     <literallayout class='monospaced'>
      IMAGE_ROOTFS_EXTRA_SPACE = "5242880"
                     </literallayout>
                 </para>
             </glossdef>
-        </glossentry> 
+        </glossentry>
 
         <glossentry id='var-IMAGE_ROOTFS_SIZE'><glossterm>IMAGE_ROOTFS_SIZE</glossterm>
             <glossdef>
                 <para>
                     Defines the size in Kbytes for the generated image.
-                    The OpenEmbedded build system determines the final size for the generated 
+                    The OpenEmbedded build system determines the final size for the generated
                     image using an algorithm that takes into account the initial disk space used
-                    for the generated image, a requested size for the image, and requested 
+                    for the generated image, a requested size for the image, and requested
                     additional free disk space to be added to the image.
-                    Programatically, the build system determines the final size of the 
+                    Programatically, the build system determines the final size of the
                     generated image as follows:
                     <literallayout class='monospaced'>
     if (image-du * overhead) &lt; rootfs-size:
@@ -1251,7 +1251,7 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
 
       image-du = Returned value of the du command on
                  the image.
-      
+
       overhead = IMAGE_OVERHEAD_FACTOR
 
       rootfs-size = IMAGE_ROOTFS_SIZE
@@ -1261,12 +1261,12 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
 
       xspace = IMAGE_ROOTFS_EXTRA_SPACE
                     </literallayout>
-<!--                    In the above example, <filename>overhead</filename> is defined by the 
+<!--                    In the above example, <filename>overhead</filename> is defined by the
                     <filename><link linkend='var-IMAGE_OVERHEAD_FACTOR'>IMAGE_OVERHEAD_FACTOR</link></filename>
-                    variable, <filename>xspace</filename> is defined by the 
+                    variable, <filename>xspace</filename> is defined by the
                     <filename><link linkend='var-IMAGE_ROOTFS_EXTRA_SPACE'>IMAGE_ROOTFS_EXTRA_SPACE</link></filename>
-                    variable, and <filename>du</filename> is the results of the disk usage command 
-                    on the initially generated image. -->                   
+                    variable, and <filename>du</filename> is the results of the disk usage command
+                    on the initially generated image. -->
                 </para>
             </glossdef>
         </glossentry>
@@ -1275,38 +1275,38 @@ FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
             <glossdef>
                 <para>Helps define the recipe revision for recipes that share
                     a common <filename>include</filename> file.
-                    You can think of this variable as part of the recipe revision 
+                    You can think of this variable as part of the recipe revision
                     as set from within an include file.</para>
-                <para>Suppose, for example, you have a set of recipes that 
+                <para>Suppose, for example, you have a set of recipes that
                     are used across several projects.
                     And, within each of those recipes the revision
                     (its <filename>PR</filename> value) is set accordingly.
                     In this case, when the revision of those recipes changes
-                    the burden is on you to find all those recipes and 
-                    be sure that they get changed to reflect the updated 
+                    the burden is on you to find all those recipes and
+                    be sure that they get changed to reflect the updated
                     version of the recipe.
                     In this scenario, it can get complicated when recipes
-                    used in many places and that provide common functionality 
+                    used in many places and that provide common functionality
                     are upgraded to a new revision.</para>
                 <para>A more efficient way of dealing with this situation is
                     to set the <filename>INC_PR</filename> variable inside
                     the <filename>include</filename> files that the recipes
                     share and then expand the <filename>INC_PR</filename>
-                    variable within the recipes to help 
+                    variable within the recipes to help
                     define the recipe revision.
                     </para>
                 <para>
-                    The following provides an example that shows how to use 
+                    The following provides an example that shows how to use
                     the <filename>INC_PR</filename> variable
-                    given a common <filename>include</filename> file that 
+                    given a common <filename>include</filename> file that
                     defines the variable.
-                    Once the variable is defined in the 
-                    <filename>include</filename> file, you can use the 
+                    Once the variable is defined in the
+                    <filename>include</filename> file, you can use the
                     variable to set the <filename>PR</filename> values in
-                    each recipe. 
-                    You will notice that when you set a recipe's  
+                    each recipe.
+                    You will notice that when you set a recipe's
                     <filename>PR</filename> you can provide more granular
-                    revisioning by appending values to the 
+                    revisioning by appending values to the
                     <filename>INC_PR</filename> variable:
                     <literallayout class='monospaced'>
 recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
@@ -1314,8 +1314,8 @@ recipes-graphics/xorg-font/encodings_1.0.4.bb:PR = "${INC_PR}.1"
 recipes-graphics/xorg-font/font-util_1.3.0.bb:PR = "${INC_PR}.0"
 recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     </literallayout>
-                    The first line of the example establishes the baseline 
-                    revision to be used for all recipes that use the 
+                    The first line of the example establishes the baseline
+                    revision to be used for all recipes that use the
                     <filename>include</filename> file.
                     The remaining lines in the example are from individual
                     recipes and show how the <filename>PR</filename> value
@@ -1335,8 +1335,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-INHERIT'><glossterm>INHERIT</glossterm>
             <glossdef>
                 <para>
-                    Causes the named class to be inherited at 
-                    this point during parsing. 
+                    Causes the named class to be inherited at
+                    this point during parsing.
                     The variable is only valid in configuration files.
                 </para>
             </glossdef>
@@ -1346,8 +1346,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-INITSCRIPT_PACKAGES'><glossterm>INITSCRIPT_PACKAGES</glossterm>
             <glossdef>
                 <para>
-                    A list of the packages that contain initscripts. 
-                    If multiple packages are specified, you need to append the package name 
+                    A list of the packages that contain initscripts.
+                    If multiple packages are specified, you need to append the package name
                     to the other <filename>INITSCRIPT_*</filename> as an override.</para>
                  <para>
                     This variable is used in recipes when using <filename>update-rc.d.bbclass</filename>.
@@ -1372,12 +1372,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     Specifies the options to pass to <filename>update-rc.d</filename>.
-                    An example is <filename>start 99 5 2 . stop 20 0 1 6 .</filename>, which gives the script a 
-                    runlevel of 99, starts the script in initlevels 2 and 5, and 
-                    stops the script in levels 0, 1 and 6. 
+                    An example is <filename>start 99 5 2 . stop 20 0 1 6 .</filename>, which gives the script a
+                    runlevel of 99, starts the script in initlevels 2 and 5, and
+                    stops the script in levels 0, 1 and 6.
                 </para>
                 <para>
-                    The variable is mandatory and is used in recipes when using 
+                    The variable is mandatory and is used in recipes when using
                     <filename>update-rc.d.bbclass</filename>.
                 </para>
             </glossdef>
@@ -1394,36 +1394,36 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-KBRANCH'><glossterm>KBRANCH</glossterm>
             <glossdef>
                 <para>
-                    A regular expression used by the build process to explicitly identify the kernel 
-                    branch that is validated, patched and configured during a build.  
+                    A regular expression used by the build process to explicitly identify the kernel
+                    branch that is validated, patched and configured during a build.
                     The <filename>KBRANCH</filename> variable is optional.
-                    You can use it to trigger checks to ensure the exact kernel branch you want is 
+                    You can use it to trigger checks to ensure the exact kernel branch you want is
                     being used by the build process.
                 </para>
 
                 <para>
-                    Values for this variable are set in the kernel's recipe file and the kernel's 
-                    append file.  
-                    For example, if you are using the Yocto Project kernel that is based on the 
-                    Linux 3.4 kernel, the kernel recipe file is the 
-                    <filename>meta/recipes-kernel/linux/linux-yocto_3.4.bb</filename> file. 
+                    Values for this variable are set in the kernel's recipe file and the kernel's
+                    append file.
+                    For example, if you are using the Yocto Project kernel that is based on the
+                    Linux 3.4 kernel, the kernel recipe file is the
+                    <filename>meta/recipes-kernel/linux/linux-yocto_3.4.bb</filename> file.
                     Following is the default value for <filename>KBRANCH</filename> and the default
                     override for the architectures the Yocto Project supports:
                     <literallayout class='monospaced'>
      KBRANCH_DEFAULT = "standard/base"
      KBRANCH = "${KBRANCH_DEFAULT}"
                     </literallayout>
-                    This branch exists in the <filename>linux-yocto-3.4</filename> kernel Git 
-                    repository <ulink url='&YOCTO_GIT_URL;/cgit.cgi/linux-yocto-3.4/refs/heads'></ulink>.  
+                    This branch exists in the <filename>linux-yocto-3.4</filename> kernel Git
+                    repository <ulink url='&YOCTO_GIT_URL;/cgit.cgi/linux-yocto-3.4/refs/heads'></ulink>.
                 </para>
 
                 <para>
-                    This variable is also used from the kernel's append file to identify the kernel 
-                    branch specific to a particular machine or target hardware.  
-                    The kernel's append file is located in the BSP layer for a given machine.  
-                    For example, the kernel append file for the Crown Bay BSP is in the 
-                    <filename>meta-intel</filename> Git repository and is named 
-                    <filename>meta-crownbay/recipes-kernel/linux/linux-yocto_3.4.bbappend</filename>.  
+                    This variable is also used from the kernel's append file to identify the kernel
+                    branch specific to a particular machine or target hardware.
+                    The kernel's append file is located in the BSP layer for a given machine.
+                    For example, the kernel append file for the Crown Bay BSP is in the
+                    <filename>meta-intel</filename> Git repository and is named
+                    <filename>meta-crownbay/recipes-kernel/linux/linux-yocto_3.4.bbappend</filename>.
                     Here are the related statements from the append file:
                     <literallayout class='monospaced'>
      COMPATIBLE_MACHINE_crownbay = "crownbay"
@@ -1434,9 +1434,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      KMACHINE_crownbay-noemgd  = "crownbay"
      KBRANCH_crownbay-noemgd  = "standard/crownbay"
                     </literallayout>
-                        The <filename>KBRANCH_*</filename> statements identify the kernel branch to 
-                        use when building for the Crown Bay BSP.  
-                        In this case there are two identical statements: one for each type of 
+                        The <filename>KBRANCH_*</filename> statements identify the kernel branch to
+                        use when building for the Crown Bay BSP.
+                        In this case there are two identical statements: one for each type of
                         Crown Bay machine.
                 </para>
             </glossdef>
@@ -1446,18 +1446,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>Includes additional metadata from the Yocto Project kernel Git repository.
                     In the OpenEmbedded build system, the default Board Support Packages (BSPs)
-                    metadata is provided through 
+                    metadata is provided through
                     the <filename>KMACHINE</filename> and <filename>KBRANCH</filename> variables.
-                    You can use the <filename>KERNEL_FEATURES</filename> variable to further 
+                    You can use the <filename>KERNEL_FEATURES</filename> variable to further
                     add metadata for all BSPs.</para>
-                <para>The metadata you add through this variable includes config fragments and 
+                <para>The metadata you add through this variable includes config fragments and
                     features descriptions,
                     which usually includes patches as well as config fragments.
                     You typically override the <filename>KERNEL_FEATURES</filename> variable
                     for a specific machine.
                     In this way, you can provide validated, but optional, sets of kernel
                     configurations and features.</para>
-                <para>For example, the following adds <filename>netfilter</filename> to all 
+                <para>For example, the following adds <filename>netfilter</filename> to all
                     the Yocto Project kernels and adds sound support to the <filename>qemux86</filename>
                     machine:
                     <literallayout class='monospaced'>
@@ -1472,10 +1472,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-KERNEL_IMAGETYPE'><glossterm>KERNEL_IMAGETYPE</glossterm>
             <glossdef>
-                <para>The type of kernel to build for a device, usually set by the 
-                    machine configuration files and defaults to "zImage". 
-                    This variable is used 
-                    when building the kernel and is passed to <filename>make</filename> as the target to 
+                <para>The type of kernel to build for a device, usually set by the
+                    machine configuration files and defaults to "zImage".
+                    This variable is used
+                    when building the kernel and is passed to <filename>make</filename> as the target to
                     build.</para>
             </glossdef>
         </glossentry>
@@ -1486,22 +1486,22 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The machine as known by the kernel.
                     Sometimes the machine name used by the kernel does not match the machine name
                     used by the OpenEmbedded build system.
-                    For example, the machine name that the OpenEmbedded build system understands as 
+                    For example, the machine name that the OpenEmbedded build system understands as
                     <filename>qemuarm</filename> goes by a different name in the Linux Yocto kernel.
                     The kernel understands that machine as <filename>arm_versatile926ejs</filename>.
-                    For cases like these, the <filename>KMACHINE</filename> variable maps the 
+                    For cases like these, the <filename>KMACHINE</filename> variable maps the
                     kernel machine name to the OpenEmbedded build system machine name.
                 </para>
 
                 <para>
-                    Kernel machine names are initially defined in the 
-                    <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>Yocto Linux Kernel</ulink> in 
+                    Kernel machine names are initially defined in the
+                    <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>Yocto Linux Kernel</ulink> in
                     the <filename>meta</filename> branch.
-                    From the <filename>meta</filename> branch, look in 
+                    From the <filename>meta</filename> branch, look in
                     the <filename>meta/cfg/kernel-cache/bsp/&lt;bsp_name&gt;/&lt;bsp-name&gt;-&lt;kernel-type&gt;.scc</filename> file.
-                    For example, from the <filename>meta</filename> branch in the 
-                    <filename>linux-yocto-3.0</filename> kernel, the 
-                    <filename>meta/cfg/kernel-cache/bsp/cedartrail/cedartrail-standard.scc</filename> file 
+                    For example, from the <filename>meta</filename> branch in the
+                    <filename>linux-yocto-3.0</filename> kernel, the
+                    <filename>meta/cfg/kernel-cache/bsp/cedartrail/cedartrail-standard.scc</filename> file
                     has the following:
                     <literallayout class='monospaced'>
      define KMACHINE cedartrail
@@ -1511,7 +1511,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      include ktypes/standard
      branch cedartrail
 
-     include cedartrail.scc                    
+     include cedartrail.scc
                     </literallayout>
                     You can see that the kernel understands the machine name for the Cedar Trail BSP as
                     <filename>cedartrail</filename>.
@@ -1533,14 +1533,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      KBRANCH_cedartrail-nopvr  = "yocto/standard/cedartrail"
      KERNEL_FEATURES_append_cedartrail-nopvr += " cfg/smp.scc"
                     </literallayout>
-                    The <filename>KMACHINE</filename> statements in the kernel's append file make sure that 
-                    the OpenEmbedded build system and the Yocto Linux kernel understand the same machine 
-                    names. 
+                    The <filename>KMACHINE</filename> statements in the kernel's append file make sure that
+                    the OpenEmbedded build system and the Yocto Linux kernel understand the same machine
+                    names.
                 </para>
 
                 <para>
                     This append file uses two <filename>KMACHINE</filename> statements.
-                    The first is not really necessary but does ensure that the machine known to the 
+                    The first is not really necessary but does ensure that the machine known to the
                     OpenEmbedded build system as <filename>cedartrail</filename> maps to the machine
                     in the kernel also known as <filename>cedartrail</filename>:
                     <literallayout class='monospaced'>
@@ -1550,12 +1550,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
                 <para>
                     The second statement is a good example of why the <filename>KMACHINE</filename> variable
-                    is needed. 
+                    is needed.
                     In this example, the OpenEmbedded build system uses the <filename>cedartrail-nopvr</filename>
-                    machine name to refer to the Cedar Trail BSP that does not support the propriatory 
+                    machine name to refer to the Cedar Trail BSP that does not support the propriatory
                     PowerVR driver.
                     The kernel, however, uses the machine name <filename>cedartrail</filename>.
-                    Thus, the append file must map the <filename>cedartrail-nopvr</filename> machine name to 
+                    Thus, the append file must map the <filename>cedartrail-nopvr</filename> machine name to
                     the kernel's <filename>cedartrail</filename> name:
                     <literallayout class='monospaced'>
      KMACHINE_cedartrail-nopvr  = "cedartrail"
@@ -1563,9 +1563,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    BSPs that ship with the Yocto Project release provide all mappings between the Yocto 
-                    Project kernel machine names and the OpenEmbedded machine names. 
-                    Be sure to use the <filename>KMACHINE</filename> if you create a BSP and the machine 
+                    BSPs that ship with the Yocto Project release provide all mappings between the Yocto
+                    Project kernel machine names and the OpenEmbedded machine names.
+                    Be sure to use the <filename>KMACHINE</filename> if you create a BSP and the machine
                     name you use is different than that used in the kernel.
                 </para>
             </glossdef>
@@ -1583,16 +1583,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     to be compared against <filename>LAYERVERSION_anotherlayer</filename> in this case).
                     An error will be produced if any dependency is missing or
                     the version numbers do not match exactly (if specified).
-                    This variable is used in the <filename>conf/layer.conf</filename> file 
-                    and must be suffixed with the name of the specific layer (e.g. 
+                    This variable is used in the <filename>conf/layer.conf</filename> file
+                    and must be suffixed with the name of the specific layer (e.g.
                     <filename>LAYERDEPENDS_mylayer</filename>).</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-LAYERDIR'><glossterm>LAYERDIR</glossterm>
             <glossdef>
-                <para>When used inside the <filename>layer.conf</filename> configuration 
-                    file, this variable provides the path of the current layer. 
+                <para>When used inside the <filename>layer.conf</filename> configuration
+                    file, this variable provides the path of the current layer.
                     This variable requires immediate expansion
                     (see the BitBake manual) as lazy expansion can result in
                     the expansion happening in the wrong directory and therefore
@@ -1605,7 +1605,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>Optionally specifies the version of a layer as a single number.
                     You can use this within <filename>LAYERDEPENDS</filename> for another layer in order to
                     depend on a specific version of the layer.
-                    This variable is used in the <filename>conf/layer.conf</filename> file 
+                    This variable is used in the <filename>conf/layer.conf</filename> file
                     and must be suffixed with the name of the specific layer (e.g.
                     <filename>LAYERVERSION_mylayer</filename>).</para>
             </glossdef>
@@ -1615,9 +1615,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>Checksums of the license text in the recipe source code.</para>
                 <para>This variable tracks changes in license text of the source
-                    code files. 
+                    code files.
                     If the license text is changed, it will trigger a build
-                    failure, which gives the developer an opportunity to review any 
+                    failure, which gives the developer an opportunity to review any
                     license change.</para>
                 <para>
                     This variable must be defined for all recipes (unless <filename>LICENSE</filename>
@@ -1636,14 +1636,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <itemizedlist>
                         <listitem><para>Do not use spaces within individual
                             license names.</para></listitem>
-                        <listitem><para>Separate license names using 
+                        <listitem><para>Separate license names using
                             | (pipe) when there is a choice between licenses.
                             </para></listitem>
-                        <listitem><para>Separate license names using 
-                            &amp; (ampersand) when multiple licenses exist 
-                            that cover different parts of the source. 
+                        <listitem><para>Separate license names using
+                            &amp; (ampersand) when multiple licenses exist
+                            that cover different parts of the source.
                             </para></listitem>
-                        <listitem><para>You can use spaces between license 
+                        <listitem><para>You can use spaces between license
                             names.</para></listitem>
                     </itemizedlist>
                 </para>
@@ -1655,12 +1655,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      LICENSE = "MPL-1 &amp; LGPLv2.1"
      LICENSE = "GPLv2+"
                     </literallayout>
-                    The first example is from the recipes for Qt, which the user 
+                    The first example is from the recipes for Qt, which the user
                     may choose to distribute under either the LGPL version
                     2.1 or GPL version 3.
                     The second example is from Cairo where two licenses cover
-                    different parts of the source code. 
-                    The final example is from <filename>sysstat</filename>, 
+                    different parts of the source code.
+                    The final example is from <filename>sysstat</filename>,
                     which presents a single license.
                 </para>
             </glossdef>
@@ -1669,10 +1669,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-LICENSE_PATH'><glossterm>LICENSE_PATH</glossterm>
             <glossdef>
                 <para>Path to additional licenses used during the build.
-                    By default, the OpenEmbedded build system uses <filename>COMMON_LICENSE_DIR</filename>  
-                    to define the directory that holds common license text used during the build. 
+                    By default, the OpenEmbedded build system uses <filename>COMMON_LICENSE_DIR</filename>
+                    to define the directory that holds common license text used during the build.
                     The <filename>LICENSE_PATH</filename> variable allows you to extend that
-                    location to other areas that have additional licenses: 
+                    location to other areas that have additional licenses:
                     <literallayout class='monospaced'>
   LICENSE_PATH += "/path/to/additional/common/licenses"
                     </literallayout></para>
@@ -1687,26 +1687,26 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     Specifies the target device for which the image is built.
-                    You define <filename>MACHINE</filename> in the 
-                    <filename>local.conf</filename> file found in the 
+                    You define <filename>MACHINE</filename> in the
+                    <filename>local.conf</filename> file found in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
-                    By default, <filename>MACHINE</filename> is set to 
-                    "qemux86", which is an x86-based architecture machine to  
+                    By default, <filename>MACHINE</filename> is set to
+                    "qemux86", which is an x86-based architecture machine to
                     be emulated using QEMU:
                     <literallayout class='monospaced'>
      MACHINE ?= "qemux86"
-                    </literallayout> 
-                    The variable corresponds to a machine configuration file of the 
+                    </literallayout>
+                    The variable corresponds to a machine configuration file of the
                     same name, through which machine-specific configurations are set.
                     Thus, when <filename>MACHINE</filename> is set to "qemux86" there
                     exists the corresponding <filename>qemux86.conf</filename> machine
-                    configuration file, which can be found in the 
+                    configuration file, which can be found in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
                     in <filename>meta/conf/machine</filename>.
                 </para>
-                    
+
                 <para>
-                    The list of machines supported by the Yocto Project as 
+                    The list of machines supported by the Yocto Project as
                     shipped include the following:
                     <literallayout class='monospaced'>
      MACHINE ?= "qemuarm"
@@ -1721,10 +1721,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     </literallayout>
                     The last four are Yocto Project reference hardware boards, which
                     are provided in the <filename>meta-yocto-bsp</filename> layer.
-                    <note>Adding additional Board Support Package (BSP) layers 
+                    <note>Adding additional Board Support Package (BSP) layers
                         to your configuration adds new possible settings for
                         <filename>MACHINE</filename>.
-                    </note>                    
+                    </note>
                 </para>
             </glossdef>
          </glossentry>
@@ -1736,16 +1736,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     A list of required machine-specific packages to install as part of
                     the image being built.
                     The build process depends on these packages being present.
-                    Furthermore, because this is a "machine essential" variable, the list of 
+                    Furthermore, because this is a "machine essential" variable, the list of
                     packages are essential for the machine to boot.
-                    The impact of this variable affects images based on 
+                    The impact of this variable affects images based on
                     <filename>packagegroup-core-boot</filename>,
                     including the <filename>core-image-minimal</filename> image.
                 </para>
                 <para>
-                    This variable is similar to the 
+                    This variable is similar to the
                     <filename><link linkend='var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS'>MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</link></filename>
-                    variable with the exception that the image being built has a build 
+                    variable with the exception that the image being built has a build
                     dependency on the variable's list of packages.
                     In other words, the image will not build if a file in this list is not found.
                 </para>
@@ -1768,16 +1768,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     A list of recommended machine-specific packages to install as part of
                     the image being built.
                     The build process does not depend on these packages being present.
-                    However, because this is a "machine essential" variable, the list of 
+                    However, because this is a "machine essential" variable, the list of
                     packages are essential for the machine to boot.
-                    The impact of this variable affects images based on 
+                    The impact of this variable affects images based on
                     <filename>packagegroup-core-boot</filename>,
                     including the <filename>core-image-minimal</filename> image.
                 </para>
                 <para>
-                    This variable is similar to the 
+                    This variable is similar to the
                     <filename><link linkend='var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS'>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</link></filename>
-                    variable with the exception that the image being built does not have a build 
+                    variable with the exception that the image being built does not have a build
                     dependency on the variable's list of packages.
                     In other words, the image will still build if a package in this list is not found.
                     Typically, this variable is used to handle essential kernel modules, whose
@@ -1790,20 +1790,20 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     However, the driver can be built as a module or
                     into the kernel depending on the kernel configuration.
                     If the driver is built as a module, you want it to be installed.
-                    But, when the driver is built into the kernel, you still want the 
+                    But, when the driver is built into the kernel, you still want the
                     build to succeed.
                     This variable sets up a "recommends" relationship so that in the latter case,
                     the build will not fail due to the missing package.
                     To accomplish this, assuming the package for the module was called
                     <filename>kernel-module-ab123</filename>, you would use the
-                    following in the machine's <filename>.conf</filename> configuration 
+                    following in the machine's <filename>.conf</filename> configuration
                     file:
                     <literallayout class='monospaced'>
      MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "kernel-module-ab123"
                     </literallayout>
                 </para>
                 <para>
-                    Some examples of these machine essentials are flash, screen, keyboard, mouse, 
+                    Some examples of these machine essentials are flash, screen, keyboard, mouse,
                     or touchscreen drivers (depending on the machine).
                 </para>
             </glossdef>
@@ -1812,21 +1812,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
          <glossentry id='var-MACHINE_EXTRA_RDEPENDS'><glossterm>MACHINE_EXTRA_RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of machine-specific packages to install as part of the 
+                    A list of machine-specific packages to install as part of the
                     image being built that are not essential for the machine to boot.
-                    However, the build process for more fully-featured images 
+                    However, the build process for more fully-featured images
                     depends on the packages being present.
                 </para>
                 <para>
                     This variable affects all images based on
-                    <filename>packagegroup-base</filename>, which does not include the 
-                    <filename>core-image-minimal</filename> or <filename>core-image-basic</filename> 
+                    <filename>packagegroup-base</filename>, which does not include the
+                    <filename>core-image-minimal</filename> or <filename>core-image-basic</filename>
                     images.
                 </para>
                 <para>
-                    The variable is similar to the 
+                    The variable is similar to the
                     <filename><link linkend='var-MACHINE_EXTRA_RRECOMMENDS'>MACHINE_EXTRA_RRECOMMENDS</link></filename>
-                    variable with the exception that the image being built has a build 
+                    variable with the exception that the image being built has a build
                     dependency on the variable's list of packages.
                     In other words, the image will not build if a file in this list is not found.
                 </para>
@@ -1834,8 +1834,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     An example is a machine that has WiFi capability but is not essential
                     For the machine to boot the image.
                     However, if you are building a more fully-featured image, you want to enable
-                    the WiFi. 
-                    The package containing the firmware for the WiFi hardware is always 
+                    the WiFi.
+                    The package containing the firmware for the WiFi hardware is always
                     expected to exist, so it is acceptable for the build process to depend upon
                     finding the package.
                     In this case, assuming the package for the firmware was called
@@ -1852,20 +1852,20 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para></para>
                 <para>
-                    A list of machine-specific packages to install as part of the 
+                    A list of machine-specific packages to install as part of the
                     image being built that are not essential for booting the machine.
                     The image being built has no build dependency on this list of packages.
                 </para>
                 <para>
-                    This variable affects only images based on 
-                    <filename>packagegroup-base</filename>, which does not include the 
-                    <filename>core-image-minimal</filename> or <filename>core-image-basic</filename> 
+                    This variable affects only images based on
+                    <filename>packagegroup-base</filename>, which does not include the
+                    <filename>core-image-minimal</filename> or <filename>core-image-basic</filename>
                     images.
                 </para>
                 <para>
-                    This variable is similar to the 
+                    This variable is similar to the
                     <filename><link linkend='var-MACHINE_EXTRA_RDEPENDS'>MACHINE_EXTRA_RDEPENDS</link></filename>
-                    variable with the exception that the image being built does not have a build 
+                    variable with the exception that the image being built does not have a build
                     dependency on the variable's list of packages.
                     In other words, the image will build if a file in this list is not found.
                 </para>
@@ -1873,7 +1873,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     An example is a machine that has WiFi capability but is not essential
                     For the machine to boot the image.
                     However, if you are building a more fully-featured image, you want to enable
-                    WiFi. 
+                    WiFi.
                     In this case, the package containing the WiFi kernel module will not be produced
                     if the WiFi driver is built into the kernel, in which case you still want the
                     build to succeed instead of failing as a result of the package not being found.
@@ -1889,19 +1889,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
          <glossentry id='var-MACHINE_FEATURES'><glossterm>MACHINE_FEATURES</glossterm>
             <glossdef>
-                <para>Specifies the list of hardware features the 
+                <para>Specifies the list of hardware features the
                     <link linkend='var-MACHINE'>MACHINE</link> supports.
-                    For example, including the "bluetooth" feature causes the 
-                    <filename>bluez</filename> bluetooth daemon to be built and 
+                    For example, including the "bluetooth" feature causes the
+                    <filename>bluez</filename> bluetooth daemon to be built and
                     added to the image.
-                    It also causes the <filename>connman</filename> recipe 
+                    It also causes the <filename>connman</filename> recipe
                     to look at <filename>MACHINE_FEATURES</filename> and when it
-                    finds "bluetooth" there it enables the bluetooth 
+                    finds "bluetooth" there it enables the bluetooth
                     support in ConnMan.
                 </para>
 
                 <para>
-                    For a list of features supported by the Yocto Project as shipped, 
+                    For a list of features supported by the Yocto Project as shipped,
                     see the "<link linkend='ref-features-machine'>Machine</link>" section.
                 </para>
             </glossdef>
@@ -1909,18 +1909,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-MACHINE_FEATURES_BACKFILL'><glossterm>MACHINE_FEATURES_BACKFILL</glossterm>
             <glossdef>
-                <para>Features to be added to 
+                <para>Features to be added to
                     <filename><link linkend='var-MACHINE_FEATURES'>MACHINE_FEATURES</link></filename>
-                    if not also present in 
+                    if not also present in
                     <filename><link linkend='var-MACHINE_FEATURES_BACKFILL_CONSIDERED'>MACHINE_FEATURES_BACKFILL_CONSIDERED</link></filename>.
                 </para>
 
                 <para>
                     This variable is set in the <filename>meta/conf/bitbake.conf</filename> file.
-                    It is not intended to be user-configurable. 
-                    It is best to just reference the variable to see which machine features are 
+                    It is not intended to be user-configurable.
+                    It is best to just reference the variable to see which machine features are
                     being backfilled for all machine configurations.
-                    See the <link linkend='ref-features-backfill'>Feature backfilling</link> section for 
+                    See the <link linkend='ref-features-backfill'>Feature backfilling</link> section for
                     more information.
                 </para>
             </glossdef>
@@ -1933,7 +1933,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     that should not be backfilled (i.e. added to
                     <filename><link linkend='var-MACHINE_FEATURES'>MACHINE_FEATURES</link></filename>)
                     during the build.
-                    See the <link linkend='ref-features-backfill'>Feature backfilling</link> section for 
+                    See the <link linkend='ref-features-backfill'>Feature backfilling</link> section for
                     more information.
                     </para>
             </glossdef>
@@ -1949,13 +1949,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     Specifies a prefix has been added to
-                    <link linkend='var-PN'><filename>PN</filename></link> to create a special version 
+                    <link linkend='var-PN'><filename>PN</filename></link> to create a special version
                     of a recipe or package, such as a multilib version.
-                    The variable is used in places where the prefix needs to be 
+                    The variable is used in places where the prefix needs to be
                     added to or removed from a the name (e.g. the
                     <link linkend='var-BPN'><filename>BPN</filename></link> variable).
-                    <filename>MLPREFIX</filename> gets set when a prefix has been 
-                    added to <filename>PN</filename>. 
+                    <filename>MLPREFIX</filename> gets set when a prefix has been
+                    added to <filename>PN</filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -1981,17 +1981,17 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-OE_TERMINAL'><glossterm>OE_TERMINAL</glossterm>
             <glossdef>
                 <para>
-                    Controls how the OpenEmbedded build system spawns 
+                    Controls how the OpenEmbedded build system spawns
                     interactive terminals on the host development system
-                    (e.g. using the BitBake command with the 
+                    (e.g. using the BitBake command with the
                     <filename>-c devshell</filename> command-line option).
-                    For more information, see the 
+                    For more information, see the
                     "<ulink url='&YOCTO_DOCS_DEV_URL;#platdev-appdev-devshell'>Using a Development Shell</ulink>" section
                     in the Yocto Project Development Manual.
                  </para>
- 
+
                  <para>
-                    You can use the following values for the 
+                    You can use the following values for the
                     <filename>OE_TERMINAL</filename> variable:
                     <literallayout class='monospaced'>
      auto
@@ -2000,10 +2000,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      rxvt
      screen
      konsole
-     none 
+     none
                     </literallayout>
                     <note>Konsole support only works for KDE 3.x.
-                        Also, "auto" is the default behavior for 
+                        Also, "auto" is the default behavior for
                         <filename>OE_TERMINAL</filename></note>
                 </para>
             </glossdef>
@@ -2030,9 +2030,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PACKAGE_BEFORE_PN'><glossterm>PACKAGE_BEFORE_PN</glossterm>
             <glossdef>
-                <para>Enables easily adding packages to 
+                <para>Enables easily adding packages to
                 <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename>
-                before <filename>${PN}</filename> so that the packages can pick 
+                before <filename>${PN}</filename> so that the packages can pick
                 up files that would normally be included in the default package.</para>
             </glossdef>
         </glossentry>
@@ -2040,15 +2040,15 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-PACKAGE_CLASSES'><glossterm>PACKAGE_CLASSES</glossterm>
             <glossdef>
                 <para>This variable, which is set in the <filename>local.conf</filename> configuration
-                    file found in the <filename>conf</filename> folder of the 
+                    file found in the <filename>conf</filename> folder of the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>,
                     specifies the package manager to use when packaging data.
-                    You can provide one or more arguments for the variable with the first 
+                    You can provide one or more arguments for the variable with the first
                     argument being the package manager used to create images:
                     <literallayout class='monospaced'>
      PACKAGE_CLASSES ?= "package_rpm package_deb package_ipk"
                     </literallayout>
-                    For information on build performance effects as a result of the 
+                    For information on build performance effects as a result of the
                     package manager use, see
                     <link linkend='ref-classes-package'>Packaging - <filename>package*.bbclass</filename></link>
                     in this manual.
@@ -2067,33 +2067,33 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-PACKAGECONFIG'><glossterm>PACKAGECONFIG</glossterm>
             <glossdef>
                 <para>
-                    This variable provides a means of enabling or disabling 
-                    features of a recipe on a per-recipe basis. 
+                    This variable provides a means of enabling or disabling
+                    features of a recipe on a per-recipe basis.
                     The <filename>PACKAGECONFIG</filename>
-                    variable itself specifies a space-separated list of the 
+                    variable itself specifies a space-separated list of the
                     features to enable.
-                    The features themselves are specified as flags on the 
+                    The features themselves are specified as flags on the
                     <filename>PACKAGECONFIG</filename> variable.
                     You can provide up to four arguments, which are separated by
-                    commas, to determine the behavior of each feature 
+                    commas, to determine the behavior of each feature
                     when it is enabled or disabled.
-                    You can omit any argument you like but must retain the 
+                    You can omit any argument you like but must retain the
                     separating commas.
                     The arguments specify the following:
                     <orderedlist>
-                        <listitem><para>Extra arguments 
-                            that should be added to the configure script argument list 
+                        <listitem><para>Extra arguments
+                            that should be added to the configure script argument list
                             (<link linkend='var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></link>)
                             if the feature is enabled.</para></listitem>
-                        <listitem><para>Extra arguments 
+                        <listitem><para>Extra arguments
                             that should be added to <filename>EXTRA_OECONF</filename>
                             if the feature is disabled.
                             </para></listitem>
-                        <listitem><para>Additional build dependencies 
+                        <listitem><para>Additional build dependencies
                             (<link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>)
                             that should be added if the feature is enabled.
                             </para></listitem>
-                        <listitem><para>Additional runtime dependencies 
+                        <listitem><para>Additional runtime dependencies
                             (<link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>)
                             that should be added if the feature is enabled.
                             </para></listitem>
@@ -2101,25 +2101,25 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    Consider the following example taken from the 
+                    Consider the following example taken from the
                     <filename>librsvg</filename> recipe.
-                    In this example the feature is <filename>croco</filename>, which 
+                    In this example the feature is <filename>croco</filename>, which
                     has three arguments that determine the feature's behavior.
                         <literallayout class='monospaced'>
      PACKAGECONFIG ??= "croco"
      PACKAGECONFIG[croco] = "--with-croco,--without-croco,libcroco"
                         </literallayout>
-                    The <filename>--with-croco</filename> and 
-                    <filename>libcroco</filename> arguments apply only if 
+                    The <filename>--with-croco</filename> and
+                    <filename>libcroco</filename> arguments apply only if
                     the feature is enabled.
-                    In this case, <filename>--with-croco</filename> is 
-                    added to the configure script argument list and 
-                    <filename>libcroco</filename> is added to 
+                    In this case, <filename>--with-croco</filename> is
+                    added to the configure script argument list and
+                    <filename>libcroco</filename> is added to
                     <filename><link linkend='var-DEPENDS'>DEPENDS</link></filename>.
                     On the other hand, if the feature is disabled say through
                     a <filename>.bbappend</filename> file in another layer, then
-                    the second argument <filename>--without-croco</filename> is 
-                    added to the configure script rather than 
+                    the second argument <filename>--without-croco</filename> is
+                    added to the configure script rather than
                     <filename>--with-croco</filename>.
                 </para>
             </glossdef>
@@ -2138,29 +2138,29 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-PACKAGES_DYNAMIC'><glossterm>PACKAGES_DYNAMIC</glossterm>
             <glossdef>
                 <para>
-                    A promise that your recipe satisfies runtime dependencies 
+                    A promise that your recipe satisfies runtime dependencies
                     for optional modules that are found in other recipes.
                     <filename>PACKAGES_DYNAMIC</filename>
-                    does not actually satisfy the dependencies, it only states that 
-                    they should be satisfied. 
-                    For example, if a hard, runtime dependency 
-                    (<filename>RDEPENDS</filename>) of another package is satisfied 
+                    does not actually satisfy the dependencies, it only states that
+                    they should be satisfied.
+                    For example, if a hard, runtime dependency
+                    (<filename>RDEPENDS</filename>) of another package is satisfied
                     at build time through the <filename>PACKAGES_DYNAMIC</filename>
-                    variable, but a package with the module name is never actually 
+                    variable, but a package with the module name is never actually
                     produced, then the other package will be broken.
                     Thus, if you attempt to include that package in an image,
-                    you will get a dependency failure from the packaging system 
-                    during <filename>do_rootfs</filename>. 
+                    you will get a dependency failure from the packaging system
+                    during <filename>do_rootfs</filename>.
                     Typically, if there is a chance that such a situation can
-                    occur and the package that is not created is valid 
-                    without the dependency being satisfied, then you should use 
-                    <filename>RRECOMMENDS</filename> (a soft runtime dependency) 
+                    occur and the package that is not created is valid
+                    without the dependency being satisfied, then you should use
+                    <filename>RRECOMMENDS</filename> (a soft runtime dependency)
                     instead of <filename>RDEPENDS</filename>.
                 </para>
 
-                <para> 
+                <para>
                     For an example of how to use the <filename>PACKAGES_DYNAMIC</filename>
-                    variable when you are splitting packages, see the 
+                    variable when you are splitting packages, see the
                     "<ulink url='&YOCTO_DOCS_DEV_URL;#handling-optional-module-packaging'>Handling Optional Module Packaging</ulink>" section
                     in the Yocto Project Development Manual.
                 </para>
@@ -2169,11 +2169,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PARALLEL_MAKE'><glossterm>PARALLEL_MAKE</glossterm>
             <glossdef>
-                <para>Specifies extra options that are passed to the <filename>make</filename> command during the 
-                    compile tasks. 
+                <para>Specifies extra options that are passed to the <filename>make</filename> command during the
+                    compile tasks.
                     This variable is usually in the form <filename>-j 4</filename>, where the number
                     represents the maximum number of parallel threads make can run.
-                    If you development host supports multiple cores a good rule of thumb is to set 
+                    If you development host supports multiple cores a good rule of thumb is to set
                     this variable to twice the number of cores on the host.</para>
             </glossdef>
         </glossentry>
@@ -2194,21 +2194,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>This variable can have two separate functions depending on the context: a recipe
                     name or a resulting package name.</para>
-                <para><filename>PN</filename> refers to a recipe name in the context of a file used 
+                <para><filename>PN</filename> refers to a recipe name in the context of a file used
                     by the OpenEmbedded build system as input to create a package.
                     The name is normally extracted from the recipe file name.
-                    For example, if the recipe is named 
+                    For example, if the recipe is named
                     <filename>expat_2.0.1.bb</filename>, then the default value of <filename>PN</filename>
                     will be "expat".</para>
-                <para> 
+                <para>
                     The variable refers to a package name in the context of a file created or produced by the
                     OpenEmbedded build system.</para>
-                <para>If applicable, the <filename>PN</filename> variable also contains any special 
+                <para>If applicable, the <filename>PN</filename> variable also contains any special
                     suffix or prefix.
                     For example, using <filename>bash</filename> to build packages for the native
                     machine, <filename>PN</filename> is <filename>bash-native</filename>.
                     Using <filename>bash</filename> to build packages for the target and for Multilib,
-                    <filename>PN</filename> would be <filename>bash</filename> and  
+                    <filename>PN</filename> would be <filename>bash</filename> and
                     <filename>lib64-bash</filename>, respectively.
                 </para>
             </glossdef>
@@ -2216,7 +2216,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PR'><glossterm>PR</glossterm>
             <glossdef>
-                <para>The revision of the recipe. 
+                <para>The revision of the recipe.
                     The default value for this variable is "r0".
                     </para>
             </glossdef>
@@ -2224,10 +2224,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PRINC'><glossterm>PRINC</glossterm>
             <glossdef>
-                <para>Causes the <filename>PR</filename> variable of 
+                <para>Causes the <filename>PR</filename> variable of
                     <filename>.bbappend</filename> files to dynamically increment.
                     This increment minimizes the impact of layer ordering.</para>
-                <para>In order to ensure multiple <filename>.bbappend</filename> files can co-exist, 
+                <para>In order to ensure multiple <filename>.bbappend</filename> files can co-exist,
                     <filename>PRINC</filename> should be self referencing.
                     This variable defaults to 0.</para>
                 <para>Following is an example that increments <filename>PR</filename> by two:
@@ -2235,8 +2235,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      PRINC := "${@int(PRINC) + 2}"
                     </literallayout>
                     It is adviseable not to use strings such as ".= '.1'" with the variable because
-                    this usage is very sensitive to layer ordering. 
-                    Explicit assignments should be avoided as they cannot adequately represent multiple 
+                    this usage is very sensitive to layer ordering.
+                    Explicit assignments should be avoided as they cannot adequately represent multiple
                     <filename>.bbappend</filename> files.</para>
             </glossdef>
         </glossentry>
@@ -2245,11 +2245,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>The version of the recipe.
                     The version is normally extracted from the recipe filename.
-                    For example, if the recipe is named 
-                    <filename>expat_2.0.1.bb</filename>, then the default value of <filename>PV</filename> 
-                    will be "2.0.1". 
-                    <filename>PV</filename> is generally not overridden within 
-                    a recipe unless it is building an unstable (i.e. development) version from a source code repository 
+                    For example, if the recipe is named
+                    <filename>expat_2.0.1.bb</filename>, then the default value of <filename>PV</filename>
+                    will be "2.0.1".
+                    <filename>PV</filename> is generally not overridden within
+                    a recipe unless it is building an unstable (i.e. development) version from a source code repository
                     (e.g. Git or Subversion).
                  </para>
             </glossdef>
@@ -2258,9 +2258,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-PE'><glossterm>PE</glossterm>
             <glossdef>
                 <para>
-                    the epoch of the recipe. 
-                    The default value is "0". 
-                    The field is used to make upgrades possible when the versioning scheme changes in 
+                    the epoch of the recipe.
+                    The default value is "0".
+                    The field is used to make upgrades possible when the versioning scheme changes in
                     some backwards incompatible way.
                 </para>
             </glossdef>
@@ -2270,10 +2270,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     If multiple recipes provide an item, this variable
-                    determines which recipe should be given preference. 
-                    The variable must always be suffixed with the name of the 
-                    provided item, and should be set to the 
-                    <filename>PN</filename> of the recipe 
+                    determines which recipe should be given preference.
+                    The variable must always be suffixed with the name of the
+                    provided item, and should be set to the
+                    <filename>PN</filename> of the recipe
                     to which you want to give precedence.
                     Here is an example:
                     <literallayout class='monospaced'>
@@ -2288,17 +2288,17 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     If there are multiple versions of recipes available, this
                     variable determines which recipe should be given preference.
-                    The variable must always be suffixed with the <filename>PN</filename> 
-                    for which to select, and should be set to the 
+                    The variable must always be suffixed with the <filename>PN</filename>
+                    for which to select, and should be set to the
                     <filename>PV</filename> to which you want to give precedence.
                     You can use the "<filename>%</filename>" character as a wildcard
-                    to match any number of characters, which can be useful when 
-                    specifying versions that contain long revision number that could 
+                    to match any number of characters, which can be useful when
+                    specifying versions that contain long revision number that could
                     potentially change.
                     Here are two examples:
                     <literallayout class='monospaced'>
      PREFERRED_VERSION_python = "2.6.6"
-     PREFERRED_VERSION_linux-yocto = "3.0+git%" 
+     PREFERRED_VERSION_linux-yocto = "3.0+git%"
                     </literallayout>
                 </para>
             </glossdef>
@@ -2317,7 +2317,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Note that the package will not be installed if the conflicting packages are not
                     first removed.</para>
                 <para>
-                   Like all package-controlling variables, you must always use them in 
+                   Like all package-controlling variables, you must always use them in
                    conjunction with a package name override.
                    Here is an example:
                    <literallayout class='monospaced'>
@@ -2330,59 +2330,59 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RDEPENDS'><glossterm>RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    Lists a package's run-time dependencies (i.e. other packages)                    
+                    Lists a package's run-time dependencies (i.e. other packages)
                     that must be installed for the package to be built.
-                    In other words, in order for the package to be built and 
+                    In other words, in order for the package to be built and
                     run correctly, it depends on the listed packages.
-                    If a package in this list cannot be found, it is probable 
+                    If a package in this list cannot be found, it is probable
                     that a dependency error would occur before the build.
                 </para>
 
                 <para>
-                    The names of the variables you list with 
-                    <filename>RDEPENDS</filename> must be the names of other 
-                    packages as listed in the 
+                    The names of the variables you list with
+                    <filename>RDEPENDS</filename> must be the names of other
+                    packages as listed in the
                     <link linkend='var-PACKAGES'><filename>PACKAGES</filename></link>
                     variable.
                     You should not list recipe names (<filename>PN</filename>).
-                </para> 
+                </para>
 
                 <para>
-                    Because the <filename>RDEPENDS</filename> variable applies 
-                    to packages being built, you should 
-                    always attach a package name to the variable to specify the 
+                    Because the <filename>RDEPENDS</filename> variable applies
+                    to packages being built, you should
+                    always attach a package name to the variable to specify the
                     particular run-time package that has the dependency.
-                    For example, suppose you are building a development package 
+                    For example, suppose you are building a development package
                     that depends on the <filename>perl</filename> package.
-                    In this case, you would use the following 
+                    In this case, you would use the following
                     <filename>RDEPENDS</filename> statement:
                     <literallayout class='monospaced'>
      RDEPENDS_${PN}-dev += "perl"
                     </literallayout>
-                    In the example, the package name 
-                    (<filename>${PN}-dev</filename>) must appear as it would 
-                    in the 
-                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> 
-                    namespace before any renaming of the output package by 
+                    In the example, the package name
+                    (<filename>${PN}-dev</filename>) must appear as it would
+                    in the
+                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename>
+                    namespace before any renaming of the output package by
                     classes like <filename>debian.bbclass</filename>.
                 </para>
 
                 <para>
-                    In many cases you do not need to explicitly add dependencies 
-                    to <filename>RDEPENDS</filename> since some automatic 
+                    In many cases you do not need to explicitly add dependencies
+                    to <filename>RDEPENDS</filename> since some automatic
                     handling occurs:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:  If 
-                            a run-time package contains a shared library 
+                        <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:  If
+                            a run-time package contains a shared library
                             (<filename>.so</filename>), the build
-                            processes the library in order to determine other 
-                            libraries to which it is dynamically linked.  
-                            The build process adds these libraries to 
-                            <filename>RDEPENDS</filename> when creating the run-time 
+                            processes the library in order to determine other
+                            libraries to which it is dynamically linked.
+                            The build process adds these libraries to
+                            <filename>RDEPENDS</filename> when creating the run-time
                             package.</para></listitem>
-                        <listitem><para><emphasis><filename>pcdeps</filename></emphasis>:  If 
-                            the package ships a <filename>pkg-config</filename> 
-                            information file, the build process uses this file 
+                        <listitem><para><emphasis><filename>pcdeps</filename></emphasis>:  If
+                            the package ships a <filename>pkg-config</filename>
+                            information file, the build process uses this file
                             to add items to the <filename>RDEPENDS</filename>
                             variable to create the run-time packages.
                             </para></listitem>
@@ -2394,11 +2394,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RRECOMMENDS'><glossterm>RRECOMMENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of packages that extend the usability of a package being 
+                    A list of packages that extend the usability of a package being
                     built.
-                    The package being built does not depend on this list of packages in 
+                    The package being built does not depend on this list of packages in
                     order to successfully build, but needs them for the extended usability.
-                    To specify runtime dependencies for packages, see the 
+                    To specify runtime dependencies for packages, see the
                     <filename><link linkend='var-RDEPENDS'>RDEPENDS</link></filename> variable.
                 </para>
                 <para>
@@ -2409,8 +2409,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     process continues without an error.
                 </para>
                 <para>
-                    Because the <filename>RRECOMMENDS</filename> variable applies to packages 
-                    being built, you should 
+                    Because the <filename>RRECOMMENDS</filename> variable applies to packages
+                    being built, you should
                     always attach an override to the variable to specify the particular package
                     whose usability is being extended.
                     For example, suppose you are building a development package that is extended
@@ -2419,9 +2419,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
      RRECOMMENDS_${PN}-dev += "&lt;wireless_package_name&gt;"
                     </literallayout>
-                    In the example, the package name (<filename>${PN}-dev</filename>) must 
-                    appear as it would in the 
-                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> namespace before any 
+                    In the example, the package name (<filename>${PN}-dev</filename>) must
+                    appear as it would in the
+                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> namespace before any
                     renaming of the output package by classes like <filename>debian.bbclass</filename>.
                 </para>
             </glossdef>
@@ -2442,22 +2442,22 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     The location in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
                     where unpacked package source code resides.
-                    This location is within the working directory 
-                    (<filename><link linkend='var-WORKDIR'>WORKDIR</link></filename>), which 
+                    This location is within the working directory
+                    (<filename><link linkend='var-WORKDIR'>WORKDIR</link></filename>), which
                     is not static.
-                    The unpacked source location depends on the package name 
-                    (<filename><link linkend='var-PN'>PN</link></filename>) and 
-                    package version (<filename><link linkend='var-PV'>PV</link></filename>) as 
+                    The unpacked source location depends on the package name
+                    (<filename><link linkend='var-PN'>PN</link></filename>) and
+                    package version (<filename><link linkend='var-PV'>PV</link></filename>) as
                     follows:
                     <literallayout class='monospaced'>
  ${WORKDIR}/${PN}-${PV}
                     </literallayout>
-                    As an example, assume a 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink> top-level 
-                    folder named <filename>poky</filename> 
+                    As an example, assume a
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink> top-level
+                    folder named <filename>poky</filename>
                     and a default <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
                     at <filename>poky/build</filename>.
-                    In this case, the working directory the build system uses to build 
+                    In this case, the working directory the build system uses to build
                     the <filename>db</filename> package is the following:
                     <literallayout class='monospaced'>
  ~/poky/build/tmp/work/qemux86-poky-linux/db-5.1.19-r3/db-5.1.19
@@ -2468,9 +2468,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-SDKIMAGE_FEATURES'><glossterm>SDKIMAGE_FEATURES</glossterm>
             <glossdef>
-                <para>Equivalent to 
+                <para>Equivalent to
                 <filename><link linkend='var-IMAGE_FEATURES'>IMAGE_FEATURES</link></filename>.
-                However, this variable applies to the SDK generated from an image using 
+                However, this variable applies to the SDK generated from an image using
                 <filename>bitbake -c populate_sdk imagename</filename>).
                 </para>
             </glossdef>
@@ -2486,10 +2486,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SELECTED_OPTIMIZATION'><glossterm>SELECTED_OPTIMIZATION</glossterm>
             <glossdef>
                 <para>
-                    The variable takes the value of 
+                    The variable takes the value of
                     <filename><link linkend='var-FULL_OPTIMIZATION'>FULL_OPTIMIZATION</link></filename>
                     unless <filename><link linkend='var-DEBUG_BUILD'>DEBUG_BUILD</link></filename> = "1".
-                    In this case the value of 
+                    In this case the value of
                     <filename><link linkend='var-DEBUG_OPTIMIZATION'>DEBUG_OPTIMIZATION</link></filename> is used.
                 </para>
             </glossdef>
@@ -2498,7 +2498,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-SERIAL_CONSOLE'><glossterm>SERIAL_CONSOLE</glossterm>
             <glossdef>
-                <para>The speed and device for the serial port used to attach the serial console. 
+                <para>The speed and device for the serial port used to attach the serial console.
                     This variable is given to the kernel as the "console"
                     parameter and after booting occurs <filename>getty</filename> is started on that port
                     so remote login is possible.</para>
@@ -2508,7 +2508,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SITEINFO_ENDIANNESS'><glossterm>SITEINFO_ENDIANNESS</glossterm>
             <glossdef>
                 <para>
-                    Specifies the endian byte order of the target system. 
+                    Specifies the endian byte order of the target system.
                     The value should be either "le" for little-endian or "be" for big-endian.
                 </para>
             </glossdef>
@@ -2526,7 +2526,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SPECIAL_PKGSUFFIX'><glossterm>SPECIAL_PKGSUFFIX</glossterm>
             <glossdef>
                 <para>
-                    A list of prefixes for <link linkend='var-PN'><filename>PN</filename></link> used by the 
+                    A list of prefixes for <link linkend='var-PN'><filename>PN</filename></link> used by the
                     OpenEmbedded build system to create variants of recipes or packages.
                     The list specifies the prefixes to strip off during certain circumstances
                     such as the generation of the <link linkend='var-BPN'><filename>BPN</filename></link> variable.
@@ -2539,7 +2539,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>The list of source files - local or remote.
                     This variable tells the OpenEmbedded build system which bits to pull
                     in for the build and how to pull them in.
-                    For example, if the recipe only needs to fetch a tarball from the 
+                    For example, if the recipe only needs to fetch a tarball from the
                     internet, the recipe uses a single <filename>SRC_URI</filename> entry.
                     On the other hand, if the recipe needs to fetch a tarball, apply
                     two patches, and include a custom file, the recipe would include four
@@ -2547,120 +2547,120 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>The following list explains the available URI protocols:
                     <itemizedlist>
                         <listitem><para><emphasis><filename>file://</filename> -</emphasis> Fetches files, which is usually
-                            a file shipped with the metadata, from the local machine. 
-                            The path is relative to the 
-                            <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link> 
+                            a file shipped with the metadata, from the local machine.
+                            The path is relative to the
+                            <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>
                             variable.
                             Thus, the build system searches, in order, from the following directories,
-                            which are assumed to be a subdirectories of the directory in which the 
+                            which are assumed to be a subdirectories of the directory in which the
                             recipe file resides:
                             <itemizedlist>
-                                <listitem><para><emphasis><filename>${PN}</filename> -</emphasis> The recipe name 
+                                <listitem><para><emphasis><filename>${PN}</filename> -</emphasis> The recipe name
                                     with any special suffix or prefix, if applicable.
                                     For example, using <filename>bash</filename> to build for the native
                                     machine, <filename>PN</filename> is <filename>bash-native</filename>.
                                     Using <filename>bash</filename> to build for the target and for Multilib,
-                                    <filename>PN</filename> would be <filename>bash</filename> and  
+                                    <filename>PN</filename> would be <filename>bash</filename> and
                                     <filename>lib64-bash</filename>, respectively.
                                     </para></listitem>
                                 <listitem><para><emphasis><filename>${PF}</filename> - </emphasis>
                                     <filename>${PN}-${EXTENDPE}${PV}-${PR}</filename>.
-                                    The recipe name including all version and revision numbers 
+                                    The recipe name including all version and revision numbers
                                     (i.e. <filename>eglibc-2.13-r20+svnr15508/</filename> and
                                     <filename>bash-4.2-r1/</filename>).</para></listitem>
-                                <listitem><para><emphasis><filename>${P}</filename> -</emphasis> 
-                                    <filename>${PN}-${PV}</filename>. 
+                                <listitem><para><emphasis><filename>${P}</filename> -</emphasis>
+                                    <filename>${PN}-${PV}</filename>.
                                     The recipe name and version (i.e. <filename>bash-4.2</filename>).
                                     </para></listitem>
-                                <listitem><para><emphasis><filename>${BPN}</filename> -</emphasis> The 
+                                <listitem><para><emphasis><filename>${BPN}</filename> -</emphasis> The
                                     base recipe name without any special suffix or version numbers.
                                     </para></listitem>
-                                <listitem><para><emphasis><filename>${BP}</filename> -</emphasis> 
+                                <listitem><para><emphasis><filename>${BP}</filename> -</emphasis>
                                     <filename>${BPN}-${PV}</filename>.
-                                    The base recipe name and version but without any special 
+                                    The base recipe name and version but without any special
                                     package name suffix.</para></listitem>
                                 <listitem><para><emphasis>Files -</emphasis> Files beneath the directory in which the recipe
                                     resides.</para></listitem>
                                 <listitem><para><emphasis>Directory -</emphasis> The directory itself in which the recipe
                                     resides.</para></listitem>
                             </itemizedlist></para></listitem>
-                        <listitem><para><emphasis><filename>bzr://</filename> -</emphasis> Fetches files from a 
+                        <listitem><para><emphasis><filename>bzr://</filename> -</emphasis> Fetches files from a
                             Bazaar revision control repository.</para></listitem>
-                        <listitem><para><emphasis><filename>git://</filename> -</emphasis> Fetches files from a 
+                        <listitem><para><emphasis><filename>git://</filename> -</emphasis> Fetches files from a
                             Git revision control repository.</para></listitem>
-                        <listitem><para><emphasis><filename>osc://</filename> -</emphasis> Fetches files from 
+                        <listitem><para><emphasis><filename>osc://</filename> -</emphasis> Fetches files from
                             an OSC (OpenSuse Build service) revision control repository.</para></listitem>
-                        <listitem><para><emphasis><filename>repo://</filename> -</emphasis> Fetches files from 
+                        <listitem><para><emphasis><filename>repo://</filename> -</emphasis> Fetches files from
                             a repo (Git) repository.</para></listitem>
-                        <listitem><para><emphasis><filename>svk://</filename> -</emphasis> Fetches files from 
+                        <listitem><para><emphasis><filename>svk://</filename> -</emphasis> Fetches files from
                             an SVK revision control repository.</para></listitem>
-                        <listitem><para><emphasis><filename>http://</filename> -</emphasis> Fetches files from 
+                        <listitem><para><emphasis><filename>http://</filename> -</emphasis> Fetches files from
                             the Internet using <filename>http</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>https://</filename> -</emphasis> Fetches files 
+                        <listitem><para><emphasis><filename>https://</filename> -</emphasis> Fetches files
                             from the Internet using <filename>https</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>ftp://</filename> -</emphasis> Fetches files 
+                        <listitem><para><emphasis><filename>ftp://</filename> -</emphasis> Fetches files
                             from the Internet using <filename>ftp</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>cvs://</filename> -</emphasis> Fetches files from 
+                        <listitem><para><emphasis><filename>cvs://</filename> -</emphasis> Fetches files from
                             a CVS revision control repository.</para></listitem>
-                        <listitem><para><emphasis><filename>hg://</filename> -</emphasis> Fetches files from 
+                        <listitem><para><emphasis><filename>hg://</filename> -</emphasis> Fetches files from
                             a Mercurial (<filename>hg</filename>) revision control repository.</para></listitem>
-                        <listitem><para><emphasis><filename>p4://</filename> -</emphasis> Fetches files from 
+                        <listitem><para><emphasis><filename>p4://</filename> -</emphasis> Fetches files from
                             a Perforce (<filename>p4</filename>) revision control repository.</para></listitem>
-                        <listitem><para><emphasis><filename>ssh://</filename> -</emphasis> Fetches files from 
+                        <listitem><para><emphasis><filename>ssh://</filename> -</emphasis> Fetches files from
                             a secure shell.</para></listitem>
-                        <listitem><para><emphasis><filename>svn://</filename> -</emphasis> Fetches files from 
+                        <listitem><para><emphasis><filename>svn://</filename> -</emphasis> Fetches files from
                             a Subversion (<filename>svn</filename>) revision control repository.</para></listitem>
                     </itemizedlist>
                 </para>
                 <para>Standard and recipe-specific options for <filename>SRC_URI</filename> exist.
                     Here are standard options:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>apply</filename> -</emphasis> Whether to apply 
-                            the patch or not. 
+                        <listitem><para><emphasis><filename>apply</filename> -</emphasis> Whether to apply
+                            the patch or not.
                             The default action is to apply the patch.</para></listitem>
-                        <listitem><para><emphasis><filename>striplevel</filename> -</emphasis> Which 
+                        <listitem><para><emphasis><filename>striplevel</filename> -</emphasis> Which
                             striplevel to use when applying the patch.
                             The default level is 1.</para></listitem>
                     </itemizedlist>
                 </para>
                 <para>Here are options specific to recipes building code from a revision control system:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>mindate</filename> -</emphasis> Only applies 
-                            the patch if <link linkend='var-SRCDATE'><filename>SRCDATE</filename></link> 
+                        <listitem><para><emphasis><filename>mindate</filename> -</emphasis> Only applies
+                            the patch if <link linkend='var-SRCDATE'><filename>SRCDATE</filename></link>
                             is equal to or greater than <filename>mindate</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>maxdate</filename> -</emphasis> Only applies 
-                            the patch if <link linkend='var-SRCDATE'><filename>SRCDATE</filename></link> 
+                        <listitem><para><emphasis><filename>maxdate</filename> -</emphasis> Only applies
+                            the patch if <link linkend='var-SRCDATE'><filename>SRCDATE</filename></link>
                             is not later than <filename>mindate</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>minrev</filename> -</emphasis> Only applies 
-                            the patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link> 
+                        <listitem><para><emphasis><filename>minrev</filename> -</emphasis> Only applies
+                            the patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
                             is equal to or greater than <filename>minrev</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>maxrev</filename> -</emphasis> Only applies 
-                            the patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link> 
+                        <listitem><para><emphasis><filename>maxrev</filename> -</emphasis> Only applies
+                            the patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
                             is not later than <filename>maxrev</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>rev</filename> -</emphasis> Only applies the 
-                            patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link> 
+                        <listitem><para><emphasis><filename>rev</filename> -</emphasis> Only applies the
+                            patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
                             is equal to <filename>rev</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>notrev</filename> -</emphasis> Only applies 
-                            the patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link> 
+                        <listitem><para><emphasis><filename>notrev</filename> -</emphasis> Only applies
+                            the patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
                             is not equal to <filename>rev</filename>.</para></listitem>
                     </itemizedlist>
                 </para>
                 <para>Here are some additional options worth mentioning:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>unpack</filename> -</emphasis> Controls 
+                        <listitem><para><emphasis><filename>unpack</filename> -</emphasis> Controls
                             whether or not to unpack the file if it is an archive.
                             The default action is to upack the file.</para></listitem>
-                        <listitem><para><emphasis><filename>subdir</filename> -</emphasis> Places the file 
-                            (or extracts its contents) into the specified 
+                        <listitem><para><emphasis><filename>subdir</filename> -</emphasis> Places the file
+                            (or extracts its contents) into the specified
                             subdirectory of <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>.
-                            This option is useful for unusual tarballs or other archives that 
+                            This option is useful for unusual tarballs or other archives that
                             don't have their files already in a subdirectory within the archive.
                             </para></listitem>
-                        <listitem><para><emphasis><filename>name</filename> -</emphasis> Specifies a 
-                            name to be used for association with <filename>SRC_URI</filename> checksums 
+                        <listitem><para><emphasis><filename>name</filename> -</emphasis> Specifies a
+                            name to be used for association with <filename>SRC_URI</filename> checksums
                             when you have more than one file specified in <filename>SRC_URI</filename>.
                             </para></listitem>
-                        <listitem><para><emphasis><filename>downloadfilename</filename> -</emphasis> Specifies  
+                        <listitem><para><emphasis><filename>downloadfilename</filename> -</emphasis> Specifies
                             the filename used when storing the downloaded file.</para></listitem>
                     </itemizedlist>
                 </para>
@@ -2671,11 +2671,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para></para>
                 <para>
-                    By default, the OpenEmbedded build system automatically detects whether 
-                    <filename><link linkend='var-SRC_URI'>SRC_URI</link></filename>  
+                    By default, the OpenEmbedded build system automatically detects whether
+                    <filename><link linkend='var-SRC_URI'>SRC_URI</link></filename>
                     contains files that are machine-specific.
-                    If so, the build system automatically changes 
-                    <filename><link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></filename>. 
+                    If so, the build system automatically changes
+                    <filename><link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></filename>.
                     Setting this variable to "0" disables this behavior.
                 </para>
             </glossdef>
@@ -2695,7 +2695,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     The revision of the source code used to build the package.
                     This variable applies to Subversion, Git, Mercurial and Bazaar
-                    only. 
+                    only.
                     Note that if you wish to build a fixed revision and you wish
                     to avoid performing a query on the remote repository every time
                     BitBake parses your recipe, you should specify a <filename>SRCREV</filename> that is a
@@ -2713,30 +2713,30 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SSTATE_MIRRORS'><glossterm>SSTATE_MIRRORS</glossterm>
             <glossdef>
                 <para>
-                    Configures the OpenEmbedded build system to search other 
-                    mirror locations for prebuilt cache data objects before 
+                    Configures the OpenEmbedded build system to search other
+                    mirror locations for prebuilt cache data objects before
                     building out the data.
-                    This variable works like fetcher 
+                    This variable works like fetcher
                     <filename>MIRRORS</filename>/<filename>PREMIRRORS</filename>
-                    and points to the cache locations to check for the shared 
+                    and points to the cache locations to check for the shared
                     objects.
                 </para>
 
                 <para>
-                    You can specify a filesystem directory or a remote URL such 
+                    You can specify a filesystem directory or a remote URL such
                     as HTTP or FTP.
                     The locations you specify need to contain the shared state
                     cache (sstate-cache) results from previous builds.
-                    The sstate-cache you point to can also be from builds on 
-                    other machines. 
+                    The sstate-cache you point to can also be from builds on
+                    other machines.
                 </para>
 
                 <para>
-                    If a mirror uses the same structure as 
-                    <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link>, 
-                    you need to add 
-                    "PATH" at the end as shown in the examples below. 
-                    The build system substitues the correct path within the 
+                    If a mirror uses the same structure as
+                    <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link>,
+                    you need to add
+                    "PATH" at the end as shown in the examples below.
+                    The build system substitues the correct path within the
                     directory structure.
                     <literallayout class='monospaced'>
      SSTATE_MIRRORS ?= "\
@@ -2761,14 +2761,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Specifies the base path used to create recipe stamp files.
                     The path to an actual stamp file is constructed by evaluating this
-                    string and then appending additional information. 
+                    string and then appending additional information.
                     Currently, the default assignment for <filename>STAMP</filename>
                     as set in the <filename>meta/conf/bitbake.conf</filename> file
                     is:
                     <literallayout class='monospaced'>
      STAMP = "${TMPDIR}/stamps/${MULTIMACH_TARGET_SYS}/${PN}-${EXTENDPE}${PV}-${PR}"
                     </literallayout>
-                    See <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>, 
+                    See <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>,
                     <link linkend='var-MULTIMACH_TARGET_SYS'><filename>MULTIMACH_TARGET_SYS</filename></link>,
                     <link linkend='var-PN'><filename>PN</filename></link>,
                     <link linkend='var-EXTENDPE'><filename>EXTENDPE</filename></link>,
@@ -2781,12 +2781,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-SUMMARY'><glossterm>SUMMARY</glossterm>
             <glossdef>
-                <para>The short (72 characters or less) summary of the binary package for packaging 
-                    systems such as <filename>opkg</filename>, <filename>rpm</filename> or 
+                <para>The short (72 characters or less) summary of the binary package for packaging
+                    systems such as <filename>opkg</filename>, <filename>rpm</filename> or
                     <filename>dpkg</filename>.
                     By default, <filename>SUMMARY</filename> is used to define
                     the <link linkend='var-DESCRIPTION'><filename>DESCRIPTION</filename></link>
-                    variable if <filename>DESCRIPTION</filename> is not set 
+                    variable if <filename>DESCRIPTION</filename> is not set
                     in the recipe.
                 </para>
             </glossdef>
@@ -2798,18 +2798,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-T'><glossterm>T</glossterm>
             <glossdef>
-                <para>This variable points to a directory were Bitbake places temporary 
-                    files when building a particular package. 
+                <para>This variable points to a directory were Bitbake places temporary
+                    files when building a particular package.
                     It is typically set as follows:
                     <literallayout class='monospaced'>
      T = ${WORKDIR}/temp
                     </literallayout>
                     The <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
-                    is the directory into which Bitbake unpacks and builds the package. 
+                    is the directory into which Bitbake unpacks and builds the package.
                     The default <filename>bitbake.conf</filename> file sets this variable.</para>
-                    <para>The <filename>T</filename> variable is not to be confused with 
+                    <para>The <filename>T</filename> variable is not to be confused with
                     the <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link> variable,
-                    which points to the root of the directory tree where Bitbake 
+                    which points to the root of the directory tree where Bitbake
                     places the output of an entire build.
                 </para>
             </glossdef>
@@ -2817,7 +2817,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-TARGET_ARCH'><glossterm>TARGET_ARCH</glossterm>
             <glossdef>
-                <para>The architecture of the device being built. 
+                <para>The architecture of the device being built.
                 While a number of values are possible, the OpenEmbedded build system primarily supports
                 <filename>arm</filename> and <filename>i586</filename>.</para>
             </glossdef>
@@ -2826,8 +2826,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-TARGET_CFLAGS'><glossterm>TARGET_CFLAGS</glossterm>
             <glossdef>
                 <para>
-                    Flags passed to the C compiler for the target system. 
-                    This variable evaluates to the same as 
+                    Flags passed to the C compiler for the target system.
+                    This variable evaluates to the same as
                     <filename><link linkend='var-CFLAGS'>CFLAGS</link></filename>.
                 </para>
             </glossdef>
@@ -2836,7 +2836,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-TARGET_FPU'><glossterm>TARGET_FPU</glossterm>
             <glossdef>
-                <para>Specifies the method for handling FPU code. 
+                <para>Specifies the method for handling FPU code.
                     For FPU-less targets, which include most ARM CPUs, the variable must be
                     set to "soft".
                     If not, the kernel emulation gets used, which results in a performance penalty.</para>
@@ -2845,9 +2845,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-TARGET_OS'><glossterm>TARGET_OS</glossterm>
             <glossdef>
-                <para>Specifies the target's operating system. 
+                <para>Specifies the target's operating system.
                     The variable can be set to "linux" for <filename>eglibc</filename>-based systems and
-                    to "linux-uclibc" for <filename>uclibc</filename>. 
+                    to "linux-uclibc" for <filename>uclibc</filename>.
                     For ARM/EABI targets, there are also "linux-gnueabi" and
                     "linux-uclibc-gnueabi" values possible.</para>
             </glossdef>
@@ -2864,7 +2864,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     You can select <filename>eglibc</filename> or <filename>uclibc</filename>.
                     <note>
-                        This release of the Yocto Project does not support the 
+                        This release of the Yocto Project does not support the
                         <filename>glibc</filename> implementation of <filename>libc</filename>.
                     </note>
                 </para>
@@ -2874,7 +2874,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-TCMODE'><glossterm>TCMODE</glossterm>
             <glossdef>
                 <para>
-                    The toolchain selector. 
+                    The toolchain selector.
                     This variable replaces <filename>POKYMODE</filename>, which is no longer
                     supported.
                 </para>
@@ -2882,39 +2882,39 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The <filename>TCMODE</filename> variable selects the external toolchain
                     built using the OpenEmbedded build system or a few supported combinations of
                     the upstream GCC or CodeSourcery Labs toolchain.
-                    The variable identifies the <filename>tcmode-*</filename> files used in 
+                    The variable identifies the <filename>tcmode-*</filename> files used in
                     the <filename>meta/conf/distro/include</filename> directory, which is found in the
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>. 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                 </para>
                 <para>
-                    By default, <filename>TCMODE</filename> is set to "default", which 
+                    By default, <filename>TCMODE</filename> is set to "default", which
                     chooses the <filename>tcmode-default.inc</filename> file.
-                    The variable is similar to 
-                    <link linkend='var-TCLIBC'><filename>TCLIBC</filename></link>, which controls 
+                    The variable is similar to
+                    <link linkend='var-TCLIBC'><filename>TCLIBC</filename></link>, which controls
                     the variant of the GNU standard C library (<filename>libc</filename>)
                     used during the build process: <filename>eglibc</filename> or <filename>uclibc</filename>.
                 </para>
             </glossdef>
-        </glossentry> 
+        </glossentry>
 
         <glossentry id='var-TMPDIR'><glossterm>TMPDIR</glossterm>
             <glossdef>
                 <para>
-                    This variable is the temporary directory the OpenEmbedded build system 
-                    uses when it does its work building images. 
-                    By default, the <filename>TMPDIR</filename> variable is named 
-                    <filename>tmp</filename> within the 
+                    This variable is the temporary directory the OpenEmbedded build system
+                    uses when it does its work building images.
+                    By default, the <filename>TMPDIR</filename> variable is named
+                    <filename>tmp</filename> within the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                 </para>
 
                 <para>
                     If you want to establish this directory in a location other than the
-                    default, you can uncomment the following statement in the 
-                    <filename>conf/local.conf</filename> file in the 
+                    default, you can uncomment the following statement in the
+                    <filename>conf/local.conf</filename> file in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>:
                     <literallayout class='monospaced'>
      #TMPDIR = "${TOPDIR}/tmp"
-                    </literallayout> 
+                    </literallayout>
                 </para>
             </glossdef>
         </glossentry>
@@ -2922,10 +2922,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-TOPDIR'><glossterm>TOPDIR</glossterm>
             <glossdef>
                 <para>
-                    This variable is the 
+                    This variable is the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                     BitBake automatically sets this variable.
-                    The OpenEmbedded build system uses the Build Directory when building images. 
+                    The OpenEmbedded build system uses the Build Directory when building images.
                 </para>
             </glossdef>
         </glossentry>
@@ -2943,7 +2943,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-WORKDIR'><glossterm>WORKDIR</glossterm>
             <glossdef>
                 <para>
-                    The pathname of the working directory in which the OpenEmbedded build system  
+                    The pathname of the working directory in which the OpenEmbedded build system
                     builds a recipe.
                     This directory is located within the
                     <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link> directory structure and changes
@@ -2964,17 +2964,17 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    For packages that are not dependent on a particular machine, 
+                    For packages that are not dependent on a particular machine,
                     <filename>WORKDIR</filename> is defined as follows:
                     <literallayout class='monospaced'>
  ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
                     </literallayout>
-                    As an example, assume a 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink> top-level 
-                    folder name <filename>poky</filename> and a default 
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink> 
+                    As an example, assume a
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink> top-level
+                    folder name <filename>poky</filename> and a default
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
                     at <filename>poky/build</filename>.
-                    In this case, the working directory the build system uses to build 
+                    In this case, the working directory the build system uses to build
                     the <filename>v86d</filename> package is the following:
                     <literallayout class='monospaced'>
      ~/poky/build/tmp/work/qemux86-poky-linux/v86d-01.9-r0
@@ -2987,11 +2987,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
  ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
                     </literallayout>
-                    As an example, again assume a Source Directory top-level folder 
-                    named <filename>poky</filename> and a default Build Directory 
+                    As an example, again assume a Source Directory top-level folder
+                    named <filename>poky</filename> and a default Build Directory
                     at <filename>poky/build</filename>.
                     In this case, the working directory the build system uses to build
-                    the <filename>acl</filename> recipe, which is being built for a 
+                    the <filename>acl</filename> recipe, which is being built for a
                     MIPS-based device, is the following:
                     <literallayout class='monospaced'>
      ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2
@@ -3013,6 +3013,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
 </glossary>
 </chapter>
-<!-- 
-vim: expandtab tw=80 ts=4 
+<!--
+vim: expandtab tw=80 ts=4
 -->
