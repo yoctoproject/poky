@@ -6,22 +6,22 @@
 <title>Using the Command Line</title>
 
     <para>
-        Recall that earlier the manual discussed how to use an existing toolchain 
-        tarball that had been installed into <filename>/opt/poky</filename>, 
-        which is outside of the 
+        Recall that earlier the manual discussed how to use an existing toolchain
+        tarball that had been installed into <filename>/opt/poky</filename>,
+        which is outside of the
         <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-        (see the section "<link linkend='using-an-existing-toolchain-tarball'>Using a Cross-Toolchain Tarball)</link>".  
-        And, that sourcing your architecture-specific environment setup script 
-        initializes a suitable cross-toolchain development environment.  
-        During the setup, locations for the compiler, QEMU scripts, QEMU binary, 
-        a special version of <filename>pkgconfig</filename> and other useful 
+        (see the section "<link linkend='using-an-existing-toolchain-tarball'>Using a Cross-Toolchain Tarball)</link>".
+        And, that sourcing your architecture-specific environment setup script
+        initializes a suitable cross-toolchain development environment.
+        During the setup, locations for the compiler, QEMU scripts, QEMU binary,
+        a special version of <filename>pkgconfig</filename> and other useful
         utilities are added to the <filename>PATH</filename> variable.
-        Variables to assist <filename>pkgconfig</filename> and <filename>autotools</filename> 
-        are also defined so that, 
-        for example, <filename>configure.sh</filename> can find pre-generated 
-        test results for tests that need target hardware on which to run.  
-        These conditions allow you to easily use the toolchain outside of the 
-        OpenEmbedded build environment on both autotools-based projects and 
+        Variables to assist <filename>pkgconfig</filename> and <filename>autotools</filename>
+        are also defined so that,
+        for example, <filename>configure.sh</filename> can find pre-generated
+        test results for tests that need target hardware on which to run.
+        These conditions allow you to easily use the toolchain outside of the
+        OpenEmbedded build environment on both autotools-based projects and
         Makefile-based projects.
     </para>
 
@@ -29,9 +29,9 @@
 <title>Autotools-Based Projects</title>
 
     <para>
-        Once you have a suitable cross-toolchain installed, it is very easy to 
+        Once you have a suitable cross-toolchain installed, it is very easy to
         develop a project outside of the OpenEmbedded build system.
-        This section presents a simple "Helloworld" example that shows how 
+        This section presents a simple "Helloworld" example that shows how
         to set up, compile, and run the project.
     </para>
 
@@ -42,7 +42,7 @@
             Follow these steps to create a simple autotools-based project:
             <orderedlist>
                 <listitem><para><emphasis>Create your directory:</emphasis>
-                    Create a clean directory for your project and then make 
+                    Create a clean directory for your project and then make
                     that directory your working location:
                     <literallayout class='monospaced'>
      $ mkdir $HOME/helloworld
@@ -78,25 +78,25 @@
      AC_OUTPUT(Makefile)
                             </literallayout></para></listitem>
                     </itemizedlist></para></listitem>
-                <listitem><para><emphasis>Source the cross-toolchain 
+                <listitem><para><emphasis>Source the cross-toolchain
                     environment setup file:</emphasis>
                     Installation of the cross-toolchain creates a cross-toolchain
                     environment setup script in <filename>/opt/poky/&lt;release&gt;</filename>.
-                    Before you can use the tools to develop your project, you must 
+                    Before you can use the tools to develop your project, you must
                     source this setup script.
                     The script begins with the string "environment-setup" and contains
-                    the machine architecture, which is followed by the string 
+                    the machine architecture, which is followed by the string
                     "poky-linux".
-                    Here is an example for an environment setup using the 
-                    32-bit Intel x86 Architecture and using the 
+                    Here is an example for an environment setup using the
+                    32-bit Intel x86 Architecture and using the
                     &DISTRO_NAME; Yocto Project release:
                     <literallayout class='monospaced'>
      $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Generate the local <filename>aclocal.m4</filename>
                     files and create the configure script:</emphasis>
-                    The following GNU Autotools generate the local 
-                    <filename>aclocal.m4</filename> files and create the 
+                    The following GNU Autotools generate the local
+                    <filename>aclocal.m4</filename> files and create the
                     configure script:
                     <literallayout class='monospaced'>
      $ aclocal
@@ -104,8 +104,8 @@
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Generate files needed by GNU
                     coding standards:</emphasis>
-                    GNU coding standards require certain files in order for the 
-                    project to be compliant. 
+                    GNU coding standards require certain files in order for the
+                    project to be compliant.
                     This command creates those files:
                     <literallayout class='monospaced'>
      $ touch NEWS README AUTHORS ChangeLog
@@ -122,7 +122,7 @@
      $ ./configure ${CONFIGURE_FLAGS}
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Make and install the project:</emphasis>
-                    These two commands generate and install the project into the 
+                    These two commands generate and install the project into the
                     destination directory:
                     <literallayout class='monospaced'>
      $ make
@@ -130,16 +130,16 @@
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Verify the installation:</emphasis>
                     This command is a simple way to verify the installation
-                    of your project. 
-                    Running the command prints the architecture on which 
+                    of your project.
+                    Running the command prints the architecture on which
                     the binary file can run.
-                    This architecture should be the same architecture that 
+                    This architecture should be the same architecture that
                     the installed cross-toolchain supports.
                     <literallayout class='monospaced'>
      $ file ./tmp/usr/local/bin/hello
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Execute your project:</emphasis>
-                    To execute the project in the shell, simply enter the name. 
+                    To execute the project in the shell, simply enter the name.
                     You could also copy the binary to the actual target hardware
                     and run the project there as well:
                     <literallayout class='monospaced'>
@@ -155,14 +155,14 @@
         <title>Passing Host Options</title>
 
         <para>
-            For an Autotools-based project, you can use the cross-toolchain by just 
+            For an Autotools-based project, you can use the cross-toolchain by just
             passing the appropriate host option to <filename>configure.sh</filename>.
-            The host option you use is derived from the name of the environment setup 
-            script in <filename>/opt/poky</filename> resulting from installation of the 
+            The host option you use is derived from the name of the environment setup
+            script in <filename>/opt/poky</filename> resulting from installation of the
             cross-toolchain tarball.
-            For example, the host option for an ARM-based target that uses the GNU EABI 
+            For example, the host option for an ARM-based target that uses the GNU EABI
             is <filename>armv5te-poky-linux-gnueabi</filename>.
-            You will notice that the name of the script is 
+            You will notice that the name of the script is
             <filename>environment-setup-armv5te-poky-linux-gnueabi</filename>.
             Thus, the following command works:
             <literallayout class='monospaced'>
@@ -172,12 +172,12 @@
         </para>
 
         <para>
-            This single command updates your project and rebuilds it using the appropriate 
+            This single command updates your project and rebuilds it using the appropriate
             cross-toolchain tools.
             <note>
-                If <filename>configure</filename> script results in problems recognizing the 
-                <filename>--with-libtool-sysroot=&lt;sysroot-dir&gt;</filename> option, 
-                regenerate the script to enable the support by doing the following and then 
+                If <filename>configure</filename> script results in problems recognizing the
+                <filename>--with-libtool-sysroot=&lt;sysroot-dir&gt;</filename> option,
+                regenerate the script to enable the support by doing the following and then
                 re-running the script:
                 <literallayout class='monospaced'>
      $ libtoolize --automake
@@ -187,17 +187,17 @@
      $ autoheader
      $ automake -a
                 </literallayout>
-            </note>    
+            </note>
         </para>
-    </section>   
+    </section>
 </section>
 
 <section id='makefile-based-projects'>
 <title>Makefile-Based Projects</title>
 
     <para>
-        For a Makefile-based project, you use the cross-toolchain by making sure 
-        the tools are used.  
+        For a Makefile-based project, you use the cross-toolchain by making sure
+        the tools are used.
         You can do this as follows:
         <literallayout class='monospaced'>
      CC=arm-poky-linux-gnueabi-gcc
