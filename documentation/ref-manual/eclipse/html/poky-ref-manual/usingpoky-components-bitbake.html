@@ -1,0 +1,66 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.1.1. BitBake</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="usingpoky-components.html" title="3.1. Yocto Project Components">
+<link rel="prev" href="usingpoky-components.html" title="3.1. Yocto Project Components">
+<link rel="next" href="usingpoky-components-metadata.html" title="3.1.2. Metadata (Recipes)">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.1.1. BitBake">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="usingpoky-components-bitbake"></a>3.1.1. BitBake</h3></div></div></div>
+<p>
+            BitBake is the tool at the heart of the OpenEmbedded build system and is responsible
+            for parsing the metadata, generating a list of tasks from it,
+            and then executing those tasks. 
+            To see a list of the options BitBake supports, use the following help command:
+            </p>
+<pre class="literallayout">
+     $ bitbake --help
+            </pre>
+<p>
+        </p>
+<p>
+            The most common usage for BitBake is <code class="filename">bitbake &lt;packagename&gt;</code>, where
+            <code class="filename">packagename</code> is the name of the package you want to build 
+            (referred to as the "target" in this manual). 
+            The target often equates to the first part of a <code class="filename">.bb</code> filename.
+            So, to run the <code class="filename">matchbox-desktop_1.2.3.bb</code> file, you
+            might type the following:
+            </p>
+<pre class="literallayout">
+     $ bitbake matchbox-desktop
+            </pre>
+<p>
+            Several different versions of <code class="filename">matchbox-desktop</code> might exist.
+            BitBake chooses the one selected by the distribution configuration.
+            You can get more details about how BitBake chooses between different 
+            target versions and providers in the 
+            "<a class="link" href="ref-bitbake-providers.html" title="6.2. Preferences and Providers">Preferences and Providers</a>" section.
+        </p>
+<p>
+            BitBake also tries to execute any dependent tasks first.
+            So for example, before building <code class="filename">matchbox-desktop</code>, BitBake
+            would build a cross compiler and <code class="filename">eglibc</code> if they had not already 
+            been built.
+            </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>This release of the Yocto Project does not support the <code class="filename">glibc</code>
+                GNU version of the Unix standard C library.  By default, the OpenEmbedded build system
+                builds with <code class="filename">eglibc</code>.</div>
+<p>
+        </p>
+<p>
+            A useful BitBake option to consider is the <code class="filename">-k</code> or 
+            <code class="filename">--continue</code> option.  
+            This option instructs BitBake to try and continue processing the job as much 
+            as possible even after encountering an error.  
+            When an error occurs, the target that
+            failed and those that depend on it cannot be remade.  
+            However, when you use this option other dependencies can still be processed.
+        </p>
+</div></body>
+</html>

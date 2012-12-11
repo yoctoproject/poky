@@ -1,0 +1,134 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.2.3. Shared State</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="shared-state-cache.html" title="3.2. Shared State Cache">
+<link rel="prev" href="checksums.html" title="3.2.2. Checksums (Signatures)">
+<link rel="next" href="tips-and-tricks.html" title="3.2.4. Tips and Tricks">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.2.3. Shared State">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="shared-state"></a>3.2.3. Shared State</h3></div></div></div>
+<p>
+            Checksums and dependencies, as discussed in the previous section, solve half the 
+            problem.
+            The other part of the problem is being able to use checksum information during the build
+            and being able to reuse or rebuild specific components.
+        </p>
+<p>
+            The shared state class (<code class="filename">sstate.bbclass</code>) 
+            is a relatively generic implementation of how to "capture" a snapshot of a given task. 
+            The idea is that the build process does not care about the source of a task's output.
+            Output could be freshly built or it could be downloaded and unpacked from
+            somewhere - the build process doesn't need to worry about its source.
+        </p>
+<p>
+            There are two types of output, one is just about creating a directory
+            in <code class="filename">WORKDIR</code>.
+            A good example is the output of either <code class="filename">do_install</code> or 
+            <code class="filename">do_package</code>. 
+            The other type of output occurs when a set of data is merged into a shared directory 
+            tree such as the sysroot.
+        </p>
+<p>
+            The Yocto Project team has tried to keep the details of the implementation hidden in 
+            <code class="filename">sstate.bbclass</code>. 
+            From a user's perspective, adding shared state wrapping to a task
+            is as simple as this <code class="filename">do_deploy</code> example taken from 
+            <code class="filename">do_deploy.bbclass</code>:
+            </p>
+<pre class="literallayout">
+     DEPLOYDIR = "${WORKDIR}/deploy-${PN}"
+     SSTATETASKS += "do_deploy"
+     do_deploy[sstate-name] = "deploy"
+     do_deploy[sstate-inputdirs] = "${DEPLOYDIR}"
+     do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}"
+
+     python do_deploy_setscene () {
+         sstate_setscene(d)
+     }
+     addtask do_deploy_setscene
+            </pre>
+<p>
+            In the example, we add some extra flags to the task, a name field ("deploy"), an
+            input directory where the task sends data, and the output
+            directory where the data from the task should eventually be copied. 
+            We also add a <code class="filename">_setscene</code> variant of the task and add the task
+            name to the <code class="filename">SSTATETASKS</code> list.
+        </p>
+<p>
+            If you have a directory whose contents you need to preserve, you can do this with 
+            a line like the following:
+            </p>
+<pre class="literallayout">
+     do_package[sstate-plaindirs] = "${PKGD} ${PKGDEST}"
+            </pre>
+<p>
+            This method, as well as the following example, also works for multiple directories.
+            </p>
+<pre class="literallayout">
+     do_package[sstate-inputdirs] = "${PKGDESTWORK} ${SHLIBSWORKDIR}"
+     do_package[sstate-outputdirs] = "${PKGDATA_DIR} ${SHLIBSDIR}"
+     do_package[sstate-lockfile] = "${PACKAGELOCK}"
+            </pre>
+<p>
+            These methods also include the ability to take a lockfile when manipulating
+            shared state directory structures since some cases are sensitive to file
+            additions or removals.
+        </p>
+<p>
+            Behind the scenes, the shared state code works by looking in 
+            <a class="link" href="ref-variables-glos.html#var-SSTATE_DIR" title="SSTATE_DIR"><code class="filename">SSTATE_DIR</code></a> and  
+            <a class="link" href="ref-variables-glos.html#var-SSTATE_MIRRORS" title="SSTATE_MIRRORS"><code class="filename">SSTATE_MIRRORS</code></a>
+            for shared state files. 
+            Here is an example:
+            </p>
+<pre class="literallayout">
+     SSTATE_MIRRORS ?= "\
+     file://.* http://someserver.tld/share/sstate/PATH \n \
+     file://.* file:///some/local/dir/sstate/PATH"
+            </pre>
+<p>
+            </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3> 
+                The shared state directory (<code class="filename">SSTATE_DIR</code>) is 
+                organized into two-character subdirectories, where the subdirectory 
+                names are based on the first two characters of the hash.
+                If the shared state directory structure for a mirror has the 
+                same structure as <code class="filename">SSTATE_DIR</code>, you must
+                specify "PATH" as part of the URI to enable the build system
+                to map to the appropriate subdirectory.
+            </div>
+<p>
+        </p>
+<p>
+            The shared state package validity can be detected just by looking at the
+            filename since the filename contains the task checksum (or signature) as
+            described earlier in this section. 
+            If a valid shared state package is found, the build process downloads it 
+            and uses it to accelerate the task.
+        </p>
+<p>
+            The build processes uses the <code class="filename">*_setscene</code> tasks
+            for the task acceleration phase.
+            BitBake goes through this phase before the main execution code and tries
+            to accelerate any tasks for which it can find shared state packages. 
+            If a shared state package for a task is available, the shared state
+            package is used.
+            This means the task and any tasks on which it is dependent are not 
+            executed.
+        </p>
+<p>
+            As a real world example, the aim is when building an IPK-based image,
+            only the <code class="filename">do_package_write_ipk</code> tasks would have their 
+            shared state packages fetched and extracted. 
+            Since the sysroot is not used, it would never get extracted. 
+            This is another reason why a task-based approach is preferred over a 
+            recipe-based approach, which would have to install the output from every task.
+        </p>
+</div></body>
+</html>

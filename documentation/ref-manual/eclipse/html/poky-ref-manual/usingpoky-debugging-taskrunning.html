@@ -1,0 +1,68 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>2.3.2. Running Specific Tasks</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="usingpoky-debugging.html" title="2.3. Debugging Build Failures">
+<link rel="prev" href="usingpoky-debugging-taskfailures.html" title="2.3.1. Task Failures">
+<link rel="next" href="usingpoky-debugging-dependencies.html" title="2.3.3. Dependency Graphs">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="2.3.2. Running Specific Tasks">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="usingpoky-debugging-taskrunning"></a>2.3.2. Running Specific Tasks</h3></div></div></div>
+<p>
+            Any given package consists of a set of tasks.  
+            The standard BitBake behavior in most cases is: <code class="filename">fetch</code>, 
+            <code class="filename">unpack</code>, 
+            <code class="filename">patch</code>, <code class="filename">configure</code>,
+            <code class="filename">compile</code>, <code class="filename">install</code>, <code class="filename">package</code>,
+            <code class="filename">package_write</code>, and <code class="filename">build</code>. 
+            The default task is <code class="filename">build</code> and any tasks on which it depends 
+            build first.
+            Some tasks exist, such as <code class="filename">devshell</code>, that are not part of the
+            default build chain.  
+            If you wish to run a task that is not part of the default build chain, you can use the 
+            <code class="filename">-c</code> option in BitBake as follows:
+            </p>
+<pre class="literallayout">
+     $ bitbake matchbox-desktop -c devshell
+            </pre>
+<p>
+        </p>
+<p>
+            If you wish to rerun a task, use the <code class="filename">-f</code> force option. 
+            For example, the following sequence forces recompilation after changing files in the 
+            working directory.
+            </p>
+<pre class="literallayout">
+     $ bitbake matchbox-desktop
+               .
+               .
+        [make some changes to the source code in the working directory]
+               .
+               .
+     $ bitbake matchbox-desktop -c compile -f
+     $ bitbake matchbox-desktop
+            </pre>
+<p>
+        </p>
+<p>
+            This sequence first builds <code class="filename">matchbox-desktop</code> and then recompiles it.
+            The last command reruns all tasks (basically the packaging tasks) after the compile.
+            BitBake recognizes that the <code class="filename">compile</code> task was rerun and therefore 
+            understands that the other tasks also need to be run again.
+        </p>
+<p>
+            You can view a list of tasks in a given package by running the
+            <code class="filename">listtasks</code> task as follows:
+            </p>
+<pre class="literallayout">
+     $ bitbake matchbox-desktop -c listtasks
+            </pre>
+<p>
+            The results are in the file <code class="filename">${WORKDIR}/temp/log.do_listtasks</code>.
+        </p>
+</div></body>
+</html>

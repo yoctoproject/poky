@@ -1,0 +1,36 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>4.1.1.1. SSTATE_MIRRORS</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="1.3-local-configuration.html" title="4.1.1. Local Configuration">
+<link rel="prev" href="1.3-local-configuration.html" title="4.1.1. Local Configuration">
+<link rel="next" href="migration-1.3-bblayers-conf.html" title="4.1.1.2. bblayers.conf">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="4.1.1.1. SSTATE_MIRRORS">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="migration-1.3-sstate-mirrors"></a>4.1.1.1. SSTATE_MIRRORS</h4></div></div></div>
+<p>
+                The shared state cache (sstate-cache) as pointed to by 
+                <a class="link" href="ref-variables-glos.html#var-SSTATE_DIR" title="SSTATE_DIR"><code class="filename">SSTATE_DIR</code></a> by default 
+                now has two-character subdirectories to prevent there being an issue with too 
+                many files in the same directory.
+                Also, native sstate-cache packages will go into a subdirectory named using 
+                the distro ID string. 
+                If you copy the newly structured sstate-cache to a mirror location 
+                (either local or remote) and then point to it in 
+                <a class="link" href="ref-variables-glos.html#var-SSTATE_MIRRORS" title="SSTATE_MIRRORS"><code class="filename">SSTATE_MIRRORS</code></a>,
+                you need to append "PATH" to the end of the mirror URL so that 
+                the path used by BitBake before the mirror substitution is 
+                appended to the path used to access the mirror. 
+                Here is an example:
+                </p>
+<pre class="literallayout">
+     SSTATE_MIRRORS = "file://.* http://someserver.tld/share/sstate/PATH"
+                </pre>
+<p>
+            </p>
+</div></body>
+</html>

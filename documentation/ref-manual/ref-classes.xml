@@ -1,0 +1,720 @@
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
+
+<chapter id='ref-classes'>
+<title>Classes</title>
+
+<para>
+    Class files are used to abstract common functionality and share it amongst multiple
+    <filename>.bb</filename> files.
+    Any metadata usually found in a <filename>.bb</filename> file can also be placed in a class
+    file.
+    Class files are identified by the extension <filename>.bbclass</filename> and are usually placed
+    in a <filename>classes/</filename> directory beneath the
+    <filename>meta*/</filename> directory found in the
+    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+    Class files can also be pointed to by BUILDDIR (e.g. <filename>build/</filename>)in the same way as
+    <filename>.conf</filename> files in the <filename>conf</filename> directory.
+    Class files are searched for in <link linkend='var-BBPATH'><filename>BBPATH</filename></link>
+    using the same method by which <filename>.conf</filename> files are searched.
+</para>
+
+<para>
+    In most cases inheriting the class is enough to enable its features, although
+    for some classes you might need to set variables or override some of the
+    default behaviour.
+</para>
+
+<section id='ref-classes-base'>
+    <title>The base class - <filename>base.bbclass</filename></title>
+
+    <para>
+        The base class is special in that every <filename>.bb</filename>
+        file inherits it automatically.
+        This class contains definitions for standard basic
+        tasks such as fetching, unpacking, configuring (empty by default), compiling
+        (runs any <filename>Makefile</filename> present), installing (empty by default) and packaging
+        (empty by default).
+        These classes are often overridden or extended by other classes
+        such as <filename>autotools.bbclass</filename> or <filename>package.bbclass</filename>.
+        The class also contains some commonly used functions such as <filename>oe_runmake</filename>.
+    </para>
+</section>
+
+<section id='ref-classes-autotools'>
+    <title>Autotooled Packages - <filename>autotools.bbclass</filename></title>
+
+    <para>
+        Autotools (<filename>autoconf</filename>, <filename>automake</filename>,
+        and <filename>libtool</filename>) bring standardization.
+        This class defines a set of tasks (configure, compile etc.) that
+        work for all Autotooled packages.
+        It should usually be enough to define a few standard variables
+        and then simply <filename>inherit autotools</filename>.
+        This class can also work with software that emulates Autotools.
+        For more information, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#usingpoky-extend-addpkg-autotools'>Autotooled Package</ulink>"
+        section in the Yocto Project Development Manual.
+    </para>
+
+    <para>
+        It's useful to have some idea of how the tasks defined by this class work
+        and what they do behind the scenes.
+        <itemizedlist>
+            <listitem><para><filename>do_configure</filename> &dash; regenerates the
+                configure script (using <filename>autoreconf</filename>) and then launches it
+                with a standard set of arguments used during cross-compilation.
+                You can pass additional parameters to <filename>configure</filename> through the
+                <filename><link linkend='var-EXTRA_OECONF'>EXTRA_OECONF</link></filename> variable.
+                </para></listitem>
+            <listitem><para><filename>do_compile</filename> &dash; runs <filename>make</filename> with
+                arguments that specify the compiler and linker.
+                You can pass additional arguments through
+                the <filename><link linkend='var-EXTRA_OEMAKE'>EXTRA_OEMAKE</link></filename> variable.
+                </para></listitem>
+            <listitem><para><filename>do_install</filename> &dash; runs <filename>make install</filename>
+                and passes a DESTDIR option, which takes its value from the standard
+                <filename><link linkend='var-DESTDIR'>DESTDIR</link></filename> variable.
+                </para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+
+<section id='ref-classes-update-alternatives'>
+    <title>Alternatives - <filename>update-alternatives.bbclass</filename></title>
+
+    <para>
+        Several programs can fulfill the same or similar function and be installed with the same name.
+        For example, the <filename>ar</filename> command is available from the
+        <filename>busybox</filename>, <filename>binutils</filename> and
+        <filename>elfutils</filename> packages.
+        The <filename>update-alternatives.bbclass</filename> class handles renaming the
+        binaries so that multiple packages can be installed without conflicts.
+        The <filename>ar</filename> command still works regardless of which packages are installed
+        or subsequently removed.
+        The class renames the conflicting binary in each package and symlinks the highest
+        priority binary during installation or removal of packages.
+    </para>
+    <para>
+        Four variables control this class:
+        <itemizedlist>
+            <listitem><para><filename>ALTERNATIVE_NAME</filename> &dash; The name of the
+                binary that is replaced (<filename>ar</filename> in this example).</para></listitem>
+            <listitem><para><filename>ALTERNATIVE_LINK</filename> &dash; The path to
+                the resulting binary (<filename>/bin/ar</filename> in this example).</para></listitem>
+            <listitem><para><filename>ALTERNATIVE_PATH</filename> &dash; The path to the
+                real binary (<filename>/usr/bin/ar.binutils</filename> in this example).</para></listitem>
+            <listitem><para><filename>ALTERNATIVE_PRIORITY</filename> &dash; The priority of
+                the binary.
+                The version with the most features should have the highest priority.</para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+	Currently, the OpenEmbedded build system supports only one binary per package.
+    </para>
+</section>
+
+<section id='ref-classes-update-rc.d'>
+    <title>Initscripts - <filename>update-rc.d.bbclass</filename></title>
+
+    <para>
+        This class uses <filename>update-rc.d</filename> to safely install an
+        initialization script on behalf of the package.
+        The OpenEmbedded build system takes care of details such as making sure the script is stopped before
+        a package is removed and started when the package is installed.
+        Three variables control this class:
+        <filename><link linkend='var-INITSCRIPT_PACKAGES'>INITSCRIPT_PACKAGES</link></filename>,
+        <filename><link linkend='var-INITSCRIPT_NAME'>INITSCRIPT_NAME</link></filename> and
+        <filename><link linkend='var-INITSCRIPT_PARAMS'>INITSCRIPT_PARAMS</link></filename>.
+        See the variable links for details.
+    </para>
+</section>
+
+<section id='ref-classes-binconfig'>
+    <title>Binary config scripts - <filename>binconfig.bbclass</filename></title>
+
+    <para>
+        Before <filename>pkg-config</filename> had become widespread, libraries shipped shell
+        scripts to give information about the libraries and include paths needed
+        to build software (usually named <filename>LIBNAME-config</filename>).
+        This class assists any recipe using such scripts.
+    </para>
+
+    <para>
+        During staging, BitBake installs such scripts into the
+        <filename>sysroots/</filename> directory.
+        BitBake also changes all paths to point into the <filename>sysroots/</filename>
+        directory so all builds that use the script will use the correct
+        directories for the cross compiling layout.
+    </para>
+</section>
+
+<section id='ref-classes-debian'>
+    <title>Debian renaming - <filename>debian.bbclass</filename></title>
+
+    <para>
+        This class renames packages so that they follow the Debian naming
+        policy (i.e. <filename>eglibc</filename> becomes <filename>libc6</filename>
+        and <filename>eglibc-devel</filename> becomes <filename>libc6-dev</filename>.
+    </para>
+</section>
+
+<section id='ref-classes-pkgconfig'>
+    <title>Pkg-config - <filename>pkgconfig.bbclass</filename></title>
+
+    <para>
+        <filename>pkg-config</filename> brought standardization and this class aims to make its
+        integration smooth for all libraries that make use of it.
+    </para>
+
+    <para>
+        During staging, BitBake installs <filename>pkg-config</filename> data into the
+        <filename>sysroots/</filename> directory.
+        By making use of sysroot functionality within <filename>pkg-config</filename>,
+        this class no longer has to manipulate the files.
+    </para>
+</section>
+
+<section id='ref-classes-src-distribute'>
+    <title>Distribution of sources - <filename>src_distribute_local.bbclass</filename></title>
+
+    <para>
+        Many software licenses require that source files be provided along with the binaries.
+        To simplify this process, two classes were created:
+        <filename>src_distribute.bbclass</filename> and
+        <filename>src_distribute_local.bbclass</filename>.
+    </para>
+
+    <para>
+        The results of these classes are <filename>tmp/deploy/source/</filename>
+        subdirs with sources sorted by
+        <filename><link linkend='var-LICENSE'>LICENSE</link></filename> field.
+        If recipes list few licenses (or have entries like "Bitstream Vera"),
+        the source archive is placed in each license directory.
+    </para>
+
+    <para>
+        This class operates using three modes:
+        <itemizedlist>
+            <listitem><para><emphasis>copy:</emphasis> Copies the files to the
+                distribute directory.</para></listitem>
+            <listitem><para><emphasis>symlink:</emphasis> Symlinks the files to the
+                distribute directory.</para></listitem>
+            <listitem><para><emphasis>move+symlink:</emphasis> Moves the files into
+                the distribute directory and then symlinks them back.</para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+
+<section id='ref-classes-perl'>
+    <title>Perl modules - <filename>cpan.bbclass</filename></title>
+
+    <para>
+        Recipes for Perl modules are simple.
+        These recipes usually only need to point to the source's archive and then inherit the
+        proper <filename>.bbclass</filename> file.
+        Building is split into two methods depending on which method the module authors used.
+    </para>
+
+    <para>
+        Modules that use old <filename>Makefile.PL</filename>-based build system require
+        <filename>cpan.bbclass</filename> in their recipes.
+    </para>
+
+    <para>
+        Modules that use <filename>Build.PL</filename>-based build system require
+        using <filename>cpan_build.bbclass</filename> in their recipes.
+    </para>
+</section>
+
+<section id='ref-classes-distutils'>
+    <title>Python extensions - <filename>distutils.bbclass</filename></title>
+
+    <para>
+        Recipes for Python extensions are simple.
+        These recipes usually only need to point to the source's archive and then inherit
+        the proper <filename>.bbclass</filename> file.
+        Building is split into two methods dependling on which method the module authors used.
+    </para>
+
+    <para>
+        Extensions that use an Autotools-based build system require Autotools and
+        <filename>distutils</filename>-based <filename>.bbclasse</filename> files in their recipes.
+    </para>
+
+    <para>
+        Extensions that use <filename>distutils</filename>-based build systems require
+        <filename>distutils.bbclass</filename> in their recipes.
+    </para>
+</section>
+
+<section id='ref-classes-devshell'>
+    <title>Developer Shell - <filename>devshell.bbclass</filename></title>
+
+    <para>
+        This class adds the <filename>devshell</filename> task.
+        Distribution policy dictates whether to include this class.
+        See the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#platdev-appdev-devshell'>Using a Development Shell</ulink>" section
+        in the Yocto Project Development Manual for more information about using <filename>devshell</filename>.
+    </para>
+</section>
+
+<section id='ref-classes-packagegroup'>
+    <title>Package Groups - <filename>packagegroup.bbclass</filename></title>
+
+    <para>
+        This class sets default values appropriate for package group recipes (such as
+        <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename>,
+        <filename><link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></filename>,
+        <filename><link linkend='var-ALLOW_EMPTY'>ALLOW_EMPTY</link></filename>,
+        and so forth.
+        It is highly recommended that all package group recipes inherit this class.
+    </para>
+    <para>
+        For information on how to use this class, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#usingpoky-extend-customimage-customtasks'>Customizing Images Using Custom Package Tasks</ulink>"
+        section in the Yocto Project Development Manual.
+    </para>
+    <para>
+        Previously, this class was named <filename>task.bbclass</filename>.
+    </para>
+</section>
+
+
+<section id='ref-classes-package'>
+    <title>Packaging - <filename>package*.bbclass</filename></title>
+
+    <para>
+        The packaging classes add support for generating packages from a build's
+        output.
+        The core generic functionality is in <filename>package.bbclass</filename>.
+        The code specific to particular package types is contained in various sub-classes such as
+        <filename>package_deb.bbclass</filename>, <filename>package_ipk.bbclass</filename>,
+        and <filename>package_rpm.bbclass</filename>.
+        Most users will want one or more of these classes.
+    </para>
+
+    <para>
+        You can control the list of resulting package formats by using the
+        <filename><link linkend='var-PACKAGE_CLASSES'>PACKAGE_CLASSES</link></filename>
+        variable defined in the <filename>local.conf</filename> configuration file,
+        which is located in the <filename>conf</filename> folder of the
+        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+        When defining the variable, you can specify one or more package types.
+        Since images are generated from packages, a packaging class is
+        needed to enable image generation.
+        The first class listed in this variable is used for image generation.
+    </para>
+
+    <para>
+        The package class you choose can affect build-time performance and has space
+        ramifications.
+        In general, building a package with RPM takes about thirty percent more time as
+        compared to using IPK to build the same or similar package.
+        This comparison takes into account a complete build of the package with all
+        dependencies previously built.
+        The reason for this discrepancy is because the RPM package manager creates and
+        processes more metadata than the IPK package manager.
+        Consequently, you might consider setting <filename>PACKAGE_CLASSES</filename>
+        to "package_ipk" if you are building smaller systems.
+    </para>
+
+    <para>
+        Keep in mind, however, that RPM starts to provide more abilities than IPK due to
+        the fact that it processes more metadata.
+        For example, this information includes individual file types, file checksum generation
+        and evaluation on install, sparse file support, conflict detection and resolution
+        for multilib systems, ACID style upgrade, and repackaging abilities for rollbacks.
+    </para>
+
+    <para>
+        Another consideration for packages built using the RPM package manager is space.
+        For smaller systems, the extra space used for the Berkley Database and the amount
+        of metadata can affect your ability to do on-device upgrades.
+    </para>
+
+    <para>
+        You can find additional information on the effects of the package class at these
+        two Yocto Project mailing list links:
+        <itemizedlist>
+            <listitem><para><ulink url='&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006362.html'>
+                https://lists.yoctoproject.org/pipermail/poky/2011-May/006362.html</ulink></para></listitem>
+            <listitem><para><ulink url='&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006363.html'>
+                https://lists.yoctoproject.org/pipermail/poky/2011-May/006363.html</ulink></para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+
+<section id='ref-classes-kernel'>
+    <title>Building kernels - <filename>kernel.bbclass</filename></title>
+
+    <para>
+        This class handles building Linux kernels.
+        The class contains code to build all kernel trees.
+        All needed headers are staged into the
+        <filename><link linkend='var-STAGING_KERNEL_DIR'>STAGING_KERNEL_DIR</link></filename>
+        directory to allow out-of-tree module builds using <filename>module.bbclass</filename>.
+    </para>
+
+    <para>
+        This means that each built kernel module is packaged separately and inter-module
+        dependencies are created by parsing the <filename>modinfo</filename> output.
+        If all modules are required, then installing the <filename>kernel-modules</filename>
+        package installs all packages with modules and various other kernel packages
+        such as <filename>kernel-vmlinux</filename>.
+    </para>
+
+    <para>
+        Various other classes are used by the kernel and module classes internally including
+        <filename>kernel-arch.bbclass</filename>, <filename>module_strip.bbclass</filename>,
+        <filename>module-base.bbclass</filename>, and <filename>linux-kernel-base.bbclass</filename>.
+    </para>
+</section>
+
+<section id='ref-classes-image'>
+    <title>Creating images - <filename>image.bbclass</filename> and <filename>rootfs*.bbclass</filename></title>
+
+    <para>
+        These classes add support for creating images in several formats.
+        First, the root filesystem is created from packages using
+        one of the <filename>rootfs_*.bbclass</filename>
+        files (depending on the package format used) and then the image is created.
+    </para>
+
+    <para>
+        The <filename><link linkend='var-IMAGE_FSTYPES'>IMAGE_FSTYPES</link></filename>
+        variable controls the types of images to generate.
+    </para>
+
+    <para>
+        The <filename><link linkend='var-IMAGE_INSTALL'>IMAGE_INSTALL</link></filename>
+        variable controls the list of packages to install into the image.
+    </para>
+</section>
+
+<section id='ref-classes-sanity'>
+    <title>Host System sanity checks - <filename>sanity.bbclass</filename></title>
+
+    <para>
+        This class checks to see if prerequisite software is present so that
+        users can be notified of potential problems that might affect their build.
+        The class also performs basic user configuration checks from
+        the <filename>local.conf</filename> configuration file to
+        prevent common mistakes that cause build failures.
+        Distribution policy usually determines whether to include this class.
+    </para>
+</section>
+
+<section id='ref-classes-insane'>
+    <title>Generated output quality assurance checks - <filename>insane.bbclass</filename></title>
+
+    <para>
+        This class adds a step to the package generation process that sanity checks the
+        packages generated by the OpenEmbedded build system.
+        A range of checks are performed that check the build's output
+        for common problems that show up during runtime.
+        Distribution policy usually dictates whether to include this class.
+    </para>
+
+    <para>
+        You can configure the sanity checks so that specific test failures either raise a warning or
+        an error message.
+        Typically, failures for new tests generate a warning.
+        Subsequent failures for the same test would then generate an error message
+        once the metadata is in a known and good condition.
+        You use the <filename>WARN_QA</filename> variable to specify tests for which you
+        want to generate a warning message on failure.
+        You use the <filename>ERROR_QA</filename> variable to specify tests for which you
+        want to generate an error message on failure.
+    </para>
+
+    <para>
+        The following list shows the tests you can list with the <filename>WARN_QA</filename>
+        and <filename>ERROR_QA</filename> variables:
+        <itemizedlist>
+            <listitem><para><emphasis><filename>ldflags:</filename></emphasis>
+                Ensures that the binaries were linked with the
+                <filename>LDFLAGS</filename> options provided by the build system.
+                If this test fails, check that the <filename>LDFLAGS</filename> variable
+                is being passed to the linker command.</para></listitem>
+            <listitem><para><emphasis><filename>useless-rpaths:</filename></emphasis>
+                Checks for dynamic library load paths (rpaths) in the binaries that
+                by default on a standard system are searched by the linker (e.g.
+                <filename>/lib</filename> and <filename>/usr/lib</filename>).
+                While these paths will not cause any breakage, they do waste space and
+                are unnecessary.</para></listitem>
+            <listitem><para><emphasis><filename>rpaths:</filename></emphasis>
+                Checks for rpaths in the binaries that contain build system paths such
+                as <filename>TMPDIR</filename>.
+                If this test fails, bad <filename>-rpath</filename> options are being
+                passed to the linker commands and your binaries have potential security
+                issues.</para></listitem>
+            <listitem><para><emphasis><filename>dev-so:</filename></emphasis>
+                Checks that the <filename>.so</filename> symbolic links are in the
+                <filename>-dev</filename> package and not in any of the other packages.
+                In general, these symlinks are only useful for development purposes.
+                Thus, the <filename>-dev</filename> package is the correct location for
+                them.
+                Some very rare cases do exist for dynamically loaded modules where
+                these symlinks are needed instead in the main package.
+                </para></listitem>
+            <listitem><para><emphasis><filename>debug-files:</filename></emphasis>
+                Checks for <filename>.debug</filename> directories in anything but the
+                <filename>-dbg</filename> package.
+                The debug files should all be in the <filename>-dbg</filename> package.
+                Thus, anything packaged elsewhere is incorrect packaging.</para></listitem>
+            <listitem><para><emphasis><filename>arch:</filename></emphasis>
+                Checks the Executable and Linkable Format (ELF) type, bit size and endianness
+                of any binaries to ensure it matches the target architecture.
+                This test fails if any binaries don't match the type since there would be an
+                incompatibility.
+                Sometimes software, like bootloaders, might need to bypass this check.
+                </para></listitem>
+            <listitem><para><emphasis><filename>debug-deps:</filename></emphasis>
+                Checks that <filename>-dbg</filename> packages only depend on other
+                <filename>-dbg</filename> packages and not on any other types of packages,
+                which would cause a packaging bug.</para></listitem>
+            <listitem><para><emphasis><filename>dev-deps:</filename></emphasis>
+                Checks that <filename>-dev</filename> packages only depend on other
+                <filename>-dev</filename> packages and not on any other types of packages,
+                which would be a packaging bug.</para></listitem>
+            <listitem><para><emphasis><filename>pkgconfig:</filename></emphasis>
+                Checks <filename>.pc</filename> files for any
+                <filename>TMPDIR/WORKDIR</filename> paths.
+                Any <filename>.pc</filename> file containing these paths is incorrect
+                since <filename>pkg-config</filename> itself adds the correct sysroot prefix
+                when the files are accessed.</para></listitem>
+            <listitem><para><emphasis><filename>la:</filename></emphasis>
+                Checks <filename>.la</filename> files for any <filename>TMPDIR</filename>
+                paths.
+                Any <filename>.la</filename> file continaing these paths is incorrect since
+                <filename>libtool</filename> adds the correct sysroot prefix when using the
+                files automatically itself.</para></listitem>
+            <listitem><para><emphasis><filename>desktop:</filename></emphasis>
+                Runs the <filename>desktop-file-validate</filename> program against any
+                <filename>.desktop</filename> files to validate their contents against
+                the specification for <filename>.desktop</filename> files.</para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+
+<section id='ref-classes-siteinfo'>
+    <title>Autotools configuration data cache - <filename>siteinfo.bbclass</filename></title>
+
+    <para>
+        Autotools can require tests that must execute on the target hardware.
+        Since this is not possible in general when cross compiling, site information is
+        used to provide cached test results so these tests can be skipped over but
+        still make the correct values available.
+        The <filename><link linkend='structure-meta-site'>meta/site directory</link></filename>
+        contains test results sorted into different categories such as architecture, endianness, and
+        the <filename>libc</filename> used.
+        Site information provides a list of files containing data relevant to
+        the current build in the
+        <filename><link linkend='var-CONFIG_SITE'>CONFIG_SITE</link></filename> variable
+        that Autotools automatically picks up.
+    </para>
+
+    <para>
+        The class also provides variables like
+        <filename><link linkend='var-SITEINFO_ENDIANNESS'>SITEINFO_ENDIANNESS</link></filename>
+        and <filename><link linkend='var-SITEINFO_BITS'>SITEINFO_BITS</link></filename>
+        that can be used elsewhere in the metadata.
+    </para>
+
+    <para>
+        Because this class is included from <filename>base.bbclass</filename>, it is always active.
+    </para>
+</section>
+
+<section id='ref-classes-useradd'>
+    <title>Adding Users - <filename>useradd.bbclass</filename></title>
+
+    <para>
+        If you have packages that install files that are owned by custom users or groups,
+        you can use this class to specify those packages and associate the users and groups
+        with those packages.
+        The <filename>meta-skeleton/recipes-skeleton/useradd/useradd-example.bb</filename>
+        recipe in the <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+        provides a simple exmample that shows how to add three
+        users and groups to two packages.
+        See the <filename>useradd-example.bb</filename> for more information on how to
+        use this class.
+    </para>
+</section>
+
+<section id='ref-classes-externalsrc'>
+    <title>Using External Source - <filename>externalsrc.bbclass</filename></title>
+
+    <para>
+        You can use this class to build software from source code that is external to the
+        OpenEmbedded build system.
+        In other words, your source code resides in an external tree outside of the Yocto Project.
+        Building software from an external source tree means that the normal fetch, unpack, and
+        patch process is not used.
+    </para>
+
+    <para>
+        To use the class, you need to define the
+        <link linkend='var-S'><filename>S</filename></link> variable to point to the directory that contains the source files.
+        You also need to have your recipe inherit the <filename>externalsrc.bbclass</filename> class.
+    </para>
+
+    <para>
+        This class expects the source code to support recipe builds that use the
+        <link linkend='var-B'><filename>B</filename></link> variable to point to the directory in
+        which the OpenEmbedded build system places the generated objects built from the recipes.
+        By default, the <filename>B</filename> directory is set to the following, which is separate from the
+        Source Directory (<filename>S</filename>):
+        <literallayout class='monospaced'>
+     ${WORKDIR}/${BPN}/{PV}/
+        </literallayout>
+        See the glossary entries for the
+        <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>,
+        <link linkend='var-BPN'><filename>BPN</filename></link>,
+        <link linkend='var-PV'><filename>PV</filename></link>,
+        <link linkend='var-S'><filename>S</filename></link>, and
+        <link linkend='var-B'><filename>B</filename></link> for more information.
+    </para>
+
+    <para>
+        You can build object files in the external tree by setting the
+        <filename>B</filename> variable equal to <filename>"${S}"</filename>.
+        However, this practice does not work well if you use the source for more than one variant
+        (i.e., "natives" such as <filename>quilt-native</filename>,
+        or "crosses" such as <filename>gcc-cross</filename>).
+        So, be sure there are no "native", "cross", or "multilib" variants of the recipe.
+    </para>
+
+    <para>
+        If you do want to build different variants of a recipe, you can use the
+        <link linkend='var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></link> variable.
+        When you do, the <link linkend='var-B'><filename>B</filename></link> variable must support the
+        recipe's ability to build variants in different working directories.
+        Most autotools-based recipes support separating these directories.
+        The OpenEmbedded build system defaults to using separate directories for <filename>gcc</filename>
+        and some kernel recipes.
+        Alternatively, you can make sure that separate recipes exist that each
+        use the <filename>BBCLASSEXTEND</filename> variable to build each variant.
+        The separate recipes can inherit a single target recipe.
+    </para>
+
+    <para>
+        For information on how to use this class, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source'>Building
+        Software from an External Source</ulink>" section in the Yocto Project Development Manual.
+    </para>
+</section>
+
+<section id='ref-classes-others'>
+    <title>Other Classes</title>
+
+    <para>
+        Thus far, this chapter has discussed only the most useful and important
+        classes.
+        However, other classes exist within the <filename>meta/classes</filename> directory
+        in the <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+        You can examine the <filename>.bbclass</filename> files directly for more
+        information.
+    </para>
+</section>
+
+<!-- Undocumented classes are:
+        allarch.bbclass
+        archive*.bbclass
+        binconfig.bbclass
+        blacklist.bbclass
+        bootimg.bbclass
+        boot-directdisk.bbclass
+        bugzilla.bbclass
+        buildhistory.bbclass
+        buildstats.bbclass
+        ccache.bbclass
+        chrpath.bbclass
+        cmake.bbclass
+        cml1.bbclass
+        copyleft_compliance.bbclass
+        core-image.bbclass
+        cross.bbclass
+        cross-canadian.bbclass
+        crosssdk.bbclass
+        deploy.bbclass
+        distrodata.bbclass
+        dummy.bbclass
+        gconf.bbclass
+        gettext.bbclass
+        gnomebase.bbclass
+        gnome.bbclass
+        gtk-doc.bbclass
+        gtk-icon-cache.bbclass
+        gzipnative.bbclass
+        icecc.bbclass
+        image-empty.bbclass
+        image-live.bbclass
+        image-vmdk.bbclass
+        image-mklibs.bbclass
+        image-prelink.bbclass
+        image-swab.bbclass
+        imagetest-dummy.bbclass
+        imagetest-qemu.bbclass
+        image_types.bbclass
+        image_types_uboot.bbclass
+        insserv.bbclass
+        kernel-arch.bbclass
+        kernel-yocto.bbclass
+        lib_package.bbclass
+        linux-kernel-base.bbclass
+        license.bbclass
+        logging.bbclass
+        meta.bbclass
+        metadata_scm.bbclass
+        mime.bbclass
+        mirrors.bbclass
+        multilib*.bbclass
+        native.bbclass
+        nativesdk.bbclass
+        oelint.bbclass
+        own-mirrors.bbclass
+        packagedata.bbclass
+        packageinfo.bbclass
+        patch.bbclass
+        perlnative.bbclass
+        pkg_distribute.bbclass
+        pkg_metainfo.bbclass
+        populate_sdk*.bbclass
+        prexport.bbclass
+        primport.bbclass
+        prserv.bbclass
+        python-dir.bbclass
+        pythonnative.bbclass
+        qemu.bbclass
+        qmake*.bbclass
+        qt4*.bbclass
+        recipe_sanity.bbclass
+        relocatable.bbclass
+        rm_work.bbclass
+        scons.bbclass
+        sdl.bbclass
+        setuptools.bbclass
+        sip.bbclass
+        siteconfig.bbclass
+        sourcepkg.bbclass
+        sstate.bbclass
+        staging.bbclass
+        syslinux.bbclass
+        terminal.bbclass
+        tinderclient.bbclass
+        toolchain-scripts.bbclass
+        typecheck.bbclass
+        utility-tasks.bbclass
+        utils.bbclass
+-->
+
+
+</chapter>
+<!--
+vim: expandtab tw=80 ts=4
+-->

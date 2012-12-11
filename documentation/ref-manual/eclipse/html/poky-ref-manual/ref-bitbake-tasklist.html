@@ -1,0 +1,54 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>6.4. The Task List</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="ref-bitbake.html" title="Chapter 6. BitBake">
+<link rel="prev" href="ref-bitbake-dependencies.html" title="6.3. Dependencies">
+<link rel="next" href="ref-bitbake-runtask.html" title="6.5. Running a Task">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="6.4. The Task List">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="ref-bitbake-tasklist"></a>6.4. The Task List</h2></div></div></div>
+<p>
+            Based on the generated list of providers and the dependency information, 
+            BitBake can now calculate exactly what tasks it needs to run and in what 
+            order it needs to run them. 
+            The build now starts with BitBake forking off threads up to the limit set in the 
+            <code class="filename"><a class="link" href="ref-variables-glos.html#var-BB_NUMBER_THREADS" title="BB_NUMBER_THREADS">BB_NUMBER_THREADS</a></code> variable.
+            BitBake continues to fork threads as long as there are tasks ready to run,
+            those tasks have all their dependencies met, and the thread threshold has not been 
+            exceeded.
+        </p>
+<p>
+            It is worth noting that you can greatly speed up the build time by properly setting 
+            the <code class="filename">BB_NUMBER_THREADS</code> variable.  
+            See the
+            "<a class="link" href="../yocto-project-qs/building-image.html" target="_self">Building an Image</a>"
+            section in the Yocto Project Quick Start for more information.
+        </p>
+<p>
+            As each task completes, a timestamp is written to the directory specified by the 
+            <code class="filename"><a class="link" href="ref-variables-glos.html#var-STAMP" title="STAMP">STAMP</a></code> variable (usually
+            <code class="filename">build/tmp/stamps/*/</code>). 
+            On subsequent runs, BitBake looks at the <code class="filename">/build/tmp/stamps</code>
+            directory and does not rerun
+            tasks that are already completed unless a timestamp is found to be invalid. 
+            Currently, invalid timestamps are only considered on a per 
+            <code class="filename">.bb</code> file basis.
+            So, for example, if the configure stamp has a timestamp greater than the 
+            compile timestamp for a given target, then the compile task would rerun.
+            Running the compile task again, however, has no effect on other providers 
+            that depend on that target. 
+            This behavior could change or become configurable in future versions of BitBake. 
+        </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+            Some tasks are marked as "nostamp" tasks.
+            No timestamp file is created when these tasks are run.
+            Consequently, "nostamp" tasks are always rerun.
+        </div>
+</div></body>
+</html>

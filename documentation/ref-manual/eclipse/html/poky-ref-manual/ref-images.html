@@ -1,0 +1,137 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Chapter 8. Images</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="prev" href="ref-classes-others.html" title="7.21. Other Classes">
+<link rel="next" href="ref-features.html" title="Chapter 9. Reference: Features">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter 8. Images">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="ref-images"></a>Chapter 8. Images</h2></div></div></div>
+<p>
+        The OpenEmbedded build process supports several types of images to satisfy different needs.  
+        When you issue the <code class="filename">bitbake</code> command you provide a &#8220;top-level&#8221; recipe 
+        that essentially begins the build for the type of image you want.
+    </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+        Building an image without GNU General Public License Version 3 (GPLv3) components
+        is only supported for minimal and base images.
+        Furthermore, if you are going to build an image using non-GPLv3 components,
+        you must make the following changes in the <code class="filename">local.conf</code> file
+        before using the BitBake command to build the minimal or base image:
+        <pre class="literallayout">
+     1. Comment out the EXTRA_IMAGE_FEATURES line
+     2. Set INCOMPATIBLE_LICENSE = "GPLv3"
+        </pre>
+</div>
+<p>
+        From within the <code class="filename">poky</code> Git repository, use the following command to list 
+        the supported images:
+        </p>
+<pre class="literallayout">
+     $ ls meta*/recipes*/images/*.bb
+        </pre>
+<p>
+        These recipes reside in the <code class="filename">meta/recipes-core/images</code>,
+        <code class="filename">meta/recipes-extended/images</code>, 
+        <code class="filename">meta/recipes-graphics/images</code>, and 
+        <code class="filename">meta/recipes-sato/images</code> directories 
+        within the <a class="link" href="../dev-manual/source-directory.html" target="_self">source directory</a>.  
+        Although the recipe names are somewhat explanatory, here is a list that describes them:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-base</code>:</em></span>
+            A console-only image that fully supports the target device hardware.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-minimal</code>:</em></span>
+            A small image just capable of allowing a device to boot.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-minimal-dev</code>:</em></span>
+            A <code class="filename">core-image-minimal</code> image suitable for development work
+            using the host.
+            The image includes headers and libraries you can use in a host development 
+            environment.
+            </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-minimal-initramfs</code>:</em></span>
+            A <code class="filename">core-image-minimal</code> image that has the Minimal RAM-based 
+            Initial Root Filesystem (<code class="filename">initramfs</code>) as part of the kernel, 
+            which allows the system to find the first &#8220;init&#8221; program more efficiently.
+            </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-minimal-mtdutils</code>:</em></span>
+            A <code class="filename">core-image-minimal</code> image that has support 
+            for the Minimal MTD Utilities, which let the user interact with the 
+            MTD subsystem in the kernel to perform operations on flash devices.
+            </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-x11</code>:</em></span>
+            A very basic X11 image with a terminal.
+            </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-basic</code>:</em></span>
+            A console-only image with more full-featured Linux system
+            functionality installed.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-lsb</code>:</em></span>
+            An image that conforms to the Linux Standard Base (LSB) specification.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-lsb-dev</code>:</em></span>
+            A <code class="filename">core-image-lsb</code> image that is suitable for development work
+            using the host.
+            The image includes headers and libraries you can use in a host development 
+            environment.
+            </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-lsb-sdk</code>:</em></span>
+            A <code class="filename">core-image-lsb</code> that includes everything in meta-toolchain 
+            but also includes development headers and libraries to form a complete standalone SDK.
+            This image is suitable for development using the target.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-clutter</code>:</em></span>
+            An image with support for the Open GL-based toolkit Clutter, which enables development of 
+            rich and animated graphical user interfaces.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-sato</code>:</em></span>
+            An image with Sato support, a mobile environment and visual style that works well 
+            with mobile devices.
+            The image supports X11 with a Sato theme and applications such as
+            a terminal, editor, file manager, media player, and so forth.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-sato-dev</code>:</em></span>
+            A <code class="filename">core-image-sato</code> image suitable for development 
+            using the host.
+            The image includes libraries needed to build applications on the device itself, 
+            testing and profiling tools, and debug symbols.  
+            This image was formerly <code class="filename">core-image-sdk</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-sato-sdk</code>:</em></span>
+            A <code class="filename">core-image-sato</code> image that includes everything in meta-toolchain. 
+            The image also includes development headers and libraries to form a complete standalone SDK
+            and is suitable for development using the target.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-rt</code>:</em></span>
+            A <code class="filename">core-image-minimal</code> image plus a real-time test suite and 
+            tools appropriate for real-time use.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-rt-sdk</code>:</em></span>
+            A <code class="filename">core-image-rt</code> image that includes everything in 
+            <code class="filename">meta-toolchain</code>.  
+            The image also includes development headers and libraries to form a complete 
+            stand-alone SDK and is suitable for development using the target.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">core-image-gtk-directfb</code>:</em></span>
+            An image that uses <code class="filename">gtk+</code> over <code class="filename">directfb</code> 
+            instead of X11.  
+            In order to build, this image requires specific distro configuration that enables 
+            <code class="filename">gtk</code> over <code class="filename">directfb</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">build-appliance-image</code>:</em></span>
+            An image you can boot and run using either the
+            <a class="ulink" href="http://www.vmware.com/products/player/overview.html" target="_self">VMware Player</a>
+            or <a class="ulink" href="http://www.vmware.com/products/workstation/overview.html" target="_self">VMware Workstation</a>.
+            For more information on this image, see the
+            <a class="ulink" href="http://www.yoctoproject.org/documentation/build-appliance" target="_self">Build Appliance</a> page on 
+            the Yocto Project website.</p></li>
+</ul></div>
+<div class="tip" title="Tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Tip</h3>
+        From the Yocto Project release 1.1 onwards, <code class="filename">-live</code> and 
+        <code class="filename">-directdisk</code> images have been replaced by a "live"
+        option in <code class="filename">IMAGE_FSTYPES</code> that will work with any image to produce an 
+        image file that can be
+        copied directly to a CD or USB device and run as is. 
+        To build a live image, simply add
+        "live" to <code class="filename">IMAGE_FSTYPES</code> within the <code class="filename">local.conf</code>
+        file or wherever appropriate and then build the desired image as normal.
+    </div>
+</div></body>
+</html>

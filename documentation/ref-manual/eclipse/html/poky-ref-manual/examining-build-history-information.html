@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>2.4.2.4. Examining Build History Information</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="understanding-what-the-build-history-contains.html" title="2.4.2. Understanding What the Build History Contains">
+<link rel="prev" href="using-build-history-to-gather-image-information-only.html" title="2.4.2.3. Using Build History to Gather Image Information Only">
+<link rel="next" href="technical-details.html" title="Chapter 3. Technical Details">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="2.4.2.4. Examining Build History Information">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="examining-build-history-information"></a>2.4.2.4. Examining Build History Information</h4></div></div></div>
+<p>
+                You can examine build history output from the command line or 
+                from a web interface.
+            </p>
+<p>
+                To see any changes that have occurred (assuming you have 
+                <code class="filename">BUILDHISTORY_COMMIT = "1"</code>), you can simply 
+                use any Git command that allows you to view the history of 
+                a repository. 
+                Here is one method:
+                </p>
+<pre class="literallayout">
+      $ git log -p 
+                </pre>
+<p>
+                You need to realize, however, that this method does show 
+                changes that are not significant (e.g. a package's size 
+                changing by a few bytes).
+            </p>
+<p>
+                A command-line tool called <code class="filename">buildhistory-diff</code>
+                does exist though that queries the Git repository and prints just 
+                the differences that might be significant in human-readable form. 
+                Here is an example:
+                </p>
+<pre class="literallayout">
+     $ ~/poky/poky/scripts/buildhistory-diff . HEAD^
+     Changes to images/qemux86_64/eglibc/core-image-minimal (files-in-image.txt):
+        /etc/anotherpkg.conf was added
+        /sbin/anotherpkg was added
+        * (installed-package-names.txt):
+        *   anotherpkg was added
+     Changes to images/qemux86_64/eglibc/core-image-minimal (installed-package-names.txt):
+        anotherpkg was added
+     packages/qemux86_64-poky-linux/v86d: PACKAGES: added "v86d-extras"
+        * PR changed from "r0" to "r1"
+        * PV changed from "0.1.10" to "0.1.12"
+     packages/qemux86_64-poky-linux/v86d/v86d: PKGSIZE changed from 110579 to 144381 (+30%)
+        * PR changed from "r0" to "r1"
+        * PV changed from "0.1.10" to "0.1.12"
+                </pre>
+<p>
+            </p>
+<p>
+                To see changes to the build history using a web interface, follow    
+                the instruction in the <code class="filename">README</code> file here.
+                <a class="ulink" href="http://git.yoctoproject.org/cgit/cgit.cgi/buildhistory-web/" target="_self">http://git.yoctoproject.org/cgit/cgit.cgi/buildhistory-web/</a>.
+            </p>
+<p>
+                Here is a sample screenshot of the interface:
+                </p>
+<table border="0" summary="manufactured viewport for HTML img" cellspacing="0" cellpadding="0" width="130%"><tr><td align="center"><img src="figures/buildhistory-web.png" align="middle" height="468"></td></tr></table>
+<p>
+            </p>
+</div></body>
+</html>

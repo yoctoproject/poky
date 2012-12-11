@@ -1,0 +1,1011 @@
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
+
+<chapter id='technical-details'>
+<title>Technical Details</title>
+
+    <para>
+        This chapter provides technical details for various parts of the Yocto Project.
+        Currently, topics include Yocto Project components and shared state (sstate) cache.
+    </para>
+
+<section id='usingpoky-components'>
+    <title>Yocto Project Components</title>
+
+    <para>
+        The BitBake task executor together with various types of configuration files form the
+        OpenEmbedded Core.
+        This section overviews the BitBake task executor and the
+        configuration files by describing what they are used for and how they interact.
+    </para>
+
+    <para>
+        BitBake handles the parsing and execution of the data files.
+        The data itself is of various types:
+    <itemizedlist>
+        <listitem><para><emphasis>Recipes:</emphasis>  Provides details about particular
+            pieces of software</para></listitem>
+        <listitem><para><emphasis>Class Data:</emphasis>  An abstraction of common build
+            information (e.g. how to build a Linux kernel).</para></listitem>
+        <listitem><para><emphasis>Configuration Data:</emphasis>  Defines machine-specific settings,
+            policy decisions, etc.
+            Configuration data acts as the glue to bind everything together.</para></listitem>
+    </itemizedlist>
+        For more information on data, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-terms'>Yocto Project Terms</ulink>"
+        section in the Yocto Project Development Manual.
+    </para>
+
+    <para>
+        BitBake knows how to combine multiple data sources together and refers to each data source
+        as a layer.
+        For information on layers, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and
+        Creating Layers</ulink>" section of the Yocto Project Development Manual.
+    </para>
+
+    <para>
+        Following are some brief details on these core components.
+        For more detailed information on these components see the
+        "<link linkend='ref-structure'>Directory Structure</link>" chapter.
+    </para>
+
+    <section id='usingpoky-components-bitbake'>
+        <title>BitBake</title>
+
+        <para>
+            BitBake is the tool at the heart of the OpenEmbedded build system and is responsible
+            for parsing the metadata, generating a list of tasks from it,
+            and then executing those tasks.
+            To see a list of the options BitBake supports, use the following help command:
+            <literallayout class='monospaced'>
+     $ bitbake --help
+            </literallayout>
+        </para>
+
+        <para>
+            The most common usage for BitBake is <filename>bitbake &lt;packagename&gt;</filename>, where
+            <filename>packagename</filename> is the name of the package you want to build
+            (referred to as the "target" in this manual).
+            The target often equates to the first part of a <filename>.bb</filename> filename.
+            So, to run the <filename>matchbox-desktop_1.2.3.bb</filename> file, you
+            might type the following:
+            <literallayout class='monospaced'>
+     $ bitbake matchbox-desktop
+            </literallayout>
+            Several different versions of <filename>matchbox-desktop</filename> might exist.
+            BitBake chooses the one selected by the distribution configuration.
+            You can get more details about how BitBake chooses between different
+            target versions and providers in the
+            "<link linkend='ref-bitbake-providers'>Preferences and Providers</link>" section.
+        </para>
+
+        <para>
+            BitBake also tries to execute any dependent tasks first.
+            So for example, before building <filename>matchbox-desktop</filename>, BitBake
+            would build a cross compiler and <filename>eglibc</filename> if they had not already
+            been built.
+            <note>This release of the Yocto Project does not support the <filename>glibc</filename>
+                GNU version of the Unix standard C library.  By default, the OpenEmbedded build system
+                builds with <filename>eglibc</filename>.</note>
+        </para>
+
+        <para>
+            A useful BitBake option to consider is the <filename>-k</filename> or
+            <filename>--continue</filename> option.
+            This option instructs BitBake to try and continue processing the job as much
+            as possible even after encountering an error.
+            When an error occurs, the target that
+            failed and those that depend on it cannot be remade.
+            However, when you use this option other dependencies can still be processed.
+        </para>
+    </section>
+
+    <section id='usingpoky-components-metadata'>
+        <title>Metadata (Recipes)</title>
+
+        <para>
+            The <filename>.bb</filename> files are usually referred to as "recipes."
+            In general, a recipe contains information about a single piece of software.
+            The information includes the location from which to download the source patches
+            (if any are needed), which special configuration options to apply,
+            how to compile the source files, and how to package the compiled output.
+        </para>
+
+        <para>
+            The term "package" can also be used to describe recipes.
+            However, since the same word is used for the packaged output from the OpenEmbedded
+            build system (i.e. <filename>.ipk</filename> or <filename>.deb</filename> files),
+            this document avoids using the term "package" when referring to recipes.
+        </para>
+    </section>
+
+    <section id='usingpoky-components-classes'>
+        <title>Classes</title>
+
+        <para>
+            Class files (<filename>.bbclass</filename>) contain information that is useful to share
+            between metadata files.
+            An example is the Autotools class, which contains
+            common settings for any application that Autotools uses.
+            The "<link linkend='ref-classes'>Classes</link>" chapter provides details
+            about common classes and how to use them.
+        </para>
+    </section>
+
+    <section id='usingpoky-components-configuration'>
+        <title>Configuration</title>
+
+        <para>
+            The configuration files (<filename>.conf</filename>) define various configuration variables
+            that govern the OpenEmbedded build process.
+            These files fall into several areas that define machine configuration options,
+            distribution configuration options, compiler tuning options, general common configuration
+            options and user configuration options (<filename>local.conf</filename>, which is found
+            in the <ulink url='build-directory'>Build Directory</ulink>).
+        </para>
+    </section>
+</section>
+
+<section id="shared-state-cache">
+    <title>Shared State Cache</title>
+
+    <para>
+        By design, the OpenEmbedded build system builds everything from scratch unless
+        BitBake can determine that parts don't need to be rebuilt.
+        Fundamentally, building from scratch is attractive as it means all parts are
+        built fresh and there is no possibility of stale data causing problems.
+        When developers hit problems, they typically default back to building from scratch
+        so they know the state of things from the start.
+    </para>
+
+    <para>
+        Building an image from scratch is both an advantage and a disadvantage to the process.
+        As mentioned in the previous paragraph, building from scratch ensures that
+        everything is current and starts from a known state.
+        However, building from scratch also takes much longer as it generally means
+        rebuilding things that don't necessarily need rebuilt.
+    </para>
+
+    <para>
+        The Yocto Project implements shared state code that supports incremental builds.
+        The implementation of the shared state code answers the following questions that
+        were fundamental roadblocks within the OpenEmbedded incremental build support system:
+        <itemizedlist>
+            <listitem>What pieces of the system have changed and what pieces have not changed?</listitem>
+            <listitem>How are changed pieces of software removed and replaced?</listitem>
+            <listitem>How are pre-built components that don't need to be rebuilt from scratch
+                used when they are available?</listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        For the first question, the build system detects changes in the "inputs" to a given task by
+        creating a checksum (or signature) of the task's inputs.
+        If the checksum changes, the system assumes the inputs have changed and the task needs to be
+        rerun.
+        For the second question, the shared state (sstate) code tracks which tasks add which output
+        to the build process.
+        This means the output from a given task can be removed, upgraded or otherwise manipulated.
+        The third question is partly addressed by the solution for the second question
+        assuming the build system can fetch the sstate objects from remote locations and
+        install them if they are deemed to be valid.
+    </para>
+
+    <para>
+        The rest of this section goes into detail about the overall incremental build
+        architecture, the checksums (signatures), shared state, and some tips and tricks.
+    </para>
+
+    <section id='overall-architecture'>
+        <title>Overall Architecture</title>
+
+        <para>
+            When determining what parts of the system need to be built, BitBake
+            uses a per-task basis and does not use a per-recipe basis.
+            You might wonder why using a per-task basis is preferred over a per-recipe basis.
+            To help explain, consider having the IPK packaging backend enabled and then switching to DEB.
+            In this case, <filename>do_install</filename> and <filename>do_package</filename>
+            output are still valid.
+            However, with a per-recipe approach, the build would not include the
+            <filename>.deb</filename> files.
+            Consequently, you would have to invalidate the whole build and rerun it.
+            Rerunning everything is not the best situation.
+            Also in this case, the core must be "taught" much about specific tasks.
+            This methodology does not scale well and does not allow users to easily add new tasks
+            in layers or as external recipes without touching the packaged-staging core.
+        </para>
+    </section>
+
+    <section id='checksums'>
+        <title>Checksums (Signatures)</title>
+
+        <para>
+            The shared state code uses a checksum, which is a unique signature of a task's
+            inputs, to determine if a task needs to be run again.
+            Because it is a change in a task's inputs that triggers a rerun, the process
+            needs to detect all the inputs to a given task.
+            For shell tasks, this turns out to be fairly easy because
+            the build process generates a "run" shell script for each task and
+            it is possible to create a checksum that gives you a good idea of when
+            the task's data changes.
+        </para>
+
+        <para>
+            To complicate the problem, there are things that should not be included in
+            the checksum.
+            First, there is the actual specific build path of a given task -
+            the <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>.
+            It does not matter if the working directory changes because it should not
+            affect the output for target packages.
+            Also, the build process has the objective of making native/cross packages relocatable.
+            The checksum therefore needs to exclude <filename>WORKDIR</filename>.
+            The simplistic approach for excluding the working directory is to set
+            <filename>WORKDIR</filename> to some fixed value and create the checksum
+            for the "run" script.
+        </para>
+
+        <para>
+            Another problem results from the "run" scripts containing functions that
+            might or might not get called.
+            The incremental build solution contains code that figures out dependencies
+            between shell functions.
+            This code is used to prune the "run" scripts down to the minimum set,
+            thereby alleviating this problem and making the "run" scripts much more
+            readable as a bonus.
+        </para>
+
+        <para>
+            So far we have solutions for shell scripts.
+            What about python tasks?
+            The same approach applies even though these tasks are more difficult.
+            The process needs to figure out what variables a python function accesses
+            and what functions it calls.
+            Again, the incremental build solution contains code that first figures out
+            the variable and function dependencies, and then creates a checksum for the data
+            used as the input to the task.
+        </para>
+
+        <para>
+            Like the <filename>WORKDIR</filename> case, situations exist where dependencies
+            should be ignored.
+            For these cases, you can instruct the build process to ignore a dependency
+            by using a line like the following:
+            <literallayout class='monospaced'>
+     PACKAGE_ARCHS[vardepsexclude] = "MACHINE"
+            </literallayout>
+            This example ensures that the <filename>PACKAGE_ARCHS</filename> variable does not
+            depend on the value of <filename>MACHINE</filename>, even if it does reference it.
+        </para>
+
+        <para>
+            Equally, there are cases where we need to add dependencies BitBake is not able to find.
+            You can accomplish this by using a line like the following:
+            <literallayout class='monospaced'>
+      PACKAGE_ARCHS[vardeps] = "MACHINE"
+            </literallayout>
+            This example explicitly adds the <filename>MACHINE</filename> variable as a
+            dependency for <filename>PACKAGE_ARCHS</filename>.
+        </para>
+
+        <para>
+            Consider a case with inline python, for example, where BitBake is not
+            able to figure out dependencies.
+            When running in debug mode (i.e. using <filename>-DDD</filename>), BitBake
+            produces output when it discovers something for which it cannot figure out
+            dependencies.
+            The Yocto Project team has currently not managed to cover those dependencies
+            in detail and is aware of the need to fix this situation.
+        </para>
+
+        <para>
+            Thus far, this section has limited discussion to the direct inputs into a task.
+            Information based on direct inputs is referred to as the "basehash" in the
+            code.
+            However, there is still the question of a task's indirect inputs - the
+            things that were already built and present in the Build Directory.
+            The checksum (or signature) for a particular task needs to add the hashes
+            of all the tasks on which the particular task depends.
+            Choosing which dependencies to add is a policy decision.
+            However, the effect is to generate a master checksum that combines the basehash
+            and the hashes of the task's dependencies.
+        </para>
+
+        <para>
+            At the code level, there are a variety of ways both the basehash and the
+            dependent task hashes can be influenced.
+            Within the BitBake configuration file, we can give BitBake some extra information
+            to help it construct the basehash.
+            The following statements effectively result in a list of global variable
+            dependency excludes - variables never included in any checksum:
+            <literallayout class='monospaced'>
+  BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH"
+  BB_HASHBASE_WHITELIST += "DL_DIR SSTATE_DIR THISDIR FILESEXTRAPATHS"
+  BB_HASHBASE_WHITELIST += "FILE_DIRNAME HOME LOGNAME SHELL TERM USER"
+  BB_HASHBASE_WHITELIST += "FILESPATH USERNAME STAGING_DIR_HOST STAGING_DIR_TARGET"
+            </literallayout>
+            The previous example actually excludes
+            <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
+            since it is actually constructed as a path within
+            <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>, which is on
+            the whitelist.
+        </para>
+
+        <para>
+            The rules for deciding which hashes of dependent tasks to include through
+            dependency chains are more complex and are generally accomplished with a
+            python function.
+            The code in <filename>meta/lib/oe/sstatesig.py</filename> shows two examples
+            of this and also illustrates how you can insert your own policy into the system
+            if so desired.
+            This file defines the two basic signature generators <filename>OE-Core</filename>
+            uses:  "OEBasic" and "OEBasicHash".
+            By default, there is a dummy "noop" signature handler enabled in BitBake.
+            This means that behavior is unchanged from previous versions.
+            <filename>OE-Core</filename> uses the "OEBasic" signature handler by default
+            through this setting in the <filename>bitbake.conf</filename> file:
+            <literallayout class='monospaced'>
+  BB_SIGNATURE_HANDLER ?= "OEBasic"
+            </literallayout>
+            The "OEBasicHash" <filename>BB_SIGNATURE_HANDLER</filename> is the same as the
+            "OEBasic" version but adds the task hash to the stamp files.
+            This results in any metadata change that changes the task hash, automatically
+            causing the task to be run again.
+            This removes the need to bump <link linkend='var-PR'><filename>PR</filename></link>
+            values and changes to metadata automatically ripple across the build.
+            Currently, this behavior is not the default behavior for <filename>OE-Core</filename>
+            but is the default in <filename>poky</filename>.
+        </para>
+
+        <para>
+            It is also worth noting that the end result of these signature generators is to
+            make some dependency and hash information available to the build.
+            This information includes:
+            <literallayout class='monospaced'>
+  BB_BASEHASH_task-&lt;taskname&gt; - the base hashes for each task in the recipe
+  BB_BASEHASH_&lt;filename:taskname&gt; - the base hashes for each dependent task
+  BBHASHDEPS_&lt;filename:taskname&gt; - The task dependencies for each task
+  BB_TASKHASH - the hash of the currently running task
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='shared-state'>
+        <title>Shared State</title>
+
+        <para>
+            Checksums and dependencies, as discussed in the previous section, solve half the
+            problem.
+            The other part of the problem is being able to use checksum information during the build
+            and being able to reuse or rebuild specific components.
+        </para>
+
+        <para>
+            The shared state class (<filename>sstate.bbclass</filename>)
+            is a relatively generic implementation of how to "capture" a snapshot of a given task.
+            The idea is that the build process does not care about the source of a task's output.
+            Output could be freshly built or it could be downloaded and unpacked from
+            somewhere - the build process doesn't need to worry about its source.
+        </para>
+
+        <para>
+            There are two types of output, one is just about creating a directory
+            in <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>.
+            A good example is the output of either <filename>do_install</filename> or
+            <filename>do_package</filename>.
+            The other type of output occurs when a set of data is merged into a shared directory
+            tree such as the sysroot.
+        </para>
+
+        <para>
+            The Yocto Project team has tried to keep the details of the implementation hidden in
+            <filename>sstate.bbclass</filename>.
+            From a user's perspective, adding shared state wrapping to a task
+            is as simple as this <filename>do_deploy</filename> example taken from
+            <filename>do_deploy.bbclass</filename>:
+            <literallayout class='monospaced'>
+     DEPLOYDIR = "${WORKDIR}/deploy-${PN}"
+     SSTATETASKS += "do_deploy"
+     do_deploy[sstate-name] = "deploy"
+     do_deploy[sstate-inputdirs] = "${DEPLOYDIR}"
+     do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}"
+
+     python do_deploy_setscene () {
+         sstate_setscene(d)
+     }
+     addtask do_deploy_setscene
+            </literallayout>
+            In the example, we add some extra flags to the task, a name field ("deploy"), an
+            input directory where the task sends data, and the output
+            directory where the data from the task should eventually be copied.
+            We also add a <filename>_setscene</filename> variant of the task and add the task
+            name to the <filename>SSTATETASKS</filename> list.
+        </para>
+
+        <para>
+            If you have a directory whose contents you need to preserve, you can do this with
+            a line like the following:
+            <literallayout class='monospaced'>
+     do_package[sstate-plaindirs] = "${PKGD} ${PKGDEST}"
+            </literallayout>
+            This method, as well as the following example, also works for multiple directories.
+            <literallayout class='monospaced'>
+     do_package[sstate-inputdirs] = "${PKGDESTWORK} ${SHLIBSWORKDIR}"
+     do_package[sstate-outputdirs] = "${PKGDATA_DIR} ${SHLIBSDIR}"
+     do_package[sstate-lockfile] = "${PACKAGELOCK}"
+            </literallayout>
+            These methods also include the ability to take a lockfile when manipulating
+            shared state directory structures since some cases are sensitive to file
+            additions or removals.
+        </para>
+
+        <para>
+            Behind the scenes, the shared state code works by looking in
+            <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link> and
+            <link linkend='var-SSTATE_MIRRORS'><filename>SSTATE_MIRRORS</filename></link>
+            for shared state files.
+            Here is an example:
+            <literallayout class='monospaced'>
+     SSTATE_MIRRORS ?= "\
+     file://.* http://someserver.tld/share/sstate/PATH \n \
+     file://.* file:///some/local/dir/sstate/PATH"
+            </literallayout>
+            <note>
+                The shared state directory (<filename>SSTATE_DIR</filename>) is
+                organized into two-character subdirectories, where the subdirectory
+                names are based on the first two characters of the hash.
+                If the shared state directory structure for a mirror has the
+                same structure as <filename>SSTATE_DIR</filename>, you must
+                specify "PATH" as part of the URI to enable the build system
+                to map to the appropriate subdirectory.
+            </note>
+        </para>
+
+        <para>
+            The shared state package validity can be detected just by looking at the
+            filename since the filename contains the task checksum (or signature) as
+            described earlier in this section.
+            If a valid shared state package is found, the build process downloads it
+            and uses it to accelerate the task.
+        </para>
+
+        <para>
+            The build processes uses the <filename>*_setscene</filename> tasks
+            for the task acceleration phase.
+            BitBake goes through this phase before the main execution code and tries
+            to accelerate any tasks for which it can find shared state packages.
+            If a shared state package for a task is available, the shared state
+            package is used.
+            This means the task and any tasks on which it is dependent are not
+            executed.
+        </para>
+
+        <para>
+            As a real world example, the aim is when building an IPK-based image,
+            only the <filename>do_package_write_ipk</filename> tasks would have their
+            shared state packages fetched and extracted.
+            Since the sysroot is not used, it would never get extracted.
+            This is another reason why a task-based approach is preferred over a
+            recipe-based approach, which would have to install the output from every task.
+        </para>
+    </section>
+
+    <section id='tips-and-tricks'>
+        <title>Tips and Tricks</title>
+
+        <para>
+            The code in the build system that supports incremental builds is not
+            simple code.
+            This section presents some tips and tricks that help you work around
+            issues related to shared state code.
+        </para>
+
+        <section id='debugging'>
+            <title>Debugging</title>
+
+            <para>
+                When things go wrong, debugging needs to be straightforward.
+                Because of this, the Yocto Project team included strong debugging
+                tools:
+                <itemizedlist>
+                    <listitem><para>Whenever a shared state package is written out, so is a
+                        corresponding <filename>.siginfo</filename> file.
+                        This practice results in a pickled python database of all
+                        the metadata that went into creating the hash for a given shared state
+                        package.</para></listitem>
+                    <listitem><para>If BitBake is run with the <filename>--dump-signatures</filename>
+                        (or <filename>-S</filename>) option, BitBake dumps out
+                        <filename>.siginfo</filename> files in
+                        the stamp directory for every task it would have executed instead of
+                        building the specified target package.</para></listitem>
+                    <listitem><para>There is a <filename>bitbake-diffsigs</filename> command that
+                        can process these <filename>.siginfo</filename> files.
+                        If one file is specified, it will dump out the dependency
+                        information in the file.
+                        If two files are specified, it will compare the two files and dump out
+                        the differences between the two.
+                        This allows the question of "What changed between X and Y?" to be
+                        answered easily.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='invalidating-shared-state'>
+            <title>Invalidating Shared State</title>
+
+            <para>
+                The shared state code uses checksums and shared state
+                cache to avoid unnecessarily rebuilding tasks.
+                As with all schemes, this one has some drawbacks.
+                It is possible that you could make implicit changes that are not factored
+                into the checksum calculation, but do affect a task's output.
+                A good example is perhaps when a tool changes its output.
+                Let's say that the output of <filename>rpmdeps</filename> needed to change.
+                The result of the change should be that all the "package", "package_write_rpm",
+                and "package_deploy-rpm" shared state cache items would become invalid.
+                But, because this is a change that is external to the code and therefore implicit,
+                the associated shared state cache items do not become invalidated.
+                In this case, the build process would use the cached items rather than running the
+                task again.
+                Obviously, these types of implicit changes can cause problems.
+            </para>
+
+            <para>
+                To avoid these problems during the build, you need to understand the effects of any
+                change you make.
+                Note that any changes you make directly to a function automatically are factored into
+                the checksum calculation and thus, will invalidate the associated area of sstate cache.
+                You need to be aware of any implicit changes that are not obvious changes to the
+                code and could affect the output of a given task.
+                Once you are aware of such a change, you can take steps to invalidate the cache
+                and force the task to run.
+                The step to take is as simple as changing a function's comments in the source code.
+                For example, to invalidate package shared state files, change the comment statements
+                of <filename>do_package</filename> or the comments of one of the functions it calls.
+                The change is purely cosmetic, but it causes the checksum to be recalculated and
+                forces the task to be run again.
+            </para>
+
+            <note>
+                For an example of a commit that makes a cosmetic change to invalidate
+                a shared state, see this
+                <ulink url='&YOCTO_GIT_URL;/cgit.cgi/poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54'>commit</ulink>.
+            </note>
+        </section>
+    </section>
+</section>
+
+<section id='x32'>
+    <title>x32</title>
+
+    <para>
+        x32 is a new processor-specific Application Binary Interface (psABI) for x86_64.
+        An ABI defines the calling conventions between functions in a processing environment.
+        The interface determines what registers are used and what the sizes are for various C data types.
+    </para>
+
+    <para>
+        Some processing environments prefer using 32-bit applications even when running
+        on Intel 64-bit platforms.
+        Consider the i386 psABI, which is a very old 32-bit ABI for Intel 64-bit platforms.
+        The i386 psABI does not provide efficient use and access of the Intel 64-bit processor resources,
+        leaving the system underutilized.
+        Now consider the x86_64 psABI.
+        This ABI is newer and uses 64-bits for data sizes and program pointers.
+        The extra bits increase the footprint size of the programs, libraries,
+        and also increases the memory and file system size requirements.
+        Executing under the x32 psABI enables user programs to utilize CPU and system resources
+        more efficiently while keeping the memory footprint of the applications low.
+        Extra bits are used for registers but not for addressing mechanisms.
+    </para>
+
+    <section id='support'>
+        <title>Support</title>
+
+        <para>
+            While the x32 psABI specifications are not fully finalized, this Yocto Project
+            release supports current development specifications of x32 psABI.
+            As of this release of the Yocto Project, x32 psABI support exists as follows:
+            <itemizedlist>
+                <listitem><para>You can create packages and images in x32 psABI format on x86_64 architecture targets.
+                    </para></listitem>
+                <listitem><para>You can use the x32 psABI support through the <filename>meta-x32</filename>
+                    layer on top of the OE-core/Yocto layer.</para></listitem>
+                <listitem><para>The toolchain from the <filename>experimental/meta-x32</filename> layer
+                    is used for building x32 psABI program binaries.</para></listitem>
+                <listitem><para>You can successfully build many recipes with the x32 toolchain.</para></listitem>
+                <listitem><para>You can create and boot <filename>core-image-minimal</filename> and
+                    <filename>core-image-sato</filename> images.</para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='future-development-and-limitations'>
+        <title>Future Development and Limitations</title>
+
+        <para>
+            As of this Yocto Project release, the x32 psABI kernel and library interfaces
+            specifications are not finalized.
+        </para>
+
+        <para>
+            Future Plans for the x32 psABI in the Yocto Project include the following:
+            <itemizedlist>
+                <listitem><para>Enhance and fix the few remaining recipes so they
+                    work with and support x32 toolchains.</para></listitem>
+                <listitem><para>Enhance RPM Package Manager (RPM) support for x32 binaries.</para></listitem>
+                <listitem><para>Support larger images.</para></listitem>
+                <listitem><para>Integrate x32 recipes, toolchain, and kernel changes from
+                    <filename>experimental/meta-x32</filename> into OE-core.</para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='using-x32-right-now'>
+        <title>Using x32 Right Now</title>
+
+        <para>
+            Despite the fact the x32 psABI support is in development state for this release of the
+            Yocto Project, you can follow these steps to use the x32 spABI:
+            <itemizedlist>
+                <listitem><para>Add the <filename>experimental/meta-x32</filename> layer to your local
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                    You can find the <filename>experimental/meta-x32</filename> source repository at
+                    <ulink url='&YOCTO_GIT_URL;'></ulink>.</para></listitem>
+                <listitem><para>Edit your <filename>conf/bblayers.conf</filename> file so that it includes
+                    the <filename>meta-x32</filename>.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     BBLAYERS ?= " \
+        /home/nitin/prj/poky.git/meta \
+        /home/nitin/prj/poky.git/meta-yocto \
+        /home/nitin/prj/poky.git/meta-yocto-bsp \
+        /home/nitin/prj/meta-x32.git \
+        "
+     BBLAYERS_NON_REMOVABLE ?= " \
+        /home/nitin/prj/poky.git/meta \
+        /home/nitin/prj/poky.git/meta-yocto \
+        "
+                    </literallayout></para></listitem>
+                <listitem><para>Enable the x32 psABI tuning file for <filename>x86_64</filename>
+                    machines by editing the <filename>conf/local.conf</filename> like this:
+                    <literallayout class='monospaced'>
+      MACHINE = "qemux86-64"
+      DEFAULTTUNE = "x86-64-x32"
+      baselib = "${@d.getVar('BASE_LIB_tune-' + (d.getVar('DEFAULTTUNE', True) \
+         or 'INVALID'), True) or 'lib'}"
+      #MACHINE = "atom-pc"
+      #DEFAULTTUNE = "core2-64-x32"
+                    </literallayout></para></listitem>
+                <listitem><para>As usual, use BitBake to build an image that supports the x32 psABI.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     $ bitake core-image-sato
+                    </literallayout></para></listitem>
+                <listitem><para>As usual, run your image using QEMU:
+                    <literallayout class='monospaced'>
+     $ runqemu qemux86-64 core-image-sato
+                    </literallayout></para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
+
+<section id="licenses">
+    <title>Licenses</title>
+
+    <para>
+        This section describes the mechanism by which the OpenEmbedded build system
+        tracks changes to licensing text.
+        The section also describes how to enable commercially licensed recipes,
+        which by default are disabled.
+    </para>
+
+    <para>
+        For information that can help you maintain compliance with various open
+        source licensing during the lifecycle of the product, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#maintaining-open-source-license-compliance-during-your-products-lifecycle'>Maintaining Open Source License Compliance During Your Project's Lifecycle</ulink>" section
+        in the Yocto Project Development Manual.
+    </para>
+
+    <section id="usingpoky-configuring-LIC_FILES_CHKSUM">
+        <title>Tracking License Changes</title>
+
+        <para>
+            The license of an upstream project might change in the future.
+            In order to prevent these changes going unnoticed, the
+            <filename><link linkend='var-LIC_FILES_CHKSUM'>LIC_FILES_CHKSUM</link></filename>
+            variable tracks changes to the license text. The checksums are validated at the end of the
+            configure step, and if the checksums do not match, the build will fail.
+        </para>
+
+        <section id="usingpoky-specifying-LIC_FILES_CHKSUM">
+            <title>Specifying the <filename>LIC_FILES_CHKSUM</filename> Variable</title>
+
+            <para>
+                The <filename>LIC_FILES_CHKSUM</filename>
+                variable contains checksums of the license text in the source code for the recipe.
+                Following is an example of how to specify <filename>LIC_FILES_CHKSUM</filename>:
+                <literallayout class='monospaced'>
+     LIC_FILES_CHKSUM = "file://COPYING;md5=xxxx \
+                         file://licfile1.txt;beginline=5;endline=29;md5=yyyy \
+                         file://licfile2.txt;endline=50;md5=zzzz \
+                         ..."
+                </literallayout>
+            </para>
+
+            <para>
+                The build system uses the
+                <filename><link linkend='var-S'>S</link></filename> variable as the
+                default directory used when searching files listed in
+                <filename>LIC_FILES_CHKSUM</filename>.
+                The previous example employs the default directory.
+            </para>
+
+            <para>
+                You can also use relative paths as shown in the following example:
+                <literallayout class='monospaced'>
+     LIC_FILES_CHKSUM = "file://src/ls.c;startline=5;endline=16;\
+                                         md5=bb14ed3c4cda583abc85401304b5cd4e"
+     LIC_FILES_CHKSUM = "file://../license.html;md5=5c94767cedb5d6987c902ac850ded2c6"
+                </literallayout>
+            </para>
+
+            <para>
+                In this example, the first line locates a file in
+                <filename>${S}/src/ls.c</filename>.
+                The second line refers to a file in
+                <filename><link linkend='var-WORKDIR'>WORKDIR</link></filename>, which is the parent
+                of <filename><link linkend='var-S'>S</link></filename>.
+            </para>
+            <para>
+                Note that this variable is mandatory for all recipes, unless the
+                <filename>LICENSE</filename> variable is set to "CLOSED".
+            </para>
+        </section>
+
+        <section id="usingpoky-LIC_FILES_CHKSUM-explanation-of-syntax">
+            <title>Explanation of Syntax</title>
+            <para>
+                As mentioned in the previous section, the
+                <filename>LIC_FILES_CHKSUM</filename> variable lists all the
+                important files that contain the license text for the source code.
+                It is possible to specify a checksum for an entire file, or a specific section of a
+                file (specified by beginning and ending line numbers with the "beginline" and "endline"
+                parameters, respectively).
+                The latter is useful for source files with a license notice header,
+                README documents, and so forth.
+                If you do not use the "beginline" parameter, then it is assumed that the text begins on the
+                first line of the file.
+                Similarly, if you do not use the "endline" parameter, it is assumed that the license text
+                ends with the last line of the file.
+            </para>
+
+            <para>
+                The "md5" parameter stores the md5 checksum of the license text.
+                If the license text changes in any way as compared to this parameter
+                then a mismatch occurs.
+                This mismatch triggers a build failure and notifies the developer.
+                Notification allows the developer to review and address the license text changes.
+                Also note that if a mismatch occurs during the build, the correct md5
+                checksum is placed in the build log and can be easily copied to the recipe.
+            </para>
+
+            <para>
+                There is no limit to how many files you can specify using the
+                <filename>LIC_FILES_CHKSUM</filename> variable.
+                Generally, however, every project requires a few specifications for license tracking.
+                Many projects have a "COPYING" file that stores the license information for all the source
+                code files.
+                This practice allows you to just track the "COPYING" file as long as it is kept up to date.
+            </para>
+
+            <tip>
+                If you specify an empty or invalid "md5" parameter, BitBake returns an md5 mis-match
+                error and displays the correct "md5" parameter value during the build.
+                The correct parameter is also captured in the build log.
+            </tip>
+
+            <tip>
+                If the whole file contains only license text, you do not need to use the "beginline" and
+                "endline" parameters.
+            </tip>
+        </section>
+    </section>
+
+    <section id="enabling-commercially-licensed-recipes">
+        <title>Enabling Commercially Licensed Recipes</title>
+
+        <para>
+            By default, the OpenEmbedded build system disables
+            components that have commercial or other special licensing
+            requirements.
+            Such requirements are defined on a
+            recipe-by-recipe basis through the <filename>LICENSE_FLAGS</filename> variable
+            definition in the affected recipe.
+            For instance, the
+            <filename>$HOME/poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly</filename>
+            recipe contains the following statement:
+            <literallayout class='monospaced'>
+     LICENSE_FLAGS = "commercial"
+            </literallayout>
+            Here is a slightly more complicated example that contains both an
+            explicit recipe name and version (after variable expansion):
+            <literallayout class='monospaced'>
+     LICENSE_FLAGS = "license_${PN}_${PV}"
+            </literallayout>
+	        In order for a component restricted by a <filename>LICENSE_FLAGS</filename>
+	        definition to be enabled and included in an image, it
+	        needs to have a matching entry in the global
+	        <filename>LICENSE_FLAGS_WHITELIST</filename> variable, which is a variable
+	        typically defined in your <filename>local.conf</filename> file.
+            For example, to enable
+	        the <filename>$HOME/poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly</filename>
+	        package, you could add either the string
+	        "commercial_gst-plugins-ugly" or the more general string
+	        "commercial" to <filename>LICENSE_FLAGS_WHITELIST</filename>.
+            See the
+            "<link linkend='license-flag-matching'>License Flag Matching</link>" section
+            for a full explanation of how <filename>LICENSE_FLAGS</filename> matching works.
+            Here is the example:
+            <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly"
+            </literallayout>
+	        Likewise, to additionally enable the package built from the recipe containing
+	        <filename>LICENSE_FLAGS = "license_${PN}_${PV}"</filename>, and assuming
+	        that the actual recipe name was <filename>emgd_1.10.bb</filename>,
+	        the following string would enable that package as well as
+	        the original <filename>gst-plugins-ugly</filename> package:
+            <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly license_emgd_1.10"
+            </literallayout>
+	        As a convenience, you do not need to specify the complete license string
+	        in the whitelist for every package.
+            you can use an abbreviated form, which consists
+	        of just the first portion or portions of the license string before
+	        the initial underscore character or characters.
+            A partial string will match
+	        any license that contains the given string as the first
+	        portion of its license.
+            For example, the following
+	        whitelist string will also match both of the packages
+	        previously mentioned as well as any other packages that have
+	        licenses starting with "commercial" or "license".
+            <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial license"
+            </literallayout>
+        </para>
+
+        <section id="license-flag-matching">
+            <title>License Flag Matching</title>
+
+            <para>
+		        The definition of 'matching' in reference to a
+		        recipe's <filename>LICENSE_FLAGS</filename> setting is simple.
+                However, some things exist that you should know about in order to
+                correctly and effectively use it.
+            </para>
+
+            <para>
+                Before a flag
+                defined by a particular recipe is tested against the
+                contents of the <filename>LICENSE_FLAGS_WHITELIST</filename> variable, the
+                string <filename>_${PN}</filename> (with
+                <link linkend='var-PN'><filename>PN</filename></link> expanded of course) is
+                appended to the flag, thus automatically making each
+                <filename>LICENSE_FLAGS</filename> value recipe-specific.
+                That string is
+                then matched against the whitelist.
+                So if you specify <filename>LICENSE_FLAGS = "commercial"</filename> in recipe
+		        "foo" for example, the string <filename>"commercial_foo"</filename>
+                would normally be what is specified in the whitelist in order for it to
+                match.
+            </para>
+
+            <para>
+                You can broaden the match by
+                putting any "_"-separated beginning subset of a
+                <filename>LICENSE_FLAGS</filename> flag in the whitelist, which will also
+                match.
+                For example, simply specifying "commercial" in
+                the whitelist would match any expanded <filename>LICENSE_FLAGS</filename>
+                definition starting with "commercial" such as
+                "commercial_foo" and "commercial_bar", which are the
+                strings that would be automatically generated for
+                hypothetical "foo" and "bar" recipes assuming those
+                recipes had simply specified the following:
+                <literallayout class='monospaced'>
+     LICENSE_FLAGS = "commercial"
+                </literallayout>
+            </para>
+
+            <para>
+                Broadening the match allows for a range of specificity for the items
+                in the whitelist, from more general to perfectly
+                specific.
+                So you have the choice of exhaustively
+                enumerating each license flag in the whitelist to
+                allow only those specific recipes into the image, or
+                of using a more general string to pick up anything
+                matching just the first component or components of the specified
+                string.
+            </para>
+
+            <para>
+                This scheme works even if the flag already
+                has <filename>_${PN}</filename> appended - the extra <filename>_${PN}</filename> is
+                redundant, but does not affect the outcome.
+                For example, a license flag of "commercial_1.2_foo" would
+                turn into "commercial_1.2_foo_foo" and would match
+                both the general "commercial" and the specific
+                "commercial_1.2_foo", as expected.
+                The flag would also match
+                "commercial_1.2_foo_foo" and "commercial_1.2", which
+                does not make much sense regarding use in the whitelist.
+            </para>
+
+            <para>
+                For a versioned string, you could instead specify
+                "commercial_foo_1.2", which would turn into
+                "commercial_foo_1.2_foo".
+                And, as expected, this flag allows
+                you to pick up this package along with
+                anything else "commercial" when you specify "commercial"
+                in the whitelist.
+                Or, the flag allows you to pick up this package along with anything "commercial_foo"
+                regardless of version when you use "commercial_foo" in the whitelist.
+                Finally, you can be completely specific about the package and version and specify
+                "commercial_foo_1.2" package and version.
+            </para>
+        </section>
+
+        <section id="other-variables-related-to-commercial-licenses">
+            <title>Other Variables Related to Commercial Licenses</title>
+
+            <para>
+                Other helpful variables related to commercial
+                license handling exist and are defined in the
+                <filename>$HOME/poky/meta/conf/distro/include/default-distrovars.inc</filename> file:
+                <literallayout class='monospaced'>
+     COMMERCIAL_AUDIO_PLUGINS ?= ""
+     COMMERCIAL_VIDEO_PLUGINS ?= ""
+     COMMERCIAL_QT = ""
+                </literallayout>
+                If you want to enable these components, you can do so by making sure you have
+                the following statements in your <filename>local.conf</filename> configuration file:
+                <literallayout class='monospaced'>
+     COMMERCIAL_AUDIO_PLUGINS = "gst-plugins-ugly-mad \
+        gst-plugins-ugly-mpegaudioparse"
+     COMMERCIAL_VIDEO_PLUGINS = "gst-plugins-ugly-mpeg2dec \
+        gst-plugins-ugly-mpegstream gst-plugins-bad-mpegvideoparse"
+     COMMERCIAL_QT ?= "qmmp"
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly commercial_gst-plugins-bad commercial_qmmp"
+                </literallayout>
+                Of course, you could also create a matching whitelist
+                for those components using the more general "commercial"
+                in the whitelist, but that would also enable all the
+                other packages with <filename>LICENSE_FLAGS</filename> containing
+                "commercial", which you may or may not want:
+                <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial"
+                </literallayout>
+            </para>
+
+            <para>
+                Specifying audio and video plug-ins as part of the
+                <filename>COMMERCIAL_AUDIO_PLUGINS</filename> and
+                <filename>COMMERCIAL_VIDEO_PLUGINS</filename> statements
+                or commercial qt components as part of
+                the <filename>COMMERCIAL_QT</filename> statement (along
+                with the enabling <filename>LICENSE_FLAGS_WHITELIST</filename>) includes the
+                plug-ins or components into built images, thus adding
+                support for media formats or components.
+            </para>
+        </section>
+    </section>
+</section>
+</chapter>
+<!--
+vim: expandtab tw=80 ts=4
+-->

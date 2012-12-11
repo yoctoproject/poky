@@ -1,0 +1,63 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>6.2. Preferences and Providers</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="ref-bitbake.html" title="Chapter 6. BitBake">
+<link rel="prev" href="ref-bitbake-parsing.html" title="6.1. Parsing">
+<link rel="next" href="ref-bitbake-dependencies.html" title="6.3. Dependencies">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="6.2. Preferences and Providers">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="ref-bitbake-providers"></a>6.2. Preferences and Providers</h2></div></div></div>
+<p>
+            Once all the <code class="filename">.bb</code> files have been 
+            parsed, BitBake starts to build the target (<code class="filename">core-image-sato</code>
+            in the previous section's example) and looks for providers of that target.
+            Once a provider is selected, BitBake resolves all the dependencies for  
+            the target. 
+            In the case of <code class="filename">core-image-sato</code>, it would lead to 
+            <code class="filename">packagegroup-core-x11-sato</code>, 
+            which in turn leads to recipes like <code class="filename">matchbox-terminal</code>, 
+            <code class="filename">pcmanfm</code> and <code class="filename">gthumb</code>.
+            These recipes in turn depend on <code class="filename">eglibc</code> and the toolchain.
+        </p>
+<p>
+            Sometimes a target might have multiple providers.
+            A common example is "virtual/kernel", which is provided by each kernel package. 
+            Each machine often selects the best kernel provider by using a line similar to the 
+            following in the machine configuration file:
+        </p>
+<pre class="literallayout">
+     PREFERRED_PROVIDER_virtual/kernel = "linux-yocto"
+        </pre>
+<p>
+            The default <code class="filename"><a class="link" href="ref-variables-glos.html#var-PREFERRED_PROVIDER" title="PREFERRED_PROVIDER">PREFERRED_PROVIDER</a></code> 
+            is the provider with the same name as the target.
+        </p>
+<p>
+            Understanding how providers are chosen is made complicated by the fact
+            that multiple versions might exist. 
+            BitBake defaults to the highest version of a provider.
+            Version comparisons are made using the same method as Debian. 
+            You can use the
+            <code class="filename"><a class="link" href="ref-variables-glos.html#var-PREFERRED_VERSION" title="PREFERRED_VERSION">PREFERRED_VERSION</a></code>
+            variable to specify a particular version (usually in the distro configuration).
+            You can influence the order by using the 
+            <code class="filename"><a class="link" href="ref-variables-glos.html#var-DEFAULT_PREFERENCE" title="DEFAULT_PREFERENCE">DEFAULT_PREFERENCE</a></code> 
+            variable. 
+            By default, files have a preference of "0". 
+            Setting the <code class="filename">DEFAULT_PREFERENCE</code> to "-1" makes the 
+            package unlikely to be used unless it is explicitly referenced.
+            Setting the <code class="filename">DEFAULT_PREFERENCE</code> to "1" makes it likely the package is used. 
+            <code class="filename">PREFERRED_VERSION</code> overrides any <code class="filename">DEFAULT_PREFERENCE</code> setting.
+            <code class="filename">DEFAULT_PREFERENCE</code> is often used to mark newer and more experimental package
+            versions until they have undergone sufficient testing to be considered stable.
+        </p>
+<p>
+            In summary, BitBake has created a list of providers, which is prioritized, for each target.
+        </p>
+</div></body>
+</html>

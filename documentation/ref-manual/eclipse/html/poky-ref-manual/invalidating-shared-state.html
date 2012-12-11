@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.2.4.2. Invalidating Shared State</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="tips-and-tricks.html" title="3.2.4. Tips and Tricks">
+<link rel="prev" href="debugging.html" title="3.2.4.1. Debugging">
+<link rel="next" href="x32.html" title="3.3. x32">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.2.4.2. Invalidating Shared State">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="invalidating-shared-state"></a>3.2.4.2. Invalidating Shared State</h4></div></div></div>
+<p>
+                The shared state code uses checksums and shared state
+                cache to avoid unnecessarily rebuilding tasks.
+                As with all schemes, this one has some drawbacks.
+                It is possible that you could make implicit changes that are not factored 
+                into the checksum calculation, but do affect a task's output. 
+                A good example is perhaps when a tool changes its output.
+                Let's say that the output of <code class="filename">rpmdeps</code> needed to change.
+                The result of the change should be that all the "package", "package_write_rpm",
+                and "package_deploy-rpm" shared state cache items would become invalid.
+                But, because this is a change that is external to the code and therefore implicit,
+                the associated shared state cache items do not become invalidated.
+                In this case, the build process would use the cached items rather than running the 
+                task again. 
+                Obviously, these types of implicit changes can cause problems.
+            </p>
+<p>
+                To avoid these problems during the build, you need to understand the effects of any
+                change you make.
+                Note that any changes you make directly to a function automatically are factored into 
+                the checksum calculation and thus, will invalidate the associated area of sstate cache.
+                You need to be aware of any implicit changes that are not obvious changes to the 
+                code and could affect the output of a given task. 
+                Once you are aware of such a change, you can take steps to invalidate the cache 
+                and force the task to run. 
+                The step to take is as simple as changing a function's comments in the source code. 
+                For example, to invalidate package shared state files, change the comment statements
+                of <code class="filename">do_package</code> or the comments of one of the functions it calls.
+                The change is purely cosmetic, but it causes the checksum to be recalculated and  
+                forces the task to be run again.
+            </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                For an example of a commit that makes a cosmetic change to invalidate 
+                a shared state, see this
+                <a class="ulink" href="http://git.yoctoproject.org/cgit.cgi/poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54" target="_self">commit</a>.
+            </div>
+</div></body>
+</html>

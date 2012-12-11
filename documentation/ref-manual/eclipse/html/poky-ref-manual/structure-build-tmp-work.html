@@ -1,0 +1,52 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>5.2.20. build/tmp/work/</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="structure-build.html" title="5.2. The Build Directory - build/">
+<link rel="prev" href="structure-build-tmp-pkgdata.html" title="5.2.19. build/tmp/pkgdata/">
+<link rel="next" href="structure-meta.html" title="5.3. The Metadata - meta/">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="5.2.20. build/tmp/work/">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="structure-build-tmp-work"></a>5.2.20. <code class="filename">build/tmp/work/</code>
+</h3></div></div></div>
+<p>
+            This directory contains architecture-specific work sub-directories for packages built by BitBake. 
+            All tasks execute from a work directory.
+            For example, the source for a particular package is unpacked, patched, configured and compiled all
+            within its own work directory.
+            Within the work directory, organization is based on the package group for which the source
+            is being compiled.
+        </p>
+<p>
+            It is worth considering the structure of a typical work directory. 
+            As an example, consider the <code class="filename">linux-yocto-kernel-3.0</code>
+            on the machine <code class="filename">qemux86</code> 
+            built within the Yocto Project.  
+            For this package, a work directory of 
+            <code class="filename">tmp/work/qemux86-poky-linux/linux-yocto-3.0+git1+&lt;.....&gt;</code>, 
+            referred to as <code class="filename"><a class="link" href="ref-variables-glos.html#var-WORKDIR" title="WORKDIR">WORKDIR</a></code>, is created.  
+            Within this directory, the source is unpacked to 
+            <code class="filename">linux-qemux86-standard-build</code> and then patched by Quilt 
+            (see the 
+            "<a class="link" href="../dev-manual/using-a-quilt-workflow.html" target="_self">Modifying Package 
+            Source Code with Quilt</a>" section in the Yocto Project Development Manual.   
+            Within the <code class="filename">linux-qemux86-standard-build</code> directory, 
+            standard Quilt directories <code class="filename">linux-3.0/patches</code>
+            and <code class="filename">linux-3.0/.pc</code> are created,
+            and standard Quilt commands can be used.
+        </p>
+<p>
+            There are other directories generated within WORKDIR. 
+            The most important directory is WORKDIR<code class="filename">/temp/</code>, which has log files for each 
+            task (<code class="filename">log.do_*.pid</code>) and contains the scripts BitBake runs for 
+            each task (<code class="filename">run.do_*.pid</code>). 
+            The WORKDIR<code class="filename">/image/</code> directory is where "make 
+            install" places its output that is then split into sub-packages 
+            within WORKDIR<code class="filename">/packages-split/</code>.
+        </p>
+</div></body>
+</html>

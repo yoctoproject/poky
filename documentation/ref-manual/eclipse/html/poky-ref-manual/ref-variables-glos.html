@@ -1,0 +1,2800 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Chapter 10. Variables Glossary</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="prev" href="ref-features-backfill.html" title="9.4. Feature Backfilling">
+<link rel="next" href="ref-varlocality.html" title="Chapter 11. Variable Context">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter 10. Variables Glossary">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="ref-variables-glos"></a>Chapter 10. Variables Glossary</h2></div></div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl><dt><span class="glossary"><a href="ref-variables-glos.html#ref-variables-glossary">Glossary</a></span></dt></dl>
+</div>
+<p>
+    This chapter lists common variables used in the OpenEmbedded build system and gives an overview
+    of their function and contents.
+</p>
+<div class="glossary" title="Glossary">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="ref-variables-glossary"></a>Glossary</h2></div></div></div>
+<p>
+       <a class="link" href="ref-variables-glos.html#var-ALLOW_EMPTY" title="ALLOW_EMPTY">A</a> 
+       <a class="link" href="ref-variables-glos.html#var-B" title="B">B</a> 
+       <a class="link" href="ref-variables-glos.html#var-CFLAGS" title="CFLAGS">C</a> 
+       <a class="link" href="ref-variables-glos.html#var-D" title="D">D</a> 
+       <a class="link" href="ref-variables-glos.html#var-ENABLE_BINARY_LOCALE_GENERATION" title="ENABLE_BINARY_LOCALE_GENERATION">E</a> 
+       <a class="link" href="ref-variables-glos.html#var-FILES" title="FILES">F</a> 
+
+       <a class="link" href="ref-variables-glos.html#var-HOMEPAGE" title="HOMEPAGE">H</a> 
+       <a class="link" href="ref-variables-glos.html#var-IMAGE_FEATURES" title="IMAGE_FEATURES">I</a> 
+
+       <a class="link" href="ref-variables-glos.html#var-KBRANCH" title="KBRANCH">K</a>
+       <a class="link" href="ref-variables-glos.html#var-LAYERDIR" title="LAYERDIR">L</a> 
+       <a class="link" href="ref-variables-glos.html#var-MACHINE" title="MACHINE">M</a> 
+
+       <a class="link" href="ref-variables-glos.html#var-OE_TERMINAL" title="OE_TERMINAL">O</a>
+       <a class="link" href="ref-variables-glos.html#var-P" title="P">P</a> 
+
+       <a class="link" href="ref-variables-glos.html#var-RCONFLICTS" title="RCONFLICTS">R</a> 
+       <a class="link" href="ref-variables-glos.html#var-S" title="S">S</a> 
+       <a class="link" href="ref-variables-glos.html#var-T" title="T">T</a> 
+
+
+       <a class="link" href="ref-variables-glos.html#var-WORKDIR" title="WORKDIR">W</a> 
+
+
+
+    </p>
+<div class="glossdiv" title="A">
+<h3 class="title">A</h3>
+<dl>
+<dt>
+<a name="var-ALLOW_EMPTY"></a>ALLOW_EMPTY</dt>
+<dd>
+<p>
+                   Specifies if an output package should still be produced if it is empty.
+                   By default, BitBake does not produce empty packages.
+                   This default behavior can cause issues when there is an 
+                   <a class="link" href="ref-variables-glos.html#var-RDEPENDS" title="RDEPENDS"><code class="filename">RDEPENDS</code></a> or 
+                   some other runtime hard-requirement on the existence of the package.
+                </p>
+<p>
+                   Like all package-controlling variables, you must always use them in 
+                   conjunction with a package name override.
+                   Here is an example:
+                   </p>
+<pre class="literallayout">
+     ALLOW_EMPTY_${PN} = "1"
+                   </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-AUTHOR"></a>AUTHOR</dt>
+<dd><p>The email address used to contact the original author or authors in 
+                    order to send patches, forward bugs, etc.</p></dd>
+<dt>
+<a name="var-AUTOREV"></a>AUTOREV</dt>
+<dd>
+<p>When <code class="filename"><a class="link" href="ref-variables-glos.html#var-SRCREV" title="SRCREV">SRCREV</a></code>
+                    is set to the value of this variable, it specifies that the latest
+                    source revision in the repository should be used. Here is an example:
+                    </p>
+<pre class="literallayout">
+     SRCREV = "${AUTOREV}"
+                    </pre>
+<p>
+                </p>
+</dd>
+</dl>
+</div>
+<div class="glossdiv" title="B">
+<h3 class="title">B</h3>
+<dl>
+<dt>
+<a name="var-B"></a>B</dt>
+<dd>
+<p>
+                    The <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>.
+                    The OpenEmbedded build system places generated objects into the Build Directory
+                    during a recipe's build process.
+                    By default, this directory is the same as the <a class="link" href="ref-variables-glos.html#var-S" title="S"><code class="filename">S</code></a>
+                    directory:
+                    </p>
+<pre class="literallayout">
+     B = ${WORKDIR}/${BPN}-{PV}/
+                    </pre>
+<p>
+                    You can separate the (<code class="filename">S</code>) directory and the directory pointed to 
+                    by the <code class="filename">B</code> variable.
+                    Most autotools-based recipes support separating these directories.
+                    The build system defaults to using separate directories for <code class="filename">gcc</code>
+                    and some kernel recipes.
+                </p>
+</dd>
+<dt>
+<a name="var-BAD_RECOMMENDATIONS"></a>BAD_RECOMMENDATIONS</dt>
+<dd><p>
+                    A list of packages not to install despite being recommended by a recipe.
+                    Support for this variable exists only when using the 
+                    <code class="filename">ipk</code> packaging backend.
+                </p></dd>
+<dt>
+<a name="var-BB_DISKMON_DIRS"></a>BB_DISKMON_DIRS</dt>
+<dd>
+<p>
+                    Monitors disk space and available inodes during the build
+                    and allows you to control the build based on these 
+                    parameters.
+                </p>
+<p>
+                    Disk space monitoring is disabled by default.
+                    To enable monitoring, add the <code class="filename">BB_DISKMON_DIRS</code>
+                    variable to your <code class="filename">conf/local.conf</code> file found in the 
+                    <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>.
+                    Use the following form:
+                    </p>
+<pre class="literallayout">
+     BB_DISKMON_DIRS = "&lt;action&gt;,&lt;dir&gt;,&lt;threshold&gt; [...]"
+                  
+     where:
+
+        &lt;action&gt; is:
+           ABORT:     Immediately abort the build when
+                      a threshold is broken.
+           STOPTASKS: Stop the build after the currently
+                      executing tasks have finished when 
+                      a threshold is broken.
+           WARN:      Issue a warning but continue the 
+                      build when a threshold is broken.
+                      Subsequent warnings are issued as 
+                      defined by the 
+                      <a class="link" href="ref-variables-glos.html#var-BB_DISKMON_WARNINTERVAL" title="BB_DISKMON_WARNINTERVAL">BB_DISKMON_WARNINTERVAL</a> variable,
+                      which must be defined in the 
+                      conf/local.conf file.
+
+        &lt;dir&gt; is:
+           Any directory you choose. You can specify one or 
+           more directories to monitor by separating the 
+           groupings with a space.  If two directories are 
+           on the same device, only the first directory
+           is monitored.
+
+        &lt;threshold&gt; is:
+           Either the minimum available disk space, 
+           the minimum number of free inodes, or 
+           both.  You must specify at least one.  To 
+           omit one or the other, simply omit the value.
+           Specify the threshold using G, M, K for Gbytes, 
+           Mbytes, and Kbytes, respectively. If you do 
+           not specify G, M, or K, Kbytes is assumed by 
+           default.  Do not use GB, MB, or KB.
+                    </pre>
+<p>
+                </p>
+<p>
+                    Here are some examples:
+                    </p>
+<pre class="literallayout">
+     BB_DISKMON_DIRS = "ABORT,${TMPDIR},1G,100K WARN,${SSTATE_DIR},1G,100K"
+     BB_DISKMON_DIRS = "STOPTASKS,${TMPDIR},1G"
+     BB_DISKMON_DIRS = "ABORT,${TMPDIR},,100K"
+                    </pre>
+<p>
+                    The first example works only if you also provide 
+                    the <a class="link" href="ref-variables-glos.html#var-BB_DISKMON_WARNINTERVAL" title="BB_DISKMON_WARNINTERVAL"><code class="filename">BB_DISKMON_WARNINTERVAL</code></a> variable
+                    in the <code class="filename">conf/local.conf</code>.
+                    This example causes the build system to immediately
+                    abort when either the disk space in <code class="filename">${TMPDIR}</code> drops
+                    below 1 Gbyte or the available free inodes drops below
+                    100 Kbytes.
+                    Because two directories are provided with the variable, the 
+                    build system also issue a 
+                    warning when the disk space in the 
+                    <code class="filename">${SSTATE_DIR}</code> directory drops
+                    below 1 Gbyte or the number of free inodes drops
+                    below 100 Kbytes.
+                    Subsequent warnings are issued during intervals as 
+                    defined by the <code class="filename">BB_DISKMON_WARNINTERVAL</code>
+                    variable.
+                </p>
+<p>
+                    The second example stops the build after all currently 
+                    executing tasks complete when the minimum disk space
+                    in the <code class="filename">${TMPDIR}</code> directory drops 
+                    below 1 Gbyte.  
+                    No disk monitoring occurs for the free inodes in this case. 
+                </p>
+<p>
+                    The final example immediately aborts the build when the 
+                    number of free inodes in the <code class="filename">${TMPDIR}</code> directory
+                    drops below 100 Kbytes. 
+                    No disk space monitoring for the directory itself occurs
+                    in this case.
+                </p>
+</dd>
+<dt>
+<a name="var-BB_DISKMON_WARNINTERVAL"></a>BB_DISKMON_WARNINTERVAL</dt>
+<dd>
+<p>
+                    Defines the disk space and free inode warning intervals.
+                    To set these intervals, define the variable in your 
+                    <code class="filename">conf/local.conf</code> file in the 
+                    <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>.
+                </p>
+<p>
+                    If you are going to use the 
+                    <code class="filename">BB_DISKMON_WARNINTERVAL</code> variable, you must 
+                    also use the 
+                    <a class="link" href="ref-variables-glos.html#var-BB_DISKMON_DIRS" title="BB_DISKMON_DIRS"><code class="filename">BB_DISKMON_DIRS</code></a> variable
+                    and define its action as "WARN".
+                    During the build, subsequent warnings are issued each time 
+                    disk space or number of free inodes further reduces by  
+                    the respective interval.
+                </p>
+<p>
+                    If you do not provide a <code class="filename">BB_DISKMON_WARNINTERVAL</code>
+                    variable and you do use <code class="filename">BB_DISKMON_DIRS</code> with 
+                    the "WARN" action, the disk monitoring interval defaults to 
+                    the following:
+                    </p>
+<pre class="literallayout">
+     BB_DISKMON_WARNINTERVAL = "50M,5K"
+                    </pre>
+<p>
+                </p>
+<p>
+                    When specifying the variable in your configuration file, 
+                    use the following form:
+                    </p>
+<pre class="literallayout">
+     BB_DISKMON_WARNINTERVAL = "&lt;disk_space_interval&gt;,&lt;disk_inode_interval&gt;"
+                  
+     where:
+
+        &lt;disk_space_interval&gt; is:
+           An interval of memory expressed in either 
+           G, M, or K for Gbytes, Mbytes, or Kbytes, 
+           respectively. You cannot use GB, MB, or KB.  
+
+        &lt;disk_inode_interval&gt; is:
+           An interval of free inodes expressed in either
+           G, M, or K for Gbytes, Mbytes, or Kbytes, 
+           respectively. You cannot use GB, MB, or KB.  
+                    </pre>
+<p>
+                </p>
+<p>
+                    Here is an example:
+                    </p>
+<pre class="literallayout">
+     BB_DISKMON_DIRS = "WARN,${SSTATE_DIR},1G,100K"
+     BB_DISKMON_WARNINTERVAL = "50M,5K"
+                    </pre>
+<p>
+                    These variables cause the OpenEmbedded build system to  
+                    issue subsequent warnings each time the available 
+                    disk space further reduces by 50 Mbytes or the number 
+                    of free inodes further reduces by 5 Kbytes in the 
+                    <code class="filename">${SSTATE_DIR}</code> directory.
+                    Subsequent warnings based on the interval occur each time 
+                    a respective interval is reached beyond the intial warning
+                    (i.e. 1 Gbytes and 100 Kbytes).
+                </p>
+</dd>
+<dt>
+<a name="var-BBCLASSEXTEND"></a>BBCLASSEXTEND</dt>
+<dd>
+<p>
+                    Allows you to extend a recipe so that it builds variants of the software.
+                    Common variants for recipes exist such as "natives" like <code class="filename">quilt-native</code>,
+                    which is a copy of quilt built to run on the build system;
+                    "crosses" such as <code class="filename">gcc-cross</code>,
+                    which is a compiler built to run on the build machine but produces binaries
+                    that run on the target <a class="link" href="ref-variables-glos.html#var-MACHINE" title="MACHINE"><code class="filename">MACHINE</code></a>;
+                    "nativesdk", which targets the SDK machine instead of <code class="filename">MACHINE</code>;
+                    and "mulitlibs" in the form "<code class="filename">multilib:&lt;multilib_name&gt;</code>".
+                </p>
+<p>
+                    To build a different variant of the recipe with a minimal amount of code, it usually
+                    is as simple as adding the following to your recipe:
+                    </p>
+<pre class="literallayout">
+     BBCLASSEXTEND =+ "native nativesdk"
+     BBCLASSEXTEND =+ "multilib:&lt;multilib_name&gt;"
+                    </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-BBMASK"></a>BBMASK</dt>
+<dd>
+<p>Prevents BitBake from processing recipes and recipe append files.
+                    You can use the <code class="filename">BBMASK</code> variable to "hide" 
+                    these <code class="filename">.bb</code> and <code class="filename">.bbappend</code> files.
+                    BitBake ignores any recipe or recipe append files that match the expression.
+                    It is as if BitBake does not see them at all.
+                    Consequently, matching files are not parsed or otherwise used by 
+                    BitBake.</p>
+<p>The value you provide is passed to python's regular expression compiler.
+                    For complete syntax information, see python's documentation at 
+                    <a class="ulink" href="http://docs.python.org/release/2.3/lib/re-syntax.html" target="_self">http://docs.python.org/release/2.3/lib/re-syntax.html</a>.
+                    The expression is compared against the full paths to the files. 
+                    For example, the following uses a complete regular expression to tell
+                    BitBake to ignore all recipe and recipe append files in the 
+                    <code class="filename">.*/meta-ti/recipes-misc/</code> directory:
+                    </p>
+<pre class="literallayout">
+     BBMASK = ".*/meta-ti/recipes-misc/"
+                    </pre>
+<p>Use the <code class="filename">BBMASK</code> variable from within the 
+                    <code class="filename">conf/local.conf</code> file found 
+                    in the <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>.</p>
+</dd>
+<dt>
+<a name="var-BB_NUMBER_THREADS"></a>BB_NUMBER_THREADS</dt>
+<dd><p>The maximum number of tasks BitBake should run in parallel at any one time.
+                    If your host development system supports multiple cores a good rule of thumb
+                    is to set this variable to twice the number of cores.</p></dd>
+<dt>
+<a name="var-BBFILE_COLLECTIONS"></a>BBFILE_COLLECTIONS</dt>
+<dd><p>Lists the names of configured layers. 
+                    These names are used to find the other <code class="filename">BBFILE_*</code>
+                    variables. 
+                    Typically, each layer will append its name to this variable in its
+                    <code class="filename">conf/layer.conf</code> file.
+                </p></dd>
+<dt>
+<a name="var-BBFILE_PATTERN"></a>BBFILE_PATTERN</dt>
+<dd><p>Variable that expands to match files from <code class="filename">BBFILES</code> in a particular layer.  
+                    This variable is used in the <code class="filename">conf/layer.conf</code> file and must 
+                    be suffixed with the name of the specific layer (e.g. 
+                    <code class="filename">BBFILE_PATTERN_emenlow</code>).</p></dd>
+<dt>
+<a name="var-BBFILE_PRIORITY"></a>BBFILE_PRIORITY</dt>
+<dd>
+<p>Assigns the priority for recipe files in each layer.</p>
+<p>This variable is useful in situations where the same recipe appears in
+                    more than one layer. 
+                    Setting this variable allows you to prioritize a
+                    layer against other layers that contain the same recipe - effectively
+                    letting you control the precedence for the multiple layers. 
+                    The precedence established through this variable stands regardless of a
+                    recipe's version (<code class="filename">PV</code> variable). 
+                    For example, a layer that has a recipe with a higher <code class="filename">PV</code> value but for 
+                    which the <code class="filename">BBFILE_PRIORITY</code> is set to have a lower precedence still has a 
+                    lower precedence.</p>
+<p>A larger value for the <code class="filename">BBFILE_PRIORITY</code> variable results in a higher
+                    precedence. 
+                    For example, the value 6 has a higher precedence than the value 5. 
+                    If not specified, the <code class="filename">BBFILE_PRIORITY</code> variable is set based on layer
+                    dependencies (see the
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-LAYERDEPENDS" title="LAYERDEPENDS">LAYERDEPENDS</a></code> variable for 
+                    more information.
+                    The default priority, if unspecified
+                    for a layer with no dependencies, is the lowest defined priority + 1
+                    (or 1 if no priorities are defined).</p>
+<div class="tip" title="Tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Tip</h3>
+                    You can use the command <code class="filename">bitbake-layers show_layers</code> to list
+                    all configured layers along with their priorities.
+                </div>
+</dd>
+<dt>
+<a name="var-BBFILES"></a>BBFILES</dt>
+<dd><p>List of recipe files used by BitBake to build software</p></dd>
+<dt>
+<a name="var-BBPATH"></a>BBPATH</dt>
+<dd><p>Used by BitBake to locate <code class="filename">.bbclass</code> and configuration files.  
+                    This variable is analogous to the <code class="filename">PATH</code> variable.</p></dd>
+<dt>
+<a name="var-BBINCLUDELOGS"></a>BBINCLUDELOGS</dt>
+<dd><p>Variable that controls how BitBake displays logs on build failure.</p></dd>
+<dt>
+<a name="var-BBLAYERS"></a>BBLAYERS</dt>
+<dd>
+<p>Lists the layers to enable during the build. 
+                    This variable is defined in the <code class="filename">bblayers.conf</code> configuration 
+                    file in the <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>. 
+                    Here is an example:
+                    </p>
+<pre class="literallayout">
+     BBLAYERS = " \
+       /home/scottrif/poky/meta \
+       /home/scottrif/poky/meta-yocto \
+       /home/scottrif/poky/meta-yocto-bsp \
+       /home/scottrif/poky/meta-mykernel \
+       "
+                    </pre>
+<p>
+                    This example enables four layers, one of which is a custom, user-defined layer 
+                    named <code class="filename">meta-mykernel</code>.
+                </p>
+</dd>
+<dt>
+<a name="var-BP"></a>BP</dt>
+<dd>
+<p>The base recipe name and version but without any special 
+                    recipe name suffix (i.e. <code class="filename">-native</code>, <code class="filename">lib64-</code>,
+                    and so forth).
+                    <code class="filename">BP</code> is comprised of the following:
+                    </p>
+<pre class="literallayout">
+     ${BPN}-${PV}
+                    </pre>
+</dd>
+<dt>
+<a name="var-BPN"></a>BPN</dt>
+<dd><p>The bare name of the recipe.
+                    This variable is a version of the <a class="link" href="ref-variables-glos.html#var-PN" title="PN"><code class="filename">PN</code></a> variable
+                    but removes common suffixes such as "-native" and "-cross" as well
+                    as removes common prefixes such as multilib's "lib64-" and "lib32-".
+                    The exact list of suffixes removed is specified by the
+                    <a class="link" href="ref-variables-glos.html#var-SPECIAL_PKGSUFFIX" title="SPECIAL_PKGSUFFIX"><code class="filename">SPECIAL_PKGSUFFIX</code></a> variable.
+                    The exact list of prefixes removed is specified by the
+                    <a class="link" href="ref-variables-glos.html#var-MLPREFIX" title="MLPREFIX"><code class="filename">MLPREFIX</code></a> variable.
+                    Prefixes are removed for multilib and nativesdk cases.</p></dd>
+</dl>
+</div>
+<div class="glossdiv" title="C">
+<h3 class="title">C</h3>
+<dl>
+<dt>
+<a name="var-CFLAGS"></a>CFLAGS</dt>
+<dd><p>
+                    Flags passed to C compiler for the target system. 
+                    This variable evaluates to the same as 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-TARGET_CFLAGS" title="TARGET_CFLAGS">TARGET_CFLAGS</a></code>.
+                </p></dd>
+<dt>
+<a name="var-COMBINED_FEATURES"></a>COMBINED_FEATURES</dt>
+<dd><p>A set of features common between 
+                    <a class="link" href="ref-variables-glos.html#var-MACHINE_FEATURES" title="MACHINE_FEATURES"><code class="filename">MACHINE_FEATURES</code></a>
+                    and <a class="link" href="ref-variables-glos.html#var-DISTRO_FEATURES" title="DISTRO_FEATURES"><code class="filename">DISTRO_FEATURES</code></a>.
+                    See the glossary descriptions for these variables for more information.</p></dd>
+<dt>
+<a name="var-COMPATIBLE_MACHINE"></a>COMPATIBLE_MACHINE</dt>
+<dd><p>A regular expression which evaluates to match the machines the recipe 
+                    works with. 
+                    It stops recipes being run on machines for which they are not compatible. 
+                    This is particularly useful with kernels. 
+                    It also helps to increase parsing speed as further parsing of the recipe is skipped 
+                    if it is found the current machine is not compatible.</p></dd>
+<dt>
+<a name="var-CONFFILES"></a>CONFFILES</dt>
+<dd>
+<p>
+                    Identifies editable or configurable files that are part of a package.
+                    If the Package Management System (PMS) is being used to update
+                    packages on the target system, it is possible that 
+                    configuration files you have changed after the original installation
+                    and that you now want to remain unchanged are overwritten.
+                    In other words, editable files might exist in the package that you do not 
+                    want reset as part of the package update process.
+                    You can use the <code class="filename">CONFFILES</code> variable to list the files in the 
+                    package that you wish to prevent the PMS from overwriting during this update process.
+                </p>
+<p>  
+                    To use the <code class="filename">CONFFILES</code> variable, provide a package name
+                    override that identifies the resulting package.
+                    Then, provide a space-separated list of files.
+                    Here is an example:
+                    </p>
+<pre class="literallayout">                       
+  CONFFILES_${PN} += "${sysconfdir}/file1 \
+     ${sysconfdir}/file2 ${sysconfdir}/file3"
+                    </pre>
+<p>
+                </p>
+<p>
+                    A relationship exists between the <code class="filename">CONFFILES</code> and 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-FILES" title="FILES">FILES</a></code> variables.
+                    The files listed within <code class="filename">CONFFILES</code> must be a subset of 
+                    the files listed within <code class="filename">FILES</code>.
+                    Because the configuration files you provide with <code class="filename">CONFFILES</code> 
+                    are simply being identified so that the PMS will not overwrite them, 
+                    it makes sense that
+                    the files must already be included as part of the package through the 
+                    <code class="filename">FILES</code> variable.
+                </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                    When specifying paths as part of the <code class="filename">CONFFILES</code> variable, 
+                    it is good practice to use appropriate path variables. 
+                    For example, <code class="filename">${sysconfdir}</code> rather than 
+                    <code class="filename">/etc</code> or <code class="filename">${bindir}</code> rather 
+                    than <code class="filename">/usr/bin</code>.
+                    You can find a list of these variables at the top of the 
+                    <code class="filename">/meta/conf/bitbake.conf</code> file in the 
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a>.
+                </div>
+</dd>
+<dt>
+<a name="var-CONFIG_SITE"></a>CONFIG_SITE</dt>
+<dd><p>
+                    A list of files that contains <code class="filename">autoconf</code> test results relevant 
+                    to the current build. 
+                    This variable is used by the Autotools utilities when running 
+                    <code class="filename">configure</code>.
+                </p></dd>
+<dt>
+<a name="var-CORE_IMAGE_EXTRA_INSTALL"></a>CORE_IMAGE_EXTRA_INSTALL</dt>
+<dd>
+<p>
+                    Specifies the list of packages to be added to the image. 
+                    This variable should only be set in the <code class="filename">local.conf</code>
+                    configuration file found in the 
+                    <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>.
+                </p>
+<p>
+                    This variable replaces <code class="filename">POKY_EXTRA_INSTALL</code>, which is no longer supported.
+                </p>
+</dd>
+</dl>
+</div>
+<div class="glossdiv" title="D">
+<h3 class="title">D</h3>
+<dl>
+<dt>
+<a name="var-D"></a>D</dt>
+<dd><p>The destination directory.</p></dd>
+<dt>
+<a name="var-DEBUG_BUILD"></a>DEBUG_BUILD</dt>
+<dd><p>
+                    Specifies to build packages with debugging information. 
+                    This influences the value of the 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-SELECTED_OPTIMIZATION" title="SELECTED_OPTIMIZATION">SELECTED_OPTIMIZATION</a></code> 
+                    variable.
+                </p></dd>
+<dt>
+<a name="var-DEBUG_OPTIMIZATION"></a>DEBUG_OPTIMIZATION</dt>
+<dd><p>
+                    The options to pass in 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-TARGET_CFLAGS" title="TARGET_CFLAGS">TARGET_CFLAGS</a></code>
+                    and <code class="filename"><a class="link" href="ref-variables-glos.html#var-CFLAGS" title="CFLAGS">CFLAGS</a></code> when compiling 
+                    a system for debugging.
+                    This variable defaults to "-O -fno-omit-frame-pointer -g".
+                </p></dd>
+<dt>
+<a name="var-DEFAULT_PREFERENCE"></a>DEFAULT_PREFERENCE</dt>
+<dd><p>Specifies the priority of recipes.</p></dd>
+<dt>
+<a name="var-DEPENDS"></a>DEPENDS</dt>
+<dd><p>
+                    Lists a recipe's build-time dependencies
+                    (i.e. other recipe files). 
+                    The system ensures that all the dependencies listed 
+                    have been built and have their contents in the appropriate 
+                    sysroots before the recipe's configure task is executed.
+                </p></dd>
+<dt>
+<a name="var-DESCRIPTION"></a>DESCRIPTION</dt>
+<dd><p>The package description used by package managers.
+                      If not set, <code class="filename">DESCRIPTION</code> takes 
+                      the value of the 
+                      <a class="link" href="ref-variables-glos.html#var-SUMMARY" title="SUMMARY"><code class="filename">SUMMARY</code></a>
+                      variable.
+                </p></dd>
+<dt>
+<a name="var-DESTDIR"></a>DESTDIR</dt>
+<dd><p>the destination directory.</p></dd>
+<dt>
+<a name="var-DISTRO"></a>DISTRO</dt>
+<dd>
+<p>
+                    The short name of the distribution. 
+                    This variable corresponds to a file with the
+                    extension <code class="filename">.conf</code>
+                    located in a <code class="filename">conf/distro</code> directory
+                    within the metadata that contains the distribution configuration. 
+                    The
+                    value must not contain spaces, and is typically all lower-case.
+                </p>
+<p>
+                    If the variable is blank, a set of default configuration
+                    will be used, which is specified
+                    within <code class="filename">meta/conf/distro/defaultsetup.conf</code>.
+                </p>
+</dd>
+<dt>
+<a name="var-DISTRO_EXTRA_RDEPENDS"></a>DISTRO_EXTRA_RDEPENDS</dt>
+<dd><p>
+                    Specifies a list of distro-specific packages to add to all images.
+                    This variable takes affect through 
+                    <code class="filename">packagegroup-base</code> so the 
+                    variable only really applies to the more full-featured 
+                    images that include <code class="filename">packagegroup-base</code>.
+                    You can use this variable to keep distro policy out of 
+                    generic images.
+                    As with all other distro variables, you set this variable
+                    in the distro <code class="filename">.conf</code> file.
+                </p></dd>
+<dt>
+<a name="var-DISTRO_EXTRA_RRECOMMENDS"></a>DISTRO_EXTRA_RRECOMMENDS</dt>
+<dd><p>
+                    Specifies a list of distro-specific packages to add to all images 
+                    if the packages exist. 
+                    The packages might not exist or be empty (e.g. kernel modules).
+                    The list of packages are automatically installed but can be 
+                    removed by the user.
+                </p></dd>
+<dt>
+<a name="var-DISTRO_FEATURES"></a>DISTRO_FEATURES</dt>
+<dd><p>The features enabled for the distribution.
+                    For a list of features supported by the Yocto Project as shipped,
+                    see the "<a class="link" href="ref-features-distro.html" title="9.1. Distro">Distro</a>"
+                    section.
+                </p></dd>
+<dt>
+<a name="var-DISTRO_FEATURES_BACKFILL"></a>DISTRO_FEATURES_BACKFILL</dt>
+<dd>
+<p>Features to be added to 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-DISTRO_FEATURES" title="DISTRO_FEATURES">DISTRO_FEATURES</a></code>
+                    if not also present in 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-DISTRO_FEATURES_BACKFILL_CONSIDERED" title="DISTRO_FEATURES_BACKFILL_CONSIDERED">DISTRO_FEATURES_BACKFILL_CONSIDERED</a></code>.
+                </p>
+<p>
+                    This variable is set in the <code class="filename">meta/conf/bitbake.conf</code> file.
+                    It is not intended to be user-configurable. 
+                    It is best to just reference the variable to see which distro features are 
+                    being backfilled for all distro configurations.
+                    See the <a class="link" href="ref-features-backfill.html" title="9.4. Feature Backfilling">Feature backfilling</a> section for 
+                    more information.
+                </p>
+</dd>
+<dt>
+<a name="var-DISTRO_FEATURES_BACKFILL_CONSIDERED"></a>DISTRO_FEATURES_BACKFILL_CONSIDERED</dt>
+<dd><p>Features from
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-DISTRO_FEATURES_BACKFILL" title="DISTRO_FEATURES_BACKFILL">DISTRO_FEATURES_BACKFILL</a></code>
+                    that should not backfilled (i.e. added to
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-DISTRO_FEATURES" title="DISTRO_FEATURES">DISTRO_FEATURES</a></code>)
+                    during the build.
+                    See the "<a class="link" href="ref-features-backfill.html" title="9.4. Feature Backfilling">Feature Backfilling</a>" section for 
+                    more information.
+                    </p></dd>
+<dt>
+<a name="var-DISTRO_NAME"></a>DISTRO_NAME</dt>
+<dd><p>The long name of the distribution.</p></dd>
+<dt>
+<a name="var-DISTRO_PN_ALIAS"></a>DISTRO_PN_ALIAS</dt>
+<dd>
+<p>Alias names used for the recipe in various Linux distributions.</p>
+<p>See the  
+                    "<a class="link" href="../dev-manual/usingpoky-configuring-DISTRO_PN_ALIAS.html" target="_self">Handling
+                    a Package Name Alias</a>" section in the Yocto Project Development 
+                    Manual for more information.</p>
+</dd>
+<dt>
+<a name="var-DISTRO_VERSION"></a>DISTRO_VERSION</dt>
+<dd><p>the version of the distribution.</p></dd>
+<dt>
+<a name="var-DL_DIR"></a>DL_DIR</dt>
+<dd>
+<p>
+                    The central download directory used by the build process to store downloads.
+                    You can set this directory by defining the <code class="filename">DL_DIR</code>
+                    variable in the <code class="filename">/conf/local.conf</code> file.
+                    This directory is self-maintaining and you should not have
+                    to touch it. 
+                    By default, the directory is <code class="filename">downloads</code> in the 
+                    <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>.
+                    </p>
+<pre class="literallayout">
+     #DL_DIR ?= "${TOPDIR}/downloads"
+                    </pre>
+<p>
+                    To specify a different download directory, simply uncomment the line
+                    and provide your directory.
+                </p>
+<p>
+                    During a first build, the system downloads many different source code 
+                    tarballs from various upstream projects. 
+                    Downloading can take a while, particularly if your network
+                    connection is slow. 
+                    Tarballs are all stored in the directory defined by 
+                    <code class="filename">DL_DIR</code> and the build system looks there first 
+                    to find source tarballs. 
+                    </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                        When wiping and rebuilding, you can preserve this directory to speed 
+                        up this part of subsequent builds. 
+                    </div>
+<p>
+                </p>
+<p>
+                    You can safely share this directory between multiple builds on the 
+                    same development machine.  
+                    For additional information on how the build process gets source files
+                    when working behind a firewall or proxy server, see the
+                    "<a class="link" href="faq.html#how-does-the-yocto-project-obtain-source-code-and-will-it-work-behind-my-firewall-or-proxy-server">FAQ</a>"
+                    chapter.
+                </p>
+</dd>
+</dl>
+</div>
+<div class="glossdiv" title="E">
+<h3 class="title">E</h3>
+<dl>
+<dt>
+<a name="var-ENABLE_BINARY_LOCALE_GENERATION"></a>ENABLE_BINARY_LOCALE_GENERATION</dt>
+<dd>
+<p></p>
+<p>Variable that controls which locales for <code class="filename">eglibc</code> are
+                    to be generated during the build (useful if the target device has 64Mbytes
+                    of RAM or less).</p>
+</dd>
+<dt>
+<a name="var-EXTENDPE"></a>EXTENDPE</dt>
+<dd>
+<p>
+                    Used with file and pathnames to create a prefix for a recipe's
+                    version based on the recipe's 
+                    <a class="link" href="ref-variables-glos.html#var-PE" title="PE"><code class="filename">PE</code></a> value.
+                    If <code class="filename">PE</code> is set and greater than zero for a recipe,
+                    <code class="filename">EXTENDPE</code> becomes that value (e.g if 
+                    <code class="filename">PE</code> is equal to "1" then <code class="filename">EXTENDPE</code>
+                    becomes "1_").  
+                    If a recipe's <code class="filename">PE</code> is not set (the default) or is equal to 
+                    zero, <code class="filename">EXTENDPE</code> becomes "".</p>
+<p>See the <a class="link" href="ref-variables-glos.html#var-STAMP" title="STAMP"><code class="filename">STAMP</code></a> 
+                    variable for an example.
+                </p>
+</dd>
+<dt>
+<a name="var-EXTRA_IMAGE_FEATURES"></a>EXTRA_IMAGE_FEATURES</dt>
+<dd>
+<p>Allows extra packages to be added to the generated images.
+                    You set this variable in the <code class="filename">local.conf</code>
+                    configuration file.
+                    Note that some image features are also added using the 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-IMAGE_FEATURES" title="IMAGE_FEATURES">IMAGE_FEATURES</a></code>
+                    variable generally configured in image recipes.
+                    You can use this variable to add more features in addition to those.
+                    Here are some examples of features you can add:</p>
+<pre class="literallayout">
+"dbg-pkgs" - Adds -dbg packages for all installed packages
+             including symbol information for debugging and 
+             profiling.
+
+"dev-pkgs" - Adds -dev packages for all installed packages.  
+             This is useful if you want to develop against 
+             the libraries in the image.
+
+"tools-sdk" - Adds development tools such as gcc, make, 
+              pkgconfig and so forth.
+
+"tools-debug" - Adds debugging tools such as gdb and 
+                strace.
+
+"tools-profile" - Adds profiling tools such as oprofile, 
+                  exmap, lttng and valgrind (x86 only).
+
+"tools-testapps" - Adds useful testing tools such as 
+                   ts_print, aplay, arecord and so 
+                   forth.
+
+"debug-tweaks" - Makes an image suitable for development.  
+                 For example, ssh root access has a blank 
+                 password.  You should remove this feature 
+                 before you produce a production image.  
+                    </pre>
+<p>There are other valid features too, see the
+                 <a class="link" href="ref-features-image.html" title="9.3. Images">Images</a>
+                 section for more details.</p>
+</dd>
+<dt>
+<a name="var-EXTRA_IMAGEDEPENDS"></a>EXTRA_IMAGEDEPENDS</dt>
+<dd>
+<p>A list of recipes to be built that do not provide packages to be installed in
+                    the root filesystem.
+                </p>
+<p>Sometimes a recipe is required to build the final image but is not
+                    needed in the root filesystem.
+                    You can use the <code class="filename">EXTRA_IMAGEDEPENDS</code> variable to 
+                    list these recipes and thus, specify the dependencies. 
+                    A typical example is a required bootloader in a machine configuration.
+                </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                    To add packages to the root filesystem, see the various 
+                    <code class="filename">*DEPENDS</code> and <code class="filename">*RECOMMENDS</code>
+                    variables.
+                </div>
+</dd>
+<dt>
+<a name="var-EXTRA_OECMAKE"></a>EXTRA_OECMAKE</dt>
+<dd><p>Additional <code class="filename">cmake</code> options.</p></dd>
+<dt>
+<a name="var-EXTRA_OECONF"></a>EXTRA_OECONF</dt>
+<dd><p>Additional <code class="filename">configure</code> script options.</p></dd>
+<dt>
+<a name="var-EXTRA_OEMAKE"></a>EXTRA_OEMAKE</dt>
+<dd><p>Additional GNU <code class="filename">make</code> options.</p></dd>
+</dl>
+</div>
+<div class="glossdiv" title="F">
+<h3 class="title">F</h3>
+<dl>
+<dt>
+<a name="var-FILES"></a>FILES</dt>
+<dd>
+<p>
+                    The list of directories or files that are placed in packages.
+                </p>
+<p>
+                    To use the <code class="filename">FILES</code> variable, provide a package name
+                    override that identifies the resulting package.
+                    Then, provide a space-separated list of files or paths that identifies the 
+                    files you want included as part of the resulting package.
+                    Here is an example:
+                    </p>
+<pre class="literallayout">                       
+  FILES_${PN} += "${bindir}/mydir1/ ${bindir}/mydir2/myfile"
+                    </pre>
+<p>
+                </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                    When specifying paths as part of the <code class="filename">FILES</code> variable, 
+                    it is good practice to use appropriate path variables. 
+                    For example, <code class="filename">${sysconfdir}</code> rather than 
+                    <code class="filename">/etc</code> or <code class="filename">${bindir}</code> rather 
+                    than <code class="filename">/usr/bin</code>.
+                    You can find a list of these variables at the top of the 
+                    <code class="filename">/meta/conf/bitbake.conf</code> file in the 
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a>.
+                </div>
+<p>
+                    If some of the files you provide with the <code class="filename">FILES</code> variable
+                    are editable and you know they should not be 
+                    overwritten during the package update process by the Package Management
+                    System (PMS), you can identify these files so that the PMS will not 
+                    overwrite them. 
+                    See the <code class="filename"><a class="link" href="ref-variables-glos.html#var-CONFFILES" title="CONFFILES">CONFFILES</a></code> 
+                    variable for information on how to identify these files to the PMS.
+                </p>
+</dd>
+<dt>
+<a name="var-FILESEXTRAPATHS"></a>FILESEXTRAPATHS</dt>
+<dd>
+<p>
+                    Extends the search path the OpenEmbedded build system uses when 
+                    looking for files and patches as it processes recipes. 
+                    The directories BitBake uses when it processes recipes is defined by the
+                    <a class="link" href="ref-variables-glos.html#var-FILESPATH" title="FILESPATH"><code class="filename">FILESPATH</code></a> variable. 
+                    You can add directories to the search path by defining the 
+                    <code class="filename">FILESEXTRAPATHS</code> variable.
+                </p>
+<p>
+                    To add paths to the search order, provide a list of directories and separate
+                    each path using a colon character as follows:
+                    </p>
+<pre class="literallayout">
+     FILESEXTRAPATHS_prepend := "path_1:path_2:path_3:"
+                    </pre>
+<p>
+                    Typically, you want your directories search first. 
+                    To make sure that happens, use <code class="filename">_prepend</code> and 
+                    the immediate expansion (<code class="filename">:=</code>) operator as shown in the 
+                    previous example.
+                    Finally, to maintain the integrity of the <code class="filename">FILESPATH</code> variable, 
+                    you must include the appropriate beginning or ending (as needed) colon character.
+                </p>
+<p>
+                    The <code class="filename">FILESEXTRAPATHS</code> variable is intended for use in 
+                    <code class="filename">.bbappend</code> files to include any additional files provided in that layer. 
+                    You typically accomplish this with the following:
+                    </p>
+<pre class="literallayout">
+     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+                    </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-FILESPATH"></a>FILESPATH</dt>
+<dd>
+<p>
+                    The default set of directories the OpenEmbedded build system uses
+                    when searching for patches and files.
+                    During the build process, BitBake searches each directory in 
+                    <code class="filename">FILESPATH</code> in the specified order when looking for 
+                    files and patches specified by each <code class="filename">file://</code> URI in a recipe.
+                </p>
+<p>
+                    The default value for the <code class="filename">FILESPATH</code> variable is defined
+                    in the <code class="filename">base.bbclass</code> class found in 
+                    <code class="filename">meta/classes</code> in the 
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a>:
+                    </p>
+<pre class="literallayout">
+FILESPATH = "${@base_set_filespath([ "${FILE_DIRNAME}/${PF}", \
+   "${FILE_DIRNAME}/${P}", "${FILE_DIRNAME}/${PN}", \
+   "${FILE_DIRNAME}/${BP}", "${FILE_DIRNAME}/${BPN}", \
+   "${FILE_DIRNAME}/files", "${FILE_DIRNAME}" ], d)}"
+                    </pre>
+<p>
+                    Do not hand-edit the <code class="filename">FILESPATH</code> variable. 
+                    If you want to extend the set of pathnames that BitBake uses when searching for 
+                    files and patches, use the 
+                    <a class="link" href="ref-variables-glos.html#var-FILESEXTRAPATHS" title="FILESEXTRAPATHS"><code class="filename">FILESEXTRAPATHS</code></a> variable.
+                </p>
+</dd>
+<dt>
+<a name="var-FILESYSTEM_PERMS_TABLES"></a>FILESYSTEM_PERMS_TABLES</dt>
+<dd>
+<p>Allows you to define your own file permissions settings table as part of
+                    your configuration for the packaging process.
+                    For example, suppose you need a consistent set of custom permissions for 
+                    a set of groups and users across an entire work project.
+                    It is best to do this in the packages themselves but this is not always 
+                    possible.
+                </p>
+<p>
+                    By default, the OpenEmbedded build system uses the <code class="filename">fs-perms.txt</code>, which
+                    is located in the <code class="filename">meta/files</code> folder in the 
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a>.
+                    If you create your own file permissions setting table, you should place it in your
+                    layer or the distros layer. 
+                </p>
+<p>
+                    You define the <code class="filename">FILESYSTEM_PERMS_TABLES</code> variable in the 
+                    <code class="filename">conf/local.conf</code> file, which is found in the 
+                    <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>, to 
+                    point to your custom <code class="filename">fs-perms.txt</code>.
+                    You can specify more than a single file permissions setting table.
+                    The paths you specify to these files must be defined within the 
+                    <code class="filename">BBPATH</code> variable.  
+                </p>
+<p>
+                    For guidance on how to create your own file permissions settings table file, 
+                    examine the existing <code class="filename">fs-perms.txt</code>.
+                </p>
+</dd>
+<dt>
+<a name="var-FULL_OPTIMIZATION"></a>FULL_OPTIMIZATION</dt>
+<dd><p>
+                    The options to pass in 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-TARGET_CFLAGS" title="TARGET_CFLAGS">TARGET_CFLAGS</a></code>
+                    and <code class="filename"><a class="link" href="ref-variables-glos.html#var-CFLAGS" title="CFLAGS">CFLAGS</a></code>
+                    when compiling an optimized system.
+                    This variable defaults to 
+                    "-fexpensive-optimizations -fomit-frame-pointer -frename-registers -O2".
+                </p></dd>
+</dl>
+</div>
+<div class="glossdiv" title="H">
+<h3 class="title">H</h3>
+<dl>
+<dt>
+<a name="var-HOMEPAGE"></a>HOMEPAGE</dt>
+<dd><p>Website where more information about the software the recipe is building
+                    can be found.</p></dd>
+</dl>
+</div>
+<div class="glossdiv" title="I">
+<h3 class="title">I</h3>
+<dl>
+<dt>
+<a name="var-IMAGE_FEATURES"></a>IMAGE_FEATURES</dt>
+<dd><p>The list of features to include in an image.
+                Typically, you configure this variable in an image recipe.
+                Note that you can also add extra features to the image by using the
+                <code class="filename"><a class="link" href="ref-variables-glos.html#var-EXTRA_IMAGE_FEATURES" title="EXTRA_IMAGE_FEATURES">EXTRA_IMAGE_FEATURES</a></code> variable.
+                See the "<a class="link" href="ref-features-image.html" title="9.3. Images">Images</a>" section for the 
+                full list of features that can be included in images built by the
+                OpenEmbedded build system.</p></dd>
+<dt>
+<a name="var-IMAGE_FSTYPES"></a>IMAGE_FSTYPES</dt>
+<dd><p>Formats of root filesystem images that you want to have created.</p></dd>
+<dt>
+<a name="var-IMAGE_INSTALL"></a>IMAGE_INSTALL</dt>
+<dd>
+<p>
+                    Specifies the packages to install into an image.
+                    The <code class="filename">IMAGE_INSTALL</code> variable is a mechanism for an image
+                    recipe and you should use it with care to avoid ordering issues.
+                </p>
+<p>
+                    Image recipes set <code class="filename">IMAGE_INSTALL</code> to specify the 
+                    packages to install into an image through <code class="filename">image.bbclass</code>.
+                    Additionally, "helper" classes exist, such as <code class="filename">core-image.bbclass</code>,
+                    that can take 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-IMAGE_FEATURES" title="IMAGE_FEATURES">IMAGE_FEATURES</a></code> lists
+                    and turn these into auto-generated entries in 
+                    <code class="filename">IMAGE_INSTALL</code> in addition to its default contents.
+                </p>
+<p>
+                    Using <code class="filename">IMAGE_INSTALL</code> with the <code class="filename">+=</code>
+                    operator from the <code class="filename">/conf/local.conf</code> file or from within 
+                    an image recipe is not recommended as it can cause ordering issues. 
+                    Since <code class="filename">core-image.bbclass</code> sets <code class="filename">IMAGE_INSTALL</code> 
+                    to a default value using the <code class="filename">?=</code> operator, using a  
+                    <code class="filename">+=</code> operation against <code class="filename">IMAGE_INSTALL</code> 
+                    will result in unexpected behavior when used in 
+                    <code class="filename">/conf/local.conf</code>.
+                    Furthermore, the same operation from with an image recipe may or may not 
+                    succeed depending on the specific situation.
+                    In both these cases, the behavior is contrary to how most users expect 
+                    the <code class="filename">+=</code> operator to work. 
+                </p>
+<p>
+                    When you use this variable, it is best to use it as follows:
+                    </p>
+<pre class="literallayout">
+     IMAGE_INSTALL_append = " package-name"
+                    </pre>
+<p>
+                    Be sure to include the space between the quotation character and the start of the
+                    package name.
+                </p>
+</dd>
+<dt>
+<a name="var-IMAGE_OVERHEAD_FACTOR"></a>IMAGE_OVERHEAD_FACTOR</dt>
+<dd>
+<p>
+                    Defines a multiplier that the build system applies to the initial image
+                    size for cases when the multiplier times the returned disk usage value
+                    for the image is greater than the sum of 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-IMAGE_ROOTFS_SIZE" title="IMAGE_ROOTFS_SIZE">IMAGE_ROOTFS_SIZE</a></code>
+                    and 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-IMAGE_ROOTFS_EXTRA_SPACE" title="IMAGE_ROOTFS_EXTRA_SPACE">IMAGE_ROOTFS_EXTRA_SPACE</a></code>.
+                    The result of the multiplier applied to the initial image size creates
+                    free disk space in the image as overhead.
+                    By default, the build process uses a multiplier of 1.3 for this variable. 
+                    This default value results in 30% free disk space added to the image when this 
+                    method is used to determine the final generated image size.
+                    You should be aware that post install scripts and the package management
+                    system uses disk space inside this overhead area. 
+                    Consequently, the multiplier does not produce an image with 
+                    all the theoretical free disk space.                     
+                    See <code class="filename"><a class="link" href="ref-variables-glos.html#var-IMAGE_ROOTFS_SIZE" title="IMAGE_ROOTFS_SIZE">IMAGE_ROOTFS_SIZE</a></code>
+                    for information on how the build system determines the overall image size.
+                </p>
+<p>
+                    The default 30% free disk space typically gives the image enough room to boot 
+                    and allows for basic post installs while still leaving a small amount of 
+                    free disk space. 
+                    If 30% free space is inadequate, you can increase the default value.
+                    For example, the following setting gives you 50% free space added to the image:
+                    </p>
+<pre class="literallayout">
+     IMAGE_OVERHEAD_FACTOR = "1.5"
+                    </pre>
+<p>
+                </p>
+<p>
+                    Alternatively, you can ensure a specific amount of free disk space is added
+                    to the image by using     
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-IMAGE_ROOTFS_EXTRA_SPACE" title="IMAGE_ROOTFS_EXTRA_SPACE">IMAGE_ROOTFS_EXTRA_SPACE</a></code>
+                    the variable.
+                </p>
+</dd>
+<dt>
+<a name="var-IMAGE_ROOTFS_EXTRA_SPACE"></a>IMAGE_ROOTFS_EXTRA_SPACE</dt>
+<dd>
+<p>
+                    Defines additional free disk space created in the image in Kbytes.
+                    By default, this variable is set to "0".
+                    This free disk space is added to the image after the build system determines
+                    the image size as described in 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-IMAGE_ROOTFS_SIZE" title="IMAGE_ROOTFS_SIZE">IMAGE_ROOTFS_SIZE</a></code>.
+                </p>
+<p>
+                    This variable is particularly useful when you want to ensure that a 
+                    specific amount of free disk space is available on a device after an image 
+                    is installed and running. 
+                    For example, to be sure 5 Gbytes of free disk space is available, set the 
+                    variable as follows:
+                    </p>
+<pre class="literallayout">
+     IMAGE_ROOTFS_EXTRA_SPACE = "5242880"
+                    </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-IMAGE_ROOTFS_SIZE"></a>IMAGE_ROOTFS_SIZE</dt>
+<dd>
+<p>
+                    Defines the size in Kbytes for the generated image.
+                    The OpenEmbedded build system determines the final size for the generated 
+                    image using an algorithm that takes into account the initial disk space used
+                    for the generated image, a requested size for the image, and requested 
+                    additional free disk space to be added to the image.
+                    Programatically, the build system determines the final size of the 
+                    generated image as follows:
+                    </p>
+<pre class="literallayout">
+    if (image-du * overhead) &lt; rootfs-size:
+	internal-rootfs-size = rootfs-size + xspace
+    else:
+	internal-rootfs-size = (image-du * overhead) + xspace
+
+    where:
+
+      image-du = Returned value of the du command on
+                 the image.
+      
+      overhead = IMAGE_OVERHEAD_FACTOR
+
+      rootfs-size = IMAGE_ROOTFS_SIZE
+
+      internal-rootfs-size = Initial root filesystem
+                             size before any modifications.
+
+      xspace = IMAGE_ROOTFS_EXTRA_SPACE
+                    </pre>
+<p>
+                   
+                </p>
+</dd>
+<dt>
+<a name="var-INC_PR"></a>INC_PR</dt>
+<dd>
+<p>Helps define the recipe revision for recipes that share
+                    a common <code class="filename">include</code> file.
+                    You can think of this variable as part of the recipe revision 
+                    as set from within an include file.</p>
+<p>Suppose, for example, you have a set of recipes that 
+                    are used across several projects.
+                    And, within each of those recipes the revision
+                    (its <code class="filename">PR</code> value) is set accordingly.
+                    In this case, when the revision of those recipes changes
+                    the burden is on you to find all those recipes and 
+                    be sure that they get changed to reflect the updated 
+                    version of the recipe.
+                    In this scenario, it can get complicated when recipes
+                    used in many places and that provide common functionality 
+                    are upgraded to a new revision.</p>
+<p>A more efficient way of dealing with this situation is
+                    to set the <code class="filename">INC_PR</code> variable inside
+                    the <code class="filename">include</code> files that the recipes
+                    share and then expand the <code class="filename">INC_PR</code>
+                    variable within the recipes to help 
+                    define the recipe revision.
+                    </p>
+<p>
+                    The following provides an example that shows how to use 
+                    the <code class="filename">INC_PR</code> variable
+                    given a common <code class="filename">include</code> file that 
+                    defines the variable.
+                    Once the variable is defined in the 
+                    <code class="filename">include</code> file, you can use the 
+                    variable to set the <code class="filename">PR</code> values in
+                    each recipe. 
+                    You will notice that when you set a recipe's  
+                    <code class="filename">PR</code> you can provide more granular
+                    revisioning by appending values to the 
+                    <code class="filename">INC_PR</code> variable:
+                    </p>
+<pre class="literallayout">
+recipes-graphics/xorg-font/xorg-font-common.inc:INC_PR = "r2"
+recipes-graphics/xorg-font/encodings_1.0.4.bb:PR = "${INC_PR}.1"
+recipes-graphics/xorg-font/font-util_1.3.0.bb:PR = "${INC_PR}.0"
+recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
+                    </pre>
+<p>
+                    The first line of the example establishes the baseline 
+                    revision to be used for all recipes that use the 
+                    <code class="filename">include</code> file.
+                    The remaining lines in the example are from individual
+                    recipes and show how the <code class="filename">PR</code> value
+                    is set.</p>
+</dd>
+<dt>
+<a name="var-INHIBIT_PACKAGE_STRIP"></a>INHIBIT_PACKAGE_STRIP</dt>
+<dd><p>
+                    Causes the build to not strip binaries in resulting packages.
+                </p></dd>
+<dt>
+<a name="var-INHERIT"></a>INHERIT</dt>
+<dd><p>
+                    Causes the named class to be inherited at 
+                    this point during parsing. 
+                    The variable is only valid in configuration files.
+                </p></dd>
+<dt>
+<a name="var-INITSCRIPT_PACKAGES"></a>INITSCRIPT_PACKAGES</dt>
+<dd>
+<p>
+                    A list of the packages that contain initscripts. 
+                    If multiple packages are specified, you need to append the package name 
+                    to the other <code class="filename">INITSCRIPT_*</code> as an override.</p>
+<p>
+                    This variable is used in recipes when using <code class="filename">update-rc.d.bbclass</code>.
+                    The variable is optional and defaults to the <code class="filename">PN</code> variable.
+                </p>
+</dd>
+<dt>
+<a name="var-INITSCRIPT_NAME"></a>INITSCRIPT_NAME</dt>
+<dd>
+<p>
+                    The filename of the initscript (as installed to <code class="filename">${etcdir}/init.d)</code>.
+                </p>
+<p>
+                    This variable is used in recipes when using <code class="filename">update-rc.d.bbclass</code>.
+                    The variable is Mandatory.
+                </p>
+</dd>
+<dt>
+<a name="var-INITSCRIPT_PARAMS"></a>INITSCRIPT_PARAMS</dt>
+<dd>
+<p>
+                    Specifies the options to pass to <code class="filename">update-rc.d</code>.
+                    An example is <code class="filename">start 99 5 2 . stop 20 0 1 6 .</code>, which gives the script a 
+                    runlevel of 99, starts the script in initlevels 2 and 5, and 
+                    stops the script in levels 0, 1 and 6. 
+                </p>
+<p>
+                    The variable is mandatory and is used in recipes when using 
+                    <code class="filename">update-rc.d.bbclass</code>.
+                </p>
+</dd>
+</dl>
+</div>
+<div class="glossdiv" title="K">
+<h3 class="title">K</h3>
+<dl>
+<dt>
+<a name="var-KBRANCH"></a>KBRANCH</dt>
+<dd>
+<p>
+                    A regular expression used by the build process to explicitly identify the kernel 
+                    branch that is validated, patched and configured during a build.  
+                    The <code class="filename">KBRANCH</code> variable is optional.
+                    You can use it to trigger checks to ensure the exact kernel branch you want is 
+                    being used by the build process.
+                </p>
+<p>
+                    Values for this variable are set in the kernel's recipe file and the kernel's 
+                    append file.  
+                    For example, if you are using the Yocto Project kernel that is based on the 
+                    Linux 3.4 kernel, the kernel recipe file is the 
+                    <code class="filename">meta/recipes-kernel/linux/linux-yocto_3.4.bb</code> file. 
+                    Following is the default value for <code class="filename">KBRANCH</code> and the default
+                    override for the architectures the Yocto Project supports:
+                    </p>
+<pre class="literallayout">
+     KBRANCH_DEFAULT = "standard/base"
+     KBRANCH = "${KBRANCH_DEFAULT}"
+                    </pre>
+<p>
+                    This branch exists in the <code class="filename">linux-yocto-3.4</code> kernel Git 
+                    repository <a class="ulink" href="http://git.yoctoproject.org/cgit.cgi/linux-yocto-3.4/refs/heads" target="_self">http://git.yoctoproject.org/cgit.cgi/linux-yocto-3.4/refs/heads</a>.  
+                </p>
+<p>
+                    This variable is also used from the kernel's append file to identify the kernel 
+                    branch specific to a particular machine or target hardware.  
+                    The kernel's append file is located in the BSP layer for a given machine.  
+                    For example, the kernel append file for the Crown Bay BSP is in the 
+                    <code class="filename">meta-intel</code> Git repository and is named 
+                    <code class="filename">meta-crownbay/recipes-kernel/linux/linux-yocto_3.4.bbappend</code>.  
+                    Here are the related statements from the append file:
+                    </p>
+<pre class="literallayout">
+     COMPATIBLE_MACHINE_crownbay = "crownbay"
+     KMACHINE_crownbay  = "crownbay"
+     KBRANCH_crownbay  = "standard/crownbay"
+
+     COMPATIBLE_MACHINE_crownbay-noemgd = "crownbay-noemgd"
+     KMACHINE_crownbay-noemgd  = "crownbay"
+     KBRANCH_crownbay-noemgd  = "standard/crownbay"
+                    </pre>
+<p>
+                        The <code class="filename">KBRANCH_*</code> statements identify the kernel branch to 
+                        use when building for the Crown Bay BSP.  
+                        In this case there are two identical statements: one for each type of 
+                        Crown Bay machine.
+                </p>
+</dd>
+<dt>
+<a name="var-KERNEL_FEATURES"></a>KERNEL_FEATURES</dt>
+<dd>
+<p>Includes additional metadata from the Yocto Project kernel Git repository.
+                    In the OpenEmbedded build system, the default Board Support Packages (BSPs)
+                    metadata is provided through 
+                    the <code class="filename">KMACHINE</code> and <code class="filename">KBRANCH</code> variables.
+                    You can use the <code class="filename">KERNEL_FEATURES</code> variable to further 
+                    add metadata for all BSPs.</p>
+<p>The metadata you add through this variable includes config fragments and 
+                    features descriptions,
+                    which usually includes patches as well as config fragments.
+                    You typically override the <code class="filename">KERNEL_FEATURES</code> variable
+                    for a specific machine.
+                    In this way, you can provide validated, but optional, sets of kernel
+                    configurations and features.</p>
+<p>For example, the following adds <code class="filename">netfilter</code> to all 
+                    the Yocto Project kernels and adds sound support to the <code class="filename">qemux86</code>
+                    machine:
+                    </p>
+<pre class="literallayout">
+     # Add netfilter to all linux-yocto kernels
+     KERNEL_FEATURES="features/netfilter"
+
+     # Add sound support to the qemux86 machine
+     KERNEL_FEATURES_append_qemux86=" cfg/sound"
+                    </pre>
+</dd>
+<dt>
+<a name="var-KERNEL_IMAGETYPE"></a>KERNEL_IMAGETYPE</dt>
+<dd><p>The type of kernel to build for a device, usually set by the 
+                    machine configuration files and defaults to "zImage". 
+                    This variable is used 
+                    when building the kernel and is passed to <code class="filename">make</code> as the target to 
+                    build.</p></dd>
+<dt>
+<a name="var-KMACHINE"></a>KMACHINE</dt>
+<dd>
+<p>
+                    The machine as known by the kernel.
+                    Sometimes the machine name used by the kernel does not match the machine name
+                    used by the OpenEmbedded build system.
+                    For example, the machine name that the OpenEmbedded build system understands as 
+                    <code class="filename">qemuarm</code> goes by a different name in the Linux Yocto kernel.
+                    The kernel understands that machine as <code class="filename">arm_versatile926ejs</code>.
+                    For cases like these, the <code class="filename">KMACHINE</code> variable maps the 
+                    kernel machine name to the OpenEmbedded build system machine name.
+                </p>
+<p>
+                    Kernel machine names are initially defined in the 
+                    <a class="ulink" href="http://git.yoctoproject.org/cgit.cgi" target="_self">Yocto Linux Kernel</a> in 
+                    the <code class="filename">meta</code> branch.
+                    From the <code class="filename">meta</code> branch, look in 
+                    the <code class="filename">meta/cfg/kernel-cache/bsp/&lt;bsp_name&gt;/&lt;bsp-name&gt;-&lt;kernel-type&gt;.scc</code> file.
+                    For example, from the <code class="filename">meta</code> branch in the 
+                    <code class="filename">linux-yocto-3.0</code> kernel, the 
+                    <code class="filename">meta/cfg/kernel-cache/bsp/cedartrail/cedartrail-standard.scc</code> file 
+                    has the following:
+                    </p>
+<pre class="literallayout">
+     define KMACHINE cedartrail
+     define KTYPE standard
+     define KARCH i386
+
+     include ktypes/standard
+     branch cedartrail
+
+     include cedartrail.scc                    
+                    </pre>
+<p>
+                    You can see that the kernel understands the machine name for the Cedar Trail BSP as
+                    <code class="filename">cedartrail</code>.
+                </p>
+<p>
+                    If you look in the Cedar Trail BSP layer in the <code class="filename">meta-intel</code> source
+                    repository at <code class="filename">meta-cedartrail/recipes-kernel/linux/linux-yocto_3.0.bbappend</code>,
+                    you will find the following statements among others:
+                    </p>
+<pre class="literallayout">
+     COMPATIBLE_MACHINE_cedartrail = "cedartrail"
+     KMACHINE_cedartrail  = "cedartrail"
+     KBRANCH_cedartrail  = "yocto/standard/cedartrail"
+     KERNEL_FEATURES_append_cedartrail += "bsp/cedartrail/cedartrail-pvr-merge.scc"
+     KERNEL_FEATURES_append_cedartrail += "cfg/efi-ext.scc"
+
+     COMPATIBLE_MACHINE_cedartrail-nopvr = "cedartrail"
+     KMACHINE_cedartrail-nopvr  = "cedartrail"
+     KBRANCH_cedartrail-nopvr  = "yocto/standard/cedartrail"
+     KERNEL_FEATURES_append_cedartrail-nopvr += " cfg/smp.scc"
+                    </pre>
+<p>
+                    The <code class="filename">KMACHINE</code> statements in the kernel's append file make sure that 
+                    the OpenEmbedded build system and the Yocto Linux kernel understand the same machine 
+                    names. 
+                </p>
+<p>
+                    This append file uses two <code class="filename">KMACHINE</code> statements.
+                    The first is not really necessary but does ensure that the machine known to the 
+                    OpenEmbedded build system as <code class="filename">cedartrail</code> maps to the machine
+                    in the kernel also known as <code class="filename">cedartrail</code>:
+                    </p>
+<pre class="literallayout">
+     KMACHINE_cedartrail  = "cedartrail"
+                    </pre>
+<p>
+                </p>
+<p>
+                    The second statement is a good example of why the <code class="filename">KMACHINE</code> variable
+                    is needed. 
+                    In this example, the OpenEmbedded build system uses the <code class="filename">cedartrail-nopvr</code>
+                    machine name to refer to the Cedar Trail BSP that does not support the propriatory 
+                    PowerVR driver.
+                    The kernel, however, uses the machine name <code class="filename">cedartrail</code>.
+                    Thus, the append file must map the <code class="filename">cedartrail-nopvr</code> machine name to 
+                    the kernel's <code class="filename">cedartrail</code> name:
+                    </p>
+<pre class="literallayout">
+     KMACHINE_cedartrail-nopvr  = "cedartrail"
+                    </pre>
+<p>
+                </p>
+<p>
+                    BSPs that ship with the Yocto Project release provide all mappings between the Yocto 
+                    Project kernel machine names and the OpenEmbedded machine names. 
+                    Be sure to use the <code class="filename">KMACHINE</code> if you create a BSP and the machine 
+                    name you use is different than that used in the kernel.
+                </p>
+</dd>
+</dl>
+</div>
+<div class="glossdiv" title="L">
+<h3 class="title">L</h3>
+<dl>
+<dt>
+<a name="var-LAYERDEPENDS"></a>LAYERDEPENDS</dt>
+<dd><p>Lists the layers that this recipe depends upon, separated by spaces.
+                    Optionally, you can specify a specific layer version for a dependency
+                    by adding it to the end of the layer name with a colon, (e.g. "anotherlayer:3"
+                    to be compared against <code class="filename">LAYERVERSION_anotherlayer</code> in this case).
+                    An error will be produced if any dependency is missing or
+                    the version numbers do not match exactly (if specified).
+                    This variable is used in the <code class="filename">conf/layer.conf</code> file 
+                    and must be suffixed with the name of the specific layer (e.g. 
+                    <code class="filename">LAYERDEPENDS_mylayer</code>).</p></dd>
+<dt>
+<a name="var-LAYERDIR"></a>LAYERDIR</dt>
+<dd><p>When used inside the <code class="filename">layer.conf</code> configuration 
+                    file, this variable provides the path of the current layer. 
+                    This variable requires immediate expansion
+                    (see the BitBake manual) as lazy expansion can result in
+                    the expansion happening in the wrong directory and therefore
+                    giving the wrong value.</p></dd>
+<dt>
+<a name="var-LAYERVERSION"></a>LAYERVERSION</dt>
+<dd><p>Optionally specifies the version of a layer as a single number.
+                    You can use this within <code class="filename">LAYERDEPENDS</code> for another layer in order to
+                    depend on a specific version of the layer.
+                    This variable is used in the <code class="filename">conf/layer.conf</code> file 
+                    and must be suffixed with the name of the specific layer (e.g.
+                    <code class="filename">LAYERVERSION_mylayer</code>).</p></dd>
+<dt>
+<a name="var-LIC_FILES_CHKSUM"></a>LIC_FILES_CHKSUM</dt>
+<dd>
+<p>Checksums of the license text in the recipe source code.</p>
+<p>This variable tracks changes in license text of the source
+                    code files. 
+                    If the license text is changed, it will trigger a build
+                    failure, which gives the developer an opportunity to review any 
+                    license change.</p>
+<p>
+                    This variable must be defined for all recipes (unless <code class="filename">LICENSE</code>
+                    is set to "CLOSED")</p>
+<p>For more information, see the
+                    <a class="link" href="usingpoky-configuring-LIC_FILES_CHKSUM.html" title="3.4.1. Tracking License Changes">
+                    Tracking License Changes</a> section</p>
+</dd>
+<dt>
+<a name="var-LICENSE"></a>LICENSE</dt>
+<dd>
+<p>
+                    The list of source licenses for the recipe.
+                    Follow these rules:
+                    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>Do not use spaces within individual
+                            license names.</p></li>
+<li class="listitem"><p>Separate license names using 
+                            | (pipe) when there is a choice between licenses.
+                            </p></li>
+<li class="listitem"><p>Separate license names using 
+                            &amp; (ampersand) when multiple licenses exist 
+                            that cover different parts of the source. 
+                            </p></li>
+<li class="listitem"><p>You can use spaces between license 
+                            names.</p></li>
+</ul></div>
+<p>
+                </p>
+<p>
+                    Here are some examples:
+                    </p>
+<pre class="literallayout">
+     LICENSE = "LGPLv2.1 | GPLv3"
+     LICENSE = "MPL-1 &amp; LGPLv2.1"
+     LICENSE = "GPLv2+"
+                    </pre>
+<p>
+                    The first example is from the recipes for Qt, which the user 
+                    may choose to distribute under either the LGPL version
+                    2.1 or GPL version 3.
+                    The second example is from Cairo where two licenses cover
+                    different parts of the source code. 
+                    The final example is from <code class="filename">sysstat</code>, 
+                    which presents a single license.
+                </p>
+</dd>
+<dt>
+<a name="var-LICENSE_PATH"></a>LICENSE_PATH</dt>
+<dd>
+<p>Path to additional licenses used during the build.
+                    By default, the OpenEmbedded build system uses <code class="filename">COMMON_LICENSE_DIR</code>  
+                    to define the directory that holds common license text used during the build. 
+                    The <code class="filename">LICENSE_PATH</code> variable allows you to extend that
+                    location to other areas that have additional licenses: 
+                    </p>
+<pre class="literallayout">
+  LICENSE_PATH += "/path/to/additional/common/licenses"
+                    </pre>
+</dd>
+</dl>
+</div>
+<div class="glossdiv" title="M">
+<h3 class="title">M</h3>
+<dl>
+<dt>
+<a name="var-MACHINE"></a>MACHINE</dt>
+<dd>
+<p>
+                    Specifies the target device for which the image is built.
+                    You define <code class="filename">MACHINE</code> in the 
+                    <code class="filename">local.conf</code> file found in the 
+                    <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>.
+                    By default, <code class="filename">MACHINE</code> is set to 
+                    "qemux86", which is an x86-based architecture machine to  
+                    be emulated using QEMU:
+                    </p>
+<pre class="literallayout">
+     MACHINE ?= "qemux86"
+                    </pre>
+<p> 
+                    The variable corresponds to a machine configuration file of the 
+                    same name, through which machine-specific configurations are set.
+                    Thus, when <code class="filename">MACHINE</code> is set to "qemux86" there
+                    exists the corresponding <code class="filename">qemux86.conf</code> machine
+                    configuration file, which can be found in the 
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a>
+                    in <code class="filename">meta/conf/machine</code>.
+                </p>
+<p>
+                    The list of machines supported by the Yocto Project as 
+                    shipped include the following:
+                    </p>
+<pre class="literallayout">
+     MACHINE ?= "qemuarm"
+     MACHINE ?= "qemumips"
+     MACHINE ?= "qemuppc"
+     MACHINE ?= "qemux86"
+     MACHINE ?= "qemux86-64"
+     MACHINE ?= "atom-pc"
+     MACHINE ?= "beagleboard"
+     MACHINE ?= "mpc8315e-rdb"
+     MACHINE ?= "routerstationpro"
+                    </pre>
+<p>
+                    The last four are Yocto Project reference hardware boards, which
+                    are provided in the <code class="filename">meta-yocto-bsp</code> layer.
+                    </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>Adding additional Board Support Package (BSP) layers 
+                        to your configuration adds new possible settings for
+                        <code class="filename">MACHINE</code>.
+                    </div>
+<p>                    
+                </p>
+</dd>
+<dt>
+<a name="var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS"></a>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</dt>
+<dd>
+<p></p>
+<p>
+                    A list of required machine-specific packages to install as part of
+                    the image being built.
+                    The build process depends on these packages being present.
+                    Furthermore, because this is a "machine essential" variable, the list of 
+                    packages are essential for the machine to boot.
+                    The impact of this variable affects images based on 
+                    <code class="filename">packagegroup-core-boot</code>,
+                    including the <code class="filename">core-image-minimal</code> image.
+                </p>
+<p>
+                    This variable is similar to the 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS" title="MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS">MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</a></code>
+                    variable with the exception that the image being built has a build 
+                    dependency on the variable's list of packages.
+                    In other words, the image will not build if a file in this list is not found.
+                </p>
+<p>
+                    As an example, suppose the machine for which you are building requires
+                    <code class="filename">example-init</code> to be run during boot to initialize the hardware.
+                    In this case, you would use the following in the machine's
+                    <code class="filename">.conf</code> configuration file:
+                    </p>
+<pre class="literallayout">
+     MACHINE_ESSENTIAL_EXTRA_RDEPENDS += "example-init"
+                    </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS"></a>MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</dt>
+<dd>
+<p></p>
+<p>
+                    A list of recommended machine-specific packages to install as part of
+                    the image being built.
+                    The build process does not depend on these packages being present.
+                    However, because this is a "machine essential" variable, the list of 
+                    packages are essential for the machine to boot.
+                    The impact of this variable affects images based on 
+                    <code class="filename">packagegroup-core-boot</code>,
+                    including the <code class="filename">core-image-minimal</code> image.
+                </p>
+<p>
+                    This variable is similar to the 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS" title="MACHINE_ESSENTIAL_EXTRA_RDEPENDS">MACHINE_ESSENTIAL_EXTRA_RDEPENDS</a></code>
+                    variable with the exception that the image being built does not have a build 
+                    dependency on the variable's list of packages.
+                    In other words, the image will still build if a package in this list is not found.
+                    Typically, this variable is used to handle essential kernel modules, whose
+                    functionality may be selected to be built into the kernel rather than as a module,
+                    in which case a package will not be produced.
+                </p>
+<p>
+                    Consider an example where you have a custom kernel where a specific touchscreen
+                    driver is required for the machine to be usable.
+                    However, the driver can be built as a module or
+                    into the kernel depending on the kernel configuration.
+                    If the driver is built as a module, you want it to be installed.
+                    But, when the driver is built into the kernel, you still want the 
+                    build to succeed.
+                    This variable sets up a "recommends" relationship so that in the latter case,
+                    the build will not fail due to the missing package.
+                    To accomplish this, assuming the package for the module was called
+                    <code class="filename">kernel-module-ab123</code>, you would use the
+                    following in the machine's <code class="filename">.conf</code> configuration 
+                    file:
+                    </p>
+<pre class="literallayout">
+     MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "kernel-module-ab123"
+                    </pre>
+<p>
+                </p>
+<p>
+                    Some examples of these machine essentials are flash, screen, keyboard, mouse, 
+                    or touchscreen drivers (depending on the machine).
+                </p>
+</dd>
+<dt>
+<a name="var-MACHINE_EXTRA_RDEPENDS"></a>MACHINE_EXTRA_RDEPENDS</dt>
+<dd>
+<p>
+                    A list of machine-specific packages to install as part of the 
+                    image being built that are not essential for the machine to boot.
+                    However, the build process for more fully-featured images 
+                    depends on the packages being present.
+                </p>
+<p>
+                    This variable affects all images based on
+                    <code class="filename">packagegroup-base</code>, which does not include the 
+                    <code class="filename">core-image-minimal</code> or <code class="filename">core-image-basic</code> 
+                    images.
+                </p>
+<p>
+                    The variable is similar to the 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE_EXTRA_RRECOMMENDS" title="MACHINE_EXTRA_RRECOMMENDS">MACHINE_EXTRA_RRECOMMENDS</a></code>
+                    variable with the exception that the image being built has a build 
+                    dependency on the variable's list of packages.
+                    In other words, the image will not build if a file in this list is not found.
+                </p>
+<p>
+                    An example is a machine that has WiFi capability but is not essential
+                    For the machine to boot the image.
+                    However, if you are building a more fully-featured image, you want to enable
+                    the WiFi. 
+                    The package containing the firmware for the WiFi hardware is always 
+                    expected to exist, so it is acceptable for the build process to depend upon
+                    finding the package.
+                    In this case, assuming the package for the firmware was called
+                    <code class="filename">wifidriver-firmware</code>, you would use the following in the
+                    <code class="filename">.conf</code> file for the machine:
+                    </p>
+<pre class="literallayout">
+     MACHINE_EXTRA_RDEPENDS += "wifidriver-firmware"
+                    </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-MACHINE_EXTRA_RRECOMMENDS"></a>MACHINE_EXTRA_RRECOMMENDS</dt>
+<dd>
+<p></p>
+<p>
+                    A list of machine-specific packages to install as part of the 
+                    image being built that are not essential for booting the machine.
+                    The image being built has no build dependency on this list of packages.
+                </p>
+<p>
+                    This variable affects only images based on 
+                    <code class="filename">packagegroup-base</code>, which does not include the 
+                    <code class="filename">core-image-minimal</code> or <code class="filename">core-image-basic</code> 
+                    images.
+                </p>
+<p>
+                    This variable is similar to the 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE_EXTRA_RDEPENDS" title="MACHINE_EXTRA_RDEPENDS">MACHINE_EXTRA_RDEPENDS</a></code>
+                    variable with the exception that the image being built does not have a build 
+                    dependency on the variable's list of packages.
+                    In other words, the image will build if a file in this list is not found.
+                </p>
+<p>
+                    An example is a machine that has WiFi capability but is not essential
+                    For the machine to boot the image.
+                    However, if you are building a more fully-featured image, you want to enable
+                    WiFi. 
+                    In this case, the package containing the WiFi kernel module will not be produced
+                    if the WiFi driver is built into the kernel, in which case you still want the
+                    build to succeed instead of failing as a result of the package not being found.
+                    To accomplish this, assuming the package for the module was called
+                    <code class="filename">kernel-module-examplewifi</code>, you would use the
+                    following in the <code class="filename">.conf</code> file for the machine:
+                    </p>
+<pre class="literallayout">
+     MACHINE_EXTRA_RRECOMMENDS += "kernel-module-examplewifi"
+                    </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-MACHINE_FEATURES"></a>MACHINE_FEATURES</dt>
+<dd>
+<p>Specifies the list of hardware features the 
+                    <a class="link" href="ref-variables-glos.html#var-MACHINE" title="MACHINE">MACHINE</a> supports.
+                    For example, including the "bluetooth" feature causes the 
+                    <code class="filename">bluez</code> bluetooth daemon to be built and 
+                    added to the image.
+                    It also causes the <code class="filename">connman</code> recipe 
+                    to look at <code class="filename">MACHINE_FEATURES</code> and when it
+                    finds "bluetooth" there it enables the bluetooth 
+                    support in ConnMan.
+                </p>
+<p>
+                    For a list of features supported by the Yocto Project as shipped, 
+                    see the "<a class="link" href="ref-features-machine.html" title="9.2. Machine">Machine</a>" section.
+                </p>
+</dd>
+<dt>
+<a name="var-MACHINE_FEATURES_BACKFILL"></a>MACHINE_FEATURES_BACKFILL</dt>
+<dd>
+<p>Features to be added to 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE_FEATURES" title="MACHINE_FEATURES">MACHINE_FEATURES</a></code>
+                    if not also present in 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE_FEATURES_BACKFILL_CONSIDERED" title="MACHINE_FEATURES_BACKFILL_CONSIDERED">MACHINE_FEATURES_BACKFILL_CONSIDERED</a></code>.
+                </p>
+<p>
+                    This variable is set in the <code class="filename">meta/conf/bitbake.conf</code> file.
+                    It is not intended to be user-configurable. 
+                    It is best to just reference the variable to see which machine features are 
+                    being backfilled for all machine configurations.
+                    See the <a class="link" href="ref-features-backfill.html" title="9.4. Feature Backfilling">Feature backfilling</a> section for 
+                    more information.
+                </p>
+</dd>
+<dt>
+<a name="var-MACHINE_FEATURES_BACKFILL_CONSIDERED"></a>MACHINE_FEATURES_BACKFILL_CONSIDERED</dt>
+<dd><p>Features from
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE_FEATURES_BACKFILL" title="MACHINE_FEATURES_BACKFILL">MACHINE_FEATURES_BACKFILL</a></code>
+                    that should not be backfilled (i.e. added to
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE_FEATURES" title="MACHINE_FEATURES">MACHINE_FEATURES</a></code>)
+                    during the build.
+                    See the <a class="link" href="ref-features-backfill.html" title="9.4. Feature Backfilling">Feature backfilling</a> section for 
+                    more information.
+                    </p></dd>
+<dt>
+<a name="var-MAINTAINER"></a>MAINTAINER</dt>
+<dd><p>The email address of the distribution maintainer.</p></dd>
+<dt>
+<a name="var-MLPREFIX"></a>MLPREFIX</dt>
+<dd><p>
+                    Specifies a prefix has been added to
+                    <a class="link" href="ref-variables-glos.html#var-PN" title="PN"><code class="filename">PN</code></a> to create a special version 
+                    of a recipe or package, such as a multilib version.
+                    The variable is used in places where the prefix needs to be 
+                    added to or removed from a the name (e.g. the
+                    <a class="link" href="ref-variables-glos.html#var-BPN" title="BPN"><code class="filename">BPN</code></a> variable).
+                    <code class="filename">MLPREFIX</code> gets set when a prefix has been 
+                    added to <code class="filename">PN</code>. 
+                </p></dd>
+<dt>
+<a name="var-MULTIMACH_TARGET_SYS"></a>MULTIMACH_TARGET_SYS</dt>
+<dd><p>
+                    Separates files for different machines such that you can build
+                    for multiple target machines using the same output directories.
+                    See the <a class="link" href="ref-variables-glos.html#var-STAMP" title="STAMP"><code class="filename">STAMP</code></a> variable
+                    for an example.
+                </p></dd>
+</dl>
+</div>
+<div class="glossdiv" title="O">
+<h3 class="title">O</h3>
+<dl>
+<dt>
+<a name="var-OE_TERMINAL"></a>OE_TERMINAL</dt>
+<dd>
+<p>
+                    Controls how the OpenEmbedded build system spawns 
+                    interactive terminals on the host development system
+                    (e.g. using the BitBake command with the 
+                    <code class="filename">-c devshell</code> command-line option).
+                    For more information, see the 
+                    "<a class="link" href="../dev-manual/platdev-appdev-devshell.html" target="_self">Using a Development Shell</a>" section
+                    in the Yocto Project Development Manual.
+                 </p>
+<p>
+                    You can use the following values for the 
+                    <code class="filename">OE_TERMINAL</code> variable:
+                    </p>
+<pre class="literallayout">
+     auto
+     gnome
+     xfce
+     rxvt
+     screen
+     konsole
+     none 
+                    </pre>
+<p>
+                    </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>Konsole support only works for KDE 3.x.
+                        Also, "auto" is the default behavior for 
+                        <code class="filename">OE_TERMINAL</code>
+</div>
+<p>
+                </p>
+</dd>
+</dl>
+</div>
+<div class="glossdiv" title="P">
+<h3 class="title">P</h3>
+<dl>
+<dt>
+<a name="var-P"></a>P</dt>
+<dd>
+<p>The recipe name and version.
+                    <code class="filename">P</code> is comprised of the following:
+                    </p>
+<pre class="literallayout">
+     ${PN}-${PV}
+                    </pre>
+</dd>
+<dt>
+<a name="var-PACKAGE_ARCH"></a>PACKAGE_ARCH</dt>
+<dd><p>The architecture of the resulting package or packages.</p></dd>
+<dt>
+<a name="var-PACKAGE_BEFORE_PN"></a>PACKAGE_BEFORE_PN</dt>
+<dd><p>Enables easily adding packages to 
+                <code class="filename"><a class="link" href="ref-variables-glos.html#var-PACKAGES" title="PACKAGES">PACKAGES</a></code>
+                before <code class="filename">${PN}</code> so that the packages can pick 
+                up files that would normally be included in the default package.</p></dd>
+<dt>
+<a name="var-PACKAGE_CLASSES"></a>PACKAGE_CLASSES</dt>
+<dd>
+<p>This variable, which is set in the <code class="filename">local.conf</code> configuration
+                    file found in the <code class="filename">conf</code> folder of the 
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a>,
+                    specifies the package manager to use when packaging data.
+                    You can provide one or more arguments for the variable with the first 
+                    argument being the package manager used to create images:
+                    </p>
+<pre class="literallayout">
+     PACKAGE_CLASSES ?= "package_rpm package_deb package_ipk"
+                    </pre>
+<p>
+                    For information on build performance effects as a result of the 
+                    package manager use, see
+                    <a class="link" href="ref-classes-package.html" title="7.13. Packaging - package*.bbclass">Packaging - <code class="filename">package*.bbclass</code></a>
+                    in this manual.
+                </p>
+</dd>
+<dt>
+<a name="var-PACKAGE_EXTRA_ARCHS"></a>PACKAGE_EXTRA_ARCHS</dt>
+<dd><p>Specifies the list of architectures compatible with the device CPU.
+                    This variable is useful when you build for several different devices that use
+                    miscellaneous processors such as XScale and ARM926-EJS).</p></dd>
+<dt>
+<a name="var-PACKAGECONFIG"></a>PACKAGECONFIG</dt>
+<dd>
+<p>
+                    This variable provides a means of enabling or disabling 
+                    features of a recipe on a per-recipe basis. 
+                    The <code class="filename">PACKAGECONFIG</code>
+                    variable itself specifies a space-separated list of the 
+                    features to enable.
+                    The features themselves are specified as flags on the 
+                    <code class="filename">PACKAGECONFIG</code> variable.
+                    You can provide up to four arguments, which are separated by
+                    commas, to determine the behavior of each feature 
+                    when it is enabled or disabled.
+                    You can omit any argument you like but must retain the 
+                    separating commas.
+                    The arguments specify the following:
+                    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>Extra arguments 
+                            that should be added to the configure script argument list 
+                            (<a class="link" href="ref-variables-glos.html#var-EXTRA_OECONF" title="EXTRA_OECONF"><code class="filename">EXTRA_OECONF</code></a>)
+                            if the feature is enabled.</p></li>
+<li class="listitem"><p>Extra arguments 
+                            that should be added to <code class="filename">EXTRA_OECONF</code>
+                            if the feature is disabled.
+                            </p></li>
+<li class="listitem"><p>Additional build dependencies 
+                            (<a class="link" href="ref-variables-glos.html#var-DEPENDS" title="DEPENDS"><code class="filename">DEPENDS</code></a>)
+                            that should be added if the feature is enabled.
+                            </p></li>
+<li class="listitem"><p>Additional runtime dependencies 
+                            (<a class="link" href="ref-variables-glos.html#var-RDEPENDS" title="RDEPENDS"><code class="filename">RDEPENDS</code></a>)
+                            that should be added if the feature is enabled.
+                            </p></li>
+</ol></div>
+<p>
+                </p>
+<p>
+                    Consider the following example taken from the 
+                    <code class="filename">librsvg</code> recipe.
+                    In this example the feature is <code class="filename">croco</code>, which 
+                    has three arguments that determine the feature's behavior.
+                        </p>
+<pre class="literallayout">
+     PACKAGECONFIG ??= "croco"
+     PACKAGECONFIG[croco] = "--with-croco,--without-croco,libcroco"
+                        </pre>
+<p>
+                    The <code class="filename">--with-croco</code> and 
+                    <code class="filename">libcroco</code> arguments apply only if 
+                    the feature is enabled.
+                    In this case, <code class="filename">--with-croco</code> is 
+                    added to the configure script argument list and 
+                    <code class="filename">libcroco</code> is added to 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-DEPENDS" title="DEPENDS">DEPENDS</a></code>.
+                    On the other hand, if the feature is disabled say through
+                    a <code class="filename">.bbappend</code> file in another layer, then
+                    the second argument <code class="filename">--without-croco</code> is 
+                    added to the configure script rather than 
+                    <code class="filename">--with-croco</code>.
+                </p>
+</dd>
+<dt>
+<a name="var-PACKAGES"></a>PACKAGES</dt>
+<dd>
+<p>The list of packages to be created from the recipe.
+                    The default value is the following:
+                    </p>
+<pre class="literallayout">
+     ${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale ${PACKAGE_BEFORE_PN} ${PN}
+                    </pre>
+</dd>
+<dt>
+<a name="var-PACKAGES_DYNAMIC"></a>PACKAGES_DYNAMIC</dt>
+<dd>
+<p>
+                    A promise that your recipe satisfies runtime dependencies 
+                    for optional modules that are found in other recipes.
+                    <code class="filename">PACKAGES_DYNAMIC</code>
+                    does not actually satisfy the dependencies, it only states that 
+                    they should be satisfied. 
+                    For example, if a hard, runtime dependency 
+                    (<code class="filename">RDEPENDS</code>) of another package is satisfied 
+                    at build time through the <code class="filename">PACKAGES_DYNAMIC</code>
+                    variable, but a package with the module name is never actually 
+                    produced, then the other package will be broken.
+                    Thus, if you attempt to include that package in an image,
+                    you will get a dependency failure from the packaging system 
+                    during <code class="filename">do_rootfs</code>. 
+                    Typically, if there is a chance that such a situation can
+                    occur and the package that is not created is valid 
+                    without the dependency being satisfied, then you should use 
+                    <code class="filename">RRECOMMENDS</code> (a soft runtime dependency) 
+                    instead of <code class="filename">RDEPENDS</code>.
+                </p>
+<p> 
+                    For an example of how to use the <code class="filename">PACKAGES_DYNAMIC</code>
+                    variable when you are splitting packages, see the 
+                    "<a class="link" href="../dev-manual/handling-optional-module-packaging.html" target="_self">Handling Optional Module Packaging</a>" section
+                    in the Yocto Project Development Manual.
+                </p>
+</dd>
+<dt>
+<a name="var-PARALLEL_MAKE"></a>PARALLEL_MAKE</dt>
+<dd><p>Specifies extra options that are passed to the <code class="filename">make</code> command during the 
+                    compile tasks. 
+                    This variable is usually in the form <code class="filename">-j 4</code>, where the number
+                    represents the maximum number of parallel threads make can run.
+                    If you development host supports multiple cores a good rule of thumb is to set 
+                    this variable to twice the number of cores on the host.</p></dd>
+<dt>
+<a name="var-PF"></a>PF</dt>
+<dd>
+<p>Specifies the recipe or package name and includes all version and revision
+                    numbers (i.e. <code class="filename">eglibc-2.13-r20+svnr15508/</code> and
+                    <code class="filename">bash-4.2-r1/</code>).
+                    This variable is comprised of the following:
+                    </p>
+<pre class="literallayout">
+     ${PN}-${EXTENDPE}${PV}-${PR}
+                    </pre>
+</dd>
+<dt>
+<a name="var-PN"></a>PN</dt>
+<dd>
+<p>This variable can have two separate functions depending on the context: a recipe
+                    name or a resulting package name.</p>
+<p><code class="filename">PN</code> refers to a recipe name in the context of a file used 
+                    by the OpenEmbedded build system as input to create a package.
+                    The name is normally extracted from the recipe file name.
+                    For example, if the recipe is named 
+                    <code class="filename">expat_2.0.1.bb</code>, then the default value of <code class="filename">PN</code>
+                    will be "expat".</p>
+<p> 
+                    The variable refers to a package name in the context of a file created or produced by the
+                    OpenEmbedded build system.</p>
+<p>If applicable, the <code class="filename">PN</code> variable also contains any special 
+                    suffix or prefix.
+                    For example, using <code class="filename">bash</code> to build packages for the native
+                    machine, <code class="filename">PN</code> is <code class="filename">bash-native</code>.
+                    Using <code class="filename">bash</code> to build packages for the target and for Multilib,
+                    <code class="filename">PN</code> would be <code class="filename">bash</code> and  
+                    <code class="filename">lib64-bash</code>, respectively.
+                </p>
+</dd>
+<dt>
+<a name="var-PR"></a>PR</dt>
+<dd><p>The revision of the recipe. 
+                    The default value for this variable is "r0".
+                    </p></dd>
+<dt>
+<a name="var-PRINC"></a>PRINC</dt>
+<dd>
+<p>Causes the <code class="filename">PR</code> variable of 
+                    <code class="filename">.bbappend</code> files to dynamically increment.
+                    This increment minimizes the impact of layer ordering.</p>
+<p>In order to ensure multiple <code class="filename">.bbappend</code> files can co-exist, 
+                    <code class="filename">PRINC</code> should be self referencing.
+                    This variable defaults to 0.</p>
+<p>Following is an example that increments <code class="filename">PR</code> by two:
+                    </p>
+<pre class="literallayout">
+     PRINC := "${@int(PRINC) + 2}"
+                    </pre>
+<p>
+                    It is adviseable not to use strings such as ".= '.1'" with the variable because
+                    this usage is very sensitive to layer ordering. 
+                    Explicit assignments should be avoided as they cannot adequately represent multiple 
+                    <code class="filename">.bbappend</code> files.</p>
+</dd>
+<dt>
+<a name="var-PV"></a>PV</dt>
+<dd><p>The version of the recipe.
+                    The version is normally extracted from the recipe filename.
+                    For example, if the recipe is named 
+                    <code class="filename">expat_2.0.1.bb</code>, then the default value of <code class="filename">PV</code> 
+                    will be "2.0.1". 
+                    <code class="filename">PV</code> is generally not overridden within 
+                    a recipe unless it is building an unstable (i.e. development) version from a source code repository 
+                    (e.g. Git or Subversion).
+                 </p></dd>
+<dt>
+<a name="var-PE"></a>PE</dt>
+<dd><p>
+                    the epoch of the recipe. 
+                    The default value is "0". 
+                    The field is used to make upgrades possible when the versioning scheme changes in 
+                    some backwards incompatible way.
+                </p></dd>
+<dt>
+<a name="var-PREFERRED_PROVIDER"></a>PREFERRED_PROVIDER</dt>
+<dd>
+<p>
+                    If multiple recipes provide an item, this variable
+                    determines which recipe should be given preference. 
+                    The variable must always be suffixed with the name of the 
+                    provided item, and should be set to the 
+                    <code class="filename">PN</code> of the recipe 
+                    to which you want to give precedence.
+                    Here is an example:
+                    </p>
+<pre class="literallayout">
+     PREFERRED_PROVIDER_virtual/xserver = "xserver-xf86"
+                    </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-PREFERRED_VERSION"></a>PREFERRED_VERSION</dt>
+<dd>
+<p>
+                    If there are multiple versions of recipes available, this
+                    variable determines which recipe should be given preference.
+                    The variable must always be suffixed with the <code class="filename">PN</code> 
+                    for which to select, and should be set to the 
+                    <code class="filename">PV</code> to which you want to give precedence.
+                    You can use the "<code class="filename">%</code>" character as a wildcard
+                    to match any number of characters, which can be useful when 
+                    specifying versions that contain long revision number that could 
+                    potentially change.
+                    Here are two examples:
+                    </p>
+<pre class="literallayout">
+     PREFERRED_VERSION_python = "2.6.6"
+     PREFERRED_VERSION_linux-yocto = "3.0+git%" 
+                    </pre>
+<p>
+                </p>
+</dd>
+</dl>
+</div>
+<div class="glossdiv" title="R">
+<h3 class="title">R</h3>
+<dl>
+<dt>
+<a name="var-RCONFLICTS"></a>RCONFLICTS</dt>
+<dd>
+<p>The list of packages that conflict with a package.
+                    Note that the package will not be installed if the conflicting packages are not
+                    first removed.</p>
+<p>
+                   Like all package-controlling variables, you must always use them in 
+                   conjunction with a package name override.
+                   Here is an example:
+                   </p>
+<pre class="literallayout">
+     RCONFLICTS_${PN} = "another-conflicting-package-name"
+                   </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-RDEPENDS"></a>RDEPENDS</dt>
+<dd>
+<p>
+                    Lists a package's run-time dependencies (i.e. other packages)                    
+                    that must be installed for the package to be built.
+                    In other words, in order for the package to be built and 
+                    run correctly, it depends on the listed packages.
+                    If a package in this list cannot be found, it is probable 
+                    that a dependency error would occur before the build.
+                </p>
+<p>
+                    The names of the variables you list with 
+                    <code class="filename">RDEPENDS</code> must be the names of other 
+                    packages as listed in the 
+                    <a class="link" href="ref-variables-glos.html#var-PACKAGES" title="PACKAGES"><code class="filename">PACKAGES</code></a>
+                    variable.
+                    You should not list recipe names (<code class="filename">PN</code>).
+                </p>
+<p>
+                    Because the <code class="filename">RDEPENDS</code> variable applies 
+                    to packages being built, you should 
+                    always attach a package name to the variable to specify the 
+                    particular run-time package that has the dependency.
+                    For example, suppose you are building a development package 
+                    that depends on the <code class="filename">perl</code> package.
+                    In this case, you would use the following 
+                    <code class="filename">RDEPENDS</code> statement:
+                    </p>
+<pre class="literallayout">
+     RDEPENDS_${PN}-dev += "perl"
+                    </pre>
+<p>
+                    In the example, the package name 
+                    (<code class="filename">${PN}-dev</code>) must appear as it would 
+                    in the 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-PACKAGES" title="PACKAGES">PACKAGES</a></code> 
+                    namespace before any renaming of the output package by 
+                    classes like <code class="filename">debian.bbclass</code>.
+                </p>
+<p>
+                    In many cases you do not need to explicitly add dependencies 
+                    to <code class="filename">RDEPENDS</code> since some automatic 
+                    handling occurs:
+                    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">shlibdeps</code></em></span>:  If 
+                            a run-time package contains a shared library 
+                            (<code class="filename">.so</code>), the build
+                            processes the library in order to determine other 
+                            libraries to which it is dynamically linked.  
+                            The build process adds these libraries to 
+                            <code class="filename">RDEPENDS</code> when creating the run-time 
+                            package.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">pcdeps</code></em></span>:  If 
+                            the package ships a <code class="filename">pkg-config</code> 
+                            information file, the build process uses this file 
+                            to add items to the <code class="filename">RDEPENDS</code>
+                            variable to create the run-time packages.
+                            </p></li>
+</ul></div>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-RRECOMMENDS"></a>RRECOMMENDS</dt>
+<dd>
+<p>
+                    A list of packages that extend the usability of a package being 
+                    built.
+                    The package being built does not depend on this list of packages in 
+                    order to successfully build, but needs them for the extended usability.
+                    To specify runtime dependencies for packages, see the 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-RDEPENDS" title="RDEPENDS">RDEPENDS</a></code> variable.
+                </p>
+<p>
+                    The OpenEmbedded build process automatically installs the list of packages
+                    as part of the built package.
+                    However, you can remove them later if you want.
+                    If, during the build, a package from the list cannot be found, the build
+                    process continues without an error.
+                </p>
+<p>
+                    Because the <code class="filename">RRECOMMENDS</code> variable applies to packages 
+                    being built, you should 
+                    always attach an override to the variable to specify the particular package
+                    whose usability is being extended.
+                    For example, suppose you are building a development package that is extended
+                    to support wireless functionality.
+                    In this case, you would use the following:
+                    </p>
+<pre class="literallayout">
+     RRECOMMENDS_${PN}-dev += "&lt;wireless_package_name&gt;"
+                    </pre>
+<p>
+                    In the example, the package name (<code class="filename">${PN}-dev</code>) must 
+                    appear as it would in the 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-PACKAGES" title="PACKAGES">PACKAGES</a></code> namespace before any 
+                    renaming of the output package by classes like <code class="filename">debian.bbclass</code>.
+                </p>
+</dd>
+<dt>
+<a name="var-RREPLACES"></a>RREPLACES</dt>
+<dd><p>The list of packages that are replaced with this package.</p></dd>
+</dl>
+</div>
+<div class="glossdiv" title="S">
+<h3 class="title">S</h3>
+<dl>
+<dt>
+<a name="var-S"></a>S</dt>
+<dd>
+<p>
+                    The location in the <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>
+                    where unpacked package source code resides.
+                    This location is within the working directory 
+                    (<code class="filename"><a class="link" href="ref-variables-glos.html#var-WORKDIR" title="WORKDIR">WORKDIR</a></code>), which 
+                    is not static.
+                    The unpacked source location depends on the package name 
+                    (<code class="filename"><a class="link" href="ref-variables-glos.html#var-PN" title="PN">PN</a></code>) and 
+                    package version (<code class="filename"><a class="link" href="ref-variables-glos.html#var-PV" title="PV">PV</a></code>) as 
+                    follows:
+                    </p>
+<pre class="literallayout">
+ ${WORKDIR}/${PN}-${PV}
+                    </pre>
+<p>
+                    As an example, assume a 
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a> top-level 
+                    folder named <code class="filename">poky</code> 
+                    and a default <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>
+                    at <code class="filename">poky/build</code>.
+                    In this case, the working directory the build system uses to build 
+                    the <code class="filename">db</code> package is the following:
+                    </p>
+<pre class="literallayout">
+ ~/poky/build/tmp/work/qemux86-poky-linux/db-5.1.19-r3/db-5.1.19
+                    </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-SDKIMAGE_FEATURES"></a>SDKIMAGE_FEATURES</dt>
+<dd><p>Equivalent to 
+                <code class="filename"><a class="link" href="ref-variables-glos.html#var-IMAGE_FEATURES" title="IMAGE_FEATURES">IMAGE_FEATURES</a></code>.
+                However, this variable applies to the SDK generated from an image using 
+                <code class="filename">bitbake -c populate_sdk imagename</code>).
+                </p></dd>
+<dt>
+<a name="var-SECTION"></a>SECTION</dt>
+<dd><p>The section in which packages should be categorized.
+                    Package management utilities can make use of this variable.</p></dd>
+<dt>
+<a name="var-SELECTED_OPTIMIZATION"></a>SELECTED_OPTIMIZATION</dt>
+<dd><p>
+                    The variable takes the value of 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-FULL_OPTIMIZATION" title="FULL_OPTIMIZATION">FULL_OPTIMIZATION</a></code>
+                    unless <code class="filename"><a class="link" href="ref-variables-glos.html#var-DEBUG_BUILD" title="DEBUG_BUILD">DEBUG_BUILD</a></code> = "1".
+                    In this case the value of 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-DEBUG_OPTIMIZATION" title="DEBUG_OPTIMIZATION">DEBUG_OPTIMIZATION</a></code> is used.
+                </p></dd>
+<dt>
+<a name="var-SERIAL_CONSOLE"></a>SERIAL_CONSOLE</dt>
+<dd><p>The speed and device for the serial port used to attach the serial console. 
+                    This variable is given to the kernel as the "console"
+                    parameter and after booting occurs <code class="filename">getty</code> is started on that port
+                    so remote login is possible.</p></dd>
+<dt>
+<a name="var-SITEINFO_ENDIANNESS"></a>SITEINFO_ENDIANNESS</dt>
+<dd><p>
+                    Specifies the endian byte order of the target system. 
+                    The value should be either "le" for little-endian or "be" for big-endian.
+                </p></dd>
+<dt>
+<a name="var-SITEINFO_BITS"></a>SITEINFO_BITS</dt>
+<dd><p>
+                    Specifies the number of bits for the target system CPU.
+                    The value should be either "32" or "64".
+                </p></dd>
+<dt>
+<a name="var-SPECIAL_PKGSUFFIX"></a>SPECIAL_PKGSUFFIX</dt>
+<dd><p>
+                    A list of prefixes for <a class="link" href="ref-variables-glos.html#var-PN" title="PN"><code class="filename">PN</code></a> used by the 
+                    OpenEmbedded build system to create variants of recipes or packages.
+                    The list specifies the prefixes to strip off during certain circumstances
+                    such as the generation of the <a class="link" href="ref-variables-glos.html#var-BPN" title="BPN"><code class="filename">BPN</code></a> variable.
+                </p></dd>
+<dt>
+<a name="var-SRC_URI"></a>SRC_URI</dt>
+<dd>
+<p>The list of source files - local or remote.
+                    This variable tells the OpenEmbedded build system which bits to pull
+                    in for the build and how to pull them in.
+                    For example, if the recipe only needs to fetch a tarball from the 
+                    internet, the recipe uses a single <code class="filename">SRC_URI</code> entry.
+                    On the other hand, if the recipe needs to fetch a tarball, apply
+                    two patches, and include a custom file, the recipe would include four
+                    instances of the variable.</p>
+<p>The following list explains the available URI protocols:
+                    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p><span class="emphasis"><em><code class="filename">file://</code> -</em></span> Fetches files, which is usually
+                            a file shipped with the metadata, from the local machine. 
+                            The path is relative to the 
+                            <a class="link" href="ref-variables-glos.html#var-FILESPATH" title="FILESPATH"><code class="filename">FILESPATH</code></a> 
+                            variable.
+                            Thus, the build system searches, in order, from the following directories,
+                            which are assumed to be a subdirectories of the directory in which the 
+                            recipe file resides:
+                            </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="circle">
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">${PN}</code> -</em></span> The recipe name 
+                                    with any special suffix or prefix, if applicable.
+                                    For example, using <code class="filename">bash</code> to build for the native
+                                    machine, <code class="filename">PN</code> is <code class="filename">bash-native</code>.
+                                    Using <code class="filename">bash</code> to build for the target and for Multilib,
+                                    <code class="filename">PN</code> would be <code class="filename">bash</code> and  
+                                    <code class="filename">lib64-bash</code>, respectively.
+                                    </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">${PF}</code> - </em></span>
+                                    <code class="filename">${PN}-${EXTENDPE}${PV}-${PR}</code>.
+                                    The recipe name including all version and revision numbers 
+                                    (i.e. <code class="filename">eglibc-2.13-r20+svnr15508/</code> and
+                                    <code class="filename">bash-4.2-r1/</code>).</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">${P}</code> -</em></span> 
+                                    <code class="filename">${PN}-${PV}</code>. 
+                                    The recipe name and version (i.e. <code class="filename">bash-4.2</code>).
+                                    </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">${BPN}</code> -</em></span> The 
+                                    base recipe name without any special suffix or version numbers.
+                                    </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">${BP}</code> -</em></span> 
+                                    <code class="filename">${BPN}-${PV}</code>.
+                                    The base recipe name and version but without any special 
+                                    package name suffix.</p></li>
+<li class="listitem"><p><span class="emphasis"><em>Files -</em></span> Files beneath the directory in which the recipe
+                                    resides.</p></li>
+<li class="listitem"><p><span class="emphasis"><em>Directory -</em></span> The directory itself in which the recipe
+                                    resides.</p></li>
+</ul></div>
+</li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">bzr://</code> -</em></span> Fetches files from a 
+                            Bazaar revision control repository.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">git://</code> -</em></span> Fetches files from a 
+                            Git revision control repository.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">osc://</code> -</em></span> Fetches files from 
+                            an OSC (OpenSuse Build service) revision control repository.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">repo://</code> -</em></span> Fetches files from 
+                            a repo (Git) repository.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">svk://</code> -</em></span> Fetches files from 
+                            an SVK revision control repository.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">http://</code> -</em></span> Fetches files from 
+                            the Internet using <code class="filename">http</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">https://</code> -</em></span> Fetches files 
+                            from the Internet using <code class="filename">https</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">ftp://</code> -</em></span> Fetches files 
+                            from the Internet using <code class="filename">ftp</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">cvs://</code> -</em></span> Fetches files from 
+                            a CVS revision control repository.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">hg://</code> -</em></span> Fetches files from 
+                            a Mercurial (<code class="filename">hg</code>) revision control repository.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">p4://</code> -</em></span> Fetches files from 
+                            a Perforce (<code class="filename">p4</code>) revision control repository.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">ssh://</code> -</em></span> Fetches files from 
+                            a secure shell.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">svn://</code> -</em></span> Fetches files from 
+                            a Subversion (<code class="filename">svn</code>) revision control repository.</p></li>
+</ul></div>
+<p>
+                </p>
+<p>Standard and recipe-specific options for <code class="filename">SRC_URI</code> exist.
+                    Here are standard options:
+                    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">apply</code> -</em></span> Whether to apply 
+                            the patch or not. 
+                            The default action is to apply the patch.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">striplevel</code> -</em></span> Which 
+                            striplevel to use when applying the patch.
+                            The default level is 1.</p></li>
+</ul></div>
+<p>
+                </p>
+<p>Here are options specific to recipes building code from a revision control system:
+                    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">mindate</code> -</em></span> Only applies 
+                            the patch if <a class="link" href="ref-variables-glos.html#var-SRCDATE" title="SRCDATE"><code class="filename">SRCDATE</code></a> 
+                            is equal to or greater than <code class="filename">mindate</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">maxdate</code> -</em></span> Only applies 
+                            the patch if <a class="link" href="ref-variables-glos.html#var-SRCDATE" title="SRCDATE"><code class="filename">SRCDATE</code></a> 
+                            is not later than <code class="filename">mindate</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">minrev</code> -</em></span> Only applies 
+                            the patch if <a class="link" href="ref-variables-glos.html#var-SRCREV" title="SRCREV"><code class="filename">SRCREV</code></a> 
+                            is equal to or greater than <code class="filename">minrev</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">maxrev</code> -</em></span> Only applies 
+                            the patch if <a class="link" href="ref-variables-glos.html#var-SRCREV" title="SRCREV"><code class="filename">SRCREV</code></a> 
+                            is not later than <code class="filename">maxrev</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">rev</code> -</em></span> Only applies the 
+                            patch if <a class="link" href="ref-variables-glos.html#var-SRCREV" title="SRCREV"><code class="filename">SRCREV</code></a> 
+                            is equal to <code class="filename">rev</code>.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">notrev</code> -</em></span> Only applies 
+                            the patch if <a class="link" href="ref-variables-glos.html#var-SRCREV" title="SRCREV"><code class="filename">SRCREV</code></a> 
+                            is not equal to <code class="filename">rev</code>.</p></li>
+</ul></div>
+<p>
+                </p>
+<p>Here are some additional options worth mentioning:
+                    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">unpack</code> -</em></span> Controls 
+                            whether or not to unpack the file if it is an archive.
+                            The default action is to upack the file.</p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">subdir</code> -</em></span> Places the file 
+                            (or extracts its contents) into the specified 
+                            subdirectory of <a class="link" href="ref-variables-glos.html#var-WORKDIR" title="WORKDIR"><code class="filename">WORKDIR</code></a>.
+                            This option is useful for unusual tarballs or other archives that 
+                            don't have their files already in a subdirectory within the archive.
+                            </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">name</code> -</em></span> Specifies a 
+                            name to be used for association with <code class="filename">SRC_URI</code> checksums 
+                            when you have more than one file specified in <code class="filename">SRC_URI</code>.
+                            </p></li>
+<li class="listitem"><p><span class="emphasis"><em><code class="filename">downloadfilename</code> -</em></span> Specifies  
+                            the filename used when storing the downloaded file.</p></li>
+</ul></div>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-SRC_URI_OVERRIDES_PACKAGE_ARCH"></a>SRC_URI_OVERRIDES_PACKAGE_ARCH</dt>
+<dd>
+<p></p>
+<p>
+                    By default, the OpenEmbedded build system automatically detects whether 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-SRC_URI" title="SRC_URI">SRC_URI</a></code>  
+                    contains files that are machine-specific.
+                    If so, the build system automatically changes 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-PACKAGE_ARCH" title="PACKAGE_ARCH">PACKAGE_ARCH</a></code>. 
+                    Setting this variable to "0" disables this behavior.
+                </p>
+</dd>
+<dt>
+<a name="var-SRCDATE"></a>SRCDATE</dt>
+<dd><p>
+                    The date of the source code used to build the package.
+                    This variable applies only if the source was fetched from a Source Code Manager (SCM).
+                </p></dd>
+<dt>
+<a name="var-SRCREV"></a>SRCREV</dt>
+<dd><p>
+                    The revision of the source code used to build the package.
+                    This variable applies to Subversion, Git, Mercurial and Bazaar
+                    only. 
+                    Note that if you wish to build a fixed revision and you wish
+                    to avoid performing a query on the remote repository every time
+                    BitBake parses your recipe, you should specify a <code class="filename">SRCREV</code> that is a
+                    full revision identifier and not just a tag.
+                </p></dd>
+<dt>
+<a name="var-SSTATE_DIR"></a>SSTATE_DIR</dt>
+<dd><p>The directory for the shared state.</p></dd>
+<dt>
+<a name="var-SSTATE_MIRRORS"></a>SSTATE_MIRRORS</dt>
+<dd>
+<p>
+                    Configures the OpenEmbedded build system to search other 
+                    mirror locations for prebuilt cache data objects before 
+                    building out the data.
+                    This variable works like fetcher 
+                    <code class="filename">MIRRORS</code>/<code class="filename">PREMIRRORS</code>
+                    and points to the cache locations to check for the shared 
+                    objects.
+                </p>
+<p>
+                    You can specify a filesystem directory or a remote URL such 
+                    as HTTP or FTP.
+                    The locations you specify need to contain the shared state
+                    cache (sstate-cache) results from previous builds.
+                    The sstate-cache you point to can also be from builds on 
+                    other machines. 
+                </p>
+<p>
+                    If a mirror uses the same structure as 
+                    <a class="link" href="ref-variables-glos.html#var-SSTATE_DIR" title="SSTATE_DIR"><code class="filename">SSTATE_DIR</code></a>, 
+                    you need to add 
+                    "PATH" at the end as shown in the examples below. 
+                    The build system substitues the correct path within the 
+                    directory structure.
+                    </p>
+<pre class="literallayout">
+     SSTATE_MIRRORS ?= "\
+     file://.* http://someserver.tld/share/sstate/PATH \n \
+     file://.* file:///some/local/dir/sstate/PATH"
+                    </pre>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-STAGING_KERNEL_DIR"></a>STAGING_KERNEL_DIR</dt>
+<dd><p>
+                    The directory with kernel headers that are required to build out-of-tree
+                    modules.
+                </p></dd>
+<dt>
+<a name="var-STAMP"></a>STAMP</dt>
+<dd>
+<p>
+                    Specifies the base path used to create recipe stamp files.
+                    The path to an actual stamp file is constructed by evaluating this
+                    string and then appending additional information. 
+                    Currently, the default assignment for <code class="filename">STAMP</code>
+                    as set in the <code class="filename">meta/conf/bitbake.conf</code> file
+                    is:
+                    </p>
+<pre class="literallayout">
+     STAMP = "${TMPDIR}/stamps/${MULTIMACH_TARGET_SYS}/${PN}-${EXTENDPE}${PV}-${PR}"
+                    </pre>
+<p>
+                    See <a class="link" href="ref-variables-glos.html#var-TMPDIR" title="TMPDIR"><code class="filename">TMPDIR</code></a>, 
+                    <a class="link" href="ref-variables-glos.html#var-MULTIMACH_TARGET_SYS" title="MULTIMACH_TARGET_SYS"><code class="filename">MULTIMACH_TARGET_SYS</code></a>,
+                    <a class="link" href="ref-variables-glos.html#var-PN" title="PN"><code class="filename">PN</code></a>,
+                    <a class="link" href="ref-variables-glos.html#var-EXTENDPE" title="EXTENDPE"><code class="filename">EXTENDPE</code></a>,
+                    <a class="link" href="ref-variables-glos.html#var-PV" title="PV"><code class="filename">PV</code></a>, and
+                    <a class="link" href="ref-variables-glos.html#var-PR" title="PR"><code class="filename">PR</code></a> for related variable
+                    information.
+                </p>
+</dd>
+<dt>
+<a name="var-SUMMARY"></a>SUMMARY</dt>
+<dd><p>The short (72 characters or less) summary of the binary package for packaging 
+                    systems such as <code class="filename">opkg</code>, <code class="filename">rpm</code> or 
+                    <code class="filename">dpkg</code>.
+                    By default, <code class="filename">SUMMARY</code> is used to define
+                    the <a class="link" href="ref-variables-glos.html#var-DESCRIPTION" title="DESCRIPTION"><code class="filename">DESCRIPTION</code></a>
+                    variable if <code class="filename">DESCRIPTION</code> is not set 
+                    in the recipe.
+                </p></dd>
+</dl>
+</div>
+<div class="glossdiv" title="T">
+<h3 class="title">T</h3>
+<dl>
+<dt>
+<a name="var-T"></a>T</dt>
+<dd>
+<p>This variable points to a directory were Bitbake places temporary 
+                    files when building a particular package. 
+                    It is typically set as follows:
+                    </p>
+<pre class="literallayout">
+     T = ${WORKDIR}/temp
+                    </pre>
+<p>
+                    The <a class="link" href="ref-variables-glos.html#var-WORKDIR" title="WORKDIR"><code class="filename">WORKDIR</code></a>
+                    is the directory into which Bitbake unpacks and builds the package. 
+                    The default <code class="filename">bitbake.conf</code> file sets this variable.</p>
+<p>The <code class="filename">T</code> variable is not to be confused with 
+                    the <a class="link" href="ref-variables-glos.html#var-TMPDIR" title="TMPDIR"><code class="filename">TMPDIR</code></a> variable,
+                    which points to the root of the directory tree where Bitbake 
+                    places the output of an entire build.
+                </p>
+</dd>
+<dt>
+<a name="var-TARGET_ARCH"></a>TARGET_ARCH</dt>
+<dd><p>The architecture of the device being built. 
+                While a number of values are possible, the OpenEmbedded build system primarily supports
+                <code class="filename">arm</code> and <code class="filename">i586</code>.</p></dd>
+<dt>
+<a name="var-TARGET_CFLAGS"></a>TARGET_CFLAGS</dt>
+<dd><p>
+                    Flags passed to the C compiler for the target system. 
+                    This variable evaluates to the same as 
+                    <code class="filename"><a class="link" href="ref-variables-glos.html#var-CFLAGS" title="CFLAGS">CFLAGS</a></code>.
+                </p></dd>
+<dt>
+<a name="var-TARGET_FPU"></a>TARGET_FPU</dt>
+<dd><p>Specifies the method for handling FPU code. 
+                    For FPU-less targets, which include most ARM CPUs, the variable must be
+                    set to "soft".
+                    If not, the kernel emulation gets used, which results in a performance penalty.</p></dd>
+<dt>
+<a name="var-TARGET_OS"></a>TARGET_OS</dt>
+<dd><p>Specifies the target's operating system. 
+                    The variable can be set to "linux" for <code class="filename">eglibc</code>-based systems and
+                    to "linux-uclibc" for <code class="filename">uclibc</code>. 
+                    For ARM/EABI targets, there are also "linux-gnueabi" and
+                    "linux-uclibc-gnueabi" values possible.</p></dd>
+<dt>
+<a name="var-TCLIBC"></a>TCLIBC</dt>
+<dd>
+<p>
+                    Specifies which variant of the GNU standard C library (<code class="filename">libc</code>)
+                    to use during the build process.
+                    This variable replaces <code class="filename">POKYLIBC</code>, which is no longer
+                    supported.
+                </p>
+<p>
+                    You can select <code class="filename">eglibc</code> or <code class="filename">uclibc</code>.
+                    </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                        This release of the Yocto Project does not support the 
+                        <code class="filename">glibc</code> implementation of <code class="filename">libc</code>.
+                    </div>
+<p>
+                </p>
+</dd>
+<dt>
+<a name="var-TCMODE"></a>TCMODE</dt>
+<dd>
+<p>
+                    The toolchain selector. 
+                    This variable replaces <code class="filename">POKYMODE</code>, which is no longer
+                    supported.
+                </p>
+<p>
+                    The <code class="filename">TCMODE</code> variable selects the external toolchain
+                    built using the OpenEmbedded build system or a few supported combinations of
+                    the upstream GCC or CodeSourcery Labs toolchain.
+                    The variable identifies the <code class="filename">tcmode-*</code> files used in 
+                    the <code class="filename">meta/conf/distro/include</code> directory, which is found in the
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a>. 
+                </p>
+<p>
+                    By default, <code class="filename">TCMODE</code> is set to "default", which 
+                    chooses the <code class="filename">tcmode-default.inc</code> file.
+                    The variable is similar to 
+                    <a class="link" href="ref-variables-glos.html#var-TCLIBC" title="TCLIBC"><code class="filename">TCLIBC</code></a>, which controls 
+                    the variant of the GNU standard C library (<code class="filename">libc</code>)
+                    used during the build process: <code class="filename">eglibc</code> or <code class="filename">uclibc</code>.
+                </p>
+</dd>
+<dt>
+<a name="var-TMPDIR"></a>TMPDIR</dt>
+<dd>
+<p>
+                    This variable is the temporary directory the OpenEmbedded build system 
+                    uses when it does its work building images. 
+                    By default, the <code class="filename">TMPDIR</code> variable is named 
+                    <code class="filename">tmp</code> within the 
+                    <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>.
+                </p>
+<p>
+                    If you want to establish this directory in a location other than the
+                    default, you can uncomment the following statement in the 
+                    <code class="filename">conf/local.conf</code> file in the 
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a>:
+                    </p>
+<pre class="literallayout">
+     #TMPDIR = "${TOPDIR}/tmp"
+                    </pre>
+<p> 
+                </p>
+</dd>
+<dt>
+<a name="var-TOPDIR"></a>TOPDIR</dt>
+<dd><p>
+                    This variable is the 
+                    <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a>.
+                    BitBake automatically sets this variable.
+                    The OpenEmbedded build system uses the Build Directory when building images. 
+                </p></dd>
+</dl>
+</div>
+<div class="glossdiv" title="W">
+<h3 class="title">W</h3>
+<dl>
+<dt>
+<a name="var-WORKDIR"></a>WORKDIR</dt>
+<dd>
+<p>
+                    The pathname of the working directory in which the OpenEmbedded build system  
+                    builds a recipe.
+                    This directory is located within the
+                    <a class="link" href="ref-variables-glos.html#var-TMPDIR" title="TMPDIR"><code class="filename">TMPDIR</code></a> directory structure and changes
+                    as different packages are built.
+                </p>
+<p>
+                    The actual <code class="filename">WORKDIR</code> directory depends on several things:
+                    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">The temporary directory - <a class="link" href="ref-variables-glos.html#var-TMPDIR" title="TMPDIR"><code class="filename">TMPDIR</code></a>
+</li>
+<li class="listitem">The package architecture - <a class="link" href="ref-variables-glos.html#var-PACKAGE_ARCH" title="PACKAGE_ARCH"><code class="filename">PACKAGE_ARCH</code></a>
+</li>
+<li class="listitem">The target machine - <a class="link" href="ref-variables-glos.html#var-MACHINE" title="MACHINE"><code class="filename">MACHINE</code></a>
+</li>
+<li class="listitem">The target operating system - <a class="link" href="ref-variables-glos.html#var-TARGET_OS" title="TARGET_OS"><code class="filename">TARGET_OS</code></a>
+</li>
+<li class="listitem">The recipe name - <a class="link" href="ref-variables-glos.html#var-PN" title="PN"><code class="filename">PN</code></a>
+</li>
+<li class="listitem">The recipe version - <a class="link" href="ref-variables-glos.html#var-PV" title="PV"><code class="filename">PV</code></a>
+</li>
+<li class="listitem">The recipe revision - <a class="link" href="ref-variables-glos.html#var-PR" title="PR"><code class="filename">PR</code></a>
+</li>
+</ul></div>
+<p>
+                </p>
+<p>
+                    For packages that are not dependent on a particular machine, 
+                    <code class="filename">WORKDIR</code> is defined as follows:
+                    </p>
+<pre class="literallayout">
+ ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
+                    </pre>
+<p>
+                    As an example, assume a 
+                    <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a> top-level 
+                    folder name <code class="filename">poky</code> and a default 
+                    <a class="link" href="../dev-manual/build-directory.html" target="_self">Build Directory</a> 
+                    at <code class="filename">poky/build</code>.
+                    In this case, the working directory the build system uses to build 
+                    the <code class="filename">v86d</code> package is the following:
+                    </p>
+<pre class="literallayout">
+     ~/poky/build/tmp/work/qemux86-poky-linux/v86d-01.9-r0
+                    </pre>
+<p>
+                </p>
+<p>
+                    For packages that are dependent on a particular machine, <code class="filename">WORKDIR</code>
+                    is defined slightly different:
+                    </p>
+<pre class="literallayout">
+ ${TMPDIR}/work/${MACHINE}-poky-${TARGET_OS}/${PN}-${PV}-${PR}
+                    </pre>
+<p>
+                    As an example, again assume a Source Directory top-level folder 
+                    named <code class="filename">poky</code> and a default Build Directory 
+                    at <code class="filename">poky/build</code>.
+                    In this case, the working directory the build system uses to build
+                    the <code class="filename">acl</code> recipe, which is being built for a 
+                    MIPS-based device, is the following:
+                    </p>
+<pre class="literallayout">
+     ~/poky/build/tmp/work/mips-poky-linux/acl-2.2.51-r2
+                    </pre>
+<p>
+                </p>
+</dd>
+</dl>
+</div>
+</div>
+</div></body>
+</html>

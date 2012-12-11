@@ -1,0 +1,93 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>6.1. Parsing</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="ref-bitbake.html" title="Chapter 6. BitBake">
+<link rel="prev" href="ref-bitbake.html" title="Chapter 6. BitBake">
+<link rel="next" href="ref-bitbake-providers.html" title="6.2. Preferences and Providers">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="6.1. Parsing">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="ref-bitbake-parsing"></a>6.1. Parsing</h2></div></div></div>
+<p>
+            BitBake parses configuration files, classes, and <code class="filename">.bb</code> files. 
+        </p>
+<p>
+            The first thing BitBake does is look for the <code class="filename">bitbake.conf</code> file.
+            This file resides in the 
+            <a class="link" href="../dev-manual/source-directory.html" target="_self">Source Directory</a>
+            within the <code class="filename">meta/conf/</code> directory.
+            BitBake finds it by examining its 
+            <a class="link" href="ref-variables-glos.html#var-BBPATH" title="BBPATH"><code class="filename">BBPATH</code></a> environment 
+            variable and looking for the <code class="filename">meta/conf/</code> 
+            directory.
+        </p>
+<p>
+            The <code class="filename">bitbake.conf</code> file lists other configuration 
+            files to include from a <code class="filename">conf/</code> 
+            directory below the directories listed in <code class="filename">BBPATH</code>. 
+            In general, the most important configuration file from a user's perspective 
+            is <code class="filename">local.conf</code>, which contains a user's customized 
+            settings for the OpenEmbedded build environment. 
+            Other notable configuration files are the distribution 
+            configuration file (set by the 
+            <code class="filename"><a class="link" href="ref-variables-glos.html#var-DISTRO" title="DISTRO">DISTRO</a></code> variable) 
+            and the machine configuration file 
+            (set by the 
+            <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE" title="MACHINE">MACHINE</a></code> variable).  
+            The <code class="filename">DISTRO</code> and <code class="filename">MACHINE</code> BitBake environment 
+            variables are both usually set in 
+            the <code class="filename">local.conf</code> file. 
+            Valid distribution 
+            configuration files are available in the <code class="filename">meta/conf/distro/</code> directory 
+            and valid machine configuration 
+            files in the <code class="filename">meta/conf/machine/</code> directory. 
+            Within the <code class="filename">meta/conf/machine/include/</code> 
+            directory are various <code class="filename">tune-*.inc</code> configuration files that provide common 
+            "tuning" settings specific to and shared between particular architectures and machines.
+        </p>
+<p>
+            After the parsing of the configuration files, some standard classes are included. 
+            The <code class="filename">base.bbclass</code> file is always included.
+            Other classes that are specified in the configuration using the 
+            <code class="filename"><a class="link" href="ref-variables-glos.html#var-INHERIT" title="INHERIT">INHERIT</a></code>
+            variable are also included. 
+            Class files are searched for in a <code class="filename">classes</code> subdirectory 
+            under the paths in <code class="filename">BBPATH</code> in the same way as
+            configuration files.
+        </p>
+<p>
+            After classes are included, the variable 
+            <code class="filename"><a class="link" href="ref-variables-glos.html#var-BBFILES" title="BBFILES">BBFILES</a></code> 
+            is set, usually in
+            <code class="filename">local.conf</code>, and defines the list of places to search for 
+            <code class="filename">.bb</code> files. 
+            By default, the <code class="filename">BBFILES</code> variable specifies the 
+            <code class="filename">meta/recipes-*/</code> directory within Poky. 
+            Adding extra content to <code class="filename">BBFILES</code> is best achieved through the use of 
+            BitBake layers as described in the 
+            "<a class="link" href="../dev-manual/understanding-and-creating-layers.html" target="_self">Understanding and 
+            Creating Layers</a>" section of the Yocto Project Development Manual.
+        </p>
+<p>
+            BitBake parses each <code class="filename">.bb</code> file in <code class="filename">BBFILES</code> and 
+            stores the values of various variables.  
+            In summary, for each <code class="filename">.bb</code> 
+            file the configuration plus the base class of variables are set, followed 
+            by the data in the <code class="filename">.bb</code> file 
+            itself, followed by any inherit commands that
+            <code class="filename">.bb</code> file might contain.
+        </p>
+<p>
+            Because parsing <code class="filename">.bb</code> files is a time 
+            consuming process, a cache is kept to speed up subsequent parsing. 
+            This cache is invalid if the timestamp of the <code class="filename">.bb</code> 
+            file itself changes, or if the timestamps of any of the include, 
+            configuration or class files the <code class="filename">.bb</code>
+            file depends on changes.
+        </p>
+</div></body>
+</html>

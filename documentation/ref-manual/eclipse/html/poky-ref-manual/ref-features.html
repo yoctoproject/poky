@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Chapter 9. Reference: Features</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="prev" href="ref-images.html" title="Chapter 8. Images">
+<link rel="next" href="ref-features-distro.html" title="9.1. Distro">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter 9. Reference: Features">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="ref-features"></a>Chapter 9. Reference: Features</h2></div></div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><span class="section"><a href="ref-features-distro.html">9.1. Distro</a></span></dt>
+<dt><span class="section"><a href="ref-features-machine.html">9.2. Machine</a></span></dt>
+<dt><span class="section"><a href="ref-features-image.html">9.3. Images</a></span></dt>
+<dt><span class="section"><a href="ref-features-backfill.html">9.4. Feature Backfilling</a></span></dt>
+</dl>
+</div>
+<p>
+        Features provide a mechanism for working out which packages
+        should be included in the generated images. 
+        Distributions can select which features they want to support through the
+        <code class="filename"><a class="link" href="ref-variables-glos.html#var-DISTRO_FEATURES" title="DISTRO_FEATURES">DISTRO_FEATURES</a></code>
+        variable, which is set in the <code class="filename">poky.conf</code> distribution configuration file.
+        Machine features are set in the
+        <code class="filename"><a class="link" href="ref-variables-glos.html#var-MACHINE_FEATURES" title="MACHINE_FEATURES">MACHINE_FEATURES</a></code>
+        variable, which is set in the machine configuration file and
+        specifies the hardware features for a given machine.
+    </p>
+<p>
+        These two variables combine to work out which kernel modules,
+        utilities, and other packages to include. 
+        A given distribution can support a selected subset of features so some machine features might not
+        be included if the distribution itself does not support them.
+    </p>
+<p>
+        One method you can use to determine which recipes are checking to see if a 
+        particular feature is contained or not is to <code class="filename">grep</code> through 
+        the metadata for the feature.
+        Here is an example that discovers the recipes whose build is potentially 
+        changed based on a given feature:
+        </p>
+<pre class="literallayout">
+     $ cd $HOME/poky
+     $ git grep 'contains.*MACHINE_FEATURES.*&lt;feature&gt;'
+        </pre>
+<p>
+    </p>
+<p>
+        This chapter provides a reference of shipped machine and distro features
+        you can include as part of the image, a reference on image types you can 
+        build, and a reference on feature backfilling.
+    </p>
+</div></body>
+</html>

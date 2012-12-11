@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.2. Shared State Cache</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="technical-details.html" title="Chapter 3. Technical Details">
+<link rel="prev" href="usingpoky-components-configuration.html" title="3.1.4. Configuration">
+<link rel="next" href="overall-architecture.html" title="3.2.1. Overall Architecture">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.2. Shared State Cache">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="shared-state-cache"></a>3.2. Shared State Cache</h2></div></div></div>
+<p>
+        By design, the OpenEmbedded build system builds everything from scratch unless 
+        BitBake can determine that parts don't need to be rebuilt.
+        Fundamentally, building from scratch is attractive as it means all parts are 
+        built fresh and there is no possibility of stale data causing problems. 
+        When developers hit problems, they typically default back to building from scratch
+        so they know the state of things from the start.
+    </p>
+<p>  
+        Building an image from scratch is both an advantage and a disadvantage to the process. 
+        As mentioned in the previous paragraph, building from scratch ensures that 
+        everything is current and starts from a known state.
+        However, building from scratch also takes much longer as it generally means 
+        rebuilding things that don't necessarily need rebuilt.
+    </p>
+<p>
+        The Yocto Project implements shared state code that supports incremental builds.
+        The implementation of the shared state code answers the following questions that
+        were fundamental roadblocks within the OpenEmbedded incremental build support system:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">What pieces of the system have changed and what pieces have not changed?</li>
+<li class="listitem">How are changed pieces of software removed and replaced?</li>
+<li class="listitem">How are pre-built components that don't need to be rebuilt from scratch
+                used when they are available?</li>
+</ul></div>
+<p>
+    </p>
+<p>
+        For the first question, the build system detects changes in the "inputs" to a given task by 
+        creating a checksum (or signature) of the task's inputs. 
+        If the checksum changes, the system assumes the inputs have changed and the task needs to be 
+        rerun.
+        For the second question, the shared state (sstate) code tracks which tasks add which output
+        to the build process. 
+        This means the output from a given task can be removed, upgraded or otherwise manipulated.
+        The third question is partly addressed by the solution for the second question
+        assuming the build system can fetch the sstate objects from remote locations and 
+        install them if they are deemed to be valid.
+    </p>
+<p>
+        The rest of this section goes into detail about the overall incremental build
+        architecture, the checksums (signatures), shared state, and some tips and tricks.
+    </p>
+</div></body>
+</html>

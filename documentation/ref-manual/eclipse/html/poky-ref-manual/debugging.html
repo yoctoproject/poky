@@ -1,0 +1,43 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.2.4.1. Debugging</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="tips-and-tricks.html" title="3.2.4. Tips and Tricks">
+<link rel="prev" href="tips-and-tricks.html" title="3.2.4. Tips and Tricks">
+<link rel="next" href="invalidating-shared-state.html" title="3.2.4.2. Invalidating Shared State">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.2.4.1. Debugging">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="debugging"></a>3.2.4.1. Debugging</h4></div></div></div>
+<p>
+                When things go wrong, debugging needs to be straightforward. 
+                Because of this, the Yocto Project team included strong debugging
+                tools:
+                </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>Whenever a shared state package is written out, so is a
+                        corresponding <code class="filename">.siginfo</code> file. 
+                        This practice results in a pickled python database of all
+                        the metadata that went into creating the hash for a given shared state
+                        package.</p></li>
+<li class="listitem"><p>If BitBake is run with the <code class="filename">--dump-signatures</code>
+                        (or <code class="filename">-S</code>) option, BitBake dumps out 
+                        <code class="filename">.siginfo</code> files in
+                        the stamp directory for every task it would have executed instead of
+                        building the specified target package.</p></li>
+<li class="listitem"><p>There is a <code class="filename">bitbake-diffsigs</code> command that
+                        can process these <code class="filename">.siginfo</code> files. 
+                        If one file is specified, it will dump out the dependency
+                        information in the file. 
+                        If two files are specified, it will compare the two files and dump out 
+                        the differences between the two.
+                        This allows the question of "What changed between X and Y?" to be
+                        answered easily.</p></li>
+</ul></div>
+<p>
+            </p>
+</div></body>
+</html>

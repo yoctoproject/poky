@@ -1,0 +1,651 @@
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
+
+<chapter id='usingpoky'>
+<title>Using the Yocto Project</title>
+
+    <para>
+        This chapter describes common usage for the Yocto Project.
+        The information is introductory in nature as other manuals in the Yocto Project
+        documentation set provide more details on how to use the Yocto Project.
+    </para>
+
+<section id='usingpoky-build'>
+    <title>Running a Build</title>
+
+    <para>
+        This section provides a summary of the build process and provides information
+        for less obvious aspects of the build process.
+        For general information on how to build an image using the OpenEmbedded build
+        system, see the
+        "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>"
+        section of the Yocto Project Quick Start.
+    </para>
+
+    <section id='build-overview'>
+        <title>Build Overview</title>
+
+        <para>
+            The first thing you need to do is set up the OpenEmbedded build environment by sourcing
+            the <link linkend='structure-core-script'>environment setup script</link> as follows:
+            <literallayout class='monospaced'>
+     $ source &OE_INIT_FILE; [build_dir]
+            </literallayout>
+        </para>
+
+        <para>
+            The <filename>build_dir</filename> is optional and specifies the directory the
+            OpenEmbedded build system uses for the build -
+            the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+            If you do not specify a Build Directory it defaults to <filename>build</filename>
+            in your current working directory.
+            A common practice is to use a different Build Directory for different targets.
+            For example, <filename>~/build/x86</filename> for a <filename>qemux86</filename>
+            target, and <filename>~/build/arm</filename> for a <filename>qemuarm</filename> target.
+            See <link linkend="structure-core-script">&OE_INIT_FILE;</link>
+            for more information on this script.
+        </para>
+
+        <para>
+            Once the build environment is set up, you can build a target using:
+            <literallayout class='monospaced'>
+     $ bitbake &lt;target&gt;
+            </literallayout>
+        </para>
+
+        <para>
+            The <filename>target</filename> is the name of the recipe you want to build.
+            Common targets are the images in <filename>meta/recipes-core/images</filename>,
+            <filename>/meta/recipes-sato/images</filename>, etc. all found in the
+            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+            Or, the target can be the name of a recipe for a specific piece of software such as
+            <application>busybox</application>.
+            For more details about the images the OpenEmbedded build system supports, see the
+            "<link linkend="ref-images">Images</link>" chapter.
+        </para>
+
+        <note>
+            Building an image without GNU General Public License Version 3 (GPLv3) components
+            is only supported for minimal and base images.
+            See the "<link linkend='ref-images'>Images</link>" chapter for more information.
+        </note>
+    </section>
+
+    <section id='building-an-image-using-gpl-components'>
+        <title>Building an Image Using GPL Components</title>
+
+        <para>
+            When building an image using GPL components, you need to maintain your original
+            settings and not switch back and forth applying different versions of the GNU
+            General Public License.
+            If you rebuild using different versions of GPL, dependency errors might occur
+            due to some components not being rebuilt.
+        </para>
+    </section>
+</section>
+
+<section id='usingpoky-install'>
+    <title>Installing and Using the Result</title>
+
+    <para>
+        Once an image has been built, it often needs to be installed.
+        The images and kernels built by the OpenEmbedded build system are placed in the
+        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink> in
+        <filename class="directory">tmp/deploy/images</filename>.
+        For information on how to run pre-built images such as <filename>qemux86</filename>
+        and <filename>qemuarm</filename>, see the
+        "<ulink url='&YOCTO_DOCS_QS_URL;#using-pre-built'>Using Pre-Built Binaries and QEMU</ulink>"
+        section in the Yocto Project Quick Start.
+        For information about how to install these images, see the documentation for your
+        particular board/machine.
+    </para>
+</section>
+
+<section id='usingpoky-debugging'>
+    <title>Debugging Build Failures</title>
+
+    <para>
+        The exact method for debugging build failures depends on the nature of the
+        problem and on the system's area from which the bug originates.
+        Standard debugging practices such as comparison against the last
+        known working version with examination of the changes and the re-application of steps
+        to identify the one causing the problem are
+        valid for the Yocto Project just as they are for any other system.
+        Even though it is impossible to detail every possible potential failure,
+        this section provides some general tips to aid in debugging.
+    </para>
+
+    <section id='usingpoky-debugging-taskfailures'>
+        <title>Task Failures</title>
+
+        <para>The log file for shell tasks is available in
+            <filename>${WORKDIR}/temp/log.do_taskname.pid</filename>.
+            For example, the <filename>compile</filename> task for the QEMU minimal image for the x86
+            machine (<filename>qemux86</filename>) might be
+            <filename>tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/temp/log.do_compile.20830</filename>.
+            To see what BitBake runs to generate that log, look at the corresponding
+            <filename>run.do_taskname.pid</filename> file located in the same directory.
+        </para>
+
+        <para>
+            Presently, the output from Python tasks is sent directly to the console.
+        </para>
+    </section>
+
+    <section id='usingpoky-debugging-taskrunning'>
+        <title>Running Specific Tasks</title>
+
+        <para>
+            Any given package consists of a set of tasks.
+            The standard BitBake behavior in most cases is: <filename>fetch</filename>,
+            <filename>unpack</filename>,
+            <filename>patch</filename>, <filename>configure</filename>,
+            <filename>compile</filename>, <filename>install</filename>, <filename>package</filename>,
+            <filename>package_write</filename>, and <filename>build</filename>.
+            The default task is <filename>build</filename> and any tasks on which it depends
+            build first.
+            Some tasks exist, such as <filename>devshell</filename>, that are not part of the
+            default build chain.
+            If you wish to run a task that is not part of the default build chain, you can use the
+            <filename>-c</filename> option in BitBake as follows:
+            <literallayout class='monospaced'>
+     $ bitbake matchbox-desktop -c devshell
+            </literallayout>
+        </para>
+
+        <para>
+            If you wish to rerun a task, use the <filename>-f</filename> force option.
+            For example, the following sequence forces recompilation after changing files in the
+            working directory.
+            <literallayout class='monospaced'>
+     $ bitbake matchbox-desktop
+               .
+               .
+        [make some changes to the source code in the working directory]
+               .
+               .
+     $ bitbake matchbox-desktop -c compile -f
+     $ bitbake matchbox-desktop
+            </literallayout>
+        </para>
+
+        <para>
+            This sequence first builds <filename>matchbox-desktop</filename> and then recompiles it.
+            The last command reruns all tasks (basically the packaging tasks) after the compile.
+            BitBake recognizes that the <filename>compile</filename> task was rerun and therefore
+            understands that the other tasks also need to be run again.
+        </para>
+
+        <para>
+            You can view a list of tasks in a given package by running the
+            <filename>listtasks</filename> task as follows:
+            <literallayout class='monospaced'>
+     $ bitbake matchbox-desktop -c listtasks
+            </literallayout>
+            The results are in the file <filename>${WORKDIR}/temp/log.do_listtasks</filename>.
+        </para>
+    </section>
+
+    <section id='usingpoky-debugging-dependencies'>
+        <title>Dependency Graphs</title>
+
+        <para>
+            Sometimes it can be hard to see why BitBake wants to build some other packages before a given
+            package you have specified.
+            The <filename>bitbake -g targetname</filename> command creates the
+            <filename>depends.dot</filename>, <filename>package-depends.dot</filename>,
+            and <filename>task-depends.dot</filename> files in the current directory.
+            These files show the package and task dependencies and are useful for debugging problems.
+            You can use the <filename>bitbake -g -u depexp targetname</filename> command to
+            display the results in a more human-readable form.
+        </para>
+    </section>
+
+    <section id='usingpoky-debugging-bitbake'>
+        <title>General BitBake Problems</title>
+
+        <para>
+            You can see debug output from BitBake by using the <filename>-D</filename> option.
+            The debug output gives more information about what BitBake
+            is doing and the reason behind it.
+            Each <filename>-D</filename> option you use increases the logging level.
+            The most common usage is <filename>-DDD</filename>.
+        </para>
+
+        <para>
+            The output from <filename>bitbake -DDD -v targetname</filename> can reveal why
+            BitBake chose a certain version of a package or why BitBake
+            picked a certain provider.
+            This command could also help you in a situation where you think BitBake did something
+            unexpected.
+        </para>
+    </section>
+
+    <section id='usingpoky-debugging-buildfile'>
+        <title>Building with No Dependencies</title>
+        <para>
+            If you really want to build a specific <filename>.bb</filename> file, you can use
+            the command form <filename>bitbake -b &lt;somepath/somefile.bb&gt;</filename>.
+            This command form does not check for dependencies so you should use it
+            only when you know its dependencies already exist.
+            You can also specify fragments of the filename.
+            In this case, BitBake checks for a unique match.
+        </para>
+    </section>
+
+    <section id='usingpoky-debugging-variables'>
+        <title>Variables</title>
+        <para>
+            The <filename>-e</filename> option dumps the resulting environment for
+            either the configuration (no package specified) or for a
+            specific package when specified; or <filename>-b recipename</filename>
+            to show the environment from parsing a single recipe file only.
+        </para>
+    </section>
+
+    <section id='recipe-logging-mechanisms'>
+        <title>Recipe Logging Mechanisms</title>
+        <para>
+            Best practices exist while writing recipes that both log build progress and
+            act on build conditions such as warnings and errors.
+            Both Python and Bash language bindings exist for the logging mechanism:
+            <itemizedlist>
+                <listitem><para><emphasis>Python:</emphasis> For Python functions, BitBake
+                    supports several loglevels: <filename>bb.fatal</filename>,
+                    <filename>bb.error</filename>, <filename>bb.warn</filename>,
+                    <filename>bb.note</filename>, <filename>bb.plain</filename>,
+                    and <filename>bb.debug</filename>.</para></listitem>
+                <listitem><para><emphasis>Bash:</emphasis> For Bash functions, the same set
+                    of loglevels exist and are accessed with a similar syntax:
+                    <filename>bbfatal</filename>, <filename>bberror</filename>,
+                    <filename>bbwarn</filename>, <filename>bbnote</filename>,
+                    <filename>bbplain</filename>, and <filename>bbdebug</filename>.</para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            For guidance on how logging is handled in both Python and Bash recipes, see the
+            <filename>logging.bbclass</filename> file in the
+            <filename>meta/classes</filename> folder of the
+            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+        </para>
+
+        <section id='logging-with-python'>
+            <title>Logging With Python</title>
+            <para>
+                When creating recipes using Python and inserting code that handles build logs
+                keep in mind the goal is to have informative logs while keeping the console as
+                "silent" as possible.
+                Also, if you want status messages in the log use the "debug" loglevel.
+            </para>
+
+            <para>
+                Following is an example written in Python.
+                The code handles logging for a function that determines the number of tasks
+                needed to be run:
+                <literallayout class='monospaced'>
+     python do_listtasks() {
+         bb.debug(2, "Starting to figure out the task list")
+         if noteworthy_condition:
+             bb.note("There are 47 tasks to run")
+         bb.debug(2, "Got to point xyz")
+         if warning_trigger:
+             bb.warn("Detected warning_trigger, this might be a problem later.")
+         if recoverable_error:
+             bb.error("Hit recoverable_error, you really need to fix this!")
+         if fatal_error:
+             bb.fatal("fatal_error detected, unable to print the task list")
+         bb.plain("The tasks present are abc")
+         bb.debug(2, "Finished figuring out the tasklist")
+     }
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='logging-with-bash'>
+            <title>Logging With Bash</title>
+            <para>
+                When creating recipes using Bash and inserting code that handles build
+                logs you have the same goals - informative with minimal console output.
+                The syntax you use for recipes written in Bash is similar to that of
+                recipes written in Python described in the previous section.
+            </para>
+
+            <para>
+                Following is an example written in Bash.
+                The code logs the progress of the <filename>do_my_function</filename> function.
+                <literallayout class='monospaced'>
+     do_my_function() {
+         bbdebug 2 "Running do_my_function"
+         if [ exceptional_condition ]; then
+             bbnote "Hit exceptional_condition"
+         fi
+         bbdebug 2  "Got to point xyz"
+         if [ warning_trigger ]; then
+             bbwarn "Detected warning_trigger, this might cause a problem later."
+         fi
+         if [ recoverable_error ]; then
+             bberror "Hit recoverable_error, correcting"
+         fi
+         if [ fatal_error ]; then
+             bbfatal "fatal_error detected"
+         fi
+         bbdebug 2 "Completed do_my_function"
+     }
+                </literallayout>
+            </para>
+        </section>
+    </section>
+
+    <section id='usingpoky-debugging-others'>
+        <title>Other Tips</title>
+
+        <para>
+            Here are some other tips that you might find useful:
+            <itemizedlist>
+                <listitem><para>When adding new packages, it is worth watching for
+                    undesirable items making their way into compiler command lines.
+                    For example, you do not want references to local system files like
+                    <filename>/usr/lib/</filename> or <filename>/usr/include/</filename>.
+                    </para></listitem>
+                <listitem><para>If you want to remove the psplash boot splashscreen,
+                    add <filename>psplash=false</filename> to  the kernel command line.
+                    Doing so prevents psplash from loading and thus allows you to see the console.
+                    It is also possible to switch out of the splashscreen by
+                    switching the virtual console (e.g. Fn+Left or Fn+Right on a Zaurus).
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
+
+<section id='maintaining-build-output-quality'>
+    <title>Maintaining Build Output Quality</title>
+
+    <para>
+        A build's quality can be influenced by many things.
+        For example, if you upgrade a recipe to use a new version of an upstream software
+        package or you experiment with some new configuration options, subtle changes
+        can occur that you might not detect until later.
+        Consider the case where your recipe is using a newer version of an upstream package.
+        In this case, a new version of a piece of software might introduce an optional
+        dependency on another library, which is auto-detected.
+        If that library has already been built when the software is building,
+        then the software will link to the built library and that library will be pulled
+        into your image along with the new software even if you did not want the
+        library.
+    </para>
+
+    <para>
+        The <filename>buildhistory</filename> class exists to help you maintain
+        the quality of your build output.
+        You can use the class to highlight unexpected and possibly unwanted
+        changes in the build output.
+        When you enable build history it records information about the contents of
+        each package and image and then commits that information to a local Git
+        repository where you can examine the information.
+    </para>
+
+    <para>
+        The remainder of this section describes the following:
+        <itemizedlist>
+           <listitem><para>How you can enable and disable
+               build history</para></listitem>
+           <listitem><para>How to understand what the build history contains
+               </para></listitem>
+           <listitem><para>How to limit the information used for build history
+               </para></listitem>
+           <listitem><para>How to examine the build history from both a
+               command-line and web interface</para></listitem>
+       </itemizedlist>
+    </para>
+
+    <section id='enabling-and-disabling-build-history'>
+        <title>Enabling and Disabling Build History</title>
+
+        <para>
+            Build history is disabled by default.
+            To enable it, add the following statements to the end of your
+            <filename>conf/local.conf</filename> file found in the
+            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
+            <literallayout class='monospaced'>
+     INHERIT += "buildhistory"
+     BUILDHISTORY_COMMIT = "1"
+            </literallayout>
+            Enabling build history as previously described
+            causes the build process to collect build
+            output information and commit it to a local
+            <ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink> repository.
+            <note>
+                Enabling build history increases your build times slightly,
+                particularly for images, and increases the amount of disk
+                space used during the build.
+            </note>
+        </para>
+
+        <para>
+            You can disable build history by removing the previous statements
+            from your <filename>conf/local.conf</filename> file.
+            However, you should realize that enabling and disabling
+            build history in this manner can change the
+            <filename>do_package</filename> task checksums, which if you
+            are using the OEBasicHash signature generator (the default
+            for many current distro configurations including
+            <filename>DISTRO = "poky"</filename> and
+            <filename>DISTRO = ""</filename>) will result in the packaging
+            tasks being re-run during the subsequent build.
+        </para>
+
+        <para>
+            To disable the build history functionality without causing the
+            packaging tasks to be re-run, add just this statement to your
+            <filename>conf/local.conf</filename> file:
+            <literallayout class='monospaced'>
+     BUILDHISTORY_FEATURES = ""
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='understanding-what-the-build-history-contains'>
+        <title>Understanding What the Build History Contains</title>
+
+        <para>
+            Build history information is kept in
+            <link linkend='var-TMPDIR'><filename>$TMPDIR</filename></link><filename>/buildhistory</filename>
+            in the Build Directory.
+            The following is an example abbreviated listing:
+            <imagedata fileref="figures/buildhistory.png" align="center" width="6in" depth="4in" />
+        </para>
+
+        <section id='build-history-package-information'>
+            <title>Build History Package Information</title>
+
+            <para>
+                The history for each package contains a text file that has
+                name-value pairs with information about the package.
+                For example, <filename>buildhistory/packages/core2-poky-linux/busybox/busybox/latest</filename>
+                contains the following:
+                <literallayout class='monospaced'>
+     PV = 1.19.3
+     PR = r3
+     RDEPENDS = update-rc.d eglibc (>= 2.13)
+     RRECOMMENDS = busybox-syslog busybox-udhcpc
+     PKGSIZE = 564701
+     FILES = /usr/bin/* /usr/sbin/* /usr/libexec/* /usr/lib/lib*.so.* \
+        /etc /com /var /bin/* /sbin/* /lib/*.so.* /usr/share/busybox \
+        /usr/lib/busybox/* /usr/share/pixmaps /usr/share/applications \
+        /usr/share/idl /usr/share/omf /usr/share/sounds /usr/lib/bonobo/servers
+     FILELIST = /etc/busybox.links /etc/init.d/hwclock.sh /bin/busybox /bin/sh
+                </literallayout>
+                Most of these name-value pairs corresponds to variables used
+                to produce the package.
+                The exceptions are <filename>FILELIST</filename>, which is the
+                actual list of files in the package, and
+                <filename>PKGSIZE</filename>, which is the total size of files
+                in the package in bytes.
+            </para>
+
+            <para>
+                There is also a file corresponding to the recipe from which the
+                package came (e.g.
+                <filename>buildhistory/packages/core2-poky-linux/busybox/latest</filename>):
+                <literallayout class='monospaced'>
+     PV = 1.19.3
+     PR = r3
+     DEPENDS = virtual/i586-poky-linux-gcc virtual/i586-poky-linux-compilerlibs \
+        virtual/libc update-rc.d-native
+     PACKAGES = busybox-httpd busybox-udhcpd busybox-udhcpc busybox-syslog \
+        busybox-mdev busybox-dbg busybox busybox-doc busybox-dev \
+        busybox-staticdev busybox-locale
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='build-history-image-information'>
+            <title>Build History Image Information</title>
+
+            <para>
+                The files produced for each image are as follows:
+                <itemizedlist>
+                    <listitem><para><emphasis>build-id:</emphasis>
+                        Human-readable information about the build configuration
+                        and metadata source revisions.</para></listitem>
+                    <listitem><para><emphasis>*.dot:</emphasis>
+                        Dependency graphs for the image that are
+                        compatible with <filename>graphviz</filename>.
+                        </para></listitem>
+                    <listitem><para><emphasis>files-in-image.txt:</emphasis>
+ 	                    A list of files in the image with permissions,
+                        owner, group, size, and symlink information.
+                        </para></listitem>
+                    <listitem><para><emphasis>image-info.txt:</emphasis>
+                        A text file containing name-value pairs with information
+                        about the image.
+                        See the following listing example for more information.
+                        </para></listitem>
+                    <listitem><para><emphasis>installed-package-names.txt:</emphasis>
+                        A list of installed packages by name only.</para></listitem>
+                    <listitem><para><emphasis>installed-package-sizes.txt:</emphasis>
+                        A list of installed packages ordered by size.
+                        </para></listitem>
+                    <listitem><para><emphasis>installed-packages.txt:</emphasis>
+                        A list of installed packages with fuill package
+                        filenames.</para></listitem>
+                </itemizedlist>
+                <note>
+                    Installed package information is able to be gathered and
+                    produced even if package management is disabled for the final
+                    image.
+                </note>
+            </para>
+
+            <para>
+                Here is an example of <filename>image-info.txt</filename>:
+                <literallayout class='monospaced'>
+     DISTRO = poky
+     DISTRO_VERSION = 1.1+snapshot-20120207
+     USER_CLASSES = image-mklibs image-prelink
+     IMAGE_CLASSES = image_types
+     IMAGE_FEATURES = debug-tweaks x11-base apps-x11-core \
+        package-management ssh-server-dropbear package-management
+     IMAGE_LINGUAS = en-us en-gb
+     IMAGE_INSTALL = task-core-boot task-base-extended
+     BAD_RECOMMENDATIONS =
+     ROOTFS_POSTPROCESS_COMMAND = buildhistory_get_image_installed ;   rootfs_update_timestamp ;
+     IMAGE_POSTPROCESS_COMMAND = buildhistory_get_imageinfo ;
+     IMAGESIZE = 171816
+                </literallayout>
+                Other than <filename>IMAGESIZE</filename>, which is the
+                total size of the files in the image in Kbytes, the
+                name-value pairs are variables that may have influenced the
+                content of the image.
+                This information is often useful when you are trying to determine
+                why a change in the package or file listings has occurred.
+            </para>
+        </section>
+
+        <section id='using-build-history-to-gather-image-information-only'>
+            <title>Using Build History to Gather Image Information Only</title>
+
+            <para>
+                As you can see, build history produces image information,
+                including dependency graphs, so you can see why something
+                was pulled into the image.
+                If you are just interested in this information and not
+                interested in collecting history or any package information,
+                you can enable writing only image information without
+                any history by adding the following
+                to your <filename>conf/local.conf</filename> file found in the
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
+                <literallayout class='monospaced'>
+     INHERIT += "buildhistory"
+     BUILDHISTORY_COMMIT = "0"
+     BUILDHISTORY_FEATURES = "image"
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='examining-build-history-information'>
+            <title>Examining Build History Information</title>
+
+            <para>
+                You can examine build history output from the command line or
+                from a web interface.
+            </para>
+
+            <para>
+                To see any changes that have occurred (assuming you have
+                <filename>BUILDHISTORY_COMMIT = "1"</filename>), you can simply
+                use any Git command that allows you to view the history of
+                a repository.
+                Here is one method:
+                <literallayout class='monospaced'>
+      $ git log -p
+                </literallayout>
+                You need to realize, however, that this method does show
+                changes that are not significant (e.g. a package's size
+                changing by a few bytes).
+            </para>
+
+            <para>
+                A command-line tool called <filename>buildhistory-diff</filename>
+                does exist though that queries the Git repository and prints just
+                the differences that might be significant in human-readable form.
+                Here is an example:
+                <literallayout class='monospaced'>
+     $ ~/poky/poky/scripts/buildhistory-diff . HEAD^
+     Changes to images/qemux86_64/eglibc/core-image-minimal (files-in-image.txt):
+        /etc/anotherpkg.conf was added
+        /sbin/anotherpkg was added
+        * (installed-package-names.txt):
+        *   anotherpkg was added
+     Changes to images/qemux86_64/eglibc/core-image-minimal (installed-package-names.txt):
+        anotherpkg was added
+     packages/qemux86_64-poky-linux/v86d: PACKAGES: added "v86d-extras"
+        * PR changed from "r0" to "r1"
+        * PV changed from "0.1.10" to "0.1.12"
+     packages/qemux86_64-poky-linux/v86d/v86d: PKGSIZE changed from 110579 to 144381 (+30%)
+        * PR changed from "r0" to "r1"
+        * PV changed from "0.1.10" to "0.1.12"
+                </literallayout>
+            </para>
+
+            <para>
+                To see changes to the build history using a web interface, follow
+                the instruction in the <filename>README</filename> file here.
+                <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/buildhistory-web/'></ulink>.
+            </para>
+
+            <para>
+                Here is a sample screenshot of the interface:
+                <imagedata fileref="figures/buildhistory-web.png" align="center" scalefit="1" width="130%" contentdepth="130%" />
+            </para>
+        </section>
+    </section>
+</section>
+
+</chapter>
+<!--
+vim: expandtab tw=80 ts=4
+-->

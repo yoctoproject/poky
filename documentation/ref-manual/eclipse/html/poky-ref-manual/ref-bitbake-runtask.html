@@ -1,0 +1,86 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>6.5. Running a Task</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="ref-bitbake.html" title="Chapter 6. BitBake">
+<link rel="prev" href="ref-bitbake-tasklist.html" title="6.4. The Task List">
+<link rel="next" href="ref-bitbake-commandline.html" title="6.6. BitBake Command Line">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="6.5. Running a Task">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="ref-bitbake-runtask"></a>6.5. Running a Task</h2></div></div></div>
+<p>
+            Tasks can either be a shell task or a Python task.
+            For shell tasks, BitBake writes a shell script to 
+            <code class="filename">${WORKDIR}/temp/run.do_taskname.pid</code> and then executes the script. 
+            The generated shell script contains all the exported variables, and the shell functions 
+            with all variables expanded. 
+            Output from the shell script goes to the file <code class="filename">${WORKDIR}/temp/log.do_taskname.pid</code>.
+            Looking at the expanded shell functions in the run file and the output in the log files 
+            is a useful debugging technique.
+        </p>
+<p>
+            For Python tasks, BitBake executes the task internally and logs information to the 
+            controlling terminal. 
+            Future versions of BitBake will write the functions to files similar to the way 
+            shell tasks are handled.
+            Logging will be handled in way similar to shell tasks as well.
+        </p>
+<p>
+            Once all the tasks have been completed BitBake exits.
+        </p>
+<p>
+            When running a task, BitBake tightly controls the execution environment 
+            of the build tasks to make sure unwanted contamination from the build machine
+            cannot influence the build. 
+            Consequently, if you do want something to get passed into the build 
+            task's environment, you must take a few steps:
+            </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+<p>Tell BitBake to load what you want from the environment
+                    into the data store. 
+                    You can do so through the <code class="filename">BB_ENV_EXTRAWHITE</code>
+                    variable.
+                    For example, assume you want to prevent the build system from 
+                    accessing your <code class="filename">$HOME/.ccache</code> directory.
+                    The following command tells BitBake to load 
+                    <code class="filename">CCACHE_DIR</code> from the environment into the data
+                    store:
+                    </p>
+<pre class="literallayout">
+     export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE CCACHE_DIR" 
+                    </pre>
+</li>
+<li class="listitem">
+<p>Tell BitBake to export what you have loaded into the 
+                    environment store to the task environment of every running task.
+                    Loading something from the environment into the data store
+                    (previous step) only makes it available in the datastore. 
+                    To export it to the task environment of every running task,
+                    use a command similar to the following in your 
+                    <code class="filename">local.conf</code> or distro configuration file:
+                    </p>
+<pre class="literallayout">
+     export CCACHE_DIR
+                    </pre>
+</li>
+</ol></div>
+<p>
+        </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+            A side effect of the previous steps is that BitBake records the variable
+            as a dependency of the build process in things like the shared state
+            checksums. 
+            If doing so results in unnecessary rebuilds of tasks, you can whitelist the 
+            variable so that the shared state code ignores the dependency when it creates
+            checksums.
+            For information on this process, see the <code class="filename">BB_HASHBASE_WHITELIST</code>
+            example in the "<a class="link" href="checksums.html" title="3.2.2. Checksums (Signatures)">Checksums (Signatures)</a>" section.
+        </div>
+</div></body>
+</html>

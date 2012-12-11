@@ -1,0 +1,44 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>5.2.14. build/tmp/deploy/images/</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="The Yocto Project Reference Manual">
+<link rel="up" href="structure-build.html" title="5.2. The Build Directory - build/">
+<link rel="prev" href="structure-build-tmp-deploy-licenses.html" title="5.2.13. build/tmp/deploy/licenses/">
+<link rel="next" href="structure-build-tmp-deploy-ipk.html" title="5.2.15. build/tmp/deploy/ipk/">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="5.2.14. build/tmp/deploy/images/">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="structure-build-tmp-deploy-images"></a>5.2.14. <code class="filename">build/tmp/deploy/images/</code>
+</h3></div></div></div>
+<p>
+            This directory receives complete filesystem images. 
+            If you want to flash the resulting image from a build onto a device, look here for the image.
+        </p>
+<p>
+            Be careful when deleting files in this directory. 
+            You can safely delete old images from this directory (e.g. 
+            <code class="filename">core-image-*</code>, <code class="filename">hob-image-*</code>,
+            etc.). 
+            However, the kernel (<code class="filename">*zImage*</code>, <code class="filename">*uImage*</code>, etc.), 
+            bootloader and other supplementary files might be deployed here prior to building an
+            image.
+            Because these files, however, are not directly produced from the image, if you
+            delete them they will not be automatically re-created when you build the image again.
+        </p>
+<p>
+            If you do accidentally delete files here, you will need to force them to be 
+            re-created. 
+            In order to do that, you will need to know the target that produced them.
+            For example, these commands rebuild and re-create the kernel files:
+            </p>
+<pre class="literallayout">
+     $ bitbake -c clean virtual/kernel
+     $ bitbake virtual/kernel
+            </pre>
+<p>
+        </p>
+</div></body>
+</html>
