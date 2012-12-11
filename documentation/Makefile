@@ -1,69 +1,69 @@
 # This is a single Makefile to handle all generated Yocto Project documents.
 # The Makefile needs to live in the documents directory and all figures used
 # in any manuals must be .PNG files and live in the individual book's figures
-# directory as well as in the figures directory for the mega-manual.  
+# directory as well as in the figures directory for the mega-manual.
 # Note that the figures for the Yocto Project Development Manual
 # differ depending on the BRANCH being built.
 #
 # The Makefile has these targets:
 #
 #    pdf:      generates a PDF version of a manual.  Not valid for the Quick Start
-#              or the mega-manual (single, large HTML file comprised of all 
+#              or the mega-manual (single, large HTML file comprised of all
 #              Yocto Project manuals).
 #    html:     generates an HTML version of a manual.
 #    tarball:  creates a tarball for the doc files.
-#    validate: validates 
+#    validate: validates
 #    publish:  pushes generated files to the Yocto Project website
 #    clean:    removes files
 #
 # The Makefile generates an HTML and PDF version of every document except the
 # Yocto Project Quick Start and the single, HTML mega-manual, which is comprised
-# of all the individual Yocto Project manuals.  These two manuals are in HTML 
-# form only.  The variable DOC indicates the folder name for a given manual. The 
-# variable VER represents the distro version of the Yocto Release for which the 
-# manuals are being generated.  The variable BRANCH is used to indicate the 
-# branch (edison or denzil) and is used only when DOC=dev-manual or 
-# DOC=mega-manual.  If you do not specify a BRANCH, the default branch used 
-# will be for the latest Yocto Project release.  If you build for either 
+# of all the individual Yocto Project manuals.  These two manuals are in HTML
+# form only.  The variable DOC indicates the folder name for a given manual. The
+# variable VER represents the distro version of the Yocto Release for which the
+# manuals are being generated.  The variable BRANCH is used to indicate the
+# branch (edison or denzil) and is used only when DOC=dev-manual or
+# DOC=mega-manual.  If you do not specify a BRANCH, the default branch used
+# will be for the latest Yocto Project release.  If you build for either
 # edison or denzil, you must use BRANCH. You do not need to use BRANCH for
-# any release beyond denzil.  
+# any release beyond denzil.
 #
-# To build a manual, you must invoke Makefile with the DOC argument.  If you 
-# are going to publish the manual, then you must invoke Makefile with both the 
+# To build a manual, you must invoke Makefile with the DOC argument.  If you
+# are going to publish the manual, then you must invoke Makefile with both the
 # DOC and the VER argument.  Furthermore, if you are building or publishing
-# the edison or denzil versions of the Yocto Poject Development Manual or 
-# the mega-manual, you must also use the BRANCH argument.  
+# the edison or denzil versions of the Yocto Poject Development Manual or
+# the mega-manual, you must also use the BRANCH argument.
 #
 # Examples:
 #
 #     make DOC=bsp-guide
 #     make DOC=yocto-project-qs
-#     make pdf DOC=poky-ref-manual
+#     make pdf DOC=ref-manual
 #     make DOC=dev-manual BRANCH=edison
 #     make DOC=mega-manual BRANCH=denzil
 #
 # The first example generates the HTML and PDF versions of the BSP Guide.
-# The second example generates the HTML version only of the Quick Start.  Note that 
-# the Quick Start only has an HTML version available.  The third example generates 
-# both the PDF and HTML versions of the Yocto Project Reference Manual. The 
-# fourth example generates both the PDF and HTML 'edison' versions of the YP 
-# Development Manual.  The last exmample generates the HTML version of the 
-# mega-manual and uses the 'denzil' branch when choosing figures for the 
-# tarball of figures.  Any example that does not use the BRANCH argument 
+# The second example generates the HTML version only of the Quick Start.  Note that
+# the Quick Start only has an HTML version available.  The third example generates
+# both the PDF and HTML versions of the Yocto Project Reference Manual. The
+# fourth example generates both the PDF and HTML 'edison' versions of the YP
+# Development Manual.  The last exmample generates the HTML version of the
+# mega-manual and uses the 'denzil' branch when choosing figures for the
+# tarball of figures.  Any example that does not use the BRANCH argument
 # builds the current version of the manual set.
 #
-# Use the publish target to push the generated manuals to the Yocto Project 
-# website.  All files needed for the manual's HTML form are pushed as well as the 
-# PDF version (if applicable).  
+# Use the publish target to push the generated manuals to the Yocto Project
+# website.  All files needed for the manual's HTML form are pushed as well as the
+# PDF version (if applicable).
 # Examples:
 #
 #    make publish DOC=bsp-guide VER=1.3
 #    make publish DOC=adt-manual VER=1.3
 #    make publish DOC=dev-manual VER=1.1.1 BRANCH=edison
-#    make publish DOC=dev-manual VER=1.2 BRANCH=denzil 
+#    make publish DOC=dev-manual VER=1.2 BRANCH=denzil
 #
-# The first example publishes the 1.3 version of both the PDF and HTML versions of 
-# the BSP Guide.  The second example publishes the 1.3 version of both the PDF and 
+# The first example publishes the 1.3 version of both the PDF and HTML versions of
+# the BSP Guide.  The second example publishes the 1.3 version of both the PDF and
 # HTML versions of the ADT Manual. The third example publishes the PDF and HTML
 # 'edison' versions of the YP Development Manual.  The fourth example publishes
 # the PDF and HTML 'denzil' versions of the YP Development Manual.
@@ -92,7 +92,7 @@ XSLTOPTS = --stringparam html.stylesheet dev-style.css \
 ALLPREQ = html pdf tarball
 #
 # Note that the tarfile might produce the "Cannot stat: No such file or directory" error
-# message for .PNG files that are not present when building a particular branch.  The 
+# message for .PNG files that are not present when building a particular branch.  The
 # list of files is all-inclusive for all branches.  Note, if you don't provide a BRANCH
 # option, it defaults to the latest stuff.  This would be appropriate for "master" branch.
 #
@@ -191,7 +191,7 @@ STYLESHEET = $(DOC)/*.css
 
 endif
 
-ifeq ($(DOC),poky-ref-manual)
+ifeq ($(DOC),ref-manual)
 XSLTOPTS = --stringparam html.stylesheet ref-style.css \
            --stringparam  chapter.autolabel 1 \
            --stringparam  appendix.autolabel A \
@@ -199,7 +199,7 @@ XSLTOPTS = --stringparam html.stylesheet ref-style.css \
            --stringparam  section.label.includes.component.label 1 \
            --xinclude
 ALLPREQ = html pdf tarball
-TARFILES = poky-ref-manual.html ref-style.css figures/poky-title.png \
+TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/buildhistory.png figures/buildhistory-web.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
@@ -259,10 +259,10 @@ else
 
 	cd $(DOC); ../tools/poky-docbook-to-pdf $(DOC).xml ../template; cd ..
 endif
-    
+
 html:
 ifeq ($(DOC),mega-manual)
-#       See http://www.sagehill.net/docbookxsl/HtmlOutput.html 
+#       See http://www.sagehill.net/docbookxsl/HtmlOutput.html
 	@echo " "
 	@echo "******** Building "$(DOC)
 	@echo " "
@@ -276,7 +276,7 @@ ifeq ($(DOC),mega-manual)
 	@echo " "
 	cd $(DOC); rm mega-manual.html; mv mega-output.html mega-manual.html; cd ..
 else
-#       See http://www.sagehill.net/docbookxsl/HtmlOutput.html 
+#       See http://www.sagehill.net/docbookxsl/HtmlOutput.html
 	@echo " "
 	@echo "******** Building "$(DOC)
 	@echo " "
