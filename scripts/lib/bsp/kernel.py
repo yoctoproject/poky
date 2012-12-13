@@ -427,16 +427,20 @@ def yocto_kernel_patch_add(scripts_path, machine, patches):
 def inc_pr(line):
     """
     Add 1 to the PR value in the given bbappend PR line.  For the PR
-    lines in kernel .bbappends after modifications.
+    lines in kernel .bbappends after modifications.  Handles PRs of
+    the form PR := "${PR}.1" as well as PR = "r0".
     """
     idx = line.find("\"")
 
     pr_str = line[idx:]
     pr_str = pr_str.replace('\"','')
     fields = pr_str.split('.')
-    fields[1] = str(int(fields[1]) + 1)
-    pr_str = "\"" + '.'.join(fields) + "\"\n"
-
+    if len(fields) > 1:
+        fields[1] = str(int(fields[1]) + 1)
+        pr_str = "\"" + '.'.join(fields) + "\"\n"
+    else:
+        pr_val = pr_str[1:]
+        pr_str = "\"" + "r" + str(int(pr_val) + 1) + "\"\n"
     idx2 = line.find("\"", idx + 1)
     line = line[:idx] + pr_str
     
