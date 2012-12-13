@@ -133,6 +133,30 @@ def gen_choices_str(choices):
     return choices_str
 
 
+def open_user_file(scripts_path, machine, userfile, mode):
+    """
+    Find one of the user files (user-config.cfg, user-patches.scc)
+    associated with the machine (could be in files/,
+    linux-yocto-custom/, etc).  Returns the open file if found, None
+    otherwise.
+
+    The caller is responsible for closing the file returned.
+    """
+    layer = find_bsp_layer(scripts_path, machine)
+    linuxdir = os.path.join(layer, "recipes-kernel/linux")
+    linuxdir_list = os.listdir(linuxdir)
+    for fileobj in linuxdir_list:
+        fileobj_path = os.path.join(linuxdir, fileobj)
+        if os.path.isdir(fileobj_path):
+            userfile_name = os.path.join(fileobj_path, userfile)
+            try:
+                f = open(userfile_name, mode)
+                return f
+            except IOError:
+                continue
+    return None
+
+
 def read_config_items(scripts_path, machine):
     """
     Find and return a list of config items (CONFIG_XXX) in a machine's
@@ -140,10 +164,7 @@ def read_config_items(scripts_path, machine):
     """
     config_items = []
 
-    layer = find_bsp_layer(scripts_path, machine)
-    cfg = os.path.join(layer, "recipes-kernel/linux/files/user-config.cfg")
-
-    f = open(cfg, "r")
+    f = open_user_file(scripts_path, machine, "user-config.cfg", "r")
     lines = f.readlines()
     for line in lines:
         s = line.strip()
@@ -159,10 +180,7 @@ def write_config_items(scripts_path, machine, config_items):
     Write (replace) the list of config items (CONFIG_XXX) in a
     machine's user-defined config fragment [user-config.cfg].
     """
-    layer = find_bsp_layer(scripts_path, machine)
-    cfg = os.path.join(layer, "recipes-kernel/linux/files/user-config.cfg")
-
-    f = open(cfg, "w")
+    f = open_user_file(scripts_path, machine, "user-config.cfg", "w")
     for item in config_items:
         f.write(item + "\n")
     f.close()
@@ -377,10 +395,7 @@ def read_patch_items(scripts_path, machine):
     """
     patch_items = []
 
-    layer = find_bsp_layer(scripts_path, machine)
-    patches = os.path.join(layer, "recipes-kernel/linux/files/user-patches.scc")
-
-    f = open(patches, "r")
+    f = open_user_file(scripts_path, machine, "user-patches.scc", "r")
     lines = f.readlines()
     for line in lines:
         s = line.strip()
@@ -399,11 +414,7 @@ def write_patch_items(scripts_path, machine, patch_items):
     Write (replace) the list of patches in a machine's user-defined
     patch list [user-patches.scc].
     """
-    layer = find_bsp_layer(scripts_path, machine)
-
-    patches = os.path.join(layer, "recipes-kernel/linux/files/user-patches.scc")
-
-    f = open(patches, "w")
+    f = open_user_file(scripts_path, machine, "user-patches.scc", "w")
     for item in patch_items:
         pass
         # this currently breaks do_patch, but is really what we want
