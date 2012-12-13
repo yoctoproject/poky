@@ -168,7 +168,7 @@ def read_config_items(scripts_path, machine):
     lines = f.readlines()
     for line in lines:
         s = line.strip()
-        if s:
+        if s and not s.startswith("#"):
             config_items.append(s)
     f.close()
 
@@ -399,7 +399,7 @@ def read_patch_items(scripts_path, machine):
     lines = f.readlines()
     for line in lines:
         s = line.strip()
-        if s:
+        if s and not s.startswith("#"):
             fields = s.split()
             if not fields[0] == "patch":
                 continue
