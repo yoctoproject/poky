@@ -289,6 +289,8 @@ def find_current_kernel(bsp_layer, machine):
 
     if preferred_kernel and preferred_kernel_version:
         return preferred_kernel + "_" + preferred_kernel_version
+    elif preferred_kernel:
+        return preferred_kernel
 
 
 def find_bsp_kernel_src_uri(scripts_path, machine, start_end_only = False):
