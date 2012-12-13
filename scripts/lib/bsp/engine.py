@@ -244,6 +244,44 @@ class GitRepoEditBoxInputLine(EditBoxInputLine):
         return line
 
 
+class FileEditBoxInputLine(EditBoxInputLine):
+    """
+    Base class for 'editbox' Input lines for user input of existing
+    files.  This class verifies the existence of the specified file.
+
+    props:
+        name: example - "Load address"
+        msg: example - "Please enter the load address"
+    result:
+        Sets the value of the variable specified by 'name' to
+        whatever the user typed.
+    """
+    def __init__(self, props, tag, lineno):
+        EditBoxInputLine.__init__(self, props, tag, lineno)
+
+    def gen(self, context = None):
+        EditBoxInputLine.gen(self, context)
+        name = self.props["name"]
+        if not name:
+            self.parse_error("No input 'name' property found",
+                             self.lineno, self.line)
+        msg = self.props["msg"]
+        if not msg:
+            self.parse_error("No input 'msg' property found",
+                             self.lineno, self.line)
+
+        try:
+            default_choice = self.props["default"]
+        except KeyError:
+            default_choice = ""
+
+        msg += " [default: " + default_choice + "]"
+
+        line = name + " = get_verified_file(\"" + msg + "\"," + name + ", True)"
+
+        return line
+
+
 class BooleanInputLine(InputLine):
     """
     Base class for boolean Input lines.
@@ -509,6 +547,23 @@ def get_verified_git_repo(input_str, name):
         giturl = default(raw_input(msg), name)
 
 
+def get_verified_file(input_str, name, filename_can_be_null):
+    """
+    Return filename if the file exists, otherwise loop forever asking
+    user for filename.
+    """
+    msg = input_str.strip() + " "
+
+    filename = default(raw_input(msg), name)
+
+    while True:
+        if not filename and filename_can_be_null:
+            return filename
+        if os.path.isfile(filename):
+            return filename
+        filename = default(raw_input(msg), name)
+
+
 def boolean(input_str, name):
     """
     Return lowercase version of first char in string, or value in name.
@@ -725,6 +780,8 @@ class SubstrateBase(object):
             return EditBoxInputLine(props, tag, lineno)
         if input_type == "edit-git-repo":
             return GitRepoEditBoxInputLine(props, tag, lineno)
+        if input_type == "edit-file":
+            return FileEditBoxInputLine(props, tag, lineno)
         elif input_type == "choicelist":
             self.prev_choicelist = ChoicelistInputLine(props, tag, lineno)
             return self.prev_choicelist
