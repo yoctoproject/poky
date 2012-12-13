@@ -623,6 +623,8 @@ def kernels(context):
             filename = filename[idx + len(CLOSE_TAG):].strip()
         kernels.append(filename)
 
+    kernels.append("custom")
+
     return kernels
 
 
