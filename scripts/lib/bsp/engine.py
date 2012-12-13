@@ -37,6 +37,7 @@ from abc import ABCMeta, abstractmethod
 from tags import *
 import shlex
 import json
+import subprocess
 
 class Line():
     """
@@ -200,6 +201,45 @@ class EditBoxInputLine(InputLine):
         msg += " [default: " + default_choice + "]"
 
         line = name + " = default(raw_input(\"" + msg + " \"), " + name + ")"
+
+        return line
+
+
+class GitRepoEditBoxInputLine(EditBoxInputLine):
+    """
+    Base class for 'editbox' Input lines for user input of remote git
+    repos.  This class verifies the existence and connectivity of the
+    specified git repo.
+
+    props:
+        name: example - "Load address"
+        msg: example - "Please enter the load address"
+    result:
+        Sets the value of the variable specified by 'name' to
+        whatever the user typed.
+    """
+    def __init__(self, props, tag, lineno):
+        EditBoxInputLine.__init__(self, props, tag, lineno)
+
+    def gen(self, context = None):
+        EditBoxInputLine.gen(self, context)
+        name = self.props["name"]
+        if not name:
+            self.parse_error("No input 'name' property found",
+                             self.lineno, self.line)
+        msg = self.props["msg"]
+        if not msg:
+            self.parse_error("No input 'msg' property found",
+                             self.lineno, self.line)
+
+        try:
+            default_choice = self.props["default"]
+        except KeyError:
+            default_choice = ""
+
+        msg += " [default: " + default_choice + "]"
+
+        line = name + " = get_verified_git_repo(\"" + msg + "\"," + name + ")"
 
         return line
 
@@ -435,6 +475,40 @@ def default(input_str, name):
     return input_str.strip()
 
 
+def verify_git_repo(giturl):
+    """
+    Verify that the giturl passed in can be connected to.  This can be
+    used as a check for the existence of the given repo and/or basic
+    git remote connectivity.
+
+    Returns True if the connection was successful, fals otherwise
+    """
+    if not giturl:
+        return False
+
+    gitcmd = "git ls-remote %s > /dev/null 2>&1" % (giturl)
+    rc = subprocess.call(gitcmd, shell=True)
+    if rc == 0:
+        return True
+
+    return False
+
+
+def get_verified_git_repo(input_str, name):
+    """
+    Return git repo if verified, otherwise loop forever asking user
+    for filename.
+    """
+    msg = input_str.strip() + " "
+
+    giturl = default(raw_input(msg), name)
+
+    while True:
+        if verify_git_repo(giturl):
+            return giturl
+        giturl = default(raw_input(msg), name)
+
+
 def boolean(input_str, name):
     """
     Return lowercase version of first char in string, or value in name.
@@ -649,6 +723,8 @@ class SubstrateBase(object):
             return BooleanInputLine(props, tag, lineno)
         if input_type == "edit":
             return EditBoxInputLine(props, tag, lineno)
+        if input_type == "edit-git-repo":
+            return GitRepoEditBoxInputLine(props, tag, lineno)
         elif input_type == "choicelist":
             self.prev_choicelist = ChoicelistInputLine(props, tag, lineno)
             return self.prev_choicelist
