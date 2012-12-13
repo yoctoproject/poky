@@ -295,11 +295,11 @@ def find_current_kernel(bsp_layer, machine):
 
 def find_bsp_kernel_src_uri(scripts_path, machine, start_end_only = False):
     """
-    Parse the SRC_URI append in the kernel .bbappend, returing a list
-    of individual components, and the start/end positions of the
-    SRC_URI statement, so it can be regenerated in the same position.
-    If start_end_only is True, don't return the list of elements, only
-    the start and end positions.
+    Parse the SRC_URI append in the kernel .bb or .bbappend, returing
+    a list of individual components, and the start/end positions of
+    the SRC_URI statement, so it can be regenerated in the same
+    position.  If start_end_only is True, don't return the list of
+    elements, only the start and end positions.
 
     Returns (SRC_URI start line, SRC_URI end_line, list of split
     SRC_URI items).
@@ -318,9 +318,17 @@ def find_bsp_kernel_src_uri(scripts_path, machine, start_end_only = False):
         print "Couldn't determine the kernel for this BSP, exiting."
         sys.exit(1)
 
-    kernel_bbappend = os.path.join(layer, "recipes-kernel/linux/" + kernel + ".bbappend")
+    kernel_bbfile = os.path.join(layer, "recipes-kernel/linux/" + kernel + ".bbappend")
+    try:
+        f = open(kernel_bbfile, "r")
+    except IOError:
+        kernel_bbfile = os.path.join(layer, "recipes-kernel/linux/" + kernel + ".bb")
+        try:
+            f = open(kernel_bbfile, "r")
+        except IOError:
+            print "Couldn't find a .bb or .bbappend file for this BSP's kernel, exiting."
+            sys.exit(1)
 
-    f = open(kernel_bbappend, "r")
     src_uri_line = ""
     in_src_uri = False
     lines = f.readlines()
@@ -561,12 +569,16 @@ def kernel_contents_changed(scripts_path, machine):
         print "Couldn't determine the kernel for this BSP, exiting."
         sys.exit(1)
 
-    kernel_bbappend = os.path.join(layer, "recipes-kernel/linux/" + kernel + ".bbappend")
-    kernel_bbappend_prev = kernel_bbappend + ".prev"
-    shutil.copyfile(kernel_bbappend, kernel_bbappend_prev)
+    kernel_bbfile = os.path.join(layer, "recipes-kernel/linux/" + kernel + ".bbappend")
+    if not os.path.isfile(kernel_bbfile):
+        kernel_bbfile = os.path.join(layer, "recipes-kernel/linux/" + kernel + ".bb")
+        if not os.path.isfile(kernel_bbfile):
+            return
+    kernel_bbfile_prev = kernel_bbfile + ".prev"
+    shutil.copyfile(kernel_bbfile, kernel_bbfile_prev)
 
-    ifile = open(kernel_bbappend_prev, "r")
-    ofile = open(kernel_bbappend, "w")
+    ifile = open(kernel_bbfile_prev, "r")
+    ofile = open(kernel_bbfile, "w")
     ifile_lines = ifile.readlines()
     for ifile_line in ifile_lines:
         if ifile_line.strip().startswith("PR"):
@@ -588,14 +600,19 @@ def write_kernel_src_uri(scripts_path, machine, src_uri):
         print "Couldn't determine the kernel for this BSP, exiting."
         sys.exit(1)
 
-    kernel_bbappend = os.path.join(layer, "recipes-kernel/linux/" + kernel + ".bbappend")
+    kernel_bbfile = os.path.join(layer, "recipes-kernel/linux/" + kernel + ".bbappend")
+    if not os.path.isfile(kernel_bbfile):
+        kernel_bbfile = os.path.join(layer, "recipes-kernel/linux/" + kernel + ".bb")
+        if not os.path.isfile(kernel_bbfile):
+            print "Couldn't find a .bb or .bbappend file for this BSP's kernel, exiting."
+            sys.exit(1)
 
     (uri_start_line, uri_end_line, unused) = find_bsp_kernel_src_uri(scripts_path, machine, True)
 
-    kernel_bbappend_prev = kernel_bbappend + ".prev"
-    shutil.copyfile(kernel_bbappend, kernel_bbappend_prev)
-    ifile = open(kernel_bbappend_prev, "r")
-    ofile = open(kernel_bbappend, "w")
+    kernel_bbfile_prev = kernel_bbfile + ".prev"
+    shutil.copyfile(kernel_bbfile, kernel_bbfile_prev)
+    ifile = open(kernel_bbfile_prev, "r")
+    ofile = open(kernel_bbfile, "w")
 
     ifile_lines = ifile.readlines()
     if uri_start_line == -1:
