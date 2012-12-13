@@ -35,7 +35,7 @@ INDENT_STR =  "    "
 
 BLANKLINE_STR = "of.write(\"\\n\")"
 NORMAL_START =  "of.write"
-OPEN_START =    "of = open"
+OPEN_START =    "current_file ="
 
 INPUT_TYPE_PROPERTY = "type"
 

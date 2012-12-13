@@ -38,6 +38,7 @@ from tags import *
 import shlex
 import json
 import subprocess
+import shutil
 
 class Line():
     """
@@ -83,7 +84,7 @@ class NormalLine(Line):
 
     def gen(self, context = None):
         if self.is_filename:
-            line = "of = open(\"" + os.path.join(self.out_filebase, self.escape(self.line)) + "\", \"w\")"
+            line = "current_file = \"" + os.path.join(self.out_filebase, self.escape(self.line)) + "\"; of = open(current_file, \"w\")"
         elif self.is_dirname:
             dirname = os.path.join(self.out_filebase, self.escape(self.line))
             line = "if not os.path.exists(\"" + dirname + "\"): os.mkdir(\"" + dirname + "\")"
@@ -134,7 +135,7 @@ class AssignmentLine(NormalLine):
             idx = line.find(ASSIGN_TAG)
             line = line[:idx] + replacement + line[idx + assignment.end - assignment.start:]
         if self.is_filename:
-            return "of = open(\"" + os.path.join(self.out_filebase, line) + "\", \"w\")"
+            return "current_file = \"" + os.path.join(self.out_filebase, line) + "\"; of = open(current_file, \"w\")"
         elif self.is_dirname:
             dirname = os.path.join(self.out_filebase, line)
             return "if not os.path.exists(\"" + dirname + "\"): os.mkdir(\"" + dirname + "\")"
@@ -562,6 +563,17 @@ def get_verified_file(input_str, name, filename_can_be_null):
         if os.path.isfile(filename):
             return filename
         filename = default(raw_input(msg), name)
+
+
+def replace_file(replace_this, with_this):
+    """
+    Replace the given file with the contents of filename, retaining
+    the original filename.
+    """
+    try:
+        shutil.copy(with_this, replace_this)
+    except IOError:
+        pass
 
 
 def boolean(input_str, name):
@@ -1197,7 +1209,7 @@ def gen_program_header_lines(program_lines):
     """
     Generate any imports we need.
     """
-    pass
+    program_lines.append("current_file = \"\"")
 
 
 def gen_supplied_property_vals(properties, program_lines):
