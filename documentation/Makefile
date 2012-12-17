@@ -235,6 +235,20 @@ FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
 
+ifeq ($(DOC),kernel-dev)
+XSLTOPTS = --stringparam html.stylesheet kernel-dev-style.css \
+           --stringparam  chapter.autolabel 1 \
+           --stringparam  appendix.autolabel A \
+           --stringparam  section.autolabel 1 \
+           --stringparam  section.label.includes.component.label 1 \
+           --xinclude
+ALLPREQ = html pdf tarball
+TARFILES = kernel-dev.html kernel-dev.pdf kernel-dev-style.css figures/kernel-dev-title.png
+MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
+FIGURES = figures
+STYLESHEET = $(DOC)/*.css
+endif
+
 
 ##
 # These URI should be rewritten by your distribution's xml catalog to
