@@ -143,7 +143,7 @@ Project Board Support Package Developer's Guide.
      SRC_URI += "file://0002-first-change.patch"
      SRC_URI += "file://0003-first-change.patch"
                 </literallayout>
-                Then next time you run BitBake to build the Linux kernel, BitBake
+                The next time you run BitBake to build the Linux kernel, BitBake
                 detects the change in the recipe and fetches and applies the patches
                 before building the kernel.
             </para>
@@ -173,7 +173,55 @@ apply the patches before rebuilding the Linux kernel.
             <title>Changing the Configuration</title>
 
             <para>
-            Making wholesale or incremental changes to the Linux kernel config can be made
+                You can make wholesale or incremental changes to the Linux
+                kernel <filename>.config</filename> file by including a
+                <filename>defconfig</filename> or by specifying
+                configuration fragments in the <filename>SRC_URI</filename>.
+            </para>
+
+            <para>
+                If you have a complete Linux kernel <filename>.config</filename>
+                file you want to use, copy it to the
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'><filename>FILES</filename></ulink><filename>}</filename>
+                directory within your layer and name it "defconfig".
+                Then, add the following line to your linux-yocto
+                <filename>.bbappend</filename> file in your layer:
+                <literallayout class='monospaced'>
+     SRC_URI += "file://defconfig"
+                </literallayout>
+            </para>
+
+            <para>
+                Generally speaking, the preferred approach is to determine the
+                incremental change you want to make and add that as a fragment.
+                For example, if you wanted to add support for a basic serial
+                console, create a file named <filename>8250.cfg</filename> in the
+                <filename>${FILES}</filename> directory with the following
+                content (without indentation):
+                <literallayout class='monospaced'>
+     CONFIG_SERIAL_8250=y
+     CONFIG_SERIAL_8250_CONSOLE=y
+     CONFIG_SERIAL_8250_PCI=y
+     CONFIG_SERIAL_8250_NR_UARTS=4
+     CONFIG_SERIAL_8250_RUNTIME_UARTS=4
+     CONFIG_SERIAL_CORE=y
+     CONFIG_SERIAL_CORE_CONSOLE=y
+                </literallayout>
+                Next, include this configuration fragment in a
+                <filename>SRC_URI</filename> statement in your
+                <filename>.bbappend</filename> file:
+                <literallayout class='monospaced'>
+     SRC_URI += "file://8250.cfg"
+                </literallayout>
+                The next time you run BitBake to build the Linux kernel, BitBake
+                detects the change in the recipe and fetches and applies the
+                new configuration before building the kernel.
+            </para>
+
+            <para>
+                Original Text:
+                <literallayout class='monospaced'>
+Making wholesale or incremental changes to the Linux kernel config can be made
 by including a defconfig or configuration fragments in the SRC_URI.
 
 If you have a complete Linux kernel .config file you want to use, copy it as
@@ -201,6 +249,7 @@ Then include this configuration fragment in the SRC_URI:
 
 At the next build, bitbake will detect the change in the recipe and fetch and
 apply the new configuration before rebuilding the Linux kernel.
+                 </literallayout>
             </para>
         </section>
     </section>
