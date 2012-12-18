@@ -33,7 +33,7 @@
             <itemizedlist>
                 <listitem><para>"<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>" for
                     general information on layers and how to create them.</para></listitem>
-                <listitem><para>"<ulink url='&YOCTO_DOCS_DEV_URL;#get-your-layer-set-up-for-the-build'>Get Your Layer Set Up for the Build</ulink>" for
+                <listitem><para>"<ulink url='&YOCTO_DOCS_DEV_URL;#get-your-layer-setup-for-the-build'>Get Your Layer Setup for the Build</ulink>" for
                     specific instructions on setting up a layer for kernel
                     development.</para></listitem>
             </itemizedlist>
@@ -44,7 +44,56 @@
         <title>Modifying an Existing Recipe</title>
 
         <para>
-        In many cases, you can customize an existing linux-yocto recipe to meet the
+            In many cases, you can customize an existing linux-yocto recipe to
+            meet the needs of your project.
+            Each release of the Yocto Project provides a few Linux
+            kernel recipes from which you can choose.
+            These are located in the
+            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+            in <filename>meta/recipes-kernel/linux</filename>.
+        </para>
+
+        <para>
+            To begin with, create a minimal, custom layer from which you
+            can work.
+            See the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#get-your-layer-setup-for-the-build'>Get Your Layer Setup for the Build</ulink>" section
+            of the Yocto Project Development Manual for information.
+        </para>
+
+        <para>
+            Next comes the <filename>.bbappend</filename> file.
+            You create this file in your custom layer.
+            You also name it accordingly based on the linux-yocto recipe
+            you are using.
+            For example, if you are modifying the
+            <filename>meta/recipes-kernel/linux/linux-yocto_3.4.bb</filename>
+            recipe, the append file will typical be located as follows
+            within your custom layer:
+            <literallayout class='monospaced'>
+     &lt;your-layer&gt;/recipes-kernel/linux/linux-yocto_3.4.bbappend
+            </literallayout>
+            The append file should initially contain the following text:
+            <literallayout class='monospaced'>
+     FILESEXTRAPATHS := "${THISDIR}/${PN}"
+            </literallayout>
+            The path <filename>${THISDIR}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename> expands
+            to "linux-yocto" in the current directory for this example.
+            If you add any new files that modify the kernel recipe, you need
+            to place them in your layer in the following area:
+            <literallayout class='monospaced'>
+     &lt;your-layer&gt;/recipes-kernel/linux/linux-yocto/
+            </literallayout>
+            <note>If you are working on a new machine Board Support Package
+                (BSP), be sure to refer to the
+                <ulink url='&YOCTO_DOCS_BSP_URL;'>Yocto Project Board Support Package (BSP) Developer's Guide</ulink>.
+            </note>
+        </para>
+
+        <para>
+            Original text:
+            <literallayout class='monospaced'>
+In many cases, you can customize an existing linux-yocto recipe to meet the
 needs of your project. Each release of the Yocto Project provides a few Linux
 kernel recipes to choose from. To get started, prepare a layer and a bbappend
 file corresponding to the recipe you wish to modify.
@@ -67,7 +116,7 @@ modify the recipe should then be added to the following path within the layer:
 
 NOTE: If you are working on a new machine BSP, be sure to refer to the Yocto
 Project Board Support Package Developer's Guide.
-
+            </literallayout>
         </para>
 
         <section id='applying-patches'>
