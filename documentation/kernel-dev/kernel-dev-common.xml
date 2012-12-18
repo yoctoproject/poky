@@ -123,7 +123,35 @@ Project Board Support Package Developer's Guide.
             <title>Applying Patches</title>
 
             <para>
-        If you have a patch, or a small series of patches, to apply to the Linux kernel
+                If you have a single patch or a small series of patches
+                that you want to apply to the Linux kernel source, you
+                can do so just as you would with any other recipe.
+                You first copy the patches to the path added to
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+                in your <filename>.bbappend</filename> file as described in
+                the previous section, and then reference them in
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                statements.
+            </para>
+
+            <para>
+                For example, you can apply a three-patch series by adding the
+                following lines to your linux-yocto <filename>.bbappend</filename>
+                file in your layer:
+                <literallayout class='monospaced'>
+     SRC_URI += "file://0001-first-change.patch"
+     SRC_URI += "file://0002-first-change.patch"
+     SRC_URI += "file://0003-first-change.patch"
+                </literallayout>
+                Then next time you run BitBake to build the Linux kernel, BitBake
+                detects the change in the recipe and fetches and applies the patches
+                before building the kernel.
+            </para>
+
+            <para>
+                Original Text:
+                <literallayout class='monospaced'>
+If you have a patch, or a small series of patches, to apply to the Linux kernel
 source, you can do so just as you would with any other recipe. You first copy
 the patches to the path added to FILESEXTRAPATHS in the bbappend file as
 described in 2.2 and then reference them in the SRC_URI.
@@ -137,6 +165,7 @@ your linux-yocto bbappend file in your layer:
 
 At the next build, bitbake will detect the change in the recipe and fetch and
 apply the patches before rebuilding the Linux kernel.
+                </literallayout>
             </para>
         </section>
 
