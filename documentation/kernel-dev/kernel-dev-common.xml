@@ -7,22 +7,36 @@
 <title>Common Tasks</title>
 
 <para>
-    This chapter describes common tasks you need to do when working
-    on the Yocto Project Linux kernel.
+    This chapter presents several common tasks that are performed when you
+    work with the Yocto Project Linux kernel.
+    These tasks include preparing a layer, modifying an existing recipe,
+    iterative development, working with your own sources, and incorporating
+    out-of-tree modules.
 </para>
 
     <section id='preparing-a-layer'>
         <title>Preparing a Layer</title>
 
         <para>
-        Customizing recipes is best done in a layer with bbappend files. Layers also
-provide a convenient mechanism to create your own recipes. This guide assumes
-you will be working from within a layer independent from those released with the
-Yocto Project. For details on how to create and work with layers, refer to
-section 5.1 Understanding and Creating Layers in the Yocto Project Development
-Manual. 
+            Customizing kernel recipes is best done in your own custom layer.
+            Your layer will have its own BitBake append files
+            (<filename>.bbappend</filename>) and provide a convenient
+            mechanism to create your own recipe files (<filename>.bb</filename>).
+        </para>
 
-(Kernel specific directions in 5.7.4)
+        <para>
+            This guide is written with the assumption that you will be working
+            from within your custom layer that is independent from layers
+            released with the Yocto Project.
+            For details on how to create and work with layers, see the following
+            sections:
+            <itemizedlist>
+                <listitem><para>"<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>" for
+                    general information on layers and how to create them.</para></listitem>
+                <listitem><para>"<ulink url='&YOCTO_DOCS_DEV_URL;#get-your-layer-set-up-for-the-build'>Get Your Layer Set Up for the Build</ulink>" for
+                    specific instructions on setting up a layer for kernel
+                    development.</para></listitem>
+            </itemizedlist>
         </para>
     </section>
 
@@ -286,7 +300,7 @@ LINUX_VERSION_EXTENSION is used to define the Linux kernel CONFIG_LOCALVERSION
 which will be compiled in to the resulting kernel and visible via the uname
 command.
 
-Set SRCREV to the commit ID you wish to build from. 
+Set SRCREV to the commit ID you wish to build from.
 
 Treat the PR as you would the PR of any other recipe. Increment it to indicate
 to the build system that the recipe has changed.
@@ -339,12 +353,12 @@ adjustments. For example, a typical module Makefile will look much like that
 provided with hello-mod:
 
 	obj-m := hello.o
-	
+
 	SRC := $(shell pwd)
-	
+
 	all:
 		$(MAKE) -C $(KERNEL_SRC) M=$(SRC)
-	
+
 	modules_install:
 		$(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules_install
 	...
