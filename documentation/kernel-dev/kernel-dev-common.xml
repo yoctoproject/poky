@@ -478,7 +478,85 @@ adjust your configuration files and repeat the "kernel_configme" and
             <title>Modifying Source Code</title>
 
             <para>
-            You can experiment with source code changes and create a simple patch without
+                You can experiment with source code changes and create a
+                simple patch without leaving the BitBake environment.
+                To get started, be sure to complete a build at
+                least through the kernel configuration task:
+                <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c kernel_configme -f
+                </literallayout>
+                Taking this step ensures you have the sources prepared
+                and the configuration completed.
+                You can find the sources in the
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}/linux</filename> directory.
+            </para>
+
+            <para>
+                You can edit the sources as you would any other Linux source
+                tree.
+                However, keep in mind that you will lose changes if you
+                trigger the <filename>fetch</filename> task for the recipe.
+                You can avoid triggering this task by not issuing BitBake's
+                <filename>cleanall</filename>, <filename>cleansstate</filename>,
+                or forced <filename>fetch</filename> commands.
+                Also, do not modify the recipe itself while working
+                with temporary changes or BitBake might run the
+                <filename>fetch</filename> command depending on the
+                changes to the recipe.
+            </para>
+
+            <para>
+                To test your temporary changes, instruct BitBake to run the
+                <filename>compile</filename> again.
+                The <filename>-f</filename> option forces the command to run
+                even though BitBake might think it has already done so:
+                <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c compile -f
+                </literallayout>
+                If the compile fails, you can update the sources and repeat
+                the <filename>compile</filename>.
+                Once compilation is successful, you can inspect and test
+                the resulting build (i.e. kernel, modules, and so forth) from
+                the build directory:
+                <literallayout class='monospaced'>
+     ${WORKDIR}/linux-${MACHINE}-${KTYPE}-build
+                </literallayout>
+                Alternatively, you can run the <filename>deploy</filename>
+                command to place the kernel image in the
+                <filename>tmp/deploy/images</filename> directory:
+                <literallayout class='monospaced'>
+	$ bitbake linux-yocto -c deploy
+                </literallayout>
+                And, of course, you can perform the remaining installation and
+                packaging steps by issuing:
+                <literallayout class='monospaced'>
+	$ bitbake linux-yocto
+                </literallayout>
+            </para>
+
+            <para>
+                For rapid iterative development, the edit-compile-repeat loop
+                described in this section is preferable to rebuilding the
+                entire recipe because the installation and packaging tasks
+                are very time consuming.
+            </para>
+
+            <para>
+                Once you are satisfied with your source code modifications,
+                you can make them permanent by generating patches and
+                applying them to the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                statement as described in section
+                "<link linkend='applying-patches'>Applying Patches</link>" section.
+                If you are not familiar with generating patches, refer to the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-the-patch'>Creating the Patch</ulink>"
+                section in the Yocto Project Development Manual.
+            </para>
+
+            <para>
+                Original Text:
+                <literallayout class='monospaced'>
+You can experiment with source code changes and create a simple patch without
 leaving the bitbake environment. To get started, be sure to complete a build at
 least through the kernel configuration task:
 
@@ -521,6 +599,7 @@ Once you are happy with your modifications, you can make these permanent by
 generating patches and applying them to the SRC_URI as described in section
 2.2.1 Applying Patches. If you are not familiar with generating patches, refer
 to the Yocto Project Development Manual, section 5.7.3 Creating the Patch.
+                </literallayout>
             </para>
         </section>
     </section>
