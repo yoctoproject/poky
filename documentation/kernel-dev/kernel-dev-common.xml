@@ -290,7 +290,128 @@ working with.
             <title>Generating Configuration Files</title>
 
             <para>
-            You can manipulate the config used to build a linux-yocto recipe with the
+                You can manipulate the <filename>.config</filename> file
+                used to build a linux-yocto recipe with the
+                <filename>menuconfig</filename> command as follows:
+                <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c menuconfig
+                </literallayout>
+                This command starts the Linux kernel configuration tool,
+                which allows you to prepare a new
+                <filename>.config</filename> file for the build.
+                When you exit the tool, be sure to save your changes
+                at the prompt.
+            </para>
+
+            <para>
+                The resulting <filename>.config</filename> file is
+                located in
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename> under the
+                <filename>linux-${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink><filename>}-${KTYPE}-build</filename> directory.
+                You can use the entire <filename>.config</filename> file as the
+                <filename>defconfig</filename> file as described in the
+                "<link linkend='changing-the-configuration'>Changing the Configuration</link>" section.
+            </para>
+
+            <para>
+                A better method is to create a configuration fragment using the
+                differences between two configuration files: one previously
+                created and saved, and one freshly created using the
+                <filename>menuconfig</filename> tool.
+            </para>
+
+            <para>
+                To create a configuration fragment using this method, follow
+                these steps:
+                <orderedlist>
+                    <listitem><para>Complete a build at least through the kernel
+                        configuration task as follows:
+                        <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c kernel_configme -f
+                        </literallayout></para></listitem>
+                    <listitem><para>Create a renamed copy of the resulting
+                        <filename>.config</filename> file (e.g.
+                        <filename>config.orig</filename>).
+                        </para></listitem>
+                    <listitem><para>Run the <filename>menuconfig</filename>
+                        command:
+                        <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c menuconfig
+                        </literallayout></para></listitem>
+                    <listitem><para>Prepare a configuration fragment from
+                        using the differences between the two files.
+                        </para></listitem>
+                </orderedlist>
+            </para>
+
+            <para>
+                Ultimately, the configuration fragment file needs to be a
+                list of Linux kernel <filename>CONFIG_</filename> assignments.
+                It cannot be in <filename>diff</filename> format.
+                Here is an example of a command that creates your
+                configuration fragment file.
+                Regardless of the exact command you use, plan on reviewing
+                the output as you can usually remove some of the defaults:
+                <literallayout class='monospaced'>
+     $ diff -Nurp config.orig .config | sed -n "s/^\+//p" > frag.cfg
+                </literallayout>
+                See the "<link linkend='changing-the-configuration'>Changing the Configuration</link>"
+                section for information on how to use the output as a
+                configuration fragment.
+                <note>
+                    You can also use this method to create configuration
+                    fragments for a BSP.
+                    See the "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
+                    for more information.
+                </note>
+            </para>
+
+            <para>
+                The kernel tools also provide configuration validation.
+                You can use these tools to produce warnings for when a
+                requested configuration does not appear in the final
+                <filename>.config</filename> file or when you override a
+                policy configuration in a hardware configuration fragment.
+                Following is the command that runs these tools and some
+                sample output:
+                <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c kernel_configcheck -f
+
+     ...
+
+     NOTE: validating kernel configuration
+     This BSP sets 3 invalid/obsolete kernel options.
+     These config options are not offered anywhere within this kernel.
+     The full list can be found in your kernel src dir at:
+     meta/cfg/standard/mybsp/invalid.cfg
+
+     This BSP sets 21 kernel options that are possibly non-hardware related.
+     The full list can be found in your kernel src dir at:
+     meta/cfg/standard/mybsp/specified_non_hdw.cfg
+
+     WARNING: There were 2 hardware options requested that do not
+              have a corresponding value present in the final ".config" file.
+              This probably means you aren't getting the config you wanted.
+              The full list can be found in your kernel src dir at:
+              meta/cfg/standard/mybsp/mismatch.cfg
+                </literallayout>
+            </para>
+
+            <para>
+                The output describes the various problems that you can
+                encounter along with where to find the offending configuration
+                items.
+                You can use the information in the logs to adjust your
+                configuration files and then repeat the
+                <filename>kernel_configme</filename> and
+                <filename>kernel_configcheck</filename> commands until
+                they produce no warnings.
+            </para>
+
+            <para>
+                Original Text:
+                <literallayout class='monospaced'>
+You can manipulate the config used to build a linux-yocto recipe with the
 "menuconfig" command.
 
 	$ bitbake linux-yocto -c menuconfig
@@ -349,6 +470,7 @@ The various problems that you can encounter are described in the output along
 with where to find the offending configuration items. You can use these logs to
 adjust your configuration files and repeat the "kernel_configme" and
 "kernel_configcheck" commands until no warnings are produced.
+                </literallayout>
             </para>
         </section>
 
