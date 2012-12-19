@@ -608,7 +608,113 @@ to the Yocto Project Development Manual, section 5.7.3 Creating the Patch.
         <title>Working With Your Own Sources</title>
 
         <para>
-        If you find yourself unable to work with one of the Linux kernel versions
+            If you find yourself unable to work with one of the Linux kernel
+            versions supported by existing linux-yocto recipes, you can
+            still make use of the Yocto Project Linux kernel tooling by
+            working with your own sources.
+            You will not be able to leverage the existing
+            <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> and
+            stabilization work of the linux-yocto sources, but you will be
+            able to manage your own Metadata in the same format as the
+            linux-yocto sources.
+            Format compatibility facilitates converging with
+            linux-yocto on a future, mutually-supported kernel version.
+        </para>
+
+        <para>
+            The linux-yocto custom recipe is located in the
+            <filename>poky</filename> Git repository of the
+            Yocto Project <ulink url='&YOCTO_GIT_URL;'>Source Repository</ulink>
+            at:
+            <literallayout class="monospaced">
+     poky/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb
+            </literallayout>
+        </para>
+
+        <para>
+            The example recipe uses <filename>kernel.org</filename> sources
+            and the Yocto Project Linux kernel tools for managing Metadata.
+        </para>
+
+        <para>
+            Here are some basic steps you can use to work with your own sources:
+            <orderedlist>
+                <listitem><para>Copy the <filename>linux-yocto-custom.bb</filename>
+                    recipe to your layer and give it a meaningful name.
+                    The name should include the version of the Linux kernel you
+                    are using (e.g. <filename>linux-yocto-myproject_3.5.bb</filename>,
+                    where "3.5" is the base version of the Linux kernel
+                    with which you would be working.</para></listitem>
+                <listitem><para>In the same directory inside your layer,
+                    create a matching directory
+                    to store your patches and configuration files (e.g.
+                    <filename>linux-yocto-myproject</filename>).
+                    </para></listitem>
+                <listitem><para>Edit the following variables in your recipe
+                    as appropriate for your project:
+                    <itemizedlist>
+                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>:
+                            The <filename>SRC_URI</filename> should be a Git
+                            repository that uses one of the supported Git fetcher
+                            protocols (i.e. <filename>file</filename>,
+                            <filename>git</filename>, <filename>http</filename>,
+                            and so forth).
+                            The skeleton recipe provides an example
+                            <filename>SRC_URI</filename> as a syntax reference.
+                            </para></listitem>
+                        <listitem><para><filename>LINUX_VERSION</filename>:
+                            The Linux kernel version you are using (e.g.
+                            "3.6.3").</para></listitem>
+                        <listitem><para><filename>LINUX_VERSION_EXTENSION</filename>:
+                            The Linux kernel <filename>CONFIG_LOCALVERSION</filename>
+                            that is compiled into the resulting kernel and visible
+                            through the <filename>uname</filename> command.
+                            </para></listitem>
+                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>:
+                            The commit ID from which you want to build.
+                            </para></listitem>
+                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>:
+                            Treat this variable the same as you would in any other
+                            recipe.
+                            Increment the variable to indicate to the OpenEmbedded
+                            build system that the recipe has changed.
+                            </para></listitem>
+                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>:
+                            The default <filename>PV</filename> assignment is
+                            typically adequate.
+                            It combines the <filename>LINUX_VERSION</filename>
+                            with the SCM revision (from the SRCPV variable)
+                            and results in a string using the following form:
+                            <literallayout class='monospaced'>
+     3.4.11+git1+68a635bf8dfb64b02263c1ac80c948647cc76d5f_1+218bd8d2022b9852c60d32f0d770931e3cf343e2
+                            </literallayout>
+                            While lengthy, the extra verbosity in <filename>PV</filename>
+                            helps ensure you are using the exact
+                            sources from which you intend to build.
+                            </para></listitem>
+                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>:
+                            A list of the machines supported by your new recipe.
+                            This variable in the example recipe is set
+                            by default to a regular expression that matches
+                            only the empty string, "(^$)".
+                            This default setting triggers an explicit build failure.
+                            You must change it to match a list of the machines
+                            that your new recipe supports (e.g. "qemux86|qemux86-64").
+                            </para></listitem>
+                    </itemizedlist></para></listitem>
+                <listitem><para>Provide further customizations to your recipe
+                    as needed just as you would customize an existing
+                    linux-yocto recipe.
+                    See the "<link linkend='modifying-an-existing-recipe'>Modifying
+                    an Existing Recipe</link>" section for information.
+                    </para></listitem>
+            </orderedlist>
+        </para>
+
+        <para>
+            Original Text:
+            <literallayout class='monospaced'>
+If you find yourself unable to work with one of the Linux kernel versions
 supported by existing linux-yocto recipes, you can still make use of the Yocto
 Project Linux kernel tooling while working with your own sources. You will not
 be able to leverage the existing meta-data and stabilization work of the
@@ -669,6 +775,7 @@ machines supported by your new recipe, such as "(qemux86|qemux86-64)"
 With that in place, you can continue to customize this recipe as you would the
 existing linux-yocto recipes. See Section 2.2 Modifying an Existing Recipe for
 details.
+            </literallayout>
         </para>
     </section>
 
