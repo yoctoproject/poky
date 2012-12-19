@@ -10,4 +10,5 @@ s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.4\/dev-manual
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.4\/adt-manual\/adt-manual.html\" target=\"_top\">Yocto Project Application Developer's Guide<\/a>/Yocto Project Application Developer's Guide/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.4\/bsp-guide\/bsp-guide.html\" target=\"_top\">Yocto Project Board Support Package (BSP) Developer's Guide<\/a>/Yocto Project Board Support Package (BSP) Developer's Guide/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.4\/kernel-manual\/kernel-manual.html\" target=\"_top\">Yocto Project Kernel Architecture and Use Manual<\/a>/Yocto Project Kernel Architecture and Use Manual/g
+s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.4\/kernel-ref\/kernel-ref.html\" target=\"_top\">Yocto Project Kernel Development Manual<\/a>/Yocto Project Kernel Development Manual/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.4\/ref-manual\/ref-manual.html\" target=\"_top\">Yocto Project Reference Manual<\/a>/Yocto Project Reference Manual/g
