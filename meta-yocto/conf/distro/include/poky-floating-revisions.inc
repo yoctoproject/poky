@@ -52,7 +52,6 @@ SRCREV_pn-clutter-cairo ?= "${AUTOREV}"
 SRCREV_pn-table ?= "${AUTOREV}"
 SRCREV_pn-libmatchbox ?= "${AUTOREV}"
 SRCREV_pn-tasks ?= "${AUTOREV}"
-SRCREV_pn-mutter ?= "${AUTOREV}"
 SRCREV_pn-ofono ?= "${AUTOREV}"
 
 SRCREV_pn-dri2proto = "${AUTOREV}"
