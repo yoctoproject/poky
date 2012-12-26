@@ -403,12 +403,102 @@ value when changing the content of files not explicitly listed in the SRC_URI.
         </para>
     </section>
 
+    <section id='in-tree-metadata'>
+        <title>In-Tree Metadata</title>
 
+        <para>
+            When stored in-tree, the metadata files reside in the
+            "meta" directory of the Linux kernel sources.
+            They may be present in the same branch as the sources,
+            such as "master", or in their own orphan branch,
+            typically named "meta".
+            An orphan branch in Git is a branch with unique history and
+            content to the other branches in the repository.
+            This is useful to track metadata changes independently from the
+            sources of the Linux kernel, while still keeping them
+            together in the same repository.
+            For the purposes of this document, we will discuss all
+            in-tree metadata as residing below the
+            <filename>meta/cfg/kernel-cache</filename> directory.
+        </para>
 
+        <para>
+            By way of example, a trivial tree of metadata stored in a custom
+            Linux kernel Git repository might look like the following:
+            <literallayout class='monospaced'>
+     meta/
+     `-- cfg
+         `-- kernel-cache
+             |-- bsp-standard.scc
+             |-- bsp.cfg
+             `-- standard.cfg
+            </literallayout>
+        </para>
 
+        <para>
+            To use a specific branch for the metadata, specify the branch
+            in the <filename>KMETA</filename> variable in your Linux kernel
+            recipe, for example:
+            <literallayout class='monospaced'>
+     KMETA = "meta"
+            </literallayout>
+            To use the same branch as the sources, set
+            <filename>KMETA</filename> to the empty string:
+            <literallayout class='monospaced'>
+     KMETA = ""
+            </literallayout>
+            If you are working with your own sources and want to create an
+            orphan <filename>meta</filename> branch, you can do so using the
+            following commands from within your Linux kernel Git repository:
+            <literallayout class='monospaced'>
+     $ git checkout --orphan meta
+     $ git rm -rf .
+     $ git commit --allow-empty -m "Create orphan meta branch"
+            </literallayout>
+        </para>
 
+        <para>
+            Original text:
+            <literallayout class='monospaced'>
+When stored in-tree, the meta-data files reside in the "meta" directory of the
+Linux kernel sources. They may be present in the same branch as the sources,
+such as "master", or in their own orphan branch, typically named "meta". An
+orphan branch in git is a branch with unique history and content to the other
+branches in the repository. This is useful to track meta-data changes
+independently from the sources of the Linux kernel, while still keeping them
+together in the same repository. For the purposes of this document, we will
+discuss all in-tree meta-data as residing below the "meta/cfg/kernel-cache"
+directory.
 
+By way of example, a trivial tree of meta-data stored in a custom Linux kernel
+git repository might look like the following:
 
+meta/
+`-- cfg
+    `-- kernel-cache
+        |-- bsp-standard.scc
+        |-- bsp.cfg
+        `-- standard.cfg
+
+To use a specific branch for the meta-data, specify the branch in the KMETA
+variable in your Linux kernel recipe, for example:
+
+	KMETA = "meta"
+
+To use the same branch as the sources, set KMETA to the empty string:
+
+	KMETA = ""
+
+If you are working with your own sources and want to create an orphan meta
+branch, you can do so using the following commands from within your Linux kernel
+git repository:
+
+	$ git checkout --orphan meta
+	$ git rm -rf .
+	$ git commit --allow-empty -m "Create orphan meta branch"
+            </literallayout>
+        </para>
+    </section>
 </section>
 
 </chapter>
