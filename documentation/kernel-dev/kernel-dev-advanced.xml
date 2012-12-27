@@ -1490,6 +1490,60 @@ Note: The "base" branches are an artifact of the way git manages its data
     </para>
 </section>
 
+<section id='feature-branches'>
+    <title>Feature Branches</title>
+
+    <para>
+        During active development a new feature, it can be more efficient
+        to work with that feature as a branch, rather than as a set of
+        patches which have to be regularly updated.
+        The Yocto Project Linux kernel tools provide for this with
+        the <filename>git merge</filename> command.
+    </para>
+
+    <para>
+        To merge a feature branch into a BSP, insert the
+        <filename>git merge</filename> command after any
+        <filename>branch</filename> commands:
+        <literallayout class='monospaced'>
+     mybsp.scc:
+        define KMACHINE mybsp
+        define KTYPE standard
+        define KARCH i386
+        include standard.scc
+
+        branch mynewbranch
+        git merge myfeature
+
+        include mybsp.scc
+        </literallayout>
+    </para>
+
+    <para>
+        Original text:
+        <literallayout class='monospaced'>
+During active development a new feature, it can be more efficient to work with
+that feature as a branch, rather than as a set of patches which have to be
+regularly updated. The Yocto Project Linux kernel tools provide for this with
+the "git merge" command.
+
+To merge a feature branch into a BSP, insert the "git merge" command after any
+branch commands:
+
+mybsp.scc:
+	define KMACHINE mybsp
+	define KTYPE standard
+	define KARCH i386
+	include standard.scc
+
+	branch mynewbranch
+	git merge myfeature
+
+	include mybsp.scc
+        </literallayout>
+    </para>
+</section>
+
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
