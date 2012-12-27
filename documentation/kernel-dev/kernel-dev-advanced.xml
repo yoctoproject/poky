@@ -664,6 +664,104 @@ meta/cfg/kernel-cache/ if you are creating meta-data in-tree (see 3.2.2).
         </literallayout>
     </para>
 
+    <section id='configuration'>
+        <title>Configuration</title>
+
+        <para>
+            The simplest unit of metadata is the configuration-only feature.
+            It consists of one or more Linux kernel configuration parameters
+            in a configuration fragment file (<filename>.cfg</filename>)
+            and an <filename>scc</filename> file describing the fragment.
+        </para>
+
+        <para>
+            The SMP fragment included in the linux-yocto-3.4 Git repository
+            consists of the following two files:
+            <literallayout class='monospaced'>
+     cfg/smp.scc:
+        define KFEATURE_DESCRIPTION "Enable SMP"
+        kconf hardware smp.cfg
+
+     cfg/smp.cfg:
+        CONFIG_SMP=y
+        CONFIG_SCHED_SMT=y
+            </literallayout>
+            You can find information on configuration fragment files in the
+            "<ulink url='&YOCTO_DOCS_REF_URL;#creating-config-fragments'>Creating Configuration Fragments</ulink>"
+            section of the Yocto Project Development Manual and in
+            the "<link linkend='generating-configuration-files'>Generating Configuration Files</link>"
+            section earlier in this manual.
+        </para>
+
+        <para>
+            <filename>KFEATURE_DESCRIPTION</filename> provides a short
+            description of the fragment, the primary use is for higher level
+            tooling, such as the Yocto Project BSP Tools (TODO:Citation).
+        </para>
+
+        <para>
+            The <filename>kconf</filename> command is used to include the
+            actual configuration fragment in an <filename>scc</filename>
+            file, and the "hardware" keyword identifies the fragment as
+            being hardware enabling, as opposed to general policy,
+            which would use the keyword "non-hardware".
+            The distinction is made for the benefit of the configuration
+            validation tools, which will warn you if a hardware fragment
+            overrides a policy set by a non-hardware fragment.
+        </para>
+
+        <para>
+            As described in the
+            "<link linkend='generating-configuration-files'>Generating Configuration Files</link>"
+            section, the following BitBake command can be used to audit your
+            configuration:
+            <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c kernel_configcheck -f
+            </literallayout>
+            The description file can include multiple <filename>kconf</filename>
+            statements, one per fragment.
+        </para>
+
+        <para>
+        Original text:
+            <literallayout class='monospaced'>
+The simplest unit of meta-data is the configuration-only feature. It consists of
+one or more Linux kernel configuration parameters in a .cfg file (as described
+in section XYZ) and an scc file describing the fragment. The SMP fragment
+included in the linux-yocto-3.4 git repository consists of the following two
+files:
+
+cfg/smp.scc:
+	define KFEATURE_DESCRIPTION "Enable SMP"
+	kconf hardware smp.cfg
+
+cfg/smp.cfg:
+	CONFIG_SMP=y
+	CONFIG_SCHED_SMT=y
+
+See 2.3.1 for details on creating configuration fragments.
+
+KFEATURE_DESCRIPTION provides a short description of the fragment, the
+primary use is for higher level tooling, such as the Yocto Project BSP Tools
+(TODO:Citation).
+
+The "kconf" command is used to include the actual configuration fragment in an
+scc file, and the "hardware" keyword identifies the fragment as being hardware
+enabling, as opposed to general policy (which would use the keyword
+"non-hardware"). The distinction is made for the benefit of the configuration
+validation tools which will warn you if a hardware fragment overrides a policy
+set by a non-hardware fragment.
+
+As described in 2.3.1, the following bitbake command can be used to audit your
+configuration:
+
+	$ bitbake linux-yocto -c kernel_configcheck -f
+
+The description file can include multiple kconf statements, one per fragment.
+            </literallayout>
+        </para>
+    </section>
+
 
 
 
