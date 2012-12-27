@@ -368,7 +368,7 @@ described in the following sections applies equally.
             <filename>.scc</filename> files by the <filename>include</filename>,
             <filename>patch</filename>, or <filename>kconf</filename> commands.
             Because of this, it is necessary to bump the recipe
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink> 
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
             value when changing the content of files not explicitly listed
             in the SRC_URI.
         </para>
@@ -499,6 +499,174 @@ git repository:
             </literallayout>
         </para>
     </section>
+</section>
+
+<section id='metadata-syntax'>
+    <title>Metadata Syntax</title>
+
+    <para>
+        The Yocto Project Linux kernel tools metadata consists of three
+        primary types of files: <filename>scc</filename>
+        <footnote>
+            <para>
+                <filename>scc</filename> stands for Series Configuration
+                Control, but the naming has less significance in the
+                current implementation of the tooling than it had in the
+                past.
+                Consider it to be a description file.
+            </para>
+        </footnote>
+        description files, configuration fragments, and patches.
+        The <filename>scc</filename> files define variables and include or
+        otherwise reference any of the three file types.
+        The description files are used to aggregate all types of metadata into
+        what ultimately describes the sources and the configuration required
+        to build a Linux kernel tailored to a specific machine.
+    </para>
+
+    <para>
+        The <filename>scc</filename> description files are used to define two
+        fundamental types of metadata:
+        <itemizedlist>
+            <listitem><para>Features</para></listitem>
+            <listitem><para>Board Support Packages (BSPs)</para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Features aggregate sources in the form of patches and configuration
+        in the form of configuration fragments into a modular reusable unit.
+        Features are used to implement conceptually separate metadata
+        descriptions like pure configuration fragments, simple patches,
+        complex features, and kernel types (ktypes).
+        Kernel types define general kernel features and policy to be reused
+        in the BSPs.
+    </para>
+
+    <para>
+        BSPs define hardware-specific features and aggregate them with kernel
+        types to form the final description of what will be assembled and built.
+    </para>
+
+    <para>
+        While the metadata syntax does not enforce any logical separation of
+        configuration fragments, patches, features or kernel types, best
+        practices dictate a logical separation of these types of meta-data.
+        The following metadata file hierarchy is recommended:
+        <literallayout class='monospaced'>
+     &lt;base&gt;/
+        bsp/
+        cfg/
+        features/
+        ktypes/
+        patches/
+        </literallayout>
+    </para>
+
+    <para>
+        The <filename>bsp</filename> directory should contain the
+        BSP descriptions, described in detail in section 3.3.5.
+        The remaining directories all contain "features"; the separation
+        is meant to aid in conceptualizing their intended usage.
+        A simple guide to determine where your <filename>scc</filename>
+        description file should go is as follows.
+        If it contains only configuration fragments, it belongs in
+        <filename>cfg</filename>.
+        If it contains only source-code fixes, it belongs in
+        <filename>patches</filename>.
+        If it encapsulates a major feature, often combining sources and
+        configurations, it belongs in <filename>features</filename>.
+        If it aggregates non-hardware configuration and patches
+        in order to define a base kernel policy or major kernel type to
+        be reused across multiple BSPs, it belongs in
+        <filename>ktypes</filename>.
+    </para>
+
+    <para>
+        The lines between these can easily become blurred, especially as
+        out-of-tree features are slowly merged upstream over time.
+        Also remember that this is purely logical organization and has
+        no impact on the functionality of the metadata as
+        all of <filename>cfg</filename>, <filename>features</filename>,
+        <filename>patches</filename>, and <filename>ktypes</filename>,
+        contain "features" as far as the Yocto Project Linux kernel
+        tools are concerned.
+    </para>
+
+    <para>
+        Paths used in metadata files are relative to
+        <filename>&lt;base&gt;</filename>, which is either
+        <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+        if you are creating metadata in recipe-space as described in
+        section "<link linkend='recipe-space-metadata'>Recipe-Space Metadata</link>",
+        or <filename>meta/cfg/kernel-cache/</filename> if you are creating
+        metadata in-tree as described in
+        the "<link linkend='in-tree-metadata'>In-Tree Metadata</link>" section.
+    </para>            
+
+    <para>
+        Original text:
+        <literallayout class='monospaced'>
+The Yocto Project Linux kernel tools meta-data consists of three primary types
+of files: scc* description files, configuration fragments, and patches. The scc
+files define variables and include or otherwise reference any of the three file
+types. The description files are used to aggregate all types of meta-data into
+what ultimately describes the sources and the configuration required to build a
+Linux kernel tailored to a specific machine.
+
+The scc description files are used to define two fundamental types of meta-data:
+	o Features
+	o BSPs
+
+Features aggregate sources in the form of patches and configuration in the form
+of configuration fragments into a modular reusable unit. Features are used to
+implement conceptually separate meta-data descriptions like pure configuration
+fragments, simple patches, complex features, and kernel types (ktypes). Kernel
+types define general kernel features and policy to be reused in the BSPs.
+
+BSPs define hardware-specific features and aggregate them with kernel types to
+form the final description of what will be assembled and built.
+
+While the meta-data syntax does not enforce any logical separation of
+configuration fragments, patches, features or kernel types, best practices
+dictate a logical separation of these types of meta-data. The following
+meta-data file hierarchy is recommended:
+
+	&lt;base&gt;/
+		bsp/
+		cfg/
+		features/
+		ktypes/
+		patches/
+
+The bsp directory should contain the BSP descriptions, described in detail in
+3.3.5. The remaining directories all contain "features"; the separation is meant
+to aid in conceptualizing their intended usage.  A simple guide to determine
+where your scc description file should go is as follows. If it contains only
+configuration fragments, it belongs in cfg. If it contains only source-code
+fixes, it belongs in patches. If it encapsulates a major feature, often
+combining sources and configurations, it belongs in features. If it aggregates
+non-hardware configuration and patches in order to define a base kernel policy
+or major kernel type to be reused across multiple BSPs, it belongs in ktypes.
+The line between these can easily become blurred, especially as out-of-tree
+features are slowly merged upstream over time. Also remember that this is purely
+logical organization and has no impact on the functionality of the meta-data as
+all of cfg, features, patches, and ktypes, contain "features" as far as the
+Yocto Project Linux kernel tools are concerned.
+
+Paths used in meta-data files are relative to &lt;base&gt; which is either
+FILESEXTRAPATHS if you are creating meta-data in recipe-space (see 3.2.1), or
+meta/cfg/kernel-cache/ if you are creating meta-data in-tree (see 3.2.2).
+
+* scc stands for Series Configuration Control, but the naming has less
+  significance in the current implementation of the tooling than it had in the
+  past. Consider it to be a description file.
+        </literallayout>
+    </para>
+
+
+
+
 </section>
 
 </chapter>
