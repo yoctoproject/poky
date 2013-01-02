@@ -29,7 +29,7 @@
             from within your custom layer that is independent from layers
             released with the Yocto Project.
             For details on how to create and work with layers, see the following
-            sections:
+            sections in the Yocto Project Development Manual:
             <itemizedlist>
                 <listitem><para>"<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>" for
                     general information on layers and how to create them.</para></listitem>
@@ -40,13 +40,14 @@
         </para>
 
         <para>
+        Original text:
             <literallayout class='monospaced'>
 Customizing recipes is best done in a layer with bbappend files. Layers also
 provide a convenient mechanism to create your own recipes. This guide assumes
 you will be working from within a layer independent from those released with the
 Yocto Project. For details on how to create and work with layers, refer to
 section 5.1 Understanding and Creating Layers in the Yocto Project Development
-Manual. 
+Manual.
 
 (Kernel specific directions in 5.7.4)
             </literallayout>
@@ -88,7 +89,7 @@ Manual.
             </literallayout>
             The append file should initially contain the following text:
             <literallayout class='monospaced'>
-     FILESEXTRAPATHS := "${THISDIR}/${PN}"
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'>FILESEXTRAPATHS</ulink> := "${THISDIR}/${PN}"
             </literallayout>
             The path <filename>${THISDIR}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename> expands
             to "linux-yocto" in the current directory for this example.
@@ -207,7 +208,7 @@ apply the patches before rebuilding the Linux kernel.
             <para>
                 Generally speaking, the preferred approach is to determine the
                 incremental change you want to make and add that as a fragment.
-                For example, if you wanted to add support for a basic serial
+                For example, if you want to add support for a basic serial
                 console, create a file named <filename>8250.cfg</filename> in the
                 <filename>${FILES}</filename> directory with the following
                 content (without indentation):
@@ -277,8 +278,8 @@ apply the new configuration before rebuilding the Linux kernel.
             During an iterative workflow, running a previously completed BitBake
             task causes BitBake to invalidate the tasks that follow that
             task in the build sequence.
-            This invalidation causes the tasks to rebuild the next
-            time you invoke the build.
+            Invalidated tasks rebuild the next time you run the build using
+            BitBake.
         </para>
 
         <para>
@@ -351,8 +352,8 @@ working with.
                         <literallayout class='monospaced'>
      $ bitbake linux-yocto -c menuconfig
                         </literallayout></para></listitem>
-                    <listitem><para>Prepare a configuration fragment from
-                        using the differences between the two files.
+                    <listitem><para>Prepare a configuration fragment based on
+                        the differences between the two files.
                         </para></listitem>
                 </orderedlist>
             </para>
@@ -375,7 +376,7 @@ working with.
                     You can also use this method to create configuration
                     fragments for a BSP.
                     See the "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
-                    for more information.
+                    section for more information.
                 </note>
             </para>
 
@@ -874,7 +875,7 @@ details.
             include the module in your images.
             To do this, see the documentation for the following variables in
             the Yocto Project Reference Manual and set one of them as
-            appropriate in your machine <filename>config</filename> file:
+            appropriate in your machine configuration file:
             <itemizedlist>
                 <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS'><filename>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</filename></ulink>
                     </para></listitem>
