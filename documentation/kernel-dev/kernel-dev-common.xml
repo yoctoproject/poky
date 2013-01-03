@@ -276,8 +276,8 @@ apply the new configuration before rebuilding the Linux kernel.
             you can iteratively generate them from within the BitBake build
             environment as described within this section.
             During an iterative workflow, running a previously completed BitBake
-            task causes BitBake to invalidate the tasks that follow that
-            task in the build sequence.
+            task causes BitBake to invalidate the tasks that follow the
+            completed task in the build sequence.
             Invalidated tasks rebuild the next time you run the build using
             BitBake.
         </para>
@@ -386,8 +386,8 @@ working with.
                 requested configuration does not appear in the final
                 <filename>.config</filename> file or when you override a
                 policy configuration in a hardware configuration fragment.
-                Following is the command that runs these tools and some
-                sample output:
+                Here is an example with some sample output of the command
+                that runs these tools:
                 <literallayout class='monospaced'>
      $ bitbake linux-yocto -c kernel_configcheck -f
 
@@ -531,7 +531,7 @@ adjust your configuration files and repeat the "kernel_configme" and
                 the <filename>compile</filename>.
                 Once compilation is successful, you can inspect and test
                 the resulting build (i.e. kernel, modules, and so forth) from
-                the build directory:
+                the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
                 <literallayout class='monospaced'>
      ${WORKDIR}/linux-${MACHINE}-${KTYPE}-build
                 </literallayout>
@@ -622,32 +622,32 @@ to the Yocto Project Development Manual, section 5.7.3 Creating the Patch.
         <title>Working With Your Own Sources</title>
 
         <para>
-            If you find yourself unable to work with one of the Linux kernel
+            If you cannot work with one of the Linux kernel
             versions supported by existing linux-yocto recipes, you can
             still make use of the Yocto Project Linux kernel tooling by
             working with your own sources.
-            You will not be able to leverage the existing
+            When you use your own sources, you will not be able to
+            leverage the existing
             <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> and
-            stabilization work of the linux-yocto sources, but you will be
-            able to manage your own Metadata in the same format as the
-            linux-yocto sources.
-            Format compatibility facilitates converging with
+            stabilization work of the linux-yocto sources.
+            However, you will be able to manage your own Metadata in the same
+            format as the linux-yocto sources.
+            Maintaining format compatibility facilitates converging with
             linux-yocto on a future, mutually-supported kernel version.
         </para>
 
         <para>
-            The linux-yocto custom recipe is located in the
+            To help you use your own sources, the Yocto Project provides a
+            linux-yocto custom recipe that uses
+            <filename>kernel.org</filename> sources
+            and the Yocto Project Linux kernel tools for managing Metadata.
+            You can find this recipe in the
             <filename>poky</filename> Git repository of the
             Yocto Project <ulink url='&YOCTO_GIT_URL;'>Source Repository</ulink>
             at:
             <literallayout class="monospaced">
      poky/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb
             </literallayout>
-        </para>
-
-        <para>
-            The example recipe uses <filename>kernel.org</filename> sources
-            and the Yocto Project Linux kernel tools for managing Metadata.
         </para>
 
         <para>
@@ -713,8 +713,14 @@ to the Yocto Project Development Manual, section 5.7.3 Creating the Patch.
                             only the empty string, "(^$)".
                             This default setting triggers an explicit build failure.
                             You must change it to match a list of the machines
-                            that your new recipe supports (e.g. "qemux86|qemux86-64").
-                            </para></listitem>
+                            that your new recipe supports.
+                            For example, to support the <filename>qemux86</filename>
+                            and <filename>qemux86-64</filename> machines, use
+                            the following form with your layer name as the
+                            override:
+                            <literallayout class='monospaced'>
+     COMPATIBLE_MACHINE_yourmachine = "qemux86|qemux86-64"
+                            </literallayout></para></listitem>
                     </itemizedlist></para></listitem>
                 <listitem><para>Provide further customizations to your recipe
                     as needed just as you would customize an existing
