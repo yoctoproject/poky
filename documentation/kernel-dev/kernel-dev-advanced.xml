@@ -7,14 +7,14 @@
 <title>Working with Advanced Metadata</title>
 
     <para>
-        In addition to configuration fragments and patches, the
-        Yocto Project kernel tools support rich metadata that you can
-        use to define complex policies and BSP support.
-        The purpose of the metadata and the tools to manage it, known as
+        In addition to supporting configuration fragments and patches, the
+        Yocto Project kernel tools also support rich
+        <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> that you can
+        use to define complex policies and Board Support Package (BSP) support.
+        The purpose of the Metadata and the tools that manage it, known as
         the kern-tools (<filename>kern-tools-native_git.bb</filename>), is
-        to assist in managing the complexity of the configuration and sources
-        in support of multiple Board Support Packages (BSPs) and Linux kernel
-        types.
+        to help you manage the complexity of the configuration and sources
+        used to support multiple BSPs and Linux kernel types.
     </para>
 
     <para>
@@ -602,7 +602,7 @@ git repository:
         or <filename>meta/cfg/kernel-cache/</filename> if you are creating
         metadata in-tree as described in
         the "<link linkend='in-tree-metadata'>In-Tree Metadata</link>" section.
-    </para>            
+    </para>
 
     <para>
         Original text:
@@ -920,12 +920,12 @@ will want to specify in the KERNEL_FEATURES variable of the Linux kernel recipe
             <literallayout class='monospaced'>
      # Include this kernel type fragment to get the standard features and
      # configuration values.
-	
+
      # Include all standard features
      include standard-nocfg.scc
-	
+
      kconf non-hardware standard.cfg
-	
+
      # individual cfg block section
      include cfg/fs/devtmpfs.scc
      include cfg/fs/debugfs.scc
@@ -933,7 +933,7 @@ will want to specify in the KERNEL_FEATURES variable of the Linux kernel recipe
      include cfg/fs/ext2.scc
      include cfg/fs/ext3.scc
      include cfg/fs/ext4.scc
-	
+
      include cfg/net/ipv6.scc
      include cfg/net/ip_nf.scc
      include cfg/net/ip6_nf.scc
@@ -967,7 +967,7 @@ fragments together with any patches you want to use for all Linux kernel builds
 of the specified ktype. In short, ktypes are where you define a high-level
 kernel policy. Syntactically, however, they are no different than features (see
 3.3.3).  preempt-rt, and tiny. The ktype is selected by the LINUX_KERNEL_TYPE
-variable in the recipe (see 3.1). 
+variable in the recipe (see 3.1).
 
 By way of example, the linux-yocto-3.4 tree defines three ktypes: standard,
 tiny, and preempt-rt. The standard kernel type includes the generic Linux kernel
@@ -983,12 +983,12 @@ not currently include any source changes, but it may in the future.
 The standard ktype is defined by standard.scc:
 	# Include this kernel type fragment to get the standard features and
 	# configuration values.
-	
+
 	# Include all standard features
 	include standard-nocfg.scc
-	
+
 	kconf non-hardware standard.cfg
-	
+
 	# individual cfg block section
 	include cfg/fs/devtmpfs.scc
 	include cfg/fs/debugfs.scc
@@ -996,7 +996,7 @@ The standard ktype is defined by standard.scc:
 	include cfg/fs/ext2.scc
 	include cfg/fs/ext3.scc
 	include cfg/fs/ext4.scc
-	
+
 	include cfg/net/ipv6.scc
 	include cfg/net/ip_nf.scc
 	include cfg/net/ip6_nf.scc
@@ -1092,7 +1092,7 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
             <literallayout class='monospaced'>
      fri2.scc:
         kconf hardware fri2.cfg
-	
+
         include cfg/x86.scc
         include features/eg20t/eg20t.scc
         include cfg/dmaengine.scc
@@ -1119,19 +1119,19 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
         define KMACHINE fri2
         define KTYPE standard
         define KARCH i386
-	
+
         include ktypes/standard/standard.scc
         branch fri2
-	
+
         git merge emgd-1.14
-	
+
         include fri2.scc
-	
+
         # Extra fri2 configs above the minimal defined in fri2.scc
         include cfg/efi-ext.scc
         include features/drm-emgd/drm-emgd.scc
         include cfg/vesafb.scc
-	
+
         # default policy for standard kernels
         include cfg/usb-mass-storage.scc
             </literallayout>
@@ -1162,10 +1162,10 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
         define KMACHINE fri2
         define KTYPE tiny
         define KARCH i386
-	
+
         include ktypes/tiny/tiny.scc
         branch fri2
-	
+
         include fri2.scc
             </literallayout>
             As you might expect, the tiny description includes quite a bit less.
@@ -1236,7 +1236,7 @@ BSP definitions from the linux-yocto-3.4 repository:
 
 fri2.scc:
 	kconf hardware fri2.cfg
-	
+
 	include cfg/x86.scc
 	include features/eg20t/eg20t.scc
 	include cfg/dmaengine.scc
@@ -1257,19 +1257,19 @@ fri2-standard.scc:
 	define KMACHINE fri2
 	define KTYPE standard
 	define KARCH i386
-	
+
 	include ktypes/standard/standard.scc
 	branch fri2
-	
+
 	git merge emgd-1.14
-	
+
 	include fri2.scc
-	
+
 	# Extra fri2 configs above the minimal defined in fri2.scc
 	include cfg/efi-ext.scc
 	include features/drm-emgd/drm-emgd.scc
 	include cfg/vesafb.scc
-	
+
 	# default policy for standard kernels
 	include cfg/usb-mass-storage.scc
 
@@ -1291,10 +1291,10 @@ fri2-tiny.scc:
 	define KMACHINE fri2
 	define KTYPE tiny
 	define KARCH i386
-	
+
 	include ktypes/tiny/tiny.scc
 	branch fri2
-	
+
 	include fri2.scc
 
 As you might expect, the tiny description includes quite a bit less. In fact,
@@ -1435,9 +1435,9 @@ include them in the BSP description for the board(s) that require them (see
 Alternatively, you can create a branch in your Linux kernel sources and apply
 the patches there. You can then specify this new branch as the KBRANCH to use
 for this board. You can do this in the recipe with the KBRANCH variable:
-	
+
 	KBRANCH = "mynewbranch"
-	
+
 or in the BSP description using the "branch" command:
 
 mybsp.scc:
