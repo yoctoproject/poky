@@ -3,8 +3,10 @@
 [<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
 <chapter id='kernel-dev-advanced'>
-
 <title>Working with Advanced Metadata</title>
+
+<section id='kernel-dev-advanced-overview'>
+    <title>Overview</title>
 
     <para>
         In addition to supporting configuration fragments and patches, the
@@ -60,37 +62,48 @@ together as needed, but maintain them in only one place. Similar logic applies
 to source changes.
         </literallayout>
     </para>
+</section>
 
-<section id='using-metadata-in-a-recipe'>
-    <title>Using Metadata in a Recipe</title>
+<section id='using-kernel-metadata-in-a-recipe'>
+    <title>Using Kernel Metadata in a Recipe</title>
 
     <para>
-        The metadata provided with any linux-yocto style Linux kernel sources
-        must define a BSP that corresponds to the definition laid out in the
-        recipe.
-        A BSP consists of an aggregation of kernel policy and hardware specific
+        The kernel sources in the Yocto Project contain kernel Metadata, which is
+        located in the <filename>meta</filename> branches of the kernel source
+        Git repositories.
+        This Metadata defines Board Support Packages (BSPs) that
+        correspond to definitions in linux-yocto recipes for the same BSPs.
+        A BSP consists of an aggregation of kernel policy and hardware-specific
         feature enablement.
-        This can be influenced from within the recipe.
+        The BSP can be influenced from within the linux-yocto recipe.
+        <note>
+            Linux kernel source that contains this Metadata is said to be
+            "linux-yocto style" kernel source.
+            A Linux kernel recipe that inherits from the
+            <filename>linux-yocto.inc</filename> include file is said to be a
+            "linux-yocto style" recipe.
+        </note>
     </para>
 
     <para>
-        Every linux-yocto style recipe must define the following variable:
-        <literallayout class='monospaced'>
-     KMACHINE
-        </literallayout>
-        <filename>KMACHINE</filename> is typically set to the same value as
-        used within the recipe-space BSP definition, such as "routerstationpro"
-        or "fri2".
+        Every linux-yocto style recipe must define the
+        <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>
+        variable.
+        This variable is typically set to the same value as the
+        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+        variable used by BitBake (e.g. "routerstationpro" or "fri2").
         However, multiple BSPs can reuse the same <filename>KMACHINE</filename>
         name if they are built using the same BSP description.
-        See section 3.3.5 for more information.
+        See the <link linkend='bsp-descriptions'>BSP Descriptions</link> section
+        for more information.
         The <filename>meta-intel</filename> "fri2" and "fri2-noemgd" are good
         examples of such a situation where each specifies
         <filename>KMACHINE</filename> as "fri2".
     </para>
 
     <para>
-        They may optionally define the following variables:
+        The linux-yocto style recipes can optionally define the following
+        variables:
         <literallayout class='monospaced'>
      KBRANCH
      KERNEL_FEATURES
@@ -839,7 +852,7 @@ The description file can include multiple patch statements, one per patch.
             and patches to be the types of things you will want to specify
             in the <filename>KERNEL_FEATURES</filename> variable of the
             Linux kernel recipe.
-            See the "<link linkend='using-metadata-in-a-recipe'>Using Metadata in a Recipe</link>"
+            See the "<link linkend='using-kernel-metadata-in-a-recipe'>Using Kernel Metadata in a Recipe</link>"
             section earlier in the manual.
         </para>
 
@@ -885,7 +898,7 @@ will want to specify in the KERNEL_FEATURES variable of the Linux kernel recipe
             as described in the previous section.
             The <filename>ktype</filename> is selected by the
             <filename>LINUX_KERNEL_TYPE</filename> variable in the recipe.
-            See the "<link linkend='using-metadata-in-a-recipe'>Using Metadata in a Recipe</link>"
+            See the "<link linkend='using-kernel-metadata-in-a-recipe'>Using Kernel Metadata in a Recipe</link>"
             section for more information.
         </para>
 
@@ -1315,7 +1328,7 @@ the KTYPE has changed, now set to "tiny".
     <title>Machine Branches</title>
 
     <para>
-        The "<link linkend='using-metadata-in-a-recipe'>Using Metadata in a Recipe</link>"
+        The "<link linkend='using-kernel-metadata-in-a-recipe'>Using Kernel Metadata in a Recipe</link>"
         section introduced the <filename>KBRANCH</filename> variable, which
         defines the source branch to use from the Linux kernel Git repository
         you are using.
