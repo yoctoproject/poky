@@ -344,22 +344,24 @@ described in the following sections applies equally.
         <title>Recipe-Space Metadata</title>
 
         <para>
-            When stored in recipe-space, the metadata files reside in a
+            When stored in recipe-space, the kernel Metadata files reside in a
             directory hierarchy below
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>,
-            which is typically set to
-            <filename>${THISDIR}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>
-            for a linux-yocto or linux-yocto-custom derived Linux kernel
-            recipe.
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>.
+            For a linux-yocto recipe or for a Linux kernel recipe derived
+            by copying and modifying
+            <filename>oe-core/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb</filename>
+            to a recipe in your layer, <filename>FILESEXTRAPATHS</filename>
+            is typically set to
+            <filename>${THISDIR}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>.
             See the "<link linkend='modifying-an-existing-recipe'>Modifying an Existing Recipe</link>"
             section for more information.
         </para>
 
         <para>
-            By way of example, a trivial tree of metadata stored in
-            recipe-space within a BSP layer might look like the following:
+            Here is an example that shows a trivial tree of kernel Metadata
+            stored in recipe-space within a BSP layer:
             <literallayout class='monospaced'>
-     meta/
+     meta-my_bsp_layer/
      `-- recipes-kernel
          `-- linux
              `-- linux-yocto
@@ -370,12 +372,9 @@ described in the following sections applies equally.
         </para>
 
         <para>
-            When the metadata is stored in recipe-space, you must take
+            When the Metadata is stored in recipe-space, you must take
             steps to ensure BitBake has the necessary information to decide
-            which files to fetch and when they need to be fetched again.
-        </para>
-
-        <para>
+            what files to fetch and when they need to be fetched again.
             It is only necessary to specify the <filename>.scc</filename>
             files on the
             <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
@@ -385,7 +384,7 @@ described in the following sections applies equally.
             Because of this, it is necessary to bump the recipe
             <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
             value when changing the content of files not explicitly listed
-            in the SRC_URI.
+            in the <filename>SRC_URI</filename>.
         </para>
 
         <para>
