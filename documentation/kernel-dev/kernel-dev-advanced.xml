@@ -914,47 +914,50 @@ will want to specify in the KERNEL_FEATURES variable of the Linux kernel recipe
         <title>Kernel Types</title>
 
         <para>
-            Kernel types, or <filename>ktypes</filename>, are used to
-            aggregate all non-hardware configuration fragments together
-            with any patches you want to use for all Linux kernel builds
-            of the specified <filename>ktype</filename>.
-            In short, <filename>ktypes</filename> are where you define a
-            high-level kernel policy.
-            Syntactically, however, they are no different than features
-            as described in the previous section.
-            The <filename>ktype</filename> is selected by the
-            <filename>LINUX_KERNEL_TYPE</filename> variable in the recipe.
+            A kernel type defines a high-level kernel policy by
+            aggregating non-hardware configuration fragments with
+            patches you want to use when building a Linux kernels of a
+            specific type.
+            Syntactically, kernel types are no different than features
+            as described in the "<link linkend='features'>Features</link>"
+            section.
+            The <filename>LINUX_KERNEL_TYPE</filename> variable in the kernel
+            recipe selects the kernel type.
             See the "<link linkend='using-kernel-metadata-in-a-recipe'>Using Kernel Metadata in a Recipe</link>"
             section for more information.
         </para>
 
         <para>
-            By way of example, the linux-yocto-3.4 tree defines three
-            <filename>ktypes</filename>: standard, tiny, and preempt-rt.
+            As an example, the <filename>linux-yocto-3.4</filename>
+            tree defines three kernel types: "standard",
+            "tiny", and "preempt-rt":
             <itemizedlist>
-                <listitem><para>standard:
-                    Includes the generic Linux kernel
-                    policy of the Yocto Project linux-yocto kernel recipes.
-                    This includes things like which file systems, which
-                    networking options, which core kernel features, and which
+                <listitem><para>"standard":
+                    Includes the generic Linux kernel policy of the Yocto
+                    Project linux-yocto kernel recipes.
+                    This policy includes, among other things, which file
+                    systems, networking options, core kernel features, and
                     debugging and tracing options are supported.
                     </para></listitem>
-                <listitem><para>preempt-rt:
+                <listitem><para>"preempt-rt":
                     Applies the <filename>PREEMPT_RT</filename>
                     patches and the configuration options required to
                     build a real-time Linux kernel.
-                    It inherits from standard.</para></listitem>
-                <listitem><para>tiny:
-                    Independent from the standard configuration
-                    and defines a bare minimum configuration meant to serve as a
+                    This kernel type inherits from the "standard" kernel type.
+                    </para></listitem>
+                <listitem><para>"tiny":
+                    Defines a bare minimum configuration meant to serve as a
                     base for very small Linux kernels.
-                    Tiny does not currently include any source changes, but it
-                    might in the future.</para></listitem>
+                    The "tiny" kernel type is independent from the "standard"
+                    configuration.
+                    Although the "tiny" kernel type does not currently include
+                    any source changes, it might in the future.
+                    </para></listitem>
             </itemizedlist>
         </para>
 
         <para>
-            The standard kernel type is defined by
+            The "standard" kernel type is defined by
             <filename>standard.scc</filename>:
             <literallayout class='monospaced'>
      # Include this kernel type fragment to get the standard features and
@@ -981,21 +984,24 @@ will want to specify in the KERNEL_FEATURES variable of the Linux kernel recipe
         </para>
 
         <para>
-            As with any <filename>scc</filename> file, a
-            <filename>ktype</filename> definition can aggregate other
-            <filename>scc</filename> files with the
-            <filename>include</filename> command, or directly pull in
+            As with any <filename>.scc</filename> file, a
+            kernel type definition can aggregate other
+            <filename>.scc</filename> files with
+            <filename>include</filename> commands.
+            These definitions can also directly pull in
             configuration fragments and patches with the
             <filename>kconf</filename> and <filename>patch</filename>
             commands, respectively.
         </para>
 
         <note>
-            It is not strictly necessary to create a
-            <filename>ktype scc</filename> file.
-            The BSP file can define the <filename>ktype</filename> implicitly
-            with a <filename>define KTYPE myktype</filename> line. See the
-            next section for more information.
+            It is not strictly necessary to create a kernel type
+            <filename>.scc</filename> file.
+            The Board Support Package (BSP) file can implicitly define
+            the kernel type using a <filename>define KTYPE myktype</filename>
+            line.
+            See the "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
+            section for more information.
         </note>
 
         <para>
