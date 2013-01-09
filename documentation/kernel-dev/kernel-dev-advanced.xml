@@ -1063,10 +1063,11 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
         <para>
             BSP descriptions combine kernel types with hardware-specific
             features.
-            The hardware specific portion is typically defined
+            The hardware-specific portion is typically defined
             independently, and then aggregated with each supported kernel
             type.
-            Consider a simple example:
+            Consider this simple BSP description that supports the "mybsp"
+            machine:
             <literallayout class='monospaced'>
      mybsp.scc:
         define KMACHINE mybsp
@@ -1075,19 +1076,25 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
 
         kconf mybsp.cfg
             </literallayout>
-            Every BSP description should include the definition of the
+            Every BSP description should define the
             <filename>KMACHINE</filename>, <filename>KTYPE</filename>,
             and <filename>KARCH</filename> variables.
-            These variables allow the build-system to identify this
-            description as meeting the criteria set by the recipe being built.
-            This particular description can be said to support the "mybsp"
-            machine for the "standard" kernel type and the "i386" architecture.
-            Be aware that there is no hard link between the
-            <filename>KTYPE</filename> and a ktype description file.
-            If you do not have kernel types defined in your metadata, you
-            only need to ensure that the recipe
-            <filename>LINUX_KERNEL_TYPE</filename> and the
-            <filename>KTYPE</filename> here match.
+            These variables allow the OpenEmbedded build system to identify
+            the description as meeting the criteria set by the recipe being
+            built.
+            This simple example supports the "mybsp" machine for the "standard"
+            kernel and the 'i386" architecture.
+        </para>
+
+        <para>
+            Be aware that a hard link between the
+            <filename>KTYPE</filename> variable and a kernel type
+            description file does not exist.
+            Thus, if you do not have kernel types defined in your kernel
+            Metadata, you only need to ensure that the kernel recipe's
+            <filename>LINUX_KERNEL_TYPE</filename> variable and the
+            <filename>KTYPE</filename> variable in the BSP description
+            file match.
             <note>
                 Future versions of the tooling make the specification of
                 <filename>KTYPE</filename> in the BSP optional.
@@ -1097,12 +1104,17 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
         <para>
             If you did want to separate your kernel policy from your
             hardware configuration, you could do so by specifying a kernel
-            type, such as "standard" (see 3.3.4) and including that
-            description in the BSP description.
+            type, such as "standard" and including that description file
+            in the BSP description file.
+            See the "<link linkend='kernel-types'>Kernel Types</link>" section
+            for more information.
+        </para>
+
+        <para>
             You might also have multiple hardware configurations that you
-            aggregate into a single hardware description file which you
-            could include here, rather than referencing a single
-            <filename>.cfg</filename> file.
+            aggregate into a single hardware description file that you
+            could include in the BSP description file, rather than referencing
+            a single <filename>.cfg</filename> file.
             Consider the following:
             <literallayout class='monospaced'>
      mybsp.scc:
@@ -1120,20 +1132,21 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
             aggregates all the configuration fragments, patches, and
             features that make up your standard kernel policy whereas
             <filename>mybsp.scc</filename> aggregates all those necessary
-            to support the hardware available on the <filename>mybsp</filename>
-            machine.
-            For information on how to break a complete <filename>.config</filename>
-            into the various, see the
+            to support the hardware available on the "mybsp" machine.
+            For information on how to break a complete
+            <filename>.config</filename> file into the various
+            configuration fragments, see the
             "<link linkend='generating-configuration-files'>Generating Configuration Files</link>"
             section.
         </para>
 
         <para>
             Many real-world examples are more complex.
-            Like any other <filename>scc</filename> file, BSP
+            Like any other <filename>.scc</filename> file, BSP
             descriptions can aggregate features.
-            Consider the Fish River Island II (fri2)
-            BSP definitions from the linux-yocto-3.4 repository:
+            Consider the Fish River Island 2 (fri2)
+            BSP definition from the <filename>linux-yocto-3.4</filename>
+            Git repository:
             <literallayout class='monospaced'>
      fri2.scc:
         kconf hardware fri2.cfg
@@ -1141,7 +1154,7 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
         include cfg/x86.scc
         include features/eg20t/eg20t.scc
         include cfg/dmaengine.scc
-        nclude features/ericsson-3g/f5521gw.scc
+        include features/ericsson-3g/f5521gw.scc
         include features/power/intel.scc
         include cfg/efi.scc
         include features/usb/ehci-hcd.scc
@@ -1153,12 +1166,15 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
         <para>
             The <filename>fri2.scc</filename> description file includes
             a hardware configuration fragment
-            (<filename>fri2.cfg</filename>) specific to the fri2 BSP
-            as well as several more general configuration fragments and
-            features enabling hardware found on the fri2.
-            This description is then included in each of the three
-            machine-ktype descriptions (standard, preempt-rt, and tiny).
-            Consider the fri2 standard description:
+            (<filename>fri2.cfg</filename>) specific to the Fish River
+            Island 2 BSP as well as several more general configuration
+            fragments and features enabling hardware found on the
+            machine.
+            This description file is then included in each of the three
+            "fri2" description files for the supported kernel types
+            (i.e. "standard", "preempt-rt", and "tiny").
+            Consider the "fri2" description for the "standard" kernel
+            type:
             <literallayout class='monospaced'>
      fri2-standard.scc:
         define KMACHINE fri2
@@ -1180,28 +1196,30 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
         # default policy for standard kernels
         include cfg/usb-mass-storage.scc
             </literallayout>
-            The "include fri2.scc" line about midway through the file defines
-            all hardware enablement common to the BSP for all kernel types.
-            Including the statement significantly reduces duplication.
+            The <filename>include</filename> command midway through the file
+            includes the <filename>fri2.scc</filename> description that
+            defines all hardware enablement for the BSP that is common to all
+            kernel types.
+            Using this command significantly reduces duplication.
         </para>
 
         <para>
-            This description introduces a few more variables and commands
-            worthy of further discussion.
-            Notice the "branch" command, which is used to create a
-            machine-specific branch into which source changes can be applied.
+            This "fri2" standard description introduces a few more variables
+            and commands that are worth further discussion.
+            Notice the <filename>branch fri2</filename> command, which creates
+            a machine-specific branch into which source changes are applied.
             With this branch set up, the <filename>git merge</filename> command
-            uses Git to merge in a feature branch "emgd-1.14".
-            This could also be handled with the patch command, but for
-            commonly used features such as this, feature branches can be a
-            convenient mechanism.
+            uses Git to merge in a feature branch named "emgd-1.14".
+            You could also handle this with the <filename>patch</filename>
+            command.
+            However, for commonly used features such as this, feature branches
+            are a convenient mechanism.
             See the "<link linkend='feature-branches'>Feature Branches</link>"
             section for more information.
         </para>
 
         <para>
-            Now consider the Fish River Island 2 tiny
-            (<filename>fri2-tiny</filename>) BSP description:
+            Now consider the "fri2" description for the "tiny" kernel type:
             <literallayout class='monospaced'>
      fri2-tiny.scc:
         define KMACHINE fri2
@@ -1213,17 +1231,19 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
 
         include fri2.scc
             </literallayout>
-            As you might expect, the tiny description includes quite a bit less.
+            As you might expect, the "tiny" description includes quite a
+            bit less.
             In fact, it includes only the minimal policy defined by the
-            tiny ktype and the hardware-specific configuration required for
-            boot and the most basic functionality of the system as defined in
-            the base fri2 description file.
+            "tiny" kernel type and the hardware-specific configuration required
+            for booting the machine along with the most basic functionality of
+            the system as defined in the base "fri2" description file.
         </para>
 
         <para>
-            Notice again the three critical variables: <filename>KMACHINE</filename>,
-            <filename>KTYPE</filename>, and <filename>KARCH</filename>.
-            Of these, only the <filename>KTYPE</filename> has changed.
+            Notice again the three critical variables:
+            <filename>KMACHINE</filename>, <filename>KTYPE</filename>,
+            and <filename>KARCH</filename>.
+            Of these variables, only the <filename>KTYPE</filename> has changed.
             It is now set to "tiny".
         </para>
 
