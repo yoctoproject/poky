@@ -1377,31 +1377,35 @@ the KTYPE has changed, now set to "tiny".
     <title>Working with Branches</title>
 
     <para>
-        Many linux-yocto-custom derived recipes will be using Linux kernel
-        sources with only a single branch: "master".
-        However, when you are working with multiple boards and architectures,
+        Many recipes based on the <filename>linux-yocto-custom.bb<filename>
+        use Linux kernel sources that have only the single branch - "master".
+        However, if you work with multiple boards and architectures,
         you are likely to run into the situation where a series of patches
         are needed for one board to boot.
         Sometimes, these patches are works-in-progress or fundamentally wrong,
         yet still necessary for specific boards.
         In these situations, you most likely do not want to include these
-        patches in every kernel you build.
-        You have a couple of options.
+        patches in every kernel you build (i.e. have the patches as part of
+        the lone "master" branch).
+        It is situations like these that give rise to multiple branches used
+        within a Linux kernel sources Git repository.
     </para>
 
     <para>
-        First, you could encapsulate these patches in a feature description
-        and only include them in the BSP description for the board(s) that
-        require them.
-        For more information, see the
-        "<link linkend='patches'>Patches</link>" and
-        "<link linkend='bsp-descriptions'>BSP Descriptions</link>" sections.
-    </para>
-
-    <para>
-        Alternatively, you can create a branch in your Linux kernel sources
-        and apply the patches there.
-        You can then specify this new branch as the
+        If you are supporting multiple boards and architectures, you have
+        some options as to how you want to isolate your changes:
+        <itemizedlist>
+            <listitem><para><emphasis>Include feature patches in the BSP:</emphasis>
+                Encapsulate patches in a feature description and only include
+                the patches in the BSP descriptions of the applicable boards.
+                For more information, see the
+                "<link linkend='patches'>Patches</link>" and
+                "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
+                sections.</para></listitem>
+            <listitem><para><emphasis>Create a machine branch:</emphasis>
+                You can create a machine branch in your Linux kernel sources
+                and apply the patches there.
+                You can then specify this new branch as the
         <filename>KBRANCH</filename> to use for this board.
         You can do this in the recipe with the
         <filename>KBRANCH</filename> variable:
