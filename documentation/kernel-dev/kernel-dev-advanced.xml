@@ -1377,11 +1377,61 @@ the KTYPE has changed, now set to "tiny".
     <title>Working with Branches</title>
 
     <para>
-        We need a top-level section here that introduces branches in general.
-        There is information that can be pulled from the embedded machine
-        and feature sections to introduce this stuff.
-        The two subsections should deal with each type of specific branch
-        that can be used.
+        Many linux-yocto-custom derived recipes will be using Linux kernel
+        sources with only a single branch: "master".
+        However, when you are working with multiple boards and architectures,
+        you are likely to run into the situation where a series of patches
+        are needed for one board to boot.
+        Sometimes, these patches are works-in-progress or fundamentally wrong,
+        yet still necessary for specific boards.
+        In these situations, you most likely do not want to include these
+        patches in every kernel you build.
+        You have a couple of options.
+    </para>
+
+    <para>
+        First, you could encapsulate these patches in a feature description
+        and only include them in the BSP description for the board(s) that
+        require them.
+        For more information, see the
+        "<link linkend='patches'>Patches</link>" and
+        "<link linkend='bsp-descriptions'>BSP Descriptions</link>" sections.
+    </para>
+
+    <para>
+        Alternatively, you can create a branch in your Linux kernel sources
+        and apply the patches there.
+        You can then specify this new branch as the
+        <filename>KBRANCH</filename> to use for this board.
+        You can do this in the recipe with the
+        <filename>KBRANCH</filename> variable:
+        <literallayout class='monospaced'>
+     KBRANCH = "mynewbranch"
+        </literallayout>
+        or in the BSP description using the "branch" command:
+        <literallayout class='monospaced'>
+     mybsp.scc:
+        define KMACHINE mybsp
+        define KTYPE standard
+        define KARCH i386
+        include standard.scc
+
+        branch mynewbranch
+
+        include mybsp-hw.scc
+        </literallayout>
+    </para>
+
+    <para>
+        The approach you take, feature or branch, is entirely up to you
+        and depends on what works best for your development model.
+        If you are actively working on board support, you may find that
+        working within a branch is more practical than trying to continually
+        reintegrate your patches into a feature.
+        On the other hand, if you are simply reusing some patches from an
+        external tree and are not working on them, you may find the
+        encapsulated feature to be appropriate as it does not require the
+        additional complexity of branching in your Linux kernel sources.
     </para>
 
     <section id='machine-branches'>
@@ -1392,61 +1442,6 @@ the KTYPE has changed, now set to "tiny".
             section introduced the <filename>KBRANCH</filename> variable, which
             defines the source branch to use from the Linux kernel Git repository
             you are using.
-            Many linux-yocto-custom derived recipes will be using Linux kernel
-            sources with only a single branch: "master".
-            However, when you are working with multiple boards and architectures,
-            you are likely to run into the situation where a series of patches
-            are needed for one board to boot.
-            Sometimes, these patches are works-in-progress or fundamentally wrong,
-            yet still necessary for specific boards.
-            In these situations, you most likely do not want to include these
-            patches in every kernel you build.
-            You have a couple of options.
-        </para>
-
-        <para>
-            First, you could encapsulate these patches in a feature description
-            and only include them in the BSP description for the board(s) that
-            require them.
-            For more information, see the
-            "<link linkend='patches'>Patches</link>" and
-            "<link linkend='bsp-descriptions'>BSP Descriptions</link>" sections.
-        </para>
-
-        <para>
-            Alternatively, you can create a branch in your Linux kernel sources
-            and apply the patches there.
-            You can then specify this new branch as the
-            <filename>KBRANCH</filename> to use for this board.
-            You can do this in the recipe with the
-            <filename>KBRANCH</filename> variable:
-           <literallayout class='monospaced'>
-     KBRANCH = "mynewbranch"
-            </literallayout>
-            or in the BSP description using the "branch" command:
-            <literallayout class='monospaced'>
-     mybsp.scc:
-        define KMACHINE mybsp
-        define KTYPE standard
-        define KARCH i386
-        include standard.scc
-
-        branch mynewbranch
-
-        include mybsp-hw.scc
-            </literallayout>
-        </para>
-
-        <para>
-            The approach you take, feature or branch, is entirely up to you
-            and depends on what works best for your development model.
-            If you are actively working on board support, you may find that
-            working within a branch is more practical than trying to continually
-            reintegrate your patches into a feature.
-            On the other hand, if you are simply reusing some patches from an
-            external tree and are not working on them, you may find the
-            encapsulated feature to be appropriate as it does not require the
-            additional complexity of branching in your Linux kernel sources.
         </para>
 
         <para>
