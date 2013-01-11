@@ -56,7 +56,7 @@ contain the highest level visible CONFIG options as presented by the Linux
 kernel menuconfig system. This reduces your maintenance effort and allows you
 to further separate your configuration in ways that make sense for your project.
 A common split is policy and hardware. For example, all your kernels may support
-the proc and sys filesystems, but only specific boards will require sound, usb,
+the proc and sys filesystems, but only specific boards will require sound, USB,
 or specific drivers. Specifying these individually allows you to aggregate them
 together as needed, but maintain them in only one place. Similar logic applies
 to source changes.
@@ -136,7 +136,7 @@ to source changes.
         The linux-yocto recipes define "standard", "tiny", and "preempt-rt"
         kernel types.
         See the <link linkend='kernel-types'>Kernel Types</link> section
-        for more inforation on kernel types.
+        for more information on kernel types.
     </para>
 
     <para>
@@ -237,7 +237,7 @@ Together with KMACHINE, this defines the search arguments used by the Yocto
 Project Linux kernel tools to find the appropriate description within the
 metadata with which to build out the sources and configuration. The linux-yocto
 recipes define "standard", "tiny", and "preempt-rt" kernel types. See 3.3.4 for
-more inforation on kernel types.
+more information on kernel types.
 
 During the build, the kern-tools will search for the BSP description file that
 most closely matches the KMACHINE and LINUX_KERNEL_TYPE passed in from the
@@ -332,7 +332,7 @@ or if you just don't want to maintain a Linux kernel git repository on your own.
 If you are doing active kernel development and are already maintaining a Linux
 kernel git repository of your own, you may find it more convenient to work with
 the meta-data in the same repository as the Linux kernel sources. This can make
-iterative development of the Linux kernel more efficient outside of the bitbake
+iterative development of the Linux kernel more efficient outside of the BitBake
 environment.
 
 Regardless of where the meta-data is stored, the syntax as
@@ -406,10 +406,10 @@ meta/
             `-- standard.cfg
 
 When the meta-data is stored in recipe-space, you must take steps to ensure
-bitbake has the necessary information to decide which files to fetch and when
+BitBake has the necessary information to decide which files to fetch and when
 they need to be fetched again.
 
-It is only necessary to specify the .scc files on the SRC_URI; bitbake will
+It is only necessary to specify the .scc files on the SRC_URI; BitBake will
 parse them and fetch any files referenced in the .scc files by the include,
 patch, or kconf commands. Because of this, it is necessary to bump the recipe PR
 value when changing the content of files not explicitly listed in the SRC_URI.
@@ -1373,17 +1373,21 @@ the KTYPE has changed, now set to "tiny".
     </section>
 </section>
 
-<section id='working-with-branches'>
-    <title>Working with Branches</title>
+<section id='organizing-your-source'>
+    <title>Organizing Your Source</title>
 
     <para>
-        Many recipes based on the <filename>linux-yocto-custom.bb<filename>
-        use Linux kernel sources that have only the single branch - "master".
+        Many recipes based on the <filename>linux-yocto-custom.bb</filename>
+        recipe use Linux kernel sources that have only a single
+        branch - "master".
+        This type of repository structure is fine for linear development
+        supporting a single machine and architecture.
         However, if you work with multiple boards and architectures,
-        you are likely to run into the situation where a series of patches
-        are needed for one board to boot.
+        a kernel source repository with multiple branches is more
+        efficient.
+        For example, suppose you need a series of patches for one board to boot.
         Sometimes, these patches are works-in-progress or fundamentally wrong,
-        yet still necessary for specific boards.
+        yet they are still necessary for specific boards.
         In these situations, you most likely do not want to include these
         patches in every kernel you build (i.e. have the patches as part of
         the lone "master" branch).
@@ -1392,28 +1396,79 @@ the KTYPE has changed, now set to "tiny".
     </para>
 
     <para>
-        If you are supporting multiple boards and architectures, you have
-        some options as to how you want to isolate your changes:
+        Repository organization strategies exist that maximize source reuse,
+        remove redundancy, and logically order your changes.
+        This section presents strategies for the following cases:
         <itemizedlist>
-            <listitem><para><emphasis>Include feature patches in the BSP:</emphasis>
-                Encapsulate patches in a feature description and only include
-                the patches in the BSP descriptions of the applicable boards.
-                For more information, see the
-                "<link linkend='patches'>Patches</link>" and
-                "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
-                sections.</para></listitem>
-            <listitem><para><emphasis>Create a machine branch:</emphasis>
-                You can create a machine branch in your Linux kernel sources
-                and apply the patches there.
-                You can then specify this new branch as the
-        <filename>KBRANCH</filename> to use for this board.
-        You can do this in the recipe with the
-        <filename>KBRANCH</filename> variable:
-        <literallayout class='monospaced'>
+            <listitem><para>Encapsulating patches in a feature description
+                and only including the patches in the BSP descriptions of
+                the applicable boards.</para></listitem>
+            <listitem><para>Creating a machine branch in your
+                kernel source repository and applying the patches on that
+                branch only.</para></listitem>
+            <listitem><para>Creating a feature branch in your
+                kernel source repository and merging that branch into your
+                BSP when needed.</para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        The approach you take is entirely up to you
+        and depends on what works best for your development model.
+    </para>
+
+    <section id='encapsulating-patches'>
+        <title>Encapsulating Patches</title>
+
+        <para>
+            if you are reusing patches from an external tree and are not
+            working on the patches, you might find the encapsulated feature
+            to be appropriate.
+            Given this scenario, you don't need to create any branches in the
+            source repository.
+            Rather, you just take the static patches you need and encapsulate
+            them within a feature description.
+            Once you have the feature description, you simply include that into
+            the BSP description as described in the
+            "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
+            section.
+        </para>
+
+        <para>
+            You can find information on how to create patches and BSP
+            descriptions in the "<link linkend='patches'>Patches</link>" and
+            "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
+            sections.
+        </para>
+    </section>
+
+    <section id='machine-branches'>
+        <title>Machine Branches</title>
+
+        <para>
+            When you have multiple machines and architectures to support,
+            or you are actively working on board support, it is more
+            efficient to create branches in the repository based on
+            individual machines.
+            Having machine branches allows common source to remain in the
+            "master" branch with any features specific to a machine stored
+            in the appropriate machine branch.
+            This organization method frees you from continually reintegrating
+            your patches into a feature.
+        </para>
+
+        <para>
+            Once you have a new branch, you can set up your kernel Metadata
+            to use the branch a couple different ways.
+            In the recipe, you can specify the new branch as the
+            <filename>KBRANCH</filename> to use for the board as
+            follows:
+            <literallayout class='monospaced'>
      KBRANCH = "mynewbranch"
-        </literallayout>
-        or in the BSP description using the "branch" command:
-        <literallayout class='monospaced'>
+            </literallayout>
+            Another method is to use the <filename>branch</filename> command
+            in the BSP description:
+            <literallayout class='monospaced'>
      mybsp.scc:
         define KMACHINE mybsp
         define KTYPE standard
@@ -1423,44 +1478,23 @@ the KTYPE has changed, now set to "tiny".
         branch mynewbranch
 
         include mybsp-hw.scc
-        </literallayout>
-    </para>
-
-    <para>
-        The approach you take, feature or branch, is entirely up to you
-        and depends on what works best for your development model.
-        If you are actively working on board support, you may find that
-        working within a branch is more practical than trying to continually
-        reintegrate your patches into a feature.
-        On the other hand, if you are simply reusing some patches from an
-        external tree and are not working on them, you may find the
-        encapsulated feature to be appropriate as it does not require the
-        additional complexity of branching in your Linux kernel sources.
-    </para>
-
-    <section id='machine-branches'>
-        <title>Machine Branches</title>
-
-        <para>
-            The "<link linkend='using-kernel-metadata-in-a-recipe'>Using Kernel Metadata in a Recipe</link>"
-            section introduced the <filename>KBRANCH</filename> variable, which
-            defines the source branch to use from the Linux kernel Git repository
-            you are using.
-        </para>
-
-        <para>
-            If you are supporting multiple boards and architectures and find
-            yourself with numerous branches, you might consider using a
-            hierarchical branching system similar to what the linux-yocto Linux
-            kernel repositories use:
-            <literallayout class='monospaced'>
-     &lt;common&gt;/&lt;ktype&gt;/&lt;machine&gt;
             </literallayout>
         </para>
 
         <para>
-            If you had two ktypes, standard and small for instance, and three
-            machines, your Git tree might look like this:
+            If you find
+            yourself with numerous branches, you might consider using a
+            hierarchical branching system similar to what the linux-yocto Linux
+            kernel repositories use:
+            <literallayout class='monospaced'>
+     &lt;common&gt;/&lt;kernel_type&gt;/&lt;machine&gt;
+            </literallayout>
+        </para>
+
+        <para>
+            If you had two kernel types, "standard" and "small" for
+            instance, and three machines, the branches in your
+            Git repository might look like this:
             <literallayout class='monospaced'>
      common/base
      common/standard/base
@@ -1473,16 +1507,17 @@ the KTYPE has changed, now set to "tiny".
         </para>
 
         <para>
-            This organization can help clarify the relationship of the branches to
-            each other.
-            In this case, "common/standard/machine_a" would include everything in
-            "common/base" and "common/standard/base".
+            This organization can help clarify the branch relationships.
+            In this case, <filename>common/standard/machine_a</filename>
+            includes everything in <filename>common/base</filename> and
+            <filename>common/standard/base</filename>.
             The "standard" and "small" branches add sources specific to those
             kernel types that for whatever reason are not appropriate for the
             other branches.
             <note>The "base" branches are an artifact of the way Git manages
-                its data internally on the filesystem: it will not allow you to use
-                "common/standard" and "common/standard/machine_a" because it
+                its data internally on the filesystem: Git will not allow you
+                to use <filename>common/standard</filename> and
+                <filename>common/standard/machine_a</filename> because it
                 would have to create a file and a directory named "standard".
             </note>
         </para>
@@ -1518,7 +1553,13 @@ mybsp.scc:
 	define KARCH i386
 	include standard.scc
 
-	branch mynewbranch
+	branch mynewbranchIf you are actively
+working on board support, you may find that working within a branch is more
+practical than trying to continually reintegrate your patches into a feature. On
+the other hand, if you are simply reusing some patches from an external tree and
+are not working on them, you may find the encapsulated feature to be appropriate
+as it does not require the additional complexity of branching in your Linux
+kernel sources
 
 	include mybsp.scc
 
@@ -1566,9 +1607,9 @@ Note: The "base" branches are an artifact of the way git manages its data
         <title>Feature Branches</title>
 
         <para>
-            During active development a new feature, it can be more efficient
-            to work with that feature as a branch, rather than as a set of
-            patches which have to be regularly updated.
+            When you are actively developing new features, it can be more
+            efficient to work with that feature as a branch, rather than
+            as a set of patches that have to be regularly updated.
             The Yocto Project Linux kernel tools provide for this with
             the <filename>git merge</filename> command.
         </para>
