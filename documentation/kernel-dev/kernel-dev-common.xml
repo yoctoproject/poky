@@ -51,44 +51,56 @@
         </para>
 
         <para>
-            To modify an existing recipe, do the following:
-            <orderedlist>
-                <listitem><para>Create a minimal, custom layer from which you
-                    can work.
-                    See the "<link linkend='creating-and-preparing-a-layer'>Creating and Preparing a Layer</link>"
-                    section for some general resources.
-                    You can also see the
-                    "<ulink url='&YOCTO_DOCS_DEV_URL;#get-your-layer-setup-for-the-build'>Get Your Layer Setup for the Build</ulink>" section
-                    of the Yocto Project Development Manual for a detailed
-                    example.</para></listitem>
-                <listitem><para>Create the <filename>.bbappend</filename> file.
-                    You create this file in your custom layer.
-                    You also name it accordingly based on the linux-yocto recipe
-                    you are using.
-                    For example, if you are modifying the
-                    <filename>meta/recipes-kernel/linux/linux-yocto_3.4.bb</filename>
-                    recipe, the append file will typical be located as follows
-                    within your custom layer:
-                    <literallayout class='monospaced'>
-     &lt;your-layer&gt;/recipes-kernel/linux/linux-yocto_3.4.bbappend
-                    </literallayout>
-                    The append file should initially contain the following text:
-                    <literallayout class='monospaced'>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'>FILESEXTRAPATHS</ulink> := "${THISDIR}/${PN}"
-                    </literallayout>
-                    The path <filename>${THISDIR}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename> expands
-                    to "linux-yocto" in the current directory for this example.
-                    If you add any new files that modify the kernel recipe,
-                    you need to place them in your layer in the following area:
-                    <literallayout class='monospaced'>
-     &lt;your-layer&gt;/recipes-kernel/linux/linux-yocto/
-                    </literallayout>
-                    <note>If you are working on a new machine Board Support Package
-                        (BSP), be sure to refer to the
-                        <ulink url='&YOCTO_DOCS_BSP_URL;'>Yocto Project Board Support Package (BSP) Developer's Guide</ulink>.
-                    </note></para></listitem>
-            </orderedlist>
+            Modifying an existing recipe can consist of the following:
+            <itemizedlist>
+                <listitem><para>Creating the append file</para></listitem>
+                <listitem><para>Applying patches</para></listitem>
+                <listitem><para>Changing the configuration</para></listitem>
+            </itemizedlist>
         </para>
+
+        <para>
+            Before modifying an existing recipe, be sure that you have created
+            a minimal, custom layer from which you can work.
+            See the "<link linkend='creating-and-preparing-a-layer'>Creating and Preparing a Layer</link>"
+            section for some general resources.
+            You can also see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#get-your-layer-setup-for-the-build'>Get Your Layer Setup for the Build</ulink>" section
+            of the Yocto Project Development Manual for a detailed
+            example.
+        </para>
+
+        <section id='creating-the-append-file'>
+            <title>Creating the Append File</title>
+
+            <para>
+                You create this file in your custom layer.
+                You also name it accordingly based on the linux-yocto recipe
+                you are using.
+                For example, if you are modifying the
+                <filename>meta/recipes-kernel/linux/linux-yocto_3.4.bb</filename>
+                recipe, the append file will typical be located as follows
+                within your custom layer:
+                <literallayout class='monospaced'>
+     &lt;your-layer&gt;/recipes-kernel/linux/linux-yocto_3.4.bbappend
+                </literallayout>
+                The append file should initially contain the following text:
+                <literallayout class='monospaced'>
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'>FILESEXTRAPATHS</ulink> := "${THISDIR}/${PN}"
+                </literallayout>
+                The path <filename>${THISDIR}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename> expands
+                to "linux-yocto" in the current directory for this example.
+                If you add any new files that modify the kernel recipe,
+                you need to place them in your layer in the following area:
+                <literallayout class='monospaced'>
+     &lt;your-layer&gt;/recipes-kernel/linux/linux-yocto/
+                </literallayout>
+                <note>If you are working on a new machine Board Support Package
+                    (BSP), be sure to refer to the
+                    <ulink url='&YOCTO_DOCS_BSP_URL;'>Yocto Project Board Support Package (BSP) Developer's Guide</ulink>.
+                </note>
+            </para>
+        </section>
 
         <section id='applying-patches'>
             <title>Applying Patches</title>
