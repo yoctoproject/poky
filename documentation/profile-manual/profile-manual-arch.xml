@@ -2,387 +2,41 @@
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
 [<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
 
-<chapter id='dev-manual-start'>
+<chapter id='profile-manual-arch'>
 
-<title>Getting Started with the Yocto Project</title>
+<title>Overall Architecture of the Linux Tracing and Profiling Tools</title>
 
-<para>
-    This chapter introduces the Yocto Project and gives you an idea of what you need to get started.
-    You can find enough information to set up your development host and build or use images for
-    hardware supported by the Yocto Project by reading the
-    <ulink url='&YOCTO_DOCS_QS_URL;'>Yocto Project Quick Start</ulink>.
-</para>
-
-<para>
-    The remainder of this chapter summarizes what is in the Yocto Project Quick Start and provides
-    some higher-level concepts you might want to consider.
-</para>
-
-<section id='introducing-the-yocto-project'>
-    <title>Introducing the Yocto Project</title>
+<section id='architecture-of-the-tracing-and-profiling-tools'>
+    <title>Architecture of the Tracing and Profiling Tools</title>
 
     <para>
-        The Yocto Project is an open-source collaboration project focused on embedded Linux development.
-        The project currently provides a build system, which is
-        referred to as the OpenEmbedded build system in the Yocto Project documentation.
-        The Yocto Project provides various ancillary tools suitable for the embedded developer
-        and also features the Sato reference User Interface, which is optimized for
-        stylus driven, low-resolution screens.
+        It may seem surprising to see a section covering an 'overall architecture'
+        for what seems to be a random collection of tracing tools that together
+        make up the Linux tracing and profiling space.
+        The fact is, however, that in recent years this seemingly disparate
+        set of tools has started to converge on a 'core' set of underlying
+        mechanisms:
     </para>
 
     <para>
-        You can use the OpenEmbedded build system, which uses
-        BitBake to develop complete Linux
-        images and associated user-space applications for architectures based on ARM, MIPS, PowerPC,
-        x86 and x86-64.
-        While the Yocto Project does not provide a strict testing framework,
-        it does provide or generate for you artifacts that let you perform target-level and
-        emulated testing and debugging.
-        Additionally, if you are an <trademark class='trade'>Eclipse</trademark>
-        IDE user, you can install an Eclipse Yocto Plug-in to allow you to
-        develop within that familiar environment.
-    </para>
-</section>
-
-<section id='getting-setup'>
-    <title>Getting Set Up</title>
-
-    <para>
-        Here is what you need to get set up to use the Yocto Project:
         <itemizedlist>
-            <listitem><para><emphasis>Host System:</emphasis>  You should have a reasonably current
-                Linux-based host system.
-                You will have the best results with a recent release of Fedora,
-                OpenSUSE, Debian, Ubuntu, or CentOS as these releases are frequently tested against the Yocto Project
-                and officially supported.
-                For a list of the distributions under validation and their status, see the
-                "<ulink url='&YOCTO_DOCS_REF_URL;#detailed-supported-distros'>Supported Linux Distributions</ulink>" section
-                in the Yocto Project Reference Manual and the wiki page at
-                <ulink url='&YOCTO_WIKI_URL;/wiki/Distribution_Support'>Distribution Support</ulink>.</para>
-                <para>
-                You should also have about 100 gigabytes of free disk space for building images.
-                </para></listitem>
-            <listitem><para><emphasis>Packages:</emphasis>  The OpenEmbedded build system
-                requires certain packages exist on your development system (e.g. Python 2.6 or 2.7).
-                See "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Packages</ulink>"
-                section in the Yocto Project Quick Start for the exact package
-                requirements and the installation commands to install them
-                for the supported distributions.</para></listitem>
-            <listitem id='local-yp-release'><para><emphasis>Yocto Project Release:</emphasis>
-                You need a release of the Yocto Project.
-                You set that up with a local <link linkend='source-directory'>Source Directory</link>
-                one of two ways depending on whether you
-                are going to contribute back into the Yocto Project or not.
-                <note>
-                    Regardless of the method you use, this manual refers to the resulting local
-                    hierarchical set of files as the "Source Directory."
-                </note>
-                <itemizedlist>
-                    <listitem><para><emphasis>Tarball Extraction:</emphasis>  If you are not going to contribute
-                        back into the Yocto Project, you can simply download a Yocto Project release you want
-                        from the website’s <ulink url='&YOCTO_HOME_URL;/download'>download page</ulink>.
-                        Once you have the tarball, just extract it into a directory of your choice.</para>
-                        <para>For example, the following command extracts the Yocto Project &DISTRO;
-                        release tarball
-                        into the current working directory and sets up the local Source Directory
-                        with a top-level folder named <filename>&YOCTO_POKY;</filename>:
-                        <literallayout class='monospaced'>
-     $ tar xfj &YOCTO_POKY_TARBALL;
-                        </literallayout></para>
-                        <para>This method does not produce a local Git repository.
-                        Instead, you simply end up with a snapshot of the release.</para></listitem>
-                    <listitem><para><emphasis>Git Repository Method:</emphasis>  If you are going to be contributing
-                        back into the Yocto Project or you simply want to keep up
-                        with the latest developments, you should use Git commands to set up a local
-                        Git repository of the upstream <filename>poky</filename> source repository.
-                        Doing so creates a repository with a complete history of changes and allows
-                        you to easily submit your changes upstream to the project.
-                        Because you cloned the repository, you have access to all the Yocto Project development
-                        branches and tag names used in the upstream repository.</para>
-                        <para>The following transcript shows how to clone the <filename>poky</filename>
-                        Git repository into the current working directory.
-                        <note>You can view the Yocto Project Source Repositories at
-                        <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink></note>
-                        The command creates the local repository in a directory named <filename>poky</filename>.
-                        For information on Git used within the Yocto Project, see the
-                        "<link linkend='git'>Git</link>" section.
-                        <literallayout class='monospaced'>
-     $ git clone git://git.yoctoproject.org/poky
-     Initialized empty Git repository in /home/scottrif/poky/.git/
-     remote: Counting objects: 141863, done.
-     remote: Compressing objects: 100% (38624/38624), done.
-     remote: Total 141863 (delta 99661), reused 141816 (delta 99614)
-     Receiving objects: 100% (141863/141863), 76.64 MiB | 126 KiB/s, done.
-     Resolving deltas: 100% (99661/99661), done.
-                        </literallayout></para>
-                        <para>For another example of how to set up your own local Git repositories, see this
-                        <ulink url='&YOCTO_WIKI_URL;/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>
-                        wiki page</ulink>, which describes how to create both <filename>poky</filename>
-                        and <filename>meta-intel</filename> Git repositories.</para></listitem>
-                </itemizedlist></para></listitem>
-            <listitem id='local-kernel-files'><para><emphasis>Yocto Project Kernel:</emphasis>
-                If you are going to be making modifications to a supported Yocto Project kernel, you
-                need to establish local copies of the source.
-                You can find Git repositories of supported Yocto Project Kernels organized under
-                "Yocto Linux Kernel" in the Yocto Project Source Repositories at
-                <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.</para>
-                <para>This setup can involve creating a bare clone of the Yocto Project kernel and then
-                copying that cloned repository.
-                You can create the bare clone and the copy of the bare clone anywhere you like.
-                For simplicity, it is recommended that you create these structures outside of the
-                Source Directory (usually <filename>poky</filename>).</para>
-                <para>As an example, the following transcript shows how to create the bare clone
-                of the <filename>linux-yocto-3.4</filename> kernel and then create a copy of
-                that clone.
-                <note>When you have a local Yocto Project kernel Git repository, you can
-                reference that repository rather than the upstream Git repository as
-                part of the <filename>clone</filename> command.
-                Doing so can speed up the process.</note></para>
-                <para>In the following example, the bare clone is named
-                <filename>linux-yocto-3.4.git</filename>, while the
-                copy is named <filename>my-linux-yocto-3.4-work</filename>:
-                <literallayout class='monospaced'>
-     $ git clone --bare git://git.yoctoproject.org/linux-yocto-3.4 linux-yocto-3.4.git
-     Initialized empty Git repository in /home/scottrif/linux-yocto-3.4.git/
-     remote: Counting objects: 2468027, done.
-     remote: Compressing objects: 100% (392255/392255), done.
-     remote: Total 2468027 (delta 2071693), reused 2448773 (delta 2052498)
-     Receiving objects: 100% (2468027/2468027), 530.46 MiB | 129 KiB/s, done.
-     Resolving deltas: 100% (2071693/2071693), done.
-                </literallayout></para>
-                <para>Now create a clone of the bare clone just created:
-                <literallayout class='monospaced'>
-     $ git clone linux-yocto-3.4.git my-linux-yocto-3.4-work
-     Cloning into 'my-linux-yocto-3.4-work'...
-     done.
-                </literallayout></para></listitem>
-            <listitem id='poky-extras-repo'><para><emphasis>
-                The <filename>poky-extras</filename> Git Repository</emphasis>:
-                The <filename>poky-extras</filename> Git repository contains metadata needed
-                only if you are modifying and building the kernel image.
-                In particular, it contains the kernel BitBake append (<filename>.bbappend</filename>)
-                files that you
-                edit to point to your locally modified kernel source files and to build the kernel
-                image.
-                Pointing to these local files is much more efficient than requiring a download of the
-                kernel's source files from upstream each time you make changes to the kernel.</para>
-                <para>You can find the <filename>poky-extras</filename> Git Repository in the
-                "Yocto Metadata Layers" area of the Yocto Project Source Repositories at
-                <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.
-                It is good practice to create this Git repository inside the Source Directory.</para>
-                <para>Following is an example that creates the <filename>poky-extras</filename> Git
-                repository inside the Source Directory, which is named <filename>poky</filename>
-                in this case:
-                <literallayout class='monospaced'>
-     $ cd ~/poky
-     $ git clone git://git.yoctoproject.org/poky-extras poky-extras
-     Initialized empty Git repository in /home/scottrif/poky/poky-extras/.git/
-     remote: Counting objects: 618, done.
-     remote: Compressing objects: 100% (558/558), done.
-     remote: Total 618 (delta 192), reused 307 (delta 39)
-     Receiving objects: 100% (618/618), 526.26 KiB | 111 KiB/s, done.
-     Resolving deltas: 100% (192/192), done.
-                </literallayout></para></listitem>
-           <listitem><para id='supported-board-support-packages-(bsps)'><emphasis>Supported Board
-                Support Packages (BSPs):</emphasis>
-                The Yocto Project provides a layer called <filename>meta-intel</filename> and
-                it is maintained in its own separate Git repository.
-                The <filename>meta-intel</filename> layer contains many supported
-                <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>.</para>
-                <para>Similar considerations exist for setting up the <filename>meta-intel</filename>
-                layer.
-                You can get set up for BSP development one of two ways: tarball extraction or
-                with a local Git repository.
-                It is a good idea to use the same method that you used to set up the Source Directory.
-                Regardless of the method you use, the Yocto Project uses the following BSP layer
-                naming scheme:
-                <literallayout class='monospaced'>
-     meta-&lt;BSP_name&gt;
-                </literallayout>
-                where <filename>&lt;BSP_name&gt;</filename> is the recognized BSP name.
-                Here are some examples:
-                <literallayout class='monospaced'>
-     meta-crownbay
-     meta-emenlow
-     meta-n450
-                </literallayout>
-                See the
-                "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
-                section in the Yocto Project Board Support Package (BSP) Developer's Guide for more
-                information on BSP Layers.
-                <itemizedlist>
-                    <listitem><para><emphasis>Tarball Extraction:</emphasis>  You can download any released
-                        BSP tarball from the same
-                        <ulink url='&YOCTO_HOME_URL;/download'>download site</ulink> used
-                        to get the Yocto Project release.
-                        Once you have the tarball, just extract it into a directory of your choice.
-                        Again, this method just produces a snapshot of the BSP layer in the form
-                        of a hierarchical directory structure.</para></listitem>
-                    <listitem><para><emphasis>Git Repository Method:</emphasis>  If you are working
-                        with a local Git repository for your Source Directory, you should also use this method
-                        to set up the <filename>meta-intel</filename> Git repository.
-                        You can locate the <filename>meta-intel</filename> Git repository in the
-                        "Yocto Metadata Layers" area of the Yocto Project Source Repositories at
-                        <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.</para>
-                        <para>Typically, you set up the <filename>meta-intel</filename> Git repository inside
-                        the Source Directory.
-                        For example, the following transcript shows the steps to clone the
-                        <filename>meta-intel</filename>
-                        Git repository inside the local <filename>poky</filename> Git repository.
-                        <literallayout class='monospaced'>
-     $ cd ~/poky
-     $ git clone git://git.yoctoproject.org/meta-intel.git
-     Initialized empty Git repository in /home/scottrif/poky/meta-intel/.git/
-     remote: Counting objects: 3380, done.
-     remote: Compressing objects: 100% (2750/2750), done.
-     remote: Total 3380 (delta 1689), reused 227 (delta 113)
-     Receiving objects: 100% (3380/3380), 1.77 MiB | 128 KiB/s, done.
-     Resolving deltas: 100% (1689/1689), done.
-                        </literallayout></para>
-                        <para>The same
-                        <ulink url='&YOCTO_WIKI_URL;/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>
-                        wiki page</ulink> referenced earlier covers how to
-                        set up the <filename>meta-intel</filename> Git repository.</para></listitem>
-                </itemizedlist></para></listitem>
-            <listitem><para><emphasis>Eclipse Yocto Plug-in:</emphasis>  If you are developing
-                applications using the Eclipse Integrated Development Environment (IDE),
-                you will need this plug-in.
-                See the
-                "<link linkend='setting-up-the-eclipse-ide'>Setting up the Eclipse IDE</link>"
-                section for more information.</para></listitem>
+            <listitem>static tracepoints</listitem>
+            <listitem>dynamic tracepoints
+                 <itemizedlist>
+                     <listitem>kprobes</listitem>
+                     <listitem>uprobes</listitem>
+                 </itemizedlist>
+            </listitem>
+            <listitem>the perf_events subsystem</listitem>
+            <listitem>debugfs</listitem>
         </itemizedlist>
-    </para>
-</section>
-
-<section id='building-images'>
-    <title>Building Images</title>
-
-    <para>
-        The build process creates an entire Linux distribution, including the toolchain, from source.
-        For more information on this topic, see the
-        "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>"
-        section in the Yocto Project Quick Start.
-    </para>
-
-    <para>
-        The build process is as follows:
-        <orderedlist>
-            <listitem><para>Make sure you have set up the Source Directory described in the
-                previous section.</para></listitem>
-            <listitem><para>Initialize the build environment by sourcing a build environment
-                script.</para></listitem>
-            <listitem><para>Optionally ensure the <filename>conf/local.conf</filename> configuration file,
-                which is found in the
-                <link linkend='build-directory'>Build Directory</link>,
-                is set up how you want it.
-                This file defines many aspects of the build environment including
-                the target machine architecture through the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'>MACHINE</ulink></filename> variable,
-                the development machine's processor use through the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'>BB_NUMBER_THREADS</ulink></filename> and
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'>PARALLEL_MAKE</ulink></filename> variables, and
-                a centralized tarball download directory through the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'>DL_DIR</ulink></filename> variable.</para></listitem>
-            <listitem><para>Build the image using the <filename>bitbake</filename> command.
-                If you want information on BitBake, see the user manual inculded in the
-                <filename>bitbake/doc/manual</filename> directory of the
-                <link linkend='source-directory'>Source Directory</link>.</para></listitem>
-            <listitem><para>Run the image either on the actual hardware or using the QEMU
-                emulator.</para></listitem>
-        </orderedlist>
-    </para>
-</section>
-
-<section id='using-pre-built-binaries-and-qemu'>
-    <title>Using Pre-Built Binaries and QEMU</title>
-
-    <para>
-        Another option you have to get started is to use pre-built binaries.
-        The Yocto Project provides many types of binaries with each release.
-        See the "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
-        chapter in the Yocto Project Reference Manual
-        for descriptions of the types of binaries that ship with a Yocto Project
-        release.
-    </para>
-
-    <para>
-        Using a pre-built binary is ideal for developing software applications to run on your
-        target hardware.
-        To do this, you need to be able to access the appropriate cross-toolchain tarball for
-        the architecture on which you are developing.
-        If you are using an SDK type image, the image ships with the complete toolchain native to
-        the architecture.
-        If you are not using an SDK type image, you need to separately download and
-        install the stand-alone Yocto Project cross-toolchain tarball.
-    </para>
-
-    <para>
-        Regardless of the type of image you are using, you need to download the pre-built kernel
-        that you will boot in the QEMU emulator and then download and extract the target root
-        filesystem for your target machine’s architecture.
-        You can get architecture-specific binaries and filesystems from
-        <ulink url='&YOCTO_MACHINES_DL_URL;'>machines</ulink>.
-        You can get installation scripts for stand-alone toolchains from
-        <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'>toolchains</ulink>.
-        Once you have all your files, you set up the environment to emulate the hardware
-        by sourcing an environment setup script.
-        Finally, you start the QEMU emulator.
-        You can find details on all these steps in the
-        "<ulink url='&YOCTO_DOCS_QS_URL;#using-pre-built'>Using Pre-Built Binaries and QEMU</ulink>"
-        section of the Yocto Project Quick Start.
-    </para>
-
-    <para>
-        Using QEMU to emulate your hardware can result in speed issues
-        depending on the target and host architecture mix.
-        For example, using the <filename>qemux86</filename> image in the emulator
-        on an Intel-based 32-bit (x86) host machine is fast because the target and
-        host architectures match.
-        On the other hand, using the <filename>qemuarm</filename> image on the same Intel-based
-        host can be slower.
-        But, you still achieve faithful emulation of ARM-specific issues.
-    </para>
-
-    <para>
-        To speed things up, the QEMU images support using <filename>distcc</filename>
-        to call a cross-compiler outside the emulated system.
-        If you used <filename>runqemu</filename> to start QEMU, and the
-        <filename>distccd</filename> application is present on the host system, any
-        BitBake cross-compiling toolchain available from the build system is automatically
-        used from within QEMU simply by calling <filename>distcc</filename>.
-        You can accomplish this by defining the cross-compiler variable
-        (e.g. <filename>export CC="distcc"</filename>).
-        Alternatively, if you are using a suitable SDK image or the appropriate
-        stand-alone toolchain is present in <filename>/opt/poky</filename>,
-        the toolchain is also automatically used.
     </para>
 
     <note>
-        Several mechanisms exist that let you connect to the system running on the
-        QEMU emulator:
-        <itemizedlist>
-            <listitem><para>QEMU provides a framebuffer interface that makes standard
-                consoles available.</para></listitem>
-            <listitem><para>Generally, headless embedded devices have a serial port.
-                If so, you can configure the operating system of the running image
-                to use that port to run a console.
-                The connection uses standard IP networking.</para></listitem>
-            <listitem><para>SSH servers exist in some QEMU images.
-                The <filename>core-image-sato</filename> QEMU image has a Dropbear secure
-                shell (ssh) server that runs with the root password disabled.
-                The <filename>core-image-basic</filename> and <filename>core-image-lsb</filename> QEMU images
-                have OpenSSH instead of Dropbear.
-                Including these SSH servers allow you to use standard <filename>ssh</filename> and
-                <filename>scp</filename> commands.
-                The <filename>core-image-minimal</filename> QEMU image, however, contains no ssh
-                server.</para></listitem>
-            <listitem><para>You can use a provided, user-space NFS server to boot the QEMU session
-                using a local copy of the root filesystem on the host.
-                In order to make this connection, you must extract a root filesystem tarball by using the
-                <filename>runqemu-extract-sdk</filename> command.
-                After running the command, you must then point the <filename>runqemu</filename>
-                script to the extracted directory instead of a root filesystem image file.</para></listitem>
-        </itemizedlist>
+        Tying It Together: Rather than enumerating here how each tool makes use of
+        these common mechanisms, textboxes like this will make note of the
+        specific usages in each tool as they come up in the course
+        of the text.
     </note>
 </section>
 </chapter>
