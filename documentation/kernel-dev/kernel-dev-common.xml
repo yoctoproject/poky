@@ -130,6 +130,12 @@
                 detects the change in the recipe and fetches and applies the patches
                 before building the kernel.
             </para>
+
+            <para>
+                For a detailed example showing how to patch the kernel, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#patching-the-kernel'>Patching the Kernel</ulink>"
+                section in the Yocto Project Development Manual.
+            </para>
         </section>
 
         <section id='changing-the-configuration'>
@@ -156,7 +162,8 @@
 
             <para>
                 Generally speaking, the preferred approach is to determine the
-                incremental change you want to make and add that as a fragment.
+                incremental change you want to make and add that as a
+                configuration fragment.
                 For example, if you want to add support for a basic serial
                 console, create a file named <filename>8250.cfg</filename> in the
                 <filename>${FILES}</filename> directory with the following
@@ -182,37 +189,10 @@
             </para>
 
             <para>
-                Original Text:
-                <literallayout class='monospaced'>
-Making wholesale or incremental changes to the Linux kernel config can be made
-by including a defconfig or configuration fragments in the SRC_URI.
-
-If you have a complete Linux kernel .config file you want to use, copy it as
-"defconfig" to the ${FILES} directory and add the following line to your
-linux-yocto bbappend file in your layer:
-
-	SRC_URI += "file://defconfig"
-
-Generally speaking, the preferred approach is to determine the incremental
-change you want to make and add that as a fragment. For example, if you wanted
-to add support for a basic serial console, create a file named "8250.cfg" in the
-${FILES} directory with the following content (without indentation):
-
-	CONFIG_SERIAL_8250=y
-	CONFIG_SERIAL_8250_CONSOLE=y
-	CONFIG_SERIAL_8250_PCI=y
-	CONFIG_SERIAL_8250_NR_UARTS=4
-	CONFIG_SERIAL_8250_RUNTIME_UARTS=4
-	CONFIG_SERIAL_CORE=y
-	CONFIG_SERIAL_CORE_CONSOLE=y
-
-Then include this configuration fragment in the SRC_URI:
-
-	SRC_URI += "file://8250.cfg"
-
-At the next build, bitbake will detect the change in the recipe and fetch and
-apply the new configuration before rebuilding the Linux kernel.
-                 </literallayout>
+                For a detailed example showing how to configure the kernel,
+                see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#configuring-the-kernel'>Configuring the Kernel</ulink>"
+                section in the Yocto Project Development Manual.
             </para>
         </section>
     </section>
