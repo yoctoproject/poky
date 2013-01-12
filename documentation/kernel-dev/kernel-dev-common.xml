@@ -437,7 +437,7 @@
             still make use of the Yocto Project Linux kernel tooling by
             working with your own sources.
             When you use your own sources, you will not be able to
-            leverage the existing
+            leverage the existing kernel
             <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> and
             stabilization work of the linux-yocto sources.
             However, you will be able to manage your own Metadata in the same
@@ -448,7 +448,8 @@
 
         <para>
             To help you use your own sources, the Yocto Project provides a
-            linux-yocto custom recipe that uses
+            linux-yocto custom recipe
+            <filename>linux-yocto-custom.bb</filename> that uses
             <filename>kernel.org</filename> sources
             and the Yocto Project Linux kernel tools for managing Metadata.
             You can find this recipe in the
@@ -538,73 +539,6 @@
                     an Existing Recipe</link>" section for information.
                     </para></listitem>
             </orderedlist>
-        </para>
-
-        <para>
-            Original Text:
-            <literallayout class='monospaced'>
-If you find yourself unable to work with one of the Linux kernel versions
-supported by existing linux-yocto recipes, you can still make use of the Yocto
-Project Linux kernel tooling while working with your own sources. You will not
-be able to leverage the existing meta-data and stabilization work of the
-linux-yocto sources, but you will be able to manage your own meta-data in the
-same format as the linux-yocto sources which will facilitate converging with
-linux-yocto on a future mutually-supported kernel version.
-
-The linux-yocto-custom recipe, located in the poky repository at:
-
-	meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb
-
-is provided as an example recipe which uses kernel.org sources and the Yocto
-Project Linux kernel tools for managing meta-data. To get started, copy this
-recipe to your layer and provide it with a meaningful name, such as
-linux-yocto-myproject_3.5.bb, where 3.5 is the base version of the Linux kernel
-you will be working with. In the same directory, create a matching directory,
-e.g. linux-yocto-myproject to store your patches and configuration files.
-
-Edit the following variables in the recipe as appropriate for your project:
-
-	o SRC_URI
-	o LINUX_VERSION
-	o LINUX_VERSION_EXTENSION
-	o SRCREV
-	o PR
-	o PV
-	o COMPATIBLE_MACHINE
-
-The SRC_URI should be a git repository, using one of the supported git fetcher
-protocols (file, git, http, etc.). The skeleton recipe provides an example
-SRC_URI as a syntax reference.
-
-Set LINUX_VERSION to the Linux kernel version you are using, such as "3.6.3".
-
-LINUX_VERSION_EXTENSION is used to define the Linux kernel CONFIG_LOCALVERSION
-which will be compiled in to the resulting kernel and visible via the uname
-command.
-
-Set SRCREV to the commit ID you wish to build from.
-
-Treat the PR as you would the PR of any other recipe. Increment it to indicate
-to the build system that the recipe has changed.
-
-The default PV assignment is typically adequate. It combines the LINUX_VERSION
-with the SCM revision (from the SRCPV variable) and results in a string
-something like:
-
-"3.4.11+git1+68a635bf8dfb64b02263c1ac80c948647cc76d5f_1+218bd8d2022b9852c60d32f0d770931e3cf343e2"
-
-While lengthy, this extra verbosity helps ensure you are building from the exact
-sources you intend.
-
-Finally, the default COMPATIBLE_MACHINE assignment for linux-yocto-custom is set
-to a regular expression matching only the empty string, "(^$)". This will
-trigger an explicit build failure. You must change it to match a list of the
-machines supported by your new recipe, such as "(qemux86|qemux86-64)"
-
-With that in place, you can continue to customize this recipe as you would the
-existing linux-yocto recipes. See Section 2.2 Modifying an Existing Recipe for
-details.
-            </literallayout>
         </para>
     </section>
 
