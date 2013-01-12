@@ -197,8 +197,8 @@
         </section>
     </section>
 
-    <section id='iterative-development'>
-        <title>Iterative Development</title>
+    <section id='using-an-iterative-development-process'>
+        <title>Using an Iterative Development Process</title>
 
         <para>
             If you do not have existing patches or configuration files,
@@ -212,21 +212,9 @@
         </para>
 
         <para>
-            As you read this section, be sure to substitute "linux-yocto" with
-            the name of the Linux kernel recipe with which you are working.
-        </para>
-
-        <para>
-            Original Text:
-            <literallayout class='monospaced'>
-If you do not have existing patches or configuration files, you can easily
-generate them from within the bitbake build environment, as will be described
-below. As you do, running previously completed bitbake tasks will cause bitbake
-to invalidate the tasks that follow them in the build sequence, causing them to
-rebuild at the next invocation of the build. Throughout this section, be sure to
-substitute "linux-yocto" with the name of the Linux kernel recipe you are
-working with.
-             </literallayout>
+            As you read this section, be sure to substitute the name
+            of your Linux kernel recipe for the term
+            "linux-yocto".
         </para>
 
         <section id='generating-configuration-files'>
@@ -272,7 +260,7 @@ working with.
                         <literallayout class='monospaced'>
      $ bitbake linux-yocto -c kernel_configme -f
                         </literallayout></para></listitem>
-                    <listitem><para>Create a renamed copy of the resulting
+                    <listitem><para>Copy and rename the resulting
                         <filename>.config</filename> file (e.g.
                         <filename>config.orig</filename>).
                         </para></listitem>
@@ -352,68 +340,10 @@ working with.
             </para>
 
             <para>
-                Original Text:
-                <literallayout class='monospaced'>
-You can manipulate the config used to build a linux-yocto recipe with the
-"menuconfig" command.
-
-	$ bitbake linux-yocto -c menuconfig
-
-This will start the Linux kernel configuration tool, allowing you to prepare a
-new .config for the build. When you exit, be sure to save the changes when
-prompted. The resulting .config file will be located in the ${WORKDIR} under
-the linux-${MACHINE}-${KTYPE}-build directory. You can use this in its entirety
-as the defconfig file described in 2.2.2.
-
-Better still, would be to use the "menuconfig" command and take the difference
-of the new .config file with the previous one to generate a configuration
-fragment. To do this, be sure to complete a build at least through the kernel
-configuration task:
-
-	$ bitbake linux-yocto -c kernel_configme -f
-
-Then make a copy of the .config file, calling it "config.orig", for example. Run
-the "menuconfig" command as described above. Finally, prepare a configuration
-fragment from the difference between the files. Ultimately you want a list of
-Linux kernel CONFIG_ assignments, and not something in diff format. Something
-like the following will do that automatically (but plan on reviewing the output
-as you can usually remove some of the defaults):
-
-	$ diff -Nurp config.orig .config | sed -n "s/^\+//p" > frag.cfg
-
-You can use the output as a configuration fragment described in 2.2.2. This
-method can also be used to define a BSP configuration fragment (See 3.3.5).
-
-The Yocto Project kernel tools provide some configuration validation tools which
-will warn when a configuration you requested does not appear in the final
-config, or when you override a policy configuration in a hardware configuration
-fragment. You can run these tools with the following command:
-
-	$ bitbake linux-yocto -c kernel_configcheck -f
-
-	...
-
-	NOTE: validating kernel configuration
-	This BSP sets 3 invalid/obsolete kernel options.
-	These config options are not offered anywhere within this kernel.
-	The full list can be found in your kernel src dir at:
-	meta/cfg/standard/mybsp/invalid.cfg
-
-	This BSP sets 21 kernel options that are possibly non-hardware related.
-	The full list can be found in your kernel src dir at:
-	meta/cfg/standard/mybsp/specified_non_hdw.cfg
-
-	WARNING: There were 2 hardware options requested that do not
-	         have a corresponding value present in the final ".config" file.
-	         This probably means you aren't getting the config you wanted.
-	The full list can be found in your kernel src dir at:
-	meta/cfg/standard/mybsp/mismatch.cfg
-
-The various problems that you can encounter are described in the output along
-with where to find the offending configuration items. You can use these logs to
-adjust your configuration files and repeat the "kernel_configme" and
-"kernel_configcheck" commands until no warnings are produced.
-                </literallayout>
+                For more information on how to use the
+                <filename>menuconfig</filename> tool, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#using-menuconfig'>Using <filename>menuconfig</filename></ulink>"
+                section in the Yocto Project Development Manual.
             </para>
         </section>
 
@@ -494,55 +424,6 @@ adjust your configuration files and repeat the "kernel_configme" and
                 If you are not familiar with generating patches, refer to the
                 "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-the-patch'>Creating the Patch</ulink>"
                 section in the Yocto Project Development Manual.
-            </para>
-
-            <para>
-                Original Text:
-                <literallayout class='monospaced'>
-You can experiment with source code changes and create a simple patch without
-leaving the bitbake environment. To get started, be sure to complete a build at
-least through the kernel configuration task:
-
-	$ bitbake linux-yocto -c kernel_configme -f
-
-This step will ensure you have the sources prepared and the configuration
-completed. You will find the sources in the ${WORKDIR}/linux directory.
-
-You can edit the sources as you would any other Linux source tree, but keep in
-mind that your changes will be lost if you trigger the fetch task for the
-recipe. Avoid this by not issuing the "cleanall" or "cleansstate", or forcing
-the "fetch" command. Also be sure not to modify the recipe itself while working
-with temporary changes or bitbake may run the fetch command (depending on the
-changes to the recipe).
-
-To test your temporary changes, instruct bitbake to run the compile again. The
--f option forces the command to run again even though bitbake may think it has
-already done so:
-
-	$ bitbake linux-yocto -c compile -f
-
-If the compile fails, you can update the sources and repeat the compile
-command. Once it compiles successfully, you can inspect and test the resulting
-build (kernel, modules, etc.) from the build directory at
-${WORKDIR}/linux-${MACHINE}-${KTYPE}-build. Alternatively, you can run the
-deploy command to place the kernel image in the tmp/deploy/images directory:
-
-	$ bitbake linux-yocto -c deploy
-
-And of course, you can run through all the remaining installation and packaging
-steps by issuing:
-
-	$ bitbake linux-yocto
-
-For rapid iterative development, the edit-compile-repeat loop is preferable to
-rebuilding the entire recipe as the installation and packaging tasks are very
-time consuming.
-
-Once you are happy with your modifications, you can make these permanent by
-generating patches and applying them to the SRC_URI as described in section
-2.2.1 Applying Patches. If you are not familiar with generating patches, refer
-to the Yocto Project Development Manual, section 5.7.3 Creating the Patch.
-                </literallayout>
             </para>
         </section>
     </section>
