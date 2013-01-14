@@ -38,30 +38,6 @@
         together as needed, but maintain them in only one place.
         Similar logic applies to source changes.
     </para>
-
-    <para>
-        Original Text:
-        <literallayout class='monospaced'>
-In addition to configuration fragments and patches, the Yocto Project kernel
-tools support rich metadata which you can use to define complex policies and
-BSP support. The purpose of the metadata and the tools to manage it, known as
-the kern-tools (kern-tools-native_git.bb), is to assist in managing the
-complexity of the configuration and sources in support of multiple BSPs and
-Linux kernel types.
-
-In particular, the kernel tools allow you to specify only what you must, and
-nothing more.  Where a complete Linux kernel .config includes all the
-automatically selected CONFIG options, the configuration fragments only need to
-contain the highest level visible CONFIG options as presented by the Linux
-kernel menuconfig system. This reduces your maintenance effort and allows you
-to further separate your configuration in ways that make sense for your project.
-A common split is policy and hardware. For example, all your kernels may support
-the proc and sys filesystems, but only specific boards will require sound, USB,
-or specific drivers. Specifying these individually allows you to aggregate them
-together as needed, but maintain them in only one place. Similar logic applies
-to source changes.
-        </literallayout>
-    </para>
 </section>
 
 <section id='using-kernel-metadata-in-a-recipe'>
@@ -197,88 +173,6 @@ to source changes.
 	        releases of the Yocto Project.
         </note>
     </para>
-
-    <para>
-        Original Text.
-        <literallayout class='monospaced'>
-The metadata provided with any linux-yocto style Linux kernel sources must
-define a BSP that corresponds to the definition laid out in the recipe. A BSP
-consists of an aggregation of kernel policy and hardware specific feature
-enablement. This can be influenced from within the recipe.
-
-Every linux-yocto style recipe must define the following variables:
-
-	KMACHINE
-
-KMACHINE is typically set to the same value as used within the recipe-space BSP
-definition, such as "routerstationpro" or "fri2". However, multiple BSPs can
-reuse the same KMACHINE name if they are built using the same BSP description
-(see 3.3.5). The meta-intel "fri2" and "fri2-noemgd" are good examples of such
-a situation where each specifies KMACHINE as "fri2".
-
-They may optionally define the following variables:
-	KBRANCH
-	KERNEL_FEATURES
-	KBRANCH_DEFAULT
-	LINUX_KERNEL_TYPE
-
-KBRANCH_DEFAULT defines the default source branch within the Linux kernel source
-repository to be used to build the Linux kernel. It is used as the default value
-for KBRANCH which may define an alternate branch, typically with a machine
-override, such as:
-
-KBRANCH_fri2 = "standard/fri2"
-
-Unless you specify otherwise, KBRANCH_DEFAULT is initialized to "master".
-
-LINUX_KERNEL_TYPE defines the kernel type to be used in assembling the
-configuration and defaults to "standard" if you do not specify otherwise.
-Together with KMACHINE, this defines the search arguments used by the Yocto
-Project Linux kernel tools to find the appropriate description within the
-metadata with which to build out the sources and configuration. The linux-yocto
-recipes define "standard", "tiny", and "preempt-rt" kernel types. See 3.3.4 for
-more information on kernel types.
-
-During the build, the kern-tools will search for the BSP description file that
-most closely matches the KMACHINE and LINUX_KERNEL_TYPE passed in from the
-recipe. It will use the first BSP description it finds matching both variables.
-Failing that it will issue a warning such as the following:
-
-	WARNING: Can't find any BSP hardware or required configuration fragments.
-	WARNING: Looked at meta/cfg/broken/fri2-broken/hdw_frags.txt and
-	         meta/cfg/broken/fri2-broken/required_frags.txt in directory:
-	         meta/cfg/broken/fri2-broken
-
-	In this example KMACHINE was set to "fri2-broken" and LINUX_KERNEL_TYPE
-	was set to "broken".
-
-It will then search first for the KMACHINE and then
-for the LINUX_KERNEL_TYPE. If it cannot find a partial match, it will use the
-sources from the KBRANCH and any configuration specified in the SRC_URI.
-
-KERNEL_FEATURES can be used to include features (configuration fragments,
-patches, or both) that are not already included by the KMACHINE and
-LINUX_KERNEL_TYPE combination. To include a feature specified as
-"features/netfilter.scc" for example, specify:
-
-KERNEL_FEATURES += "features/netfilter.scc"
-
-To include a feature called "cfg/sound.scc" just for the qemux86 machine,
-specify:
-
-KERNEL_FEATURES_append_qemux86 = "cfg/sound.scc"
-
-The value of the entries in KERNEL_FEATURES are dependent on their location
-within the metadata itself. The examples here are taken from the
-linux-yocto-3.4 repository where "features" and "cfg" are subdirectories of the
-metadata directory. For details, see 3.3.
-
-	Note: The processing of the these variables has evolved some between the
-	      0.9 and 1.3 releases of the Yocto Project and associated
-	      kern-tools sources. The above is accurate for 1.3 and later
-	      releases of the Yocto Project.
-        </literallayout>
-    </para>
 </section>
 
 <section id='kernel-metadata-location'>
@@ -313,31 +207,6 @@ metadata directory. For details, see 3.3.
         repository as the Linux kernel sources.
         This method can make iterative development of the Linux kernel
         more efficient outside of the BitBake environment.
-    </para>
-
-    <para>
-        Original Text:
-        <literallayout class='monospaced'>
-This meta-data can be defined along with the Linux kernel recipe (recipe-space)
-as partially described in section 2.2 as well as within the Linux kernel sources
-themselves (in-tree).
-
-Where you choose to store the meta-data depends on what you want to do and how
-you intend to work. If you are unfamiliar with the Linux kernel and only wish
-to apply a config and possibly a couple of patches provided to you by others,
-you may find the recipe-space mechanism to be easier to work with. This is also
-a good approach if you are working with Linux kernel sources you do not control
-or if you just don't want to maintain a Linux kernel git repository on your own.
-
-If you are doing active kernel development and are already maintaining a Linux
-kernel git repository of your own, you may find it more convenient to work with
-the meta-data in the same repository as the Linux kernel sources. This can make
-iterative development of the Linux kernel more efficient outside of the BitBake
-environment.
-
-Regardless of where the meta-data is stored, the syntax as
-described in the following sections applies equally.
-        </literallayout>
     </para>
 
     <section id='recipe-space-metadata'>
@@ -385,35 +254,6 @@ described in the following sections applies equally.
             <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
             value when changing the content of files not explicitly listed
             in the <filename>SRC_URI</filename>.
-        </para>
-
-        <para>
-            Original text:
-            <literallayout class='monospaced'>
-When stored in recipe-space, the meta-data files reside in a directory hierarchy
-below FILESEXTRAPATHS, which is typically set to ${THISDIR}/${PN} for a
-linux-yocto or linux-yocto-custom derived Linux kernel recipe. See 2.2.
-
-By way of example, a trivial tree of meta-data stored in recipe-space within a
-BSP layer might look like the following:
-
-meta/
-`-- recipes-kernel
-    `-- linux
-        `-- linux-yocto
-            |-- bsp-standard.scc
-            |-- bsp.cfg
-            `-- standard.cfg
-
-When the meta-data is stored in recipe-space, you must take steps to ensure
-BitBake has the necessary information to decide which files to fetch and when
-they need to be fetched again.
-
-It is only necessary to specify the .scc files on the SRC_URI; BitBake will
-parse them and fetch any files referenced in the .scc files by the include,
-patch, or kconf commands. Because of this, it is necessary to bump the recipe PR
-value when changing the content of files not explicitly listed in the SRC_URI.
-            </literallayout>
         </para>
     </section>
 
@@ -472,48 +312,6 @@ value when changing the content of files not explicitly listed in the SRC_URI.
      $ git checkout --orphan meta
      $ git rm -rf .
      $ git commit --allow-empty -m "Create orphan meta branch"
-            </literallayout>
-        </para>
-
-        <para>
-            Original text:
-            <literallayout class='monospaced'>
-When stored in-tree, the meta-data files reside in the "meta" directory of the
-Linux kernel sources. They may be present in the same branch as the sources,
-such as "master", or in their own orphan branch, typically named "meta". An
-orphan branch in git is a branch with unique history and content to the other
-branches in the repository. This is useful to track meta-data changes
-independently from the sources of the Linux kernel, while still keeping them
-together in the same repository. For the purposes of this document, we will
-discuss all in-tree meta-data as residing below the "meta/cfg/kernel-cache"
-directory.
-
-By way of example, a trivial tree of meta-data stored in a custom Linux kernel
-git repository might look like the following:
-
-meta/
-`-- cfg
-    `-- kernel-cache
-        |-- bsp-standard.scc
-        |-- bsp.cfg
-        `-- standard.cfg
-
-To use a specific branch for the meta-data, specify the branch in the KMETA
-variable in your Linux kernel recipe, for example:
-
-	KMETA = "meta"
-
-To use the same branch as the sources, set KMETA to the empty string:
-
-	KMETA = ""
-
-If you are working with your own sources and want to create an orphan meta
-branch, you can do so using the following commands from within your Linux kernel
-git repository:
-
-	$ git checkout --orphan meta
-	$ git rm -rf .
-	$ git commit --allow-empty -m "Create orphan meta branch"
             </literallayout>
         </para>
     </section>
@@ -635,66 +433,6 @@ git repository:
         Metadata <link linkend='in-tree-metadata'>in-tree</link>.
     </para>
 
-    <para>
-        Original text:
-        <literallayout class='monospaced'>
-The Yocto Project Linux kernel tools meta-data consists of three primary types
-of files: scc* description files, configuration fragments, and patches. The scc
-files define variables and include or otherwise reference any of the three file
-types. The description files are used to aggregate all types of meta-data into
-what ultimately describes the sources and the configuration required to build a
-Linux kernel tailored to a specific machine.
-
-The scc description files are used to define two fundamental types of meta-data:
-	o Features
-	o BSPs
-
-Features aggregate sources in the form of patches and configuration in the form
-of configuration fragments into a modular reusable unit. Features are used to
-implement conceptually separate meta-data descriptions like pure configuration
-fragments, simple patches, complex features, and kernel types (ktypes). Kernel
-types define general kernel features and policy to be reused in the BSPs.
-
-BSPs define hardware-specific features and aggregate them with kernel types to
-form the final description of what will be assembled and built.
-
-While the meta-data syntax does not enforce any logical separation of
-configuration fragments, patches, features or kernel types, best practices
-dictate a logical separation of these types of meta-data. The following
-meta-data file hierarchy is recommended:
-
-	&lt;base&gt;/
-		bsp/
-		cfg/
-		features/
-		ktypes/
-		patches/
-
-The bsp directory should contain the BSP descriptions, described in detail in
-3.3.5. The remaining directories all contain "features"; the separation is meant
-to aid in conceptualizing their intended usage.  A simple guide to determine
-where your scc description file should go is as follows. If it contains only
-configuration fragments, it belongs in cfg. If it contains only source-code
-fixes, it belongs in patches. If it encapsulates a major feature, often
-combining sources and configurations, it belongs in features. If it aggregates
-non-hardware configuration and patches in order to define a base kernel policy
-or major kernel type to be reused across multiple BSPs, it belongs in ktypes.
-The line between these can easily become blurred, especially as out-of-tree
-features are slowly merged upstream over time. Also remember that this is purely
-logical organization and has no impact on the functionality of the meta-data as
-all of cfg, features, patches, and ktypes, contain "features" as far as the
-Yocto Project Linux kernel tools are concerned.
-
-Paths used in meta-data files are relative to &lt;base&gt; which is either
-FILESEXTRAPATHS if you are creating meta-data in recipe-space (see 3.2.1), or
-meta/cfg/kernel-cache/ if you are creating meta-data in-tree (see 3.2.2).
-
-* scc stands for Series Configuration Control, but the naming has less
-  significance in the current implementation of the tooling than it had in the
-  past. Consider it to be a description file.
-        </literallayout>
-    </para>
-
     <section id='configuration'>
         <title>Configuration</title>
 
@@ -757,45 +495,6 @@ meta/cfg/kernel-cache/ if you are creating meta-data in-tree (see 3.2.2).
      $ bitbake linux-yocto -c kernel_configcheck -f
             </literallayout>
         </para>
-
-        <para>
-        Original text:
-            <literallayout class='monospaced'>
-The simplest unit of meta-data is the configuration-only feature. It consists of
-one or more Linux kernel configuration parameters in a .cfg file (as described
-in section XYZ) and an scc file describing the fragment. The SMP fragment
-included in the linux-yocto-3.4 git repository consists of the following two
-files:
-
-cfg/smp.scc:
-	define KFEATURE_DESCRIPTION "Enable SMP"
-	kconf hardware smp.cfg
-
-cfg/smp.cfg:
-	CONFIG_SMP=y
-	CONFIG_SCHED_SMT=y
-
-See 2.3.1 for details on creating configuration fragments.
-
-KFEATURE_DESCRIPTION provides a short description of the fragment, the
-primary use is for higher level tooling, such as the Yocto Project BSP Tools
-(TODO:Citation).
-
-The "kconf" command is used to include the actual configuration fragment in an
-scc file, and the "hardware" keyword identifies the fragment as being hardware
-enabling, as opposed to general policy (which would use the keyword
-"non-hardware"). The distinction is made for the benefit of the configuration
-validation tools which will warn you if a hardware fragment overrides a policy
-set by a non-hardware fragment.
-
-As described in 2.3.1, the following bitbake command can be used to audit your
-configuration:
-
-	$ bitbake linux-yocto -c kernel_configcheck -f
-
-The description file can include multiple kconf statements, one per fragment.
-            </literallayout>
-        </para>
     </section>
 
     <section id='patches'>
@@ -825,23 +524,6 @@ The description file can include multiple kconf statements, one per fragment.
         <para>
             The description file can include multiple patch statements,
             one per patch.
-        </para>
-
-        <para>
-            Original text:
-            <literallayout class='monospaced'>
-Patches are described in a very similar way to configuration fragments (see
-3.3.1). Instead of a .cfg file, they work with source patches. A typical patch
-includes a description file and the patch itself:
-
-patches/mypatch.scc:
-	patch mypatch.patch
-
-patches/mypatch.patch:
-	&lt;typical patch created with 'diff -Nurp' or 'git format-patch'&gt;
-
-The description file can include multiple patch statements, one per patch.
-            </literallayout>
         </para>
     </section>
 
@@ -880,33 +562,6 @@ The description file can include multiple patch statements, one per patch.
             Linux kernel recipe.
             See the "<link linkend='using-kernel-metadata-in-a-recipe'>Using Kernel Metadata in a Recipe</link>"
             section earlier in the manual.
-        </para>
-
-        <para>
-        Original text:
-            <literallayout class='monospaced'>
-Features are a combination of configuration fragments and patches, or, more
-accurately, configuration fragments and patches are simple forms of a feature, a
-more complex meta-data type. In addition to the kconf and patch commands,
-features often aggregate description files with the include command.
-
-A hypothetical example of a feature description file might look like the
-following:
-
-features/myfeature.scc
-	define KFEATURE_DESCRIPTION "Enable myfeature"
-
-	patch 0001-myfeature-core.patch
-	patch 0002-myfeature-interface.patch
-
-	include cfg/myfeature_dependency.scc
-	kconf non-hardware myfeature.cfg
-
-Features are typically less granular than configuration fragments and are more
-likely than configurations fragments and patches to be the types of things you
-will want to specify in the KERNEL_FEATURES variable of the Linux kernel recipe
-(see 3.1).
-            </literallayout>
         </para>
     </section>
 
@@ -1003,58 +658,6 @@ will want to specify in the KERNEL_FEATURES variable of the Linux kernel recipe
             See the "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
             section for more information.
         </note>
-
-        <para>
-            Original text:
-            <literallayout class='monospaced'>
-Kernel types, or ktypes, are used to aggregate all non-hardware configuration
-fragments together with any patches you want to use for all Linux kernel builds
-of the specified ktype. In short, ktypes are where you define a high-level
-kernel policy. Syntactically, however, they are no different than features (see
-3.3.3).  preempt-rt, and tiny. The ktype is selected by the LINUX_KERNEL_TYPE
-variable in the recipe (see 3.1).
-
-By way of example, the linux-yocto-3.4 tree defines three ktypes: standard,
-tiny, and preempt-rt. The standard kernel type includes the generic Linux kernel
-policy of the Yocto Project linux-yocto kernel recipes. This includes things
-like which filesystems, which networking options, which core kernel features,
-and which debugging and tracing optoins are supported. The preempt-rt kernel
-type applies the PREEMPT_RT patches and the configuration options required to
-build a real-time Linux kernel. It inherits from standard. The tiny kernel type
-is independent from the standard configuration and defines a bare minimum
-configuration meant to serve as a base for very small Linux kernels. Tiny does
-not currently include any source changes, but it may in the future.
-
-The standard ktype is defined by standard.scc:
-	# Include this kernel type fragment to get the standard features and
-	# configuration values.
-
-	# Include all standard features
-	include standard-nocfg.scc
-
-	kconf non-hardware standard.cfg
-
-	# individual cfg block section
-	include cfg/fs/devtmpfs.scc
-	include cfg/fs/debugfs.scc
-	include cfg/fs/btrfs.scc
-	include cfg/fs/ext2.scc
-	include cfg/fs/ext3.scc
-	include cfg/fs/ext4.scc
-
-	include cfg/net/ipv6.scc
-	include cfg/net/ip_nf.scc
-	include cfg/net/ip6_nf.scc
-	include cfg/net/bridge.scc
-
-As with any scc file, a ktype definition can aggregate other scc files with the
-include command, or directly pull in configuration fragments and patches with
-the kconf and patch commands, respectively.
-
-Note: It is not strictly necessary to create a ktype scc file. The BSP file can
-      define the ktype implicitly with a "define KTYPE myktype" line. See 3.3.5.
-            </literallayout>
-        </para>
     </section>
 
     <section id='bsp-descriptions'>
@@ -1246,130 +849,6 @@ Note: It is not strictly necessary to create a ktype scc file. The BSP file can
             Of these variables, only the <filename>KTYPE</filename> has changed.
             It is now set to "tiny".
         </para>
-
-        <para>
-            Original text:
-            <literallayout class='monospaced'>
-BSP descriptions combine kernel types (see 3.3.4) with hardware-specific
-features (see 3.3.3). The hardware specific portion is typically defined
-independently, and then aggregated with each supported kernel type. Consider a
-simple example:
-
-mybsp.scc:
-	define KMACHINE mybsp
-	define KTYPE standard
-	define KARCH i386
-
-	kconf mybsp.cfg
-
-Every BSP description should include the definition of the KMACHINE, KTYPE, and
-KARCH variables. These variables allow the build-system to identify this
-description as meeting the criteria set by the recipe being built. This
-particular description can be said to support the "mybsp" machine for the
-"standard" kernel type and the "i386" architecture. Note that there is no hard
-link between the KTYPE and a ktype description file. If you do not have kernel
-types defined in your meta-data, you only need to ensure that the recipe
-LINUX_KERNEL_TYPE and the KTYPE here match.
-
-NOTE: future versions of the tooling make the specification of KTYPE in the BSP
-      optional.
-
-If you did want to separate your kernel policy from your hardware configuration,
-you could do so by specifying a kernel type, such as "standard" (see 3.3.4) and
-including that description in the BSP description. You might also have multiple
-hardware configurations that you aggregate into a single hardware description
-file which you could include here, rather than referencing a single .cfg file.
-Consider the following:
-
-mybsp.scc:
-	define KMACHINE mybsp
-	define KTYPE standard
-	define KARCH i386
-
-	include standard.scc
-	include mybsp.scc
-
-In the above example standard.scc aggregates all the configuration fragments,
-patches, and features that make up your standard kernel policy whereas mybsp.scc
-aggregates all those necessary to support the hardware available on the mybsp
-machine. For information on how to break a complete .config into the various
-fragments, see 2.3.1.
-
-Many real-world examples are more complex. Like any other scc file, BSP
-descriptions can aggregate features. Consider the Fish River Island II (fri2)
-BSP definitions from the linux-yocto-3.4 repository:
-
-fri2.scc:
-	kconf hardware fri2.cfg
-
-	include cfg/x86.scc
-	include features/eg20t/eg20t.scc
-	include cfg/dmaengine.scc
-	include features/ericsson-3g/f5521gw.scc
-	include features/power/intel.scc
-	include cfg/efi.scc
-	include features/usb/ehci-hcd.scc
-	include features/usb/ohci-hcd.scc
-	include features/iwlwifi/iwlwifi.scc
-
-The fri2.scc description file includes a hardware configuration fragment
-(fri2.cfg) specific to the fri2 BSP as well as several more general
-configuration fragments and features enabling hardware found on the fri2. This
-description is then included in each of the three machine-ktype descriptions
-(standard, preempt-rt, and tiny). Consider the fri2 standard description:
-
-fri2-standard.scc:
-	define KMACHINE fri2
-	define KTYPE standard
-	define KARCH i386
-
-	include ktypes/standard/standard.scc
-	branch fri2
-
-	git merge emgd-1.14
-
-	include fri2.scc
-
-	# Extra fri2 configs above the minimal defined in fri2.scc
-	include cfg/efi-ext.scc
-	include features/drm-emgd/drm-emgd.scc
-	include cfg/vesafb.scc
-
-	# default policy for standard kernels
-	include cfg/usb-mass-storage.scc
-
-Note the "include fri2.scc" line about midway through the file. By defining all
-hardware enablement common to the BSP for all kernel types, duplication is
-significantly reduced.
-
-This description introduces a few more variables and commands worthy of further
-discussion.  Note the "branch" command which is used to create a
-machine-specific branch into which source changes can be applied. With this
-branch set up, the "git merge" command uses the git SCM to merge in a feature
-branch "emgd-1.14".  This could also be handled with the patch command, but for
-commonly used features such as this, feature branches can be a convenient
-mechanism (see 3.5).
-
-Next consider the fri2 tiny description:
-
-fri2-tiny.scc:
-	define KMACHINE fri2
-	define KTYPE tiny
-	define KARCH i386
-
-	include ktypes/tiny/tiny.scc
-	branch fri2
-
-	include fri2.scc
-
-As you might expect, the tiny description includes quite a bit less. In fact,
-it includes only the minimal policy defined by the tiny ktype and the
-hardware-specific configuration required for boot and the most basic
-functionality of the system as defined in the base fri2 description file. Note
-again the three critical variables: KMACHINE, KTYPE, and KARCH. Of these, only
-the KTYPE has changed, now set to "tiny".
-            </literallayout>
-        </para>
     </section>
 </section>
 
@@ -1521,86 +1000,6 @@ the KTYPE has changed, now set to "tiny".
                 would have to create a file and a directory named "standard".
             </note>
         </para>
-
-        <para>
-            Original text:
-            <literallayout class='monospaced'>
-Section 3.1 introduced the KBRANCH variable which defines the source branch to
-use from the Linux kernel git repository you are using. Many linux-yocto-custom
-derived recipes will be using Linux kernel sources with only a single branch:
-"master". However, when you are working with multiple boards and architectures,
-you are likely to run into the situation where a series of patches are needed
-for one board to boot. Sometimes these patches are works in progress or
-fundamentally wrong, yet still necessary for specific boards. In these
-situations, you most likely do not want to include these patches in every kernel
-you build. You have a couple of options.
-
-First, you could encapsulate these patches in a feature description and only
-include them in the BSP description for the board(s) that require them (see
-3.3.2 and 3.3.5).
-
-Alternatively, you can create a branch in your Linux kernel sources and apply
-the patches there. You can then specify this new branch as the KBRANCH to use
-for this board. You can do this in the recipe with the KBRANCH variable:
-
-	KBRANCH = "mynewbranch"
-
-or in the BSP description using the "branch" command:
-
-mybsp.scc:
-	define KMACHINE mybsp
-	define KTYPE standard
-	define KARCH i386
-	include standard.scc
-
-	branch mynewbranchIf you are actively
-working on board support, you may find that working within a branch is more
-practical than trying to continually reintegrate your patches into a feature. On
-the other hand, if you are simply reusing some patches from an external tree and
-are not working on them, you may find the encapsulated feature to be appropriate
-as it does not require the additional complexity of branching in your Linux
-kernel sources
-
-	include mybsp.scc
-
-The decision of which approach to take, feature or branch, is entirely up to you
-and depends on what works best for your development model. If you are actively
-working on board support, you may find that working within a branch is more
-practical than trying to continually reintegrate your patches into a feature. On
-the other hand, if you are simply reusing some patches from an external tree and
-are not working on them, you may find the encapsulated feature to be appropriate
-as it does not require the additional complexity of branching in your Linux
-kernel sources.
-
-If you are supporting multiple boards and architectures and find yourself with
-numerous branches, you might consider using a hierarchical branching system
-similar to what the linux-yocto Linux kernel repositories use:
-
-	&lt;common&gt;/&lt;ktype&gt;/&lt;machine&gt;
-
-If you had two ktypes, standard and small for instance, and three machines, your
-git tree might look like this:
-
-	common/base
-	common/standard/base
-	common/standard/machine_a
-	common/standard/machine_b
-	common/standard/machine_c
-	common/small/base
-	common/small/machine_a
-
-This organization can help clarify the relationship of the branches to
-each other. In this case, "common/standard/machine_a" would include everything in
-"common/base" and "common/standard/base". The "standard" and "small" branches
-add sources specific to those kernel types that for whatever reason are not
-appropriate for the other branches.
-
-Note: The "base" branches are an artifact of the way git manages its data
-      internally on the filesystem: it will not allow you to use
-      "common/standard" and "common/standard/machine_a" because it would have to
-      create a file and a directory named "standard".
-            </literallayout>
-        </para>
     </section>
 
     <section id='feature-branches'>
@@ -1629,30 +1028,6 @@ Note: The "base" branches are an artifact of the way git manages its data
         git merge myfeature
 
         include mybsp-hw.scc
-            </literallayout>
-        </para>
-
-        <para>
-            Original text:
-            <literallayout class='monospaced'>
-During active development a new feature, it can be more efficient to work with
-that feature as a branch, rather than as a set of patches which have to be
-regularly updated. The Yocto Project Linux kernel tools provide for this with
-the "git merge" command.
-
-To merge a feature branch into a BSP, insert the "git merge" command after any
-branch commands:
-
-mybsp.scc:
-	define KMACHINE mybsp
-	define KTYPE standard
-	define KARCH i386
-	include standard.scc
-
-	branch mynewbranch
-	git merge myfeature
-
-	include mybsp.scc
             </literallayout>
         </para>
     </section>
@@ -1686,39 +1061,6 @@ mybsp.scc:
             <listitem><para><filename>patch PATCH_FILE</filename>:
                 Applies the patch to the current Git branch.</para></listitem>
         </itemizedlist>
-    </para>
-
-    <para>
-        Original text:
-        <literallayout class='monospaced'>
-* branch [ref]
-
-  Create a new branch relative to the current branch (typically ${KTYPE}) using
-  the currently checked-out branch, or "ref" if specified.
-
-  TODO: Bruce, we need to clarify the "relative to the current branch" bit.
-
-* define
-
-  Define variables, such as KMACHINE, KTYPE, KARCH, and KFEATURE_DESCRIPTION.
-
-* include SCC_FILE
-
-  Include an scc file in the current file. It will be parsed as if inserted
-  inline.
-
-* kconf [hardware|non-hardware] CFG_FILE
-
-  Queue a configuration fragment for merging into the final Linux .config file.
-
-* merge (or "git merge") GIT_BRANCH
-
-  Merge the feature branch into the current branch.
-
-* patch PATCH_FILE
-
-  Apply the patch to the current git branch.
-        </literallayout>
     </para>
 </section>
 
