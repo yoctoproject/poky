@@ -449,9 +449,10 @@
         <para>
             To help you use your own sources, the Yocto Project provides a
             linux-yocto custom recipe
-            <filename>linux-yocto-custom.bb</filename> that uses
+            (<filename>linux-yocto-custom.bb</filename>) that uses
             <filename>kernel.org</filename> sources
-            and the Yocto Project Linux kernel tools for managing Metadata.
+            and the Yocto Project Linux kernel tools for managing
+            kernel Metadata.
             You can find this recipe in the
             <filename>poky</filename> Git repository of the
             Yocto Project <ulink url='&YOCTO_GIT_URL;'>Source Repository</ulink>
@@ -469,7 +470,7 @@
                     The name should include the version of the Linux kernel you
                     are using (e.g. <filename>linux-yocto-myproject_3.5.bb</filename>,
                     where "3.5" is the base version of the Linux kernel
-                    with which you would be working.</para></listitem>
+                    with which you would be working).</para></listitem>
                 <listitem><para>In the same directory inside your layer,
                     create a matching directory
                     to store your patches and configuration files (e.g.
@@ -489,7 +490,7 @@
                             </para></listitem>
                         <listitem><para><filename>LINUX_VERSION</filename>:
                             The Linux kernel version you are using (e.g.
-                            "3.6.3").</para></listitem>
+                            "3.4").</para></listitem>
                         <listitem><para><filename>LINUX_VERSION_EXTENSION</filename>:
                             The Linux kernel <filename>CONFIG_LOCALVERSION</filename>
                             that is compiled into the resulting kernel and visible
@@ -508,8 +509,11 @@
                             The default <filename>PV</filename> assignment is
                             typically adequate.
                             It combines the <filename>LINUX_VERSION</filename>
-                            with the SCM revision (from the SRCPV variable)
-                            and results in a string using the following form:
+                            with the Source Control Manager (SCM) revision
+                            as derived from the <filename>SRCPV</filename>
+                            variable.
+                            The combined results are a string with
+                            the following form:
                             <literallayout class='monospaced'>
      3.4.11+git1+68a635bf8dfb64b02263c1ac80c948647cc76d5f_1+218bd8d2022b9852c60d32f0d770931e3cf343e2
                             </literallayout>
@@ -522,7 +526,8 @@
                             This variable in the example recipe is set
                             by default to a regular expression that matches
                             only the empty string, "(^$)".
-                            This default setting triggers an explicit build failure.
+                            This default setting triggers an explicit build
+                            failure.
                             You must change it to match a list of the machines
                             that your new recipe supports.
                             For example, to support the <filename>qemux86</filename>
