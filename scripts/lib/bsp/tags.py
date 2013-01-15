@@ -41,7 +41,7 @@ INPUT_TYPE_PROPERTY = "type"
 
 SRC_URI_FILE = "file://"
 
-
+GIT_CHECK_URI = "git://git.yoctoproject.org/linux-yocto-dev.git"
 
 
 

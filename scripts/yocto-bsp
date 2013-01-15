@@ -58,6 +58,8 @@ def yocto_bsp_create_subcommand(args, usage_str):
                       help = "name of file containing the values for BSP properties as a JSON file")
     parser.add_option("-c", "--codedump", dest = "codedump", action = "store_true",
                       default = False, help = "dump the generated code to bspgen.out")
+    parser.add_option("-s", "--skip-git-check", dest = "git_check", action = "store_false",
+                      default = True, help = "skip the git connectivity check")
     (options, args) = parser.parse_args(args)
 
     if len(args) != 2:
@@ -72,6 +74,17 @@ def yocto_bsp_create_subcommand(args, usage_str):
         bsp_output_dir = options.outdir
     else:
         bsp_output_dir = "meta-" + machine
+
+    if options.git_check and not options.properties_file:
+        print "Checking basic git connectivity..."
+        if not verify_git_repo(GIT_CHECK_URI):
+            print "Couldn't verify git connectivity, exiting\n"
+            print "Details: couldn't access %s" % GIT_CHECK_URI
+            print "         (this most likely indicates a network connectivity problem or"
+            print "         a misconfigured git intallation)"
+            sys.exit(1)
+        else:
+            print "Done.\n"
 
     yocto_bsp_create(machine, karch, scripts_path, bsp_output_dir, options.codedump, options.properties_file)
 
