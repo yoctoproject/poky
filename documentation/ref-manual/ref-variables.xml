@@ -2732,6 +2732,40 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-SRCPV'><glossterm>SRCPV</glossterm>
+            <glossdef>
+                <para>
+                    Returns the version string of the current package.
+                    This string is used to help define the value of
+                    <link linkend='var-PV'><filename>PV</filename></link>.
+                </para>
+
+                <para>
+                    The <filename>SRCPV</filename> variable is defined in the
+                    <filename>meta/conf/bitbake.conf</filename> configuration
+                    file in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+                    as follows:
+                    <literallayout class='monospaced'>
+     SRCPV = "${@bb.fetch2.get_srcrev(d)}"
+                    </literallayout>
+                </para>
+
+                <para>
+                    Recipes that need to define <filename>PV</filename> do so
+                    with the help of the <filename>SRCPV</filename>.
+                    For example, the <filename>ofono</filename> recipe
+                    (<filename>ofono_git.bb</filename>) located in
+                    <filename>meta/recipes-connectivity</filename> in the
+                    Source Directory defines <filename>PV</filename> as
+                    follows:
+                    <literallayout class='monospaced'>
+     PV = "1.5.0+git${SRCPV}"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-SRCREV'><glossterm>SRCREV</glossterm>
             <glossdef>
                 <para>
