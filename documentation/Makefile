@@ -221,6 +221,36 @@ FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
 
+ifeq ($(DOC),profile-manual)
+XSLTOPTS = --stringparam html.stylesheet profile-manual-style.css \
+           --stringparam  chapter.autolabel 1 \
+           --stringparam  appendix.autolabel A \
+           --stringparam  section.autolabel 1 \
+           --stringparam  section.label.includes.component.label 1 \
+           --xinclude
+ALLPREQ = html pdf tarball
+TARFILES = profile-manual.html profile-manual.pdf profile-manual-style.css \
+           figures/profile-title.png figures/kernelshark-all.png \
+           figures/kernelshark-choose-events.png figures/kernelshark-i915-display.png \
+           figures/kernelshark-output-display.png figures/lttngmain0.png \
+           figures/oprofileui-busybox.png figures/oprofileui-copy-to-user.png \
+           figures/oprofileui-downloading.png figures/oprofileui-processes.png \
+           figures/perf-probe-do_fork-profile.png figures/perf-report-cycles-u.png \
+           figures/perf-systemwide.png figures/perf-systemwide-libc.png \
+           figures/perf-wget-busybox-annotate-menu.png figures/perf-wget-busybox-annotate-udhcpc.png \
+           figures/perf-wget-busybox-debuginfo.png figures/perf-wget-busybox-dso-zoom.png \
+           figures/perf-wget-busybox-dso-zoom-menu.png figures/perf-wget-busybox-expanded-stripped.png \
+           figures/perf-wget-flat-stripped.png figures/perf-wget-g-copy-from-user-expanded-stripped.png \
+           figures/perf-wget-g-copy-to-user-expanded-debuginfo.png figures/perf-wget-g-copy-to-user-expanded-stripped.png \
+           figures/perf-wget-g-copy-to-user-expanded-stripped-unresolved-hidden.png figures/pybootchartgui-linux-yocto.png \
+           figures/pychart-linux-yocto-rpm.png figures/pychart-linux-yocto-rpm-nostrip.png \
+           figures/sched-wakeup-profile.png figures/sysprof-callers.png \
+           figures/sysprof-copy-from-user.png figures/sysprof-copy-to-user.png
+MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
+FIGURES = figures
+STYLESHEET = $(DOC)/*.css
+endif
+
 ifeq ($(DOC),kernel-manual)
 XSLTOPTS = --stringparam html.stylesheet kernel-style.css \
            --stringparam  chapter.autolabel 1 \
