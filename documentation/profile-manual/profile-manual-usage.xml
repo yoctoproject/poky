@@ -981,10 +981,363 @@
         </para>
     </section>
 
+    <section id='system-wide-tracing-and-profiling'>
+        <title>System-Wide Tracing and Profiling</title>
+
+        <para>
+            The examples so far have focused on tracing a particular program or
+            workload - in other words, every profiling run has specified the
+            program to profile in the command-line e.g. 'perf record wget ...'.
+        </para>
+
+        <para>
+            It's also possible, and more interesting in many cases, to run a
+            system-wide profile or trace while running the workload in a
+            separate shell.
+        </para>
+
+        <para>
+            To do system-wide profiling or tracing, you typically use
+            the -a flag to 'perf record'.
+        </para>
+
+        <para>
+            To demonstrate this, open up one window and start the profile
+            using the -a flag (press Ctrl-C to stop tracing):
+            <literallayout class='monospaced'>
+     root@crownbay:~# perf record -g -a
+     ^C[ perf record: Woken up 6 times to write data ]
+     [ perf record: Captured and wrote 1.400 MB perf.data (~61172 samples) ]
+            </literallayout>
+            In another window, run the wget test:
+            <literallayout class='monospaced'>
+     root@crownbay:~# wget <ulink url='http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2'>http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2</ulink>
+     Connecting to downloads.yoctoproject.org (140.211.169.59:80)
+     linux-2.6.19.2.tar.b 100% |*******************************| 41727k  0:00:00 ETA
+            </literallayout>
+            Here we see entries not only for our wget load, but for other
+            processes running on the system as well:
+        </para>
+
+        <para>
+            <imagedata fileref="figures/perf-systemwide.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            In the snapshot above, we can see callchains that originate in
+            libc, and a callchain from Xorg that demonstrates that we're
+            using a proprietary X driver in userspace (notice the presence
+            of 'PVR' and some other unresolvable symbols in the expanded
+            Xorg callchain).
+        </para>
+
+        <para>
+            Note also that we have both kernel and userspace entries in the
+            above snapshot. We can also tell perf to focus on userspace but
+            providing a modifier, in this case 'u', to the 'cycles' hardware
+            counter when we record a profile:
+            <literallayout class='monospaced'>
+     root@crownbay:~# perf record -g -a -e cycles:u
+     ^C[ perf record: Woken up 2 times to write data ]
+     [ perf record: Captured and wrote 0.376 MB perf.data (~16443 samples) ]
+            </literallayout>
+        </para>
+
+        <para>
+            <imagedata fileref="figures/perf-report-cycles-u.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            Notice in the screenshot above, we see only userspace entries ([.])
+        </para>
+
+        <para>
+            Finally, we can press 'enter' on a leaf node and select the 'Zoom
+            into DSO' menu item to show only entries associated with a
+            specific DSO. In the screenshot below, we've zoomed into the
+            'libc' DSO which shows all the entries associated with the
+            libc-xxx.so DSO.
+        </para>
+
+        <para>
+            <imagedata fileref="figures/perf-systemwide-libc.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            We can also use the system-wide -a switch to do system-wide
+            tracing. Here we'll trace a couple of scheduler events:
+            <literallayout class='monospaced'>
+     root@crownbay:~# perf record -a -e sched:sched_switch -e sched:sched_wakeup
+     ^C[ perf record: Woken up 38 times to write data ]
+     [ perf record: Captured and wrote 9.780 MB perf.data (~427299 samples) ]
+            </literallayout>
+            We can look at the raw output using 'perf script' with no
+            arguments:
+            <literallayout class='monospaced'>
+     root@crownbay:~# perf script
+
+                perf  1383 [001]  6171.460045: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+                perf  1383 [001]  6171.460066: sched_switch: prev_comm=perf prev_pid=1383 prev_prio=120 prev_state=R+ ==> next_comm=kworker/1:1 next_pid=21 next_prio=120
+         kworker/1:1    21 [001]  6171.460093: sched_switch: prev_comm=kworker/1:1 prev_pid=21 prev_prio=120 prev_state=S ==> next_comm=perf next_pid=1383 next_prio=120
+             swapper     0 [000]  6171.468063: sched_wakeup: comm=kworker/0:3 pid=1209 prio=120 success=1 target_cpu=000
+             swapper     0 [000]  6171.468107: sched_switch: prev_comm=swapper/0 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=kworker/0:3 next_pid=1209 next_prio=120
+         kworker/0:3  1209 [000]  6171.468143: sched_switch: prev_comm=kworker/0:3 prev_pid=1209 prev_prio=120 prev_state=S ==> next_comm=swapper/0 next_pid=0 next_prio=120
+                perf  1383 [001]  6171.470039: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+                perf  1383 [001]  6171.470058: sched_switch: prev_comm=perf prev_pid=1383 prev_prio=120 prev_state=R+ ==> next_comm=kworker/1:1 next_pid=21 next_prio=120
+         kworker/1:1    21 [001]  6171.470082: sched_switch: prev_comm=kworker/1:1 prev_pid=21 prev_prio=120 prev_state=S ==> next_comm=perf next_pid=1383 next_prio=120
+                perf  1383 [001]  6171.480035: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+            </literallayout>
+        </para>
+
+        <section id='perf-filtering'>
+            <title>Filtering</title>
+
+            <para>
+                Notice that there are a lot of events that don't really have
+                anything to do with what we're interested in, namely events
+                that schedule 'perf' itself in and out or that wake perf up.
+                We can get rid of those by using the '--filter' option -
+                for each event we specify using -e, we can add a --filter
+                after that to filter out trace events that contain fields
+                with specific values:
+                <literallayout class='monospaced'>
+     root@crownbay:~# perf record -a -e sched:sched_switch --filter 'next_comm != perf &amp;&amp; prev_comm != perf' -e sched:sched_wakeup --filter 'comm != perf'
+     ^C[ perf record: Woken up 38 times to write data ]
+     [ perf record: Captured and wrote 9.688 MB perf.data (~423279 samples) ]
 
 
+     root@crownbay:~# perf script
 
+             swapper     0 [000]  7932.162180: sched_switch: prev_comm=swapper/0 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=kworker/0:3 next_pid=1209 next_prio=120
+         kworker/0:3  1209 [000]  7932.162236: sched_switch: prev_comm=kworker/0:3 prev_pid=1209 prev_prio=120 prev_state=S ==> next_comm=swapper/0 next_pid=0 next_prio=120
+                perf  1407 [001]  7932.170048: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+                perf  1407 [001]  7932.180044: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+                perf  1407 [001]  7932.190038: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+                perf  1407 [001]  7932.200044: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+                perf  1407 [001]  7932.210044: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+                perf  1407 [001]  7932.220044: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+             swapper     0 [001]  7932.230111: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
+             swapper     0 [001]  7932.230146: sched_switch: prev_comm=swapper/1 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=kworker/1:1 next_pid=21 next_prio=120
+         kworker/1:1    21 [001]  7932.230205: sched_switch: prev_comm=kworker/1:1 prev_pid=21 prev_prio=120 prev_state=S ==> next_comm=swapper/1 next_pid=0 next_prio=120
+             swapper     0 [000]  7932.326109: sched_wakeup: comm=kworker/0:3 pid=1209 prio=120 success=1 target_cpu=000
+             swapper     0 [000]  7932.326171: sched_switch: prev_comm=swapper/0 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=kworker/0:3 next_pid=1209 next_prio=120
+         kworker/0:3  1209 [000]  7932.326214: sched_switch: prev_comm=kworker/0:3 prev_pid=1209 prev_prio=120 prev_state=S ==> next_comm=swapper/0 next_pid=0 next_prio=120
+                </literallayout>
+                In this case, we've filtered out all events that have 'perf'
+                in their 'comm' or 'comm_prev' or 'comm_next' fields. Notice
+                that there are still events recorded for perf, but notice
+                that those events don't have values of 'perf' for the filtered
+                fields. To completely filter out anything from perf will
+                require a bit more work, but for the purpose of demonstrating
+                how to use filters, it's close enough.
+            </para>
 
+            <note>
+                Tying It Together: These are exactly the same set of event
+                filters defined by the trace event subsystem. See the
+                ftrace/tracecmd/kernelshark section for more discussion about
+                these event filters.
+            </note>
+
+            <note>
+                Tying It Together: These event filters are implemented by a
+                special-purpose pseudo-interpreter in the kernel and are an
+                integral and indispensable part of the perf design as it
+                relates to tracing.  kernel-based event filters provide a
+                mechanism to precisely throttle the event stream that appears
+                in user space, where it makes sense to provide bindings to real
+                programming languages for postprocessing the event stream.
+                This architecture allows for the intelligent and flexible
+                partitioning of processing between the kernel and user space.
+                Contrast this with other tools such as SystemTap, which does
+                all of its processing in the kernel and as such requires a
+                special project-defined language in order to accommodate that
+                design, or LTTng, where everything is sent to userspace and
+                as such requires a super-efficient kernel-to-userspace
+                transport mechanism in order to function properly.  While
+                perf certainly can benefit from for instance advances in
+                the design of the transport, it doesn't fundamentally depend
+                on them.  Basically, if you find that your perf tracing
+                application is causing buffer I/O overruns, it probably
+                means that you aren't taking enough advantage of the
+                kernel filtering engine.
+            </note>
+        </section>
+    </section>
+
+    <section id='using-dynamic-tracepoints'>
+        <title>Using Dynamic Tracepoints</title>
+
+        <para>
+            perf isn't restricted to the fixed set of static tracepoints
+            listed by 'perf list'. Users can also add their own 'dynamic'
+            tracepoints anywhere in the kernel. For instance, suppose we
+            want to define our own tracepoint on do_fork(). We can do that
+            using the 'perf probe' perf subcommand:
+            <literallayout class='monospaced'>
+     root@crownbay:~# perf probe do_fork
+     Added new event:
+       probe:do_fork        (on do_fork)
+
+     You can now use it in all perf tools, such as:
+
+	     perf record -e probe:do_fork -aR sleep 1
+            </literallayout>
+            Adding a new tracepoint via 'perf probe' results in an event
+            with all the expected files and format in
+            /sys/kernel/debug/tracing/events, just the same as for static
+            tracepoints (as discussed in more detail in the trace events
+            subsystem section:
+            <literallayout class='monospaced'>
+     root@crownbay:/sys/kernel/debug/tracing/events/probe/do_fork# ls -al
+     drwxr-xr-x    2 root     root             0 Oct 28 11:42 .
+     drwxr-xr-x    3 root     root             0 Oct 28 11:42 ..
+     -rw-r--r--    1 root     root             0 Oct 28 11:42 enable
+     -rw-r--r--    1 root     root             0 Oct 28 11:42 filter
+     -r--r--r--    1 root     root             0 Oct 28 11:42 format
+     -r--r--r--    1 root     root             0 Oct 28 11:42 id
+
+     root@crownbay:/sys/kernel/debug/tracing/events/probe/do_fork# cat format
+     name: do_fork
+     ID: 944
+     format:
+	     field:unsigned short common_type;	offset:0;	size:2;	signed:0;
+	     field:unsigned char common_flags;	offset:2;	size:1;	signed:0;
+	     field:unsigned char common_preempt_count;	offset:3;	size:1;	signed:0;
+	     field:int common_pid;	offset:4;	size:4;	signed:1;
+	     field:int common_padding;	offset:8;	size:4;	signed:1;
+
+	     field:unsigned long __probe_ip;	offset:12;	size:4;	signed:0;
+
+     print fmt: "(%lx)", REC->__probe_ip
+            </literallayout>
+            We can list all dynamic tracepoints currently in existence:
+            <literallayout class='monospaced'>
+     root@crownbay:~# perf probe -l
+      probe:do_fork        (on do_fork)
+      probe:schedule       (on schedule)
+            </literallayout>
+            Let's record system-wide ('sleep 30' is a trick for recording
+            system-wide but basically do nothing and then wake up after
+            30 seconds):
+            <literallayout class='monospaced'>
+     root@crownbay:~# perf record -g -a -e probe:do_fork sleep 30
+     [ perf record: Woken up 1 times to write data ]
+     [ perf record: Captured and wrote 0.087 MB perf.data (~3812 samples) ]
+            </literallayout>
+            Using 'perf script' we can see each do_fork event that fired:
+            <literallayout class='monospaced'>
+     root@crownbay:~# perf script
+
+     # ========
+     # captured on: Sun Oct 28 11:55:18 2012
+     # hostname : crownbay
+     # os release : 3.4.11-yocto-standard
+     # perf version : 3.4.11
+     # arch : i686
+     # nrcpus online : 2
+     # nrcpus avail : 2
+     # cpudesc : Intel(R) Atom(TM) CPU E660 @ 1.30GHz
+     # cpuid : GenuineIntel,6,38,1
+     # total memory : 1017184 kB
+     # cmdline : /usr/bin/perf record -g -a -e probe:do_fork sleep 30
+     # event : name = probe:do_fork, type = 2, config = 0x3b0, config1 = 0x0, config2 = 0x0, excl_usr = 0, excl_kern
+      = 0, id = { 5, 6 }
+     # HEADER_CPU_TOPOLOGY info available, use -I to display
+     # ========
+     #
+      matchbox-deskto  1197 [001] 34211.378318: do_fork: (c1028460)
+      matchbox-deskto  1295 [001] 34211.380388: do_fork: (c1028460)
+              pcmanfm  1296 [000] 34211.632350: do_fork: (c1028460)
+              pcmanfm  1296 [000] 34211.639917: do_fork: (c1028460)
+      matchbox-deskto  1197 [001] 34217.541603: do_fork: (c1028460)
+      matchbox-deskto  1299 [001] 34217.543584: do_fork: (c1028460)
+               gthumb  1300 [001] 34217.697451: do_fork: (c1028460)
+               gthumb  1300 [001] 34219.085734: do_fork: (c1028460)
+               gthumb  1300 [000] 34219.121351: do_fork: (c1028460)
+               gthumb  1300 [001] 34219.264551: do_fork: (c1028460)
+              pcmanfm  1296 [000] 34219.590380: do_fork: (c1028460)
+      matchbox-deskto  1197 [001] 34224.955965: do_fork: (c1028460)
+      matchbox-deskto  1306 [001] 34224.957972: do_fork: (c1028460)
+      matchbox-termin  1307 [000] 34225.038214: do_fork: (c1028460)
+      matchbox-termin  1307 [001] 34225.044218: do_fork: (c1028460)
+      matchbox-termin  1307 [000] 34225.046442: do_fork: (c1028460)
+      matchbox-deskto  1197 [001] 34237.112138: do_fork: (c1028460)
+      matchbox-deskto  1311 [001] 34237.114106: do_fork: (c1028460)
+                 gaku  1312 [000] 34237.202388: do_fork: (c1028460)
+            </literallayout>
+            And using 'perf report' on the same file, we can see the
+            callgraphs from starting a few programs during those 30 seconds:
+        </para>
+
+        <para>
+            <imagedata fileref="figures/perf-probe-do_fork-profile.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <note>
+            Tying It Together: The trace events subsystem accomodate static
+            and dynamic tracepoints in exactly the same way - there's no
+            difference as far as the infrastructure is concerned.  See the
+            ftrace section for more details on the trace event subsystem.
+        </note>
+
+        <note>
+            Tying It Together: Dynamic tracepoints are implemented under the
+            covers by kprobes and uprobes.  kprobes and uprobes are also used
+            by and in fact are the main focus of SystemTap.
+        </note>
+    </section>
+
+    <section id='perf-documentation'>
+        <title>Documentation</title>
+
+        <para>
+            Online versions of the man pages for the commands discussed in this
+            section can be found here:
+            <itemizedlist>
+                <listitem><para>The <ulink url='http://linux.die.net/man/1/perf-stat'>'perf stat' manpage</ulink>.
+                    </para></listitem>
+                <listitem><para>The <ulink url='http://linux.die.net/man/1/perf-record'>'perf record' manpage</ulink>.
+                    </para></listitem>
+                <listitem><para>The <ulink url='http://linux.die.net/man/1/perf-report'>'perf report' manpage</ulink>.
+                    </para></listitem>
+                <listitem><para>The <ulink url='http://linux.die.net/man/1/perf-probe'>'perf probe' manpage</ulink>.
+                    </para></listitem>
+                <listitem><para>The <ulink url='http://linux.die.net/man/1/perf-script'>'perf script' manpage</ulink>.
+                    </para></listitem>
+                <listitem><para>Documentation on using the
+                    <ulink url='http://linux.die.net/man/1/perf-script-python'>'perf script' python binding</ulink>.
+                    </para></listitem>
+                <listitem><para>The top-level
+                    <ulink url='http://linux.die.net/man/1/perf'>perf(1) manpage</ulink>.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Normally, you should be able to invoke the man pages via perf
+            itself e.g. 'perf help' or 'perf help record'.
+        </para>
+
+        <para>
+            However, by default Yocto doesn't install man pages, but perf
+            invokes the man pages for most help functionality. This is a bug
+            and is being addressed by a Yocto bug:
+            <ulink url='https://bugzilla.yoctoproject.org/show_bug.cgi?id=3388'>Bug 3388 - perf: enable man pages for basic 'help' functionality</ulink>.
+        </para>
+
+        <para>
+            The man pages in text form, along with some other files, such as
+            a set of examples, can be found in the 'perf' directory of the
+            kernel tree:
+            <literallayout class='monospaced'>
+     tools/perf/Documentation
+            </literallayout>
+            There's also a nice perf tutorial on the perf wiki that goes
+            into more detail than we do here in certain areas:
+            <ulink url='https://perf.wiki.kernel.org/index.php/Tutorial'>Perf Tutorial</ulink>
+        </para>
+    </section>
 </section>
 </chapter>
 <!--
