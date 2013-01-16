@@ -108,28 +108,28 @@
        top             System profiling tool.
 
      See 'perf help COMMAND' for more information on a specific command.
-        </literallayout>
-    </para>
+            </literallayout>
+        </para>
 
-    <section id='using-perf-to-do-basic-profiling'>
-        <title>Using perf to do Basic Profiling</title>
+        <section id='using-perf-to-do-basic-profiling'>
+            <title>Using perf to do Basic Profiling</title>
 
-        <para>
-            As a simple test case, we'll profile the 'wget' of a fairly large
-            file, which is a minimally interesting case because it has both
-            file and network I/O aspects, and at least in the case of standard
-            Yocto images, it's implemented as part of busybox, so the methods
-            we use to analyze it can be used in a very similar way to the whole
-            host of supported busybox applets in Yocto.
-            <literallayout class='monospaced'>
+            <para>
+                As a simple test case, we'll profile the 'wget' of a fairly large
+                file, which is a minimally interesting case because it has both
+                file and network I/O aspects, and at least in the case of standard
+                Yocto images, it's implemented as part of busybox, so the methods
+                we use to analyze it can be used in a very similar way to the whole
+                host of supported busybox applets in Yocto.
+                <literallayout class='monospaced'>
      root@crownbay:~# rm linux-2.6.19.2.tar.bz2; \
      wget http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2
-            </literallayout>
-            The quickest and easiest way to get some basic overall data about
-            what's going on for a particular workload it to profile it using
-            'perf stat'. 'perf stat' basically profiles using a few default
-            counters and displays the summed counts at the end of the run:
-            <literallayout class='monospaced'>
+                </literallayout>
+                The quickest and easiest way to get some basic overall data about
+                what's going on for a particular workload it to profile it using
+                'perf stat'. 'perf stat' basically profiles using a few default
+                counters and displays the summed counts at the end of the run:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf stat wget http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2
      Connecting to downloads.yoctoproject.org (140.211.169.59:80)
      linux-2.6.19.2.tar.b 100% |***************************************************| 41727k  0:00:00 ETA
@@ -148,19 +148,19 @@
               19550329 branch-misses             #   11.82% of all branches
 
           59.836627620 seconds time elapsed
-            </literallayout>
-            Many times such a simple-minded test doesn't yield much of
-            interest, but sometimes it does (see Real-world Yocto bug
-            (slow loop-mounted write speed)).
-        </para>
+                </literallayout>
+                Many times such a simple-minded test doesn't yield much of
+                interest, but sometimes it does (see Real-world Yocto bug
+                (slow loop-mounted write speed)).
+            </para>
 
-        <para>
-            Also, note that 'perf stat' isn't restricted to a fixed set of
-            counters - basically any event listed in the output of 'perf list'
-            can be tallied by 'perf stat'. For example, suppose we wanted to
-            see a summary of all the events related to kernel memory
-            allocation/freeing along with cache hits and misses:
-            <literallayout class='monospaced'>
+            <para>
+                Also, note that 'perf stat' isn't restricted to a fixed set of
+                counters - basically any event listed in the output of 'perf list'
+                can be tallied by 'perf stat'. For example, suppose we wanted to
+                see a summary of all the events related to kernel memory
+                allocation/freeing along with cache hits and misses:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf stat -e kmem:* -e cache-references -e cache-misses wget http://    downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2
      Connecting to downloads.yoctoproject.org (140.211.169.59:80)
      linux-2.6.19.2.tar.b 100% |***************************************************| 41727k  0:00:00 ETA
@@ -183,28 +183,28 @@
                2917740 cache-misses              #    4.365 % of all cache refs
 
           44.831023415 seconds time elapsed
-            </literallayout>
-            So 'perf stat' gives us a nice easy way to get a quick overview of
-            what might be happening for a set of events, but normally we'd
-            need a little more detail in order to understand what's going on
-            in a way that we can act on in a useful way.
-        </para>
+                </literallayout>
+                So 'perf stat' gives us a nice easy way to get a quick overview of
+                what might be happening for a set of events, but normally we'd
+                need a little more detail in order to understand what's going on
+                in a way that we can act on in a useful way.
+            </para>
 
-        <para>
-            To dive down into a next level of detail, we can use 'perf
-            record'/'perf report' which will collect profiling data and
-            present it to use using an interactive text-based UI (or
-            simply as text if we specify --stdio to 'perf report').
-        </para>
+            <para>
+                To dive down into a next level of detail, we can use 'perf
+                record'/'perf report' which will collect profiling data and
+                present it to use using an interactive text-based UI (or
+                simply as text if we specify --stdio to 'perf report').
+            </para>
 
-        <para>
-            As our first attempt at profiling this workload, we'll simply
-            run 'perf record', handing it the workload we want to profile
-            (everything after 'perf record' and any perf options we hand
-            it - here none - will be executedin a new shell). perf collects
-            samples until the process exits and records them in a file named
-            'perf.data' in the current working directory.
-            <literallayout class='monospaced'>
+            <para>
+                As our first attempt at profiling this workload, we'll simply
+                run 'perf record', handing it the workload we want to profile
+                (everything after 'perf record' and any perf options we hand
+                it - here none - will be executedin a new shell). perf collects
+                samples until the process exits and records them in a file named
+                'perf.data' in the current working directory.
+                <literallayout class='monospaced'>
      root@crownbay:~# perf record wget http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2
 
      Connecting to downloads.yoctoproject.org (140.211.169.59:80)
@@ -215,44 +215,44 @@
             To see the results in a 'text-based UI' (tui), simply run
             'perf report', which will read the perf.data file in the current
             working directory and display the results in an interactive UI:
-            <literallayout class='monospaced'>
+                <literallayout class='monospaced'>
      root@crownbay:~# perf report
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-flat-stripped.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-flat-stripped.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            The above screenshot displays a 'flat' profile, one entry for
-            each 'bucket' corresponding to the functions that were profiled
-            during the profiling run, ordered from the most popular to the
-            least (perf has options to sort in various orders and keys as
-            well as display entries only above a certain threshold and so
-            on - see the perf documentation for details). Note that this
-            includes both userspace functions (entries containing a [.]) and
-            kernel functions accounted to the process (entries containing
-            a [k]). (perf has command-line modifiers that can be used to
-            restrict the profiling to kernel or userspace, among others).
-        </para>
+            <para>
+                The above screenshot displays a 'flat' profile, one entry for
+                each 'bucket' corresponding to the functions that were profiled
+                during the profiling run, ordered from the most popular to the
+                least (perf has options to sort in various orders and keys as
+                well as display entries only above a certain threshold and so
+                on - see the perf documentation for details). Note that this
+                includes both userspace functions (entries containing a [.]) and
+                kernel functions accounted to the process (entries containing
+                a [k]). (perf has command-line modifiers that can be used to
+                restrict the profiling to kernel or userspace, among others).
+            </para>
 
-        <para>
-            Notice also that the above report shows an entry for 'busybox',
-            which is the executable that implements 'wget' in Yocto, but that
-            instead of a useful function name in that entry, it displays
-            an not-so-friendly hex value instead. The steps below will show
-            how to fix that problem.
-        </para>
+            <para>
+                Notice also that the above report shows an entry for 'busybox',
+                which is the executable that implements 'wget' in Yocto, but that
+                instead of a useful function name in that entry, it displays
+                an not-so-friendly hex value instead. The steps below will show
+                how to fix that problem.
+            </para>
 
-        <para>
-            Before we do that, however, let's try running a different profile,
-            one which shows something a little more interesting. The only
-            difference between the new profile and the previous one is that
-            we'll add the -g option, which will record not just the address
-            of a sampled function, but the entire callchain to the sampled
-            function as well:
-            <literallayout class='monospaced'>
+            <para>
+                Before we do that, however, let's try running a different profile,
+                one which shows something a little more interesting. The only
+                difference between the new profile and the previous one is that
+                we'll add the -g option, which will record not just the address
+                of a sampled function, but the entire callchain to the sampled
+                function as well:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf record -g wget http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2
      Connecting to downloads.yoctoproject.org (140.211.169.59:80)
      linux-2.6.19.2.tar.b 100% |************************************************| 41727k  0:00:00 ETA
@@ -261,217 +261,217 @@
 
 
      root@crownbay:~# perf report
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-g-copy-to-user-expanded-stripped.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-g-copy-to-user-expanded-stripped.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            Using the callgraph view, we can actually see not only which
-            functions took the most time, but we can also see a summary of
-            how those functions were called and learn something about how the
-            program interacts with the kernel in the process.
-        </para>
+            <para>
+                Using the callgraph view, we can actually see not only which
+                functions took the most time, but we can also see a summary of
+                how those functions were called and learn something about how the
+                program interacts with the kernel in the process.
+            </para>
 
-        <para>
-            Notice that each entry in the above screenshot now contains a '+'
-            on the left-hand side. This means that we can expand the entry and
-            drill down into the callchains that feed into that entry.
-            Pressing 'enter' on any one of them will expand the callchain
-            (you can also press 'E' to expand them all at the same time or 'C'
-            to collapse them all).
-        </para>
+            <para>
+                Notice that each entry in the above screenshot now contains a '+'
+                on the left-hand side. This means that we can expand the entry and
+                drill down into the callchains that feed into that entry.
+                Pressing 'enter' on any one of them will expand the callchain
+                (you can also press 'E' to expand them all at the same time or 'C'
+                to collapse them all).
+            </para>
 
-        <para>
-            In the screenshot above, we've toggled the __copy_to_user_ll()
-            entry and several subnodes all the way down. This lets us see
-            which callchains contributed to the profiled __copy_to_user_ll()
-            function which contributed 1.77% to the total profile.
-        </para>
+            <para>
+                In the screenshot above, we've toggled the __copy_to_user_ll()
+                entry and several subnodes all the way down. This lets us see
+                which callchains contributed to the profiled __copy_to_user_ll()
+                function which contributed 1.77% to the total profile.
+            </para>
 
-        <para>
-            As a bit of background explanation for these callchains, think
-            about what happens at a high level when you run wget to get a file
-            out on the network. Basically what happens is that the data comes
-            into the kernel via the network connection (socket) and is passed
-            to the userspace program 'wget' (which is actually a part of
-            busybox, but that's not important for now), which takes the buffers
-            the kernel passes to it and writes it to a disk file to save it.
-        </para>
+            <para>
+                As a bit of background explanation for these callchains, think
+                about what happens at a high level when you run wget to get a file
+                out on the network. Basically what happens is that the data comes
+                into the kernel via the network connection (socket) and is passed
+                to the userspace program 'wget' (which is actually a part of
+                busybox, but that's not important for now), which takes the buffers
+                the kernel passes to it and writes it to a disk file to save it.
+            </para>
 
-        <para>
-            The part of this process that we're looking at in the above call
-            stacks is the part where the kernel passes the data it's read from
-            the socket down to wget i.e. a copy-to-user.
-        </para>
+            <para>
+                The part of this process that we're looking at in the above call
+                stacks is the part where the kernel passes the data it's read from
+                the socket down to wget i.e. a copy-to-user.
+            </para>
 
-        <para>
-            Notice also that here there's also a case where the a hex value
-            is displayed in the callstack, here in the expanded
-            sys_clock_gettime() function. Later we'll see it resolve to a
-            userspace function call in busybox.
-        </para>
+            <para>
+                Notice also that here there's also a case where the a hex value
+                is displayed in the callstack, here in the expanded
+                sys_clock_gettime() function. Later we'll see it resolve to a
+                userspace function call in busybox.
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-g-copy-from-user-expanded-stripped.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-g-copy-from-user-expanded-stripped.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            The above screenshot shows the other half of the journey for the
-            data - from the wget program's userspace buffers to disk. To get
-            the buffers to disk, the wget program issues a write(2), which
-            does a copy-from-user to the kernel, which then takes care via
-            some circuitous path (probably also present somewhere in the
-            profile data), to get it safely to disk.
-        </para>
+            <para>
+                The above screenshot shows the other half of the journey for the
+                data - from the wget program's userspace buffers to disk. To get
+                the buffers to disk, the wget program issues a write(2), which
+                does a copy-from-user to the kernel, which then takes care via
+                some circuitous path (probably also present somewhere in the
+                profile data), to get it safely to disk.
+            </para>
 
-        <para>
-            Now that we've seen the basic layout of the profile data and the
-            basics of how to extract useful information out of it, let's get
-            back to the task at hand and see if we can get some basic idea
-            about where the time is spent in the program we're profiling,
-            wget. Remember that wget is actually implemented as an applet
-            in busybox, so while the process name is 'wget', the executable
-            we're actually interested in is busybox. So let's expand the
-            first entry containing busybox:
-        </para>
+            <para>
+                Now that we've seen the basic layout of the profile data and the
+                basics of how to extract useful information out of it, let's get
+                back to the task at hand and see if we can get some basic idea
+                about where the time is spent in the program we're profiling,
+                wget. Remember that wget is actually implemented as an applet
+                in busybox, so while the process name is 'wget', the executable
+                we're actually interested in is busybox. So let's expand the
+                first entry containing busybox:
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-busybox-expanded-stripped.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-busybox-expanded-stripped.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            Again, before we expanded we saw that the function was labeled
-            with a hex value instead of a symbol as with most of the kernel
-            entries. Expanding the busybox entry doesn't make it any better.
-        </para>
+            <para>
+                Again, before we expanded we saw that the function was labeled
+                with a hex value instead of a symbol as with most of the kernel
+                entries. Expanding the busybox entry doesn't make it any better.
+            </para>
 
-        <para>
-            The problem is that perf can't find the symbol information for the
-            busybox binary, which is actually stripped out by the Yocto build
-            system.
-        </para>
+            <para>
+                The problem is that perf can't find the symbol information for the
+                busybox binary, which is actually stripped out by the Yocto build
+                system.
+            </para>
 
-        <para>
-            One way around that is to put the following in your local.conf
-            when you build the image:
-            <literallayout class='monospaced'>
+            <para>
+                One way around that is to put the following in your local.conf
+                when you build the image:
+                <literallayout class='monospaced'>
      INHIBIT_PACKAGE_STRIP = "1"
-            </literallayout>
-            However, we already have an image with the binaries stripped,
-            so what can we do to get perf to resolve the symbols? Basically
-            we need to install the debuginfo for the busybox package.
-        </para>
+                </literallayout>
+                However, we already have an image with the binaries stripped,
+                so what can we do to get perf to resolve the symbols? Basically
+                we need to install the debuginfo for the busybox package.
+            </para>
 
-        <para>
-            To generate the debug info for the packages in the image, we can
-            to add dbg-pkgs to EXTRA_IMAGE_FEATURES in local.conf. For example:
-            <literallayout class='monospaced'>
+            <para>
+                To generate the debug info for the packages in the image, we can
+                to add dbg-pkgs to EXTRA_IMAGE_FEATURES in local.conf. For example:
+                <literallayout class='monospaced'>
      EXTRA_IMAGE_FEATURES = "debug-tweaks tools-profile dbg-pkgs"
-            </literallayout>
-            Additionally, in order to generate the type of debuginfo that
-            perf understands, we also need to add the following to local.conf:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Additionally, in order to generate the type of debuginfo that
+                perf understands, we also need to add the following to local.conf:
+                <literallayout class='monospaced'>
      PACKAGE_DEBUG_SPLIT_STYLE = 'debug-file-directory'
-            </literallayout>
-            Once we've done that, we can install the debuginfo for busybox.
-            The debug packages once built can be found in
-            build/tmp/deploy/rpm/* on the host system. Find the
-            busybox-dbg-...rpm file and copy it to the target. For example:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Once we've done that, we can install the debuginfo for busybox.
+                The debug packages once built can be found in
+                build/tmp/deploy/rpm/* on the host system. Find the
+                busybox-dbg-...rpm file and copy it to the target. For example:
+                <literallayout class='monospaced'>
      [trz@empanada core2]$ scp /home/trz/yocto/crownbay-tracing-dbg/build/tmp/deploy/rpm/core2/busybox-dbg-1.20.2-r2.core2.rpm root@192.168.1.31:
      root@192.168.1.31's password:
      busybox-dbg-1.20.2-r2.core2.rpm                     100% 1826KB   1.8MB/s   00:01
-            </literallayout>
-            Now install the debug rpm on the target:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Now install the debug rpm on the target:
+                <literallayout class='monospaced'>
      root@crownbay:~# rpm -i busybox-dbg-1.20.2-r2.core2.rpm
-            </literallayout>
-            Now that the debuginfo is installed, we see that the busybox
-            entries now display their functions symbolically:
-        </para>
+                </literallayout>
+                Now that the debuginfo is installed, we see that the busybox
+                entries now display their functions symbolically:
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-busybox-debuginfo.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-busybox-debuginfo.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            If we expand one of the entries and press 'enter' on a leaf node,
-            we're presented with a menu of actions we can take to get more
-            information related to that entry:
-        </para>
+            <para>
+                If we expand one of the entries and press 'enter' on a leaf node,
+                we're presented with a menu of actions we can take to get more
+                information related to that entry:
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-busybox-dso-zoom-menu.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-busybox-dso-zoom-menu.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            One of these actions allows us to show a view that displays a
-            busybox-centric view of the profiled functions (in this case we've
-            also expanded all the nodes using the 'E' key):
-        </para>
+            <para>
+                One of these actions allows us to show a view that displays a
+                busybox-centric view of the profiled functions (in this case we've
+                also expanded all the nodes using the 'E' key):
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-busybox-dso-zoom.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-busybox-dso-zoom.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            Finally, we can see that now that the busybox debuginfo is
-            installed, the previously unresolved symbol in the
-            sys_clock_gettime() entry mentioned previously is now resolved,
-            and shows that the sys_clock_gettime system call that was the
-            source of 6.75% of the copy-to-user overhead was initiated by
-            the handle_input() busybox function:
-        </para>
+            <para>
+                Finally, we can see that now that the busybox debuginfo is
+                installed, the previously unresolved symbol in the
+                sys_clock_gettime() entry mentioned previously is now resolved,
+                and shows that the sys_clock_gettime system call that was the
+                source of 6.75% of the copy-to-user overhead was initiated by
+                the handle_input() busybox function:
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-g-copy-to-user-expanded-debuginfo.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-g-copy-to-user-expanded-debuginfo.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            At the lowest level of detail, we can dive down to the assembly
-            level and see which instructions caused the most overhead in a
-            function. Pressing 'enter' on the 'udhcpc_main' function, we're
-            again presented with a menu:
-        </para>
+            <para>
+                At the lowest level of detail, we can dive down to the assembly
+                level and see which instructions caused the most overhead in a
+                function. Pressing 'enter' on the 'udhcpc_main' function, we're
+                again presented with a menu:
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-busybox-annotate-menu.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-busybox-annotate-menu.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            Selecting 'Annotate udhcpc_main', we get a detailed listing of
-            percentages by instruction for the udhcpc_main function. From the
-            display, we can see that over 50% of the time spent in this
-            function is taken up by a couple tests and the move of a
-            constant (1) to a register:
-        </para>
+            <para>
+                Selecting 'Annotate udhcpc_main', we get a detailed listing of
+                percentages by instruction for the udhcpc_main function. From the
+                display, we can see that over 50% of the time spent in this
+                function is taken up by a couple tests and the move of a
+                constant (1) to a register:
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-wget-busybox-annotate-udhcpc.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-wget-busybox-annotate-udhcpc.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            As a segue into tracing, let's try another profile using a
-            different counter, something other than the default 'cycles'.
-        </para>
+            <para>
+                As a segue into tracing, let's try another profile using a
+                different counter, something other than the default 'cycles'.
+            </para>
 
-        <para>
-            The tracing and profiling infrastructure in Linux has become
-            unified in a way that allows us to use the same tool with a
-            completely different set of counters, not just the standard
-            hardware counters that traditionally tools have had to restrict
-            themselves to (of course the traditional tools can also make use
-            of the expanded possibilities now available to them, and in some
-            cases have, as mentioned previously).
-        </para>
+            <para>
+                The tracing and profiling infrastructure in Linux has become
+                unified in a way that allows us to use the same tool with a
+                completely different set of counters, not just the standard
+                hardware counters that traditionally tools have had to restrict
+                themselves to (of course the traditional tools can also make use
+                of the expanded possibilities now available to them, and in some
+                cases have, as mentioned previously).
+            </para>
 
-        <para>
-            We can get a list of the available events that can be used to
-            profile a workload via 'perf list':
-            <literallayout class='monospaced'>
+            <para>
+                We can get a list of the available events that can be used to
+                profile a workload via 'perf list':
+                <literallayout class='monospaced'>
      root@crownbay:~# perf list
 
      List of pre-defined events (to be used in -e):
@@ -602,23 +602,23 @@
       syscalls:sys_exit_unshare                          [Tracepoint event]
       raw_syscalls:sys_enter                             [Tracepoint event]
       raw_syscalls:sys_exit                              [Tracepoint event]
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <note>
-            Tying It Together: These are exactly the same set of events defined
-            by the trace event subsystem and exposed by
-            ftrace/tracecmd/kernelshark as files in
-            /sys/kernel/debug/tracing/events, by SystemTap as
-            kernel.trace("tracepoint_name") and (partially) accessed by LTTng.
-        </note>
+            <note>
+                Tying It Together: These are exactly the same set of events defined
+                by the trace event subsystem and exposed by
+                ftrace/tracecmd/kernelshark as files in
+                /sys/kernel/debug/tracing/events, by SystemTap as
+                kernel.trace("tracepoint_name") and (partially) accessed by LTTng.
+            </note>
 
-        <para>
-            Only a subset of these would be of interest to us when looking at
-            this workload, so let's choose the most likely subsystems
-            (identified by the string before the colon in the Tracepoint events)
-            and do a 'perf stat' run using only those wildcarded subsystems:
-            <literallayout class='monospaced'>
+            <para>
+                Only a subset of these would be of interest to us when looking at
+                this workload, so let's choose the most likely subsystems
+                (identified by the string before the colon in the Tracepoint events)
+                and do a 'perf stat' run using only those wildcarded subsystems:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf stat -e skb:* -e net:* -e napi:* -e sched:* -e workqueue:* -e irq:* -e syscalls:* wget http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2
      Performance counter stats for 'wget http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2':
 
@@ -675,26 +675,26 @@
                        .
 
           58.029710972 seconds time elapsed
-            </literallayout>
-            Let's pick one of these tracepoints and tell perf to do a profile
-            using it as the sampling event:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Let's pick one of these tracepoints and tell perf to do a profile
+                using it as the sampling event:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf record -g -e sched:sched_wakeup wget http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            <imagedata fileref="figures/sched-wakeup-profile.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/sched-wakeup-profile.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            The screenshot above shows the results of running a profile using
-            sched:sched_switch tracepoint, which shows the relative costs of
-            various paths to sched_wakeup (note that sched_wakeup is the
-            name of the tracepoint - it's actually defined just inside
-            ttwu_do_wakeup(), which accounts for the function name actually
-            displayed in the profile:
-            <literallayout class='monospaced'>
+            <para>
+                The screenshot above shows the results of running a profile using
+                sched:sched_switch tracepoint, which shows the relative costs of
+                various paths to sched_wakeup (note that sched_wakeup is the
+                name of the tracepoint - it's actually defined just inside
+                ttwu_do_wakeup(), which accounts for the function name actually
+                displayed in the profile:
+                <literallayout class='monospaced'>
      /*
       * Mark the task runnable and perform wakeup-preemption.
       */
@@ -706,55 +706,55 @@
           .
           .
      }
-            </literallayout>
-            A couple of the more interesting callchains are expanded and
-            displayed above, basically some network receive paths that
-            presumably end up waking up wget (busybox) when network data is
-            ready.
-        </para>
+                </literallayout>
+                A couple of the more interesting callchains are expanded and
+                displayed above, basically some network receive paths that
+                presumably end up waking up wget (busybox) when network data is
+                ready.
+            </para>
 
-        <para>
-            Note that because tracepoints are normally used for tracing,
-            the default sampling period for tracepoints is 1 i.e. for
-            tracepoints perf will sample on every event occurrence (this
-            can be changed using the -c option). This is in contrast to
-            hardware counters such as for example the default 'cycles'
-            hardware counter used for normal profiling, where sampling
-            periods are much higher (in the thousands) because profiling should
-            have as low an overhead as possible and sampling on every cycle w
-            ould be prohibitively expensive.
-        </para>
-    </section>
+            <para>
+                Note that because tracepoints are normally used for tracing,
+                the default sampling period for tracepoints is 1 i.e. for
+                tracepoints perf will sample on every event occurrence (this
+                can be changed using the -c option). This is in contrast to
+                hardware counters such as for example the default 'cycles'
+                hardware counter used for normal profiling, where sampling
+                periods are much higher (in the thousands) because profiling should
+                have as low an overhead as possible and sampling on every cycle
+                would be prohibitively expensive.
+            </para>
+        </section>
 
-    <section id='using-perf-to-do-basic-tracing'>
-        <title>Using perf to do Basic Tracing</title>
+        <section id='using-perf-to-do-basic-tracing'>
+            <title>Using perf to do Basic Tracing</title>
 
-        <para>
-            Profiling is a great tool for solving many problems or for
-            getting a high-level view of what's going on with a workload or
-            across the system. It is however by definition an approximation,
-            as suggested by the most prominent word associated with it,
-            'sampling'. On the one hand, it allows a representative picture of
-            what's going on in the system to be cheaply taken, but on the other
-            hand, that cheapness limits its utility when that data suggests a
-            need to 'dive down' more deeply to discover what's really going
-            on. In such cases, the only way to see what's really going on is
-            to be able to look at (or summarize more intelligently) the
-            individual steps that go into the higher-level behavior exposed
-            by the coarse-grained profiling data.
-        </para>
+            <para>
+                Profiling is a great tool for solving many problems or for
+                getting a high-level view of what's going on with a workload or
+                across the system. It is however by definition an approximation,
+                as suggested by the most prominent word associated with it,
+                'sampling'. On the one hand, it allows a representative picture of
+                what's going on in the system to be cheaply taken, but on the other
+                hand, that cheapness limits its utility when that data suggests a
+                need to 'dive down' more deeply to discover what's really going
+                on. In such cases, the only way to see what's really going on is
+                to be able to look at (or summarize more intelligently) the
+                individual steps that go into the higher-level behavior exposed
+                by the coarse-grained profiling data.
+            </para>
 
-        <para>
-            As a concrete example, we can trace all the events we think might
-            be applicable to our workload:
-            <literallayout class='monospaced'>
+            <para>
+                As a concrete example, we can trace all the events we think might
+                be applicable to our workload:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf record -g -e skb:* -e net:* -e napi:* -e sched:sched_switch -e sched:sched_wakeup -e irq:*
       -e syscalls:sys_enter_read -e syscalls:sys_exit_read -e syscalls:sys_enter_write -e syscalls:sys_exit_write
       wget http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2
-            </literallayout>
-            We can look at the raw trace output using 'perf script' with no
-            arguments:
-            <literallayout class='monospaced'>
+                </literallayout>
+                We can look at the raw trace output using 'perf script' with no
+                arguments:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf script
 
            perf  1262 [000] 11624.857082: sys_exit_read: 0x0
@@ -779,90 +779,90 @@
            wget  1262 [001] 11624.859888: sys_exit_read: 0x400
            wget  1262 [001] 11624.859935: sys_enter_read: fd: 0x0003, buf: 0xb7720000, count: 0x0400
            wget  1262 [001] 11624.859944: sys_exit_read: 0x400
-            </literallayout>
-            This gives us a detailed timestamped sequence of events that
-            occurred within the workload with respect to those events.
-        </para>
+                </literallayout>
+                This gives us a detailed timestamped sequence of events that
+                occurred within the workload with respect to those events.
+            </para>
 
-        <para>
-            In many ways, profiling can be viewed as a subset of tracing -
-            theoretically, if you have a set of trace events that's sufficient
-            to capture all the important aspects of a workload, you can derive
-            any of the results or views that a profiling run can.
-        </para>
+            <para>
+                In many ways, profiling can be viewed as a subset of tracing -
+                theoretically, if you have a set of trace events that's sufficient
+                to capture all the important aspects of a workload, you can derive
+                any of the results or views that a profiling run can.
+            </para>
 
-        <para>
-            Another aspect of traditional profiling is that while powerful in
-            many ways, it's limited by the granularity of the underlying data.
-            Profiling tools offer various ways of sorting and presenting the
-            sample data, which make it much more useful and amenable to user
-            experimentation, but in the end it can't be used in an open-ended
-            way to extract data that just isn't present as a consequence of
-            the fact that conceptually, most of it has been thrown away.
-        </para>
+            <para>
+                Another aspect of traditional profiling is that while powerful in
+                many ways, it's limited by the granularity of the underlying data.
+                Profiling tools offer various ways of sorting and presenting the
+                sample data, which make it much more useful and amenable to user
+                experimentation, but in the end it can't be used in an open-ended
+                way to extract data that just isn't present as a consequence of
+                the fact that conceptually, most of it has been thrown away.
+            </para>
 
-        <para>
-            Full-blown detailed tracing data does however offer the opportunity
-            to manipulate and present the information collected during a
-            tracing run in an infinite variety of ways.
-        </para>
+            <para>
+                Full-blown detailed tracing data does however offer the opportunity
+                to manipulate and present the information collected during a
+                tracing run in an infinite variety of ways.
+            </para>
 
-        <para>
-            Another way to look at it is that there are only so many ways that
-            the 'primitive' counters can be used on their own to generate
-            interesting output; to get anything more complicated than simple
-            counts requires some amount of additional logic, which is typically
-            very specific to the problem at hand. For example, if we wanted to
-            make use of a 'counter' that maps to the value of the time
-            difference between when a process was scheduled to run on a
-            processor and the time it actually ran, we wouldn't expect such
-            a counter to exist on its own, but we could derive one called say
-            'wakeup_latency' and use it to extract a useful view of that metric
-            from trace data. Likewise, we really can't figure out from standard
-            profiling tools how much data every process on the system reads and
-            writes, along with how many of those reads and writes fail
-            completely. If we have sufficient trace data, however, we could
-            with the right tools easily extract and present that information,
-            but we'd need something other than pre-canned profiling tools to
-            do that.
-        </para>
+            <para>
+                Another way to look at it is that there are only so many ways that
+                the 'primitive' counters can be used on their own to generate
+                interesting output; to get anything more complicated than simple
+                counts requires some amount of additional logic, which is typically
+                very specific to the problem at hand. For example, if we wanted to
+                make use of a 'counter' that maps to the value of the time
+                difference between when a process was scheduled to run on a
+                processor and the time it actually ran, we wouldn't expect such
+                a counter to exist on its own, but we could derive one called say
+                'wakeup_latency' and use it to extract a useful view of that metric
+                from trace data. Likewise, we really can't figure out from standard
+                profiling tools how much data every process on the system reads and
+                writes, along with how many of those reads and writes fail
+                completely. If we have sufficient trace data, however, we could
+                with the right tools easily extract and present that information,
+                but we'd need something other than pre-canned profiling tools to
+                do that.
+            </para>
 
-        <para>
-            Luckily, there is general-purpose way to handle such needs,
-            called 'programming languages'. Making programming languages
-            easily available to apply to such problems given the specific
-            format of data is called a 'programming language binding' for
-            that data and language. Perf supports two programming language
-            bindings, one for Python and one for Perl.
-        </para>
+            <para>
+                Luckily, there is general-purpose way to handle such needs,
+                called 'programming languages'. Making programming languages
+                easily available to apply to such problems given the specific
+                format of data is called a 'programming language binding' for
+                that data and language. Perf supports two programming language
+                bindings, one for Python and one for Perl.
+            </para>
 
-        <note>
-            Tying It Together: Language bindings for manipulating and
-            aggregating trace data are of course not a new
-            idea.  One of the first projects to do this was IBM's DProbes
-            dpcc compiler, an ANSI C compiler which targeted a low-level
-            assembly language running on an in-kernel interpreter on the
-            target system.  This is exactly analagous to what Sun's DTrace
-            did, except that DTrace invented its own language for the purpose.
-            Systemtap, heavily inspired by DTrace, also created its own
-            one-off language, but rather than running the product on an
-            in-kernel interpreter, created an elaborate compiler-based
-            machinery to translate its language into kernel modules written
-            in C.
-        </note>
+            <note>
+                Tying It Together: Language bindings for manipulating and
+                aggregating trace data are of course not a new
+                idea.  One of the first projects to do this was IBM's DProbes
+                dpcc compiler, an ANSI C compiler which targeted a low-level
+                assembly language running on an in-kernel interpreter on the
+                target system.  This is exactly analagous to what Sun's DTrace
+                did, except that DTrace invented its own language for the purpose.
+                Systemtap, heavily inspired by DTrace, also created its own
+                one-off language, but rather than running the product on an
+                in-kernel interpreter, created an elaborate compiler-based
+                machinery to translate its language into kernel modules written
+                in C.
+            </note>
 
-        <para>
-            Now that we have the trace data in perf.data, we can use
-            'perf script -g' to generate a skeleton script with handlers
-            for the read/write entry/exit events we recorded:
-            <literallayout class='monospaced'>
+            <para>
+                Now that we have the trace data in perf.data, we can use
+                'perf script -g' to generate a skeleton script with handlers
+                for the read/write entry/exit events we recorded:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf script -g python
      generated Python script: perf-script.py
-            </literallayout>
-            The skeleton script simply creates a python function for each
-            event type in the perf.data file. The body of each function simply
-            prints the event name along with its parameters. For example:
-            <literallayout class='monospaced'>
+                </literallayout>
+                The skeleton script simply creates a python function for each
+                event type in the perf.data file. The body of each function simply
+                prints the event name along with its parameters. For example:
+                <literallayout class='monospaced'>
      def net__netif_rx(event_name, context, common_cpu,
             common_secs, common_nsecs, common_pid, common_comm,
             skbaddr, len, name):
@@ -870,10 +870,10 @@
                             common_pid, common_comm)
 
 		     print "skbaddr=%u, len=%u, name=%s\n" % (skbaddr, len, name),
-            </literallayout>
-            We can run that script directly to print all of the events
-            contained in the perf.data file:
-            <literallayout class='monospaced'>
+                </literallayout>
+                We can run that script directly to print all of the events
+                contained in the perf.data file:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf script -s perf-script.py
 
      in trace_begin
@@ -899,39 +899,39 @@
      syscalls__sys_exit_read     1 11624.859888770     1262 wget                  nr=3, ret=1024
      syscalls__sys_enter_read     1 11624.859935140     1262 wget                  nr=3, fd=3, buf=3077701632,      count=1024
      syscalls__sys_exit_read     1 11624.859944032     1262 wget                  nr=3, ret=1024
-            </literallayout>
-            That in itself isn't very useful; after all, we can accomplish
-            pretty much the same thing by simply running 'perf script'
-            without arguments in the same directory as the perf.data file.
-        </para>
+                </literallayout>
+                That in itself isn't very useful; after all, we can accomplish
+                pretty much the same thing by simply running 'perf script'
+                without arguments in the same directory as the perf.data file.
+            </para>
 
-        <para>
-            We can however replace the print statements in the generated
-            function bodies with whatever we want, and thereby make it
-            infinitely more useful.
-        </para>
+            <para>
+                We can however replace the print statements in the generated
+                function bodies with whatever we want, and thereby make it
+                infinitely more useful.
+            </para>
 
-        <para>
-            As a simple example, let's just replace the print statements in
-            the function bodies with a simple function that does nothing but
-            increment a per-event count. When the program is run against a
-            perf.data file, each time a particular event is encountered,
-            a tally is incremented for that event. For example:
-            <literallayout class='monospaced'>
+            <para>
+                As a simple example, let's just replace the print statements in
+                the function bodies with a simple function that does nothing but
+                increment a per-event count. When the program is run against a
+                perf.data file, each time a particular event is encountered,
+                a tally is incremented for that event. For example:
+                <literallayout class='monospaced'>
      def net__netif_rx(event_name, context, common_cpu,
             common_secs, common_nsecs, common_pid, common_comm,
             skbaddr, len, name):
 		          inc_counts(event_name)
-            </literallayout>
-            Each event handler function in the generated code is modified
-            to do this. For convenience, we define a common function called
-            inc_counts() that each handler calls; inc_counts simply tallies
-            a count for each event using the 'counts' hash, which is a
-            specialized has function that does Perl-like autovivification, a
-            capability that's extremely useful for kinds of multi-level
-            aggregation commonly used in processing traces (see perf's
-            documentation on the Python language binding for details):
-            <literallayout class='monospaced'>
+                </literallayout>
+                Each event handler function in the generated code is modified
+                to do this. For convenience, we define a common function called
+                inc_counts() that each handler calls; inc_counts simply tallies
+                a count for each event using the 'counts' hash, which is a
+                specialized has function that does Perl-like autovivification, a
+                capability that's extremely useful for kinds of multi-level
+                aggregation commonly used in processing traces (see perf's
+                documentation on the Python language binding for details):
+                <literallayout class='monospaced'>
      counts = autodict()
 
      def inc_counts(event_name):
@@ -939,18 +939,18 @@
                     counts[event_name] += 1
             except TypeError:
                     counts[event_name] = 1
-            </literallayout>
-            Finally, at the end of the trace processing run, we want to
-            print the result of all the per-event tallies. For that, we
-            use the special 'trace_end()' function:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Finally, at the end of the trace processing run, we want to
+                print the result of all the per-event tallies. For that, we
+                use the special 'trace_end()' function:
+                <literallayout class='monospaced'>
      def trace_end():
             for event_name, count in counts.iteritems():
                     print "%-40s %10s\n" % (event_name, count)
-            </literallayout>
-            The end result is a summary of all the events recorded in the
-            trace:
-            <literallayout>
+                </literallayout>
+                The end result is a summary of all the events recorded in the
+                trace:
+                <literallayout>
      skb__skb_copy_datagram_iovec                  13148
      irq__softirq_entry                             4796
      irq__irq_handler_exit                          3805
@@ -968,112 +968,112 @@
      net__netif_rx                                     2
      napi__napi_poll                                1877
      syscalls__sys_exit_write                       8990
-            </literallayout>
-            Note that this is pretty much exactly the same information we get
-            from 'perf stat', which goes a little way to support the idea
-            mentioned previously that given the right kind of trace data,
-            higher-level profiling-type summaries can be derived from it.
-        </para>
+                </literallayout>
+                Note that this is pretty much exactly the same information we get
+                from 'perf stat', which goes a little way to support the idea
+                mentioned previously that given the right kind of trace data,
+                higher-level profiling-type summaries can be derived from it.
+            </para>
 
-        <para>
-            Documentation on using the
-            <ulink url='http://linux.die.net/man/1/perf-script-python'>'perf script' python binding</ulink>.
-        </para>
-    </section>
+            <para>
+                Documentation on using the
+                <ulink url='http://linux.die.net/man/1/perf-script-python'>'perf script' python binding</ulink>.
+            </para>
+        </section>
 
-    <section id='system-wide-tracing-and-profiling'>
-        <title>System-Wide Tracing and Profiling</title>
+        <section id='system-wide-tracing-and-profiling'>
+            <title>System-Wide Tracing and Profiling</title>
 
-        <para>
-            The examples so far have focused on tracing a particular program or
-            workload - in other words, every profiling run has specified the
-            program to profile in the command-line e.g. 'perf record wget ...'.
-        </para>
+            <para>
+                The examples so far have focused on tracing a particular program or
+                workload - in other words, every profiling run has specified the
+                program to profile in the command-line e.g. 'perf record wget ...'.
+            </para>
 
-        <para>
-            It's also possible, and more interesting in many cases, to run a
-            system-wide profile or trace while running the workload in a
-            separate shell.
-        </para>
+            <para>
+                It's also possible, and more interesting in many cases, to run a
+                system-wide profile or trace while running the workload in a
+                separate shell.
+            </para>
 
-        <para>
-            To do system-wide profiling or tracing, you typically use
-            the -a flag to 'perf record'.
-        </para>
+            <para>
+                To do system-wide profiling or tracing, you typically use
+                the -a flag to 'perf record'.
+            </para>
 
-        <para>
-            To demonstrate this, open up one window and start the profile
-            using the -a flag (press Ctrl-C to stop tracing):
-            <literallayout class='monospaced'>
+            <para>
+                To demonstrate this, open up one window and start the profile
+                using the -a flag (press Ctrl-C to stop tracing):
+                <literallayout class='monospaced'>
      root@crownbay:~# perf record -g -a
      ^C[ perf record: Woken up 6 times to write data ]
      [ perf record: Captured and wrote 1.400 MB perf.data (~61172 samples) ]
-            </literallayout>
-            In another window, run the wget test:
-            <literallayout class='monospaced'>
+                </literallayout>
+                In another window, run the wget test:
+                <literallayout class='monospaced'>
      root@crownbay:~# wget <ulink url='http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2'>http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2</ulink>
      Connecting to downloads.yoctoproject.org (140.211.169.59:80)
      linux-2.6.19.2.tar.b 100% |*******************************| 41727k  0:00:00 ETA
-            </literallayout>
-            Here we see entries not only for our wget load, but for other
-            processes running on the system as well:
-        </para>
+                </literallayout>
+                Here we see entries not only for our wget load, but for other
+                processes running on the system as well:
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-systemwide.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-systemwide.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            In the snapshot above, we can see callchains that originate in
-            libc, and a callchain from Xorg that demonstrates that we're
-            using a proprietary X driver in userspace (notice the presence
-            of 'PVR' and some other unresolvable symbols in the expanded
-            Xorg callchain).
-        </para>
+            <para>
+                In the snapshot above, we can see callchains that originate in
+                libc, and a callchain from Xorg that demonstrates that we're
+                using a proprietary X driver in userspace (notice the presence
+                of 'PVR' and some other unresolvable symbols in the expanded
+                Xorg callchain).
+            </para>
 
-        <para>
-            Note also that we have both kernel and userspace entries in the
-            above snapshot. We can also tell perf to focus on userspace but
-            providing a modifier, in this case 'u', to the 'cycles' hardware
-            counter when we record a profile:
-            <literallayout class='monospaced'>
+            <para>
+                Note also that we have both kernel and userspace entries in the
+                above snapshot. We can also tell perf to focus on userspace but
+                providing a modifier, in this case 'u', to the 'cycles' hardware
+                counter when we record a profile:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf record -g -a -e cycles:u
      ^C[ perf record: Woken up 2 times to write data ]
      [ perf record: Captured and wrote 0.376 MB perf.data (~16443 samples) ]
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-report-cycles-u.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-report-cycles-u.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            Notice in the screenshot above, we see only userspace entries ([.])
-        </para>
+            <para>
+                Notice in the screenshot above, we see only userspace entries ([.])
+            </para>
 
-        <para>
-            Finally, we can press 'enter' on a leaf node and select the 'Zoom
-            into DSO' menu item to show only entries associated with a
-            specific DSO. In the screenshot below, we've zoomed into the
-            'libc' DSO which shows all the entries associated with the
-            libc-xxx.so DSO.
-        </para>
+            <para>
+                Finally, we can press 'enter' on a leaf node and select the 'Zoom
+                into DSO' menu item to show only entries associated with a
+                specific DSO. In the screenshot below, we've zoomed into the
+                'libc' DSO which shows all the entries associated with the
+                libc-xxx.so DSO.
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-systemwide-libc.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-systemwide-libc.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <para>
-            We can also use the system-wide -a switch to do system-wide
-            tracing. Here we'll trace a couple of scheduler events:
-            <literallayout class='monospaced'>
+            <para>
+                We can also use the system-wide -a switch to do system-wide
+                tracing. Here we'll trace a couple of scheduler events:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf record -a -e sched:sched_switch -e sched:sched_wakeup
      ^C[ perf record: Woken up 38 times to write data ]
      [ perf record: Captured and wrote 9.780 MB perf.data (~427299 samples) ]
-            </literallayout>
-            We can look at the raw output using 'perf script' with no
-            arguments:
-            <literallayout class='monospaced'>
+                </literallayout>
+                We can look at the raw output using 'perf script' with no
+                arguments:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf script
 
                 perf  1383 [001]  6171.460045: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
@@ -1086,21 +1086,21 @@
                 perf  1383 [001]  6171.470058: sched_switch: prev_comm=perf prev_pid=1383 prev_prio=120 prev_state=R+ ==> next_comm=kworker/1:1 next_pid=21 next_prio=120
          kworker/1:1    21 [001]  6171.470082: sched_switch: prev_comm=kworker/1:1 prev_pid=21 prev_prio=120 prev_state=S ==> next_comm=perf next_pid=1383 next_prio=120
                 perf  1383 [001]  6171.480035: sched_wakeup: comm=kworker/1:1 pid=21 prio=120 success=1 target_cpu=001
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <section id='perf-filtering'>
-            <title>Filtering</title>
+            <section id='perf-filtering'>
+                <title>Filtering</title>
 
-            <para>
-                Notice that there are a lot of events that don't really have
-                anything to do with what we're interested in, namely events
-                that schedule 'perf' itself in and out or that wake perf up.
-                We can get rid of those by using the '--filter' option -
-                for each event we specify using -e, we can add a --filter
-                after that to filter out trace events that contain fields
-                with specific values:
-                <literallayout class='monospaced'>
+                <para>
+                    Notice that there are a lot of events that don't really have
+                    anything to do with what we're interested in, namely events
+                    that schedule 'perf' itself in and out or that wake perf up.
+                    We can get rid of those by using the '--filter' option -
+                    for each event we specify using -e, we can add a --filter
+                    after that to filter out trace events that contain fields
+                    with specific values:
+                    <literallayout class='monospaced'>
      root@crownbay:~# perf record -a -e sched:sched_switch --filter 'next_comm != perf &amp;&amp; prev_comm != perf' -e sched:sched_wakeup --filter 'comm != perf'
      ^C[ perf record: Woken up 38 times to write data ]
      [ perf record: Captured and wrote 9.688 MB perf.data (~423279 samples) ]
@@ -1122,59 +1122,59 @@
              swapper     0 [000]  7932.326109: sched_wakeup: comm=kworker/0:3 pid=1209 prio=120 success=1 target_cpu=000
              swapper     0 [000]  7932.326171: sched_switch: prev_comm=swapper/0 prev_pid=0 prev_prio=120 prev_state=R ==> next_comm=kworker/0:3 next_pid=1209 next_prio=120
          kworker/0:3  1209 [000]  7932.326214: sched_switch: prev_comm=kworker/0:3 prev_pid=1209 prev_prio=120 prev_state=S ==> next_comm=swapper/0 next_pid=0 next_prio=120
-                </literallayout>
-                In this case, we've filtered out all events that have 'perf'
-                in their 'comm' or 'comm_prev' or 'comm_next' fields. Notice
-                that there are still events recorded for perf, but notice
-                that those events don't have values of 'perf' for the filtered
-                fields. To completely filter out anything from perf will
-                require a bit more work, but for the purpose of demonstrating
-                how to use filters, it's close enough.
-            </para>
+                    </literallayout>
+                    In this case, we've filtered out all events that have 'perf'
+                    in their 'comm' or 'comm_prev' or 'comm_next' fields. Notice
+                    that there are still events recorded for perf, but notice
+                    that those events don't have values of 'perf' for the filtered
+                    fields. To completely filter out anything from perf will
+                    require a bit more work, but for the purpose of demonstrating
+                    how to use filters, it's close enough.
+                </para>
 
-            <note>
-                Tying It Together: These are exactly the same set of event
-                filters defined by the trace event subsystem. See the
-                ftrace/tracecmd/kernelshark section for more discussion about
-                these event filters.
-            </note>
+                <note>
+                    Tying It Together: These are exactly the same set of event
+                    filters defined by the trace event subsystem. See the
+                    ftrace/tracecmd/kernelshark section for more discussion about
+                    these event filters.
+                </note>
 
-            <note>
-                Tying It Together: These event filters are implemented by a
-                special-purpose pseudo-interpreter in the kernel and are an
-                integral and indispensable part of the perf design as it
-                relates to tracing.  kernel-based event filters provide a
-                mechanism to precisely throttle the event stream that appears
-                in user space, where it makes sense to provide bindings to real
-                programming languages for postprocessing the event stream.
-                This architecture allows for the intelligent and flexible
-                partitioning of processing between the kernel and user space.
-                Contrast this with other tools such as SystemTap, which does
-                all of its processing in the kernel and as such requires a
-                special project-defined language in order to accommodate that
-                design, or LTTng, where everything is sent to userspace and
-                as such requires a super-efficient kernel-to-userspace
-                transport mechanism in order to function properly.  While
-                perf certainly can benefit from for instance advances in
-                the design of the transport, it doesn't fundamentally depend
-                on them.  Basically, if you find that your perf tracing
-                application is causing buffer I/O overruns, it probably
-                means that you aren't taking enough advantage of the
-                kernel filtering engine.
-            </note>
+                <note>
+                    Tying It Together: These event filters are implemented by a
+                    special-purpose pseudo-interpreter in the kernel and are an
+                    integral and indispensable part of the perf design as it
+                    relates to tracing.  kernel-based event filters provide a
+                    mechanism to precisely throttle the event stream that appears
+                    in user space, where it makes sense to provide bindings to real
+                    programming languages for postprocessing the event stream.
+                    This architecture allows for the intelligent and flexible
+                    partitioning of processing between the kernel and user space.
+                    Contrast this with other tools such as SystemTap, which does
+                    all of its processing in the kernel and as such requires a
+                    special project-defined language in order to accommodate that
+                    design, or LTTng, where everything is sent to userspace and
+                    as such requires a super-efficient kernel-to-userspace
+                    transport mechanism in order to function properly.  While
+                    perf certainly can benefit from for instance advances in
+                    the design of the transport, it doesn't fundamentally depend
+                    on them.  Basically, if you find that your perf tracing
+                    application is causing buffer I/O overruns, it probably
+                    means that you aren't taking enough advantage of the
+                    kernel filtering engine.
+                </note>
+            </section>
         </section>
-    </section>
 
-    <section id='using-dynamic-tracepoints'>
-        <title>Using Dynamic Tracepoints</title>
+        <section id='using-dynamic-tracepoints'>
+            <title>Using Dynamic Tracepoints</title>
 
-        <para>
-            perf isn't restricted to the fixed set of static tracepoints
-            listed by 'perf list'. Users can also add their own 'dynamic'
-            tracepoints anywhere in the kernel. For instance, suppose we
-            want to define our own tracepoint on do_fork(). We can do that
-            using the 'perf probe' perf subcommand:
-            <literallayout class='monospaced'>
+            <para>
+                perf isn't restricted to the fixed set of static tracepoints
+                listed by 'perf list'. Users can also add their own 'dynamic'
+                tracepoints anywhere in the kernel. For instance, suppose we
+                want to define our own tracepoint on do_fork(). We can do that
+                using the 'perf probe' perf subcommand:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf probe do_fork
      Added new event:
        probe:do_fork        (on do_fork)
@@ -1182,13 +1182,13 @@
      You can now use it in all perf tools, such as:
 
 	     perf record -e probe:do_fork -aR sleep 1
-            </literallayout>
-            Adding a new tracepoint via 'perf probe' results in an event
-            with all the expected files and format in
-            /sys/kernel/debug/tracing/events, just the same as for static
-            tracepoints (as discussed in more detail in the trace events
-            subsystem section:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Adding a new tracepoint via 'perf probe' results in an event
+                with all the expected files and format in
+                /sys/kernel/debug/tracing/events, just the same as for static
+                tracepoints (as discussed in more detail in the trace events
+                subsystem section:
+                <literallayout class='monospaced'>
      root@crownbay:/sys/kernel/debug/tracing/events/probe/do_fork# ls -al
      drwxr-xr-x    2 root     root             0 Oct 28 11:42 .
      drwxr-xr-x    3 root     root             0 Oct 28 11:42 ..
@@ -1210,23 +1210,23 @@
 	     field:unsigned long __probe_ip;	offset:12;	size:4;	signed:0;
 
      print fmt: "(%lx)", REC->__probe_ip
-            </literallayout>
-            We can list all dynamic tracepoints currently in existence:
-            <literallayout class='monospaced'>
+                </literallayout>
+                We can list all dynamic tracepoints currently in existence:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf probe -l
       probe:do_fork        (on do_fork)
       probe:schedule       (on schedule)
-            </literallayout>
-            Let's record system-wide ('sleep 30' is a trick for recording
-            system-wide but basically do nothing and then wake up after
-            30 seconds):
-            <literallayout class='monospaced'>
+                </literallayout>
+                Let's record system-wide ('sleep 30' is a trick for recording
+                system-wide but basically do nothing and then wake up after
+                30 seconds):
+                <literallayout class='monospaced'>
      root@crownbay:~# perf record -g -a -e probe:do_fork sleep 30
      [ perf record: Woken up 1 times to write data ]
      [ perf record: Captured and wrote 0.087 MB perf.data (~3812 samples) ]
-            </literallayout>
-            Using 'perf script' we can see each do_fork event that fired:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Using 'perf script' we can see each do_fork event that fired:
+                <literallayout class='monospaced'>
      root@crownbay:~# perf script
 
      # ========
@@ -1265,27 +1265,28 @@
       matchbox-deskto  1197 [001] 34237.112138: do_fork: (c1028460)
       matchbox-deskto  1311 [001] 34237.114106: do_fork: (c1028460)
                  gaku  1312 [000] 34237.202388: do_fork: (c1028460)
-            </literallayout>
-            And using 'perf report' on the same file, we can see the
-            callgraphs from starting a few programs during those 30 seconds:
-        </para>
+                </literallayout>
+                And using 'perf report' on the same file, we can see the
+                callgraphs from starting a few programs during those 30 seconds:
+            </para>
 
-        <para>
-            <imagedata fileref="figures/perf-probe-do_fork-profile.png" width="6in" depth="7in" align="center" scalefit="1" />
-        </para>
+            <para>
+                <imagedata fileref="figures/perf-probe-do_fork-profile.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
 
-        <note>
-            Tying It Together: The trace events subsystem accomodate static
-            and dynamic tracepoints in exactly the same way - there's no
-            difference as far as the infrastructure is concerned.  See the
-            ftrace section for more details on the trace event subsystem.
-        </note>
+            <note>
+                Tying It Together: The trace events subsystem accomodate static
+                and dynamic tracepoints in exactly the same way - there's no
+                difference as far as the infrastructure is concerned.  See the
+                ftrace section for more details on the trace event subsystem.
+            </note>
 
-        <note>
-            Tying It Together: Dynamic tracepoints are implemented under the
-            covers by kprobes and uprobes.  kprobes and uprobes are also used
-            by and in fact are the main focus of SystemTap.
-        </note>
+            <note>
+                Tying It Together: Dynamic tracepoints are implemented under the
+                covers by kprobes and uprobes.  kprobes and uprobes are also used
+                by and in fact are the main focus of SystemTap.
+            </note>
+        </section>
     </section>
 
     <section id='perf-documentation'>
