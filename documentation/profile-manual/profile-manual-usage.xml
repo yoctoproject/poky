@@ -1340,6 +1340,670 @@
         </para>
     </section>
 </section>
+
+<section id='profile-manual-ftrace'>
+    <title>ftrace</title>
+
+    <para>
+        'ftrace' literally refers to the 'ftrace function tracer' but in
+        reality this encompasses a number of related tracers along with
+        the infrastructure that they all make use of.
+    </para>
+
+    <section id='ftrace-setup'>
+        <title>Setup</title>
+
+        <para>
+            For this section, we'll assume you've already performed the basic
+            setup outlined in the General Setup section.
+        </para>
+
+        <para>
+            ftrace, trace-cmd, and kernelshark run on the target system,
+            and are ready to go out-of-the-box - no additional setup is
+            necessary. For the rest of this section we assume you've ssh'ed
+            to the host and will be running ftrace on the target. kernelshark
+            is a GUI application and if you use the '-X' option to ssh you
+            can have the kernelshark GUI run on the target but display
+            remotely on the host if you want.
+        </para>
+    </section>
+
+    <section id='basic-ftrace-usage'>
+        <title>Basic ftrace usage</title>
+
+        <para>
+            'ftrace' essentially refers to everything included in
+            the /tracing directory of the mounted debugfs filesystem
+            (Yocto follows the standard convention and mounts it
+            at /sys/kernel/debug). Here's a listing of all the files
+            found in /sys/kernel/debug/tracing on a Yocto system.:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing# ls
+     README                      kprobe_events               trace
+     available_events            kprobe_profile              trace_clock
+     available_filter_functions  options                     trace_marker
+     available_tracers           per_cpu                     trace_options
+     buffer_size_kb              printk_formats              trace_pipe
+     buffer_total_size_kb        saved_cmdlines              tracing_cpumask
+     current_tracer              set_event                   tracing_enabled
+     dyn_ftrace_total_info       set_ftrace_filter           tracing_on
+     enabled_functions           set_ftrace_notrace          tracing_thresh
+     events                      set_ftrace_pid
+     free_buffer                 set_graph_function
+            </literallayout>
+            The files listed above are used for various purposes -
+            some relate directly to the tracers themselves, others are
+            used to set tracing options, and yet others actually contain
+            the tracing output when a tracer is in effect. Some of the
+            functions can be guessed from their names, others need
+            explanation; in any case, we'll cover some of the files we
+            see here below but for an explanation of the others, please
+            see the ftrace documentation.
+        </para>
+
+        <para>
+            We'll start by looking at some of the available built-in
+            tracers.
+        </para>
+
+        <para>
+            cat'ing the 'available_tracers' file lists the set of
+            available tracers:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing# cat available_tracers
+     blk function_graph function nop
+            </literallayout>
+            The 'current_tracer' file contains the tracer currently in
+            effect:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing# cat current_tracer
+     nop
+            </literallayout>
+            The above listing of current_tracer shows that
+            the 'nop' tracer is in effect, which is just another
+            way of saying that there's actually no tracer
+            currently in effect.
+        </para>
+
+        <para>
+            echo'ing one of the available_tracers into current_tracer
+            makes the specified tracer the current tracer:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing# echo function > current_tracer
+     root@sugarbay:/sys/kernel/debug/tracing# cat current_tracer
+     function
+            </literallayout>
+            The above sets the current tracer to be the
+            'function tracer'. This tracer traces every function
+            call in the kernel and makes it available as the
+            contents of the 'trace' file. Reading the 'trace' file
+            lists the currently buffered function calls that have been
+            traced by the function tracer:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing# cat trace | less
+
+     # tracer: function
+     #
+     # entries-in-buffer/entries-written: 310629/766471   #P:8
+     #
+     #                              _-----=&gt; irqs-off
+     #                             / _----=&gt; need-resched
+     #                            | / _---=&gt; hardirq/softirq
+     #                            || / _--=&gt; preempt-depth
+     #                            ||| /     delay
+     #           TASK-PID   CPU#  ||||    TIMESTAMP  FUNCTION
+     #              | |       |   ||||       |         |
+              &lt;idle&gt;-0     [004] d..1   470.867169: ktime_get_real &lt;-intel_idle
+              &lt;idle&gt;-0     [004] d..1   470.867170: getnstimeofday &lt;-ktime_get_real
+              &lt;idle&gt;-0     [004] d..1   470.867171: ns_to_timeval &lt;-intel_idle
+              &lt;idle&gt;-0     [004] d..1   470.867171: ns_to_timespec &lt;-ns_to_timeval
+              &lt;idle&gt;-0     [004] d..1   470.867172: smp_apic_timer_interrupt &lt;-apic_timer_interrupt
+              &lt;idle&gt;-0     [004] d..1   470.867172: native_apic_mem_write &lt;-smp_apic_timer_interrupt
+              &lt;idle&gt;-0     [004] d..1   470.867172: irq_enter &lt;-smp_apic_timer_interrupt
+              &lt;idle&gt;-0     [004] d..1   470.867172: rcu_irq_enter &lt;-irq_enter
+              &lt;idle&gt;-0     [004] d..1   470.867173: rcu_idle_exit_common.isra.33 &lt;-rcu_irq_enter
+              &lt;idle&gt;-0     [004] d..1   470.867173: local_bh_disable &lt;-irq_enter
+              &lt;idle&gt;-0     [004] d..1   470.867173: add_preempt_count &lt;-local_bh_disable
+              &lt;idle&gt;-0     [004] d.s1   470.867174: tick_check_idle &lt;-irq_enter
+              &lt;idle&gt;-0     [004] d.s1   470.867174: tick_check_oneshot_broadcast &lt;-tick_check_idle
+              &lt;idle&gt;-0     [004] d.s1   470.867174: ktime_get &lt;-tick_check_idle
+              &lt;idle&gt;-0     [004] d.s1   470.867174: tick_nohz_stop_idle &lt;-tick_check_idle
+              &lt;idle&gt;-0     [004] d.s1   470.867175: update_ts_time_stats &lt;-tick_nohz_stop_idle
+              &lt;idle&gt;-0     [004] d.s1   470.867175: nr_iowait_cpu &lt;-update_ts_time_stats
+              &lt;idle&gt;-0     [004] d.s1   470.867175: tick_do_update_jiffies64 &lt;-tick_check_idle
+              &lt;idle&gt;-0     [004] d.s1   470.867175: _raw_spin_lock &lt;-tick_do_update_jiffies64
+              &lt;idle&gt;-0     [004] d.s1   470.867176: add_preempt_count &lt;-_raw_spin_lock
+              &lt;idle&gt;-0     [004] d.s2   470.867176: do_timer &lt;-tick_do_update_jiffies64
+              &lt;idle&gt;-0     [004] d.s2   470.867176: _raw_spin_lock &lt;-do_timer
+              &lt;idle&gt;-0     [004] d.s2   470.867176: add_preempt_count &lt;-_raw_spin_lock
+              &lt;idle&gt;-0     [004] d.s3   470.867177: ntp_tick_length &lt;-do_timer
+              &lt;idle&gt;-0     [004] d.s3   470.867177: _raw_spin_lock_irqsave &lt;-ntp_tick_length
+              .
+              .
+              .
+            </literallayout>
+            Each line in the trace above shows what was happening in
+            the kernel on a given cpu, to the level of detail of
+            function calls. Each entry shows the function called,
+            followed by its caller (after the arrow).
+        </para>
+
+        <para>
+            The function tracer gives you an extremely detailed idea
+            of what the kernel was doing at the point in time the trace
+            was taken, and is a great way to learn about how the kernel
+            code works in a dynamic sense.
+        </para>
+
+        <note>
+            Tying It Together: The ftrace function tracer is also
+            available from within perf, as the ftrace:function tracepoint.
+        </note>
+
+        <para>
+            It is a little more difficult to follow the call chains than
+            it needs to be - luckily there's a variant of the function
+            tracer that displays the callchains explicitly, called the
+            'function_graph' tracer:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing# echo function_graph &gt; current_tracer
+     root@sugarbay:/sys/kernel/debug/tracing# cat trace | less
+
+      tracer: function_graph
+
+      CPU  DURATION                  FUNCTION CALLS
+      |     |   |                     |   |   |   |
+     7)   0.046 us    |      pick_next_task_fair();
+     7)   0.043 us    |      pick_next_task_stop();
+     7)   0.042 us    |      pick_next_task_rt();
+     7)   0.032 us    |      pick_next_task_fair();
+     7)   0.030 us    |      pick_next_task_idle();
+     7)               |      _raw_spin_unlock_irq() {
+     7)   0.033 us    |        sub_preempt_count();
+     7)   0.258 us    |      }
+     7)   0.032 us    |      sub_preempt_count();
+     7) + 13.341 us   |    } /* __schedule */
+     7)   0.095 us    |  } /* sub_preempt_count */
+     7)               |  schedule() {
+     7)               |    __schedule() {
+     7)   0.060 us    |      add_preempt_count();
+     7)   0.044 us    |      rcu_note_context_switch();
+     7)               |      _raw_spin_lock_irq() {
+     7)   0.033 us    |        add_preempt_count();
+     7)   0.247 us    |      }
+     7)               |      idle_balance() {
+     7)               |        _raw_spin_unlock() {
+     7)   0.031 us    |          sub_preempt_count();
+     7)   0.246 us    |        }
+     7)               |        update_shares() {
+     7)   0.030 us    |          __rcu_read_lock();
+     7)   0.029 us    |          __rcu_read_unlock();
+     7)   0.484 us    |        }
+     7)   0.030 us    |        __rcu_read_lock();
+     7)               |        load_balance() {
+     7)               |          find_busiest_group() {
+     7)   0.031 us    |            idle_cpu();
+     7)   0.029 us    |            idle_cpu();
+     7)   0.035 us    |            idle_cpu();
+     7)   0.906 us    |          }
+     7)   1.141 us    |        }
+     7)   0.022 us    |        msecs_to_jiffies();
+     7)               |        load_balance() {
+     7)               |          find_busiest_group() {
+     7)   0.031 us    |            idle_cpu();
+     .
+     .
+     .
+     4)   0.062 us    |        msecs_to_jiffies();
+     4)   0.062 us    |        __rcu_read_unlock();
+     4)               |        _raw_spin_lock() {
+     4)   0.073 us    |          add_preempt_count();
+     4)   0.562 us    |        }
+     4) + 17.452 us   |      }
+     4)   0.108 us    |      put_prev_task_fair();
+     4)   0.102 us    |      pick_next_task_fair();
+     4)   0.084 us    |      pick_next_task_stop();
+     4)   0.075 us    |      pick_next_task_rt();
+     4)   0.062 us    |      pick_next_task_fair();
+     4)   0.066 us    |      pick_next_task_idle();
+     ------------------------------------------
+     4)   kworker-74   =&gt;    &lt;idle&gt;-0
+     ------------------------------------------
+
+     4)               |      finish_task_switch() {
+     4)               |        _raw_spin_unlock_irq() {
+     4)   0.100 us    |          sub_preempt_count();
+     4)   0.582 us    |        }
+     4)   1.105 us    |      }
+     4)   0.088 us    |      sub_preempt_count();
+     4) ! 100.066 us  |    }
+     .
+     .
+     .
+     3)               |  sys_ioctl() {
+     3)   0.083 us    |    fget_light();
+     3)               |    security_file_ioctl() {
+     3)   0.066 us    |      cap_file_ioctl();
+     3)   0.562 us    |    }
+     3)               |    do_vfs_ioctl() {
+     3)               |      drm_ioctl() {
+     3)   0.075 us    |        drm_ut_debug_printk();
+     3)               |        i915_gem_pwrite_ioctl() {
+     3)               |          i915_mutex_lock_interruptible() {
+     3)   0.070 us    |            mutex_lock_interruptible();
+     3)   0.570 us    |          }
+     3)               |          drm_gem_object_lookup() {
+     3)               |            _raw_spin_lock() {
+     3)   0.080 us    |              add_preempt_count();
+     3)   0.620 us    |            }
+     3)               |            _raw_spin_unlock() {
+     3)   0.085 us    |              sub_preempt_count();
+     3)   0.562 us    |            }
+     3)   2.149 us    |          }
+     3)   0.133 us    |          i915_gem_object_pin();
+     3)               |          i915_gem_object_set_to_gtt_domain() {
+     3)   0.065 us    |            i915_gem_object_flush_gpu_write_domain();
+     3)   0.065 us    |            i915_gem_object_wait_rendering();
+     3)   0.062 us    |            i915_gem_object_flush_cpu_write_domain();
+     3)   1.612 us    |          }
+     3)               |          i915_gem_object_put_fence() {
+     3)   0.097 us    |            i915_gem_object_flush_fence.constprop.36();
+     3)   0.645 us    |          }
+     3)   0.070 us    |          add_preempt_count();
+     3)   0.070 us    |          sub_preempt_count();
+     3)   0.073 us    |          i915_gem_object_unpin();
+     3)   0.068 us    |          mutex_unlock();
+     3)   9.924 us    |        }
+     3) + 11.236 us   |      }
+     3) + 11.770 us   |    }
+     3) + 13.784 us   |  }
+     3)               |  sys_ioctl() {
+            </literallayout>
+            As you can see, the function_graph display is much easier to
+            follow. Also note that in addition to the function calls and
+            associated braces, other events such as scheduler events
+            are displayed in context. In fact, you can freely include
+            any tracepoint available in the trace events subsystem described
+            in the next section by simply enabling those events, and they'll
+            appear in context in the function graph display. Quite a
+            powerful tool for understanding kernel dynamics.
+        </para>
+
+        <para>
+            Also notice that there are various annotations on the left
+            hand side of the display. For example if the total time it
+            took for a given function to execute is above a certain
+            threshold, and exclamation point or plus sign appears on the
+            left hand side. Please see the ftrace documentation for
+            details on all these fields.
+        </para>
+    </section>
+
+    <section id='the-trace-events-subsystem'>
+        <title>The 'trace events' Subsystem</title>
+
+        <para>
+            One especially important directory contained within
+            the /sys/kernel/debug/tracing directory is the 'events'
+            subdirectory, which contains representations of every
+            tracepoint in the system. Listing out the contents of
+            the 'events' subdirectory, we see mainly another set of
+            subdirectories:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing# cd events
+     root@sugarbay:/sys/kernel/debug/tracing/events# ls -al
+     drwxr-xr-x   38 root     root             0 Nov 14 23:19 .
+     drwxr-xr-x    5 root     root             0 Nov 14 23:19 ..
+     drwxr-xr-x   19 root     root             0 Nov 14 23:19 block
+     drwxr-xr-x   32 root     root             0 Nov 14 23:19 btrfs
+     drwxr-xr-x    5 root     root             0 Nov 14 23:19 drm
+     -rw-r--r--    1 root     root             0 Nov 14 23:19 enable
+     drwxr-xr-x   40 root     root             0 Nov 14 23:19 ext3
+     drwxr-xr-x   79 root     root             0 Nov 14 23:19 ext4
+     drwxr-xr-x   14 root     root             0 Nov 14 23:19 ftrace
+     drwxr-xr-x    8 root     root             0 Nov 14 23:19 hda
+     -r--r--r--    1 root     root             0 Nov 14 23:19 header_event
+     -r--r--r--    1 root     root             0 Nov 14 23:19 header_page
+     drwxr-xr-x   25 root     root             0 Nov 14 23:19 i915
+     drwxr-xr-x    7 root     root             0 Nov 14 23:19 irq
+     drwxr-xr-x   12 root     root             0 Nov 14 23:19 jbd
+     drwxr-xr-x   14 root     root             0 Nov 14 23:19 jbd2
+     drwxr-xr-x   14 root     root             0 Nov 14 23:19 kmem
+     drwxr-xr-x    7 root     root             0 Nov 14 23:19 module
+     drwxr-xr-x    3 root     root             0 Nov 14 23:19 napi
+     drwxr-xr-x    6 root     root             0 Nov 14 23:19 net
+     drwxr-xr-x    3 root     root             0 Nov 14 23:19 oom
+     drwxr-xr-x   12 root     root             0 Nov 14 23:19 power
+     drwxr-xr-x    3 root     root             0 Nov 14 23:19 printk
+     drwxr-xr-x    8 root     root             0 Nov 14 23:19 random
+     drwxr-xr-x    4 root     root             0 Nov 14 23:19 raw_syscalls
+     drwxr-xr-x    3 root     root             0 Nov 14 23:19 rcu
+     drwxr-xr-x    6 root     root             0 Nov 14 23:19 rpm
+     drwxr-xr-x   20 root     root             0 Nov 14 23:19 sched
+     drwxr-xr-x    7 root     root             0 Nov 14 23:19 scsi
+     drwxr-xr-x    4 root     root             0 Nov 14 23:19 signal
+     drwxr-xr-x    5 root     root             0 Nov 14 23:19 skb
+     drwxr-xr-x    4 root     root             0 Nov 14 23:19 sock
+     drwxr-xr-x   10 root     root             0 Nov 14 23:19 sunrpc
+     drwxr-xr-x  538 root     root             0 Nov 14 23:19 syscalls
+     drwxr-xr-x    4 root     root             0 Nov 14 23:19 task
+     drwxr-xr-x   14 root     root             0 Nov 14 23:19 timer
+     drwxr-xr-x    3 root     root             0 Nov 14 23:19 udp
+     drwxr-xr-x   21 root     root             0 Nov 14 23:19 vmscan
+     drwxr-xr-x    3 root     root             0 Nov 14 23:19 vsyscall
+     drwxr-xr-x    6 root     root             0 Nov 14 23:19 workqueue
+     drwxr-xr-x   26 root     root             0 Nov 14 23:19 writeback
+            </literallayout>
+            Each one of these subdirectories corresponds to a
+            'subsystem' and contains yet again more subdirectories,
+            each one of those finally corresponding to a tracepoint.
+            For example, here are the contents of the 'kmem' subsystem:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing/events# cd kmem
+     root@sugarbay:/sys/kernel/debug/tracing/events/kmem# ls -al
+     drwxr-xr-x   14 root     root             0 Nov 14 23:19 .
+     drwxr-xr-x   38 root     root             0 Nov 14 23:19 ..
+     -rw-r--r--    1 root     root             0 Nov 14 23:19 enable
+     -rw-r--r--    1 root     root             0 Nov 14 23:19 filter
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 kfree
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 kmalloc
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 kmalloc_node
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 kmem_cache_alloc
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 kmem_cache_alloc_node
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 kmem_cache_free
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 mm_page_alloc
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 mm_page_alloc_extfrag
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 mm_page_alloc_zone_locked
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 mm_page_free
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 mm_page_free_batched
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 mm_page_pcpu_drain
+            </literallayout>
+            Let's see what's inside the subdirectory for a specific
+            tracepoint, in this case the one for kmalloc:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing/events/kmem# cd kmalloc
+     root@sugarbay:/sys/kernel/debug/tracing/events/kmem/kmalloc# ls -al
+     drwxr-xr-x    2 root     root             0 Nov 14 23:19 .
+     drwxr-xr-x   14 root     root             0 Nov 14 23:19 ..
+     -rw-r--r--    1 root     root             0 Nov 14 23:19 enable
+     -rw-r--r--    1 root     root             0 Nov 14 23:19 filter
+     -r--r--r--    1 root     root             0 Nov 14 23:19 format
+     -r--r--r--    1 root     root             0 Nov 14 23:19 id
+            </literallayout>
+            The 'format' file for the tracepoint describes the event
+            in memory, which is used by the various tracing tools
+            that now make use of these tracepoint to parse the event
+            and make sense of it, along with a 'print fmt' field that
+            allows tools like ftrace to display the event as text.
+            Here's what the format of the kmalloc event looks like:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing/events/kmem/kmalloc# cat format
+     name: kmalloc
+     ID: 313
+     format:
+	     field:unsigned short common_type;	offset:0;	size:2;	signed:0;
+	     field:unsigned char common_flags;	offset:2;	size:1;	signed:0;
+	     field:unsigned char common_preempt_count;	offset:3;	size:1;	signed:0;
+	     field:int common_pid;	offset:4;	size:4;	signed:1;
+	     field:int common_padding;	offset:8;	size:4;	signed:1;
+
+	     field:unsigned long call_site;	offset:16;	size:8;	signed:0;
+	     field:const void * ptr;	offset:24;	size:8;	signed:0;
+	     field:size_t bytes_req;	offset:32;	size:8;	signed:0;
+	     field:size_t bytes_alloc;	offset:40;	size:8;	signed:0;
+	     field:gfp_t gfp_flags;	offset:48;	size:4;	signed:0;
+
+     print fmt: "call_site=%lx ptr=%p bytes_req=%zu bytes_alloc=%zu gfp_flags=%s", REC->call_site, REC->ptr, REC->bytes_req, REC->bytes_alloc,
+     (REC->gfp_flags) ? __print_flags(REC->gfp_flags, "|", {(unsigned long)(((( gfp_t)0x10u) | (( gfp_t)0x40u) | (( gfp_t)0x80u) | ((
+     gfp_t)0x20000u) | (( gfp_t)0x02u) | (( gfp_t)0x08u)) | (( gfp_t)0x4000u) | (( gfp_t)0x10000u) | (( gfp_t)0x1000u) | (( gfp_t)0x200u) | ((
+     gfp_t)0x400000u)), "GFP_TRANSHUGE"}, {(unsigned long)((( gfp_t)0x10u) | (( gfp_t)0x40u) | (( gfp_t)0x80u) | (( gfp_t)0x20000u) | ((
+     gfp_t)0x02u) | (( gfp_t)0x08u)), "GFP_HIGHUSER_MOVABLE"}, {(unsigned long)((( gfp_t)0x10u) | (( gfp_t)0x40u) | (( gfp_t)0x80u) | ((
+     gfp_t)0x20000u) | (( gfp_t)0x02u)), "GFP_HIGHUSER"}, {(unsigned long)((( gfp_t)0x10u) | (( gfp_t)0x40u) | (( gfp_t)0x80u) | ((
+     gfp_t)0x20000u)), "GFP_USER"}, {(unsigned long)((( gfp_t)0x10u) | (( gfp_t)0x40u) | (( gfp_t)0x80u) | (( gfp_t)0x80000u)), GFP_TEMPORARY"},
+     {(unsigned long)((( gfp_t)0x10u) | (( gfp_t)0x40u) | (( gfp_t)0x80u)), "GFP_KERNEL"}, {(unsigned long)((( gfp_t)0x10u) | (( gfp_t)0x40u)),
+     "GFP_NOFS"}, {(unsigned long)((( gfp_t)0x20u)), "GFP_ATOMIC"}, {(unsigned long)((( gfp_t)0x10u)), "GFP_NOIO"}, {(unsigned long)((
+     gfp_t)0x20u), "GFP_HIGH"}, {(unsigned long)(( gfp_t)0x10u), "GFP_WAIT"}, {(unsigned long)(( gfp_t)0x40u), "GFP_IO"}, {(unsigned long)((
+     gfp_t)0x100u), "GFP_COLD"}, {(unsigned long)(( gfp_t)0x200u), "GFP_NOWARN"}, {(unsigned long)(( gfp_t)0x400u), "GFP_REPEAT"}, {(unsigned
+     long)(( gfp_t)0x800u), "GFP_NOFAIL"}, {(unsigned long)(( gfp_t)0x1000u), "GFP_NORETRY"},      {(unsigned long)(( gfp_t)0x4000u), "GFP_COMP"},
+     {(unsigned long)(( gfp_t)0x8000u), "GFP_ZERO"}, {(unsigned long)(( gfp_t)0x10000u), "GFP_NOMEMALLOC"}, {(unsigned long)(( gfp_t)0x20000u),
+     "GFP_HARDWALL"}, {(unsigned long)(( gfp_t)0x40000u), "GFP_THISNODE"}, {(unsigned long)(( gfp_t)0x80000u), "GFP_RECLAIMABLE"}, {(unsigned
+     long)(( gfp_t)0x08u), "GFP_MOVABLE"}, {(unsigned long)(( gfp_t)0), "GFP_NOTRACK"}, {(unsigned long)(( gfp_t)0x400000u), "GFP_NO_KSWAPD"},
+     {(unsigned long)(( gfp_t)0x800000u), "GFP_OTHER_NODE"} ) : "GFP_NOWAIT"
+            </literallayout>
+            The 'enable' file in the tracepoint directory is what allows
+            the user (or tools such as trace-cmd) to actually turn the
+            tracepoint on and off. When enabled, the corresponding
+            tracepoint will start appearing in the ftrace 'trace'
+            file described previously. For example, this turns on the
+            kmalloc tracepoint:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing/events/kmem/kmalloc# echo 1 > enable
+            </literallayout>
+            At the moment, we're not interested in the function tracer or
+            some other tracer that might be in effect, so we first turn
+            it off, but if we do that, we still need to turn tracing on in
+            order to see the events in the output buffer:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing# echo nop > current_tracer
+     root@sugarbay:/sys/kernel/debug/tracing# echo 1 > tracing_on
+            </literallayout>
+            Now, if we look at the the 'trace' file, we see nothing
+            but the kmalloc events we just turned on:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing# cat trace | less
+     # tracer: nop
+     #
+     # entries-in-buffer/entries-written: 1897/1897   #P:8
+     #
+     #                              _-----=&gt; irqs-off
+     #                             / _----=&gt; need-resched
+     #                            | / _---=&gt; hardirq/softirq
+     #                            || / _--=&gt; preempt-depth
+     #                            ||| /     delay
+     #           TASK-PID   CPU#  ||||    TIMESTAMP  FUNCTION
+     #              | |       |   ||||       |         |
+            dropbear-1465  [000] ...1 18154.620753: kmalloc: call_site=ffffffff816650d4 ptr=ffff8800729c3000 bytes_req=2048 bytes_alloc=2048 gfp_flags=GFP_KERNEL
+              &lt;idle&gt;-0     [000] ..s3 18154.621640: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d555800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+              &lt;idle&gt;-0     [000] ..s3 18154.621656: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d555800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+     matchbox-termin-1361  [001] ...1 18154.755472: kmalloc: call_site=ffffffff81614050 ptr=ffff88006d5f0e00 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_KERNEL|GFP_REPEAT
+                Xorg-1264  [002] ...1 18154.755581: kmalloc: call_site=ffffffff8141abe8 ptr=ffff8800734f4cc0 bytes_req=168 bytes_alloc=192 gfp_flags=GFP_KERNEL|GFP_NOWARN|GFP_NORETRY
+                Xorg-1264  [002] ...1 18154.755583: kmalloc: call_site=ffffffff814192a3 ptr=ffff88001f822520 bytes_req=24 bytes_alloc=32 gfp_flags=GFP_KERNEL|GFP_ZERO
+                Xorg-1264  [002] ...1 18154.755589: kmalloc: call_site=ffffffff81419edb ptr=ffff8800721a2f00 bytes_req=64 bytes_alloc=64 gfp_flags=GFP_KERNEL|GFP_ZERO
+     matchbox-termin-1361  [001] ...1 18155.354594: kmalloc: call_site=ffffffff81614050 ptr=ffff88006db35400 bytes_req=576 bytes_alloc=1024 gfp_flags=GFP_KERNEL|GFP_REPEAT
+                Xorg-1264  [002] ...1 18155.354703: kmalloc: call_site=ffffffff8141abe8 ptr=ffff8800734f4cc0 bytes_req=168 bytes_alloc=192 gfp_flags=GFP_KERNEL|GFP_NOWARN|GFP_NORETRY
+                Xorg-1264  [002] ...1 18155.354705: kmalloc: call_site=ffffffff814192a3 ptr=ffff88001f822520 bytes_req=24 bytes_alloc=32 gfp_flags=GFP_KERNEL|GFP_ZERO
+                Xorg-1264  [002] ...1 18155.354711: kmalloc: call_site=ffffffff81419edb ptr=ffff8800721a2f00 bytes_req=64 bytes_alloc=64 gfp_flags=GFP_KERNEL|GFP_ZERO
+              &lt;idle&gt;-0     [000] ..s3 18155.673319: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d555800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+            dropbear-1465  [000] ...1 18155.673525: kmalloc: call_site=ffffffff816650d4 ptr=ffff8800729c3000 bytes_req=2048 bytes_alloc=2048 gfp_flags=GFP_KERNEL
+              &lt;idle&gt;-0     [000] ..s3 18155.674821: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d554800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+              &lt;idle&gt;-0     [000] ..s3 18155.793014: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d554800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+            dropbear-1465  [000] ...1 18155.793219: kmalloc: call_site=ffffffff816650d4 ptr=ffff8800729c3000 bytes_req=2048 bytes_alloc=2048 gfp_flags=GFP_KERNEL
+              &lt;idle&gt;-0     [000] ..s3 18155.794147: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d555800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+              &lt;idle&gt;-0     [000] ..s3 18155.936705: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d555800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+            dropbear-1465  [000] ...1 18155.936910: kmalloc: call_site=ffffffff816650d4 ptr=ffff8800729c3000 bytes_req=2048 bytes_alloc=2048 gfp_flags=GFP_KERNEL
+              &lt;idle&gt;-0     [000] ..s3 18155.937869: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d554800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+     matchbox-termin-1361  [001] ...1 18155.953667: kmalloc: call_site=ffffffff81614050 ptr=ffff88006d5f2000 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_KERNEL|GFP_REPEAT
+                Xorg-1264  [002] ...1 18155.953775: kmalloc: call_site=ffffffff8141abe8 ptr=ffff8800734f4cc0 bytes_req=168 bytes_alloc=192 gfp_flags=GFP_KERNEL|GFP_NOWARN|GFP_NORETRY
+                Xorg-1264  [002] ...1 18155.953777: kmalloc: call_site=ffffffff814192a3 ptr=ffff88001f822520 bytes_req=24 bytes_alloc=32 gfp_flags=GFP_KERNEL|GFP_ZERO
+                Xorg-1264  [002] ...1 18155.953783: kmalloc: call_site=ffffffff81419edb ptr=ffff8800721a2f00 bytes_req=64 bytes_alloc=64 gfp_flags=GFP_KERNEL|GFP_ZERO
+              &lt;idle&gt;-0     [000] ..s3 18156.176053: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d554800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+            dropbear-1465  [000] ...1 18156.176257: kmalloc: call_site=ffffffff816650d4 ptr=ffff8800729c3000 bytes_req=2048 bytes_alloc=2048 gfp_flags=GFP_KERNEL
+              &lt;idle&gt;-0     [000] ..s3 18156.177717: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d555800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+              &lt;idle&gt;-0     [000] ..s3 18156.399229: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d555800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+            dropbear-1465  [000] ...1 18156.399434: kmalloc: call_site=ffffffff816650d4 ptr=ffff8800729c3000 bytes_http://rostedt.homelinux.com/kernelshark/req=2048 bytes_alloc=2048 gfp_flags=GFP_KERNEL
+              &lt;idle&gt;-0     [000] ..s3 18156.400660: kmalloc: call_site=ffffffff81619b36 ptr=ffff88006d554800 bytes_req=512 bytes_alloc=512 gfp_flags=GFP_ATOMIC
+     matchbox-termin-1361  [001] ...1 18156.552800: kmalloc: call_site=ffffffff81614050 ptr=ffff88006db34800 bytes_req=576 bytes_alloc=1024 gfp_flags=GFP_KERNEL|GFP_REPEAT
+            </literallayout>
+            To again disable the kmalloc event, we need to send 0 to the
+            enable file:
+            <literallayout class='monospaced'>
+     root@sugarbay:/sys/kernel/debug/tracing/events/kmem/kmalloc# echo 0 > enable
+            </literallayout>
+            You can enable any number of events or complete subsystems
+            (by using the 'enable' file in the subsystem directory) and
+            get am arbitrarily fine-grained idea of what's going on in the
+            system by enabling as many of the appropriate tracepoints
+            as applicable.
+        </para>
+
+        <para>
+            A number of the tools described in this HOWTO do just that,
+            including trace-cmd and kernelshark in the next section.
+        </para>
+
+        <note>
+            Tying It Together: These tracepoints and their representation
+            are used not only by ftrace,  but by many of the other tools
+            covered in this document and they form a central point of
+            integration for the various tracers available in Linux.
+            They form a central part of the instrumentation for the
+            following tools: perf, lttng, ftrace, blktrace and SystemTap
+        </note>
+
+        <note>
+            Tying It Together: Eventually all the special-purpose tracers
+            currently available in /sys/kernel/debug/tracing will be
+            removed and replaced with equivalent tracers based on the
+            'trace events' subsystem.
+        </note>
+    </section>
+
+    <section id='trace-cmd-kernelshark'>
+        <title>trace-cmd/kernelshark</title>
+
+        <para>
+            trace-cmd is essentially an extensive command-line 'wrapper'
+            interface that hides the details of all the individual files
+            in /sys/kernel/debug/tracing, allowing users to specify
+            specific particular events within the
+            /sys/kernel/debug/tracing/events/ subdirectory and to collect
+            traces and avoiding having to deal with those details directly.
+        </para>
+
+        <para>
+            As yet another layer on top of that, kernelshark provides a GUI
+            that allows users to start and stop traces and specify sets
+            of events using an intuitive interface, and view the
+            output as both trace events and as a per-cpu graphical
+            display. It directly uses 'trace-cmd' as the plumbing
+            that accomplishes all that underneath the covers (and
+            actually displays the trace-cmd command it uses, as we'll see).
+        </para>
+
+        <para>
+            To start a trace using kernelshark, first start kernelshark:
+            <literallayout class='monospaced'>
+     root@sugarbay:~# kernelshark
+            </literallayout>
+            The bring up the 'Capture' dialog by choosing from the
+            kernelshark menu:
+            <literallayout class='monospaced'>
+     Capture | Record
+            </literallayout>
+            That will display the following dialog, which allows you to
+            choose on or more events (or even one or more complete
+            subsystems) to trace:
+        </para>
+
+        <para>
+            <imagedata fileref="figures/kernelshark-choose-events.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            Note that these are exactly the same set of events described
+            in the previous trace events subsystem section, and in fact
+            is where trace-cmd gets them for kernelshark.
+        </para>
+
+        <para>
+            In the above screenshot, we've decided to explore the
+            graphics subsystem a bit and so have chosen to trace all
+            the tracepoints contained within the 'i915' and 'drm'
+            subsystems.
+        </para>
+
+        <para>
+            After doing that, we can start and stop the trace using
+            the 'Run' and 'Stop' button on the lower right corner of
+            the dialog (the same button will turn into the 'Stop'
+            button after the trace has started):
+        </para>
+
+        <para>
+            <imagedata fileref="figures/kernelshark-output-display.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            Notice that the right-hand pane shows the exact trace-cmd
+            command-line that's used to run the trace, along with the
+            results of the trace-cmd run.
+        </para>
+
+        <para>
+            Once the 'Stop' button is pressed, the graphical view magically
+            fills up with a colorful per-cpu display of the trace data,
+            along with the detailed event listing below that:
+        </para>
+
+        <para>
+            <imagedata fileref="figures/kernelshark-i915-display.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            Here's another example, this time a display resulting
+            from tracing 'all events':
+        </para>
+
+        <para>
+            <imagedata fileref="figures/kernelshark-all.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            The tool is pretty self-explanatory, but for more detailed
+            information on navigating through the data, see the
+            <ulink url='http://rostedt.homelinux.com/kernelshark/'>kernelshark website</ulink>.
+        </para>
+    </section>
+
+    <section id='ftrace-documentation'>
+        <title>Documentation</title>
+
+        <para>
+            The documentation for ftrace can be found in the kernel
+            Documentation directory:
+            <literallayout class='monospaced'>
+     Documentation/trace/ftrace.txt
+            </literallayout>
+            The documentation for the trace event subsystem can also
+            be found in the kernel Documentation directory:
+            <literallayout class='monospaced'>
+     Documentation/trace/events.txt
+            </literallayout>
+            There are a nice series of articles on using
+            ftrace and trace-cmd at LWN:
+            <itemizedlist>
+                <listitem><para><ulink url='http://lwn.net/Articles/365835/'>Debugging the kernel using Ftrace - part 1</ulink>
+                    </para></listitem>
+                <listitem><para><ulink url='http://lwn.net/Articles/366796/'>Debugging the kernel using Ftrace - part 2</ulink>
+                    </para></listitem>
+                <listitem><para><ulink url='https://lwn.net/Articles/410200/'>trace-cmd: A front-end for Ftrace</ulink>
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            There's more detailed documentation kernelshark usage here:
+            <ulink url='http://rostedt.homelinux.com/kernelshark/'>KernelShark</ulink>
+        </para>
+
+        <para>
+            An amusing yet useful README (a tracing mini-HOWTO) can be
+            found in /sys/kernel/debug/tracing/README.
+        </para>
+    </section>
+</section>
+
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
