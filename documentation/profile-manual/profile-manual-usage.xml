@@ -2763,6 +2763,129 @@
             <ulink url='http://oprofile.sourceforge.net/about/'>About OProfile</ulink>
         </para>
     </section>
+</section>
+
+<section id='profile-manual-sysprof'>
+    <title>Sysprof</title>
+
+    <para>
+        Sysprof is a very easy to use system-wide profiler that consists
+        of a single window with three panes and a few buttons which allow
+        you to start, stop, and view the profile from one place.
+    </para>
+
+    <section id='sysprof-setup'>
+        <title>Setup</title>
+
+        <para>
+            For this section, we'll assume you've already performed the
+            basic setup outlined in the General Setup section.
+        </para>
+
+        <para>
+            Sysprof is a GUI-based application that runs on the target
+            system. For the rest of this document we assume you've
+            ssh'ed to the host and will be running Sysprof on the
+            target (you can use the '-X' option to ssh and have the
+            Sysprof GUI run on the target but display remotely on the
+            host if you want).
+        </para>
+    </section>
+
+    <section id='sysprof-basic-usage'>
+        <title>Basic Usage</title>
+
+        <para>
+            To start profiling the system, you simply press the 'Start'
+            button. To stop profiling and to start viewing the profile data
+            in one easy step, press the 'Profile' button.
+        </para>
+
+        <para>
+            Once you've pressed the profile button, the three panes will
+            fill up with profiling data:
+        </para>
+
+        <para>
+            <imagedata fileref="figures/sysprof-copy-to-user.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            The left pane shows a list of functions and processes.
+            Selecting one of those expands that function in the right
+            pane, showing all its callees. Note that this caller-oriented
+            display is essentially the inverse of perf's default
+            callee-oriented callchain display.
+        </para>
+
+        <para>
+            In the screenshot above, we're focusing on __copy_to_user_ll()
+            and looking up the callchain we can see that one of the callers
+            of __copy_to_user_ll is sys_read() and the complete callpath
+            between them. Notice that this is essentially a portion of the
+            same information we saw in the perf display shown in the perf
+            section of this page.
+        </para>
+
+        <para>
+            <imagedata fileref="figures/sysprof-copy-from-user.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            Similarly, the above is a snapshot of the Sysprof display of a
+            copy-from-user callchain.
+        </para>
+
+        <para>
+            Finally, looking at the third Sysprof pane in the lower left,
+            we can see a list of all the callers of a particular function
+            selected in the top left pane. In this case, the lower pane is
+            showing all the callers of __mark_inode_dirty:
+        </para>
+
+        <para>
+            <imagedata fileref="figures/sysprof-callers.png" width="6in" depth="7in" align="center" scalefit="1" />
+        </para>
+
+        <para>
+            Double-clicking on one of those functions will in turn change the
+            focus to the selected function, and so on.
+        </para>
+
+        <note>
+            Tying It Together: If you like sysprof's 'caller-oriented'
+            display, you may be able to approximate it in other tools as
+            well.  For example, 'perf report' has the -g (--call-graph)
+            option that you can experiment with; one of the options is
+            'caller' for an inverted caller-based callgraph display.
+        </note>
+
+        <note>
+            Tying It Together: sysprof does have build options to enable
+            use of the perf_event subsystem and benefit from the perf_event
+            infrastructure by adding support for something other than
+            system-wide profiling i.e. per-process or workload profiling,
+            but the version in danny doesn't yet take advantage of those
+            capabilities (sysprof officially added the ability.
+            to make use of perf_events just as we were going to press).
+        </note>
+    </section>
+
+    <section id='sysprof-documentation'>
+        <title>Documentation</title>
+
+        <para>
+            There doesn't seem to be any documentation for Sysprof, but
+            maybe that's because it's pretty self-explanatory.
+            The Sysprof website, however, is here:
+            <ulink url='http://sysprof.com/'>Sysprof, System-wide Performance Profiler for Linux</ulink>
+        </para>
+    </section>
+
+
+
+
+
 
 
 
