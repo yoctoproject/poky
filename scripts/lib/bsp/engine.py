@@ -1387,6 +1387,9 @@ def yocto_common_create(machine, target, scripts_path, layer_output_dir, codedum
 
         properties = json.load(infile)
 
+    if properties_str and not properties:
+        properties = json.loads(properties_str)
+
     os.mkdir(layer_output_dir)
 
     context = create_context(machine, target, scripts_path)
@@ -1413,7 +1416,7 @@ def yocto_common_create(machine, target, scripts_path, layer_output_dir, codedum
     run_program_lines(program_lines, codedump)
 
 
-def yocto_layer_create(layer_name, scripts_path, layer_output_dir, codedump, properties_file):
+def yocto_layer_create(layer_name, scripts_path, layer_output_dir, codedump, properties_file, properties=""):
     """
     Create yocto layer
 
@@ -1424,13 +1427,13 @@ def yocto_layer_create(layer_name, scripts_path, layer_output_dir, codedump, pro
     properties_file - use values from this file if nonempty i.e no prompting
     properties - use values from this string if nonempty i.e no prompting
     """
-    yocto_common_create(layer_name, "layer", scripts_path, layer_output_dir, codedump, properties_file, False)
+    yocto_common_create(layer_name, "layer", scripts_path, layer_output_dir, codedump, properties_file, properties, False)
 
     print "\nNew layer created in %s.\n" % (layer_output_dir)
     print "Don't forget to add it to your BBLAYERS (for details see %s\README)." % (layer_output_dir)
 
 
-def yocto_bsp_create(machine, arch, scripts_path, bsp_output_dir, codedump, properties_file):
+def yocto_bsp_create(machine, arch, scripts_path, bsp_output_dir, codedump, properties_file, properties=None):
     """
     Create bsp
 
@@ -1443,7 +1446,7 @@ def yocto_bsp_create(machine, arch, scripts_path, bsp_output_dir, codedump, prop
     properties_file - use values from this file if nonempty i.e no prompting
     properties - use values from this string if nonempty i.e no prompting
     """
-    yocto_common_create(machine, arch, scripts_path, bsp_output_dir, codedump, properties_file)
+    yocto_common_create(machine, arch, scripts_path, bsp_output_dir, codedump, properties_file, properties)
 
     print "\nNew %s BSP created in %s" % (arch, bsp_output_dir)
 
