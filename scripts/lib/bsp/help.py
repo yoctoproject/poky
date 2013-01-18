@@ -622,7 +622,8 @@ yocto_layer_create_usage = """
 
  Create a new generic Yocto layer
 
- usage: yocto-layer create <layer-name> [-o <DIRNAME> | --outdir <DIRNAME>]
+ usage: yocto-layer create <layer-name> [layer_priority]
+            [-o <DIRNAME> | --outdir <DIRNAME>]
             [-i <JSON PROPERTY FILE> | --infile <JSON PROPERTY_FILE>]
 
  This command creates a generic Yocto layer based on the specified
@@ -630,6 +631,10 @@ yocto_layer_create_usage = """
  default within the top-level directory specified as
  'meta-layer-name'.  The -o option can be used to place the layer in a
  directory with a different name and location.
+
+ If layer_priority is specified, a simple layer will be created using
+ the given layer priority, and the user will not be prompted for
+ further input.
 
  NOTE: Once created, you should add your new layer to your
  bblayers.conf file in order for it to be subsequently seen and
@@ -646,7 +651,8 @@ NAME
     yocto-layer create - Create a new generic Yocto layer
 
 SYNOPSIS
-    yocto-layer create <layer-name> [-o <DIRNAME> | --outdir <DIRNAME>]
+    yocto-layer create <layer-name> [layer_priority]
+        [-o <DIRNAME> | --outdir <DIRNAME>]
         [-i <JSON PROPERTY FILE> | --infile <JSON PROPERTY_FILE>]
 
 DESCRIPTION
@@ -655,6 +661,10 @@ DESCRIPTION
     default within the top-level directory specified as
     'meta-layer-name'.  The -o option can be used to place the layer
     in a directory with a different name and location.
+
+    If layer_priority is specified, a simple layer will be created
+    using the given layer priority, and the user will not be prompted
+    for further input.
 
     The layer-specific properties that define the values that will be
     used to generate the layer can be specified on the command-line
