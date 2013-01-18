@@ -2881,18 +2881,404 @@
             <ulink url='http://sysprof.com/'>Sysprof, System-wide Performance Profiler for Linux</ulink>
         </para>
     </section>
+</section>
 
+<section id='lttng-linux-trace-toolkit-next-generation'>
+    <title>LTTng (Linux Trace Toolkit, next generation)</title>
 
+    <section id='lttng-setup'>
+        <title>Setup</title>
 
+        <note>
+            The lttng support in Yocto 1.3 (danny) needs the following poky
+            commits applied in order to work:
+            <itemizedlist>
+                <listitem><para><ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/poky-contrib/commit/?h=tzanussi/switch-to-lttng2&amp;id=ea602300d9211669df0acc5c346e4486d6bf6f67'>http://git.yoctoproject.org/cgit/cgit.cgi/poky-contrib/commit/?h=tzanussi/switch-to-lttng2&amp;id=ea602300d9211669df0acc5c346e4486d6bf6f67</ulink>
+                    </para></listitem>
+                <listitem><para><ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/poky-contrib/commit/?h=tzanussi/lttng-fixes.0&amp;id=1d0dc88e1635cfc24612a3e97d0391facdc2c65f'>http://git.yoctoproject.org/cgit/cgit.cgi/poky-contrib/commit/?h=tzanussi/lttng-fixes.0&amp;id=1d0dc88e1635cfc24612a3e97d0391facdc2c65f</ulink>
+                    </para></listitem>
+            </itemizedlist>
+            If you also want to view the LTTng traces graphically, you also
+            need to download and install/run the 'SR1' or later Juno release
+            of eclipse e.g.:
+            <ulink url='http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/juno/SR1/eclipse-cpp-juno-SR1-linux-gtk-x86_64.tar.gz'>http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/juno/SR1/eclipse-cpp-juno-SR1-linux-gtk-x86_64.tar.gz</ulink>
+        </note>
+    </section>
 
+    <section id='collecting-and-viewing-traces'>
+        <title>Collecting and Viewing Traces</title>
 
+        <para>
+            Once you've applied the above commits and built and booted your
+            image (you need to build the core-image-sato-sdk image or the
+            other methods described in the General Setup section), you're
+            ready to start tracing.
+        </para>
 
+        <section id='collecting-and-viewing-a-trace-on-the-target-inside-a-shell'>
+            <title>Collecting and viewing a trace on the target (inside a shell)</title>
 
+            <para>
+                First, from the target, ssh to the target:
+                <literallayout class='monospaced'>
+     $ ssh -l root 192.168.1.47
+     The authenticity of host '192.168.1.47 (192.168.1.47)' can't be established.
+     RSA key fingerprint is 23:bd:c8:b1:a8:71:52:00:ee:00:4f:64:9e:10:b9:7e.
+     Are you sure you want to continue connecting (yes/no)? yes
+     Warning: Permanently added '192.168.1.47' (RSA) to the list of known hosts.
+     root@192.168.1.47's password:
+                </literallayout>
+                Once on the target, use these steps to create a trace:
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng create
+     Spawning a session daemon
+     Session auto-20121015-232120 created.
+     Traces will be written in /home/root/lttng-traces/auto-20121015-232120
+                </literallayout>
+                Enable the events you want to trace (in this case all
+                kernel events):
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng enable-event --kernel --all
+     All kernel events are enabled in channel channel0
+                </literallayout>
+                Start the trace:
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng start
+     Tracing started for session auto-20121015-232120
+                </literallayout>
+                And then stop the trace after awhile or after running
+                a particular workload that you want to trace:
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng stop
+     Tracing stopped for session auto-20121015-232120
+                </literallayout>
+                You can now view the trace in text form on the target:
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng view
+     [23:21:56.989270399] (+?.?????????) sys_geteuid: { 1 }, { }
+     [23:21:56.989278081] (+0.000007682) exit_syscall: { 1 }, { ret = 0 }
+     [23:21:56.989286043] (+0.000007962) sys_pipe: { 1 }, { fildes = 0xB77B9E8C }
+     [23:21:56.989321802] (+0.000035759) exit_syscall: { 1 }, { ret = 0 }
+     [23:21:56.989329345] (+0.000007543) sys_mmap_pgoff: { 1 }, { addr = 0x0, len = 10485760, prot = 3, flags = 131362, fd = 4294967295, pgoff = 0 }
+     [23:21:56.989351694] (+0.000022349) exit_syscall: { 1 }, { ret = -1247805440 }
+     [23:21:56.989432989] (+0.000081295) sys_clone: { 1 }, { clone_flags = 0x411, newsp = 0xB5EFFFE4, parent_tid = 0xFFFFFFFF, child_tid = 0x0 }
+     [23:21:56.989477129] (+0.000044140) sched_stat_runtime: { 1 }, { comm = "lttng-consumerd", tid = 1193, runtime = 681660, vruntime = 43367983388 }
+     [23:21:56.989486697] (+0.000009568) sched_migrate_task: { 1 }, { comm = "lttng-consumerd", tid = 1193, prio = 20, orig_cpu = 1, dest_cpu = 1 }
+     [23:21:56.989508418] (+0.000021721) hrtimer_init: { 1 }, { hrtimer = 3970832076, clockid = 1, mode = 1 }
+     [23:21:56.989770462] (+0.000262044) hrtimer_cancel: { 1 }, { hrtimer = 3993865440 }
+     [23:21:56.989771580] (+0.000001118) hrtimer_cancel: { 0 }, { hrtimer = 3993812192 }
+     [23:21:56.989776957] (+0.000005377) hrtimer_expire_entry: { 1 }, { hrtimer = 3993865440, now = 79815980007057, function = 3238465232 }
+     [23:21:56.989778145] (+0.000001188) hrtimer_expire_entry: { 0 }, { hrtimer = 3993812192, now = 79815980008174, function = 3238465232 }
+     [23:21:56.989791695] (+0.000013550) softirq_raise: { 1 }, { vec = 1 }
+     [23:21:56.989795396] (+0.000003701) softirq_raise: { 0 }, { vec = 1 }
+     [23:21:56.989800635] (+0.000005239) softirq_raise: { 0 }, { vec = 9 }
+     [23:21:56.989807130] (+0.000006495) sched_stat_runtime: { 1 }, { comm = "lttng-consumerd", tid = 1193, runtime = 330710, vruntime = 43368314098 }
+     [23:21:56.989809993] (+0.000002863) sched_stat_runtime: { 0 }, { comm = "lttng-sessiond", tid = 1181, runtime = 1015313, vruntime = 36976733240 }
+     [23:21:56.989818514] (+0.000008521) hrtimer_expire_exit: { 0 }, { hrtimer = 3993812192 }
+     [23:21:56.989819631] (+0.000001117) hrtimer_expire_exit: { 1 }, { hrtimer = 3993865440 }
+     [23:21:56.989821866] (+0.000002235) hrtimer_start: { 0 }, { hrtimer = 3993812192, function = 3238465232, expires = 79815981000000, softexpires = 79815981000000 }
+     [23:21:56.989822984] (+0.000001118) hrtimer_start: { 1 }, { hrtimer = 3993865440, function = 3238465232, expires = 79815981000000, softexpires = 79815981000000 }
+     [23:21:56.989832762] (+0.000009778) softirq_entry: { 1 }, { vec = 1 }
+     [23:21:56.989833879] (+0.000001117) softirq_entry: { 0 }, { vec = 1 }
+     [23:21:56.989838069] (+0.000004190) timer_cancel: { 1 }, { timer = 3993871956 }
+     [23:21:56.989839187] (+0.000001118) timer_cancel: { 0 }, { timer = 3993818708 }
+     [23:21:56.989841492] (+0.000002305) timer_expire_entry: { 1 }, { timer = 3993871956, now = 79515980, function = 3238277552 }
+     [23:21:56.989842819] (+0.000001327) timer_expire_entry: { 0 }, { timer = 3993818708, now = 79515980, function = 3238277552 }
+     [23:21:56.989854831] (+0.000012012) sched_stat_runtime: { 1 }, { comm = "lttng-consumerd", tid = 1193, runtime = 49237, vruntime = 43368363335 }
+     [23:21:56.989855949] (+0.000001118) sched_stat_runtime: { 0 }, { comm = "lttng-sessiond", tid = 1181, runtime = 45121, vruntime = 36976778361 }
+     [23:21:56.989861257] (+0.000005308) sched_stat_sleep: { 1 }, { comm = "kworker/1:1", tid = 21, delay = 9451318 }
+     [23:21:56.989862374] (+0.000001117) sched_stat_sleep: { 0 }, { comm = "kworker/0:0", tid = 4, delay = 9958820 }
+     [23:21:56.989868241] (+0.000005867) sched_wakeup: { 0 }, { comm = "kworker/0:0", tid = 4, prio = 120, success = 1, target_cpu = 0 }
+     [23:21:56.989869358] (+0.000001117) sched_wakeup: { 1 }, { comm = "kworker/1:1", tid = 21, prio = 120, success = 1, target_cpu = 1 }
+     [23:21:56.989877460] (+0.000008102) timer_expire_exit: { 1 }, { timer = 3993871956 }
+     [23:21:56.989878577] (+0.000001117) timer_expire_exit: { 0 }, { timer = 3993818708 }
+     .
+     .
+     .
+                </literallayout>
+                You can now safely destroy the trace session (note that
+                this doesn't delete the trace - it's still there
+                in ~/lttng-traces):
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng destroy
+     Session auto-20121015-232120 destroyed at /home/root
+                </literallayout>
+                Note that the trace is saved in a directory of the same
+                name as returned by 'lttng create', under the ~/lttng-traces
+                directory (note that you can change this by supplying your
+                own name to 'lttng create'):
+                <literallayout class='monospaced'>
+     root@crownbay:~# ls -al ~/lttng-traces
+     drwxrwx---    3 root     root          1024 Oct 15 23:21 .
+     drwxr-xr-x    5 root     root          1024 Oct 15 23:57 ..
+     drwxrwx---    3 root     root          1024 Oct 15 23:21 auto-20121015-232120
+                </literallayout>
+            </para>
+        </section>
 
+        <section id='collecting-and-viewing-a-userspace-trace-on-the-target-inside-a-shell'>
+            <title>Collecting and viewing a userspace trace on the target (inside a shell)</title>
 
+            <para>
+                For lttng userspace tracing, you need to have a properly
+                instrumented userspace program. For this example, we'll use
+                the 'hello' test program generated by the lttng-ust build.
+            </para>
 
+            <para>
+                The 'hello' test program isn't installed on the rootfs by
+                the lttng-ust build, so we need to copy it over manually.
+                First cd into the build directory that contains the hello
+                executable:
+                <literallayout class='monospaced'>
+     $ cd build/tmp/work/core2-poky-linux/lttng-ust/2.0.5-r0/git/tests/hello/.libs
+                </literallayout>
+                Copy that over to the target machine:
+                <literallayout class='monospaced'>
+     $ scp hello root@192.168.1.20:
+                </literallayout>
+                You now have the instrumented lttng 'hello world' test
+                program on the target, ready to test.
+            </para>
 
+            <para>
+                First, from the target, ssh to the target:
+                <literallayout class='monospaced'>
+     $ ssh -l root 192.168.1.47
+     The authenticity of host '192.168.1.47 (192.168.1.47)' can't be established.
+     RSA key fingerprint is 23:bd:c8:b1:a8:71:52:00:ee:00:4f:64:9e:10:b9:7e.
+     Are you sure you want to continue connecting (yes/no)? yes
+     Warning: Permanently added '192.168.1.47' (RSA) to the list of known hosts.
+     root@192.168.1.47's password:
+                </literallayout>
+                Once on the target, use these steps to create a trace:
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng create
+     Session auto-20190303-021943 created.
+     Traces will be written in /home/root/lttng-traces/auto-20190303-021943
+                </literallayout>
+                Enable the events you want to trace (in this case all
+                userspace events):
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng enable-event --userspace --all
+     All UST events are enabled in channel channel0
+                </literallayout>
+                Start the trace:
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng start
+     Tracing started for session auto-20190303-021943
+                </literallayout>
+                Run the instrumented hello world program:
+                <literallayout class='monospaced'>
+     root@crownbay:~# ./hello
+     Hello, World!
+     Tracing...  done.
+                </literallayout>
+                And then stop the trace after awhile or after running a
+                particular workload that you want to trace:
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng stop
+     Tracing stopped for session auto-20190303-021943
+                </literallayout>
+                You can now view the trace in text form on the target:
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng view
+     [02:31:14.906146544] (+?.?????????) hello:1424 ust_tests_hello:tptest: { cpu_id = 1 }, { intfield = 0, intfield2 = 0x0, longfield = 0, netintfield = 0, netintfieldhex = 0x0, arrfield1 = [ [0] = 1, [1] = 2, [2] = 3 ], arrfield2 = "test", _seqfield1_length = 4, seqfield1 = [ [0] = 116, [1] = 101, [2] = 115, [3] = 116 ], _seqfield2_length = 4,  seqfield2 = "test", stringfield = "test", floatfield = 2222, doublefield = 2, boolfield = 1 }
+     [02:31:14.906170360] (+0.000023816) hello:1424 ust_tests_hello:tptest: { cpu_id = 1 }, { intfield = 1, intfield2 = 0x1, longfield = 1, netintfield = 1, netintfieldhex = 0x1, arrfield1 = [ [0] = 1, [1] = 2, [2] = 3 ], arrfield2 = "test", _seqfield1_length = 4, seqfield1 = [ [0] = 116, [1] = 101, [2] = 115, [3] = 116 ], _seqfield2_length = 4, seqfield2 = "test", stringfield = "test", floatfield = 2222, doublefield = 2, boolfield = 1 }
+     [02:31:14.906183140] (+0.000012780) hello:1424 ust_tests_hello:tptest: { cpu_id = 1 }, { intfield = 2, intfield2 = 0x2, longfield = 2, netintfield = 2, netintfieldhex = 0x2, arrfield1 = [ [0] = 1, [1] = 2, [2] = 3 ], arrfield2 = "test", _seqfield1_length = 4, seqfield1 = [ [0] = 116, [1] = 101, [2] = 115, [3] = 116 ], _seqfield2_length = 4, seqfield2 = "test", stringfield = "test", floatfield = 2222, doublefield = 2, boolfield = 1 }
+     [02:31:14.906194385] (+0.000011245) hello:1424 ust_tests_hello:tptest: { cpu_id = 1 }, { intfield = 3, intfield2 = 0x3, longfield = 3, netintfield = 3, netintfieldhex = 0x3, arrfield1 = [ [0] = 1, [1] = 2, [2] = 3 ], arrfield2 = "test", _seqfield1_length = 4, seqfield1 = [ [0] = 116, [1] = 101, [2] = 115, [3] = 116 ], _seqfield2_length = 4, seqfield2 = "test", stringfield = "test", floatfield = 2222, doublefield = 2, boolfield = 1 }
+     .
+     .
+     .
+                </literallayout>
+                You can now safely destroy the trace session (note that
+                this doesn't delete the trace - it's still
+                there in ~/lttng-traces):
+                <literallayout class='monospaced'>
+     root@crownbay:~# lttng destroy
+     Session auto-20190303-021943 destroyed at /home/root
+                </literallayout>
+            </para>
+        </section>
 
+        <section id='manually-copying-a-trace-to-the-host-and-viewing-it-in-eclipse'>
+            <title>Manually copying a trace to the host and viewing it in Eclipse (i.e. using Eclipse without network support)</title>
+
+            <para>
+                If you already have an LTTng trace on a remote target and
+                would like to view it in Eclipse on the host, you can easily
+                copy it from the target to the host and import it into
+                Eclipse to view it using the LTTng Eclipse plugin already
+                bundled in the Eclipse (Juno SR1 or greater).
+            </para>
+
+            <para>
+                Using the trace we created in the previous section, archive
+                it and copy it to your host system:
+                <literallayout class='monospaced'>
+     root@crownbay:~/lttng-traces# tar zcvf auto-20121015-232120.tar.gz auto-20121015-232120
+     auto-20121015-232120/
+     auto-20121015-232120/kernel/
+     auto-20121015-232120/kernel/metadata
+     auto-20121015-232120/kernel/channel0_1
+     auto-20121015-232120/kernel/channel0_0
+
+     $ scp root@192.168.1.47:lttng-traces/auto-20121015-232120.tar.gz .
+     root@192.168.1.47's password:
+     auto-20121015-232120.tar.gz                                             100% 1566KB   1.5MB/s   00:01
+                </literallayout>
+                Unarchive it on the host:
+                <literallayout class='monospaced'>
+     $ gunzip -c auto-20121015-232120.tar.gz | tar xvf -
+     auto-20121015-232120/
+     auto-20121015-232120/kernel/
+     auto-20121015-232120/kernel/metadata
+     auto-20121015-232120/kernel/channel0_1
+     auto-20121015-232120/kernel/channel0_0
+                </literallayout>
+                We can now import the trace into Eclipse and view it:
+                <orderedlist>
+                    <listitem><para>First, start eclipse and open the
+                        'LTTng Kernel' perspective by selecting the following
+                        menu item:
+                        <literallayout class='monospaced'>
+     Window | Open Perspective | Other...
+                        </literallayout></para></listitem>
+                    <listitem><para>In the dialog box that opens, select
+                        'LTTng Kernel' from the list.</para></listitem>
+                    <listitem><para>Back at the main menu, select the
+                        following menu item:
+                        <literallayout class='monospaced'>
+     File | New | Project...
+                        </literallayout></para></listitem>
+                    <listitem><para>In the dialog box that opens, select
+                        the 'Tracing | Tracing Project' wizard and press
+                        'Next>'.</para></listitem>
+                    <listitem><para>Give the project a name and press
+                        'Finish'.</para></listitem>
+                    <listitem><para>In the 'Project Explorer' pane under
+                        the project you created, right click on the
+                        'Traces' item.</para></listitem>
+                    <listitem><para>Select 'Import..." and in the dialog
+                        that's displayed:</para></listitem>
+                    <listitem><para>Browse the filesystem and find the
+                        select the 'kernel' directory containing the trace
+                        you copied from the target
+                        e.g. auto-20121015-232120/kernel</para></listitem>
+                    <listitem><para>'Checkmark' the directory in the tree
+                        that's displayed for the trace</para></listitem>
+                    <listitem><para>Below that, select 'Common Trace Format:
+                        Kernel Trace' for the 'Trace Type'</para></listitem>
+                    <listitem><para>Press 'Finish' to close the dialog
+                        </para></listitem>
+                    <listitem><para>Back in the 'Project Explorer' pane,
+                        double-click on the 'kernel' item for the
+                        trace you just imported under 'Traces'
+                        </para></listitem>
+                </orderedlist>
+                You should now see your trace data displayed graphically
+                in several different views in Eclipse:
+            </para>
+
+            <para>
+                <imagedata fileref="figures/lttngmain0.png" width="6in" depth="7in" align="center" scalefit="1" />
+            </para>
+
+            <para>
+                You can access extensive help information on how to use
+                the LTTng plugin to search and analyze captured traces via
+                the Eclipse help system:
+                <literallayout class='monospaced'>
+     Help | Help Contents | LTTng Plug-in User Guide
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='collecting-and-viewing-a-trace-in-eclipse'>
+            <title>Collecting and viewing a trace in Eclipse</title>
+
+            <note>
+                This section on collecting traces remotely doesn't currently
+                work because of Eclipse 'RSE' connectivity problems. Manually
+                tracing on the target, copying the trace files to the host,
+                and viewing the trace in Eclipse on the host as outlined in
+                previous steps does work however - please use the manual
+                steps outlined above to view traces in Eclipse.
+            </note>
+
+            <para>
+                In order to trace a remote target, you also need to add
+                a 'tracing' group on the target and connect as a user
+                who's part of that group e.g:
+                <literallayout class='monospaced'>
+     # adduser tomz
+     # groupadd -r tracing
+     # usermod -a -G tracing tomz
+                </literallayout>
+                <orderedlist>
+                    <listitem><para>First, start eclipse and open the
+                        'LTTng Kernel' perspective by selecting the following
+                         menu item:
+                         <literallayout class='monospaced'>
+     Window | Open Perspective | Other...
+                         </literallayout></para></listitem>
+                    <listitem><para>In the dialog box that opens, select
+                        'LTTng Kernel' from the list.</para></listitem>
+                    <listitem><para>Back at the main menu, select the
+                        following menu item:
+                        <literallayout class='monospaced'>
+     File | New | Project...
+                        </literallayout></para></listitem>
+                    <listitem><para>In the dialog box that opens, select
+                        the 'Tracing | Tracing Project' wizard and
+                        press 'Next>'.</para></listitem>
+                    <listitem><para>Give the project a name and press
+                        'Finish'. That should result in an entry in the
+                        'Project' subwindow.</para></listitem>
+                    <listitem><para>In the 'Control' subwindow just below
+                        it, press 'New Connection'.</para></listitem>
+                    <listitem><para>Add a new connection, giving it the
+                        hostname or IP address of the target system.
+                        </para></listitem>
+                    <listitem><para>Provide the username and password
+                        of a qualified user (a member of the 'tracing' group)
+                        or root account on the target system.
+                        </para></listitem>
+                    <listitem><para>Provide appropriate answers to whatever
+                        else is asked for e.g. 'secure storage password'
+                        can be anything you want.
+                        If you get an 'RSE Error' it may be due to proxies.
+                        It may be possible to get around the problem by
+                        changing the following setting:
+                        <literallayout class='monospaced'>
+     Window | Preferences | Network Connections
+                        </literallayout>
+                        Switch 'Active Provider' to 'Direct'
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+    </section>
+
+    <section id='lltng-documentation'>
+        <title>Documentation</title>
+
+        <para>
+            There doesn't seem to be any current documentation covering
+            LTTng 2.0, but maybe that's because the project is in transition.
+            The LTTng 2.0 website, however, is here:
+            <ulink url='http://lttng.org/lttng2.0'>LTTng Project</ulink>
+        </para>
+
+        <para>
+            You can access extensive help information on how to use the
+            LTTng plug-in to search and analyze captured traces via the
+            Eclipse help system:
+            <literallayout class='monospaced'>
+     Help | Help Contents | LTTng Plug-in User Guide
+            </literallayout>
+        </para>
+    </section>
 
 
 </section>
