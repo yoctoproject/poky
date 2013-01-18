@@ -3279,8 +3279,412 @@
             </literallayout>
         </para>
     </section>
+</section>
 
+<section id='profile-manual-blktrace'>
+    <title>blktrace</title>
 
+    <para>
+        blktrace is a tool for tracing and reporting low-level disk I/O.
+        blktrace provides the tracing half of the equation; its output can
+        be piped into the blkparse program, which renders the data in a
+        human-readable form and does some basic analysis:
+    </para>
+
+    <section id='blktrace-setup'>
+        <title>Setup</title>
+
+        <para>
+            For this section, we'll assume you've already performed the
+            basic setup outlined in the
+            "<link linkend='profile-manual-general-setup'>General Setup</link>"
+            section.
+        </para>
+
+        <para>
+            blktrace is an application that runs on the target system.
+            You can run the entire blktrace and blkparse pipeline on the
+            target, or you can run blktrace in 'listen' mode on the target
+            and have blktrace and blkparse collect and analyze the data on
+            the host (see the
+            "<link linkend='using-blktrace-remotely'>Using blktrace Remotely</link>"
+            section below).
+            For the rest of this section we assume you've ssh'ed to the
+            host and will be running blkrace on the target.
+        </para>
+    </section>
+
+    <section id='blktrace-basic-usage'>
+        <title>Basic Usage</title>
+
+        <para>
+            To record a trace, simply run the 'blktrace' command, giving it
+            the name of the block device you want to trace activity on:
+            <literallayout class='monospaced'>
+     root@crownbay:~# blktrace /dev/sdc
+            </literallayout>
+            In another shell, execute a workload you want to trace.
+            <literallayout class='monospaced'>
+     root@crownbay:/media/sdc# rm linux-2.6.19.2.tar.bz2; wget <ulink url='http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2'>http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2</ulink>; sync
+     Connecting to downloads.yoctoproject.org (140.211.169.59:80)
+     linux-2.6.19.2.tar.b 100% |*******************************| 41727k  0:00:00 ETA
+            </literallayout>
+            Press Ctrl-C in the blktrace shell to stop the trace. It will
+            display how many events were logged, along with the per-cpu file
+            sizes (blktrace records traces in per-cpu kernel buffers and
+            simply dumps them to userspace for blkparse to merge and sort
+            later).
+            <literallayout class='monospaced'>
+     ^C=== sdc ===
+      CPU  0:                 7082 events,      332 KiB data
+      CPU  1:                 1578 events,       74 KiB data
+      Total:                  8660 events (dropped 0),      406 KiB data
+            </literallayout>
+            If you examine the files saved to disk, you see multiple files,
+            one per CPU and with the device name as the first part of the
+            filename:
+            <literallayout class='monospaced'>
+     root@crownbay:~# ls -al
+     drwxr-xr-x    6 root     root          1024 Oct 27 22:39 .
+     drwxr-sr-x    4 root     root          1024 Oct 26 18:24 ..
+     -rw-r--r--    1 root     root        339938 Oct 27 22:40 sdc.blktrace.0
+     -rw-r--r--    1 root     root         75753 Oct 27 22:40 sdc.blktrace.1
+            </literallayout>
+            To view the trace events, simply invoke 'blkparse' in the
+            directory containing the trace files, giving it the device name
+            that forms the first part of the filenames:
+            <literallayout class='monospaced'>
+     root@crownbay:~# blkparse sdc
+
+      8,32   1        1     0.000000000  1225  Q  WS 3417048 + 8 [jbd2/sdc-8]
+      8,32   1        2     0.000025213  1225  G  WS 3417048 + 8 [jbd2/sdc-8]
+      8,32   1        3     0.000033384  1225  P   N [jbd2/sdc-8]
+      8,32   1        4     0.000043301  1225  I  WS 3417048 + 8 [jbd2/sdc-8]
+      8,32   1        0     0.000057270     0  m   N cfq1225 insert_request
+      8,32   1        0     0.000064813     0  m   N cfq1225 add_to_rr
+      8,32   1        5     0.000076336  1225  U   N [jbd2/sdc-8] 1
+      8,32   1        0     0.000088559     0  m   N cfq workload slice:150
+      8,32   1        0     0.000097359     0  m   N cfq1225 set_active wl_prio:0 wl_type:1
+      8,32   1        0     0.000104063     0  m   N cfq1225 Not idling. st->count:1
+      8,32   1        0     0.000112584     0  m   N cfq1225 fifo=  (null)
+      8,32   1        0     0.000118730     0  m   N cfq1225 dispatch_insert
+      8,32   1        0     0.000127390     0  m   N cfq1225 dispatched a request
+      8,32   1        0     0.000133536     0  m   N cfq1225 activate rq, drv=1
+      8,32   1        6     0.000136889  1225  D  WS 3417048 + 8 [jbd2/sdc-8]
+      8,32   1        7     0.000360381  1225  Q  WS 3417056 + 8 [jbd2/sdc-8]
+      8,32   1        8     0.000377422  1225  G  WS 3417056 + 8 [jbd2/sdc-8]
+      8,32   1        9     0.000388876  1225  P   N [jbd2/sdc-8]
+      8,32   1       10     0.000397886  1225  Q  WS 3417064 + 8 [jbd2/sdc-8]
+      8,32   1       11     0.000404800  1225  M  WS 3417064 + 8 [jbd2/sdc-8]
+      8,32   1       12     0.000412343  1225  Q  WS 3417072 + 8 [jbd2/sdc-8]
+      8,32   1       13     0.000416533  1225  M  WS 3417072 + 8 [jbd2/sdc-8]
+      8,32   1       14     0.000422121  1225  Q  WS 3417080 + 8 [jbd2/sdc-8]
+      8,32   1       15     0.000425194  1225  M  WS 3417080 + 8 [jbd2/sdc-8]
+      8,32   1       16     0.000431968  1225  Q  WS 3417088 + 8 [jbd2/sdc-8]
+      8,32   1       17     0.000435251  1225  M  WS 3417088 + 8 [jbd2/sdc-8]
+      8,32   1       18     0.000440279  1225  Q  WS 3417096 + 8 [jbd2/sdc-8]
+      8,32   1       19     0.000443911  1225  M  WS 3417096 + 8 [jbd2/sdc-8]
+      8,32   1       20     0.000450336  1225  Q  WS 3417104 + 8 [jbd2/sdc-8]
+      8,32   1       21     0.000454038  1225  M  WS 3417104 + 8 [jbd2/sdc-8]
+      8,32   1       22     0.000462070  1225  Q  WS 3417112 + 8 [jbd2/sdc-8]
+      8,32   1       23     0.000465422  1225  M  WS 3417112 + 8 [jbd2/sdc-8]
+      8,32   1       24     0.000474222  1225  I  WS 3417056 + 64 [jbd2/sdc-8]
+      8,32   1        0     0.000483022     0  m   N cfq1225 insert_request
+      8,32   1       25     0.000489727  1225  U   N [jbd2/sdc-8] 1
+      8,32   1        0     0.000498457     0  m   N cfq1225 Not idling. st->count:1
+      8,32   1        0     0.000503765     0  m   N cfq1225 dispatch_insert
+      8,32   1        0     0.000512914     0  m   N cfq1225 dispatched a request
+      8,32   1        0     0.000518851     0  m   N cfq1225 activate rq, drv=2
+      .
+      .
+      .
+      8,32   0        0    58.515006138     0  m   N cfq3551 complete rqnoidle 1
+      8,32   0     2024    58.516603269     3  C  WS 3156992 + 16 [0]
+      8,32   0        0    58.516626736     0  m   N cfq3551 complete rqnoidle 1
+      8,32   0        0    58.516634558     0  m   N cfq3551 arm_idle: 8 group_idle: 0
+      8,32   0        0    58.516636933     0  m   N cfq schedule dispatch
+      8,32   1        0    58.516971613     0  m   N cfq3551 slice expired t=0
+      8,32   1        0    58.516982089     0  m   N cfq3551 sl_used=13 disp=6 charge=13 iops=0 sect=80
+      8,32   1        0    58.516985511     0  m   N cfq3551 del_from_rr
+      8,32   1        0    58.516990819     0  m   N cfq3551 put_queue
+
+     CPU0 (sdc):
+      Reads Queued:           0,        0KiB	 Writes Queued:         331,   26,284KiB
+      Read Dispatches:        0,        0KiB	 Write Dispatches:      485,   40,484KiB
+      Reads Requeued:         0		 Writes Requeued:         0
+      Reads Completed:        0,        0KiB	 Writes Completed:      511,   41,000KiB
+      Read Merges:            0,        0KiB	 Write Merges:           13,      160KiB
+      Read depth:             0        	 Write depth:             2
+      IO unplugs:            23        	 Timer unplugs:           0
+     CPU1 (sdc):
+      Reads Queued:           0,        0KiB	 Writes Queued:         249,   15,800KiB
+      Read Dispatches:        0,        0KiB	 Write Dispatches:       42,    1,600KiB
+      Reads Requeued:         0		 Writes Requeued:         0
+      Reads Completed:        0,        0KiB	 Writes Completed:       16,    1,084KiB
+      Read Merges:            0,        0KiB	 Write Merges:           40,      276KiB
+      Read depth:             0        	 Write depth:             2
+      IO unplugs:            30        	 Timer unplugs:           1
+
+     Total (sdc):
+      Reads Queued:           0,        0KiB	 Writes Queued:         580,   42,084KiB
+      Read Dispatches:        0,        0KiB	 Write Dispatches:      527,   42,084KiB
+      Reads Requeued:         0		 Writes Requeued:         0
+      Reads Completed:        0,        0KiB	 Writes Completed:      527,   42,084KiB
+      Read Merges:            0,        0KiB	 Write Merges:           53,      436KiB
+      IO unplugs:            53        	 Timer unplugs:           1
+
+     Throughput (R/W): 0KiB/s / 719KiB/s
+     Events (sdc): 6,592 entries
+     Skips: 0 forward (0 -   0.0%)
+     Input file sdc.blktrace.0 added
+     Input file sdc.blktrace.1 added
+            </literallayout>
+            The report shows each event that was found in the blktrace data,
+            along with a summary of the overall block I/O traffic during
+            the run. You can look at the
+            <ulink url='http://linux.die.net/man/1/blkparse'>blkparse</ulink>
+            manpage to learn the
+            meaning of each field displayed in the trace listing.
+        </para>
+
+        <section id='blktrace-live-mode'>
+            <title>Live Mode</title>
+
+            <para>
+                blktrace and blkparse are designed from the ground up to
+                be able to operate together in a 'pipe mode' where the
+                stdout of blktrace can be fed directly into the stdin of
+                blkparse:
+                <literallayout class='monospaced'>
+     root@crownbay:~# blktrace /dev/sdc -o - | blkparse -i -
+                </literallayout>
+                This enables long-lived tracing sessions to run without
+                writing anything to disk, and allows the user to look for
+                certain conditions in the trace data in 'real-time' by
+                viewing the trace output as it scrolls by on the screen or
+                by passing it along to yet another program in the pipeline
+                such as grep which can be used to identify and capture
+                conditions of interest.
+            </para>
+
+            <para>
+                There's actually another blktrace command that implements
+                the above pipeline as a single command, so the user doesn't
+                have to bother typing in the above command sequence:
+                <literallayout class='monospaced'>
+     root@crownbay:~# btrace /dev/sdc
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='using-blktrace-remotely'>
+            <title>Using blktrace Remotely</title>
+
+            <para>
+                Because blktrace traces block I/O and at the same time
+                normally writes its trace data to a block device, and
+                in general because it's not really a great idea to make
+                the device being traced the same as the device the tracer
+                writes to, blktrace provides a way to trace without
+                perturbing the traced device at all by providing native
+                support for sending all trace data over the network.
+            </para>
+
+            <para>
+                To have blktrace operate in this mode, start blktrace on
+                the target system being traced with the -l option, along with
+                the device to trace:
+                <literallayout class='monospaced'>
+     root@crownbay:~# blktrace -l /dev/sdc
+     server: waiting for connections...
+                </literallayout>
+                On the host system, use the -h option to connect to the
+                target system, also passing it the device to trace:
+                <literallayout class='monospaced'>
+     $ blktrace -d /dev/sdc -h 192.168.1.43
+     blktrace: connecting to 192.168.1.43
+     blktrace: connected!
+                </literallayout>
+                On the target system, you should see this:
+                <literallayout class='monospaced'>
+     server: connection from 192.168.1.43
+                </literallayout>
+                In another shell, execute a workload you want to trace.
+                <literallayout class='monospaced'>
+     root@crownbay:/media/sdc# rm linux-2.6.19.2.tar.bz2; wget <ulink url='http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2'>http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2</ulink>; sync
+     Connecting to downloads.yoctoproject.org (140.211.169.59:80)
+     linux-2.6.19.2.tar.b 100% |*******************************| 41727k  0:00:00 ETA
+                </literallayout>
+                When it's done, do a Ctrl-C on the host system to
+                stop the trace:
+                <literallayout class='monospaced'>
+     ^C=== sdc ===
+      CPU  0:                 7691 events,      361 KiB data
+      CPU  1:                 4109 events,      193 KiB data
+      Total:                 11800 events (dropped 0),      554 KiB data
+                </literallayout>
+                On the target system, you should also see a trace
+                summary for the trace just ended:
+                <literallayout class='monospaced'>
+     server: end of run for 192.168.1.43:sdc
+     === sdc ===
+      CPU  0:                 7691 events,      361 KiB data
+      CPU  1:                 4109 events,      193 KiB data
+      Total:                 11800 events (dropped 0),      554 KiB data
+                </literallayout>
+                The blktrace instance on the host will save the target
+                output inside a hostname-timestamp directory:
+                <literallayout class='monospaced'>
+     $ ls -al
+     drwxr-xr-x   10 root     root          1024 Oct 28 02:40 .
+     drwxr-sr-x    4 root     root          1024 Oct 26 18:24 ..
+     drwxr-xr-x    2 root     root          1024 Oct 28 02:40 192.168.1.43-2012-10-28-02:40:56
+                </literallayout>
+                cd into that directory to see the output files:
+                <literallayout class='monospaced'>
+     $ ls -l
+     -rw-r--r--    1 root     root        369193 Oct 28 02:44 sdc.blktrace.0
+     -rw-r--r--    1 root     root        197278 Oct 28 02:44 sdc.blktrace.1
+                </literallayout>
+                And run blkparse on the host system using the device name:
+                <literallayout class='monospaced'>
+     $ blkparse sdc
+
+      8,32   1        1     0.000000000  1263  Q  RM 6016 + 8 [ls]
+      8,32   1        0     0.000036038     0  m   N cfq1263 alloced
+      8,32   1        2     0.000039390  1263  G  RM 6016 + 8 [ls]
+      8,32   1        3     0.000049168  1263  I  RM 6016 + 8 [ls]
+      8,32   1        0     0.000056152     0  m   N cfq1263 insert_request
+      8,32   1        0     0.000061600     0  m   N cfq1263 add_to_rr
+      8,32   1        0     0.000075498     0  m   N cfq workload slice:300
+      .
+      .
+      .
+      8,32   0        0   177.266385696     0  m   N cfq1267 arm_idle: 8 group_idle: 0
+      8,32   0        0   177.266388140     0  m   N cfq schedule dispatch
+      8,32   1        0   177.266679239     0  m   N cfq1267 slice expired t=0
+      8,32   1        0   177.266689297     0  m   N cfq1267 sl_used=9 disp=6 charge=9 iops=0 sect=56
+      8,32   1        0   177.266692649     0  m   N cfq1267 del_from_rr
+      8,32   1        0   177.266696560     0  m   N cfq1267 put_queue
+
+     CPU0 (sdc):
+      Reads Queued:           0,        0KiB	 Writes Queued:         270,   21,708KiB
+      Read Dispatches:       59,    2,628KiB	 Write Dispatches:      495,   39,964KiB
+      Reads Requeued:         0		 Writes Requeued:         0
+      Reads Completed:       90,    2,752KiB	 Writes Completed:      543,   41,596KiB
+      Read Merges:            0,        0KiB	 Write Merges:            9,      344KiB
+      Read depth:             2        	 Write depth:             2
+      IO unplugs:            20        	 Timer unplugs:           1
+     CPU1 (sdc):
+      Reads Queued:         688,    2,752KiB	 Writes Queued:         381,   20,652KiB
+      Read Dispatches:       31,      124KiB	 Write Dispatches:       59,    2,396KiB
+      Reads Requeued:         0		 Writes Requeued:         0
+      Reads Completed:        0,        0KiB	 Writes Completed:       11,      764KiB
+      Read Merges:          598,    2,392KiB	 Write Merges:           88,      448KiB
+      Read depth:             2        	 Write depth:             2
+      IO unplugs:            52        	 Timer unplugs:           0
+
+     Total (sdc):
+      Reads Queued:         688,    2,752KiB	 Writes Queued:         651,   42,360KiB
+      Read Dispatches:       90,    2,752KiB	 Write Dispatches:      554,   42,360KiB
+      Reads Requeued:         0		 Writes Requeued:         0
+      Reads Completed:       90,    2,752KiB	 Writes Completed:      554,   42,360KiB
+      Read Merges:          598,    2,392KiB	 Write Merges:           97,      792KiB
+      IO unplugs:            72        	 Timer unplugs:           1
+
+     Throughput (R/W): 15KiB/s / 238KiB/s
+     Events (sdc): 9,301 entries
+     Skips: 0 forward (0 -   0.0%)
+                </literallayout>
+                You should see the trace events and summary just as
+                you would have if you'd run the same command on the target.
+            </para>
+        </section>
+
+        <section id='tracing-block-io-via-ftrace'>
+            <title>Tracing Block I/O via 'ftrace'</title>
+
+            <para>
+                It's also possible to trace block I/O using only
+                <link linkend='the-trace-events-subsystem'>trace events subsystem</link>,
+                which can be useful for casual tracing
+                if you don't want bother dealing with the userspace tools.
+            </para>
+
+            <para>
+                To enable tracing for a given device, use
+                /sys/block/xxx/trace/enable, where xxx is the device name.
+                This for example enables tracing for /dev/sdc:
+                <literallayout class='monospaced'>
+     root@crownbay:/sys/kernel/debug/tracing# echo 1 > /sys/block/sdc/trace/enable
+                </literallayout>
+                Once you've selected the device(s) you want to trace,
+                selecting the 'blk' tracer will turn the blk tracer on:
+                <literallayout class='monospaced'>
+     root@crownbay:/sys/kernel/debug/tracing# cat available_tracers
+     blk function_graph function nop
+
+     root@crownbay:/sys/kernel/debug/tracing# echo blk > current_tracer
+                </literallayout>
+                Execute the workload you're interested in:
+                <literallayout class='monospaced'>
+     root@crownbay:/sys/kernel/debug/tracing# cat /media/sdc/testfile.txt
+                </literallayout>
+                And look at the output (note here that we're using
+                'trace_pipe' instead of trace to capture this trace -
+                this allows us to wait around on the pipe for data to
+                appear):
+                <literallayout class='monospaced'>
+     root@crownbay:/sys/kernel/debug/tracing# cat trace_pipe
+                 cat-3587  [001] d..1  3023.276361:   8,32   Q   R 1699848 + 8 [cat]
+                 cat-3587  [001] d..1  3023.276410:   8,32   m   N cfq3587 alloced
+                 cat-3587  [001] d..1  3023.276415:   8,32   G   R 1699848 + 8 [cat]
+                 cat-3587  [001] d..1  3023.276424:   8,32   P   N [cat]
+                 cat-3587  [001] d..2  3023.276432:   8,32   I   R 1699848 + 8 [cat]
+                 cat-3587  [001] d..1  3023.276439:   8,32   m   N cfq3587 insert_request
+                 cat-3587  [001] d..1  3023.276445:   8,32   m   N cfq3587 add_to_rr
+                 cat-3587  [001] d..2  3023.276454:   8,32   U   N [cat] 1
+                 cat-3587  [001] d..1  3023.276464:   8,32   m   N cfq workload slice:150
+                 cat-3587  [001] d..1  3023.276471:   8,32   m   N cfq3587 set_active wl_prio:0 wl_type:2
+                 cat-3587  [001] d..1  3023.276478:   8,32   m   N cfq3587 fifo=  (null)
+                 cat-3587  [001] d..1  3023.276483:   8,32   m   N cfq3587 dispatch_insert
+                 cat-3587  [001] d..1  3023.276490:   8,32   m   N cfq3587 dispatched a request
+                 cat-3587  [001] d..1  3023.276497:   8,32   m   N cfq3587 activate rq, drv=1
+                 cat-3587  [001] d..2  3023.276500:   8,32   D   R 1699848 + 8 [cat]
+                </literallayout>
+                And this turns off tracing for the specified device:
+                <literallayout class='monospaced'>
+     root@crownbay:/sys/kernel/debug/tracing# echo 0 > /sys/block/sdc/trace/enable
+                </literallayout>
+            </para>
+        </section>
+    </section>
+
+    <section id='blktrace-documentation'>
+        <title>Documentation</title>
+
+        <para>
+            Online versions of the man pages for the commands discussed
+            in this section can be found here:
+            <itemizedlist>
+                <listitem><para><ulink url='http://linux.die.net/man/8/blktrace'>http://linux.die.net/man/8/blktrace</ulink>
+                    </para></listitem>
+                <listitem><para><ulink url='http://linux.die.net/man/1/blkparse'>http://linux.die.net/man/1/blkparse</ulink>
+                    </para></listitem>
+                <listitem><para><ulink url='http://linux.die.net/man/8/btrace'>http://linux.die.net/man/8/btrace</ulink>
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            The above manpages, along with manpages for the other
+            blktrace utilities (btt, blkiomon, etc) can be found in the
+            /doc directory of the blktrace tools git repo:
+            <literallayout class='monospaced'>
+     $ git clone git://git.kernel.dk/blktrace.git
+            </literallayout>
+        </para>
+    </section>
 </section>
 </chapter>
 <!--
