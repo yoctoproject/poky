@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS_prepend_{{=machine}} := "${THISDIR}/files:"
 
 PR := "${PR}.1"
 
@@ -51,8 +51,8 @@ KERNEL_FEATURES_append_{{=machine}} += " cfg/smp.scc"
 SRC_URI += "file://{{=machine}}-standard.scc \
             file://{{=machine}}.scc \
             file://{{=machine}}.cfg \
-            file://user-config.cfg \
-            file://user-patches.scc \
+            file://{{=machine}}-user-config.cfg \
+            file://{{=machine}}-user-patches.scc \
            "
 
 # uncomment and replace these SRCREVs with the real commit ids once you've had

@@ -136,12 +136,12 @@ def gen_choices_str(choices):
 def read_config_items(scripts_path, machine):
     """
     Find and return a list of config items (CONFIG_XXX) in a machine's
-    user-defined config fragment [user-config.cfg].
+    user-defined config fragment [${machine}-user-config.cfg].
     """
     config_items = []
 
     layer = find_bsp_layer(scripts_path, machine)
-    cfg = os.path.join(layer, "recipes-kernel/linux/files/user-config.cfg")
+    cfg = os.path.join(layer, "recipes-kernel/linux/files/"+machine+"-user-config.cfg")
 
     f = open(cfg, "r")
     lines = f.readlines()
@@ -157,10 +157,10 @@ def read_config_items(scripts_path, machine):
 def write_config_items(scripts_path, machine, config_items):
     """
     Write (replace) the list of config items (CONFIG_XXX) in a
-    machine's user-defined config fragment [user-config.cfg].
+    machine's user-defined config fragment [${machine}=user-config.cfg].
     """
     layer = find_bsp_layer(scripts_path, machine)
-    cfg = os.path.join(layer, "recipes-kernel/linux/files/user-config.cfg")
+    cfg = os.path.join(layer, "recipes-kernel/linux/files/"+machine+"-user-config.cfg")
 
     f = open(cfg, "w")
     for item in config_items:
@@ -173,7 +173,7 @@ def write_config_items(scripts_path, machine, config_items):
 def yocto_kernel_config_list(scripts_path, machine):
     """
     Display the list of config items (CONFIG_XXX) in a machine's
-    user-defined config fragment [user-config.cfg].
+    user-defined config fragment [${machine}-user-config.cfg].
     """
     config_items = read_config_items(scripts_path, machine)
 
@@ -196,7 +196,7 @@ def map_choice(choice_str, array):
 def yocto_kernel_config_rm(scripts_path, machine):
     """
     Display the list of config items (CONFIG_XXX) in a machine's
-    user-defined config fragment [user-config.cfg], prompt the user
+    user-defined config fragment [${machine}-user-config.cfg], prompt the user
     for one or more to remove, and remove them.
     """
     config_items = read_config_items(scripts_path, machine)
@@ -229,7 +229,7 @@ def yocto_kernel_config_rm(scripts_path, machine):
 def yocto_kernel_config_add(scripts_path, machine, config_items):
     """
     Add one or more config items (CONFIG_XXX) to a machine's
-    user-defined config fragment [user-config.cfg].
+    user-defined config fragment [${machine}-user-config.cfg].
     """
     new_items = []
 
@@ -373,12 +373,12 @@ def find_patches(src_uri):
 def read_patch_items(scripts_path, machine):
     """
     Find and return a list of patch items in a machine's user-defined
-    patch list [user-patches.scc].
+    patch list [${machine}-user-patches.scc].
     """
     patch_items = []
 
     layer = find_bsp_layer(scripts_path, machine)
-    patches = os.path.join(layer, "recipes-kernel/linux/files/user-patches.scc")
+    patches = os.path.join(layer, "recipes-kernel/linux/files/"+machine+"-user-patches.scc")
 
     f = open(patches, "r")
     lines = f.readlines()
@@ -397,11 +397,11 @@ def read_patch_items(scripts_path, machine):
 def write_patch_items(scripts_path, machine, patch_items):
     """
     Write (replace) the list of patches in a machine's user-defined
-    patch list [user-patches.scc].
+    patch list [${machine}-user-patches.scc].
     """
     layer = find_bsp_layer(scripts_path, machine)
 
-    patches = os.path.join(layer, "recipes-kernel/linux/files/user-patches.scc")
+    patches = os.path.join(layer, "recipes-kernel/linux/files/"+machine+"-user-patches.scc")
 
     f = open(patches, "w")
     for item in patch_items:
@@ -417,7 +417,7 @@ def write_patch_items(scripts_path, machine, patch_items):
 def yocto_kernel_patch_list(scripts_path, machine):
     """
     Display the list of patches in a machine's user-defined patch list
-    [user-patches.scc].
+    [${machine}-user-patches.scc].
     """
     (start_line, end_line, src_uri) = find_bsp_kernel_src_uri(scripts_path, machine)
     patches = find_patches(src_uri)
@@ -429,7 +429,7 @@ def yocto_kernel_patch_list(scripts_path, machine):
 def yocto_kernel_patch_rm(scripts_path, machine):
     """
     Remove one or more patches from a machine's user-defined patch
-    list [user-patches.scc].
+    list [${machine}-user-patches.scc].
     """
     (start_line, end_line, src_uri) = find_bsp_kernel_src_uri(scripts_path, machine)
     patches = find_patches(src_uri)
@@ -470,7 +470,7 @@ def yocto_kernel_patch_rm(scripts_path, machine):
 def yocto_kernel_patch_add(scripts_path, machine, patches):
     """
     Add one or more patches to a machine's user-defined patch list
-    [user-patches.scc].
+    [${machine}-user-patches.scc].
     """
     (start_line, end_line, src_uri) = find_bsp_kernel_src_uri(scripts_path, machine)
     src_uri_patches = find_patches(src_uri)
