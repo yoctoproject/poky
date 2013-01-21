@@ -1679,6 +1679,34 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-LINUX_KERNEL_TYPE'><glossterm>LINUX_KERNEL_TYPE</glossterm>
+            <glossdef>
+                <para>
+                    Defines the kernel type to be used in assembling the
+                    configuration.
+                    The linux-yocto recipes define "standard", "tiny", and
+                    "preempt-rt" kernel types.
+                    See the
+                    "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#kernel-types'>Kernel Types</ulink>"
+                    section in the Yocto Project Linux Kernel Development
+                    Manual for more information on kernel types.
+                </para>
+
+                <para>
+                    If you do not specify a
+                    <filename>LINUX_KERNEL_TYPE</filename>, it defaults to
+                    "standard".
+                    Together with
+                    <link linkend='var-KMACHINE'><filename>KMACHINE</filename></link>,
+                    the <filename>LINUX_KERNEL_TYPE</filename> variable
+                    defines the search
+                    arguments used by the kernel tools to find the appropriate
+                    description within the kernel Metadata with which to build
+                    out the sources and configuration.
+                    </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-LINUX_VERSION'><glossterm>LINUX_VERSION</glossterm>
             <glossdef>
                 <para>The Linux version from <filename>kernel.org</filename>
@@ -1710,7 +1738,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     For example, the linux-yocto kernel recipes all define
                     the variable as follows:
                     <literallayout class='monospaced'>
-     LINUX_VERSION_EXTENSION ?= "-yocto-${LINUX_KERNEL_TYPE}"
+     LINUX_VERSION_EXTENSION ?= "-yocto-${<link linkend='var-LINUX_KERNEL_TYPE'>LINUX_KERNEL_TYPE</link>}"
                     </literallayout>
                     Defining this variable essentially sets the
                     Linux kernel configuration item
