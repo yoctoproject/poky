@@ -182,7 +182,23 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
 	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
 	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
 	figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
-	figures/source-repos.png figures/yp-download.png figures/kernel-dev-title.png
+	figures/source-repos.png figures/yp-download.png figures/kernel-dev-title.png \
+        figures/profile-title.png figures/kernelshark-all.png \
+        figures/kernelshark-choose-events.png figures/kernelshark-i915-display.png \
+        figures/kernelshark-output-display.png figures/lttngmain0.png \
+        figures/oprofileui-busybox.png figures/oprofileui-copy-to-user.png \
+        figures/oprofileui-downloading.png figures/oprofileui-processes.png \
+        figures/perf-probe-do_fork-profile.png figures/perf-report-cycles-u.png \
+        figures/perf-systemwide.png figures/perf-systemwide-libc.png \
+        figures/perf-wget-busybox-annotate-menu.png figures/perf-wget-busybox-annotate-udhcpc.png \
+        figures/perf-wget-busybox-debuginfo.png figures/perf-wget-busybox-dso-zoom.png \
+        figures/perf-wget-busybox-dso-zoom-menu.png figures/perf-wget-busybox-expanded-stripped.png \
+        figures/perf-wget-flat-stripped.png figures/perf-wget-g-copy-from-user-expanded-stripped.png \
+        figures/perf-wget-g-copy-to-user-expanded-debuginfo.png figures/perf-wget-g-copy-to-user-expanded-stripped.png \
+        figures/perf-wget-g-copy-to-user-expanded-stripped-unresolved-hidden.png figures/pybootchartgui-linux-yocto.png \
+        figures/pychart-linux-yocto-rpm.png figures/pychart-linux-yocto-rpm-nostrip.png \
+        figures/sched-wakeup-profile.png figures/sysprof-callers.png \
+        figures/sysprof-copy-from-user.png figures/sysprof-copy-to-user.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
