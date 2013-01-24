@@ -160,11 +160,11 @@ def open_user_file(scripts_path, machine, userfile, mode):
 def read_config_items(scripts_path, machine):
     """
     Find and return a list of config items (CONFIG_XXX) in a machine's
-    user-defined config fragment [user-config.cfg].
+    user-defined config fragment [${machine}-user-config.cfg].
     """
     config_items = []
 
-    f = open_user_file(scripts_path, machine, "user-config.cfg", "r")
+    f = open_user_file(scripts_path, machine, machine+"-user-config.cfg", "r")
     lines = f.readlines()
     for line in lines:
         s = line.strip()
@@ -178,9 +178,9 @@ def read_config_items(scripts_path, machine):
 def write_config_items(scripts_path, machine, config_items):
     """
     Write (replace) the list of config items (CONFIG_XXX) in a
-    machine's user-defined config fragment [user-config.cfg].
+    machine's user-defined config fragment [${machine}=user-config.cfg].
     """
-    f = open_user_file(scripts_path, machine, "user-config.cfg", "w")
+    f = open_user_file(scripts_path, machine, machine+"-user-config.cfg", "w")
     for item in config_items:
         f.write(item + "\n")
     f.close()
@@ -191,7 +191,7 @@ def write_config_items(scripts_path, machine, config_items):
 def yocto_kernel_config_list(scripts_path, machine):
     """
     Display the list of config items (CONFIG_XXX) in a machine's
-    user-defined config fragment [user-config.cfg].
+    user-defined config fragment [${machine}-user-config.cfg].
     """
     config_items = read_config_items(scripts_path, machine)
 
@@ -202,7 +202,7 @@ def yocto_kernel_config_list(scripts_path, machine):
 def yocto_kernel_config_rm(scripts_path, machine):
     """
     Display the list of config items (CONFIG_XXX) in a machine's
-    user-defined config fragment [user-config.cfg], prompt the user
+    user-defined config fragment [${machine}-user-config.cfg], prompt the user
     for one or more to remove, and remove them.
     """
     config_items = read_config_items(scripts_path, machine)
@@ -235,7 +235,7 @@ def yocto_kernel_config_rm(scripts_path, machine):
 def yocto_kernel_config_add(scripts_path, machine, config_items):
     """
     Add one or more config items (CONFIG_XXX) to a machine's
-    user-defined config fragment [user-config.cfg].
+    user-defined config fragment [${machine}-user-config.cfg].
     """
     new_items = []
 
@@ -304,11 +304,11 @@ def find_filesdir(scripts_path, machine):
 def read_patch_items(scripts_path, machine):
     """
     Find and return a list of patch items in a machine's user-defined
-    patch list [user-patches.scc].
+    patch list [${machine}-user-patches.scc].
     """
     patch_items = []
 
-    f = open_user_file(scripts_path, machine, "user-patches.scc", "r")
+    f = open_user_file(scripts_path, machine, machine+"-user-patches.scc", "r")
     lines = f.readlines()
     for line in lines:
         s = line.strip()
@@ -325,9 +325,9 @@ def read_patch_items(scripts_path, machine):
 def write_patch_items(scripts_path, machine, patch_items):
     """
     Write (replace) the list of patches in a machine's user-defined
-    patch list [user-patches.scc].
+    patch list [${machine}-user-patches.scc].
     """
-    f = open_user_file(scripts_path, machine, "user-patches.scc", "w")
+    f = open_user_file(scripts_path, machine, machine+"-user-patches.scc", "w")
     for item in patch_items:
         f.write("patch " + item + "\n")
     f.close()
@@ -338,7 +338,7 @@ def write_patch_items(scripts_path, machine, patch_items):
 def yocto_kernel_patch_list(scripts_path, machine):
     """
     Display the list of patches in a machine's user-defined patch list
-    [user-patches.scc].
+    [${machine}-user-patches.scc].
     """
     patches = read_patch_items(scripts_path, machine)
 
@@ -349,7 +349,7 @@ def yocto_kernel_patch_list(scripts_path, machine):
 def yocto_kernel_patch_rm(scripts_path, machine):
     """
     Remove one or more patches from a machine's user-defined patch
-    list [user-patches.scc].
+    list [${machine}-user-patches.scc].
     """
     patches = read_patch_items(scripts_path, machine)
 
@@ -390,7 +390,7 @@ def yocto_kernel_patch_rm(scripts_path, machine):
 def yocto_kernel_patch_add(scripts_path, machine, patches):
     """
     Add one or more patches to a machine's user-defined patch list
-    [user-patches.scc].
+    [${machine}-user-patches.scc].
     """
     existing_patches = read_patch_items(scripts_path, machine)
 
