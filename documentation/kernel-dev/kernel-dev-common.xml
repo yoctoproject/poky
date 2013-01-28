@@ -667,6 +667,114 @@
             to include in the image.
         </para>
     </section>
+
+    <section id='inspecting-changes-and-commits'>
+        <title>Inspecting Changes and Commits</title>
+
+        <para>
+            A common question when working with a kernel is:
+            "What changes have been applied to this tree?"
+            Rather than using "grep" across directories to see what has
+            changed, you can use Git to inspect or search the kernel tree.
+            Using Git is an efficent way to see what has changed in the tree.
+        </para>
+
+        <section id='what-changed-in-a-kernel'>
+            <title>What Changed in a Kernel?</title>
+
+            <para>
+                Following are a few examples that show how to use Git
+                commands to examine changes.
+                These examples are by no means the only way to see changes.
+                <note>
+                    In the following examples, unless you provide a commit
+                    range, <filename>kernel.org</filename> history is blended
+                    with Yocto Project kernel changes.
+                    You can form ranges by using branch names from the
+                    kernel tree as the upper and lower commit markers with
+                    the Git commands.
+                    You can see the branch names through the web interface
+                    to the Yocto Project source repositories at
+                    <ulink url='http://git.yoctoproject.org/cgit.cgi'></ulink>.
+                </note>
+                To see a full range of the changes, use the
+                <filename>git whatchanged</filename> command and specify a
+                commit range for the branch
+                (<filename>&lt;commit&gt;..&lt;commit&gt;</filename>).
+            </para>
+
+            <para>
+                Here is an example that looks at what has changed in the
+                <filename>emenlow</filename> branch of the
+                <filename>linux-yocto-3.4</filename> kernel.
+                The lower commit range is the commit associated with the
+                <filename>standard/base</filename> branch, while
+                the upper commit range is the commit associated with the
+                <filename>standard/emenlow</filename> branch.
+                <literallayout class='monospaced'>
+     $ git whatchanged origin/standard/base..origin/standard/emenlow
+                </literallayout>
+            </para>
+
+            <para>
+                To see short, oneline summaries of changes use the
+                <filename>git log</filename> command:
+                <literallayout class='monospaced'>
+     $ git log --oneline origin/standard/base..origin/standard/emenlow
+                </literallayout>
+            </para>
+
+            <para>
+                Use this command to see code differences for the changes:
+                <literallayout class='monospaced'>
+     $ git diff origin/standard/base..origin/standard/emenlow
+                </literallayout>
+            </para>
+
+            <para>
+                Use this command to see the commit log messages and the
+                text differences:
+                <literallayout class='monospaced'>
+     $ git show origin/standard/base..origin/standard/emenlow
+                </literallayout>
+            </para>
+
+            <para>
+                Use this command to create individual patches for
+                each change.
+                Here is an example that that creates patch files for each
+                commit and places them in your <filename>Documents</filename>
+                directory:
+                <literallayout class='monospaced'>
+     $ git format-patch -o $HOME/Documents origin/standard/base..origin/standard/emenlow
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='showing-a-particular-feature-or-branch-change'>
+            <title>Showing a Particular Feature or Branch Change</title>
+
+            <para>
+                Tags in the Yocto Project kernel tree divide changes for
+                significant features or branches.
+                The <filename>git show &lt;tag&gt;</filename> command shows
+                changes based on a tag.
+                Here is an example that shows <filename>systemtap</filename>
+                changes:
+                <literallayout class='monospaced'>
+     $ git show systemtap
+                </literallayout>
+                You can use the
+                <filename>git branch --contains &lt;tag&gt;</filename> command
+                to show the branches that contain a particular feature.
+                This command shows the branches that contain the
+                <filename>systemtap</filename> feature:
+                <literallayout class='monospaced'>
+     $ git branch --contains systemtap
+                </literallayout>
+            </para>
+        </section>
+    </section>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
