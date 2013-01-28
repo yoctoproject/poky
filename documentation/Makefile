@@ -178,11 +178,11 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
 	figures/using-a-pre-built-image.png \
 	figures/poky-title.png figures/buildhistory.png figures/buildhistory-web.png \
 	figures/adt-title.png figures/bsp-title.png \
-	figures/kernel-title.png figures/kernel-architecture-overview.png \
+	figures/kernel-dev-title.png figures/kernel-architecture-overview.png \
 	figures/app-dev-flow.png figures/bsp-dev-flow.png figures/dev-title.png \
 	figures/git-workflow.png figures/index-downloads.png figures/kernel-dev-flow.png \
 	figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
-	figures/source-repos.png figures/yp-download.png figures/kernel-dev-title.png \
+	figures/source-repos.png figures/yp-download.png \
         figures/profile-title.png figures/kernelshark-all.png \
         figures/kernelshark-choose-events.png figures/kernelshark-i915-display.png \
         figures/kernelshark-output-display.png figures/lttngmain0.png \
@@ -262,20 +262,6 @@ TARFILES = profile-manual.html profile-manual.pdf profile-manual-style.css \
            figures/pychart-linux-yocto-rpm.png figures/pychart-linux-yocto-rpm-nostrip.png \
            figures/sched-wakeup-profile.png figures/sysprof-callers.png \
            figures/sysprof-copy-from-user.png figures/sysprof-copy-to-user.png
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
-FIGURES = figures
-STYLESHEET = $(DOC)/*.css
-endif
-
-ifeq ($(DOC),kernel-manual)
-XSLTOPTS = --stringparam html.stylesheet kernel-style.css \
-           --stringparam  chapter.autolabel 1 \
-           --stringparam  appendix.autolabel A \
-           --stringparam  section.autolabel 1 \
-           --stringparam  section.label.includes.component.label 1 \
-           --xinclude
-ALLPREQ = html pdf tarball
-TARFILES = kernel-manual.html kernel-manual.pdf kernel-style.css figures/kernel-title.png figures/kernel-architecture-overview.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
