@@ -1012,31 +1012,39 @@ Core layer for images cannot be removed
         <glossentry id='var-FILESEXTRAPATHS'><glossterm>FILESEXTRAPATHS</glossterm>
             <glossdef>
                 <para>
-                    Extends the search path the OpenEmbedded build system uses when
-                    looking for files and patches as it processes recipes.
-                    The directories BitBake uses when it processes recipes is defined by the
+                    Extends the search path the OpenEmbedded build system uses
+                    when looking for files and patches as it processes recipes.
+                    The directories BitBake uses when it processes recipes are
+                    defined by the
                     <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link> variable.
                     You can add directories to the search path by defining the
                     <filename>FILESEXTRAPATHS</filename> variable.
                 </para>
 
                 <para>
-                    To add paths to the search order, provide a list of directories and separate
+                    To add paths to the front of the search order, prepend
+                    them and use the immediate expansion
+                    (<filename>:=</filename>) operator.
+                    Provide a list of directories and separate
                     each path using a colon character as follows:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "path_1:path_2:path_3:"
                     </literallayout>
-                    Typically, you want your directories searched first.
-                    To make sure that happens, use <filename>_prepend</filename> and
-                    the immediate expansion (<filename>:=</filename>) operator as shown in the
-                    previous example.
-                    Finally, to maintain the integrity of the <filename>FILESPATH</filename> variable,
-                    you must include the appropriate beginning or ending (as needed) colon character.
+                    You can add paths to the end of the search order by simply
+                    adding them as follows:
+                    <literallayout class='monospaced'>
+     FILESEXTRAPATHS := "path_1:path_2:path_3:"
+                    </literallayout>
+                    To maintain the integrity of the
+                    <filename>FILESPATH</filename> variable, you must include
+                    the appropriate beginning or ending (as needed) colon
+                    character.
                 </para>
 
                 <para>
-                    The <filename>FILESEXTRAPATHS</filename> variable is intended for use in
-                    <filename>.bbappend</filename> files to include any additional files provided in that layer.
+                    The <filename>FILESEXTRAPATHS</filename> variable is
+                    intended for use in <filename>.bbappend</filename> files
+                    to include any additional files provided in that layer.
                     You typically accomplish this with the following:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
