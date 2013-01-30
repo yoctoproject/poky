@@ -342,26 +342,61 @@
 
         <glossentry id='var-BBMASK'><glossterm>BBMASK</glossterm>
             <glossdef>
-                <para>Prevents BitBake from processing recipes and recipe append files.
-                    You can use the <filename>BBMASK</filename> variable to "hide"
-                    these <filename>.bb</filename> and <filename>.bbappend</filename> files.
-                    BitBake ignores any recipe or recipe append files that match the expression.
-                    It is as if BitBake does not see them at all.
-                    Consequently, matching files are not parsed or otherwise used by
-                    BitBake.</para>
-                <para>The value you provide is passed to python's regular expression compiler.
-                    For complete syntax information, see python's documentation at
-                    <ulink url='http://docs.python.org/release/2.3/lib/re-syntax.html'></ulink>.
-                    The expression is compared against the full paths to the files.
-                    For example, the following uses a complete regular expression to tell
-                    BitBake to ignore all recipe and recipe append files in the
-                    <filename>.*/meta-ti/recipes-misc/</filename> directory:
-                    <literallayout class='monospaced'>
-     BBMASK = ".*/meta-ti/recipes-misc/"
-                    </literallayout></para>
-                <para>Use the <filename>BBMASK</filename> variable from within the
+                <para>
+                    Prevents BitBake from processing recipes and recipe
+                    append files.
+                    Use the <filename>BBMASK</filename> variable from within the
                     <filename>conf/local.conf</filename> file found
-                    in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.</para>
+                    in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                </para>
+
+                <para>
+                    You can use the <filename>BBMASK</filename> variable
+                    to "hide" these <filename>.bb</filename> and
+                    <filename>.bbappend</filename> files.
+                    BitBake ignores any recipe or recipe append files that
+                    match the expression.
+                    It is as if BitBake does not see them at all.
+                    Consequently, matching files are not parsed or otherwise
+                    used by BitBake.</para>
+                <para>
+                    The value you provide is passed to python's regular
+                    expression compiler.
+                    The expression is compared against the full paths to
+                    the files.
+                    For complete syntax information, see python's
+                    documentation at
+                    <ulink url='http://docs.python.org/release/2.3/lib/re-syntax.html'></ulink>.
+                </para>
+
+                <para>
+                    The following example uses a complete regular expression
+                    to tell BitBake to ignore all recipe and recipe append
+                    files in the <filename>/meta-ti/recipes-misc/</filename>
+                    directory:
+                    <literallayout class='monospaced'>
+     BBMASK = "/meta-ti/recipes-misc/"
+                    </literallayout>
+                    If you want to mask out multiple directories or recipes,
+                    use the vertical bar to separate the regular expression
+                    fragments.
+                    This next example masks out multiple directories and
+                    individual recipes:
+                    <literallayout class='monospaced'>
+     BBMASK = "meta-ti/recipes-misc/|meta-ti/recipes-ti/packagegroup/"
+     BBMASK .= "|.*meta-oe/recipes-support/"
+     BBMASK .= "|.*openldap"
+     BBMASK .= "|.*opencv"
+     BBMASK .= "|.*lzma"
+                    </literallayout>
+                    Notice how the vertical bar is used to append the fragments.
+                    <note>
+                        When specifying a directory name, use the trailing
+                        slash character to ensure you match just that directory
+                        name.
+                    </note>
+                </para>
             </glossdef>
         </glossentry>
 
