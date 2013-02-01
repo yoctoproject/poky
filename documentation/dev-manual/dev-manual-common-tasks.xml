@@ -295,7 +295,7 @@
             </para>
 
             <para>
-                Append files must have the same name as the corresponding recipe.
+                Append files must have the same root name as the corresponding recipe.
                 For example, the append file <filename>someapp_&DISTRO;.bbappend</filename> must
                 apply to <filename>someapp_&DISTRO;.bb</filename>.
                 This means the original recipe and append file names are version number-specific.
@@ -304,6 +304,9 @@
                 During the build process, BitBake displays an error on starting if it detects a
                 <filename>.bbappend</filename> file that does not have a corresponding recipe
                 with a matching name.
+                See the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_DANGLINGAPPENDS_WARNONLY'><filename>BB_DANGLINGAPPENDS_WARNONLY</filename></ulink>
+                variable for information on how to handle this error.
             </para>
 
             <para>
@@ -317,7 +320,7 @@
                 append file both from the
                 <link linkend='source-directory'>Source Directory</link>.
                 Here is the main formfactor recipe, which is named <filename>formfactor_0.0.bb</filename> and
-                located in the meta layer at <filename>meta/recipes-bsp/formfactor</filename>:
+                located in the "meta" layer at <filename>meta/recipes-bsp/formfactor</filename>:
                 <literallayout class='monospaced'>
      DESCRIPTION = "Device formfactor information"
      SECTION = "base"
@@ -364,10 +367,16 @@
                 of the reference to <filename>THISDIR</filename>.
                 The trailing colon character is important as it ensures that items in the list remain
                 colon-separated.
-                <note>BitBake automatically defines the <filename>THISDIR</filename> variable.
+                <note><para>BitBake automatically defines the
+                    <filename>THISDIR</filename> variable.
                     You should never set this variable yourself.
-                    Using <filename>_prepend</filename> ensures your path will be searched prior to other
-                    paths in the final list.
+                    Using <filename>_prepend</filename> ensures your path will
+                    be searched prior to other paths in the final list.</para>
+                    <para>Also, not all append files add extra files.
+                    Many append files simply exist to add build options
+                    (e.g. <filename>systemd</filename>).
+                    For these cases, it is not necessary to use the
+                    "_prepend" part of the statement.</para>
                 </note>
             </para>
         </section>
