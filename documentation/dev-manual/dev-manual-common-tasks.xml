@@ -102,37 +102,64 @@
                        layer folder, you need to create a <filename>conf/layer.conf</filename> file.
                        It is easiest to take an existing layer configuration file and copy that to your
                        layer's <filename>conf</filename> directory and then modify the file as needed.</para>
-                       <para>The <filename>meta-yocto/conf/layer.conf</filename> file demonstrates the
+                       <para>The <filename>meta-yocto-bsp/conf/layer.conf</filename> file demonstrates the
                        required syntax:
                        <literallayout class='monospaced'>
      # We have a conf and classes directory, add to BBPATH
-     BBPATH := "${LAYERDIR}:${BBPATH}"
+     BBPATH := "${BBPATH}:${LAYERDIR}"
 
-     # We have recipes-* directories, add to BBFILES
+     # We have a packages directory, add to BBFILES
      BBFILES := "${BBFILES} ${LAYERDIR}/recipes-*/*/*.bb \
                  ${LAYERDIR}/recipes-*/*/*.bbappend"
 
-     BBFILE_COLLECTIONS += "yocto"
-     BBFILE_PATTERN_yocto := "^${LAYERDIR}/"
-     BBFILE_PRIORITY_yocto = "5"
+     BBFILE_COLLECTIONS += "yoctobsp"
+     BBFILE_PATTERN_yoctobsp := "^${LAYERDIR}/"
+     BBFILE_PRIORITY_yoctobsp = "5"
                         </literallayout></para>
-                        <para>In the previous example, the recipes for the layers are added to
-                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'>BBFILES</ulink></filename>.
-                        The
-                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_COLLECTIONS'>BBFILE_COLLECTIONS</ulink></filename>
-                        variable is then appended with the layer name.
-                        The
-                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PATTERN'>BBFILE_PATTERN</ulink></filename>
-                        variable is set to a regular expression and is used to match files
-                        from <filename>BBFILES</filename> into a particular layer.
-                        In this case, immediate expansion of
-                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename>
-                        sets <filename>BBFILE_PATTERN</filename> to the layer's path.
-                        The
-                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename>
-                        variable then assigns a priority to the layer.
-                        Applying priorities is useful in situations where the same package might appear in multiple
-                        layers and allows you to choose what layer should take precedence.</para>
+                        <para>Here is an explanation of the example:
+                        <itemizedlist>
+                            <listitem><para>The configuration and
+                                classes directory is appended to
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBPATH'><filename>BBPATH</filename></ulink>.
+                                <note>
+                                    All non-distro layers, which include all BSP
+                                    layers, are expected to append the layer
+                                    directory to the
+                                    <filename>BBPATH</filename>.
+                                    On the other hand, distro layers, such as
+                                    <filename>meta-yocto</filename>, can choose
+                                    to enforce their own precedence over
+                                    <filename>BBPATH</filename>.
+                                    For an example of that syntax, see the
+                                    <filename>layer.conf</filename> file for
+                                    the <filename>meta-yocto</filename> layer.
+                                </note></para></listitem>
+                            <listitem><para>The recipes for the layers are
+                                appended to
+                                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'>BBFILES</ulink></filename>.
+                                </para></listitem>
+                            <listitem><para>The
+                                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_COLLECTIONS'>BBFILE_COLLECTIONS</ulink></filename>
+                                variable is then appended with the layer name.
+                                </para></listitem>
+                            <listitem><para>The
+                                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PATTERN'>BBFILE_PATTERN</ulink></filename>
+                                variable is set to a regular expression and is
+                                used to match files from
+                                <filename>BBFILES</filename> into a particular
+                                layer.
+                                In this case, immediate expansion of
+                                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename>
+                                sets <filename>BBFILE_PATTERN</filename> to the
+                                layer's path.</para></listitem>
+                            <listitem><para>The
+                                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename>
+                                variable then assigns a priority to the layer.
+                                Applying priorities is useful in situations
+                                where the same package might appear in multiple
+                                layers and allows you to choose what layer
+                                should take precedence.</para></listitem>
+                        </itemizedlist></para>
                         <para>Note the use of the
                         <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename>
                         variable with the immediate expansion operator.
@@ -1769,7 +1796,7 @@
                         the <filename>layer.conf</filename> file as follows:
                         <literallayout class='monospaced'>
      # We have a conf and classes directory, add to BBPATH
-     BBPATH := "${LAYERDIR}:${BBPATH}"
+     BBPATH := "${BBPATH}:${LAYERDIR}"
 
      # We have a packages directory, add to BBFILES
      BBFILES := "${BBFILES} ${LAYERDIR}/recipes-*/*/*.bb \
