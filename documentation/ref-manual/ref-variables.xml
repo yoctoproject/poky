@@ -2487,6 +2487,51 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PREMIRRORS'><glossterm>PREMIRRORS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies additional paths from which the OpenEmbedded
+                    build system gets source code.
+                    When the build system searches for source code, it first
+                    tries the local download directory.
+                    If that location fails, the build system tries locations
+                    defined by <filename>PREMIRRORS</filename>, the upstream
+                    source, and then locations specified by
+                    <link linkend='var-MIRRORS'><filename>MIRRORS</filename></link>
+                    in that order.
+                </para>
+
+                <para>
+                    Assuming your distribution
+                    (<link linkend='var-DISTRO'><filename>DISTRO</filename></link>)
+                    is "poky", the default value for
+                    <filename>PREMIRRORS</filename> is defined in the
+                    <filename>conf/distro/poky.conf</filename> file in the
+                    <filename>meta-yocto</filename> Git repository.
+                </para>
+
+                <para>
+                    Typically, you could add a specific server for the
+                    build system to attempt before any others by adding
+                    something like the following to the
+                    <filename>local.conf</filename> configuration file in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
+                    <literallayout class='monospaced'>
+     PREMIRRORS_prepend = "\
+     git://.*/.* http://www.yoctoproject.org/sources/ \n \
+     ftp://.*/.* http://www.yoctoproject.org/sources/ \n \
+     http://.*/.* http://www.yoctoproject.org/sources/ \n \
+     https://.*/.* http://www.yoctoproject.org/sources/ \n"
+                    </literallayout>
+                    These changes cause the build system to intercept
+                    Git, FTP, HTTP, and HTTPS requests and direct them to
+                    the <filename>http://</filename> sources mirror.
+                    You can use <filename>file://</filename> URLs to point
+                    to local directories or network shares as well.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PRINC'><glossterm>PRINC</glossterm>
             <glossdef>
                 <para>Causes the <filename>PR</filename> variable of
