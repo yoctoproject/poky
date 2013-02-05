@@ -85,35 +85,36 @@
     <title>Alternatives - <filename>update-alternatives.bbclass</filename></title>
 
     <para>
-        Several programs can fulfill the same or similar function and be installed with the same name.
+        This class helps the alternatives system when multiple sources provide
+        the same command.
+        This situation occurs when several programs that have the same or
+        similar function are installed with the same name.
         For example, the <filename>ar</filename> command is available from the
         <filename>busybox</filename>, <filename>binutils</filename> and
         <filename>elfutils</filename> packages.
-        The <filename>update-alternatives.bbclass</filename> class handles renaming the
-        binaries so that multiple packages can be installed without conflicts.
-        The <filename>ar</filename> command still works regardless of which packages are installed
-        or subsequently removed.
-        The class renames the conflicting binary in each package and symlinks the highest
-        priority binary during installation or removal of packages.
-    </para>
-    <para>
-        Four variables control this class:
-        <itemizedlist>
-            <listitem><para><filename>ALTERNATIVE_NAME</filename> &dash; The name of the
-                binary that is replaced (<filename>ar</filename> in this example).</para></listitem>
-            <listitem><para><filename>ALTERNATIVE_LINK</filename> &dash; The path to
-                the resulting binary (<filename>/bin/ar</filename> in this example).</para></listitem>
-            <listitem><para><filename>ALTERNATIVE_PATH</filename> &dash; The path to the
-                real binary (<filename>/usr/bin/ar.binutils</filename> in this example).</para></listitem>
-            <listitem><para><filename>ALTERNATIVE_PRIORITY</filename> &dash; The priority of
-                the binary.
-                The version with the most features should have the highest priority.</para></listitem>
-        </itemizedlist>
+        The <filename>update-alternatives.bbclass</filename> class handles
+        renaming the binaries so that multiple packages can be installed
+        without conflicts.
+        The <filename>ar</filename> command still works regardless of which
+        packages are installed or subsequently removed.
+        The class renames the conflicting binary in each package and symlinks
+        the highest priority binary during installation or removal of packages.
     </para>
 
     <para>
-	Currently, the OpenEmbedded build system supports only one binary per package.
+        To use this class, you need to define a number of variables.
+        These variables list alternative commands needed by a package,
+        provide pathnames for links, default links for targets, and
+        so forth.
+        For details on how to use this class, see the comments in the
+        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/update-alternatives.bbclass'><filename>update-alternatives.bbclass</filename></ulink>.
     </para>
+
+    <note>
+        You can use the <filename>update-alternatives</filename> command
+        directly in your recipes.
+        However, this class simplifies things in most cases.
+    </note>
 </section>
 
 <section id='ref-classes-update-rc.d'>
