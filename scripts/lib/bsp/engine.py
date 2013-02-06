@@ -1445,6 +1445,10 @@ def yocto_bsp_list_property_values(arch, property, scripts_path, properties_file
             gen_fn = input_line.props["gen"]
             if nested_properties:
                 context["filename"] = nested_properties[0]
+                try:
+                    context["branches_base"] = input_line.props["branches_base"]
+                except KeyError:
+                    context["branches_base"] = None
             values_list = input_line.gen_choices_list(context, False)
         except KeyError:
             for choice in input_line.choices:
