@@ -311,17 +311,61 @@
                 variables for the Texas Instruments ARM Cortex-A8 development board).
                 Configuration files end with a <filename>.conf</filename> filename extension.
                 </para></listitem>
-            <listitem><para><emphasis>Cross-Development Toolchain:</emphasis>
+            <listitem><para id='cross-development-toolchain'>
+                <emphasis>Cross-Development Toolchain:</emphasis>
                 A collection of software development
-                tools and utilities that allow you to develop software for targeted architectures.
-                This toolchain contains cross-compilers, linkers, and debuggers that are specific to
-                an architecture.
-                You can use the OpenEmbedded build system to build a cross-development toolchain
-                installer that when run installs the toolchain that contains the development tools you
+                tools and utilities that allow you to develop software for
+                targeted architectures.
+                This toolchain contains cross-compilers, linkers, and debuggers
+                that are specific to an architecture.
+                You can use the OpenEmbedded build system to build a
+                cross-development toolchain installer that, when run, installs
+                the toolchain that contains the development tools you
                 need to cross-compile and test your software.
                 The Yocto Project ships with images that contain installers for
                 toolchains for supported architectures as well.
-                Sometimes this toolchain is referred to as the meta-toolchain.</para></listitem>
+                Sometimes this toolchain is referred to as the
+                meta-toolchain.</para>
+                <para>Following is a list of toolchain recipes with brief
+                descriptions of each:
+                <itemizedlist>
+                    <listitem><para><filename>gcc-cross-initial</filename>:
+                        The initial compiler needed to bootstrap the toolchain
+                        that runs on the host and is used to build software
+                        for the target.
+                        This tool is a 'native' package.</para></listitem>
+                    <listitem><para><filename>gcc-cross-intermediate</filename>:
+                        The second stage of the bootstrap process that runs
+                        on the host and builds software for the target.
+                        This tool is a 'native' package.</para></listitem>
+                    <listitem><para><filename>gcc-cross</filename>:
+                        The the final stage of the bootstrap process that
+                        results in the cross compiler that runs on the host
+                        and builds software for the target.
+                        If you are replacing the cross compiler toolchain
+                        with a custom version, this is what you must replace.
+                        This tool is a 'native' package.</para></listitem>
+                    <listitem><para><filename>gcc-runtime</filename>:
+                        Runtime libraries from the toolchain bootstrapping
+                        process.
+                        This tool produces a binary for the target.
+                        </para></listitem>
+                    <listitem><para><filename>gcc-crosssdk-initial/intermediate</filename>:
+                        Stage 1 and 2 of the a cross compiler that runs on the
+                        host and builds for the SDK.
+                        Often the SDK is not the same target as the host.
+                        This tool is a 'native' binary.</para></listitem>
+                    <listitem><para><filename>gcc-crosssdk</filename>:
+                        The final stage of the SDK compiler.
+                        This tool is a 'native' binary.
+                        The tool runs on the host and builds for the SDK.
+                        </para></listitem>
+                    <listitem><para><filename>gcc-cross-canadian</filename>:
+                        The compiler that runs on the SDK machine and is
+                        included with the SDK that builds software for the
+                        target.
+                        This tool is a 'nativesdk' package.</para></listitem>
+                </itemizedlist></para></listitem>
             <listitem><para><emphasis>Image:</emphasis> An image is the result produced when
                 BitBake processes a given collection of recipes and related metadata.
                 Images are the binary output that run on specific hardware or QEMU
