@@ -227,13 +227,8 @@ STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),profile-manual)
-XSLTOPTS = --stringparam html.stylesheet profile-manual-style.css \
-           --stringparam  chapter.autolabel 1 \
-           --stringparam  appendix.autolabel A \
-           --stringparam  section.autolabel 1 \
-           --stringparam  section.label.includes.component.label 1 \
-           --xinclude
-ALLPREQ = html pdf tarball
+XSLTOPTS = --xinclude
+ALLPREQ = html pdf eclipse tarball
 TARFILES = profile-manual.html profile-manual.pdf profile-manual-style.css \
            figures/profile-title.png figures/kernelshark-all.png \
            figures/kernelshark-choose-events.png figures/kernelshark-i915-display.png \
@@ -323,9 +318,17 @@ eclipse: eclipse-generate eclipse-resolve-links
 .PHONY : eclipse-generate eclipse-resolve-links
 
 eclipse-generate:
-ifeq ($(DOC),mega-manual)
+ifeq ($(filter $(DOC), adt-manual bsp-guide dev-manual kernel-dev profile-manual ref-manual yocto-project-qs),)
 	@echo " "
-	@echo "ERROR: You cannot generate eclipse documentation for the mega-manual"
+	@echo "ERROR: You can only create eclipse documentation"
+	@echo "       of the following documentation parts:"
+	@echo "       - adt-manual"
+	@echo "       - bsp-guide"
+	@echo "       - dev-manual"
+	@echo "       - kernel-dev"
+	@echo "       - profile-manual"
+	@echo "       - ref-manual"
+	@echo "       - yocto-project-qs"
 	@echo " "
 else
 	@echo " "
