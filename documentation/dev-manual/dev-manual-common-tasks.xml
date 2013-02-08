@@ -1974,71 +1974,233 @@
             </itemizedlist>
         </para>
 
-        <section id="usingpoky-changes-prbump">
+        <section id='incrementing-a-package-revision-number'>
             <title>Incrementing a Package Revision Number</title>
 
             <para>
                 If a committed change results in changing the package output,
                 then the value of the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'>PR</ulink></filename>
-                variable needs to be increased
-                (or "bumped") as part of that commit.
-                For new recipes you should add the <filename>PR</filename>
-                variable and set its initial value equal to "r0", which is the default.
-                Even though the default value is "r0", the practice of adding it to a new recipe makes
-                it harder to forget to bump the variable when you make changes
-                to the recipe in future.
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
+                variable needs to be increased (or "bumped").
+                Increasing <filename>PR</filename> occurs one of two ways:
+                <itemizedlist>
+                    <listitem><para>Automatically using a Package Revision
+                        Service (PR Service).</para></listitem>
+                    <listitem><para>Manually incrementing the
+                        <filename>PR</filename> variable.</para></listitem>
+                </itemizedlist>
             </para>
 
             <para>
-                If you are sharing a common <filename>.inc</filename> file with multiple recipes,
-                you can also use the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-INC_PR'>INC_PR</ulink></filename>
-                variable to ensure that
-                the recipes sharing the <filename>.inc</filename> file are rebuilt when the
-                <filename>.inc</filename> file itself is changed.
-                The <filename>.inc</filename> file must set <filename>INC_PR</filename>
-                (initially to "r0"), and all recipes referring to it should set <filename>PR</filename>
-                to "$(INC_PR).0" initially, incrementing the last number when the recipe is changed.
-                If the <filename>.inc</filename> file is changed then its
-                <filename>INC_PR</filename> should be incremented.
+                Given that one of the challenges any build system and its
+                users face is how to maintain a package feed that is compatible
+                with existing package manager applications such as
+                RPM, APT, and OPKG, using an automated system is much
+                preferred over a manual system.
+                In either system, the main requirement is that version
+                numbering increases in a linear fashion and that a number of
+                version components exist that support that linear progression.
             </para>
 
             <para>
-                When upgrading the version of a package, assuming the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'>PV</ulink></filename>
-                changes, the <filename>PR</filename> variable should be reset to "r0"
-                (or "$(INC_PR).0" if you are using <filename>INC_PR</filename>).
+                The following two sections provide information on the PR Service
+                and on manual <filename>PR</filename> bumping.
             </para>
 
-            <para>
-                Usually, version increases occur only to packages.
-                However, if for some reason <filename>PV</filename> changes but does not
-                increase, you can increase the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PE'>PE</ulink></filename>
-                variable (Package Epoch).
-                The <filename>PE</filename> variable defaults to "0".
-            </para>
+            <section id='working-with-a-pr-service'>
+                <title>Working With a PR Service</title>
 
-            <para>
-                Version numbering strives to follow the
-                <ulink url='http://www.debian.org/doc/debian-policy/ch-controlfields.html'>
-                Debian Version Field Policy Guidelines</ulink>.
-                These guidelines define how versions are compared and what "increasing" a version means.
-            </para>
+                <para>
+                    As mentioned, attempting to maintain revision numbers in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>
+                    is error prone, inaccurate and causes problems for people
+                    submitting recipes.
+                    Conversely, the PR Service automatically generates
+                    increasing numbers, particularly the revision field,
+                    which removes the human element.
+                    <note>
+                        For additional information on using a PR Service, you
+                        can see the
+                        <ulink url='&YOCTO_WIKI_URL;/wiki/PR_Service'>PR Service</ulink>
+                        wiki page.
+                    </note>
+                </para>
 
-            <para>
-                There are two reasons for following the previously mentioned guidelines.
-                First, to ensure that when a developer updates and rebuilds, they get all the changes to
-                the repository and do not have to remember to rebuild any sections.
-                Second, to ensure that target users are able to upgrade their
-                devices using package manager commands such as <filename>opkg upgrade</filename>
-                (or similar commands for dpkg/apt or rpm-based systems).
-            </para>
+                <para>
+                    The Yocto Project uses variables in order of
+                    decreasing priority to facilitate revision numbering (i.e.
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PE'><filename>PE</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>, and
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
+                    for epoch, version and revision, respectively).
+                    The values are highly dependent on the policies and
+                    procedures of a given distribution and package feed.
+                </para>
 
-            <para>
-                The goal is to ensure the Yocto Project has packages that can be upgraded in all cases.
-            </para>
+                <para>
+                    Because the OpenEmbedded build system uses "signatures",
+                    which are unique to a given build, the build system
+                    knows when to rebuild packages.
+                    All the inputs into a given task are represented by a
+                    signature, which can trigger a rebuild when different.
+                    Thus, the build system itself does not rely on the
+                    <filename>PR</filename> numbers to trigger a rebuild.
+                    The signatures, however, can be used to generate
+                    <filename>PR</filename> values.
+                </para>
+
+                <para>
+                    The PR Service works with both
+                    <filename>OEBasic</filename> and
+                    <filename>OEBasicHash</filename> generators.
+                    The value of <filename>PR</filename> bumps when the
+                    checksum changes and the different generator mechanisms
+                    change signatures under different circumstances.
+                </para>
+
+                <para>
+                    As implemented, the build system includes values from
+                    the PR Service into the <filename>PR</filename> field as
+                    an addition using the form "<filename>.x</filename>" so
+                    <filename>r0</filename> becomes <filename>r0.1</filename>,
+                    <filename>r0.2</filename> and so forth.
+                    This scheme allows existing <filename>PR</filename> values
+                    to be used for whatever reasons, which include manual
+                    <filename>PR</filename> bumps should it be necessary.
+                </para>
+
+                <para>
+                    By default, there is no server that runs the PR Service.
+                    Thus, the packages generated are just "self consistent".
+                    The build system adds and removes packages and
+                    there are no guarantees about upgrade paths.
+                </para>
+
+                <para>
+                    The simplest form for a PR Service is for it to exist
+                    for a single host development system that builds the
+                    package feed (building system).
+                    For this scenario, you can enable the PR Service by adding
+                    the following to your <filename>local.conf</filename>
+                    file in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
+                    <literallayout class='monospaced'>
+     PRSERV_HOST = "localhost:0"
+                    </literallayout>
+                    Once the service is started, packages will automatically
+                    get increasing <filename>PR</filename> values and
+                    BitBake will take care of starting and stopping the server.
+                </para>
+
+                <para>
+                    If you have a more complex setup where multiple host
+                    development systems work against a common, shared package
+                    feed, you have a single PR Service running and it is
+                    connected to each building system.
+                    For this scenario, you need to start the PR Service using
+                    the <filename>bitbake-prserv</filename> command:
+                    <literallayout class='monospaced'>
+     bitbake-prserve &dash;&dash;host &lt;ip&gt; &dash;&dash;port &lt;port&gt; &dash;&dash;start
+                    </literallayout>
+                    In addition to hand-starting the service, you need to
+                    update the <filename>local.conf</filename> file of each
+                    building system as described earlier so each system
+                    points to the server and port.
+                </para>
+
+                <para>
+                    It is also recommended you use build history, which adds
+                    some sanity checks to package versions, in conjunction with
+                    the server that is running the PR Service.
+                    To enable build history, add the following to each building
+                    system's <filename>local.conf</filename> file:
+                    <literallayout class='monospaced'>
+     # It is recommended to activate "buildhistory" for testing the PR service
+     INHERIT += "buildhistory"
+     BUILDHISTORY_COMMIT = "1"
+                    </literallayout>
+                    For information on build history, see the
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#maintaining-build-output-quality'>Maintaining Build Output Quality</ulink>"
+                    section in the Yocto Project Reference Manual.
+                </para>
+
+                <note>
+                    The OpenEmbedded build system does not maintain
+                    <filename>PR</filename> information as part of the
+                    shared state (sstate) packages.
+                    If you maintain an sstate feed, its expected that either
+                    all your building systems that contribute to the sstate
+                    feed use a shared PR Service, or you do not run a PR
+                    Service on any of your building systems.
+                    Having some systems use a PR Service while others do
+                    not leads to obvious problems.
+                </note>
+            </section>
+
+            <section id='manually-bumping-pr'>
+                <title>Manually Bumping PR</title>
+
+                <para>
+                    If a committed change results in changing the package output,
+                    then the value of the PR variable needs to be increased
+                    (or "bumped") as part of that commit.
+                    For new recipes you should add the <filename>PR</filename>
+                    variable and set its initial value equal to "r0", which is the default.
+                    Even though the default value is "r0", the practice of adding it to a new recipe makes
+                    it harder to forget to bump the variable when you make changes
+                    to the recipe in future.
+                </para>
+
+                <para>
+                    If you are sharing a common <filename>.inc</filename> file with multiple recipes,
+                    you can also use the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-INC_PR'>INC_PR</ulink></filename>
+                    variable to ensure that
+                    the recipes sharing the <filename>.inc</filename> file are rebuilt when the
+                    <filename>.inc</filename> file itself is changed.
+                    The <filename>.inc</filename> file must set <filename>INC_PR</filename>
+                    (initially to "r0"), and all recipes referring to it should set <filename>PR</filename>
+                    to "$(INC_PR).0" initially, incrementing the last number when the recipe is changed.
+                    If the <filename>.inc</filename> file is changed then its
+                    <filename>INC_PR</filename> should be incremented.
+                </para>
+
+                <para>
+                    When upgrading the version of a package, assuming the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'>PV</ulink></filename>
+                    changes, the <filename>PR</filename> variable should be reset to "r0"
+                    (or "$(INC_PR).0" if you are using <filename>INC_PR</filename>).
+                </para>
+
+                <para>
+                    Usually, version increases occur only to packages.
+                    However, if for some reason <filename>PV</filename> changes but does not
+                    increase, you can increase the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PE'>PE</ulink></filename>
+                    variable (Package Epoch).
+                    The <filename>PE</filename> variable defaults to "0".
+                </para>
+
+                <para>
+                    Version numbering strives to follow the
+                    <ulink url='http://www.debian.org/doc/debian-policy/ch-controlfields.html'>
+                    Debian Version Field Policy Guidelines</ulink>.
+                    These guidelines define how versions are compared and what "increasing" a version means.
+                </para>
+
+                <para>
+                    There are two reasons for following the previously mentioned guidelines.
+                    First, to ensure that when a developer updates and rebuilds, they get all the changes to
+                    the repository and do not have to remember to rebuild any sections.
+                    Second, to ensure that target users are able to upgrade their
+                    devices using package manager commands such as <filename>opkg upgrade</filename>
+                    (or similar commands for dpkg/apt or rpm-based systems).
+                </para>
+
+                <para>
+                    The goal is to ensure the Yocto Project has packages that can be upgraded in all cases.
+                </para>
+            </section>
         </section>
 
         <section id="usingpoky-configuring-DISTRO_PN_ALIAS">
