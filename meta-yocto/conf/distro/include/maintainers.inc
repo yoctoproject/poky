@@ -507,7 +507,6 @@ RECIPE_MAINTAINER_pn-matchbox-keyboard = "Constantin Musca <constantinx.musca@in
 RECIPE_MAINTAINER_pn-matchbox-panel-2 = "Constantin Musca <constantinx.musca@intel.com>"
 RECIPE_MAINTAINER_pn-matchbox-session-sato = "Constantin Musca <constantinx.musca@intel.com>"
 RECIPE_MAINTAINER_pn-matchbox-session = "Constantin Musca <constantinx.musca@intel.com>"
-RECIPE_MAINTAINER_pn-matchbox-stroke = "Constantin Musca <constantinx.musca@intel.com>"
 RECIPE_MAINTAINER_pn-matchbox-terminal = "Constantin Musca <constantinx.musca@intel.com>"
 RECIPE_MAINTAINER_pn-matchbox-theme-sato-2 = "Constantin Musca <constantinx.musca@intel.com>"
 RECIPE_MAINTAINER_pn-matchbox-theme-sato = "Constantin Musca <constantinx.musca@intel.com>"

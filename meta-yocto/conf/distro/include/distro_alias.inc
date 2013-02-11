@@ -231,7 +231,6 @@ DISTRO_PN_ALIAS_pn-matchbox-keyboard = "Debian=matchbox-keyboard Fedora=matchbox
 DISTRO_PN_ALIAS_pn-matchbox-panel-2 = "Debian=matchbox-panel Mandriva=matchbox-panel Ubuntu=matchbox-panel"
 DISTRO_PN_ALIAS_pn-matchbox-session = "OpenedHand"
 DISTRO_PN_ALIAS_pn-matchbox-session-sato = "OpenedHand"
-DISTRO_PN_ALIAS_pn-matchbox-stroke = "OpenedHand"
 DISTRO_PN_ALIAS_pn-matchbox-terminal = "OpenedHand"
 DISTRO_PN_ALIAS_pn-matchbox-theme-sato-2 = "OpenedHand"
 DISTRO_PN_ALIAS_pn-matchbox-theme-sato = "OpenedHand"
