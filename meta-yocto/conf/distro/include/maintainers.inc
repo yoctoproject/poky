@@ -86,7 +86,6 @@ RECIPE_MAINTAINER_pn-claws-plugin-mailmbox = "Constantin Musca <constantinx.musc
 RECIPE_MAINTAINER_pn-claws-plugin-rssyl = "Constantin Musca <constantinx.musca@intel.com>"
 RECIPE_MAINTAINER_pn-clipboard-manager = "Constantin Musca <constantinx.musca@intel.com>"
 RECIPE_MAINTAINER_pn-clutter-1.8 = "Ross Burton <ross.burton@intel.com>"
-RECIPE_MAINTAINER_pn-clutter-box2d = "Ross Burton <ross.burton@intel.com>"
 RECIPE_MAINTAINER_pn-clutter-gst-1.8 = "Ross Burton <ross.burton@intel.com>"
 RECIPE_MAINTAINER_pn-clutter-gtk-1.8 = "Ross Burton <ross.burton@intel.com>"
 RECIPE_MAINTAINER_pn-clutter = "Ross Burton <ross.burton@intel.com>"
