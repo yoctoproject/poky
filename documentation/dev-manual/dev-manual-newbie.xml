@@ -58,99 +58,321 @@
     <title>Using the Yocto Project in a Team Environment</title>
 
     <para>
-        It might not be immediately clear how you can use the Yocto Project in a team environment,
-        or scale it for a large team of developers.
-        The specifics of any situation determine the best solution.
-        Granted that the Yocto Project offers immense flexibility regarding this, practices do exist
-        that experience has shown work well.
+        It might not be immediately clear how you can use the Yocto
+        Project in a team environment, or scale it for a large team of
+        developers.
+        One of the strengths of the Yocto Project is that it is extremely
+        flexible.
+        Thus, you can adapt it to many different use cases and scenarios.
+        However, these characteristics can cause a struggle if you are trying
+        to create a working setup that scales across a large team.
+        To help with these types of situations, this section presents
+        some of the project's most successful experiences,
+        practices, solutions, and available technologies that work well.
+        Keep in mind, the information here is a starting point.
+        You can build off it and customize it to fit any
+        particular working environment and set of practices.
     </para>
 
-    <para>
-        The core component of any development effort with the Yocto Project is often an
-        automated build and testing framework along with an image generation process.
-        You can use these core components to check that the metadata can be built,
-        highlight when commits break the build, and provide up-to-date images that
-        allow developers to test the end result and use it as a base platform for further
-        development.
-        Experience shows that buildbot is a good fit for this role.
-        What works well is to configure buildbot to make two types of builds:
-        incremental and full (from scratch).
-        See "<ulink url='http://autobuilder.yoctoproject.org:8010/'>Welcome to the buildbot for the Yocto Project</ulink>"
-        for an example implementation that uses buildbot.
-    </para>
+    <section id='best-practices-system-configurations'>
+        <title>System Configurations</title>
 
-    <para>
-        You can tie an incremental build to a commit hook that triggers the build
-        each time a commit is made to the metadata.
-        This practice results in useful acid tests that determine whether a given commit
-        breaks the build in some serious way.
-        Associating a build to a commit can catch a lot of simple errors.
-        Furthermore, the tests are fast so developers can get quick feedback on changes.
-    </para>
+        <para>
+            Systems across a large team should meet the needs of
+            two types of developers: those working on the direction of the
+            software stack itself and those developing applications.
+            Regardless of the type of developer, their workstations must
+            be both reasonably powerful and run Linux.
+        </para>
 
-    <para>
-        Full builds build and test everything from the ground up.
-        These types of builds usually happen at predetermined times like during the
-        night when the machine load is low.
-    </para>
+        <section id='best-practices-application-development'>
+            <title>Application Development</title>
 
-    <para>
-        Most teams have many pieces of software undergoing active development at any given time.
-        You can derive large benefits by putting these pieces under the control of a source
-        control system that is compatible (i.e. Git or Subversion (SVN)) with the OpenEmbedded
-        build system that the Yocto Project uses.
-        You can then set the autobuilder to pull the latest revisions of the packages
-        and test the latest commits by the builds.
-        This practice quickly highlights issues.
-        The build system easily supports testing configurations that use both a
-        stable known good revision and a floating revision.
-        The build system can also take just the changes from specific source control branches.
-        This capability allows you to track and test specific changes.
-    </para>
+            <para>
+                For developers who mainly do application level work
+                on top of an existing software stack,
+                here are some practices that work best:
+                <itemizedlist>
+                    <listitem><para>Use a pre-built toolchain that
+                        contains the software stack itself.
+                        Then, develop the application code on top of the
+                        stack.
+                        This method works well for small numbers of relatively
+                        isolated applications.</para></listitem>
+                    <listitem><para>When possible, use the Yocto Project
+                        plug-in for the <trademark class='trade'>Eclipse</trademark> IDE
+                        and other pieces of Application Development
+                        Technology (ADT).
+                        For more information, see the
+                        "<link linkend='application-development-workflow'>Application
+                        Development Workflow</link>" section as well as the
+                        <ulink url='&YOCTO_DOCS_ADT_URL;'>Yocto Project Application Developer's Guide</ulink>.
+                        </para></listitem>
+                    <listitem><para>Keep your cross-development toolchains
+                        updated.
+                        You can do this by provisioning either as new
+                        toolchain downloads or as updates through a package
+                        update mechanism using <filename>opkg</filename>
+                        to provide updates to an existing toolchain.
+                        The exact mechanics of how and when to do this are a
+                        question for local policy.</para></listitem>
+                    <listitem><para>Use multiple toolchains installed locally
+                        into different locations to allow development across
+                        versions.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
 
-    <para>
-        Perhaps the hardest part of setting this up is defining the software project or
-        the metadata policies that surround the different source control systems.
-        Of course circumstances will be different in each case.
-        However, this situation reveals one of the Yocto Project's advantages -
-        the system itself does not
-        force any particular policy on users, unlike a lot of build systems.
-        The system allows the best policies to be chosen for the given circumstances.
-    </para>
+        <section id='best-practices-core-system-development'>
+            <title>Core System Development</title>
 
-    <para>
-        In general, best practices exist that make your work with the Yocto
-        Project easier in a team environment.
-        This list presents some of these practices you might consider following.
-        Of course, you need to understand that you do not have to follow these
-        practices and your setup can be totally controlled and customized by
-        your team:
-        <itemizedlist>
-            <listitem><para>Use <link linkend='git'>Git</link>
-                as the source control system.</para></listitem>
-            <listitem><para>Maintain your metadata in layers that make sense
-                for your situation.
-                See the "<link linkend='understanding-and-creating-layers'>Understanding
-                and Creating Layers</link>" section for more information on
-                layers.</para></listitem>
-            <listitem><para>Separate the project's metadata and code by using
-                separate Git repositories.
-                See the "<link linkend='yocto-project-repositories'>Yocto Project
-                Source Repositories</link>" section for information on these
-                repositories.
-                See the "<link linkend='getting-setup'>Getting Set Up</link>" section
-                for information on how to set up various Yocto Project related
-                Git repositories.</para></listitem>
-            <listitem><para>Set up the directory for the shared state cache
-                (<ulink url='&YOCTO_DOCS_REF_URL;#var-SSTATE_DIR'><filename>SSTATE_DIR</filename></ulink>)
-                where they make sense.
-                For example, set up the sstate cache for developers using the
-                same office and share source directories on the developer's
-                machines.</para></listitem>
-            <listitem><para>Set up an autobuilder and have it populate the
-                sstate cache and source directories.</para></listitem>
-        </itemizedlist>
-    </para>
+            <para>
+                For core system development, it is often best to have the
+                build system itself available on the developer workstations
+                so developers can run their own builds and directly
+                rebuild the software stack.
+                You should keep the core system standard as much as
+                possible and do your work in layers on top of the core system.
+                You can share layers amongst the developers of a particular
+                project and contain the policy configuration that defines
+                the project.
+            </para>
+
+            <para>
+                Aside from the previous best practices, there exists a number
+                of tips and tricks that can help speed up core development
+                projects:
+                <itemizedlist>
+                    <listitem><para>Use a
+                        <ulink url='&YOCTO_DOCS_REF_URL;#shared-state-cache'>Shared State Cache</ulink>
+                        (sstate) among groups of developers who are on a
+                        fast network.
+                        The best way to share sstate is through a
+                        Network File System (NFS) share.
+                        The first user to build a given component for the
+                        first time contributes that object to the sstate,
+                        while subsequent builds from other developers then
+                        reuse the object rather than rebuild it themselves.
+                        </para>
+                        <para>Although it is possible to use other protocols for the
+                        sstate such as HTTP and FTP, you should avoid these.
+                        Using HTTP limits the sstate to read-only and
+                        FTP provides poor performance.
+                        </para></listitem>
+                    <listitem><para>Have autobuilders contribute to the sstate
+                        pool similarly to how the developer workstations
+                        contribute.
+                        For information, see the
+                        <link linkend='best-practices-autobuilders'>Autobuilders</link>
+                        section.</para></listitem>
+                    <listitem><para>Build stand-alone tarballs that contain
+                        "missing" system requirements if for some reason
+                        developer workstations do not meet minimum system
+                        requirements such as latest Python versions,
+                        <filename>chrpath</filename>, or other tools.
+                        You can install and relocate the tarball exactly as you
+                        would the usual cross-development toolchain so that
+                        all developers can meet minimum version requirements
+                        on most distributions.</para></listitem>
+                    <listitem><para>Use a small number of high performance
+                        systems for testing purposes (e.g. dual six core Xeons
+                        with 24GB RAM and plenty of disk space).
+                        Developers can use these systems for wider, more
+                        extensive testing while they continue to develop
+                        locally using their primary development system.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+    </section>
+
+    <section id='best-practices-source-control-management'>
+        <title>Source Control Manangement (SCM)</title>
+
+        <para>
+            Keeping your
+            <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>
+            and any software you are developing under the
+            control of an SCM system that is compatible
+            with the OpenEmbedded build system is adviseable.
+            Of the two SCMs available (Git or Subversion), the
+            Yocto Project team strongly recommends using
+            <link linkend='git'>Git</link>.
+            Git is a distributed system that is easy to backup
+            (each checkout is a backup in itself), allows you to work
+            remotely, and then connect back to the infrastructue.
+        </para>
+
+        <para>
+            It is relatively easy to set up Git services and create
+            infrastructure like
+            <ulink url='&YOCTO_GIT_URL;'>http://git.yoctoproject.org</ulink>,
+            which is based on server software called
+            <filename>gitolite</filename> with <filename>cgit</filename>
+            being used to generate the web interface that lets you view the
+            repositories.
+            The <filename>gitlite</filename> software identifies users
+            using <filename>ssh</filename> keys and allows branch-based
+            access controls to repositories that you can control as little
+            or as much as necessary.
+        </para>
+
+        <note>
+            The setup of these services is beyond the scope of this manual.
+            However, sites such as these exist that describe how to perform
+            setup:
+            <itemizedlist>
+                <listitem><para><ulink url='http://git-scm.com/book/ch4-8.html'>Git documentation</ulink>:
+                    Describes how to install <filename>gitolite</filename>
+                    on the server.</para></listitem>
+                <listitem><para><ulink url='http://sitaramc.github.com/gitolite/master-toc.html'>The <filename>gitolite</filename> master index</ulink>:
+                    All topics for <filename>gitolite</filename>.
+                    </para></listitem>
+                <listitem><para><ulink url='http://hjemli.net/git/cgit/tree/README'><filename>cgit</filename> index</ulink>:
+                    A <filename>README</filename> file on how to create a
+                    fast web interface for Git.</para></listitem>
+            </itemizedlist>
+        </note>
+    </section>
+
+    <section id='best-practices-autobuilders'>
+        <title>Autobuilders</title>
+
+        <para>
+            Autobuilders are often the core of a development project.
+            It is here that changes from individual developers are brought
+            together and centrally tested and subsequent decisions about
+            releases can be made.
+            Autobuilders also allow for "continuous integration" style
+            testing of software components and regression identification
+            and tracking.
+        </para>
+
+        <para>
+            See "<ulink url='http://autobuilder.yoctoproject.org:8010/'>Welcome to the buildbot for the Yocto Project</ulink>"
+            for the Yocto Project's reference implementation that uses
+            buildbot.
+            The Yocto Project team has found this implementation
+            works well in this role.
+            A public example of this is the Yocto Project
+            Autobuilders, which we use to test the overall health of the
+            project.
+        </para>
+
+        <para>
+            The features of this system are:
+            <itemizedlist>
+                <listitem><para>Highlights when commits break the build
+                    </para></listitem>
+                <listitem><para>Populates an sstate cache from which
+                    developers can pull rather than requiring local
+                    builds</para></listitem>
+                <listitem><para>Allows commit hook triggers,
+                    which trigger builds when commits are made
+                    </para></listitem>
+                <listitem><para>Allows triggering of automated image booting
+                    and testing under the QuickEMUlator (QEMU)
+                    </para></listitem>
+                <listitem><para>Supports incremental build testing and from
+                    scratch builds</para></listitem>
+                <listitem><para>Shared output that allows developer
+                    testing and historical regression investigation
+                    </para></listitem>
+                <listitem><para>Creates output that can be use for releases
+                    </para></listitem>
+                <listitem><para>Allows scheduling of builds so that resources
+                    can be used efficiently.</para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='best-practices-policies-and-change-flow'>
+        <title>Policies and Change Flow</title>
+
+        <para>
+            The Yocto Project itself uses a hierarchy structure and a
+            pull model.
+            Scripts exist to create and send pull requests
+            (i.e. <filename>create-pull-request</filename> and
+            <filename>send-pull-request</filename>).
+            This model is in line with other open source projects where
+            maintainers are responsible for specific areas of the project
+            and a single maintainer handles the final top-of-tree merges.
+        </para>
+
+        <note>
+            You can also use a more collective push model.
+            The <filename>gitolite</filename> software supports both the
+            push and pull models quite easily.
+        </note>
+
+        <para>
+            As with any development environment, it is important
+            to document the policy used as well as any main project
+            guidelines so they are understoon by everyone.
+            It is also a good idea to have well structured
+            commit messages, which are usually a part of a project's
+            guidelines.
+            Good commit messages are essential when looking back in time and
+            trying to understand why changes were made.
+        </para>
+
+        <para>
+            If you discover that changes are needed to the core layer of the
+            project, it is worth sharing those with the community as soon
+            as possible.
+            Chances are if you have discovered the need for changes, someone
+            someone else in the community needs them also.
+            sooner than later.
+        </para>
+    </section>
+
+    <section id='best-practices-summary'>
+        <title>Summary</title>
+
+        <para>
+            This section summarizes thee key recommendations described in the
+            previous sections:
+            <itemizedlist>
+                <listitem><para>Use <link linkend='git'>Git</link>
+                    as the source control system.</para></listitem>
+                <listitem><para>Maintain your metadata in layers that make sense
+                    for your situation.
+                    See the "<link linkend='understanding-and-creating-layers'>Understanding
+                    and Creating Layers</link>" section for more information on
+                    layers.</para></listitem>
+                <listitem><para>Separate the project's metadata and code by using
+                    separate Git repositories.
+                    See the "<link linkend='yocto-project-repositories'>Yocto Project
+                    Source Repositories</link>" section for information on these
+                    repositories.
+                    See the "<link linkend='getting-setup'>Getting Set Up</link>" section
+                    for information on how to set up various Yocto Project related
+                    Git repositories.</para></listitem>
+                <listitem><para>Set up the directory for the shared state cache
+                    (<ulink url='&YOCTO_DOCS_REF_URL;#var-SSTATE_DIR'><filename>SSTATE_DIR</filename></ulink>)
+                    where they make sense.
+                    For example, set up the sstate cache for developers using the
+                    same office and share source directories on the developer's
+                    machines.</para></listitem>
+                <listitem><para>Set up an autobuilder and have it populate the
+                    sstate cache and source directories.</para></listitem>
+                <listitem><para>Follow the project commit guidelines for
+                    writing good commit messages.
+                    See the "<link linkend='how-to-submit-a-change'>How to Submit a Change</link>"
+                    section.</para></listitem>
+                <listitem><para>Send changes to the core sooner than later
+                    as others likely run into the same issues.
+                    For some guidance on mailing lists to use, see the list in the
+                    "<link linkend='how-to-submit-a-change'>How to Submit a Change</link>"
+                    section.
+                    For a description of the available mailing lists, see
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#resources-mailinglist'>Mailing Lists</ulink>"
+                    section in the Yocto Project Reference Manual.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
 </section>
 
 <section id='yocto-project-repositories'>
