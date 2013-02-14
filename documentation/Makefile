@@ -209,7 +209,7 @@ ifeq ($(DOC),ref-manual)
 XSLTOPTS = --xinclude
 ALLPREQ = html pdf eclipse tarball
 TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
-	figures/buildhistory.png figures/buildhistory-web.png  eclipse
+	figures/buildhistory.png figures/buildhistory-web.png eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
@@ -245,8 +245,9 @@ TARFILES = profile-manual.html profile-manual.pdf profile-manual-style.css \
            figures/perf-wget-g-copy-to-user-expanded-stripped-unresolved-hidden.png figures/pybootchartgui-linux-yocto.png \
            figures/pychart-linux-yocto-rpm.png figures/pychart-linux-yocto-rpm-nostrip.png \
            figures/sched-wakeup-profile.png figures/sysprof-callers.png \
-           figures/sysprof-copy-from-user.png figures/sysprof-copy-to-user.png
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
+           figures/sysprof-copy-from-user.png figures/sysprof-copy-to-user.png \
+           eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
