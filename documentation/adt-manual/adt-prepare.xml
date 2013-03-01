@@ -198,24 +198,29 @@
      $ cd ~/adt-installer
      $ ./adt_installer
                 </literallayout>
-                Once the installer begins to run, you are asked to enter the location for
-                cross-toolchain installation.
-                The default location is <filename>/opt/poky/&lt;release&gt;</filename>.
-                After selecting the location, you are prompted to run in
-                interactive or silent mode.
-                If you want to closely monitor the installation, choose “I” for interactive
-                mode rather than “S” for silent mode.
+                Once the installer begins to run, you are asked to enter the
+                location for cross-toolchain installation.
+                The default location is
+                <filename>/opt/poky/&lt;release&gt;</filename>.
+                After either accepting the default location or selecting your
+                own location, you are prompted to run the installation script
+                interactively or in silent mode.
+                If you want to closely monitor the installation,
+                choose “I” for interactive mode rather than “S” for silent mode.
                 Follow the prompts from the script to complete the installation.
             </para>
 
             <para>
-                Once the installation completes, the ADT, which includes the cross-toolchain, is installed.
-                You will notice environment setup files for the cross-toolchain in
-                <filename>&YOCTO_ADTPATH_DIR;</filename>,
-                and image tarballs in the <filename>adt-installer</filename>
-                directory according to your installer configurations, and the target sysroot located
-                according to the <filename>YOCTOADT_TARGET_SYSROOT_LOC_&lt;arch&gt;</filename> variable
-                also in your configuration file.
+                Once the installation completes, the ADT, which includes the
+                cross-toolchain, is installed in the selected installation
+                directory.
+                You will notice environment setup files for the cross-toolchain
+                in the installation directory, and image tarballs in the
+                <filename>adt-installer</filename> directory according to your
+                installer configurations, and the target sysroot located
+                according to the
+                <filename>YOCTOADT_TARGET_SYSROOT_LOC_&lt;arch&gt;</filename>
+                variable also in your configuration file.
             </para>
          </section>
     </section>
@@ -224,11 +229,12 @@
         <title>Using a Cross-Toolchain Tarball</title>
 
         <para>
-            If you want to simply install the cross-toolchain by hand, you can do so by running the
-            toolchain installer.
-            If you use this method to install the cross-toolchain and you still need to install the target
-            sysroot, you will have to extract and install sysroot separately.
-            For information on how to do this, see the
+            If you want to simply install the cross-toolchain by hand, you can
+            do so by running the toolchain installer.
+            If you use this method to install the cross-toolchain and you
+            might still need to install the target sysroot by installing and
+            extracting it separately.
+            For information on how to install the sysroot, see the
             "<link linkend='extracting-the-root-filesystem'>Extracting the Root Filesystem</link>" section.
         </para>
 
@@ -248,29 +254,50 @@
                     <literallayout class='monospaced'>
      poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.sh
                     </literallayout>
-                    <note><para>As an alternative to steps one and two, you can build the toolchain installer
-                        if you have a <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
-                        If you need GMAE, you should use the <filename>bitbake meta-toolchain-gmae</filename>
+                    <note><para>As an alternative to steps one and two, you can
+                        build the toolchain installer if you have a
+                        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                        If you need GMAE, you should use the
+                        <filename>bitbake meta-toolchain-gmae</filename>
                         command.
-                        The resulting installation script when run will support such development.
-                        However, if you are not concerned with GMAE,
-                        you can generate the toolchain installer using
-                        <filename>bitbake meta-toolchain</filename>.</para>
-                        <para>Use the appropriate <filename>bitbake</filename> command only after you have
-                        sourced the <filename>&OE_INIT_PATH;</filename> script located in the Source
-                        Directory and you have made sure your <filename>conf/local.conf</filename>
-                        variables are correct.
+                        Running the resulting installation script will support
+                        such development.
+                        If you are not concerned with GMAE, you can generate
+                        the toolchain installer using
+                        <filename>bitbake meta-toolchain</filename>.
+                        Either of these methods requires you to still
+                        install the target sysroot by installing and
+                        extracting it separately.
+                        For information on how to install the sysroot, see the
+                        "<link linkend='extracting-the-root-filesystem'>Extracting the Root Filesystem</link>" section.
+                        </para>
+                        <para>A final method of building the toolchain installer
+                        exists that has significant advantages over the previous
+                        two methods.
+                        This method results in a toolchain installer that
+                        contains the sysroot that matches your target root
+                        filesystem.
+                        To build this installer, use the
+                        <filename>bitbake image -c populate_sdk</filename>
+                        command.</para>
+                        <para>Remember, before using any
+                        <filename>bitbake</filename> command, you must source
+                        the <filename>&OE_INIT_PATH;</filename> script
+                        located in the Source Directory and you must make sure
+                        your <filename>conf/local.conf</filename> variables are
+                        correct.
                         In particular, you need to be sure the
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
-                        variable matches the architecture for which you are building and that the
-                        <filename>SDKMACHINE</filename> variable is correctly set if you are building
-                        a toolchain for an architecture that differs from your current
-                        development host machine.</para>
-                        <para>When the <filename>bitbake</filename> command completes, the
-                        toolchain installer will be in <filename>tmp/deploy/sdk</filename> in the
-                        Build Directory.
-                        </para></note>
-                    </para></listitem>
+                        variable matches the architecture for which you are
+                        building and that the <filename>SDKMACHINE</filename>
+                        variable is correctly set if you are building
+                        a toolchain for an architecture that differs from your
+                        current development host machine.</para>
+                        <para>When the <filename>bitbake</filename> command
+                        completes, the toolchain installer will be in
+                        <filename>tmp/deploy/sdk</filename> in the Build
+                        Directory.</para>
+                    </note></para></listitem>
                 <listitem><para>Once you have the installer, run it to install the toolchain.
                     You must change the permissions on the toolchain installer
                     script so that it is executable.</para>
@@ -354,7 +381,8 @@
         Before you can develop using the cross-toolchain, you need to set up the
         cross-development environment by sourcing the toolchain's environment setup script.
         If you used the ADT Installer or hand-installed cross-toolchain,
-        then you can find this script in the <filename>&YOCTO_ADTPATH_DIR;</filename>
+        then you can find this script in the directory you chose for installation.
+        The default installation directory is the <filename>&YOCTO_ADTPATH_DIR;</filename>
         directory.
         If you installed the toolchain in the
         <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>,
@@ -367,8 +395,9 @@
         which you are developing.
         Environment setup scripts begin with the string “<filename>environment-setup</filename>”
         and include as part of their name the architecture.
-        For example, the toolchain environment setup script for a 64-bit IA-based architecture would
-        be the following:
+        For example, the toolchain environment setup script for a 64-bit
+        IA-based architecture installed in the default installation directory
+        would be the following:
         <literallayout class='monospaced'>
      &YOCTO_ADTPATH_DIR;/environment-setup-x86_64-poky-linux
         </literallayout>
@@ -497,9 +526,9 @@
             The example extracts the root filesystem into the <filename>$HOME/qemux86-sato</filename>
             directory:
             <literallayout class='monospaced'>
-     $ source $HOME/poky/build/tmp/environment-setup-i586-poky-linux
+     $ source $HOME/toolchain_dir/environment-setup-i586-poky-linux
      $ runqemu-extract-sdk \
-        tmp/deploy/images/core-image-sato-sdk-qemux86-2011091411831.rootfs.tar.bz2 \
+        ~Downloads/core-image-sato-sdk-qemux86-2011091411831.rootfs.tar.bz2 \
         $HOME/qemux86-sato
             </literallayout>
             In this case, you could now point to the target sysroot at
