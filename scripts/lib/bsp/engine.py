@@ -1727,7 +1727,7 @@ def yocto_layer_list(args, scripts_path, properties_file):
 def map_standard_kbranch(need_new_kbranch, new_kbranch, existing_kbranch):
     """
     Return the linux-yocto bsp branch to use with the specified
-    kbranch.  This handles the -standard variants for 3.2 and 3.4; the
+    kbranch.  This handles the -standard variants for 3.4 and 3.8; the
     other variants don't need mappings.
     """
     if need_new_kbranch == "y":
@@ -1735,11 +1735,9 @@ def map_standard_kbranch(need_new_kbranch, new_kbranch, existing_kbranch):
     else:
         kbranch = existing_kbranch
 
-    if (kbranch.startswith("standard/default/common-pc-64") or
-        kbranch.startswith("standard/common-pc-64")):
-        return "bsp/common-pc-64/common-pc-64-standard"
-    if (kbranch.startswith("standard/default/common-pc") or
-        kbranch.startswith("standard/common-pc")):
-        return "bsp/common-pc/common-pc-standard"
+    if kbranch.startswith("standard/common-pc-64"):
+        return "bsp/common-pc-64/common-pc-64-standard.scc"
+    if kbranch.startswith("standard/common-pc"):
+        return "bsp/common-pc/common-pc-standard.scc"
     else:
-        return "ktypes/standard"
+        return "ktypes/standard/standard.scc"
