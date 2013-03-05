@@ -2013,6 +2013,108 @@
         </para>
     </section>
 
+    <section id="creating-your-own-distribution">
+        <title>Creating Your Own Distribution</title>
+
+        <para>
+            When you build a Linux Yocto image using the Yocto Project and
+            do not alter any distribution
+            <link linkend='metadata'>Metadata</link>, you are creating a
+            Poky Distribution.
+            If you do not want a Poky Distribution, you can take steps to
+            create your own distribution.
+        </para>
+
+        <para>
+            To create your own distribution, the basic steps consist of
+            creating your own distribution layer, creating your own
+            distribution configuration file, and then adding any needed
+            code and Metadata to the layer.
+            The following steps provide some more detail:
+            <itemizedlist>
+                <listitem><para><emphasis>Create a layer for your new distro:</emphasis>
+                    Create your distribution layer so that you can keep your
+                    Metadata and code for the distribution separate.
+                    It is strongly recommended that you create and use your own
+                    layer for configuration and code.
+                    Using your own layer as compared to just placing
+                    configurations in a <filename>local.conf</filename>
+                    configuration file makes it easier to reproduce your
+                    distribution when using multiple build machines.
+                    </para></listitem>
+                <listitem><para><emphasis>Create the Distribution Configuration File:</emphasis>
+                    The distribution configuration file needs to be created in
+                    the <filename>conf/distro</filename> directory of your
+                    layer.
+                    You need to name it using your distribution name
+                    (e.g. <filename>mydistro.conf</filename>.</para>
+                    <para>You can split out parts of your configuration file
+                    into include file and then "require" them from within
+                    your distribution configuration file.
+                    Be sure to place the include files in the
+                    <filename>conf/distro/include</filename> directory of
+                    your layer.
+                    Common include files select the desired version and
+                    revisions for individual recipes.
+                    <tip>
+                        If you want to base your distribution configuration file
+                        on the very basic configuration from OE-Core, you
+                        can "require"
+                        <filename>require conf/distro/defaultsetup.conf</filename>.
+                        Alternatively, you can create a distribution
+                        configuration file from scratch using the
+                        <filename>defaultsetup.conf</filename> file
+                        or configuration files from other distributions
+                        such as Poky or Angstrom as references.
+                    </tip></para>
+                    <para>Your configuration file needs to set the following
+                    variables:
+                    <literallayout class='monospaced'>
+     <ulink url='&YOCTO_DOCS_REF_URL;#DISTRO_NAME'><filename>DISTRO_NAME</filename></ulink> [required]
+     <ulink url='&YOCTO_DOCS_REF_URL;#DISTRO_VERSION'><filename>DISTRO_VERSION</filename></ulink> [required]
+     <ulink url='&YOCTO_DOCS_REF_URL;#DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></ulink>
+     <ulink url='&YOCTO_DOCS_REF_URL;#DISTRO_EXTRA_RDEPENDS'><filename>DISTRO_EXTRA_RDEPENDS</filename></ulink>
+     <ulink url='&YOCTO_DOCS_REF_URL;#DISTRO_EXTRA_RRECOMMENDS'><filename>DISTRO_EXTRA_RRECOMMENDS</filename></ulink>
+     <ulink url='&YOCTO_DOCS_REF_URL;#TCLIBC'><filename>TCLIBC</filename></ulink>
+     <ulink url='&YOCTO_DOCS_REF_URL;#PREFERRED_VERSION'><filename>PREFERRED_VERSION</filename></ulink>
+     <ulink url='&YOCTO_DOCS_REF_URL;#PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER</filename></ulink>
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Provide Miscellaneous Variables:</emphasis>
+                    Be sure to define any other variable for which you want to
+                    create a default or enforce as part of the distribution
+                    configuration.
+                    You can include nearly any variable from the
+                    <filename>local.conf</filename> file.</para></listitem>
+                <listitem><para><emphasis>Point to Your Distribution Configuration File:</emphasis>
+                    In your <filename>local.conf</filename> file in the
+                    <link linkend='build-directory'>Build Directory</link>,
+                    set your
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO'><filename>DISTRO</filename></ulink>
+                    variable to point to your distribution's configuration file.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     DISTRO = "mydistro"
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Add More to the Layer if Necessary:</emphasis>
+                    Use your layer to hold other information needed for the
+                    distribution.
+                    You can add recipes for installing distro-specific
+                    configuration files that are not already
+                    installed by another recipe.
+                    If you have distro-specific configuration files that are
+                    included by an existing recipe, you should add a
+                    <filename>.bbappend</filename> for those.
+                    You should add any image recipes that are specific to your
+                    distribution.
+                    You should add a <filename>psplash</filename> append file
+                    for a branded splash screen.
+                    Finally, be sure to add any other append files to make
+                    custom changes that are specific to individual recipes.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
     <section id='working-with-packages'>
         <title>Working with Packages</title>
 
