@@ -2020,9 +2020,10 @@
             When you build a Linux Yocto image using the Yocto Project and
             do not alter any distribution
             <link linkend='metadata'>Metadata</link>, you are creating a
-            Poky Distribution.
-            If you do not want a Poky Distribution, you can take steps to
-            create your own distribution.
+            Poky distribution.
+            If you wish to gain more control over package alternative
+            selections, compile-time options, and other low-level
+            configuration, you can create your own distribution.
         </para>
 
         <para>
@@ -2039,28 +2040,29 @@
                     layer for configuration and code.
                     Using your own layer as compared to just placing
                     configurations in a <filename>local.conf</filename>
-                    configuration file makes it easier to reproduce your
-                    distribution when using multiple build machines.
+                    configuration file makes it easier to reproduce the same
+                    build configuration when using multiple build machines.
                     </para></listitem>
                 <listitem><para><emphasis>Create the Distribution Configuration File:</emphasis>
                     The distribution configuration file needs to be created in
                     the <filename>conf/distro</filename> directory of your
                     layer.
                     You need to name it using your distribution name
-                    (e.g. <filename>mydistro.conf</filename>.</para>
+                    (e.g. <filename>mydistro.conf</filename>).</para>
                     <para>You can split out parts of your configuration file
                     into include file and then "require" them from within
                     your distribution configuration file.
                     Be sure to place the include files in the
                     <filename>conf/distro/include</filename> directory of
                     your layer.
-                    Common include files select the desired version and
-                    revisions for individual recipes.
+                    A common example usage of include files would be to
+                    separate out the selection of desired version and revisions
+                    for individual recipes.
                     <tip>
                         If you want to base your distribution configuration file
                         on the very basic configuration from OE-Core, you
                         can "require"
-                        <filename>require conf/distro/defaultsetup.conf</filename>.
+                        <filename>conf/distro/defaultsetup.conf</filename>.
                         Alternatively, you can create a distribution
                         configuration file from scratch using the
                         <filename>defaultsetup.conf</filename> file
@@ -2072,19 +2074,19 @@
                     <literallayout class='monospaced'>
      <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_NAME'><filename>DISTRO_NAME</filename></ulink> [required]
      <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_VERSION'><filename>DISTRO_VERSION</filename></ulink> [required]
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></ulink>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RDEPENDS'><filename>DISTRO_EXTRA_RDEPENDS</filename></ulink>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RRECOMMENDS'><filename>DISTRO_EXTRA_RRECOMMENDS</filename></ulink>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-TCLIBC'><filename>TCLIBC</filename></ulink>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_VERSION'><filename>PREFERRED_VERSION</filename></ulink>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER</filename></ulink>
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></ulink> [required if creating from scratch]
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RDEPENDS'><filename>DISTRO_EXTRA_RDEPENDS</filename></ulink> [optional]
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RRECOMMENDS'><filename>DISTRO_EXTRA_RRECOMMENDS</filename></ulink> [optional]
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-TCLIBC'><filename>TCLIBC</filename></ulink> [required if creating from scratch]
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Provide Miscellaneous Variables:</emphasis>
                     Be sure to define any other variable for which you want to
                     create a default or enforce as part of the distribution
                     configuration.
                     You can include nearly any variable from the
-                    <filename>local.conf</filename> file.</para></listitem>
+                    <filename>local.conf</filename> file.
+                    The variables you use are not limited to the list in the
+                    previous bulletted item.</para></listitem>
                 <listitem><para><emphasis>Point to Your Distribution Configuration File:</emphasis>
                     In your <filename>local.conf</filename> file in the
                     <link linkend='build-directory'>Build Directory</link>,
