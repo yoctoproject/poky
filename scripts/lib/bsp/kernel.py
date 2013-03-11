@@ -552,6 +552,105 @@ def find_giturl(context):
     
     return None
 
+
+def read_features(scripts_path, machine):
+    """
+    Find and return a list of features in a machine's user-defined
+    features fragment [${machine}-user-features.scc].
+    """
+    features = []
+
+    f = open_user_file(scripts_path, machine, machine+"-user-features.scc", "r")
+    lines = f.readlines()
+    for line in lines:
+        s = line.strip()
+        if s and not s.startswith("#"):
+            feature_include = s.split()
+            features.append(feature_include[1].strip())
+    f.close()
+
+    return features
+
+
+def write_features(scripts_path, machine, features):
+    """
+    Write (replace) the list of feature items in a
+    machine's user-defined features fragment [${machine}=user-features.cfg].
+    """
+    f = open_user_file(scripts_path, machine, machine+"-user-features.scc", "w")
+    for item in features:
+        f.write("include " + item + "\n")
+    f.close()
+
+    kernel_contents_changed(scripts_path, machine)
+
+
+def yocto_kernel_feature_list(scripts_path, machine):
+    """
+    Display the list of features used in a machine's user-defined
+    features fragment [${machine}-user-features.scc].
+    """
+    features = read_features(scripts_path, machine)
+
+    print "The current set of machine-specific features for %s is:" % machine
+    print gen_choices_str(features)
+
+
+def yocto_kernel_feature_rm(scripts_path, machine):
+    """
+    Display the list of features used in a machine's user-defined
+    features fragment [${machine}-user-features.scc], prompt the user
+    for one or more to remove, and remove them.
+    """
+    features = read_features(scripts_path, machine)
+
+    print "Specify the features to remove:"
+    input = raw_input(gen_choices_str(features))
+    rm_choices = input.split()
+    rm_choices.sort()
+
+    removed = []
+
+    for choice in reversed(rm_choices):
+        try:
+            idx = int(choice) - 1
+        except ValueError:
+            print "Invalid choice (%s), exiting" % choice
+            sys.exit(1)
+        if idx < 0 or idx >= len(features):
+            print "Invalid choice (%d), exiting" % (idx + 1)
+            sys.exit(1)
+        removed.append(features.pop(idx))
+
+    write_features(scripts_path, machine, features)
+
+    print "Removed features:"
+    for r in removed:
+        print "\t%s" % r
+
+
+def yocto_kernel_feature_add(scripts_path, machine, features):
+    """
+    Add one or more features a machine's user-defined features
+    fragment [${machine}-user-features.scc].
+    """
+    new_items = []
+
+    for item in features:
+        if not item.endswith(".scc"):
+            print "Invalid feature (%s), exiting" % item
+            sys.exit(1)
+        new_items.append(item)
+
+    cur_items = read_features(scripts_path, machine)
+    cur_items.extend(new_items)
+
+    write_features(scripts_path, machine, cur_items)
+
+    print "Added features:"
+    for n in new_items:
+        print "\t%s" % n
+
     
 def base_branches(context):
     """

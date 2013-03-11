@@ -162,6 +162,65 @@ def yocto_kernel_patch_rm_subcommand(args, usage_str):
     yocto_kernel_patch_rm(scripts_path, args[0])
 
 
+def yocto_kernel_feature_list_subcommand(args, usage_str):
+    """
+    Command-line handling for listing the BSP features that are being
+    used by the BSP.  The real work is done by
+    bsp.kernel.yocto_kernel_feature_list().
+    """
+    logging.debug("yocto_kernel_feature_list_subcommand")
+
+    parser = optparse.OptionParser(usage = usage_str)
+
+    (options, args) = parser.parse_args(args)
+
+    if len(args) != 1:
+        logging.error("Wrong number of arguments, exiting\n")
+        parser.print_help()
+        sys.exit(1)
+
+    yocto_kernel_feature_list(scripts_path, args[0])
+
+
+def yocto_kernel_feature_add_subcommand(args, usage_str):
+    """
+    Command-line handling for adding the use of kernel features to a
+    BSP.  The real work is done by bsp.kernel.yocto_kernel_feature_add().
+    """
+    logging.debug("yocto_kernel_feature_add_subcommand")
+
+    parser = optparse.OptionParser(usage = usage_str)
+
+    (options, args) = parser.parse_args(args)
+
+    if len(args) < 2:
+        logging.error("Wrong number of arguments, exiting\n")
+        parser.print_help()
+        sys.exit(1)
+
+    machine = args.pop(0)
+    yocto_kernel_feature_add(scripts_path, machine, args)
+
+
+def yocto_kernel_feature_rm_subcommand(args, usage_str):
+    """
+    Command-line handling for removing the use of kernel features from
+    a BSP.  The real work is done by bsp.kernel.yocto_kernel_feature_rm().
+    """
+    logging.debug("yocto_kernel_feature_rm_subcommand")
+
+    parser = optparse.OptionParser(usage = usage_str)
+
+    (options, args) = parser.parse_args(args)
+
+    if len(args) != 1:
+        logging.error("Wrong number of arguments, exiting\n")
+        parser.print_help()
+        sys.exit(1)
+
+    yocto_kernel_feature_rm(scripts_path, args[0])
+
+
 subcommands = {
     "config-list": [yocto_kernel_config_list_subcommand,
                     yocto_kernel_config_list_usage,
@@ -181,6 +240,15 @@ subcommands = {
     "patch-rm": [yocto_kernel_patch_rm_subcommand,
                  yocto_kernel_patch_rm_usage,
                  yocto_kernel_patch_rm_help],
+    "feature-list": [yocto_kernel_feature_list_subcommand,
+                   yocto_kernel_feature_list_usage,
+                   yocto_kernel_feature_list_help],
+    "feature-add": [yocto_kernel_feature_add_subcommand,
+                  yocto_kernel_feature_add_usage,
+                  yocto_kernel_feature_add_help],
+    "feature-rm": [yocto_kernel_feature_rm_subcommand,
+                 yocto_kernel_feature_rm_usage,
+                 yocto_kernel_feature_rm_help],
 }
 
 
@@ -212,7 +280,8 @@ def main():
         else:
             sc = 0
 
-        if args[sc] == "config" or args[sc] == "patch":
+        if args[sc] == "config" or args[sc] == "patch" or \
+                args[sc] == "feature":
             if len(args) < 2 + sc:
                 parser.print_help()
                 sys.exit(1)

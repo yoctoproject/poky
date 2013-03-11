@@ -383,6 +383,9 @@ yocto_kernel_usage = """
    patch list        List the patches associated with a BSP
    patch add         Patch the Yocto kernel for a BSP
    patch rm          Remove patches from a BSP
+   feature list      List the features used by a BSP
+   feature add       Have a BSP use a feature
+   feature rm        Have a BSP stop using a feature
 
  See 'yocto-kernel help COMMAND' for more information on a specific command.
 
@@ -591,6 +594,101 @@ DESCRIPTION
 
     The set of patches available to be removed by this command for a
     BSP is listed and the user prompted for the specific patches to
+    remove.
+"""
+
+yocto_kernel_feature_list_usage = """
+
+ List the BSP features that are being used by a BSP
+
+ usage: yocto-kernel feature list <bsp-name>
+
+ This command lists the features being used by a BSP i.e. the features
+ which are eligible for modification or removal by other yocto-kernel
+ commands.
+
+ 'modifiable' features are the features listed in a BSP's
+ user-features.scc file.
+"""
+
+
+yocto_kernel_feature_list_help = """
+
+NAME
+    yocto-kernel feature list - List the modifiable set of features
+    being used by a BSP
+
+SYNOPSIS
+    yocto-kernel feature list <bsp-name>
+
+DESCRIPTION
+    This command lists the 'modifiable' features being used by a BSP
+    i.e. the features which are eligible for modification or removal
+    by other yocto-kernel commands.
+"""
+
+
+yocto_kernel_feature_add_usage = """
+
+ Add to or modify the list of features being used for a BSP
+
+ usage: yocto-kernel feature add <bsp-name> [/xxxx/yyyy/feature.scc ...]
+
+ This command adds one or more feature items to a BSP's kernel
+ user-features.scc file, which is the file used to manage features in
+ a yocto-bsp-generated BSP.  Features to be added must be specified as
+ fully-qualified feature names.
+"""
+
+
+yocto_kernel_feature_add_help = """
+
+NAME
+    yocto-kernel feature add - Add to or modify the list of features
+    being used for a BSP
+
+SYNOPSIS
+    yocto-kernel feature add <bsp-name> [/xxxx/yyyy/feature.scc ...]
+
+DESCRIPTION
+    This command adds one or more feature items to a BSP's
+    user-features.scc file, which is the file used to manage features
+    in a yocto-bsp-generated BSP.  Features to be added must be
+    specified as fully-qualified feature names.
+"""
+
+
+yocto_kernel_feature_rm_usage = """
+
+ Remove a feature from the list of features being used for a BSP
+
+ usage: yocto-kernel feature rm <bsp-name>
+
+ This command removes (turns off) one or more features from a BSP's
+ user-features.scc file, which is the file used to manage features in
+ a yocto-bsp-generated BSP.
+
+ The set of features available to be removed by this command for a BSP
+ is listed and the user prompted for the specific items to remove.
+"""
+
+
+yocto_kernel_feature_rm_help = """
+
+NAME
+    yocto-kernel feature rm - Remove a feature from the list of
+    features being used for a BSP
+
+SYNOPSIS
+    yocto-kernel feature rm <bsp-name>
+
+DESCRIPTION
+    This command removes (turns off) one or more features from a BSP's
+    user-features.scc file, which is the file used to manage features
+    in a yocto-bsp-generated BSP.
+
+    The set of features available to be removed by this command for a
+    BSP is listed and the user prompted for the specific items to
     remove.
 """
 
