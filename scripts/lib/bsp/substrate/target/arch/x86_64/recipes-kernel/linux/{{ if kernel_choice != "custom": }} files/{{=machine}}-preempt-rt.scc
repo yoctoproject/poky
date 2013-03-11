@@ -2,8 +2,9 @@ define KMACHINE {{=machine}}
 define KTYPE preempt-rt
 define KARCH x86_64
 
-# no new branch required, re-use the ktypes/preempt-rt branch
-include ktypes/preempt-rt
+include {{=map_preempt_rt_kbranch(need_new_kbranch, new_kbranch, existing_kbranch)}}
+{{ if need_new_kbranch == "y": }}
+branch {{=machine}}
 
 include {{=machine}}.scc
 
