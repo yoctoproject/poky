@@ -387,6 +387,7 @@ yocto_kernel_usage = """
    feature add       Have a BSP use a feature
    feature rm        Have a BSP stop using a feature
    features list     List the features available to BSPs
+   feature describe  Describe a particular feature
 
  See 'yocto-kernel help COMMAND' for more information on a specific command.
 
@@ -720,6 +721,34 @@ DESCRIPTION
      to a BSP.  This includes the features contained in linux-yocto
      meta branches as well as recipe-space features defined locally to
      the BSP.
+"""
+
+
+yocto_kernel_feature_describe_usage = """
+
+ Print the description and compatibility information for a given kernel feature
+
+ usage: yocto-kernel feature describe <bsp-name> [/xxxx/yyyy/feature.scc ...]
+
+ This command prints the description and compatibility of a specific
+ feature in the format 'description [compatibility].
+"""
+
+
+yocto_kernel_feature_describe_help = """
+
+NAME
+    yocto-kernel feature describe - print the description and
+    compatibility information for a given kernel feature
+
+SYNOPSIS
+    yocto-kernel feature describe <bsp-name> [/xxxx/yyyy/feature.scc ...]
+
+DESCRIPTION
+    This command prints the description and compatibility of a
+    specific feature in the format 'description [compatibility].  If
+    the feature doesn't define a description or compatibility, a
+    string with generic unknown values will be printed.
 """
 
 

@@ -243,6 +243,29 @@ def yocto_kernel_available_features_list_subcommand(args, usage_str):
     yocto_kernel_available_features_list(scripts_path, args[0])
 
 
+def yocto_kernel_feature_describe_subcommand(args, usage_str):
+    """
+    Command-line handling for listing the description of a specific
+    kernel feature available for use in a BSP.  This includes the
+    features present in the meta branch(es) of the pointed-to repo(s)
+    as well as the local features added in recipe-space to the current
+    BSP as well.  The real work is done by
+    bsp.kernel.yocto_kernel_feature_describe().
+    """
+    logging.debug("yocto_kernel_feature_describe_subcommand")
+
+    parser = optparse.OptionParser(usage = usage_str)
+
+    (options, args) = parser.parse_args(args)
+
+    if len(args) != 2:
+        logging.error("Wrong number of arguments, exiting\n")
+        parser.print_help()
+        sys.exit(1)
+
+    yocto_kernel_feature_describe(scripts_path, args[0], args[1])
+
+
 subcommands = {
     "config-list": [yocto_kernel_config_list_subcommand,
                     yocto_kernel_config_list_usage,
@@ -274,6 +297,9 @@ subcommands = {
     "features-list": [yocto_kernel_available_features_list_subcommand,
                  yocto_kernel_available_features_list_usage,
                  yocto_kernel_available_features_list_help],
+    "feature-describe": [yocto_kernel_feature_describe_subcommand,
+                 yocto_kernel_feature_describe_usage,
+                 yocto_kernel_feature_describe_help],
 }
 
 

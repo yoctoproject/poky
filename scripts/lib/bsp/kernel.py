@@ -758,6 +758,56 @@ def yocto_kernel_available_features_list(scripts_path, machine):
     print_feature_descs(layer, "features")
 
 
+def find_feature_desc_url(git_url, feature):
+    """
+    Find the url of the kernel feature in the kernel repo specified
+    from the BSP's kernel recipe SRC_URI.
+    """
+    feature_desc_url = ""
+    if git_url.startswith("git://"):
+        git_url = git_url[len("git://"):].strip()
+        s = git_url.split("/")
+        if s[1].endswith(".git"):
+            s[1] = s[1][:len(s[1]) - len(".git")]
+        feature_desc_url = "http://" + s[0] + "/cgit/cgit.cgi/" + s[1] + \
+            "/plain/meta/cfg/kernel-cache/" + feature + "?h=meta"
+
+    return feature_desc_url
+
+
+def get_feature_desc(git_url, feature):
+    """
+    Return a feature description of the form 'description [compatibility]
+    BSPs, as gathered from the set of feature sources.
+    """
+    feature_desc_url = find_feature_desc_url(git_url, feature)
+    feature_desc_cmd = "wget -q -O - " + feature_desc_url
+    tmp = subprocess.Popen(feature_desc_cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
+
+    return find_feature_desc(tmp.split("\n"))
+
+
+def yocto_kernel_feature_describe(scripts_path, machine, feature):
+    """
+    Display the description of a specific kernel feature available for
+    use in a BSP.
+    """
+    layer = find_bsp_layer(scripts_path, machine)
+
+    kernel = find_current_kernel(layer, machine)
+    if not kernel:
+        print "Couldn't determine the kernel for this BSP, exiting."
+        sys.exit(1)
+
+    context = create_context(machine, "arch", scripts_path)
+    context["name"] = "name"
+    context["filename"] = kernel
+    giturl = find_giturl(context)
+
+    desc = get_feature_desc(giturl, feature)
+
+    print desc
+
     
 def base_branches(context):
     """
