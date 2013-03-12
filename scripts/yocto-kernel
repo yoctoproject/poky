@@ -221,6 +221,28 @@ def yocto_kernel_feature_rm_subcommand(args, usage_str):
     yocto_kernel_feature_rm(scripts_path, args[0])
 
 
+def yocto_kernel_available_features_list_subcommand(args, usage_str):
+    """
+    Command-line handling for listing all the kernel features
+    available for use in a BSP.  This includes the features present in
+    the meta branch(es) of the pointed-to repo(s) as well as the local
+    features added in recipe-space to the current BSP as well.  The
+    real work is done by bsp.kernel.yocto_kernel_available_features_list().
+    """
+    logging.debug("yocto_kernel_feature_available_features_list_subcommand")
+
+    parser = optparse.OptionParser(usage = usage_str)
+
+    (options, args) = parser.parse_args(args)
+
+    if len(args) != 1:
+        logging.error("Wrong number of arguments, exiting\n")
+        parser.print_help()
+        sys.exit(1)
+
+    yocto_kernel_available_features_list(scripts_path, args[0])
+
+
 subcommands = {
     "config-list": [yocto_kernel_config_list_subcommand,
                     yocto_kernel_config_list_usage,
@@ -249,6 +271,9 @@ subcommands = {
     "feature-rm": [yocto_kernel_feature_rm_subcommand,
                  yocto_kernel_feature_rm_usage,
                  yocto_kernel_feature_rm_help],
+    "features-list": [yocto_kernel_available_features_list_subcommand,
+                 yocto_kernel_available_features_list_usage,
+                 yocto_kernel_available_features_list_help],
 }
 
 
@@ -281,7 +306,7 @@ def main():
             sc = 0
 
         if args[sc] == "config" or args[sc] == "patch" or \
-                args[sc] == "feature":
+                args[sc] == "feature" or args[sc] == "features":
             if len(args) < 2 + sc:
                 parser.print_help()
                 sys.exit(1)

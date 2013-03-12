@@ -32,6 +32,7 @@ import shutil
 from tags import *
 import glob
 import subprocess
+from engine import create_context
 
 
 def find_bblayers(scripts_path):
@@ -650,6 +651,112 @@ def yocto_kernel_feature_add(scripts_path, machine, features):
     print "Added features:"
     for n in new_items:
         print "\t%s" % n
+
+
+def find_feature_url(git_url):
+    """
+    Find the url of the kern-features.rc kernel for the kernel repo
+    specified from the BSP's kernel recipe SRC_URI.
+    """
+    feature_url = ""
+    if git_url.startswith("git://"):
+        git_url = git_url[len("git://"):].strip()
+        s = git_url.split("/")
+        if s[1].endswith(".git"):
+            s[1] = s[1][:len(s[1]) - len(".git")]
+        feature_url = "http://" + s[0] + "/cgit/cgit.cgi/" + s[1] + \
+            "/plain/meta/cfg/kern-features.rc?h=meta"
+
+    return feature_url
+
+
+def find_feature_desc(lines):
+    """
+    Find the feature description and compatibility in the passed-in
+    set of lines.  Returns a string string of the form 'desc
+    [compat]'.
+    """
+    desc = "no description available"
+    compat = "unknown"
+
+    for line in lines:
+        idx = line.find("KFEATURE_DESCRIPTION")
+        if idx != -1:
+            desc = line[idx + len("KFEATURE_DESCRIPTION"):].strip()
+            if desc.startswith("\""):
+                desc = desc[1:]
+                if desc.endswith("\""):
+                    desc = desc[:-1]
+        else:
+            idx = line.find("KFEATURE_COMPATIBILITY")
+            if idx != -1:
+                compat = line[idx + len("KFEATURE_COMPATIBILITY"):].strip()
+
+    return desc + " [" + compat + "]"
+
+
+def print_feature_descs(layer, feature_dir):
+    """
+    Print the feature descriptions for the features in feature_dir.
+    """
+    kernel_files_features = os.path.join(layer, "recipes-kernel/linux/files/" +
+                                         feature_dir)
+    for root, dirs, files in os.walk(kernel_files_features):
+        for file in files:
+            if file.endswith("~") or file.endswith("#"):
+                continue
+            if file.endswith(".scc"):
+                fullpath = os.path.join(layer, "recipes-kernel/linux/files/" +
+                                        feature_dir + "/" + file)
+                f = open(fullpath)
+                feature_desc = find_feature_desc(f.readlines())
+                print feature_dir + "/" + file + ": " + feature_desc
+
+
+def yocto_kernel_available_features_list(scripts_path, machine):
+    """
+    Display the list of all the kernel features available for use in
+    BSPs, as gathered from the set of feature sources.
+    """
+    layer = find_bsp_layer(scripts_path, machine)
+    kernel = find_current_kernel(layer, machine)
+    if not kernel:
+        print "Couldn't determine the kernel for this BSP, exiting."
+        sys.exit(1)
+
+    context = create_context(machine, "arch", scripts_path)
+    context["name"] = "name"
+    context["filename"] = kernel
+    giturl = find_giturl(context)
+    feature_url = find_feature_url(giturl)
+
+    feature_cmd = "wget -q -O - " + feature_url
+    tmp = subprocess.Popen(feature_cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
+
+    print "The current set of kernel features available to %s is:\n" % machine
+
+    if tmp:
+        tmpline = tmp.split("\n")
+        in_kernel_options = False
+        for line in tmpline:
+            if not "=" in line:
+                if in_kernel_options:
+                    break
+                if "kernel-options" in line:
+                    in_kernel_options = True
+                continue
+            if in_kernel_options:
+                feature_def = line.split("=")
+                feature_type = feature_def[0].strip()
+                feature = feature_def[1].strip()
+                desc = get_feature_desc(giturl, feature)
+                print "%s: %s" % (feature, desc)
+
+    print "[local]"
+
+    print_feature_descs(layer, "cfg")
+    print_feature_descs(layer, "features")
+
 
     
 def base_branches(context):

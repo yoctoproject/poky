@@ -386,6 +386,7 @@ yocto_kernel_usage = """
    feature list      List the features used by a BSP
    feature add       Have a BSP use a feature
    feature rm        Have a BSP stop using a feature
+   features list     List the features available to BSPs
 
  See 'yocto-kernel help COMMAND' for more information on a specific command.
 
@@ -691,6 +692,36 @@ DESCRIPTION
     BSP is listed and the user prompted for the specific items to
     remove.
 """
+
+
+yocto_kernel_available_features_list_usage = """
+
+ List the set of kernel features available to a BSP
+
+ usage: yocto-kernel features list <bsp-name>
+
+ This command lists the complete set of kernel features available to a
+ BSP.  This includes the features contained in linux-yocto meta
+ branches as well as recipe-space features defined locally to the BSP.
+"""
+
+
+yocto_kernel_available_features_list_help = """
+
+NAME
+    yocto-kernel features list - List the set of kernel features
+    available to a BSP
+
+SYNOPSIS
+    yocto-kernel features list <bsp-name>
+
+DESCRIPTION
+     This command lists the complete set of kernel features available
+     to a BSP.  This includes the features contained in linux-yocto
+     meta branches as well as recipe-space features defined locally to
+     the BSP.
+"""
+
 
 ##
 # yocto-layer help and usage strings
