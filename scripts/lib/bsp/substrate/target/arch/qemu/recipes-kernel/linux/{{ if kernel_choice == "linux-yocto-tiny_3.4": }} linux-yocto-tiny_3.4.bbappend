@@ -42,6 +42,7 @@ KERNEL_FEATURES_append_{{=machine}} += " cfg/smp.scc"
 SRC_URI += "file://{{=machine}}-tiny.scc \
             file://{{=machine}}-user-config.cfg \
             file://{{=machine}}-user-patches.scc \
+            file://{{=machine}}-user-features.scc \
            "
 
 # uncomment and replace these SRCREVs with the real commit ids once you've had
