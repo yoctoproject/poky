@@ -388,6 +388,7 @@ yocto_kernel_usage = """
    feature rm        Have a BSP stop using a feature
    features list     List the features available to BSPs
    feature describe  Describe a particular feature
+   feature create    Create a new BSP-local feature
 
  See 'yocto-kernel help COMMAND' for more information on a specific command.
 
@@ -751,6 +752,41 @@ DESCRIPTION
     string with generic unknown values will be printed.
 """
 
+
+yocto_kernel_feature_create_usage = """
+
+ Create a recipe-space kernel feature in a BSP
+
+ usage: yocto-kernel feature create <bsp-name> newfeature.scc \
+        "Feature Description" capabilities [<CONFIG_XXX=x> ...] [<PATCH> ...]
+
+ This command creates a new kernel feature from the bare config
+ options and patches specified on the command-line.
+"""
+
+
+yocto_kernel_feature_create_help = """
+
+NAME
+    yocto-kernel feature create - create a recipe-space kernel feature
+    in a BSP
+
+SYNOPSIS
+    yocto-kernel feature create <bsp-name> newfeature.scc \
+        "Feature Description" capabilities [<CONFIG_XXX=x> ...] [<PATCH> ...]
+
+DESCRIPTION
+    This command creates a new kernel feature from the bare config
+    options and patches specified on the command-line.  The new
+    feature will be created in recipe-space, specifically in either
+    the kernel .bbappend's /files/cfg or /files/features subdirectory,
+    depending on whether or not the feature contains config items only
+    or config items along with patches.  The named feature must end
+    with .scc and must not contain a feature directory to contain the
+    feature (this will be determined automatically), and a feature
+    decription in double-quotes along with a capabilities string
+    (which for the time being can be one of: 'all' or 'board').
+"""
 
 ##
 # yocto-layer help and usage strings

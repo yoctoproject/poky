@@ -808,7 +808,108 @@ def yocto_kernel_feature_describe(scripts_path, machine, feature):
 
     print desc
 
-    
+
+def check_feature_name(feature_name):
+    """
+    Sanity-check the feature name for create/destroy.  Return False if not OK.
+    """
+    if not feature_name.endswith(".scc"):
+        print "Invalid feature name (must end with .scc) [%s], exiting" % feature_name
+        return False
+
+    if "/" in feature_name:
+        print "Invalid feature name (don't specify directory) [%s], exiting" % feature_name
+        return False
+
+    return True
+
+
+def check_create_input(feature_items):
+    """
+    Sanity-check the create input.  Return False if not OK.
+    """
+    if not check_feature_name(feature_items[0]):
+        return False
+
+    if feature_items[1].endswith(".patch") or feature_items[1].startswith("CONFIG_"):
+        print "Missing description and/or compatibilty [%s], exiting" % feature_items[1]
+        return False
+
+    if feature_items[2].endswith(".patch") or feature_items[2].startswith("CONFIG_"):
+        print "Missing description and/or compatibility [%s], exiting" % feature_items[1]
+        return False
+
+    return True
+
+
+def yocto_kernel_feature_create(scripts_path, machine, feature_items):
+    """
+    Create a recipe-space kernel feature in a BSP.
+    """
+    if not check_create_input(feature_items):
+        sys.exit(1)
+
+    feature = feature_items[0]
+    feature_basename = feature.split(".")[0]
+    feature_description = feature_items[1]
+    feature_compat = feature_items[2]
+
+    patches = []
+    cfg_items = []
+
+    for item in feature_items[3:]:
+        if item.endswith(".patch"):
+            patches.append(item)
+        elif item.startswith("CONFIG"):
+            if ("=y" in item or "=m" in item):
+                cfg_items.append(item)
+        else:
+            print "Invalid feature item (must be .patch or CONFIG_*) [%s], exiting" % item
+            sys.exit(1)
+
+    feature_dirname = "cfg"
+    if patches:
+        feature_dirname = "features"
+
+    filesdir = find_filesdir(scripts_path, machine)
+    if not filesdir:
+        print "Couldn't add feature (%s), no 'files' dir found" % feature
+        sys.exit(1)
+
+    featdir = os.path.join(filesdir, feature_dirname)
+    if not os.path.exists(featdir):
+        os.mkdir(featdir)
+
+    for patch in patches:
+        if not os.path.isfile(patch):
+            print "Couldn't find patch (%s), exiting" % patch
+            sys.exit(1)
+        basename = os.path.basename(patch)
+        featdir_patch = os.path.join(featdir, basename)
+        shutil.copyfile(patch, featdir_patch)
+
+    new_cfg_filename = os.path.join(featdir, feature_basename + ".cfg")
+    new_cfg_file = open(new_cfg_filename, "w")
+    for cfg_item in cfg_items:
+        new_cfg_file.write(cfg_item + "\n")
+    new_cfg_file.close()
+
+    new_feature_filename = os.path.join(featdir, feature_basename + ".scc")
+    new_feature_file = open(new_feature_filename, "w")
+    new_feature_file.write("define KFEATURE_DESCRIPTION \"" + feature_description + "\"\n")
+    new_feature_file.write("define KFEATURE_COMPATIBILITY " + feature_compat + "\n\n")
+
+    for patch in patches:
+        patch_dir, patch_file = os.path.split(patch)
+        new_feature_file.write("patch " + patch_file + "\n")
+
+    new_feature_file.write("kconf non-hardware " + feature_basename + ".cfg\n")
+    new_feature_file.close()
+
+    print "Added feature:"
+    print "\t%s" % feature_dirname + "/" + feature
+
+
 def base_branches(context):
     """
     Return a list of the base branches found in the kernel git repo.
