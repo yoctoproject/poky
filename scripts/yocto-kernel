@@ -287,6 +287,26 @@ def yocto_kernel_feature_create_subcommand(args, usage_str):
     yocto_kernel_feature_create(scripts_path, machine, args)
 
 
+def yocto_kernel_feature_destroy_subcommand(args, usage_str):
+    """
+    Command-line handling for removing a recipe-space kernel feature
+    from a BSP.  The real work is done by
+    bsp.kernel.yocto_kernel_feature_destroy().
+    """
+    logging.debug("yocto_kernel_feature_destroy_subcommand")
+
+    parser = optparse.OptionParser(usage = usage_str)
+
+    (options, args) = parser.parse_args(args)
+
+    if len(args) != 2:
+        logging.error("Wrong number of arguments, exiting\n")
+        parser.print_help()
+        sys.exit(1)
+
+    yocto_kernel_feature_destroy(scripts_path, args[0], args[1])
+
+
 subcommands = {
     "config-list": [yocto_kernel_config_list_subcommand,
                     yocto_kernel_config_list_usage,
@@ -324,6 +344,9 @@ subcommands = {
     "feature-create": [yocto_kernel_feature_create_subcommand,
                  yocto_kernel_feature_create_usage,
                  yocto_kernel_feature_create_help],
+    "feature-destroy": [yocto_kernel_feature_destroy_subcommand,
+                 yocto_kernel_feature_destroy_usage,
+                 yocto_kernel_feature_destroy_help],
 }
 
 

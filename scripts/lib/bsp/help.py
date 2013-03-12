@@ -389,6 +389,7 @@ yocto_kernel_usage = """
    features list     List the features available to BSPs
    feature describe  Describe a particular feature
    feature create    Create a new BSP-local feature
+   feature destroy   Remove a BSP-local feature
 
  See 'yocto-kernel help COMMAND' for more information on a specific command.
 
@@ -786,6 +787,36 @@ DESCRIPTION
     feature (this will be determined automatically), and a feature
     decription in double-quotes along with a capabilities string
     (which for the time being can be one of: 'all' or 'board').
+"""
+
+
+yocto_kernel_feature_destroy_usage = """
+
+ Destroy a recipe-space kernel feature in a BSP
+
+ usage: yocto-kernel feature destroy <bsp-name> feature.scc
+
+ This command destroys a kernel feature defined in the specified BSP's
+ recipe-space kernel definition.
+"""
+
+
+yocto_kernel_feature_destroy_help = """
+
+NAME
+    yocto-kernel feature destroy <bsp-name> feature.scc - destroy a
+    recipe-space kernel feature in a BSP
+
+SYNOPSIS
+    yocto-kernel feature destroy <bsp-name> feature.scc
+
+DESCRIPTION
+    This command destroys a kernel feature defined in the specified
+    BSP's recipe-space kernel definition.  The named feature must end
+    with .scc and must not contain a feature directory to contain the
+    feature (this will be determined automatically).  If the kernel
+    feature is in use by a BSP, it can't be removed until the BSP
+    stops using it (see yocto-kernel feature rm to stop using it).
 """
 
 ##

@@ -910,6 +910,85 @@ def yocto_kernel_feature_create(scripts_path, machine, feature_items):
     print "\t%s" % feature_dirname + "/" + feature
 
 
+def feature_in_use(scripts_path, machine, feature):
+    """
+    Determine whether the specified feature is in use by the BSP.
+    Return True if so, False otherwise.
+    """
+    features = read_features(scripts_path, machine)
+    for f in features:
+        if f == feature:
+            return True
+    return False
+
+
+def feature_remove(scripts_path, machine, feature):
+    """
+    Remove the specified feature from the available recipe-space
+    features defined for the BSP.
+    """
+    features = read_features(scripts_path, machine)
+    new_features = []
+    for f in features:
+        if f == feature:
+            continue
+        new_features.append(f)
+    write_features(scripts_path, machine, new_features)
+
+
+def yocto_kernel_feature_destroy(scripts_path, machine, feature):
+    """
+    Remove a recipe-space kernel feature from a BSP.
+    """
+    if not check_feature_name(feature):
+        sys.exit(1)
+
+    if feature_in_use(scripts_path, machine, "features/" + feature) or \
+            feature_in_use(scripts_path, machine, "cfg/" + feature):
+        print "Feature %s is in use (use 'feature rm' to un-use it first), exiting" % feature
+        sys.exit(1)
+
+    filesdir = find_filesdir(scripts_path, machine)
+    if not filesdir:
+        print "Couldn't destroy feature (%s), no 'files' dir found" % feature
+        sys.exit(1)
+
+    feature_dirname = "features"
+    featdir = os.path.join(filesdir, feature_dirname)
+    if not os.path.exists(featdir):
+        print "Couldn't find feature directory (%s)" % feature_dirname
+        sys.exit(1)
+
+    feature_fqn = os.path.join(featdir, feature)
+    if not os.path.exists(feature_fqn):
+        feature_dirname = "cfg"
+        featdir = os.path.join(filesdir, feature_dirname)
+        if not os.path.exists(featdir):
+            print "Couldn't find feature directory (%s)" % feature_dirname
+            sys.exit(1)
+        feature_fqn = os.path.join(featdir, feature_filename)
+        if not os.path.exists(feature_fqn):
+            print "Couldn't find feature (%s)" % feature
+            sys.exit(1)
+
+    f = open(feature_fqn, "r")
+    lines = f.readlines()
+    for line in lines:
+        s = line.strip()
+        if s.startswith("patch ") or s.startswith("kconf "):
+            split_line = s.split()
+            filename = os.path.join(featdir, split_line[-1])
+            if os.path.exists(filename):
+                os.remove(filename)
+    f.close()
+    os.remove(feature_fqn)
+
+    feature_remove(scripts_path, machine, feature)
+
+    print "Removed feature:"
+    print "\t%s" % feature_dirname + "/" + feature
+
+
 def base_branches(context):
     """
     Return a list of the base branches found in the kernel git repo.
