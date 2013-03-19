@@ -2013,7 +2013,7 @@
         </para>
     </section>
 
-    <section id="creating-your-own-distribution">
+    <section id='creating-your-own-distribution'>
         <title>Creating Your Own Distribution</title>
 
         <para>
@@ -2125,6 +2125,154 @@
                     </itemizedlist></para></listitem>
             </itemizedlist>
         </para>
+    </section>
+
+    <section id='building-a-tiny-system'>
+        <title>Building a Tiny System</title>
+
+        <literallayout class='monospaced'>
+     * Introduction that tells what, why, and benefits
+     * Overview of the process
+     * Cutting back on the kernel size
+     * Cutting back on the filesystem (libc and busybox)
+        </literallayout>
+
+        <para>
+            Very small distributions have some significant advantages such
+            requiring less on-die memory (cheaper), better performance through
+            efficient cache usage, lower power requirements due to less 
+            memory, faster boot times, and reduced development overhead.
+            Some real-world examples where a very small distribution gives 
+            you distinct advantages are digital cameras, medical devices,
+            small headless systems, and partitioned flash.
+            You can use the Yocto Project to create very small distribution.
+        </para>            
+
+        <para>
+            This section presents information that shows you how you can 
+            trim your distribution to even smaller sizes than the 
+            8 Mbytes <filename>poky-tiny</filename> distribution that 
+            can be built out-of-the-box using the Yocto Project.
+        </para>
+
+        <section id='tiny-system-overview'>
+            <title>Overview</title>
+
+            <para>
+                The following list presents the overall steps you need to 
+                consider and perform to create very small systems that
+                have a kernel and root filesystem under 4 Mbytes, boot to the 
+                shell in under two seconds, maintain <filename>ipv4</filename>
+                functionality, and avoid an initial RAM disk:
+                <itemizedlist>
+                    <listitem><para>Determine your goals and guiding 
+                        principles.</para></listitem>
+                    <listitem><para>Know what you are starting with.
+                        </para></listitem>
+                    <listitem><para>Trim the root filesystem.
+                        </para></listitem> 
+                    <listitem><para>Trim the kernel</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='goals-and-guiding-principles'>
+            <title>Goals and Guiding Principles</title>
+
+            <para>
+                Before you can reach your destination, you need to know 
+                where you are going.  
+                Here is an example list that you can use as a guide when
+                creating very small distributions:
+                <itemizedlist>
+                    <listitem><para>Determine how much space you need
+                        (e.g. a kernel that is 1 Mbyte or less and 
+                        a root filesystem that is 3 Mbytes or less).
+                        </para></listitem>
+                    <listitem><para>Find the areas that are currently 
+                        taking 90% of the space and concentrate on that
+                        for trimming.
+                        </para></listitem>
+                    <listitem><para>Do not create any difficult "hacks" 
+                        to achieve your goals.</para></listitem>
+                    <listitem><para>Leverage of the device-specific 
+                        options.</para></listitem>
+                    <listitem><para>Do your work in a separate layer 
+                        to keep changes isolated.
+                        For information on how to create layers, see 
+                        the "<link linkend='understanding-and-creating-layers'>Understanding and Creating Layers</link>" section.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='know-what-you-are-starting-with'>
+            <title>Know What You Are Starting With</title>
+
+            <para>
+                You will need to have an image from which you can 
+                work. 
+                The Yocto Project ships with the ability to create a             
+                <filename>poky-tiny</filename> distribution.
+                This distribution consists of a small, sub-8 Mbyte kernel
+                that works with two shipped Board Support Packages (BSPs):
+                Fish River Island 2 and QEMU.
+                You can use this distribution as a starting point and trim
+                down from there.
+                If you need to build out the <filename>poky-tiny</filename>
+                distribution, see the
+                "<link linkend='creating-your-own-distribution'>Creating Your Own Distribution</link>"
+                section.
+            </para>
+            
+            <para>
+                Understanding some memory concepts will help you reduce the 
+                system size. 
+                Memory consists of static, dynamic, and temporary memory.
+                Static memory is the TEXT, DATA, and BSS sections.  
+                Dynamic memory contains memory that is allocate at runtime, 
+                stacks, hashtables, and so forth.
+                Temporary memory is decompression and 
+                <filename>__init__</filename>
+            </para>
+
+            <para>
+                To help you see where you currently are with kernel and root
+                filesystem sizes, you can use some tools found in the 
+                <link linkend='source-directory'>Source Directory</link> in 
+                the <filename>scripts</filename> directory:
+                <itemizedlist>
+                    <listitem><para><filename>ksize.py</filename>: Reports
+                        the size of the kernel files.</para></listitem>
+                    <listitem><para><filename>dirsize.py</filename>: Reports
+                        the size of the root filesystem.</para></listitem>
+                </itemizedlist>
+                This next tool and command helps you organized configuration 
+                fragments and view file dependencies in a human-readable form:
+                <itemizedlist>
+                    <listitem><para><filename>merge_config.sh</filename>:
+                        Merges individual configuration fragments.
+                        For more information on configuration fragments, see
+                        the 
+                        "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#generating-configuration-files'>Generating Configuration Files</ulink>"
+                        section of the Yocto Project Linux Kernel Development 
+                        Manual and the "<link linkend='creating-config-fragments'>Creating Configuration Fragments</link>"
+                        section in this manual.</para></listitem>
+                    <listitem><para><filename>bitbake -u depexp -g core-image-*</filename>:
+                        Using the BitBake command with these options brings up
+                        a Dependency Explorer from which you can view file 
+                        dependencies. 
+                        Understanding these dependencies allows you to make 
+                        sane decisions when cutting out various pieces of the 
+                        kernel and root filesystem.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>             
+
+        <section id='trim-the-root-filesystem'>
+            <title>Trim the Root Filesystem</title>
+
+        </section>
     </section>
 
     <section id='working-with-packages'>
