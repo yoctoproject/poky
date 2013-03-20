@@ -2,7 +2,6 @@
 # Package Versions for cutting edge testing:
 #
 
-SRCREV_pn-exmap-console ?= "${AUTOREV}"
 #SRCREV_pn-opkg-native ?= "${AUTOREV}"
 #SRCREV_pn-opkg-sdk ?= "${AUTOREV}"
 #SRCREV_pn-opkg ?= "${AUTOREV}"
