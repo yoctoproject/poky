@@ -2132,18 +2132,18 @@
 
         <para>
             Very small distributions have some significant advantages such
-            as requiring less on-die memory (cheaper), better performance 
-            through efficient cache usage, lower power requirements due to less 
+            as requiring less on-die memory (cheaper), better performance
+            through efficient cache usage, lower power requirements due to less
             memory, faster boot times, and reduced development overhead.
-            Some real-world examples where a very small distribution gives 
+            Some real-world examples where a very small distribution gives
             you distinct advantages are digital cameras, medical devices,
             small headless systems, and partitioned flash.
-        </para>            
+        </para>
 
         <para>
-            This section presents information that shows you how you can 
-            trim your distribution to even smaller sizes than the 
-            8 Mbytes <filename>poky-tiny</filename> distribution that 
+            This section presents information that shows you how you can
+            trim your distribution to even smaller sizes than the
+            8 Mbytes <filename>poky-tiny</filename> distribution that
             can be built out-of-the-box using the Yocto Project.
         </para>
 
@@ -2151,18 +2151,18 @@
             <title>Overview</title>
 
             <para>
-                The following list presents the overall steps you need to 
+                The following list presents the overall steps you need to
                 consider and perform to create very small systems that
-                have a kernel and root filesystem under 4 Mbytes, boot to the 
+                have a kernel and root filesystem under 4 Mbytes, boot to the
                 shell in under two seconds, maintain <filename>ipv4</filename>
                 functionality, and avoid an initial RAM disk:
                 <itemizedlist>
-                    <listitem><para>Determine your goals and guiding 
+                    <listitem><para>Determine your goals and guiding
                         principles.</para></listitem>
                     <listitem><para>Understand what gives your image size.
                         </para></listitem>
                     <listitem><para>Reduce the size of the root filesystem.
-                        </para></listitem> 
+                        </para></listitem>
                     <listitem><para>Reduce the size of the kernel.
                         </para></listitem>
                     <listitem><para>Iterate on the process.</para></listitem>
@@ -2174,26 +2174,26 @@
             <title>Goals and Guiding Principles</title>
 
             <para>
-                Before you can reach your destination, you need to know 
-                where you are going.  
+                Before you can reach your destination, you need to know
+                where you are going.
                 Here is an example list that you can use as a guide when
                 creating very small distributions:
                 <itemizedlist>
                     <listitem><para>Determine how much space you need
-                        (e.g. a kernel that is 1 Mbyte or less and 
+                        (e.g. a kernel that is 1 Mbyte or less and
                         a root filesystem that is 3 Mbytes or less).
                         </para></listitem>
-                    <listitem><para>Find the areas that are currently 
+                    <listitem><para>Find the areas that are currently
                         taking 90% of the space and concentrate on reducing
                         those areas.
                         </para></listitem>
-                    <listitem><para>Do not create any difficult "hacks" 
+                    <listitem><para>Do not create any difficult "hacks"
                         to achieve your goals.</para></listitem>
-                    <listitem><para>Leverage off the device-specific 
+                    <listitem><para>Leverage off the device-specific
                         options.</para></listitem>
-                    <listitem><para>Work in a separate layer so that you 
+                    <listitem><para>Work in a separate layer so that you
                         keep changes isolated.
-                        For information on how to create layers, see 
+                        For information on how to create layers, see
                         the "<link linkend='understanding-and-creating-layers'>Understanding and Creating Layers</link>" section.
                         </para></listitem>
                 </itemizedlist>
@@ -2204,9 +2204,9 @@
             <title>Understand What Gives Your Image Size</title>
 
             <para>
-                You will need to have an image from which you can 
-                work. 
-                The Yocto Project ships with the ability to create a             
+                You will need to have an image from which you can
+                work.
+                The Yocto Project ships with the ability to create a
                 <filename>poky-tiny</filename> distribution.
                 This distribution consists of a small, sub-8 Mbyte kernel
                 that works with two shipped Board Support Packages (BSPs):
@@ -2218,16 +2218,16 @@
                 "<link linkend='creating-your-own-distribution'>Creating Your Own Distribution</link>"
                 section for information.
             </para>
-            
+
             <para>
-                Understanding some memory concepts will help you reduce the 
-                system size. 
+                Understanding some memory concepts will help you reduce the
+                system size.
                 Memory consists of static, dynamic, and temporary memory.
-                Static memory is the TEXT (the code), DATA (initialized data 
-                in the code), and BSS (uninitialized data) sections.  
-                Dynamic memory contains memory that is allocate at runtime, 
+                Static memory is the TEXT (the code), DATA (initialized data
+                in the code), and BSS (uninitialized data) sections.
+                Dynamic memory contains memory that is allocate at runtime,
                 stacks, hash tables, and so forth.
-                Temporary memory is decompressed from the expanded kernel  
+                Temporary memory is decompressed from the expanded kernel
                 after boot.
                 Temporary memory also includes the <filename>__init__</filename>
                 functions.
@@ -2235,8 +2235,8 @@
 
             <para>
                 To help you see where you currently are with kernel and root
-                filesystem sizes, you can use two tools found in the 
-                <link linkend='source-directory'>Source Directory</link> in 
+                filesystem sizes, you can use two tools found in the
+                <link linkend='source-directory'>Source Directory</link> in
                 the <filename>scripts</filename> directory:
                 <itemizedlist>
                     <listitem><para><filename>ksize.py</filename>: Reports
@@ -2244,54 +2244,54 @@
                     <listitem><para><filename>dirsize.py</filename>: Reports
                         the size of the root filesystem.</para></listitem>
                 </itemizedlist>
-                This next tool and command helps you organize configuration 
+                This next tool and command helps you organize configuration
                 fragments and view file dependencies in a human-readable form:
                 <itemizedlist>
                     <listitem><para><filename>merge_config.sh</filename>:
                         Helps you manage configuration files and fragments
                         within the kernel.
                         With this tool you can merge individual configuration
-                        fragments together. 
-                        The tool allows you to make overrides and warns you 
+                        fragments together.
+                        The tool allows you to make overrides and warns you
                         of any missing configuration options.
-                        The tool is ideal for allowing you to iterate on 
-                        configurations, create minimal configurations, and 
+                        The tool is ideal for allowing you to iterate on
+                        configurations, create minimal configurations, and
                         create a configuration files for different machines
                         without having to duplicate your process.</para>
-                        <para>The <filename>merge_config.sh</filename> script is 
-                        part of the Linux Yocto kernel Git repository in the 
+                        <para>The <filename>merge_config.sh</filename> script is
+                        part of the Linux Yocto kernel Git repository in the
                         <filename>scripts/kconfig</filename> directory.</para>
-                        <para>For more information on configuration fragments, 
-                        see the 
+                        <para>For more information on configuration fragments,
+                        see the
                         "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#generating-configuration-files'>Generating Configuration Files</ulink>"
-                        section of the Yocto Project Linux Kernel Development 
+                        section of the Yocto Project Linux Kernel Development
                         Manual and the "<link linkend='creating-config-fragments'>Creating Configuration Fragments</link>"
                         section, which is in this manual.</para></listitem>
                     <listitem><para><filename>bitbake -u depexp -g core-image-*</filename>:
                         Using the BitBake command with these options brings up
-                        a Dependency Explorer from which you can view file 
-                        dependencies. 
-                        Understanding these dependencies allows you to make 
-                        sane decisions when cutting out various pieces of the 
+                        a Dependency Explorer from which you can view file
+                        dependencies.
+                        Understanding these dependencies allows you to make
+                        sane decisions when cutting out various pieces of the
                         kernel and root filesystem.</para></listitem>
                 </itemizedlist>
             </para>
-        </section>             
+        </section>
 
         <section id='trim-the-root-filesystem'>
             <title>Trim the Root Filesystem</title>
 
             <para>
-                Root filesystem is made up of packages for booting, libraries, 
+                Root filesystem is made up of packages for booting, libraries,
                 and applications.
                 To change things you can configure how the packaging happens,
-                which changes the way you build them. 
+                which changes the way you build them.
                 You can also tweak the filesystem itself or select a different
                 file system.
             </para>
 
             <para>
-                First, check out what is hogging your file system running the 
+                First, check out what is hogging your file system running the
                 <filename>dirsize.sh</filename> script from your root directory:
                 <literallayout class='monospaced'>
      $ cd &lt;root-directory-of-image&gt;
@@ -2299,7 +2299,7 @@
      $ cat dirsize-100k.log
                 </literallayout>
                 You can apply a filter to the script to ignore files under
-                a certain size.   
+                a certain size.
                 This example filters out anything below 100 Kbytes.
                 When you examine your log file, you can focus on areas of the
                 root filesystem that take up large amounts of memory.
@@ -2307,20 +2307,20 @@
 
             <para>
                 You need to be sure that what you eliminate does not cripple
-                the functionality you need. 
-                One way to see how packages relate to each other is by using 
+                the functionality you need.
+                One way to see how packages relate to each other is by using
                 the Dependency Explorer UI with the BitBake command:
                 <literallayout class='monospaced'>
      $ cd &lt;image-directory&gt;
      $ bitbake -u depexp -g &lt;image&gt;
                 </literallayout>
-                Use the interface to select potential packages you wish to 
+                Use the interface to select potential packages you wish to
                 eliminate and see their dependency relationships.
             </para>
 
             <para>
-                When deciding how to reduce the size, get rid of packages that 
-                result in minimal impact on the feature set.  
+                When deciding how to reduce the size, get rid of packages that
+                result in minimal impact on the feature set.
                 For example, you might not need a VGA display.
                 Or, you might be able to get by with <filename>devtmpfs</filename>
                 and <filename>mdev</filename>.
@@ -2328,8 +2328,8 @@
 
             <para>
                 Use the <filename>local.conf</filename> file to make changes.
-                For example, to eliminate <filename>udev</filename> and 
-                <filename>glib</filename>, set the following in the 
+                For example, to eliminate <filename>udev</filename> and
+                <filename>glib</filename>, set the following in the
                 local configuration file:
                 <literallayout class='monospaced'>
      VIRTUAL-RUNTIME_dev_manager = ""
@@ -2337,21 +2337,21 @@
             </para>
 
             <para>
-                Some other examples of where you can look to eliminate size 
+                Some other examples of where you can look to eliminate size
                 from the root filesystem are using <filename>ext2</filename>
                 rather than <filename>ext3</filename>, which requires a
                 1 Mbyte journal.
-                If you are okay with running read-only you don't need this 
-                journal. 
+                If you are okay with running read-only you don't need this
+                journal.
             </para>
 
             <note>
-                After each round of elimination, you need to rebuild your 
-                system and then use the tools to see the effects of your 
+                After each round of elimination, you need to rebuild your
+                system and then use the tools to see the effects of your
                 reductions.
             </note>
 
- 
+
         </section>
 
         <section id='trim-the-kernel'>
@@ -2370,51 +2370,51 @@
 
             <para>
                 Run the <filename>ksize.py</filename> script from the top-level
-                Linux build directory to get an idea of what is making up 
+                Linux build directory to get an idea of what is making up
                 the kernel:
                 <literallayout class='monospaced'>
      $ cd &lt;top-level-linux-build-directory&gt;
      $ ksize.py > ksize.log
      $ cat ksize.log
                 </literallayout>
-                When you examine the log, you will see how much space is 
-                taken up with the built-in <filename>.o</filename> files for 
-                drivers, networking, core kernel files, filesystem, sound, 
+                When you examine the log, you will see how much space is
+                taken up with the built-in <filename>.o</filename> files for
+                drivers, networking, core kernel files, filesystem, sound,
                 and so forth.
                 Look to reduce the areas that are large and taking up around
                 the "90% rule".
             </para>
 
             <para>
-                To examine, or drill down, into any particular area, use the 
+                To examine, or drill down, into any particular area, use the
                 <filename>-d</filename> option with the script:
                 <literallayout class='monospaced'>
      $ ksize.py -d > ksize.log
                 </literallayout>
                 Using this option breaks out the individual file information
-                for each area of the kernel (e.g. drivers, networking, and 
+                for each area of the kernel (e.g. drivers, networking, and
                 so forth).
             </para>
 
             <para>
                 Use your log file to see what you can eliminate from the kernel
-                based on features you can let go. 
+                based on features you can let go.
                 For example, if you are not going to need sound, you do not
                 need any drivers that support sound.
             </para>
 
             <para>
                 After figuring out what to eliminate, you need to reconfigure
-                kernel to reflect those changes during the next build. 
+                kernel to reflect those changes during the next build.
                 You could run <filename>menuconfig</filename> and make all your
-                changes at once.  
-                However, that makes it difficult to see the effects of your 
+                changes at once.
+                However, that makes it difficult to see the effects of your
                 individual eliminations and also makes it difficult to replicate
-                the changes for perhaps another target device. 
+                the changes for perhaps another target device.
                 A better method is to start with no configurations using
-                <filename>allnoconfig</filename>, create configuration 
-                fragments for individual changes, and then manage the 
-                fragments into a single configuration file using 
+                <filename>allnoconfig</filename>, create configuration
+                fragments for individual changes, and then manage the
+                fragments into a single configuration file using
                 <filename>merge_config.sh</filename>.
                 The tool makes it easy for you to iterate using the
                 configuration change/build cycle.
@@ -2422,7 +2422,7 @@
 
             <para>
                 Each time you make configuration changes, you need to rebuild
-                the kernel and check to see what impact your changes had on 
+                the kernel and check to see what impact your changes had on
                 the overall size.
             </para>
         </section>
@@ -2432,16 +2432,16 @@
 
             <para>
                 If you have not reached your goals on system size, you need
-                to iterate on the process.  
-                The process is the same. 
+                to iterate on the process.
+                The process is the same.
                 Use the tools and see just what is taking up 90% of the root
-                filesystem and the kernel. 
+                filesystem and the kernel.
                 Decide what you can eliminate without limiting your device
                 beyond what you need.
             </para>
 
             <para>
-                Depending on your system, a good place to look might be 
+                Depending on your system, a good place to look might be
                 Busybox, which provides a stripped down
                 version of Unix tools in a single, executable file.
                 You might be able to drop virtual terminal services or perhaps
@@ -3004,9 +3004,11 @@
         <para>
             You might find that there are groups of recipes or append files
             that you want to filter out of the build process.
-            For example, recipes you know you will never use or want should not
-            be part of the build.
-            Removing these files from parsing speeds up parts of the build.
+            Usually, this is not necessary.
+            However, on rare occasions where you might want to use a
+            layer but exclude parts that are causing problems, such
+            as introducing a different version of a recipe, you can
+            use <filename>BBMASK</filename> to exclude the recipe.
         </para>
 
         <para>
