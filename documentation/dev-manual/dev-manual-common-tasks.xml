@@ -2197,12 +2197,13 @@
 
         <para>
             Very small distributions have some significant advantages such
-            as requiring less on-die memory (cheaper), better performance
-            through efficient cache usage, lower power requirements due to less
-            memory, faster boot times, and reduced development overhead.
+            as requiring less on-die or in-package memory (cheaper), better 
+            performance through efficient cache usage, lower power requirements 
+            due to less memory, faster boot times, and reduced development 
+            overhead.
             Some real-world examples where a very small distribution gives
             you distinct advantages are digital cameras, medical devices,
-            small headless systems, and partitioned flash.
+            and small headless systems.
         </para>
 
         <para>
@@ -2217,10 +2218,9 @@
 
             <para>
                 The following list presents the overall steps you need to
-                consider and perform to create very small systems that
-                have a kernel and root filesystem under 4 Mbytes, boot to the
-                shell in under two seconds, maintain <filename>ipv4</filename>
-                functionality, and avoid an initial RAM disk:
+                consider and perform to create distributions with smaller
+                filesystems, faster boot times, maintain your critical
+                functionality, and avoid initial RAM disks:
                 <itemizedlist>
                     <listitem><para>Determine your goals and guiding
                         principles.</para></listitem>
@@ -2254,7 +2254,7 @@
                         </para></listitem>
                     <listitem><para>Do not create any difficult "hacks"
                         to achieve your goals.</para></listitem>
-                    <listitem><para>Leverage off the device-specific
+                    <listitem><para>Leverage the device-specific
                         options.</para></listitem>
                     <listitem><para>Work in a separate layer so that you
                         keep changes isolated.
@@ -2290,11 +2290,10 @@
                 Memory consists of static, dynamic, and temporary memory.
                 Static memory is the TEXT (the code), DATA (initialized data
                 in the code), and BSS (uninitialized data) sections.
-                Dynamic memory contains memory that is allocate at runtime,
+                Dynamic memory contains memory that is allocated at runtime,
                 stacks, hash tables, and so forth.
                 Temporary memory is decompressed from the expanded kernel
-                after boot.
-                Temporary memory also includes the <filename>__init__</filename>
+                after boot and also includes the <filename>__init__</filename>
                 functions.
             </para>
 
@@ -2305,9 +2304,9 @@
                 the <filename>scripts</filename> directory:
                 <itemizedlist>
                     <listitem><para><filename>ksize.py</filename>: Reports
-                        the size of the kernel files.</para></listitem>
+                        component sizes for the kernel files.</para></listitem>
                     <listitem><para><filename>dirsize.py</filename>: Reports
-                        the size of the root filesystem.</para></listitem>
+                        component sizes for root filesystem.</para></listitem>
                 </itemizedlist>
                 This next tool and command helps you organize configuration
                 fragments and view file dependencies in a human-readable form:
@@ -2332,12 +2331,12 @@
                         section of the Yocto Project Linux Kernel Development
                         Manual and the "<link linkend='creating-config-fragments'>Creating Configuration Fragments</link>"
                         section, which is in this manual.</para></listitem>
-                    <listitem><para><filename>bitbake -u depexp -g core-image-*</filename>:
+                    <listitem><para><filename>bitbake -u depexp -g &lt;bitbake_target&gt;</filename>:
                         Using the BitBake command with these options brings up
                         a Dependency Explorer from which you can view file
                         dependencies.
                         Understanding these dependencies allows you to make
-                        sane decisions when cutting out various pieces of the
+                        informed decisions when cutting out various pieces of the
                         kernel and root filesystem.</para></listitem>
                 </itemizedlist>
             </para>
@@ -2357,7 +2356,7 @@
 
             <para>
                 First, check out what is hogging your file system running the
-                <filename>dirsize.sh</filename> script from your root directory:
+                <filename>dirsize.py</filename> script from your root directory:
                 <literallayout class='monospaced'>
      $ cd &lt;root-directory-of-image&gt;
      $ dirsize.py 100000 > dirsize-100k.log
@@ -2366,6 +2365,9 @@
                 You can apply a filter to the script to ignore files under
                 a certain size.
                 This example filters out anything below 100 Kbytes.
+                The sizes reported by the tool are uncompressed and thus,
+                will be smaller by a relatively constant factor in a 
+                compressed root filesystem.
                 When you examine your log file, you can focus on areas of the
                 root filesystem that take up large amounts of memory.
             </para>
@@ -2388,7 +2390,8 @@
                 result in minimal impact on the feature set.
                 For example, you might not need a VGA display.
                 Or, you might be able to get by with <filename>devtmpfs</filename>
-                and <filename>mdev</filename>.
+                and <filename>mdev</filename> instead of 
+                <filename>udev</filename>.
             </para>
 
             <para>
@@ -2402,10 +2405,14 @@
             </para>
 
             <para>
-                Some other examples of where you can look to eliminate size
-                from the root filesystem are using <filename>ext2</filename>
-                rather than <filename>ext3</filename>, which requires a
-                1 Mbyte journal.
+                Finally, you should consider exactly what filesystem you need
+                to meet your needs while also reducing size.
+                For example, consider <filename>cramfs</filename>, 
+                <filename>squashfs</filename>, <filename>ubifs</filename>, 
+                <filename>ext2</filename>, or an <filename>initramfs</filename>
+                using <filename>initramfs</filename>.
+                Be aware that <filename>ext3</filename> requires a 1 Mbyte
+                journal.
                 If you are okay with running read-only you don't need this
                 journal.
             </para>
@@ -2446,6 +2453,9 @@
                 taken up with the built-in <filename>.o</filename> files for
                 drivers, networking, core kernel files, filesystem, sound,
                 and so forth.
+                The sizes reported by the tool are uncompressed and thus,
+                will be smaller by a relatively constant factor in a compressed 
+                kernel image.
                 Look to reduce the areas that are large and taking up around
                 the "90% rule".
             </para>
