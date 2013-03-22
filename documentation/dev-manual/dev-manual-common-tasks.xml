@@ -1184,7 +1184,17 @@
         <title>Working With Libraries</title>
 
         <para>
-            Intro text
+            Libraries are an integral part of your system. 
+            This section describes some common practices you might find 
+            helpful when working with libraries to build your system:
+            <itemizedlist>
+                <listitem><para><link linkend='including-static-library-files'>How to include static library files</link>
+                    </para></listitem>
+                <listitem><para><link linkend='combining-multiple-versions-library-files-into-one-image'>How to use the Multilib feature to combine multiple versions of library files into a single image</link>
+                    </para></listitem>
+                <listitem><para><link linkend='installing-multiple-versions-of-the-same-library'>How to install multiple versions of the same library in parallel on the same system</link>
+                    </para></listitem>
+            </itemizedlist>
         </para>
 
         <section id='including-static-library-files'>
@@ -1432,29 +1442,46 @@
             <title>Installing Multiple Versions of the Same Library</title>
 
             <para>
+                Situations can exist where you need to install and use 
+                multiple versions of the same library on the same system
+                at the same time.
+                These situations almost always exist when a library API 
+                changes and you have multiple pieces of software that 
+                depend on the separate versions of the library.
+                To accomodate these situations, you can install multiple 
+                versions of the same library in parallel on the same system.
+            </para>
+
+            <para>
+                The process is straight forward as long as the libraries use
+                proper versioning.
+                With properly versioned libraries, all you need to do to 
+                individually specify the libraries is create separate,
+                appropriately named recipes where the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink> part of the 
+                name includes a portion that differentiates each library version
+                (e.g.the major part of the version number).
+                Thus, instead of having a single recipe that loads one version
+                of a library (e.g. <filename>clutter</filename>), you provide 
+                multiple recipes that result in different versions
+                of the libraries you want.
+                As an example, the following two recipes would allow the 
+                two separate versions of the <filename>clutter</filename> 
+                library to co-exist on the same system:
                 <literallayout class='monospaced'>
-               (08:04:38 AM) scottrif: RP:  I am looking at an old bug (https://bugzilla.yoctoproject.org/show_bug.cgi?id=1548) regarding documenting how multiple different library versions of a library can be built and installed in parallel on a system.  You mention Clutter as a good example of this.  Before I start diving into this can you tell me if it is still relevant given the bug was filed in Oct. of 2011?
-(08:06:44 AM) paul.eggleton: scottrif: it's still a valid use case I think
-(08:06:59 AM) scottrif: paul.eggleton: ok - thanks
-(08:07:43 AM) paul.eggleton: it's not too tricky assuming the library uses proper versioning itself; if it does you just need to ensure something version-specific appears in PN
-(08:08:07 AM) paul.eggleton: so e.g. for clutter, PN is clutter-1.8 rather than just clutter
-(08:09:25 AM) scottrif: paul.eggleton: so PN specifies version 1.8 in your example.  Do you put multiple PN statements somewhere to accomplish installing multiple versions of the same library?
-(08:09:52 AM) paul.eggleton: scottrif: no, you need to provide a separate recipe for each version
-(08:09:59 AM) paul.eggleton: scottrif: so the PN would come from the file name
-(08:10:07 AM) paul.eggleton: (as normal)
-(08:10:24 AM) paul.eggleton: so e.g. the recipe might be clutter-1.8_1.8.4.bb
-(08:10:30 AM) scottrif: paul.eggleton: ok - one version per library version and each recipe specifically uses PN to indicate the version.
-(08:10:48 AM) paul.eggleton: the major part of the version, yes
-(08:10:48 AM) scottrif: paul.eggleton: I mean one "recipe" per library version :)
-(08:11:18 AM) scottrif: paul.eggleton: major being "1.8" in your example
-(08:11:33 AM) paul.eggleton: right, in this instance one recipe per major version since the API got changed between the two
-(08:11:56 AM) paul.eggleton: (which is the typical cause of needing to do this multiple version exercise)
-(08:12:15 AM) scottrif: paul.eggleton: okay - so what circumstances do I tell the reader when it is a good idea to do this besides the case you just stated?
-(08:14:07 AM) paul.eggleton: it's almost always about an API change and you have other pieces of software that depend on both versions that you need to build and use at runtime within the same system
-(08:14:22 AM) paul.eggleton: in fact I can't think of another reason why you'd want to do this
-(08:14:44 AM) scottrif: paul.eggleton: ok - I will stick to that one.  Thanks!  I will probably enlist you to check over the new section :)
-(08:14:52 AM) paul.eggleton: scottrif: sure thing
+     clutter-1.6_1.6.20.bb
+     clutter-1.8_1.8.4.bb
                 </literallayout>
+                Additionally, if you have other recipes that depend on a given 
+                library, you need to use the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink> 
+                variable to create the dependency. 
+                Continuing with the same example, if you want to have a recipe
+                depend on the 1.8 version of the <filename>clutter</filename> 
+                library, use the following in your recipe:
+                <literallayout class='monospaced'>
+     DEPENDS = "clutter-1.8"
+                </literallayout> 
             </para>
         </section>
     </section>
