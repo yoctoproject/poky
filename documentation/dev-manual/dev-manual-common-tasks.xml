@@ -3228,7 +3228,7 @@
         </section>
 
         <section id="platdev-gdb-remotedebug-launch-gdb">
-            <title>Launching GDB on the Host Computer</title>
+            <title>Launch GDB on the Host Computer</title>
 
             <para>
                 Running GDB on the host computer takes a number of stages.
@@ -3236,13 +3236,13 @@
             </para>
 
             <section id="platdev-gdb-remotedebug-launch-gdb-buildcross">
-                <title>Building the Cross-GDB Package</title>
+                <title>Build the Cross-GDB Package</title>
                 <para>
                     A suitable GDB cross-binary is required that runs on your host computer but
                     also knows about the the ABI of the remote target.
                     You can get this binary from the meta-toolchain.
                     Here is an example where the toolchain has been installed
-                    in the default directory <filename>/opt/poky/1.4</filename>:
+                    in the default directory <filename>/opt/poky/&DISTRO;</filename>:
                     <literallayout class='monospaced'>
      /opt/poky/1.4/sysroots/i686-pokysdk-linux/usr/bin/armv7a-vfp-neon-poky-linux-gnueabi/arm-poky-linux-gnueabi-gdb
                     </literallayout>
@@ -3263,6 +3263,63 @@
                 </para>
             </section>
 
+            <section id='create-the-gdb-initialization-file'>
+                <title>Create the GDB Initialization File</title>
+
+                <para>
+                    Aside from the GDB cross-binary, you also need a GDB
+                    initialization file in the same top directory in which 
+                    your binary resides.
+                    When you start GDB on your host development system, GDB
+                    finds this initialization file and executes all the 
+                    commands within.
+                    For information on the <filename>.gdbinit</filename>, see
+                    "<ulink url='http://sourceware.org/gdb/onlinedocs/gdb/'>Debugging with GDB</ulink>"
+                    by maintained by
+                    <ulink url='http://www.sourceware.org'>sourceware.org</ulink>.
+                </para>
+            </section>
+
+            <section id='point-to-your-root-filesystem'>
+                <title>Point to Your Root Filesystem</title>
+
+                <para>
+                    Before starting your debugging session, you need to enter
+                    the following to set your sysroot filesystem location
+                    by using a command with this form:
+                    <literallayout class='monospaced'>
+     set sysroot &lt;your-sysroot-path&gt; 
+                    </literallayout>
+                </para>
+            </section>
+
+            <section id="platdev-gdb-remotedebug-launch-gdb-launchhost">
+                <title>Launch the Host GDB</title>
+
+                <para>
+                    To launch the host GDB, you need to source the 
+                    cross-debugging environment script, which if you installed
+                    the sysroot filesystem in the default location is at 
+                    <filename>/opt/poky/&DISTRO;</filename> and begins with the 
+                    string "environment-setup".
+                </para>
+
+                <para>
+                    Finally, run the <filename>cross-gdb</filename> binary 
+                    and provide the inferior binary as part of the command line.
+                    For example, the following command form continues with the 
+                    example used in the previous section.
+                    This command form loads the <filename>foo</filename> binary
+                    as well as the debugging information:
+                    <literallayout class='monospaced'>
+     $ &lt;target-abi&gt;-gdb rootfs/usr/bin/foo
+                    </literallayout>
+                    The commands in your <filename>.gdbinit</filename> execute
+                    and the GDB prompt appears.
+                </para>
+            </section>
+
+<!--
             <section id="platdev-gdb-remotedebug-launch-gdb-inferiorbins">
                 <title>Making the Inferior Binaries Available</title>
 
@@ -3355,9 +3412,10 @@
                     Port 2345 is the port on which the GDBSERVER is running.
                 </para>
             </section>
+-->
 
             <section id="platdev-gdb-remotedebug-launch-gdb-using">
-                <title>Using the Debugger</title>
+                <title>Use the Debugger</title>
 
                 <para>
                     You can now proceed with debugging as normal - as if you were debugging
