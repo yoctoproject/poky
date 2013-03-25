@@ -2219,7 +2219,7 @@
             <para>
                 The following list presents the overall steps you need to
                 consider and perform to create distributions with smaller
-                filesystems, faster boot times, maintain your critical
+                root filesystems, faster boot times, maintain your critical
                 functionality, and avoid initial RAM disks:
                 <itemizedlist>
                     <listitem><para>Determine your goals and guiding
@@ -2306,7 +2306,7 @@
                     <listitem><para><filename>ksize.py</filename>: Reports
                         component sizes for the kernel files.</para></listitem>
                     <listitem><para><filename>dirsize.py</filename>: Reports
-                        component sizes for root filesystem.</para></listitem>
+                        component sizes for the root filesystem.</para></listitem>
                 </itemizedlist>
                 This next tool and command helps you organize configuration
                 fragments and view file dependencies in a human-readable form:
@@ -2346,16 +2346,16 @@
             <title>Trim the Root Filesystem</title>
 
             <para>
-                Root filesystem is made up of packages for booting, libraries,
-                and applications.
+                The root filesystem is made up of packages for booting, 
+                libraries, and applications.
                 To change things you can configure how the packaging happens,
                 which changes the way you build them.
                 You can also tweak the filesystem itself or select a different
-                file system.
+                filesystem.
             </para>
 
             <para>
-                First, check out what is hogging your file system running the
+                First, check out what is hogging your root filesystem running the
                 <filename>dirsize.py</filename> script from your root directory:
                 <literallayout class='monospaced'>
      $ cd &lt;root-directory-of-image&gt;
@@ -2405,8 +2405,9 @@
             </para>
 
             <para>
-                Finally, you should consider exactly what filesystem you need
-                to meet your needs while also reducing size.
+                Finally, you should consider exactly the type of root
+                filesystem you need to meet your needs while also reducing 
+                its size.
                 For example, consider <filename>cramfs</filename>, 
                 <filename>squashfs</filename>, <filename>ubifs</filename>, 
                 <filename>ext2</filename>, or an <filename>initramfs</filename>
@@ -3285,7 +3286,7 @@
 
                 <para>
                     Before starting your debugging session, you need to enter
-                    the following to set your sysroot filesystem location
+                    the following to set your root filesystem location
                     by using a command with this form:
                     <literallayout class='monospaced'>
      set sysroot &lt;your-sysroot-path&gt; 
@@ -3299,7 +3300,7 @@
                 <para>
                     To launch the host GDB, you need to source the 
                     cross-debugging environment script, which if you installed
-                    the sysroot filesystem in the default location is at 
+                    the root filesystem in the default location is at 
                     <filename>/opt/poky/&DISTRO;</filename> and begins with the 
                     string "environment-setup".
                 </para>
