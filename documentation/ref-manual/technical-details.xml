@@ -559,12 +559,14 @@
                 It is possible that you could make implicit changes that are not factored
                 into the checksum calculation, but do affect a task's output.
                 A good example is perhaps when a tool changes its output.
-                Let's say that the output of <filename>rpmdeps</filename> needed to change.
-                The result of the change should be that all the "package", "package_write_rpm",
-                and "package_deploy-rpm" shared state cache items would become invalid.
+                Assume that the output of <filename>rpmdeps</filename> needed to change.
+                The result of the change should be that all the 
+                <filename>package</filename>, <filename>package_write_rpm</filename>,
+                and <filename>package_deploy-rpm</filename> shared state cache 
+                items would become invalid.
                 But, because this is a change that is external to the code and therefore implicit,
                 the associated shared state cache items do not become invalidated.
-                In this case, the build process would use the cached items rather than running the
+                In this case, the build process uses the cached items rather than running the
                 task again.
                 Obviously, these types of implicit changes can cause problems.
             </para>
@@ -576,9 +578,9 @@
                 the checksum calculation and thus, will invalidate the associated area of sstate cache.
                 You need to be aware of any implicit changes that are not obvious changes to the
                 code and could affect the output of a given task.
-                Once you are aware of such a change, you can take steps to invalidate the cache
-                and force the task to run.
-                The step to take is as simple as changing a function's comments in the source code.
+                Once you are aware of such changes, you can take steps to invalidate the cache
+                and force the tasks to run.
+                The steps to take are as simple as changing function's comments in the source code.
                 For example, to invalidate package shared state files, change the comment statements
                 of <filename>do_package</filename> or the comments of one of the functions it calls.
                 The change is purely cosmetic, but it causes the checksum to be recalculated and
