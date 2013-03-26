@@ -409,7 +409,7 @@
     <title>Maintaining Build Output Quality</title>
 
     <para>
-        A build's quality can be influenced by many things.
+        Many factors can influence the quality of a build.
         For example, if you upgrade a recipe to use a new version of an upstream software
         package or you experiment with some new configuration options, subtle changes
         can occur that you might not detect until later.
@@ -417,7 +417,7 @@
         In this case, a new version of a piece of software might introduce an optional
         dependency on another library, which is auto-detected.
         If that library has already been built when the software is building,
-        then the software will link to the built library and that library will be pulled
+        the software will link to the built library and that library will be pulled
         into your image along with the new software even if you did not want the
         library.
     </para>
@@ -427,7 +427,7 @@
         the quality of your build output.
         You can use the class to highlight unexpected and possibly unwanted
         changes in the build output.
-        When you enable build history it records information about the contents of
+        When you enable build history, it records information about the contents of
         each package and image and then commits that information to a local Git
         repository where you can examine the information.
     </para>
@@ -478,13 +478,13 @@
             are using the OEBasicHash signature generator (the default
             for many current distro configurations including
             <filename>DISTRO = "poky"</filename> and
-            <filename>DISTRO = ""</filename>) will result in the packaging
+            <filename>DISTRO = ""</filename>) and will result in the packaging
             tasks being re-run during the subsequent build.
         </para>
 
         <para>
             To disable the build history functionality without causing the
-            packaging tasks to be re-run, add just this statement to your
+            packaging tasks to be re-run, add this statement to your
             <filename>conf/local.conf</filename> file:
             <literallayout class='monospaced'>
      BUILDHISTORY_FEATURES = ""
@@ -497,7 +497,7 @@
 
         <para>
             Build history information is kept in
-            <link linkend='var-TMPDIR'><filename>$TMPDIR</filename></link><filename>/buildhistory</filename>
+            <filename>$</filename><link linkend='var-TMPDIR'><filename>TMPDIR</filename></link><filename>/buildhistory</filename>
             in the Build Directory.
             The following is an example abbreviated listing:
             <imagedata fileref="figures/buildhistory.png" align="center" width="6in" depth="4in" />
@@ -523,7 +523,7 @@
         /usr/share/idl /usr/share/omf /usr/share/sounds /usr/lib/bonobo/servers
      FILELIST = /etc/busybox.links /etc/init.d/hwclock.sh /bin/busybox /bin/sh
                 </literallayout>
-                Most of these name-value pairs corresponds to variables used
+                Most of these name-value pairs correspond to variables used
                 to produce the package.
                 The exceptions are <filename>FILELIST</filename>, which is the
                 actual list of files in the package, and
@@ -553,28 +553,28 @@
             <para>
                 The files produced for each image are as follows:
                 <itemizedlist>
-                    <listitem><para><emphasis>build-id:</emphasis>
+                    <listitem><para><filename>build-id:</filename>
                         Human-readable information about the build configuration
                         and metadata source revisions.</para></listitem>
-                    <listitem><para><emphasis>*.dot:</emphasis>
+                    <listitem><para><filename>*.dot:</filename>
                         Dependency graphs for the image that are
                         compatible with <filename>graphviz</filename>.
                         </para></listitem>
-                    <listitem><para><emphasis>files-in-image.txt:</emphasis>
+                    <listitem><para><filename>files-in-image.txt:</filename>
  	                    A list of files in the image with permissions,
                         owner, group, size, and symlink information.
                         </para></listitem>
-                    <listitem><para><emphasis>image-info.txt:</emphasis>
+                    <listitem><para><filename>image-info.txt:</filename>
                         A text file containing name-value pairs with information
                         about the image.
                         See the following listing example for more information.
                         </para></listitem>
-                    <listitem><para><emphasis>installed-package-names.txt:</emphasis>
+                    <listitem><para><filename>installed-package-names.txt:</filename>
                         A list of installed packages by name only.</para></listitem>
-                    <listitem><para><emphasis>installed-package-sizes.txt:</emphasis>
+                    <listitem><para><filename>installed-package-sizes.txt:</filename>
                         A list of installed packages ordered by size.
                         </para></listitem>
-                    <listitem><para><emphasis>installed-packages.txt:</emphasis>
+                    <listitem><para><filename>installed-packages.txt:</filename>
                         A list of installed packages with fuill package
                         filenames.</para></listitem>
                 </itemizedlist>
@@ -655,7 +655,7 @@
 
             <para>
                 A command-line tool called <filename>buildhistory-diff</filename>
-                does exist though that queries the Git repository and prints just
+                does exist, though, that queries the Git repository and prints just
                 the differences that might be significant in human-readable form.
                 Here is an example:
                 <literallayout class='monospaced'>
