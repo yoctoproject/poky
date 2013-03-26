@@ -254,7 +254,7 @@
             the <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>.
             It does not matter if the working directory changes because it should not
             affect the output for target packages.
-            Also, the build process has the objective of making native/cross packages relocatable.
+            Also, the build process has the objective of making native or cross packages relocatable.
             The checksum therefore needs to exclude <filename>WORKDIR</filename>.
             The simplistic approach for excluding the working directory is to set
             <filename>WORKDIR</filename> to some fixed value and create the checksum
@@ -273,9 +273,9 @@
 
         <para>
             So far we have solutions for shell scripts.
-            What about python tasks?
+            What about Python tasks?
             The same approach applies even though these tasks are more difficult.
-            The process needs to figure out what variables a python function accesses
+            The process needs to figure out what variables a Python function accesses
             and what functions it calls.
             Again, the incremental build solution contains code that first figures out
             the variable and function dependencies, and then creates a checksum for the data
@@ -305,7 +305,7 @@
         </para>
 
         <para>
-            Consider a case with inline python, for example, where BitBake is not
+            Consider a case with in-line Python, for example, where BitBake is not
             able to figure out dependencies.
             When running in debug mode (i.e. using <filename>-DDD</filename>), BitBake
             produces output when it discovers something for which it cannot figure out
@@ -319,7 +319,8 @@
             Information based on direct inputs is referred to as the "basehash" in the
             code.
             However, there is still the question of a task's indirect inputs - the
-            things that were already built and present in the Build Directory.
+            things that were already built and present in the 
+            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
             The checksum (or signature) for a particular task needs to add the hashes
             of all the tasks on which the particular task depends.
             Choosing which dependencies to add is a policy decision.
@@ -350,7 +351,7 @@
         <para>
             The rules for deciding which hashes of dependent tasks to include through
             dependency chains are more complex and are generally accomplished with a
-            python function.
+            Python function.
             The code in <filename>meta/lib/oe/sstatesig.py</filename> shows two examples
             of this and also illustrates how you can insert your own policy into the system
             if so desired.
@@ -365,7 +366,9 @@
             </literallayout>
             The "OEBasicHash" <filename>BB_SIGNATURE_HANDLER</filename> is the same as the
             "OEBasic" version but adds the task hash to the stamp files.
-            This results in any metadata change that changes the task hash, automatically
+            This results in any 
+            <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>
+            change that changes the task hash, automatically
             causing the task to be run again.
             This removes the need to bump <link linkend='var-PR'><filename>PR</filename></link>
             values and changes to metadata automatically ripple across the build.
