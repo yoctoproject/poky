@@ -257,6 +257,7 @@ REGEX_pn-libffi-native = "[hH][rR][eE][fF]=\"ftp://sourceware.org:21/pub/libffi/
 REGEX_pn-nativesdk-libffi = "[hH][rR][eE][fF]=\"ftp://sourceware.org:21/pub/libffi/libffi\-(?P<pver>((\d+[\.\-_]*)+))\.tar\.gz\""
 REGEX_pn-gtk+ = "[hH][rR][eE][fF]=\"gtk\+\-(?P<pver>((\d+[\.\-_]*)+))\.tar\.xz\""
 REGEX_pn-gtk+3 = "[hH][rR][eE][fF]=\"gtk\+\-(?P<pver>((\d+[\.\-_]*)+))\.tar\.xz\""
+REGEX_pn-gtk-update-icon-cache-native = "[hH][rR][eE][fF]=\"gtk\+\-(?P<pver>((\d+[\.\-_]*)+))\.tar\.xz\""
 REGEX_pn-webkit-gtk = "[hH][rR][eE][fF]=\"webkitgtk\-(?P<pver>((\d+[\.\-_]*)+))\.tar\.xz\""
 REGEX_URI_pn-bind = "ftp://ftp.isc.org/isc/bind9/"
 REGEX_pn-bind = "[hH][rR][eE][fF]=\"ftp://ftp.isc.org:21/isc/bind9/(?P<pver>((P?\d+[\.\-_]*)+))/\""
