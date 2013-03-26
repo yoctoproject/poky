@@ -902,48 +902,60 @@
             <title>License Flag Matching</title>
 
             <para>
-		        The definition of "matching" in reference to a
-		        recipe's <filename>LICENSE_FLAGS</filename> setting is simple.
-                However, some things exist that you should know about in order to
-                correctly and effectively use it.
+		        In general, license flag matching is simple.
+                However, understanding some concepts will help you 
+                correctly and effectively use matching.
             </para>
 
             <para>
                 Before a flag
                 defined by a particular recipe is tested against the
                 contents of the <filename>LICENSE_FLAGS_WHITELIST</filename> variable, the
-                string <filename>_${PN}</filename> (with
-                <link linkend='var-PN'><filename>PN</filename></link> expanded of course) is
-                appended to the flag, thus automatically making each
-                <filename>LICENSE_FLAGS</filename> value recipe-specific.
-                That string is
-                then matched against the whitelist.
-                So if you specify <filename>LICENSE_FLAGS = "commercial"</filename> in recipe
-		        "foo" for example, the string <filename>"commercial_foo"</filename>
-                would normally be what is specified in the whitelist in order for it to
-                match.
+                expanded string <filename>_${PN}</filename> is
+                appended to the flag.
+                This expansion makes each <filename>LICENSE_FLAGS</filename> 
+                value recipe-specific.
+                After expansion, the string is then matched against the 
+                whitelist.
+                Thus, specifying <filename>LICENSE_FLAGS = "commercial"</filename> 
+                in recipe "foo" for example, results in the string 
+                <filename>"commercial_foo"</filename>.
+                And that string would normally be appears in the whitelist
+                in order for a match to occur.
             </para>
 
             <para>
-                You can broaden the match by
-                putting any "_"-separated beginning subset of a
-                <filename>LICENSE_FLAGS</filename> flag in the whitelist, which will also
-                match.
-                For example, simply specifying "commercial" in
-                the whitelist would match any expanded <filename>LICENSE_FLAGS</filename>
-                definition starting with "commercial" such as
-                "commercial_foo" and "commercial_bar", which are the
-                strings that would be automatically generated for
-                hypothetical "foo" and "bar" recipes assuming those
-                recipes had simply specified the following:
+                Judicious use of the <filename>LICENSE_FLAGS</filename> 
+                strings and the contents of the 
+                <filename>LICENSE_FLAGS_WHITELIST</filename> variable
+                allows you a lot of flexibility for matching license
+                flags.
+                For example, you can broaden the matching capabilities by 
+                using string subsets from the <filename>LICENSE_FLAGS</filename> 
+                variables in the whitelist.
+                <note>Be sure to use the part of the expanded  
+                    string that precedes
+                    the underscore character (e.g.   
+                    <filename>usethispart_1.3</filename>,
+                    <filename>usethispart_1.4</filename>, and so forth).
+                </note>
+                For example, simply specifying the string "commercial" in
+                the whitelist matches any expanded 
+                <filename>LICENSE_FLAGS</filename> definition that starts with 
+                the string "commercial" such as "commercial_foo" and 
+                "commercial_bar", which are the strings the build system 
+                automatically generates for hypothetical recipes named
+                "foo" and "bar" assuming those recipes simply specify the 
+                following:
                 <literallayout class='monospaced'>
      LICENSE_FLAGS = "commercial"
                 </literallayout>
             </para>
 
             <para>
-                Broadening the match allows for a range of specificity for the items
-                in the whitelist, from more general to perfectly
+                Judicious use of the strings with the 
+                <filename>LICENSE_FLAGS</filename> variable and the Broadening the match allows for a range of specificity for the 
+                items in the whitelist, from more general to perfectly
                 specific.
                 So you have the choice of exhaustively
                 enumerating each license flag in the whitelist to
