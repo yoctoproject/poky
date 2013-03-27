@@ -7,7 +7,7 @@
 
     <para>
         This chapter provides technical details for various parts of the Yocto Project.
-        Currently, topics include Yocto Project components, 
+        Currently, topics include Yocto Project components,
         shared state (sstate) cache, x32, and Licenses.
     </para>
 
@@ -17,7 +17,7 @@
     <para>
         The BitBake task executor together with various types of configuration files form the
         OpenEmbedded Core.
-        This section overviews these by describing what they are used for 
+        This section overviews these by describing what they are used for
         and how they interact.
     </para>
 
@@ -126,8 +126,8 @@
         <title>Classes</title>
 
         <para>
-            Class files (<filename>.bbclass</filename>) contain information that 
-            is useful to share between 
+            Class files (<filename>.bbclass</filename>) contain information that
+            is useful to share between
             <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> files.
             An example is the Autotools class, which contains
             common settings for any application that Autotools uses.
@@ -319,7 +319,7 @@
             Information based on direct inputs is referred to as the "basehash" in the
             code.
             However, there is still the question of a task's indirect inputs - the
-            things that were already built and present in the 
+            things that were already built and present in the
             <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
             The checksum (or signature) for a particular task needs to add the hashes
             of all the tasks on which the particular task depends.
@@ -366,7 +366,7 @@
             </literallayout>
             The "OEBasicHash" <filename>BB_SIGNATURE_HANDLER</filename> is the same as the
             "OEBasic" version but adds the task hash to the stamp files.
-            This results in any 
+            This results in any
             <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>
             change that changes the task hash, automatically
             causing the task to be run again.
@@ -543,7 +543,7 @@
                         information in the file.
                         If you specify two files, BitBake compares the two files and dumps out
                         the differences between the two.
-                        This more easily helps answer the question of "What 
+                        This more easily helps answer the question of "What
                         changed between X and Y?"</para></listitem>
                 </itemizedlist>
             </para>
@@ -560,9 +560,9 @@
                 into the checksum calculation, but do affect a task's output.
                 A good example is perhaps when a tool changes its output.
                 Assume that the output of <filename>rpmdeps</filename> needed to change.
-                The result of the change should be that all the 
+                The result of the change should be that all the
                 <filename>package</filename>, <filename>package_write_rpm</filename>,
-                and <filename>package_deploy-rpm</filename> shared state cache 
+                and <filename>package_deploy-rpm</filename> shared state cache
                 items would become invalid.
                 But, because this is a change that is external to the code and therefore implicit,
                 the associated shared state cache items do not become invalidated.
@@ -780,8 +780,8 @@
                 of <filename><link linkend='var-S'>S</link></filename>.
             </para>
             <para>
-                Note that <filename>LIC_FILES_CHKSUM</filename> variable is 
-                mandatory for all recipes, unless the 
+                Note that <filename>LIC_FILES_CHKSUM</filename> variable is
+                mandatory for all recipes, unless the
                 <filename>LICENSE</filename> variable is set to "CLOSED".
             </para>
         </section>
@@ -902,94 +902,104 @@
             <title>License Flag Matching</title>
 
             <para>
-		        In general, license flag matching is simple.
-                However, understanding some concepts will help you 
+		        License flag matching allows you to control what recipes the
+                OpenEmbedded build system includes in the build.
+                Fundamentally, the build system attempts to match
+                <filename>LICENSE_FLAG</filename> strings found in
+                recipes against <filename>LICENSE_FLAGS_WHITELIST</filename>
+                strings found in the whitelist.
+                A match, causes the build system to include a recipe in the
+                build, while failure to find a match causes the build system to
+                exclued a recipe.
+            </para>
+
+            <para>
+                In general, license flag matching is simple.
+                However, understanding some concepts will help you
                 correctly and effectively use matching.
             </para>
 
             <para>
                 Before a flag
                 defined by a particular recipe is tested against the
-                contents of the <filename>LICENSE_FLAGS_WHITELIST</filename> variable, the
-                expanded string <filename>_${PN}</filename> is
-                appended to the flag.
-                This expansion makes each <filename>LICENSE_FLAGS</filename> 
+                contents of the whitelist, the expanded string
+                <filename>_${PN}</filename> is appended to the flag.
+                This expansion makes each <filename>LICENSE_FLAGS</filename>
                 value recipe-specific.
-                After expansion, the string is then matched against the 
+                After expansion, the string is then matched against the
                 whitelist.
-                Thus, specifying <filename>LICENSE_FLAGS = "commercial"</filename> 
-                in recipe "foo" for example, results in the string 
+                Thus, specifying
+                <filename>LICENSE_FLAGS = "commercial"</filename>
+                in recipe "foo", for example, results in the string
                 <filename>"commercial_foo"</filename>.
-                And that string would normally be appears in the whitelist
-                in order for a match to occur.
+                And, to create a match, that string must appear in the
+                whitelist.
             </para>
 
             <para>
-                Judicious use of the <filename>LICENSE_FLAGS</filename> 
-                strings and the contents of the 
+                Judicious use of the <filename>LICENSE_FLAGS</filename>
+                strings and the contents of the
                 <filename>LICENSE_FLAGS_WHITELIST</filename> variable
-                allows you a lot of flexibility for matching license
-                flags.
-                For example, you can broaden the matching capabilities by 
-                using string subsets from the <filename>LICENSE_FLAGS</filename> 
-                variables in the whitelist.
-                <note>Be sure to use the part of the expanded  
-                    string that precedes
-                    the underscore character (e.g.   
-                    <filename>usethispart_1.3</filename>,
+                allows you a lot of flexibility for including or excluding
+                recipes based on licensing.
+                For example, you can broaden the matching capabilities by
+                using license flags string subsets in the whitelist.
+                <note>When using a string subset, be sure to use the part of
+                    the expanded string that precedes the appended underscore
+                    character (e.g. <filename>usethispart_1.3</filename>,
                     <filename>usethispart_1.4</filename>, and so forth).
                 </note>
                 For example, simply specifying the string "commercial" in
-                the whitelist matches any expanded 
-                <filename>LICENSE_FLAGS</filename> definition that starts with 
-                the string "commercial" such as "commercial_foo" and 
-                "commercial_bar", which are the strings the build system 
+                the whitelist matches any expanded
+                <filename>LICENSE_FLAGS</filename> definition that starts with
+                the string "commercial" such as "commercial_foo" and
+                "commercial_bar", which are the strings the build system
                 automatically generates for hypothetical recipes named
-                "foo" and "bar" assuming those recipes simply specify the 
+                "foo" and "bar" assuming those recipes simply specify the
                 following:
                 <literallayout class='monospaced'>
      LICENSE_FLAGS = "commercial"
                 </literallayout>
+                Thus, you can choose to exhaustively
+                enumerate each license flag in the whitelist and
+                allow only specific recipes into the image, or
+                you can use a string subset that causes a broader range of
+                matches to allow a range of recipes into the image.
             </para>
 
             <para>
-                Judicious use of the strings with the 
-                <filename>LICENSE_FLAGS</filename> variable and the Broadening the match allows for a range of specificity for the 
-                items in the whitelist, from more general to perfectly
-                specific.
-                So you have the choice of exhaustively
-                enumerating each license flag in the whitelist to
-                allow only those specific recipes into the image, or
-                of using a more general string to pick up anything
-                matching just the first component or components of the specified
-                string.
+                This scheme works even if the
+                <filename>LICENSE_FLAG</filename> string already
+                has <filename>_${PN}</filename> appended.
+                For example, the build system turns the license flag
+                "commercial_1.2_foo" into "commercial_1.2_foo_foo" and would
+                match both the general "commercial" and the specific
+                "commercial_1.2_foo" strings found in the whitelist, as
+                expected.
             </para>
 
             <para>
-                This scheme works even if the flag already
-                has <filename>_${PN}</filename> appended - the extra <filename>_${PN}</filename> is
-                redundant, but does not affect the outcome.
-                For example, a license flag of "commercial_1.2_foo" would
-                turn into "commercial_1.2_foo_foo" and would match
-                both the general "commercial" and the specific
-                "commercial_1.2_foo", as expected.
-                The flag would also match
-                "commercial_1.2_foo_foo" and "commercial_1.2", which
-                does not make much sense regarding use in the whitelist.
-            </para>
-
-            <para>
-                For a versioned string, you could instead specify
-                "commercial_foo_1.2", which would turn into
-                "commercial_foo_1.2_foo".
-                And, as expected, this flag allows
-                you to pick up this package along with
-                anything else "commercial" when you specify "commercial"
-                in the whitelist.
-                Or, the flag allows you to pick up this package along with anything "commercial_foo"
-                regardless of version when you use "commercial_foo" in the whitelist.
-                Finally, you can be completely specific about the package and version and specify
-                "commercial_foo_1.2" package and version.
+                Here are some other scenarios:
+                <itemizedlist>
+                    <listitem><para>You can specify a versioned string in the
+                        recipe such as "commercial_foo_1.2" in a "foo" recipe.
+                        The build system expands this string to
+                        "commercial_foo_1.2_foo".
+                        Combine this license flag with a whitelist that has
+                        the string "commercial" and you match the flag along
+                        with any other flag that starts with the string
+                        "commercial".</para></listitem>
+                    <listitem><para>Under the same circumstances, you can
+                        use "commercial_foo" in the whitelist and the
+                        build system not only matches "commercial_foo_1.2" but
+                        also matches any license flag with the string
+                        "commercial_foo", regardless of the version.
+                        </para></listitem>
+                    <listitem><para>You can be very specific and use both the
+                        package and version parts in the whitelist (e.g.
+                        "commercial_foo_1.2") to specifically match a
+                        versioned recipe.</para></listitem>
+                </itemizedlist>
             </para>
         </section>
 
@@ -1006,7 +1016,7 @@
      COMMERCIAL_QT = ""
                 </literallayout>
                 If you want to enable these components, you can do so by making sure you have
-                statements similar to the following 
+                statements similar to the following
                 in your <filename>local.conf</filename> configuration file:
                 <literallayout class='monospaced'>
      COMMERCIAL_AUDIO_PLUGINS = "gst-plugins-ugly-mad \
