@@ -16,7 +16,7 @@
 
     <para>
         This section provides migration information for moving to the
-        Yocto Project 1.3 Release.
+        Yocto Project 1.3 Release from the prior release.
     </para>
 
     <section id='1.3-local-configuration'>
@@ -32,10 +32,10 @@
             <title>SSTATE_MIRRORS</title>
 
             <para>
-                The shared state cache (sstate-cache) as pointed to by
-                <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link> by default
-                now has two-character subdirectories to prevent there being an issue with too
-                many files in the same directory.
+                The shared state cache (sstate-cache), as pointed to by
+                <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link>, by default
+                now has two-character subdirectories to prevent issues rising
+                from too many files in the same directory.
                 Also, native sstate-cache packages will go into a subdirectory named using
                 the distro ID string.
                 If you copy the newly structured sstate-cache to a mirror location
@@ -55,15 +55,15 @@
             <title>bblayers.conf</title>
 
             <para>
-                The <filename>meta-yocto</filename> layer has been split into
-                two parts: <filename>meta-yocto</filename> and
-                <filename>meta-yocto-bsp</filename>, corresponding to the
-                Poky reference distro configuration and the reference
-                hardware Board Support Packages (BSPs), respectively.
+                The <filename>meta-yocto</filename> layer consits of two parts
+                that correspond to the Poky reference distribution and the
+                reference hardware Board Support Packages (BSPs), respectively:
+                <filename>meta-yocto</filename> and
+                <filename>meta-yocto-bsp</filename>.
                 When running BitBake or Hob for the first time after upgrading,
                 your <filename>conf/bblayers.conf</filename> file will be
                 updated to handle this change and you will be asked to
-                re-run/restart for the changes to take effect.
+                re-run or restart for the changes to take effect.
             </para>
         </section>
     </section>
@@ -171,7 +171,7 @@
                 should now include "splash" instead to enable the boot-up
                 splash screen.
                 Retaining "apps-console-core" will still include the splash
-                screen generates a warning.
+                screen but generates a warning.
                 The "apps-x11-core" and "apps-x11-games"
                 <filename>IMAGE_FEATURES</filename> features have been removed.
             </para>
@@ -183,7 +183,8 @@
             <para>
                 The following recipes have been removed.
                 For most of them, it is unlikely that you would have any
-                references to them in your own metadata.
+                references to them in your own
+                <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>.
                 However, you should check your metadata against this list to be sure:
                 <itemizedlist>
                     <listitem><para><emphasis><filename>libx11-trim</filename></emphasis>:
@@ -220,11 +221,12 @@
                 had become obsolete or broken.
                 Additionally, these recipes were not parsed in the default configuration.
                 Many of these recipes are already provided in an updated and
-                maintained form within OpenEmbedded community layers such as
+                maintained form within the OpenEmbedded community layers such as
                 <filename>meta-oe</filename> and <filename>meta-gnome</filename>.
                 For the remainder, you can now find them in the
                 <filename>meta-extras</filename> repository, which is in the
-                Yocto Project source repositories.
+                Yocto Project
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-repositories'>Source Repositories</ulink>.
             </para>
         </section>
     </section>
