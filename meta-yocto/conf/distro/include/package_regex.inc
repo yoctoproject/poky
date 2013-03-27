@@ -48,6 +48,7 @@ REGEX_URI_pn-nativesdk-db = "http://www.oracle.com/technetwork/products/berkeley
 REGEX_pn-nativesdk-db = "[hH][rR][eE][fF]=\"http://download.oracle.com/otn/berkeley-db/db-(?P<pver>((\d+[\.\-_]*)+))\.tar\.gz\""
 REGEX_URI_pn-e2fsprogs = "http://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/"
 REGEX_pn-e2fsprogs = "[hH][rR][eE][fF]=\"/projects/e2fsprogs/files/e2fsprogs/v(?P<pver>((\d+[\.\-_]*)+))/\""
+REGEX_pn-elfutils = "[hH][rR][eE][fF]=\"(elfutils\-)?(?P<pver>((\d+[\.\-_]*)+))(/|\.tar\.bz2)\""
 REGEX_URI_pn-expat = "http://sourceforge.net/projects/expat/files/expat/"
 REGEX_pn-expat-native = "[hH][rR][eE][fF]=\"/projects/expat/files/expat/(?P<pver>((\d+[\.\-_]*)+))/\""
 REGEX_URI_pn-expat-native = "http://sourceforge.net/projects/expat/files/expat/"
