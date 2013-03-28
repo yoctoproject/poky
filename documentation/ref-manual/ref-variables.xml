@@ -2942,7 +2942,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>The following list explains the available URI protocols:
                     <itemizedlist>
                         <listitem><para><emphasis><filename>file://</filename> -</emphasis> Fetches files, which is usually
-                            a file shipped with the metadata, from the local machine.
+                            a file shipped with the
+                            <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>,
+                            from the local machine.
                             The path is relative to the
                             <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>
                             variable.
@@ -2955,11 +2957,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                                     For example, using <filename>bash</filename> to build for the native
                                     machine, <filename>PN</filename> is <filename>bash-native</filename>.
                                     Using <filename>bash</filename> to build for the target and for Multilib,
-                                    <filename>PN</filename> would be <filename>bash</filename> and
+                                    <link linkend='var-PN'><filename>PN</filename></link>
+                                    would be <filename>bash</filename> and
                                     <filename>lib64-bash</filename>, respectively.
                                     </para></listitem>
                                 <listitem><para><emphasis><filename>${PF}</filename> - </emphasis>
-                                    <filename>${PN}-${EXTENDPE}${PV}-${PR}</filename>.
+                                    <filename>${PN}-${EXTENDPE}${<link linkend='var-PV'>PV</link>}-${<link linkend='var-PR'>PR</link>}</filename>.
                                     The recipe name including all version and revision numbers
                                     (i.e. <filename>eglibc-2.13-r20+svnr15508/</filename> and
                                     <filename>bash-4.2-r1/</filename>).</para></listitem>
@@ -2971,7 +2974,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                                     base recipe name without any special suffix or version numbers.
                                     </para></listitem>
                                 <listitem><para><emphasis><filename>${BP}</filename> -</emphasis>
-                                    <filename>${BPN}-${PV}</filename>.
+                                    <filename>${<link linkend='var-BPN'>BPN</link>}-${PV}</filename>.
                                     The base recipe name and version but without any special
                                     package name suffix.</para></listitem>
                                 <listitem><para><emphasis>Files -</emphasis> Files beneath the directory in which the recipe
@@ -2984,7 +2987,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                         <listitem><para><emphasis><filename>git://</filename> -</emphasis> Fetches files from a
                             Git revision control repository.</para></listitem>
                         <listitem><para><emphasis><filename>osc://</filename> -</emphasis> Fetches files from
-                            an OSC (OpenSuse Build service) revision control repository.</para></listitem>
+                            an OSC (OpenSUSE Build service) revision control repository.</para></listitem>
                         <listitem><para><emphasis><filename>repo://</filename> -</emphasis> Fetches files from
                             a repo (Git) repository.</para></listitem>
                         <listitem><para><emphasis><filename>svk://</filename> -</emphasis> Fetches files from
@@ -3020,24 +3023,31 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
                 <para>Here are options specific to recipes building code from a revision control system:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>mindate</filename> -</emphasis> Only applies
-                            the patch if <link linkend='var-SRCDATE'><filename>SRCDATE</filename></link>
-                            is equal to or greater than <filename>mindate</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>maxdate</filename> -</emphasis> Only applies
-                            the patch if <link linkend='var-SRCDATE'><filename>SRCDATE</filename></link>
-                            is not later than <filename>mindate</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>minrev</filename> -</emphasis> Only applies
-                            the patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
-                            is equal to or greater than <filename>minrev</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>maxrev</filename> -</emphasis> Only applies
-                            the patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
-                            is not later than <filename>maxrev</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>rev</filename> -</emphasis> Only applies the
-                            patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
-                            is equal to <filename>rev</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>notrev</filename> -</emphasis> Only applies
-                            the patch if <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
-                            is not equal to <filename>rev</filename>.</para></listitem>
+                        <listitem><para><emphasis><filename>mindate</filename> -</emphasis>
+                            Apply the patch only if
+                            <link linkend='var-SRCDATE'><filename>SRCDATE</filename></link>
+                            is equal to or greater than <filename>mindate</filename>.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>maxdate</filename> -</emphasis>
+                            Apply the patch only if <filename>SRCDATE</filename>
+                            is not later than <filename>mindate</filename>.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>minrev</filename> -</emphasis>
+                            Apply the patch only if <filename>SRCREV</filename>
+                            is equal to or greater than <filename>minrev</filename>.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>maxrev</filename> -</emphasis>
+                            Apply the patch only if <filename>SRCREV</filename>
+                            is not later than <filename>maxrev</filename>.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>rev</filename> -</emphasis>
+                            Apply the patch only if <filename>SRCREV</filename>
+                            is equal to <filename>rev</filename>.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>notrev</filename> -</emphasis>
+                            Apply the patch only if <filename>SRCREV</filename>
+                            is not equal to <filename>rev</filename>.
+                            </para></listitem>
                     </itemizedlist>
                 </para>
                 <para>Here are some additional options worth mentioning:
@@ -3049,7 +3059,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                             (or extracts its contents) into the specified
                             subdirectory of <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>.
                             This option is useful for unusual tarballs or other archives that
-                            don't have their files already in a subdirectory within the archive.
+                            do not have their files already in a subdirectory within the archive.
                             </para></listitem>
                         <listitem><para><emphasis><filename>name</filename> -</emphasis> Specifies a
                             name to be used for association with <filename>SRC_URI</filename> checksums
