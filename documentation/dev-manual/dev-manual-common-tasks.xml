@@ -1184,8 +1184,8 @@
         <title>Working With Libraries</title>
 
         <para>
-            Libraries are an integral part of your system. 
-            This section describes some common practices you might find 
+            Libraries are an integral part of your system.
+            This section describes some common practices you might find
             helpful when working with libraries to build your system:
             <itemizedlist>
                 <listitem><para><link linkend='including-static-library-files'>How to include static library files</link>
@@ -1442,46 +1442,46 @@
             <title>Installing Multiple Versions of the Same Library</title>
 
             <para>
-                Situations can exist where you need to install and use 
+                Situations can exist where you need to install and use
                 multiple versions of the same library on the same system
                 at the same time.
-                These situations almost always exist when a library API 
-                changes and you have multiple pieces of software that 
+                These situations almost always exist when a library API
+                changes and you have multiple pieces of software that
                 depend on the separate versions of the library.
-                To accomodate these situations, you can install multiple 
+                To accomodate these situations, you can install multiple
                 versions of the same library in parallel on the same system.
             </para>
 
             <para>
                 The process is straight forward as long as the libraries use
                 proper versioning.
-                With properly versioned libraries, all you need to do to 
+                With properly versioned libraries, all you need to do to
                 individually specify the libraries is create separate,
-                appropriately named recipes where the 
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink> part of the 
+                appropriately named recipes where the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink> part of the
                 name includes a portion that differentiates each library version
                 (e.g.the major part of the version number).
                 Thus, instead of having a single recipe that loads one version
-                of a library (e.g. <filename>clutter</filename>), you provide 
+                of a library (e.g. <filename>clutter</filename>), you provide
                 multiple recipes that result in different versions
                 of the libraries you want.
-                As an example, the following two recipes would allow the 
-                two separate versions of the <filename>clutter</filename> 
+                As an example, the following two recipes would allow the
+                two separate versions of the <filename>clutter</filename>
                 library to co-exist on the same system:
                 <literallayout class='monospaced'>
      clutter-1.6_1.6.20.bb
      clutter-1.8_1.8.4.bb
                 </literallayout>
-                Additionally, if you have other recipes that depend on a given 
-                library, you need to use the 
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink> 
-                variable to create the dependency. 
+                Additionally, if you have other recipes that depend on a given
+                library, you need to use the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
+                variable to create the dependency.
                 Continuing with the same example, if you want to have a recipe
-                depend on the 1.8 version of the <filename>clutter</filename> 
+                depend on the 1.8 version of the <filename>clutter</filename>
                 library, use the following in your recipe:
                 <literallayout class='monospaced'>
      DEPENDS = "clutter-1.8"
-                </literallayout> 
+                </literallayout>
             </para>
         </section>
     </section>
@@ -2197,9 +2197,9 @@
 
         <para>
             Very small distributions have some significant advantages such
-            as requiring less on-die or in-package memory (cheaper), better 
-            performance through efficient cache usage, lower power requirements 
-            due to less memory, faster boot times, and reduced development 
+            as requiring less on-die or in-package memory (cheaper), better
+            performance through efficient cache usage, lower power requirements
+            due to less memory, faster boot times, and reduced development
             overhead.
             Some real-world examples where a very small distribution gives
             you distinct advantages are digital cameras, medical devices,
@@ -2346,7 +2346,7 @@
             <title>Trim the Root Filesystem</title>
 
             <para>
-                The root filesystem is made up of packages for booting, 
+                The root filesystem is made up of packages for booting,
                 libraries, and applications.
                 To change things you can configure how the packaging happens,
                 which changes the way you build them.
@@ -2366,7 +2366,7 @@
                 a certain size.
                 This example filters out anything below 100 Kbytes.
                 The sizes reported by the tool are uncompressed and thus,
-                will be smaller by a relatively constant factor in a 
+                will be smaller by a relatively constant factor in a
                 compressed root filesystem.
                 When you examine your log file, you can focus on areas of the
                 root filesystem that take up large amounts of memory.
@@ -2390,7 +2390,7 @@
                 result in minimal impact on the feature set.
                 For example, you might not need a VGA display.
                 Or, you might be able to get by with <filename>devtmpfs</filename>
-                and <filename>mdev</filename> instead of 
+                and <filename>mdev</filename> instead of
                 <filename>udev</filename>.
             </para>
 
@@ -2406,10 +2406,10 @@
 
             <para>
                 Finally, you should consider exactly the type of root
-                filesystem you need to meet your needs while also reducing 
+                filesystem you need to meet your needs while also reducing
                 its size.
-                For example, consider <filename>cramfs</filename>, 
-                <filename>squashfs</filename>, <filename>ubifs</filename>, 
+                For example, consider <filename>cramfs</filename>,
+                <filename>squashfs</filename>, <filename>ubifs</filename>,
                 <filename>ext2</filename>, or an <filename>initramfs</filename>
                 using <filename>initramfs</filename>.
                 Be aware that <filename>ext3</filename> requires a 1 Mbyte
@@ -2455,7 +2455,7 @@
                 drivers, networking, core kernel files, filesystem, sound,
                 and so forth.
                 The sizes reported by the tool are uncompressed and thus,
-                will be smaller by a relatively constant factor in a compressed 
+                will be smaller by a relatively constant factor in a compressed
                 kernel image.
                 Look to reduce the areas that are large and taking up around
                 the "90% rule".
@@ -3074,6 +3074,61 @@
         </para>
     </section>
 
+    <section id="selecting-an-initialization-manager">
+        <title>Selecting an Initialization Manager</title>
+
+        <para>
+            By default, the Yocto Project uses
+            <filename>SysVinit</filename> as the initialization manager.
+            However, support also exists for <filename>systemd</filename>.
+            If you want to use <filename>SysVinit</filename>, you do
+            not have to do anything.
+            But, if you want to use <filename>systemd</filename>, you must
+            take some steps as described in the following sections.
+        </para>
+
+        <section id='using-systemd-exclusively'>
+            <title>Using systemd Exclusively</title>
+
+            <para>
+                Set the following variables in your
+                <filename>local.conf</filename> file as follows:
+                <literallayout class='monospaced'>
+     DISTRO_FEATURES = "systemd"
+     VIRTUAL-RUNTIME_init-manager = "systemd"
+                </literallayout>
+                You can save some disk space by adding
+                <filename>sysvinit</filename> to the distribution features
+                considered for backfill as follows:
+                <literallayout class='monospaced'>
+     DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
+                </literallayout>
+                Doing so removes any redundant <filename>sysvinit</filename>
+                scripts.
+            </para>
+        </section>
+
+        <section id='use-systemd-for-the-main-image-and-use-sysvinit-for-the-rescue-image'>
+            <title>Use systemd for the Main Image and Use SysVinit for the Rescue Image</title>
+
+            <para>
+                Set the following variables in your
+                <filename>local.conf</filename> file as follows:
+                <literallayout class='monospaced'>
+     DISTRO_FEATURES = "systemd"
+     VIRTUAL-RUNTIME_init-manager = "systemd"
+                </literallayout>
+                Doing so causes your main image to use
+                <filename>packagegroup-core-boot</filename> and
+                <filename>systemd</filename>.
+                The rescue/minimal image cannot use this group.
+                However, it can install <filename>sysvinit</filename>
+                and the appropriate packages with have both
+                <filename>systemd</filename> and <filename>sysvinit</filename>.
+            </para>
+        </section>
+    </section>
+
     <section id='excluding-recipes-from-the-build'>
         <title>Excluding Recipes From the Build</title>
 
@@ -3269,10 +3324,10 @@
 
                 <para>
                     Aside from the GDB cross-binary, you also need a GDB
-                    initialization file in the same top directory in which 
+                    initialization file in the same top directory in which
                     your binary resides.
                     When you start GDB on your host development system, GDB
-                    finds this initialization file and executes all the 
+                    finds this initialization file and executes all the
                     commands within.
                     For information on the <filename>.gdbinit</filename>, see
                     "<ulink url='http://sourceware.org/gdb/onlinedocs/gdb/'>Debugging with GDB</ulink>"
@@ -3289,7 +3344,7 @@
                     the following to set your root filesystem location
                     by using a command with this form:
                     <literallayout class='monospaced'>
-     set sysroot &lt;your-sysroot-path&gt; 
+     set sysroot &lt;your-sysroot-path&gt;
                     </literallayout>
                 </para>
             </section>
@@ -3298,17 +3353,17 @@
                 <title>Launch the Host GDB</title>
 
                 <para>
-                    To launch the host GDB, you need to source the 
+                    To launch the host GDB, you need to source the
                     cross-debugging environment script, which if you installed
-                    the root filesystem in the default location is at 
-                    <filename>/opt/poky/&DISTRO;</filename> and begins with the 
+                    the root filesystem in the default location is at
+                    <filename>/opt/poky/&DISTRO;</filename> and begins with the
                     string "environment-setup".
                 </para>
 
                 <para>
-                    Finally, run the <filename>cross-gdb</filename> binary 
+                    Finally, run the <filename>cross-gdb</filename> binary
                     and provide the inferior binary as part of the command line.
-                    For example, the following command form continues with the 
+                    For example, the following command form continues with the
                     example used in the previous section.
                     This command form loads the <filename>foo</filename> binary
                     as well as the debugging information:
