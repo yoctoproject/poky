@@ -3080,12 +3080,36 @@
         <para>
             By default, the Yocto Project uses
             <filename>SysVinit</filename> as the initialization manager.
-            However, support also exists for <filename>systemd</filename>.
+            However, support also exists for <filename>systemd</filename>,
+            which is a full replacement of for <filename>init</filename> with
+            parallel starting of services, reduced shell overhead and other
+            features, used by many distributions.
+        </para>
+
+        <para>
             If you want to use <filename>SysVinit</filename>, you do
             not have to do anything.
             But, if you want to use <filename>systemd</filename>, you must
             take some steps as described in the following sections.
         </para>
+
+        <note>
+            <para><emphasis>NOTES TO SELF:</emphasis>
+            <filename>systemd</filename> is a full replacement of for init with
+            parallel starting of services, reduced shell overhead and other
+            features, used by many distributions.</para>
+            <para>I think you set the <filename>VIRTUAL-RUNTIME</filename>
+            in a recipe.
+            I found a recipe called
+            <filename>packagegroup-core-boot.bb</filename>, which is an
+            <filename>OE-Core</filename> recipe, that has a bunch of them.
+            The comment refers to the group as "VIRTUAL-RUNTIME providers".
+            The list includes <filename>VIRTUAL-RUNTIME_dev_manager</filename>,
+            <filename>VIRTUAL-RUNTIME_init_manager</filename>,
+            <filename>VIRTUAL-RUNTIME_login_manager</filename>,
+            <filename>VIRTUAL-RUNTIME_initscripts</filename>, and
+            <filename>VIRTUAL-RUNTIME_keymaps</filename>.</para>
+        </note>
 
         <section id='using-systemd-exclusively'>
             <title>Using systemd Exclusively</title>
@@ -3118,8 +3142,8 @@
      DISTRO_FEATURES = "systemd"
      VIRTUAL-RUNTIME_init-manager = "systemd"
                 </literallayout>
-                Doing so causes your main image to use
-                <filename>packagegroup-core-boot</filename> and
+                Doing so causes your main image to use the
+                <filename>packagegroup-core-boot.bb</filename> recipe and
                 <filename>systemd</filename>.
                 The rescue/minimal image cannot use this group.
                 However, it can install <filename>sysvinit</filename>
