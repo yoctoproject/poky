@@ -453,15 +453,35 @@
         </question>
         <answer>
             <para>
-                Images are created to be 1.2 times the size of the populated root filesystem.
-                To modify this ratio so that there is more free space available, you need to
-                set the configuration value <filename>IMAGE_OVERHEAD_FACTOR</filename>.
-                For example, setting <filename>IMAGE_OVERHEAD_FACTOR</filename> to 1.5 sets
-                the image size ratio to one and a half times the size of the populated
-                root filesystem.
-                <literallayout class='monospaced'>
-     IMAGE_OVERHEAD_FACTOR = "1.5"
-                </literallayout>
+                By default, the OpenEmbedded build system creates images 
+                that are 1.3 times the size of the populated root filesystem.
+                To affect the image size, you need to set various 
+                configurations:
+                <itemizedlist>
+                    <listitem><para><emphasis>Image Size:</emphasis>
+                        The OpenEmbedded build system uses the 
+                        <link linkend='var-IMAGE_ROOTFS_SIZE'><filename>IMAGE_ROOTFS_SIZE</filename></link>
+                        variable to define the size of the image in Kbytes. 
+                        The build system determines the size by taking into 
+                        account the initial root filesystem size before any
+                        modifications such as requested size for the image and 
+                        any requested additional free disk space to be 
+                        added to the image.</para></listitem>
+                    <listitem><para><emphasis>Overhead:</emphasis>
+                        Use the 
+                        <link linkend='var-IMAGE_OVERHEAD_FACTOR'><filename>IMAGE_OVERHEAD_FACTOR</filename></link>
+                        variable to define the multiplier that the build system 
+                        applies to the initial image size, which is 1.3 by 
+                        default.</para></listitem>
+                    <listitem><para><emphasis>Additional Free Space:</emphasis>
+                        Use the 
+                        <link linkend='var-IMAGE_ROOTFS_EXTRA_SPACE'><filename>IMAGE_ROOTFS_EXTRA_SPACE</filename></link>
+                        variable to add additional free space to the image.
+                        The build system adds this space to the image after
+                        it determines its 
+                        <filename>IMAGE_ROOTFS_SIZE</filename>.
+                        </para></listitem>
+                </itemizedlist>
             </para>
         </answer>
     </qandaentry>
