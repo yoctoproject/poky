@@ -571,7 +571,8 @@ def replace_file(replace_this, with_this):
     the original filename.
     """
     try:
-        shutil.copy(with_this, replace_this)
+        replace_this.close()
+        shutil.copy(with_this, replace_this.name)
     except IOError:
         pass
 
