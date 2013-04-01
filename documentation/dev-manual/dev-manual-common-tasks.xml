@@ -2209,8 +2209,8 @@
         <para>
             This section presents information that shows you how you can
             trim your distribution to even smaller sizes than the
-            8 Mbytes <filename>poky-tiny</filename> distribution that
-            can be built out-of-the-box using the Yocto Project.
+            <filename>poky-tiny</filename> distribution, which is around
+            5 Mbytes, that can be built out-of-the-box using the Yocto Project.
         </para>
 
         <section id='tiny-system-overview'>
@@ -2269,19 +2269,21 @@
             <title>Understand What Gives Your Image Size</title>
 
             <para>
-                You will need to have an image from which you can
-                work.
-                The Yocto Project ships with the ability to create a
+                It is easiest to have something to start with when creating
+                your own distribution.
+                You can use the Yocto Project out-of-the-box to create the 
                 <filename>poky-tiny</filename> distribution.
-                This distribution consists of a small, sub-8 Mbyte kernel
-                that works with two shipped Board Support Packages (BSPs):
-                Fish River Island 2 and QEMU.
-                You can use this distribution as a starting point and trim
-                the size down from there.
-                If you need to build out the <filename>poky-tiny</filename>
-                distribution, see the
-                "<link linkend='creating-your-own-distribution'>Creating Your Own Distribution</link>"
-                section for information.
+                Ulitmately, you will want to make changes in your own 
+                distribution that are likely modeled after  
+                <filename>poky-tiny</filename>.
+                <note>
+                    To use <filename>poky-tiny</filename> in your build, 
+                    set the <filename>DISTRO</filename> variable in your 
+                    <filename>local.conf</filename> file to "poky-tiny" 
+                    as described in the 
+                    "<link linkend='creating-your-own-distribution'>Creating Your Own Distribution</link>"
+                    section.
+                </note>
             </para>
 
             <para>
@@ -2292,8 +2294,9 @@
                 in the code), and BSS (uninitialized data) sections.
                 Dynamic memory contains memory that is allocated at runtime,
                 stacks, hash tables, and so forth.
-                Temporary memory is decompressed from the expanded kernel
-                after boot and also includes the <filename>__init__</filename>
+                Temporary memory is recovered after the boot process.
+                This memory consists of memory used for decompressing 
+                the kernel and for the <filename>__init__</filename>
                 functions.
             </para>
 
@@ -2304,7 +2307,8 @@
                 the <filename>scripts</filename> directory:
                 <itemizedlist>
                     <listitem><para><filename>ksize.py</filename>: Reports
-                        component sizes for the kernel files.</para></listitem>
+                        component sizes for the kernel build objects.
+                        </para></listitem>
                     <listitem><para><filename>dirsize.py</filename>: Reports
                         component sizes for the root filesystem.</para></listitem>
                 </itemizedlist>
@@ -2500,6 +2504,55 @@
                 Each time you make configuration changes, you need to rebuild
                 the kernel and check to see what impact your changes had on
                 the overall size.
+            </para>
+        </section>
+
+        <section id='look-for-other-ways-to-minimize-size'>
+            <title>Look for Other Ways to Minimize Size</title>
+
+            <para>
+                Depending on your particular circumstances, other areas that you 
+                can trim likely exist.
+                The key to finding these areas is through tools and methods
+                described here combined with experimentation and iteration.
+                Here are a couple of areas to experiment with:
+                <itemizedlist>
+                    <listitem><para><filename>eglibc</filename>:
+                        In general, follow this process:
+                        <orderedlist>
+                            <listitem><para>Remove <filename>eglibc</filename>
+                                features from  
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></ulink>
+                                that you think you don't need.</para></listitem>
+                            <listitem><para>Build your distribution.
+                                </para></listitem>
+                            <listitem><para>If the build fails due to missing 
+                                symbols in a package, determine if you can 
+                                reconfigure the package to not need those 
+                                features.
+                                For example, change the configuration to not 
+                                support wide character support as is done for 
+                                <filename>ncurses</filename>.
+                                Or, if support for those characters is needed, 
+                                determine what <filename>eglibc</filename> 
+                                features provide the support and restore the 
+                                configuration.
+                                </para></listitem>
+                            <listitem><para>Rebuild and repeat the process.
+                                </para></listitem>
+                        </orderedlist></para></listitem>
+                    <listitem><para><filename>busybox</filename>:
+                        For BusyBox, use a process similar as described for 
+                        <filename>eglibc</filename>.
+                        A difference is you will need to boot the resulting 
+                        system to see if you are able to do everything you 
+                        expect from the running system.
+                        You need to be sure to integrate configuration fragments
+                        into Busybox because BusyBox handles its own core 
+                        features and then allows you to add configuration 
+                        fragments on top.
+                        </para></listitem>
+                </itemizedlist>
             </para>
         </section>
 
