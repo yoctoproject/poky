@@ -330,12 +330,12 @@
     <para>
         The package class you choose can affect build-time performance and has space
         ramifications.
-        In general, building a package with RPM takes about thirty percent more time as
-        compared to using IPK to build the same or similar package.
-        This comparison takes into account a complete build of the package with all
-        dependencies previously built.
-        The reason for this discrepancy is because the RPM package manager creates and
-        processes more 
+        In general, building a package with IPK takes about thirty percent less
+        time as compared to using RPM to build the same or similar package.
+        This comparison takes into account a complete build of the package with 
+        all dependencies previously built.
+        The reason for this discrepancy is because the RPM package manager 
+        creates and processes more 
         <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> than the 
         IPK package manager.
         Consequently, you might consider setting <filename>PACKAGE_CLASSES</filename>
@@ -343,22 +343,36 @@
     </para>
 
     <para>
-        Keep in mind, however, that RPM starts to provide more abilities than IPK due to
-        the fact that it processes more metadata.
-        For example, this information includes individual file types, file checksum generation
-        and evaluation on install, sparse file support, conflict detection and resolution
-        for Multilib systems, ACID style upgrade, and repackaging abilities for rollbacks.
+        Before making your decision on package manager, however, you should 
+        consider some further things about using RPM:
+        <itemizedlist>
+            <listitem><para>
+                RPM starts to provide more abilities than IPK due to
+                the fact that it processes more metadata.
+                For example, this information includes individual file types, 
+                file checksum generation and evaluation on install, sparse file 
+                support, conflict detection and resolution for Multilib systems, 
+                ACID style upgrade, and repackaging abilities for rollbacks.
+                </para></listitem>
+            <listitem><para>
+                For smaller systems, the extra space used for the Berkley 
+                Database and the amount of metadata when using RPM can affect 
+                your ability to perform on-device upgrades.
+                </para></listitem>
+            <listitem><para>
+                If you take the steps to set up a repository (package feed)    
+                on the development host that can be used by Smart, you can
+                install packages from the feed while you are running the image
+                on the target (i.e. runtime installation of packages).
+                For information on how to set up this repository, see the 
+                "NEED LINK" section in the Yocto Project Development Manual.
+            </para></listitem>
+        </itemizedlist> 
     </para>
 
     <para>
-        Another consideration for packages built using the RPM package manager is space.
-        For smaller systems, the extra space used for the Berkley Database and the amount
-        of metadata can affect your ability to perform on-device upgrades.
-    </para>
-
-    <para>
-        You can find additional information on the effects of the package class at these
-        two Yocto Project mailing list links:
+        You can find additional information on the effects of the package 
+        class at these two Yocto Project mailing list links:
         <itemizedlist>
             <listitem><para><ulink url='&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006362.html'>
                 https://lists.yoctoproject.org/pipermail/poky/2011-May/006362.html</ulink></para></listitem>
