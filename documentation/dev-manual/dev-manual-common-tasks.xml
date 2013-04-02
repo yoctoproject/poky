@@ -2593,6 +2593,8 @@
                     </para></listitem>
                 <listitem><para>Handling optional module packaging
                     </para></listitem>
+                <listitem><para>Setting up Runtime Package Management
+                    </para></listitem>
             </itemizedlist>
         </para>
 
@@ -3071,6 +3073,140 @@
                     <filename>do_split_packages</filename>.
                 </para>
             </section>
+        </section>
+
+        <section id='setting-up-runtime-package-management'>
+            <title>Setting Up Runtime Package Management</title>
+
+            <para>
+                It is possible to set up a repository that is a host-based
+                package feed from which you can install packages on the 
+                target system during runtime.
+                Doing so is optional and depends on the following:
+                <itemizedlist>
+                    <listitem><para>
+                        You take specific steps to set up the feed.
+                        </para></listitem>
+                    <listitem><para>
+                        When you build your image, you select to use the 
+                        RPM package manager by setting the 
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink>
+                        variable.
+                        </para></listitem>
+                    <listitem><para>
+                        You have Apache 2 installed and configured on the 
+                        development host.
+                        </para></listitem>
+                    <listitem><para>
+                        You have <filename>createrepo</filename> installed on
+                        the development host.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Here are the steps to set up this optional package feed:
+                <orderedlist>
+                    <listitem><para>
+                        Add the directory to your Apache configuration, which
+                        you can find at 
+                        <filename>/etc/httpd/conf/httpd.conf</filename>.
+                        Use commands similar to these on the development system.
+                        These example commands assume a top-level 
+                        <link linkend='source-directory'>Source Directory</link>
+                        named <filename>poky</filename> in your home directory:
+                        <literallayout class='monospaced'>
+     &lt;VirtualHost *:80&gt;
+       ....
+         Alias /rpm ~/poky/build/tmp/deploy/rpm
+         &lt;Directory "~/poky/build/tmp/deploy/rpm"&gt;
+           Options +Indexes
+         &lt;/Directory&gt;
+     &lt;/VirtualHost&gt; 
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        Reload the Apache configuration as follows.
+                        For all commands, be sure you have root privileges.
+                        </para>
+                        <para>
+                        If your development system is using Fedora or  
+                        CentOS, use the following:
+                        </para>
+                            <note>
+                                <emphasis>Note to Self:</emphasis> Paul says that
+                                some of the distros (Fedora and CentOS in 
+                                particular) might have different commands based 
+                                on the distro version.
+                                We need links for the reader to follow for the 
+                                specifics.  
+                                We don't want to have to document all this 
+                                distro-specific stuff.
+                            </note>
+                        <para>
+                            <literallayout class='monospaced'>
+     service httpd reload 
+                            </literallayout>
+                            For Ubuntu, use the following:
+                            <literallayout class='monospaced'>
+     /etc/init.d/apache2 reload
+                            </literallayout>
+                            For OpenSUSE, use the following:
+                            <literallayout class='monospaced'>
+     /etc/init.d/apache2 reload
+                            </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        Change your working directory to
+                        <filename>tmp/deploy/rpm</filename> in the 
+                        <link linkend='build-directory'>Build Directory</link>.
+                        </para></listitem>
+                    <listitem><para>
+                        Create the repository data on the host using
+                        this command:
+                        <literallayout class='monospaced'>
+     createrepo .
+                        </literallayout>
+                        </para>
+                        <para>
+                            <note>
+                                If you're updating, add 
+                                <filename>&dash;&dash;update</filename> to save some time.
+                            </note>
+                        </para></listitem>
+                    <listitem><para>
+                        If you are using Security-Enhanced Linux (SELinux),
+                        you need to label the files as being accessible 
+                        through Apache.
+                        Use the following command from the development host:
+                        <literallayout class='monospaced'>
+     chcon -R -h -t httpd_sys_content_t .
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        On the target machine, add the repository to Smart.
+                        For <filename>somealias</filename>, provide a local 
+                        alias for the repository:
+                        <literallayout class='monospaced'>
+     smart channel &dash;&dash;add &lt;somealias&gt; type=rpm-md baseurl=http://server.name/rpm
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        Also from the target machine, fetch the repository 
+                        information using this command:
+                        <literallayout class='monospaced'>
+     smart update
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
+            </para>
+
+            <para>
+                After taking these steps and making sure that the other 
+                requirements mentioned at the beginning of the section are met,
+                reboot the target device to take advantage of runtime package 
+                installations.
+            </para>
         </section>
     </section>
 
