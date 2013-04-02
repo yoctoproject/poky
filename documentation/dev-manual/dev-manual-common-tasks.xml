@@ -630,25 +630,62 @@
                 the <link linkend='build-directory'>Build Directory</link>.
             </para>
 
-            <para>
-                The Yocto Project ships with two SSH servers you can use in your 
-                images: Dropbear and OpenSSH.
-                Dropbear is a minimal SSH server appropriate for 
-                resource-constrained environments, while OpenSSH is a well-known 
-                standard SSH server implementation.
-                By default, the <filename>core-image-sato</filename> image is 
-                configured to use Dropbear.
-                The <filename>core-image-basic</filename> and 
-                <filename>core-image-lsb</filename> images both 
-                include OpenSSH.
-                The <filename>core-image-minimal</filename> image does not 
-                contain an SSH server.
-                To change these defaults, edit the 
-                <filename>IMAGE_FEATURES</filename> variable
-                so that it sets the image you are working with to include
-                <filename>ssh-server-dropbear</filename> or 
-                <filename>ssh-server-openssh</filename>.
-            </para>
+            <section id='choosing-the-ssh-servers'>
+                <title>Choosing the SSH Server</title>
+
+                <para>
+                    The Yocto Project ships with two SSH servers you can use 
+                    with your images: Dropbear and OpenSSH.
+                    Dropbear is a minimal SSH server appropriate for 
+                    resource-constrained environments, while OpenSSH is a 
+                    well-known standard SSH server implementation.
+                    By default, the <filename>core-image-sato</filename> image 
+                    is configured to use Dropbear.
+                    The <filename>core-image-basic</filename> and 
+                    <filename>core-image-lsb</filename> images both 
+                    include OpenSSH.
+                    The <filename>core-image-minimal</filename> image does not 
+                    contain an SSH server.
+                </para>
+
+                <para>
+                    You can customize your image and change these defaults.
+                    Edit <filename>IMAGE_FEATURES</filename> variable
+                    so that it configures the image you are working with to 
+                    include <filename>ssh-server-dropbear</filename> or 
+                    <filename>ssh-server-openssh</filename>.
+                </para>
+            </section>
+
+            <section id='creating-a-read-only-root-filesystem'>
+                <title>Creating a Read-Only Root Filesystem</title>
+
+                <para>
+                    Another example of customizing your image could be setting 
+                    up a read-only filesystem.
+                    Suppose, for security reasons, you need to disable the 
+                    your target device's root filesystem's write permisions
+                    (i.e. you need a read-only root filesystem).
+                    Or, perhaps you are running the device's operating system
+                    from a read-only storage device.
+                    For either case, you can customize your image for 
+                    that behavior.
+                </para>
+
+                <para>
+                    To create a read-only root filesystem, simply add the 
+                    "read-only-rootfs" feature to your image.
+                    Using either of the following statements in your 
+                    image recipe or from within the 
+                    <filename>local.conf</filename> file found in the Build 
+                    Directory causes the build system to create a 
+                    read-only root filesystem:
+                    <literallayout class='monospaced'>
+     IMAGE_FEATURES = "read-only-rootfs"
+     EXTRA_IMAGE_FEATURES = "read-only-rootfs"
+                    </literallayout>
+                </para>
+            </section>
         </section>
 
         <section id='usingpoky-extend-customimage-localconf'>
