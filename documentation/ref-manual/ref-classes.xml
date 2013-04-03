@@ -328,51 +328,52 @@
     </para>
 
     <para>
+        If you take the optional step to set up a repository (package feed)
+        on the development host that can be used by Smart, you can
+        install packages from the feed while you are running the image
+        on the target (i.e. runtime installation of packages).
+        For information on how to set up this repository, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#setting-up-runtime-package-management'>Setting Up Runtime Package Management</ulink>"
+         in the Yocto Project Development Manual.
+    </para>
+
+    <para>
         The package class you choose can affect build-time performance and has space
         ramifications.
         In general, building a package with IPK takes about thirty percent less
         time as compared to using RPM to build the same or similar package.
-        This comparison takes into account a complete build of the package with 
+        This comparison takes into account a complete build of the package with
         all dependencies previously built.
-        The reason for this discrepancy is because the RPM package manager 
-        creates and processes more 
-        <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> than the 
+        The reason for this discrepancy is because the RPM package manager
+        creates and processes more
+        <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> than the
         IPK package manager.
         Consequently, you might consider setting <filename>PACKAGE_CLASSES</filename>
         to "package_ipk" if you are building smaller systems.
     </para>
 
     <para>
-        Before making your decision on package manager, however, you should 
+        Before making your decision on package manager, however, you should
         consider some further things about using RPM:
         <itemizedlist>
             <listitem><para>
                 RPM starts to provide more abilities than IPK due to
                 the fact that it processes more metadata.
-                For example, this information includes individual file types, 
-                file checksum generation and evaluation on install, sparse file 
-                support, conflict detection and resolution for Multilib systems, 
+                For example, this information includes individual file types,
+                file checksum generation and evaluation on install, sparse file
+                support, conflict detection and resolution for Multilib systems,
                 ACID style upgrade, and repackaging abilities for rollbacks.
                 </para></listitem>
             <listitem><para>
-                For smaller systems, the extra space used for the Berkley 
-                Database and the amount of metadata when using RPM can affect 
+                For smaller systems, the extra space used for the Berkley
+                Database and the amount of metadata when using RPM can affect
                 your ability to perform on-device upgrades.
                 </para></listitem>
-            <listitem><para>
-                If you take the steps to set up a repository (package feed)    
-                on the development host that can be used by Smart, you can
-                install packages from the feed while you are running the image
-                on the target (i.e. runtime installation of packages).
-                For information on how to set up this repository, see the 
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#setting-up-runtime-package-management'>Setting Up Runtime Package Management</ulink>"
-                 in the Yocto Project Development Manual.
-            </para></listitem>
-        </itemizedlist> 
+        </itemizedlist>
     </para>
 
     <para>
-        You can find additional information on the effects of the package 
+        You can find additional information on the effects of the package
         class at these two Yocto Project mailing list links:
         <itemizedlist>
             <listitem><para><ulink url='&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006362.html'>
