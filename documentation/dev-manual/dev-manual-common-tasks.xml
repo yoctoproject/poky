@@ -606,28 +606,43 @@
                 <filename>EXTRA_IMAGE_FEATURES</filename></title>
 
             <para>
-                Ultimately, you might want to add extra image features to the
-                set by using the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'>IMAGE_FEATURES</ulink></filename>
-                variable.
-                To create these features, the best reference is
-                <filename>meta/classes/core-image.bbclass</filename>, which
-                shows how you can add features.
+                You might want to customize your image by adding image
+                features.
+                You add features to the existing set by using the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>
+                and <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
+                variables.
+                Although both variables are nearly identical, best practices
+                dictate using the <filename>IMAGE_FEATURES</filename> from
+                within a recipe and using
+                <filename>EXTRA_IMAGE_FEATURES</filename> from within
+                your <filename>local.conf</filename>, which is found in the
+                <link linkend='build-directory'></link>.
+            </para>
+
+            <para>
+                To understand how to add features from within a recipe,
+                the best reference is
+                <filename>meta/classes/core-image.bbclass</filename>.
                 In summary, the file looks at the contents of the
-                <filename>IMAGE_FEATURES</filename> variable and then maps those
-                contents into a set of tasks or packages.
+                <filename>IMAGE_FEATURES</filename> variable and then maps
+                those contents into a set of package groups.
                 Based on this information, the build system automatically
-                generates the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'> IMAGE_INSTALL</ulink></filename>
+                adds the appropriate packages to the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>
                 variable.
-                You can add extra features by extending the class or creating a
-                custom class for use with specialized image
+                Effectively, you are adding extra features by extending the
+                class or creating a custom class for use with specialized image
                 <filename>.bb</filename> files.
-                You can also add more features by configuring the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'>EXTRA_IMAGE_FEATURES</ulink></filename>
-                variable in the <filename>local.conf</filename> file found in
-                the <filename>local.conf</filename> file, which is located in
-                the <link linkend='build-directory'>Build Directory</link>.
+            </para>
+
+            <para>
+                Use the <filename>EXTRA_IMAGE_FEATURES</filename> variable
+                from within your local configuration file.
+                Using a separate area from which to define features with
+                this variable helps you avoid conflicting situations that
+                might arise from using the variable in the same manner as
+                the <filename>IMAGE_FEATURES</filename> variable.
             </para>
 
             <para>
@@ -649,11 +664,21 @@
 
             <para>
                 You can customize your image and change these defaults.
-                Edit <filename>IMAGE_FEATURES</filename> variable
-                so that it configures the image you are working with to
-                include <filename>ssh-server-dropbear</filename> or
+                Edit the <filename>IMAGE_FEATURES</filename> variable
+                in your recipe or use the
+                <filename>EXTRA_IMAGE_FEATURES</filename> in your
+                <filename>local.conf</filename> file so that it configures the
+                image you are working with to include
+                <filename>ssh-server-dropbear</filename> or
                 <filename>ssh-server-openssh</filename>.
             </para>
+
+            <note>
+                See the
+                "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
+                section in the Yocto Project Reference Manual for a complete
+                list of image features that ship with the Yocto Project.
+            </note>
         </section>
 
         <section id='usingpoky-extend-customimage-localconf'>
@@ -3092,12 +3117,18 @@
                         variable.
                         </para></listitem>
                     <listitem><para>
-                        You have a supported web server, such as Apache 2,
+                        You have a web server, such as Apache 2,
                         installed and configured on the development host.
                         </para></listitem>
                     <listitem><para>
                         You have <filename>createrepo</filename> installed on
                         the development host.
+                        </para></listitem>
+                    <listitem><para>
+                        You enable package management on the target by
+                        listing "package-management" in the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>
+                        variable.
                         </para></listitem>
                 </itemizedlist>
             </para>
@@ -3435,6 +3466,9 @@
             read-only root filesystem:
             <literallayout class='monospaced'>
      IMAGE_FEATURES = "read-only-rootfs"
+            </literallayout>
+            or
+            <literallayout class='monospaced'>
      EXTRA_IMAGE_FEATURES = "read-only-rootfs"
             </literallayout>
         </para>
