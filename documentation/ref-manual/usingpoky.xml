@@ -547,12 +547,15 @@
             </para>
 
             <para>
-                Finally, for those recipes that are fetched from a version control
-                system (such as Git) there is a file that lists the source revision(s)
-                specified in the recipe and the actual revision used when building
-                (which may be different when <filename>SRCREV</filename> is set to
-                <filename>${AUTOREV}</filename> for example). Here is an example
-                of one of these files:
+                Finally, for those recipes fetched from a version control
+                system (e.g., Git), a file exists that lists source revisions
+                that are specified in the recipe and lists the actual revisions
+                used during the build.
+                Listed and actual revisions might differ when 
+                <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
+                is set to 
+                <filename>${<link linkend='var-AUTOREV'>AUTOREV</link>}</filename>. 
+                Here is an example assuming 
                 <filename>buildhistory/packages/emenlow-poky-linux/linux-yocto/latest_srcrev</filename>):
                 <literallayout class='monospaced'>
      # SRCREV_machine = "b5c37fe6e24eec194bb29d22fdd55d73bcc709bf"
@@ -565,8 +568,9 @@
                 You can use the <filename>buildhistory-collect-srcrevs</filename>
                 command to collect the stored <filename>SRCREV</filename> values
                 from build history and report them in a format suitable for use in
-                global configuration (for example, local.conf or a distro include
-                file) to override floating AUTOREV values to a fixed set of revisions.
+                global configuration (e.g., <filename>local.conf</filename>
+                or a distro include file) to override floating 
+                <filename>AUTOREV</filename> values to a fixed set of revisions.
                 Here is some example output from this command:
                 <literallayout class='monospaced'>
      # emenlow-poky-linux
@@ -578,24 +582,33 @@
      SRCREV_pn-blktrace = "d6918c8832793b4205ed3bfede78c2f915c23385"
      SRCREV_pn-opkg = "649"
                 </literallayout>
-                Some notes on using the <filename>buildhistory-collect-srcrevs</filename>
-                command:
-                <itemizedlist>
-                    <listitem><para>By default only values where the SRCREV was
-                        not hardcoded (usually when AUTOREV was used) are reported
-                        - use the <filename>-a</filename> option to see all SRCREV
-                        values.</para></listitem>
-                    <listitem><para>The output statements may not have any effect
-                        in the face of overrides applied elsewhere in the build system
-                        configuration; use the <filename>-f</filename> option to add the
-                        <filename>forcevariable</filename> override to each output line
-                        if you need to work around this.</para></listitem>
-                    <listitem><para>The script does not do any special handling for
-                        building for multiple machines; however it does place a
-                        comment before each set of values specifying which triplet
-                        (for example <filename>emenlow-poky-linux</filename>) that they
-                        belong to as shown above.</para></listitem>
-                </itemizedlist>
+                <note>
+                    Here are some notes on using the 
+                    <filename>buildhistory-collect-srcrevs</filename> command:
+                    <itemizedlist>
+                        <listitem><para>By default, only values where the 
+                            <filename>SRCREV</filename> was
+                            not hardcoded (usually when <filename>AUTOREV</filename>
+                            was used) are reported.
+                            Use the <filename>-a</filename> option to see all 
+                            <filename>SRCREV</filename> values.
+                            </para></listitem>
+                        <listitem><para>The output statements might not have any effect
+                            if overrides are applied elsewhere in the build system
+                            configuration.
+                            Use the <filename>-f</filename> option to add the
+                            <filename>forcevariable</filename> override to each output line
+                            if you need to work around this restriction.
+                            </para></listitem>
+                        <listitem><para>The script does apply special handling when
+                            building for multiple machines.
+                            However, the script does place a
+                            comment before each set of values that specifies
+                            which triplet to which they belong as shown above
+                            (e.g., <filename>emenlow-poky-linux</filename>).
+                            </para></listitem>
+                    </itemizedlist>
+                </note>
             </para>
         </section>
 
