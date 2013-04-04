@@ -106,14 +106,14 @@
                        required syntax:
                        <literallayout class='monospaced'>
      # We have a conf and classes directory, add to BBPATH
-     BBPATH := "${BBPATH}:${LAYERDIR}"
+     BBPATH .= ":${LAYERDIR}"
 
-     # We have a packages directory, add to BBFILES
-     BBFILES := "${BBFILES} ${LAYERDIR}/recipes-*/*/*.bb \
+     # We have recipes-* directories, add to BBFILES
+     BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
                  ${LAYERDIR}/recipes-*/*/*.bbappend"
 
      BBFILE_COLLECTIONS += "yoctobsp"
-     BBFILE_PATTERN_yoctobsp := "^${LAYERDIR}/"
+     BBFILE_PATTERN_yoctobsp = "^${LAYERDIR}/"
      BBFILE_PRIORITY_yoctobsp = "5"
                         </literallayout></para>
                         <para>Here is an explanation of the example:
@@ -148,9 +148,9 @@
                                 used to match files from
                                 <filename>BBFILES</filename> into a particular
                                 layer.
-                                In this case, immediate expansion of
+                                In this case,
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename>
-                                sets <filename>BBFILE_PATTERN</filename> to the
+                                is used to make <filename>BBFILE_PATTERN</filename> match within the
                                 layer's path.</para></listitem>
                             <listitem><para>The
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename>
@@ -162,10 +162,7 @@
                         </itemizedlist></para>
                         <para>Note the use of the
                         <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename>
-                        variable with the immediate expansion operator.
-                        The <filename>LAYERDIR</filename> variable expands to the directory of the current layer and
-                        requires the immediate expansion operator so that BitBake does not wait to expand the variable
-                        when it's parsing a different directory.</para>
+                        variable, which expands to the directory of the current layer.</para>
                         <para>Through the use of the <filename>BBPATH</filename> variable,
                         BitBake locates <filename>.bbclass</filename> files, configuration
                         files, and files that are included with <filename>include</filename>
@@ -402,7 +399,7 @@
                 variable.
                 For example:
                 <literallayout class='monospaced'>
-     BBFILE_PRIORITY := "1"
+     BBFILE_PRIORITY_mylayer = "1"
                 </literallayout>
             </para>
 
@@ -1963,14 +1960,14 @@
                         the <filename>layer.conf</filename> file as follows:
                         <literallayout class='monospaced'>
      # We have a conf and classes directory, add to BBPATH
-     BBPATH := "${BBPATH}:${LAYERDIR}"
+     BBPATH .= ":${LAYERDIR}"
 
-     # We have a packages directory, add to BBFILES
-     BBFILES := "${BBFILES} ${LAYERDIR}/recipes-*/*/*.bb \
+     # We have recipes-* directories, add to BBFILES
+     BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
                  ${LAYERDIR}/recipes-*/*/*.bbappend"
 
      BBFILE_COLLECTIONS += "mylayer"
-     BBFILE_PATTERN_mylayer := "^${LAYERDIR}/"
+     BBFILE_PATTERN_mylayer = "^${LAYERDIR}/"
      BBFILE_PRIORITY_mylayer = "5"
                          </literallayout>
                          Notice <filename>mylayer</filename> as part of the last three
