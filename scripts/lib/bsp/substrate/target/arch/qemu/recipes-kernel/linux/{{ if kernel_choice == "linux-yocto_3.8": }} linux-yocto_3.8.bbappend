@@ -48,6 +48,9 @@ SRC_URI += "file://{{=machine}}-standard.scc \
             file://{{=machine}}-user-features.scc \
            "
 
+{{ if qemuarch == "arm": }}
+SRCREV_machine_pn-linux-yocto_{{=machine}} ?= "bf458ca0e48f4f57cbb02b52070a000f361eec84"
+
 # uncomment and replace these SRCREVs with the real commit ids once you've had
 # the appropriate changes committed to the upstream linux-yocto repo
 #SRCREV_machine_pn-linux-yocto_{{=machine}} ?= "b170394a475b96ecc92cbc9e4b002bed0a9f69c5"
