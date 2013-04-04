@@ -231,6 +231,66 @@
         </section>
     </section>
 </section>
+
+<section id='moving-to-the-yocto-project-1.4-release'>
+    <title>Moving to the Yocto Project 1.4 Release</title>
+
+    <para>
+        This section provides migration information for moving to the
+        Yocto Project 1.4 Release from the prior release.
+    </para>
+
+    <para>
+        Here is the raw text from Paul:
+        <literallayout class='monospaced'>
+* BitBake  - Fix continuation on last line of a comment: if a comment ends in a line continuation (\) then the next line must also be a comment; any instance where this is not the case will now trigger a warning. Either remove the continuation character or make the next line a comment as well.
+
+* BitBake - The runtime package specific variables (RDEPENDS, RRECOMMENDS, RSUGGESTS, RPROVIDES, RCONFLICTS, RREPLACES, FILES, ALLOW_EMPTY, and the pre/post install/uninstall script functions pkg_preinst, pkg_postinst, pkg_prerm, and pkg_postrm) should always have a package name override, for example RDEPENDS_${PN} for the main package instead of RDEPENDS; there are now stricter checks at parse time to ensure this is done in all recipes.
+
+* Build Behavior - Shared state code has been optimised to avoid running tasks that are not really needed; for example, bitbake -c rootfs some-image from shared state will no longer populate the target sysroot since that is not necessary - the system just needs to extract the output package contents, re-create the packages and construct the root filesystem. This is unlikely to cause any problems unless you have missing declared dependencies.
+
+* Proxies and Fetching Source - A new oe-git-proxy script has been added to replace previous methods of handling proxies and fetching source from Git. See meta-yocto/conf/site.conf.sample for information on how to use this script.
+
+* Build Behavior - When scanning for files in SRC_URI, the system now uses FILESOVERRIDES instead of OVERRIDES for the directory names. All of the sensible values previously in OVERRIDES are now in FILESOVERRIDES as well, however if you relied upon an additional value you added to OVERRIDES you may now need to add it to FILESOVERRIDES (unless you are already adding it via the MACHINEOVERRIDES or DISTROOVERRIDES variables, where this is appropriate).
+
+* Remote Debugging - Support for remote debugging with the Eclipse IDE has been split out into a separate image feature (eclipse-debug) corresponding to the packagegroup-core-eclipse-debug package group. (Previously this was included in the tools-debug image feature which corresponds to the packagegroup-core-tools-debug package group.)
+
+* Variables - SANITY_TESTED_DISTROS now uses a distro ID composed of the host distributor ID followed by the release, rather than the description field being used previously (so "Ubuntu 12.10" becomes "Ubuntu-12.10"). If you aren't setting this variable (or are setting it to "") you don't need to worry about this.
+
+* Items Removed
+- mesa-dri renamed to mesa
+- Gtk+ DirectFB support has been removed since it is no longer supported in upstream Gtk+ as of version 2.18
+- linux-yocto 3.0 kernel has been removed and a version 3.8 has been added
+- mesa-xlib removed - no longer useful
+- polkit removed - now in the meta-oe layer
+- libmusicbrainz removed - now in the meta-multimedia layer
+- zeroconf removed - now in the meta-networking layer
+- web removed - unmaintained and superseded by web-webkit
+- gtkhtml2 removed - now in the meta-oe layer
+- clutter-box2d removed - now in the meta-oe layer
+- orinoco-conf removed - obsolete
+- matchbox-stroke removed - was never more than a proof-of-concept
+- update-modules removed - no longer used (kernel module postinstall/postrm scripts can now do the same task without the use of this script)
+- zypper / libzypp / sat-solver removed - these have been functionally replaced with Smart (python-smartpm) when RPM packaging is used and package management is enabled on the target.
+- libcanberra removed - now in the meta-gnome layer
+- metacity removed - now in the meta-gnome layer
+- gupnp removed - now in the meta-multimedia layer
+- libgdata removed - now in the meta-gnome layer
+- gthumb removed - now in the meta-gnome layer
+- mutter removed - never used by anything else and recipe was very old
+- gypsy removed - now in the meta-oe layer
+- matchbox-wm-2 / matchbox-theme-sato-2 removed - unmaintained (matchbox-wm / matchbox-theme-sato still provided)
+- lsbsetup removed - functionality now provided by lsbtest
+- evolution-data-server removed - now in the meta-gnome layer
+- xf86bigfontproto removed - disabled by default upstream since 2007, nothing uses it
+- evieext removed - removed from xserver in 2008
+- xf86rushproto removed - dependency in xserver was spurious and was removed in 2005
+- libxfontcache / xfontcacheproto removed - removed from the Xorg server in 2008
+- libxp / libxprintapputil / libxprintutil / printproto removed - the XPrint server was removed from Xorg in 2008
+- libxtrap / xtrapproto removed - functionality was broken upstream so it was removed
+        </literallayout>
+    </para>
+</section>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
