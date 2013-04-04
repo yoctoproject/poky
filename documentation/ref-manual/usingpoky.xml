@@ -631,6 +631,68 @@
             </para>
         </section>
 
+        <section id='build-history-sdk-information'>
+            <title>Build History SDK Information</title>
+            <para>
+                Build history collects similar information on the contents
+                of SDKs (for example, <filename>meta-toolchain</filename>
+                or <filename>bitbake -c populate_sdk imagename</filename>)
+                to that which it collects for images.
+                The files produced for each SDK are as follows:
+                <itemizedlist>
+                    <listitem><para><filename>files-in-sdk.txt:</filename>
+                        A list of files in the SDK with permissions,
+                        owner, group, size, and symlink information.
+                        This includes both the host and target parts
+                        of the SDK.
+                        </para></listitem>
+                    <listitem><para><filename>sdk-info.txt:</filename>
+                        A text file containing name-value pairs with information
+                        about the SDK.
+                        See the following listing example for more information.
+                        </para></listitem>
+                    <listitem><para>Under each of the <filename>host</filename> and 
+                        <filename>target</filename> directories (for the portions of the
+                        SDK that run on the host and on the target respectively):
+                        <itemizedlist>
+                            <listitem><para><filename>depends.dot:</filename>
+                                Dependency graph for the SDK that is
+                                compatible with <filename>graphviz</filename>.
+                                </para></listitem>
+                            <listitem><para><filename>installed-package-names.txt:</filename>
+                                A list of installed packages by name only.</para></listitem>
+                            <listitem><para><filename>installed-package-sizes.txt:</filename>
+                                A list of installed packages ordered by size.
+                                </para></listitem>
+                            <listitem><para><filename>installed-packages.txt:</filename>
+                                A list of installed packages with full package
+                                filenames.</para></listitem>
+                            </itemizedlist>
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Here is an example of <filename>sdk-info.txt</filename>:
+                <literallayout class='monospaced'>
+DISTRO = poky
+DISTRO_VERSION = 1.3+snapshot-20130327
+SDK_NAME = poky-eglibc-i686-arm
+SDK_VERSION = 1.3+snapshot
+SDKMACHINE = 
+SDKIMAGE_FEATURES = dev-pkgs dbg-pkgs
+BAD_RECOMMENDATIONS = 
+SDKSIZE = 352712
+                </literallayout>
+                Other than <filename>SDKSIZE</filename>, which is the
+                total size of the files in the SDK in Kbytes, the
+                name-value pairs are variables that may have influenced the
+                content of the SDK.
+                This information is often useful when you are trying to determine
+                why a change in the package or file listings has occurred.
+            </para>
+        </section>
+
         <section id='examining-build-history-information'>
             <title>Examining Build History Information</title>
 
