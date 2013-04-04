@@ -240,56 +240,260 @@
         Yocto Project 1.4 Release from the prior release.
     </para>
 
-    <para>
-        Here is the raw text from Paul:
-        <literallayout class='monospaced'>
-* BitBake  - Fix continuation on last line of a comment: if a comment ends in a line continuation (\) then the next line must also be a comment; any instance where this is not the case will now trigger a warning. Either remove the continuation character or make the next line a comment as well.
+    <section id='migration-1.4-bitbake'>
+        <title>BitBake</title>
 
-* BitBake - The runtime package specific variables (RDEPENDS, RRECOMMENDS, RSUGGESTS, RPROVIDES, RCONFLICTS, RREPLACES, FILES, ALLOW_EMPTY, and the pre/post install/uninstall script functions pkg_preinst, pkg_postinst, pkg_prerm, and pkg_postrm) should always have a package name override, for example RDEPENDS_${PN} for the main package instead of RDEPENDS; there are now stricter checks at parse time to ensure this is done in all recipes.
+        <para>
+            Differences include the following:
+            <itemizedlist>
+                <listitem><para><emphasis>Comment Continuation:</emphasis>
+                    If a comment ends with a line continuation (\) character, 
+                    then the next line must also be a comment.
+                    Any instance where this is not the case, now triggers 
+                    a warning. 
+                    You must either remove the continuation character, or be 
+                    sure the next line is a comment.
+                    </para></listitem>
+                <listitem><para><emphasis>Package Name Overrides:</emphasis>
+                    The runtime package specific variables 
+                    <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>,
+                    <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>,
+                    <filename>RSUGGESTS</filename>, 
+                    <filename>RPROVIDES</filename>,
+                    <link linkend='var-RCONFLICTS'><filename>RCONFLICTS</filename></link>,
+                    <link linkend='var-RREPLACES'><filename>RREPLACES</filename></link>,
+                    <link linkend='var-FILES'><filename>FILES</filename></link>,
+                    <link linkend='var-ALLOW_EMPTY'><filename>ALLOW_EMPTY</filename></link>,
+                    and the pre, post, install, and uninstall script functions 
+                    <filename>pkg_preinst</filename>, 
+                    <filename>pkg_postinst</filename>, 
+                    <filename>pkg_prerm</filename>, and 
+                    <filename>pkg_postrm</filename> should always have a
+                    package name override.
+                    For example, use <filename>RDEPENDS_${PN}</filename> for 
+                    the main package instead of <filename>RDEPENDS</filename>.
+                    BitBake uses more strict checks when it parses recipes.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
 
-* Build Behavior - Shared state code has been optimised to avoid running tasks that are not really needed; for example, bitbake -c rootfs some-image from shared state will no longer populate the target sysroot since that is not necessary - the system just needs to extract the output package contents, re-create the packages and construct the root filesystem. This is unlikely to cause any problems unless you have missing declared dependencies.
+    <section id='migration-1.4-build-behavior'>
+        <title>Build Behavior</title>
 
-* Proxies and Fetching Source - A new oe-git-proxy script has been added to replace previous methods of handling proxies and fetching source from Git. See meta-yocto/conf/site.conf.sample for information on how to use this script.
+        <para>
+            Differences include the following:
+            <itemizedlist>
+                <listitem><para><emphasis>Shared State Code:</emphasis>
+                    The shared state code has been optimized to avoid running 
+                    unnecessary tasks.
+                    For example, 
+                    <filename>bitbake -c rootfs some-image</filename> from 
+                    shared state no longer populates the target sysroot 
+                    since that is not necessary.
+                    Instead, the system just needs to extract the output 
+                    package contents, re-create the packages, and construct 
+                    the root filesystem. 
+                    This change is unlikely to cause any problems unless 
+                    you have missing declared dependencies.
+                    </para></listitem>
+                <listitem><para><emphasis>Scanning Directory Names:</emphasis>
+                    When scanning for files in 
+                    <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>, 
+                    the build system now uses <filename>FILESOVERRIDES</filename>
+                    instead of <filename>OVERRIDES</filename> for the directory 
+                    names. 
+                    In general, the values previously in
+                    <filename>OVERRIDES</filename> are now in 
+                    <filename>FILESOVERRIDES</filename> as well.
+                    However, if you relied upon an additional value 
+                    you previously added to <filename>OVERRIDES</filename>,
+                    you might now need to add it to 
+                    <filename>FILESOVERRIDES</filename> unless you are already 
+                    adding it through the <filename>MACHINEOVERRIDES</filename> 
+                    or <filename>DISTROOVERRIDES</filename> variables, 
+                    as appropriate.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
 
-* Build Behavior - When scanning for files in SRC_URI, the system now uses FILESOVERRIDES instead of OVERRIDES for the directory names. All of the sensible values previously in OVERRIDES are now in FILESOVERRIDES as well, however if you relied upon an additional value you added to OVERRIDES you may now need to add it to FILESOVERRIDES (unless you are already adding it via the MACHINEOVERRIDES or DISTROOVERRIDES variables, where this is appropriate).
 
-* Remote Debugging - Support for remote debugging with the Eclipse IDE has been split out into a separate image feature (eclipse-debug) corresponding to the packagegroup-core-eclipse-debug package group. (Previously this was included in the tools-debug image feature which corresponds to the packagegroup-core-tools-debug package group.)
+    <section id='migration-1.4-proxies-and-fetching-source'>
+        <title>Proxies and Fetching Source</title>
 
-* Variables - SANITY_TESTED_DISTROS now uses a distro ID composed of the host distributor ID followed by the release, rather than the description field being used previously (so "Ubuntu 12.10" becomes "Ubuntu-12.10"). If you aren't setting this variable (or are setting it to "") you don't need to worry about this.
+        <para>
+            A new <filename>oe-git-proxy</filename> script has been added to 
+            replace previous methods of handling proxies and fetching source 
+            from Git. 
+            See the <filename>meta-yocto/conf/site.conf.sample</filename> file
+            for information on how to use this script.
+        </para>
+    </section>
 
-* Items Removed
-- mesa-dri renamed to mesa
-- Gtk+ DirectFB support has been removed since it is no longer supported in upstream Gtk+ as of version 2.18
-- linux-yocto 3.0 kernel has been removed and a version 3.8 has been added
-- mesa-xlib removed - no longer useful
-- polkit removed - now in the meta-oe layer
-- libmusicbrainz removed - now in the meta-multimedia layer
-- zeroconf removed - now in the meta-networking layer
-- web removed - unmaintained and superseded by web-webkit
-- gtkhtml2 removed - now in the meta-oe layer
-- clutter-box2d removed - now in the meta-oe layer
-- orinoco-conf removed - obsolete
-- matchbox-stroke removed - was never more than a proof-of-concept
-- update-modules removed - no longer used (kernel module postinstall/postrm scripts can now do the same task without the use of this script)
-- zypper / libzypp / sat-solver removed - these have been functionally replaced with Smart (python-smartpm) when RPM packaging is used and package management is enabled on the target.
-- libcanberra removed - now in the meta-gnome layer
-- metacity removed - now in the meta-gnome layer
-- gupnp removed - now in the meta-multimedia layer
-- libgdata removed - now in the meta-gnome layer
-- gthumb removed - now in the meta-gnome layer
-- mutter removed - never used by anything else and recipe was very old
-- gypsy removed - now in the meta-oe layer
-- matchbox-wm-2 / matchbox-theme-sato-2 removed - unmaintained (matchbox-wm / matchbox-theme-sato still provided)
-- lsbsetup removed - functionality now provided by lsbtest
-- evolution-data-server removed - now in the meta-gnome layer
-- xf86bigfontproto removed - disabled by default upstream since 2007, nothing uses it
-- evieext removed - removed from xserver in 2008
-- xf86rushproto removed - dependency in xserver was spurious and was removed in 2005
-- libxfontcache / xfontcacheproto removed - removed from the Xorg server in 2008
-- libxp / libxprintapputil / libxprintutil / printproto removed - the XPrint server was removed from Xorg in 2008
-- libxtrap / xtrapproto removed - functionality was broken upstream so it was removed
-        </literallayout>
-    </para>
+    <section id='migration-1.4-remote-debugging'>
+        <title>Remote Debugging</title>
+
+        <para>
+            Support for remote debugging with the Eclipse IDE is now 
+            separated into an image feature 
+            (<filename>eclipse-debug</filename>) that corresponds to the 
+            <filename>packagegroup-core-eclipse-debug</filename> package group. 
+            Previously, the debugging feature was included through the 
+            <filename>tools-debug</filename> image feature, which corresponds 
+            to the <filename>packagegroup-core-tools-debug</filename>
+            package group.
+        </para>
+    </section>
+
+    <section id='migration-1.4-variables'>
+        <title>Variables</title>
+
+        <para>
+            The <filename>SANITY_TESTED_DISTROS</filename> variable now uses a
+            distribution ID, which is composed of the host distributor ID 
+            followed by the release.
+            Previously, it was composed of the description field.
+            For example, "Ubuntu 12.10" becomes "Ubuntu-12.10". 
+            You do not need to worry about this change if you are not 
+            specifically setting this variable, or if you are
+            specifically setting it to "".
+        </para>
+    </section>
+
+    <section id='migration-1.4-removals-and-renames'>
+        <title>Removals and Renames</title>
+
+        <para>
+            The following list shows what has been removed or renamed:
+            <itemizedlist>
+                <listitem><para><emphasis><filename>mesa-dri</filename>:</emphasis>
+                    Renamed to <filename>mesa</filename>.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>Gtk+ DirectFB</filename>:</emphasis>
+                    Removed support because upstream Gtk+ no longer supports it
+                    as of version 2.18.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>linux-yocto 3.0 kernel</filename>:</emphasis>
+                    Removed with linux-yocto 3.8 kernel being added.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>mesa-xlib</filename>:</emphasis>
+                    Removed because it was no longer useful.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>polkit</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-oe</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>libmusicbrainz</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-multimedia</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>zeroconf</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-networking</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>web</filename>:</emphasis>
+                    Removed because it is not maintained.  Superseded by 
+                    <filename>web-webkit</filename>.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>gtkhtml2</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-oe</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>gtkhtml2</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-oe</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>clutter-box2d</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-oe</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>orinoco-conf</filename>:</emphasis>
+                    Removed because it has become obsolete.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>omatchbox-stroke</filename>:</emphasis>
+                    Removed because it was never more than a proof-of-concept.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>update-modules</filename>:</emphasis>
+                    Removed because it is no longer used.
+                    The kernel module <filename>postinstall</filename> and 
+                    <filename>postrm</filename> scripts can now do the same 
+                    task without the use of this script.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>zypper / libzypp / sat-solver</filename>:</emphasis>
+                    Removed and been functionally replaced with Smart 
+                    (<filename>python-smartpm</filename>) when RPM packaging 
+                    is used and package management is enabled on the target.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>libcanberra</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-gnome</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>metacity</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-gnome</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>gupnp</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-multimedia</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>libgdata</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-gnome</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>gthumb</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-gnome</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>mutter</filename>:</emphasis>
+                    Removed because nothing ever uses it and the recipe is 
+                    very old.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>gypsy</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-oe</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>matchbox-wm-2 / matchbox-theme-sato-2</filename>:</emphasis>
+                    Removed because they are not maintained.
+                    However, <filename>matchbox-wm</filename> and  
+                    <filename>matchbox-theme-sato</filename> are still 
+                    provided.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>lsbsetup</filename>:</emphasis>
+                    Removed with functionality now provided by 
+                    <filename>lsbtest</filename>.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>evolution-data-server</filename>:</emphasis>
+                    Removed from its previous location and now resides in the 
+                    <filename>meta-gnome</filename> layer.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>xf86bigfontproto</filename>:</emphasis>
+                    Removed because upstream it has been disabled by default 
+                    since 2007.
+                    Nothing uses <filename>xf86bigfontproto</filename>.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>evieext</filename>:</emphasis>
+                    Removed because it has been removed from 
+                    <filename>xserver</filename> since 2008.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>xf86rushproto</filename>:</emphasis>
+                    Removed because its dependency in 
+                    <filename>xserver</filename> was spurious and it was
+                    removed in 2005.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>libxfontcache / xfontcacheproto</filename>:</emphasis>
+                    Removed because they were removed from the Xorg server in 2008.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>libxp / libxprintapputil / libxprintutil / printproto</filename>:</emphasis>
+                    Removed because the XPrint server was removed from 
+                    Xorg in 2008.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>libxtrap / xtrapproto</filename>:</emphasis>
+                    Removed because their functionality was broken upstream.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
 </section>
 </chapter>
 <!--
