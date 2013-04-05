@@ -17,25 +17,34 @@
         <title>Understanding and Creating Layers</title>
 
         <para>
-            The OpenEmbedded build system supports organizing <link linkend='metadata'>metadata</link>
-            into multiple layers.
-            Layers allow you to isolate different types of customizations from each other.
-            You might find it tempting to keep everything in one layer when working on a single project.
-            However, the more modular you organize your metadata, the easier it is to cope with future changes.
+            The OpenEmbedded build system supports organizing
+            <link linkend='metadata'>Metadata</link> into multiple layers.
+            Layers allow you to isolate different types of customizations from
+            each other.
+            You might find it tempting to keep everything in one layer when
+            working on a single project.
+            However, the more modular you organize your Metadata, the easier
+            it is to cope with future changes.
         </para>
 
         <para>
-            To illustrate how layers are used to keep things modular, consider machine customizations.
-            These types of customizations typically reside in a BSP Layer.
-            Furthermore, the machine customizations should be isolated from recipes and metadata that support
-            a new GUI environment, for example.
-            This situation gives you a couple of layers: one for the machine configurations, and one for the
-            GUI environment.
-            It is important to understand, however, that the BSP layer can still make machine-specific
-            additions to recipes within the GUI environment layer without polluting the GUI layer itself
+            To illustrate how layers are used to keep things modular, consider
+            machine customizations.
+            These types of customizations typically reside in a special layer,
+            rather than a general layer, called a Board Specific Package (BSP)
+            Layer.
+            Furthermore, the machine customizations should be isolated from
+            recipes and Metadata that support a new GUI environment,
+            for example.
+            This situation gives you a couple of layers: one for the machine
+            configurations, and one for the GUI environment.
+            It is important to understand, however, that the BSP layer can
+            still make machine-specific additions to recipes within the GUI
+            environment layer without polluting the GUI layer itself
             with those machine-specific changes.
             You can accomplish this through a recipe that is a BitBake append
-            (<filename>.bbappend</filename>) file, which is described later in this section.
+            (<filename>.bbappend</filename>) file, which is described later
+            in this section.
         </para>
 
         <para>
@@ -45,8 +54,8 @@
             <title>Layers</title>
 
             <para>
-                The Source Directory contains several layers right out of the
-                box.
+                The Source Directory contains both general layers and BSP
+                layers right out of the box.
                 You can easily identify layers that ship with a
                 Yocto Project release in the Source Directory by their
                 folder names.
@@ -56,20 +65,25 @@
                     It is not a requirement that a layer begins with the
                     string <filename>meta</filename>.
                 </note>
-                For example, when you set up the <link linkend='source-directory'>Source Directory</link>
-                structure, you will see several layers: <filename>meta</filename>,
-                <filename>meta-hob</filename>, <filename>meta-skeleton</filename>,
-                <filename>meta-yocto</filename>, and <filename>meta-yocto-bsp</filename>.
+                For example, when you set up the
+                <link linkend='source-directory'>Source Directory</link>
+                structure, you will see several layers:
+                <filename>meta</filename>, <filename>meta-hob</filename>,
+                <filename>meta-skeleton</filename>,
+                <filename>meta-yocto</filename>, and
+                <filename>meta-yocto-bsp</filename>.
                 Each of these folders is a layer.
             </para>
 
             <para>
-                Furthermore, if you set up a local copy of the <filename>meta-intel</filename> Git repository
-                and then explore that folder, you will discover many BSP layers within the
-                <filename>meta-intel</filename> layer.
+                Furthermore, if you set up a local copy of the
+                <filename>meta-intel</filename> Git repository
+                and then explore the folder of that general layer,
+                you will discover many BSP layers inside.
                 For more information on BSP layers, see the
                 "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
-                section in the Yocto Project Board Support Package (BSP) Developer's Guide.
+                section in the Yocto Project Board Support Package (BSP)
+                Developer's Guide.
             </para>
         </section>
 
@@ -77,32 +91,54 @@
             <title>Creating Your Own Layer</title>
 
             <para>
-                It is very easy to create your own layer to use with the OpenEmbedded build system.
+                It is very easy to create your own layers to use with the
+                OpenEmbedded build system.
+                The Yocto Project ships with scripts that speed up creating
+                general layers and BSP layers.
+                This section describes the steps you perform by hand to create
+                a layer so that you can better understand them.
+                For information about the layer-creation scripts, see the
+                "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a New BSP Layer Using the yocto-bsp Script</ulink>"
+                section in the Yocto Project Board Support Package (BSP)
+                Developer's Guide and the
+                "<link linkend='creating-a-general-layer-using-the-yocto-layer-script'>Creating a General Layer Using the yocto-layer Script</link>"
+                section further down in this manual.
+            </para>
+
+            <para>
                 Follow these general steps to create your layer:
                 <orderedlist>
-                    <listitem><para><emphasis>Check Existing Layers:</emphasis> Before creating a new layer,
-                        you should be sure someone has not already created a layer containing the metadata
+                    <listitem><para><emphasis>Check Existing Layers:</emphasis>
+                        Before creating a new layer, you should be sure someone
+                        has not already created a layer containing the Metadata
                         you need.
                         You can see the
-                        <ulink url='http://layers.openembedded.org/layerindex/layers/'><filename>OpenEmbedded metadata index</filename></ulink>
-                        for a list of layers from the OpenEmbedded community that can be used in the
-                        Yocto Project.</para></listitem>
+                        <ulink url='http://layers.openembedded.org/layerindex/layers/'><filename>OpenEmbedded Metadata Index</filename></ulink>
+                        for a list of layers from the OpenEmbedded community
+                        that can be used in the Yocto Project.
+                        </para></listitem>
                     <listitem><para><emphasis>Create a Directory:</emphasis>
                         Create the directory for your layer.
                         While not strictly required, prepend the name of the
-                        folder with the string <filename>meta</filename>.
+                        folder with the string <filename>meta-</filename>.
                         For example:
                         <literallayout class='monospaced'>
      meta-mylayer
      meta-GUI_xyz
      meta-mymachine
-                        </literallayout></para></listitem>
-                    <listitem><para><emphasis>Create a Layer Configuration File:</emphasis> Inside your new
-                       layer folder, you need to create a <filename>conf/layer.conf</filename> file.
-                       It is easiest to take an existing layer configuration file and copy that to your
-                       layer's <filename>conf</filename> directory and then modify the file as needed.</para>
-                       <para>The <filename>meta-yocto-bsp/conf/layer.conf</filename> file demonstrates the
-                       required syntax:
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para><emphasis>Create a Layer Configuration
+                       File:</emphasis>
+                       Inside your new layer folder, you need to create a
+                       <filename>conf/layer.conf</filename> file.
+                       It is easiest to take an existing layer configuration
+                       file and copy that to your layer's
+                       <filename>conf</filename> directory and then modify the
+                       file as needed.</para>
+                       <para>The
+                       <filename>meta-yocto-bsp/conf/layer.conf</filename> file
+                       demonstrates the required syntax:
                        <literallayout class='monospaced'>
      # We have a conf and classes directory, add to BBPATH
      BBPATH .= ":${LAYERDIR}"
@@ -161,73 +197,95 @@
                         </itemizedlist></para>
                         <para>Note the use of the
                         <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename>
-                        variable, which expands to the directory of the current layer.</para>
-                        <para>Through the use of the <filename>BBPATH</filename> variable,
-                        BitBake locates <filename>.bbclass</filename> files, configuration
-                        files, and files that are included with <filename>include</filename>
-                        and <filename>require</filename> statements.
-                        For these cases, BitBake uses the first file with the matching name found in
-                        <filename>BBPATH</filename>.
-                        This is similar to the way the <filename>PATH</filename> variable is used for binaries.
-                        We recommend, therefore, that you use unique <filename>.bbclass</filename>
-                        and configuration file names in your custom layer.</para></listitem>
-                    <listitem><para><emphasis>Add Content:</emphasis> Depending on the type of layer,
-                        add the content.
-                        If the layer adds support for a machine, add the machine configuration in
-                        a <filename>conf/machine/</filename> file within the layer.
-                        If the layer adds distro policy, add the distro configuration in a
-                        <filename>conf/distro/</filename> file with the layer.
-                        If the layer introduces new recipes, put the recipes you need in
-                        <filename>recipes-*</filename> subdirectories within the layer.
-                        <note>In order to be compliant with the Yocto Project, a layer must contain
-                            a <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-filelayout-readme'>README file.</ulink>
+                        variable, which expands to the directory of the current
+                        layer.</para>
+                        <para>Through the use of the <filename>BBPATH</filename>
+                        variable, BitBake locates <filename>.bbclass</filename>
+                        files, configuration files, and files that are included
+                        with <filename>include</filename> and
+                        <filename>require</filename> statements.
+                        For these cases, BitBake uses the first file that
+                        matches the name found in <filename>BBPATH</filename>.
+                        This is similar to the way the <filename>PATH</filename>
+                        variable is used for binaries.
+                        We recommend, therefore, that you use unique
+                        <filename>.bbclass</filename> and configuration
+                        filenames in your custom layer.</para></listitem>
+                    <listitem><para><emphasis>Add Content:</emphasis> Depending
+                        on the type of layer, add the content.
+                        If the layer adds support for a machine, add the machine
+                        configuration in a <filename>conf/machine/</filename>
+                        file within the layer.
+                        If the layer adds distro policy, add the distro
+                        configuration in a <filename>conf/distro/</filename>
+                        file with the layer.
+                        If the layer introduces new recipes, put the recipes
+                        you need in <filename>recipes-*</filename>
+                        subdirectories within the layer.
+                        <note>In order to be compliant with the Yocto Project,
+                            a layer must contain a
+                            <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-filelayout-readme'>README file.</ulink>
                             </note></para></listitem>
                 </orderedlist>
             </para>
 
             <para>
-                To create layers that are easier to maintain, you should consider the following:
+                To create layers that are easier to maintain, you should
+                consider the following:
                 <itemizedlist>
-                    <listitem><para>Avoid "overlaying" entire recipes from other layers in your
-                        configuration.
-                        In other words, don't copy an entire recipe into your layer and then modify it.
-                        Use <filename>.bbappend</filename> files to override the parts of the
-                        recipe you need to modify.</para></listitem>
+                    <listitem><para>Avoid "overlaying" entire recipes from
+                        other layers in your configuration.
+                        In other words, don't copy an entire recipe into your
+                        layer and then modify it.
+                        Use <filename>.bbappend</filename> files to override the
+                        parts of the recipe you need to modify.
+                        </para></listitem>
                     <listitem><para>Avoid duplicating include files.
-                        Use <filename>.bbappend</filename> files for each recipe that uses an include
-                        file.
-                        Or, if you are introducing a new recipe that requires the included file, use the
-                        path relative to the original layer directory to refer to the file.
-                        For example, use <filename>require recipes-core/somepackage/somefile.inc</filename>
+                        Use <filename>.bbappend</filename> files for each recipe
+                        that uses an include file.
+                        Or, if you are introducing a new recipe that requires
+                        the included file, use the path relative to the original
+                        layer directory to refer to the file.
+                        For example, use
+                        <filename>require recipes-core/somepackage/somefile.inc</filename>
                         instead of <filename>require somefile.inc</filename>.
-                        If you're finding you have to overlay the include file, it could indicate a
-                        deficiency in the include file in the layer to which it originally belongs.
-                        If this is the case, you need to address that deficiency instead of overlaying
-                        the include file.
-                        For example, consider how Qt 4 database support plug-ins are configured.
-                        The Source Directory does not have
-                        MySQL or PostgreSQL, however OpenEmbedded's
-                        layer <filename>meta-oe</filename> does.
-                        Consequently, <filename>meta-oe</filename> uses <filename>.bbappend</filename>
-                        files to modify the <filename>QT_SQL_DRIVER_FLAGS</filename> variable to enable
-                        the appropriate plugins.
-                        This variable was added to the <filename>qt4.inc</filename> include file in
-                        the Source Directory specifically to allow the <filename>meta-oe</filename> layer
-                        to be able to control which plugins are built.</para></listitem>
+                        If you're finding you have to overlay the include file,
+                        it could indicate a deficiency in the include file in
+                        the layer to which it originally belongs.
+                        If this is the case, you need to address that deficiency
+                        instead of overlaying the include file.
+                        For example, consider how Qt 4 database support plug-ins
+                        are configured.
+                        The Source Directory does not have MySQL or PostgreSQL,
+                        however OpenEmbedded's layer
+                        <filename>meta-oe</filename> does.
+                        Consequently, <filename>meta-oe</filename> uses
+                        <filename>.bbappend</filename> files to modify the
+                        <filename>QT_SQL_DRIVER_FLAGS</filename> variable to
+                        enable the appropriate plugins.
+                        This variable was added to the
+                        <filename>qt4.inc</filename> include file in the Source
+                        Directory specifically to allow the
+                        <filename>meta-oe</filename> layer to be able to control
+                        which plugins are built.</para></listitem>
                 </itemizedlist>
             </para>
 
             <para>
                 We also recommend the following:
                 <itemizedlist>
-                    <listitem><para>Store custom layers in a Git repository that uses the
-                        <filename>meta-&lt;layer_name&gt;</filename> format.</para></listitem>
-                    <listitem><para>Clone the repository alongside other <filename>meta</filename>
-                        directories in the
-                        <link linkend='source-directory'>Source Directory</link>.</para></listitem>
+                    <listitem><para>Store custom layers in a Git repository
+                        that uses the
+                        <filename>meta-&lt;layer_name&gt;</filename> format.
+                        </para></listitem>
+                    <listitem><para>Clone the repository alongside other
+                        <filename>meta</filename> directories in the
+                        <link linkend='source-directory'>Source Directory</link>.
+                        </para></listitem>
                  </itemizedlist>
                  Following these recommendations keeps your Source Directory and
-                 its configuration entirely inside the Yocto Project's core base.
+                 its configuration entirely inside the Yocto Project's core
+                 base.
             </para>
         </section>
 
@@ -235,12 +293,15 @@
             <title>Enabling Your Layer</title>
 
             <para>
-                Before the OpenEmbedded build system can use your new layer, you need to enable it.
+                Before the OpenEmbedded build system can use your new layer,
+                you need to enable it.
                 To enable your layer, simply add your layer's path to the
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'>BBLAYERS</ulink></filename>
-                variable in your <filename>conf/bblayers.conf</filename> file, which is found in the
+                variable in your <filename>conf/bblayers.conf</filename> file,
+                which is found in the
                 <link linkend='build-directory'>Build Directory</link>.
-                The following example shows how to enable a layer named <filename>meta-mylayer</filename>:
+                The following example shows how to enable a layer named
+                <filename>meta-mylayer</filename>:
                 <literallayout class='monospaced'>
      LCONF_VERSION = "6"
 
@@ -262,12 +323,13 @@
             </para>
 
             <para>
-                BitBake parses each <filename>conf/layer.conf</filename> file as specified in the
-                <filename>BBLAYERS</filename> variable within the <filename>conf/bblayers.conf</filename>
-                file.
-                During the processing of each <filename>conf/layer.conf</filename> file, BitBake adds the
-                recipes, classes and configurations contained within the particular layer to the source
-                directory.
+                BitBake parses each <filename>conf/layer.conf</filename> file
+                as specified in the <filename>BBLAYERS</filename> variable
+                within the <filename>conf/bblayers.conf</filename> file.
+                During the processing of each
+                <filename>conf/layer.conf</filename> file, BitBake adds the
+                recipes, classes and configurations contained within the
+                particular layer to the source directory.
             </para>
         </section>
 
@@ -275,48 +337,58 @@
             <title>Using .bbappend Files</title>
 
             <para>
-                Recipes used to append metadata to other recipes are called BitBake append files.
-                BitBake append files use the <filename>.bbappend</filename> file type suffix, while
-                the corresponding recipes to which metadata is being appended use the
-                <filename>.bb</filename> file type suffix.
+                Recipes used to append Metadata to other recipes are called
+                BitBake append files.
+                BitBake append files use the <filename>.bbappend</filename> file
+                type suffix, while the corresponding recipes to which Metadata
+                is being appended use the <filename>.bb</filename> file type
+                suffix.
             </para>
 
             <para>
-                A <filename>.bbappend</filename> file allows your layer to make additions or
-                changes to the content of another layer's recipe without having to copy the other
-                recipe into your layer.
-                Your <filename>.bbappend</filename> file resides in your layer, while the underlying
-                <filename>.bb</filename> recipe file to which you are appending metadata
-                resides in a different layer.
+                A <filename>.bbappend</filename> file allows your layer to make
+                additions or changes to the content of another layer's recipe
+                without having to copy the other recipe into your layer.
+                Your <filename>.bbappend</filename> file resides in your layer,
+                while the main <filename>.bb</filename> recipe file to
+                which you are appending Metadata resides in a different layer.
             </para>
 
             <para>
-                Append files must have the same root name as the corresponding recipe.
-                For example, the append file <filename>someapp_&DISTRO;.bbappend</filename> must
-                apply to <filename>someapp_&DISTRO;.bb</filename>.
-                This means the original recipe and append file names are version number-specific.
-                If the corresponding recipe is renamed to update to a newer version, the
-                underlying <filename>.bbappend</filename> file must be renamed as well.
-                During the build process, BitBake displays an error on starting if it detects a
-                <filename>.bbappend</filename> file that does not have a corresponding recipe
-                with a matching name.
+                Append files must have the same root name as the corresponding
+                recipe.
+                For example, the append file
+                <filename>someapp_&DISTRO;.bbappend</filename> must apply to
+                <filename>someapp_&DISTRO;.bb</filename>.
+                This means the original recipe and append file names are version
+                number-specific.
+                If the corresponding recipe is renamed to update to a newer
+                version, the underlying <filename>.bbappend</filename> file must
+                be renamed as well.
+                During the build process, BitBake displays an error on starting
+                if it detects a <filename>.bbappend</filename> file that does
+                not have a corresponding recipe with a matching name.
                 See the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_DANGLINGAPPENDS_WARNONLY'><filename>BB_DANGLINGAPPENDS_WARNONLY</filename></ulink>
                 variable for information on how to handle this error.
             </para>
 
             <para>
-                Being able to append information to an existing recipe not only avoids duplication,
-                but also automatically applies recipe changes in a different layer to your layer.
-                If you were copying recipes, you would have to manually merge changes as they occur.
+                Being able to append information to an existing recipe not only
+                avoids duplication, but also automatically applies recipe
+                changes in a different layer to your layer.
+                If you were copying recipes, you would have to manually merge
+                changes as they occur.
             </para>
 
             <para>
-                As an example, consider the main formfactor recipe and a corresponding formfactor
-                append file both from the
+                As an example, consider the main formfactor recipe and a
+                corresponding formfactor append file both from the
                 <link linkend='source-directory'>Source Directory</link>.
-                Here is the main formfactor recipe, which is named <filename>formfactor_0.0.bb</filename> and
-                located in the "meta" layer at <filename>meta/recipes-bsp/formfactor</filename>:
+                Here is the main formfactor recipe, which is named
+                <filename>formfactor_0.0.bb</filename> and located in the
+                "meta" layer at
+                <filename>meta/recipes-bsp/formfactor</filename>:
                 <literallayout class='monospaced'>
      DESCRIPTION = "Device formfactor information"
      SECTION = "base"
@@ -340,8 +412,10 @@
      	fi
      }
                 </literallayout>
-                Here is the append file, which is named <filename>formfactor_0.0.bbappend</filename> and is from the
-                Crown Bay BSP Layer named <filename>meta-intel/meta-crownbay</filename>.
+                Here is the append file, which is named
+                <filename>formfactor_0.0.bbappend</filename> and is from the
+                Crown Bay BSP Layer named
+                <filename>meta-intel/meta-crownbay</filename>.
                 The file is in <filename>recipes-bsp/formfactor</filename>:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
@@ -350,20 +424,24 @@
                 </literallayout>
                 This example adds or overrides files in
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                within a <filename>.bbappend</filename> by extending the path BitBake uses to search for files.
+                within a <filename>.bbappend</filename> by extending the path
+                BitBake uses to search for files.
                 The most reliable way to do this is by prepending the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
                 variable.
-                For example, if you have your files in a directory that is named the same as your package
+                For example, if you have your files in a directory that is named
+                the same as your package
                 (<ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink>),
-                you can add this directory by adding the following to your <filename>.bbappend</filename> file:
+                you can add this directory by adding the following to your
+                <filename>.bbappend</filename> file:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
                 </literallayout>
-                Using the immediate expansion assignment operator <filename>:=</filename> is important because
-                of the reference to <filename>THISDIR</filename>.
-                The trailing colon character is important as it ensures that items in the list remain
-                colon-separated.
+                Using the immediate expansion assignment operator
+                <filename>:=</filename> is important because of the reference to
+                <filename>THISDIR</filename>.
+                The trailing colon character is important as it ensures that
+                items in the list remain colon-separated.
                 <note><para>BitBake automatically defines the
                     <filename>THISDIR</filename> variable.
                     You should never set this variable yourself.
@@ -383,13 +461,15 @@
 
             <para>
                 Each layer is assigned a priority value.
-                Priority values control which layer takes precedence if there are recipe files with
-                the same name in multiple layers.
-                For these cases, the recipe file from the layer with a higher priority number takes precedence.
-                Priority values also affect the order in which multiple <filename>.bbappend</filename> files
-                for the same recipe are applied.
-                You can either specify the priority manually, or allow the build system to calculate it
-                based on the layer's dependencies.
+                Priority values control which layer takes precedence if there
+                are recipe files with the same name in multiple layers.
+                For these cases, the recipe file from the layer with a higher
+                priority number takes precedence.
+                Priority values also affect the order in which multiple
+                <filename>.bbappend</filename> files for the same recipe are
+                applied.
+                You can either specify the priority manually, or allow the
+                build system to calculate it based on the layer's dependencies.
             </para>
 
             <para>
@@ -406,8 +486,9 @@
                 <para>It is possible for a recipe with a lower version number
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
                 in a layer that has a higher priority to take precedence.</para>
-                <para>Also, the layer priority does not currently affect the precedence order of
-                <filename>.conf</filename> or <filename>.bbclass</filename> files.
+                <para>Also, the layer priority does not currently affect the
+                precedence order of <filename>.conf</filename>
+                or <filename>.bbclass</filename> files.
                 Future versions of BitBake might address this.</para>
             </note>
         </section>
@@ -416,11 +497,12 @@
             <title>Managing Layers</title>
 
             <para>
-                You can use the BitBake layer management tool to provide a view into the structure of
-                recipes across a multi-layer project.
-                Being able to generate output that reports on configured layers with their paths and
-                priorities and on <filename>.bbappend</filename> files and their applicable recipes
-                can help to reveal potential problems.
+                You can use the BitBake layer management tool to provide a view
+                into the structure of recipes across a multi-layer project.
+                Being able to generate output that reports on configured layers
+                with their paths and priorities and on
+                <filename>.bbappend</filename> files and their applicable
+                recipes can help to reveal potential problems.
             </para>
 
             <para>
@@ -431,46 +513,64 @@
                 The following list describes the available commands:
                 <itemizedlist>
                     <listitem><para><filename><emphasis>help:</emphasis></filename>
-                        Displays general help or help on a specified command.</para></listitem>
+                        Displays general help or help on a specified command.
+                        </para></listitem>
                     <listitem><para><filename><emphasis>show-layers:</emphasis></filename>
-                        Show the current configured layers.</para></listitem>
+                        Show the current configured layers.
+                        </para></listitem>
                     <listitem><para><filename><emphasis>show-recipes:</emphasis></filename>
                         Lists available recipes and the layers that provide them.
                         </para></listitem>
                     <listitem><para><filename><emphasis>show-overlayed:</emphasis></filename>
                         Lists overlayed recipes.
-                        A recipe is overlayed when a recipe with the same name exists in another layer
-                        that has a higher layer priority.
+                        A recipe is overlayed when a recipe with the same name
+                        exists in another layer that has a higher layer
+                        priority.
                         </para></listitem>
                     <listitem><para><filename><emphasis>show-appends:</emphasis></filename>
-                        Lists <filename>.bbappend</filename> files and the recipe files to which
-                        they apply.</para></listitem>
+                        Lists <filename>.bbappend</filename> files and the
+                        recipe files to which they apply.
+                        </para></listitem>
                     <listitem><para><filename><emphasis>show-cross-depends:</emphasis></filename>
-                        Lists dependency relationships between recipes that cross layer boundaries.
+                        Lists dependency relationships between recipes that
+                        cross layer boundaries.
                         </para></listitem>
                     <listitem><para><filename><emphasis>flatten:</emphasis></filename>
-                        Flattens the layer configuration into a separate output directory.
-                        Flattening your layer configuration builds a "flattened" directory that contains
-                        the contents of all layers, with any overlayed recipes removed and any
-                        <filename>.bbappend</filename> files appended to the corresponding recipes.
-                        You might have to perform some manual cleanup of the flattened layer as follows:
+                        Flattens the layer configuration into a separate output
+                        directory.
+                        Flattening your layer configuration builds a "flattened"
+                        directory that contains the contents of all layers,
+                        with any overlayed recipes removed and any
+                        <filename>.bbappend</filename> files appended to the
+                        corresponding recipes.
+                        You might have to perform some manual cleanup of the
+                        flattened layer as follows:
                         <itemizedlist>
-                            <listitem><para>Non-recipe files (such as patches) are overwritten.
-                                The flatten command shows a warning for these files.</para></listitem>
-                            <listitem><para>Anything beyond the normal layer setup has been added to
-                                the <filename>layer.conf</filename> file.
-                                Only the lowest priority layer's <filename>layer.conf</filename> is used.
+                            <listitem><para>Non-recipe files (such as patches)
+                                are overwritten.
+                                The flatten command shows a warning for these
+                                files.
                                 </para></listitem>
-                            <listitem><para>Overridden and appended items from <filename>.bbappend</filename>
-                                files need to be cleaned up.
-                                The contents of each <filename>.bbappend</filename> end up in the
+                            <listitem><para>Anything beyond the normal layer
+                                setup has been added to the
+                                <filename>layer.conf</filename> file.
+                                Only the lowest priority layer's
+                                <filename>layer.conf</filename> is used.
+                                </para></listitem>
+                            <listitem><para>Overridden and appended items from
+                                <filename>.bbappend</filename> files need to be
+                                cleaned up.
+                                The contents of each
+                                <filename>.bbappend</filename> end up in the
                                 flattened recipe.
-                                However, if there are appended or changed variable values, you need to tidy
-                                these up yourself.
+                                However, if there are appended or changed
+                                variable values, you need to tidy these up
+                                yourself.
                                 Consider the following example.
-                                Here, the <filename>bitbake-layers</filename> command adds the line
-                                <filename>#### bbappended ...</filename> so that you know where the following
-                                lines originate:
+                                Here, the <filename>bitbake-layers</filename>
+                                command adds the line
+                                <filename>#### bbappended ...</filename> so that
+                                you know where the following lines originate:
                                 <literallayout class='monospaced'>
      ...
      DESCRIPTION = "A useful utility"
@@ -483,7 +583,8 @@
      DESCRIPTION = "Customized utility"
      EXTRA_OECONF += "--enable-somethingelse"
                                 </literallayout>
-                                Ideally, you would tidy up these utilities as follows:
+                                Ideally, you would tidy up these utilities as
+                                follows:
                                 <literallayout class='monospaced'>
      ...
      DESCRIPTION = "Customized utility"
@@ -494,6 +595,134 @@
                         </itemizedlist></para></listitem>
                 </itemizedlist>
             </para>
+        </section>
+
+        <section id='creating-a-general-layer-using-the-yocto-layer-script'>
+            <title>Creating a General Layer Using the yocto-layer Script</title>
+
+            <para>
+                The <filename>yocto-layer</filename> script simplifies
+                creating a new general layer.
+                <note>
+                    For information on BSP layers, see the
+                    "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
+                    section in the Yocto Project Board Specific (BSP)
+                    Developer's Guide.
+                </note>
+                The default mode of the script's operation is to prompt you for
+                information needed to generate the layer:
+                <itemizedlist>
+                    <listitem><para>The layer priority
+                        </para></listitem>
+                    <listitem><para>Whether or not to create a sample recipe.
+                        </para></listitem>
+                    <listitem><para>Whether or not to create a sample
+                        append file.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                You use the <filename>yocto-layer create</filename> sub-command
+                to create a new general layer.
+                In its simplest form, you can create a layer as follows:
+                <literallayout class='monospaced'>
+     $ yocto-layer create mylayer
+                </literallayout>
+                The previous example creates a layer named
+                <filename>meta-mylayer</filename> in the current directory.
+            </para>
+
+            <para>
+                As the <filename>yocto-layer create</filename> command runs,
+                default values for the prompts appear in brackets.
+                Pressing enter without supplying anything on the command line
+                or pressing enter and providing an invalid response causes the
+                script to accept the default value.
+                Once the script completes, the new layer
+                is created in the current working directory.
+                The script names the layer according to the string you provide
+                and the prepended <filename>meta-</filename> string.
+            </para>
+
+            <para>
+                If you choose to not generate a sample recipe or append file,
+                the script creates the following within the layer:
+                <itemizedlist>
+                    <listitem><para><emphasis>The <filename>conf</filename>
+                        directory:</emphasis>
+                        This directory contains the layers
+                        <filename>.conf</filename>.
+                        The root name for the file is the same as the root name
+                        your provided for the layer.
+                        </para></listitem>
+                    <listitem><para><emphasis>The
+                        <filename>COPYING.MIT</filename>:</emphasis>
+                        The copyright and use notice for the software.
+                        </para></listitem>
+                    <listitem><para><emphasis>The <filename>README</filename>
+                        file:</emphasis>
+                        A file describing the contents of your new layer.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                If you choose to generate a sample recipe file, the script
+                prompts you for the name for the recipe and then creates it
+                in <filename>&lt;layer&gt;/recipes-example/example/</filename>.
+                in a directory named <filename>recipes-example</filename>.
+                The script creates a <filename>.bb</filename> file and a
+                directory, which contains a sample
+                <filename>helloworld.c</filename>source file and along with
+                a sample patch file.
+                If you do not provide a recipe name, the script uses
+                "example".
+            </para>
+
+            <para>
+                If you choose to generate a sample append file, the script
+                prompts you for the name for the file and then creates it
+                in <filename>&lt;layer&gt;/recipes-example-bbappend/example-bbappend/</filename>.
+                The script creates a <filename>.bbappend</filename> file and a
+                directory, which contains a sample patch file.
+                If you do not provide a recipe name, the script uses
+                "example".
+                The script also prompts you for the version of the append file.
+                The version should match the recipe to which the append file
+                is associated.
+            </para>
+
+            <para>
+                The easiest way to see how the <filename>yocto-layer</filename>
+                script works is to experiment with the script.
+                You can also read the usage information by entering the
+                following:
+                <literallayout class='monospaced'>
+     $ yocto-layer help
+                </literallayout>
+            </para>
+
+            <para>
+                Once you create your general layer, you must add it to your
+                <filename>bblayers.conf</filename> file.
+                Here is an example:
+                <literallayout class='monospaced'>
+     BBLAYERS = ?" \
+        /usr/local/src/yocto/meta \
+        /usr/local/src/yocto/meta-yocto \
+        /usr/local/src/yocto/meta-yocto-bsp \
+        /usr/local/src/yocto/meta-mylayer \
+        "
+
+     BBLAYERS_NON_REMOVABLE ?= " \
+        /usr/local/src/yocto/meta \
+        /usr/local/src/yocto/meta-yocto \
+        "
+                </literallayout>
+                Adding the layer to this file enables the build system to
+                the layer during the build.
+                </para>
         </section>
     </section>
 
