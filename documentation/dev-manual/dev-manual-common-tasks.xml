@@ -606,23 +606,21 @@
                 <filename>EXTRA_IMAGE_FEATURES</filename></title>
 
             <para>
-                You might want to customize your image by adding image
-                features.
-                You add features to the existing set by using the
+                You might want to customize your image by enabling or
+                disabling high-level image features by using the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>
                 and <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
                 variables.
-                Although both variables are nearly identical, best practices
-                dictate using the <filename>IMAGE_FEATURES</filename> from
-                within a recipe and using
+                Although both variables function nearly equivalent, best
+                practices dictate using <filename>IMAGE_FEATURES</filename>
+                from within a recipe and using
                 <filename>EXTRA_IMAGE_FEATURES</filename> from within
                 your <filename>local.conf</filename>, which is found in the
-                <link linkend='build-directory'></link>.
+                <link linkend='build-directory'>Build Directory</link>.
             </para>
 
             <para>
-                To understand how to add features from within a recipe,
-                the best reference is
+                To understand how these features work, the best reference is
                 <filename>meta/classes/core-image.bbclass</filename>.
                 In summary, the file looks at the contents of the
                 <filename>IMAGE_FEATURES</filename> variable and then maps
@@ -631,7 +629,7 @@
                 adds the appropriate packages to the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>
                 variable.
-                Effectively, you are adding extra features by extending the
+                Effectively, you are enabling extra features by extending the
                 class or creating a custom class for use with specialized image
                 <filename>.bb</filename> files.
             </para>
@@ -639,10 +637,13 @@
             <para>
                 Use the <filename>EXTRA_IMAGE_FEATURES</filename> variable
                 from within your local configuration file.
-                Using a separate area from which to define features with
-                this variable helps you avoid conflicting situations that
-                might arise from using the variable in the same manner as
-                the <filename>IMAGE_FEATURES</filename> variable.
+                Using a separate area from which to enable features with
+                this variable helps you avoid overwriting the features in the
+                image recipe that are enabled with
+                <filename>IMAGE_FEATURES</filename>.
+                The value of <filename>EXTRA_IMAGE_FEATURES</filename> is added
+                to <filename>IMAGE_FEATURES</filename> within
+                <filename>meta/conf/bitbake.conf</filename>.
             </para>
 
             <para>
