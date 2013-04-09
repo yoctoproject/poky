@@ -3009,8 +3009,25 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-RREPLACES'><glossterm>RREPLACES</glossterm>
             <glossdef>
-                <para>The list of packages replaced by the package in which
-                    <filename>RREPLACES</filename> appears.</para>
+                <para>
+                    A list of packages replaced by a package. 
+                    The package manager uses this variable to determine which 
+                    package should be installed to replace other package(s) 
+                    during an upgrade.
+                    In order to also have the other package(s) removed at the 
+                    same time, you must add the name of the other 
+                    package to the
+                    <filename><link linkend='var-RCONFLICTS'>RCONFLICTS</link></filename> variable.
+                </para>
+                <para>
+                   As with all package-controlling variables, you must use
+                   this variable in conjunction with a package name 
+                   override.
+                   Here is an example:
+                   <literallayout class='monospaced'>
+     RREPLACES_${PN} = "other-package-being-replaced"
+                   </literallayout>
+                </para>
             </glossdef>
         </glossentry>
 
