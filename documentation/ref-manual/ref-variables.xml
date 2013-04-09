@@ -2527,8 +2527,34 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
     </glossdiv>
 
-<!--            <glossdiv id='var-glossary-n'><title>N</title>-->
-<!--            </glossdiv>-->
+    <glossdiv id='var-glossary-n'><title>N</title>
+
+        <glossentry id='var-NATIVELSBSTRING'><glossterm>NATIVELSBSTRING</glossterm>
+            <glossdef>
+                <para>
+                    A string identifying the host distribution.
+                    Strings consist of the host distributor ID
+                    followed by the release, as reported by the 
+                    <filename>lsb_release</filename> tool
+                    or as read from <filename>/etc/lsb-release</filename>. 
+                    For example, when running a build on Ubuntu 12.10, the value 
+                    is "Ubuntu-12.10". 
+                    If this information is unable to be determined, the value 
+                    resolves to "Unknown".
+                </para>
+                <para>
+                    This variable is used by default to isolate native shared 
+                    state packages for different distributions (e.g. to avoid 
+                    problems with <filename>glibc</filename> version 
+                    incompatibilities).
+                    Additionally, the variable is checked against
+                    <link linkend='var-SANITY_TESTED_DISTROS'><filename>SANITY_TESTED_DISTROS</filename></link>
+                    if that variable is set.
+                </para>
+            </glossdef>
+        </glossentry>
+
+    </glossdiv>
 
     <glossdiv id='var-glossary-o'><title>O</title>
 
@@ -3161,6 +3187,27 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
  ~/poky/build/tmp/work/qemux86-poky-linux/db/5.1.19-r3/db-5.1.19
                     </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SANITY_TESTED_DISTROS'><glossterm>SANITY_TESTED_DISTROS</glossterm>
+            <glossdef>
+                <para>
+                    A list of the host distribution identifiers that the 
+                    build system has been tested against.
+                    Identifiers consist of the host distributor ID
+                    followed by the release, 
+                    as reported by the <filename>lsb_release</filename> tool
+                    or as read from <filename>/etc/lsb-release</filename>.) 
+                    Separate the list items with explicit newline 
+                    characters (<filename>\n</filename>).
+                    If <filename>SANITY_TESTED_DISTROS</filename> is not empty 
+                    and the current value of 
+                    <link linkend='var-NATIVELSBSTRING'><filename>NATIVELSBSTRING</filename></link>
+                    does not appear in the list, then the build system reports        
+                    a warning that indicates the current host distribution has 
+                    not been tested as a build host.
                 </para>
             </glossdef>
         </glossentry>
