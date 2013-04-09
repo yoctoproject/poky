@@ -72,9 +72,12 @@
             <listitem><para><emphasis>Packages:</emphasis>  The OpenEmbedded build system
                 requires certain packages exist on your development system (e.g. Python 2.6 or 2.7).
                 See "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Packages</ulink>"
-                section in the Yocto Project Quick Start for the exact package
-                requirements and the installation commands to install them
-                for the supported distributions.</para></listitem>
+                section in the Yocto Project Quick Start and the 
+                "<ulink url='&YOCTO_DOCS_REF_URL;#required-packages-for-the-host-development-system'>Required Packages for the Host Development System</ulink>"
+                section in the Yocto Project Reference Manual for the exact 
+                package requirements and the installation commands to install 
+                them for the supported distributions.
+                </para></listitem>
             <listitem id='local-yp-release'><para><emphasis>Yocto Project Release:</emphasis>
                 You need a release of the Yocto Project.
                 You set that up with a local <link linkend='source-directory'>Source Directory</link>
@@ -85,12 +88,15 @@
                     hierarchical set of files as the "Source Directory."
                 </note>
                 <itemizedlist>
-                    <listitem><para><emphasis>Tarball Extraction:</emphasis>  If you are not going to contribute
-                        back into the Yocto Project, you can simply download a Yocto Project release you want
-                        from the website’s <ulink url='&YOCTO_HOME_URL;/download'>download page</ulink>.
-                        Once you have the tarball, just extract it into a directory of your choice.</para>
-                        <para>For example, the following command extracts the Yocto Project &DISTRO;
-                        release tarball
+                    <listitem><para><emphasis>Tarball Extraction:</emphasis>  
+                        If you are not going to contribute back into the Yocto 
+                        Project, you can simply go to the 
+                        <ulink url='&YOCTO_HOME_URL;'>Yocto Project Website</ulink>, 
+                        select the "Downloads" tab, and choose what you want.
+                        Once you have the tarball, just extract it into a 
+                        directory of your choice.</para>
+                        <para>For example, the following command extracts the 
+                        Yocto Project &DISTRO; release tarball
                         into the current working directory and sets up the local Source Directory
                         with a top-level folder named <filename>&YOCTO_POKY;</filename>:
                         <literallayout class='monospaced'>
@@ -104,23 +110,23 @@
                         Git repository of the upstream <filename>poky</filename> source repository.
                         Doing so creates a repository with a complete history of changes and allows
                         you to easily submit your changes upstream to the project.
-                        Because you cloned the repository, you have access to all the Yocto Project development
+                        Because you clone the repository, you have access to all the Yocto Project development
                         branches and tag names used in the upstream repository.</para>
-                        <para>The following transcript shows how to clone the <filename>poky</filename>
-                        Git repository into the current working directory.
                         <note>You can view the Yocto Project Source Repositories at
                         <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink></note>
+                        <para>The following transcript shows how to clone the <filename>poky</filename>
+                        Git repository into the current working directory.
                         The command creates the local repository in a directory named <filename>poky</filename>.
                         For information on Git used within the Yocto Project, see the
                         "<link linkend='git'>Git</link>" section.
                         <literallayout class='monospaced'>
      $ git clone git://git.yoctoproject.org/poky
-     Initialized empty Git repository in /home/scottrif/poky/.git/
-     remote: Counting objects: 141863, done.
-     remote: Compressing objects: 100% (38624/38624), done.
-     remote: Total 141863 (delta 99661), reused 141816 (delta 99614)
-     Receiving objects: 100% (141863/141863), 76.64 MiB | 126 KiB/s, done.
-     Resolving deltas: 100% (99661/99661), done.
+     Cloning into 'poky'...
+     remote: Counting objects: 183981, done.
+     remote: Compressing objects: 100% (47428/47428), done.
+     remote: Total 183981 (delta 132271), reused 183703 (delta 132044)
+     Receiving objects: 100% (183981/183981), 89.71 MiB | 2.93 MiB/s, done.
+     Resolving deltas: 100% (132271/132271), done.   
                         </literallayout></para>
                         <para>For another example of how to set up your own local Git repositories, see this
                         <ulink url='&YOCTO_WIKI_URL;/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>
@@ -139,33 +145,32 @@
                 For simplicity, it is recommended that you create these structures outside of the
                 Source Directory (usually <filename>poky</filename>).</para>
                 <para>As an example, the following transcript shows how to create the bare clone
-                of the <filename>linux-yocto-3.4</filename> kernel and then create a copy of
+                of the <filename>linux-yocto-3.8</filename> kernel and then create a copy of
                 that clone.
                 <note>When you have a local Yocto Project kernel Git repository, you can
                 reference that repository rather than the upstream Git repository as
                 part of the <filename>clone</filename> command.
                 Doing so can speed up the process.</note></para>
                 <para>In the following example, the bare clone is named
-                <filename>linux-yocto-3.4.git</filename>, while the
-                copy is named <filename>my-linux-yocto-3.4-work</filename>:
+                <filename>linux-yocto-3.8.git</filename>, while the
+                copy is named <filename>my-linux-yocto-3.8-work</filename>:
                 <literallayout class='monospaced'>
-     $ git clone --bare git://git.yoctoproject.org/linux-yocto-3.4 linux-yocto-3.4.git
-     Initialized empty Git repository in /home/scottrif/linux-yocto-3.4.git/
-     remote: Counting objects: 2468027, done.
-     remote: Compressing objects: 100% (392255/392255), done.
-     remote: Total 2468027 (delta 2071693), reused 2448773 (delta 2052498)
-     Receiving objects: 100% (2468027/2468027), 530.46 MiB | 129 KiB/s, done.
-     Resolving deltas: 100% (2071693/2071693), done.
-                </literallayout></para>
+     $ git clone --bare git://git.yoctoproject.org/linux-yocto-3.8 linux-yocto-3.8.git
+     Cloning into bare repository 'linux-yocto-3.8.git'...
+     remote: Counting objects: 2847090, done.
+     remote: Compressing objects: 100% (454675/454675), done.
+     remote: Total 2847090 (delta 2386170), reused 2825793 (delta 2364886)
+     Receiving objects: 100% (2847090/2847090), 603.19 MiB | 3.54 MiB/s, done.
+     Resolving deltas: 100% (2386170/2386170), done.                </literallayout></para>
                 <para>Now create a clone of the bare clone just created:
                 <literallayout class='monospaced'>
-     $ git clone linux-yocto-3.4.git my-linux-yocto-3.4-work
-     Cloning into 'my-linux-yocto-3.4-work'...
+     $ git clone linux-yocto-3.8.git my-linux-yocto-3.8-work
+     Cloning into 'my-linux-yocto-3.8-work'...
      done.
                 </literallayout></para></listitem>
             <listitem id='poky-extras-repo'><para><emphasis>
                 The <filename>poky-extras</filename> Git Repository</emphasis>:
-                The <filename>poky-extras</filename> Git repository contains metadata needed
+                The <filename>poky-extras</filename> Git repository contains Metadata needed
                 only if you are modifying and building the kernel image.
                 In particular, it contains the kernel BitBake append (<filename>.bbappend</filename>)
                 files that you
@@ -183,13 +188,12 @@
                 <literallayout class='monospaced'>
      $ cd ~/poky
      $ git clone git://git.yoctoproject.org/poky-extras poky-extras
-     Initialized empty Git repository in /home/scottrif/poky/poky-extras/.git/
-     remote: Counting objects: 618, done.
-     remote: Compressing objects: 100% (558/558), done.
-     remote: Total 618 (delta 192), reused 307 (delta 39)
-     Receiving objects: 100% (618/618), 526.26 KiB | 111 KiB/s, done.
-     Resolving deltas: 100% (192/192), done.
-                </literallayout></para></listitem>
+     Cloning into 'poky-extras'...
+     remote: Counting objects: 690, done.
+     remote: Compressing objects: 100% (431/431), done.
+     remote: Total 690 (delta 238), reused 690 (delta 238)
+     Receiving objects: 100% (690/690), 532.60 KiB, done.
+     Resolving deltas: 100% (238/238), done.                </literallayout></para></listitem>
            <listitem><para id='supported-board-support-packages-(bsps)'><emphasis>Supported Board
                 Support Packages (BSPs):</emphasis>
                 The Yocto Project provides a layer called <filename>meta-intel</filename> and
@@ -219,10 +223,12 @@
                 information on BSP Layers.
                 <itemizedlist>
                     <listitem><para><emphasis>Tarball Extraction:</emphasis>  You can download any released
-                        BSP tarball from the same
-                        <ulink url='&YOCTO_HOME_URL;/download'>download site</ulink> used
+                        BSP tarball from the same "Downloads" page of the 
+                        <ulink url='&YOCTO_HOME_URL;'>Yocto Project Website</ulink>
                         to get the Yocto Project release.
-                        Once you have the tarball, just extract it into a directory of your choice.
+                        Once on the "Download" page, look for "BSP" under the 
+                        "Type" heading.</para>
+                        <para>Once you have the tarball, just extract it into a directory of your choice.
                         Again, this method just produces a snapshot of the BSP layer in the form
                         of a hierarchical directory structure.</para></listitem>
                     <listitem><para><emphasis>Git Repository Method:</emphasis>  If you are working
@@ -239,12 +245,12 @@
                         <literallayout class='monospaced'>
      $ cd ~/poky
      $ git clone git://git.yoctoproject.org/meta-intel.git
-     Initialized empty Git repository in /home/scottrif/poky/meta-intel/.git/
-     remote: Counting objects: 3380, done.
-     remote: Compressing objects: 100% (2750/2750), done.
-     remote: Total 3380 (delta 1689), reused 227 (delta 113)
-     Receiving objects: 100% (3380/3380), 1.77 MiB | 128 KiB/s, done.
-     Resolving deltas: 100% (1689/1689), done.
+     Cloning into 'meta-intel'...
+     remote: Counting objects: 6264, done.
+     remote: Compressing objects: 100% (2135/2135), done.
+     remote: Total 6264 (delta 3321), reused 6235 (delta 3293)
+     Receiving objects: 100% (6264/6264), 2.17 MiB | 2.63 MiB/s, done.
+     Resolving deltas: 100% (3321/3321), done.
                         </literallayout></para>
                         <para>The same
                         <ulink url='&YOCTO_WIKI_URL;/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>
