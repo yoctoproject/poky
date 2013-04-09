@@ -741,7 +741,27 @@ Core layer for images cannot be removed
 
         <glossentry id='var-DEFAULT_PREFERENCE'><glossterm>DEFAULT_PREFERENCE</glossterm>
             <glossdef>
-                <para>Specifies the priority of recipes.</para>
+                <para>
+                    Specifies a weak bias for recipe selection priority.
+                    Use this variable when more than one provider/version 
+                    satisfies a dependency.
+                </para>
+                <para>
+                    The most common usage of this is variable is to set 
+                    it to "-1" within a recipe for a development version of a 
+                    piece of software.
+                    Using the variable in this way causes the stable version
+                    of the recipe to build by default in the absence of
+                    <filename><link linkend='var-PREFERRED_VERSION'>PREFERRED_VERSION</link></filename>
+                    being used to build the development version.
+                </para>
+                <note>
+                    The bias provided by <filename>DEFAULT_PREFERENCE</filename> 
+                    is weak and is overridden by 
+                    <filename><link linkend='var-BBFILE_PRIORITY'>BBFILE_PRIORITY</link></filename>
+                    if the selection priority is different between two layers 
+                    that contain different versions of the same recipe.
+                </note>
             </glossdef>
         </glossentry>
 
