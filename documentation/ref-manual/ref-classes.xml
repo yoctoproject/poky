@@ -584,6 +584,25 @@
                 the specification for <filename>.desktop</filename> files.</para></listitem>
         </itemizedlist>
     </para>
+    <note>
+        You can use the <filename>WARN_QA</filename> and 
+        <filename>ERROR_QA</filename> variables to control the behavior of 
+        these checks at the global level (i.e. in your custom distro 
+        configuration).
+        However, to skip one or more checks in recipes, you should use 
+        <filename>INSANE_SKIP</filename>. 
+        For example, to skip the check for symbolic link 
+        <filename>.so</filename> files in the main package of a recipe, 
+        add the following to the recipe.
+        You need to realize that the package name override, in this example
+        <filename>${PN}</filename>, must be used:
+        <literallayout class='monospaced'>
+     INSANE_SKIP_${PN} += "dev-so"
+        </literallayout>
+        Please keep in mind that the QA checks exist in order to detect real 
+        or potential problems in the packaged output.
+        So exercise caution when disabling these checks.
+    </note>
 </section>
 
 <section id='ref-classes-rm-work'>
