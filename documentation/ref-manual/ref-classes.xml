@@ -524,6 +524,54 @@
                 Any <filename>.pc</filename> file containing these paths is incorrect
                 since <filename>pkg-config</filename> itself adds the correct sysroot prefix
                 when the files are accessed.</para></listitem>
+            <listitem><para><emphasis><filename>textrel:</filename></emphasis>
+                Checks for ELF binaries that contain relocations in their 
+                <filename>.text</filename> sections, which can result in a 
+                performance impact at runtime.</para></listitem>
+            <listitem><para><emphasis><filename>pkgvarcheck:</filename></emphasis>
+                Checks through the variables 
+                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>, 
+                <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>, 
+                <filename>RSUGGESTS</filename>,
+                <link linkend='var-RCONFLICTS'><filename>RCONFLICTS</filename></link>,
+                <filename>RPROVIDES</filename>,
+                <link linkend='var-RREPLACES'><filename>RREPLACES</filename></link>, 
+                <link linkend='var-FILES'><filename>FILES</filename></link>,
+                <link linkend='var-ALLOW_EMPTY'><filename>ALLOW_EMPTY</filename></link>,
+                <filename>pkg_preinst</filename>, 
+                <filename>pkg_postinst</filename>, 
+                <filename>pkg_prerm</filename>
+                and <filename>pkg_postrm</filename>, and reports if there are 
+                variable sets that are not package-specific.
+                Using these variables without a package suffix is bad practice,
+                and might unecessarily complicate dependencies of other packages
+                within the same recipe or have other unintended consequences.
+                </para></listitem>
+            <listitem><para><emphasis><filename>xorg-driver-abi:</filename></emphasis>
+                Checks that all packages containing Xorg drivers have ABI 
+                dependencies.
+                The <filename>xserver-xorg</filename> recipe provides driver 
+                ABI names.
+                All drivers should depend on the ABI versions that they have 
+                been built against. 
+                Driver recipes that include 
+                <filename>xorg-driver-input.inc</filename>
+                or <filename>xorg-driver-video.inc</filename> will 
+                automatically get these versions.
+                Consequently, you should only need to explicitly add 
+                dependencies to binary driver recipes.
+                </para></listitem>
+            <listitem><para><emphasis><filename>libexec:</filename></emphasis>
+                Checks if a package contains files in 
+                <filename>/usr/libexec</filename>.
+                This check is not performed if the 
+                <filename>libexecdir</filename> variable has been set 
+                explicitly to <filename>/usr/libexec</filename>.
+                </para></listitem>
+            <listitem><para><emphasis><filename>staticdev:</filename></emphasis>
+                Checks for static library files (<filename>*.a</filename>) in
+                non-<filename>staticdev</filename> packages.
+                </para></listitem>
             <listitem><para><emphasis><filename>la:</filename></emphasis>
                 Checks <filename>.la</filename> files for any <filename>TMPDIR</filename>
                 paths.
