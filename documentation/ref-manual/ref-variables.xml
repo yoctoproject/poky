@@ -598,16 +598,34 @@ Core layer for images cannot be removed
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-COMPATIBLE_HOST'><glossterm>COMPATIBLE_HOST</glossterm>
+            <glossdef>
+                <para>A regular expression matched against
+                    <link linkend="var-HOST_SYS"><filename>HOST_SYS</filename></link>
+                    that the OpenEmbedded build system evaulates against
+                    systems with which the recipe works.
+                    You can use the variable to stop recipes from being built
+                    for classes of systems with which the recipes are not 
+                    compatible.
+                    Stopping these builds is particularly useful with kernels.
+                    The variable also helps to increase parsing speed 
+                    since the build system skips parsing recipes not 
+                    compatible with the current system.</para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-COMPATIBLE_MACHINE'><glossterm>COMPATIBLE_MACHINE</glossterm>
             <glossdef>
-                <para>A regular expression that evaluates to match the machines
-                    with which the recipe works.
-                    You can use the variable to stop recipes from being run
-                    on machines for which they are not compatible.
-                    This is particularly useful with kernels.
-                    The variable also helps to increase parsing speed as
-                    further parsing of the recipe is skipped if it is found
-                    the current machine is not compatible.</para>
+                <para>A regular expression matched against
+                    <link linkend="var-MACHINEOVERRIDES"><filename>MACHINEOVERRIDES</filename></link>
+                    that the OpenEmbedded build system evaluates against
+                    machines with which the recipe works.
+                    You can use the variable to stop recipes from being built
+                    for machines with which the recipes are not compatible.
+                    Stopping these builds is particularly useful with kernels.
+                    The variable also helps to increase parsing speed 
+                    since the build system skips parsing recipes not
+                    compatible with the current machine.</para>
             </glossdef>
         </glossentry>
 
@@ -866,6 +884,22 @@ Core layer for images cannot be removed
         <glossentry id='var-DISTRO_VERSION'><glossterm>DISTRO_VERSION</glossterm>
             <glossdef>
                 <para>the version of the distribution.</para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-DISTROOVERRIDES'><glossterm>DISTROOVERRIDES</glossterm>
+            <glossdef>
+                <para>
+                    This variable lists overrides specific to the current 
+                    distribution. 
+                    By default, the variable list includes the value of the 
+                    <filename><link linkend='var-DISTRO'>DISTRO</link></filename>
+                    variable.
+                    You can extend the variable to apply any variable overrides 
+                    you want as part of the distribution and are not
+                    already in <filename>OVERRIDES</filename> through
+                    some other means.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -1218,6 +1252,33 @@ Core layer for images cannot be removed
             <glossdef>
                 <para>Website where more information about the software the recipe is building
                     can be found.</para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-HOST_SYS'><glossterm>HOST_SYS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the system, including the architecture and the 
+                    operating system, being built in the context of the current
+                    recipe. 
+                    The OpenEmbedded build system automatically sets this
+                    variable.
+                    You do not need to set the variable yourself.
+                </para>
+
+                <para>
+                    Here are two examples:
+                    <itemizedlist>
+                        <listitem><para>Given a native recipe on a 32-bit
+                            x86 machine running Linux, the value is 
+                            "i686-linux".
+                            </para></listitem>
+                        <listitem><para>Given a recipe being built for a 
+                            little-endian MIPS target running Linux,
+                            the value might be "mipsel-linux". 
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
             </glossdef>
         </glossentry>
 
@@ -2336,6 +2397,35 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-MACHINEOVERRIDES'><glossterm>MACHINEOVERRIDES</glossterm>
+            <glossdef>
+                <para>
+                    Lists overrides specific to the current machine. 
+                    By default, this list includes the value
+                    of <filename><link linkend='var-MACHINE'>MACHINE</link></filename>. 
+                    You can extend the list to apply variable overrides for 
+                    classes of machines.
+                    For example, all QEMU emulated machines (e.g. qemuarm, 
+                    qemux86, and so forth) include a common file named
+                    <filename>meta/conf/machine/include/qemu.inc</filename>
+                    that prepends <filename>MACHINEOVERRIDES</filename> with 
+                    the following variable override:
+                    <literallayout class='monospaced'>
+    MACHINEOVERRIDES =. "qemuall:"
+                    </literallayout>
+                    Applying an override like <filename>qemuall</filename>
+                    affects all QEMU emulated machines elsewhere.
+                    Here is an example from the 
+                    <filename>connman-conf</filename> recipe:
+                    <literallayout class='monospaced'>
+    SRC_URI_append_qemuall = "file://wired.config \
+                              file://wired-setup \
+                             "
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-MAINTAINER'><glossterm>MAINTAINER</glossterm>
             <glossdef>
                 <para>The email address of the distribution maintainer.</para>
@@ -3012,6 +3102,24 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Specifies the number of bits for the target system CPU.
                     The value should be either "32" or "64".
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SOC_FAMILY'><glossterm>SOC_FAMILY</glossterm>
+            <glossdef>
+                <para>
+                    Groups together machines based upon the same family
+                    of SOC (System On Chip). 
+                    You typically set this variable in a common
+                    <filename>.inc</filename> file that you include in the 
+                    configuration files of all the machines. 
+                    <note>
+                        You must include 
+                        <filename>conf/machine/include/soc-family.inc</filename>
+                        for this variable to appear in
+                    <link linkend='var-MACHINEOVERRIDES'><filename>MACHINEOVERRIDES</filename></link>.
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
