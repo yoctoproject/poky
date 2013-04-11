@@ -2847,6 +2847,9 @@
                     </para></listitem>
                 <listitem><para>Setting up Runtime Package Management
                     </para></listitem>
+                <listitem><para>Setting up and running package test
+                    (Ptest)
+                    </para></listitem>
             </itemizedlist>
         </para>
 
@@ -3471,6 +3474,129 @@
      $ src/gz beagleboard http://www.mysite.com/somedir/deploy/ipk/beagleboard
                 </literallayout>
             </para>
+        </section>
+
+        <section id='setting-up-and-running-package-test-ptest'>
+            <title>Setting Up and Running Package Test (Ptest)</title>
+
+            <para>
+                Intro shit
+            </para>
+
+            <section id='getting-your-package-ready'>
+                <title>Getting Your Package Ready</title>
+ 
+                <para>
+                    In order to run installed Ptests on target hardware, 
+                    you need to prepare each recipe so that it can run
+                    its test.
+                    Here is what you have to do:
+                    <itemizedlist>
+                        <listitem><para><emphasis>Be sure the package recipe
+                            inherits Ptest:</emphasis>
+                            Include the following line in your recipe:
+                            <literallayout class='monospaced'>
+     inherit ptest
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para><emphasis>Ensure dependencies are
+                            met:</emphasis>
+                            If the test adds build or runtime dependencies 
+                            to the package that do not normally exist
+                            (such as requiring "make" to run the test suite), 
+                            use the 
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>
+                            variable in your package to meet the dependency.
+                            Here is an example where the recipe has a build
+                            dependency on "make":
+                            <literallayout class='monospaced'>
+     RDEPENDS_${PN}-ptest += "make"
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para><emphasis>Add a function to build the 
+                            test suite:</emphasis>
+                            Few packages support cross-compiling their test 
+                            suites.
+                            Consequently, you usually need to add a function
+                            to do that.</para>
+                            <para>Many packages based on Automake compile and 
+                            run the test suite by using a single command
+                            such as <filename>make check</filename>.
+                            However, this method does not work when you are 
+                            cross-compiling packages because building occurs on
+                            the host and execution occurs on the target.
+                            Thus, compilation needs to occur separately on 
+                            the host.
+                            The built version of Automake that ships with 
+                            the Yocto Project does this automatically through 
+                            a patch.
+                            Consequently, packages that use 
+                            <filename>make check</filename> automatically 
+                            are deal with the cross-compile situation.</para>
+                            <para>However, you still must add a 
+                            <filename>do_compile_ptest</filename> function to 
+                            build the test suite.
+                            Add a function similar to the following to your 
+                            package recipe:
+                            <literallayout class='monospaced'>
+     do_compile_ptest() {
+        oe_runmake buildtest-TESTS
+     }
+                            </literallayout>
+                            </para></listitem>
+                       <listitem><para><emphasis>Ensure special configurations
+                            are set:</emphasis>
+                            If the package requires special configuration 
+                            actions prior to compiling the test code, you must
+                            insert a <filename>do_configure_ptest</filename>
+                            function into the recipe.
+                            </para></listitem>
+                       <listitem><para><emphasis>Install the test 
+                            suite:</emphasis>
+                            The <filename>ptest.bbclass</filename> class
+                            automatically copies the required files that both 
+                            "make" and run the tests assuming there is a 
+                            make target in the top-level 
+                            <filename>Makefile</filename>.
+                            If this is not the case, you need to create a 
+                            <filename>do_install_ptest</filename> in the 
+                            package recipe that is called after the 
+                            "make install-ptest" has completed.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
+
+            <section id='adding-ptest-to-your-build'>
+                <title>Adding Ptest to Your Build</title>
+
+                <para>
+                    To add Ptest to your build, add the following
+                    into your <filename>local.conf</filename> file, 
+                    which is found in the 
+                    <link linkend='build-directory'>Build Directory</link>:
+                    <literallayout class='monospaced'>
+     DISTRO_FEATURES += "ptest"
+     IMAGE_FEATURES += "ptest" 
+                    </literallayout>
+                    Once your build is complete, the Ptest files are installed
+                    into the <filename>/usr/lib/&lt;package&gt;/ptest</filename>
+                    directory, where &lt;package&gt; is the name of the 
+                    package.
+                </para>
+            </section>
+
+            <section id='running-ptest'>
+                <title>Running Ptest</title>
+
+                <para>
+                    The <filename>ptest-runner</filename> package installs a 
+                    shell script that loops through all installed Ptest test 
+                    suites and runs them in sequence. 
+                    Consequently, you might want to add this package to
+                    your image. 
+                </para>
+            </section>           
         </section>
     </section>
 
