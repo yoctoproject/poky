@@ -600,10 +600,11 @@ Core layer for images cannot be removed
 
         <glossentry id='var-COMPATIBLE_HOST'><glossterm>COMPATIBLE_HOST</glossterm>
             <glossdef>
-                <para>A regular expression matched against
-                    <link linkend="var-HOST_SYS"><filename>HOST_SYS</filename></link>
-                    that the OpenEmbedded build system evaluates against
-                    systems with which the recipe works.
+                <para>A regular expression that resolves to one or more hosts 
+                    (when the recipe is native) or one or more targets (when 
+                    the recipe is non-native) with which a recipe is compatible.
+                    The regular expression is matched against
+                    <link linkend="var-HOST_SYS"><filename>HOST_SYS</filename></link>.
                     You can use the variable to stop recipes from being built
                     for classes of systems with which the recipes are not 
                     compatible.
@@ -616,10 +617,10 @@ Core layer for images cannot be removed
 
         <glossentry id='var-COMPATIBLE_MACHINE'><glossterm>COMPATIBLE_MACHINE</glossterm>
             <glossdef>
-                <para>A regular expression matched against
-                    <link linkend="var-MACHINEOVERRIDES"><filename>MACHINEOVERRIDES</filename></link>
-                    that the OpenEmbedded build system evaluates against
-                    machines with which the recipe works.
+                <para>A regular expression that resolves to one or more 
+                    target machines with which a recipe is compatible.
+                    The regular expression is matched against
+                    <link linkend="var-MACHINEOVERRIDES"><filename>MACHINEOVERRIDES</filename></link>.
                     You can use the variable to stop recipes from being built
                     for machines with which the recipes are not compatible.
                     Stopping these builds is particularly useful with kernels.
@@ -743,8 +744,6 @@ Core layer for images cannot be removed
             <glossdef>
                 <para>
                     Specifies a weak bias for recipe selection priority.
-                    Use this variable when more than one provider/version 
-                    satisfies a dependency.
                 </para>
                 <para>
                     The most common usage of this is variable is to set 
@@ -759,7 +758,7 @@ Core layer for images cannot be removed
                     The bias provided by <filename>DEFAULT_PREFERENCE</filename> 
                     is weak and is overridden by 
                     <filename><link linkend='var-BBFILE_PRIORITY'>BBFILE_PRIORITY</link></filename>
-                    if the selection priority is different between two layers 
+                    if the that variable is different between two layers 
                     that contain different versions of the same recipe.
                 </note>
             </glossdef>
@@ -1279,7 +1278,8 @@ Core layer for images cannot be removed
             <glossdef>
                 <para>
                     Specifies the system, including the architecture and the 
-                    operating system, being built in the context of the current
+                    operating system, for with the build is occurring
+                    in the context of the current
                     recipe. 
                     The OpenEmbedded build system automatically sets this
                     variable.
@@ -1389,7 +1389,7 @@ Core layer for images cannot be removed
             <glossdef>
                 <para>
                     Specifies the list of locales to install into the image
-                    during the packaging process.
+                    during the root filesystem construction process.
                     The OpenEmbedded build system automatically splits locale 
                     files, which are used for localization, into separate 
                     packages. 
@@ -1648,8 +1648,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     For example, to skip the check for symbolic link 
                     <filename>.so</filename> files in the main package of a 
                     recipe, add the following to the recipe.
-                    In this example, the package name override
-                    <filename>${PN}</filename> must be used:
+                    The package name override must be used, which in this 
+                    example is <filename>${PN}</filename>:
                     <literallayout class='monospaced'>
      INSANE_SKIP_${PN} += "dev-so"
                     </literallayout>
@@ -3158,8 +3158,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RSUGGESTS'><glossterm>RSUGGESTS</glossterm>
             <glossdef>
                 <para>
-                    A list of additional packages that you can suggest the 
-                    package manager installs.
+                    A list of additional packages that you can suggest for 
+                    installation by the package manager at the time a package 
+                    is installed.
                     Not all package managers support this functionality.
                 </para>
                 <para>
@@ -3214,7 +3215,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Identifiers consist of the host distributor ID
                     followed by the release, 
                     as reported by the <filename>lsb_release</filename> tool
-                    or as read from <filename>/etc/lsb-release</filename>.) 
+                    or as read from <filename>/etc/lsb-release</filename>. 
                     Separate the list items with explicit newline 
                     characters (<filename>\n</filename>).
                     If <filename>SANITY_TESTED_DISTROS</filename> is not empty 
@@ -3281,9 +3282,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     thus force rebuilds when the recipe changes. 
                     <caution>
                         If you add an inappropriate variable to this list,
-                        other recipes might break when the interface of the 
-                        recipe changes after the other recipes have been
-                        built.
+                        the software might break at runtime if the 
+                        interface of the recipe was changed after the other 
+                        had been built.
                     </caution>
                 </para>
             </glossdef>
@@ -3309,9 +3310,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     recipe changes. 
                     <caution>
                         If you add an inappropriate dependency for a recipe
-                        relationship, the build might break when the interface
-                        of the second recipe changes after the first recipe has 
-                        been built.
+                        relationship, the software might break during 
+                        runtime if the interface of the second recipe was 
+                        changed after the first recipe had been built.
                     </caution>
                 </para>
             </glossdef>
@@ -3387,24 +3388,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                             which are assumed to be a subdirectories of the directory in which the
                             recipe file resides:
                             <itemizedlist>
-                                <listitem><para><emphasis><filename>${PN}</filename> -</emphasis> The recipe name
-                                    with any special suffix or prefix, if applicable.
-                                    For example, using <filename>bash</filename> to build for the native
-                                    machine, <filename>PN</filename> is <filename>bash-native</filename>.
-                                    Using <filename>bash</filename> to build for the target and for Multilib,
-                                    <link linkend='var-PN'><filename>PN</filename></link>
-                                    would be <filename>bash</filename> and
-                                    <filename>lib64-bash</filename>, respectively.
-                                    </para></listitem>
-                                <listitem><para><emphasis><filename>${PF}</filename> - </emphasis>
-                                    <filename>${PN}-${EXTENDPE}${<link linkend='var-PV'>PV</link>}-${<link linkend='var-PR'>PR</link>}</filename>.
-                                    The recipe name including all version and revision numbers
-                                    (i.e. <filename>eglibc-2.13-r20+svnr15508/</filename> and
-                                    <filename>bash-4.2-r1/</filename>).</para></listitem>
-                                <listitem><para><emphasis><filename>${P}</filename> -</emphasis>
-                                    <filename>${PN}-${PV}</filename>.
-                                    The recipe name and version (i.e. <filename>bash-4.2</filename>).
-                                    </para></listitem>
                                 <listitem><para><emphasis><filename>${BPN}</filename> -</emphasis> The
                                     base recipe name without any special suffix or version numbers.
                                     </para></listitem>
@@ -3683,9 +3666,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     A list of functions to execute after files are staged into 
                     the sysroot.
-                    The OpenEmbedded build system usually uses such functions 
-                    to apply additional processing on the
-                    staged files, or to stage additional files.
+                    These functions are usually used to apply additional 
+                    processing on the staged files, or to stage additional 
+                    files.
                 </para>
             </glossdef>
         </glossentry>
