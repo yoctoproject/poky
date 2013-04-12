@@ -3476,11 +3476,32 @@
             </para>
         </section>
 
-        <section id='setting-up-and-running-package-test-ptest'>
-            <title>Setting Up and Running Package Test (Ptest)</title>
+        <section id='testing-packages-with-ptest'>
+            <title>Testing Packages with Ptest</title>
 
             <para>
-                Intro shit
+                A Packate Test (Ptest) runs tests against packages built 
+                by the OpenEmbedded build system.
+                Minimaly, a Ptest contains two things: a shell script that 
+                starts the test, and the actual test.
+                The shell that starts the test must not contain 
+                the actual test, the script only starts it.
+                On the other hand, the test can be anything from a simple
+                schell script that runs a binary and checks the output to 
+                an elaborate system of test binaries and data files.
+            </para>
+
+            <para>
+                The test formats the output into the single, common
+                format used by Automake:
+                <literallayout class='monospaced'>
+     &lt;result&gt;: &lt;testname&gr;
+                </literallayout>
+                The <filename>&lt;result&gt;</filename> can be 
+                <filename>PASS</filename>, <filename>FAIL</filename>, or
+                <filename>SKIP</filename>.
+                The <filename>&lt;testname&gt;</filename> can be any
+                identifying string.
             </para>
 
             <section id='getting-your-package-ready'>
@@ -3488,13 +3509,13 @@
  
                 <para>
                     In order to run installed Ptests on target hardware, 
-                    you need to prepare each recipe so that it can run
-                    its test.
-                    Here is what you have to do:
+                    you need to prepare the recipes that build the packages     
+                    you want to test.
+                    Here is what you have to do for each recipe:
                     <itemizedlist>
                         <listitem><para><emphasis>Be sure the package recipe
                             inherits Ptest:</emphasis>
-                            Include the following line in your recipe:
+                            Include the following line in your recipes:
                             <literallayout class='monospaced'>
      inherit ptest
                             </literallayout>
@@ -3506,8 +3527,9 @@
                             (such as requiring "make" to run the test suite), 
                             use the 
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>
-                            variable in your package to meet the dependency.
-                            Here is an example where the recipe has a build
+                            variable in your recipe so the package meets the 
+                            dependency.
+                            Here is an example where the package has a build
                             dependency on "make":
                             <literallayout class='monospaced'>
      RDEPENDS_${PN}-ptest += "make"
@@ -3517,8 +3539,8 @@
                             test suite:</emphasis>
                             Few packages support cross-compiling their test 
                             suites.
-                            Consequently, you usually need to add a function
-                            to do that.</para>
+                            Consequently, you usually need to add that function.
+                            </para>
                             <para>Many packages based on Automake compile and 
                             run the test suite by using a single command
                             such as <filename>make check</filename>.
@@ -3528,11 +3550,11 @@
                             Thus, compilation needs to occur separately on 
                             the host.
                             The built version of Automake that ships with 
-                            the Yocto Project does this automatically through 
-                            a patch.
+                            the Yocto Project separates these actions 
+                            automatically through a patch.
                             Consequently, packages that use 
                             <filename>make check</filename> automatically 
-                            are deal with the cross-compile situation.</para>
+                            cross-compile.</para>
                             <para>However, you still must add a 
                             <filename>do_compile_ptest</filename> function to 
                             build the test suite.
@@ -3546,8 +3568,8 @@
                             </para></listitem>
                        <listitem><para><emphasis>Ensure special configurations
                             are set:</emphasis>
-                            If the package requires special configuration 
-                            actions prior to compiling the test code, you must
+                            If the package requires special configurations 
+                            prior to compiling the test code, you must
                             insert a <filename>do_configure_ptest</filename>
                             function into the recipe.
                             </para></listitem>
@@ -3555,13 +3577,12 @@
                             suite:</emphasis>
                             The <filename>ptest.bbclass</filename> class
                             automatically copies the required files that both 
-                            "make" and run the tests assuming there is a 
-                            make target in the top-level 
-                            <filename>Makefile</filename>.
+                            "make" (assuming there is a make target in the 
+                            top-level <filename>Makefile</filename>) and run 
+                            the tests.
                             If this is not the case, you need to create a 
-                            <filename>do_install_ptest</filename> in the 
-                            package recipe that is called after the 
-                            "make install-ptest" has completed.
+                            <filename>do_install_ptest</filename> that gets
+                            called after the "make install-ptest" completes.
                             </para></listitem>
                     </itemizedlist>
                 </para>
@@ -3571,8 +3592,8 @@
                 <title>Adding Ptest to Your Build</title>
 
                 <para>
-                    To add Ptest to your build, add the following
-                    into your <filename>local.conf</filename> file, 
+                    To add package testing to your build, add the following
+                    two statements to your <filename>local.conf</filename> file, 
                     which is found in the 
                     <link linkend='build-directory'>Build Directory</link>:
                     <literallayout class='monospaced'>
@@ -3581,8 +3602,8 @@
                     </literallayout>
                     Once your build is complete, the Ptest files are installed
                     into the <filename>/usr/lib/&lt;package&gt;/ptest</filename>
-                    directory, where &lt;package&gt; is the name of the 
-                    package.
+                    directory, where <filename>&lt;package&gt;</filename>
+                    is the name of the package.
                 </para>
             </section>
 
