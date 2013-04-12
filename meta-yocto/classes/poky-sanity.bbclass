@@ -1,16 +1,24 @@
-python check_bblayers_conf_append() {
-    if current_lconf != lconf_version:
-        if current_lconf == 5:
-            index, meta_yocto_line = find_line('meta-yocto\s*\\\\\\n', lines)
+python poky_update_bblayersconf() {
+    current_version = int(d.getVar('LCONF_VERSION', True) or -1)
+    latest_version = int(d.getVar('LAYER_CONF_VERSION', True) or -1)
+
+    bblayers_fn = bblayers_conf_file(d)
+    lines = sanity_conf_read(bblayers_fn)
+
+    if current_version == 5 and latest_version == 6:
+        if '/meta-yocto-bsp' not in d.getVar('BBLAYERS', True):
+            index, meta_yocto_line = sanity_conf_find_line('meta-yocto\s*\\\\\\n', lines)
             if meta_yocto_line:
                 lines.insert(index + 1, meta_yocto_line.replace('meta-yocto',
                                                                 'meta-yocto-bsp'))
             else:
                 sys.exit()
 
-            index, line = find_line('LCONF_VERSION', lines)
-            current_lconf += 1
-            lines[index] = 'LCONF_VERSION = "%d"\n' % current_lconf
-            with open(bblayers_fn, "w") as f:
-                f.write(''.join(lines))
+        current_version += 1
+        sanity_conf_update(bblayers_fn, lines, 'LCONF_VERSION', current_version)
+        return
+
+    sys.exit()
 }
+
+BBLAYERS_CONF_UPDATE_FUNCS += "poky_update_bblayersconf"
