@@ -3515,9 +3515,9 @@
             <para>
                 A Package Test (ptest) runs tests against packages built 
                 by the OpenEmbedded build system on the target machine.
-                Minimally, a ptest contains two things: a shell script that 
-                starts the test (<filename>run-ptest</filename>),
-                and the actual test.
+                A ptest contains at least two items: the actual test, and 
+                a shell script (<filename>run-ptest</filename>) that starts
+                the test.
                 The shell script that starts the test must not contain 
                 the actual test, the script only starts it.
                 On the other hand, the test can be anything from a simple
@@ -3526,124 +3526,31 @@
             </para>
 
             <para>
-                The test formats the output into the single, common
-                format used by Automake:
+                The test generates output in the format used by 
+                Automake:
                 <literallayout class='monospaced'>
      &lt;result&gt;: &lt;testname&gt;
                 </literallayout>
-                The <filename>&lt;result&gt;</filename> can be 
-                <filename>PASS</filename>, <filename>FAIL</filename>, or
-                <filename>SKIP</filename>.
-                The <filename>&lt;testname&gt;</filename> can be any
-                identifying string.
+                where the result can be <filename>PASS</filename>, 
+                <filename>FAIL</filename>, or <filename>SKIP</filename>,
+                and the testname can be any identifying string.
             </para>
 
-            <section id='getting-your-package-ready'>
-                <title>Getting Your Package Ready</title>
- 
-                <para>
-                    In order to run installed ptests on target hardware, 
-                    you need to prepare the recipes that build the packages     
-                    you want to test.
-                    Here is what you have to do for each recipe:
-                    <itemizedlist>
-                        <listitem><para><emphasis>Be sure the recipe
-                            inherits ptest:</emphasis>
-                            Include the following line in your recipes:
-                            <literallayout class='monospaced'>
-     inherit ptest
-                            </literallayout>
-                            </para></listitem>
-                        <listitem><para><emphasis>Create <filename>run-ptest</filename>:</emphasis>
-                            The <filename>run-ptest</filename> script needs to
-                            start your tests.
-                            Locate this script where you would point to it 
-                            using 
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
-                            Here is an example that starts a test for 
-                            <filename>dbus</filename>:
-                            <literallayout class='monospaced'>
-     #!/bin/sh
-     cd test
-     make -k runtest-TESTS
-                            </literallayout>
-                            </para></listitem>
-                        <listitem><para><emphasis>Ensure dependencies are
-                            met:</emphasis>
-                            If the test adds build or runtime dependencies 
-                            to the package that do not normally exist
-                            (such as requiring "make" to run the test suite), 
-                            use the 
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>
-                            variable in your recipe so the package meets the 
-                            dependency.
-                            Here is an example where the package has a build
-                            dependency on "make":
-                            <literallayout class='monospaced'>
-     RDEPENDS_${PN}-ptest += "make"
-                            </literallayout>
-                            </para></listitem>
-                        <listitem><para><emphasis>Add a function to build the 
-                            test suite:</emphasis>
-                            Few packages support cross-compiling their test 
-                            suites.
-                            Consequently, you usually need to add that function.
-                            </para>
-                            <para>Many packages based on Automake compile and 
-                            run the test suite by using a single command
-                            such as <filename>make check</filename>.
-                            However, this method does not work when you are 
-                            cross-compiling packages because building occurs on
-                            the host and execution occurs on the target.
-                            Thus, compilation needs to occur separately on 
-                            the host.
-                            The built version of Automake that ships with 
-                            the Yocto Project separates these actions 
-                            automatically through a patch.
-                            Consequently, packages that use the unaltered
-                            patched version of 
-                            <filename>make check</filename> automatically 
-                            cross-compile.</para>
-                            <para>However, you still must add a 
-                            <filename>do_compile_ptest</filename> function to 
-                            build the test suite.
-                            Add a function similar to the following to your 
-                            recipe:
-                            <literallayout class='monospaced'>
-     do_compile_ptest() {
-        oe_runmake buildtest-TESTS
-     }
-                            </literallayout>
-                            </para></listitem>
-                       <listitem><para><emphasis>Ensure special configurations
-                            are set:</emphasis>
-                            If the package requires special configurations 
-                            prior to compiling the test code, you must
-                            insert a <filename>do_configure_ptest</filename>
-                            function into the recipe.
-                            </para></listitem>
-                       <listitem><para><emphasis>Install the test 
-                            suite:</emphasis>
-                            The <filename>ptest.bbclass</filename> class
-                            automatically copies the file
-                            <filename>run-ptest</filename> to the target and 
-                            then runs <filename>make install-ptest</filename>
-                            to run the tests.
-                            If this is not the case, you need to create a 
-                            <filename>do_install_ptest</filename> that gets
-                            called after the "make install-ptest" completes.
-                            </para></listitem>
-                    </itemizedlist>
-                </para>
-            </section>
+            <note>
+                With this release of the Yocto Project, three recipes exist
+                that are "ptest-enabled": <filename>bash</filename>, 
+                <filename>glib-2.0</filename>, and 
+                <filename>dbus</filename>.
+                These three recipes are Autotool-enabled.
+            </note>
 
             <section id='adding-ptest-to-your-build'>
                 <title>Adding ptest to Your Build</title>
 
                 <para>
                     To add package testing to your build, add the 
-                    <ulink url='&YOCTO_DOCS_REF_URL;#DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></ulink>
-                    and <ulink url='&YOCTO_DOCS_REF_URL;#EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></ulink>
+                    and <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
                     variables to your <filename>local.conf</filename> file, 
                     which is found in the 
                     <link linkend='build-directory'>Build Directory</link>:
@@ -3669,7 +3576,108 @@
                     Consequently, you might want to add this package to
                     your image. 
                 </para>
-            </section>           
+            </section> 
+
+            <section id='getting-your-package-ready'>
+                <title>Getting Your Package Ready</title>
+ 
+                <para>
+                    In order to enable a recipe to run installed ptests 
+                    on target hardware, 
+                    you need to prepare the recipes that build the packages     
+                    you want to test.
+                    Here is what you have to do for each recipe:
+                    <itemizedlist>
+                        <listitem><para><emphasis>Be sure the recipe
+                            inherits ptest:</emphasis>
+                            Include the following line in each recipe:
+                            <literallayout class='monospaced'>
+     inherit ptest
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para><emphasis>Create <filename>run-ptest</filename>:</emphasis>
+                            This script starts your test.
+                            Locate the script where you will refer to it 
+                            using 
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
+                            Here is an example that starts a test for 
+                            <filename>dbus</filename>:
+                            <literallayout class='monospaced'>
+     #!/bin/sh
+     cd test
+     make -k runtest-TESTS
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para><emphasis>Ensure dependencies are
+                            met:</emphasis>
+                            If the test adds build or runtime dependencies 
+                            that normally do not exist for the package 
+                            (such as requiring "make" to run the test suite), 
+                            use the 
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
+                            and 
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>
+                            variables in your recipe in order for the package
+                            to meet the dependencies. 
+                            Here is an example where the package has a runtime 
+                            dependency on "make":
+                            <literallayout class='monospaced'>
+     RDEPENDS_${PN}-ptest += "make"
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para><emphasis>Add a function to build the 
+                            test suite:</emphasis>
+                            Not many packages support cross-compilation of 
+                            their test suites. 
+                            Consequently, you usually need to add a 
+                            cross-compilation function to the package.
+                            </para>
+                            <para>Many packages based on Automake compile and 
+                            run the test suite by using a single command
+                            such as <filename>make check</filename>.
+                            However, the native <filename>make check</filename>
+                            builds and runs on the same computer, while 
+                            cross-compiling requires that the package is built 
+                            on the host but executed on the target.
+                            The built version of Automake that ships with the 
+                            Yocto Project includes a patch that separates 
+                            building and execution.
+                            Consequently, packages that use the unaltered, 
+                            patched version of <filename>make check</filename>
+                            automatically cross-compiles.</para>
+                            <para>However, you still must add a 
+                            <filename>do_compile_ptest</filename> function to 
+                            build the test suite.
+                            Add a function similar to the following to your 
+                            recipe:
+                            <literallayout class='monospaced'>
+     do_compile_ptest() {
+        oe_runmake buildtest-TESTS
+     }
+                            </literallayout>
+                            </para></listitem>
+                       <listitem><para><emphasis>Ensure special configurations
+                            are set:</emphasis>
+                            If the package requires special configurations 
+                            prior to compiling the test code, you must
+                            insert a <filename>do_configure_ptest</filename>
+                            function into the recipe.
+                            </para></listitem>
+                       <listitem><para><emphasis>Install the test 
+                            suite:</emphasis>
+                            The <filename>ptest.bbclass</filename> class 
+                            automatically copies the file 
+                            <filename>run-ptest</filename> to the target and 
+                            then runs make <filename>install-ptest</filename>
+                            to run the tests. 
+                            If this is not enough, you need to create a 
+                            <filename>do_install_ptest</filename> function and 
+                            make sure it gets called after the 
+                            "make install-ptest" completes.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>         
         </section>
     </section>
 
