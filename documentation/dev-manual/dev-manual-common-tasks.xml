@@ -2384,27 +2384,34 @@
                     A common example usage of include files would be to
                     separate out the selection of desired version and revisions
                     for individual recipes.
+</para>
+                    <para>Your configuration file needs to set the following
+                    required variables:
+                    <literallayout class='monospaced'>
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_NAME'><filename>DISTRO_NAME</filename></ulink> [required]
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_VERSION'><filename>DISTRO_VERSION</filename></ulink> [required]
+                    </literallayout>
+                    These following variables are optional and you typically 
+                    set them from the distribution configuration file:
+                    <literallayout class='monospaced'>
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></ulink> [optional]
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RDEPENDS'><filename>DISTRO_EXTRA_RDEPENDS</filename></ulink> [optional]
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RRECOMMENDS'><filename>DISTRO_EXTRA_RRECOMMENDS</filename></ulink> [optional]
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-TCLIBC'><filename>TCLIBC</filename></ulink> [optional]
+                    </literallayout>
                     <tip>
                         If you want to base your distribution configuration file
                         on the very basic configuration from OE-Core, you
-                        can "require"
-                        <filename>conf/distro/defaultsetup.conf</filename>.
+                        can use 
+                        <filename>conf/distro/defaultsetup.conf</filename> as
+                        a reference and just include variables that differ
+                        as compared to <filename>defaultsetup.conf</filename>.
                         Alternatively, you can create a distribution
                         configuration file from scratch using the
                         <filename>defaultsetup.conf</filename> file
                         or configuration files from other distributions
                         such as Poky or Angstrom as references.
-                    </tip></para>
-                    <para>Your configuration file needs to set the following
-                    variables:
-                    <literallayout class='monospaced'>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_NAME'><filename>DISTRO_NAME</filename></ulink> [required]
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_VERSION'><filename>DISTRO_VERSION</filename></ulink> [required]
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></ulink> [required if creating from scratch]
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RDEPENDS'><filename>DISTRO_EXTRA_RDEPENDS</filename></ulink> [optional]
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RRECOMMENDS'><filename>DISTRO_EXTRA_RRECOMMENDS</filename></ulink> [optional]
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-TCLIBC'><filename>TCLIBC</filename></ulink> [required if creating from scratch]
-                    </literallayout></para></listitem>
+                    </tip></para></listitem>
                 <listitem><para><emphasis>Provide Miscellaneous Variables:</emphasis>
                     Be sure to define any other variable for which you want to
                     create a default or enforce as part of the distribution
@@ -3724,36 +3731,27 @@
         </para>
 
         <note>
-            <para><emphasis>NOTES TO SELF:</emphasis>
-            <filename>systemd</filename> is a full replacement of for init with
-            parallel starting of services, reduced shell overhead and other
-            features, used by many distributions.</para>
-            <para>I think you set the <filename>VIRTUAL-RUNTIME</filename>
-            in a recipe.
-            I found a recipe called
-            <filename>packagegroup-core-boot.bb</filename>, which is an
-            <filename>OE-Core</filename> recipe, that has a bunch of them.
-            The comment refers to the group as "VIRTUAL-RUNTIME providers".
-            The list includes <filename>VIRTUAL-RUNTIME_dev_manager</filename>,
-            <filename>VIRTUAL-RUNTIME_init_manager</filename>,
-            <filename>VIRTUAL-RUNTIME_login_manager</filename>,
-            <filename>VIRTUAL-RUNTIME_initscripts</filename>, and
-            <filename>VIRTUAL-RUNTIME_keymaps</filename>.</para>
+            It is recommended that you create your own distribution configuration
+            file to hold these settings instead of using your 
+            <filename>local.conf</filename> file.
+            For information on creating your own distribution, see the 
+            "<link linkend='creating-your-own-distribution'>Creating Your Own Distribution</link>"
+            section.
         </note>
 
         <section id='using-systemd-exclusively'>
             <title>Using systemd Exclusively</title>
 
             <para>
-                Set the following variables in your
-                <filename>local.conf</filename> file as follows:
+                Set the following variables in your distribution configuration
+                file as follows:
                 <literallayout class='monospaced'>
      DISTRO_FEATURES_append = " systemd"
      VIRTUAL-RUNTIME_init_manager = "systemd"
                 </literallayout>
-                You can save some disk space by adding
-                <filename>sysvinit</filename> to the distribution features
-                considered for backfill as follows:
+                You can also prevent the <filename>sysvinit</filename>
+                distribution feature from 
+                being automatically enabled as follows:
                 <literallayout class='monospaced'>
      DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
                 </literallayout>
@@ -3762,12 +3760,12 @@
             </para>
         </section>
 
-        <section id='use-systemd-for-the-main-image-and-use-sysvinit-for-the-rescue-image'>
-            <title>Use systemd for the Main Image and Use SysVinit for the Rescue Image</title>
+        <section id='using-systemd-for-the-main-image-and-using-sysvinit-for-the-rescue-image'>
+            <title>Using systemd for the Main Image and Using SysVinit for the Rescue Image</title>
 
             <para>
-                Set the following variables in your
-                <filename>local.conf</filename> file as follows:
+                Set the following variables in your distribution configuration
+                file as follows:
                 <literallayout class='monospaced'>
      DISTRO_FEATURES_append = " systemd"
      VIRTUAL-RUNTIME_init_manager = "systemd"
@@ -3775,9 +3773,9 @@
                 Doing so causes your main image to use the
                 <filename>packagegroup-core-boot.bb</filename> recipe and
                 <filename>systemd</filename>.
-                The rescue/minimal image cannot use this group.
+                The rescue/minimal image cannot use this package group.
                 However, it can install <filename>sysvinit</filename>
-                and the appropriate packages with have both
+                and the appropriate packages will have support for both
                 <filename>systemd</filename> and <filename>sysvinit</filename>.
             </para>
         </section>
