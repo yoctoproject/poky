@@ -395,7 +395,7 @@
      LICENSE = "MIT"
      LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=3f40d7994397109285ec7b81fdeb3b58 \
                          file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
-     PR = "r20"
+     PR = "r21"
 
      SRC_URI = "file://config file://machconfig"
      S = "${WORKDIR}"
@@ -410,9 +410,15 @@
      	if [ -s "${S}/machconfig" ]; then
      	        install -m 0644 ${S}/machconfig ${D}${sysconfdir}/formfactor/
      	fi
-     }
-                </literallayout>
-                Here is the append file, which is named
+     }          </literallayout>
+                In the main recipe, note the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                variable, which tells the OpenEmbedded build system where to
+                find files during the build.
+            </para>
+
+            <para>
+                Following is the append file, which is named
                 <filename>formfactor_0.0.bbappend</filename> and is from the
                 Crown Bay BSP Layer named
                 <filename>meta-intel/meta-crownbay</filename>.
@@ -422,21 +428,33 @@
 
      PRINC := "${@int(PRINC) + 2}"
                 </literallayout>
-                This example adds or overrides files in
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                within a <filename>.bbappend</filename> by extending the path
-                BitBake uses to search for files.
-                The most reliable way to do this is by prepending the
+            </para>
+
+            <para>
+                By default, the build system uses the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
+                variable to locate files.
+                This append file extends the locations by setting the 
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
                 variable.
-                For example, if you have your files in a directory that is named
-                the same as your package
-                (<ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink>),
-                you can add this directory by adding the following to your
-                <filename>.bbappend</filename> file:
-                <literallayout class='monospaced'>
-     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-                </literallayout>
+                Setting this variable in the <filename>.bbappend</filename>
+                file is the most reliable and recommended method for adding 
+                directories to the search path used by the build system 
+                to find files.
+            </para>
+
+            <para>
+                The statement in this example extends the directories to include 
+                <filename>${THISDIR}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>, 
+                which resolves to the same directory in which the append file 
+                resides (i.e.
+                <filename>meta-intel/meta-crownbay/recipes-bsp/formfactor</filename>.
+                This implies that you must have the supporting directory 
+                structure set up that will contain any files or patches you 
+                will be including from the layer.
+            </para>
+
+            <para>
                 Using the immediate expansion assignment operator
                 <filename>:=</filename> is important because of the reference to
                 <filename>THISDIR</filename>.
