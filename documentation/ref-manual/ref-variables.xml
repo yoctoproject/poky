@@ -1156,21 +1156,43 @@ Core layer for images cannot be removed
             <glossdef>
                 <para>
                     Extends the search path the OpenEmbedded build system uses
-                    when looking for files and patches as it processes recipes.
+                    when looking for files and patches as it processes recipes
+                    and append files.
+                    The directories BitBake uses when it processes recipes 
+                    are defined by the 
+                    <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>
+                    variable, and can be extended using 
+                    <filename>FILESEXTRAPATHS</filename>.
+                </para>
+
+                <para>
                     Best practices dictate that you accomplish this by using the 
                     variable from within a <filename>.bbappend</filename> file 
                     and that you prepend paths as follows:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
                     </literallayout>
+                    In the above example, the build system looks for files in
+                    a directory that has the same name as the corresponding
+                    append file.
+                    Here is another common use:
+                    <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+                    </literallayout>
+                    In this example, the build system extends the 
+                    <filename>FILESPATH</filename> variable to include a
+                    directory named <filename>files</filename> that is in the 
+                    same directory as the corresponding append file.
                 </para>
 
                 <para>
-                    The directories BitBake uses when it processes recipes 
-                    are defined by the 
-                    <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>
-                    variable, and can be extended using 
-                    <filename>FILESEXTRAPATHS</filename>.
+                    Here is a final example that specifically adds three paths:
+                    <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend := "path_1:path_2:path_3:"
+                    </literallayout>
+                </para>
+
+                <para>
                     By prepending paths in <filename>.bbappend</filename>
                     files, you allow multiple append files that reside in
                     different layers but are used for the same recipe to 
@@ -1180,10 +1202,6 @@ Core layer for images cannot be removed
                         (<filename>:=</filename>) operator and include 
                         the trailing separating colon character.
                     </note>
-                    Here is another example that specifically adds three paths:
-                    <literallayout class='monospaced'>
-     FILESEXTRAPATHS_prepend := "path_1:path_2:path_3:"
-                    </literallayout>
                 </para>
             </glossdef>
         </glossentry>
@@ -1208,10 +1226,10 @@ Core layer for images cannot be removed
      FILESPATH = "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", \
         "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}"
                     </literallayout>
-                    <warning>
+                    <note>
                         Do not hand-edit the <filename>FILESPATH</filename> 
                         variable.
-                    </warning>
+                    </note>
                     Be aware that the default <filename>FILESPATH</filename>
                     directories do not map to directories in custom layers
                     where append files (<filename>.bbappend</filename>) 
@@ -3405,17 +3423,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                             recipe file (<filename>.bb</filename>) or 
                             append file (<filename>.bbappend</filename>) 
                             resides:
-                            <note>
-                                If you want the build system to pick up files 
-                                specified through a 
-                                <filename>SRC_URI</filename>
-                                statement from your append file, you need to be
-                                sure to extend the 
-                                <filename>FILESPATH</filename>
-                                variable by also using the 
-                                <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link>
-                                variable from within your append file.
-                            </note>
                             <itemizedlist>
                                 <listitem><para><emphasis><filename>${BPN}</filename> -</emphasis>
                                     The base recipe name without any special 
@@ -3431,7 +3438,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                                     <filename>files</filename> and is also 
                                     alongside the recipe or append file.
                                     </para></listitem>
-                            </itemizedlist></para></listitem>
+                            </itemizedlist>
+                            <note>
+                                If you want the build system to pick up files 
+                                specified through a 
+                                <filename>SRC_URI</filename>
+                                statement from your append file, you need to be
+                                sure to extend the 
+                                <filename>FILESPATH</filename>
+                                variable by also using the 
+                                <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link>
+                                variable from within your append file.
+                            </note>
+                            </para></listitem>
                         <listitem><para><emphasis><filename>bzr://</filename> -</emphasis> Fetches files from a
                             Bazaar revision control repository.</para></listitem>
                         <listitem><para><emphasis><filename>git://</filename> -</emphasis> Fetches files from a
