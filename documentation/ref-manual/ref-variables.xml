@@ -3368,36 +3368,57 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SRC_URI'><glossterm>SRC_URI</glossterm>
             <glossdef>
                 <para>The list of source files - local or remote.
-                    This variable tells the OpenEmbedded build system which bits to pull
-                    in for the build and how to pull them in.
-                    For example, if the recipe only needs to fetch a tarball from the
-                    Internet, the recipe uses a single <filename>SRC_URI</filename> entry.
-                    On the other hand, if the recipe needs to fetch a tarball, apply
-                    two patches, and include a custom file, the recipe would include four
+                    This variable tells the OpenEmbedded build system which bits 
+                    to pull in for the build and how to pull them in.
+                    For example, if the recipe or append file only needs to 
+                    fetch a tarball from the Internet, the recipe or 
+                    append file uses a single <filename>SRC_URI</filename> 
+                    entry.
+                    On the other hand, if the recipe or append file needs to 
+                    fetch a tarball, apply two patches, and include a custom 
+                    file, the recipe or append file would include four
                     instances of the variable.</para>
                 <para>The following list explains the available URI protocols:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>file://</filename> -</emphasis> Fetches files, which is usually
-                            a file shipped with the
+                        <listitem><para><emphasis><filename>file://</filename> -</emphasis>
+                            Fetches files, which are usually files shipped with 
+                            the
                             <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>,
                             from the local machine.
                             The path is relative to the
                             <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>
                             variable.
-                            Thus, the build system searches, in order, from the following directories,
-                            which are assumed to be a subdirectories of the directory in which the
-                            recipe file resides:
+                            Thus, the build system searches, in order, from the 
+                            following directories, which are assumed to be a 
+                            subdirectories of the directory in which the
+                            recipe file (<filename>.bb</filename>) or 
+                            append file (<filename>.bbappend</filename>) 
+                            resides:
+                            <note>
+                                If you want the build system to pick up files 
+                                specified through a 
+                                <filename>SRC_URI</filename>
+                                statement from your append file, you need to be
+                                sure to extend the 
+                                <filename>FILESPATH</filename>
+                                variable by also using the 
+                                <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link>
+                                variable from within your append file.
+                            </note>
                             <itemizedlist>
-                                <listitem><para><emphasis><filename>${BPN}</filename> -</emphasis> The
-                                    base recipe name without any special suffix or version numbers.
+                                <listitem><para><emphasis><filename>${BPN}</filename> -</emphasis>
+                                    The base recipe name without any special 
+                                    suffix or version numbers.
                                     </para></listitem>
                                 <listitem><para><emphasis><filename>${BP}</filename> -</emphasis>
                                     <filename>${<link linkend='var-BPN'>BPN</link>}-${PV}</filename>.
-                                    The base recipe name and version but without any special
-                                    package name suffix.</para></listitem>
-                                <listitem><para><emphasis>files -</emphasis> Files within a 
-                                    directory, which is named <filename>files</filename>
-                                    and is also alongside the recipe.
+                                    The base recipe name and version but without 
+                                    any special package name suffix.
+                                    </para></listitem>
+                                <listitem><para><emphasis>files -</emphasis> 
+                                    Files within a directory, which is named 
+                                    <filename>files</filename> and is also 
+                                    alongside the recipe or append file.
                                     </para></listitem>
                             </itemizedlist></para></listitem>
                         <listitem><para><emphasis><filename>bzr://</filename> -</emphasis> Fetches files from a
