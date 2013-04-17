@@ -149,20 +149,31 @@
                 You can make wholesale or incremental changes to the Linux
                 kernel <filename>.config</filename> file by including a
                 <filename>defconfig</filename> or by specifying
-                configuration fragments in the <filename>SRC_URI</filename>.
+                configuration fragments in the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
             </para>
 
             <para>
                 If you have a complete Linux kernel <filename>.config</filename>
                 file you want to use, copy it to a directory named 
-                <filename>files</filename>, which is in your 
-                layer's <filename>recipes-kernel/linux</filename> directory
-                and name name the file "defconfig".
-                Then, add the following line to your linux-yocto
+                <filename>files</filename>, which must be in 
+                your layer's <filename>recipes-kernel/linux</filename> 
+                directory, and name the file "defconfig".
+                Then, add the following lines to your linux-yocto
                 <filename>.bbappend</filename> file in your layer:
                 <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
      SRC_URI += "file://defconfig"
                 </literallayout>
+                The 
+                <filename>SRC_URI</filename> tells the build system how to 
+                search for the file, while the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+                extends the 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
+                variable (search directories) to include the 
+                <filename>files</filename> directory you created for the
+                configuration changes.
             </para>
 
             <para>
@@ -182,10 +193,11 @@
      CONFIG_SERIAL_CORE=y
      CONFIG_SERIAL_CORE_CONSOLE=y
                 </literallayout>
-                Next, include this configuration fragment in a
-                <filename>SRC_URI</filename> statement in your
+                Next, include this configuration fragment and extend the 
+                <filename>FILESPATH</filename> variable in your 
                 <filename>.bbappend</filename> file:
                 <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
      SRC_URI += "file://8250.cfg"
                 </literallayout>
                 The next time you run BitBake to build the Linux kernel, BitBake
