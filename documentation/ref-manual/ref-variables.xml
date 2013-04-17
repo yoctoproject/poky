@@ -1191,26 +1191,37 @@ Core layer for images cannot be removed
         <glossentry id='var-FILESPATH'><glossterm>FILESPATH</glossterm>
             <glossdef>
                 <para>
-                    The default set of directories the OpenEmbedded build system uses
-                    when searching for patches and files.
+                    The default set of directories the OpenEmbedded build system 
+                    uses when searching for patches and files.
                     During the build process, BitBake searches each directory in
-                    <filename>FILESPATH</filename> in the specified order when looking for
-                    files and patches specified by each <filename>file://</filename> URI in a recipe.
+                    <filename>FILESPATH</filename> in the specified order when 
+                    looking for files and patches specified by each 
+                    <filename>file://</filename> URI in a recipe.
                 </para>
 
                 <para>
-                    The default value for the <filename>FILESPATH</filename> variable is defined
-                    in the <filename>base.bbclass</filename> class found in
-                    <filename>meta/classes</filename> in the
+                    The default value for the <filename>FILESPATH</filename> 
+                    variable is defined in the <filename>base.bbclass</filename> 
+                    class found in <filename>meta/classes</filename> in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>:
                     <literallayout class='monospaced'>
      FILESPATH = "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", \
         "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}"
                     </literallayout>
-                    Do not hand-edit the <filename>FILESPATH</filename> variable.
-                    If you want to extend the set of pathnames that BitBake uses when searching for
-                    files and patches, use the
-                    <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link> variable.
+                    <warning>
+                        Do not hand-edit the <filename>FILESPATH</filename> 
+                        variable.
+                    </warning>
+                    Be aware that the default <filename>FILESPATH</filename>
+                    directories do not map to directories in custom layers
+                    where append files (<filename>.bbappend</filename>) 
+                    are used.
+                    If you want the build system to find patches or files
+                    that reside with your append files, you need to extend
+                    the <filename>FILESPATH</filename> variable by using 
+                    the 
+                    <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link> 
+                    variable.
                 </para>
             </glossdef>
         </glossentry>
