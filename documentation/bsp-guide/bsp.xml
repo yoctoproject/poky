@@ -34,11 +34,13 @@
                 The BSP consists of a file structure inside a base directory.
                 Collectively, you can think of the base directory and the file structure
                 as a BSP Layer.
-                BSP Layers use the following naming convention:
+                Although not a strict requirement, layers in the Yocto Project use the  
+                following well established naming convention:
                 <literallayout class='monospaced'>
      meta-&lt;bsp_name&gt;
                 </literallayout>
-                "bsp_name" is a placeholder for the machine or platform name.
+                The string "meta-" is prepended to the machine or platform name, which is 
+                "bsp_name" in the above form.
             </para>
 
             <para>
@@ -318,9 +320,9 @@
      # We have a conf and classes directory, add to BBPATH
      BBPATH .= ":${LAYERDIR}"
 
-     # We have recipes-* directories, add to BBFILES
-     BBFILES += "${LAYERDIR}/recipes-*/*.bb \
-                 ${LAYERDIR}/recipes-*/*.bbappend"
+     # We have a recipes directory, add to BBFILES
+     BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
+             ${LAYERDIR}/recipes-*/*/*.bbappend"
 
      BBFILE_COLLECTIONS += "bsp"
      BBFILE_PATTERN_bsp = "^${LAYERDIR}/"
@@ -329,8 +331,8 @@
             </para>
 
             <para>
-                To illustrate the string substitutions, here are the last three statements from the Crown
-                Bay <filename>conf/layer.conf</filename> file:
+                To illustrate the string substitutions, here are the corresponding statements 
+                from the Crown Bay <filename>conf/layer.conf</filename> file:
                <literallayout class='monospaced'>
      BBFILE_COLLECTIONS += "crownbay"
      BBFILE_PATTERN_crownbay = "^${LAYERDIR}/"
@@ -397,9 +399,8 @@
                 Tuning files are found in the <filename>meta/conf/machine/include</filename>
                 directory within the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
-                Tuning files can also reside in the BSP Layer itself.
                 For example, the <filename>ia32-base.inc</filename> file resides in the
-                <filename>meta-intel</filename> BSP Layer in <filename>conf/machine/include</filename>.
+                <filename>meta/conf/machine/include</filename> directory.
             </para>
 
             <para>
@@ -409,12 +410,13 @@
                 <literallayout class='monospaced'>
      require conf/machine/include/tune-atom.inc
      require conf/machine/include/ia32-base.inc
+     require conf/machine/include/meta-intel.inc
                 </literallayout>
             </para>
             </section>
 
             <section id='bsp-filelayout-misc-recipes'>
-            <title>Miscellaneous Recipe Files</title>
+            <title>Miscellaneous BSP-Specific Recipe Files</title>
             <para>
                 You can find these files in the BSP Layer at:
                 <literallayout class='monospaced'>
@@ -500,28 +502,28 @@
                 the <filename>meta-&lt;bsp_name&gt;/recipes-kernel/linux</filename> directory).
             </para>
             <para>
-                Suppose you are using the <filename>linux-yocto_3.4.bb</filename> recipe to build
+                Suppose you are using the <filename>linux-yocto_3.8.bb</filename> recipe to build
                 the kernel.
                 In other words, you have selected the kernel in your
                 <filename>&lt;bsp_name&gt;.conf</filename> file by adding these types
                 of statements:
                 <literallayout class='monospaced'>
      PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-     PREFERRED_VERSION_linux-yocto = "3.4%"
+     PREFERRED_VERSION_linux-yocto ?= "3.8%"
                 </literallayout>
                 <note>
                     When the preferred provider is assumed by default, the
                     <filename>PREFERRED_PROVIDER</filename> statement does not appear in the
                     <filename>&lt;bsp_name&gt;.conf</filename> file.
                 </note>
-                You would use the <filename>linux-yocto_3.4.bbappend</filename> file to append
+                You would use the <filename>linux-yocto_3.8.bbappend</filename> file to append
                 specific BSP settings to the kernel, thus configuring the kernel for your particular BSP.
             </para>
             <para>
                 As an example, look at the existing Crown Bay BSP.
                 The append file used is:
                 <literallayout class='monospaced'>
-     meta-crownbay/recipes-kernel/linux/linux-yocto_3.4.bbappend
+     meta-crownbay/recipes-kernel/linux/linux-yocto_3.8.bbappend
                 </literallayout>
                 The following listing shows the file.
                 Be aware that the actual commit ID strings in this example listing might be different
@@ -531,40 +533,43 @@
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
      COMPATIBLE_MACHINE_crownbay = "crownbay"
-     KMACHINE_crownbay  = "crownbay"
-     KBRANCH_crownbay  = "standard/crownbay"
+     KMACHINE_crownbay = "crownbay"
+     KBRANCH_crownbay = "standard/crownbay"
+     KERNEL_FEATURES_crownbay_append = " features/drm-emgd/drm-emgd-1.16 cfg/vesafb"
 
      COMPATIBLE_MACHINE_crownbay-noemgd = "crownbay-noemgd"
-     KMACHINE_crownbay-noemgd  = "crownbay"
-     KBRANCH_crownbay-noemgd  = "standard/crownbay"
+     KMACHINE_crownbay-noemgd = "crownbay"
+     KBRANCH_crownbay-noemgd = "standard/crownbay"
+     KERNEL_FEATURES_crownbay-noemgd_append = " cfg/vesafb"
 
-     SRCREV_machine_pn-linux-yocto_crownbay ?= "449f7f520350700858f21a5554b81cc8ad23267d"
-     SRCREV_meta_pn-linux-yocto_crownbay ?= "9e3bdb7344054264b750e53fbbb6394cc1c942ac"
-     SRCREV_emgd_pn-linux-yocto_crownbay ?= "86643bdd8cbad616a161ab91f51108cf0da827bc"
+     LINUX_VERSION = "3.8.4"
 
-     SRCREV_machine_pn-linux-yocto_crownbay-noemgd ?= "449f7f520350700858f21a5554b81cc8ad23267d"
-     SRCREV_meta_pn-linux-yocto_crownbay-noemgd ?= "9e3bdb7344054264b750e53fbbb6394cc1c942ac"
+     SRCREV_meta_crownbay = "2a6d36e75ca0a121570a389d7bab76ec240cbfda"
+     SRCREV_machine_crownbay = "47aed0c17c1c55988198ad39f86ae88894c8e0a4"
+     SRCREV_emgd_crownbay = "c780732f175ff0ec866fac2130175876b519b576"
 
-     KSRC_linux_yocto_3_4 ?= "git.yoctoproject.org/linux-yocto-3.4.git"
-     SRC_URI_crownbay = "git://git.yoctoproject.org/linux-yocto-3.4.git;protocol=git;nocheckout=1;branch=${KBRANCH},meta,emgd-1.14;name=machine,meta,emgd"
-     SRC_URI_crownbay-noemgd = "git://git.yoctoproject.org/linux-yocto-3.4.git;protocol=git;nocheckout=1;branch=${KBRANCH},meta;name=machine,meta"
+     SRCREV_meta_crownbay-noemgd = "2a6d36e75ca0a121570a389d7bab76ec240cbfda"
+     SRCREV_machine_crownbay-noemgd = "47aed0c17c1c55988198ad39f86ae88894c8e0a4"
+
+     SRC_URI_crownbay = "git://git.yoctoproject.org/linux-yocto-3.8.git;protocol=git;nocheckout=1;branch=${KBRANCH},${KMETA},emgd-1.16;name=machine,meta,emgd"
                 </literallayout>
                 This append file contains statements used to support the Crown Bay BSP for both
                 <trademark class='registered'>Intel</trademark> EMGD and the VESA graphics.
                 The build process, in this case, recognizes and uses only the statements that
                 apply to the defined machine name - <filename>crownbay</filename> in this case.
-                So, the applicable statements in the <filename>linux-yocto_3.4.bbappend</filename>
+                So, the applicable statements in the <filename>linux-yocto_3.8.bbappend</filename>
                 file are follows:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
      COMPATIBLE_MACHINE_crownbay = "crownbay"
-     KMACHINE_crownbay  = "crownbay"
-     KBRANCH_crownbay  = "standard/crownbay"
+     KMACHINE_crownbay = "crownbay"
+     KBRANCH_crownbay = "standard/crownbay"
+     KERNEL_FEATURES_crownbay_append = " features/drm-emgd/drm-emgd-1.16 cfg/vesafb"
 
-     SRCREV_machine_pn-linux-yocto_crownbay ?= "449f7f520350700858f21a5554b81cc8ad23267d"
-     SRCREV_meta_pn-linux-yocto_crownbay ?= "9e3bdb7344054264b750e53fbbb6394cc1c942ac"
-     SRCREV_emgd_pn-linux-yocto_crownbay ?= "86643bdd8cbad616a161ab91f51108cf0da827bc"
+     SRCREV_meta_crownbay = "2a6d36e75ca0a121570a389d7bab76ec240cbfda"
+     SRCREV_machine_crownbay = "47aed0c17c1c55988198ad39f86ae88894c8e0a4"
+     SRCREV_emgd_crownbay = "c780732f175ff0ec866fac2130175876b519b576"
                 </literallayout>
                 The append file defines <filename>crownbay</filename> as the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>
@@ -574,8 +579,11 @@
                 machine name used by the Linux Yocto kernel.
                 The file also uses the optional
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KBRANCH'><filename>KBRANCH</filename></ulink> variable
-                to ensure the build process uses the <filename>standard/default/crownbay</filename>
+                to ensure the build process uses the <filename>standard/crownbay</filename>
                 kernel branch.
+                The 
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES'><filename>KERNEL_FEATURES</filename></ulink>
+                variable enables features specific to the kernel.
                 Finally, the append file points to specific commits in the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink> Git
                 repository and the <filename>meta</filename> Git repository branches to identify the
@@ -601,7 +609,7 @@
             </para>
 
             <para>
-                For example, suppose you had a some configuration options in a file called
+                For example, suppose you had some configuration options in a file called
                 <filename>network_configs.cfg</filename>.
                 You can place that file inside a directory named <filename>/linux-yocto</filename> and then add
                 a <filename>SRC_URI</filename> statement such as the following to the append file.
@@ -723,7 +731,7 @@
                             as outlined in <filename>recipes.txt</filename>.
                             If you cannot find a category in <filename>recipes.txt</filename>
                             to fit a particular recipe, you can make up your own
-                            <filename>recipe-*</filename> subdirectory.
+                            <filename>recipes-*</filename> subdirectory.
                             You can find <filename>recipes.txt</filename> in the
                             <filename>meta</filename> directory of the
                             <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>,
@@ -811,9 +819,9 @@
                             This file identifies the <filename>meta-&lt;bsp_name&gt;</filename>
                             BSP layer as a layer to the build system.</para></listitem>
                         <listitem><para><emphasis>Machine Configuration File:</emphasis>
-                            You must include a <filename>conf/machine/&lt;bsp_name&gt;.conf</filename>
-                            in the <filename>meta-&lt;bsp_name&gt;</filename> directory.
-                            This configuration file defines a machine target that can be built
+                            You must include one or more <filename>conf/machine/&lt;bsp_name&gt;.conf</filename>
+                            files in the <filename>meta-&lt;bsp_name&gt;</filename> directory.
+                            These configuration files define machine targets that can be built
                             using the BSP layer.
                             Multiple machine configuration files define variations of machine
                             configurations that are supported by the BSP.
@@ -827,7 +835,8 @@
                             <note>It is completely possible for a developer to structure the
                             working repository as a conglomeration of unrelated BSP
                             files, and to possibly generate BSPs targeted for release
-                            from that directory using scripts or some other mechanism.
+                            from that directory using scripts or some other mechanism
+                            (e.g. <filename>meta-yocto-bsp</filename> layer).
                             Such considerations are outside the scope of this document.</note>
                             </para></listitem>
                     </itemizedlist>
@@ -1259,7 +1268,7 @@
                     As the <filename>yocto-bsp create</filename> command runs, default values for
                     the prompts appear in brackets.
                     Pressing enter without supplying anything on the command line or pressing enter
-                    and providing an invalid response causes the script to accept the default value.
+                    with an invalid response causes the script to accept the default value.
                     Once the script completes, the new <filename>meta-myarm</filename> BSP layer
                     is created in the current working directory.
                     This example assumes you have sourced the 
@@ -1350,7 +1359,7 @@
                     <filename>bblayers.conf</filename> file.
                     Here is an example:
                     <literallayout class='monospaced'>
-     BBLAYERS = ?" \
+     BBLAYERS = ? " \
         /usr/local/src/yocto/meta \
         /usr/local/src/yocto/meta-yocto \
         /usr/local/src/yocto/meta-yocto-bsp \
