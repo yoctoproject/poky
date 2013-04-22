@@ -883,31 +883,59 @@
                If you plan on customizing a recipe for a particular BSP, you need to do the
                following:
                <itemizedlist>
-                   <listitem><para>Include within the BSP layer a <filename>.bbappend</filename>
-                       file for the modified recipe.</para></listitem>
-                   <listitem><para>Place the BSP-specific file in the BSP's recipe
-                       <filename>.bbappend</filename> file path under a directory named
-                       after the machine.</para></listitem>
+                   <listitem><para>Create a <filename>.bbappend</filename>
+                       file for the modified recipe.
+                       For information on using append files, see the 
+                       "<ulink url='&YOCTO_DOCS_DEV_URL;#using-bbappend-files'>Using .bbappend Files</ulink>"
+                       section in the Yocto Project Development Manual.
+                       </para></listitem>
+                   <listitem><para>
+                       Ensure your directory structure in the BSP layer
+                       that supports your machine is such that it can be found
+                       by the build system.
+                       See the example later in this section for more information.
+                       </para></listitem> 
+                   <listitem><para>
+                       Put the append file in a directory whose name matches
+                       the machine's name and is located in an appropriate
+                       sub-directory inside the BSP layer (i.e. 
+                       <filename>recipes-bsp</filename>, <filename>recipes-graphics</filename>,
+                       <filename>recipes-core</filename>, and so forth). 
+                       </para></listitem>
+                   <listitem><para>Place the BSP-specific files in the directory named for 
+                       your machine inside the BSP layer.
+                       </para></listitem>
                </itemizedlist>
            </para>
 
            <para>
-               To better understand this, consider an example that customizes a recipe by adding
+               Following is a specific example to help you better understand the process.
+               Consider an example that customizes a recipe by adding
                a BSP-specific configuration file named <filename>interfaces</filename> to the
-               <filename>netbase_5.0.bb</filename> recipe for machine "xyz".
+               <filename>init-ifupdown_1.0.bb</filename> recipe for machine "xyz".
                Do the following:
                <orderedlist>
-                   <listitem><para>Edit the <filename>netbase_5.0.bbappend</filename> file so that it
+                   <listitem><para>Edit the <filename>init-ifupdown_1.0.bbappend</filename> file so that it
                        contains the following:
                        <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
      PRINC := "${@int(PRINC) + 2}"
-                       </literallayout></para></listitem>
+                       </literallayout>
+                       The append file needs to be in the 
+                       <filename>meta-xyz/recipes-core/init-ifupdown</filename> directory.
+                       </para></listitem>
                    <listitem><para>Create and place the new <filename>interfaces</filename>
                        configuration file in the BSP's layer here:
                        <literallayout class='monospaced'>
-     meta-xyz/recipes-core/netbase/files/xyz/interfaces
-                       </literallayout></para></listitem>
+     meta-xyz/recipes-core/init-ifupdown/files/xyz/interfaces
+                       </literallayout>
+                       The 
+                       <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+                       variable in the append files extends the search path 
+                       the build system uses to find files during the build.
+                       Consequently, for this example you need to have the  
+                       <filename>files</filename> directory in the same location
+                       as your append file.</para></listitem>
                </orderedlist>
             </para>
         </section>
