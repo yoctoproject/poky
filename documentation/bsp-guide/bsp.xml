@@ -34,12 +34,12 @@
                 The BSP consists of a file structure inside a base directory.
                 Collectively, you can think of the base directory and the file structure
                 as a BSP Layer.
-                Although not a strict requirement, layers in the Yocto Project use the  
+                Although not a strict requirement, layers in the Yocto Project use the
                 following well established naming convention:
                 <literallayout class='monospaced'>
      meta-&lt;bsp_name&gt;
                 </literallayout>
-                The string "meta-" is prepended to the machine or platform name, which is 
+                The string "meta-" is prepended to the machine or platform name, which is
                 "bsp_name" in the above form.
             </para>
 
@@ -54,7 +54,7 @@
                 definition and from it build an image.
                 Here is an example:
                 <literallayout class='monospaced'>
-     BBLAYERS = ?" \
+     BBLAYERS ?= " \
        /usr/local/src/yocto/meta \
        /usr/local/src/yocto/meta-yocto \
        /usr/local/src/yocto/meta-yocto-bsp \
@@ -261,7 +261,7 @@
                 This file provides information on where to locate the BSP source files.
                 For example, information provides where to find the sources that comprise
                 the images shipped with the BSP.
-                Information is also included to help you find the 
+                Information is also included to help you find the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>
                 used to generate the images that ship with the BSP.
             </para>
@@ -331,7 +331,7 @@
             </para>
 
             <para>
-                To illustrate the string substitutions, here are the corresponding statements 
+                To illustrate the string substitutions, here are the corresponding statements
                 from the Crown Bay <filename>conf/layer.conf</filename> file:
                <literallayout class='monospaced'>
      BBFILE_COLLECTIONS += "crownbay"
@@ -382,8 +382,8 @@
                 The <filename>crownbay.conf</filename> file is used for the Crown Bay BSP
                 that supports the <trademark class='registered'>Intel</trademark> Embedded
                 Media and Graphics Driver (<trademark class='registered'>Intel</trademark>
-                EMGD), while the <filename>crownbay-noemgd</filename> file is used for the 
-                Crown Bay BSP that supports Video Electronics Standards Association (VESA) 
+                EMGD), while the <filename>crownbay-noemgd</filename> file is used for the
+                Crown Bay BSP that supports Video Electronics Standards Association (VESA)
                 graphics only.
             </para>
 
@@ -581,7 +581,7 @@
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KBRANCH'><filename>KBRANCH</filename></ulink> variable
                 to ensure the build process uses the <filename>standard/crownbay</filename>
                 kernel branch.
-                The 
+                The
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES'><filename>KERNEL_FEATURES</filename></ulink>
                 variable enables features specific to the kernel.
                 Finally, the append file points to specific commits in the
@@ -788,7 +788,7 @@
                                     BSP layer maintainer.
                                     This is the person to whom patches and questions should
                                     be sent.
-                                    For information on how to find the right person, see the 
+                                    For information on how to find the right person, see the
                                     "<ulink url='&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change'>How to Submit a Change</ulink>"
                                     section in the Yocto Project Development Manual.
                                     </para></listitem>
@@ -894,7 +894,7 @@
                <itemizedlist>
                    <listitem><para>Create a <filename>.bbappend</filename>
                        file for the modified recipe.
-                       For information on using append files, see the 
+                       For information on using append files, see the
                        "<ulink url='&YOCTO_DOCS_DEV_URL;#using-bbappend-files'>Using .bbappend Files</ulink>"
                        section in the Yocto Project Development Manual.
                        </para></listitem>
@@ -903,15 +903,15 @@
                        that supports your machine is such that it can be found
                        by the build system.
                        See the example later in this section for more information.
-                       </para></listitem> 
+                       </para></listitem>
                    <listitem><para>
                        Put the append file in a directory whose name matches
                        the machine's name and is located in an appropriate
-                       sub-directory inside the BSP layer (i.e. 
+                       sub-directory inside the BSP layer (i.e.
                        <filename>recipes-bsp</filename>, <filename>recipes-graphics</filename>,
-                       <filename>recipes-core</filename>, and so forth). 
+                       <filename>recipes-core</filename>, and so forth).
                        </para></listitem>
-                   <listitem><para>Place the BSP-specific files in the directory named for 
+                   <listitem><para>Place the BSP-specific files in the directory named for
                        your machine inside the BSP layer.
                        </para></listitem>
                </itemizedlist>
@@ -930,7 +930,7 @@
      FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
      PRINC := "${@int(PRINC) + 2}"
                        </literallayout>
-                       The append file needs to be in the 
+                       The append file needs to be in the
                        <filename>meta-xyz/recipes-core/init-ifupdown</filename> directory.
                        </para></listitem>
                    <listitem><para>Create and place the new <filename>interfaces</filename>
@@ -938,11 +938,11 @@
                        <literallayout class='monospaced'>
      meta-xyz/recipes-core/init-ifupdown/files/xyz/interfaces
                        </literallayout>
-                       The 
+                       The
                        <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
-                       variable in the append files extends the search path 
+                       variable in the append files extends the search path
                        the build system uses to find files during the build.
-                       Consequently, for this example you need to have the  
+                       Consequently, for this example you need to have the
                        <filename>files</filename> directory in the same location
                        as your append file.</para></listitem>
                </orderedlist>
@@ -978,7 +978,7 @@
 
             <para>
                 For cases where you can substitute a free component and still
-                maintain the system's functionality, the "Downloads" page from the 
+                maintain the system's functionality, the "Downloads" page from the
                 <ulink url='&YOCTO_HOME_URL;'>Yocto Project website's</ulink>
                 makes available de-featured BSPs
                 that are completely free of any IP encumbrances.
@@ -1033,8 +1033,8 @@
 		        can build the encumbered image with no change at all
 		        to the normal build process.</para></listitem>
                     <listitem><para><emphasis>Get a pre-built version of the BSP:</emphasis>
-                        You can get this type of BSP by visiting the 
-                        "Downloads" page of the 
+                        You can get this type of BSP by visiting the
+                        "Downloads" page of the
                         <ulink url='&YOCTO_HOME_URL;'>Yocto Project website</ulink>.
                         You can download BSP tarballs that contain proprietary components
                         after agreeing to the licensing
@@ -1193,8 +1193,8 @@
                     the tools.
                     <note>
                         You can also use the <filename>yocto-layer</filename> tool to create
-                        a "generic" layer. 
-                        For information on this tool, see the 
+                        a "generic" layer.
+                        For information on this tool, see the
                         "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-general-layer-using-the-yocto-layer-script'>Creating a General Layer Using the yocto-layer Script</ulink>"
                         section in the Yocto Project Development Guide.
                     </note>
@@ -1216,7 +1216,7 @@
                     by the Yocto Project, as well as QEMU versions of the same.
                     The default mode of the script's operation is to prompt you for information needed
                     to generate the BSP layer.
-                </para>                    
+                </para>
 
                 <para>
                     For the current set of BSPs, the script prompts you for various important
@@ -1271,7 +1271,7 @@
                     with an invalid response causes the script to accept the default value.
                     Once the script completes, the new <filename>meta-myarm</filename> BSP layer
                     is created in the current working directory.
-                    This example assumes you have sourced the 
+                    This example assumes you have sourced the
                     <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
                     and are currently in the top-level folder of the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
