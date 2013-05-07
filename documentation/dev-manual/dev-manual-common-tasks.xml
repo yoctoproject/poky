@@ -2804,6 +2804,44 @@
             </para>
         </section>
 
+        <section id='remove-package-management-requirements'>
+            <title>Remove Package Management Requirements</title>
+
+            <para>
+                Packaging requirements add size to the kernel.
+                One way to reduce the size of the kernel is to remove all the
+                packaging requirements from the image.
+                This reduction includes removing the package manager as well
+                as its dependencies.
+            </para>
+
+            <para>
+                To eliminate all the packaging requirements for an image,
+                follow these steps:
+                <orderedlist>
+                    <listitem><para>Put the following line in your main
+                        recipe for the image to remove packaging files:
+                        <literallayout class='monospaced'>
+     ROOTFS_POSTPROCESS_COMMAND += "remove_packaging_data_files ;
+                        </literallayout>
+                        For example, the recipe for the
+                        <filename>core-image-minimal</filename> image contains
+                        this line.
+                        You can also add the line to the
+                        <filename>local.conf</filename> configuration file.
+                        </para></listitem>
+                    <listitem><para>Be sure that "package-management" is not
+                        part of your
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>
+                        statement for the image.
+                        When you remove this feature, you are removing the
+                        package manager as well as its dependencies
+                        from the root filesystem.
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+
         <section id='look-for-other-ways-to-minimize-size'>
             <title>Look for Other Ways to Minimize Size</title>
 
