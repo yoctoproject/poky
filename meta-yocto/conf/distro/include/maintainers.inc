@@ -559,6 +559,7 @@ RECIPE_MAINTAINER_pn-nativesdk-qt4-tools = "Paul Eggleton <paul.eggleton@linux.i
 RECIPE_MAINTAINER_pn-nativesdk-unfs-server = "Saul Wold <sgw@linux.intel.com>"
 RECIPE_MAINTAINER_pn-nativesdk-util-macros = "Saul Wold <sgw@linux.intel.com>"
 RECIPE_MAINTAINER_pn-ncurses = "Saul Wold <sgw@linux.intel.com>"
+RECIPE_MAINTAINER_pn-neard = "Cristian Iorga <cristian.iorga@intel.com>"
 RECIPE_MAINTAINER_pn-neon = "Cristian Iorga <cristian.iorga@intel.com>"
 RECIPE_MAINTAINER_pn-netbase = "Cristian Iorga <cristian.iorga@intel.com>"
 RECIPE_MAINTAINER_pn-net-tools = "Cristian Iorga <cristian.iorga@intel.com>"
