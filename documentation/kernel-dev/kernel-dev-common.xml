@@ -148,16 +148,16 @@
             <para>
                 You can make wholesale or incremental changes to the Linux
                 kernel <filename>.config</filename> file by including a
-                <filename>defconfig</filename> or by specifying
-                configuration fragments in the 
+                <filename>defconfig</filename> and by specifying
+                configuration fragments in the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
             </para>
 
             <para>
-                If you have a complete Linux kernel <filename>.config</filename>
-                file you want to use, copy it to a directory named 
-                <filename>files</filename>, which must be in 
-                your layer's <filename>recipes-kernel/linux</filename> 
+                If you have a final Linux kernel <filename>.config</filename>
+                file you want to use, copy it to a directory named
+                <filename>files</filename>, which must be in
+                your layer's <filename>recipes-kernel/linux</filename>
                 directory, and name the file "defconfig".
                 Then, add the following lines to your linux-yocto
                 <filename>.bbappend</filename> file in your layer:
@@ -165,24 +165,36 @@
      FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
      SRC_URI += "file://defconfig"
                 </literallayout>
-                The 
-                <filename>SRC_URI</filename> tells the build system how to 
-                search for the file, while the 
+                The <filename>SRC_URI</filename> tells the build system how to
+                search for the file, while the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
-                extends the 
+                extends the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
-                variable (search directories) to include the 
+                variable (search directories) to include the
                 <filename>files</filename> directory you created for the
                 configuration changes.
             </para>
+
+            <note>
+                The build system applies the configurations from the
+                <filename>.config</filename> file before applying any
+                subsequent configuration fragments.
+                The final kernel configuration is a combination of the
+                configurations in the <filename>.config</filename> file and
+                any configuration fragments you provide.
+                You need to realize that if you have any configuration
+                fragments, the build system applies these on top of and
+                after applying the existing <filename>.config</filename>
+                file configurations.
+            </note>
 
             <para>
                 Generally speaking, the preferred approach is to determine the
                 incremental change you want to make and add that as a
                 configuration fragment.
                 For example, if you want to add support for a basic serial
-                console, create a file named <filename>8250.cfg</filename> in the
-                <filename>files</filename> directory with the following
+                console, create a file named <filename>8250.cfg</filename> in
+                the <filename>files</filename> directory with the following
                 content (without indentation):
                 <literallayout class='monospaced'>
      CONFIG_SERIAL_8250=y
@@ -193,8 +205,8 @@
      CONFIG_SERIAL_CORE=y
      CONFIG_SERIAL_CORE_CONSOLE=y
                 </literallayout>
-                Next, include this configuration fragment and extend the 
-                <filename>FILESPATH</filename> variable in your 
+                Next, include this configuration fragment and extend the
+                <filename>FILESPATH</filename> variable in your
                 <filename>.bbappend</filename> file:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
