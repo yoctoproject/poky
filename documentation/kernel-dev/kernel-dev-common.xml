@@ -88,14 +88,21 @@
                 <literallayout class='monospaced'>
      &lt;your-layer&gt;/recipes-kernel/linux/linux-yocto_3.4.bbappend
                 </literallayout>
-                The append file should initially contain the following text:
+                The append file should initially extend the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
+                search path by prepending the directory that contains your
+                files to the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+                variable as follows:
                 <literallayout class='monospaced'>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'>FILESEXTRAPATHS</ulink> := "${THISDIR}/${PN}"
+     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}"
                 </literallayout>
                 The path <filename>${THISDIR}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename> expands
                 to "linux-yocto" in the current directory for this example.
-                If you add any new files that modify the kernel recipe,
-                you need to place them in your layer in the following area:
+                If you add any new files that modify the kernel recipe and you
+                have extended <filename>FILESPATH</filename> as
+                described above, you must place the files in your layer in the
+                following area:
                 <literallayout class='monospaced'>
      &lt;your-layer&gt;/recipes-kernel/linux/linux-yocto/
                 </literallayout>
