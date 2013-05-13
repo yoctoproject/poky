@@ -600,31 +600,31 @@ Core layer for images cannot be removed
 
         <glossentry id='var-COMPATIBLE_HOST'><glossterm>COMPATIBLE_HOST</glossterm>
             <glossdef>
-                <para>A regular expression that resolves to one or more hosts 
-                    (when the recipe is native) or one or more targets (when 
+                <para>A regular expression that resolves to one or more hosts
+                    (when the recipe is native) or one or more targets (when
                     the recipe is non-native) with which a recipe is compatible.
                     The regular expression is matched against
                     <link linkend="var-HOST_SYS"><filename>HOST_SYS</filename></link>.
                     You can use the variable to stop recipes from being built
-                    for classes of systems with which the recipes are not 
+                    for classes of systems with which the recipes are not
                     compatible.
                     Stopping these builds is particularly useful with kernels.
-                    The variable also helps to increase parsing speed 
-                    since the build system skips parsing recipes not 
+                    The variable also helps to increase parsing speed
+                    since the build system skips parsing recipes not
                     compatible with the current system.</para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-COMPATIBLE_MACHINE'><glossterm>COMPATIBLE_MACHINE</glossterm>
             <glossdef>
-                <para>A regular expression that resolves to one or more 
+                <para>A regular expression that resolves to one or more
                     target machines with which a recipe is compatible.
                     The regular expression is matched against
                     <link linkend="var-MACHINEOVERRIDES"><filename>MACHINEOVERRIDES</filename></link>.
                     You can use the variable to stop recipes from being built
                     for machines with which the recipes are not compatible.
                     Stopping these builds is particularly useful with kernels.
-                    The variable also helps to increase parsing speed 
+                    The variable also helps to increase parsing speed
                     since the build system skips parsing recipes not
                     compatible with the current machine.</para>
             </glossdef>
@@ -746,8 +746,8 @@ Core layer for images cannot be removed
                     Specifies a weak bias for recipe selection priority.
                 </para>
                 <para>
-                    The most common usage of this is variable is to set 
-                    it to "-1" within a recipe for a development version of a 
+                    The most common usage of this is variable is to set
+                    it to "-1" within a recipe for a development version of a
                     piece of software.
                     Using the variable in this way causes the stable version
                     of the recipe to build by default in the absence of
@@ -755,10 +755,10 @@ Core layer for images cannot be removed
                     being used to build the development version.
                 </para>
                 <note>
-                    The bias provided by <filename>DEFAULT_PREFERENCE</filename> 
-                    is weak and is overridden by 
+                    The bias provided by <filename>DEFAULT_PREFERENCE</filename>
+                    is weak and is overridden by
                     <filename><link linkend='var-BBFILE_PRIORITY'>BBFILE_PRIORITY</link></filename>
-                    if the that variable is different between two layers 
+                    if the that variable is different between two layers
                     that contain different versions of the same recipe.
                 </note>
             </glossdef>
@@ -909,12 +909,12 @@ Core layer for images cannot be removed
         <glossentry id='var-DISTROOVERRIDES'><glossterm>DISTROOVERRIDES</glossterm>
             <glossdef>
                 <para>
-                    This variable lists overrides specific to the current 
-                    distribution. 
-                    By default, the variable list includes the value of the 
+                    This variable lists overrides specific to the current
+                    distribution.
+                    By default, the variable list includes the value of the
                     <filename><link linkend='var-DISTRO'>DISTRO</link></filename>
                     variable.
-                    You can extend the variable to apply any variable overrides 
+                    You can extend the variable to apply any variable overrides
                     you want as part of the distribution and are not
                     already in <filename>OVERRIDES</filename> through
                     some other means.
@@ -1158,16 +1158,16 @@ Core layer for images cannot be removed
                     Extends the search path the OpenEmbedded build system uses
                     when looking for files and patches as it processes recipes
                     and append files.
-                    The directories BitBake uses when it processes recipes 
-                    are defined by the 
+                    The directories BitBake uses when it processes recipes
+                    are defined by the
                     <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>
-                    variable, and can be extended using 
+                    variable, and can be extended using
                     <filename>FILESEXTRAPATHS</filename>.
                 </para>
 
                 <para>
-                    Best practices dictate that you accomplish this by using the 
-                    variable from within a <filename>.bbappend</filename> file 
+                    Best practices dictate that you accomplish this by using the
+                    variable from within a <filename>.bbappend</filename> file
                     and that you prepend paths as follows:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
@@ -1175,13 +1175,27 @@ Core layer for images cannot be removed
                     In the above example, the build system looks for files in
                     a directory that has the same name as the corresponding
                     append file.
+                    <note>
+                        When using the <filename>FILESEXTRAPATHS</filename>,
+                        be sure to use the immediate expansion
+                        (<filename>:=</filename>) operator and include
+                        the trailing separating colon character.
+                        Immediate expansion makes sure that BitBake evaluates
+                        <filename>THISDIR</filename> at the time the directive
+                        is encountered rather than at some later time when
+                        expansion might result in a directory that does not
+                        contain the files you need.
+                        The trailing colon character is necessary because you
+                        are directing BitBake to extend the path by prepending
+                        directories to the search path.
+                    </note>
                     Here is another common use:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
                     </literallayout>
-                    In this example, the build system extends the 
+                    In this example, the build system extends the
                     <filename>FILESPATH</filename> variable to include a
-                    directory named <filename>files</filename> that is in the 
+                    directory named <filename>files</filename> that is in the
                     same directory as the corresponding append file.
                 </para>
 
@@ -1195,13 +1209,8 @@ Core layer for images cannot be removed
                 <para>
                     By prepending paths in <filename>.bbappend</filename>
                     files, you allow multiple append files that reside in
-                    different layers but are used for the same recipe to 
+                    different layers but are used for the same recipe to
                     correctly extend the path.
-                    <note>
-                        Be sure to use the immediate expansion
-                        (<filename>:=</filename>) operator and include 
-                        the trailing separating colon character.
-                    </note>
                 </para>
             </glossdef>
         </glossentry>
@@ -1209,17 +1218,17 @@ Core layer for images cannot be removed
         <glossentry id='var-FILESPATH'><glossterm>FILESPATH</glossterm>
             <glossdef>
                 <para>
-                    The default set of directories the OpenEmbedded build system 
+                    The default set of directories the OpenEmbedded build system
                     uses when searching for patches and files.
                     During the build process, BitBake searches each directory in
-                    <filename>FILESPATH</filename> in the specified order when 
-                    looking for files and patches specified by each 
+                    <filename>FILESPATH</filename> in the specified order when
+                    looking for files and patches specified by each
                     <filename>file://</filename> URI in a recipe.
                 </para>
 
                 <para>
-                    The default value for the <filename>FILESPATH</filename> 
-                    variable is defined in the <filename>base.bbclass</filename> 
+                    The default value for the <filename>FILESPATH</filename>
+                    variable is defined in the <filename>base.bbclass</filename>
                     class found in <filename>meta/classes</filename> in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>:
                     <literallayout class='monospaced'>
@@ -1227,18 +1236,18 @@ Core layer for images cannot be removed
         "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}"
                     </literallayout>
                     <note>
-                        Do not hand-edit the <filename>FILESPATH</filename> 
+                        Do not hand-edit the <filename>FILESPATH</filename>
                         variable.
                     </note>
                     Be aware that the default <filename>FILESPATH</filename>
                     directories do not map to directories in custom layers
-                    where append files (<filename>.bbappend</filename>) 
+                    where append files (<filename>.bbappend</filename>)
                     are used.
                     If you want the build system to find patches or files
                     that reside with your append files, you need to extend
-                    the <filename>FILESPATH</filename> variable by using 
-                    the 
-                    <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link> 
+                    the <filename>FILESPATH</filename> variable by using
+                    the
+                    <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link>
                     variable.
                 </para>
             </glossdef>
@@ -1306,10 +1315,10 @@ Core layer for images cannot be removed
         <glossentry id='var-HOST_SYS'><glossterm>HOST_SYS</glossterm>
             <glossdef>
                 <para>
-                    Specifies the system, including the architecture and the 
+                    Specifies the system, including the architecture and the
                     operating system, for with the build is occurring
                     in the context of the current
-                    recipe. 
+                    recipe.
                     The OpenEmbedded build system automatically sets this
                     variable.
                     You do not need to set the variable yourself.
@@ -1319,12 +1328,12 @@ Core layer for images cannot be removed
                     Here are two examples:
                     <itemizedlist>
                         <listitem><para>Given a native recipe on a 32-bit
-                            x86 machine running Linux, the value is 
+                            x86 machine running Linux, the value is
                             "i686-linux".
                             </para></listitem>
-                        <listitem><para>Given a recipe being built for a 
+                        <listitem><para>Given a recipe being built for a
                             little-endian MIPS target running Linux,
-                            the value might be "mipsel-linux". 
+                            the value might be "mipsel-linux".
                             </para></listitem>
                     </itemizedlist>
                 </para>
@@ -1419,24 +1428,24 @@ Core layer for images cannot be removed
                 <para>
                     Specifies the list of locales to install into the image
                     during the root filesystem construction process.
-                    The OpenEmbedded build system automatically splits locale 
-                    files, which are used for localization, into separate 
-                    packages. 
+                    The OpenEmbedded build system automatically splits locale
+                    files, which are used for localization, into separate
+                    packages.
                     Setting the <filename>IMAGE_LINGUAS</filename> variable
-                    ensures that any locale packages that correspond to packages 
-                    already selected for installation into the image are also 
-                    installed. 
+                    ensures that any locale packages that correspond to packages
+                    already selected for installation into the image are also
+                    installed.
                     Here is an example:
                     <literallayout class='monospaced'>
      IMAGE_LINGUAS = "pt-br de-de"
                     </literallayout>
-                    In this example, the build system ensures any Brazilian 
-                    Portuguese and German locale files that correspond to 
-                    packages in the image are installed (i.e. 
+                    In this example, the build system ensures any Brazilian
+                    Portuguese and German locale files that correspond to
+                    packages in the image are installed (i.e.
                     <filename>*-locale-pt-br</filename>
-                    and <filename>*-locale-de-de</filename> as well as 
+                    and <filename>*-locale-de-de</filename> as well as
                     <filename>*-locale-pt</filename>
-                    and <filename>*-locale-de</filename>, since some software 
+                    and <filename>*-locale-de</filename>, since some software
                     packages only provide locale files by language and not by
                     country-specific language).
                 </para>
@@ -1672,12 +1681,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-INSANE_SKIP'><glossterm>INSANE_SKIP</glossterm>
             <glossdef>
                 <para>
-                    Specifies the QA checks to skip for a specific package 
+                    Specifies the QA checks to skip for a specific package
                     within a recipe.
-                    For example, to skip the check for symbolic link 
-                    <filename>.so</filename> files in the main package of a 
+                    For example, to skip the check for symbolic link
+                    <filename>.so</filename> files in the main package of a
                     recipe, add the following to the recipe.
-                    The package name override must be used, which in this 
+                    The package name override must be used, which in this
                     example is <filename>${PN}</filename>:
                     <literallayout class='monospaced'>
      INSANE_SKIP_${PN} += "dev-so"
@@ -1685,7 +1694,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
                 <para>
                     See the "<link linkend='ref-classes-insane'>Generated Output Quality Assurance Checks - <filename>insane.bbclass</filename></link>"
-                    section for a list of the valid QA checks you can 
+                    section for a list of the valid QA checks you can
                     specify using this variable.
                 </para>
             </glossdef>
@@ -2199,7 +2208,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-LOG_DIR'><glossterm>LOG_DIR</glossterm>
             <glossdef>
                 <para>
-                    Specifies the directory to which the OpenEmbedded build 
+                    Specifies the directory to which the OpenEmbedded build
                     system writes overall log files.
                     The default directory is <filename>${TMPDIR}/log</filename>.
                 </para>
@@ -2474,22 +2483,22 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-MACHINEOVERRIDES'><glossterm>MACHINEOVERRIDES</glossterm>
             <glossdef>
                 <para>
-                    Lists overrides specific to the current machine. 
+                    Lists overrides specific to the current machine.
                     By default, this list includes the value
-                    of <filename><link linkend='var-MACHINE'>MACHINE</link></filename>. 
-                    You can extend the list to apply variable overrides for 
+                    of <filename><link linkend='var-MACHINE'>MACHINE</link></filename>.
+                    You can extend the list to apply variable overrides for
                     classes of machines.
-                    For example, all QEMU emulated machines (e.g. qemuarm, 
+                    For example, all QEMU emulated machines (e.g. qemuarm,
                     qemux86, and so forth) include a common file named
                     <filename>meta/conf/machine/include/qemu.inc</filename>
-                    that prepends <filename>MACHINEOVERRIDES</filename> with 
+                    that prepends <filename>MACHINEOVERRIDES</filename> with
                     the following variable override:
                     <literallayout class='monospaced'>
     MACHINEOVERRIDES =. "qemuall:"
                     </literallayout>
                     Applying an override like <filename>qemuall</filename>
                     affects all QEMU emulated machines elsewhere.
-                    Here is an example from the 
+                    Here is an example from the
                     <filename>connman-conf</filename> recipe:
                     <literallayout class='monospaced'>
     SRC_URI_append_qemuall = "file://wired.config \
@@ -2578,18 +2587,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     A string identifying the host distribution.
                     Strings consist of the host distributor ID
-                    followed by the release, as reported by the 
+                    followed by the release, as reported by the
                     <filename>lsb_release</filename> tool
-                    or as read from <filename>/etc/lsb-release</filename>. 
-                    For example, when running a build on Ubuntu 12.10, the value 
-                    is "Ubuntu-12.10". 
-                    If this information is unable to be determined, the value 
+                    or as read from <filename>/etc/lsb-release</filename>.
+                    For example, when running a build on Ubuntu 12.10, the value
+                    is "Ubuntu-12.10".
+                    If this information is unable to be determined, the value
                     resolves to "Unknown".
                 </para>
                 <para>
-                    This variable is used by default to isolate native shared 
-                    state packages for different distributions (e.g. to avoid 
-                    problems with <filename>glibc</filename> version 
+                    This variable is used by default to isolate native shared
+                    state packages for different distributions (e.g. to avoid
+                    problems with <filename>glibc</filename> version
                     incompatibilities).
                     Additionally, the variable is checked against
                     <link linkend='var-SANITY_TESTED_DISTROS'><filename>SANITY_TESTED_DISTROS</filename></link>
@@ -2920,15 +2929,15 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-PROVIDES'><glossterm>PROVIDES</glossterm>
             <glossdef>
                 <para>
-                    A list of aliases that a recipe also provides. 
-                    These aliases are useful for satisfying dependencies of 
-                    other recipes during the build (as specified by 
+                    A list of aliases that a recipe also provides.
+                    These aliases are useful for satisfying dependencies of
+                    other recipes during the build (as specified by
                     <filename><link linkend='var-DEPENDS'>DEPENDS</link></filename>).
                     <note>
-                        A recipe's own 
+                        A recipe's own
                         <filename><link linkend='var-PN'>PN</link></filename>
-                        is implicitly already in its 
-                        <filename>PROVIDES</filename> list. 
+                        is implicitly already in its
+                        <filename>PROVIDES</filename> list.
                     </note>
                 </para>
             </glossdef>
@@ -3090,8 +3099,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RM_WORK_EXCLUDE'><glossterm>RM_WORK_EXCLUDE</glossterm>
             <glossdef>
                 <para>
-                    With <filename>rm_work</filename> enabled, this 
-                    variable specifies a list of packages whose work directories 
+                    With <filename>rm_work</filename> enabled, this
+                    variable specifies a list of packages whose work directories
                     should not be removed.
                     See the "<link linkend='ref-classes-rm-work'>Removing Work Files During the Build - <filename>rm_work.bbclass</filename></link>"
                     section for more details.
@@ -3102,9 +3111,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RPROVIDES'><glossterm>RPROVIDES</glossterm>
             <glossdef>
                 <para>
-                    A list of package name aliases that a package also provides. 
-                    These aliases are useful for satisfying runtime dependencies 
-                    of other packages both during the build and on the target 
+                    A list of package name aliases that a package also provides.
+                    These aliases are useful for satisfying runtime dependencies
+                    of other packages both during the build and on the target
                     (as specified by
                     <filename><link linkend='var-RDEPENDS'>RDEPENDS</link></filename>).
                     <note>
@@ -3113,7 +3122,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     </note>
                 </para>
                 <para>
-                   As with all package-controlling variables, you must always 
+                   As with all package-controlling variables, you must always
                    use the variable in conjunction with a package name override.
                    Here is an example:
                    <literallayout class='monospaced'>
@@ -3163,18 +3172,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RREPLACES'><glossterm>RREPLACES</glossterm>
             <glossdef>
                 <para>
-                    A list of packages replaced by a package. 
-                    The package manager uses this variable to determine which 
-                    package should be installed to replace other package(s) 
+                    A list of packages replaced by a package.
+                    The package manager uses this variable to determine which
+                    package should be installed to replace other package(s)
                     during an upgrade.
-                    In order to also have the other package(s) removed at the 
-                    same time, you must add the name of the other 
+                    In order to also have the other package(s) removed at the
+                    same time, you must add the name of the other
                     package to the
                     <filename><link linkend='var-RCONFLICTS'>RCONFLICTS</link></filename> variable.
                 </para>
                 <para>
                    As with all package-controlling variables, you must use
-                   this variable in conjunction with a package name 
+                   this variable in conjunction with a package name
                    override.
                    Here is an example:
                    <literallayout class='monospaced'>
@@ -3187,14 +3196,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RSUGGESTS'><glossterm>RSUGGESTS</glossterm>
             <glossdef>
                 <para>
-                    A list of additional packages that you can suggest for 
-                    installation by the package manager at the time a package 
+                    A list of additional packages that you can suggest for
+                    installation by the package manager at the time a package
                     is installed.
                     Not all package managers support this functionality.
                 </para>
                 <para>
                    As with all package-controlling variables, you must always
-                   use this variable in conjunction with a package name 
+                   use this variable in conjunction with a package name
                    override.
                    Here is an example:
                    <literallayout class='monospaced'>
@@ -3239,19 +3248,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SANITY_TESTED_DISTROS'><glossterm>SANITY_TESTED_DISTROS</glossterm>
             <glossdef>
                 <para>
-                    A list of the host distribution identifiers that the 
+                    A list of the host distribution identifiers that the
                     build system has been tested against.
                     Identifiers consist of the host distributor ID
-                    followed by the release, 
+                    followed by the release,
                     as reported by the <filename>lsb_release</filename> tool
-                    or as read from <filename>/etc/lsb-release</filename>. 
-                    Separate the list items with explicit newline 
+                    or as read from <filename>/etc/lsb-release</filename>.
+                    Separate the list items with explicit newline
                     characters (<filename>\n</filename>).
-                    If <filename>SANITY_TESTED_DISTROS</filename> is not empty 
-                    and the current value of 
+                    If <filename>SANITY_TESTED_DISTROS</filename> is not empty
+                    and the current value of
                     <link linkend='var-NATIVELSBSTRING'><filename>NATIVELSBSTRING</filename></link>
-                    does not appear in the list, then the build system reports        
-                    a warning that indicates the current host distribution has 
+                    does not appear in the list, then the build system reports
+                    a warning that indicates the current host distribution has
                     not been tested as a build host.
                 </para>
             </glossdef>
@@ -3302,17 +3311,17 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SIGGEN_EXCLUDERECIPES_ABISAFE'><glossterm>SIGGEN_EXCLUDERECIPES_ABISAFE</glossterm>
             <glossdef>
                 <para>
-                    A list of recipes that are completely stable and will 
+                    A list of recipes that are completely stable and will
                     never change.
                     The ABI for the recipes in the list are presented by
                     output from the tasks run to build the recipe.
-                    Use of this variable is one way to remove dependencies from 
+                    Use of this variable is one way to remove dependencies from
                     one recipe on another that affect task signatures and
-                    thus force rebuilds when the recipe changes. 
+                    thus force rebuilds when the recipe changes.
                     <caution>
                         If you add an inappropriate variable to this list,
-                        the software might break at runtime if the 
-                        interface of the recipe was changed after the other 
+                        the software might break at runtime if the
+                        interface of the recipe was changed after the other
                         had been built.
                     </caution>
                 </para>
@@ -3322,25 +3331,25 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS'><glossterm>SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS</glossterm>
             <glossdef>
                 <para>
-                    A list of recipe dependencies that should not be used to 
+                    A list of recipe dependencies that should not be used to
                     determine signatures of tasks from one recipe when they
-                    depend on tasks from another recipe. 
+                    depend on tasks from another recipe.
                     For example:
                     <literallayout class='monospaced'>
     SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS += "intone->mplayer2"
                     </literallayout>
-                    In this example, <filename>intone</filename> depends on 
+                    In this example, <filename>intone</filename> depends on
                     <filename>mplayer2</filename>.
                 </para>
 
                 <para>
-                    Use of this variable is one mechanism to remove dependencies 
-                    that affect task signatures and thus force rebuilds when a 
-                    recipe changes. 
+                    Use of this variable is one mechanism to remove dependencies
+                    that affect task signatures and thus force rebuilds when a
+                    recipe changes.
                     <caution>
                         If you add an inappropriate dependency for a recipe
-                        relationship, the software might break during 
-                        runtime if the interface of the second recipe was 
+                        relationship, the software might break during
+                        runtime if the interface of the second recipe was
                         changed after the first recipe had been built.
                     </caution>
                 </para>
@@ -3369,12 +3378,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     Groups together machines based upon the same family
-                    of SOC (System On Chip). 
+                    of SOC (System On Chip).
                     You typically set this variable in a common
-                    <filename>.inc</filename> file that you include in the 
-                    configuration files of all the machines. 
+                    <filename>.inc</filename> file that you include in the
+                    configuration files of all the machines.
                     <note>
-                        You must include 
+                        You must include
                         <filename>conf/machine/include/soc-family.inc</filename>
                         for this variable to appear in
                     <link linkend='var-MACHINEOVERRIDES'><filename>MACHINEOVERRIDES</filename></link>.
@@ -3397,56 +3406,56 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SRC_URI'><glossterm>SRC_URI</glossterm>
             <glossdef>
                 <para>The list of source files - local or remote.
-                    This variable tells the OpenEmbedded build system which bits 
+                    This variable tells the OpenEmbedded build system which bits
                     to pull in for the build and how to pull them in.
-                    For example, if the recipe or append file only needs to 
-                    fetch a tarball from the Internet, the recipe or 
-                    append file uses a single <filename>SRC_URI</filename> 
+                    For example, if the recipe or append file only needs to
+                    fetch a tarball from the Internet, the recipe or
+                    append file uses a single <filename>SRC_URI</filename>
                     entry.
-                    On the other hand, if the recipe or append file needs to 
-                    fetch a tarball, apply two patches, and include a custom 
+                    On the other hand, if the recipe or append file needs to
+                    fetch a tarball, apply two patches, and include a custom
                     file, the recipe or append file would include four
                     instances of the variable.</para>
                 <para>The following list explains the available URI protocols:
                     <itemizedlist>
                         <listitem><para><emphasis><filename>file://</filename> -</emphasis>
-                            Fetches files, which are usually files shipped with 
+                            Fetches files, which are usually files shipped with
                             the
                             <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>,
                             from the local machine.
                             The path is relative to the
                             <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>
                             variable.
-                            Thus, the build system searches, in order, from the 
-                            following directories, which are assumed to be a 
+                            Thus, the build system searches, in order, from the
+                            following directories, which are assumed to be a
                             subdirectories of the directory in which the
-                            recipe file (<filename>.bb</filename>) or 
-                            append file (<filename>.bbappend</filename>) 
+                            recipe file (<filename>.bb</filename>) or
+                            append file (<filename>.bbappend</filename>)
                             resides:
                             <itemizedlist>
                                 <listitem><para><emphasis><filename>${BPN}</filename> -</emphasis>
-                                    The base recipe name without any special 
+                                    The base recipe name without any special
                                     suffix or version numbers.
                                     </para></listitem>
                                 <listitem><para><emphasis><filename>${BP}</filename> -</emphasis>
                                     <filename>${<link linkend='var-BPN'>BPN</link>}-${PV}</filename>.
-                                    The base recipe name and version but without 
+                                    The base recipe name and version but without
                                     any special package name suffix.
                                     </para></listitem>
-                                <listitem><para><emphasis>files -</emphasis> 
-                                    Files within a directory, which is named 
-                                    <filename>files</filename> and is also 
+                                <listitem><para><emphasis>files -</emphasis>
+                                    Files within a directory, which is named
+                                    <filename>files</filename> and is also
                                     alongside the recipe or append file.
                                     </para></listitem>
                             </itemizedlist>
                             <note>
-                                If you want the build system to pick up files 
-                                specified through a 
+                                If you want the build system to pick up files
+                                specified through a
                                 <filename>SRC_URI</filename>
                                 statement from your append file, you need to be
-                                sure to extend the 
+                                sure to extend the
                                 <filename>FILESPATH</filename>
-                                variable by also using the 
+                                variable by also using the
                                 <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link>
                                 variable from within your append file.
                             </note>
@@ -3691,9 +3700,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-STAMPS_DIR'><glossterm>STAMPS_DIR</glossterm>
             <glossdef>
                 <para>
-                    Specifies the base directory in which the OpenEmbedded 
+                    Specifies the base directory in which the OpenEmbedded
                     build system places stamps.
-                    The default directory is 
+                    The default directory is
                     <filename>${TMPDIR}/stamps</filename>.
                 </para>
             </glossdef>
@@ -3715,10 +3724,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SYSROOT_PREPROCESS_FUNCS'><glossterm>SYSROOT_PREPROCESS_FUNCS</glossterm>
             <glossdef>
                 <para>
-                    A list of functions to execute after files are staged into 
+                    A list of functions to execute after files are staged into
                     the sysroot.
-                    These functions are usually used to apply additional 
-                    processing on the staged files, or to stage additional 
+                    These functions are usually used to apply additional
+                    processing on the staged files, or to stage additional
                     files.
                 </para>
             </glossdef>
@@ -3730,15 +3739,15 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-T'><glossterm>T</glossterm>
             <glossdef>
-                <para>This variable points to a directory were BitBake places 
-                    temporary files, which consist mostly of task logs and 
-                    scripts, when building a particular recipe. 
+                <para>This variable points to a directory were BitBake places
+                    temporary files, which consist mostly of task logs and
+                    scripts, when building a particular recipe.
                     The variable is typically set as follows:
                     <literallayout class='monospaced'>
      T = "${WORKDIR}/temp"
                     </literallayout>
                     The <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
-                    is the directory into which BitBake unpacks and builds the 
+                    is the directory into which BitBake unpacks and builds the
                     recipe.
                     The default <filename>bitbake.conf</filename> file sets this variable.</para>
                     <para>The <filename>T</filename> variable is not to be confused with
