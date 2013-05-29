@@ -239,22 +239,32 @@ def yocto_kernel_config_add(scripts_path, machine, config_items):
     user-defined config fragment [${machine}-user-config.cfg].
     """
     new_items = []
+    dup_items = []
+
+    cur_items = read_config_items(scripts_path, machine)
 
     for item in config_items:
         if not item.startswith("CONFIG") or (not "=y" in item and not "=m" in item):
             print "Invalid config item (%s), exiting" % item
             sys.exit(1)
-        new_items.append(item)
+        if item not in cur_items and item not in new_items:
+            new_items.append(item)
+        else:
+            dup_items.append(item)
 
-    cur_items = read_config_items(scripts_path, machine)
-    cur_items.extend(new_items)
+    if len(new_items) > 0:
+        cur_items.extend(new_items)
+        write_config_items(scripts_path, machine, cur_items)
+        print "Added item%s:" % ("" if len(new_items)==1 else "s")
+        for n in new_items:
+            print "\t%s" % n
 
-    write_config_items(scripts_path, machine, cur_items)
-
-    print "Added items:"
-    for n in new_items:
-        print "\t%s" % n
-
+    if len(dup_items) > 0:
+        output="Below item%s already exist%s in current configuration, ignore %s" % \
+            (("","s", "it") if len(dup_items)==1 else ("s", "", "them" ))
+        print output
+        for n in dup_items:
+            print "\t%s" % n
 
 def find_current_kernel(bsp_layer, machine):
     """
