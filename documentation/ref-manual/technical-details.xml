@@ -641,7 +641,7 @@
         <title>Stabilizing and Completing x32</title>
 
         <para>
-            As of this Yocto Project release, the x32 psABI kernel and library 
+            As of this Yocto Project release, the x32 psABI kernel and library
             interfaces specifications are not finalized.
         </para>
 
@@ -682,6 +682,114 @@
      $ runqemu qemux86-64 core-image-sato
                     </literallayout></para></listitem>
             </itemizedlist>
+        </para>
+    </section>
+</section>
+
+<section id="wayland">
+    <title>Wayland</title>
+
+    <para>
+        <ulink url='http://en.wikipedia.org/wiki/Wayland_(display_server_protocol)#Weston'>Wayland</ulink>
+        is a computer display server protocol that when implemented
+        provides a method for compositing window managers to communicate
+        directly with applications and video hardware and expects them to
+        communicate with input hardware using other libraries.
+        Using Wayland with supporting targets can result in better control
+        over graphics frame rendering than an application might otherwise
+        achieve.
+    </para>
+
+    <para>
+        The Yocto Project provides the Wayland protocol libraries and the
+        reference Weston compositor as part of it release.
+        This section describes what you need to do to implement Wayland and
+        use the compositor when building an image for a supporting target.
+    </para>
+
+    <section id="wayland-support">
+        <title>Support</title>
+
+        <para>
+            The Wayland protocol libraries and the reference Weston compositor
+            ship as integrated packages in the <filename>meta</filename> layer
+            of the
+            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+            Specifically, you can find the recipes that build both Wayland
+            and Weston at <filename>meta/recipes-graphics/wayland</filename>.
+        </para>
+
+        <para>
+            You can build both the Wayland and Weston packages for use only
+            with targets that accept the
+            <ulink url='http://dri.freedesktop.org/wiki/'>Mesa 3D and Direct Rendering Infrastructure</ulink>,
+            which is also known as Mesa DRI.
+            This implies that you cannot build and use the packages if your
+            target uses, for example, the
+            <trademark class='registered'>Intel</trademark> Embedded Media and
+            Graphics Driver (<trademark class='registered'>Intel</trademark>
+            EMGD) that overrides Mesa DRI.
+        </para>
+
+        <note>
+            Due to lack of EGL support, Weston 1.0.3 will not run directly on
+            the emulated QEMU hardware.
+            However, this version of Weston will run under X emulation without
+            issues.
+        </note>
+    </section>
+
+    <section id="enabling-wayland-in-an-image">
+        <title>Enabling Wayland in an Image</title>
+
+        <para>
+            This section talks about two different ways to enable Wayland:
+            to run under X11 (the default), or to run under Kernel Mode
+            Setting (<ulink url='https://wiki.archlinux.org/index.php/Kernel_Mode_Setting'>KMS</ulink>).
+        </para>
+
+        <para>
+            I don't clearly understand the steps as they are described in the
+            <ulink url='https://wiki.yoctoproject.org/wiki/Wayland'>Enable Wayland in an Image</ulink>
+            section of the wiki.
+            I need help in understanding this section before I can complete
+            this first draft of the new section.
+            What I don't understand is what you have to do exactly for each
+            method.
+            The description in the wiki implies that you need to append the
+            "wayland" feature to use KMS/DRI as well as X11 (both).
+            I need some clarification and clearer steps for the user.
+        </para>
+    </section>
+
+    <section id="running-weston">
+        <title>Running Weston</title>
+
+        <para>
+            To run Weston inside X11, enabling it as described earlier and
+            building a Sato image is sufficient.
+            If you are running your image under Sato, a Weston Launcher appears
+            in the "Utility" category.
+        </para>
+
+        <para>
+            Alternatively, you can run Weston through the command-line
+            interpretor (CLI), which is better suited for development work.
+            To run Weston under the CLI you need to do the following after
+            your image is built:
+            <orderedlist>
+                <listitem><para>Run these commands to export
+                    <filename>XDG_RUNTIME_DIR</filename>:
+                    <literallayout class='monospaced'>
+     mkdir -p /tmp/$USER-weston
+     chmod 0700 /tmp/$USER-weston
+     export XDG_RUNTIME_DIR=/tmp/$USER=weston
+                    </literallayout></para></listitem>
+                <listitem><para>Launch Weston in the shell:
+                    <literallayout class='monospaced'>
+     weston
+                    </literallayout></para></listitem>
+            </orderedlist>
         </para>
     </section>
 </section>
