@@ -92,10 +92,13 @@
                 <literallayout class='monospaced'>
      <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'>FILESEXTRAPATHS</ulink> := "${THISDIR}/${PN}"
                 </literallayout>
-                The path <filename>${THISDIR}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename> expands
-                to "linux-yocto" in the current directory for this example.
-                If you add any new files that modify the kernel recipe,
-                you need to place them in your layer in the following area:
+                The path <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-THISDIR'><filename>THISDIR</filename></ulink><filename>}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>
+                expands to "linux-yocto" in the current directory for this
+                example.
+                If you add any new files that modify the kernel recipe and you
+                have extended <filename>FILESPATH</filename> as
+                described above, you must place the files in your layer in the
+                following area:
                 <literallayout class='monospaced'>
      &lt;your-layer&gt;/recipes-kernel/linux/linux-yocto/
                 </literallayout>
@@ -149,15 +152,15 @@
                 You can make wholesale or incremental changes to the Linux
                 kernel <filename>.config</filename> file by including a
                 <filename>defconfig</filename> or by specifying
-                configuration fragments in the 
+                configuration fragments in the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
             </para>
 
             <para>
                 If you have a complete Linux kernel <filename>.config</filename>
-                file you want to use, copy it to a directory named 
-                <filename>files</filename>, which must be in 
-                your layer's <filename>recipes-kernel/linux</filename> 
+                file you want to use, copy it to a directory named
+                <filename>files</filename>, which must be in
+                your layer's <filename>recipes-kernel/linux</filename>
                 directory, and name the file "defconfig".
                 Then, add the following lines to your linux-yocto
                 <filename>.bbappend</filename> file in your layer:
@@ -165,13 +168,13 @@
      FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
      SRC_URI += "file://defconfig"
                 </literallayout>
-                The 
-                <filename>SRC_URI</filename> tells the build system how to 
-                search for the file, while the 
+                The
+                <filename>SRC_URI</filename> tells the build system how to
+                search for the file, while the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
-                extends the 
+                extends the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
-                variable (search directories) to include the 
+                variable (search directories) to include the
                 <filename>files</filename> directory you created for the
                 configuration changes.
             </para>
@@ -193,8 +196,8 @@
      CONFIG_SERIAL_CORE=y
      CONFIG_SERIAL_CORE_CONSOLE=y
                 </literallayout>
-                Next, include this configuration fragment and extend the 
-                <filename>FILESPATH</filename> variable in your 
+                Next, include this configuration fragment and extend the
+                <filename>FILESPATH</filename> variable in your
                 <filename>.bbappend</filename> file:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
