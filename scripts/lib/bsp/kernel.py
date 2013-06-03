@@ -260,7 +260,7 @@ def yocto_kernel_config_add(scripts_path, machine, config_items):
             print "\t%s" % n
 
     if len(dup_items) > 0:
-        output="Below item%s already exist%s in current configuration, ignore %s" % \
+        output="The following item%s already exist%s in the current configuration, ignoring %s:" % \
             (("","s", "it") if len(dup_items)==1 else ("s", "", "them" ))
         print output
         for n in dup_items:
