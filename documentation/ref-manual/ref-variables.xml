@@ -1158,22 +1158,24 @@ Core layer for images cannot be removed
                     Extends the search path the OpenEmbedded build system uses
                     when looking for files and patches as it processes recipes
                     and append files.
-                    The directories BitBake uses when it processes recipes
-                    are defined by the
+                    The default directories BitBake uses when it processes
+                    recipes are initially defined by the
                     <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>
-                    variable, and can be extended using
-                    <filename>FILESEXTRAPATHS</filename>.
+                    variable.
+                    You can extend <filename>FILESPATH</filename> variable
+                    by using <filename>FILESEXTRAPATHS</filename>.
                 </para>
 
                 <para>
-                    Best practices dictate that you accomplish this by using the
-                    variable from within a <filename>.bbappend</filename> file
-                    and that you prepend paths as follows:
+                    Best practices dictate that you accomplish this by using
+                    <filename>FILESEXTRAPATHS</filename> from within a
+                    <filename>.bbappend</filename> file and that you prepend
+                    paths as follows:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
                     </literallayout>
-                    In the above example, the build system looks for files in
-                    a directory that has the same name as the corresponding
+                    In the above example, the build system first looks for files
+                    in a directory that has the same name as the corresponding
                     append file.
                     <note>
                         <para>When extending <filename>FILESEXTRAPATHS</filename>,
@@ -1181,10 +1183,10 @@ Core layer for images cannot be removed
                         (<filename>:=</filename>) operator.
                         Immediate expansion makes sure that BitBake evaluates
                         <link linkend='var-THISDIR'><filename>THISDIR</filename></link>
-                        at the time the directive
-                        is encountered rather than at some later time when
-                        expansion might result in a directory that does not
-                        contain the files you need.</para>
+                        at the time the directive is encountered rather than at
+                        some later time when expansion might result in a
+                        directory that does not contain the files you need.
+                        </para>
                         <para>Also, include the trailing separating colon
                         character if you are prepending.
                         The trailing colon character is necessary because you
@@ -1239,6 +1241,11 @@ Core layer for images cannot be removed
                     </literallayout>
                     <note>
                         Do not hand-edit the <filename>FILESPATH</filename>
+                        variable.
+                        If you want the build system to look in directories
+                        other than the defaults, extend the
+                        <filename>FILESPATH</filename> variable by using the
+                        <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link>
                         variable.
                     </note>
                     Be aware that the default <filename>FILESPATH</filename>
