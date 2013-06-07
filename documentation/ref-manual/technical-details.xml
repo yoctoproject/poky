@@ -743,23 +743,45 @@
         <title>Enabling Wayland in an Image</title>
 
         <para>
-            This section talks about two different ways to enable Wayland:
-            to run under X11 (the default), or to run under Kernel Mode
-            Setting (<ulink url='https://wiki.archlinux.org/index.php/Kernel_Mode_Setting'>KMS</ulink>).
+            To enable Wayland, you need to enable it to be built and enable
+            it to be included in the image.
         </para>
 
-        <para>
-            I don't clearly understand the steps as they are described in the
-            <ulink url='https://wiki.yoctoproject.org/wiki/Wayland'>Enable Wayland in an Image</ulink>
-            section of the wiki.
-            I need help in understanding this section before I can complete
-            this first draft of the new section.
-            What I don't understand is what you have to do exactly for each
-            method.
-            The description in the wiki implies that you need to append the
-            "wayland" feature to use KMS/DRI as well as X11 (both).
-            I need some clarification and clearer steps for the user.
-        </para>
+        <section id="enable-building">
+            <title>Building</title>
+
+            <para>
+                To cause Mesa to build the <filename>wayland-egl</filename>
+                platform and Weston to build Wayland with Kernel Mode
+                Setting
+                (<ulink url='https://wiki.archlinux.org/index.php/Kernel_Mode_Setting'>KMS</ulink>)
+                support, include the "wayland" flag in the
+                <link linkend="var-DISTRO_FEATURES"><filename>DISTRO_FEATURES</filename></link>
+                statement in your <filename>local.conf</filename> file:
+                <literallayout class='monospaced'>
+     DISTRO_FEATURES_append = " wayland"
+                </literallayout>
+            </para>
+
+            <note>
+                If X11 has been enabled elsewhere, Weston will build Wayland
+                with X11 support
+            </note>
+        </section>
+
+        <section id="enable-installation-in-an-image">
+            <title>Installing</title>
+
+            <para>
+                To install the Wayland feature into an image, you must
+                include the following
+                <link linkend='var-CORE_IMAGE_EXTRA_INSTALL'><filename>CORE_IMAGE_EXTRA_INSTALL</filename></link>
+                statement in your <filename>local.conf</filename> file:
+                <literallayout class='monospaced'>
+     CORE_IMAGE_EXTRA_INSTALL += "wayland weston"
+                </literallayout>
+            </para>
+        </section>
     </section>
 
     <section id="running-weston">
