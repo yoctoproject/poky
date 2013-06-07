@@ -3095,20 +3095,25 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    The names of the variables you list with
+                    The names of the packages you list within
                     <filename>RDEPENDS</filename> must be the names of other
-                    packages as listed in the
+                    packages - they cannot be recipe names.
+                    <note>
+                        Although package names and recipe names usually match,
+                        the important point here is that you are
+                        providing package names within the
+                        <filename>RDEPENDS</filename> variable.
+                    </note>
+                    For an example of the default list of packages created from
+                    a recipe, see the
                     <link linkend='var-PACKAGES'><filename>PACKAGES</filename></link>
                     variable.
-                    You should not list recipe names
-                    (<link linkend='var-PN'><filename>PN</filename></link>).
                 </para>
 
                 <para>
                     Because the <filename>RDEPENDS</filename> variable applies
-                    to packages being built, you should
-                    always attach a package name to the variable to specify the
-                    particular run-time package that has the dependency.
+                    to packages being built, you should always use the variable
+                    in a form with an attached package name.
                     For example, suppose you are building a development package
                     that depends on the <filename>perl</filename> package.
                     In this case, you would use the following
@@ -3116,17 +3121,28 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
      RDEPENDS_${PN}-dev += "perl"
                     </literallayout>
-                    In the example, the package name
-                    (<filename>${PN}-dev</filename>) must appear as it would
-                    in the
+                    In the example, the development package depends on
+                    the <filename>perl</filename> package.
+                    Thus, the <filename>RDEPENDS</filename> variable has the
+                    <filename>${PN}-dev</filename> package name as part of the
+                    variable.
+                </para>
+
+                <para>
+                    If the package with the dependency is one of the default
+                    packages as listed in the
                     <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename>
+                    variable, the package name you attach to the
+                    <filename>RDEPENDS</filename> variable must appear
+                    as it would in the <filename>PACKAGES</filename>
                     namespace before any renaming of the output package by
                     classes like <filename>debian.bbclass</filename>.
                 </para>
 
                 <para>
-                    In many cases you do not need to explicitly add dependencies
-                    to <filename>RDEPENDS</filename> since some automatic
+                    In many cases you do not need to explicitly add
+                    run-time dependencies using
+                    <filename>RDEPENDS</filename> since some automatic
                     handling occurs:
                     <itemizedlist>
                         <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:  If
