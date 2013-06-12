@@ -567,8 +567,9 @@
             <listitem><para id='cross-development-toolchain'>
                 <emphasis>Cross-Development Toolchain:</emphasis>
                 A collection of software development
-                tools and utilities that allow you to develop software for
-                targeted architectures.
+                tools and utilities that run on one architecture but
+                allow you to develop software for a different targeted
+                architecture.
                 This toolchain contains cross-compilers, linkers, and debuggers
                 that are specific to an architecture.
                 You can use the OpenEmbedded build system to build a
@@ -583,40 +584,48 @@
                 descriptions of each:
                 <itemizedlist>
                     <listitem><para><filename>gcc-cross-initial</filename>:
-                        The initial compiler needed to bootstrap the toolchain
-                        that runs on the host and is used to build software
-                        for the target.
-                        This tool is a "native" package.</para></listitem>
-                    <listitem><para><filename>gcc-cross-intermediate</filename>:
-                        The second stage of the bootstrap process that runs
-                        on the host and builds software for the target.
-                        This tool is a "native" package.</para></listitem>
-                    <listitem><para><filename>gcc-cross</filename>:
-                        The the final stage of the bootstrap process that
-                        results in the cross compiler that runs on the host
+                        The first stage of the bootstrap process that
+                        results in the cross-compiler that runs on the host
                         and builds software for the target.
+                        This tool is a "native" packages (i.e. it is
+                        designed to run on the development host).
+                        </para></listitem>
+                    <listitem><para><filename>gcc-cross</filename>:
+                        The second and final stage of the previously described
+                        bootstrap process.
                         If you are replacing the cross compiler toolchain
-                        with a custom version, this is what you must replace.
-                        This tool is a "native" package.</para></listitem>
+                        with a custom version, you must replace
+                        <filename>gcc-cross</filename>.
+                        This tool is a "native" package (i.e. it is
+                        designed to run on the development host).
+                        </para></listitem>
                     <listitem><para><filename>gcc-runtime</filename>:
                         Runtime libraries from the toolchain bootstrapping
                         process.
                         This tool produces a binary for the target.
                         </para></listitem>
-                    <listitem><para><filename>gcc-crosssdk-initial/intermediate</filename>:
-                        Stage 1 and 2 of the a cross compiler that runs on the
-                        host and builds for the SDK.
+                    <listitem><para><filename>gcc-crosssdk-initial</filename>:
+                        The first stage of the Software Development Kit (SDK)
+                        cross-compiler that runs on the host and builds for
+                        the SDK.
                         Often the SDK is not the same target as the host.
                         This tool is a "native" binary.</para></listitem>
                     <listitem><para><filename>gcc-crosssdk</filename>:
-                        The final stage of the SDK compiler.
+                        The second and final stage of the previously mentioned
+                        SDK cross-compiler.
                         This tool is a "native" binary.
                         The tool runs on the host and builds for the SDK.
                         </para></listitem>
                     <listitem><para><filename>gcc-cross-canadian</filename>:
-                        The compiler that runs on the SDK machine and is
-                        included with the SDK that builds software for the
-                        target.
+                        A compiler built on one machine (build machine) that
+                        runs on a different machine (host machine) and produces
+                        software that runs on a third target machine.
+                        See WikipediA's
+                        <ulink url='http://en.wikipedia.org/wiki/Cross_compiler#Canadian_Cross'>Cross Compiler</ulink>
+                        page for a more general explanation of a
+                        "Canadian Cross".
+                        This compiler is included with the SDK that builds
+                        software for the eventual target.
                         This tool is a "nativesdk" package.</para></listitem>
                 </itemizedlist></para></listitem>
             <listitem><para><emphasis>Image:</emphasis> An image is the result produced when
