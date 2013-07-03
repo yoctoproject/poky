@@ -54,7 +54,8 @@ def find_bblayers(scripts_path):
     in_bblayers = False
     for line in lines:
         line = line.strip()
-        if line.strip().startswith("BBLAYERS"):
+        tokens = line.split()
+        if len(tokens) > 0 and tokens[0] == 'BBLAYERS':
             bblayers_lines.append(line)
             in_bblayers = True
             quotes = line.strip().count('"')
