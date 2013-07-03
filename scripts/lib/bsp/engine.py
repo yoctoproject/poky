@@ -1674,7 +1674,7 @@ def yocto_bsp_list(args, scripts_path, properties_file):
         arch_path = bsp_path + '/substrate/target/arch'
         print "Architectures available:"
         for arch in os.listdir(arch_path):
-            if arch == "common":
+            if arch == "common" or arch == "layer":
                 continue
             print "    %s" % arch
         return True
