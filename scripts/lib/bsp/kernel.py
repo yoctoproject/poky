@@ -60,14 +60,12 @@ def find_bblayers(scripts_path):
             in_bblayers = True
             quotes = line.strip().count('"')
             if quotes > 1:
-                break
+                in_bblayers = False
             continue
         if in_bblayers:
             bblayers_lines.append(line)
             if line.strip().endswith("\""):
-                break
-            else:
-                continue
+                in_bblayers = False
 
     for i, line in enumerate(bblayers_lines):
         if line.strip().endswith("\\"):
@@ -75,19 +73,31 @@ def find_bblayers(scripts_path):
 
     bblayers_line = " ".join(bblayers_lines)
 
-    start_quote = bblayers_line.find("\"")
-    if start_quote == -1:
+    openquote = ''
+    for c in bblayers_line:
+        if c == '\"' or c == '\'':
+            if openquote:
+                if c != openquote:
+                    print "Invalid BBLAYERS found in %s, exiting" % bblayers_conf
+                    sys.exit(1)
+                else:
+                    openquote = ''
+            else:
+                openquote = c
+
+    if openquote:
         print "Invalid BBLAYERS found in %s, exiting" % bblayers_conf
         sys.exit(1)
 
-    start_quote += 1
-    end_quote = bblayers_line.find("\"", start_quote)
-    if end_quote == -1:
-        print "Invalid BBLAYERS found in %s, exiting" % bblayers_conf
-        sys.exit(1)
+    bblayers_line = bblayers_line.strip().replace('\"', '')
+    bblayers_line = bblayers_line.strip().replace('\'', '')
 
-    bblayers_line = bblayers_line[start_quote:end_quote]
-    layers = bblayers_line.split()
+    raw_layers = bblayers_line.split()
+
+    for layer in raw_layers:
+        if layer == 'BBLAYERS' or '=' in layer:
+            continue
+        layers.append(layer)
 
     f.close()
 
@@ -114,7 +124,7 @@ def find_bsp_layer(scripts_path, machine):
     layers = find_bblayers(scripts_path)
 
     for layer in layers:
-        if machine in layer:
+        if layer.endswith(machine):
             return layer
 
     print "Unable to find the BSP layer for machine %s." % machine
