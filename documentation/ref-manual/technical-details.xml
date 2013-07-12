@@ -157,25 +157,18 @@
     <title>A Closer Look at the Yocto Project Development Environment</title>
 
     <para>
-        This section is a work-in-progress for an expanded discussion of the
-        Yocto Project Development Environment.
-        The section is rooted in the figure found in the
-        "<ulink url='&YOCTO_DOCS_QS_URL;#yp-intro'>Introducing the Yocto Project Development Environment</ulink>"
-        section of the Yocto Project Quick Start.
-        This expanded discussion presents a deeper level of detail regarding
-        input, output, and
-        <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>.
+        This section takes a more detailed look at the Yocto Project
+        development environment.
+        The following diagram represents the development environment at a
+        high level.
+        The remainder of this section expands on the fundamental input, output,
+        process, and
+        <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>) blocks
+        in the Yocto Project development environment.
     </para>
 
     <para>
-        I will either replicate the exact figure from the YP Quick Start here
-        or I will create a more simplified version that can be used as the
-        top-level diagram from which to base subsequent sections and expanded
-        illustrations.
-    </para>
-
-    <para>
-        [NEED REPEATED FIGURE HERE OR A NEW FIGURE]
+        <imagedata fileref="figures/yocto-environment-ref.png" align="center" width="8in" depth="4.25in" />
     </para>
 
     <para>
@@ -222,7 +215,9 @@
             environment:
         </para>
 
-        <imagedata fileref="figures/user-configuration.png" align="center" width="6in" depth="3.5in" />
+        <para>
+            <imagedata fileref="figures/user-configuration.png" align="center" width="6in" depth="3.5in" />
+        </para>
 
         <para>
             BitBake needs some basic configuration files in order to complete
@@ -232,15 +227,21 @@
             <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
             For simplicity, this section refers to the Source Directory as
             the "Poky Directory."
-            <note>
-                Poky is primarily an aggregation of existing repositories and
-                is not actual canonical upstream source for anything.
-            </note>
+        </para>
+
+        <para>
             When you clone the <filename>poky</filename> Git repository or you
             download and unpack a Yocto Project release, you can set up the
             Source Directory to be named anything you want.
             For this discussion, the cloned repository uses the default
             name <filename>poky</filename>.
+            Within the figure, layers appear inside the Source Directory using
+            a bold typeface.
+            <note>
+                The Poky repository is primarily an aggregation of existing
+                repositories.
+                It is not a canonical upstream source.
+            </note>
         </para>
 
         <para>
@@ -250,35 +251,50 @@
             These example files are used as a basis for creating actual
             configuration files when you source the build environment
             script <filename>oe-init-build-env</filename>.
-            <note>
-                The <filename>oe-init-build-env</filename> script also exists
-                in the <filename>meta</filename> directory of the OE-Core
-                root directory.
-                Both scripts look for sample configuration files through
-                a <filename>$TEMPLATECONF</filename> variable.
-                When using the Yocto Project Development Environment,
-                that location resolves to the samples found in the
-                <filename>poky/meta-yocto/conf</filename> directory.
-            </note>
         </para>
 
         <para>
-            When you source the build environment script, it creates a
+            Sourcing the build environment script creates a
             <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
             if one does not already exist.
             BitBake uses the Build Directory for all its work during builds.
             The Build Directory has a <filename>conf</filename> directory that
             contains default versions of your <filename>local.conf</filename>
             and <filename>bblayers.conf</filename> configuration files.
-            These default configuration files are created by
-            <filename>oe-init-build-env</filename> only if versions of these
-            files do not already exist in the Build Directory you specify
-            when you run the script.
+            These default configuration files are created only if versions
+            do not already exist in the Build Directory at the time you
+            source the <filename>oe-init-build-env</filename> script.
+        </para>
+
+        <para>
+            Because the Poky repository is fundamentally an aggregation of
+            existing repositories, some users might be familiar with running
+            the <filename>oe-init-build-env</filename> script in the context
+            of the OpenEmbedded development environment, which is outside
+            of the Yocto Project development environment.
+            This discussion assumes the script is executed from within a
+            cloned or unpacked version of Poky (i.e. within the Yocto Project
+            environment).
+        </para>
+
+        <para>
+            Depending on where the script is sourced, different sub-scripts
+            are called to set up the Build Directory (Yocto or OpenEmbedded).
+            Specifically, the script
+            <filename>scripts/oe-setup-builddir</filename> inside the
+            poky directory sets up the Build Directory and seeds the directory
+            (if necessary) with configuration files appropriate for the
+            Yocto Project development environment.
+            <note>
+                The <filename>scripts/oe-setup-builddir</filename> script
+                uses the <filename>$TEMPLATECONF</filename> variable to
+                determine which sample configuration files to locate.
+            </note>
         </para>
 
         <para>
             The <filename>local.conf</filename> file provides many
-            basic variables that define your build.
+            basic variables that define a build environment.
             Here is a list of a few.
             To see the default configurations in a <filename>local.conf</filename>
             file created by the build environment script, see the
@@ -308,14 +324,20 @@
                     <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
                     variable.</para></listitem>
             </itemizedlist>
+            <note>
+                Configurations set in the <filename>conf/local.conf</filename>
+                file can also be set in the
+                <filename>conf/site.conf</filename> and
+                <filename>conf/auto.conf</filename> configuration files.
+            </note>
         </para>
 
         <para>
             The <filename>bblayers.conf</filename> file tells BitBake what
-            layers you want it to consider during the build.
-            The list of layers includes default layers needed by the build
-            system.
-            You have to manually add any custom layers that you have created.
+            layers you want considered during the build.
+            By default, the layers listed in this file include layers
+            minimally needed by the build system.
+            However, you must manually add any custom layers you have created.
             You can find more information on working with the
             <filename>bblayers.conf</filename> file in the
             "<ulink url='&YOCTO_DOCS_DEV_URL;#enabling-your-layer'>Enabling Your Layer</ulink>"
@@ -330,24 +352,44 @@
             yourself:
             <itemizedlist>
                 <listitem><para><emphasis><filename>site.conf</filename>:</emphasis>
-                    I don't really know what this does.
-                    All I know is that if you want it, you need to hand-create
-                    it.
-                    I need some information on it.</para></listitem>
+                    You can use the <filename>conf/site.conf</filename>
+                    configuration file to configure multiple build directories.
+                    For example, suppose you had several build environments and
+                    they shared some common features.
+                    You can set these default build properties here.
+                    A good example is perhaps the level of parallelism you want
+                    to use through the
+                    <link linkend='var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></link>
+                    and
+                    <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></link>
+                    variables.</para>
+                    <para>One useful scenario for using the
+                    <filename>conf/site.conf</filename> file is to extend your
+                    <link linkend='var-BBPATH'><filename>BBPATH</filename></link>
+                    variable to include the path to a
+                    <filename>conf/site.conf</filename>.
+                    Then, when BitBake looks for Metadata using
+                    <filename>BBPATH</filename>, it finds the
+                    <filename>conf/site.conf</filename> file and applies your
+                    common configurations found in the file.
+                    To override configurations in a particular build directory,
+                    alter the similar configurations within that build
+                    directory's <filename>conf/local.conf</filename> file.
+                    </para></listitem>
                 <listitem><para><emphasis><filename>auto.conf</filename>:</emphasis>
                     This file is not hand-created.
                     Rather, the file is usually created and written to by
                     an autobuilder.
                     The settings put into the file are typically the same as
-                    you would find in the <filename>local.conf</filename>
-                    or <filename>site.conf</filename> files.
+                    you would find in the <filename>conf/local.conf</filename>
+                    or the <filename>conf/site.conf</filename> files.
                     </para></listitem>
             </itemizedlist>
         </para>
 
         <para>
             You can edit all configuration files to further define
-            the build.
+            any particular build environment.
             This process is represented by the "User Configuration Edits"
             box in the figure.
         </para>
@@ -355,8 +397,8 @@
         <para>
             When you launch your build with the
             <filename>bitbake &lt;target&gt;</filename> command, BitBake
-            draws on the user configurations you have provided in your
-            Build Directory.
+            sorts out the configurations to ultimately define your build
+            environment.
         </para>
     </section>
 
@@ -372,159 +414,174 @@
             policy.
         </para>
 
-         <para>
-             In general, three types of layer input exist:
-             <itemizedlist>
-                 <listitem><para><emphasis>Metadata:</emphasis>
-                     Software layers contain user-supplied recipe files,
-                     patches, and append files.
-                     </para></listitem>
-                 <listitem><para><emphasis>Machine Configuration:</emphasis>
-                     Board Support Package (BSP) layers provide machine
-                     configurations.
-                     This type of information is specific to a particular
-                     target architecture.</para></listitem>
-                 <listitem><para><emphasis>Policy Configuration:</emphasis>
-                     Distribution Layers provide top-level or general
-                     policies for the image or SDK being built.
-                     For example, this layer would dictate whether BitBake
-                     produces RPM or IPK packages.</para></listitem>
-             </itemizedlist>
-         </para>
+        <para>
+            In general, three types of layer input exist:
+            <itemizedlist>
+                <listitem><para><emphasis>Policy Configuration:</emphasis>
+                    Distribution Layers provide top-level or general
+                    policies for the image or SDK being built.
+                    For example, this layer would dictate whether BitBake
+                    produces RPM or IPK packages.</para></listitem>
+                <listitem><para><emphasis>Machine Configuration:</emphasis>
+                    Board Support Package (BSP) layers provide machine
+                    configurations.
+                    This type of information is specific to a particular
+                    target architecture.</para></listitem>
+                <listitem><para><emphasis>Metadata:</emphasis>
+                    Software layers contain user-supplied recipe files,
+                    patches, and append files.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
 
-         <para>
+        <para>
             The following figure shows an expanded representation of the
             Metadata, Machine Configuration, and Policy Configuration input
-            boxes of the Yocto Project development environment:
-         </para>
+            (layers) boxes of the Yocto Project development environment:
+        </para>
 
-         <imagedata fileref="figures/layer-input.png" align="center" width="8in" depth="7.5in" />
+        <para>
+            <imagedata fileref="figures/layer-input.png" align="center" width="8in" depth="7.5in" />
+        </para>
 
-         <para>
-             The Yocto Project has many layers that can be used.
-             You can see a web-interface listing of them on the
-             <ulink url="http://git.yoctoproject.org/">Source Repositories</ulink>
-             page.
-             The layers are shown at the bottom categorized under
-             "Yocto Metadata Layers."
-             These layers are fundamentally a subset of the
-             <ulink url="http://layers.openembedded.org/layerindex/layers/">OpenEmbedded Metadata Index</ulink>,
-             which shows all layers supported by OpenEmbedded.
-         </para>
+        <para>
+            In general, all layers have a similar structure.
+            They all contain a licensing file
+            (e.g. <filename>COPYING</filename>) if the layer is to be
+            distributed, a <filename>README</filename> file as good practice
+            and especially if the layer is to be distributed, a
+            configuration directory, and recipe directories.
+        </para>
 
-         <note>
-             Layers exist in the Yocto Project Source Repositories that cannot
-             be found in the OpenEmbedded Metadata Index.
-             These layers are either deprecated or experimental in nature.
-         </note>
+        <para>
+            The Yocto Project has many layers that can be used.
+            You can see a web-interface listing of them on the
+            <ulink url="http://git.yoctoproject.org/">Source Repositories</ulink>
+            page.
+            The layers are shown at the bottom categorized under
+            "Yocto Metadata Layers."
+            These layers are fundamentally a subset of the
+            <ulink url="http://layers.openembedded.org/layerindex/layers/">OpenEmbedded Metadata Index</ulink>,
+            which lists all layers provided by the OpenEmbedded community.
+            <note>
+                Layers exist in the Yocto Project Source Repositories that
+                cannot be found in the OpenEmbedded Metadata Index.
+                These layers are either deprecated or experimental in nature.
+            </note>
+        </para>
 
-         <para>
-             BitBake uses the <filename>bblayers.conf</filename> file that is
-             part of the user configuration to find what layers it should be
-             using as part of the build.
-         </para>
+        <para>
+            BitBake uses the <filename>conf/bblayers.conf</filename> file,
+            which is part of the user configuration, to find what layers it
+            should be using as part of the build.
+        </para>
 
-         <para>
-             For more information on layers, see the
-             "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
-             section in the Yocto Project Development Manual.
-         </para>
+        <para>
+            For more information on layers, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
+            section in the Yocto Project Development Manual.
+        </para>
 
-         <section id="software-layer">
-             <title>Software Layer</title>
+        <section id="distro-layer">
+            <title>Distro Layer</title>
 
-             <para>
-                 The software layer provides the Metadata for your source
-                 code used during the build.
-                 This general layer minimally contains license
-                 information; a <filename>README</filename> file; a layer
-                 configuration file named <filename>layer.conf</filename>;
-                 and recipe files (<filename>.bb</filename>), append files
-                 (<filename>.bbappend</filename>), and patches
-                 (<filename>.patch</filename>).
-             </para>
+            <para>
+                The distribution layer provides policy configurations for your
+                distribution.
+                Best practices dictate that you isolate these types of
+                configurations into their own layer.
+                Settings you provide in
+                <filename>conf/&lt;distro&gt;.conf</filename> override similar
+                settings that BitBake finds in your
+                <filename>conf/local.conf</filename> file in the Build
+                Directory.
+            </para>
 
-             <para>
-                 You provide any new recipes that your project needs in the
-                 form of recipe files.
-                 If you are modifying any existing recipes from other layers,
-                 rather than duplicate them here with the modifcations, you can
-                 provide a recipe append file that just has the modifications.
-                 Patch files are stored in the <filename>files</filename>
-                 directory.
-             </para>
-         </section>
+            <para>
+                The following list provides some explanation and references
+                for what you typically find in the distribution layer:
+                <itemizedlist>
+                    <listitem><para><emphasis>classes:</emphasis>
+                        Class files (<filename>.bbclass</filename>) holds
+                        common functionality that can be shared among
+                        recipes in the distribution.
+                        When your recipes inherit a class, they take on the
+                        settings and functions for that class.
+                        You can read more about class files in the
+                        "<link linkend='ref-classes'>Classes</link>" section.
+                        </para></listitem>
+                    <listitem><para><emphasis>conf:</emphasis>
+                        This area holds configuration files for the
+                        layer (<filename>conf/layer.conf</filename>),
+                        the distribution
+                        (<filename>conf/distro/&lt;distro&lt;.conf</filename>),
+                        and any distribution-wide include files.
+                        </para></listitem>
+                    <listitem><para><emphasis>recipes-*:</emphasis>
+                        Recipes and append files that affect common
+                        functionality across the distribution.
+                        This area also can hold common distribution headers,
+                        initialization files, and
+                        <filename>&lt;recipe&gt;/files/defconfig</filename>
+                        files for the distribution.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
 
-         <section id="distro-layer">
-             <title>Distro Layer</title>
+        <section id="bsp-layer">
+            <title>BSP Layer</title>
 
-             <para>
-                 The distribution layer provides policy configurations for your
-                 distribution.
-                 Best practices dictate that you isolate these types of
-                 configurations into their own layer.
-                 Metadata you provide in this layer overrides similar settings
-                 that BitBake finds in your <filename>local.conf</filename>
-                 file in the Build Directory.
-             </para>
+            <para>
+                The BSP Layer provides machine configurations.
+                Everything in this layer is specific to the machine for which
+                you are building the image or the SDK.
+                BSP Layers have a structure that is followed if they are
+                considered to be compatible with the Yocto Project.
+                For information on the structure, see the
+                <ulink url='&YOCTO_DOCS_BSP_URL;'>Yocto Project Board Support Package (BSP) Developer's Guide</ulink>.
+            </para>
 
-             <para>
-                 The following list provides some explanation and references
-                 for what you typically find in the distribution layer:
-                 <itemizedlist>
-                     <listitem><para><emphasis>classes:</emphasis>
-                         Class files (<filename>.bbclass</filename>) hold
-                         common functionality that can be shared among
-                         recipes in the distribution.
-                         When your recipes inherit a class, they take on the
-                         settings and functions for that class.
-                         You can read more about class files in the
-                         "<link linkend='ref-classes'>Classes</link>" section.
-                         </para></listitem>
-                     <listitem><para><emphasis>conf:</emphasis>
-                         This area holds configuration information for the
-                         distribution.
-                         Any distribution-wide include files and, of course, the
-                         <filename>layer.conf</filename> configuration
-                         file that every layer must have.</para></listitem>
-                     <listitem><para><emphasis>recipes-core:</emphasis>
-                         Recipes and append files that affect common
-                         functionality across the distribution.
-                         This area also can hold common distribution headers,
-                         initialization files, and
-                         <filename>defconfig</filename> files for the
-                         distribution.</para></listitem>
-                 </itemizedlist>
-             </para>
-         </section>
+            <para>
+                The BSP Layer's configuration directory contains
+                configuration files for the machine
+                (<filename>conf/machine/&lt;machine&gt;.conf</filename>) and,
+                of course, the layer (<filename>conf/layer.conf</filename>).
+            </para>
 
-         <section id="bsp-layer">
-             <title>BSP Layer</title>
+            <para>
+                The remainder of the layer is dedicated to specific recipes
+                by function: <filename>recipes-bsp</filename>,
+                <filename>recipes-core</filename>,
+                <filename>recipes-graphics</filename>, and
+                <filename>recipes-kernel</filename>.
+                Metadata can exist for multiple formfactors, graphics
+                support systems, and so forth.
+                <note>
+                    While the figure shows several <filename>recipe-*</filename>
+                    directories, not all these directories appear in all
+                    BSP layers.
+                </note>
+            </para>
+        </section>
 
-             <para>
-                 The BSP Layer provides machine configurations.
-                 Everything in this layer is specific to the machine for which
-                 you are building the image or the SDK.
-                 BSP Layer's have a structure that is followed if they are
-                 considered to be compatible with the Yocto Project.
-                 For information on the structure, see the
-                 <ulink url='&YOCTO_DOCS_BSP_URL;'>Yocto Project Board Support Package (BSP) Developer's Guide</ulink>.
-             </para>
+        <section id="software-layer">
+            <title>Software Layer</title>
 
-             <para>
-                 The BSP Layer contains a configuration directory that has
-                 configuration files for the machine
-                 (<filename>&lt;machine&gt;.conf</filename>) and, of course,
-                 the layer (<filename>layer.conf</filename>).
-             </para>
+            <para>
+                The software layer provides the Metadata for your source
+                code used during the build.
+                This layer does not include Metadata that is specific to the
+                distribution or the machine, which are found in their
+                respective layers.
+            </para>
 
-             <para>
-                 The remainder of the layer is dedicated to specific recipes
-                 by function: bsp, core, graphics, and kernel.
-                 Metadata can exist for multiple formfactors, graphics
-                 support systems, and so forth.
-             </para>
-         </section>
+            <para>
+                This layer contains any new recipes that your project needs
+                in the form of recipe files.
+                Patch files are stored in the <filename>files</filename>
+                directory.
+            </para>
+        </section>
     </section>
 </section>
 
