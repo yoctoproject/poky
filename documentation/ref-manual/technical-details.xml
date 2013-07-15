@@ -184,13 +184,19 @@
             <listitem><para><emphasis>Source Files:</emphasis>
                 Upstream releases, local projects, and SCMs.</para></listitem>
             <listitem><para><emphasis>Build System:</emphasis>
-                Processes inside the BitBake "box".
+                Processes under the control of BitBake.
                 This block expands on how BitBake fetches source, applies
                 patches, completes compilation, analyzes output for package
                 generation, creates and tests packages, generates images, and
                 generates cross-development tools.</para></listitem>
             <listitem><para><emphasis>Package Feeds:</emphasis>
-                Package feeds into the BitBake process.</para></listitem>
+                Directories containing output packages (rpm, deb or ipk),
+                which are subsequently used in the construction of an image or
+                SDK, produced by the build system.
+                These feeds can also be copied and shared using a web server or
+                other means to facilitate extending or updating existing
+                images on devices at runtime if runtime package management is
+                enabled.</para></listitem>
             <listitem><para><emphasis>Images:</emphasis>
                 Images produced by the development process.
                 Where do they go?
@@ -269,12 +275,11 @@
         <para>
             Because the Poky repository is fundamentally an aggregation of
             existing repositories, some users might be familiar with running
-            the <filename>oe-init-build-env</filename> script in the context
-            of the OpenEmbedded development environment, which is outside
-            of the Yocto Project development environment.
-            This discussion assumes the script is executed from within a
-            cloned or unpacked version of Poky (i.e. within the Yocto Project
-            environment).
+            the <filename>oe-init-build-env</filename> script in the context of
+            separate OpenEmbedded-Core and BitBake repositories rather than a
+            single Poky repository.
+            This discussion assumes the script is executed from within a cloned
+            or unpacked version of Poky.
         </para>
 
         <para>
@@ -514,16 +519,16 @@
                         This area holds configuration files for the
                         layer (<filename>conf/layer.conf</filename>),
                         the distribution
-                        (<filename>conf/distro/&lt;distro&lt;.conf</filename>),
+                        (<filename>conf/distro/&lt;distro&gt;.conf</filename>),
                         and any distribution-wide include files.
                         </para></listitem>
                     <listitem><para><emphasis>recipes-*:</emphasis>
                         Recipes and append files that affect common
                         functionality across the distribution.
-                        This area also can hold common distribution headers,
-                        initialization files, and
-                        <filename>&lt;recipe&gt;/files/defconfig</filename>
-                        files for the distribution.</para></listitem>
+                        This area could include recipes and append files to
+                        to add distribution-specific configuration,
+                        initialization scripts, custom image recipes,
+                        and so forth.</para></listitem>
                 </itemizedlist>
             </para>
         </section>
@@ -535,10 +540,13 @@
                 The BSP Layer provides machine configurations.
                 Everything in this layer is specific to the machine for which
                 you are building the image or the SDK.
-                BSP Layers have a structure that is followed if they are
-                considered to be compatible with the Yocto Project.
-                For information on the structure, see the
+                A common structure or form is defined for BSP layers.
+                You can learn more about this structure in the
                 <ulink url='&YOCTO_DOCS_BSP_URL;'>Yocto Project Board Support Package (BSP) Developer's Guide</ulink>.
+                <note>
+                    In order for a BSP layer to be considered compliant with the
+                    Yocto Project, it must meet some structural requirements.
+                </note>
             </para>
 
             <para>
@@ -568,8 +576,8 @@
             <title>Software Layer</title>
 
             <para>
-                The software layer provides the Metadata for your source
-                code used during the build.
+                The software layer provides the Metadata for your
+                software packages used during the build.
                 This layer does not include Metadata that is specific to the
                 distribution or the machine, which are found in their
                 respective layers.
@@ -578,8 +586,8 @@
             <para>
                 This layer contains any new recipes that your project needs
                 in the form of recipe files.
-                Patch files are stored in the <filename>files</filename>
-                directory.
+                If the software layer contains any patch files, they can be
+                stored in a <filename>files</filename> directory.
             </para>
         </section>
     </section>
