@@ -589,6 +589,159 @@
             </para>
         </section>
     </section>
+
+    <section id="sources-dev-environment">
+        <title>Sources</title>
+
+        <para>
+            In order for the OpenEmbedded build system to create an image or
+            any target, it must be able to access source files.
+            The main
+            <link linkend='a-closer-look-at-the-yocto-project-development-environment'>Yocto Project Development Environment figure</link>
+            represents source files using the "Upstream Project Releases",
+            "Local Projects", and "SCMs (optional)" boxes.
+            The figure represents mirrors, which also play a role in locating
+            source files, with the "Source Mirror(s)" box.
+        </para>
+
+        <para>
+            The method by which source files are ultimately organized is
+            a function of the project.
+            For example, for released software, projects tend to use tarballs
+            or other archived files that can capture the state of a release
+            guaranteeing that it is statically represented.
+            On the other hand, for a project that is more dynamic or
+            experimental in nature, a project might keep source files in a
+            repository controlled by a Source Control Manager (SCM) such as
+            Git.
+            Pulling source from a repository allows you to control
+            the point in the repository (the revision) from which you want to
+            build software.
+            Finally, a combination of the two might exist, which would give the
+            consumer a choice when deciding where to get source files.
+        </para>
+
+        <para>
+            BitBake uses the
+            <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
+            variable to point to source files regardless of their location.
+            Each recipe must have a <filename>SRC_URI</filename> variable
+            that points to the source.
+        </para>
+
+        <para>
+            Another area that plays a significant role in where source files
+            comes from is pointed to by the
+            <link linkend='var-DL_DIR'><filename>DL_DIR</filename></link>
+            variable.
+            This area is a cache that can hold previously downloaded source.
+            Judicious use of a <filename>DL_DIR</filename> directory can
+            save the build system a trip across the Internet when looking
+            for files.
+            A good method for using a download directory is to have
+            <filename>DL_DIR</filename> point to an area outside of your
+            Build Directory.
+            Doing so allows you to safely delete the Build Directory's
+            <filename>/work/tmp</filename> directory if needed without fear
+            of removing any downloaded source file.
+        </para>
+
+        <para>
+            The remainder of this section provides a deeper look into the
+            source files and the mirrors.
+            Here is a more detailed look at the source file area of the
+            base figure:
+            <imagedata fileref="figures/source-input.png" align="center" width="7in" depth="7.5in" />
+        </para>
+
+        <section id='upstream-project-releases'>
+            <title>Upstream Project Releases</title>
+
+            <para>
+                Upstream project releases exist anywhere in the form of an
+                archived file (e.g. tarball or zip file).
+                These files correspond to individual recipes.
+                For example, the figure uses specific releases each for
+                BusyBox, Qt, and Dbus.
+                An archive file can be for any released product that can be
+                built using a recipe.
+            </para>
+        </section>
+
+        <section id='local-projects'>
+            <title>Local Projects</title>
+
+            <para>
+                Local projects are custom bits of software the user provides.
+                These bits reside somewhere local to a project - perhaps
+                a directory into which the user checks in items (e.g.
+                a local directory that contains tarballs or repositories
+                used by the group).
+            </para>
+
+            <para>
+                The canonical method through which to include a local project
+                is to use the
+                <link linkend='ref-classes-externalsrc'><filename>externalsrc.bbclass</filename></link>
+                class to include local project.
+                You use a recipe's append file to override or instruct the
+                recipe to point to the local directory on your disk to pull
+                in the whole source tree.
+                Should you ever need to override that, you can use the
+                Build Directory's <filename>local.conf</filename> file.
+            </para>
+
+            <para>
+                For information on how to use the
+                <filename>externalsrc.bbclass</filename>, see the
+                "<link linkend='ref-classes-externalsrc'>Using External Source - <filename>externalsrc.bbclass</filename></link>"
+                section.
+            </para>
+        </section>
+
+        <section id='scms'>
+            <title>Source Control Managers (Optional)</title>
+
+            <para>
+                Another place the build system can get source files from is
+                through an SCM such as Git or Subversion.
+                In this case, a repository is cloned or checked out.
+                The <filename>do_fetch</filename> task inside BitBake uses
+                the <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
+                variable and the argument's prefix to determine the correct
+                fetcher module.
+            </para>
+
+            <para>
+                When fetching a repository, BitBake uses the
+                <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
+                variable to determine the specific revision from which to
+                build.
+            </para>
+        </section>
+
+        <section id='source-mirrors'>
+            <title>Source Mirror(s)</title>
+
+            <para>
+                Two kinds of mirrors exist: pre-mirrors and regular mirrors.
+                BitBake checks pre-mirrors before looking upstream for any
+                source files.
+                Pre-mirrors are appropriate when you have a shared directory
+                that is not a directory defined by the
+                <link linkend='var-DL_DIR'><filename>DL_DIR</filename></link>
+                variable.
+                A Pre-mirror typically points to a shared directory that is
+                local to your organization.
+            </para>
+
+            <para>
+                Regular mirrors can be any site across the Internet that is
+                used as an alternative location for source code should the
+                primary site not be functioning for some reason or another.
+            </para>
+        </section>
+    </section>
 </section>
 
 <section id="cross-development-toolchain-generation">
