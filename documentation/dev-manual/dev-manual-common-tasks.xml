@@ -4319,6 +4319,175 @@
         </section>
     </section>
 
+    <section id="examining-builds-using-webhob">
+        <title>Examining Builds using Webhob</title>
+
+        <para>
+            WebHob is a Web-based interface to the OpenEmbedded build system,
+            which uses BitBake.
+            WebHob offers features to record and analyze BitBake runs applied
+            to a specific target.
+            Using Webhob, you can do the following:
+            <itemizedlist>
+                <listitem><para>Understand why a task fails or was
+                    reused from the shared state cache when you thought it
+                    should have been rebuilt from scratch.</para></listitem>
+                <listitem><para>See what is built (recipes and
+                    packages) and what packages were installed into the final
+                    image.</para></listitem>
+                <listitem><para>See performance-related information such
+                    as size, build time, CPU usage, disk input, and disk
+                    output.</para></listitem>
+            </itemizedlist>
+        </para>
+
+        <note>
+            <para>This release of the WebHob service provides you with information
+            about a BitBake run.
+            The tool does not allow you to configure and launch a build.
+            Future development includes plans to integrate the data examination
+            features of WebHob with the configuration and build launching
+            capabilities of
+            <ulink url='&YOCTO_HOME_URL;/tools-resources/projects/hob'>Hob</ulink>.
+            </para>
+            <para>For more information on using Hob to build an image,
+            see the
+            "<link linkend='image-development-using-hob'>Image Development Using Hob</link>"
+            section.</para>
+        </note>
+
+        <section id='starting-webhob'>
+            <title>Starting WebHob</title>
+
+            <para>
+                Getting set up to use WebHob and start it is simple.
+                First, be sure you have met the following requirements:
+                <itemizedlist>
+                    <listitem><para>You have set up your
+                        <link linkend='source-directory'>Source Directory</link>.
+                        See the
+                        <link linkend='local-yp-release'>Yocto Project Release</link>
+                        item for information on how to set up the Source
+                        Directory.</para></listitem>
+                    <listitem><para>Be sure your build machine has
+                        <ulink url='http://en.wikipedia.org/wiki/Django_%28web_framework%29'>Django</ulink>
+                        version 1.4 or greater installed.</para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Once you have met the requirements, follow these steps to
+                start WebHob running in the background of your shell:
+                <orderedlist>
+                    <listitem><para>Set up your build environment by sourcing
+                        the <filename>oe-init-build-env</filename> script.
+                        </para></listitem>
+                    <listitem><para>Edit your <filename>local.conf</filename>
+                        configuration file as needed.</para></listitem>
+                    <listitem><para>Start the WebHob service using this
+                        command from within your build directory:
+                        <literallayout class='monospaced'>
+     $ source webhob start
+                        </literallayout></para></listitem>
+                </orderedlist>
+            </para>
+
+            <para>
+                When WebHob starts, it creates some additional files in your
+                Build Directory.
+                Deleting these files will cause you to lose data or interrupt
+                WebHob:
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>webhob.sqlite</filename>:</emphasis>
+                        WebHob's database file.</para></listitem>
+                    <listitem><para><emphasis><filename>whbmain.log</filename>:</emphasis>
+                        WebHob's log file.</para></listitem>
+                    <listitem><para><emphasis><filename>whbmain.pid</filename>:</emphasis>
+                        Contains the PID of the web server.</para></listitem>
+                    <listitem><para><emphasis><filename>dsi.pid</filename>:</emphasis>
+                        Contains the PID of th bridge.</para></listitem>
+                    <listitem><para><emphasis><filename>bitbake-cookerdaemon.log</filename>:</emphasis>
+                        The BitBake server's log file.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='using-webhob'>
+            <title>Using WebHob</title>
+
+            <para>
+                Once WebHob is running, it logs information for any BitBake
+                run from your Build Directory.
+                This logging is automatic.
+                All you need to do is access and use the information.
+            </para>
+
+            <para>
+                You access the information one of two ways:
+                <itemizedlist>
+                    <listitem><para>Open a Browser and type enter in the
+                        <filename>http://localhost:8000</filename> URL.
+                        </para></listitem>
+                    <listitem><para>Use the <filename>xdg-open</filename>
+                        tool from the shell and pass it the same URL.
+                        </para></listitem>
+                </itemizedlist>
+                Either method opens the home page for the WebHob interface.
+            </para>
+        </section>
+
+        <section id='examining-webhob-data'>
+            <title>Examining WebHob Data</title>
+
+            <para>
+                The WebHob database is persistent regardless of whether you
+                start or stop the service.
+                The home page of the interface into the database organizes
+                builds into areas:
+                <itemizedlist>
+                    <listitem><para>Recent successful builds, which appear
+                        in row format in a green area.</para></listitem>
+                    <listitem><para>Recent failed builds, which appear
+                        in row format in a red area.</para></listitem>
+                    <listitem><para>Recent builds in progress, which appear
+                        in row format in a yellow area.</para></listitem>
+                    <listitem><para>All builds, which appear in row format at
+                        the end of the page.</para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Each entry is linked to more detail on the particular build
+                or recipe.
+                You can click on the links to learn more information.
+            </para>
+
+            <para>
+                When you click on a failed recipe link, you can find out
+                information such as the work directory, the pathname to the
+                failing recipe, the exact error message, and precursor tasks.
+            </para>
+
+            <para>
+                Clicking on a successful build provides you with configuration,
+                task, and package information along with directory structure,
+                build time, CPU usage, and disk I/O information.
+            </para>
+        </section>
+
+        <section id='stopping-webhob'>
+            <title>Stopping WebHob</title>
+
+            <para>
+                Stop the WebHob service with the following command:
+                <literallayout class='monospaced'>
+     $ source webhob stop
+                </literallayout>
+                The service stops but the WebHob database remains persistent.
+            </para>
+        </section>
+    </section>
+
     <section id="platdev-oprofile">
         <title>Profiling with OProfile</title>
 
