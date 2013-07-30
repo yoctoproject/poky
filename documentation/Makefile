@@ -196,7 +196,9 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
         figures/perf-wget-g-copy-to-user-expanded-stripped-unresolved-hidden.png figures/pybootchartgui-linux-yocto.png \
         figures/pychart-linux-yocto-rpm.png figures/pychart-linux-yocto-rpm-nostrip.png \
         figures/sched-wakeup-profile.png figures/sysprof-callers.png \
-        figures/sysprof-copy-from-user.png figures/sysprof-copy-to-user.png figures/cross-development-toolchains.png
+        figures/sysprof-copy-from-user.png figures/sysprof-copy-to-user.png figures/cross-development-toolchains.png \
+	figures/yocto-environment-ref.png figures/user-configuration.png figures/source-input \
+	figures/package-feeds.png figures/layer-input.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
@@ -210,7 +212,9 @@ XSLTOPTS = --xinclude
 ALLPREQ = html pdf eclipse tarball
 TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/buildhistory.png figures/buildhistory-web.png eclipse \
-        figures/cross-development-toolchains.png
+        figures/cross-development-toolchains.png figures/layer-input.png \
+	figures/package-feeds.png figures/source-input.png \
+	figures/user-configuration.png figures/yocto-environment-ref.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
