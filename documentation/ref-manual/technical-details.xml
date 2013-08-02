@@ -796,6 +796,169 @@
             <filename>do_package_write_ipk</filename> for IPK packages).
         </para>
     </section>
+
+    <section id='images-and-application-development-sdk'>
+        <title>Images and Application Development SDK</title>
+
+        <para>
+            The purpose of using the OpenEmbedded build system is to produce
+            an image or a Software Development Kit (SDK).
+            You can see from the main
+            <link linkend='a-closer-look-at-the-yocto-project-development-environment'>Yocto Project Development Environment</link>
+            figure that the output (shown in red) are images and SDKs.
+            This section is going to look more closely at this output:
+            <imagedata fileref="figures/images-sdk.png" align="center" width="5in" depth="4in" />
+        </para>
+
+        <section id='images-dev-environment'>
+            <title>Images</title>
+
+            <para>
+                The images produced by BitBake are compressed forms of the
+                root filesystems that are ready to boot on a target device.
+                You can see the
+                "<link linkend='ref-images'>Images</link>" chapter for a list
+                of example images that the Yocto Project provides.
+            </para>
+
+            <para>
+                Images are kept in the
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+                inside the <filename>deploy/images</filename> folder as shown
+                in the figure.
+                This folder contains any files expected to be loaded on the
+                target device.
+                The
+                <link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link>
+                variable points to the <filename>deploy</filename> directory.
+                <itemizedlist>
+                    <listitem><para><filename>&lt;image&gt;</filename>:
+                        A <filename>*.bin</filename> image file.
+                        The <link linkend='var-KERNEL_IMAGETYPE'><filename>KERNEL_IMAGETYPE</filename></link>
+                        variable setting determines the naming scheme for the
+                        image file.
+                        Depending on that variable, the file could begin with
+                        a variety of naming strings.
+                        The <filename>deploy/images</filename> directory can
+                        contain multiple image files.</para></listitem>
+                    <listitem><para><filename>&lt;root-filesystem&gt;</filename>:
+                        Root filesystems for the target device (e.g.
+                        <filename>*.ext3</filename> or <filename>*.bz2</filename>
+                        files).
+                        The <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                        variable setting determines the root filesystem
+                        type.
+                        The <filename>deploy/images</filename> directory can
+                        contain multiple root filesystems.</para></listitem>
+                    <listitem><para><filename>&lt;kernel-modules&gt;</filename>:
+                        Tarballs that contain all the modules used by the
+                        kernel.
+                        Kernel module tarballs exist for legacy purposes and
+                        can be suppressed by setting the
+                        <link linkend='var-MODULE_TARBALL_DEPLOY'><filename>MODULE_TARBALL_DEPLOY</filename></link>
+                        variable to "0".
+                        The <filename>deploy/images</filename> directory can
+                        contain multiple kernel module tarballs.
+                        </para></listitem>
+                    <listitem><para><filename>&lt;bootloaders&gt;</filename>:
+                        Bootloaders supporting the image.
+                        The <filename>deploy/images</filename> directory can
+                        contain multiple bootloaders.
+                        </para></listitem>
+                    <listitem><para><filename>&lt;symlinks&gt;</filename>:
+                        The <filename>images/deploy</filename> folder contains
+                        a symbolic link for each actual file in the folder.
+                        Links exist for all types of files (i.e. images,
+                        root filesystems, bootloaders, and kernel module
+                        tarballs).
+                        The link scheme for images is such that a single link
+                        exists for the most recently built image.
+                        In addition to that single image link, additional
+                        links exist on a one-for-one basis that map to each
+                        physical image file.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='sdk-dev-environment'>
+            <title>Application Development SDK</title>
+
+            <para>
+                An Application Development SDK (referred to as an
+                "SDK installer" in this section) is a self-extracting SDK
+                installer file (<filename>*.sh</filename>) that, when run,
+                installs a cross-development toolchain, a set of libraries
+                and headers, and an SDK environment setup script.
+                Running this installer essentially sets up your
+                cross-development environment.
+                You can think of the cross-toolchains as the "host" part
+                because they run on the SDK machine.
+                You can think of the libraries and headers as the "target"
+                part because they are built for the target hardware.
+                The setup script is added so that you can initialize the
+                environment before using the tools.
+            </para>
+
+            <note>
+                <para>
+                    The Yocto Project supports several methods by which you can
+                    set up this cross-development environment.
+                    These methods include downloading pre-built SDK installers,
+                    building and installing your own SKD installer, or running
+                    an Application Development Toolkit (ADT) installer to
+                    install not just cross-development toolchains
+                    but also additional tools to help in this type of
+                    development.
+                </para>
+
+                <para>
+                    For background information on cross-development toolchains
+                    in the Yocto Project development environment, see the
+                    "<link linkend='cross-development-toolchain-generation'>Cross-Development Toolchain Generation</link>"
+                    section.
+                    For information on setting up a cross-development
+                    environment, see the
+                    "<ulink url='&YOCTO_DOCS_ADT_URL;#installing-the-adt'>Installing the ADT and Toolchains</ulink>"
+                    section in the Yocto Project Application Developer's Guide.
+                </para>
+            </note>
+
+            <para>
+                When built using BitBake, the SDK installers are kept in the
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+                inside the <filename>deploy/sdk</filename> folder as shown
+                in the figure at the beginning of this section.
+                Several variables exist that help configure these files:
+                <itemizedlist>
+                    <listitem><para><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link>:
+                        Points to the <filename>deploy</filename>
+                        directory.</para></listitem>
+                    <listitem><para><link linkend='var-SDKMACHINE'><filename>SDKMACHINE</filename></link>:
+                        Specifies the architecture of the machine
+                        on which the cross-development tools are run to
+                        create packages for the target hardware.
+                        </para></listitem>
+                    <listitem><para><link linkend='var-SDKIMAGE_FEATURES'><filename>SDKIMAGE_FEATURES</filename></link>:
+                        Lists the features to include in the libraries.
+                        </para></listitem>
+                    <listitem><para><link linkend='var-TOOLCHAIN_HOSTS_TASKS'><filename>TOOLCHAIN_HOSTS_TASKS</filename></link>:
+                        Lists packages that make up the host
+                        part of the SDK installer (i.e. the part that runs on
+                        the <filename>SDKMACHINE</filename>).
+                        When you use <filename>bitbake sdk_populate</filename>
+                        to create the SDK installer, a set of default tasks
+                        apply.
+                        This variable allows you to add more tasks.
+                        </para></listitem>
+                    <listitem><para><link linkend='var-TOOLCHAIN_TARGET_TASKS'><filename>TOOLCHAIN_TARGET_TASKS</filename></link>:
+                        Lists packages that make up the target part
+                        of the SDK installer (i.e. the part built for the
+                        target hardware).
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+    </section>
 </section>
 
 <section id="cross-development-toolchain-generation">
