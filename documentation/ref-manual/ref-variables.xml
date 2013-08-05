@@ -780,8 +780,7 @@ Core layer for images cannot be removed
             <glossdef>
                 <para>
                     Points to the area that the OpenEmbedded build system uses
-                    to place images and their related files created with
-                    BitBake.
+                    to place images and their related files.
                     By default, this directory resides within the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
                     as <filename>tmp/deploy</filename>.
@@ -794,8 +793,9 @@ Core layer for images cannot be removed
                     section.
                     For more detail on the contents of the
                     <filename>deploy</filename> directory, see the
-                    "<link linkend='images-and-application-development-sdk'>Images and Application Development SDK</link>"
-                    section.
+                    "<link linkend='images-dev-environment'>Images</link>" and
+                    "<link linkend='sdk-dev-environment'>Application Development SDK</link>"
+                    sections.
                 </para>
             </glossdef>
         </glossentry>
@@ -4008,18 +4008,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-TOOLCHAIN_HOSTS_TASKS'><glossterm>TOOLCHAIN_HOSTS_TASKS</glossterm>
+        <glossentry id='var-TOOLCHAIN_HOST_TASK'><glossterm>TOOLCHAIN_HOST_TASK</glossterm>
             <glossdef>
                 <para>
-                    This variable lists packages BitBake uses when it builds
-                    an SDK installer, which is used to extract and set up a
+                    This variable lists packages the OpenEmbedded build system
+                    uses when building an SDK, which contains a
                     cross-development environment.
                     The packages specified by this variable are part of the
                     toolchain set that runs on the
-                    <link linkend='var-SDKMACHINE'><filename>SDKMACHINE</filename></link>.
-                    When you build an SDK installer using BitBake, a set of
-                    default tasks apply.
-                    The tasks you specify here are added to those defaults.
+                    <link linkend='var-SDKMACHINE'><filename>SDKMACHINE</filename></link>,
+                    and each package should usually have the prefix
+                    "nativesdk-".
+                    When building an SDK using
+                    <filename>bitbake -c populate_sdk &lt;imagename&gt;</filename>,
+                    a default list of packages is set in this variable, but
+                    you can add additional packages to the list.
                 </para>
 
                 <para>
@@ -4035,11 +4038,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-TOOLCHAIN_TARGET_TASKS'><glossterm>TOOLCHAIN_TARGET_TASKS</glossterm>
+        <glossentry id='var-TOOLCHAIN_TARGET_TASK'><glossterm>TOOLCHAIN_TARGET_TASK</glossterm>
             <glossdef>
                 <para>
                     This variable lists packages BitBake uses when it creates
-                    the target part of an SDK installer (i.e. the part built
+                    the target part of an SDK (i.e. the part built
                     for the target hardware), which includes libraries and
                     headers.
                 </para>
