@@ -179,7 +179,7 @@
     <title>Pkg-config - <filename>pkgconfig.bbclass</filename></title>
 
     <para>
-        <filename>pkg-config</filename> provides a standard way to get 
+        <filename>pkg-config</filename> provides a standard way to get
         header and library information.
         This class aims to smooth integration of
         <filename>pkg-config</filename> into libraries that use it.
@@ -198,7 +198,7 @@
 
     <para>
         Many software licenses require that source code and other materials be
-        released with the binaries. 
+        released with the binaries.
         To help with that task, the following classes are provided:
         <itemizedlist>
             <listitem><filename>archive-original-sources.bbclass</filename></listitem>
@@ -515,47 +515,47 @@
                 since <filename>pkg-config</filename> itself adds the correct sysroot prefix
                 when the files are accessed.</para></listitem>
             <listitem><para><emphasis><filename>textrel:</filename></emphasis>
-                Checks for ELF binaries that contain relocations in their 
-                <filename>.text</filename> sections, which can result in a 
+                Checks for ELF binaries that contain relocations in their
+                <filename>.text</filename> sections, which can result in a
                 performance impact at runtime.</para></listitem>
             <listitem><para><emphasis><filename>pkgvarcheck:</filename></emphasis>
-                Checks through the variables 
-                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>, 
-                <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>, 
+                Checks through the variables
+                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>,
+                <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>,
                 <link linkend='var-RSUGGESTS'><filename>RSUGGESTS</filename></link>,
                 <link linkend='var-RCONFLICTS'><filename>RCONFLICTS</filename></link>,
                 <link linkend='var-RPROVIDES'><filename>RPROVIDES</filename></link>,
-                <link linkend='var-RREPLACES'><filename>RREPLACES</filename></link>, 
+                <link linkend='var-RREPLACES'><filename>RREPLACES</filename></link>,
                 <link linkend='var-FILES'><filename>FILES</filename></link>,
                 <link linkend='var-ALLOW_EMPTY'><filename>ALLOW_EMPTY</filename></link>,
-                <filename>pkg_preinst</filename>, 
-                <filename>pkg_postinst</filename>, 
+                <filename>pkg_preinst</filename>,
+                <filename>pkg_postinst</filename>,
                 <filename>pkg_prerm</filename>
-                and <filename>pkg_postrm</filename>, and reports if there are 
+                and <filename>pkg_postrm</filename>, and reports if there are
                 variable sets that are not package-specific.
                 Using these variables without a package suffix is bad practice,
                 and might unnecessarily complicate dependencies of other packages
                 within the same recipe or have other unintended consequences.
                 </para></listitem>
             <listitem><para><emphasis><filename>xorg-driver-abi:</filename></emphasis>
-                Checks that all packages containing Xorg drivers have ABI 
+                Checks that all packages containing Xorg drivers have ABI
                 dependencies.
-                The <filename>xserver-xorg</filename> recipe provides driver 
+                The <filename>xserver-xorg</filename> recipe provides driver
                 ABI names.
-                All drivers should depend on the ABI versions that they have 
-                been built against. 
-                Driver recipes that include 
+                All drivers should depend on the ABI versions that they have
+                been built against.
+                Driver recipes that include
                 <filename>xorg-driver-input.inc</filename>
-                or <filename>xorg-driver-video.inc</filename> will 
+                or <filename>xorg-driver-video.inc</filename> will
                 automatically get these versions.
-                Consequently, you should only need to explicitly add 
+                Consequently, you should only need to explicitly add
                 dependencies to binary driver recipes.
                 </para></listitem>
             <listitem><para><emphasis><filename>libexec:</filename></emphasis>
-                Checks if a package contains files in 
+                Checks if a package contains files in
                 <filename>/usr/libexec</filename>.
-                This check is not performed if the 
-                <filename>libexecdir</filename> variable has been set 
+                This check is not performed if the
+                <filename>libexecdir</filename> variable has been set
                 explicitly to <filename>/usr/libexec</filename>.
                 </para></listitem>
             <listitem><para><emphasis><filename>staticdev:</filename></emphasis>
@@ -575,21 +575,21 @@
         </itemizedlist>
     </para>
     <note>
-        You can use the <filename>WARN_QA</filename> and 
-        <filename>ERROR_QA</filename> variables to control the behavior of 
-        these checks at the global level (i.e. in your custom distro 
+        You can use the <filename>WARN_QA</filename> and
+        <filename>ERROR_QA</filename> variables to control the behavior of
+        these checks at the global level (i.e. in your custom distro
         configuration).
-        However, to skip one or more checks in recipes, you should use 
-        <link linkend='var-INSANE_SKIP'><filename>INSANE_SKIP</filename></link>. 
-        For example, to skip the check for symbolic link 
-        <filename>.so</filename> files in the main package of a recipe, 
+        However, to skip one or more checks in recipes, you should use
+        <link linkend='var-INSANE_SKIP'><filename>INSANE_SKIP</filename></link>.
+        For example, to skip the check for symbolic link
+        <filename>.so</filename> files in the main package of a recipe,
         add the following to the recipe.
         You need to realize that the package name override, in this example
         <filename>${PN}</filename>, must be used:
         <literallayout class='monospaced'>
      INSANE_SKIP_${PN} += "dev-so"
         </literallayout>
-        Please keep in mind that the QA checks exist in order to detect real 
+        Please keep in mind that the QA checks exist in order to detect real
         or potential problems in the packaged output.
         So exercise caution when disabling these checks.
     </note>
@@ -599,28 +599,28 @@
     <title>Removing Work Files During the Build - <filename>rm_work.bbclass</filename></title>
 
     <para>
-        The OpenEmbedded build system can use a substantial amount of disk 
+        The OpenEmbedded build system can use a substantial amount of disk
         space during the build process.
-        A portion of this space is the work files under the 
-        <filename>${TMPDIR}/work</filename> directory for each recipe. 
-        Once the build system generates the packages for a recipe, the work 
+        A portion of this space is the work files under the
+        <filename>${TMPDIR}/work</filename> directory for each recipe.
+        Once the build system generates the packages for a recipe, the work
         files for that recipe are no longer needed.
         However, by default, the build system preserves these files
         for inspection and possible debugging purposes.
-        If you would rather have these files deleted to save disk space 
+        If you would rather have these files deleted to save disk space
         as the build progresses, you can enable <filename>rm_work</filename>
         by adding the following to your <filename>local.conf</filename> file,
-        which is found in the 
+        which is found in the
         <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
         <literallayout class='monospaced'>
     INHERIT += "rm_work"
         </literallayout>
-        If you are modifying and building source code out of the work directory 
-        for a recipe, enabling <filename>rm_work</filename> will potentially 
-        result in your changes to the source being lost. 
+        If you are modifying and building source code out of the work directory
+        for a recipe, enabling <filename>rm_work</filename> will potentially
+        result in your changes to the source being lost.
         To exclude some recipes from having their work directories deleted by
-        <filename>rm_work</filename>, you can add the names of the recipe or 
-        recipes you are working on to the <filename>RM_WORK_EXCLUDE</filename> 
+        <filename>rm_work</filename>, you can add the names of the recipe or
+        recipes you are working on to the <filename>RM_WORK_EXCLUDE</filename>
         variable, which can also be set in your <filename>local.conf</filename>
         file.
         Here is an example:
@@ -677,28 +677,37 @@
 </section>
 
 <section id='ref-classes-externalsrc'>
-    <title>Using External Source - <filename>externalsrc.bbclass</filename></title>
+    <title><filename>externalsrc.bbclass</filename></title>
 
     <para>
-        You can use this class to build software from source code that is external to the
-        OpenEmbedded build system.
-        In other words, your source code resides in an external tree outside of the Yocto Project.
-        Building software from an external source tree means that the normal fetch, unpack, and
-        patch process is not used.
+        You can use this class to build software from source code that is
+        external to the OpenEmbedded build system.
+        Building software from an external source tree means that the build
+        system's normal fetch, unpack, and patch process is not used.
     </para>
 
     <para>
-        To use the class, you need to define the
-        <link linkend='var-S'><filename>S</filename></link> variable to point to the directory that contains the source files.
-        You also need to have your recipe inherit the <filename>externalsrc.bbclass</filename> class.
+        By default, the OpenEmbedded build system uses the
+        <link linkend='var-S'><filename>S</filename></link> and
+        <link linkend='var-B'><filename>B</filename></link> variables to
+        locate unpacked recipe source code and to build it, respectively.
+        When your recipe inherits <filename>externalsrc.bbclass</filename>,
+        you use the
+        <link linkend='var-EXTERNALSRC'><filename>EXTERNALSRC</filename></link>
+        and
+        <link linkend='var-EXTERNALSRC_BUILD'><filename>EXTERNALSRC_BUILD</filename></link>
+        variables to ultimately define <filename>S</filename> and
+        <filename>B</filename>.
     </para>
 
     <para>
-        This class expects the source code to support recipe builds that use the
-        <link linkend='var-B'><filename>B</filename></link> variable to point to the directory in
-        which the OpenEmbedded build system places the generated objects built from the recipes.
-        By default, the <filename>B</filename> directory is set to the following, which is separate from the
-        Source Directory (<filename>S</filename>):
+        By default, this class expects the source code to support recipe builds
+        that use the <link linkend='var-B'><filename>B</filename></link>
+        variable to point to the directory in which the OpenEmbedded build
+        system places the generated objects built from the recipes.
+        By default, the <filename>B</filename> directory is set to the
+        following, which is separate from the source directory
+        (<filename>S</filename>):
         <literallayout class='monospaced'>
      ${WORKDIR}/${BPN}/{PV}/
         </literallayout>
@@ -706,36 +715,17 @@
         <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>,
         <link linkend='var-BPN'><filename>BPN</filename></link>,
         <link linkend='var-PV'><filename>PV</filename></link>,
-        <link linkend='var-S'><filename>S</filename></link>, and
-        <link linkend='var-B'><filename>B</filename></link> for more information.
     </para>
 
     <para>
-        You can build object files in the external tree by setting the
-        <filename>B</filename> variable equal to <filename>"${S}"</filename>.
-        However, this practice does not work well if you use the source for more than one variant
-        (i.e., "natives" such as <filename>quilt-native</filename>,
-        or "crosses" such as <filename>gcc-cross</filename>).
-        So, be sure there are no "native", "cross", or "multilib" variants of the recipe.
-    </para>
-
-    <para>
-        If you do want to build different variants of a recipe, you can use the
-        <link linkend='var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></link> variable.
-        When you do, the <link linkend='var-B'><filename>B</filename></link> variable must support the
-        recipe's ability to build variants in different working directories.
-        Most Autotools-based recipes support separating these directories.
-        The OpenEmbedded build system defaults to using separate directories for <filename>gcc</filename>
-        and some kernel recipes.
-        Alternatively, you can make sure that separate recipes exist that each
-        use the <filename>BBCLASSEXTEND</filename> variable to build each variant.
-        The separate recipes can inherit a single target recipe.
-    </para>
-
-    <para>
-        For information on how to use this class, see the
-        "<ulink url='&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source'>Building
-        Software from an External Source</ulink>" section in the Yocto Project Development Manual.
+        For more information on
+        <filename>externalsrc.bbclass</filename>, see the comments in
+        <filename>meta/classes/externalsrc.bbclass</filename> in the
+        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+        For information on how to use <filename>externalsrc.bbclass</filename>,
+        see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source'>Building Software from an External Source</ulink>"
+        section in the Yocto Project Development Manual.
     </para>
 </section>
 
