@@ -67,6 +67,141 @@
             </glossdef>
          </glossentry>
 
+         <glossentry id='var-ALTERNATIVE'><glossterm>ALTERNATIVE</glossterm>
+            <glossdef>
+                <para>
+                    Lists commands in a package that need an alternative
+                    binary naming scheme.
+                    Sometimes the same command is provided in multiple packages.
+                    When this occurs, the OpenEmbedded build system needs to
+                    use the alternatives system to create a different binary
+                    naming scheme so the commands can co-exist.
+                </para>
+
+                <para>
+                    To use the variable, list out the package's commands
+                    that also exist as part of another package.
+                    For example, if the <filename>busybox</filename> package
+                    has four commands that also exist as part of another
+                    package, you identify them as follows:
+                    <literallayout class='monospaced'>
+     ALTERNATIVE_busybox = "sh sed test bracket"
+                    </literallayout>
+                    For more information on the alternatives system, see the
+                    "<link linkend='ref-classes-update-alternatives'>Alternatives - <filename>update-alternatives.bbclass</filename></link>"
+                    section.
+                </para>
+            </glossdef>
+         </glossentry>
+
+         <glossentry id='var-ALTERNATIVE_LINK_NAME'><glossterm>ALTERNATIVE_LINK_NAME</glossterm>
+            <glossdef>
+                <para>
+                    Used by the alternatives system to map duplicated commands
+                    to actual locations.
+                    For example, if the <filename>bracket</filename> command
+                    provided by the <filename>busybox</filename> package is
+                    duplicated through another package, you must use the
+                    <filename>ALTERNATIVE_LINK_NAME</filename> variable to
+                    specify the actual location:
+                    <literallayout class='monospaced'>
+     ALTERNATIVE_LINK_NAME[bracket] = "/usr/bin/["
+                    </literallayout>
+                    In this example, the binary for the
+                    <filename>bracket</filename> command (i.e.
+                    <filename>[</filename>) from the
+                    <filename>busybox</filename> package resides in
+                    <filename>/usr/bin/</filename>.
+                    <note>
+                        If <filename>ALTERNATIVE_LINK_NAME</filename> is not
+                        defined, it defaults to
+                        <filename>${bindir}/&lt;name&gt;</filename>.
+                    </note>
+                </para>
+
+                <para>
+                    For more information on the alternatives system, see the
+                    "<link linkend='ref-classes-update-alternatives'>Alternatives - <filename>update-alternatives.bbclass</filename></link>"
+                    section.
+                </para>
+            </glossdef>
+         </glossentry>
+
+         <glossentry id='var-ALTERNATIVE_PRIORITY'><glossterm>ALTERNATIVE_PRIORITY</glossterm>
+            <glossdef>
+                <para>
+                    Used by the alternatives system to create default
+                    priorities for duplicated commands.
+                    You can use the variable to create a single default
+                    regardless of the command name or package, a default for
+                    specific duplicated commands regardless of the package, or
+                    a default for specific commands tied to particular packages.
+                    Here are the available syntax forms:
+                    <literallayout class='monospaced'>
+     ALTERNATIVE_PRIORITY = "&lt;priority&gt;"
+     ALTERNATIVE_PRIORITY[&lt;name&gt;] = "&lt;priority&gt;"
+     ALTERNATIVE_PRIORITY_&lt;pkg&gt;[&lt;name&gt;] = "&lt;priority&gt;"
+                    </literallayout>
+                </para>
+
+                <para>
+                    For more information on the alternatives system, see the
+                    "<link linkend='ref-classes-update-alternatives'>Alternatives - <filename>update-alternatives.bbclass</filename></link>"
+                    section.
+                </para>
+            </glossdef>
+         </glossentry>
+
+         <glossentry id='var-ALTERNATIVE_TARGET'><glossterm>ALTERNATIVE_TARGET</glossterm>
+            <glossdef>
+                <para>
+                    Used by the alternatives system to create default link
+                    locations for duplicated commands.
+                    You can use the variable to create a single default
+                    location for all duplicated commands regardless of the
+                    command name or package, a default for
+                    specific duplicated commands regardless of the package, or
+                    a default for specific commands tied to particular packages.
+                    Here are the available syntax forms:
+                    <literallayout class='monospaced'>
+     ALTERNATIVE_TARGET = "&lt;target&gt;"
+     ALTERNATIVE_TARGET[&lt;name&gt;] = "&lt;target&gt;"
+     ALTERNATIVE_TARGET_&lt;pkg&gt;[&lt;name&gt;] = "&lt;target&gt;"
+                    </literallayout>
+                    <note>
+                        <para>
+                            If <filename>ALTERNATIVE_TARGET</filename> is not
+                            defined, it inherits the value from the
+                            <link linkend='var-ALTERNATIVE_LINK_NAME'><filename>ALTERNATIVE_LINK_NAME</filename></link>
+                            variable.
+                        </para>
+
+                        <para>
+                            If <filename>ALTERNATIVE_LINK_NAME</filename> and
+                            <filename>ALTERNATIVE_TARGET</filename> are the
+                            same, the target for
+                            <filename>ALTERNATIVE_TARGET</filename>
+                            has "<filename>.{BPN}</filename>" appended to it.
+                        </para>
+
+                        <para>
+                            Finally, if the file referenced has not been
+                            renamed, the alternatives system will rename it to
+                            avoid the need to rename alternative files in the
+                            <filename>do_install</filename> task while
+                            retaining support for the command if necessary.
+                        </para>
+                    </note>
+                </para>
+
+                <para>
+                    For more information on the alternatives system, see the
+                    "<link linkend='ref-classes-update-alternatives'>Alternatives - <filename>update-alternatives.bbclass</filename></link>"
+                    section.
+                </para>
+            </glossdef>
+         </glossentry>
+
          <glossentry id='var-AUTHOR'><glossterm>AUTHOR</glossterm>
             <glossdef>
                 <para>The email address used to contact the original author
@@ -579,19 +714,6 @@ Core layer for images cannot be removed
             </glossdef>
         </glossentry>
 
-<!--
-        <glossentry id='var-BUILDHISTORY_CHECKVERBACKWARDS'><glossterm>BUILDHISTORY_CHECKVERBACKWARDS</glossterm>
-            <glossdef>
-                <para>
-                    When Build History is enabled, setting this variable to "0"
-                    disables the check for package versions going backwards.
-                    During 1.5 development, a patch surfaced late that might
-                    eliminate the need for this variable.
-                    I am commenting it out for now until more is known.
-                </para>
-            </glossdef>
-        </glossentry>
--->
     </glossdiv>
 
     <glossdiv id='var-glossary-c'><title>C</title>
@@ -612,6 +734,17 @@ Core layer for images cannot be removed
                     <link linkend='var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></link>
                     and <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
                     See the glossary descriptions for these variables for more information.</para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-COMMON_LICENSE_DIR'><glossterm>COMMON_LICENSE_DIR</glossterm>
+            <glossdef>
+                <para>
+                    Points to <filename>meta/files/common-licenses</filename>
+                    in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>,
+                    which is where generic license files reside.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -1040,6 +1173,30 @@ Core layer for images cannot be removed
                     <filename>eglibc</filename> are generated during the
                     build (useful if the target device has 64Mbytes
                     of RAM or less).</para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-EXCLUDE_FROM_WORLD'><glossterm>EXCLUDE_FROM_WORLD</glossterm>
+            <glossdef>
+                <para>
+                    Directs BitBake to exclude a recipe from world builds (i.e.
+                    <filename>bitbake world</filename>).
+                    This variable is intrinsically understood by BitBake.
+                </para>
+
+                <note>
+                    During world builds, BitBake locates, parses and builds all
+                    recipes found in every layer exposed in the
+                    <filename>bblayers.conf</filename> configuration file.
+                </note>
+
+                <para>
+                    To exclude a recipe from a world build using this variable,
+                    set the variable to "1" in the recipe.
+                    Alternatively, if a recipe inherits a class where
+                    <filename>EXCLUDE_FROM_WORLD</filename> is set to "1", that
+                    recipe will also be excluded from world builds.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -1798,7 +1955,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    Set the variable to "1" to prevent the default dependencies.
+                    Set the variable to "1" to prevent the default dependencies
+                    from being added.
                 </para>
             </glossdef>
         </glossentry>
@@ -1821,6 +1979,17 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-INITRAMFS_FSTYPES'><glossterm>INITRAMFS_FSTYPES</glossterm>
+            <glossdef>
+                <para>
+                    Defines the format for the output image of an initial
+                    RAM disk (initramfs), which is used during boot.
+                    Supported formats are the same as those supported by the
+                    <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                    variable.
+                </para>
+            </glossdef>
+        </glossentry>
 
         <glossentry id='var-INITSCRIPT_PACKAGES'><glossterm>INITSCRIPT_PACKAGES</glossterm>
             <glossdef>
@@ -1889,6 +2058,38 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-INTERCEPT_DIR'><glossterm>INTERCEPT_DIR</glossterm>
+            <glossdef>
+                <para>
+                    An environment variable that defines the directory where
+                    post installation hooks are installed for the
+                    post install environment.
+                    This variable is fixed as follows:
+                    <literallayout class='monospaced'>
+     ${WORKDIR}/intercept_scripts
+                    </literallayout>
+                </para>
+
+                <para>
+                    After installation of a target's root filesystem,
+                    post installation scripts, which are essentially bash scripts,
+                    are all executed just a single time.
+                    Limiting execution of these scripts minimizes installation
+                    time that would be lengthened due to  certain packages
+                    triggering redundant operations.
+                    For example, consider the installation of font packages
+                    as a common example.
+                    Without limiting the execution of post installation scripts,
+                    all font directories would be rescanned to create the
+                    cache after each individual font package was installed.
+                </para>
+
+                <para>
+                    Do not edit the <filename>INTERCEPT_DIR</filename>
+                    variable.
+                </para>
+            </glossdef>
+        </glossentry>
 
     </glossdiv>
 
@@ -2875,6 +3076,25 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-OLDEST_KERNEL'><glossterm>OLDEST_KERNEL</glossterm>
+            <glossdef>
+                <para>
+                    Declares the oldest version of the Linux kernel that the
+                    produced binaries must support.
+                    This variable is passed into the build of the Embedded
+                    GNU C Library (<filename>eglibc</filename>).
+                </para>
+
+                <para>
+                    The default for this variable comes from the
+                    <filename>meta/conf/bitbake.conf</filename> configuration
+                    file.
+                    You can override this default by setting the variable
+                    in a custom distribution configuration file.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-OVERRIDES'><glossterm>OVERRIDES</glossterm>
             <glossdef>
                 <para>
@@ -3091,8 +3311,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     during <filename>do_patch</filename>.
                     The default utility used is "quilt" except for the
                     quilt-native recipe itself.
-                    Because the quilt-native recipe is not available at the
-                    time it is being patched, it uses "patch".
+                    Because the quilt tool is not available at the
+                    time quilt-native is being patched, it uses "patch".
                 </para>
 
                 <para>
@@ -3648,10 +3868,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SERIAL_CONSOLE'><glossterm>SERIAL_CONSOLE</glossterm>
             <glossdef>
                 <para>
-                    This variable is deprecated.
-                    See the
-                    <link linkend='var-SERIAL_CONSOLES'><filename>SERIAL_CONSOLES</filename></link>
-                    variable.
+                    Define a serial console (TTY) to enable using getty.
+                    Provide a value that specifies the baud rate followed by
+                    the TTY device name separated by a space.
+                    You cannot specify more than one TTY device:
+                    <literallayout class='monospaced'>
+     SERIAL_CONSOLE = "115200 ttyS0"
+                    </literallayout>
+                    <note>
+                        The <filename>SERIAL_CONSOLE</filename> is deprecated.
+                        Please use the
+                        <link linkend='var-SERIAL_CONSOLES'><filename>SERIAL_CONSOLES</filename></link>
+                        variable.
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
@@ -3763,6 +3992,42 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                         for this variable to appear in
                     <link linkend='var-MACHINEOVERRIDES'><filename>MACHINEOVERRIDES</filename></link>.
                     </note>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SOLIBS'><glossterm>SOLIBS</glossterm>
+            <glossdef>
+                <para>
+                    Defines the suffix for shared libraries used on the
+                    target platform.
+                    By default, this suffix is ".so.*" for all Linux
+                    distributions and is defined in the
+                    <filename>meta/conf/bitbake.conf</filename> configuration
+                    file.
+                </para>
+
+                <para>
+                    You will see this variable referenced in the default values
+                    of <filename>FILES_${PN}</filename>.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SOLIBSDEV'><glossterm>SOLIBSDEV</glossterm>
+            <glossdef>
+                <para>
+                    Defines the suffix for the development symbolic link
+                    (symlink) for shared libraries on the target platform.
+                    By default, this suffix is ".so" for all Linux
+                    distributions and is defined in the
+                    <filename>meta/conf/bitbake.conf</filename> configuration
+                    file.
+                </para>
+
+                <para>
+                    You will see this variable referenced in the default values
+                    of <filename>FILES_${PN}</filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -4315,6 +4580,23 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     This variable points to the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                     BitBake automatically sets this variable.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TRANSLATED_TARGET_ARCH'><glossterm>TRANSLATED_TARGET_ARCH</glossterm>
+            <glossdef>
+                <para>
+                    A sanitized version of
+                    <link linkend='var-TARGET_ARCH'><filename>TARGET_ARCH</filename></link>.
+                    This variable is used when package filenames contain
+                    underscore characters that would otherwise not be allowed.
+                    In this case, dash characters replace the underscore
+                    characters used in the package names.
+                </para>
+
+                <para>
+                    Do not edit this variable.
                 </para>
             </glossdef>
         </glossentry>
