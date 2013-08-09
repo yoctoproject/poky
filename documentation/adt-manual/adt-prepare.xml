@@ -231,7 +231,7 @@
         <para>
             If you want to simply install the cross-toolchain by hand, you can
             do so by running the toolchain installer.
-            If you use this method to install the cross-toolchain and you
+            If you use this method to install the cross-toolchain, you
             might still need to install the target sysroot by installing and
             extracting it separately.
             For information on how to install the sysroot, see the
@@ -241,82 +241,56 @@
         <para>
             Follow these steps:
             <orderedlist>
-                <listitem><para>Go to
-                    <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'></ulink>
-                    and find the folder that matches your host development system
-                    (i.e. <filename>i686</filename> for 32-bit machines or
-                    <filename>x86-64</filename> for 64-bit machines).</para></listitem>
-                <listitem><para>Go into that folder and download the toolchain installer whose name
-                    includes the appropriate target architecture.
-                    For example, if your host development system is an Intel-based 64-bit system and
-                    you are going to use your cross-toolchain for an Intel-based 32-bit target, go into the
-                    <filename>x86_64</filename> folder and download the following installer:
-                    <literallayout class='monospaced'>
+                <listitem><para>Get the toolchain installer using one of the
+                    following methods:
+                    <itemizedlist>
+                        <listitem><para>Go to
+                            <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'></ulink>
+                            and find the folder that matches your host
+                            development system (i.e. <filename>i686</filename>
+                            for 32-bit machines or <filename>x86-64</filename>
+                            for 64-bit machines).</para>
+                            <para>Go into that folder and download the toolchain
+                            installer whose name includes the appropriate target
+                            architecture.
+                            For example, if your host development system is an
+                            Intel-based 64-bit system and you are going to use
+                            your cross-toolchain for an Intel-based 32-bit
+                            target, go into the <filename>x86_64</filename>
+                            folder and download the following installer:
+                            <literallayout class='monospaced'>
      poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.sh
-                    </literallayout>
-                    <note><para>As an alternative to steps one and two, you can
-                        build the toolchain installer if you have a
-                        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
-                        If you need GMAE, you should use the
-                        <filename>bitbake meta-toolchain-gmae</filename>
-                        command.
-                        Running the resulting installation script will support
-                        such development.
-                        If you are not concerned with GMAE, you can generate
-                        the toolchain installer using
-                        <filename>bitbake meta-toolchain</filename>.
-                        Either of these methods requires you to still
-                        install the target sysroot by installing and
-                        extracting it separately.
-                        For information on how to install the sysroot, see the
-                        "<link linkend='extracting-the-root-filesystem'>Extracting the Root Filesystem</link>" section.
-                        </para>
-                        <para>A final method of building the toolchain installer
-                        exists that has significant advantages over the previous
-                        two methods.
-                        This method results in a toolchain installer that
-                        contains the sysroot that matches your target root
-                        filesystem.
-                        To build this installer, use the
-                        <filename>bitbake image -c populate_sdk</filename>
-                        command.</para>
-                        <para>Remember, before using any
-                        <filename>bitbake</filename> command, you must source
-                        the <filename>&OE_INIT_PATH;</filename> script
-                        located in the Source Directory and you must make sure
-                        your <filename>conf/local.conf</filename> variables are
-                        correct.
-                        In particular, you need to be sure the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
-                        variable matches the architecture for which you are
-                        building and that the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKMACHINE'><filename>SDKMACHINE</filename></ulink>
-                        variable is correctly set if you are building
-                        a toolchain designed to run on an architecture that
-                        differs from your current development host machine
-                        (i.e. the build machine).</para>
-                        <para>When the BitBake command
-                        completes, the toolchain installer will be in
-                        <filename>tmp/deploy/sdk</filename> in the Build
-                        Directory.</para>
-                    </note></para></listitem>
-                <listitem><para>Once you have the installer, run it to install the toolchain.
+                            </literallayout></para></listitem>
+                        <listitem><para>Build your own toolchain installer.
+                            For cases where you cannot use an installer
+                            from the download area, you can build your as
+                            described in the
+                            "<link linkend='optionally-building-a-toolchain-installer'>Optionally Building a Toolchain Installer</link>"
+                            section.</para></listitem>
+                    </itemizedlist></para></listitem>
+                <listitem><para>Once you have the installer, run it to install
+                    the toolchain.
                     You must change the permissions on the toolchain installer
                     script so that it is executable.</para>
-                    <para>The following command shows how to run the installer given a toolchain tarball
-                    for a 64-bit development host system and a 32-bit target architecture.
-                    The example assumes the toolchain installer is located in <filename>~/Downloads/</filename>.
+                    <para>The following command shows how to run the installer
+                    given a toolchain tarball for a 64-bit development host
+                    system and a 32-bit target architecture.
+                    The example assumes the toolchain installer is located
+                    in <filename>~/Downloads/</filename>.
                     <literallayout class='monospaced'>
      $ ~/Downloads/poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.sh
                     </literallayout>
                     <note>
-                        If you do not have write permissions for the directory into which you are installing
-                        the toolchain, the toolchain installer notifies you and exits.
-                        Be sure you have write permissions in the directory and run the installer again.
+                        If you do not have write permissions for the directory
+                        into which you are installing the toolchain, the
+                        toolchain installer notifies you and exits.
+                        Be sure you have write permissions in the directory and
+                        run the installer again.
                     </note>
-                    Once the tarball is expanded, the cross-toolchain is installed.
-                    You will notice environment setup files for the cross-toolchain in the directory.
-                    </para></listitem>
+                    Once the tarball is expanded, the cross-toolchain is
+                    installed.
+                    You will notice environment setup files for the
+                    cross-toolchain in the directory.</para></listitem>
             </orderedlist>
         </para>
     </section>
@@ -537,6 +511,57 @@
             <filename>$HOME/qemux86-sato</filename>.
         </para>
     </section>
+</section>
+
+<section id='optionally-building-a-toolchain-installer'>
+    <title>Optionally Building a Toolchain Installer</title>
+
+    <para>
+        As an alternative to locating and downloading a toolchain installer,
+        you can build the toolchain installer if you have a
+        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+    </para>
+
+    <para>
+        If you need GMAE, you should use the
+        <filename>bitbake meta-toolchain-gmae</filename> command.
+        Running the resulting installation script will support such development.
+        If you are not concerned with GMAE, you can build the toolchain
+        installer using <filename>bitbake meta-toolchain</filename>.
+        Either of these methods requires you to still install the target
+        sysroot by installing and extracting it separately.
+        For information on how to install the sysroot, see the
+        "<link linkend='extracting-the-root-filesystem'>Extracting the Root Filesystem</link>" section.
+    </para>
+
+    <para>
+        A final method of building the toolchain installer exists that has
+        significant advantages over the previous two methods.
+        This method results in a toolchain installer that contains the sysroot
+        that matches your target root filesystem.
+        To build this installer, use the
+        <filename>bitbake image -c populate_sdk</filename> command.
+    </para>
+
+    <para>
+         Remember, before using any <filename>bitbake</filename> command, you
+         must source the <filename>&OE_INIT_PATH;</filename> script located in
+         the Source Directory and you must make sure your
+         <filename>conf/local.conf</filename> variables are correct.
+         In particular, you need to be sure the
+         <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+         variable matches the architecture for which you are building and that
+         the
+         <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKMACHINE'><filename>SDKMACHINE</filename></ulink>
+         variable is correctly set if you are building a toolchain designed to
+         run on an architecture that differs from your current development host
+         machine (i.e. the build machine).
+     </para>
+
+     <para>
+         When the BitBake command completes, the toolchain installer will be in
+         <filename>tmp/deploy/sdk</filename> in the Build Directory.
+     </para>
 </section>
 
 </chapter>
