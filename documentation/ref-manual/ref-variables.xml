@@ -1193,9 +1193,6 @@ Core layer for images cannot be removed
                 <para>
                     To exclude a recipe from a world build using this variable,
                     set the variable to "1" in the recipe.
-                    Alternatively, if a recipe inherits a class where
-                    <filename>EXCLUDE_FROM_WORLD</filename> is set to "1", that
-                    recipe will also be excluded from world builds.
                 </para>
             </glossdef>
         </glossentry>
@@ -2058,6 +2055,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+<!--
         <glossentry id='var-INTERCEPT_DIR'><glossterm>INTERCEPT_DIR</glossterm>
             <glossdef>
                 <para>
@@ -2090,6 +2088,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
             </glossdef>
         </glossentry>
+-->
 
     </glossdiv>
 
@@ -3868,7 +3867,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SERIAL_CONSOLE'><glossterm>SERIAL_CONSOLE</glossterm>
             <glossdef>
                 <para>
-                    Define a serial console (TTY) to enable using getty.
+                    Defines a serial console (TTY) to enable using getty.
                     Provide a value that specifies the baud rate followed by
                     the TTY device name separated by a space.
                     You cannot specify more than one TTY device:
@@ -4001,8 +4000,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Defines the suffix for shared libraries used on the
                     target platform.
-                    By default, this suffix is ".so.*" for all Linux
-                    distributions and is defined in the
+                    By default, this suffix is ".so.*" for all Linux-based
+                    systems and is defined in the
                     <filename>meta/conf/bitbake.conf</filename> configuration
                     file.
                 </para>
@@ -4019,15 +4018,15 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Defines the suffix for the development symbolic link
                     (symlink) for shared libraries on the target platform.
-                    By default, this suffix is ".so" for all Linux
-                    distributions and is defined in the
+                    By default, this suffix is ".so" for Linux-based
+                    systems and is defined in the
                     <filename>meta/conf/bitbake.conf</filename> configuration
                     file.
                 </para>
 
                 <para>
                     You will see this variable referenced in the default values
-                    of <filename>FILES_${PN}</filename>.
+                    of <filename>FILES_${PN}-dev</filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -4589,10 +4588,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     A sanitized version of
                     <link linkend='var-TARGET_ARCH'><filename>TARGET_ARCH</filename></link>.
-                    This variable is used when package filenames contain
-                    underscore characters that would otherwise not be allowed.
-                    In this case, dash characters replace the underscore
-                    characters used in the package names.
+                    This variable is used where the architecture is needed in
+                    a value where underscores are not allowed, for example
+                    within package filenames.
+                    In this case, dash characters replace any underscore
+                    characters used in TARGET_ARCH.
                 </para>
 
                 <para>
