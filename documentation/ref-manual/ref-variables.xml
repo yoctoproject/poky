@@ -1727,7 +1727,7 @@ Core layer for images cannot be removed
         <glossentry id='var-IMAGE_FSTYPES'><glossterm>IMAGE_FSTYPES</glossterm>
             <glossdef>
                 <para>
-                    Specifes the format of the root filesystem created by
+                    Specifies the format of the root filesystem created by
                     the OpenEmbedded build system.
                     Available formats are a subset of the
                     supported images listed in
@@ -2006,6 +2006,33 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The remaining lines in the example are from individual
                     recipes and show how the <filename>PR</filename> value
                     is set.</para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-INCOMPATIBLE_LICENSE'><glossterm>INCOMPATIBLE_LICENSE</glossterm>
+            <glossdef>
+                <para>
+                    Specifies a space-separated list of license names
+                    (as they would appear in
+                    <link linkend='var-LICENSE'><filename>LICENSE</filename></link>)
+                    that should be excluded from the build.
+                    Recipes that provide no alternatives to listed incompatible
+                    licenses are not built.
+                    Packages that are individually licensed with the specified
+                    incompatible licenses will be deleted.
+                </para>
+
+                <note>
+                    This functionality is only regularly tested using
+                    the following setting:
+                    <literallayout class='monospaced'>
+     INCOMPATIBLE_LICENSE = "GPLv3"
+                    </literallayout>
+                    Although you can use other settings, you might be required
+                    to remove dependencies on or provide alternatives to
+                    components that are required to produce a functional system
+                    image.
+                </note>
             </glossdef>
         </glossentry>
 
@@ -2582,6 +2609,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     different parts of the source code.
                     The final example is from <filename>sysstat</filename>,
                     which presents a single license.
+                </para>
+
+                <para>
+                    You can also specify licenses on a per-package basis to
+                    handle situations where components of the output have
+                    different licenses.
+                    For example, a piece of software whose code is
+                    licensed under GPLv2 but has accompanying documentation
+                    licensed under the GNU Free Documentation License 1.2 could
+                    be specified as follows:
+                    <literallayout class='monospaced'>
+     LICENSE = "GFDL-1.2 &amp; GPLv2"
+     LICENSE_${PN} = "GPLv2"
+     LICENSE_${PN}-doc = "GFDL-1.2"
+                    </literallayout>
                 </para>
             </glossdef>
         </glossentry>
@@ -3414,6 +3456,37 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
      ${<link linkend='var-PN'>PN</link>}-${<link linkend='var-EXTENDPE'>EXTENDPE</link>}${<link linkend='var-PV'>PV</link>}-${<link linkend='var-PR'>PR</link>}
                     </literallayout></para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PKGD'><glossterm>PKGD</glossterm>
+            <glossdef>
+                <para>
+                    Points to the destination directory for files to be
+                    packaged before they are split into individual packages.
+                    This directory defaults to the following:
+                    <literallayout class='monospaced'>
+     ${WORKDIR}/package
+                    </literallayout>
+                    Do not change this default.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PKGDEST'><glossterm>PKGDEST</glossterm>
+            <glossdef>
+                <para>
+                    Points to the parent directory for files to be packaged
+                    after they have been split into individual packages.
+                    This directory defaults to the following:
+                    <literallayout class='monospaced'>
+     ${WORKDIR}/packages-split
+                    </literallayout>
+                    Under this default directory, the build system creates
+                    directories for each package specified in
+                    <link linkend='var-PACKAGES'><filename>PACKAGES</filename></link>.
+                    Do not change this default.
+                </para>
             </glossdef>
         </glossentry>
 
