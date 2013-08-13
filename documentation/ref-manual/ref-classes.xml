@@ -466,20 +466,39 @@
     </para>
 
     <para>
-        You can configure the sanity checks so that specific test failures either raise a warning or
-        an error message.
+        You can configure the sanity checks so that specific test failures
+        either raise a warning or an error message.
         Typically, failures for new tests generate a warning.
-        Subsequent failures for the same test would then generate an error message
-        once the metadata is in a known and good condition.
-        You use the <filename>WARN_QA</filename> variable to specify tests for which you
-        want to generate a warning message on failure.
-        You use the <filename>ERROR_QA</filename> variable to specify tests for which you
-        want to generate an error message on failure.
+        Subsequent failures for the same test would then generate an error
+        message once the metadata is in a known and good condition.
     </para>
 
     <para>
-        The following list shows the tests you can list with the <filename>WARN_QA</filename>
-        and <filename>ERROR_QA</filename> variables:
+        Use the
+        <link linkend='var-WARN_QA'><filename>WARN_QA</filename></link> and
+        <link linkend='var-ERROR_QA'><filename>ERROR_QA</filename></link>
+         variables to control the behavior of
+        these checks at the global level (i.e. in your custom distro
+        configuration).
+        However, to skip one or more checks in recipes, you should use
+        <link linkend='var-INSANE_SKIP'><filename>INSANE_SKIP</filename></link>.
+        For example, to skip the check for symbolic link
+        <filename>.so</filename> files in the main package of a recipe,
+        add the following to the recipe.
+        You need to realize that the package name override, in this example
+        <filename>${PN}</filename>, must be used:
+        <literallayout class='monospaced'>
+     INSANE_SKIP_${PN} += "dev-so"
+        </literallayout>
+        Please keep in mind that the QA checks exist in order to detect real
+        or potential problems in the packaged output.
+        So exercise caution when disabling these checks.
+    </para>
+
+    <para>
+        The following list shows the tests you can list with the
+        <filename>WARN_QA</filename> and <filename>ERROR_QA</filename>
+        variables:
         <itemizedlist>
             <listitem><para><emphasis><filename>ldflags:</filename></emphasis>
                 Ensures that the binaries were linked with the
@@ -780,25 +799,6 @@
                 </para></listitem>
         </itemizedlist>
     </para>
-    <note>
-        You can use the <filename>WARN_QA</filename> and
-        <filename>ERROR_QA</filename> variables to control the behavior of
-        these checks at the global level (i.e. in your custom distro
-        configuration).
-        However, to skip one or more checks in recipes, you should use
-        <link linkend='var-INSANE_SKIP'><filename>INSANE_SKIP</filename></link>.
-        For example, to skip the check for symbolic link
-        <filename>.so</filename> files in the main package of a recipe,
-        add the following to the recipe.
-        You need to realize that the package name override, in this example
-        <filename>${PN}</filename>, must be used:
-        <literallayout class='monospaced'>
-     INSANE_SKIP_${PN} += "dev-so"
-        </literallayout>
-        Please keep in mind that the QA checks exist in order to detect real
-        or potential problems in the packaged output.
-        So exercise caution when disabling these checks.
-    </note>
 </section>
 
 <section id='ref-classes-rm-work'>
