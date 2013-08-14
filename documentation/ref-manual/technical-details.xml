@@ -961,6 +961,77 @@
             </itemizedlist>
         </para>
     </section>
+
+    <section id='bitbake-dev-environment'>
+        <title>BitBake</title>
+
+        <para>
+            The OpenEmbedded build system uses BitBake to produce images.
+            You can see from the
+            <link linkend='a-closer-look-at-the-yocto-project-development-environment'>Yocto Project Development Environment</link>
+            figure, the BitBake area consists of several functional areas.
+            This section takes a closer look at each of those areas.
+        </para>
+
+        <section id='source-fetching-dev-environment'>
+            <title>Source Fetching</title>
+
+            <para>
+                The first stages of building a recipe are to fetch and unpack
+                the source code:
+                <imagedata fileref="figures/source-fetching.png" align="center" width="6in" depth="4in" />
+            </para>
+
+            <para>
+                The <filename>do_fetch</filename> and
+                <filename>do_unpack</filename> tasks fetch the source files
+                and unpack them into a working directory.
+                By default, everything is accomplished in the
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>,
+                which has a defined structure.
+                For additional general information on the Build Directory,
+                see the
+                "<link linkend='structure-core-build'><filename>build/</filename></link>"
+                section.
+            </para>
+
+            <para>
+                Unpacked source source files are pointed to by the
+                <link linkend='var-S'><filename>S</filename></link> variable.
+                Each recipe has an area in the Build Directory where the
+                unpacked source code resides.
+                The name of directory for any given recipe is defined from
+                several different variables.
+                You can see the variables that define these directories
+                by looking at the figure:
+                <itemizedlist>
+                    <listitem><para><link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-TARGET_OS'><filename>TARGET_OS</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-PN'><filename>PN</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-PV'><filename>PV</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-PR'><filename>PR</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-S'><filename>S</filename></link>
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Briefly, the <filename>S</filename> directory contains the
+                unpacked source files for a recipe.
+                The <filename>WORKDIR</filename> directory is where all the
+                building goes on for a given recipe.
+            </para>
+        </section>
+    </section>
 </section>
 
 <section id="cross-development-toolchain-generation">
