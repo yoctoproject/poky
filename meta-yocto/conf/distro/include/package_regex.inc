@@ -18,6 +18,7 @@ COMMON_REGEX = "((\d+[\.\-_]*)+)"
 #This will need to be changed a little bit when versions are bigger than 9.
 REGEX_URI_pn-acpid = "http://sourceforge.net/projects/acpid/files/acpid/"
 REGEX_pn-acpid = "[hH][rR][eE][fF]=\"/projects/acpid/files/acpid/(acpid\-)?(?P<pver>(\d\.(\d+[\.\-_]*)+))/\""
+REGEX_pn-atk = "[hH][rR][eE][fF]=\"atk\-(?P<pver>(\d+\.\d*[0|2|4|6|8]\.\d+))\.tar\.(gz|xz|bz2)\""
 REGEX_URI_pn-beecrypt = "http://sourceforge.net/projects/beecrypt/files/beecrypt/"
 REGEX_pn-beecrypt = "[hH][rR][eE][fF]=\"/projects/beecrypt/files/beecrypt/(?P<pver>((\d+[\.\-_]*)+))/\""
 REGEX_URI_pn-beecrypt-native = "http://sourceforge.net/projects/beecrypt/files/beecrypt/"
