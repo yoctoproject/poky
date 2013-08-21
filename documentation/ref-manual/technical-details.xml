@@ -1066,6 +1066,65 @@
                 section.
             </para>
         </section>
+
+        <section id='configuration-and-compilation-dev-environment'>
+            <title>Configuration and Compilation</title>
+
+            <para>
+                After source code is patched, BitBake executes tasks that
+                configure and compile the source code:
+                <imagedata fileref="figures/configuration-compile-autoreconf.png" align="center" width="7in" depth="5in" />
+            </para>
+
+            <para>
+                This step in the build process consists of three tasks:
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>do_configure</filename>:</emphasis>
+                        This task configures the source by enabling and
+                        disabling any build-time and configuration options for
+                        the software being built.
+                        Configurations can come from the recipe itself as well
+                        as from an inherited class.
+                        Additionally, the software itself might configure itself
+                        depending on the target for which it is being built.
+                        </para>
+
+                        <para>The configurations handled by the
+                        <filename>do_configure</filename> task are specific
+                        to source code configuration for the source code
+                        being built by the recipe.</para>
+
+                        <para>If you are using
+                        <link linkend='ref-classes-autotools'><filename>autotools.bbclass</filename></link>,
+                        you can add additional configuration options by using
+                        the <link linkend='var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></link>
+                        variable.
+                        For information on how this variable works within
+                        that class, see the
+                        <filename>meta/classes/autotools.bbclass</filename>.
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>do_compile</filename>:</emphasis>
+                        Once a configuration task has been satisfied, BitBake
+                        compiles the source using the
+                        <filename>do_compile</filename> task.
+                        Compilation occurs in the directory pointed to by the
+                        <link linkend='var-B'><filename>B</filename></link>
+                        variable.
+                        Realize that the <filename>B</filename> directory, by
+                        default, is the same as the
+                        <link linkend='var-S'><filename>S</filename></link>
+                        directory.</para></listitem>
+                    <listitem><para><emphasis><filename>do_install</filename>:</emphasis>
+                        Once compilation is done, BitBake executes the
+                        <filename>do_install</filename> task.
+                        This task copies files from the <filename>B</filename>
+                        directory and places them in a holding area pointed to
+                        by the
+                        <link linkend='var-D'><filename>D</filename></link>
+                        variable.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
     </section>
 </section>
 
