@@ -1130,38 +1130,49 @@
             <title>Package Splitting</title>
 
             <para>
-                After source code configured and compiled, BitBake analyzes
-                the results and splits the output into package:
+                After source code is configured and compiled, the
+                OpenEmbedded build system analyzes
+                the results and splits the output into packages:
                 <imagedata fileref="figures/analysis-for-package-splitting.png" align="center" width="7in" depth="7in" />
             </para>
 
             <para>
                 The <filename>do_package</filename> and
                 <filename>do_packagedata</filename> tasks combine to analyze
-                the data found in the
+                the files found in the
                 <link linkend='var-D'><filename>D</filename></link> directory
-                and split it into subsets based on available packages and
+                and split them into subsets based on available packages and
                 files.
-                The analyzing process involves splitting out debugging symbols,
-                looking at shared library dependencies between packages, and
-                looking at package relationships.
-                The <filename>do_packagedata</filename> task puts package
-                metadata based on the analysis such that BitBake can generate
-                the final packages.
-                Intermediate results of the package analysis and splitting
-                end up in the
-                <link linkend='var-PKGDEST'><filename>PKGDEST</filename></link>
-                directory with the
-                <link linkend='var-FILES'><filename>FILES</filename></link>
-                variable defining the files that go into the packages.
-                If you want some details on how this is accomplished, you can
+                The analyzing process involves the following as well as other
+                items: splitting out debugging symbols,
+                looking at shared library dependencies between packages,
+                and looking at package relationships.
+                The <filename>do_packagedata</filename> task creates package
+                metadata based on the analysis such that the
+                OpenEmbedded build system can generate the final packages.
+                Working, staged, and intermediate results of the analysis
+                and package splitting process use these areas:
+                <itemizedlist>
+                    <listitem><para><link linkend='var-PKGD'><filename>PKGD</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-PKGDESTWORK'><filename>PKGDESTWORK</filename></link>
+                        </para></listitem>
+                    <listitem><para><link linkend='var-PKGDEST'><filename>PKGDEST</filename></link>
+                        </para></listitem>
+                </itemizedlist>
+                The <link linkend='var-FILES'><filename>FILES</filename></link>
+                variable defines the files that go into each package in
+                <link linkend='var-PACKAGES'><filename>PACKAGES</filename></link>.
+                If you want details on how this is accomplished, you can
                 look at
                 <link linkend='ref-classes-package'><filename>package.bbclass</filename></link>.
             </para>
 
             <para>
                 Depending on the type of packages being created (RPM, DEB, or
-                IPK), the <filename>do_packagewrite_*</filename> task
+                IPK), the <filename>do_package_write_*</filename> task
                 creates the actual packages and places them in the
                 Package Feed area, which is
                 <filename>${TMPDIR}/deploy</filename>.
@@ -1173,9 +1184,10 @@
                     <filename>deploy/*</filename> directories does not exist.
                     Creating such feeds usually requires some kind of feed
                     maintenance mechanism that would upload the new packages
-                    into an official package feed (e.g. angstrom).
-                    Providing such a piece for the user is not feasible since
-                    it is very distribution-specific.
+                    into an official package feed (e.g. the
+                    Ångström distribution).
+                    This functionality is highly distribution-specific
+                    and thus is not provided out of the box.
                 </note>
             </para>
         </section>
