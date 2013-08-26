@@ -229,8 +229,10 @@
         <title>Using a Cross-Toolchain Tarball</title>
 
         <para>
-            If you want to simply install the cross-toolchain by hand, you can
+            If you want to simply install a cross-toolchain by hand, you can
             do so by running the toolchain installer.
+            The installer includes the pre-built cross-toolchain, the
+            <filename>runqemu</filename> script, and support files.
             If you use this method to install the cross-toolchain, you
             might still need to install the target sysroot by installing and
             extracting it separately.
@@ -241,25 +243,30 @@
         <para>
             Follow these steps:
             <orderedlist>
-                <listitem><para>Get the toolchain installer using one of the
+                <listitem><para>Get your toolchain installer using one of the
                     following methods:
                     <itemizedlist>
                         <listitem><para>Go to
                             <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'></ulink>
                             and find the folder that matches your host
                             development system (i.e. <filename>i686</filename>
-                            for 32-bit machines or <filename>x86-64</filename>
+                            for 32-bit machines or <filename>x86_64</filename>
                             for 64-bit machines).</para>
                             <para>Go into that folder and download the toolchain
                             installer whose name includes the appropriate target
                             architecture.
+                            The toolchains provided by the Yocto Project
+                            are based off of the
+                            <filename>core-image-sato</filename> image and
+                            contain libraries appropriate for developing
+                            against that image.
                             For example, if your host development system is a
                             64-bit x86 system and you are going to use
                             your cross-toolchain for a 32-bit x86
                             target, go into the <filename>x86_64</filename>
                             folder and download the following installer:
                             <literallayout class='monospaced'>
-     poky-eglibc-x86_64-i586-toolchain-&DISTRO;.sh
+     poky-eglibc-x86_64-core-image-sato-i586.sh
                             </literallayout></para></listitem>
                         <listitem><para>Build your own toolchain installer.
                             For cases where you cannot use an installer
@@ -278,7 +285,7 @@
                     The example assumes the toolchain installer is located
                     in <filename>~/Downloads/</filename>.
                     <literallayout class='monospaced'>
-     $ ~/Downloads/poky-eglibc-x86_64-i586-toolchain-&DISTRO;.sh
+     $ ~/Downloads/poky-eglibc-x86_64-core-image-sato-i586.sh
                     </literallayout>
                     <note>
                         If you do not have write permissions for the directory

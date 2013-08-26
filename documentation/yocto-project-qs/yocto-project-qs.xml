@@ -552,44 +552,62 @@
 
         <section id='installing-the-toolchain'>
             <title>Installing the Toolchain</title>
+
             <para>
-                You can download a tarball installer, which includes the pre-built toolchain, the
-                <filename>runqemu</filename>
+                You can download a tarball installer, which includes the
+                pre-built toolchain, the <filename>runqemu</filename>
                 script, and support files from the appropriate directory under
                 <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'></ulink>.
-                Toolchains are available for 32-bit and 64-bit x86 development systems from the
-                <filename>i686</filename> and <filename>x86_64</filename> directories, respectively.
-                Each type of development system supports five target architectures.
-                The names of the tarball installer scripts are such that a string representing the
-                host system appears first in the filename and then is immediately followed by a
-                string representing the target architecture.
+                Toolchains are available for 32-bit and 64-bit x86 development
+                systems from the <filename>i686</filename> and
+                <filename>x86_64</filename> directories, respectively.
+                The toolchains the Yocto Project provides are based off the
+                <filename>core-image-sato</filename> image and contain
+                libraries appropriate for developing against that image.
+                Each type of development system supports five or more target
+                architectures.
+            </para>
+
+            <para>
+                The names of the tarball installer scripts are such that a
+                string representing the host system appears first in the
+                filename and then is immediately followed by a string
+                that represents the target architecture.
             </para>
 
             <literallayout class='monospaced'>
-     poky-eglibc-&lt;<emphasis>host_system</emphasis>&gt;-&lt;<emphasis>arch</emphasis>&gt;-toolchain-gmae-&lt;<emphasis>release</emphasis>&gt;.sh
+     poky-eglibc-&lt;<emphasis>host_system</emphasis>&gt;-&lt;<emphasis>image_type</emphasis>&gt;-&lt;<emphasis>arch</emphasis>&gt;.sh
 
      Where:
          &lt;<emphasis>host_system</emphasis>&gt; is a string representing your development system:
                 i686 or x86_64.
 
-         &lt;<emphasis>arch</emphasis>&gt; is a string representing the target architecture:
-                i586, x86_64, powerpc, mips, or arm.
+         &lt;<emphasis>image_type</emphasis>&gt; is a string representing the image you wish to
+                develop a Software Development Toolkit (SDK) for use against.
+                The Yocto Project builds toolchain installers using the
+                following BitBake command:
 
-         &lt;<emphasis>release</emphasis>&gt; is the version of Yocto Project.
+                    bitbake core-image-sato -c do_populatesdk core-image-sato
+
+         &lt;<emphasis>arch</emphasis>&gt; is a string representing the tuned target architecture:
+
+                i586, x86_64, powerpc, mips, armv7a or armv5te
             </literallayout>
 
             <para>
-                For example, the following toolchain installer is for a 64-bit development
-                host system and a 32-bit target architecture:
+                For example, the following toolchain installer is for a 64-bit
+                development host system and a i586-tuned target architecture
+                based off the SDK for <filename>core-image-sato</filename>:
+                <literallayout class='monospaced'>
+     poky-eglibc-x86_64-core-image-sato-i586.sh
+                </literallayout>
             </para>
 
-            <literallayout class='monospaced'>
-     poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.sh
-            </literallayout>
-
             <para>
-                Toolchains are self-contained and by default are installed into <filename>/opt/poky</filename>.
-                However, when you run the toolchain installer, you can choose an installation directory.
+                Toolchains are self-contained and by default are installed into
+                <filename>/opt/poky</filename>.
+                However, when you run the toolchain installer, you can choose an
+                installation directory.
             </para>
 
             <para>
@@ -610,7 +628,7 @@
 
             <para>
                 <literallayout class='monospaced'>
-     $ ~/Downloads/poky-eglibc-x86_64-i586-toolchain-gmae-&DISTRO;.sh
+     $ ~/Downloads/poky-eglibc-x86_64-core-image-sato-i586.sh
                 </literallayout>
             </para>
 
