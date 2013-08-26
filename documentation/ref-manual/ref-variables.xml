@@ -3490,6 +3490,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PKGDATA_DIR'><glossterm>PKGDATA_DIR</glossterm>
+            <glossdef>
+                <para>
+                    Points to a shared, global-state directory that holds data
+                    generated during the packaging process.
+                    During the packaging process, the
+                    <filename>do_packagedata</filename> task packages
+                    data for each recipe and installs it into this temporary,
+                    shared area.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PKGDEST'><glossterm>PKGDEST</glossterm>
             <glossdef>
                 <para>
@@ -3502,6 +3515,29 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Under this directory, the build system creates
                     directories for each package specified in
                     <link linkend='var-PACKAGES'><filename>PACKAGES</filename></link>.
+                    Do not change this default.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PKGDESTWORK'><glossterm>PKGDESTWORK</glossterm>
+            <glossdef>
+                <para>
+                    Points to a temporary work area used by the
+                    <filename>do_package</filename> task to write output
+                    from the <filename>do_packagedata</filename> task.
+                    The <filename>PKGDESTWORK</filename> location defaults to
+                    the following:
+                    <literallayout class='monospaced'>
+     ${WORKDIR}/pkgdata
+                    </literallayout>
+                    The <filename>do_packagedata</filename> task then packages
+                    the data in the temporary work area and installs it into a
+                    shared directory pointed to by
+                    <link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>.
+                </para>
+
+                <para>
                     Do not change this default.
                 </para>
             </glossdef>
