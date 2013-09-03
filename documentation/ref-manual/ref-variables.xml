@@ -968,6 +968,28 @@ Core layer for images cannot be removed
                     have been built and have their contents in the appropriate
                     sysroots before the recipe's configure task is executed.
                 </para>
+
+                <para>
+                    Consider this simple example for two recipes named "a" and
+                    "b" that produce similarly named packages.
+                    In this example, the <filename>DEPENDS</filename>
+                    statement appears in the "a" recipe:
+                    <literallayout class='monospaced'>
+     DEPENDS = "b"
+                    </literallayout>
+                    Here, the dependency is such that the
+                    <filename>do_configure</filename> task for recipe "a"
+                    depends on the <filename>do_populate_sysroot</filename>
+                    task of recipe "b".
+                    This means anything that recipe "b" puts into sysroot
+                    is available when recipe "a" is configuring itself.
+                </para>
+
+                <para>
+                    For information on runtime dependencies, see the
+                    <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
+                    variable.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -3750,11 +3772,34 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RDEPENDS'><glossterm>RDEPENDS</glossterm>
             <glossdef>
                 <para>
-                    Lists a package's run-time dependencies (i.e. other packages)
+                    Lists a package's runtime dependencies (i.e. other packages)
                     that must be installed in order for the built package to run
                     correctly.
                     If a package in this list cannot be found during the build,
                     you will get a build error.
+                </para>
+
+                <para>
+                    When you use the <filename>RDEPENDS</filename> variable
+                    in a recipe, you are essentially stating that the recipe's
+                    <filename>do_build</filename> task depends on the existence
+                    of a specific package.
+                    Consider this simple example for two recipes named "a" and
+                    "b" that produce similarly named packages.
+                    In this example, the <filename>RDEPENDS</filename>
+                    statement appears in the "a" recipe:
+                    <literallayout class='monospaced'>
+     RDEPENDS_${PN} = "b"
+                    </literallayout>
+                    Here, the dependency is such that the
+                    <filename>do_build</filename> task for recipe "a" depends
+                    on the <filename>do_package_write</filename> task
+                    of recipe "b".
+                    This means the package file for "b" must be available when
+                    the output for recipe "a" has been completely built.
+                    More importantly, package "a" will be marked as depending
+                    on package "b" in a manner that is understood by the
+                    package manager in use (i.e. rpm, opkg, or dpkg).
                 </para>
 
                 <para>
@@ -3799,25 +3844,31 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
                 <para>
                     In many cases you do not need to explicitly add
-                    run-time dependencies using
+                    runtime dependencies using
                     <filename>RDEPENDS</filename> since some automatic
                     handling occurs:
                     <itemizedlist>
                         <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:  If
-                            a run-time package contains a shared library
+                            a runtime package contains a shared library
                             (<filename>.so</filename>), the build
                             processes the library in order to determine other
                             libraries to which it is dynamically linked.
                             The build process adds these libraries to
-                            <filename>RDEPENDS</filename> when creating the run-time
+                            <filename>RDEPENDS</filename> when creating the runtime
                             package.</para></listitem>
                         <listitem><para><emphasis><filename>pcdeps</filename></emphasis>:  If
                             the package ships a <filename>pkg-config</filename>
                             information file, the build process uses this file
                             to add items to the <filename>RDEPENDS</filename>
-                            variable to create the run-time packages.
+                            variable to create the runtime packages.
                             </para></listitem>
                     </itemizedlist>
+                </para>
+
+                <para>
+                    For information on build-time dependencies, see the
+                    <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
+                    variable.
                 </para>
             </glossdef>
         </glossentry>
