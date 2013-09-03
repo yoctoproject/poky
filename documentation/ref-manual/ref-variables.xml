@@ -252,9 +252,47 @@
         <glossentry id='var-BAD_RECOMMENDATIONS'><glossterm>BAD_RECOMMENDATIONS</glossterm>
             <glossdef>
                 <para>
-                    A list of packages not to install despite being recommended by a recipe.
+                    Lists "recommended-only" packages to not install.
+                    Recommended-only packages are packages installed only
+                    through the
+                    <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>
+                    variable.
+                    You can prevent any of these "recommended" packages from
+                    being installed by listing them with the
+                    <filename>BAD_RECOMMENDATIONS</filename> variable:
+                    <literallayout class='monospaced'>
+     BAD_RECOMMENDATIONS = "&lt;package_name&gt; &lt;package_name&gt; &lt;package_name&gt; ..."
+                    </literallayout>
+                    You can set this variable globally in your
+                    <filename>local.conf</filename> file or you can attach it to
+                    a specific image recipe by using the recipe name override:
+                    <literallayout class='monospaced'>
+     BAD_RECOMMENDATIONS_pn-&lt;target_image&gt; = "&lt;package_name&gt;"
+                    </literallayout>
+                </para>
+
+                <para>
+                    It is important to realize that if you choose to not install
+                    a package using this variable and some other package is
+                    dependent on it (i.e. listed in a recipe's
+                    <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
+                    variable), the OpenEmbedded build system does not notify
+                    you with a dependency error.
+                    The specified package is simply not installed.
+                </para>
+
+                <para>
                     Support for this variable exists only when using the
-                    IPK packaging backend.
+                    IPK and RPM packaging backend.
+                    Support does not exist for DEB.
+                </para>
+
+                <para>
+                    See the
+                    <link linkend='var-NO_RECOMMENDATIONS'><filename>NO_RECOMMENDATIONS</filename></link>
+                    and the
+                    <link linkend='var-PACKAGE_EXCLUDE'><filename>PACKAGE_EXCLUDE</filename></link>
+                    variables for related information.
                 </para>
             </glossdef>
         </glossentry>
@@ -3158,6 +3196,59 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-NO_RECOMMENDATIONS'><glossterm>NO_RECOMMENDATIONS</glossterm>
+            <glossdef>
+                <para>
+                    Prevents installation of all "recommended-only" packages.
+                    Recommended-only packages are packages installed only
+                    through the
+                    <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>
+                    variable).
+                    Setting the <filename>NO_RECOMMENDATIONS</filename> variable
+                    to "1" turns this feature on:
+                    <literallayout class='monospaced'>
+     NO_RECOMMENDATIONS = "1"
+                    </literallayout>
+                    You can set this variable globally in your
+                    <filename>local.conf</filename> file or you can attach it to
+                    a specific image recipe by using the recipe name override:
+                    <literallayout class='monospaced'>
+     NO_RECOMMENDATIONS_pn-&lt;target_image&gt; = "&lt;package_name&gt;"
+                    </literallayout>
+                </para>
+
+                <para>
+                    It is important to realize that if you choose to not install
+                    packages using this variable and some other packages are
+                    dependent on them (i.e. listed in a recipe's
+                    <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
+                    variable), the OpenEmbedded build system does not notify
+                    you with dependency errors.
+                    The packages are simply not installed.
+                    <note>
+                        Some recommended packages might be required for certain
+                        system functionality, such as kernel modules.
+                        It is up to you to add packages with
+                        <link linkend='var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></link>
+                        variable.
+                    </note>
+                </para>
+
+                <para>
+                    Support for this variable exists only when using the
+                    IPK and RPM packaging backend.
+                    Support does not exist for DEB.
+                </para>
+
+                <para>
+                    See the
+                    <link linkend='var-BAD_RECOMMENDATIONS'><filename>BAD_RECOMMENDATIONS</filename></link>
+                    and the
+                    <link linkend='var-PACKAGE_EXCLUDE'><filename>PACKAGE_EXCLUDE</filename></link>
+                    variables for related information.
+                </para>
+            </glossdef>
+        </glossentry>
     </glossdiv>
 
     <glossdiv id='var-glossary-o'><title>O</title>
@@ -3314,6 +3405,57 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     package manager use, see
                     <link linkend='ref-classes-package'>Packaging - <filename>package*.bbclass</filename></link>
                     in this manual.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PACKAGE_EXCLUDE'><glossterm>PACKAGE_EXCLUDE</glossterm>
+            <glossdef>
+                <para>
+                    Lists "recommended-only" packages to not install.
+                    Recommended-only packages are packages installed only
+                    through the
+                    <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>
+                    variable.
+                    You can prevent any of these "recommended" packages from
+                    being installed by listing them with the
+                    <filename>PACKAGE_EXCLUDE</filename> variable:
+                    <literallayout class='monospaced'>
+     PACKAGE_EXCLUDE = "&lt;package_name&gt; &lt;package_name&gt; &lt;package_name&gt; ..."
+                    </literallayout>
+                    You can set this variable globally in your
+                    <filename>local.conf</filename> file or you can attach it to
+                    a specific image recipe by using the recipe name override:
+                    <literallayout class='monospaced'>
+     PACKAGE_EXCLUDE_pn-&lt;target_image&gt; = "&lt;package_name&gt;"
+                    </literallayout>
+                </para>
+
+                <para>
+                    If you choose to not install
+                    a package using this variable and some other package is
+                    dependent on it (i.e. listed in a recipe's
+                    <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
+                    variable), the OpenEmbedded build system generates a fatal
+                    installation error.
+                    Because the build system halts the process with a fatal
+                    error, you can use the variable with an iterative
+                    development process to remove specific components from a
+                    system.
+                </para>
+
+                <para>
+                    Support for this variable exists only when using the
+                    IPK and RPM packaging backend.
+                    Support does not exist for DEB.
+                </para>
+
+                <para>
+                    See the
+                    <link linkend='var-NO_RECOMMENDATIONS'><filename>NO_RECOMMENDATIONS</filename></link>
+                    and the
+                    <link linkend='var-BAD_RECOMMENDATIONS'><filename>BAD_RECOMMENDATIONS</filename></link>
+                    variables for related information.
                 </para>
             </glossdef>
         </glossentry>
@@ -3930,27 +4072,43 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-RRECOMMENDS'><glossterm>RRECOMMENDS</glossterm>
             <glossdef>
                 <para>
-                    A list of packages that extends the usability of a package being
-                    built.
-                    The package being built does not depend on this list of packages in
-                    order to successfully build, but needs them for the extended usability.
+                    A list of packages that extends the usability of a package
+                    being built.
+                    The package being built does not depend on this list of
+                    packages in order to successfully build, but needs them for
+                    the extended usability.
                     To specify runtime dependencies for packages, see the
-                    <filename><link linkend='var-RDEPENDS'>RDEPENDS</link></filename> variable.
+                    <filename><link linkend='var-RDEPENDS'>RDEPENDS</link></filename>
+                    variable.
                 </para>
+
                 <para>
-                    The OpenEmbedded build process automatically installs the list of packages
-                    as part of the built package.
-                    However, you can remove them later if you want.
-                    If, during the build, a package from the list cannot be found, the build
-                    process continues without an error.
+                    The OpenEmbedded build process automatically installs the
+                    list of packages as part of the built package.
+                    However, you can remove these packages later if you want.
+                    If, during the build, a package from the
+                    <filename>RRECOMMENDS</filename> list cannot be
+                    found, the build process continues without an error.
                 </para>
+
                 <para>
-                    Because the <filename>RRECOMMENDS</filename> variable applies to packages
-                    being built, you should
-                    always attach an override to the variable to specify the particular package
-                    whose usability is being extended.
-                    For example, suppose you are building a development package that is extended
-                    to support wireless functionality.
+                    You can also prevent packages in the list from being
+                    installed by using several variables.
+                    See the
+                    <link linkend='var-BAD_RECOMMENDATIONS'><filename>BAD_RECOMMENDATIONS</filename></link>,
+                    <link linkend='var-NO_RECOMMENDATIONS'><filename>NO_RECOMMENDATIONS</filename></link>,
+                    and
+                    <link linkend='var-PACKAGE_EXCLUDE'><filename>PACKAGE_EXCLUDE</filename></link>
+                    variables for more information.
+                </para>
+
+                <para>
+                    Because the <filename>RRECOMMENDS</filename> variable
+                    applies to packages being built, you should always attach
+                    an override to the variable to specify the particular
+                    package whose usability is being extended.
+                    For example, suppose you are building a development package
+                    that is extended to support wireless functionality.
                     In this case, you would use the following:
                     <literallayout class='monospaced'>
      RRECOMMENDS_${PN}-dev += "&lt;wireless_package_name&gt;"
@@ -3958,8 +4116,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     In the example, the package name
                     (<filename>${<link linkend='var-PN'>PN</link>}-dev</filename>)
                     must appear as it would in the
-                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename> namespace before any
-                    renaming of the output package by classes like <filename>debian.bbclass</filename>.
+                    <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename>
+                    namespace before any renaming of the output package by
+                    classes such as <filename>debian.bbclass</filename>.
                 </para>
             </glossdef>
         </glossentry>
