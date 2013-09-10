@@ -3647,6 +3647,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PE'><glossterm>PE</glossterm>
+            <glossdef>
+                <para>
+                    the epoch of the recipe.
+                    By default, this variable is unset.
+                    The field is used to make upgrades possible when the
+                    versioning scheme changes in some backwards incompatible
+                    way.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PF'><glossterm>PF</glossterm>
             <glossdef>
                 <para>Specifies the recipe or package name and includes all version and revision
@@ -3758,6 +3770,46 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PREFERRED_PROVIDER'><glossterm>PREFERRED_PROVIDER</glossterm>
+            <glossdef>
+                <para>
+                    If multiple recipes provide an item, this variable
+                    determines which recipe should be given preference.
+                    You should always suffix the variable with the name of the
+                    provided item, and you should set it to the
+                    <link linkend='var-PN'><filename>PN</filename></link>
+                    of the recipe to which you want to give precedence.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     PREFERRED_PROVIDER_virtual/xserver = "xserver-xf86"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PREFERRED_VERSION'><glossterm>PREFERRED_VERSION</glossterm>
+            <glossdef>
+                <para>
+                    If there are multiple versions of recipes available, this
+                    variable determines which recipe should be given preference.
+                    You must always suffix the variable with the
+                    <link linkend='var-PN'><filename>PN</filename></link>
+                    you want to select, and you should set to the
+                    <link linkend='var-PV'><filename>PV</filename></link>
+                    accordingly for precedence.
+                    You can use the "<filename>%</filename>" character as a
+                    wildcard to match any number of characters, which can be
+                    useful when specifying versions that contain long revision
+                    numbers that could potentially change.
+                    Here are two examples:
+                    <literallayout class='monospaced'>
+     PREFERRED_VERSION_python = "2.6.6"
+     PREFERRED_VERSION_linux-yocto = "3.0+git%"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PREMIRRORS'><glossterm>PREMIRRORS</glossterm>
             <glossdef>
                 <para>
@@ -3852,58 +3904,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     a recipe unless it is building an unstable (i.e. development) version from a source code repository
                     (e.g. Git or Subversion).
                  </para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-PE'><glossterm>PE</glossterm>
-            <glossdef>
-                <para>
-                    the epoch of the recipe.
-                    By default, this variable is unset.
-                    The field is used to make upgrades possible when the
-                    versioning scheme changes in some backwards incompatible
-                    way.
-                </para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-PREFERRED_PROVIDER'><glossterm>PREFERRED_PROVIDER</glossterm>
-            <glossdef>
-                <para>
-                    If multiple recipes provide an item, this variable
-                    determines which recipe should be given preference.
-                    You should always suffix the variable with the name of the
-                    provided item, and you should set it to the
-                    <link linkend='var-PN'><filename>PN</filename></link>
-                    of the recipe to which you want to give precedence.
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     PREFERRED_PROVIDER_virtual/xserver = "xserver-xf86"
-                    </literallayout>
-                </para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-PREFERRED_VERSION'><glossterm>PREFERRED_VERSION</glossterm>
-            <glossdef>
-                <para>
-                    If there are multiple versions of recipes available, this
-                    variable determines which recipe should be given preference.
-                    You must always suffix the variable with the
-                    <link linkend='var-PN'><filename>PN</filename></link>
-                    you want to select, and you should set to the
-                    <link linkend='var-PV'><filename>PV</filename></link>
-                    accordingly for precedence.
-                    You can use the "<filename>%</filename>" character as a
-                    wildcard to match any number of characters, which can be
-                    useful when specifying versions that contain long revision
-                    numbers that could potentially change.
-                    Here are two examples:
-                    <literallayout class='monospaced'>
-     PREFERRED_VERSION_python = "2.6.6"
-     PREFERRED_VERSION_linux-yocto = "3.0+git%"
-                    </literallayout>
-                </para>
             </glossdef>
         </glossentry>
 
