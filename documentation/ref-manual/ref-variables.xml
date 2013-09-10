@@ -493,6 +493,14 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-BB_NUMBER_THREADS'><glossterm>BB_NUMBER_THREADS</glossterm>
+            <glossdef>
+                <para>The maximum number of tasks BitBake should run in parallel at any one time.
+                    If your host development system supports multiple cores a good rule of thumb
+                    is to set this variable to twice the number of cores.</para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-BBCLASSEXTEND'><glossterm>BBCLASSEXTEND</glossterm>
             <glossdef>
                 <para>
@@ -515,6 +523,124 @@
                     </literallayout>
                 </para>
              </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BBFILE_COLLECTIONS'><glossterm>BBFILE_COLLECTIONS</glossterm>
+            <glossdef>
+                <para>Lists the names of configured layers.
+                    These names are used to find the other <filename>BBFILE_*</filename>
+                    variables.
+                    Typically, each layer will append its name to this variable in its
+                    <filename>conf/layer.conf</filename> file.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BBFILE_PATTERN'><glossterm>BBFILE_PATTERN</glossterm>
+            <glossdef>
+                <para>Variable that expands to match files from
+                    <link linkend='var-BBFILES'><filename>BBFILES</filename></link>
+                    in a particular layer.
+                    This variable is used in the <filename>conf/layer.conf</filename> file and must
+                    be suffixed with the name of the specific layer (e.g.
+                    <filename>BBFILE_PATTERN_emenlow</filename>).</para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BBFILE_PRIORITY'><glossterm>BBFILE_PRIORITY</glossterm>
+            <glossdef>
+                <para>Assigns the priority for recipe files in each layer.</para>
+                <para>This variable is useful in situations where the same recipe appears in
+                    more than one layer.
+                    Setting this variable allows you to prioritize a
+                    layer against other layers that contain the same recipe - effectively
+                    letting you control the precedence for the multiple layers.
+                    The precedence established through this variable stands regardless of a
+                    recipe's version
+                    (<link linkend='var-PV'><filename>PV</filename></link> variable).
+                    For example, a layer that has a recipe with a higher <filename>PV</filename> value but for
+                    which the <filename>BBFILE_PRIORITY</filename> is set to have a lower precedence still has a
+                    lower precedence.</para>
+                <para>A larger value for the <filename>BBFILE_PRIORITY</filename> variable results in a higher
+                    precedence.
+                    For example, the value 6 has a higher precedence than the value 5.
+                    If not specified, the <filename>BBFILE_PRIORITY</filename> variable is set based on layer
+                    dependencies (see the
+                    <filename><link linkend='var-LAYERDEPENDS'>LAYERDEPENDS</link></filename> variable for
+                    more information.
+                    The default priority, if unspecified
+                    for a layer with no dependencies, is the lowest defined priority + 1
+                    (or 1 if no priorities are defined).</para>
+                <tip>
+                    You can use the command <filename>bitbake-layers show_layers</filename> to list
+                    all configured layers along with their priorities.
+                </tip>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BBFILES'><glossterm>BBFILES</glossterm>
+            <glossdef>
+                <para>List of recipe files used by BitBake to build software.</para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BBINCLUDELOGS'><glossterm>BBINCLUDELOGS</glossterm>
+            <glossdef>
+                <para>Variable that controls how BitBake displays logs on build failure.</para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BBLAYERS'><glossterm>BBLAYERS</glossterm>
+            <glossdef>
+                <para>Lists the layers to enable during the build.
+                    This variable is defined in the <filename>bblayers.conf</filename> configuration
+                    file in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     BBLAYERS = " \
+       /home/scottrif/poky/meta \
+       /home/scottrif/poky/meta-yocto \
+       /home/scottrif/poky/meta-yocto-bsp \
+       /home/scottrif/poky/meta-mykernel \
+       "
+
+     BBLAYERS_NON_REMOVABLE ?= " \
+       /home/scottrif/poky/meta \
+       /home/scottrif/poky/meta-yocto \
+       "
+                    </literallayout>
+                    This example enables four layers, one of which is a custom, user-defined layer
+                    named <filename>meta-mykernel</filename>.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BBLAYERS_NON_REMOVABLE'><glossterm>BBLAYERS_NON_REMOVABLE</glossterm>
+            <glossdef>
+Core layer for images cannot be removed
+                <para>Lists core layers that cannot be removed from the
+                    <filename>bblayers.conf</filename> file.
+                    In order for BitBake to build your image, your
+                    <filename>bblayers.conf</filename> file must include the
+                    <filename>meta</filename> and <filename>meta-yocto</filename>
+                    core layers.
+                    Here is an example that shows these two layers listed in
+                    the <filename>BBLAYERS_NON_REMOVABLE</filename> statement:
+                    <literallayout class='monospaced'>
+     BBLAYERS = " \
+       /home/scottrif/poky/meta \
+       /home/scottrif/poky/meta-yocto \
+       /home/scottrif/poky/meta-yocto-bsp \
+       /home/scottrif/poky/meta-mykernel \
+       "
+
+     BBLAYERS_NON_REMOVABLE ?= " \
+       /home/scottrif/poky/meta \
+       /home/scottrif/poky/meta-yocto \
+       "
+                    </literallayout>
+                </para>
+            </glossdef>
         </glossentry>
 
         <glossentry id='var-BBMASK'><glossterm>BBMASK</glossterm>
@@ -577,136 +703,10 @@
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-BB_NUMBER_THREADS'><glossterm>BB_NUMBER_THREADS</glossterm>
-            <glossdef>
-                <para>The maximum number of tasks BitBake should run in parallel at any one time.
-                    If your host development system supports multiple cores a good rule of thumb
-                    is to set this variable to twice the number of cores.</para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-BBFILE_COLLECTIONS'><glossterm>BBFILE_COLLECTIONS</glossterm>
-            <glossdef>
-                <para>Lists the names of configured layers.
-                    These names are used to find the other <filename>BBFILE_*</filename>
-                    variables.
-                    Typically, each layer will append its name to this variable in its
-                    <filename>conf/layer.conf</filename> file.
-                </para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-BBFILE_PATTERN'><glossterm>BBFILE_PATTERN</glossterm>
-            <glossdef>
-                <para>Variable that expands to match files from
-                    <link linkend='var-BBFILES'><filename>BBFILES</filename></link>
-                    in a particular layer.
-                    This variable is used in the <filename>conf/layer.conf</filename> file and must
-                    be suffixed with the name of the specific layer (e.g.
-                    <filename>BBFILE_PATTERN_emenlow</filename>).</para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-BBFILE_PRIORITY'><glossterm>BBFILE_PRIORITY</glossterm>
-            <glossdef>
-                <para>Assigns the priority for recipe files in each layer.</para>
-                <para>This variable is useful in situations where the same recipe appears in
-                    more than one layer.
-                    Setting this variable allows you to prioritize a
-                    layer against other layers that contain the same recipe - effectively
-                    letting you control the precedence for the multiple layers.
-                    The precedence established through this variable stands regardless of a
-                    recipe's version
-                    (<link linkend='var-PV'><filename>PV</filename></link> variable).
-                    For example, a layer that has a recipe with a higher <filename>PV</filename> value but for
-                    which the <filename>BBFILE_PRIORITY</filename> is set to have a lower precedence still has a
-                    lower precedence.</para>
-                <para>A larger value for the <filename>BBFILE_PRIORITY</filename> variable results in a higher
-                    precedence.
-                    For example, the value 6 has a higher precedence than the value 5.
-                    If not specified, the <filename>BBFILE_PRIORITY</filename> variable is set based on layer
-                    dependencies (see the
-                    <filename><link linkend='var-LAYERDEPENDS'>LAYERDEPENDS</link></filename> variable for
-                    more information.
-                    The default priority, if unspecified
-                    for a layer with no dependencies, is the lowest defined priority + 1
-                    (or 1 if no priorities are defined).</para>
-                <tip>
-                    You can use the command <filename>bitbake-layers show_layers</filename> to list
-                    all configured layers along with their priorities.
-                </tip>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-BBFILES'><glossterm>BBFILES</glossterm>
-            <glossdef>
-                <para>List of recipe files used by BitBake to build software.</para>
-            </glossdef>
-        </glossentry>
-
         <glossentry id='var-BBPATH'><glossterm>BBPATH</glossterm>
             <glossdef>
                 <para>Used by BitBake to locate <filename>.bbclass</filename> and configuration files.
                     This variable is analogous to the <filename>PATH</filename> variable.</para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-BBINCLUDELOGS'><glossterm>BBINCLUDELOGS</glossterm>
-            <glossdef>
-                <para>Variable that controls how BitBake displays logs on build failure.</para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-BBLAYERS'><glossterm>BBLAYERS</glossterm>
-            <glossdef>
-                <para>Lists the layers to enable during the build.
-                    This variable is defined in the <filename>bblayers.conf</filename> configuration
-                    file in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     BBLAYERS = " \
-       /home/scottrif/poky/meta \
-       /home/scottrif/poky/meta-yocto \
-       /home/scottrif/poky/meta-yocto-bsp \
-       /home/scottrif/poky/meta-mykernel \
-       "
-
-     BBLAYERS_NON_REMOVABLE ?= " \
-       /home/scottrif/poky/meta \
-       /home/scottrif/poky/meta-yocto \
-       "
-                    </literallayout>
-                    This example enables four layers, one of which is a custom, user-defined layer
-                    named <filename>meta-mykernel</filename>.
-                </para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-BBLAYERS_NON_REMOVABLE'><glossterm>BBLAYERS_NON_REMOVABLE</glossterm>
-            <glossdef>
-Core layer for images cannot be removed
-                <para>Lists core layers that cannot be removed from the
-                    <filename>bblayers.conf</filename> file.
-                    In order for BitBake to build your image, your
-                    <filename>bblayers.conf</filename> file must include the
-                    <filename>meta</filename> and <filename>meta-yocto</filename>
-                    core layers.
-                    Here is an example that shows these two layers listed in
-                    the <filename>BBLAYERS_NON_REMOVABLE</filename> statement:
-                    <literallayout class='monospaced'>
-     BBLAYERS = " \
-       /home/scottrif/poky/meta \
-       /home/scottrif/poky/meta-yocto \
-       /home/scottrif/poky/meta-yocto-bsp \
-       /home/scottrif/poky/meta-mykernel \
-       "
-
-     BBLAYERS_NON_REMOVABLE ?= " \
-       /home/scottrif/poky/meta \
-       /home/scottrif/poky/meta-yocto \
-       "
-                    </literallayout>
-                </para>
             </glossdef>
         </glossentry>
 
