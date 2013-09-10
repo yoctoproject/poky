@@ -322,10 +322,10 @@
 $ bitbake --help
 Usage: bitbake [options] [package ...]
 
-Executes the specified task (default is 'build') for a given set of BitBake files.
-It expects that BBFILES is defined, which is a space separated list of files to
-be executed.  BBFILES does support wildcards.
-Default BBFILES are the .bb files in the current directory.
+    Executes the specified task (default is 'build') for a given set of BitBake files.
+    It expects that BBFILES is defined, which is a space separated list of files to
+    be executed.  BBFILES does support wildcards.
+    Default BBFILES are the .bb files in the current directory.
 
 Options:
   --version             show program's version number and exit
@@ -348,6 +348,10 @@ Options:
                         what you are doing). Depending on the base.bbclass a
                         listtasks tasks is defined and will show available
                         tasks
+  -C INVALIDATE_STAMP, --clear-stamp=INVALIDATE_STAMP
+                        Invalidate the stamp for the specified cmd such as
+                        'compile' and run the default task for the specified
+                        target(s)
   -r PREFILE, --read=PREFILE
                         read the specified file before bitbake.conf
   -R POSTFILE, --postread=POSTFILE
@@ -360,11 +364,12 @@ Options:
                         don't execute, just dump out the signature
                         construction information
   -p, --parse-only      quit after parsing the BB files (developers only)
-  -s, --show-versions   show current and preferred versions of all packages
+  -s, --show-versions   show current and preferred versions of all recipes
   -e, --environment     show the global or per-package environment (this is
                         what used to be bbread)
   -g, --graphviz        emit the dependency trees of the specified packages in
-                        the dot syntax
+                        the dot syntax, and the pn-buildlist to show the build
+                        list
   -I EXTRA_ASSUME_PROVIDED, --ignore-deps=EXTRA_ASSUME_PROVIDED
                         Assume these dependencies don't exist and are already
                         provided (equivalent to ASSUME_PROVIDED). Useful to
@@ -374,9 +379,17 @@ Options:
   -P, --profile         profile the command and print a report
   -u UI, --ui=UI        userinterface to use
   -t SERVERTYPE, --servertype=SERVERTYPE
-                        Choose which server to use, none, process or xmlrpc
+                        Choose which server to use, process or xmlrpc
   --revisions-changed   Set the exit code depending on whether upstream
                         floating revisions have changed or not
+  --server-only         Run bitbake without UI,  the frontend can connect with
+                        bitbake server itself
+  -B BIND, --bind=BIND  The name/address for the bitbake server to bind to
+  --no-setscene         Do not run any setscene tasks, forces builds
+  --remote-server=REMOTE_SERVER
+                        Connect to the specified server
+  -m, --kill-server     Terminate the remote server
+  --observe-only        Connect to a server as an observing-only client
         </screen>
     </section>
 
