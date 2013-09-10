@@ -74,7 +74,11 @@
             the source tree is combined with the output.
             The <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
             is created initially when you <filename>source</filename>
-            the OpenEmbedded build environment setup script <filename>&OE_INIT_FILE;</filename>.
+            the OpenEmbedded build environment setup script 
+            (i.e.
+            <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
+            or
+            <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>).
         </para>
 
         <para>
@@ -85,8 +89,10 @@
             the setup script.
             For information on separating output from your local
             Source Directory files, see the
-            "<link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>"
-            section.
+            "<link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
+            and
+            "<link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>"
+            sections.
         </para>
     </section>
 
@@ -143,7 +149,7 @@
             which is a Yocto Project build user interface.
             For more information on the Hob, see the
             <ulink url='&YOCTO_HOME_URL;/tools-resources/projects/hob'>Hob Project</ulink>
-            webpage.
+            web page.
         </para>
     </section>
 
@@ -162,7 +168,9 @@
             This directory contains various integration scripts that implement
             extra functionality in the Yocto Project environment (e.g. QEMU scripts).
             The <link linkend="structure-core-script"><filename>&OE_INIT_FILE;</filename></link>
-            script appends this directory to the shell's
+            and
+            <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>
+            scripts append this directory to the shell's
             <filename>PATH</filename> environment variable.
         </para>
 
@@ -177,11 +185,19 @@
         <title><filename>&OE_INIT_FILE;</filename></title>
 
         <para>
-            This script sets up the OpenEmbedded build environment.
+            This script is one of two scripts that set up the OpenEmbedded build 
+            environment.
+            For information on the other script, see the 
+            "<link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>"
+            section.
+        </para>
+
+        <para>
             Running this script with the <filename>source</filename> command in
             a shell makes changes to <filename>PATH</filename> and sets other
             core BitBake variables based on the current working directory.
-            You need to run this script before running BitBake commands.
+            You need to run an environment setup script before running BitBake 
+            commands.
             The script uses other scripts within the
             <filename>scripts</filename> directory to do the bulk of the work.
         </para>
@@ -191,7 +207,7 @@
             <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
             argument creates the <filename>build</filename> directory.
             If you provide a Build Directory argument when you
-            <filename>source</filename> the script, you direct OpenEmbedded
+            <filename>source</filename> the script, you direct the OpenEmbedded
             build system to create a Build Directory of your choice.
             For example, the following command creates a Build Directory named
             <filename>mybuilds</filename> that is outside of the
@@ -207,6 +223,81 @@
                 or directory names, the script returns an error indicating no such
                 file or directory.
                 Be sure to use a Source Directory free of names containing spaces.
+            </note>
+        </para>
+    </section>
+
+    <section id='structure-memres-core-script'>
+        <title><filename>oe-init-build-env-memres</filename></title>
+
+        <para>
+            This script is one of two scripts that set up the OpenEmbedded build 
+            environment.
+            Setting up the environment with this script uses a 
+            memory-resident BitBake.
+            For information on the other setup script, see the 
+            "<link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>"
+            section.
+        </para>
+
+        <para>
+            Memory-resident BitBake resides in memory until you specifically
+            remove it using the following BitBake command:
+            <literallayout class='monospaced'>
+     $ bitbake -m
+            </literallayout>
+        </para>
+
+        <para>
+            Running this script with the <filename>source</filename> command in
+            a shell makes changes to <filename>PATH</filename> and sets other
+            core BitBake variables based on the current working directory.
+            One of these variables is the 
+            <link linkend='var-BBSERVER'><filename>BBSERVER</filename></link>
+            variable, which allows the OpenEmbedded build system to locate 
+            the server that is running BitBake.
+        </para>
+
+        <para>
+            You need to run an environment setup script before running BitBake 
+            commands.
+            Following is the script syntax:
+            <literallayout class='monospaced'>
+     $ source oe-init-build-env-memres &lt;port_number&gt; &lt;build_dir&gt;
+            </literallayout>
+            The script uses other scripts within the
+            <filename>scripts</filename> directory to do the bulk of the work.
+        </para>
+
+        <para>
+            If you do not provide a port number with the script, the default
+            port "12345" is used.
+        </para>
+
+        <para>
+            By default, running this script without a
+            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+            argument creates the <filename>build</filename> directory.
+            If you provide a Build Directory argument when you
+            <filename>source</filename> the script, you direct the OpenEmbedded
+            build system to create a Build Directory of your choice.
+            For example, the following command uses the default port number
+            "12345" and creates a Build Directory named
+            <filename>mybuilds</filename> that is outside of the
+            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>:
+            <literallayout class='monospaced'>
+     $ source oe-init-build-env-memres ~/mybuilds
+            </literallayout>
+            <note>
+                The OpenEmbedded build system does not support file or 
+                directory names that contain spaces.
+                If you attempt to run the 
+                <filename>oe-init-build-env-memres</filename> script
+                from a Source Directory that contains spaces in either the 
+                filenames or directory names, the script returns an error 
+                indicating no such file or directory.
+                Be sure to use a Source Directory free of names containing 
+                spaces.
             </note>
         </para>
     </section>
