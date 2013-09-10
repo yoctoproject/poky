@@ -2926,6 +2926,8 @@
         <para>
             This section describes a few tasks that involve packages:
             <itemizedlist>
+                <listitem><para>Excluding packages from an image
+                    </para></listitem>
                 <listitem><para>Incrementing a package revision number
                     </para></listitem>
                 <listitem><para>Handling a package name alias
@@ -2939,6 +2941,49 @@
                     </para></listitem>
             </itemizedlist>
         </para>
+
+        <section id='excluding-packages-from-an-image'>
+            <title>Excluding Packages from an Image</title>
+
+            <para>
+                You might find it necessary to prevent specific packages 
+                from being installed into an image.
+                If so, you can use several variables to direct the build
+                system to essentially ignore installing recommended packages
+                or to not install a package at all.
+            </para>
+
+            <para>
+                The following list introduces variables you can use to 
+                prevent packages from being installed into your image.
+                Each of these variables only works with IPK and RPM
+                package types.
+                Support for Debian packages does not exist.
+                Also, you can use these variables from your  
+                <filename>local.conf</filename> file or attach them to a 
+                specific image recipe by using a recipe name override.
+                For more detail on the variables, see the descriptions in the 
+                Yocto Project Reference Manual's glossary chapter.
+                <itemizedlist>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-BAD_RECOMMENDATIONS'><filename>BAD_RECOMMENDATIONS</filename></ulink>:
+                        Use this variable to specify "recommended-only"  
+                        packages that you do not want installed.
+                        </para></listitem>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-NO_RECOMMENDATIONS'><filename>NO_RECOMMENDATIONS</filename></ulink>:
+                        Use this variable to prevent all "recommended-only"  
+                        packages from being installed.
+                        </para></listitem>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_EXCLUDE'><filename>PACKAGE_EXCLUDE</filename></ulink>:
+                        Use this variable to prevent specific packages from 
+                        being installed regardless of whether they are
+                        "recommended-only" or not.
+                        You need to realize that things could break when you 
+                        prevent the installation of a package whose presence
+                        is required by an installed package.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
 
         <section id='incrementing-a-package-revision-number'>
             <title>Incrementing a Package Revision Number</title>
