@@ -334,25 +334,69 @@
         <title><filename>build/conf/local.conf</filename></title>
 
         <para>
-            This file contains all the local user configuration for your build environment.
-            If there is no <filename>local.conf</filename> present, it is created from
-            <filename>local.conf.sample</filename>.
-            The <filename>local.conf</filename> file contains documentation on the various configuration options.
-            Any variable set here overrides any variable set elsewhere within the environment unless
-            that variable is hard-coded within a file (e.g. by using '=' instead of '?=').
-            Some variables are hard-coded for various reasons but these variables are
-            relatively rare.
+            This configuration file contains all the local user configurations 
+            for your build environment.
+            The <filename>local.conf</filename> file contains documentation on 
+            the various configuration options.
+            Any variable set here overrides any variable set elsewhere within 
+            the environment unless that variable is hard-coded within a file 
+            (e.g. by using '=' instead of '?=').
+            Some variables are hard-coded for various reasons but these 
+            variables are relatively rare.
         </para>
 
         <para>
-            Edit this file to set the <filename><link linkend='var-MACHINE'>MACHINE</link></filename>
+            Edit this file to set the 
+            <filename><link linkend='var-MACHINE'>MACHINE</link></filename>
             for which you want to build, which package types you wish to use
             (<link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>),
             the location from which you want to downloaded files
             (<filename><link linkend='var-DL_DIR'>DL_DIR</link></filename>),
             and how you want your host machine to use resources
-            (<link linkend='var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></link> and
+            (<link linkend='var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></link> 
+            and
             <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></link>).
+        </para>
+
+        <para>
+            If <filename>local.conf</filename> is not present when you 
+            start the build, the OpenEmbedded build system creates it from 
+            <filename>local.conf.sample</filename> when
+            you <filename>source</filename> the top-level build environment 
+            setup script (i.e.
+            <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
+            or 
+            <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>).
+        </para>
+
+        <para>
+            The source <filename>local.conf.sample</filename> file used 
+            depends on the <filename>$TEMPLATECONF</filename> script variable,
+            which defaults to <filename>/meta-yocto/conf</filename>
+            when you are building from the Yocto Project development 
+            environment and defaults to <filename>/meta/conf</filename> when 
+            you are building from the OpenEmbedded Core environment.
+            Because the script variable points to the source of the 
+            <filename>local.conf.sample</filename> file, this implies that 
+            you can configure your build environment from any layer by setting     
+            the variable in the top-level build environment setup script as 
+            follows:
+            <literallayout class='monospaced'>
+     TEMPLATECONF=&lt;your_layer&gt;/conf
+            </literallayout>
+            Once the build process gets the sample file, it uses 
+            <filename>sed</filename> to substitute final 
+            <filename>${</filename><link linkend='var-OEROOT'><filename>OEROOT</filename></link><filename>}</filename> 
+            values for all <filename>##OEROOT##</filename> values.
+            <note>
+                You can see how the <filename>TEMPLATECONF</filename> variable
+                is used by looking at the       
+                <filename>/scripts/oe-setup-builddir</filename> script in the 
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+                You can find the Yocto Project version of the 
+                <filename>local.conf.sample</filename> file in the 
+                <filename>/meta-yocto/conf</filename> directory.                
+            </note>
         </para>
     </section>
 
@@ -360,21 +404,53 @@
         <title><filename>build/conf/bblayers.conf</filename></title>
 
         <para>
-            This file defines
+            This configuration file defines
             <ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>layers</ulink>,
             which are directory trees, traversed (or walked) by BitBake.
-            If <filename>bblayers.conf</filename>
-            is not present, it is created from <filename>bblayers.conf.sample</filename> when
-            you <filename>source</filename> the environment setup script.
+            The <filename>bblayers.conf</filename> file uses the
+            <link linkend='var-BBLAYERS'><filename>BBLAYERS</filename></link> 
+            variable to list the layers BitBake tries to find, and uses the
+            <link linkend='var-BBLAYERS_NON_REMOVABLE'><filename>BBLAYERS_NON_REMOVABLE</filename></link>
+            variable to list layers that must not be removed.
         </para>
 
         <para>
-            The <filename>bblayers.conf</filename> file uses the
-            <link linkend='var-BBLAYERS'><filename>BBLAYERS</filename></link> variable to
-            list the layers BitBake tries to find.
-            The file uses the
-            <link linkend='var-BBLAYERS_NON_REMOVABLE'><filename>BBLAYERS_NON_REMOVABLE</filename></link>
-            variable to list layers that must not be removed.
+            If <filename>bblayers.conf</filename> is not present when you 
+            start the build, the OpenEmbedded build system creates it from 
+            <filename>bblayers.conf.sample</filename> when
+            you <filename>source</filename> the top-level build environment 
+            setup script (i.e.
+            <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
+            or 
+            <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>).
+        </para>
+
+        <para>
+            The source <filename>bblayers.conf.sample</filename> file used 
+            depends on the <filename>$TEMPLATECONF</filename> script variable,
+            which defaults to <filename>/meta-yocto/conf</filename>
+            when you are building from the Yocto Project development 
+            environment and defaults to <filename>/meta/conf</filename> when 
+            you are building from the OpenEmbedded Core environment.
+            Because the script variable points to the source of the 
+            <filename>bblayers.conf.sample</filename> file, this implies that 
+            you can base your build from any layer by setting the variable in
+            the top-level build environment setup script as follows:
+            <literallayout class='monospaced'>
+     TEMPLATECONF=&lt;your_layer&gt;/conf
+            </literallayout>
+            Once the build process gets the sample file, it uses 
+            <filename>sed</filename> to substitute final 
+            <filename>${</filename><link linkend='var-OEROOT'><filename>OEROOT</filename></link><filename>}</filename> 
+            values for all <filename>##OEROOT##</filename> values.
+            <note>
+                You can see how the <filename>TEMPLATECONF</filename> variable
+                <filename>/scripts/oe-setup-builddir</filename> script in the 
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+                You can find the Yocto Project version of the 
+                <filename>bblayers.conf.sample</filename> file in the 
+                <filename>/meta-yocto/conf</filename> directory.                
+            </note>
         </para>
     </section>
 
