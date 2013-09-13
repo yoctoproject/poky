@@ -24,7 +24,7 @@
        <link linkend='var-FILES'>F</link>
 <!--               <link linkend='var-glossary-g'>G</link> -->
        <link linkend='var-HOMEPAGE'>H</link>
-       <link linkend='var-IMAGE_FEATURES'>I</link>
+       <link linkend='var-IMAGE_CLASSES'>I</link>
 <!--               <link linkend='var-glossary-j'>J</link> -->
        <link linkend='var-KARCH'>K</link>
        <link linkend='var-LAYERDEPENDS'>L</link>
@@ -36,7 +36,7 @@
        <link linkend='var-RCONFLICTS'>R</link>
        <link linkend='var-S'>S</link>
        <link linkend='var-T'>T</link>
-<!--               <link linkend='var-glossary-u'>U</link> -->
+       <link linkend='var-USER_CLASSES'>U</link>
 <!--               <link linkend='var-glossary-v'>V</link> -->
        <link linkend='var-WARN_QA'>W</link>
 <!--               <link linkend='var-glossary-x'>X</link> -->
@@ -1797,6 +1797,31 @@ Core layer for images cannot be removed
     </glossdiv>
 
     <glossdiv id='var-glossary-i'><title>I</title>
+
+        <glossentry id='var-IMAGE_CLASSES'><glossterm>IMAGE_CLASSES</glossterm>
+            <glossdef>
+                <para>
+                    A list of classes that all images should inherit.  
+                    You typically use this variable to specify the list of 
+                    classes that register the different types of images 
+                    the OpenEmbedded build system creates.
+                </para>
+
+                <para>
+                    The default value for <filename>IMAGE_CLASSES</filename> is
+                    <filename>image_types.bbclass</filename>.
+                    You can set this variable in your 
+                    <filename>local.conf</filename> or in a distribution 
+                    configuration file.
+                </para>
+
+                <para>
+                    For more information, see  
+                    <filename>meta/classes/image_types.bbclass</filename> in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+                </para> 
+            </glossdef>
+        </glossentry>
 
         <glossentry id='var-IMAGE_FEATURES'><glossterm>IMAGE_FEATURES</glossterm>
             <glossdef>
@@ -3651,6 +3676,30 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PATCHRESOLVE'><glossterm>PATCHRESOLVE</glossterm>
+            <glossdef>
+                <para>
+                    Determines the action to take when a patch fails.
+                    You can set this variable to one of two values: "noop" and
+                    "user".
+                </para>
+
+                <para>
+                    The default value of "noop" causes the build to simply fail
+                    when the OpenEmbedded build system cannot successfully 
+                    apply a patch.
+                    Setting the value to "user" causes the build system to 
+                    launch a shell and places you in the right location so that 
+                    you can manually resolve the conflicts.
+                </para>
+
+                <para>
+                    Set this variable in your 
+                    <filename>local.conf</filename> file.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PATCHTOOL'><glossterm>PATCHTOOL</glossterm>
             <glossdef>
                 <para>
@@ -5075,8 +5124,33 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
     </glossdiv>
 
-<!--            <glossdiv id='var-glossary-u'><title>U</title>-->
-<!--            </glossdiv>-->
+    <glossdiv id='var-glossary-u'><title>U</title>
+
+        <glossentry id='var-USER_CLASSES'><glossterm>USER_CLASSES</glossterm>
+            <glossdef>
+                <para>
+                    A list of classes to globally inherit.  
+                    These classes are used by the OpenEmbedded build system 
+                    to enable extra features (e.g. 
+                    <filename>buildstats</filename>, 
+                    <filename>image-mklibs</filename>, and so forth).
+                </para>
+
+                <para>
+                    The default list is set in your 
+                    <filename>local.conf</filename> file:
+                    <literallayout class='monospaced'>
+     USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+                    </literallayout>
+                    For more information, see
+                    <filename>meta-yocto/conf/local.conf.sample</filename> in 
+                    the 
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+                </para>
+            </glossdef>
+        </glossentry>
+
+    </glossdiv>
 
 <!--            <glossdiv id='var-glossary-v'><title>V</title>-->
 <!--            </glossdiv>-->
