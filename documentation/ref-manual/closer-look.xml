@@ -601,6 +601,58 @@
         </section>
     </section>
 
+    <section id="package-feeds-dev-environment">
+        <title>Package Feeds</title>
+
+        <para>
+            When the OpenEmbedded build system generates an image or an SDK,
+            it gets the packages from a package feed area located in the
+            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+            The 
+            <link linkend='general-yocto-environment-figure'>general Yocto Project Development Environment figure</link>
+            shows this package feeds area in the upper-right corner.
+        </para>
+
+        <para>
+            This section looks a little closer into the package feeds area used
+            by the build system.
+            Here is a more detailed look at the area:
+            <imagedata fileref="figures/package-feeds.png" align="center" width="7in" depth="6in" />
+        </para>
+
+        <para>
+            Package feeds are an intermediary step in the build process.
+            BitBake generates packages whose type is defined by the
+            <link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>
+            variable.
+            Before placing the packages into package feeds,
+            the build process validates them with generated output quality
+            assurance checks through the
+            <link linkend='ref-classes-insane'><filename>insane.bbclass</filename></link>
+            class.
+        </para>
+
+        <para>
+            The package feed area resides in
+            <filename>tmp/deploy</filename> of the Build Directory.
+            Folders are created that correspond to the package type
+            (IPK, DEB, or RPM) created.
+            Further organization is derived through the value of the
+            <link linkend='var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></link>
+            variable for each package.
+            For example, packages can exist for the i586 or qemux86
+            architectures.
+            The package files themselves reside within the appropriate
+            architecture folder.
+        </para>
+
+        <para>
+            BitBake uses the <filename>do_package_write_*</filename> task to
+            place generated packages into the package holding area (e.g.
+            <filename>do_package_write_ipk</filename> for IPK packages).
+        </para>
+    </section>
+
     <section id='bitbake-dev-environment'>
         <title>BitBake</title>
 
@@ -844,12 +896,15 @@
             <para>
                 The image generation process consists of several stages and 
                 depends on many variables.
-                The <filename>do_rootfs</filename> uses these key variables
+                The <filename>do_rootfs</filename> task uses these key variables
                 to help create the list of packages to actually install:
                 <itemizedlist>
                     <listitem><para><link linkend='var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></link>:
                         Lists out the base set of packages to install from 
                         the Package Feeds area.</para></listitem>   
+                    <listitem><para><link linkend='var-PACKAGE_EXCLUDE'><filename>PACKAGE_EXCLUDE</filename></link>:
+                        Specifies packages that should not be installed.
+                        </para></listitem>  
                     <listitem><para><link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>:
                         Specifies features to include in the image. 
                         These features map to additional packages for
@@ -858,18 +913,10 @@
                         Specifies the package manager to use and consequently
                         helps determine where to locate packages within the 
                         Package Feeds area.</para></listitem>  
-                    <listitem><para><link linkend='var-PACKAGE_EXCLUDE'><filename>PACKAGE_EXCLUDE</filename></link>:
-                        Specifies packages that should not be installed.
-                        </para></listitem>  
+                    <listitem><para><link linkend='var-IMAGE_LINGUAS'><filename>IMAGE_LINGUAS</filename></link>:
+                        Determines the language for which packages are being 
+                        installed.</para></listitem>
                 </itemizedlist>
-            </para>
-
-            <para> 
-                In addition to the previously mentioned variables, the image
-                generation process uses 
-                <link linkend='var-IMAGE_LINGUAS'><filename>IMAGE_LINGUAS</filename></link>
-                to determine what language for which packages are being 
-                installed.
             </para>
 
             <para>
@@ -921,58 +968,6 @@
                 filesystem have correct ownership.
             </note>
         </section>
-    </section>
-
-    <section id="package-feeds-dev-environment">
-        <title>Package Feeds</title>
-
-        <para>
-            When the OpenEmbedded build system generates an image or an SDK,
-            it gets the packages from a package feed area located in the
-            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
-            The 
-            <link linkend='general-yocto-environment-figure'>general Yocto Project Development Environment figure</link>
-            shows this package feeds area in the upper-right corner.
-        </para>
-
-        <para>
-            This section looks a little closer into the package feeds area used
-            by the build system.
-            Here is a more detailed look at the area:
-            <imagedata fileref="figures/package-feeds.png" align="center" width="7in" depth="6in" />
-        </para>
-
-        <para>
-            Package feeds are an intermediary step in the build process.
-            BitBake generates packages whose type is defined by the
-            <link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>
-            variable.
-            Before placing the packages into package feeds,
-            the build process validates them with generated output quality
-            assurance checks through the
-            <link linkend='ref-classes-insane'><filename>insane.bbclass</filename></link>
-            class.
-        </para>
-
-        <para>
-            The package feed area resides in
-            <filename>tmp/deploy</filename> of the Build Directory.
-            Folders are created that correspond to the package type
-            (IPK, DEB, or RPM) created.
-            Further organization is derived through the value of the
-            <link linkend='var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></link>
-            variable for each package.
-            For example, packages can exist for the i586 or qemux86
-            architectures.
-            The package files themselves reside within the appropriate
-            architecture folder.
-        </para>
-
-        <para>
-            BitBake uses the <filename>do_package_write_*</filename> task to
-            place generated packages into the package holding area (e.g.
-            <filename>do_package_write_ipk</filename> for IPK packages).
-        </para>
     </section>
 
     <section id='images-dev-environment'>
