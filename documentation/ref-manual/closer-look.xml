@@ -830,6 +830,97 @@
                 </note>
             </para>
         </section>
+
+        <section id='image-generation-dev-environment'>
+            <title>Image Generation</title>
+
+            <para>
+                Once packages are split and stored in the Package Feeds area, 
+                the OpenEmbedded build system uses BitBake to generate the 
+                root filesystem image:
+                <imagedata fileref="figures/image-generation.png" align="center" width="6in" depth="7in" />
+            </para>
+
+            <para>
+                The image generation process consists of several stages and 
+                depends on many variables.
+                The <filename>do_rootfs</filename> uses these key variables
+                to help create the list of packages to actually install:
+                <itemizedlist>
+                    <listitem><para><link linkend='var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></link>:
+                        Lists out the base set of packages to install from 
+                        the Package Feeds area.</para></listitem>   
+                    <listitem><para><link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>:
+                        Specifies features to include in the image. 
+                        These features map to additional packages for
+                        installation.</para></listitem>
+                    <listitem><para><link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>:
+                        Specifies the package manager to use and consequently
+                        helps determine where to locate packages within the 
+                        Package Feeds area.</para></listitem>  
+                    <listitem><para><link linkend='var-PACKAGE_EXCLUDE'><filename>PACKAGE_EXCLUDE</filename></link>:
+                        Specifies packages that should not be installed.
+                        </para></listitem>  
+                </itemizedlist>
+            </para>
+
+            <para> 
+                In addition to the previously mentioned variables, the image
+                generation process uses 
+                <link linkend='var-IMAGE_LINGUAS'><filename>IMAGE_LINGUAS</filename></link>
+                to determine what language for which packages are being 
+                installed.
+            </para>
+
+            <para>
+                Part of the image generation process includes compressing the 
+                root filesystem image. 
+                Compression is accomplished through several optimization 
+                routines designed to reduce the overall size of the image.
+            </para>
+
+            <para>
+                The process runs as many post installation scripts as possible.
+                Any scripts that cannot be run are run when the system is 
+                first booted.
+                If you are using a read-only root filesystem, all the post
+                installation scripts are run during the package installation
+                phase since the root filesystem cannot be written into.
+            </para>
+
+            <para>
+                During the Prelink phase, optimization processes are run across
+                the image. 
+                These processes include <filename>mklibs</filename> and 
+                <filename>prelink</filename>.
+                The <filename>mklibs</filename> optimizes the size of the 
+                libraries.  
+                The <filename>prelink</filename> process optimizes the dynamic 
+                linking of shared libraries to reduce start up time of the 
+                executables.
+                See the 
+                <link linkend='var-IMAGE_POSTPROCESS_COMMAND'><filename>IMAGE_POSTPROCESS_COMMAND</filename></link>
+                and 
+                <link linkend='var-ROOTFS_POSTPROCESS_COMMAND'><filename>ROOTFS_POSTPROCESS_COMMAND</filename></link>
+                variables for additional information.
+            </para>
+
+            <para>
+                After the root filesystem has been constructed, the image
+                generation process turns everything into an image file or 
+                a set of image files.  
+                we need to turn into an image file or set of image files.  
+                The formats used for the root filesystem depend on the 
+                <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                variable.
+            </para>
+
+            <note>
+                The entire image generation process is run under Pseudo.
+                Running under Pseudo ensures that the files in the root 
+                filesystem have correct ownership.
+            </note>
+        </section>
     </section>
 
     <section id="package-feeds-dev-environment">
