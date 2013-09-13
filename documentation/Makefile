@@ -381,8 +381,8 @@ publish:
             echo " "; \
             echo "******** Publishing "$(DOC)".html"; \
             echo " "; \
-            scp -r $(MANUALS) $(STYLESHEET) www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/$(VER)/$(DOC); \
-            cd $(DOC); scp -r $(FIGURES) www.yoctoproject.org:/srv/www/www.yoctoproject.org-docs/$(VER)/$(DOC); \
+            scp -r $(MANUALS) $(STYLESHEET) docs.yp:/var/www/www.yoctoproject.org-docs/$(VER)/$(DOC); \
+            cd $(DOC); scp -r $(FIGURES) docs.yp:/var/www/www.yoctoproject.org-docs/$(VER)/$(DOC); \
 	else \
           echo " "; \
           echo $(DOC)".html missing.  Generate the file first then try again."; \
