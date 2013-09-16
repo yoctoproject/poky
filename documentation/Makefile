@@ -200,7 +200,8 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
 	figures/yocto-environment-ref.png figures/user-configuration.png figures/source-input.png \
 	figures/package-feeds.png figures/layer-input.png figures/images.png figures/sdk.png \
 	figures/source-fetching.png figures/patching.png figures/configuration-compile-autoreconf.png \
-	figures/analysis-for-package-splitting.png figures/image-generation.png
+	figures/analysis-for-package-splitting.png figures/image-generation.png \
+	figures/sdk-generation.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
@@ -219,7 +220,8 @@ TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/user-configuration.png figures/yocto-environment-ref.png \
 	figures/images.png figures/sdk.png figures/source-fetching.png \
 	figures/patching.png figures/configuration-compile-autoreconf.png \
-	figures/analysis-for-package-splitting.png figures/image-generation.png
+	figures/analysis-for-package-splitting.png figures/image-generation.png \
+	figures/sdk-generation.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
