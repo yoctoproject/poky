@@ -921,12 +921,23 @@
             </para>
 
             <para>
-                The process runs all of the post installation scripts, and
-                any that fail to run on the build host will be run on the
+                Package installation is under control of the package manager
+                (e.g. smart/rpm, opkg, or apt/dpkg) regardless of whether or
+                not package management is enabled for the target.
+                At the end of the process, if package management is not
+                enabled for the target, the package manager's data files
+                are deleted from the root filesystem.
+            </para>
+
+            <para>
+                During image generation, the build system attempts to run
+                all post installation scripts.
+                Any that fail to run on the build host are run on the
                 target when the target system is first booted.
-                If you are using a read-only root filesystem, all the post
-                installation scripts must succeed during the package
-                installation phase since the root filesystem cannot be
+                If you are using a
+                <ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-read-only-root-filesystem'>read-only root filesystem</ulink>,
+                all the post installation scripts must succeed during the
+                package installation phase since the root filesystem cannot be
                 written into.
             </para>
 
@@ -935,10 +946,10 @@
                 the image.
                 These processes include <filename>mklibs</filename> and
                 <filename>prelink</filename>.
-                The <filename>mklibs</filename> optimizes the size of the
-                libraries.
+                The <filename>mklibs</filename> process optimizes the size
+                of the libraries.
                 A <filename>prelink</filename> process optimizes the dynamic
-                linking of shared libraries to reduce start up time of the
+                linking of shared libraries to reduce start up time of
                 executables.
             </para>
 
