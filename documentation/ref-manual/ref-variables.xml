@@ -4133,6 +4133,32 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
+                    BitBake, which the OpenEmbedded build system uses, supports
+                    specifying versioned dependencies.
+                    Although the syntax varies depending on the packaging
+                    format, BitBake hides these differences from you.
+                    Here is the general syntax to specify versions with
+                    the <filename>RDEPENDS</filename> variable:
+                    <literallayout class='monospaced'>
+     RDEPENDS_${PN} = "&lt;package&gt; (&lt;operator&gt; &lt;version&gt;)"
+                    </literallayout>
+                    For <filename>operator</filename>, you can specify the
+                    following:
+                    <literallayout class='monospaced'>
+     =
+     &lt;
+     &gt;
+     &lt;=
+     &gt;=
+                    </literallayout>
+                    For example, the following sets up a dependency on version
+                    1.2 or greater of the package <filename>foo</filename>:
+                    <literallayout class='monospaced'>
+     RDEPENDS_${PN} = "foo (>= 1.2)"
+                    </literallayout>
+                </para>
+
+                <para>
                     For information on build-time dependencies, see the
                     <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
                     variable.
