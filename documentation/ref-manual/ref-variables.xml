@@ -502,6 +502,12 @@
                     For performance reasons, creating and placing tarballs of
                     the Git repositories is not the default action by the
                     OpenEmbedded build system.
+                    <literallayout class='monospaced'>
+     BB_Generate_MIRROR_TARBALLS = "1"
+                    </literallayout>
+                    Set this variable in your <filename>local.conf</filename>
+                    file in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                 </para>
             </glossdef>
         </glossentry>
@@ -1272,6 +1278,15 @@ Core layer for images cannot be removed
                 <para>
                     The central download directory used by the build process to
                     store downloads.
+                    By default, <filename>DL_DIR</filename> gets files
+                    suitable for mirroring for everything except Git
+                    repositories.
+                    If you want tarballs of Git repositories, use the
+                    <link linkend='var-BB_GENERATE_MIRROR_TARBALLS'><filename>BB_GENERATE_MIRROR_TARBALLS</filename></link>
+                    variable.
+                </para>
+
+                <para>
                     You can set this directory by defining the
                     <filename>DL_DIR</filename> variable in the
                     <filename>/conf/local.conf</filename> file.
@@ -1296,20 +1311,9 @@ Core layer for images cannot be removed
                     <filename>DL_DIR</filename> and the build system looks there
                     first to find source tarballs.
                     <note>
-                        <para>
-                            When wiping and rebuilding, you can preserve this
-                            directory to speed up this part of subsequent
-                            builds.
-                        </para>
-
-                        <para>
-                            Also, by default, the <filename>DL_DIR</filename>
-                            does not contain tarballs of Git directories.
-                            However, you can instruct the build process to save
-                            these tarballs to the directory by using the
-                            <link linkend='var-BB_GENERATE_MIRROR_TARBALLS'><filename>BB_GENERATE_MIRROR_TARBALLS</filename></link>
-                            variable.
-                        </para>
+                        When wiping and rebuilding, you can preserve this
+                        directory to speed up this part of subsequent
+                        builds.
                     </note>
                 </para>
 
