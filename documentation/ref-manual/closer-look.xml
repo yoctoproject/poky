@@ -1079,13 +1079,16 @@
         <para>
             Images are written out to the
             <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-            inside the <filename>deploy/images</filename> folder as shown
-            in the figure.
+            inside the <filename>deploy/images/&lt;machine&gt;/</filename>
+            folder as shown in the figure.
             This folder contains any files expected to be loaded on the
             target device.
             The
             <link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link>
-            variable points to the <filename>deploy</filename> directory.
+            variable points to the <filename>deploy</filename> directory,
+            while the
+            <link linkend='var-DEPLOY_DIR_IMAGE'><filename>DEPLOY_DIR_IMAGE</filename></link>
+            variable points to the machine-specific directory.
             <itemizedlist>
                 <listitem><para><filename>&lt;kernel-image&gt;</filename>:
                     A kernel binary file.
@@ -1094,8 +1097,9 @@
                     kernel image file.
                     Depending on that variable, the file could begin with
                     a variety of naming strings.
-                    The <filename>deploy/images</filename> directory can
-                    contain multiple image files.</para></listitem>
+                    The <filename>deploy/images/&lt;machine&gt;</filename>
+                    directory can contain multiple image files for the
+                    machine.</para></listitem>
                 <listitem><para><filename>&lt;root-filesystem-image&gt;</filename>:
                     Root filesystems for the target device (e.g.
                     <filename>*.ext3</filename> or <filename>*.bz2</filename>
@@ -1103,25 +1107,27 @@
                     The <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
                     variable setting determines the root filesystem image
                     type.
-                    The <filename>deploy/images</filename> directory can
-                    contain multiple root filesystems.</para></listitem>
+                    The <filename>deploy/images/&lt;machine&gt;</filename>
+                    directory can contain multiple root filesystems for the
+                    machine.</para></listitem>
                 <listitem><para><filename>&lt;kernel-modules&gt;</filename>:
                     Tarballs that contain all the modules built for the kernel.
                     Kernel module tarballs exist for legacy purposes and
                     can be suppressed by setting the
                     <link linkend='var-MODULE_TARBALL_DEPLOY'><filename>MODULE_TARBALL_DEPLOY</filename></link>
                     variable to "0".
-                    The <filename>deploy/images</filename> directory can
-                    contain multiple kernel module tarballs.
-                    </para></listitem>
+                    The <filename>deploy/images/&lt;machine&gt;</filename>
+                    directory can contain multiple kernel module tarballs
+                    for the machine.</para></listitem>
                 <listitem><para><filename>&lt;bootloaders&gt;</filename>:
                     Bootloaders supporting the image, if applicable to the
                     target machine.
-                    The <filename>deploy/images</filename> directory can
-                    contain multiple bootloaders.
-                    </para></listitem>
+                    The <filename>deploy/images/&lt;machine&gt;</filename>
+                    directory can contain multiple bootloaders for the
+                    machine.</para></listitem>
                 <listitem><para><filename>&lt;symlinks&gt;</filename>:
-                    The <filename>deploy/images</filename> folder contains
+                    The <filename>deploy/images/&lt;machine&gt;</filename>
+                    folder contains
                     a symbolic link that points to the most recently built file
                     for each machine.
                     These links might be useful for external scripts that
