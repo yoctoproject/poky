@@ -1350,6 +1350,24 @@ Core layer for images cannot be removed
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-EXTENDPE'><glossterm>EXTENDPE</glossterm>
+            <glossdef>
+                <para>
+                    Used with file and pathnames to create a prefix for a recipe's
+                    version based on the recipe's
+                    <link linkend='var-PE'><filename>PE</filename></link> value.
+                    If <filename>PE</filename> is set and greater than zero for a recipe,
+                    <filename>EXTENDPE</filename> becomes that value (e.g if
+                    <filename>PE</filename> is equal to "1" then <filename>EXTENDPE</filename>
+                    becomes "1_").
+                    If a recipe's <filename>PE</filename> is not set (the default) or is equal to
+                    zero, <filename>EXTENDPE</filename> becomes "".</para>
+                    <para>See the <link linkend='var-STAMP'><filename>STAMP</filename></link>
+                    variable for an example.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-EXTENDPKGV'><glossterm>EXTENDPKGV</glossterm>
             <glossdef>
                 <para>
@@ -1367,24 +1385,6 @@ Core layer for images cannot be removed
                     The dependency relationships are intended to force the
                     package manager to upgrade these types of packages in
                     lock-step.
-                </para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-EXTENDPE'><glossterm>EXTENDPE</glossterm>
-            <glossdef>
-                <para>
-                    Used with file and pathnames to create a prefix for a recipe's
-                    version based on the recipe's
-                    <link linkend='var-PE'><filename>PE</filename></link> value.
-                    If <filename>PE</filename> is set and greater than zero for a recipe,
-                    <filename>EXTENDPE</filename> becomes that value (e.g if
-                    <filename>PE</filename> is equal to "1" then <filename>EXTENDPE</filename>
-                    becomes "1_").
-                    If a recipe's <filename>PE</filename> is not set (the default) or is equal to
-                    zero, <filename>EXTENDPE</filename> becomes "".</para>
-                    <para>See the <link linkend='var-STAMP'><filename>STAMP</filename></link>
-                    variable for an example.
                 </para>
             </glossdef>
         </glossentry>
@@ -2267,6 +2267,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-INITSCRIPT_NAME'><glossterm>INITSCRIPT_NAME</glossterm>
+            <glossdef>
+                <para>
+                    The filename of the initscript as installed to <filename>${etcdir}/init.d</filename>.
+                </para>
+                <para>
+                    This variable is used in recipes when using <filename>update-rc.d.bbclass</filename>.
+                    The variable is Mandatory.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-INITSCRIPT_PACKAGES'><glossterm>INITSCRIPT_PACKAGES</glossterm>
             <glossdef>
                 <para>
@@ -2279,18 +2291,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <link linkend='var-PN'><filename>PN</filename></link> variable.
                 </para>
            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-INITSCRIPT_NAME'><glossterm>INITSCRIPT_NAME</glossterm>
-            <glossdef>
-                <para>
-                    The filename of the initscript as installed to <filename>${etcdir}/init.d</filename>.
-                </para>
-                <para>
-                    This variable is used in recipes when using <filename>update-rc.d.bbclass</filename>.
-                    The variable is Mandatory.
-                </para>
-            </glossdef>
         </glossentry>
 
         <glossentry id='var-INITSCRIPT_PARAMS'><glossterm>INITSCRIPT_PARAMS</glossterm>
@@ -4524,26 +4524,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-SIGGEN_EXCLUDERECIPES_ABISAFE'><glossterm>SIGGEN_EXCLUDERECIPES_ABISAFE</glossterm>
-            <glossdef>
-                <para>
-                    A list of recipes that are completely stable and will
-                    never change.
-                    The ABI for the recipes in the list are presented by
-                    output from the tasks run to build the recipe.
-                    Use of this variable is one way to remove dependencies from
-                    one recipe on another that affect task signatures and
-                    thus force rebuilds when the recipe changes.
-                    <caution>
-                        If you add an inappropriate variable to this list,
-                        the software might break at runtime if the
-                        interface of the recipe was changed after the other
-                        had been built.
-                    </caution>
-                </para>
-            </glossdef>
-        </glossentry>
-
         <glossentry id='var-SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS'><glossterm>SIGGEN_EXCLUDE_SAFE_RECIPE_DEPS</glossterm>
             <glossdef>
                 <para>
@@ -4572,11 +4552,22 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-SITEINFO_ENDIANNESS'><glossterm>SITEINFO_ENDIANNESS</glossterm>
+        <glossentry id='var-SIGGEN_EXCLUDERECIPES_ABISAFE'><glossterm>SIGGEN_EXCLUDERECIPES_ABISAFE</glossterm>
             <glossdef>
                 <para>
-                    Specifies the endian byte order of the target system.
-                    The value should be either "le" for little-endian or "be" for big-endian.
+                    A list of recipes that are completely stable and will
+                    never change.
+                    The ABI for the recipes in the list are presented by
+                    output from the tasks run to build the recipe.
+                    Use of this variable is one way to remove dependencies from
+                    one recipe on another that affect task signatures and
+                    thus force rebuilds when the recipe changes.
+                    <caution>
+                        If you add an inappropriate variable to this list,
+                        the software might break at runtime if the
+                        interface of the recipe was changed after the other
+                        had been built.
+                    </caution>
                 </para>
             </glossdef>
         </glossentry>
@@ -4586,6 +4577,15 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Specifies the number of bits for the target system CPU.
                     The value should be either "32" or "64".
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SITEINFO_ENDIANNESS'><glossterm>SITEINFO_ENDIANNESS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the endian byte order of the target system.
+                    The value should be either "le" for little-endian or "be" for big-endian.
                 </para>
             </glossdef>
         </glossentry>
