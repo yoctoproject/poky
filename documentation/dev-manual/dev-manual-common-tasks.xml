@@ -235,10 +235,10 @@
 
             <para>
                 To create layers that are easier to maintain and that will
-                not impact builds for other machines, you should consider the 
+                not impact builds for other machines, you should consider the
                 information in the following sections.
             </para>
- 
+
             <section id='avoid-overlaying-entire-recipes'>
                 <title>Avoid "Overlaying" Entire Recipes</title>
 
@@ -270,19 +270,19 @@
                     the layer to which it originally belongs.
                     If this is the case, you need to address that deficiency
                     instead of overlaying the include file.
-                    For example, consider how support plugins for the Qt 4 
+                    For example, consider how support plug-ins for the Qt 4
                     database are configured.
                     The Source Directory does not have MySQL or PostgreSQL.
-                    However, OpenEmbedded's layer <filename>meta-oe</filename> 
+                    However, OpenEmbedded's layer <filename>meta-oe</filename>
                     does.
                     Consequently, <filename>meta-oe</filename> uses
                     <filename>.bbappend</filename> files to modify the
                     <filename>QT_SQL_DRIVER_FLAGS</filename> variable to
-                    enable the appropriate plugins.
-                    This variable was added to the <filename>qt4.inc</filename> 
-                    include file in the Source Directory specifically to allow 
+                    enable the appropriate plug-ins.
+                    This variable was added to the <filename>qt4.inc</filename>
+                    include file in the Source Directory specifically to allow
                     the <filename>meta-oe</filename> layer to be able to control
-                    which plugins are built.
+                    which plug-ins are built.
                 </para>
             </section>
 
@@ -290,105 +290,105 @@
                 <title>Structure Your Layers</title>
 
                 <para>
-                    Proper use of overrides within append files and placement 
-                    of machine-specific files within your layer can ensure that 
+                    Proper use of overrides within append files and placement
+                    of machine-specific files within your layer can ensure that
                     a build is not using the wrong Metadata and negatively
                     impacting a build for a different machine.
                     Following are some examples:
                     <itemizedlist>
-                        <listitem><para><emphasis>Modifying Variables to support 
+                        <listitem><para><emphasis>Modifying Variables to support
                             a different machine:</emphasis>
                             Suppose you have a layer named
-                            <filename>meta-one</filename> that adds support 
+                            <filename>meta-one</filename> that adds support
                             for building machine "one".
-                            To do so, you use an append file named 
-                            <filename>base-files.bbappend</filename> and 
-                            create a dependency on "foo" by altering the 
+                            To do so, you use an append file named
+                            <filename>base-files.bbappend</filename> and
+                            create a dependency on "foo" by altering the
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
                             variable:
                             <literallayout class='monospaced'>
      DEPENDS = "foo"
                             </literallayout>
-                            The dependency is created during any build that 
-                            includes the layer 
+                            The dependency is created during any build that
+                            includes the layer
                             <filename>meta-one</filename>.
-                            However, you might not want this dependency 
+                            However, you might not want this dependency
                             for all machines.
-                            For example, suppose you are building for 
-                            machine "two" but your 
-                            <filename>bblayers.conf</filename> file has the 
+                            For example, suppose you are building for
+                            machine "two" but your
+                            <filename>bblayers.conf</filename> file has the
                             <filename>meta-one</filename> layer included.
-                            During the build, the 
-                            <filename>base-files</filename> for machine 
-                            "two" will also have the dependency on 
+                            During the build, the
+                            <filename>base-files</filename> for machine
+                            "two" will also have the dependency on
                             <filename>foo</filename>.</para>
-                            <para>To make sure your changes apply only when 
-                            building machine "one", use a machine override 
+                            <para>To make sure your changes apply only when
+                            building machine "one", use a machine override
                             with the <filename>DEPENDS</filename> statement:
                             <literallayout class='monospaced'>
      DEPENDS_one = "foo"
                             </literallayout>
-                            You should follow the same strategy when using 
-                            <filename>_append</filename> and 
+                            You should follow the same strategy when using
+                            <filename>_append</filename> and
                             <filename>_prepend</filename> operations:
                             <literallayout class='monospaced'>
      DEPENDS_append_one = " foo"
      DEPENDS_prepend_one = "foo "
                             </literallayout>
                             <note>
-                                Avoiding "+=" and "=+" and using 
-                                machine-specific 
+                                Avoiding "+=" and "=+" and using
+                                machine-specific
                                 <filename>_append</filename>
-                                and <filename>_prepend</filename> operations 
+                                and <filename>_prepend</filename> operations
                                 is recommended as well.
                             </note></para></listitem>
-                        <listitem><para><emphasis>Place Machine-Specific Files 
+                        <listitem><para><emphasis>Place Machine-Specific Files
                             in Machine-Specific Locations:</emphasis>
-                            When you have a base recipe, such as 
-                            <filename>base-files.bb</filename>, that 
-                            contains a 
+                            When you have a base recipe, such as
+                            <filename>base-files.bb</filename>, that
+                            contains a
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
                             statement to a file, you can use an append file
-                            to cause the build to use your own version of 
+                            to cause the build to use your own version of
                             the file.
-                            For example, an append file in your layer at 
+                            For example, an append file in your layer at
                             <filename>/meta-one/recipes-core/base-files/base-files.bbappend</filename>
-                            could extend  
+                            could extend
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
-                            using 
+                            using
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
                             as follows:
                             <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
                             </literallayout>
-                            The build for machine "one" will pick up your 
-                            machine-specific file as long as you have the 
+                            The build for machine "one" will pick up your
+                            machine-specific file as long as you have the
                             file in
                             <filename>/meta-one/recipes-core/base-files/base-files/</filename>.
-                            However, if you are building for a different 
-                            machine and the 
+                            However, if you are building for a different
+                            machine and the
                             <filename>bblayers.conf</filename> file includes
-                            the <filename>meta-one</filename> layer and 
-                            the location of your machine-specific file is 
+                            the <filename>meta-one</filename> layer and
+                            the location of your machine-specific file is
                             the first location where that file is found
-                            according to <filename>FILESPATH</filename>, 
-                            builds for all machines will also use that 
+                            according to <filename>FILESPATH</filename>,
+                            builds for all machines will also use that
                             machine-specific file.</para>
                             <para>You can make sure that a machine-specific
                             file is used for a particular machine by putting
-                            the file in a subdirectory specific to the 
+                            the file in a subdirectory specific to the
                             machine.
-                            For example, rather than placing the file in 
+                            For example, rather than placing the file in
                             <filename>/meta-one/recipes-core/base-files/base-files/</filename>
-                            as shown above, put it in 
+                            as shown above, put it in
                             <filename>/meta-one/recipes-core/base-files/base-files/one/</filename>.
-                            Not only does this make sure the file is used  
-                            only when building for machine "one" but the 
+                            Not only does this make sure the file is used
+                            only when building for machine "one" but the
                             build process locates the file more quickly.</para>
                             <para>In summary, you need to place all files
                             referenced from <filename>SRC_URI</filename>
-                            in a machine-specific subdirectory within the 
-                            layer in order to restrict those files to 
+                            in a machine-specific subdirectory within the
+                            layer in order to restrict those files to
                             machine-specific builds.</para></listitem>
                     </itemizedlist>
                 </para>
@@ -2596,8 +2596,8 @@
                             If you have distro-specific configuration files
                             that are included by an existing recipe, you should
                             add a <filename>.bbappend</filename> for those.
-                            For general information and recommendations 
-                            on how to add recipes to your layer, see the 
+                            For general information and recommendations
+                            on how to add recipes to your layer, see the
                             "<link linkend='creating-your-own-layer'>Creating Your Own Layer</link>"
                             and
                             "<link linkend='best-practices-to-follow-when-creating-layers'>Best Practices to Follow When Creating Layers</link>"
@@ -3076,7 +3076,7 @@
             <title>Excluding Packages from an Image</title>
 
             <para>
-                You might find it necessary to prevent specific packages 
+                You might find it necessary to prevent specific packages
                 from being installed into an image.
                 If so, you can use several variables to direct the build
                 system to essentially ignore installing recommended packages
@@ -3084,31 +3084,31 @@
             </para>
 
             <para>
-                The following list introduces variables you can use to 
+                The following list introduces variables you can use to
                 prevent packages from being installed into your image.
                 Each of these variables only works with IPK and RPM
                 package types.
                 Support for Debian packages does not exist.
-                Also, you can use these variables from your  
-                <filename>local.conf</filename> file or attach them to a 
+                Also, you can use these variables from your
+                <filename>local.conf</filename> file or attach them to a
                 specific image recipe by using a recipe name override.
-                For more detail on the variables, see the descriptions in the 
+                For more detail on the variables, see the descriptions in the
                 Yocto Project Reference Manual's glossary chapter.
                 <itemizedlist>
                     <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-BAD_RECOMMENDATIONS'><filename>BAD_RECOMMENDATIONS</filename></ulink>:
-                        Use this variable to specify "recommended-only"  
+                        Use this variable to specify "recommended-only"
                         packages that you do not want installed.
                         </para></listitem>
                     <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-NO_RECOMMENDATIONS'><filename>NO_RECOMMENDATIONS</filename></ulink>:
-                        Use this variable to prevent all "recommended-only"  
+                        Use this variable to prevent all "recommended-only"
                         packages from being installed.
                         </para></listitem>
                     <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_EXCLUDE'><filename>PACKAGE_EXCLUDE</filename></ulink>:
-                        Use this variable to prevent specific packages from 
+                        Use this variable to prevent specific packages from
                         being installed regardless of whether they are
                         "recommended-only" or not.
-                        You need to realize that the build process could 
-                        fail with an error when you 
+                        You need to realize that the build process could
+                        fail with an error when you
                         prevent the installation of a package whose presence
                         is required by an installed package.
                         </para></listitem>
@@ -3393,7 +3393,7 @@
 
             <para>
                 Many pieces of software split functionality into optional
-                modules (or plugins) and the plugins that are built
+                modules (or plug-ins) and the plug-ins that are built
                 might depend on configuration options.
                 To avoid having to duplicate the logic that determines what
                 modules are available in your recipe or to avoid having
@@ -4505,10 +4505,10 @@
         <title>Examining Builds Using the Toaster API</title>
 
         <para>
-            Toaster is an Application Programming Interface (API) to the 
+            Toaster is an Application Programming Interface (API) to the
             OpenEmbedded build system, which uses BitBake.
             The interface is a Representational State Transfer (REST) API
-            that queries for and returns build information using 
+            that queries for and returns build information using
             <filename>GET</filename> and <filename>JSON</filename>.
         </para>
 
@@ -4528,16 +4528,16 @@
         </para>
 
         <para>
-            In summary, the search operation retrieves a set of objects from 
-            a data store used to collect build information. 
+            In summary, the search operation retrieves a set of objects from
+            a data store used to collect build information.
             The result contains all the data for the objects being returned.
-            You can order the results of the search by key and the search 
+            You can order the results of the search by key and the search
             parameters are consistent for all object types.
         </para>
 
         <para>
             For complete information on the API and its search operation
-            URI, parameters, and reposes, see the 
+            URI, parameters, and reposes, see the
             <ulink url='https://wiki.yoctoproject.org/wiki/REST_API_Contracts'>REST API Contracts</ulink>
             Wiki page.
         </para>
