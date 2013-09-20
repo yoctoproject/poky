@@ -4252,6 +4252,420 @@
         </section>
     </section>
 
+    <section id="running-and-writing-tests-for-a-qemu-image">
+        <title>Running and Writing Tests for a QEMU Image</title>
+
+        <para>
+            The OpenEmbedded build system makes available a series of automated
+            tests for QEMU images.
+            These tests are commands that run on the target system over
+            <filename>ssh</filename> and are written in Python, thus making
+            use of the <filename>unittest</filename> module.
+        </para>
+
+        <para>
+            This section describes how you set up the environment to use these
+            tests, run available tests, and write and add your own tests.
+            You can the same information in a different form and with example
+            log files of test runs on the
+            <ulink url='https://wiki.yoctoproject.org/wiki/Image_tests'>Image Tests</ulink>
+            Wiki page.
+        </para>
+
+        <section id="qemu-image-enabling-tests">
+            <title>Enabling Tests</title>
+
+            <para>
+                In order to run tests, you need to do the following:
+                <itemizedlist>
+                    <listitem><para><emphasis>Ensure you run the test
+                        automatically with no interaction and under
+                        <filename>sudo</filename>:</emphasis>
+                        To accomplish this, you must do one of the
+                        following:
+                        <itemizedlist>
+                            <listitem><para>Add
+                                <filename>NOPASSWD</filename> for your user
+                                in <filename>/etc/sudoers</filename> either for
+                                ALL commands or just for
+                                <filename>runqemu-ifup</filename>.
+                                You must provide the full path as that can
+                                change if you are using multiple clones of the
+                                source repository.
+                                <note>
+                                    On some distributions, you also need to
+                                    comment out "Defaults requiretty" in
+                                    <filename>/etc/sudoers</filename>.
+                                </note></para></listitem>
+                            <listitem><para>Manually configure a tap interface
+                                for your system.</para></listitem>
+                            <listitem><para>Run as root the script in
+                                <filename>scripts/runqemu-gen-tapdev</filename>,
+                                which should generate a list of tap devices.
+                                List generation is usually done in environments
+                                similar to AutoBuilder.</para></listitem>
+                        </itemizedlist></para></listitem>
+                    <listitem><para><emphasis>Set up the
+                        <filename>DISPLAY</filename> variable:</emphasis>
+                        You need to set this variable so that you have an X
+                        server available (e.g. start
+                        <filename>vncserver</filename> for a headless machine).
+                        </para></listitem>
+                    <listitem><para><emphasis>Be sure your host's firewall
+                        accepts incoming connections from
+                        192.168.7.0/24:</emphasis>
+                        Some of the tests (in particular smart tests) start a
+                        HTTP server on a random high number port, which is
+                        used to serve files to the target.
+                        The smart module serves
+                        <filename>${DEPLOY_DIR}/rpm</filename> so it can run
+                        smart channel commands. That means your host's firewall
+                        must accept incoming connections from 192.168.7.0/24,
+                        which is the default class used for
+                        <filename>tap0</filename> devices by
+                        <filename>runqemu</filename>.</para></listitem>
+                    <listitem><para><emphasis>Have your QEMU image built:</emphasis>
+                        The QEMU image on which you want to run tests needs to
+                        be built.
+                        For example, the following command would build the
+                        <filename>core-image-sato</filename> image when
+                        <filename>MACHINE</filename> is set to "qemu".
+                        <literallayout class='monospaced'>
+    bitbake core-image-sato
+                        </literallayout></para></listitem>
+                    <listitem><para><emphasis>Globally inherit
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-testimage'><filename>testimage.class</filename>:</ulink></emphasis>
+                        Edit your <filename>local.conf</filename> file as
+                        follows:
+                        <literallayout class='monospaced'>
+    INHERIT += "testimage"
+                        </literallayout></para></listitem>
+                </itemizedlist>
+            </para>
+
+            <note>
+                If you built your QEMU image using <filename>rm_work</filename>,
+                most of the tests will fail with errors because they rely on
+                <filename>${WORKDIR}/installed_pkgs.txt</filename>.
+            </note>
+        </section>
+
+        <section id="qemu-image-running-tests">
+            <title>Running Tests</title>
+
+            <para>
+                After setting up to run the tests, use BitBake to start
+                the standard suite of tests:
+                <literallayout class='monospaced'>
+     bitbake core-image-sato -c testimage
+                </literallayout>
+            </para>
+
+            <para>
+                Once you start the tests, the following happens:
+                <itemizedlist>
+                    <listitem><para>A copy of the root filesystem is written
+                        to <filename>${WORKDIR}/testimage</filename>.
+                        </para></listitem>
+                    <listitem><para>The image is booted under QEMU using the
+                        standard <filename>runqemu</filename> script.
+                        </para></listitem>
+                    <listitem><para>A default timeout of 500 seconds occurs
+                        to allow for the boot process to reach the login prompt.
+                        You can change the timeout period by setting
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_QEMUBOOT_TIMEOUT'><filename>TEST_QEMUBOOT_TIMEOUT</filename></ulink>
+                        in the <filename>local.conf</filename> file.
+                        </para></listitem>
+                    <listitem><para>Once the boot process is reached and the
+                        login prompt appears, the tests run.
+                        The full boot log is written to
+                        <filename>${WORKDIR}/testimage/qemu_boot_log</filename>.
+                        </para></listitem>
+                    <listitem><para>Each test module loads in the order found
+                        in <filename>TEST_SUITES</filename>.
+                        You can find the full output of the commands run over
+                        <filename>ssh</filename> in
+                        <filename>${WORKDIR}/testimgage/ssh_target_log</filename>.
+                        </para></listitem>
+                    <listitem><para>If no failures occur, the task running the
+                        tests ends successfully.
+                        You can find the output from the
+                        <filename>unittest</filename> in the task log at
+                        <filename>${WORKDIR}/temp/log.do_testimage</filename>.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                All test files reside in
+                <filename>meta/lib/oeqa/runtime</filename> in the
+                <link linkend='source-directory'>Source Directory</link>.
+                Tests (also referred to as modules) have a one-to-one
+                relationship with the filenames in <filename>runtime</filename>.
+                Modules can have multiple classes and test methods and are
+                usually grouped together by the area tested (e.g tests for
+                <filename>systemd</filename> reside in
+                <filename>meta/lib/oeqa/runtime/systemd.py</filename>).
+            </para>
+
+            <para>
+                You can add tests to any layer provided you place them in the
+                proper area and you extend
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBPATH'><filename>BBPATH</filename></ulink>
+                in the <filename>local.conf</filename> file.
+                Be sure that tests reside in
+                <filename>&lt;layer&gt;/lib/oeqa/runtime</filename>.
+                <note>
+                    Be sure that module names do not collide with module names
+                    provided by the Yocto Project.
+                </note>
+            </para>
+
+            <para>
+                You can change the set of tests run by appending or overriding
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_SUITES'><filename>TEST_SUITES</filename></ulink>
+                variable in <filename>local.conf</filename>.
+                Each name in <filename>TEST_SUITES</filename> represents a
+                required test for the image.
+                Module skipping is not allowed even if a test is not suitable
+                for an image (e.g. running the <filename>rpm</filename> tests on
+                an image without <filename>rpm</filename>).
+                Appending "auto" to <filename>TEST_SUITES</filename> causes the
+                build system to try to run all tests that are suitable for the
+                image (i.e. the build system decides whether to run each test).
+            </para>
+
+            <para>
+                The order you list tests in <filename>TEST_SUITES</filename>
+                is important.
+                The order influences test dependencies.
+                Consequently, tests that depend on other tests should be added
+                after the test on which they depend.
+                For example, since <filename>ssh</filename> depends on the
+                <filename>ping</filename> test, <filename>ssh</filename>
+                needs to come after <filename>ping</filename> in the list.
+                The test class provides no re-ordering or dependency handling.
+                <note>
+                    Each module can have multiple classes with multiple test
+                    methods.
+                    And, Python <filename>unittest</filename> rules apply.
+                </note>
+            </para>
+
+            <para>
+                The following list summarizes how to run the tests:
+                <itemizedlist>
+                    <listitem><para>Run the default set of tests simply by
+                        running the following:
+                        <literallayout class='monospaced'>
+     bitbake &lt;qemu_image&gt; -c testimage
+                        </literallayout></para></listitem>
+                    <listitem><para>The default tests for the image are defined
+                        as:
+                        <literallayout class='monospaced'>
+     DEFAULT_TEST_SUITES_pn-&lt;qemu_image&gt; = "ping ssh df connman syslog xorg scp vnc date rpm smart dmesg"
+                        </literallayout></para></listitem>
+                    <listitem><para>Add your own test to the list of the
+                        by using the following:
+                        <literallayout class='monospaced'>
+     TEST_SUITES_append = " mytest"
+                        </literallayout></para></listitem>
+                    <listitem><para>Run a specific list of tests as follows:
+                        <literallayout class='monospaced'>
+     TEST_SUITES = "test1 test2 test3"
+                        </literallayout>
+                        Remember, order is important.
+                        Be sure to place a test that is dependent on another test
+                        later in the order.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id="qemu-image-writing-new-tests">
+            <title>Writing New Tests</title>
+
+            <para>
+                As mentioned previously, all new test files need to be in the
+                proper place for the build system to find them.
+                New tests can go in the
+                <link linkend='source-directory'>Source Directory</link> at
+                <filename>meta/lib/oeqa/runtime</filename>.
+                Alternatively, a layer can add its own tests in
+                <filename>&lt;layer&gt;/lib/oeqa/runtime</filename> as long
+                as you extend <filename>BBPATH</filename>.
+                Just remember that filenames need to map directory to test
+                (module) names and you not use module names that collide with
+                existing core tests.
+            </para>
+
+            <para>
+                To create a new test, start by copying an existing module
+                (e.g. <filename>syslog.py</filename> or
+                <filename>gcc.py</filename> are good ones to use).
+                Test modules can use code from
+                <filename>meta/lib/oeqa/utils</filename>, which are helper
+                classes.
+            </para>
+
+            <note>
+                Structure shell commands such that you rely on them and they
+                return a single code for success.
+                Be aware that sometimes you will need to parse the output.
+                See the <filename>df.py</filename> and
+                <filename>date.py</filename> modules for examples.
+            </note>
+
+            <para>
+                You will notice that all test classes inherit
+                <filename>oeRuntimeTest</filename>, which is found in
+                <filename>meta/lib/oetest.py</filename>.
+                This base class offers some helper attributes, which are
+                described in the following sections:
+            </para>
+
+            <section id='qemu-image-writing-tests-class-methods'>
+                <title>Class Methods</title>
+
+                <para>
+                    Class methods are as follows:
+                    <itemizedlist>
+                        <listitem><para><emphasis><filename>hasPackage(pkg)</filename>:</emphasis>
+                            Returns "True" if <filename>pkg</filename> is in the
+                            installed package list of the image, which is based
+                            on
+                            <filename>${WORKDIR}/installed_pkgs.txt</filename>
+                            that is generated during the
+                            <filename>do.rootfs</filename> task.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>hasFeature(feature)</filename>:</emphasis>
+                            Returns "True" if the feature is in
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>
+                            or
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></ulink>.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>restartTarget(params)</filename>:</emphasis>
+                            Restarts the QEMU image optionally passing
+                            <filename>params</filename> to the
+                            <filename>runqemu</filename> script's
+                            <filename>qemuparams</filename> list (e.g "-m 1024" for
+                            more memory).</para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
+
+            <section id='qemu-image-writing-tests-class-attributes'>
+                <title>Class Attributes</title>
+
+                <para>
+                    Class attributes are as follows:
+                    <itemizedlist>
+                        <listitem><para><emphasis><filename>pscmd</filename>:</emphasis>
+                            Equals "ps -ef" if <filename>procps</filename> is
+                            installed in the image.
+                            Otherwise, <filename>pscmd</filename> equals
+                            "ps" (busybox).
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>tc</filename>:</emphasis>
+                            The called text context, which gives access to the
+                            following attributes:
+                            <itemizedlist>
+                                <listitem><para><emphasis><filename>d</filename>:</emphasis>
+                                    The BitBake data store, which allows you to
+                                    use stuff such as
+                                    <filename>oeRuntimeTest.tc.d.getVar("VIRTUAL-RUNTIME_init_manager")</filename>.
+                                    </para></listitem>
+                                <listitem><para><emphasis><filename>testslist</filename> and <filename>testsrequired</filename>:</emphasis>
+                                    Used internally.
+                                    The tests do not need these.
+                                    </para></listitem>
+                                <listitem><para><emphasis><filename>filesdir</filename>:</emphasis>
+                                    The absolute path to
+                                    <filename>meta/lib/oeqa/runtime/files</filename>,
+                                    which contains helper files for tests meant
+                                    for copying on the target such as small
+                                    files written in C for compilation.
+                                    </para></listitem>
+                                <listitem><para><emphasis><filename>qemu</filename>:</emphasis>
+                                    Provides access to the
+                                    <filename>QemuRunner</filename> object,
+                                    which is the class that boots the image.
+                                    The <filename>qemu</filename> attribute
+                                    provides the following useful attributes:
+                                    <itemizedlist>
+                                        <listitem><para><emphasis><filename>ip</filename>:</emphasis>
+                                            The machine's IP address.
+                                            </para></listitem>
+                                        <listitem><para><emphasis><filename>host_ip</filename>:</emphasis>
+                                            The host IP address, which is only
+                                            used by smart tests.
+                                            </para></listitem>
+                                    </itemizedlist></para></listitem>
+                                <listitem><para><emphasis><filename>target</filename>:</emphasis>
+                                    The <filename>SSHControl</filename> object,
+                                    which is used for running the following
+                                    commands on the image:
+                                    <itemizedlist>
+                                        <listitem><para><emphasis><filename>host</filename>:</emphasis>
+                                            Used internally.
+                                            The tests do not use this command.
+                                            </para></listitem>
+                                        <listitem><para><emphasis><filename>timeout</filename>:</emphasis>
+                                            A global timeout for commands run on
+                                            the target for the instance of a
+                                            test.
+                                            The default is 300 seconds.
+                                            </para></listitem>
+                                        <listitem><para><emphasis><filename>run(cmd, timeout=None)</filename>:</emphasis>
+                                            The single, most used method.
+                                            This command is a wrapper for:
+                                            <filename>ssh root@host "cmd"</filename>.
+                                            The command returns a tuple:
+                                            (status, output), which are what
+                                            their names imply - the return code
+                                            of 'cmd' and whatever output
+                                            it produces.
+                                            The optional timeout argument
+                                            represents the number of seconds the
+                                            test should wait for 'cmd' to
+                                            return.
+                                            If the argument is "None", the
+                                            test uses the default instance's
+                                            timeout period, which is 300
+                                            seconds.
+                                            If the argument is "0", the test
+                                            runs until the command returns.
+                                            </para></listitem>
+                                        <listitem><para><emphasis><filename>copy_to(localpath, remotepath)</filename>:</emphasis>
+                                            <filename>scp localpath root@ip:remotepath</filename>.
+                                            </para></listitem>
+                                        <listitem><para><emphasis><filename>copy_from(remotepath, localpath)</filename>:</emphasis>
+                                            <filename>scp root@host:remotepath localpath</filename>.
+                                            </para></listitem>
+                                    </itemizedlist></para></listitem>
+                            </itemizedlist></para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
+
+            <section id='qemu-image-writing-tests-instance-attributes'>
+                <title>Instance Attributes</title>
+
+                <para>
+                    A single instance attribute exists, which is
+                    <filename>target</filename>.
+                    The <filename>target</filename> instance attribute is
+                    identical to the class attribute of the same name, which
+                    is described in the previous section.
+                    This attribute exists as both an instance and class
+                    attribute so tests can use
+                    <filename>self.target.run(cmd)</filename> in instance
+                    methods instead of
+                    <filename>oeRuntimeTest.tc.target.run(cmd)</filename>.
+                </para>
+            </section>
+        </section>
+    </section>
+
     <section id="platdev-gdb-remotedebug">
         <title>Debugging With the GNU Project Debugger (GDB) Remotely</title>
 
