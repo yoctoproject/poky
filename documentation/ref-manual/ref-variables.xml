@@ -5217,6 +5217,78 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-TEST_QEMUBOOT_TIMEOUT'><glossterm>TEST_QEMUBOOT_TIMEOUT</glossterm>
+            <glossdef>
+                <para>
+                    The time in seconds allowed for a QEMU image to boot before
+                    tests begin to run against the image using the following
+                    command:
+                    <literallayout class='monospaced'>
+     bitbake &lt;qemu_image&gt; -c testimage
+                    </literallayout>
+                </para>
+
+                <para>
+                    The default timeout period to allow the boot process to
+                    reach the login prompt is 500 seconds.
+                    You can edit this default value in the
+                    <filename>local.conf</filename> file.
+                </para>
+
+                <para>
+                    For more information on testing QEMU images, see the
+                    "<ulink url='running-and-writing-tests-for-a-qemu-image'>Running and Writing Tests for a QEMU Image</ulink>"
+                    section in the Yocto Project Development Manual.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TEST_SUITES'><glossterm>TEST_SUITES</glossterm>
+            <glossdef>
+                <para>
+                    An ordered list of tests (modules) to run against
+                    a QEMU image using the following command:
+                    <literallayout class='monospaced'>
+     bitbake &lt;qemu_image&gt; -c testimage
+                    </literallayout>
+                </para>
+
+                <para>
+                    The Yocto Project provides a core set of tests that can
+                    be used against QEMU images.
+                    Tests include <filename>ping</filename>,
+                    <filename>ssh</filename>, <filename>df</filename> among
+                    others.
+                    You can add your own tests to the list of tests by
+                    appending <filename>TEST_SUITES</filename> as follows:
+                    <literallayout class='monospaced'>
+     TEST_SUITES_append = " mytest"
+                    </literallayout>
+                </para>
+
+                <para>
+                    The order in which tests are run is important.
+                    Tests that depend on another test must appear later in the
+                    list than the test on which they depend.
+                    For example, if you append the list of tests with two
+                    tests (<filename>test_A</filename> and
+                    <filename>test_B</filename>) where
+                    <filename>test_B</filename> is dependent on
+                    <filename>test_A</filename>, then you must order the tests
+                    as follows:
+                    <literallayout class='monospaced'>
+     TEST_SUITES = " test_A test_B"
+                    </literallayout>
+                </para>
+
+                <para>
+                    For more information on testing QEMU images, see the
+                    "<ulink url='running-and-writing-tests-for-a-qemu-image'>Running and Writing Tests for a QEMU Image</ulink>"
+                    section in the Yocto Project Development Manual.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-THISDIR'><glossterm>THISDIR</glossterm>
             <glossdef>
                 <para>
