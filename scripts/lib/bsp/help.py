@@ -121,12 +121,6 @@ yocto_bsp_create_usage = """
  modified by the yocto-kernel tool.
 
  See 'yocto bsp help create' for more detailed instructions.
-
- NOTE: For x86-based BSPs that select the EMGD xserver, the generated
- BSP assumes the presence of the meta-intel layer. Ensure the
- meta-intel layer is present and added to bblayers.conf.
-
- See 'yocto bsp help create' for more detailed instructions.
 """
 
 yocto_bsp_create_help = """
@@ -180,26 +174,6 @@ DESCRIPTION
     BBLAYERS ?= " \\
       /path/to/poky/meta \\
       /path/to/poky/meta-yocto \\
-      /path/to/poky/meta-mybsp \\
-      "
-
-    NOTE: For x86-based BSPs that select the EMGD xserver, the
-    generated BSP assumes the presence of the meta-intel layer. Ensure
-    the meta-intel layer is present and added to bblayers.conf.
-
-    For example, assuming your poky repo is at /path/to/poky, your new
-    BSP layer is at /path/to/poky/meta-mybsp, and your build directory
-    is /path/to/build:
-
-    $ cd /path/to/poky
-    $ git clone git://git.yoctoproject.org/meta-intel.git
-
-    $ gedit /path/to/build/conf/bblayers.conf
-
-    BBLAYERS ?= " \\
-      /path/to/poky/meta \\
-      /path/to/poky/meta-yocto \\
-      /path/to/poky/meta-intel \\
       /path/to/poky/meta-mybsp \\
       "
 """
@@ -335,15 +309,12 @@ DESCRIPTION
 
     $ yocto-bsp list i386 property xserver_choice
         ["xserver_vesa", "VESA xserver support"]
-        ["xserver_emgd", "EMGD xserver support (proprietary)"]
         ["xserver_i915", "i915 xserver support"]
 
     $ yocto-bsp list arm property base_kbranch_linux_yocto_3_0
         Getting branches from remote repo git://git.yoctoproject.org/linux-yocto-3.0...
         ["yocto/base", "yocto/base"]
         ["yocto/eg20t", "yocto/eg20t"]
-        ["yocto/emgd", "yocto/emgd"]
-        ["yocto/emgd-1.10", "yocto/emgd-1.10"]
         ["yocto/gma500", "yocto/gma500"]
         ["yocto/pvr", "yocto/pvr"]
         ["yocto/standard/arm-versatile-926ejs", "yocto/standard/arm-versatile-926ejs"]

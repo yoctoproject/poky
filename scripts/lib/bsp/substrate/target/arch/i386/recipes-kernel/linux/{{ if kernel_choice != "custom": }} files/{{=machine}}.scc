@@ -3,16 +3,13 @@ kconf hardware {{=machine}}.cfg
 include features/intel-e1xxxx/intel-e100.scc
 include features/intel-e1xxxx/intel-e1xxxx.scc
 
-{{ if xserver == "y" and xserver_choice == "xserver_emgd": }}
-include features/drm-emgd/drm-emgd.scc
-
-{{ if xserver == "y" and xserver_choice == "xserver_i915": }}
+{{ if xserver == "y" and xserver_choice == "xserver_i915" or xserver_choice == "xserver_i965": }}
 include features/i915/i915.scc
 
 include features/serial/8250.scc
 include features/ericsson-3g/f5521gw.scc
 
-{{ if xserver == "y" and xserver_choice == "xserver_vesa" or xserver_choice == "xserver_emgd": }}
+{{ if xserver == "y" and xserver_choice == "xserver_vesa": }}
 include cfg/vesafb.scc
 
 include cfg/usb-mass-storage.scc

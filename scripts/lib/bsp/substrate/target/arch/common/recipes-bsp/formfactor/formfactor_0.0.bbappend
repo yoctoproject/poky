@@ -1,2 +1,2 @@
-FILESEXTRAPATHS_prepend_{{=machine}} := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
