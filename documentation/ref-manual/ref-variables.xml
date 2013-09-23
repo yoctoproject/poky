@@ -5220,21 +5220,27 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-TEST_IMAGE'><glossterm>TEST_IMAGE</glossterm>
             <glossdef>
                 <para>
-                    Automatically runs the series of automated tests for QEMU
-                    images when a QEMU image is successfully built.
-                    These tests are commands that run on the target system over
-                    <filename>ssh</filename> and are written in Python.
+                    Automatically runs the series of automated tests for
+                    images when an image is successfully built.
+                    <note>
+                        The current release of Yocto Project supports these tests
+                        for QEMU images only.
+                    </note>
+                    These tests are written in Python making use of the
+                    <filename>unittest</filename> module, and the majority of
+                    them run commands on the target system over
+                    <filename>ssh</filename>.
                     You can set this variable to "1" in your
                     <filename>local.conf</filename> file in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
                     to have the OpenEmbedded build system automatically run
-                    these tests after a QEMU image successfully builds:
+                    these tests after an image successfully builds:
                     <literallayout class='monospaced'>
      TEST_IMAGE = "1"
                     </literallayout>
                     For more information on enabling, running, and writing
                     these tests, see the
-                    "<ulink url='&YOCTO_DOCS_DEV_URL;#running-and-writing-tests-for-a-qemu-image'>Running and Writing Tests for a QEMU Image</ulink>"
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing'>Performing Automated Runtime Testing</ulink>"
                     section in the Yocto Project Development Manual and the
                     "<link linkend='ref-classes-testimage'><filename>testimage.bbclass</filename></link>"
                     section.
@@ -5245,24 +5251,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-TEST_QEMUBOOT_TIMEOUT'><glossterm>TEST_QEMUBOOT_TIMEOUT</glossterm>
             <glossdef>
                 <para>
-                    The time in seconds allowed for a QEMU image to boot before
-                    tests begin to run against the image using the following
-                    command:
-                    <literallayout class='monospaced'>
-     bitbake &lt;qemu_image&gt; -c testimage
-                    </literallayout>
-                </para>
-
-                <para>
+                    The time in seconds allowed for an image to boot before
+                    automated runtime tests begin to run against an
+                    image.
                     The default timeout period to allow the boot process to
                     reach the login prompt is 500 seconds.
-                    You can edit this default value in the
+                    You can specify a different value in the
                     <filename>local.conf</filename> file.
                 </para>
 
                 <para>
-                    For more information on testing QEMU images, see the
-                    "<ulink url='running-and-writing-tests-for-a-qemu-image'>Running and Writing Tests for a QEMU Image</ulink>"
+                    For more information on testing images, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing'>Performing Automated Runtime Testing</ulink>"
                     section in the Yocto Project Development Manual.
                 </para>
             </glossdef>
@@ -5272,15 +5272,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     An ordered list of tests (modules) to run against
-                    a QEMU image using the following command:
-                    <literallayout class='monospaced'>
-     bitbake &lt;qemu_image&gt; -c testimage
-                    </literallayout>
+                    an image when performing automated runtime testing.
                 </para>
 
                 <para>
-                    The Yocto Project provides a core set of tests that can
-                    be used against QEMU images.
+                    The OpenEmbedded build system provides a core set of tests
+                    that can be used against images.
+                    <note>
+                        The current release of Yocto Project supports these
+                        tests for QEMU images only.
+                    </note>
                     Tests include <filename>ping</filename>,
                     <filename>ssh</filename>, <filename>df</filename> among
                     others.
@@ -5289,6 +5290,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
      TEST_SUITES_append = " mytest"
                     </literallayout>
+                    Alternatively, you can provide the "auto" option to
+                    have all applicable tests run against the image.
+                    <literallayout class='monospaced'>
+     TEST_SUITES_append = " auto"
+                    </literallayout>
+                    Using this option causes the build system to automatically
+                    run tests that are applicable to the image.
+                    Tests that are not applicable are skipped.
                 </para>
 
                 <para>
@@ -5307,8 +5316,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    For more information on testing QEMU images, see the
-                    "<ulink url='running-and-writing-tests-for-a-qemu-image'>Running and Writing Tests for a QEMU Image</ulink>"
+                    For more information on testing images, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing'>Performing Automated Runtime Testing</ulink>"
                     section in the Yocto Project Development Manual.
                 </para>
             </glossdef>

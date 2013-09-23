@@ -4252,24 +4252,22 @@
         </section>
     </section>
 
-    <section id="running-and-writing-tests-for-a-qemu-image">
-        <title>Running and Writing Tests for a QEMU Image</title>
+    <section id="performing-automated-runtime-testing">
+        <title>Performing Automated Runtime Testing</title>
 
         <para>
             The OpenEmbedded build system makes available a series of automated
-            tests for QEMU images.
-            These tests are commands that run on the target system over
-            <filename>ssh</filename> and are written in Python, thus making
-            use of the <filename>unittest</filename> module.
-        </para>
-
-        <para>
+            tests for images.
+            <note>
+                The current release of Yocto Project supports these tests
+                for QEMU images only.
+            </note>
+            These tests are written in Python making use of the
+            <filename>unittest</filename> module, and the majority of them
+            run commands on the target system over
+            <filename>ssh</filename>.
             This section describes how you set up the environment to use these
             tests, run available tests, and write and add your own tests.
-            You can the same information in a different form and with example
-            log files of test runs on the
-            <ulink url='https://wiki.yoctoproject.org/wiki/Image_tests'>Image Tests</ulink>
-            Wiki page.
         </para>
 
         <section id="qemu-image-enabling-tests">
@@ -4278,9 +4276,8 @@
             <para>
                 In order to run tests, you need to do the following:
                 <itemizedlist>
-                    <listitem><para><emphasis>Ensure you run the test
-                        automatically with no interaction and under
-                        <filename>sudo</filename>:</emphasis>
+                    <listitem><para><emphasis>Set up to avoid interaction
+                        with <filename>sudo</filename> for networking:</emphasis>
                         To accomplish this, you must do one of the
                         following:
                         <itemizedlist>
@@ -4300,12 +4297,13 @@
                             <listitem><para>Manually configure a tap interface
                                 for your system.</para></listitem>
                             <listitem><para>Run as root the script in
-                                <filename>scripts/runqemu-gen-tapdev</filename>,
+                                <filename>scripts/runqemu-gen-tapdevs</filename>,
                                 which should generate a list of tap devices.
-                                List generation is usually done in environments
-                                similar to AutoBuilder.</para></listitem>
+                                This is the option typically chosen for
+                                Autobuilder-type environments.
+                                </para></listitem>
                         </itemizedlist></para></listitem>
-                    <listitem><para><emphasis>Set up the
+                    <listitem><para><emphasis>Set the
                         <filename>DISPLAY</filename> variable:</emphasis>
                         You need to set this variable so that you have an X
                         server available (e.g. start
@@ -4321,11 +4319,10 @@
                         <filename>${DEPLOY_DIR}/rpm</filename> so it can run
                         smart channel commands. That means your host's firewall
                         must accept incoming connections from 192.168.7.0/24,
-                        which is the default class used for
-                        <filename>tap0</filename> devices by
-                        <filename>runqemu</filename>.</para></listitem>
-                    <listitem><para><emphasis>Have your QEMU image built:</emphasis>
-                        The QEMU image on which you want to run tests needs to
+                        which is the default IP range used for tap devices
+                        by <filename>runqemu</filename>.</para></listitem>
+                    <listitem><para><emphasis>Have your image built:</emphasis>
+                        The image on which you want to run tests needs to
                         be built.
                         For example, the following command would build the
                         <filename>core-image-sato</filename> image when
@@ -4333,18 +4330,34 @@
                         <literallayout class='monospaced'>
     bitbake core-image-sato
                         </literallayout></para></listitem>
-                    <listitem><para><emphasis>Globally inherit
-                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-testimage'><filename>testimage.class</filename>:</ulink></emphasis>
-                        Edit your <filename>local.conf</filename> file as
+                    <listitem><para><emphasis>Run the tests:</emphasis>
+                        You can start the tests automatically or manually.
+                        To have the tests start automatically after the
+                        OpenEmbedded build system successfully creates a QEMU
+                        image, set the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_IMAGE'><filename>TEST_IMAGE</filename></ulink>
+                        variable to "1" in your
+                        <filename>local.conf</filename> file in the
+                        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                        To manually run the tests, globally inherit
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-testimage'><filename>testimage.class</filename>:</ulink>
+                        by editing your <filename>local.conf</filename> file as
                         follows:
                         <literallayout class='monospaced'>
     INHERIT += "testimage"
+                        </literallayout>
+                        After editing your
+                        <filename>local.conf</filename> file, use BitBake to
+                        run the tests:
+                        <literallayout class='monospaced'>
+     bitbake -c testimage &lt;qemu-image&gt;
                         </literallayout></para></listitem>
                 </itemizedlist>
             </para>
 
             <note>
-                If you built your QEMU image using <filename>rm_work</filename>,
+                Regardless of how you initiate the tests, if you built your
+                image using <filename>rm_work</filename>,
                 most of the tests will fail with errors because they rely on
                 <filename>${WORKDIR}/installed_pkgs.txt</filename>.
             </note>
@@ -4355,14 +4368,16 @@
 
             <para>
                 After setting up to run the tests, use BitBake to start
-                the standard suite of tests:
+                the standard suite of tests manually or, if you are running
+                them automatically, build your image:
                 <literallayout class='monospaced'>
      bitbake core-image-sato -c testimage
+     bitbake core-image-sato
                 </literallayout>
             </para>
 
             <para>
-                Once you start the tests, the following happens:
+                Once the tests start, the following happens:
                 <itemizedlist>
                     <listitem><para>A copy of the root filesystem is written
                         to <filename>${WORKDIR}/testimage</filename>.
@@ -4400,10 +4415,10 @@
                 All test files reside in
                 <filename>meta/lib/oeqa/runtime</filename> in the
                 <link linkend='source-directory'>Source Directory</link>.
-                Tests (also referred to as modules) have a one-to-one
-                relationship with the filenames in <filename>runtime</filename>.
-                Modules can have multiple classes and test methods and are
-                usually grouped together by the area tested (e.g tests for
+                A test name (sometimes referred to as a module) maps to a
+                method name within a class within a module.
+                Tests can be used within multiple classes and the tests
+                are usually grouped together by the area tested (e.g tests for
                 <filename>systemd</filename> reside in
                 <filename>meta/lib/oeqa/runtime/systemd.py</filename>).
             </para>
@@ -4412,12 +4427,13 @@
                 You can add tests to any layer provided you place them in the
                 proper area and you extend
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-BBPATH'><filename>BBPATH</filename></ulink>
-                in the <filename>local.conf</filename> file.
+                in the <filename>local.conf</filename> file as normal.
                 Be sure that tests reside in
                 <filename>&lt;layer&gt;/lib/oeqa/runtime</filename>.
                 <note>
                     Be sure that module names do not collide with module names
-                    provided by the Yocto Project.
+                    used in the default set of test modules in
+                    <filename>meta/lib/oeqa/runtime</filename>.
                 </note>
             </para>
 
@@ -4458,12 +4474,12 @@
                     <listitem><para>Run the default set of tests simply by
                         running the following:
                         <literallayout class='monospaced'>
-     bitbake &lt;qemu_image&gt; -c testimage
+     bitbake &lt;image&gt; -c testimage
                         </literallayout></para></listitem>
                     <listitem><para>The default tests for the image are defined
                         as:
                         <literallayout class='monospaced'>
-     DEFAULT_TEST_SUITES_pn-&lt;qemu_image&gt; = "ping ssh df connman syslog xorg scp vnc date rpm smart dmesg"
+     DEFAULT_TEST_SUITES_pn-&lt;image&gt; = "ping ssh df connman syslog xorg scp vnc date rpm smart dmesg"
                         </literallayout></para></listitem>
                     <listitem><para>Add your own test to the list of the
                         by using the following:
@@ -4487,15 +4503,16 @@
             <para>
                 As mentioned previously, all new test files need to be in the
                 proper place for the build system to find them.
-                New tests can go in the
-                <link linkend='source-directory'>Source Directory</link> at
-                <filename>meta/lib/oeqa/runtime</filename>.
-                Alternatively, a layer can add its own tests in
-                <filename>&lt;layer&gt;/lib/oeqa/runtime</filename> as long
-                as you extend <filename>BBPATH</filename>.
-                Just remember that filenames need to map directory to test
-                (module) names and you not use module names that collide with
-                existing core tests.
+                New tests for additional functionality outside of the core
+                should be added to the layer that adds the functionality, in
+                <filename>&lt;layer&gt;/lib/oeqa/runtime</filename> (as
+                long as
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBPATH'><filename>BBPATH</filename></ulink>
+                is extended in the layer's
+                <filename>layer.conf</filename> file as normal.
+                Just remember that filenames need to map directly to test
+                (module) names and that you do not use module names that
+                collide with existing core tests.
             </para>
 
             <para>
