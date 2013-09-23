@@ -4257,10 +4257,10 @@
 
         <para>
             The OpenEmbedded build system makes available a series of automated
-            tests for images.
+            tests for images to verify runtime functionality.
             <note>
-                The current release of Yocto Project supports these tests
-                for QEMU images only.
+                Currently, there is only support for running these tests
+                under QEMU.
             </note>
             These tests are written in Python making use of the
             <filename>unittest</filename> module, and the majority of them
@@ -4321,37 +4321,6 @@
                         must accept incoming connections from 192.168.7.0/24,
                         which is the default IP range used for tap devices
                         by <filename>runqemu</filename>.</para></listitem>
-                    <listitem><para><emphasis>Have your image built:</emphasis>
-                        The image on which you want to run tests needs to
-                        be built.
-                        For example, the following command would build the
-                        <filename>core-image-sato</filename> image when
-                        <filename>MACHINE</filename> is set to "qemu".
-                        <literallayout class='monospaced'>
-    bitbake core-image-sato
-                        </literallayout></para></listitem>
-                    <listitem><para><emphasis>Run the tests:</emphasis>
-                        You can start the tests automatically or manually.
-                        To have the tests start automatically after the
-                        OpenEmbedded build system successfully creates a QEMU
-                        image, set the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_IMAGE'><filename>TEST_IMAGE</filename></ulink>
-                        variable to "1" in your
-                        <filename>local.conf</filename> file in the
-                        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
-                        To manually run the tests, globally inherit
-                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-testimage'><filename>testimage.class</filename>:</ulink>
-                        by editing your <filename>local.conf</filename> file as
-                        follows:
-                        <literallayout class='monospaced'>
-    INHERIT += "testimage"
-                        </literallayout>
-                        After editing your
-                        <filename>local.conf</filename> file, use BitBake to
-                        run the tests:
-                        <literallayout class='monospaced'>
-     bitbake -c testimage &lt;qemu-image&gt;
-                        </literallayout></para></listitem>
                 </itemizedlist>
             </para>
 
@@ -4367,17 +4336,42 @@
             <title>Running Tests</title>
 
             <para>
-                After setting up to run the tests, use BitBake to start
-                the standard suite of tests manually or, if you are running
-                them automatically, build your image:
-                <literallayout class='monospaced'>
-     bitbake core-image-sato -c testimage
+                You can start the tests automatically or manually:
+                <itemizedlist>
+                    <listitem><para><emphasis>Automatically Running Tests:</emphasis>
+                        To run the tests automatically after the
+                        OpenEmbedded build system successfully creates an image,
+                        first set the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_IMAGE'><filename>TEST_IMAGE</filename></ulink>
+                        variable to "1" in your <filename>local.conf</filename>
+                        file in the
+                        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
+                        <literallayout class='monospaced'>
+     TEST_IMAGE = "1"
+                        </literallayout>
+                        Next, simply build your image.
+                        If the image successfully builds, the tests will be
+                        run:
+                        <literallayout class='monospaced'>
      bitbake core-image-sato
-                </literallayout>
+                        </literallayout></para></listitem>
+                    <listitem><para><emphasis>Manually Running Tests:</emphasis>
+                        To manually run the tests, first globally inherit
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-testimage'><filename>testimage.class</filename></ulink>
+                        by editing your <filename>local.conf</filename> file:
+                        <literallayout class='monospaced'>
+    INHERIT += "testimage"
+                        </literallayout>
+                        Next, use BitBake to run the tests:
+                        <literallayout class='monospaced'>
+     bitbake -c testimage &lt;image&gt;
+                        </literallayout></para></listitem>
+                </itemizedlist>
             </para>
 
             <para>
-                Once the tests start, the following happens:
+                Regardless of how you run the tests, once they start, the
+                following happens:
                 <itemizedlist>
                     <listitem><para>A copy of the root filesystem is written
                         to <filename>${WORKDIR}/testimage</filename>.
@@ -4415,11 +4409,10 @@
                 All test files reside in
                 <filename>meta/lib/oeqa/runtime</filename> in the
                 <link linkend='source-directory'>Source Directory</link>.
-                A test name (sometimes referred to as a module) maps to a
-                method name within a class within a module.
-                Tests can be used within multiple classes and the tests
-                are usually grouped together by the area tested (e.g tests for
-                <filename>systemd</filename> reside in
+                A test name maps directly to a Python module.
+                Each test module may contain a number of individual tests.
+                Tests are usually grouped together by the area
+                tested (e.g tests for <filename>systemd</filename> reside in
                 <filename>meta/lib/oeqa/runtime/systemd.py</filename>).
             </para>
 
@@ -4443,12 +4436,13 @@
                 variable in <filename>local.conf</filename>.
                 Each name in <filename>TEST_SUITES</filename> represents a
                 required test for the image.
-                Module skipping is not allowed even if a test is not suitable
-                for an image (e.g. running the <filename>rpm</filename> tests on
-                an image without <filename>rpm</filename>).
+                Test modules named within <filename>TEST_SUITES</filename>
+                cannot be skipped even if a test is not suitable for an image
+                (e.g. running the rpm tests on an image without
+                <filename>rpm</filename>).
                 Appending "auto" to <filename>TEST_SUITES</filename> causes the
                 build system to try to run all tests that are suitable for the
-                image (i.e. the build system decides whether to run each test).
+                image (i.e. each test module may elect to skip itself).
             </para>
 
             <para>
@@ -4469,13 +4463,8 @@
             </para>
 
             <para>
-                The following list summarizes how to run the tests:
+                Here are some things to keep in mind when running tests:
                 <itemizedlist>
-                    <listitem><para>Run the default set of tests simply by
-                        running the following:
-                        <literallayout class='monospaced'>
-     bitbake &lt;image&gt; -c testimage
-                        </literallayout></para></listitem>
                     <listitem><para>The default tests for the image are defined
                         as:
                         <literallayout class='monospaced'>
@@ -4509,7 +4498,7 @@
                 long as
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-BBPATH'><filename>BBPATH</filename></ulink>
                 is extended in the layer's
-                <filename>layer.conf</filename> file as normal.
+                <filename>layer.conf</filename> file as normal).
                 Just remember that filenames need to map directly to test
                 (module) names and that you do not use module names that
                 collide with existing core tests.
