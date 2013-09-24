@@ -580,6 +580,469 @@
         </para>
     </section>
 </section>
+
+<section id='moving-to-the-yocto-project-1.5-release'>
+    <title>Moving to the Yocto Project 1.5 Release</title>
+
+    <para>
+        This section provides migration information for moving to the
+        Yocto Project 1.5 Release from the prior release.
+    </para>
+
+    <section id='migration-1.5-host-dependency-changes'>
+        <title>Host Dependency Changes</title>
+
+        <para>
+            The OpenEmbedded build system now has some additional requirements
+            on the host system:
+            <literallayout class='monospaced'>
+     Python 2.7.3+
+
+     tar 1.24+
+
+     git 1.7.5+
+
+     Patched version of make if you are using make version 3.82.  Most
+        distributions that provide make 3.82 have now done this.
+            </literallayout>
+            If the Linux distribution you are using on your build host
+            does not provide packages for these, you can install and use
+            the Buildtools tarball, which provides an SDK-like environment
+            containing them.
+        </para>
+
+        <para>
+            For more information on this requirement, see the
+            "<link linkend='required-git-tar-and-python-versions'>Required Git, tar, and Python Versions</link>"
+            section.
+        </para>
+    </section>
+
+    <section id='migration-1.5-atom-pc-bsp'>
+        <title><filename>atom-pc</filename> Board Support Package (BSP)</title>
+
+        <para>
+            The <filename>atom-pc</filename> hardware reference BSP has been
+            replaced by a <filename>genericx86</filename> BSP.
+            This BSP is not necessarily guaranteed to work on all x86
+            hardware, but it will run on a wider range of systems than the
+            <filename>atom-pc</filename> did.
+            <note>
+                Additionally, a <filename>genericx86-64</filename> BSP has been
+                added for 64-bit systems.
+            </note>
+        </para>
+    </section>
+
+    <section id='migration-1.5-remove-operator'>
+        <title>BitBake <filename>_remove</filename> Operator</title>
+
+        <para>
+            BitBake now supports a <filename>_remove</filename> operator.
+            The addition of this operator means you will have to rename any
+            items in recipe space (functions, variables) whose names currently
+            contain <filename>_remove_</filename> or end with
+            <filename>_remove</filename> to avoid unexpected behavior.
+        </para>
+    </section>
+
+    <section id='migration-1.5-qa-warnings'>
+        <title>QA Warnings</title>
+
+        <para>
+            The following QA warnings exist:
+            <itemizedlist>
+                <listitem><para>
+                    If you have customized
+                    <link linkend='var-ERROR_QA'><filename>ERROR_QA</filename></link>
+                    or <link linkend='var-WARN_QA'><filename>WARN_QA</filename></link>
+                    values in your configuration, check that they contain all of
+                    the issues that you wish to be reported.
+                    Previous Yocto Project versions contained a bug that meant
+                    that any item not mentioned in <filename>ERROR_QA</filename>
+                    or <filename>WARN_QA</filename> would be treated as a
+                    warning.
+                    Consequently, several important items were not already in
+                    the default value of <filename>WARN_QA</filename>.
+                    All of the possible QA checks are now documented in the
+                    "<link linkend='ref-classes-insane'><filename>insane.bbclass</filename></link>"
+                    section.</para></listitem>
+                <listitem><para>
+                    An additional QA check has been added to check if
+                    <filename>/usr/share/info/dir</filename> is being installed.
+                    Your recipe should delete this file within
+                    <filename>do_install</filename> if "make install" is
+                    installing it.</para></listitem>
+                <listitem><para>
+                    If you are using the buildhistory class, the check for the
+                    package version going backwards is now controlled using a
+                    standard QA check.
+                    Thus, if you have customized your
+                    <filename>ERROR_QA</filename> or
+                    <filename>WARN_QA</filename> values and still wish to have
+                    this check performed, you should add
+                    "version-going-backwards" to your value for one or the
+                    other variables depending on how you wish it to be handled.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.5-directory-layout-changes'>
+        <title>Directory Layout Changes</title>
+
+        <para>
+            The following directory changes exist:
+            <itemizedlist>
+                <listitem><para>
+                    Output SDK installer files are now named to include the
+                    image name and tuning architecture through the
+                    <link linkend='var-SDK_NAME'><filename>SDK_NAME</filename></link>
+                    variable.</para></listitem>
+                <listitem><para>
+                    Images and related files are now installed into a directory
+                    that is specific to the machine, instead of a parent
+                    directory containing output files for multiple machines.
+                    The
+                    <link linkend='var-DEPLOY_DIR_IMAGE'><filename>DEPLOY_DIR_IMAGE</filename></link>
+                    variable continues to point to the directory containing
+                    images for the current
+                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link>
+                    and should be used anywhere there is a need to refer to
+                    this directory.
+                    The <filename>runqemu</filename> script now uses this
+                    variable to find images and kernel binaries and will use
+                    BitBake to determine the directory.
+                    Alternatively, you can set the
+                    <filename>DEPLOY_DIR_IMAGE</filename> variable in the
+                    external environment.</para></listitem>
+                <listitem><para>
+                    When buildhistory is enabled, its output is now written
+                    under the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+                    rather than
+                    <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>.
+                    Doing so makes it a easier to delete
+                    <filename>TMPDIR</filename> and preserve the build history.
+                    Additionally, data for produced SDKs is now split by
+                    <link linkend='var-IMAGE_NAME'><filename>IMAGE_NAME</filename></link>.
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>pkgdata</filename> directory produced as
+                    part of the packaging process has been collapsed into a
+                    single machine-specific directory.</para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.5-shortened-git-srcrev-values'>
+        <title>Shortened Git <filename>SRCREV</filename> Values</title>
+
+        <para>
+            BitBake will now shorten revisions from Git repositories from the
+            normal 40 characters down to 10 characters within
+            <link linkend='var-SRCPV'><filename>SRCPV</filename></link>
+            for improved usability in path and file names.
+            This change should be safe within contexts where these revisions
+            are used because the chances of spatially close collisions
+            is very low.
+            <note>
+                Distant collisions are not a major issue in the way
+                the values are used.
+            </note>
+        </para>
+    </section>
+
+    <section id='migration-1.5-image-features'>
+        <title><filename>IMAGE_FEATURES</filename></title>
+
+        <para>
+            These
+            <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>
+            exist:
+            <itemizedlist>
+                <listitem><para>
+                    The value of
+                    <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>
+                    is now validated to ensure invalid feature items are not
+                    added.
+                    Some users mistakenly add package names to this variable
+                    instead of using
+                    <link linkend='var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></link>
+                    in order to have the package added to the image, which does
+                    not work.
+                    This change is intended to catch those kinds of situations.
+                    Valid <filename>IMAGE_FEATURES</filename> are drawn from
+                    <link linkend='var-PACKAGE_GROUP'><filename>PACKAGE_GROUP</filename></link>
+                    definitions,
+                    <link linkend='var-COMPLEMENTARY_GLOBS'><filename>COMPLEMENTARY_GLOBS</filename></link>
+                    and a new 'validitems' varflag on
+                    <filename>IMAGE_FEATURES</filename>.
+                    This change allows additional features to be added if they
+                    are not provided using the previous two mechanisms.
+                    </para></listitem>
+                <listitem><para>
+                    The previously deprecated "apps-console-core"
+                    <filename>IMAGE_FEATURES</filename> item is no longer
+                    supported.
+                    Add "splash" to <filename>IMAGE_FEATURES</filename> if you
+                    wish to have the splash screen enabled, since this is
+                    all that apps-console-core was doing.</para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.5-run'>
+        <title><filename>/run</filename></title>
+
+        <para>
+            The <filename>/run</filename> directory from the Filesystem
+            Hierarchy Standard 3.0 has been introduced.
+            You can find some of the implications for this change
+            <ulink url='http://cgit.openembedded.org/openembedded-core/commit/?id=0e326280a15b0f2c4ef2ef4ec441f63f55b75873'>here</ulink>.
+            The change also means that recipes that install files to
+            <filename>/var/run</filename> must be changed.
+            You can find a guide on how to make these changes
+            <ulink url='http://permalink.gmane.org/gmane.comp.handhelds.openembedded/58530'>here</ulink>.
+        </para>
+    </section>
+
+    <section id='migration-1.5-removal-of-package-manager-database-within-image-recipes'>
+        <title>Removal of Package Manager Database Within Image Recipes</title>
+
+        <para>
+            The image <filename>core-image-minimal</filename> no longer adds
+            <filename>remove_packaging_data_files</filename> to
+            <link linkend='var-ROOTFS_POSTPROCESS_COMMAND'><filename>ROOTFS_POSTPROCESS_COMMAND</filename></link>.
+            This addition is now handled automatically when "package-management"
+            is not in
+            <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>.
+            If you have custom image recipes that makes this addition,
+            you should remove the lines, as it is not needed and may interfere
+            with correct operation of postinstall scripts.
+        </para>
+    </section>
+
+    <section id='migration-1.5-images-now-rebuild-only-on-changes-instead-of-every-time'>
+        <title>Images Now Rebuild Only on Changes Instead of Every Time</title>
+
+        <para>
+            The <filename>do_rootfs</filename> and other related image
+            construction tasks are no longer marked as "nostamp".
+            Consequently, they will only be re-executed when their inputs have
+            changed.
+            Previous versions of the OpenEmbedded build system always rebuilt
+            the image when requested rather when necessary.
+        </para>
+    </section>
+
+    <section id='migration-1.5-task-recipes'>
+        <title>Task Recipes</title>
+
+        <para>
+            The previously deprecated <filename>task.bbclass</filename> has
+            now been dropped.
+            You should remove recipes that previously inherited from this task
+            and rename from <filename>task-*</filename> to
+            <filename>packagegroup-*</filename> and inherit packagegroup
+            instead.
+        </para>
+
+        <para>
+            For more information, see the
+            "<link linkend='ref-classes-packagegroup'>Package Groups - <filename>packagegroup.bbclass</filename></link>"
+            section.
+        </para>
+    </section>
+
+    <section id='migration-1.5-busybox'>
+        <title>BusyBox</title>
+
+        <para>
+            By default, we now split BusyBox into two binaries:
+            one that is suid root for those components that need it, and
+            another for the rest of the components.
+            Splitting BusyBox allows for optimization that eliminates the
+            <filename>tinylogin</filename> recipe as recommended by upstream.
+            You can disable this split by setting
+            <link linkend='var-BUSYBOX_SPLIT_SUID'><filename>BUSYBOX_SPLIT_SUID</filename></link>
+            to "0".
+        </para>
+    </section>
+
+    <section id='migration-1.5-automated-image-testing'>
+        <title>Automated Image Testing</title>
+
+        <para>
+            A new automated image testing framework has been added
+            through the
+            <link linkend='ref-classes-testimage'><filename>testimage*.bbclass</filename></link>
+            class.
+            This framework replaces the older
+            <filename>imagetest-qemu</filename> framework.
+        </para>
+
+        <para>
+            You can learn more about performing automated image tests in the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing'>Performing Automated Runtime Testing</ulink>"
+            section.
+        </para>
+    </section>
+
+    <section id='removed-renamed-recipes'>
+        <title>Removed and Renamed Recipes</title>
+
+        <itemizedlist>
+            <listitem><para>
+                The <filename>linux-yocto</filename> 3.2 kernel has been
+                removed.</para></listitem>
+            <listitem><para>
+                <filename>libtool-nativesdk</filename> has been renamed to
+                <filename>nativesdk-libtool</filename>.</para></listitem>
+            <listitem><para>
+                <filename>tinylogin</filename> has been removed.
+                It has been replaced by a suid portion of Busybox.
+                See the
+                "<link linkend='migration-1.5-busybox'>BusyBox</link>" section
+                for more information.</para></listitem>
+            <listitem><para>
+                <filename>external-python-tarball</filename> has been renamed
+                to <filename>buildtools-tarball</filename>.
+                </para></listitem>
+            <listitem><para>
+                <filename>web-webkit</filename> has been removed.
+                It has been functionally replaced by
+                <filename>midori</filename>.</para></listitem>
+            <listitem><para>
+                <filename>imake</filename> has been removed.
+                It is no longer needed by any other recipe.
+                </para></listitem>
+            <listitem><para>
+                <filename>transfig-native</filename> has been removed.
+                It is no longer needed by any other recipe.
+                </para></listitem>
+            <listitem><para>
+                <filename>anjuta-remote-run</filename> has been removed.
+                Support for Anjuta IDE integration has not existed for some
+                several releases.</para></listitem>
+        </itemizedlist>
+    </section>
+
+    <section id='migration-1.5-other-changes'>
+        <title>Other Changes</title>
+
+        <para>
+            Following is a list of short entries describing other changes:
+            <itemizedlist>
+                <listitem><para>
+                    BitBake: <filename>methodpool</filename>: Retire this.
+                    Remove global method scope.</para></listitem>
+                <listitem><para>
+                    BitBake: server: Remove none server.</para></listitem>
+                <listitem><para>
+                    BitBake: Drop <filename>bitbake-runtask</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    Do not recommend <filename>udev-extraconf</filename>
+                    for <filename>udev</filename>.</para></listitem>
+                <listitem><para>
+                    <filename>udev</filename>: Do not recommend
+                    <filename>pciutils/usbutils ids</filename>
+                    </para></listitem>
+                <listitem><para>
+                    <filename>run-postinsts</filename>: Make this generic.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>classes/externalsrc</filename>: Enable global
+                    inherit and simplify usage.</para></listitem>
+                <listitem><para>
+                    BusyBox: Enable to list suid and non-suid app configs.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>base-files</filename>: Remove the unnecessary
+                    <filename>/media/xxx</filename> directories.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>classes/testimage.bbclass</filename>: New class
+                    for image tests.
+                    See the
+                    "<link linkend='ref-classes-testimage'><filename>testimage.bbclass</filename></link>"
+                    section for more information.</para></listitem>
+                <listitem><para>
+                    <filename>alsa-state</filename>: Provide an empty
+                    <filename>asound.conf</filename> by default.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>classes/image</filename>: Ensure
+                    <link linkend='var-BAD_RECOMMENDATIONS'><filename>BAD_RECOMMENDATIONS</filename></link>
+                    supports pre-renamed package names.</para></listitem>
+                <listitem><para>
+                    <filename>classes/rootfs_rpm</filename>: Implement
+                    <link linkend='var-BAD_RECOMMENDATIONS'><filename>BAD_RECOMMENDATIONS</filename></link>
+                    for RPM.</para></listitem>
+                <listitem><para>
+                    <filename>systemd</filename>: Remove
+                    <filename>systemd_unitdir</filename> if
+                    <filename>systemd</filename> is not in distro features.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>systemd</filename>: Remove
+                    <filename>init.d</filename> dir if
+                    <filename>systemd</filename> unit file is present and
+                    <filename>sysvinit</filename> is not a distro feature.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>libpam</filename>: Deny all services for the
+                    <filename>OTHER</filename> entries.
+                    </para></listitem>
+                <listitem><para>
+                    Add <filename>libav</filename> and use it in
+                    <filename>gst-ffmpeg</filename> by default.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>image.bbclass</filename>: Move
+                    <filename>runtime_mapping_rename</filename> to avoid
+                    conflict with <filename>multilib</filename>.
+                    See
+                    <ulink url='https://bugzilla.yoctoproject.org/show_bug.cgi?id=4993'><filename>YOCTO #4993</filename></ulink>
+                    in Bugzilla for more information.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>linux-dtb</filename>: Use kernel build system
+                    to generate the <filename>dtb</filename> files.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>classes/buildhistory</filename>: Record the
+                    size of the installed package not the compressed archive.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>classes/buildhistory</filename>: Avoid mangling
+                    names in dot graphs for images.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>buildhistory-diff/buildhistory-collect-srcrevs</filename>:
+                    Improved command-line handling.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>kern-tools</filename>: Switch from guilt to
+                    new <filename>kgit-s2q</filename> tool.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>poky.conf</filename>: Do not force the addition
+                    of extra
+                    <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>bitbake.conf</filename>: Stop providing
+                    <filename>${</filename><link linkend='var-P'><filename>P</filename></link><filename>}</filename>
+                    and
+                    <filename>${</filename><link linkend='var-PF'><filename>PF</filename></link><filename>}</filename>
+                    by default.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
