@@ -3609,10 +3609,9 @@
             <title>Setting Up Runtime Package Management</title>
 
             <para>
-                For RPM, IPK, and DEB package formats, it is possible to set
-                up a repository that is a host-based
-                package feed from which you can install packages on the
-                target system during runtime.
+                For supported package formats, it is possible to set
+                up a repository that is a host-based package feed from which
+                you can install packages on the target system during runtime.
                 Doing so is optional and depends on the following:
                 <itemizedlist>
                     <listitem><para>
@@ -3637,23 +3636,30 @@
                 </itemizedlist>
             </para>
 
-            <section id='runtime-package-management-deb-rpm'>
-                <title>Using DEB and RPM</title>
-
-                <para>
-                    Following are the steps to set up the optional repository.
-                    This example assumes you are using RPM and the Apache 2
-                    server:
-                    <orderedlist>
-                        <listitem><para>
-                            Add the directory to your Apache configuration, which
-                            you can find at
-                            <filename>/etc/httpd/conf/httpd.conf</filename>.
-                            Use commands similar to these on the development system.
-                            These example commands assume a top-level
-                            <link linkend='source-directory'>Source Directory</link>
-                            named <filename>poky</filename> in your home directory:
-                            <literallayout class='monospaced'>
+            <para>
+                The following list provides steps for setting up the optional 
+                repository regardless of the package format.
+                Once you work through these generic steps, see the 
+                "<link linkend='runtime-package-management-deb-rpm'>Using RPM</link>"
+                section or the  
+                "<link linkend='runtime-package-management-ipk'>Using IPK</link>"
+                section for remaining steps specific to the package type.
+                <note>
+                    The example assumes you are using the Apache 2 server:
+                </note>
+                <orderedlist>
+                    <listitem><para>
+                        Add the directory to your Apache configuration, which
+                        you can find at
+                        <filename>/etc/httpd/conf/httpd.conf</filename>.
+                        Use commands similar to these on the development system.
+                        These example commands assume a top-level
+                        <link linkend='source-directory'>Source Directory</link>
+                        named <filename>poky</filename> in your home directory.
+                        The example also assumes an RPM package type. 
+                        If you are using a different package type, such as 
+                        IPK, use "ipk" in the pathnames:
+                        <literallayout class='monospaced'>
      &lt;VirtualHost *:80&gt;
        ....
          Alias /rpm ~/poky/build/tmp/deploy/rpm
@@ -3661,53 +3667,62 @@
            Options +Indexes
          &lt;/Directory&gt;
      &lt;/VirtualHost&gt;
-                            </literallayout>
-                            </para></listitem>
-                        <listitem><para>
-                            Reload the Apache configuration as follows.
-                            For all commands, be sure you have root privileges.
-                            </para>
-                            <para>
-                            If your development system is using Fedora or
-                            CentOS, use the following:
-                            <literallayout class='monospaced'>
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        Reload the Apache configuration as follows.
+                        For all commands, be sure you have root privileges.
+                        </para>
+                        <para>
+                        If your development system is using Fedora or
+                        CentOS, use the following:
+                        <literallayout class='monospaced'>
      service httpd reload
-                            </literallayout>
-                            For Ubuntu and Debian, use the following:
-                            <literallayout class='monospaced'>
+                        </literallayout>
+                        For Ubuntu and Debian, use the following:
+                        <literallayout class='monospaced'>
      /etc/init.d/apache2 reload
-                            </literallayout>
-                            For OpenSUSE, use the following:
-                            <literallayout class='monospaced'>
+                        </literallayout>
+                        For OpenSUSE, use the following:
+                        <literallayout class='monospaced'>
      /etc/init.d/apache2 reload
-                            </literallayout>
-                            </para></listitem>
-                        <listitem><para>
-                            Run BitBake on <filename>package-index</filename>
-                            on the host
-                            <literallayout class='monospaced'>
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        Re-generate the package index:
+                        <literallayout class='monospaced'>
      bitbake package-index
-                            </literallayout>
-                            </para></listitem>
-                        <listitem><para>
-                            Change your working directory to
-                            <filename>tmp/deploy/rpm</filename> in the
-                            <link linkend='build-directory'>Build Directory</link>.
-                            </para></listitem>
-                        <listitem><para>
-                            If you are using Security-Enhanced Linux (SELinux),
-                            you need to label the files as being accessible
-                            through Apache.
-                            Use the following command from the development host:
-                            <literallayout class='monospaced'>
-     chcon -R -h -t httpd_sys_content_t .
-                            </literallayout>
-                            </para></listitem>
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        If you are using Security-Enhanced Linux (SELinux),
+                        you need to label the files as being accessible
+                        through Apache.
+                        Use the following command from the development host.
+                        Again, the example assumes RPM package types:
+                        <literallayout class='monospaced'>
+     chcon -R -h -t httpd_sys_content_t tmp/deploy/rpm
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
+            </para>
+
+            <section id='runtime-package-management-deb-rpm'>
+                <title>Using RPM</title>
+
+                <para>
+                    Following are RPM-specific steps needed for setting up the 
+                    optional repository.
+                    Perform these steps after working through the common steps
+                    at the start of this section:
+                    <orderedlist>
                         <listitem><para>
                             On the target machine, add the repository to Smart 
                             for every package architecture.
-                            To see the list of package architectures, just list 
-                            the contents of the directory.</para>
+                            To see the list of package architectures, list 
+                            the contents of the 
+                          setting-up-runtime-package-management  <filename>tmp/deploy/rpm</filename> directory
+                            on the host.</para>
                             <para>
                             As an example, suppose you list the contents of the 
                             directory and discover three architectures:
@@ -3715,7 +3730,7 @@
                             and <filename>qemux86</filename>.
                             Given this example, use the following commands:
                             <literallayout class='monospaced'>
-     smart channel &dash;&dash;add all type=rpm-md baseurl=http:server.name/rpm/all
+     smart channel &dash;&dash;add all type=rpm-md baseurl=http://server.name/rpm/all
      smart channel &dash;&dash;add i585 type=rpm-md baseurl=http://server.name/rpm/i586
      smart channel &dash;&dash;add qemux86 type=rpm-md baseurl=http://server.name/rpm/qemux86
                             </literallayout>
@@ -3728,6 +3743,9 @@
                             </literallayout>
                             </para></listitem>
                     </orderedlist>
+                    You can now use the <filename>smart query</filename>
+                    and <filename>smart install</filename> commands to find 
+                    and install packages from the repositories.
                 </para>
             </section>
 
@@ -3735,18 +3753,32 @@
                 <title>Using IPK</title>
 
                 <para>
-                    If your packages are IPK, you can install packages onto an
-                    existing running system by first sharing the
-                    <filename>tmp/deploy/ipk/</filename> directory
-                    through a web server and then by changing
-                    <filename>/etc/opkg/base-feeds.conf</filename>
-                    to point at the shared server.
-                    Following is an example:
-                    <literallayout class='monospaced'>
-     $ src/gz all http://www.mysite.com/somedir/deploy/ipk/all
-     $ src/gz armv7a http://www.mysite.com/somedir/deploy/ipk/armv7a
-     $ src/gz beagleboard http://www.mysite.com/somedir/deploy/ipk/beagleboard
-                    </literallayout>
+                    Following are IPK-specific steps needed for setting up the 
+                    optional repository.
+                    Perform these steps after working through the common steps
+                    at the start of this section:
+                    <orderedlist>
+                        <listitem><para>Install packages onto an
+                            existing running system by first sharing the
+                            <filename>tmp/deploy/ipk/</filename> directory
+                            through a web server and then by changing
+                            <filename>/etc/opkg/base-feeds.conf</filename>
+                            to point at the shared server.
+                            Following is an example:
+                            <literallayout class='monospaced'>
+     src/gz all http://www.mysite.com/somedir/deploy/ipk/all
+     src/gz armv7a http://www.mysite.com/somedir/deploy/ipk/armv7a
+     src/gz beagleboard http://www.mysite.com/somedir/deploy/ipk/beagleboard
+                            </literallayout></para></listitem>
+                        <listitem><para>From the target machine, fetch the
+                            repository information using this command:
+                            <literallayout class='monospaced'>
+     opkg update
+                            </literallayout></para></listitem>
+                    </orderedlist>
+                    You can now use the <filename>opkg list</filename> and 
+                    <filename>opkg install</filename> commands to find and 
+                    install packages from the repositories.
                 </para>
             </section>
         </section>
