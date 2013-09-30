@@ -599,7 +599,7 @@
                 <listitem><para>Python 2.7.3+</para></listitem>
                 <listitem><para>Tar 1.24+</para></listitem>
                 <listitem><para>Git 1.7.5+</para></listitem>
-                <listitem><para>Patched version of Make if you are using 
+                <listitem><para>Patched version of Make if you are using
                     3.82.
                     Most distributions that provide Make 3.82 use the patched
                     version.</para></listitem>
@@ -633,15 +633,46 @@
         </para>
     </section>
 
-    <section id='migration-1.5-remove-operator'>
-        <title>BitBake <filename>_remove</filename> Operator</title>
+    <section id='migration-1.5-bitbake'>
+        <title>BitBake</title>
 
         <para>
-            BitBake now supports a <filename>_remove</filename> operator.
-            The addition of this operator means you will have to rename any
-            items in recipe space (functions, variables) whose names currently
-            contain <filename>_remove_</filename> or end with
-            <filename>_remove</filename> to avoid unexpected behavior.
+            The following changes have been made that relate to BitBake:
+            <itemizedlist>
+                <listitem><para>
+                    BitBake now supports a <filename>_remove</filename>
+                    operator.
+                    The addition of this operator means you will have to
+                    rename any items in recipe space (functions, variables)
+                    whose names currently contain
+                    <filename>_remove_</filename> or end with
+                    <filename>_remove</filename> to avoid unexpected behavior.
+                    </para></listitem>
+                <listitem><para>
+                    BitBake's global method pool has been removed.
+                    This method not particularly useful and led to clashes
+                    between recipes containing functions that had the
+                    same name.</para></listitem>
+                <listitem><para>
+                    The "none" server backend has been removed.
+                    The "process" server backend has been serving well as the
+                    default for a long time now.</para></listitem>
+                <listitem><para>
+                    The <filename>bitbake-runtask</filename> script has been
+                    removed.</para></listitem>
+                <listitem><para>
+                    <filename>${</filename><link linkend='var-P'><filename>P</filename></link><filename>}</filename>
+                    and
+                    <filename>${</filename><link linkend='var-PF'><filename>PF</filename></link><filename>}</filename>
+                    are no longer added to
+                    <link linkend='var-PROVIDES'><filename>PROVIDES</filename></link>
+                    by default.
+                    These version-specific <filename>PROVIDES</filename>
+                    items were seldom used.
+                    Attempting to use them could result in two versions being
+                    built simultaneously rather than just one version due to
+                    the way BitBake resolves dependencies.</para></listitem>
+            </itemizedlist>
         </para>
     </section>
 
@@ -684,7 +715,7 @@
                     other variables depending on how you wish it to be handled.
                     See the documented QA checks in the
                     "<link linkend='ref-classes-insane'><filename>insane.bbclass</filename></link>"
-                    section. 
+                    section.
                     </para></listitem>
             </itemizedlist>
         </para>
@@ -733,9 +764,9 @@
                     The <filename>pkgdata</filename> directory produced as
                     part of the packaging process has been collapsed into a
                     single machine-specific directory.
-                    These directories are located under 
-                    <filename>sysroots</filename> and use a machine-specific
-                    name (i.e. 
+                    This directory is located under
+                    <filename>sysroots</filename> and uses a machine-specific
+                    name (i.e.
                     <filename>tmp/sysroots/&lt;machine&gt;/pkgdata</filename>).
                     </para></listitem>
             </itemizedlist>
@@ -753,10 +784,8 @@
             This change should be safe within contexts where these revisions
             are used because the chances of spatially close collisions
             is very low.
-            <note>
-                Distant collisions are not a major issue in the way
-                the values are used.
-            </note>
+            Distant collisions are not a major issue in the way
+            the values are used.
         </para>
     </section>
 
@@ -764,9 +793,8 @@
         <title><filename>IMAGE_FEATURES</filename></title>
 
         <para>
-            These
-            <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>
-            exist:
+            The following changes have been made that relate to
+            <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>:
             <itemizedlist>
                 <listitem><para>
                     The value of
@@ -783,10 +811,11 @@
                     <link linkend='var-PACKAGE_GROUP'><filename>PACKAGE_GROUP</filename></link>
                     definitions,
                     <link linkend='var-COMPLEMENTARY_GLOB'><filename>COMPLEMENTARY_GLOB</filename></link>
-                    and a new 'validitems' varflag on
+                    and a new "validitems" varflag on
                     <filename>IMAGE_FEATURES</filename>.
-                    This change allows additional features to be added if they
-                    are not provided using the previous two mechanisms.
+                    The "validitems" varflag change allows additional features
+                    to be added if they are not provided using the previous
+                    two mechanisms.
                     </para></listitem>
                 <listitem><para>
                     The previously deprecated "apps-console-core"
@@ -824,9 +853,9 @@
             This addition is now handled automatically when "package-management"
             is not in
             <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>.
-            If you have custom image recipes that makes this addition,
-            you should remove the lines, as it is not needed and may interfere
-            with correct operation of postinstall scripts.
+            If you have custom image recipes that make this addition,
+            you should remove the lines, as they are not needed and might
+            interfere with correct operation of postinstall scripts.
         </para>
     </section>
 
@@ -849,8 +878,8 @@
         <para>
             The previously deprecated <filename>task.bbclass</filename> has
             now been dropped.
-            You should remove recipes that previously inherited from this task
-            and rename from <filename>task-*</filename> to
+            For recipes that previously inherited from this task, you should
+            rename them from <filename>task-*</filename> to
             <filename>packagegroup-*</filename> and inherit packagegroup
             instead.
         </para>
@@ -930,9 +959,67 @@
                 </para></listitem>
             <listitem><para>
                 <filename>anjuta-remote-run</filename> has been removed.
-                Support for Anjuta IDE integration has not existed for some
+                Anjuta IDE integration has not been officially supported for
                 several releases.</para></listitem>
         </itemizedlist>
+    </section>
+
+    <section id='migration-1.5-build-history'>
+        <title>Build History</title>
+
+        <para>
+            Following are changes to Build History:
+            <itemizedlist>
+                <listitem><para>
+                     Installed package sizes:
+                     <filename>installed-package-sizes.txt</filename> for an
+                     image now records the size of the files installed by each
+                     package instead of the size of each compressed package
+                     archive file.</para></listitem>
+                <listitem><para>
+                    The dependency graphs (<filename>depends*.dot</filename>)
+                    now use the actual package names instead of replacing
+                    dashes, dots and plus signs with underscores.
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>buildhistory-diff</filename> and
+                    <filename>buildhistory-collect-srcrevs</filename>
+                    utilities have improved command-line handling.
+                    Use the <filename>&dash;&dash;help</filename> option for
+                    each utility for more information on the new syntax.
+                    </para></listitem>
+            </itemizedlist>
+            For more information on Build History, see the
+            "<link linkend='maintaining-build-output-quality'>Maintaining Build Output Quality</link>"
+            section.
+        </para>
+    </section>
+
+    <section id='migration-1.5-udev'>
+        <title><filename>udev</filename></title>
+
+        <para>
+            Following are changes to <filename>udev</filename>:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>udev</filename> no longer brings in
+                    <filename>udev-extraconf</filename> automatically
+                    through
+                    <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>,
+                    since this was originally intended to be optional.
+                    If you need the extra rules, then add
+                    <filename>udev-extraconf</filename> to your image.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>udev</filename> no longer brings in
+                    <filename>pciutils-ids</filename> or
+                    <filename>usbutils-ids</filename> through
+                    <filename>RRECOMMENDS</filename>.
+                    These are not needed by <filename>udev</filename> itself
+                    and removing them saves around 350KB.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
     </section>
 
     <section id='migration-1.5-other-changes'>
@@ -942,39 +1029,12 @@
             Following is a list of short entries describing other changes:
             <itemizedlist>
                 <listitem><para>
-                    BitBake: <filename>methodpool</filename>: Retire this.
-                    Remove global method scope.</para></listitem>
-                <listitem><para>
-                    BitBake: server: Remove none server.</para></listitem>
-                <listitem><para>
-                    BitBake: Drop <filename>bitbake-runtask</filename>.
-                    </para></listitem>
-                <listitem><para>
-                    Do not recommend <filename>udev-extraconf</filename>
-                    for <filename>udev</filename>.</para></listitem>
-                <listitem><para>
-                    <filename>udev</filename>: Do not recommend
-                    <filename>pciutils/usbutils ids</filename>
-                    </para></listitem>
-                <listitem><para>
                     <filename>run-postinsts</filename>: Make this generic.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>classes/externalsrc</filename>: Enable global
-                    inherit and simplify usage.</para></listitem>
-                <listitem><para>
-                    BusyBox: Enable to list suid and non-suid app configs.
                     </para></listitem>
                 <listitem><para>
                     <filename>base-files</filename>: Remove the unnecessary
                     <filename>/media/xxx</filename> directories.
                     </para></listitem>
-                <listitem><para>
-                    <filename>classes/testimage.bbclass</filename>: New class
-                    for image tests.
-                    See the
-                    "<link linkend='ref-classes-testimage'><filename>testimage.bbclass</filename></link>"
-                    section for more information.</para></listitem>
                 <listitem><para>
                     <filename>alsa-state</filename>: Provide an empty
                     <filename>asound.conf</filename> by default.
@@ -990,7 +1050,8 @@
                 <listitem><para>
                     <filename>systemd</filename>: Remove
                     <filename>systemd_unitdir</filename> if
-                    <filename>systemd</filename> is not in distro features.
+                    <filename>systemd</filename> is not in
+                    <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
                     </para></listitem>
                 <listitem><para>
                     <filename>systemd</filename>: Remove
@@ -1001,10 +1062,6 @@
                 <listitem><para>
                     <filename>libpam</filename>: Deny all services for the
                     <filename>OTHER</filename> entries.
-                    </para></listitem>
-                <listitem><para>
-                    Add <filename>libav</filename> and use it in
-                    <filename>gst-ffmpeg</filename> by default.
                     </para></listitem>
                 <listitem><para>
                     <filename>image.bbclass</filename>: Move
@@ -1019,32 +1076,8 @@
                     to generate the <filename>dtb</filename> files.
                     </para></listitem>
                 <listitem><para>
-                    <filename>classes/buildhistory</filename>: Record the
-                    size of the installed package not the compressed archive.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>classes/buildhistory</filename>: Avoid mangling
-                    names in dot graphs for images.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>buildhistory-diff/buildhistory-collect-srcrevs</filename>:
-                    Improved command-line handling.
-                    </para></listitem>
-                <listitem><para>
                     <filename>kern-tools</filename>: Switch from guilt to
                     new <filename>kgit-s2q</filename> tool.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>poky.conf</filename>: Do not force the addition
-                    of extra
-                    <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>bitbake.conf</filename>: Stop providing
-                    <filename>${</filename><link linkend='var-P'><filename>P</filename></link><filename>}</filename>
-                    and
-                    <filename>${</filename><link linkend='var-PF'><filename>PF</filename></link><filename>}</filename>
-                    by default.
                     </para></listitem>
             </itemizedlist>
         </para>
