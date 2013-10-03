@@ -3064,7 +3064,7 @@
                     </para></listitem>
                 <listitem><para>Handling optional module packaging
                     </para></listitem>
-                <listitem><para>Setting up Runtime Package Management
+                <listitem><para>Using Runtime Package Management
                     </para></listitem>
                 <listitem><para>Setting up and running package test
                     (ptest)
@@ -3605,161 +3605,208 @@
             </section>
         </section>
 
-        <section id='runtime-package-management'>
-            <title>Runtime Package Management</title>
+        <section id='using-runtime-package-management'>
+            <title>Using Runtime Package Management</title>
+
             <para>
-                Regardless of anything else, during a build bitbake will
-                transform a recipe into one or more packages. For example,
-                the <filename>bash</filename> recipe currently produces the
-                following packages: <filename>bash-dbg bash-staticdev bash-dev
-                bash-doc bash-locale bash</filename>. Not all generated
-                packages will be included in an image.
-            </para><para>
-                In several situations you might want to have the ability to
-                update, add, remove, query, etc the packages on a target
-                device at runtime (i.e. without having to generate a new
-                image). Examples of such situations include:
+                During a build, BitBake always transforms a recipe into one or
+                more packages.
+                For example, BitBake takes the <filename>bash</filename> recipe
+                and currently produces the <filename>bash-dbg</filename>,
+                <filename>bash-staticdev</filename>,
+                <filename>bash-dev</filename>, <filename>bash-doc</filename>,
+                <filename>bash-locale</filename>, and
+                <filename>bash</filename> packages.
+                Not all generated packages are included in an image.
+            </para>
+
+            <para>
+                In several situations, you might need to update, add, remove,
+                or query the packages on a target device at runtime
+                (i.e. without having to generate a new image).
+                Examples of such situations include:
                 <itemizedlist>
                     <listitem><para>
                         You want to provide in-the-field updates to deployed
-                        devices (e.g. for security updates).
-                    </para></listitem>
+                        devices (e.g. security updates).
+                        </para></listitem>
                     <listitem><para>
                         You want to have a fast turn-around development cycle
-                        for one or more applications which run on your device.
-                    </para></listitem>
+                        for one or more applications that run on your device.
+                        </para></listitem>
                     <listitem><para>
                         You want to temporarily install the "debug" packages
                         of various applications on your device so that
-                        debugging can be greatly improved (access to symbols,
-                        source debugging, etc).
-                    </para></listitem>
+                        debugging can be greatly improved by allowing
+                        access to symbols and source debugging.
+                        </para></listitem>
                     <listitem><para>
                         You want to deploy a more minimal package selection of
                         your device but allow in-the-field updates to add a
                         larger selection for customization.
-                    </para></listitem>
+                        </para></listitem>
                 </itemizedlist>
-            </para><para>
-                In all these situations you have something similar to a more
+            </para>
+
+            <para>
+                In all these situations, you have something similar to a more
                 traditional Linux distribution in that in-field devices
-                are able to grab pre-compiled packages from a server for
-                installation/update. This is what is termed "runtime package
-                management". In order to use runtime package management you
-                need a host/server machine which serves up the pre-compiled
-                packages plus the required meta data, and you need package
-                manipulation tools on the target. Note that the build machine
-                is a likely candidate to act as the server, but the build
-                machine doesn't necessarily have to be the package server;
-                the build machine could push its artifacts to another (e.g.
-                Internet-facing) machine which acts as the server.
-            </para><para>
-                A simple build which targets just one device will produce
-                more than one package database. In other words, the packages
-                produced by a build will be separated out into a couple of
-                different package groupings based on criteria such as the
-                target's CPU architecture, the target board, or the C library
-                used on the target. For example, a build targetting the
-                <filename>qemuarm</filename> device will produce the following
-                3 package databases: <filename>all</filename>,
-                <filename>armv5te</filename>, and
-                <filename>qemuarm</filename>. If I wanted my
-                <filename>qemuarm</filename> device to be aware of all the
-                packages which were available to it, I would need to point it
-                to each of these databases individually. In a similar way, a
-                traditional Linux distribution usually is configured to be
-                aware of a number of software repositories from which it
-                will retrieve packages.
-            </para><para><note>
+                are able to receive pre-compiled packages from a server for
+                installation or update.
+                Being able to install these packages on a running,
+                in-field device is what is termed "runtime package
+                management".
+            </para>
+
+            <para>
+                In order to use runtime package management, you
+                need a host/server machine that serves up the pre-compiled
+                packages plus the required metadata.
+                You also need package manipulation tools on the target.
+                The build machine is a likely candidate to act as the server.
+                However, that machine does not necessarily have to be the
+                package server.
+                The build machine could push its artifacts to another machine
+                that acts as the server (e.g. Internet-facing).
+            </para>
+
+            <para>
+                A simple build that targets just one device produces
+                more than one package database.
+                In other words, the packages produced by a build are separated
+                out into a couple of different package groupings based on
+                criteria such as the target's CPU architecture, the target
+                board, or the C library used on the target.
+                For example, a build targeting the <filename>qemuarm</filename>
+                device produces the following three package databases:
+                <filename>all</filename>, <filename>armv5te</filename>, and
+                <filename>qemuarm</filename>.
+                If you wanted your <filename>qemuarm</filename> device to be
+                aware of all the packages that were available to it,
+                you would need to point it to each of these databases
+                individually.
+                In a similar way, a traditional Linux distribution usually is
+                configured to be aware of a number of software repositories
+                from which it retrieves packages.
+            </para>
+
+            <para>
                 Using runtime package management is completely optional and
-                not required for a successful build or deployment in any way.
-                But if you want to make use of runtime package management
-                you'll need to do a couple things above and beyond the basics.
-            </note></para>
+                not required for a successful build or deployment in any
+                way.
+                But if you want to make use of runtime package management,
+                you need to do a couple things above and beyond the basics.
+                The remainder of this section describes what you need to do.
+            </para>
 
             <section id='runtime-package-management-build'>
                 <title>Build Considerations</title>
+
                 <para>
-                    In order to provide support for runtime package management
-                    there are some build considerations of which to be aware.
-                </para><para>
-                    When bitbake generates packages it needs to know in
-                    which format(s) you want the packages to be generated.
-                    In your configuration this is handled by the
+                    This section describes build considerations that you need
+                    to be aware of in order to provide support for runtime
+                    package management.
+                </para>
+
+                <para>
+                    When BitBake generates packages it needs to know
+                    what format(s) to use.
+                    In your configuration, you use the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink>
-                    variable. Note that you can choose to have more than one,
-                    but at least one is required.
-                </para><para>
+                    variable to specify the format.
+                    <note>
+                        You can choose to have more than one format but you must
+                        provide at least one.
+                    </note>
+                </para>
+
+                <para>
                     If you would like your image to start off with a basic
                     package database of the packages in your current build
-                    as well as having the relevant tools available on the
+                    as well as have the relevant tools available on the
                     target for runtime package management, you can include
                     "package-management" in the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>
-                    variable. Including "package-management" in this
+                    variable.
+                    Including "package-management" in this
                     configuration variable ensures that when the image
-                    is assembled for your target it will include
+                    is assembled for your target, the image includes
                     the currently-known package databases as well as
                     the target-specific tools required for runtime
                     package management to be performed on the target.
-                    Note, however, this isn't strictly necessary.
+                    However, this is not strictly necessary.
                     You could start your image off without any databases
                     but only include the required on-target package
-                    tool(s) (for example you would include "opkg" in your
+                    tool(s).
+                    As an example, you could include "opkg" in your
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>
-                    variable if you are using the IPK package format). You can
-                    then initialize your target's package database(s) later,
-                    once your image is up and running.
-                </para><para>
-                    Whenever you perform any sort of build step which can
+                    variable if you are using the IPK package format.
+                    You can then initialize your target's package database(s)
+                    later once your image is up and running.
+                </para>
+
+                <para>
+                    Whenever you perform any sort of build step that can
                     potentially generate a package or modify an existing
                     package, it is always a good idea to re-generate the
                     package index with:
                     <literallayout class='monospaced'>
     $ bitbake package-index
                     </literallayout>
-                    Note that it is not sufficient to simply do:
+                    Realize that it is not sufficient to simply do the
+                    following:
                     <literallayout class='monospaced'>
     $ bitbake &lt;some-package&gt; package-index
                     </literallayout>
-                    since bitbake won't properly schedule the
+                    This is because BitBake does not properly schedule the
                     <filename>package-index</filename> target fully after any
-                    other target has completed. Therefore, be sure to run the
-                    package update step separately.
-                </para><para>
+                    other target has completed.
+                    Thus, be sure to run the package update step separately.
+                </para>
+
+                <para>
                     As described below in the
-                    <link linkend='runtime-package-management-target-ipk'>Using IPK</link>
+                    "<link linkend='runtime-package-management-target-ipk'>Using IPK</link>"
                     section, if you are using IPK as your package format, you
                     can make use of the
                     <filename>distro-feed-configs</filename> recipe provided
                     by <filename>meta-oe</filename> in order to configure your
                     target to use your IPK databases.
-                </para><para>
-                    When your build is complete your packages will show up in
-                    the
+                </para>
+
+                <para>
+                    When your build is complete, your packages reside in the
                     <filename>${TMPDIR}/deploy/&lt;package-format&gt;</filename>
-                    directory. For example, if <filename>${TMPDIR}</filename>
+                    directory.
+                    For example, if <filename>${TMPDIR}</filename>
                     is <filename>tmp</filename> and your selected package type
-                    is IPK, then your IPK packages will be available in
+                    is IPK, then your IPK packages are available in
                     <filename>tmp/deploy/ipk</filename>.
                 </para>
             </section>
 
             <section id='runtime-package-management-server'>
                 <title>Host or Server Machine Setup</title>
+
                 <para>
-                    Typically packages are served from a server via HTTP, but
-                    other protocols are possible. If we assume you want to
-                    use HTTP, then you would need to setup and configure a
+                    Typically, packages are served from a server using
+                    HTTP.
+                    However, other protocols are possible.
+                    If you want to use HTTP, then setup and configure a
                     web server, such as Apache 2 or lighttpd, on the machine
-                    serving the packages. As mentioned above, the build
-                    machine can act as the package server; in the following
-                    server machine setups it is assumed the build machine is
-                    also the server.
+                    serving the packages.
+                </para>
+
+                <para>
+                    As previously mentioned, the build machine can act as the
+                    package server.
+                    In the following sections that describe server machine
+                    setups, the build machine is assumed to also be the server.
                 </para>
 
                 <section id='package-server-apache'>
                     <title>Serving Packages via Apache 2</title>
+
                     <para>
                         This example assumes you are using the Apache 2
                         server:
@@ -3769,14 +3816,14 @@
                                 configuration, which you can find at
                                 <filename>/etc/httpd/conf/httpd.conf</filename>.
                                 Use commands similar to these on the
-                                development system. These example
-                                commands assume a top-level
+                                development system.
+                                These example commands assume a top-level
                                 <link linkend='source-directory'>Source Directory</link>
                                 named <filename>poky</filename> in your home
-                                directory. The example also assumes an RPM
-                                package type. If you are using a different
-                                package type, such as IPK, use "ipk" in the
-                                pathnames:
+                                directory.
+                                The example also assumes an RPM package type.
+                                If you are using a different package type, such
+                                as IPK, use "ipk" in the pathnames:
                                 <literallayout class='monospaced'>
      &lt;VirtualHost *:80&gt;
        ....
@@ -3785,68 +3832,75 @@
            Options +Indexes
          &lt;/Directory&gt;
      &lt;/VirtualHost&gt;
-                                </literallayout>
-                            </para></listitem>
+                                </literallayout></para></listitem>
                             <listitem><para>
-                                Reload the Apache configuration as follows.
+                                Reload the Apache configuration as described
+                                in this step.
                                 For all commands, be sure you have root
                                 privileges.
-                                </para><para>
+                                </para>
+
+                                <para>
                                 If your development system is using Fedora or
                                 CentOS, use the following:
                                 <literallayout class='monospaced'>
-     # service httpd reload
+     $ service httpd reload
                                 </literallayout>
                                 For Ubuntu and Debian, use the following:
                                 <literallayout class='monospaced'>
-     # /etc/init.d/apache2 reload
+     $ /etc/init.d/apache2 reload
                                 </literallayout>
                                 For OpenSUSE, use the following:
                                 <literallayout class='monospaced'>
-     # /etc/init.d/apache2 reload
-                                </literallayout>
-                            </para></listitem>
+     $ /etc/init.d/apache2 reload
+                                </literallayout></para></listitem>
                             <listitem><para>
                                 If you are using Security-Enhanced Linux
                                 (SELinux), you need to label the files as
-                                being accessible through Apache. Use the
-                                following command from the development host
-                                (this example assumes RPM package types):
+                                being accessible through Apache.
+                                Use the following command from the development
+                                host.
+                                This example assumes RPM package types:
                                 <literallayout class='monospaced'>
-     # chcon -R -h -t httpd_sys_content_t tmp/deploy/rpm
-                                </literallayout>
-                            </para></listitem>
+     $ chcon -R -h -t httpd_sys_content_t tmp/deploy/rpm
+                                </literallayout></para></listitem>
                         </orderedlist>
                     </para>
                 </section>
 
                 <section id='package-server-lighttpd'>
                     <title>Serving Packages via lighttpd</title>
+
                     <para>
-                        If you are using lighttpd all you need
+                        If you are using lighttpd, all you need
                         to do is to provide a link from your
-                        ${TMPDIR}/deploy/&lt;package-format&gt; directory to
-                        lighttpd's document-root. You can determine the
-                        specifics of your lighttpd installation by looking
-                        through its configuration file which is usually found
-                        at: <filename>/etc/lighttpd/lighttpd.conf</filename>.
-                    </para><para>
-                        For example, if you are using IPK, if
-                        lighttpd's document-root is set to
-                        <filename>/var/www/lighttpd</filename>, and if you had
-                        packages for a target named "BOARD"
+                        <filename>${TMPDIR}/deploy/&lt;package-format&gt;</filename>
+                        directory to lighttpd's document-root.
+                        You can determine the specifics of your lighttpd
+                        installation by looking through its configuration file,
+                        which is usually found at:
+                        <filename>/etc/lighttpd/lighttpd.conf</filename>.
+                    </para>
+
+                    <para>
+                        For example, if you are using IPK, lighttpd's
+                        document-root is set to
+                        <filename>/var/www/lighttpd</filename>, and you had
+                        packages for a target named "BOARD",
                         then you might create a link from your build location
                         to lighttpd's document-root as follows:
                         <literallayout class='monospaced'>
-    # ln -s $(PWD)/tmp/deploy/ipk /var/www/lighttpd/BOARD-dir
+    $ ln -s $(PWD)/tmp/deploy/ipk /var/www/lighttpd/BOARD-dir
                         </literallayout>
-                    </para><para>
-                        At this point you need to start the lighttpd server.
-                        The way in which you start the server will vary by
-                        distribution, but one basic way to start it by hand
-                        would be:
+                    </para>
+
+                    <para>
+                        At this point, you need to start the lighttpd server.
+                        The method used to start the server varies by
+                        distribution.
+                        However, one basic method that starts it by hand is:
                         <literallayout class='monospaced'>
-    # lighttpd -f /etc/lighttpd/lighttpd.conf
+    $ lighttpd -f /etc/lighttpd/lighttpd.conf
                         </literallayout>
                     </para>
                 </section>
@@ -3855,30 +3909,41 @@
             <section id='runtime-package-management-target'>
                 <title>Target Setup</title>
 
+                <para>
+                    Setting up the target differs depending on the
+                    package management system.
+                    This section provides information for RPM and IPK.
+                </para>
+
                 <section id='runtime-package-management-target-rpm'>
                     <title>Using RPM</title>
+
                     <para>
                         The application for performing runtime package
                         management of RPM packages on the target is called
                         <filename>smart</filename>.
-                    </para><para>
+                    </para>
+
+                    <para>
                         On the target machine, you need to inform
                         <filename>smart</filename> of every package database
-                        you wish to use. As an example, suppose your target
-                        device can use the following 3 package databases from
-                        a server named <filename>server.name</filename>:
+                        you want to use.
+                        As an example, suppose your target device can use the
+                        following three package databases from a server named
+                        <filename>server.name</filename>:
                         <filename>all</filename>, <filename>i586</filename>,
-                        and <filename>qemux86</filename>. Given this example,
-                        issue the following commands on the target:
+                        and <filename>qemux86</filename>.
+                        Given this example, issue the following commands on the
+                        target:
                         <literallayout class='monospaced'>
-     # smart channel --add all type=rpm-md baseurl=http://server.name/rpm/all
-     # smart channel --add i585 type=rpm-md baseurl=http://server.name/rpm/i586
-     # smart channel --add qemux86 type=rpm-md baseurl=http://server.name/rpm/qemux86
+     $ smart channel --add all type=rpm-md baseurl=http://server.name/rpm/all
+     $ smart channel --add i585 type=rpm-md baseurl=http://server.name/rpm/i586
+     $ smart channel --add qemux86 type=rpm-md baseurl=http://server.name/rpm/qemux86
                         </literallayout>
                         Also from the target machine, fetch the repository
                         information using this command:
                         <literallayout class='monospaced'>
-     # smart update
+     $ smart update
                         </literallayout>
                         You can now use the <filename>smart query</filename>
                         and <filename>smart install</filename> commands to
@@ -3888,23 +3953,28 @@
 
                 <section id='runtime-package-management-target-ipk'>
                     <title>Using IPK</title>
+
                     <para>
                         The application for performing runtime package
                         management of IPK packages on the target is called
                         <filename>opkg</filename>.
-                    </para><para>
+                    </para>
+
+                    <para>
                         In order to inform <filename>opkg</filename> of the
-                        package databases you wish to use, simply create one
+                        package databases you want to use, simply create one
                         or more <filename>*.conf</filename> files in the
-                        <filename>/etc/opkg</filename> directory on the target
-                        and <filename>opkg</filename> will use them to find
-                        its available package databases. As an example if you
-                        configured your HTTP server on your machine named
+                        <filename>/etc/opkg</filename> directory on the target.
+                        The <filename>opkg</filename> application uses them
+                        to find its available package databases.
+                        As an example, suppose you configured your HTTP server
+                        on your machine named
                         <filename>www.mysite.com</filename> to serve files
                         from a <filename>BOARD-dir</filename> directory under
-                        its document-root you might create a configuration
+                        its document-root.
+                        In this case, you might create a configuration
                         file on the target called
-                        <filename>/etc/opkg/base-feeds.conf</filename> which
+                        <filename>/etc/opkg/base-feeds.conf</filename> that
                         contains:
                         <literallayout class='monospaced'>
      src/gz all http://www.mysite.com/BOARD-dir/all
@@ -3912,43 +3982,46 @@
      src/gz beagleboard http://www.mysite.com/BOARD-dir/beagleboard
                         </literallayout>
                     </para>
-                    <note>
+
+                    <para>
                         As a way of making it easier to generate and make
                         these IPK configuration files available on your
                         target, the <filename>meta-oe</filename> layer
                         provides a recipe called
-                        <filename>distro-feed-configs</filename> (which
-                        provides a package by the same name). When you
-                        include this package into your image, it will
+                        <filename>distro-feed-configs</filename>, which
+                        provides a package by the same name.
+                        When you include this package into your image, it will
                         automatically generate and include a set of
                         <filename>*.conf</filename> files in the image's
-                        <filename>/etc/opkg</filename> directory which will
-                        provide your target's opkg tool with any and all
-                        package databases your build will generate. The only
-                        catch is that this recipe can't possibly imagine your
-                        server's DNS name/IP address, so somewhere in your
-                        configuration you need to set a variable called
-                        <filename>DISTRO_FEED_URI</filename> which will point
+                        <filename>/etc/opkg</filename> directory that will
+                        provide your target's <filename>opkg</filename>
+                        tool with any and all package databases your build will
+                        generate.
+                        The only catch is that this recipe cannot possibly
+                        imagine your server's DNS name/IP address.
+                        Consequently, somewhere in your configuration you need
+                        to set a variable called
+                        <filename>DISTRO_FEED_URI</filename> to point
                         to your server and the location within the
-                        document-root which contains the databases. For
-                        example: if you are serving your packages over HTTP,
+                        document-root that contains the databases.
+                        For example: if you are serving your packages over HTTP,
                         your server's IP address is 192.168.7.1, and your
                         databases are located in a directory called
                         <filename>BOARD-dir</filename> underneath your HTTP
-                        server's document-root then set
+                        server's document-root, you need to set
                         <filename>DISTRO_FEED_URI</filename> to
                         <filename>http://192.168.7.1/BOARD-dir</filename>.
-                    </note>
+                    </para>
+
                     <para>
                         On the target machine, fetch (or refresh) the
                         repository information using this command:
                         <literallayout class='monospaced'>
-     # opkg update
+     $ opkg update
                         </literallayout>
-                        You can now use the <filename>opkg list</filename> and 
-                        <filename>opkg install</filename> commands to find and 
+                        You can now use the <filename>opkg list</filename> and
+                        <filename>opkg install</filename> commands to find and
                         install packages from the repositories.
-                    </para><para>
                     </para>
                 </section>
             </section>
