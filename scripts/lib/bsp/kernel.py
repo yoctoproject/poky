@@ -35,7 +35,7 @@ import subprocess
 from engine import create_context
 
 
-def find_bblayers(scripts_path):
+def find_bblayers():
     """
     Find and return a sanitized list of the layers found in BBLAYERS.
     """
@@ -48,67 +48,50 @@ def find_bblayers(scripts_path):
 
     layers = []
 
-    f = open(bblayers_conf, "r")
-    lines = f.readlines()
-    bblayers_lines = []
-    in_bblayers = False
-    for line in lines:
-        line = line.strip()
-        tokens = line.split()
-        if len(tokens) > 0 and tokens[0] == 'BBLAYERS':
-            bblayers_lines.append(line)
-            in_bblayers = True
-            quotes = line.strip().count('"')
-            if quotes > 1:
-                in_bblayers = False
-            continue
-        if in_bblayers:
-            bblayers_lines.append(line)
-            if line.strip().endswith("\""):
-                in_bblayers = False
+    bitbake_env_cmd = "bitbake -e"
+    bitbake_env_lines = subprocess.Popen(bitbake_env_cmd, shell=True,
+                                         stdout=subprocess.PIPE).stdout.read()
 
-    for i, line in enumerate(bblayers_lines):
-        if line.strip().endswith("\\"):
-            bblayers_lines[i] = line.strip().replace('\\', '')
-
-    bblayers_line = " ".join(bblayers_lines)
-
-    openquote = ''
-    for c in bblayers_line:
-        if c == '\"' or c == '\'':
-            if openquote:
-                if c != openquote:
-                    print "Invalid BBLAYERS found in %s, exiting" % bblayers_conf
-                    sys.exit(1)
-                else:
-                    openquote = ''
-            else:
-                openquote = c
-
-    if openquote:
-        print "Invalid BBLAYERS found in %s, exiting" % bblayers_conf
+    if not bitbake_env_lines:
+        print "Couldn't get '%s' output, exiting." % bitbake_env_cmd
         sys.exit(1)
 
-    bblayers_line = bblayers_line.strip().replace('\"', '')
-    bblayers_line = bblayers_line.strip().replace('\'', '')
+    for line in bitbake_env_lines.split('\n'):
+        bblayers = get_line_val(line, "BBLAYERS")
+        if (bblayers):
+            break
 
-    raw_layers = bblayers_line.split()
+    if not bblayers:
+        print "Couldn't find BBLAYERS in 'bitbake -e' output, exiting." % \
+            bitbake_env_cmd
+        sys.exit(1)
+
+    raw_layers = bblayers.split()
 
     for layer in raw_layers:
         if layer == 'BBLAYERS' or '=' in layer:
             continue
         layers.append(layer)
 
-    f.close()
-
     return layers
 
 
-def find_meta_layer(scripts_path):
+def get_line_val(line, key):
+    """
+    Extract the value from the VAR="val" string
+    """
+    if line.startswith(key + "="):
+        stripped_line = line.split('=')[1]
+        stripped_line = stripped_line.replace('\"', '')
+        return stripped_line
+    return None
+
+
+def find_meta_layer():
     """
     Find and return the meta layer in BBLAYERS.
     """
-    layers = find_bblayers(scripts_path)
+    layers = find_bblayers()
 
     for layer in layers:
         if layer.endswith("meta"):
@@ -117,11 +100,11 @@ def find_meta_layer(scripts_path):
     return None
 
 
-def find_bsp_layer(scripts_path, machine):
+def find_bsp_layer(machine):
     """
     Find and return a machine's BSP layer in BBLAYERS.
     """
-    layers = find_bblayers(scripts_path)
+    layers = find_bblayers()
 
     for layer in layers:
         if layer.endswith(machine):
@@ -154,7 +137,7 @@ def open_user_file(scripts_path, machine, userfile, mode):
 
     The caller is responsible for closing the file returned.
     """
-    layer = find_bsp_layer(scripts_path, machine)
+    layer = find_bsp_layer(machine)
     linuxdir = os.path.join(layer, "recipes-kernel/linux")
     linuxdir_list = os.listdir(linuxdir)
     for fileobj in linuxdir_list:
@@ -309,7 +292,7 @@ def find_filesdir(scripts_path, machine):
     (could be in files/, linux-yocto-custom/, etc).  Returns the name
     of the files dir if found, None otherwise.
     """
-    layer = find_bsp_layer(scripts_path, machine)
+    layer = find_bsp_layer(machine)
     filesdir = None
     linuxdir = os.path.join(layer, "recipes-kernel/linux")
     linuxdir_list = os.listdir(linuxdir)
@@ -474,7 +457,7 @@ def kernel_contents_changed(scripts_path, machine):
     Do what we need to do to notify the system that the kernel
     recipe's contents have changed.
     """
-    layer = find_bsp_layer(scripts_path, machine)
+    layer = find_bsp_layer(machine)
 
     kernel = find_current_kernel(layer, machine)
     if not kernel:
@@ -561,7 +544,7 @@ def find_giturl(context):
     filebase = context["filename"]
     scripts_path = context["scripts_path"]
 
-    meta_layer = find_meta_layer(scripts_path)
+    meta_layer = find_meta_layer()
 
     kerndir = os.path.join(meta_layer, "recipes-kernel/linux")
     bbglob = os.path.join(kerndir, "*.bb")
@@ -739,7 +722,7 @@ def yocto_kernel_available_features_list(scripts_path, machine):
     Display the list of all the kernel features available for use in
     BSPs, as gathered from the set of feature sources.
     """
-    layer = find_bsp_layer(scripts_path, machine)
+    layer = find_bsp_layer(machine)
     kernel = find_current_kernel(layer, machine)
     if not kernel:
         print "Couldn't determine the kernel for this BSP, exiting."
@@ -813,7 +796,7 @@ def yocto_kernel_feature_describe(scripts_path, machine, feature):
     Display the description of a specific kernel feature available for
     use in a BSP.
     """
-    layer = find_bsp_layer(scripts_path, machine)
+    layer = find_bsp_layer(machine)
 
     kernel = find_current_kernel(layer, machine)
     if not kernel:
