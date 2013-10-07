@@ -3774,20 +3774,29 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     This variable provides a means of enabling or disabling
                     features of a recipe on a per-recipe basis.
+                    <filename>PACKAGECONFIG</filename> blocks are defined
+                    in recipes when you specify features and then arguments
+                    that define feature behaviors.
+                    Here is the basic block structure:
+                    <literallayout class='monospaced'>
+     PACKAGECONFIG ??= "f1 f2 f3 ..."
+     PACKAGECONFIG[f1] = "--with-f1,--without-f1,build-deps-f1,rt-deps-f1"
+     PACKAGECONFIG[f2] = "--with-f2,--without-f2,build-deps-f2,rt-deps-f2"
+     PACKAGECONFIG[f3] = "--with-f3,--without-f3,build-deps-f3,rt-deps-f3"
+                    </literallayout>
                     The <filename>PACKAGECONFIG</filename>
                     variable itself specifies a space-separated list of the
                     features to enable.
-                    The features themselves are specified as flags on the
-                    <filename>PACKAGECONFIG</filename> variable.
-                    You can provide up to four arguments, which are separated by
-                    commas, to determine the behavior of each feature
-                    when it is enabled or disabled.
+                    Following the features, you can determine the behavior of
+                    each feature by providing up to four order-dependent
+                    arguments, which are separated by commas.
                     You can omit any argument you like but must retain the
                     separating commas.
-                    The arguments specify the following:
+                    The order is important and specifies the following:
                     <orderedlist>
                         <listitem><para>Extra arguments
-                            that should be added to the configure script argument list
+                            that should be added to the configure script
+                            argument list
                             (<link linkend='var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></link>)
                             if the feature is enabled.</para></listitem>
                         <listitem><para>Extra arguments
@@ -3806,14 +3815,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    Consider the following example taken from the
+                    Consider the following
+                    <filename>PACKAGECONFIG</filename> block taken from the
                     <filename>librsvg</filename> recipe.
-                    In this example the feature is <filename>croco</filename>, which
-                    has three arguments that determine the feature's behavior.
-                        <literallayout class='monospaced'>
+                    In this example the feature is <filename>croco</filename>,
+                    which has three arguments that determine the feature's
+                    behavior.
+                    <literallayout class='monospaced'>
      PACKAGECONFIG ??= "croco"
      PACKAGECONFIG[croco] = "--with-croco,--without-croco,libcroco"
-                        </literallayout>
+                    </literallayout>
                     The <filename>--with-croco</filename> and
                     <filename>libcroco</filename> arguments apply only if
                     the feature is enabled.
@@ -3826,6 +3837,49 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     the second argument <filename>--without-croco</filename> is
                     added to the configure script rather than
                     <filename>--with-croco</filename>.
+                </para>
+
+                <para>
+                    The basic <filename>PACKAGECONFIG</filename> structure
+                    previously described holds true regardless of whether you
+                    are creating a block or changing a block.
+                    When creating a block, use the structure inside your
+                    recipe.
+                </para>
+
+                <para>
+                    If you want to change an existing
+                    <filename>PACKAGECONFIG</filename> block, you can do so
+                    one of two ways:
+                    <itemizedlist>
+                        <listitem><para><emphasis>Append file:</emphasis>
+                            Create an append file named
+                            <filename>&lt;recipename&gt;.bbappend</filename> in your
+                            layer and override the value of
+                            <filename>PACKAGECONFIG</filename>.
+                            You can either completely override the variable:
+                            <literallayout class='monospaced'>
+     PACKAGECONFIG="f4 f5"
+                            </literallayout>
+                            Or, you can just amended the variable:
+                            <literallayout class='monospaced'>
+     PACKAGECONFIG_append = " f4"
+                            </literallayout></para></listitem>
+                        <listitem><para><emphasis>Configuration file:</emphasis>
+                            This method is identical to changing the block
+                            through an append file except you edit your
+                            <filename>local.conf</filename> or
+                            <filename>&lt;mydistro&gt;.conf</filename> file.
+                            As with append files previously described,
+                            you can either completely override the variable:
+                            <literallayout class='monospaced'>
+     PACKAGECONFIG_pn-&lt;recipename&gt;="f4 f5"
+                            </literallayout>
+                            Or, you can just amended the variable:
+                            <literallayout class='monospaced'>
+     PACKAGECONFIG_append_pn-&lt;recipename&gt; = " f4"
+                            </literallayout></para></listitem>
+                    </itemizedlist>
                 </para>
             </glossdef>
         </glossentry>
