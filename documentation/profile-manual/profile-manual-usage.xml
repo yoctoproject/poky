@@ -2096,6 +2096,15 @@
             booted. The 'crosstap' script provides details on how
             to do this if you run the script on the host without having
             done a build:
+            <note>
+                SystemTap, which uses 'crosstap', assumes you can establish an
+                ssh connection to the remote target.
+                Please refer to crosstap wiki page for details on verifying
+                ssh connections at
+                <ulink url='https://wiki.yoctoproject.org/wiki/Tracing_and_Profiling#systemtap'></ulink>.
+                Also, the ability to ssh into the target system is not enabled
+                by default in -minimal images.
+            </note>
             <literallayout class='monospaced'>
      $ crosstap root@192.168.1.88 trace_open.stp
 
@@ -2121,9 +2130,6 @@
           [ edit local.conf and add 'tools-profile' to the end of
             the EXTRA_IMAGE_FEATURES variable ]
           $ bitbake core-image-sato
-
-      [ NOTE that 'crosstap' needs to be able to ssh into the target
-        system, which isn't enabled by default in -minimal images. ]
 
      Once you've build the image on the host system, you're ready to
      boot it (or the equivalent pre-built image) and use 'crosstap'
