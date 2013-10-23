@@ -414,9 +414,9 @@
 
          <para>
              <literallayout class='monospaced'>
-     $ wget &YOCTO_POKY_DL_URL;
-     $ tar xjf &YOCTO_POKY;.tar.bz2
-     $ cd &YOCTO_POKY;
+     $ git clone &YOCTO_GIT_URL;/git/poky
+     $ cd poky
+     $ git checkout -b &DISTRO_NAME; origin/&DISTRO_NAME;
      $ source &OE_INIT_FILE;
              </literallayout>
          </para>
@@ -433,30 +433,31 @@
          </para></tip>
 
          <itemizedlist>
-             <listitem><para>In the previous example, the first command retrieves the Yocto Project
-                 release tarball from the source repositories using the
-                 <filename>wget</filename> command.
-                 Alternatively, you can go to the
-                 <ulink url='&YOCTO_HOME_URL;'>Yocto Project website's</ulink>
-                 "Downloads" page to retrieve the tarball.</para></listitem>
-             <listitem><para>The second command extracts the files from the tarball and places
-                 them into a directory named <filename>&YOCTO_POKY;</filename> in the current
-                 directory.</para></listitem>
-             <listitem><para>The third and fourth commands change the working directory to the
-                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
-                 and run the Yocto Project
+             <listitem><para>In the previous example, the first command uses
+                 <ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink> to create
+                 a local repository named <filename>poky</filename> that is a
+                 clone of the upstream Yocto Project
+                 <filename>poky</filename> repository.</para></listitem>
+             <listitem><para>The third command checks out a local branch and
+                 names it <filename>&DISTRO_NAME;</filename>.
+                 The local branch tracks the upstream branch of the same name.
+                 Creating your own branch based on the released branch ensures
+                 you are using the latest files for that release.
+                 </para></listitem>
+             <listitem><para>The final command runs the Yocto Project
                  <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
                  environment setup script.
-                 Running this script defines OpenEmbedded build environment settings needed to
-                 complete the build.
+                 Running this script defines OpenEmbedded build environment
+                 settings needed to complete the build.
                  The script also creates the
                  <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>,
-                 which is <filename>build</filename> in this case and is located in the
-                 Source Directory.
+                 which is <filename>build</filename> in this case and is located
+                 in the
+                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                  After the script runs, your current working directory is set
                  to the Build Directory.
-                 Later, when the build completes, the Build Directory contains all the files
-                 created during the build.
+                 Later, when the build completes, the Build Directory contains
+                 all the files created during the build.
                  <note>
                      For information on running a memory-resident BitBake, see
                      the
