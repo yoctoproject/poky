@@ -334,37 +334,43 @@
         <para>
             Follow these steps to generate the toolchain into the Build Directory:
             <orderedlist>
-                <listitem><para>Source the environment setup script
-                    <filename>&OE_INIT_FILE;</filename> located in the
+                <listitem><para><emphasis>Set up the Build Environment:</emphasis>
+                    Source the OpenEmbedded build environment setup
+                    script (i.e.
+                    <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
+                    or
+                    <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>)
+                    located in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                     </para></listitem>
-                <listitem><para>At this point, you should be sure that the
+                <listitem><para><emphasis>Check your Local Configuration File:</emphasis>
+                    At this point, you should be sure that the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink> variable
                     in the <filename>local.conf</filename> file found in the
                     <filename>conf</filename> directory of the Build Directory
                     is set for the target architecture.
-                    Comments within the <filename>local.conf</filename> file list the values you
-                    can use for the <filename>MACHINE</filename> variable.
-                    <note>You can populate the Build Directory with the cross-toolchains for more
-                        than a single architecture.
-                        You just need to edit the <filename>MACHINE</filename> variable in the
-                        <filename>local.conf</filename> file and re-run the BitBake
-                        command.</note></para></listitem>
-                <listitem><para>Run <filename>bitbake meta-ide-support</filename> to complete the
-                    cross-toolchain generation.
-                    <note>If you change out of your working directory after you
-                        <filename>source</filename> the environment setup script and before you run
-                        the BitBake command, the command might not work.
-                        Be sure to run the BitBake command immediately
-                        after checking or editing the <filename>local.conf</filename> but without
-                        changing out of your working directory.</note>
-                    Once the BitBake command finishes,
-                    the cross-toolchain is generated and populated within the Build Directory.
-                    You will notice environment setup files for the cross-toolchain in the
-                    Build Directory in the <filename>tmp</filename> directory.
-                    Setup script filenames contain the strings <filename>environment-setup</filename>.</para>
-                    <para>Be aware that when you use this method to install the toolchain you still need
-                    to separately extract and install the sysroot filesystem.
+                    Comments within the <filename>local.conf</filename> file
+                    list the values you can use for the
+                    <filename>MACHINE</filename> variable.
+                    <note>
+                        You can populate the Build Directory with the
+                        cross-toolchains for more than a single architecture.
+                        You just need to edit the <filename>MACHINE</filename>
+                        variable in the <filename>local.conf</filename> file and
+                        re-run the BitBake command.
+                    </note></para></listitem>
+                <listitem><para><emphasis>Generate the Cross-Toolchain:</emphasis>
+                    Run <filename>bitbake meta-ide-support</filename> to
+                    complete the cross-toolchain generation.
+                    Once the BitBake command finishes, the cross-toolchain is
+                    generated and populated within the Build Directory.
+                    You will notice environment setup files for the
+                    cross-toolchain that contain the string
+                    "<filename>environment-setup</filename>" in the
+                    Build Directory's <filename>tmp</filename> folder.</para>
+                    <para>Be aware that when you use this method to install the
+                    toolchain, you still need to separately extract and install
+                    the sysroot filesystem.
                     For information on how to do this, see the
                     "<link linkend='extracting-the-root-filesystem'>Extracting the Root Filesystem</link>" section.
                     </para></listitem>
