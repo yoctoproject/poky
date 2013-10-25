@@ -8,22 +8,31 @@
     <para>
         Recall that earlier the manual discussed how to use an existing toolchain
         tarball that had been installed into the default installation
-        directory, <filename>/opt/poky</filename>, which is outside of the
+        directory, <filename>/opt/poky/&DISTRO;</filename>, which is outside of the
         <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
         (see the section "<link linkend='using-an-existing-toolchain-tarball'>Using a Cross-Toolchain Tarball)</link>".
         And, that sourcing your architecture-specific environment setup script
         initializes a suitable cross-toolchain development environment.
-        During the setup, locations for the compiler, QEMU scripts, QEMU binary,
+    </para>
+
+    <para>
+        During this setup, locations for the compiler, QEMU scripts, QEMU binary,
         a special version of <filename>pkgconfig</filename> and other useful
         utilities are added to the <filename>PATH</filename> variable.
-        Variables to assist <filename>pkgconfig</filename> and <filename>autotools</filename>
-        are also defined so that,
-        for example, <filename>configure.sh</filename> can find pre-generated
-        test results for tests that need target hardware on which to run.
-        These conditions allow you to easily use the toolchain outside of the
-        OpenEmbedded build environment on both autotools-based projects and
-        Makefile-based projects.
+        Also, variables to assist
+        <filename>pkgconfig</filename> and <filename>autotools</filename>
+        are also defined so that, for example, <filename>configure.sh</filename>
+        can find pre-generated test results for tests that need target hardware
+        on which to run.
     </para>
+
+    <para>
+        Collectively, these conditions allow you to easily use the toolchain
+        outside of the OpenEmbedded build environment on both autotools-based
+        projects and Makefile-based projects.
+        This chapter provides information for both these types of projects.
+    </para>
+
 
 <section id='autotools-based-projects'>
 <title>Autotools-Based Projects</title>
@@ -179,7 +188,7 @@
                 If <filename>configure</filename> script results in problems recognizing the
                 <filename>--with-libtool-sysroot=&lt;sysroot-dir&gt;</filename> option,
                 regenerate the script to enable the support by doing the following and then
-                re-running the script:
+                run the script again:
                 <literallayout class='monospaced'>
      $ libtoolize --automake
      $ aclocal -I ${OECORE_NATIVE_SYSROOT}/usr/share/aclocal \
