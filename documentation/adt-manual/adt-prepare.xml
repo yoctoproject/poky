@@ -516,31 +516,62 @@
         <title>Extracting the Root Filesystem</title>
 
         <para>
-            You must extract the root filesystem if you want to boot the image using NFS
-            or you want to use the root filesystem as the target sysroot.
-            For example, the Eclipse IDE environment with the Eclipse Yocto Plug-in installed allows you
-            to use QEMU to boot under NFS.
-            Another example is if you want to develop your target application using the
-            root filesystem as the target sysroot.
+            If you install your toolchain by hand or build it using BitBake and
+            you need a root filesystem, you need to extract it separately.
+            If you use the ADT Installer to install the ADT, the root
+            filesystem is automatically extracted and installed.
+        </para>
+
+        <para>
+            Here are some cases where you need to extract the root filesystem:
+            <itemizedlist>
+                <listitem><para>You want to boot the image using NFS.
+                    </para></listitem>
+                <listitem><para>You want to use the root filesystem as the
+                    target sysroot.
+                    For example, the Eclipse IDE environment with the Eclipse
+                    Yocto Plug-in installed allows you to use QEMU to boot
+                    under NFS.</para></listitem>
+                <listitem><para>You want to develop your target application
+                    using the root filesystem as the target sysroot.
+                    </para></listitem>
+            </itemizedlist>
         </para>
 
         <para>
             To extract the root filesystem, first <filename>source</filename>
-            the cross-development environment setup script and then
-            use the <filename>runqemu-extract-sdk</filename> command on the
+            the cross-development environment setup script.
+            If you built the toolchain in the Build Directory, you will find
+            the toolchain environment script in the
+            <filename>tmp</filename> directory.
+            If you installed the toolchain by hand, the environment setup
+            script is located in <filename>opt/poky/&DISTRO;</filename>.
+        </para>
+
+        <para>
+            After sourcing the environment script, use the
+            <filename>runqemu-extract-sdk</filename> command and provide the
             filesystem image.
-            For example, the following commands set up the environment and then extract
-            the root filesystem from a previously built filesystem image tarball named
-            <filename>core-image-sato-sdk-qemux86-2011091411831.rootfs.tar.bz2</filename>.
-            The example extracts the root filesystem into the <filename>$HOME/qemux86-sato</filename>
-            directory:
+        </para>
+
+        <para>
+            Following is an example.
+            The second command sets up the environment.
+            In this case, the setup script is located in the
+            <filename>/opt/poky/&DISTRO;</filename> directory.
+            The third command extracts the root filesystem from a previously
+            built filesystem that is located in the
+            <filename>~/Downloads</filename> directory.
+            Furthermore, this command extracts the root filesystem into the
+            <filename>$HOME/qemux86-sato</filename> directory:
             <literallayout class='monospaced'>
-     $ source $HOME/toolchain_dir/environment-setup-i586-poky-linux
+     $ cd ~
+     $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
      $ runqemu-extract-sdk \
         ~Downloads/core-image-sato-sdk-qemux86-2011091411831.rootfs.tar.bz2 \
         $HOME/qemux86-sato
             </literallayout>
-            In this case, you could now point to the target sysroot at
+            You could now point to the target sysroot at
             <filename>$HOME/qemux86-sato</filename>.
         </para>
     </section>
