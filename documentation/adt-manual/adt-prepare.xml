@@ -582,30 +582,26 @@
 
     <para>
         As an alternative to locating and downloading a toolchain installer,
-        you can build the toolchain installer if you have a
-        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+        you can build the toolchain installer one of two ways if you have a
+        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
+        <itemizedlist>
+            <listitem><para>Use <filename>bitbake meta-toolchain</filename>.
+                This method requires you to still install the target
+                sysroot by installing and extracting it separately.
+                For information on how to install the sysroot, see the
+                "<link linkend='extracting-the-root-filesystem'>Extracting the Root Filesystem</link>"
+                section.</para></listitem>
+            <listitem><para>Use
+                <filename>bitbake image -c populate_sdk</filename>.
+                This method has significant advantages over the previous method
+                because it results in a toolchain installer that contains the
+                sysroot that matches your target root filesystem.
+                </para></listitem>
+        </itemizedlist>
     </para>
 
     <para>
-        You can build the toolchain
-        installer using <filename>bitbake meta-toolchain</filename>.
-        This method requires you to still install the target
-        sysroot by installing and extracting it separately.
-        For information on how to install the sysroot, see the
-        "<link linkend='extracting-the-root-filesystem'>Extracting the Root Filesystem</link>" section.
-    </para>
-
-    <para>
-        A final method of building the toolchain installer exists that has
-        significant advantages over the previous method.
-        This method results in a toolchain installer that contains the sysroot
-        that matches your target root filesystem.
-        To build this installer, use the
-        <filename>bitbake image -c populate_sdk</filename> command.
-    </para>
-
-    <para>
-         Remember, before using any <filename>bitbake</filename> command, you
+         Remember, before using any BitBake command, you
          must source the build environment setup script
          (i.e.
          <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
