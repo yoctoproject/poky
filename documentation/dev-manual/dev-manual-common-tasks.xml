@@ -5275,9 +5275,8 @@
             <para>This release of Toaster provides you with information
             about a BitBake run.
             The tool does not allow you to configure and launch a build.
-            Future development includes plans to integrate the data examination
-            features of Toaster with the configuration and build launching
-            capabilities of
+            However, future development includes plans to integrate the
+            configuration and build launching capabilities of
             <ulink url='&YOCTO_HOME_URL;/tools-resources/projects/hob'>Hob</ulink>.
             </para>
             <para>For more information on using Hob to build an image,
@@ -5294,14 +5293,19 @@
                 First, be sure you have met the following requirements:
                 <itemizedlist>
                     <listitem><para>You have set up your
-                        <link linkend='source-directory'>Source Directory</link>.
+                        <link linkend='source-directory'>Source Directory</link>
+                        by cloning the upstream <filename>poky</filename>
+                        repository.
                         See the
                         <link linkend='local-yp-release'>Yocto Project Release</link>
                         item for information on how to set up the Source
                         Directory.</para></listitem>
                     <listitem><para>Be sure your build machine has
                         <ulink url='http://en.wikipedia.org/wiki/Django_%28web_framework%29'>Django</ulink>
-                        version 1.4 or greater installed.</para></listitem>
+                        version 1.4.5 or greater installed.</para></listitem>
+                    <listitem><para>Make sure that port 8000 and 8200 are
+                        free (i.e. they have no servers on them).
+                        </para></listitem>
                 </itemizedlist>
             </para>
 
@@ -5309,12 +5313,30 @@
                 Once you have met the requirements, follow these steps to
                 start Toaster running in the background of your shell:
                 <orderedlist>
-                    <listitem><para>Set up your build environment by sourcing
-                        the <filename>oe-init-build-env</filename> script.
+                    <listitem><para><emphasis>Set up your build environment:</emphasis>
+                        Source a build environment script (i.e.
+                        <filename>oe-init-build-env</filename> or
+                        <filename>oe-init-build-env-memres</filename>).
                         </para></listitem>
-                    <listitem><para>Edit your <filename>local.conf</filename>
-                        configuration file as needed.</para></listitem>
-                    <listitem><para>Start the Toaster service using this
+                    <listitem><para><emphasis>Prepare your local configuration file:</emphasis>
+                        Toaster needs the Toaster class enabled
+                        in Bitbake in order to record target image package
+                        information.
+                        You can enable it by adding the following line to your
+                        <filename>conf/local.conf</filename> file:
+                        <literallayout class='monospaced'>
+     INHERIT += "toaster"
+                        </literallayout>
+                        Toaster also needs Build History enabled in Bitbake in
+                        order to record target image package information.
+                        You can enable this by adding the following two lines
+                        to your <filename>conf/local.conf</filename> file:
+                        <literallayout class='monospaced'>
+     INHERIT += "buildhistory"
+     BUILDHISTORY_COMMIT = "1"
+                        </literallayout></para></listitem>
+                    <listitem><para><emphasis>Start Toaster:</emphasis>
+                        Start the Toaster service using this
                         command from within your build directory:
                         <literallayout class='monospaced'>
      $ source toaster start
@@ -5334,12 +5356,15 @@
                 <itemizedlist>
                     <listitem><para><emphasis><filename>toaster.sqlite</filename>:</emphasis>
                         Toaster's database file.</para></listitem>
-                    <listitem><para><emphasis><filename>tstmain.log</filename>:</emphasis>
-                        Toaster's log file.</para></listitem>
-                    <listitem><para><emphasis><filename>tstmain.pid</filename>:</emphasis>
-                        Contains the PID of the web server.</para></listitem>
-                    <listitem><para><emphasis><filename>dsi.pid</filename>:</emphasis>
-                        Contains the PID of th bridge.</para></listitem>
+                    <listitem><para><emphasis><filename>toaster_web.log</filename>:</emphasis>
+                        The log file of the web server.</para></listitem>
+                    <listitem><para><emphasis><filename>toaster_ui.log</filename>:</emphasis>
+                        The log file of the user interface component.
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>toastermain.pid</filename>:</emphasis>
+                        The PID of the web server.</para></listitem>
+                    <listitem><para><emphasis><filename>toasterui.pid</filename>:</emphasis>
+                        The PID of the DSI data bridge.</para></listitem>
                     <listitem><para><emphasis><filename>bitbake-cookerdaemon.log</filename>:</emphasis>
                         The BitBake server's log file.</para></listitem>
                 </itemizedlist>
