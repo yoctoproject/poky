@@ -617,12 +617,27 @@
          variable is correctly set if you are building a toolchain designed to
          run on an architecture that differs from your current development host
          machine (i.e. the build machine).
-     </para>
+    </para>
 
-     <para>
-         When the BitBake command completes, the toolchain installer will be in
-         <filename>tmp/deploy/sdk</filename> in the Build Directory.
-     </para>
+    <para>
+        When the BitBake command completes, the toolchain installer will be in
+        <filename>tmp/deploy/sdk</filename> in the Build Directory.
+        <note>
+            By default, this toolchain does not build static binaries.
+            If you want to use the toolchain to build these types of libraries,
+            you need to be sure your image has the appropriate static 
+            development libraries.
+            Use the 
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>
+            variable inside your <filename>local.conf</filename> file to
+            install the appropriate library packages.
+            Following is an example using <filename>eglibc</filename> static 
+            development libraries:
+            <literallayout class='monospaced'>
+     IMAGE_INSTALL_append = " eglibc-staticdev"
+            </literallayout>
+        </note>
+    </para>
 </section>
 
 </chapter>
