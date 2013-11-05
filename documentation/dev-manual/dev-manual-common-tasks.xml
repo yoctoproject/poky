@@ -3996,31 +3996,19 @@
                     <para>
                         As a way of making it easier to generate and make
                         these IPK configuration files available on your
-                        target, the <filename>meta-oe</filename> layer
-                        provides a recipe called
-                        <filename>distro-feed-configs</filename>, which
-                        provides a package by the same name.
-                        When you include this package into your image, it will
-                        automatically generate and include a set of
-                        <filename>*.conf</filename> files in the image's
-                        <filename>/etc/opkg</filename> directory that will
-                        provide your target's <filename>opkg</filename>
-                        tool with any and all package databases your build will
-                        generate.
-                        The only catch is that this recipe cannot possibly
-                        imagine your server's DNS name/IP address.
-                        Consequently, somewhere in your configuration you need
-                        to set a variable called
-                        <filename>DISTRO_FEED_URI</filename> to point
+                        target, simply define
+                        <filename>FEED_DEPLOYDIR_BASE_URI</filename> to point
                         to your server and the location within the
-                        document-root that contains the databases.
-                        For example: if you are serving your packages over HTTP,
-                        your server's IP address is 192.168.7.1, and your
-                        databases are located in a directory called
+                        document-root which contains the databases.
+                        For example: if you are serving your packages over
+                        HTTP, your server's IP address is 192.168.7.1, and
+                        your databases are located in a directory called
                         <filename>BOARD-dir</filename> underneath your HTTP
                         server's document-root, you need to set
-                        <filename>DISTRO_FEED_URI</filename> to
-                        <filename>http://192.168.7.1/BOARD-dir</filename>.
+                        <filename>FEED_DEPLOYDIR_BASE_URI</filename> to
+                        <filename>http://192.168.7.1/BOARD-dir</filename> and
+                        a set of configuration files will be generated for you
+                        in your target to work with this feed.
                     </para>
 
                     <para>
