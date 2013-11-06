@@ -730,43 +730,61 @@
             <title>Invalidating Shared State</title>
 
             <para>
-                The shared state code uses checksums and shared state
+                The OpenEmbedded build system uses checksums and shared state
                 cache to avoid unnecessarily rebuilding tasks.
+                Collectively, this scheme is known as "shared state code."
+            </para>
+
+            <para>
                 As with all schemes, this one has some drawbacks.
-                It is possible that you could make implicit changes that are not factored
-                into the checksum calculation, but do affect a task's output.
-                A good example is perhaps when a tool changes its output.
-                Assume that the output of <filename>rpmdeps</filename> needed to change.
+                It is possible that you could make implicit changes to your
+                code that the checksum calculations do not take into
+                account (i.e. implicit changes).
+                These implicit changes affect a task's output but do not trigger
+                the shared state code into rebuilding a recipe.
+                Consider an example during which a tool changes its output.
+                Assume that the output of <filename>rpmdeps</filename> changes.
                 The result of the change should be that all the
-                <filename>package</filename>, <filename>package_write_rpm</filename>,
-                and <filename>package_deploy-rpm</filename> shared state cache
-                items would become invalid.
-                But, because this is a change that is external to the code and therefore implicit,
-                the associated shared state cache items do not become invalidated.
-                In this case, the build process uses the cached items rather than running the
-                task again.
+                <filename>package</filename> and
+                <filename>package_write_rpm</filename> shared state cache
+                items become invalid.
+                However, because the change to the output is
+                external to the code and therefore implicit,
+                the associated shared state cache items do not become
+                invalidated.
+                In this case, the build process uses the cached items rather
+                than running the task again.
                 Obviously, these types of implicit changes can cause problems.
             </para>
 
             <para>
-                To avoid these problems during the build, you need to understand the effects of any
-                change you make.
-                Note that any changes you make directly to a function automatically are factored into
-                the checksum calculation and thus, will invalidate the associated area of sstate cache.
-                You need to be aware of any implicit changes that are not obvious changes to the
-                code and could affect the output of a given task.
-                Once you are aware of such changes, you can take steps to invalidate the cache
-                and force the tasks to run.
-                The steps to take are as simple as changing function's comments in the source code.
-                For example, to invalidate package shared state files, change the comment statements
-                of <filename>do_package</filename> or the comments of one of the functions it calls.
-                The change is purely cosmetic, but it causes the checksum to be recalculated and
-                forces the task to be run again.
+                To avoid these problems during the build, you need to
+                understand the effects of any changes you make.
+                Realize that changes you make directly to a function
+                are automatically factored into the checksum calculation.
+                Thus, these explicit changes invalidate the associated area of
+                sstate cache.
+                However, you need to be aware of any implicit changes that
+                are not obvious changes to the code and could affect the output
+                of a given task.
+            </para>
+
+            <para>
+                When you identify an implicit change, you can easily take steps
+                to invalidate the cache and force the tasks to run.
+                The steps you can take are as simple as changing a function's
+                comments in the source code.
+                For example, to invalidate package shared state files, change
+                the comment statements of <filename>do_package</filename> or
+                the comments of one of the functions it calls.
+                Even though the change is purely cosmetic, it causes the
+                checksum to be recalculated and forces the OpenEmbedded build
+                system to run the task again.
             </para>
 
             <note>
-                For an example of a commit that makes a cosmetic change to invalidate
-                a shared state, see this
+                For an example of a commit that makes a cosmetic change to
+                invalidate shared state, see this
                 <ulink url='&YOCTO_GIT_URL;/cgit.cgi/poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54'>commit</ulink>.
             </note>
         </section>
