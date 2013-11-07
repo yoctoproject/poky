@@ -106,7 +106,7 @@
                         build environment while also creating the default
                         Build Directory, and run the BitBake command that
                         results in the tarball
-                        <filename>~/yocto-project/build/tmp/deploy/sdk/adt_installer.tar.bz2</filename>:
+                        <filename>poky/build/tmp/deploy/sdk/adt_installer.tar.bz2</filename>:
                         <note>
                             Before using BitBake to build the ADT tarball, be
                             sure to make sure your
@@ -136,7 +136,7 @@
                 a top-level directory named <filename>adt-installer</filename>:
                 <literallayout class='monospaced'>
      $ cd ~
-     $ cp ~/poky/build/tmp/deploy/sdk/adt_installer.tar.bz2 $HOME
+     $ cp poky/build/tmp/deploy/sdk/adt_installer.tar.bz2 $HOME
      $ tar -xjf adt_installer.tar.bz2
                 </literallayout>
                 Unpacking it creates the directory <filename>adt-installer</filename>,
@@ -206,7 +206,7 @@
                 When you run the installer, the environment must use a
                 host <filename>gcc</filename>:
                 <literallayout class='monospaced'>
-     $ cd ~/adt-installer
+     $ cd adt-installer
      $ ./adt_installer
                 </literallayout>
                 Once the installer begins to run, you are asked to enter the
@@ -303,7 +303,7 @@
                     The first thing the installer prompts you for is the
                     directory into which you want to install the toolchain.
                     The default directory used is
-                    <filename>opt/poky/&DISTRO;</filename>.
+                    <filename>/opt/poky/&DISTRO;</filename>.
                     If you do not have write permissions for the directory
                     into which you are installing the toolchain, the
                     toolchain installer notifies you and exits.
@@ -545,7 +545,7 @@
             the toolchain environment script in the
             <filename>tmp</filename> directory.
             If you installed the toolchain by hand, the environment setup
-            script is located in <filename>opt/poky/&DISTRO;</filename>.
+            script is located in <filename>/opt/poky/&DISTRO;</filename>.
         </para>
 
         <para>
@@ -563,16 +563,16 @@
             built filesystem that is located in the
             <filename>~/Downloads</filename> directory.
             Furthermore, this command extracts the root filesystem into the
-            <filename>$HOME/qemux86-sato</filename> directory:
+            <filename>qemux86-sato</filename> directory:
             <literallayout class='monospaced'>
      $ cd ~
      $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
      $ runqemu-extract-sdk \
-        ~Downloads/core-image-sato-sdk-qemux86-2011091411831.rootfs.tar.bz2 \
+        ~/Downloads/core-image-sato-sdk-qemux86-2011091411831.rootfs.tar.bz2 \
         $HOME/qemux86-sato
             </literallayout>
             You could now point to the target sysroot at
-            <filename>$HOME/qemux86-sato</filename>.
+            <filename>qemux86-sato</filename>.
         </para>
     </section>
 </section>
@@ -625,13 +625,13 @@
         <note>
             By default, this toolchain does not build static binaries.
             If you want to use the toolchain to build these types of libraries,
-            you need to be sure your image has the appropriate static 
+            you need to be sure your image has the appropriate static
             development libraries.
-            Use the 
+            Use the
             <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>
             variable inside your <filename>local.conf</filename> file to
             install the appropriate library packages.
-            Following is an example using <filename>eglibc</filename> static 
+            Following is an example using <filename>eglibc</filename> static
             development libraries:
             <literallayout class='monospaced'>
      IMAGE_INSTALL_append = " eglibc-staticdev"
