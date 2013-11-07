@@ -101,7 +101,7 @@
     </section>
 
     <section id='handbook'>
-        <title><filename>documentation</filename></title>
+        <title><filename>documentation/</filename></title>
 
         <para>
             This directory holds the source for the Yocto Project documentation
@@ -109,7 +109,7 @@
             versions of the manuals.
             Each manual is contained in a sub-folder.
             For example, the files for this manual reside in
-            <filename>ref-manual</filename>.
+            the <filename>ref-manual/</filename> directory.
         </para>
     </section>
 
@@ -179,9 +179,9 @@
         </para>
 
         <para>
-            The <filename>scripts</filename> directory has useful scripts that assist contributing
-            back to the Yocto Project, such as <filename>create_pull_request</filename> and
-            <filename>send_pull_request</filename>.
+            The <filename>scripts</filename> directory has useful scripts that assist in contributing
+            back to the Yocto Project, such as <filename>create-pull-request</filename> and
+            <filename>send-pull-request</filename>.
         </para>
     </section>
 
@@ -209,7 +209,8 @@
         <para>
             By default, running this script without a
             <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-            argument creates the <filename>build</filename> directory.
+            argument creates the <filename>build</filename> directory
+            in your current working directory.
             If you provide a Build Directory argument when you
             <filename>source</filename> the script, you direct the OpenEmbedded
             build system to create a Build Directory of your choice.
@@ -346,7 +347,7 @@
             <filename><link linkend='var-MACHINE'>MACHINE</link></filename>
             for which you want to build, which package types you wish to use
             (<link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>),
-            the location from which you want to downloaded files
+            the location from which you want to access downloaded files
             (<filename><link linkend='var-DL_DIR'>DL_DIR</link></filename>),
             and how you want your host machine to use resources
             (<link linkend='var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></link>
@@ -368,9 +369,9 @@
         <para>
             The source <filename>local.conf.sample</filename> file used
             depends on the <filename>$TEMPLATECONF</filename> script variable,
-            which defaults to <filename>/meta-yocto/conf</filename>
+            which defaults to <filename>meta-yocto/conf</filename>
             when you are building from the Yocto Project development
-            environment and defaults to <filename>/meta/conf</filename> when
+            environment and defaults to <filename>meta/conf</filename> when
             you are building from the OpenEmbedded Core environment.
             Because the script variable points to the source of the
             <filename>local.conf.sample</filename> file, this implies that
@@ -387,11 +388,11 @@
             <note>
                 You can see how the <filename>TEMPLATECONF</filename> variable
                 is used by looking at the
-                <filename>/scripts/oe-setup-builddir</filename> script in the
+                <filename>scripts/oe-setup-builddir</filename> script in the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                 You can find the Yocto Project version of the
                 <filename>local.conf.sample</filename> file in the
-                <filename>/meta-yocto/conf</filename> directory.
+                <filename>meta-yocto/conf</filename> directory.
             </note>
         </para>
     </section>
@@ -424,9 +425,9 @@
         <para>
             The source <filename>bblayers.conf.sample</filename> file used
             depends on the <filename>$TEMPLATECONF</filename> script variable,
-            which defaults to <filename>/meta-yocto/conf</filename>
+            which defaults to <filename>meta-yocto/conf</filename>
             when you are building from the Yocto Project development
-            environment and defaults to <filename>/meta/conf</filename> when
+            environment and defaults to <filename>meta/conf</filename> when
             you are building from the OpenEmbedded Core environment.
             Because the script variable points to the source of the
             <filename>bblayers.conf.sample</filename> file, this implies that
@@ -441,11 +442,11 @@
             values for all <filename>##OEROOT##</filename> values.
             <note>
                 You can see how the <filename>TEMPLATECONF</filename> variable
-                <filename>/scripts/oe-setup-builddir</filename> script in the
+                <filename>scripts/oe-setup-builddir</filename> script in the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
                 You can find the Yocto Project version of the
                 <filename>bblayers.conf.sample</filename> file in the
-                <filename>/meta-yocto/conf</filename> directory.
+                <filename>meta-yocto/conf</filename> directory.
             </note>
         </para>
     </section>
@@ -487,7 +488,7 @@
         <title><filename>build/tmp/</filename></title>
 
         <para>
-            This directory receives all the OpenEmbedded build system's output.
+            This directory receives all of the OpenEmbedded build system's output.
             BitBake creates this directory if it does not exist.
             As a last resort, to clean up a build and start it from scratch (other than the downloads),
             you can remove everything in the <filename>tmp</filename> directory or get rid of the
@@ -551,6 +552,15 @@
         </para>
     </section>
 
+    <section id='structure-build-tmp-deploy-ipk'>
+        <title><filename>build/tmp/deploy/ipk/</filename></title>
+
+        <para>
+            This directory receives <filename>.ipk</filename> packages produced by
+            the build process.
+        </para>
+    </section>
+
     <section id='structure-build-tmp-deploy-licenses'>
         <title><filename>build/tmp/deploy/licenses/</filename></title>
 
@@ -597,14 +607,6 @@
         </para>
     </section>
 
-    <section id='structure-build-tmp-deploy-ipk'>
-        <title><filename>build/tmp/deploy/ipk/</filename></title>
-
-        <para>
-            This directory receives <filename>.ipk</filename> packages produced by
-            the build process.</para>
-    </section>
-
     <section id='structure-build-tmp-sysroots'>
         <title><filename>build/tmp/sysroots/</filename></title>
 
@@ -643,15 +645,6 @@
             Examples of logs are the output from the <filename>check_pkg</filename> or
             <filename>distro_check</filename> tasks.
             Running a build does not necessarily mean this directory is created.
-        </para>
-    </section>
-
-    <section id='structure-build-tmp-pkgdata'>
-        <title><filename>build/tmp/pkgdata/</filename></title>
-
-        <para>
-            This directory contains intermediate packaging data that is used later in the packaging process.
-            For more information, see the "<link linkend='ref-classes-package'>Packaging - package*.bbclass</link>" section.
         </para>
     </section>
 
