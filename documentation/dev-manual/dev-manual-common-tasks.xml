@@ -1136,6 +1136,175 @@
         </section>
     </section>
 
+    <section id='usingpoky-writing-a-new-recipe'>
+        <title>Writing a New Recipe</title>
+
+        <para>
+            Recipes (<filename>.bb</filename> files) are fundamental components
+            in the Yocto Project environment.
+            The OpenEmbedded build system parses and compiles your recipes to
+            create an image.
+            Your project consists in part of the recipes that define it.
+            This section describes how to create, write, and test a new
+            recipe.
+        </para>
+
+        <section id='new-recipe-overview'>
+            <title>Overview</title>
+
+            <para>
+                The following figure shows the basic process for creating a
+                new recipe.
+                Subsequent sections provide details for each step.
+                <imagedata fileref="figures/recipe-workflow.png" width="4in" depth="7in" align="center" scalefit="1" />
+            </para>
+        </section>
+
+        <section id='new-recipe-locate-a-base-recipe'>
+            <title>Locate a Base Recipe</title>
+
+            <para>
+                Working from an existing recipe or a skeleton recipe is the
+                best way to get started.
+                Here are some points on both methods:
+                <itemizedlist>
+                    <listitem><para><emphasis>Locate a recipe that is close
+                        to what you want to do and use it:</emphasis>
+                        This method works when you are familiar with the
+                        current recipe space.
+                        The method does not work so well for those new to
+                        the Yocto Project or writing recipes.</para>
+                        <para>Some risks associated with this method are
+                        using a recipe that has areas totally unrelated to
+                        what you are trying to accomplish with your recipe,
+                        not recognizing areas of the recipe that you might
+                        have to add from scratch, and so forth.
+                        All these risks stem from unfamiliarity with the
+                        existing recipe space.</para></listitem>
+                    <listitem><para><emphasis>Use a skeleton recipe:</emphasis>
+                        Using the skeleton recipe located at
+                        &lt;Need some path for a good recipe to use&gt; is the
+                        recommended method for creating a new recipe.
+                        The skeleton recipe provides the fundamental areas
+                        that you need to include, exclude, or alter to fit
+                        your needs.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='new-recipe-fetching-code'>
+            <title>Fetching Code</title>
+
+            <para>
+                fetching: basically a matter of ensuring SRC_URI is correct, and for archives
+that SRC_URI checksums are specified and correct. We should show examples of
+the error message you get when you don't, from which you can copy and paste
+the lines with the correct values.
+            </para>
+        </section>
+
+        <section id='new-recipe-unpacking-code'>
+            <title>Unpacking Code</title>
+
+            <para>
+                unpacking: ensure S matches the directory that contains the source. Often the
+default will work for a source archive, but it depends on how the upstream
+project structures their archive. If SRC_URI specifies to fetch the source from
+an SCM such as git or svn you'll definitely need to set S.
+            </para>
+        </section>
+
+        <section id='new-recipe-licensing'>
+            <title>Licensing</title>
+
+            <para>
+                licensing: set correct values for LICENSE and LIC_FILES_CHKSUM, i.e. look for
+a license statement somewhere (COPYING, LICENSE, part of a README, top of a
+source file etc.) and then set the two variables accordingly. You need to go
+through this several steps, i.e. look in the directory containing the
+extracted source, then set LIC_FILES_CHKSUM to point to the file without the
+md5 value specified, and then run bitbake on the recipe again and it will error
+out with the actual md5 value which you can then put into the recipe. I notice
+we don't necessarily have a list anywhere of the common values for LICENSE
+either, so maybe we need to add this to the variable reference entry for this
+variable. We should also cover what to do if there is no file specifying the
+license shipped with the source.
+            </para>
+        </section>
+
+        <section id='new-recipe-optionally-supporting-services'>
+            <title>Supporting Services</title>
+
+            <para>
+                We'll probably also need some subsections on specific extra functions needed in
+some recipes e.g. how to add support for services (sysvinit and systemd),
+adding PACKAGECONFIG options, dealing with alternatives, etc. There's a
+question in my mind on how some of these will overlap with the class reference
+section though.
+            </para>
+        </section>
+
+        <section id='new-recipe-configuring-the-recipe'>
+            <title>Configuring the Recipe</title>
+
+            <para>
+                configure: this depends on whether you're using autotools or not; if you are
+then you should set EXTRA_OECONF to pass any needed configure options specific
+to this recipe. If you are not using autotools, you need to define your own
+do_configure function, assuming there is anything to configure. At this point
+you may also need to tweak DEPENDS if the configure scripts complain about any
+required dependencies being missing, assuming it's not just looking in the
+wrong place for the dependency in which case it's usually a matter of
+supplying the appropriate configure options to point to the correct location
+within the sysroot.
+            </para>
+        </section>
+
+        <section id='new-recipe-compiling-the-recipe'>
+            <title>Compiling the Recipe</title>
+
+            <para>
+                compile: if the recipe passes through do_compile successfully, nothing needs
+to be done. If not, diagnose the failure. We might be able to highlight common
+issues here such as parallel build failures, host path usage when building for
+the target, etc.
+            </para>
+        </section>
+
+        <section id='new-recipe-optionally-installing'>
+            <title>Optionally Installing</title>
+
+            <para>
+                install: for autotools/cmake recipes, if the recipe passes through do_install
+successfully, nothing needs to be done (at this stage). If not, diagnose the
+failure. For non-autotools recipes you need to define your own do_install
+(which may well just run "oe_runmake install").
+            </para>
+        </section>
+
+        <section id='new-recipe-packaging'>
+            <title>Packaging</title>
+
+            <para>
+                packaging: ensure that the files are packaged correctly. Resolve any package QA
+issues (we need to have more detailed docs on this, probably as its own
+section). This can also involve looking at packages-split under the work
+directory and checking if files are where they need to be; if not, set
+PACKAGES, FILES, do_install(_append) etc. as needed.
+            </para>
+        </section>
+
+        <section id='new-recipe-testing'>
+            <title>Testing</title>
+
+            <para>
+                runtime testing: add the output package(s) to your image and ensure that they
+work at runtime.
+            </para>
+        </section>
+    </section>
+
     <section id='usingpoky-extend-addpkg'>
         <title>Writing a Recipe to Add a Package to Your Image</title>
 
