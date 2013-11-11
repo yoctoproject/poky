@@ -10,7 +10,7 @@
         adding new software packages, extending or customizing images,
         porting work to new hardware (adding a new machine), and so forth.
         You will find the procedures documented here occur often in the
-        develop cycle using the Yocto Project.
+        development cycle using the Yocto Project.
     </para>
 
     <section id="understanding-and-creating-layers">
@@ -31,7 +31,7 @@
             To illustrate how layers are used to keep things modular, consider
             machine customizations.
             These types of customizations typically reside in a special layer,
-            rather than a general layer, called a Board Specific Package (BSP)
+            rather than a general layer, called a Board Support Package (BSP)
             Layer.
             Furthermore, the machine customizations should be isolated from
             recipes and Metadata that support a new GUI environment,
@@ -60,11 +60,12 @@
                 You can easily identify layers that ship with a
                 Yocto Project release in the Source Directory by their
                 folder names.
-                Folders that are layers begin with the string
-                <filename>meta</filename>.
+                Folders that represent layers typically have names that begin with
+                the string <filename>meta-</filename>.
                 <note>
-                    It is not a requirement that a layer begins with the
-                    string <filename>meta</filename>.
+                    It is not a requirement that a layer name begin with the
+                    prefix <filename>meta-</filename>, but it's a commonly accepted
+                    standard in the Yocto Project community.
                 </note>
                 For example, when you set up the Source Directory structure,
                 you will see several layers:
@@ -72,14 +73,14 @@
                 <filename>meta-skeleton</filename>,
                 <filename>meta-yocto</filename>, and
                 <filename>meta-yocto-bsp</filename>.
-                Each of these folders is a layer.
+                Each of these folders represents a distinct layer.
             </para>
 
             <para>
                 Furthermore, if you set up a local copy of the
                 <filename>meta-intel</filename> Git repository
                 and then explore the folder of that general layer,
-                you will discover many BSP layers inside.
+                you will discover many Intel-specific BSP layers inside.
                 For more information on BSP layers, see the
                 "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
                 section in the Yocto Project Board Support Package (BSP)
@@ -252,8 +253,8 @@
                     configuration.
                     In other words, do not copy an entire recipe into your
                     layer and then modify it.
-                    Use <filename>.bbappend</filename> files to override the
-                    parts of the recipe you need to modify.
+                    Rather, use <filename>.bbappend</filename> files to override the
+                    only those parts of the original recipe you need to modify.
                 </para>
             </section>
 
@@ -275,6 +276,9 @@
                     the layer to which it originally belongs.
                     If this is the case, you need to address that deficiency
                     instead of overlaying the include file.
+                </para>
+
+                <para>
                     For example, consider how support plug-ins for the Qt 4
                     database are configured.
                     The Source Directory does not have MySQL or PostgreSQL.
@@ -496,7 +500,7 @@
                 number-specific.
                 If the corresponding recipe is renamed to update to a newer
                 version, the corresponding <filename>.bbappend</filename> file must
-                be renamed as well.
+                be renamed (and possibly updated) as well.
                 During the build process, BitBake displays an error on starting
                 if it detects a <filename>.bbappend</filename> file that does
                 not have a corresponding recipe with a matching name.
