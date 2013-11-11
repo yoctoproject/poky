@@ -1142,8 +1142,8 @@
         <para>
             Recipes (<filename>.bb</filename> files) are fundamental components
             in the Yocto Project environment.
-            The OpenEmbedded build system parses and compiles your recipes to
-            create an image.
+            The OpenEmbedded build system parses and compiles your recipes and
+            packages the output to create an image.
             Your project consists in part of the recipes that define it.
             This section describes how to create, write, and test a new
             recipe.
@@ -1168,8 +1168,8 @@
                 best way to get started.
                 Here are some points on both methods:
                 <itemizedlist>
-                    <listitem><para><emphasis>Locate a recipe that is close
-                        to what you want to do and use it:</emphasis>
+                    <listitem><para><emphasis>Locate and modify a recipe that
+                        is close to what you want to do:</emphasis>
                         This method works when you are familiar with the
                         current recipe space.
                         The method does not work so well for those new to
@@ -1181,7 +1181,8 @@
                         have to add from scratch, and so forth.
                         All these risks stem from unfamiliarity with the
                         existing recipe space.</para></listitem>
-                    <listitem><para><emphasis>Use a skeleton recipe:</emphasis>
+                    <listitem><para><emphasis>Use and modify a skeleton
+                        recipe:</emphasis>
                         Using the skeleton recipe located at
                         &lt;Need some path for a good recipe to use&gt; is the
                         recommended method for creating a new recipe.
@@ -1197,10 +1198,38 @@
             <title>Fetching Code</title>
 
             <para>
-                fetching: basically a matter of ensuring SRC_URI is correct, and for archives
-that SRC_URI checksums are specified and correct. We should show examples of
-the error message you get when you don't, from which you can copy and paste
-the lines with the correct values.
+                The first thing your recipe must do is fetch the source files.
+                Fetching is accomplished through the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                variable.
+                Your recipe must have a <filename>SRC_URI</filename> variable
+                that points to where the source is located.
+                The <filename>do_fetch</filename> task uses the
+                variable and its prefix to determine what fetcher to use to
+                get your source files.
+                It is the <filename>SRC_URI</filename> variable that triggers
+                the fetcher.
+                The <filename>do_patch</filename> task uses the variable after
+                source is fetched to apply patches.
+                The OpenEmbedded build system uses
+                <ulink url='&YOCOT_DOCS_REF_URL;#var-FILESOVERRIDES'><filename>FILESOVERRIDES</filename></ulink>
+                when scanning directory names for files in
+                <filename>SRC_URI</filename>.
+            </para>
+
+            <para>
+                You need to use an instance of the <filename>SRC_URI</filename>
+                variable for each unique location holding your source file.
+                For example, if you need a tarball, and two patches, then you
+                need to use three instances of the variable in your recipe.
+            </para>
+
+            <para>
+                I need some good examples here.
+                I also need some sample error messages you get when you don't
+                have the correct <filename>SRC_URI</filename> locations.
+                We can describe how you can copy and past the lines from the
+                error message and use the correct values.
             </para>
         </section>
 
