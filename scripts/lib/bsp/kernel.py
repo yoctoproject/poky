@@ -62,7 +62,7 @@ def find_bblayers():
             break
 
     if not bblayers:
-        print "Couldn't find BBLAYERS in 'bitbake -e' output, exiting." % \
+        print "Couldn't find BBLAYERS in %s output, exiting." % \
             bitbake_env_cmd
         sys.exit(1)
 
