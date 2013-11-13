@@ -1917,6 +1917,725 @@
         </section>
     </section>
 
+    <section id='creating-partitioned-images'>
+        <title>Creating Partitioned Images</title>
+
+        <para>
+            Creating an image for a particular hardware target using the
+            OpenEmbedded build system does not necessarily mean you can boot
+            that image as is on your device.
+            Physical devices accept and boot images in various ways depending
+            on the specifics of the device.
+            Usually information about the hardware can tell you what image
+            format the device requires.
+            Should your device require multiple partitions on an SD card, flash,
+            or an HDD, you can use the OpenEmbedded Image Creator
+            (<filename>wic</filename>) to create the properly partitioned image.
+        </para>
+
+        <para>
+            Using the <filename>wic</filename> command, you can also describe
+            your desired final image and have BitBake assemble the image.
+            The 'wic' command generates partitioned images from existing
+            OpenEmbedded build artifacts.
+            Image generation is driven by partitioning commands contained
+            in an Openembedded kickstart file (<filename>.wks</filename>)
+            specified either directly on the command-line or as one of a
+            selection of canned <filename>.wks</filename> files
+            (see 'wic list images').
+            When applied to a given set of build artifacts, the result is an
+            image or set of images that can be directly written onto media and
+            used on a particular system.
+        </para>
+
+        <para>
+            'wic' is based loosely on the 'mic' (Meego Image Creator) framework,
+but heavily modified to make direct use of OpenEmbedded build
+artifacts instead of package installation and configuration, things
+already incorporated in the OE artifacts.
+        </para>
+
+        <note>
+The name 'wic' comes from 'oeic', which stands for 'OpenEmbedded
+Image Creator'. The 'oe' diphthong in 'oeic' has been promoted to the
+letter 'w', because 'oeic' is impossible to remember or pronounce.
+        </note>
+
+        <note>
+This is a completely independent standalone utility that
+initially provides easier-to-use and more flexible replacements for a
+couple bits of existing functionality in oe-core: directdisk.bbclass
+and mkefidisk.sh. The replaced scripts are implemented by a
+general-purpose partitioning 'language' based on Red Hat kickstart
+syntax (with the underlying code borrowed from Tizen mic, which in
+turn was borrowed from Meego mic, in turn borrowed from Fedora livecd,
+etc.).
+        </note>
+
+        <para>
+            This section covers the mechanics of invoking and providing help for
+the command and sub-commands; it contains hooks for future commits to
+connect with the actual functionality, once implemented.
+        </para>
+
+        <para>
+            Help is integrated into the 'wic' command itself - you can also see
+that for details and reminders on usage (simply invoke 'wic' without
+any arguments to get started).
+        </para>
+
+        <note>
+            Just because 'wic' can generate an image doesn't mean that it
+will boot on a given machine. 'wic' tries to spot the most obvious
+usages that are likely to cause problems but, as a relatively
+low-level tool, it can't in general figure out whether a generated
+image is appropriate for a given piece of hardware - it's really up to
+you to provide intelligent inputs to the image creation process. If
+you suspect that your image isn't working as expected due to some bug
+or missing feature of the tool, please file a bug report describing
+the details.
+        </note>
+
+        <section id='requirements'>
+            <title>Requirements</title>
+
+            <para>
+                wic has only been tested on and is only designed to work on the
+distros officially supported by Yocto.
+            </para>
+
+            <para>
+                Aside from the standard system utilities, such as 'cp', wic expects the
+following utilities to be installed on the host machine:
+                <itemizedlist>
+                    <listitem><para><emphasis>parted:</emphasis>
+                        GNU Parted - a partition manipulation program
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='raw-vs-cooked-mode'>
+            <title>Raw Vs. Cooked Mode</title>
+
+            <para>
+                'wic' can be used in 'raw' mode, where artifacts are explicitly
+specified via command-line arguments (see the command documentation
+and examples below), or it can be used in a more easily usable
+'cooked' mode which uses the current MACHINE setting and a specified
+image name to automatically locate the artifacts used to create the
+image.
+            </para>
+
+            <note>
+                The prerequisite for generating any image is to have the build
+artifacts already available. For example, to create a 'wic' image
+using the build artifacts from a core-image-minimal build, you must
+already have created a core-image-minimal OpenembeddedCore image. It
+may seem redundant to generate an OpenEmbedded image in order to
+create a 'wic' image, and in fact to some degree it is. At the
+moment, however, that's typically how build artifacts are generated,
+and future versions will likely be more integrated into the build
+system and will be able to skip that step. There is a benefit
+however, in that 'wic' images are created more quickly and without the
+need for root access.
+            </note>
+        </section>
+
+        <section id='command-summary'>
+            <title>Command Summary</title>
+
+            <para>
+                The general form of the 'wic' command in raw mode is:
+                <literallayout class='monospaced'>
+     $ wic create myimage.wks -r &lt;rootfs-dir&gt; -b &lt;bootimg-dir&gt;
+       -k &lt;kernel-dir&gt; -n &lt;native-sysroot&gt;
+                </literallayout>
+                <note>
+                    The 'wic' does NOT require root privileges, and in fact should
+not be run as root.
+                </note>
+            </para>
+
+            <para>
+                The .wks file specified in the command is an OE kickstart file (see
+the OE kickstart syntax section below) and can of course be specified
+directly on the command-line, but the user can also choose from a set
+of 'canned' .wks files available via the 'wic list images' command
+(example below).
+            </para>
+
+            <para>
+                The -r, -b, -k, and -n options refer to the corresponding OpenEmbedded
+build artifacts. Using OpenEmbedded terminology:
+                <itemizedlist>
+                    <listitem><para><emphasis>-r option:</emphasis>
+                        Used to specify the path to the /rootfs dir to
+                        use as the .wks rootfs source.</para></listitem>
+                    <listitem><para><emphasis>-b option:</emphasis>
+                        Used to specify the path to the dir containing
+                        the boot artifacts (e.g. /EFI or /syslinux dirs) to use as the
+                        .wks bootimg source.</para></listitem>
+                    <listitem><para><emphasis>-k option:</emphasis>
+                         Used to specify the path to the dir containing
+                         the kernel to use in the .wks bootimg.
+                         </para></listitem>
+                    <listitem><para><emphasis>-n option:</emphasis>
+                         Used to specify the path to the native sysroot
+                         containing the tools to use to build the image.
+                         </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                For more technical detail on the origin and meanings of those
+artifacts, see the Yocto documentation corresponding to those topics
+elsewhere. In most cases, it's not important to know that, because
+'cooked' mode provides a convenient shortcut allowing the user to
+forget about the raw details and simply specify artifacts via a
+high-level OpenEmbedded image name.
+            </para>
+
+            <para>
+                If instead of specifying a user-defined .wks file, you prefer to use
+one of the 'canned' wic images, you can simply specify a canned image
+name (without the .wks extension) in place of a .wks file. Use 'wic
+list images' to get a list of 'canned' images:
+            <literallayout class='monospaced'>
+     $ wic list images
+     mkefidisk Create an EFI disk image
+     directdisk Create a 'pcbios' direct disk image
+            </literallayout>
+            To use one of the canned images, simply specify it in the raw command.
+For example:
+            <literallayout class='monospaced'>
+     $ wic create directdisk -r &lt;rootfs-dir&gt; -b &lt;bootimg-dir&gt;
+     -k &lt;kernel-dir&gt; -n &lt;native-sysroot&gt;
+            </literallayout>
+            Finally, the general form of the 'wic' command in cooked mode is:
+            <literallayout class='monospaced'>
+     $ wic create directdisk -e &lt;image-name&gt;
+            </literallayout>
+            This form is the simplest and most user-friendly, as it allows you to
+skip the need for specifying all the parameters individually.
+            </para>
+
+            <para>
+                <filename>&lt;image-name&gt;</filename> refers to the Openembedded image name that you've already
+build the artifacts for, for example, 'core-image-minimal'.
+                <note>
+                    In order to use cooked mode, you must have the machine that you
+built the artifacts with selected in local.conf.
+                </note>
+            </para>
+        </section>
+
+        <section id='wic-usage-examples'>
+            <title>'wic' Usage Examples</title>
+
+            <para>
+                As mentioned, the main prerequisite for generating any image is to
+have the build artifacts already available. The below examples assume
+the user has already built a 'core-image-minimal' for a specific
+machine (future versions won't require this redundant step, but for
+now that's typically how build artifacts get generated).
+            </para>
+
+            <para>
+                The other prerequisite is to source the build environment:
+                <literallayout class='monospaced'>
+     $ source oe-init-build-env
+                </literallayout>
+                To start out with, we'll generate an image from one of the canned .wks
+files. The following generates a list of available images:
+                <literallayout class='monospaced'>
+     $ wic list images
+     mkefidisk Create an EFI disk image
+     directdisk Create a 'pcbios' direct disk image
+                </literallayout>
+                You can get more information about any of the available images by typing
+'wic list xxx help', where 'xxx' is one of the image names.
+            </para>
+
+            <para>
+                For example:
+                <literallayout class='monospaced'>
+     $ wic list mkefidisk help
+                </literallayout>
+                Creates a partitioned EFI disk image that the user
+can directly dd to boot media.
+            </para>
+
+            <para>
+                At any time, you can get help on the 'wic' command or any subcommand
+(currently 'list' and 'create'). For instance, to get the description
+of 'wic create' command and its parameters:
+                <literallayout class='monospaced'>
+     $ wic create
+
+     Usage:
+
+      Create a new OpenEmbedded image
+
+      usage: wic create &lt;wks file or image name&gt; [-o &lt;DIRNAME&gt; | --outdir &lt;DIRNAME&gt;]
+      [-i &lt;JSON PROPERTY FILE&gt; | --infile &lt;JSON PROPERTY FILE&gt;]
+      [-e | --image-name] [-r, --rootfs-dir] [-b, --bootimg-dir]
+      [-k, --kernel-dir] [-n, --native-sysroot] [-s, --skip-build-check]
+
+      This command creates an OpenEmbedded image based on the 'OE kickstart
+      commands' found in the &lt;wks file&gt;.
+
+      The -o option can be used to place the image in a directory with a
+      different name and location.
+
+      See 'wic help create' for more detailed instructions.
+
+     [...]
+                </literallayout>
+            </para>
+
+            <para>
+            Continuing further, as mentioned in the command, you can get even more
+detailed information by adding 'help' to the above:
+                <literallayout class='monospaced'>
+     $ wic help create
+
+     NAME
+      wic create - Create a new OpenEmbedded image
+
+     SYNOPSIS
+      wic create &lt;wks file or image name&gt; [-o &lt;DIRNAME&gt; | --outdir &lt;DIRNAME&gt;]
+      [-i &lt;JSON PROPERTY FILE&gt; | --infile &lt;JSON PROPERTY FILE&gt;]
+      [-e | --image-name] [-r, --rootfs-dir] [-b, --bootimg-dir]
+      [-k, --kernel-dir] [-n, --native-sysroot] [-s,
+     --skip-build-check]
+
+     DESCRIPTION
+      This command creates an OpenEmbedded image based on the 'OE
+      kickstart commands' found in the &lt;wks file&gt;.
+
+      In order to do this, wic needs to know the locations of the
+      various build artifacts required to build the image.
+
+      Users can explicitly specify the build artifact locations using
+      the -r, -b, -k, and -n options. See below for details on where
+      the corresponding artifacts are typically found in a normal
+      OpenEmbedded build.
+
+      Alternatively, users can use the -e option to have 'mic' determine
+      those locations for a given image. If the -e option is used, the
+      user needs to have set the appropriate MACHINE variable in
+      local.conf, and have sourced the build environment.
+
+      The -e option is used to specify the name of the image to use the
+      artifacts from e.g. core-image-sato.
+
+      The -r option is used to specify the path to the /rootfs dir to
+      use as the .wks rootfs source.
+
+      The -b option is used to specify the path to the dir containing
+      the boot artifacts (e.g. /EFI or /syslinux dirs) to use as the
+      .wks bootimg source.
+
+      The -k option is used to specify the path to the dir containing
+      the kernel to use in the .wks bootimg.
+
+      The -n option is used to specify the path to the native sysroot
+      containing the tools to use to build the image.
+
+      The -s option is used to skip the build check. The build check is
+      a simple sanity check used to determine whether the user has
+      sourced the build environment so that the -e option can operate
+      correctly. If the user has specified the build artifact locations
+      explicitly, 'wic' assumes the user knows what he or she is doing
+      and skips the build check.
+
+      When 'wic -e' is used, the locations for the build artifacts
+      values are determined by 'wic -e' from the output of the 'bitbake
+      -e' command given an image name e.g. 'core-image-minimal' and a
+      given machine set in local.conf. In that case, the image is
+      created as if the following 'bitbake -e' variables were used:
+
+      -r: IMAGE_ROOTFS
+      -k: STAGING_KERNEL_DIR
+      -n: STAGING_DIR_NATIVE
+      -b: HDDDIR and STAGING_DATA_DIR (handlers decide which to use)
+
+      If 'wic -e' is not used, the user needs to select the appropriate
+      value for -b (as well as -r, -k, and -n).
+
+      The -o option can be used to place the image in a directory with a
+      different name and location.
+
+      As an alternative to the wks file, the image-specific properties
+      that define the values that will be used to generate a particular
+      image can be specified on the command-line using the -i option and
+      supplying a JSON object consisting of the set of name:value pairs
+      needed by image creation.
+
+      The set of properties available for a given image type can be
+      listed using the 'wic list' command.
+                </literallayout>
+        So, the easiest way to create an image is to use the -e option with a
+canned .wks file. To use the -e option, you need to specify the image
+used to generate the artifacts and you actually need to have the
+MACHINE used to build them specified in your local.conf (these
+requirements aren't necessary if you aren't using the -e options.
+            </para>
+
+            <para>
+            Below, we generate a mkefidisk image, pointing the process at the
+core-image-minimal artifacts for the minnow, selected as our current
+MACHINE in local.conf.
+            </para>
+
+            <para>
+            First, once we've set the build up, we run a core-image-minimal minnow
+build:
+                <literallayout class='monospaced'>
+     $ bitbake core-image-minimal
+                </literallayout>
+            Once the build is finished, we can then use wic to create an EFI image
+for the minnow to boot. In this case, we'll use the '-e' option to
+have wic discover the appropriate build artifacts and generate the
+image:
+                <literallayout class='monospaced'>
+     $ wic create mkefidisk -e core-image-minimal
+     Checking basic build environment...
+     Done.
+
+     Creating image(s)...
+
+     Info: The new image(s) can be found here:
+      /var/tmp/wic/build/mkefidisk-201310230946-sda.direct
+
+     The following build artifacts were used to create the image(s):
+      ROOTFS_DIR: /home/trz/yocto/yocto-image/build/tmp/work/minnow-poky-linux/core-image-minimal/1.0-r0/rootfs
+      BOOTIMG_DIR: /home/trz/yocto/yocto-image/build/tmp/work/minnow-poky-linux/core-image-minimal/1.0-r0/core-image-minimal-1.0/hddimg
+      KERNEL_DIR: /home/trz/yocto/yocto-image/build/tmp/sysroots/minnow/usr/src/kernel
+      NATIVE_SYSROOT: /home/trz/yocto/yocto-image/build/tmp/sysroots/x86_64-linux
+
+
+     The image(s) were created using OE kickstart file:
+      /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/mkefidisk.wks
+                </literallayout>
+        The output specifies exactly which image was created and where it was
+created. It also names the artifacts that were used and the exact
+.wks script that was used to generate the image. You should always
+verify the details provided in the output to make sure that the image
+was indeed created exactly as expected.
+            </para>
+
+            <para>
+            Using the path specified in the output for the image name and
+location, you can now directly dd the image to a USB stick or whatever
+media you built the image for, and boot the resulting media:
+                <literallayout class='monospaced'>
+     $ sudo dd if=/var/tmp/wic/build/mkefidisk-201310230946-sda.direct of=/dev/sdb
+     [sudo] password for trz:
+     182274+0 records in
+     182274+0 records out
+     93324288 bytes (93 MB) copied, 14.4777 s, 6.4 MB/s
+     [trz@empanada ~]$ sudo eject /dev/sdb
+                </literallayout>
+            The next example uses a modified 'directdisk' script as an example.
+            </para>
+
+            <para>
+            Because wic image creation is driven by .wks files, it's easy to
+change the parameters that drive image creation: simply modify the
+.wks file.
+            </para>
+
+            <para>
+            As illustrated previously, 'wic list images' provides a list of
+available images. The images displayed are simply the list of .wks
+files in the scripts/lib/image/canned-wks/ directory, minus the .wks
+extension.
+            </para>
+
+            <para>
+            To add a new image to that list, simply add a new .wks file.
+            </para>
+
+            <para>
+            For this example, we already have a .wks file that already does pretty
+much what we want, but for our particular hardware, we know we'll be
+booting from sdb instead of sda, which is what the directdisk script uses.
+            </para>
+
+            <para>
+            What we can do is simply create a copy of the directdisk.wks file in
+the scripts/lib/image/canned-wks/ directory and change the lines that
+specify the target disk to boot from.
+            </para>
+
+            <para>
+            First, we copy the directdisk.wks file to directdisksdb.wks:
+                <literallayout class='monospaced'>
+     $ cp /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisk.wks /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisksdb.wks
+                </literallayout>
+            Then we modify the directdisksdb.wks file and change all instances of
+'--ondisk sda' to '--ondisk sdb'. The following two lines are the
+lines we end up changing (leaving the rest alone):
+                <literallayout class='monospaced'>
+     part /boot --source bootimg --ondisk sdb --fstype=msdos --label boot --active --align 1024
+     part / --source rootfs --ondisk sdb --fstype=ext3 --label platform --align 1024
+                </literallayout>
+               Once we've made that change, we generate a directdisksdb image,
+pointing the process at the core-image-minimal artifacts for the nuc
+(Next Unit of Computing), selected as our current MACHINE in
+local.conf.
+            </para>
+
+            <para>
+            Once we've set the build up, we run a core-image-minimal nuc build:
+                <literallayout class='monospaced'>
+     $ bitbake core-image-minimal
+                </literallayout>
+            Once the build is finished, we can then use nuc to create our
+directdisk image for the nuc to boot. In this case, we'll use the
+'-e' option to have wic discover the appropriate build artifacts and
+generate the image:
+                <literallayout class='monospaced'>
+     $ wic create directdisksdb -e core-image-minimal
+     Checking basic build environment...
+     Done.
+
+     Creating image(s)...
+
+     Info: The new image(s) can be found here:
+      /var/tmp/wic/build/directdisksdb-201310231131-sdb.direct
+
+     The following build artifacts were used to create the image(s):
+      ROOTFS_DIR: /home/trz/yocto/yocto-image/build/tmp/work/nuc-poky-linux/core-image-minimal/1.0-r0/rootfs
+      BOOTIMG_DIR: /home/trz/yocto/yocto-image/build/tmp/sysroots/nuc/usr/share
+      KERNEL_DIR: /home/trz/yocto/yocto-image/build/tmp/sysroots/nuc/usr/src/kernel
+      NATIVE_SYSROOT: /home/trz/yocto/yocto-image/build/tmp/sysroots/x86_64-linux
+
+
+     The image(s) were created using OE kickstart file:
+      /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisksdb.wks
+                </literallayout>
+            Using the path specified in the output for the image name and
+location, you can now directly dd the image to a USB stick or whatever
+media you built the image for, and boot the resulting media:
+                <literallayout class='monospaced'>
+     $ sudo dd if=/var/tmp/wic/build/directdisksdb-201310231131-sdb.direct of=/dev/sdb
+     86018+0 records in
+     86018+0 records out
+     44041216 bytes (44 MB) copied, 13.0734 s, 3.4 MB/s
+     [trz@empanada tmp]$ sudo eject /dev/sdb
+                </literallayout>
+                Of course, you can just use the directdisk image directly if you don't
+have any special needs.
+            </para>
+
+            <para>
+            Here'we're creating a wic image based on core-image-minimal and
+crownbay-noemgd, which works right out of the box.
+                <literallayout class='monospaced'>
+     $ wic create directdisk -e core-image-minimal
+
+     Checking basic build environment...
+     Done.
+
+     Creating image(s)...
+
+     Info: The new image(s) can be found here:
+      /var/tmp/wic/build/directdisk-201309252350-sda.direct
+
+     The following build artifacts were used to create the image(s):
+
+     ROOTFS_DIR: /home/trz/yocto/yocto-image/build/tmp/work/crownbay_noemgd-poky-linux/core-image-minimal/1.0-r0/rootfs
+     BOOTIMG_DIR: /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/share
+     KERNEL_DIR: /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel
+     NATIVE_SYSROOT: /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel
+
+     The image(s) were created using OE kickstart file:
+      /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisk.wks
+                </literallayout>
+            Finally, here's an example that doesn't take the easy way out and
+manually specifies each build artifact, along with a non-canned .wks
+file, and also uses the -o option to have wic create the output
+somewhere other than the default /var/tmp/wic:
+                <literallayout class='monospaced'>
+     $ wic create ~/test.wks -o /home/trz/testwic --rootfs-dir /home/trz/yocto/yocto-image/build/tmp/work/crownbay_noemgd-poky-linux/core-image-minimal/1.0-r0/rootfs --bootimg-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/share  --kernel-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel --native-sysroot /home/trz/yocto/yocto-image/build/tmp/sysroots/x86_64-linux
+
+     Creating image(s)...
+
+     Info: The new image(s) can be found here:
+      /home/trz/testwic/build/test-201309260032-sda.direct
+
+     The following build artifacts were used to create the image(s):
+
+     ROOTFS_DIR: /home/trz/yocto/yocto-image/build/tmp/work/crownbay_noemgd-poky-linux/core-image-minimal/1.0-r0/rootfs
+     BOOTIMG_DIR: /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/share
+     KERNEL_DIR: /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel
+     NATIVE_SYSROOT: /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel
+
+     The image(s) were created using OE kickstart file:
+      /home/trz/test.wks
+                </literallayout>
+            In this case, we didn't need to have the proper machine selected in
+local.conf - we manually specified each artifact and therefore wic
+doesn't need further information from the build system.
+            </para>
+
+            <para>
+            Finally, here's an example of the actual partition language commands
+used to generate the mkefidisk image i.e. these are the contents of the
+mkefidisk.wks OE kickstart file:
+                <literallayout class='monospaced'>
+     # short-description: Create an EFI disk image
+     # long-description: Creates a partitioned EFI disk image that the user
+     # can directly dd to boot media.
+
+     part /boot --source bootimg --ondisk sda --fstype=efi --label msdos --active --align 1024
+
+     part / --source rootfs --ondisk sda --fstype=ext3 --label platform --align 1024
+
+     part swap --ondisk sda --size 44 --label swap1 --fstype=swap
+
+     bootloader --timeout=10 --append="rootwait rootfstype=ext3 console=ttyPCH0,115200 console=tty0 vmalloc=256MB snd-hda-     intel.enable_msi=0"
+                </literallayout>
+            </para>
+        </section>
+    </section>
+
+    <section id='openembedded-kickstart-wks-reference'>
+        <title>OpenEmbedded Kickstart (.wks) Reference</title>
+
+        <para>
+            The current 'wic' implementation supports only the basic kickstart
+partitioning commands: 'partition' (or 'part' for short) and
+'bootloader'.
+        </para>
+
+        <para>
+            They are listed below and mostly follow the syntax and meaning of the
+standard kickstart options for those commands. The documentation below
+is based on the Fedora kickstart documentation of the same commands,
+but modified to reflect wic capabilities. For reference:
+            <literallayout class='monospaced'>
+     http://fedoraproject.org/wiki/Anaconda/Kickstart#part_or_partition
+     http://fedoraproject.org/wiki/Anaconda/Kickstart#bootloader
+            </literallayout>
+        </para>
+
+        <section id='command-part-or-partition'>
+            <title>Command: part or partition</title>
+
+            <para>
+                Creates a partition on the system.
+                Use the following syntax:
+                <literallayout class='monospaced'>
+     part &lt;mntpoint&gt;
+                </literallayout>
+                The &lt;mntpoint&gt; is where the partition will be mounted and must be of
+one of the following forms:
+                <itemizedlist>
+                    <listitem><para><filename>/&lt;path&gt;</filename>:
+                        For example, <filename>/</filename>,
+                        <filename>/usr</filename>, and
+                        <filename>/home</filename></para></listitem>
+                    <listitem><para><filename>swap</filename>:
+                        The partition will be used as swap space.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Following are the supported options:
+                <literallayout class='monospaced'>
+     --size
+      The minimum partition size in megabytes. Specify an integer value
+      here such as 500. Do not append the number with MB. Not needed if
+      --source is used.
+
+     --source
+      bootimg
+      rootfs
+
+      The --source option is a wic-specific option that can currently
+      have one of two values, 'bootimg' or 'rootfs'.
+
+      If '--source rootfs' is used, it tells the wic command to create a
+      partition as large as needed to fill with the contents of /rootfs
+      (specified by the -r 'wic' option) and to fill it with the
+      contents of /rootfs.
+
+      If '--source bootimg' is used, it tells the wic command to create
+      a partition as large as needed to fill with the contents of the
+      boot partition (specified by the -b 'wic' option). Exactly what
+      those contents are depend on the value of the --fstype option for
+      that partition. If '--fstype=efi' is specified, the boot
+      artifacts contained in HDDDIR are used, and if '--fstype=msdos' is
+      specified, the boot artifacts found in STAGING_DATADIR are used.
+
+     --ondisk or --ondrive
+      Forces the partition to be created on a particular disk.
+
+     --fstype
+      Sets the file system type for the partition. Valid values are:
+      msdos
+      efi
+      ext4
+      ext3
+      ext2
+      btrfs
+      swap
+
+     --label label
+      Specify the label to give to the filesystem to be made on the
+      partition. If the given label is already in use by another
+      filesystem, a new label will be created for this partition.
+
+     --active
+      Mark the partition as active.
+
+     --align (in kB)
+      The '--align' option is a mic-specific option that says to start a
+      partition on an x kB boundary.
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='command-bootloader'>
+            <title>Command: bootloader</title>
+
+            <para>
+                This command specifies how the boot loader should be installed.
+            </para>
+
+            <para>
+                Following are the supported options:
+                <literallayout class='monospaced'>
+     --timeout
+      Specify the number of seconds before the bootloader times out and
+      boots the default option.
+
+     --append
+      Specifies kernel parameters. These will be added to the syslinux
+      APPEND or grub kernel command line.
+
+     The boot type is determined by the fstype of the /boot mountpoint. If
+     the fstype is 'msdos' the boot type is 'pcbios', otherwise it's the
+     fstype, which currently be: 'efi' (more to be added later).
+
+     If the boot type is 'efi', the image will use grub and has one
+     menuentry: 'boot'.
+
+     If the boot type is 'pcbios', the image will use syslinux and has one
+     menu label: 'boot'.
+
+     Future updates will implement more options - using anything not
+     explicitly supported can result in unpredictable results.
+                </literallayout>
+            </para>
+        </section>
+    </section>
+
     <section id='configuring-the-kernel'>
         <title>Configuring the Kernel</title>
 
