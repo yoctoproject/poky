@@ -2008,13 +2008,13 @@ any arguments to get started).
         </para>
 
         <note>
-            Just because 'wic' can generate an image doesn't mean that it
+            Just because 'wic' can generate an image does not mean that it
 will boot on a given machine. 'wic' tries to spot the most obvious
 usages that are likely to cause problems but, as a relatively
 low-level tool, it can't in general figure out whether a generated
 image is appropriate for a given piece of hardware - it's really up to
 you to provide intelligent inputs to the image creation process. If
-you suspect that your image isn't working as expected due to some bug
+you suspect that your image is not working as expected due to some bug
 or missing feature of the tool, please file a bug report describing
 the details.
         </note>
@@ -2180,7 +2180,7 @@ the details.
      $ wic create &lt;kickstart_file&gt; -e &lt;image_name&gt;
                     </literallayout>
                     This form is the simplest and most user-friendly, as it
-                    does not requre specifying all individual parameters.
+                    does not require specifying all individual parameters.
                     All you need to provide is your own
                     <filename>.wks</filename> file or one provided with the
                     release.
@@ -2222,6 +2222,25 @@ the details.
                  <literallayout class='monospaced'>
      $ wic create directdisk -r &lt;rootfs_dir&gt; -b &lt;bootimg_dir&gt; \
            -k &lt;kernel_dir&gt; -n &lt;native_sysroot&gt;
+                </literallayout>
+            </para>
+
+            <para>
+                Here are the actual partition language commands
+                used in the <filename>mkefidisk.wks</filename> file to generate
+                an image:
+                <literallayout class='monospaced'>
+     # short-description: Create an EFI disk image
+     # long-description: Creates a partitioned EFI disk image that the user
+     # can directly dd to boot media.
+
+     part /boot --source bootimg --ondisk sda --fstype=efi --label msdos --active --align 1024
+
+     part / --source rootfs --ondisk sda --fstype=ext3 --label platform --align 1024
+
+     part swap --ondisk sda --size 44 --label swap1 --fstype=swap
+
+     bootloader --timeout=10 --append="rootwait rootfstype=ext3 console=ttyPCH0,115200 console=tty0 vmalloc=256MB snd-hda-     intel.enable_msi=0"
                 </literallayout>
             </para>
         </section>
@@ -2267,10 +2286,10 @@ the details.
                     </literallayout>
                     This example shows the easiest way to create an image
                     by running in Cooked Mode and using the
-                    <filename>&lt;-e&gt;</filename> option with a
-                    provided kickstart file.
-                    All that is necessary is to specify the image
-                    used to generate the artifacts.
+                    <filename>-e</filename> option with a provided kickstart
+                    file.
+                    All that is necessary is to specify the image used to
+                    generate the artifacts.
                     Your <filename>local.conf</filename> needs to have the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
                     variable set to the machine you are using, which is
@@ -2278,14 +2297,14 @@ the details.
                 </para>
 
                 <para>
-                    The output specifies exactly which image were
-                    created and where the image was created.
+                    The output specifies exactly which image was
+                    created as well as where it was created.
                     The output also names the artifacts used and the exact
                     <filename>.wks</filename> script that was used to generate
                     the image.
                     <note>
                         You should always verify the details provided in the
-                        output to make sure that the imagewas indeed created
+                        output to make sure that the image was indeed created
                         exactly as expected.
                     </note>
                 </para>
@@ -2311,7 +2330,7 @@ the details.
 
                 <para>
                     Because <filename>wic</filename> image creation is driven
-                    by the kickstart file, it is easy to drive image creation
+                    by the kickstart file, it is easy to affect image creation
                     by changing the parameters in the file.
                     This next example demonstrates that through modification
                     of the <filename>directdisk</filename> kickstart file.
@@ -2321,9 +2340,10 @@ the details.
                     As mentioned earlier, you can use the command
                     <filename>wic list images</filename> to show the list
                     of provided kickstart files.
-                    The directory in which these files reside is in the
-                    <link linkend='source-directory'>Source Directory</link>
-                    in <filename>scripts/lib/image/canned-wks/</filename>.
+                    The directory in which these files reside is
+                    <filename>scripts/lib/image/canned-wks/</filename>
+                    located in the
+                    <link linkend='source-directory'>Source Directory</link>.
                     Because the available files reside in this directory, you
                     can create and add your own custom files to the directory.
                     Subsequent use of the <filename>wic list images</filename>
@@ -2359,22 +2379,13 @@ the details.
      part /boot --source bootimg --ondisk sdb --fstype=msdos --label boot --active --align 1024
      part / --source rootfs --ondisk sdb --fstype=ext3 --label platform --align 1024
                     </literallayout>
-                    (I AM HERE)
-                    Once the lines are changed, Once we've made that change, we generate a directdisksdb image,
-pointing the process at the core-image-minimal artifacts for the nuc
-(Next Unit of Computing), selected as our current MACHINE in
-local.conf.
-                </para>
-
-                <para>
-                    Once we've set the build up, we run a core-image-minimal nuc build:
-                    <literallayout class='monospaced'>
-     $ bitbake core-image-minimal
-                    </literallayout>
-            Once the build is finished, we can then use nuc to create our
-directdisk image for the nuc to boot. In this case, we'll use the
-'-e' option to have wic discover the appropriate build artifacts and
-generate the image:
+                    Once the lines are changed, the example generates the
+                    <filename>directdisksdb</filename> image.
+                    The command points the process at the
+                    <filename>core-image-minimal</filename> artifacts for the
+                    Next Unit of Computing (nuc)
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                    the <filename>local.conf</filename>.
                     <literallayout class='monospaced'>
      $ wic create directdisksdb -e core-image-minimal
      Checking basic build environment...
@@ -2395,9 +2406,10 @@ generate the image:
      The image(s) were created using OE kickstart file:
       /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisksdb.wks
                     </literallayout>
-            Using the path specified in the output for the image name and
-location, you can now directly dd the image to a USB stick or whatever
-media you built the image for, and boot the resulting media:
+                    Continuing with the example, you can now directly
+                    <filename>dd</filename> the image to a USB stick, or
+                    whatever media for which you built your image,
+                    and boot the resulting media:
                     <literallayout class='monospaced'>
      $ sudo dd if=/var/tmp/wic/build/directdisksdb-201310231131-sdb.direct of=/dev/sdb
      86018+0 records in
@@ -2405,13 +2417,18 @@ media you built the image for, and boot the resulting media:
      44041216 bytes (44 MB) copied, 13.0734 s, 3.4 MB/s
      [trz@empanada tmp]$ sudo eject /dev/sdb
                     </literallayout>
-                Of course, you can just use the directdisk image directly if you don't
-have any special needs.
                 </para>
+            </section>
+
+            <section id='creating-an-image-based-on-core-image-minimal-and-crownbay-noemgd'>
+                <title>Creating an Image Based on <filename>core-image-minimal</filename> and <filename>crownbay-noemgd</filename></title>
 
                 <para>
-            Here'we're creating a wic image based on core-image-minimal and
-crownbay-noemgd, which works right out of the box.
+                    This example creates an image based on
+                    <filename>core-image-minimal</filename> and a
+                    <filename>crownbay-noemgd</filename>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                    that works right out of the box.
                     <literallayout class='monospaced'>
      $ wic create directdisk -e core-image-minimal
 
@@ -2433,10 +2450,19 @@ crownbay-noemgd, which works right out of the box.
      The image(s) were created using OE kickstart file:
       /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisk.wks
                     </literallayout>
-            Finally, here's an example that doesn't take the easy way out and
-manually specifies each build artifact, along with a non-canned .wks
-file, and also uses the -o option to have wic create the output
-somewhere other than the default /var/tmp/wic:
+                </para>
+            </section>
+
+            <section id='using-a-modified-kickstart-file-and-running-in-raw-mode'>
+                <title>Using a Modified Kickstart File and Running in Raw Mode</title>
+
+                <para>
+                    This next example manually specifies each build artifact
+                    (runs in Raw Mode) and uses a modified kickstart file.
+                    The example also uses the <filename>-o</filename> option
+                    to cause <filename>wic</filename> to create the output
+                    somewhere other than the default
+                    <filename>/var/tmp/wic</filename> directory:
                     <literallayout class='monospaced'>
      $ wic create ~/test.wks -o /home/trz/testwic --rootfs-dir /home/trz/yocto/yocto-image/build/tmp/work/crownbay_noemgd-poky-linux/core-image-minimal/1.0-r0/rootfs --bootimg-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/share  --kernel-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel --native-sysroot /home/trz/yocto/yocto-image/build/tmp/sysroots/x86_64-linux
 
@@ -2455,28 +2481,11 @@ somewhere other than the default /var/tmp/wic:
      The image(s) were created using OE kickstart file:
       /home/trz/test.wks
                     </literallayout>
-            In this case, we didn't need to have the proper machine selected in
-local.conf - we manually specified each artifact and therefore wic
-doesn't need further information from the build system.
-                </para>
-
-                <para>
-            Finally, here's an example of the actual partition language commands
-used to generate the mkefidisk image i.e. these are the contents of the
-mkefidisk.wks OE kickstart file:
-                    <literallayout class='monospaced'>
-     # short-description: Create an EFI disk image
-     # long-description: Creates a partitioned EFI disk image that the user
-     # can directly dd to boot media.
-
-     part /boot --source bootimg --ondisk sda --fstype=efi --label msdos --active --align 1024
-
-     part / --source rootfs --ondisk sda --fstype=ext3 --label platform --align 1024
-
-     part swap --ondisk sda --size 44 --label swap1 --fstype=swap
-
-     bootloader --timeout=10 --append="rootwait rootfstype=ext3 console=ttyPCH0,115200 console=tty0 vmalloc=256MB snd-hda-     intel.enable_msi=0"
-                    </literallayout>
+                    For this example,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                    did not have to be specified in the
+                    <filename>local.conf</filename> file since the artifact is
+                    manually specified.
                 </para>
             </section>
         </section>
@@ -2485,16 +2494,18 @@ mkefidisk.wks OE kickstart file:
             <title>OpenEmbedded Kickstart (.wks) Reference</title>
 
             <para>
-            The current 'wic' implementation supports only the basic kickstart
-partitioning commands: 'partition' (or 'part' for short) and
-'bootloader'.
+                The current <filename>wic</filename> implementation supports
+                only the basic kickstart partitioning commands:
+                <filename>partition</filename> (or <filename>part</filename>
+                for short) and <filename>bootloader</filename>.
             </para>
 
             <para>
-            They are listed below and mostly follow the syntax and meaning of the
-standard kickstart options for those commands. The documentation below
-is based on the Fedora kickstart documentation of the same commands,
-but modified to reflect wic capabilities. For reference:
+                Following is a listing of the commands, their syntax, and
+                meanings.
+                The commands are based on the Fedora kickstart documentation
+                but with modifications to reflect <filename>wic</filename>
+                capabilities.
                 <literallayout class='monospaced'>
      http://fedoraproject.org/wiki/Anaconda/Kickstart#part_or_partition
      http://fedoraproject.org/wiki/Anaconda/Kickstart#bootloader
@@ -2505,13 +2516,14 @@ but modified to reflect wic capabilities. For reference:
                 <title>Command: part or partition</title>
 
                 <para>
-                Creates a partition on the system.
-                Use the following syntax:
+                This command creates a partition on the system and uses the
+                following syntax:
                     <literallayout class='monospaced'>
      part &lt;mntpoint&gt;
                     </literallayout>
-                The &lt;mntpoint&gt; is where the partition will be mounted and must be of
-one of the following forms:
+                    The <filename>&lt;mntpoint&gt;</filename> is where the
+                    partition will be mounted and must be of one of the
+                    following forms:
                     <itemizedlist>
                         <listitem><para><filename>/&lt;path&gt;</filename>:
                             For example, <filename>/</filename>,
@@ -2525,57 +2537,75 @@ one of the following forms:
 
                 <para>
                     Following are the supported options:
-                    <literallayout class='monospaced'>
-     --size
-      The minimum partition size in megabytes. Specify an integer value
-      here such as 500. Do not append the number with MB. Not needed if
-      --source is used.
-
-     --source
-      bootimg
-      rootfs
-
-      The --source option is a wic-specific option that can currently
-      have one of two values, 'bootimg' or 'rootfs'.
-
-      If '--source rootfs' is used, it tells the wic command to create a
-      partition as large as needed to fill with the contents of /rootfs
-      (specified by the -r 'wic' option) and to fill it with the
-      contents of /rootfs.
-
-      If '--source bootimg' is used, it tells the wic command to create
-      a partition as large as needed to fill with the contents of the
-      boot partition (specified by the -b 'wic' option). Exactly what
-      those contents are depend on the value of the --fstype option for
-      that partition. If '--fstype=efi' is specified, the boot
-      artifacts contained in HDDDIR are used, and if '--fstype=msdos' is
-      specified, the boot artifacts found in STAGING_DATADIR are used.
-
-     --ondisk or --ondrive
-      Forces the partition to be created on a particular disk.
-
-     --fstype
-      Sets the file system type for the partition. Valid values are:
-      msdos
-      efi
-      ext4
-      ext3
-      ext2
-      btrfs
-      swap
-
-     --label label
-      Specify the label to give to the filesystem to be made on the
-      partition. If the given label is already in use by another
-      filesystem, a new label will be created for this partition.
-
-     --active
-      Mark the partition as active.
-
-     --align (in kB)
-      The '--align' option is a mic-specific option that says to start a
-      partition on an x kB boundary.
-                    </literallayout>
+                    <itemizedlist>
+                        <listitem><para><emphasis><filename>--size</filename>:</emphasis>
+                            The minimum partition size in MBytes.
+                            Specify an integer value such as 500.
+                            Do not append the number with "MB".
+                            You do not need this option if you use
+                            <filename>--source</filename>.</para></listitem>
+                        <listitem><para><emphasis><filename>--source</filename>:</emphasis>
+                            This option is a wic-specific option that can
+                            currently have one of two values, "bootimg" or
+                            "rootfs".</para>
+                            <para>If <filename>--source rootfs</filename> is
+                            used, it tells the <filename>wic</filename> command
+                            to create a partition as large as needed to fill
+                            with the contents of the root filesystem
+                            (specified by the <filename>-r</filename>
+                            <filename>wic</filename> option) and to fill it
+                            with the contents of <filename>/rootfs</filename>.
+                            </para>
+                            <para>If <filename>--source bootimg</filename>
+                            is used, it tells the <filename>wic</filename>
+                            command to create a partition as large as needed to
+                            fill with the contents of the boot partition
+                            (specified by the <filename>-b</filename>
+                            <filename>wic</filename> option).
+                            Exactly what those contents are depend on the value
+                            of the <filename>--fstype</filename> option for
+                            that partition.
+                            If <filename>--fstype=efi</filename> is specified,
+                            the boot artifacts contained in HDDDIR are used,
+                            and if <filename>--fstype=msdos</filename> is
+                            specified, the boot artifacts found in
+                            <filename>STAGING_DATADIR</filename> are used.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>--ondisk</filename> or <filename>--ondrive</filename>:</emphasis>
+                            Forces the partition to be created on a particular
+                            disk.</para></listitem>
+                        <listitem><para><emphasis><filename>--fstype</filename>:</emphasis>
+                            Sets the file system type for the partition.
+                            Valid values are:
+                            <itemizedlist>
+                                <listitem><para><filename>msdos</filename>
+                                </para></listitem>
+                                <listitem><para><filename>efi</filename>
+                                </para></listitem>
+                                <listitem><para><filename>ext4</filename>
+                                </para></listitem>
+                                <listitem><para><filename>ext3</filename>
+                                </para></listitem>
+                                <listitem><para><filename>ext2</filename>
+                                </para></listitem>
+                                <listitem><para><filename>btrfs</filename>
+                                </para></listitem>
+                                <listitem><para><filename>swap</filename>
+                                </para></listitem>
+                            </itemizedlist></para></listitem>
+                        <listitem><para><emphasis><filename>--label label</filename>:</emphasis>
+                            Specifies the label to give to the filesystem to
+                            be made on the partition.
+                            If the given label is already in use by another
+                            filesystem, a new label is created for the
+                            partition.</para></listitem>
+                        <listitem><para><emphasis><filename>--active</filename>:</emphasis>
+                            Marks the partition as active.</para></listitem>
+                        <listitem><para><emphasis><filename>--align (in KBytes)</filename>:</emphasis>
+                            This option is specific to the Meego Image
+                            Creator (mic) that says to start a partition on an
+                            x KBytes boundary.</para></listitem>
+                    </itemizedlist>
                 </para>
             </section>
 
@@ -2583,33 +2613,36 @@ one of the following forms:
                 <title>Command: bootloader</title>
 
                 <para>
-                    This command specifies how the boot loader should be installed.
-                </para>
-
-                <para>
-                    Following are the supported options:
-                    <literallayout class='monospaced'>
-     --timeout
-      Specify the number of seconds before the bootloader times out and
-      boots the default option.
-
-     --append
-      Specifies kernel parameters. These will be added to the syslinux
-      APPEND or grub kernel command line.
-
-     The boot type is determined by the fstype of the /boot mountpoint. If
-     the fstype is 'msdos' the boot type is 'pcbios', otherwise it's the
-     fstype, which currently be: 'efi' (more to be added later).
-
-     If the boot type is 'efi', the image will use grub and has one
-     menuentry: 'boot'.
-
-     If the boot type is 'pcbios', the image will use syslinux and has one
-     menu label: 'boot'.
-
-     Future updates will implement more options - using anything not
-     explicitly supported can result in unpredictable results.
-                    </literallayout>
+                    This command specifies how the boot loader should be
+                    and supports the following options:
+                    <itemizedlist>
+                        <listitem><para><emphasis><filename>--timeout</filename>:</emphasis>
+                            Specifies the number of seconds before the
+                            bootloader times out and boots the default option.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>--append</filename>:</emphasis>
+                            Specifies kernel parameters.
+                            These will be added to the syslinux
+                            <filename>APPEND</filename> or
+                            <filename>grub</filename> kernel command line.
+                            </para>
+                            <para>The boot type is determined by the fstype of
+                            the <filename>/boot</filename> mountpoint.
+                            If the fstype is "msdos" the boot type is
+                            "pcbios", otherwise it is the fstype, which
+                            is currently "efi" (more to be added later).
+                            </para>
+                            <para>If the boot type is "efi", the image will
+                            use <filename>grub</filename> and has one
+                            menuentry: "boot".</para>
+                            <para>If the boot type is "pcbios", the image
+                            will use syslinux and has one menu label: "boot".
+                            </para>
+                            <para>Future updates will implement more options.
+                            If you use anything that is not specifically
+                            supported, results can be unpredictable.
+                            </para></listitem>
+                    </itemizedlist>
                 </para>
             </section>
         </section>
