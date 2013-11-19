@@ -5793,6 +5793,49 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
     <glossdiv id='var-glossary-u'><title>U</title>
 
+        <glossentry id='var-UBOOT_CONFIG'><glossterm>UBOOT_CONFIG</glossterm>
+            <glossdef>
+                <para>
+                    Configures the
+                    <link linkend='var-UBOOT_MACHINE'><filename>UBOOT_MACHINE</filename></link>
+                    and can also define
+                    <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                    for individual cases.
+                </para>
+
+                <para>
+                    Following is an example from the
+                    <filename>meta-fsl-arm</filename> layer.
+                    <literallayout class='monospaced'>
+     UBOOT_CONFIG ??= "sd"
+     UBOOT_CONFIG[sd] = "mx6qsabreauto_config,sdcard"
+     UBOOT_CONFIG[eimnor] = "mx6qsabreauto_eimnor_config"
+     UBOOT_CONFIG[nand] = "mx6qsabreauto_nand_config,ubifs"
+     UBOOT_CONFIG[spinor] = "mx6qsabreauto_spinor_config"
+                    </literallayout>
+                    In this example, "sd" is selected as the configuration
+                    of the possible four for the
+                    <filename>UBOOT_MACHINE</filename>.
+                    The "sd" configuration defines "mx6qsabreauto_congif"
+                    as the value for <filename>UBOOT_MACHINE</filename>, while
+                    the "sdcard" specifies the
+                    <filename>IMAGE_FSTYPES</filename> to use for the U-boot
+                    image.
+                </para>
+
+                <para>
+                    For more information on how the
+                    <filename>UBOOT_CONFIG</filename> is handled, see the
+                    <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/classes/uboot-config.bbclass'><filename>uboot-config</filename></ulink>
+                    class.
+                </para>
+
+
+
+
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-UBOOT_ENTRYPOINT'><glossterm>UBOOT_ENTRYPOINT</glossterm>
             <glossdef>
                 <para>
