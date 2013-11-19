@@ -1142,9 +1142,8 @@
         <para>
             Recipes (<filename>.bb</filename> files) are fundamental components
             in the Yocto Project environment.
-            The OpenEmbedded build system parses and compiles your recipes and
-            packages the output to create an image.
-            Your project consists in part of the recipes that define it.
+            Each software component built by the OpenEmbedded build system
+            requires a recipe to define the component.
             This section describes how to create, write, and test a new
             recipe.
         </para>
@@ -1199,7 +1198,7 @@
 
             <para>
                 The first thing your recipe must do is fetch the source files.
-                Fetching is accomplished through the
+                Fetching is controlled mainly through the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
                 variable.
                 Your recipe must have a <filename>SRC_URI</filename> variable
@@ -1218,10 +1217,12 @@
             </para>
 
             <para>
-                You need to use an instance of the <filename>SRC_URI</filename>
-                variable for each unique location holding your source file.
-                For example, if you need a tarball, and two patches, then you
-                need to use three instances of the variable in your recipe.
+                The instance (or instances) of the <filename>SRC_URI</filename>
+                variable in your recipe must define each unique location
+                for your source files.
+                For example, if you need a tarball, and two patches, then your
+                <filename>SRC_URI</filename> statement(s) must point to the
+                tarball and the patches.
             </para>
 
             <para>
