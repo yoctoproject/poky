@@ -917,10 +917,27 @@
 
         <glossentry id='var-COMBINED_FEATURES'><glossterm>COMBINED_FEATURES</glossterm>
             <glossdef>
-                <para>A set of features common between
+                <para>
+                    Provides a list of hardware features that are enabled in
+                    both
                     <link linkend='var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></link>
-                    and <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
-                    See the glossary descriptions for these variables for more information.</para>
+                    and
+                    <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
+                    This select list of features is a list features that make
+                    sense to be controlled both at the machine and distribution
+                    configuration level.
+                    For example, the "bluetooth" feature requires hardware
+                    support but should also be optional at the distribution
+                    level, in case the hardware supports Bluetooth but you
+                    do not ever intend to use it.
+                </para>
+
+                <para>
+                    For more information, see the
+                    <link linkend='var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></link>
+                    and <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>
+                    variables.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -1306,10 +1323,25 @@
 
         <glossentry id='var-DISTRO_FEATURES'><glossterm>DISTRO_FEATURES</glossterm>
             <glossdef>
-                <para>The features enabled for the distribution.
-                    For a list of supported features that ship with the
-                    Yocto Project, see the
-                    "<link linkend='ref-features-distro'>Distro</link>"
+                <para>
+                    The software support you want in your distribution for
+                    various features.
+                    In most cases, the presence or absence of a feature in
+                    <filename>DISTRO_FEATURES</filename> is translated to the
+                    appropriate option supplied to the configure script
+                    during <filename>do_configure</filename> for recipes that
+                    optionally support the feature.
+                    For example, specifying x11 in
+                    <filename>DISTRO_FEATURES</filename>, causes
+                    every piece of software built for the target that can
+                    optionally support X11 to have its X11 support enabled.
+                </para>
+
+                <para>
+                    Two more examples are Bluetooth and NFS support.
+                    For a more complete features that ship with the Yocto
+                    Project that you can provide using this variable, see the
+                    "<link linkend='ref-features-distro'>Distro Features</link>"
                     section.
                 </para>
             </glossdef>
@@ -3344,20 +3376,23 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
          <glossentry id='var-MACHINE_FEATURES'><glossterm>MACHINE_FEATURES</glossterm>
             <glossdef>
-                <para>Specifies the list of hardware features the
-                    <link linkend='var-MACHINE'>MACHINE</link> supports.
-                    For example, including the "bluetooth" feature causes the
-                    <filename>bluez</filename> bluetooth daemon to be built and
-                    added to the image.
-                    It also causes the <filename>connman</filename> recipe
-                    to look at <filename>MACHINE_FEATURES</filename> and when it
-                    finds "bluetooth" there it enables the bluetooth
-                    support in ConnMan.
+                <para>
+                    Specifies the list of hardware features the
+                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link> is capable
+                    of supporting.
+                    For related information on enabling features, see the
+                    <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>,
+                    <link linkend='var-COMBINED_FEATURES'><filename>COMBINED_FEATURES</filename></link>,
+                    and
+                    <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>
+                    variables.
                 </para>
 
                 <para>
-                    For a list of features supported by the Yocto Project as shipped,
-                    see the "<link linkend='ref-features-machine'>Machine</link>" section.
+                    For a list of hardware features supported by the Yocto
+                    Project as shipped, see the
+                    "<link linkend='ref-features-machine'>Machine Features</link>"
+                    section.
                 </para>
             </glossdef>
          </glossentry>
