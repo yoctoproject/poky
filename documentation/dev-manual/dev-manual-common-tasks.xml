@@ -887,105 +887,68 @@
             This section describes several methods and provides guidelines for each.
         </para>
 
-        <section id='usingpoky-extend-customimage-custombb'>
-            <title>Customizing Images Using Custom .bb Files</title>
+        <section id='usingpoky-extend-customimage-localconf'>
+            <title>Customizing Images Using <filename>local.conf</filename></title>
 
             <para>
-                One way to customize an image is to create a custom recipe
-                that defines additional software as part of the image.
-                The following example shows the form for the two lines you need:
-                <literallayout class='monospaced'>
-     IMAGE_INSTALL = "packagegroup-core-x11-base package1 package2"
-
-     inherit core-image
-                </literallayout>
+                Probably the easiest way to customize an image is to add a
+                package by way of the <filename>local.conf</filename>
+                configuration file.
+                Because it is limited to local use, this method generally only
+                allows you to add packages and is not as flexible as creating
+                your own customized image.
+                When you add packages using local variables this way, you need
+                to realize that these variable changes affect all images at
+                the same time and might not be what you require.
             </para>
 
             <para>
-                Defining the software using a custom recipe gives you total
-                control over the contents of the image.
-                It is important to use the correct names of packages in the
+                To add a package to your image using the local configuration
+                file, use the
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>
+                variable with the <filename>_append</filename> operator:
+                <literallayout class='monospaced'>
+     IMAGE_INSTALL_append = " strace"
+                </literallayout>
+                Use of the syntax is important - specifically, the space between
+                the quote and the package name, which is
+                <filename>strace</filename> in this example.
+                This space is required since the <filename>_append</filename>
+                operator does not add the space.
+            </para>
+
+            <para>
+                Furthermore, you must use <filename>_append</filename> instead
+                of the <filename>+=</filename> operator if you want to avoid
+                ordering issues.
+                The reason for this is because doing so unconditionally appends
+                to the variable and avoids ordering problems due to the
+                variable being set in image recipes and
+                <filename>.bbclass</filename> files with operators like
+                <filename>?=</filename>.
+                Using <filename>_append</filename> ensures the operation takes
+                affect.
+            </para>
+
+            <para>
+                As shown in its simplest use,
+                <filename>IMAGE_INSTALL_append</filename> affects all images.
+                It is possible to extend the syntax so that the variable
+                applies to a specific image only.
+                Here is an example:
+                <literallayout class='monospaced'>
+     IMAGE_INSTALL_append_pn-core-image-minimal = " strace"
+                </literallayout>
+                This example adds <filename>strace</filename> to
+                <filename>core-image-minimal</filename> only.
+            </para>
+
+            <para>
+                You can add packages using a similar approach through the
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-CORE_IMAGE_EXTRA_INSTALL'>CORE_IMAGE_EXTRA_INSTALL</ulink></filename>
                 variable.
-                You must use the OpenEmbedded notation and not the Debian notation for the names
-                (e.g. <filename>eglibc-dev</filename> instead of <filename>libc6-dev</filename>).
-            </para>
-
-            <para>
-                The other method for creating a custom image is to base it on an existing image.
-                For example, if you want to create an image based on <filename>core-image-sato</filename>
-                but add the additional package <filename>strace</filename> to the image,
-                copy the <filename>meta/recipes-sato/images/core-image-sato.bb</filename> to a
-                new <filename>.bb</filename> and add the following line to the end of the copy:
-                <literallayout class='monospaced'>
-     IMAGE_INSTALL += "strace"
-                </literallayout>
-            </para>
-        </section>
-
-        <section id='usingpoky-extend-customimage-customtasks'>
-            <title>Customizing Images Using Custom Package Groups</title>
-
-            <para>
-                For complex custom images, the best approach is to create a
-                custom package group recipe that is used to build the image or
-                images.
-                A good example of a package group recipe is
-                <filename>meta/recipes-core/packagegroups/packagegroup-core-boot.bb</filename>.
-                The
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename>
-                variable lists the package group packages you wish to produce.
-                <filename>inherit packagegroup</filename> sets appropriate
-                default values and automatically adds <filename>-dev</filename>,
-                <filename>-dbg</filename>, and <filename>-ptest</filename>
-                complementary packages for every package specified in
-                <filename>PACKAGES</filename>.
-                Note that the inherit line should be towards
-                the top of the recipe, certainly before you set
-                <filename>PACKAGES</filename>.
-                For each package you specify in <filename>PACKAGES</filename>,
-                you can use
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'>RDEPENDS</ulink></filename>
-                and
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'>RRECOMMENDS</ulink></filename>
-                entries to provide a list of packages the parent task package
-                should contain.
-                Following is an example:
-                <literallayout class='monospaced'>
-     DESCRIPTION = "My Custom Package Groups"
-
-     inherit packagegroup
-
-     PACKAGES = "\
-         packagegroup-custom-apps \
-         packagegroup-custom-tools \
-         "
-
-     RDEPENDS_packagegroup-custom-apps = "\
-         dropbear \
-         portmap \
-         psplash"
-
-     RDEPENDS_packagegroup-custom-tools = "\
-         oprofile \
-         oprofileui-server \
-         lttng-control \
-         lttng-viewer"
-
-     RRECOMMENDS_packagegroup-custom-tools = "\
-         kernel-module-oprofile"
-                </literallayout>
-            </para>
-
-            <para>
-                In the previous example, two package group packages are created with their dependencies and their
-                recommended package dependencies listed: <filename>packagegroup-custom-apps</filename>, and
-                <filename>packagegroup-custom-tools</filename>.
-                To build an image using these package group packages, you need to add
-                <filename>packagegroup-custom-apps</filename> and/or
-                <filename>packagegroup-custom-tools</filename> to
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>.
-                For other forms of image dependencies see the other areas of this section.
+                If you use this variable, only
+                <filename>core-image-*</filename> images are affected.
             </para>
         </section>
 
@@ -994,8 +957,8 @@
                 <filename>EXTRA_IMAGE_FEATURES</filename></title>
 
             <para>
-                You might want to customize your image by enabling or
-                disabling high-level image features by using the
+                Another method for customizing your image is to enable or
+                disable high-level image features by using the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>
                 and <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
                 variables.
@@ -1070,59 +1033,105 @@
             </note>
         </section>
 
-        <section id='usingpoky-extend-customimage-localconf'>
-            <title>Customizing Images Using <filename>local.conf</filename></title>
+        <section id='usingpoky-extend-customimage-custombb'>
+            <title>Customizing Images Using Custom .bb Files</title>
 
             <para>
-                It is possible to customize image contents by using variables from your
-                local configuration in your <filename>conf/local.conf</filename> file.
-                Because it is limited to local use, this method generally only allows you to
-                add packages and is not as flexible as creating your own customized image.
-                When you add packages using local variables this way, you need to realize that
-                these variable changes affect all images at the same time and might not be
-                what you require.
+                You can also customize an image by creating a custom recipe
+                that defines additional software as part of the image.
+                The following example shows the form for the two lines you need:
+                <literallayout class='monospaced'>
+     IMAGE_INSTALL = "packagegroup-core-x11-base package1 package2"
+
+     inherit core-image
+                </literallayout>
             </para>
 
             <para>
-                The simplest way to add extra packages to all images is by using the
+                Defining the software using a custom recipe gives you total
+                control over the contents of the image.
+                It is important to use the correct names of packages in the
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>
-                variable with the <filename>_append</filename> operator:
-                <literallayout class='monospaced'>
-     IMAGE_INSTALL_append = " strace"
-                </literallayout>
-                Use of the syntax is important - specifically, the space between
-                the quote and the package name, which is
-                <filename>strace</filename> in this example.
-                This space is required since the <filename>_append</filename>
-                operator does not add the space.
-            </para>
-
-            <para>
-                Furthermore, you must use <filename>_append</filename> instead of the <filename>+=</filename>
-                operator if you want to avoid ordering issues.
-                The reason for this is because doing so unconditionally appends to the variable and
-                avoids ordering problems due to the variable being set in image recipes and
-                <filename>.bbclass</filename> files with operators like <filename>?=</filename>.
-                Using <filename>_append</filename> ensures the operation takes affect.
-            </para>
-
-            <para>
-                As shown in its simplest use, <filename>IMAGE_INSTALL_append</filename> affects
-                all images.
-                It is possible to extend the syntax so that the variable applies to a specific image only.
-                Here is an example:
-                <literallayout class='monospaced'>
-     IMAGE_INSTALL_append_pn-core-image-minimal = " strace"
-                </literallayout>
-                This example adds <filename>strace</filename> to <filename>core-image-minimal</filename>
-                only.
-            </para>
-
-            <para>
-                You can add packages using a similar approach through the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-CORE_IMAGE_EXTRA_INSTALL'>CORE_IMAGE_EXTRA_INSTALL</ulink></filename>
                 variable.
-                If you use this variable, only <filename>core-image-*</filename> images are affected.
+                You must use the OpenEmbedded notation and not the Debian notation for the names
+                (e.g. <filename>eglibc-dev</filename> instead of <filename>libc6-dev</filename>).
+            </para>
+
+            <para>
+                The other method for creating a custom image is to base it on an existing image.
+                For example, if you want to create an image based on <filename>core-image-sato</filename>
+                but add the additional package <filename>strace</filename> to the image,
+                copy the <filename>meta/recipes-sato/images/core-image-sato.bb</filename> to a
+                new <filename>.bb</filename> and add the following line to the end of the copy:
+                <literallayout class='monospaced'>
+     IMAGE_INSTALL += "strace"
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='usingpoky-extend-customimage-customtasks'>
+            <title>Customizing Images Using Custom Package Groups</title>
+
+            <para>
+                For complex custom images, the best approach for customizing
+                an image is to create a custom package group recipe that is
+                used to build the image or images.
+                A good example of a package group recipe is
+                <filename>meta/recipes-core/packagegroups/packagegroup-core-boot.bb</filename>.
+                The
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename>
+                variable lists the package group packages you wish to produce.
+                <filename>inherit packagegroup</filename> sets appropriate
+                default values and automatically adds <filename>-dev</filename>,
+                <filename>-dbg</filename>, and <filename>-ptest</filename>
+                complementary packages for every package specified in
+                <filename>PACKAGES</filename>.
+                Note that the inherit line should be towards
+                the top of the recipe, certainly before you set
+                <filename>PACKAGES</filename>.
+                For each package you specify in <filename>PACKAGES</filename>,
+                you can use
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'>RDEPENDS</ulink></filename>
+                and
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'>RRECOMMENDS</ulink></filename>
+                entries to provide a list of packages the parent task package
+                should contain.
+                Following is an example:
+                <literallayout class='monospaced'>
+     DESCRIPTION = "My Custom Package Groups"
+
+     inherit packagegroup
+
+     PACKAGES = "\
+         packagegroup-custom-apps \
+         packagegroup-custom-tools \
+         "
+
+     RDEPENDS_packagegroup-custom-apps = "\
+         dropbear \
+         portmap \
+         psplash"
+
+     RDEPENDS_packagegroup-custom-tools = "\
+         oprofile \
+         oprofileui-server \
+         lttng-control \
+         lttng-viewer"
+
+     RRECOMMENDS_packagegroup-custom-tools = "\
+         kernel-module-oprofile"
+                </literallayout>
+            </para>
+
+            <para>
+                In the previous example, two package group packages are created with their dependencies and their
+                recommended package dependencies listed: <filename>packagegroup-custom-apps</filename>, and
+                <filename>packagegroup-custom-tools</filename>.
+                To build an image using these package group packages, you need to add
+                <filename>packagegroup-custom-apps</filename> and/or
+                <filename>packagegroup-custom-tools</filename> to
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'>IMAGE_INSTALL</ulink></filename>.
+                For other forms of image dependencies see the other areas of this section.
             </para>
         </section>
     </section>
