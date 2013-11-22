@@ -22,7 +22,7 @@
        <link linkend='var-D'>D</link>
        <link linkend='var-ENABLE_BINARY_LOCALE_GENERATION'>E</link>
        <link linkend='var-FEED_DEPLOYDIR_BASE_URI'>F</link>
-<!--               <link linkend='var-glossary-g'>G</link> -->
+       <link linkend='var-GROUPADD_PARAM'>G</link>
        <link linkend='var-HOMEPAGE'>H</link>
        <link linkend='var-IMAGE_BASENAME'>I</link>
 <!--               <link linkend='var-glossary-j'>J</link> -->
@@ -2029,11 +2029,54 @@
                 </para>
             </glossdef>
         </glossentry>
-
     </glossdiv>
 
-<!--            <glossdiv id='var-glossary-g'><title>G</title>-->
-<!--            </glossdiv>-->
+    <glossdiv id='var-glossary-g'><title>G</title>
+
+        <glossentry id='var-GROUPADD_PARAM'><glossterm>GROUPADD_PARAM</glossterm>
+            <glossdef>
+                <para>
+                    When a recipe inherits the
+                    <filename>useradd</filename> class, this variable
+                    specifies for a package what parameters should be passed
+                    to the <filename>groupadd</filename> command
+                    if you wish to add a group to the system when the package
+                    is installed.
+                </para>
+
+                <para>
+                    Here is an example from the <filename>dbus</filename>
+                    recipe:
+                    <literallayout class='monospaced'>
+     GROUPADD_PARAM_${PN} = "-r netdev"
+                    </literallayout>
+                    For information on the standard Linux shell command
+                    <filename>groupadd</filename>, see
+                    <ulink url='http://linux.die.net/man/8/groupadd'></ulink>.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-GROUPMEMS_PARAM'><glossterm>GROUPMEMS_PARAM</glossterm>
+            <glossdef>
+                <para>
+                    When a recipe inherits the
+                    <filename>useradd</filename> class, this variable
+                    specifies for a package what parameters should be passed
+                    to the <filename>groupmems</filename> command
+                    if you wish to modify the members of a group when the
+                    package is installed.
+                </para>
+
+                <para>
+                    For information on the standard Linux shell command
+                    <filename>groupmems</filename>, see
+                    <ulink url='http://linux.die.net/man/8/groupmems'></ulink>.
+                </para>
+            </glossdef>
+        </glossentry>
+
+    </glossdiv>
 
     <glossdiv id='var-glossary-h'><title>H</title>
 
@@ -6047,6 +6090,63 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-USERADD_PACKAGES'><glossterm>USERADD_PACKAGES</glossterm>
+            <glossdef>
+                <para>
+                    When a recipe inherits the
+                    <filename>useradd</filename> class, this variable
+                    specifies the individual packages within the recipe that
+                    require users and/or groups to be added.
+                </para>
+
+                <para>
+                    You must set this variable if the recipe inherits the
+                    class.
+                    For example, the following enables adding a user for the
+                    main package in a recipe:
+                    <literallayout class='monospaced'>
+     USERADD_PACKAGES = "${PN}"
+                    </literallayout>
+                    <note>
+                        If follows that if you are going to use the
+                        <filename>USERADD_PACKAGES</filename> variable,
+                        you need to set one or more of the
+                        <link linkend='var-USERADD_PARAM'><filename>USERADD_PARAM</filename></link>,
+                        <link linkend='var-GROUPADD_PARAM'><filename>GROUPADD_PARAM</filename></link>,
+                        or
+                        <link linkend='var-GROUPMEMS_PARAM'><filename>GROUPMEMS_PARAM</filename></link>
+                        variables.
+                    </note>
+                </para>
+
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-USERADD_PARAM'><glossterm>USERADD_PARAM</glossterm>
+            <glossdef>
+                <para>
+                    When a recipe inherits the
+                    <filename>useradd</filename> class, this variable
+                    specifies for a package what parameters should be passed
+                    to the <filename>useradd</filename> command
+                    if you wish to add a user to the system when the package
+                    is installed.
+                </para>
+
+                <para>
+                    Here is an example from the <filename>dbus</filename>
+                    recipe:
+                    <literallayout class='monospaced'>
+     USERADD_PARAM_${PN} = "--system --home ${localstatedir}/lib/dbus \
+                            --no-create-home --shell /bin/false \
+                            --user-group messagebus"
+                    </literallayout>
+                    For information on the standard Linux shell command
+                    <filename>useradd</filename>, see
+                    <ulink url='http://linux.die.net/man/8/useradd'></ulink>.
+                </para>
+            </glossdef>
+        </glossentry>
     </glossdiv>
 
 <!--            <glossdiv id='var-glossary-v'><title>V</title>-->
