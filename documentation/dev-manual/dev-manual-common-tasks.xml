@@ -2137,7 +2137,7 @@
                         <filename>.config</filename> file.</para></listitem>
                     <listitem><para>Configuration items that appear twice in the same
                         configuration fragment.</para></listitem>
-                    <listitem><para>Configuration items tagged as "required" were overridden.
+                    <listitem><para>Configuration items tagged as "required" that were overridden.
                         </para></listitem>
                     <listitem><para>A board overrides a non-board specific option.</para></listitem>
                     <listitem><para>Listed options not valid for the kernel being processed.
@@ -2241,8 +2241,8 @@
             <para>
                 The first step is to create a layer so you can isolate your changes:
                 <literallayout class='monospaced'>
-     $cd ~/poky
-     $mkdir meta-mylayer
+     $ cd ~/poky
+     $ mkdir meta-mylayer
                 </literallayout>
                 Creating a directory that follows the Yocto Project layer naming
                 conventions sets up the layer for your changes.
@@ -2309,7 +2309,7 @@
                         Edit the <filename>init/calibrate.c</filename> file to have the
                         following changes:
                         <literallayout class='monospaced'>
-     void __cpuinit calibrate_delay(void)
+     void calibrate_delay(void)
      {
          unsigned long lpj;
          static bool printed;
@@ -2675,12 +2675,12 @@
             <para>
                 The following list presents the overall steps you need to
                 consider and perform to create distributions with smaller
-                root filesystems, faster boot times, maintain your critical
+                root filesystems, achieve faster boot times, maintain your critical
                 functionality, and avoid initial RAM disks:
                 <itemizedlist>
                     <listitem><para>Determine your goals and guiding
                         principles.</para></listitem>
-                    <listitem><para>Understand what gives your image size.
+                    <listitem><para>Understand what contributes to your image size.
                         </para></listitem>
                     <listitem><para>Reduce the size of the root filesystem.
                         </para></listitem>
@@ -2726,7 +2726,7 @@
         </section>
 
         <section id='understand-what-gives-your-image-size'>
-            <title>Understand What Gives Your Image Size</title>
+            <title>Understand What Contributes to Your Image Size</title>
 
             <para>
                 It is easiest to have something to start with when creating
@@ -2754,7 +2754,7 @@
                 Memory consists of static, dynamic, and temporary memory.
                 Static memory is the TEXT (code), DATA (initialized data
                 in the code), and BSS (uninitialized data) sections.
-                Dynamic memory contains memory that is allocated at runtime,
+                Dynamic memory represents memory that is allocated at runtime:
                 stacks, hash tables, and so forth.
                 Temporary memory is recovered after the boot process.
                 This memory consists of memory used for decompressing
@@ -2830,8 +2830,8 @@
                 </literallayout>
                 You can apply a filter to the script to ignore files under
                 a certain size.
-                This example filters out anything below 100 Kbytes.
-                The sizes reported by the tool are uncompressed and thus,
+                The previous example filters out any files below 100 Kbytes.
+                The sizes reported by the tool are uncompressed, and thus
                 will be smaller by a relatively constant factor in a
                 compressed root filesystem.
                 When you examine your log file, you can focus on areas of the
@@ -2861,7 +2861,7 @@
             </para>
 
             <para>
-                Use the <filename>local.conf</filename> file to make changes.
+                Use your <filename>local.conf</filename> file to make changes.
                 For example, to eliminate <filename>udev</filename> and
                 <filename>glib</filename>, set the following in the
                 local configuration file:
@@ -2880,7 +2880,7 @@
                 using <filename>initramfs</filename>.
                 Be aware that <filename>ext3</filename> requires a 1 Mbyte
                 journal.
-                If you are okay with running read-only you do not need this
+                If you are okay with running read-only, you do not need this
                 journal.
             </para>
 
@@ -2901,7 +2901,7 @@
                 aspects.
                 What subsystems do you enable?
                 For what architecture are you building?
-                Which drivers do you build by default.
+                Which drivers do you build by default?
                 <note>You can modify the kernel source if you want to help
                     with boot time.
                 </note>
@@ -2920,7 +2920,7 @@
                 taken up with the built-in <filename>.o</filename> files for
                 drivers, networking, core kernel files, filesystem, sound,
                 and so forth.
-                The sizes reported by the tool are uncompressed and thus,
+                The sizes reported by the tool are uncompressed, and thus
                 will be smaller by a relatively constant factor in a compressed
                 kernel image.
                 Look to reduce the areas that are large and taking up around
@@ -4413,7 +4413,7 @@
             Supporting a read-only root filesystem requires that the system and
             applications do not try to write to the root filesystem.
             You must configure all parts of the target system to write
-            elsewhere, or to gracefully fail in the event of failing to
+            elsewhere, or to gracefully fail in the event of attempting to
             write to the root filesystem.
         </note>
 
