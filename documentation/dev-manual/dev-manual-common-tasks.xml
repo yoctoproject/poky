@@ -4394,6 +4394,45 @@
             is the name of the recipe for which you want to enable automatic source
             revision updating.
         </para>
+
+        <para>
+            In fact, the Yocto Project provides a distribution named
+            <filename>poky-bleeding</filename>, whose configuration 
+            file contains the line:
+            <literallayout class='monospaced'>
+     require conf/distro/include/poky-floating-revisions.inc
+            </literallayout>
+            This line pulls in the listed include file that contains 
+            numerous lines of exactly that form:
+            <literallayout class='monospaced'>
+     SRCREV_pn-gconf-dbus ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-common ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-config-gtk ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-desktop ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-keyboard ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-panel ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-panel-2 ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-themes-extra ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-terminal ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-wm ?= "${AUTOREV}"
+     SRCREV_pn-matchbox-wm-2 ?= "${AUTOREV}"
+     SRCREV_pn-settings-daemon ?= "${AUTOREV}"
+     SRCREV_pn-screenshot ?= "${AUTOREV}"
+     SRCREV_pn-libfakekey ?= "${AUTOREV}"
+     SRCREV_pn-oprofileui ?= "${AUTOREV}"
+          .
+          .
+          .
+            </literallayout>
+            These lines allow you to experiment with building a 
+            distribution that tracks the latest development source 
+            for numerous packages.
+            <note><title>Caution</title>
+                The <filename>poky-bleeding</filename> distribution
+                is not tested on a regular basis.
+                Keep this in mind if you use it.
+            </note>                
+        </para>
     </section>
 
     <section id='creating-a-read-only-root-filesystem'>
