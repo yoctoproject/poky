@@ -234,6 +234,28 @@
     </para>
 </section>
 
+<section id='ref-classes-blacklist.bbclass'>
+    <title><filename>blacklist.bbclass</filename></title>
+
+    <para>
+        The blacklist (<filename>blacklist</filename>) class prevents
+        the OpenEmbedded build system from building specific recipes
+        (blacklists them).
+        To use this class, inherit the class globally and set
+        <filename>PNBLACKLIST</filename> for each recipe you wish to blacklist.
+        Specify the <link linkend='var-PN'><filename>PN</filename></link>
+        value as a variable flag (varflag) and provide a reason, which is
+        reported, if the package is requested to be built as the value.
+        For example, if you want to blacklist a recipe called "exoticware",
+        you add the following to your <filename>local.conf</filename>
+        or distribution configuration:
+        <literallayout class='monospaced'>
+     INHERIT += "blacklist"
+     PNBLACKLIST[exoticware] = "Not supported by our organization."
+        </literallayout>
+    </para>
+</section>
+
 <section id='ref-classes-debian'>
     <title>Debian Renaming - <filename>debian.bbclass</filename></title>
 
