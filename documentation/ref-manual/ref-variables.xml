@@ -4362,6 +4362,30 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PNBLACKLIST'><glossterm>PNBLACKLIST</glossterm>
+            <glossdef>
+                <para>
+                    Lists recipes you do not want the OpenEmbedded build system
+                    to build.
+                    This variable works in conjunction with the
+                    <link linkend='ref-classes-blacklist'><filename>blacklist</filename></link>
+                    class, which the recipe must inherit globally.
+                </para>
+
+                <para>
+                    To prevent a recipe from being built, inherit the class
+                    globally and use the variable in your
+                    <filename>local.conf</filename> file.
+                    Here is an example that prevents
+                    <filename>myrecipe</filename> from being built:
+                    <literallayout class='monospaced'>
+     INHERIT += "blacklist"
+     PNBLACKLIST[myrecipe] = "Not supported by our organization."
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PR'><glossterm>PR</glossterm>
             <glossdef>
                 <para>The revision of the recipe.
