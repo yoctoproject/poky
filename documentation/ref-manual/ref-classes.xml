@@ -535,6 +535,44 @@
     </para>
 </section>
 
+<section id='ref-classes-extrausers'>
+    <title><filename>extrausers.bbclass</filename></title>
+
+    <para>
+        The extra users (<filename>extrausers</filename>) class allows
+        additional user and group configuration to be applied at the image
+        level.
+        Inheriting this class either globally or from an image recipe allows
+        additional user and group operations to be performed using the
+        <link linkend='var-EXTRA_USERS_PARAMS'><filename>EXTRA_USERS_PARAMS</filename></link>
+        variable.
+        <note>
+            The user and group operations added using the
+            <filename>extrausers</filename> class are not tied to a specific
+            recipe but can be performed across the image as a whole.
+            See the
+            <link linkend='ref-classes-useradd'><filename>useradd</filename></link>
+            class for information on how to add user and group configuration
+            to a specific recipe.
+        </note>
+    </para>
+
+    <para>
+        Here is an example that uses this class in an image recipe:
+        <literallayout class='monospaced'>
+     inherit extrausers
+     EXTRA_USERS_PARAMS = "\
+         useradd -p '' tester; \
+         groupadd developers; \
+         userdel nobody; \
+         groupdel -g video; \
+         groupmod -g 1020 developers; \
+         usermod -s /bin/sh tester; \
+         "
+        </literallayout>
+    </para>
+</section>
+
 <section id='ref-classes-debian'>
     <title>Debian Renaming - <filename>debian.bbclass</filename></title>
 
