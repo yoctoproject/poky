@@ -781,6 +781,78 @@
     </para>
 </section>
 
+<section id='ref-classes-icecc'>
+    <title><filename>icecc.bbclass</filename></title>
+
+    <para>
+        The Icecream distributed compile support (<filename>icecc</filename>)
+        class stages directories with symlinks from
+        <filename>gcc</filename> and <filename>g++</filename> to
+        <filename>icecc</filename>, for both native and cross compilers.
+        Depending on each configure or compile, the OpenEmbedded build system
+        adds the directories at the head of the <filename>PATH</filename> list
+        and then sets
+        <link linkend='var-ICECC_CXX'><filename>ICECC_CXX</filename></link>
+        and
+        <link linkend='var-ICECC_CC'><filename>ICEC_CC</filename></link>.
+    </para>
+
+    <para>
+        For the cross compiler, the class creates a <filename>tar.gz</filename>
+        file that contains the Yocto Project toolchain and sets
+        <link linkend='var-ICECC_VERSION'><filename>ICECC_VERSION</filename></link>
+        accordingly.
+    </para>
+
+    <para>
+        The class handles all three different compile stages
+        (i.e native ,cross-kernel and target) and creates the necessary
+        environment <filename>tar.gz</filename> file to be used by the remote
+        machines.
+        The class also supports SDK generation.
+    </para>
+
+    <para>
+        If <link linkend='var-ICECC_PATH'><filename>ICECC_PATH</filename></link>
+        is not set in your <filename>local.conf</filename> file, then the
+        class tries to locate it using <filename>which</filename>.
+
+        If
+        <link linkend='var-ICECC_ENV_EXEC'><filename>ICECC_ENV_EXEC</filename></link>
+        is set in your <filename>local.conf</filename> file, the variable should
+        point to the <filename>icecc-create-env</filename> script provided by
+        the user.
+        If you do not point to a user-provided script, the build system
+        uses the default script provided by the recipe
+        <filename>icecc-create-env.bb</filename>.
+        <note>
+            This script is a modified version and not the one that comes with
+            <filename>icecc</filename>.
+        </note>
+    </para>
+
+    <para>
+        If you do not want the Icecream distributed compile support to apply
+        to specific packages or classes, you can effectively "blacklist" them
+        by listing the packages and classes using the
+        <link linkend='var-ICECC_USER_PACKAGE_BL'><filename>ICECC_USER_PACKAGE_BL</filename></link>
+        and
+        <link linkend='var-ICECC_USER_CLASS_BL'><filename>ICECC_USER_CLASS_BL</filename></link>,
+        variables, respectively, in your <filename>local.conf</filename> file.
+        Doing so causes the OpenEmbedded build system to handle these
+        compilations locally.
+    </para>
+
+    <para>
+        Additionally, you can list packages using the
+        <link linkend='var-ICECC_USER_PACKAGE_WL'><filename>ICECC_USER_PACKAGE_WL</filename></link>
+        variable in your <filename>local.conf</filename> file to force
+        <filename>icecc</filename> to be enabled for packages using an empty
+        <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></link>
+        variable.
+    </para>
+</section>
+
 <section id='ref-classes-mime'>
     <title><filename>mime.bbclass</filename></title>
 
