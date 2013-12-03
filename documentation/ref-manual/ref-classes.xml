@@ -1147,6 +1147,44 @@
     </para>
 </section>
 
+<section id='ref-classes-native'>
+    <title><filename>native.bbclass</filename></title>
+
+    <para>
+        The native (<filename>native</filename>) class provides common
+        functionality for recipes that wish to build tools to run on the build
+        host (i.e. tools that use the compiler or other tools from the
+        build host).
+    </para>
+
+    <para>
+        You can create a recipe that builds tools that run natively on the
+        host a couple different ways:
+        <itemizedlist>
+            <listitem><para>Create a <filename>myrecipe-native.bb</filename>
+                that inherits the <filename>native</filename> class.
+                </para></listitem>
+            <listitem><para>Create or modify a target recipe that has adds
+                the following:
+                <literallayout class='monospaced'>
+     <link linkend='var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></link> = "native"
+                </literallayout>
+                Inside the recipe, use <filename>_class-native</filename> and
+                <filename>_class-target</filename> overrides to specify any
+                functionality specific to the respective native or target
+                case.</para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Although applied differently, the <filename>native</filename> class is
+        used with both methods.
+        The advantage of the second method is that you do not need to have two
+        separate recipes (assuming you need both) for native and target.
+        All common parts of the recipe are automatically shared.
+    </para>
+</section>
+
 <section id='ref-classes-pkgconfig'>
     <title>Pkg-config - <filename>pkgconfig.bbclass</filename></title>
 
