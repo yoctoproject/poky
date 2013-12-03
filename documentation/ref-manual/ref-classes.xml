@@ -1406,24 +1406,28 @@
 
 
 <section id='ref-classes-package'>
-    <title>Packaging - <filename>package*.bbclass</filename></title>
+    <title><filename>package.bbclass</filename></title>
 
     <para>
-        The packaging classes add support for generating packages from a build's
-        output.
-        The core generic functionality is in <filename>package.bbclass</filename>.
-        The code specific to particular package types is contained in various sub-classes such as
-        <filename>package_deb.bbclass</filename>, <filename>package_ipk.bbclass</filename>,
-        and <filename>package_rpm.bbclass</filename>.
-        Most users will want one or more of these classes.
+        The packaging class (<filename>package</filename>) supports generating
+        packages from a build's output.
+        The core generic functionality is in the
+        <filename>package.bbclass</filename>.
+        The code specific to particular package types resides in these
+        package-specific classes:
+        <link linkend='ref-classes-package_deb'><filename>package_deb</filename></link>,
+        <link linkend='ref-classes-package_rpm'><filename>package_rpm</filename></link>,
+        <link linkend='ref-classes-package_ipk'><filename>package_ipk</filename></link>,
+        and
+        <link linkend='ref-classes-package_tar'><filename>package_tar</filename></link>.
     </para>
 
     <para>
         You can control the list of resulting package formats by using the
         <filename><link linkend='var-PACKAGE_CLASSES'>PACKAGE_CLASSES</link></filename>
-        variable defined in the <filename>local.conf</filename> configuration file,
-        which is located in the <filename>conf</filename> folder of the
-        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+        variable defined in your <filename>conf/local.conf</filename>
+        configuration file, which is located in the
+        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
         When defining the variable, you can specify one or more package types.
         Since images are generated from packages, a packaging class is
         needed to enable image generation.
@@ -1441,8 +1445,8 @@
     </para>
 
     <para>
-        The package class you choose can affect build-time performance and has space
-        ramifications.
+        The package-specific class you choose can affect build-time performance
+        and has space ramifications.
         In general, building a package with IPK takes about thirty percent less
         time as compared to using RPM to build the same or similar package.
         This comparison takes into account a complete build of the package with
@@ -1451,17 +1455,18 @@
         creates and processes more
         <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> than the
         IPK package manager.
-        Consequently, you might consider setting <filename>PACKAGE_CLASSES</filename>
-        to "package_ipk" if you are building smaller systems.
+        Consequently, you might consider setting
+        <filename>PACKAGE_CLASSES</filename> to "package_ipk" if you are
+        building smaller systems.
     </para>
 
     <para>
-        Before making your decision on package manager, however, you should
+        Before making your package manager decision, however, you should
         consider some further things about using RPM:
         <itemizedlist>
             <listitem><para>
                 RPM starts to provide more abilities than IPK due to
-                the fact that it processes more metadata.
+                the fact that it processes more Metadata.
                 For example, this information includes individual file types,
                 file checksum generation and evaluation on install, sparse file
                 support, conflict detection and resolution for Multilib systems,
@@ -1484,6 +1489,78 @@
             <listitem><para><ulink url='&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006363.html'>
                 https://lists.yoctoproject.org/pipermail/poky/2011-May/006363.html</ulink></para></listitem>
         </itemizedlist>
+    </para>
+</section>
+
+<section id='ref-classes-package_deb'>
+    <title><filename>package_deb.bbclass</filename></title>
+
+    <para>
+        The Debian package manager (<filename>package_deb</filename>) class
+        provides support for creating packages that use the
+        <filename>.deb</filename> file format.
+        The class ensures the packages are written out to the
+        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/deb</filename>
+        directory in a <filename>.deb</filename> file format.
+        <note>
+            This package inherits the
+            <link linkend='ref-classes-package'><filename>package</filename></link>
+            class.
+        </note>
+    </para>
+</section>
+
+<section id='ref-classes-package_rpm'>
+    <title><filename>package_rpm.bbclass</filename></title>
+
+    <para>
+        The RPM package manager (<filename>package_deb</filename>) class
+        provides support for creating packages that use the
+        <filename>.rpm</filename> file format.
+        The class ensures the packages are written out to the
+        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/rpm</filename>
+        directory in a <filename>.rpm</filename> file format.
+        <note>
+            This package inherits the
+            <link linkend='ref-classes-package'><filename>package</filename></link>
+            class.
+        </note>
+    </para>
+</section>
+
+<section id='ref-classes-package_ipk'>
+    <title><filename>package_ipk.bbclass</filename></title>
+
+    <para>
+        The Itsy package manager (<filename>package_ipk</filename>) class
+        provides support for creating packages that use the
+        <filename>.ipk</filename> file format.
+        The class ensures the packages are written out to the
+        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/ipk</filename>
+        directory in a <filename>.ipk</filename> file format.
+        <note>
+            This package inherits the
+            <link linkend='ref-classes-package'><filename>package</filename></link>
+            class.
+        </note>
+    </para>
+</section>
+
+<section id='ref-classes-package_tar'>
+    <title><filename>package_tar.bbclass</filename></title>
+
+    <para>
+        The consolidated Unix archive file (<filename>package_tar</filename>)
+        class provides support for creating packages that use the
+        <filename>.tar</filename> file format.
+        The class ensures the packages are written out to the
+        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/tar</filename>
+        directory in a <filename>.tar</filename> file format.
+        <note>
+            This package inherits the
+            <link linkend='ref-classes-package'><filename>package</filename></link>
+            class.
+        </note>
     </para>
 </section>
 
