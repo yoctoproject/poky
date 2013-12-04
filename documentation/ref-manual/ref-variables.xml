@@ -225,6 +225,18 @@
             </glossdef>
          </glossentry>
 
+         <glossentry id='var-AUTO_SYSLINUXMENU'><glossterm>AUTO_SYSLINUXMENU</glossterm>
+            <glossdef>
+                <para>
+                    Enables creating an automatic menu.
+                    You must set this in your recipe.
+                    The
+                    <link linkend='ref-classes-syslinux'><filename>syslinux</filename></link>
+                    class checks this variable.
+                </para>
+            </glossdef>
+         </glossentry>
+
         <glossentry id='var-AUTOREV'><glossterm>AUTOREV</glossterm>
             <glossdef>
                 <para>When <filename><link linkend='var-SRCREV'>SRCREV</link></filename>
@@ -6175,6 +6187,92 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     the <link linkend='var-DESCRIPTION'><filename>DESCRIPTION</filename></link>
                     variable if <filename>DESCRIPTION</filename> is not set
                     in the recipe.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SYSLINUX_DEFAULT_CONSOLE'><glossterm>SYSLINUX_DEFAULT_CONSOLE</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the kernel boot default console.
+                    If you want to use a console other than the default,
+                    set this variable in your recipe as follows where "X" is
+                    the console number you want to use:
+                    <literallayout class='monospaced'>
+     SYSLINUX_DEFAULT_CONSOLE = "console=ttyX"
+                    </literallayout>
+                </para>
+
+                <para>
+                    The
+                    <link linkend='ref-classes-syslinux'><filename>syslinux</filename></link>
+                    class initially sets this variable to null but then checks
+                    for a value later.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SYSLINUX_OPTS'><glossterm>SYSLINUX_OPTS</glossterm>
+            <glossdef>
+                <para>
+                    Lists additional options to add to the syslinux file.
+                    You need to set this variable in your recipe.
+                    If you want to list multiple options, separate the options
+                    with a semicolon character (<filename>;</filename>).
+                </para>
+
+                <para>
+                    The
+                    <link linkend='ref-classes-syslinux'><filename>syslinux</filename></link>
+                    class uses this variable to create a set of options.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SYSLINUX_SERIAL'><glossterm>SYSLINUX_SERIAL</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the alternate serial port or turns it off.
+                    To turn off serial, set this variable to an empty string
+                    in your recipe.
+                    The variable's default value is set in the
+                    <link linkend='ref-classes-syslinux'><filename>syslinux</filename></link>
+                    as follows:
+                    <literallayout class='monospaced'>
+     SYSLINUX_SERIAL ?= "0 115200"
+                    </literallayout>
+                    The class checks for and uses the variable as needed.                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SYSLINUX_SPLASH'><glossterm>SYSLINUX_SPLASH</glossterm>
+            <glossdef>
+                <para>
+                    An <filename>.LSS</filename> file used as the background
+                    for the VGA boot menu when you are using the boot menu.
+                    You need to set this variable in your recipe.
+                </para>
+
+                <para>
+                    The
+                    <link linkend='ref-classes-syslinux'><filename>syslinux</filename></link>
+                    class checks for this variable and if found, the
+                    OpenEmbedded build system installs the splash screen.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SYSLINUX_SERIAL_TTY'><glossterm>SYSLINUX_SERIAL_TTY</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the alternate console=tty... kernel boot argument.
+                    The variable's default value is set in the
+                    <link linkend='ref-classes-syslinux'><filename>syslinux</filename></link>
+                    as follows:
+                    <literallayout class='monospaced'>
+     SYSLINUX_SERIAL_TTY ?= "console=ttyS0,115200"
+                    </literallayout>
+                    The class checks for and uses the variable as needed.
                 </para>
             </glossdef>
         </glossentry>
