@@ -1393,12 +1393,76 @@
     </para>
 </section>
 
-<section id='ref-classes-populate_sdk'>
+<section id='ref-classes-populate-sdk'>
     <title><filename>populate_sdk.bbclass</filename></title>
 
     <para>
         The <filename>populate_sdk</filename> class facilitates compatibility
         with SDK-only recipes.
+    </para>
+</section>
+
+<section id='ref-classes-populate-sdk-*'>
+    <title><filename>populate_sdk_*.bbclass</filename></title>
+
+    <para>
+        The <filename>populate_sdk_*</filename> family of classes support
+        SDK creation.
+        This family of classes consists of the following:
+        <itemizedlist>
+            <listitem><para><emphasis><filename>populate_sdk_base</filename>:</emphasis>
+                The base class supporting SDK creation under all package
+                managers (i.e. DEB, RPM, and IPK).</para></listitem>
+            <listitem><para><emphasis><filename>populate_sdk_deb</filename>:</emphasis>
+                Supports creation of the SDK given the Debian package manager.
+                </para></listitem>
+            <listitem><para><emphasis><filename>populate_sdk_rpm</filename>:</emphasis>
+                Supports creation of the SDK given the RPM package manager.
+                </para></listitem>
+            <listitem><para><emphasis><filename>populate_sdk_ipk</filename>:</emphasis>
+                Supports creation of the SDK given the IPK package manager.
+                </para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        The <filename>populate_sdk_base</filename> package inherits the
+        appropriate <filename>populate_sdk_*</filename> (i.e.
+        <filename>deb</filename>, <filename>rpm</filename>, and
+        <filename>ipk</filename>) based on
+        <link linkend='var-IMAGE_PKGTYPE'><filename>IMAGE_PKGTYPE</filename></link>.
+    </para>
+
+    <para>
+        The base class ensures all source and destination directories are
+        established and then populates the SDK.
+        After populating the SDK, the <filename>populate_sdk_base</filename>
+        class constructs two images:
+        <link linkend='var-SDK_ARCH'><filename>SDK_ARCH</filename></link><filename>-nativesdk</filename>,
+        which contains the cross-compiler and associated tooling, and the
+        target, which contains a target root filesystem that is configured for
+        the SDK usage.
+        These two images reside in
+        <link linkend='var-SDK_OUTPUT'><filename>SDK_OUTPUT</filename></link>,
+        which consists of the following:
+        <literallayout class='monospaced'>
+     ${SDK_OUTPUT}/&lt;sdk_arch-nativesdk pkgs&gt;
+     ${SDK_OUTPUT}/${SDKTARGETSYSROOT}/&lt;target pkgs&gt;
+        </literallayout>
+    </para>
+
+    <para>
+        Finally, the base populate SDK class creates the toolchain
+        environment setup script, the tarball of the SDK, and the installer.
+    </para>
+
+    <para>
+        The respective <filename>populate_sdk_deb</filename>,
+        <filename>populate_sdk_rpm</filename>, and
+        <filename>populate_sdk_ipk</filename> classes each support the
+        specific type of SDK.
+        These classes are inherited by and used with the
+        <filename>populate_sdk_base</filename> class.
     </para>
 </section>
 

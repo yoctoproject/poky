@@ -2645,6 +2645,36 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-IMAGE_PKGTYPE'><glossterm>IMAGE_PKGTYPE</glossterm>
+            <glossdef>
+                <para>
+                    Defines the package type (DEB, RPM, IPK, or TAR) used
+                    by the OpenEmbedded build system.
+                    The variable is defined appropriately by the
+                    <link linkend='ref-classes-package_deb'><filename>package_deb</filename></link>
+                    class, the
+                    <link linkend='ref-classes-package_rpm'><filename>package_rpm</filename></link>
+                    class, the
+                    <link linkend='ref-classes-package_ipk'><filename>package_ipk</filename></link>
+                    class, or the
+                    <link linkend='ref-classes-package_tar'><filename>package_tar</filename></link>
+                    class as follows:
+                    <literallayout class='monospaced'>
+     IMAGE_PKGTYPE ?= "deb"
+     IMAGE_PKGTYPE ?= "ipk"
+     IMAGE_PKGTYPE ?= "rpm"
+     IMAGE_PKGTYPE ?= "tar"
+                    </literallayout>
+                    The
+                    <link linkend='ref-classes-populate-sdk-*'><filename>package_sdk_base</filename></link>
+                    and
+                    <link linkend='ref-classes-image'><filename>image</filename></link>
+                    classes use the <filename>IMAGE_PKGTYPE</filename> for
+                    packaging up images and SDKs.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-IMAGE_POSTPROCESS_COMMAND'><glossterm>IMAGE_POSTPROCESS_COMMAND</glossterm>
             <glossdef>
                 <para>
@@ -5436,6 +5466,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-SDK_DIR'><glossterm>SDK_DIR</glossterm>
+            <glossdef>
+                <para>
+                    The parent directory used by the OpenEmbedded build system
+                    when creating SDK output.
+                    The
+                    <link linkend='ref-classes-populate-sdk-*'><filename>populate_sdk_base</filename></link>
+                    class defines the variable as follows:
+                    <literallayout class='monospaced'>
+     SDK_DIR = "${<link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>}/sdk"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-SDK_NAME'><glossterm>SDK_NAME</glossterm>
             <glossdef>
                 <para>
@@ -5450,6 +5495,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     variables:
                     <literallayout class='monospaced'>
      SDK_NAME = "${DISTRO}-${TCLIBC}-${SDK_ARCH}-${IMAGE_BASENAME}-${TUNE_PKGARCH}"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SDK_OUTPUT'><glossterm>SDK_OUTPUT</glossterm>
+            <glossdef>
+                <para>
+                    The location used by the OpenEmbedded build system when
+                    creating SDK output.
+                    The
+                    <link linkend='ref-classes-populate-sdk-*'><filename>populate_sdk_base</filename></link>
+                    class defines the variable as follows:
+                    <literallayout class='monospaced'>
+     SDK_OUTPUT = "${<link linkend='var-SDK_DIR'>SDK_DIR</link>}/image"
                     </literallayout>
                 </para>
             </glossdef>
