@@ -585,6 +585,59 @@
     </para>
 </section>
 
+<section id='ref-classes-externalsrc'>
+    <title><filename>externalsrc.bbclass</filename></title>
+
+    <para>
+        The <filename>externalsrc</filename> class supports building software
+        from source code that is external to the OpenEmbedded build system.
+        Building software from an external source tree means that the build
+        system's normal fetch, unpack, and patch process is not used.
+    </para>
+
+    <para>
+        By default, the OpenEmbedded build system uses the
+        <link linkend='var-S'><filename>S</filename></link> and
+        <link linkend='var-B'><filename>B</filename></link> variables to
+        locate unpacked recipe source code and to build it, respectively.
+        When your recipe inherits the <filename>externalsrc</filename> class,
+        you use the
+        <link linkend='var-EXTERNALSRC'><filename>EXTERNALSRC</filename></link>
+        and
+        <link linkend='var-EXTERNALSRC_BUILD'><filename>EXTERNALSRC_BUILD</filename></link>
+        variables to ultimately define <filename>S</filename> and
+        <filename>B</filename>.
+    </para>
+
+    <para>
+        By default, this class expects the source code to support recipe builds
+        that use the <link linkend='var-B'><filename>B</filename></link>
+        variable to point to the directory in which the OpenEmbedded build
+        system places the generated objects built from the recipes.
+        By default, the <filename>B</filename> directory is set to the
+        following, which is separate from the source directory
+        (<filename>S</filename>):
+        <literallayout class='monospaced'>
+     ${WORKDIR}/${BPN}/{PV}/
+        </literallayout>
+        See these variables for more information:
+        <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>,
+        <link linkend='var-BPN'><filename>BPN</filename></link>, and
+        <link linkend='var-PV'><filename>PV</filename></link>,
+    </para>
+
+    <para>
+        For more information on the
+        <filename>externalsrc</filename> class, see the comments in
+        <filename>meta/classes/externalsrc.bbclass</filename> in the
+        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+        For information on how to use the <filename>externalsrc</filename>
+        class, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source'>Building Software from an External Source</ulink>"
+        section in the Yocto Project Development Manual.
+    </para>
+</section>
+
 <section id='ref-classes-extrausers'>
     <title><filename>extrausers.bbclass</filename></title>
 
@@ -2843,59 +2896,6 @@
         <link linkend='var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></link>
         variable to specify additional configuration options to be passed on
         the Waf command line.
-    </para>
-</section>
-
-<section id='ref-classes-externalsrc'>
-    <title><filename>externalsrc.bbclass</filename></title>
-
-    <para>
-        The <filename>externalsrc</filename> class supports building software
-        from source code that is external to the OpenEmbedded build system.
-        Building software from an external source tree means that the build
-        system's normal fetch, unpack, and patch process is not used.
-    </para>
-
-    <para>
-        By default, the OpenEmbedded build system uses the
-        <link linkend='var-S'><filename>S</filename></link> and
-        <link linkend='var-B'><filename>B</filename></link> variables to
-        locate unpacked recipe source code and to build it, respectively.
-        When your recipe inherits the <filename>externalsrc</filename> class,
-        you use the
-        <link linkend='var-EXTERNALSRC'><filename>EXTERNALSRC</filename></link>
-        and
-        <link linkend='var-EXTERNALSRC_BUILD'><filename>EXTERNALSRC_BUILD</filename></link>
-        variables to ultimately define <filename>S</filename> and
-        <filename>B</filename>.
-    </para>
-
-    <para>
-        By default, this class expects the source code to support recipe builds
-        that use the <link linkend='var-B'><filename>B</filename></link>
-        variable to point to the directory in which the OpenEmbedded build
-        system places the generated objects built from the recipes.
-        By default, the <filename>B</filename> directory is set to the
-        following, which is separate from the source directory
-        (<filename>S</filename>):
-        <literallayout class='monospaced'>
-     ${WORKDIR}/${BPN}/{PV}/
-        </literallayout>
-        See these variables for more information:
-        <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>,
-        <link linkend='var-BPN'><filename>BPN</filename></link>, and
-        <link linkend='var-PV'><filename>PV</filename></link>,
-    </para>
-
-    <para>
-        For more information on the
-        <filename>externalsrc</filename> class, see the comments in
-        <filename>meta/classes/externalsrc.bbclass</filename> in the
-        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
-        For information on how to use the <filename>externalsrc</filename>
-        class, see the
-        "<ulink url='&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source'>Building Software from an External Source</ulink>"
-        section in the Yocto Project Development Manual.
     </para>
 </section>
 
