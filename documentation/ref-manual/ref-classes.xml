@@ -2262,6 +2262,67 @@
     </para>
 </section>
 
+<section id='ref-classes-rm-work'>
+    <title><filename>rm_work.bbclass</filename></title>
+
+    <para>
+        The <filename>rm_work</filename> class supports deletion of temporary
+        workspace, which can ease your hard drive demands during builds.
+    </para>
+
+    <para>
+        The OpenEmbedded build system can use a substantial amount of disk
+        space during the build process.
+        A portion of this space is the work files under the
+        <filename>${TMPDIR}/work</filename> directory for each recipe.
+        Once the build system generates the packages for a recipe, the work
+        files for that recipe are no longer needed.
+        However, by default, the build system preserves these files
+        for inspection and possible debugging purposes.
+        If you would rather have these files deleted to save disk space
+        as the build progresses, you can enable <filename>rm_work</filename>
+        by adding the following to your <filename>local.conf</filename> file,
+        which is found in the
+        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+        <literallayout class='monospaced'>
+    INHERIT += "rm_work"
+        </literallayout>
+        If you are modifying and building source code out of the work directory
+        for a recipe, enabling <filename>rm_work</filename> will potentially
+        result in your changes to the source being lost.
+        To exclude some recipes from having their work directories deleted by
+        <filename>rm_work</filename>, you can add the names of the recipe or
+        recipes you are working on to the <filename>RM_WORK_EXCLUDE</filename>
+        variable, which can also be set in your <filename>local.conf</filename>
+        file.
+        Here is an example:
+        <literallayout class='monospaced'>
+    RM_WORK_EXCLUDE += "busybox eglibc"
+        </literallayout>
+    </para>
+</section>
+
+<section id='ref-classes-rootfs*'>
+    <title><filename>rootfs*.bbclass</filename></title>
+
+    <para>
+        These classes add support for creating images in several formats.
+        First, the root filesystem is created from packages using
+        one of the <filename>rootfs_*.bbclass</filename>
+        files (depending on the package format used) and then the image is created.
+        <itemizedlist>
+            <listitem><para>The
+                <filename><link linkend='var-IMAGE_FSTYPES'>IMAGE_FSTYPES</link></filename>
+                variable controls the types of images to generate.
+                </para></listitem>
+            <listitem><para>The
+                <filename><link linkend='var-IMAGE_INSTALL'>IMAGE_INSTALL</link></filename>
+                variable controls the list of packages to install into the
+                image.</para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+
 <section id='ref-classes-scons'>
     <title><filename>scons.bbclass</filename></title>
 
@@ -2459,27 +2520,6 @@
     </para>
 </section>
 
-<section id='ref-classes-rootfs*'>
-    <title><filename>rootfs*.bbclass</filename></title>
-
-    <para>
-        These classes add support for creating images in several formats.
-        First, the root filesystem is created from packages using
-        one of the <filename>rootfs_*.bbclass</filename>
-        files (depending on the package format used) and then the image is created.
-        <itemizedlist>
-            <listitem><para>The
-                <filename><link linkend='var-IMAGE_FSTYPES'>IMAGE_FSTYPES</link></filename>
-                variable controls the types of images to generate.
-                </para></listitem>
-            <listitem><para>The
-                <filename><link linkend='var-IMAGE_INSTALL'>IMAGE_INSTALL</link></filename>
-                variable controls the list of packages to install into the
-                image.</para></listitem>
-        </itemizedlist>
-    </para>
-</section>
-
 <section id='ref-classes-sanity'>
     <title>Host System Sanity Checks - <filename>sanity.bbclass</filename></title>
 
@@ -2492,42 +2532,6 @@
         Distribution policy usually determines whether to include this class.
     </para>
 </section>
-
-<section id='ref-classes-rm-work'>
-    <title>Removing Work Files During the Build - <filename>rm_work.bbclass</filename></title>
-
-    <para>
-        The OpenEmbedded build system can use a substantial amount of disk
-        space during the build process.
-        A portion of this space is the work files under the
-        <filename>${TMPDIR}/work</filename> directory for each recipe.
-        Once the build system generates the packages for a recipe, the work
-        files for that recipe are no longer needed.
-        However, by default, the build system preserves these files
-        for inspection and possible debugging purposes.
-        If you would rather have these files deleted to save disk space
-        as the build progresses, you can enable <filename>rm_work</filename>
-        by adding the following to your <filename>local.conf</filename> file,
-        which is found in the
-        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
-        <literallayout class='monospaced'>
-    INHERIT += "rm_work"
-        </literallayout>
-        If you are modifying and building source code out of the work directory
-        for a recipe, enabling <filename>rm_work</filename> will potentially
-        result in your changes to the source being lost.
-        To exclude some recipes from having their work directories deleted by
-        <filename>rm_work</filename>, you can add the names of the recipe or
-        recipes you are working on to the <filename>RM_WORK_EXCLUDE</filename>
-        variable, which can also be set in your <filename>local.conf</filename>
-        file.
-        Here is an example:
-        <literallayout class='monospaced'>
-    RM_WORK_EXCLUDE += "busybox eglibc"
-        </literallayout>
-    </para>
-</section>
-
 
 <section id='ref-classes-siteinfo'>
     <title>Autotools Configuration Data Cache - <filename>siteinfo.bbclass</filename></title>
