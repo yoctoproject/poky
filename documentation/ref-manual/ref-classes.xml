@@ -1717,21 +1717,162 @@
     </para>
 </section>
 
-<section id='ref-classes-pkgconfig'>
-    <title>Pkg-config - <filename>pkgconfig.bbclass</filename></title>
+<section id='ref-classes-package'>
+    <title><filename>package.bbclass</filename></title>
 
     <para>
-        <filename>pkg-config</filename> provides a standard way to get
-        header and library information.
-        This class aims to smooth integration of
-        <filename>pkg-config</filename> into libraries that use it.
+        The packaging class (<filename>package</filename>) supports generating
+        packages from a build's output.
+        The core generic functionality is in the
+        <filename>package.bbclass</filename>.
+        The code specific to particular package types resides in these
+        package-specific classes:
+        <link linkend='ref-classes-package_deb'><filename>package_deb</filename></link>,
+        <link linkend='ref-classes-package_rpm'><filename>package_rpm</filename></link>,
+        <link linkend='ref-classes-package_ipk'><filename>package_ipk</filename></link>,
+        and
+        <link linkend='ref-classes-package_tar'><filename>package_tar</filename></link>.
     </para>
 
     <para>
-        During staging, BitBake installs <filename>pkg-config</filename> data into the
-        <filename>sysroots/</filename> directory.
-        By making use of sysroot functionality within <filename>pkg-config</filename>,
-        this class no longer has to manipulate the files.
+        You can control the list of resulting package formats by using the
+        <filename><link linkend='var-PACKAGE_CLASSES'>PACKAGE_CLASSES</link></filename>
+        variable defined in your <filename>conf/local.conf</filename>
+        configuration file, which is located in the
+        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+        When defining the variable, you can specify one or more package types.
+        Since images are generated from packages, a packaging class is
+        needed to enable image generation.
+        The first class listed in this variable is used for image generation.
+    </para>
+
+    <para>
+        If you take the optional step to set up a repository (package feed)
+        on the development host that can be used by Smart, you can
+        install packages from the feed while you are running the image
+        on the target (i.e. runtime installation of packages).
+        For more information, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#using-runtime-package-management'>Using Runtime Package Management</ulink>"
+         section in the Yocto Project Development Manual.
+    </para>
+
+    <para>
+        The package-specific class you choose can affect build-time performance
+        and has space ramifications.
+        In general, building a package with IPK takes about thirty percent less
+        time as compared to using RPM to build the same or similar package.
+        This comparison takes into account a complete build of the package with
+        all dependencies previously built.
+        The reason for this discrepancy is because the RPM package manager
+        creates and processes more
+        <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> than the
+        IPK package manager.
+        Consequently, you might consider setting
+        <filename>PACKAGE_CLASSES</filename> to "package_ipk" if you are
+        building smaller systems.
+    </para>
+
+    <para>
+        Before making your package manager decision, however, you should
+        consider some further things about using RPM:
+        <itemizedlist>
+            <listitem><para>
+                RPM starts to provide more abilities than IPK due to
+                the fact that it processes more Metadata.
+                For example, this information includes individual file types,
+                file checksum generation and evaluation on install, sparse file
+                support, conflict detection and resolution for Multilib systems,
+                ACID style upgrade, and repackaging abilities for rollbacks.
+                </para></listitem>
+            <listitem><para>
+                For smaller systems, the extra space used for the Berkley
+                Database and the amount of metadata when using RPM can affect
+                your ability to perform on-device upgrades.
+                </para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        You can find additional information on the effects of the package
+        class at these two Yocto Project mailing list links:
+        <itemizedlist>
+            <listitem><para><ulink url='&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006362.html'>
+                https://lists.yoctoproject.org/pipermail/poky/2011-May/006362.html</ulink></para></listitem>
+            <listitem><para><ulink url='&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006363.html'>
+                https://lists.yoctoproject.org/pipermail/poky/2011-May/006363.html</ulink></para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+
+<section id='ref-classes-package_deb'>
+    <title><filename>package_deb.bbclass</filename></title>
+
+    <para>
+        The Debian package manager (<filename>package_deb</filename>) class
+        provides support for creating packages that use the
+        <filename>.deb</filename> file format.
+        The class ensures the packages are written out to the
+        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/deb</filename>
+        directory in a <filename>.deb</filename> file format.
+        <note>
+            This package inherits the
+            <link linkend='ref-classes-package'><filename>package</filename></link>
+            class.
+        </note>
+    </para>
+</section>
+
+<section id='ref-classes-package_ipk'>
+    <title><filename>package_ipk.bbclass</filename></title>
+
+    <para>
+        The Itsy package manager (<filename>package_ipk</filename>) class
+        provides support for creating packages that use the
+        <filename>.ipk</filename> file format.
+        The class ensures the packages are written out to the
+        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/ipk</filename>
+        directory in a <filename>.ipk</filename> file format.
+        <note>
+            This package inherits the
+            <link linkend='ref-classes-package'><filename>package</filename></link>
+            class.
+        </note>
+    </para>
+</section>
+
+<section id='ref-classes-package_rpm'>
+    <title><filename>package_rpm.bbclass</filename></title>
+
+    <para>
+        The RPM package manager (<filename>package_deb</filename>) class
+        provides support for creating packages that use the
+        <filename>.rpm</filename> file format.
+        The class ensures the packages are written out to the
+        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/rpm</filename>
+        directory in a <filename>.rpm</filename> file format.
+        <note>
+            This package inherits the
+            <link linkend='ref-classes-package'><filename>package</filename></link>
+            class.
+        </note>
+    </para>
+</section>
+
+<section id='ref-classes-package_tar'>
+    <title><filename>package_tar.bbclass</filename></title>
+
+    <para>
+        The consolidated Unix archive file (<filename>package_tar</filename>)
+        class provides support for creating packages that use the
+        <filename>.tar</filename> file format.
+        The class ensures the packages are written out to the
+        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/tar</filename>
+        directory in a <filename>.tar</filename> file format.
+        <note>
+            This package inherits the
+            <link linkend='ref-classes-package'><filename>package</filename></link>
+            class.
+        </note>
     </para>
 </section>
 
@@ -1751,6 +1892,27 @@
         This class is enabled by default because it is inherited by the
         <link linkend='ref-classes-package'><filename>package</filename></link>
         class.
+    </para>
+</section>
+
+<section id='ref-classes-packagegroup'>
+    <title>Package Groups - <filename>packagegroup.bbclass</filename></title>
+
+    <para>
+        This class sets default values appropriate for package group recipes (e.g.
+        <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename>,
+        <filename><link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></filename>,
+        <filename><link linkend='var-ALLOW_EMPTY'>ALLOW_EMPTY</link></filename>,
+        and so forth).
+        It is highly recommended that all package group recipes inherit this class.
+    </para>
+    <para>
+        For information on how to use this class, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#usingpoky-extend-customimage-customtasks'>Customizing Images Using Custom Package Groups</ulink>"
+        section in the Yocto Project Development Manual.
+    </para>
+    <para>
+        Previously, this class was named <filename>task.bbclass</filename>.
     </para>
 </section>
 
@@ -1816,6 +1978,24 @@
         than the main package, set
         <link linkend='var-PIXBUF_PACKAGES'><filename>PIXBUF_PACKAGES</filename></link>
         to include the packages containing the modules.
+    </para>
+</section>
+
+<section id='ref-classes-pkgconfig'>
+    <title>Pkg-config - <filename>pkgconfig.bbclass</filename></title>
+
+    <para>
+        <filename>pkg-config</filename> provides a standard way to get
+        header and library information.
+        This class aims to smooth integration of
+        <filename>pkg-config</filename> into libraries that use it.
+    </para>
+
+    <para>
+        During staging, BitBake installs <filename>pkg-config</filename> data into the
+        <filename>sysroots/</filename> directory.
+        By making use of sysroot functionality within <filename>pkg-config</filename>,
+        this class no longer has to manipulate the files.
     </para>
 </section>
 
@@ -2117,168 +2297,6 @@
     </para>
 </section>
 
-<section id='ref-classes-packagegroup'>
-    <title>Package Groups - <filename>packagegroup.bbclass</filename></title>
-
-    <para>
-        This class sets default values appropriate for package group recipes (e.g.
-        <filename><link linkend='var-PACKAGES'>PACKAGES</link></filename>,
-        <filename><link linkend='var-PACKAGE_ARCH'>PACKAGE_ARCH</link></filename>,
-        <filename><link linkend='var-ALLOW_EMPTY'>ALLOW_EMPTY</link></filename>,
-        and so forth).
-        It is highly recommended that all package group recipes inherit this class.
-    </para>
-    <para>
-        For information on how to use this class, see the
-        "<ulink url='&YOCTO_DOCS_DEV_URL;#usingpoky-extend-customimage-customtasks'>Customizing Images Using Custom Package Groups</ulink>"
-        section in the Yocto Project Development Manual.
-    </para>
-    <para>
-        Previously, this class was named <filename>task.bbclass</filename>.
-    </para>
-</section>
-
-<section id='ref-classes-package'>
-    <title><filename>package.bbclass</filename></title>
-
-    <para>
-        The packaging class (<filename>package</filename>) supports generating
-        packages from a build's output.
-        The core generic functionality is in the
-        <filename>package.bbclass</filename>.
-        The code specific to particular package types resides in these
-        package-specific classes:
-        <link linkend='ref-classes-package_deb'><filename>package_deb</filename></link>,
-        <link linkend='ref-classes-package_rpm'><filename>package_rpm</filename></link>,
-        <link linkend='ref-classes-package_ipk'><filename>package_ipk</filename></link>,
-        and
-        <link linkend='ref-classes-package_tar'><filename>package_tar</filename></link>.
-    </para>
-
-    <para>
-        You can control the list of resulting package formats by using the
-        <filename><link linkend='var-PACKAGE_CLASSES'>PACKAGE_CLASSES</link></filename>
-        variable defined in your <filename>conf/local.conf</filename>
-        configuration file, which is located in the
-        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
-        When defining the variable, you can specify one or more package types.
-        Since images are generated from packages, a packaging class is
-        needed to enable image generation.
-        The first class listed in this variable is used for image generation.
-    </para>
-
-    <para>
-        If you take the optional step to set up a repository (package feed)
-        on the development host that can be used by Smart, you can
-        install packages from the feed while you are running the image
-        on the target (i.e. runtime installation of packages).
-        For more information, see the
-        "<ulink url='&YOCTO_DOCS_DEV_URL;#using-runtime-package-management'>Using Runtime Package Management</ulink>"
-         section in the Yocto Project Development Manual.
-    </para>
-
-    <para>
-        The package-specific class you choose can affect build-time performance
-        and has space ramifications.
-        In general, building a package with IPK takes about thirty percent less
-        time as compared to using RPM to build the same or similar package.
-        This comparison takes into account a complete build of the package with
-        all dependencies previously built.
-        The reason for this discrepancy is because the RPM package manager
-        creates and processes more
-        <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> than the
-        IPK package manager.
-        Consequently, you might consider setting
-        <filename>PACKAGE_CLASSES</filename> to "package_ipk" if you are
-        building smaller systems.
-    </para>
-
-    <para>
-        Before making your package manager decision, however, you should
-        consider some further things about using RPM:
-        <itemizedlist>
-            <listitem><para>
-                RPM starts to provide more abilities than IPK due to
-                the fact that it processes more Metadata.
-                For example, this information includes individual file types,
-                file checksum generation and evaluation on install, sparse file
-                support, conflict detection and resolution for Multilib systems,
-                ACID style upgrade, and repackaging abilities for rollbacks.
-                </para></listitem>
-            <listitem><para>
-                For smaller systems, the extra space used for the Berkley
-                Database and the amount of metadata when using RPM can affect
-                your ability to perform on-device upgrades.
-                </para></listitem>
-        </itemizedlist>
-    </para>
-
-    <para>
-        You can find additional information on the effects of the package
-        class at these two Yocto Project mailing list links:
-        <itemizedlist>
-            <listitem><para><ulink url='&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006362.html'>
-                https://lists.yoctoproject.org/pipermail/poky/2011-May/006362.html</ulink></para></listitem>
-            <listitem><para><ulink url='&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006363.html'>
-                https://lists.yoctoproject.org/pipermail/poky/2011-May/006363.html</ulink></para></listitem>
-        </itemizedlist>
-    </para>
-</section>
-
-<section id='ref-classes-package_deb'>
-    <title><filename>package_deb.bbclass</filename></title>
-
-    <para>
-        The Debian package manager (<filename>package_deb</filename>) class
-        provides support for creating packages that use the
-        <filename>.deb</filename> file format.
-        The class ensures the packages are written out to the
-        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/deb</filename>
-        directory in a <filename>.deb</filename> file format.
-        <note>
-            This package inherits the
-            <link linkend='ref-classes-package'><filename>package</filename></link>
-            class.
-        </note>
-    </para>
-</section>
-
-<section id='ref-classes-package_rpm'>
-    <title><filename>package_rpm.bbclass</filename></title>
-
-    <para>
-        The RPM package manager (<filename>package_deb</filename>) class
-        provides support for creating packages that use the
-        <filename>.rpm</filename> file format.
-        The class ensures the packages are written out to the
-        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/rpm</filename>
-        directory in a <filename>.rpm</filename> file format.
-        <note>
-            This package inherits the
-            <link linkend='ref-classes-package'><filename>package</filename></link>
-            class.
-        </note>
-    </para>
-</section>
-
-<section id='ref-classes-package_ipk'>
-    <title><filename>package_ipk.bbclass</filename></title>
-
-    <para>
-        The Itsy package manager (<filename>package_ipk</filename>) class
-        provides support for creating packages that use the
-        <filename>.ipk</filename> file format.
-        The class ensures the packages are written out to the
-        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/ipk</filename>
-        directory in a <filename>.ipk</filename> file format.
-        <note>
-            This package inherits the
-            <link linkend='ref-classes-package'><filename>package</filename></link>
-            class.
-        </note>
-    </para>
-</section>
-
 <section id='ref-classes-sip'>
     <title><filename>sip.bbclass</filename></title>
 
@@ -2440,24 +2458,6 @@
         For more information on <filename>systemd</filename>, see the
         "<ulink url='&YOCTO_DOCS_DEV_URL;#selecting-an-initialization-manager'>Selecting an Initialization Manager</ulink>"
         section in the Yocto Project Development Manual.
-    </para>
-</section>
-
-<section id='ref-classes-package_tar'>
-    <title><filename>package_tar.bbclass</filename></title>
-
-    <para>
-        The consolidated Unix archive file (<filename>package_tar</filename>)
-        class provides support for creating packages that use the
-        <filename>.tar</filename> file format.
-        The class ensures the packages are written out to the
-        <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/tar</filename>
-        directory in a <filename>.tar</filename> file format.
-        <note>
-            This package inherits the
-            <link linkend='ref-classes-package'><filename>package</filename></link>
-            class.
-        </note>
     </para>
 </section>
 
