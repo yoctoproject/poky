@@ -2704,6 +2704,68 @@
     </para>
 </section>
 
+<section id='ref-classes-update-alternatives'>
+    <title>Alternatives - <filename>update-alternatives.bbclass</filename></title>
+
+    <para>
+        This class helps the alternatives system when multiple sources provide
+        the same command.
+        This situation occurs when several programs that have the same or
+        similar function are installed with the same name.
+        For example, the <filename>ar</filename> command is available from the
+        <filename>busybox</filename>, <filename>binutils</filename> and
+        <filename>elfutils</filename> packages.
+        The <filename>update-alternatives.bbclass</filename> class handles
+        renaming the binaries so that multiple packages can be installed
+        without conflicts.
+        The <filename>ar</filename> command still works regardless of which
+        packages are installed or subsequently removed.
+        The class renames the conflicting binary in each package and symlinks
+        the highest priority binary during installation or removal of packages.
+    </para>
+
+    <para>
+        To use this class, you need to define a number of variables:
+        <itemizedlist>
+            <listitem><para><link linkend='var-ALTERNATIVE'><filename>ALTERNATIVE</filename></link>
+                </para></listitem>
+            <listitem><para><link linkend='var-ALTERNATIVE_LINK_NAME'><filename>ALTERNATIVE_LINK_NAME</filename></link>
+                </para></listitem>
+            <listitem><para><link linkend='var-ALTERNATIVE_TARGET'><filename>ALTERNATIVE_TARGET</filename></link>
+                </para></listitem>
+            <listitem><para><link linkend='var-ALTERNATIVE_PRIORITY'><filename>ALTERNATIVE_PRIORITY</filename></link>
+                </para></listitem>
+        </itemizedlist>
+        These variables list alternative commands needed by a package,
+        provide pathnames for links, default links for targets, and
+        so forth.
+        For details on how to use this class, see the comments in the
+        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/update-alternatives.bbclass'><filename>update-alternatives.bbclass</filename></ulink>.
+    </para>
+
+    <note>
+        You can use the <filename>update-alternatives</filename> command
+        directly in your recipes.
+        However, this class simplifies things in most cases.
+    </note>
+</section>
+
+<section id='ref-classes-update-rc.d'>
+    <title>Initscripts - <filename>update-rc.d.bbclass</filename></title>
+
+    <para>
+        This class uses <filename>update-rc.d</filename> to safely install an
+        initialization script on behalf of the package.
+        The OpenEmbedded build system takes care of details such as making sure the script is stopped before
+        a package is removed and started when the package is installed.
+        Three variables control this class:
+        <filename><link linkend='var-INITSCRIPT_PACKAGES'>INITSCRIPT_PACKAGES</link></filename>,
+        <filename><link linkend='var-INITSCRIPT_NAME'>INITSCRIPT_NAME</link></filename> and
+        <filename><link linkend='var-INITSCRIPT_PARAMS'>INITSCRIPT_PARAMS</link></filename>.
+        See the variable links for details.
+    </para>
+</section>
+
 <section id='ref-classes-useradd'>
     <title>Adding Users - <filename>useradd.bbclass</filename></title>
 
@@ -2827,68 +2889,6 @@
         see the
         "<ulink url='&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source'>Building Software from an External Source</ulink>"
         section in the Yocto Project Development Manual.
-    </para>
-</section>
-
-<section id='ref-classes-update-alternatives'>
-    <title>Alternatives - <filename>update-alternatives.bbclass</filename></title>
-
-    <para>
-        This class helps the alternatives system when multiple sources provide
-        the same command.
-        This situation occurs when several programs that have the same or
-        similar function are installed with the same name.
-        For example, the <filename>ar</filename> command is available from the
-        <filename>busybox</filename>, <filename>binutils</filename> and
-        <filename>elfutils</filename> packages.
-        The <filename>update-alternatives.bbclass</filename> class handles
-        renaming the binaries so that multiple packages can be installed
-        without conflicts.
-        The <filename>ar</filename> command still works regardless of which
-        packages are installed or subsequently removed.
-        The class renames the conflicting binary in each package and symlinks
-        the highest priority binary during installation or removal of packages.
-    </para>
-
-    <para>
-        To use this class, you need to define a number of variables:
-        <itemizedlist>
-            <listitem><para><link linkend='var-ALTERNATIVE'><filename>ALTERNATIVE</filename></link>
-                </para></listitem>
-            <listitem><para><link linkend='var-ALTERNATIVE_LINK_NAME'><filename>ALTERNATIVE_LINK_NAME</filename></link>
-                </para></listitem>
-            <listitem><para><link linkend='var-ALTERNATIVE_TARGET'><filename>ALTERNATIVE_TARGET</filename></link>
-                </para></listitem>
-            <listitem><para><link linkend='var-ALTERNATIVE_PRIORITY'><filename>ALTERNATIVE_PRIORITY</filename></link>
-                </para></listitem>
-        </itemizedlist>
-        These variables list alternative commands needed by a package,
-        provide pathnames for links, default links for targets, and
-        so forth.
-        For details on how to use this class, see the comments in the
-        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/update-alternatives.bbclass'><filename>update-alternatives.bbclass</filename></ulink>.
-    </para>
-
-    <note>
-        You can use the <filename>update-alternatives</filename> command
-        directly in your recipes.
-        However, this class simplifies things in most cases.
-    </note>
-</section>
-
-<section id='ref-classes-update-rc.d'>
-    <title>Initscripts - <filename>update-rc.d.bbclass</filename></title>
-
-    <para>
-        This class uses <filename>update-rc.d</filename> to safely install an
-        initialization script on behalf of the package.
-        The OpenEmbedded build system takes care of details such as making sure the script is stopped before
-        a package is removed and started when the package is installed.
-        Three variables control this class:
-        <filename><link linkend='var-INITSCRIPT_PACKAGES'>INITSCRIPT_PACKAGES</link></filename>,
-        <filename><link linkend='var-INITSCRIPT_NAME'>INITSCRIPT_NAME</link></filename> and
-        <filename><link linkend='var-INITSCRIPT_PARAMS'>INITSCRIPT_PARAMS</link></filename>.
-        See the variable links for details.
     </para>
 </section>
 
