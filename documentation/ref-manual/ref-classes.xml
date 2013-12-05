@@ -1409,6 +1409,32 @@
     </para>
 </section>
 
+<section id='ref-classes-kernel'>
+    <title>Building Kernels - <filename>kernel.bbclass</filename></title>
+
+    <para>
+        This class handles building Linux kernels.
+        The class contains code to build all kernel trees.
+        All needed headers are staged into the
+        <filename><link linkend='var-STAGING_KERNEL_DIR'>STAGING_KERNEL_DIR</link></filename>
+        directory to allow out-of-tree module builds using <filename>module.bbclass</filename>.
+    </para>
+
+    <para>
+        This means that each built kernel module is packaged separately and inter-module
+        dependencies are created by parsing the <filename>modinfo</filename> output.
+        If all modules are required, then installing the <filename>kernel-modules</filename>
+        package installs all packages with modules and various other kernel packages
+        such as <filename>kernel-vmlinux</filename>.
+    </para>
+
+    <para>
+        Various other classes are used by the kernel and module classes internally including
+        <filename>kernel-arch.bbclass</filename>, <filename>module_strip.bbclass</filename>,
+        <filename>module-base.bbclass</filename>, and <filename>linux-kernel-base.bbclass</filename>.
+    </para>
+</section>
+
 <section id='ref-classes-kernel-arch'>
     <title><filename>kernel-arch.bbclass</filename></title>
 
@@ -2436,34 +2462,8 @@
     </para>
 </section>
 
-<section id='ref-classes-kernel'>
-    <title>Building Kernels - <filename>kernel.bbclass</filename></title>
-
-    <para>
-        This class handles building Linux kernels.
-        The class contains code to build all kernel trees.
-        All needed headers are staged into the
-        <filename><link linkend='var-STAGING_KERNEL_DIR'>STAGING_KERNEL_DIR</link></filename>
-        directory to allow out-of-tree module builds using <filename>module.bbclass</filename>.
-    </para>
-
-    <para>
-        This means that each built kernel module is packaged separately and inter-module
-        dependencies are created by parsing the <filename>modinfo</filename> output.
-        If all modules are required, then installing the <filename>kernel-modules</filename>
-        package installs all packages with modules and various other kernel packages
-        such as <filename>kernel-vmlinux</filename>.
-    </para>
-
-    <para>
-        Various other classes are used by the kernel and module classes internally including
-        <filename>kernel-arch.bbclass</filename>, <filename>module_strip.bbclass</filename>,
-        <filename>module-base.bbclass</filename>, and <filename>linux-kernel-base.bbclass</filename>.
-    </para>
-</section>
-
-<section id='ref-classes-image'>
-    <title>Creating Images - <filename>image.bbclass</filename> and <filename>rootfs*.bbclass</filename></title>
+<section id='ref-classes-rootfs*'>
+    <title><filename>rootfs*.bbclass</filename></title>
 
     <para>
         These classes add support for creating images in several formats.
