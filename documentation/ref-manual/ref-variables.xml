@@ -6289,6 +6289,65 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-SYSTEMD_AUTO_ENABLE'><glossterm>SYSTEMD_AUTO_ENABLE</glossterm>
+            <glossdef>
+                <para>
+                    Enables and disables the <filename>systemd</filename>
+                    service manager.
+                    By default, the service is enabled to automatically start
+                    at boot time.
+                    The default setting is in the
+                    <link linkend='ref-classes-systemd'><filename>systemd</filename></link>
+                    class as follows:
+                    <literallayout class='monospaced'>
+     SYSTEMD_AUTO_ENABLE ??= "enable"
+                    </literallayout>
+                    You can disable the service by setting the variable to
+                    "disable."
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SYSTEMD_PACKAGES'><glossterm>SYSTEMD_PACKAGES</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the packages into which
+                    <filename>systemd</filename> unit files are installed
+                    when the files need to be installed into packages other
+                    than recipe's main package.
+                </para>
+
+                <para>
+                    The
+                    <link linkend='ref-classes-systemd'><filename>systemd</filename></link>
+                    class sets <filename>SYSTEMD_PACKAGES</filename> as follows:
+                    <literallayout class='monospaced'>
+     SYSTEMD_PACKAGES ?= "${PN}"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SYSTEMD_SERVICE'><glossterm>SYSTEMD_SERVICE</glossterm>
+            <glossdef>
+                <para>
+                    The service file for the <filename>systemd</filename>
+                    service manager.
+                </para>
+
+                <para>
+                    When you specify this file in your recipe, use a package
+                    name override to indicate the package to which the value
+                    applies when the value applies to a package other than
+                    the recipe's main package.
+                    Here is an example from the connman recipe:
+                    <literallayout class='monospaced'>
+     SYSTEMD_SERVICE_${PN} = "connman.service"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
     </glossdiv>
 
     <glossdiv id='var-glossary-t'><title>T</title>

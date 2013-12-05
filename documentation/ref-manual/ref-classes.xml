@@ -2027,6 +2027,56 @@
     </para>
 </section>
 
+<section id='ref-classes-systemd'>
+    <title><filename>systemd.bbclass</filename></title>
+
+    <para>
+        The <filename>systemd</filename> class provides support for recipes
+        that install <filename>systemd</filename> unit files.
+    </para>
+
+    <para>
+        The functionality for this class is disabled unless you have "systemd"
+        in
+        <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
+    </para>
+
+    <para>
+        Under this class, unit files are installed into
+        <filename>${</filename><link linkend='var-D'><filename>D</filename></link><filename>}${systemd_unitdir}/system</filename>
+        during the <filename>do_install</filename> task.
+        If the unit files being installed go into packages other than the
+        main package, you need to set
+        <link linkend='var-SYSTEMD_PACKAGES'><filename>SYSTEMD_PACKAGES</filename></link>
+        in your recipe to identify the packages in which the files will be
+        installed.
+    </para>
+
+    <para>
+        You should set
+        <link linkend='var-SYSTEMD_SERVICE'><filename>SYSTEMD_SERVICE</filename></link>
+        to the name of the service file.
+        You should also use a package name override to indicate the package
+        to which the value applies.
+        If the value applies to the recipe's main package, use
+        <filename>${</filename><link linkend='var-PN'><filename>PN</filename></link><filename>}</filename>.
+        Here is an example from the connman recipe:
+        <literallayout class='monospaced'>
+     SYSTEMD_SERVICE_${PN} = "connman.service"
+        </literallayout>
+        Services are set up to start on boot automatically unless
+        you have set
+        <link linkend='var-SYSTEMD_AUTO_ENABLE'><filename>SYSTEMD_AUTO_ENABLE</filename></link>
+        to "disable".
+    </para>
+
+    <para>
+        For more information on <filename>systemd</filename>, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#selecting-an-initialization-manager'>Selecting an Initialization Manager</ulink>"
+        section in the Yocto Project Development Manual.
+    </para>
+</section>
+
 <section id='ref-classes-package_tar'>
     <title><filename>package_tar.bbclass</filename></title>
 
