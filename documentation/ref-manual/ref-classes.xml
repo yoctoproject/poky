@@ -2325,6 +2325,19 @@
     </para>
 </section>
 
+<section id='ref-classes-sanity'>
+    <title>Host System Sanity Checks - <filename>sanity.bbclass</filename></title>
+
+    <para>
+        This class checks to see if prerequisite software is present on the host system
+        so that users can be notified of potential problems that might affect their build.
+        The class also performs basic user configuration checks from
+        the <filename>local.conf</filename> configuration file to
+        prevent common mistakes that cause build failures.
+        Distribution policy usually determines whether to include this class.
+    </para>
+</section>
+
 <section id='ref-classes-scons'>
     <title><filename>scons.bbclass</filename></title>
 
@@ -2376,6 +2389,35 @@
         The class is used by the
         <link linkend='ref-classes-autotools'><filename>autotools</filename></link>
         class to accelerate the <filename>do_configure</filename> task.
+    </para>
+</section>
+
+<section id='ref-classes-siteinfo'>
+    <title>Autotools Configuration Data Cache - <filename>siteinfo.bbclass</filename></title>
+
+    <para>
+        Autotools can require tests that must execute on the target hardware.
+        Since this is not possible in general when cross compiling, site information is
+        used to provide cached test results so these tests can be skipped over but
+        still make the correct values available.
+        The <filename><link linkend='structure-meta-site'>meta/site directory</link></filename>
+        contains test results sorted into different categories such as architecture, endianness, and
+        the <filename>libc</filename> used.
+        Site information provides a list of files containing data relevant to
+        the current build in the
+        <filename><link linkend='var-CONFIG_SITE'>CONFIG_SITE</link></filename> variable
+        that Autotools automatically picks up.
+    </para>
+
+    <para>
+        The class also provides variables like
+        <filename><link linkend='var-SITEINFO_ENDIANNESS'>SITEINFO_ENDIANNESS</link></filename>
+        and <filename><link linkend='var-SITEINFO_BITS'>SITEINFO_BITS</link></filename>
+        that can be used elsewhere in the metadata.
+    </para>
+
+    <para>
+        Because this class is included from <filename>base.bbclass</filename>, it is always active.
     </para>
 </section>
 
@@ -2519,48 +2561,6 @@
         For more information on <filename>systemd</filename>, see the
         "<ulink url='&YOCTO_DOCS_DEV_URL;#selecting-an-initialization-manager'>Selecting an Initialization Manager</ulink>"
         section in the Yocto Project Development Manual.
-    </para>
-</section>
-
-<section id='ref-classes-sanity'>
-    <title>Host System Sanity Checks - <filename>sanity.bbclass</filename></title>
-
-    <para>
-        This class checks to see if prerequisite software is present on the host system
-        so that users can be notified of potential problems that might affect their build.
-        The class also performs basic user configuration checks from
-        the <filename>local.conf</filename> configuration file to
-        prevent common mistakes that cause build failures.
-        Distribution policy usually determines whether to include this class.
-    </para>
-</section>
-
-<section id='ref-classes-siteinfo'>
-    <title>Autotools Configuration Data Cache - <filename>siteinfo.bbclass</filename></title>
-
-    <para>
-        Autotools can require tests that must execute on the target hardware.
-        Since this is not possible in general when cross compiling, site information is
-        used to provide cached test results so these tests can be skipped over but
-        still make the correct values available.
-        The <filename><link linkend='structure-meta-site'>meta/site directory</link></filename>
-        contains test results sorted into different categories such as architecture, endianness, and
-        the <filename>libc</filename> used.
-        Site information provides a list of files containing data relevant to
-        the current build in the
-        <filename><link linkend='var-CONFIG_SITE'>CONFIG_SITE</link></filename> variable
-        that Autotools automatically picks up.
-    </para>
-
-    <para>
-        The class also provides variables like
-        <filename><link linkend='var-SITEINFO_ENDIANNESS'>SITEINFO_ENDIANNESS</link></filename>
-        and <filename><link linkend='var-SITEINFO_BITS'>SITEINFO_BITS</link></filename>
-        that can be used elsewhere in the metadata.
-    </para>
-
-    <para>
-        Because this class is included from <filename>base.bbclass</filename>, it is always active.
     </para>
 </section>
 
