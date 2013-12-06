@@ -45,7 +45,7 @@
     <title><filename>allarch.bbclass</filename></title>
 
     <para>
-        The all architecture (<filename>allarch</filename>) class is inherited
+        The <filename>allarch</filename> class is inherited
         by recipes that do not produce architecture-specific output.
         The class disables functionality that is normally needed for recipes
         that produce executable binaries (such as building the cross-compiler
@@ -137,7 +137,7 @@
 
     <para>
         The <filename>base</filename> class is special in that every
-        <filename>.bb</filename> file automatically inherits the class.
+        <filename>.bb</filename> file implicitly inherits the class.
         This class contains definitions for standard basic
         tasks such as fetching, unpacking, configuring (empty by default),
         compiling (runs any <filename>Makefile</filename> present), installing
@@ -166,8 +166,9 @@
         <note>
             For RPMs and other packages that do not contain a subdirectory,
             you should specify a "subdir" parameter.
-            Here is an example where <filename>${BP}</filename> matches the
-            subdirectory expected by the default value of
+            Here is an example where <filename>${BP}</filename> is used so that
+            the files are extracted into the subdirectory expected by the
+            default value of
             <link linkend='var-S'><filename>S</filename></link>:
             <literallayout class='monospaced'>
      SRC_URI = "http://example.com/downloads/somepackage.rpm;subdir=${BP}"
@@ -290,10 +291,11 @@
     <title><filename>bugzilla.bbclass</filename></title>
 
     <para>
-        The <filename>bugzilla</filename> class, if enabled in
-        your instance of Bugzilla, automatically files bug reports to that
-        enabled instance in response to build failures.
+        The <filename>bugzilla</filename> class automatically files bug reports
+        to a Bugzilla instance in response to build failures.
         This class uses Bugzilla's XML-RPC interface.
+        Consequently, you need to enable the class in the instance of Bugzilla
+        within which you wish to file reports.
     </para>
 </section>
 
@@ -330,13 +332,12 @@
     </para>
 
     <para>
-        To enable this class, use the
+        Collecting build statistics is enabled by default through the
         <link linkend='var-USER_CLASSES'><filename>USER_CLASSES</filename></link>
         variable from your <filename>local.conf</filename> file.
-        The <filename>meta-yocto/conf/local.conf.sample</filename> file
-        in the
-        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
-        enables this class by default.
+        Consequently, you do not have to do anything to enable the class.
+        However, if you want to disable the class, simply remove "buildstats"
+        from the <filename>USER_CLASSES</filename> list.
     </para>
 </section>
 
