@@ -345,7 +345,9 @@
     <title><filename>ccache.bbclass</filename></title>
 
     <para>
-        The <filename>ccache</filename> class enables this cache for the build.
+        The <filename>ccache</filename> class enables the
+        <ulink url='http://ccache.samba.org/'>C/C++ Compiler Cache</ulink>
+        for the build.
         This class is used to give a minor performance boost during the build.
         However, using the class can lead to unexpected side-effects.
         Thus, it is recommended that you do not use this class.
@@ -360,7 +362,9 @@
     <para>
         The <filename>chrpath</filename> class
         is a wrapper around the "chrpath" utility, which is used during the
-        build process for <filename>nativesdk</filename> recipes to change
+        build process for <filename>nativesdk</filename>,
+        <filename>cross</filename>, and
+        <filename>cross-canadian</filename> recipes to change
         <filename>RPATH</filename> records within binaries in order to make
         them relocatable.
     </para>
@@ -373,6 +377,12 @@
         The <filename>clutter</filename> class consolidates the
         major and minor version naming and other common items used by Clutter
         and related recipes.
+        <note>
+            Unlike some other classes related to specific libraries, recipes
+            building other software that uses Clutter do not need to
+            inherit this class unless they use the same recipe versioning
+            scheme that the Clutter and related recipes do.
+        </note>
     </para>
 </section>
 
@@ -454,8 +464,8 @@
     <title><filename>cross.bbclass</filename></title>
 
     <para>
-        The <filename>cross</filename>)class provides support for
-        cross-compilation tools.
+        The <filename>cross</filename> class provides support for the recipes
+        that build the cross-compilation tools.
     </para>
 </section>
 
@@ -464,7 +474,8 @@
 
     <para>
         The <filename>cross-canadian</filename> class
-        provides support for Canadian Cross compilation tools for SDKs.
+        provides support for the recipes that build the Canadian
+        Cross-compilation tools for SDKs.
         See the
         "<link linkend='cross-development-toolchain-generation'>Cross-Development Toolchain Generation</link>"
         section for more discussion on these cross-compilation tools.
@@ -476,8 +487,8 @@
 
     <para>
         The <filename>crosssdk</filename> class
-        provides support for cross-compilation tools used for building
-        SDKs.
+        provides support for the recipes that build the cross-compilation
+        tools used for building SDKs.
         See the
         "<link linkend='cross-development-toolchain-generation'>Cross-Development Toolchain Generation</link>"
         section for more discussion on these cross-compilation tools.
@@ -488,10 +499,20 @@
     <title><filename>debian.bbclass</filename></title>
 
     <para>
-        The <filename>debian</filename> class renames packages so that they
-        follow the Debian naming policy (i.e. <filename>eglibc</filename>
+        The <filename>debian</filename> class renames output packages so that
+        they follow the Debian naming policy (i.e. <filename>eglibc</filename>
         becomes <filename>libc6</filename> and <filename>eglibc-devel</filename>
         becomes <filename>libc6-dev</filename>.)
+        Renaming includes the library name and version as part of the package
+        name.
+    </para>
+
+    <para>
+        If a recipe creates packages for multiple libraries
+        (shared object files of <filename>.so</filename> type), use the
+        <link linkend='var-LEAD_SONAME'><filename>LEAD_SONAME</filename></link>
+        variable in the recipe to specify the library on which to apply the
+        naming scheme.
     </para>
 </section>
 
@@ -512,6 +533,9 @@
         and use <filename>addtask</filename> to add the task at the appropriate
         place, which is usually after <filename>do_compile</filename> or
         <filename>do_install</filename>.
+        The class then takes care of staging the files from
+        <filename>DEPLOYDIR</filename> to
+        <filename>DEPLOY_DIR_IMAGE</filename>.
     </para>
 </section>
 
