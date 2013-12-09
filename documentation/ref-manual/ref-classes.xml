@@ -902,9 +902,15 @@
     <title><filename>icecc.bbclass</filename></title>
 
     <para>
-        The <filename>icecc</filename> class stages directories with symlinks
-        from <filename>gcc</filename> and <filename>g++</filename> to
-        <filename>icecc</filename>, for both native and cross compilers.
+        The <filename>icecc</filename> class supports Icecream, which
+        facilitates taking compile jobs and distributing them among remote
+        machines to achieve parallelism during the build.
+    </para>
+
+    <para>
+        The class stages directories with symlinks from <filename>gcc</filename>
+        and <filename>g++</filename> to <filename>icecc</filename>, for both
+        native and cross compilers.
         Depending on each configure or compile, the OpenEmbedded build system
         adds the directories at the head of the <filename>PATH</filename> list
         and then sets
@@ -931,7 +937,8 @@
     <para>
         If <link linkend='var-ICECC_PATH'><filename>ICECC_PATH</filename></link>
         is not set in your <filename>local.conf</filename> file, then the
-        class tries to locate it using <filename>which</filename>.
+        class tries to locate the <filename>icecc</filename> binary
+        using <filename>which</filename>.
 
         If
         <link linkend='var-ICECC_ENV_EXEC'><filename>ICECC_ENV_EXEC</filename></link>
@@ -977,8 +984,8 @@
         in different formats.
         First, the root filesystem is created from packages using
         one of the <filename>rootfs_*.bbclass</filename>
-        files (depending on the package format used) and then the image is
-        created.
+        files (depending on the package format used) and then one or more image
+        files are created.
         <itemizedlist>
             <listitem><para>The
                 <filename><link linkend='var-IMAGE_FSTYPES'>IMAGE_FSTYPES</link></filename>
@@ -989,6 +996,11 @@
                 variable controls the list of packages to install into the
                 image.</para></listitem>
         </itemizedlist>
+        For more information on customizing images, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#usingpoky-extend-customimage'>Customizing Images</ulink>"
+        section in the Yocto Project Development Manual and the
+        "<link linkend='images-dev-environment'>Images</link>" section elsewhere
+        in this manual.
     </para>
 </section>
 
@@ -1042,20 +1054,17 @@
     <title><filename>image-mklibs.bbclass</filename></title>
 
     <para>
-        The <filename>mklibs</filename> class
+        The <filename>image-mklibs</filename> class
         enables the use of the <filename>mklibs</filename> utility during the
         <filename>do_rootfs</filename> task, which optimizes the size of
         libraries contained in the image.
     </para>
 
     <para>
-        The
-        <link linkend='var-USER_CLASSES'><filename>USER_CLASSES</filename></link>
-        variable enables this class.
         By default, the class is enabled in the
-        <filename>local.conf.template</filename> in the
-        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
-        as follows:
+        <filename>local.conf.template</filename> using the
+        <link linkend='var-USER_CLASSES'><filename>USER_CLASSES</filename></link>
+        variable as follows:
         <literallayout class='monospaced'>
      USER_CLASSES ?= "buildstats image-mklibs image-prelink"
         </literallayout>
@@ -1073,13 +1082,10 @@
     </para>
 
     <para>
-        The
-        <link linkend='var-USER_CLASSES'><filename>USER_CLASSES</filename></link>
-        variable enables this class.
         By default, the class is enabled in the
-        <filename>local.conf.template</filename> in the
-        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
-        as follows:
+        <filename>local.conf.template</filename> using the
+        <link linkend='var-USER_CLASSES'><filename>USER_CLASSES</filename></link>
+        variable as follows:
         <literallayout class='monospaced'>
      USER_CLASSES ?= "buildstats image-mklibs image-prelink"
         </literallayout>
@@ -1475,11 +1481,11 @@
     </para>
 </section>
 
-<section id='ref-classes-insserve'>
-    <title><filename>insserve.bbclass</filename></title>
+<section id='ref-classes-insserv'>
+    <title><filename>insserv.bbclass</filename></title>
 
     <para>
-        The <filename>insserve</filename> class
+        The <filename>insserv</filename> class
         uses the <filename>insserv</filename> utility to update the order of
         symbolic links in <filename>/etc/rc?.d/</filename> within an image
         based on dependencies specified by LSB headers in the
@@ -1495,7 +1501,10 @@
         The class contains code to build all kernel trees.
         All needed headers are staged into the
         <filename><link linkend='var-STAGING_KERNEL_DIR'>STAGING_KERNEL_DIR</link></filename>
-        directory to allow out-of-tree module builds using <filename>module.bbclass</filename>.
+        directory to allow out-of-tree module builds using
+        the
+        <link linkend='ref-classes-module'><filename>module</filename></link>
+        class.
     </para>
 
     <para>
@@ -1507,9 +1516,14 @@
     </para>
 
     <para>
-        Various other classes are used by the kernel and module classes internally including
-        <filename>kernel-arch.bbclass</filename>, <filename>module_strip.bbclass</filename>,
-        <filename>module-base.bbclass</filename>, and <filename>linux-kernel-base.bbclass</filename>.
+        Various other classes are used by the <filename>kernel</filename>
+        and <filename>module</filename> classes internally including the
+        <link linkend='ref-classes-kernel-arch'><filename>kernel-arch</filename></link>,
+        <link linkend='ref-classes-module_strip'><filename>module_strip</filename></link>,
+        <link linkend='ref-classes-module-base'><filename>module-base</filename></link>,
+        and
+        <link linkend='ref-classes-linux-kernel-base'><filename>linux-kernel-base</filename></link>
+        classes.
     </para>
 </section>
 
