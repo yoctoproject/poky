@@ -6330,8 +6330,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SYSTEMD_AUTO_ENABLE'><glossterm>SYSTEMD_AUTO_ENABLE</glossterm>
             <glossdef>
                 <para>
-                    Enables and disables the <filename>systemd</filename>
-                    service manager.
+                    For recipes that inherit the
+                    <link linkend='ref-classes-systemd'><filename>systemd</filename></link>
+                    class, this variable specifies whether the service you have
+                    specified in
+                    <link linkend='var-SYSTEMD_SERVICE'><filename>SYSTEMD_SERVICE</filename></link>
+                    should be started automatically or not.
                     By default, the service is enabled to automatically start
                     at boot time.
                     The default setting is in the
@@ -6349,10 +6353,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SYSTEMD_PACKAGES'><glossterm>SYSTEMD_PACKAGES</glossterm>
             <glossdef>
                 <para>
-                    Specifies the packages into which
-                    <filename>systemd</filename> unit files are installed
-                    when the files need to be installed into packages other
-                    than recipe's main package.
+                    For recipes that inherit the
+                    <link linkend='ref-classes-systemd'><filename>systemd</filename></link>
+                    class, this variable specifies the packages into which
+                    systemd unit files have been packaged when the files
+                    need to be installed into packages other than recipe's main
+                    package.
                 </para>
 
                 <para>
@@ -6369,15 +6375,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SYSTEMD_SERVICE'><glossterm>SYSTEMD_SERVICE</glossterm>
             <glossdef>
                 <para>
-                    The service file for the <filename>systemd</filename>
-                    service manager.
+                    For recipes that inherit the
+                    <link linkend='ref-classes-systemd'><filename>systemd</filename></link>
+                    class, this variable specifies the
+                    <filename>systemd</filename> service name for a package.
                 </para>
 
                 <para>
                     When you specify this file in your recipe, use a package
                     name override to indicate the package to which the value
-                    applies when the value applies to a package other than
-                    the recipe's main package.
+                    applies.
                     Here is an example from the connman recipe:
                     <literallayout class='monospaced'>
      SYSTEMD_SERVICE_${PN} = "connman.service"
