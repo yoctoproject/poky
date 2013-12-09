@@ -902,9 +902,10 @@
     <title><filename>icecc.bbclass</filename></title>
 
     <para>
-        The <filename>icecc</filename> class supports Icecream, which
+        The <filename>icecc</filename> class supports
+        <ulink url='https://github.com/icecc/icecream'>Icecream</ulink>, which
         facilitates taking compile jobs and distributing them among remote
-        machines to achieve parallelism during the build.
+        machines.
     </para>
 
     <para>
@@ -996,9 +997,10 @@
                 variable controls the list of packages to install into the
                 image.</para></listitem>
         </itemizedlist>
-        For more information on customizing images, see the
+        For information on customizing images, see the
         "<ulink url='&YOCTO_DOCS_DEV_URL;#usingpoky-extend-customimage'>Customizing Images</ulink>"
-        section in the Yocto Project Development Manual and the
+        section in the Yocto Project Development Manual.
+        For information on how images are created, see the
         "<link linkend='images-dev-environment'>Images</link>" section elsewhere
         in this manual.
     </para>
@@ -1603,7 +1605,7 @@
         shell functions used to log messages for various BitBake severity levels
         (i.e. <filename>bbplain</filename>, <filename>bbnote</filename>,
         <filename>bbwarn</filename>, <filename>bberror</filename>,
-        <filename>bbfatal</filename>, and <filename>bbdebug</filename>.
+        <filename>bbfatal</filename>, and <filename>bbdebug</filename>).
     </para>
 
     <para>
@@ -1739,7 +1741,7 @@
         You can create a recipe that builds tools that run on the SDK machine
         a couple different ways:
         <itemizedlist>
-            <listitem><para>Create a <filename>myrecipe-native.bb</filename>
+            <listitem><para>Create a <filename>myrecipe-nativesdk.bb</filename>
                 recipe that inherits the <filename>nativesdk</filename> class.
                 </para></listitem>
             <listitem><para>Create a <filename>nativesdk</filename> variant
@@ -1783,11 +1785,11 @@
     </para>
 </section>
 
-<section id='ref-classes-ownmirrors'>
-    <title><filename>ownmirrors.bbclass</filename></title>
+<section id='ref-classes-own-mirrors'>
+    <title><filename>own-mirrors.bbclass</filename></title>
 
     <para>
-        The <filename>ownmirrors</filename> class makes it
+        The <filename>own-mirrors</filename> class makes it
         easier to set up your own
         <link linkend='var-PREMIRRORS'><filename>PREMIRRORS</filename></link>
         from which to first fetch source before attempting to fetch it from the
@@ -1813,7 +1815,7 @@
     <title><filename>package.bbclass</filename></title>
 
     <para>
-        The <filename>package</filename> supports generating
+        The <filename>package</filename> class supports generating
         packages from a build's output.
         The core generic functionality is in
         <filename>package.bbclass</filename>.
@@ -1877,7 +1879,7 @@
                 ACID style upgrade, and repackaging abilities for rollbacks.
                 </para></listitem>
             <listitem><para>
-                For smaller systems, the extra space used for the Berkley
+                For smaller systems, the extra space used for the Berkeley
                 Database and the amount of metadata when using RPM can affect
                 your ability to perform on-device upgrades.
                 </para></listitem>
@@ -1906,11 +1908,14 @@
         The class ensures the packages are written out to the
         <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/deb</filename>
         directory in a <filename>.deb</filename> file format.
-        <note>
-            This package inherits the
-            <link linkend='ref-classes-package'><filename>package</filename></link>
-            class.
-        </note>
+    </para>
+
+    <para>
+        This class inherits the
+        <link linkend='ref-classes-package'><filename>package</filename></link>
+        class and is enabled through the
+        <link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>
+        variable in the <filename>local.conf</filename> file.
     </para>
 </section>
 
@@ -1924,11 +1929,14 @@
         The class ensures the packages are written out to the
         <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/ipk</filename>
         directory in a <filename>.ipk</filename> file format.
-        <note>
-            This package inherits the
-            <link linkend='ref-classes-package'><filename>package</filename></link>
-            class.
-        </note>
+    </para>
+
+    <para>
+        This class inherits the
+        <link linkend='ref-classes-package'><filename>package</filename></link>
+        class and is enabled through the
+        <link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>
+        variable in the <filename>local.conf</filename> file.
     </para>
 </section>
 
@@ -1942,11 +1950,14 @@
         The class ensures the packages are written out to the
         <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/rpm</filename>
         directory in a <filename>.rpm</filename> file format.
-        <note>
-            This package inherits the
-            <link linkend='ref-classes-package'><filename>package</filename></link>
-            class.
-        </note>
+    </para>
+
+    <para>
+        This class inherits the
+        <link linkend='ref-classes-package'><filename>package</filename></link>
+        class and is enabled through the
+        <link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>
+        variable in the <filename>local.conf</filename> file.
     </para>
 </section>
 
@@ -1960,11 +1971,12 @@
         The class ensures the packages are written out to the
         <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}/tar</filename>
         directory in a <filename>.tar</filename> file format.
-        <note>
-            This package inherits the
-            <link linkend='ref-classes-package'><filename>package</filename></link>
-            class.
-        </note>
+    </para>
+
+    <para>
+        This class inherits the
+        <link linkend='ref-classes-package'><filename>package</filename></link>
+        class and is for a given recipe when the recipe inherits the class.
     </para>
 </section>
 
@@ -2061,7 +2073,7 @@
         that install pixbuf loaders, which are used with
         <filename>gdk-pixbuf</filename>.
         These scriptlets call <filename>update_pixbuf_cache</filename>
-        to add the input method modules to the cache.
+        to add the pixbuf loaders to the cache.
         Since the cache files are architecture-specific,
         <filename>update_pixbuf_cache</filename> is run using QEMU if the
         postinst scriptlets need to be run on the build host during image
@@ -2072,7 +2084,7 @@
         If the pixbuf loaders modules being installed are in packages other
         than the main package, set
         <link linkend='var-PIXBUF_PACKAGES'><filename>PIXBUF_PACKAGES</filename></link>
-        to include the packages containing the modules.
+        to specify the packages containing the modules.
     </para>
 </section>
 
@@ -2098,8 +2110,8 @@
     <title><filename>populate_sdk.bbclass</filename></title>
 
     <para>
-        The <filename>populate_sdk</filename> class facilitates compatibility
-        with SDK-only recipes.
+        The <filename>populate_sdk</filename> class provides support for
+        SDK-only recipes.
     </para>
 </section>
 
@@ -2212,8 +2224,8 @@
         This class is enabled by default because it is inherited by the
         <link linkend='ref-classes-package'><filename>package</filename></link>
         class.
-        However, the OpenEmbedded build system will not use this variable
-        unless
+        However, the OpenEmbedded build system will not enable the
+        functionality of this class unless
         <link linkend='var-PRSERV_HOST'><filename>PRSERV_HOST</filename></link>
         has been set.
     </para>
@@ -2253,11 +2265,9 @@
     <title><filename>pythonnative.bbclass</filename></title>
 
     <para>
-        The <filename>pythonnative</filename> causes the OpenEmbedded build
-        system to use the native version of Python, which is built by the
-        build system.
-        Normally, the OpenEmbedded build system uses the version of Python
-        that is built by the build host.
+        When inherited by a recipe, the <filename>pythonnative</filename> class
+        supports using the native version of Python built by the build system
+        rather than using the version provided by the build host.
         <note>
             This class must be inherited by a recipe in order to be used.
         </note>
@@ -2399,21 +2409,72 @@
 
     <para>
         The <filename>rootfs*</filename> classes add support for creating
-        images in several formats and consist of the following:
+        the root filesystem in either <filename>.ext3</filename> or
+        <filename>tar.bz2</filename> formats and consist of the following
+        classes:
         <itemizedlist>
             <listitem><para>The
-                <filename><link linkend='var-IMAGE_FSTYPES'>IMAGE_FSTYPES</link></filename>
-                variable controls the types of images to generate.
-                </para></listitem>
+                <link linkend='ref-classes-rootfs_deb'><filename>rootfs_deb</filename></link>
+                class.</para></listitem>
             <listitem><para>The
-                <filename><link linkend='var-IMAGE_INSTALL'>IMAGE_INSTALL</link></filename>
-                variable controls the list of packages to install into the
-                image.</para></listitem>
+                <link linkend='ref-classes-rootfs_rpm'><filename>rootfs_rpm</filename></link>
+                class.</para></listitem>
+            <listitem><para>The
+                <link linkend='ref-classes-rootfs_ipk'><filename>rootfs_ipk</filename></link>
+                class.</para></listitem>
         </itemizedlist>
-        First, the root filesystem is created from packages using
-        one of the <filename>rootfs_*.bbclass</filename>
-        files (depending on the package format used) and then the image
-        is created.
+    </para>
+
+    <para>
+        The root filesystem is created from packages using one of the
+        <filename>rootfs_*.bbclass</filename> files as determined by the
+        <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+        variable.
+    </para>
+
+    <para>
+        For information on how root filesystem images are created, see the
+        "<link linkend='image-generation-dev-environment'>Image Generation</link>"
+        section.
+    </para>
+</section>
+
+<section id='ref-classes-rootfs_deb'>
+    <title><filename>rootfs_deb.bbclass</filename></title>
+
+    <para>
+        The <filename>rootfs_deb</filename> class supports creation of
+        root filesystems for images built using <filename>.deb</filename>
+        packages.
+        See the
+        "<link linkend='ref-classes-rootfs*'><filename>rootfs*.bbclass</filename></link>"
+        section for more information.
+    </para>
+</section>
+
+<section id='ref-classes-rootfs_ipk'>
+    <title><filename>rootfs_ipk.bbclass</filename></title>
+
+    <para>
+        The <filename>rootfs_ipk</filename> class supports creation of
+        root filesystems for images built using <filename>.ipk</filename>
+        packages.
+        See the
+        "<link linkend='ref-classes-rootfs*'><filename>rootfs*.bbclass</filename></link>"
+        section for more information.
+    </para>
+</section>
+
+<section id='ref-classes-rootfs_rpm'>
+    <title><filename>rootfs_rpm.bbclass</filename></title>
+
+    <para>
+        The <filename>rootfs_rpm</filename> class supports creation of
+        root filesystems for images built using <filename>.rpm</filename>
+        packages.
+        See the
+        "<link linkend='ref-classes-rootfs*'><filename>rootfs*.bbclass</filename></link>"
+        section for more information.
     </para>
 </section>
 
@@ -2458,7 +2519,7 @@
 
     <para>
         The <filename>setuptools</filename> class supports extensions that use
-        setuptools-based build systems.
+        setuptools-based build systems making use of Python.
         If your recipe uses these build systems, the recipe needs to
         inherit the <filename>setuptools</filename> class.
     </para>
@@ -2631,9 +2692,10 @@
     </para>
 
     <para>
-        Under this class, unit files are installed into
-        <filename>${</filename><link linkend='var-D'><filename>D</filename></link><filename>}${systemd_unitdir}/system</filename>
-        during the <filename>do_install</filename> task.
+        Under this class, the recipe or Makefile (i.e. whatever the recipe is
+        calling during the <filename>do_install</filename> task) installs unit
+        files into
+        <filename>${</filename><link linkend='var-D'><filename>D</filename></link><filename>}${systemd_unitdir}/system</filename>.
         If the unit files being installed go into packages other than the
         main package, you need to set
         <link linkend='var-SYSTEMD_PACKAGES'><filename>SYSTEMD_PACKAGES</filename></link>
@@ -2678,9 +2740,9 @@
     </para>
 
     <para>
-        You can use this class anywhere a separate terminal session needs to
-        be started.
-        To use the class, include the
+        Other classes use the <filename>terminal</filename> class anywhere a
+        separate terminal session needs to be started.
+        The class is used by including the
         <link linkend='ref-classes-patch'><filename>patch</filename></link>
         class if
         <link linkend='var-PATCHRESOLVE'><filename>PATCHRESOLVE</filename></link>
@@ -2867,11 +2929,11 @@
     <title><filename>useradd.bbclass</filename></title>
 
     <para>
-        The <filename>useradd</filename> class supports recipes that restrict
-        packages to certain users or groups.
-        For example, if you have packages that install files that are owned
-        by custom users or groups, you can use this class to specify
-        those packages and then associate them with the users and groups.
+        The <filename>useradd</filename> class supports the addition of users
+        or groups for usage by the package on the target.
+        For example, if you have packages that contain system services that
+        should be run under their own user or group, you can use this class to
+        enable creation of the user or group.
         The <filename>meta-skeleton/recipes-skeleton/useradd/useradd-example.bb</filename>
         recipe in the <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
         provides a simple example that shows how to add three
