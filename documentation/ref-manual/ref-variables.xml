@@ -6351,19 +6351,20 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     For recipes that inherit the
                     <link linkend='ref-classes-systemd'><filename>systemd</filename></link>
-                    class, this variable specifies the packages into which
-                    systemd unit files have been packaged when the files
-                    need to be installed into packages other than recipe's main
-                    package.
-                </para>
-
-                <para>
-                    The
-                    <link linkend='ref-classes-systemd'><filename>systemd</filename></link>
-                    class sets <filename>SYSTEMD_PACKAGES</filename> as follows:
+                    class, this variable locates the systemd unit files when
+                    they are not found in the main recipe's package.
+                    By default, the
+                    <filename>SYSTEMD_PACKAGES</filename> variable is set
+                    such that the systemd unit files are assumed to reside in
+                    the recipes main package:
                     <literallayout class='monospaced'>
      SYSTEMD_PACKAGES ?= "${PN}"
                     </literallayout>
+                    If these unit files are not in this recipe's main
+                    package, you need to use
+                    <filename>SYSTEMD_PACKAGES</filename> to list the package
+                    or packages in which the build system can find the systemd
+                    unit files.
                 </para>
             </glossdef>
         </glossentry>
@@ -6373,8 +6374,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     For recipes that inherit the
                     <link linkend='ref-classes-systemd'><filename>systemd</filename></link>
-                    class, this variable specifies the
-                    <filename>systemd</filename> service name for a package.
+                    class, this variable specifies the systemd service name for
+                    a package.
                 </para>
 
                 <para>
