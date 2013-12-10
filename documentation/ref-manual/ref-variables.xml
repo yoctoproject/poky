@@ -4340,17 +4340,47 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PACKAGE_CLASSES'><glossterm>PACKAGE_CLASSES</glossterm>
             <glossdef>
-                <para>This variable, which is set in the <filename>local.conf</filename> configuration
-                    file found in the <filename>conf</filename> folder of the
+                <para>
+                    This variable, which is set in the
+                    <filename>local.conf</filename> configuration file found in
+                    the <filename>conf</filename> folder of the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>,
-                    specifies the package manager to use when packaging data.
-                    You can provide one or more arguments for the variable with the first
-                    argument being the package manager used to create images:
+                    specifies the package manager the OpenEmbedded build system
+                    uses when packaging data.
+                </para>
+
+                <para>
+                    You can provide one or more of the following arguments for
+                    the variable:
                     <literallayout class='monospaced'>
-     PACKAGE_CLASSES ?= "package_rpm package_deb package_ipk"
+     PACKAGE_CLASSES ?= "package_rpm package_deb package_ipk package_tar"
                     </literallayout>
-                    For information on build performance effects as a result of the
-                    package manager use, see the
+                    The build system uses only the first argument in the list
+                    as the package manager when creating your image or SDK.
+                    However, packages will be created using any additional
+                    packaging classes you specify.
+                    For example, if you use the following in your
+                    <filename>local.conf</filename> file:
+                    <literallayout class='monospaced'>
+     PACKAGE_CLASSES ?= "package_ipk package_tar"
+                    </literallayout>
+                    The OpenEmbedded build system uses the IPK package manager
+                    to create your image or SDK as well as generating
+                    TAR packages.
+                </para>
+
+                <para>
+                    You cannot specify the
+                    <link linkend='ref-classes-package_tar'><filename>package_tar</filename></link>
+                    class first in the list.
+                    Files using the <filename>.tar</filename> format cannot
+                    be used as a substitute packaging format
+                    for DEB, RPM, and IPK formatted files for you image or SDK.
+                </para>
+
+                <para>
+                    For information on packaging and build performance effects
+                    as a result of the package manager in use, see the
                     "<link linkend='ref-classes-package'><filename>package.bbclass</filename></link>"
                     section.
                 </para>
