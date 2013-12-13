@@ -6532,25 +6532,45 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-TCMODE'><glossterm>TCMODE</glossterm>
             <glossdef>
                 <para>
-                    The toolchain selector.
-                    This variable replaces <filename>POKYMODE</filename>, which is no longer
-                    supported.
+                    Specifies the toolchain selector.
+                    <filename>TCMODE</filename> controls the characteristics
+                    of the generated packages and images by telling the
+                    OpenEmbedded build system which toolchain profile to use.
+                    By default, the OpenEmbedded build system builds its own
+                    internal toolchain.
+                    The variable's default value is "default", which uses
+                    that internal toolchain.
                 </para>
+
                 <para>
-                    The <filename>TCMODE</filename> variable selects the external toolchain
-                    built using the OpenEmbedded build system or a few supported combinations of
-                    the upstream GCC or CodeSourcery Labs toolchain.
-                    The variable identifies the <filename>tcmode-*</filename> files used in
-                    the <filename>meta/conf/distro/include</filename> directory, which is found in the
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+                    With additional layers, it is possible to use a pre-compiled
+                    external toolchain.
+                    One example is the Sourcery G++ Toolchain.
+                    The support for this toolchain resides in the separate
+                    <filename>meta-sourcery</filename> layer at
+                    <ulink url='http://github.com/MentorEmbedded/meta-sourcery/'></ulink>.
+                    You can use <filename>meta-sourcery</filename> as a
+                    template for adding support for other external toolchains.
                 </para>
+
                 <para>
-                    By default, <filename>TCMODE</filename> is set to "default", which
-                    chooses the <filename>tcmode-default.inc</filename> file.
+                    The <filename>TCMODE</filename> variable points the build
+                    system to a file in
+                    <filename>conf/distro/include/tcmode-${TCMODE}.inc</filename>.
+                    Thus, for <filename>meta-sourcery</filename>,
+                    which has <filename>conf/distro/include/tcmode-external-sourcery.inc</filename>,
+                    you would set the variable as follows:
+                    <literallayout class='monospaced'>
+     TCMODE ?= "external-sourcery"
+                    </literallayout>
+                </para>
+
+                <para>
                     The variable is similar to
-                    <link linkend='var-TCLIBC'><filename>TCLIBC</filename></link>, which controls
-                    the variant of the GNU standard C library (<filename>libc</filename>)
-                    used during the build process: <filename>eglibc</filename> or <filename>uclibc</filename>.
+                    <link linkend='var-TCLIBC'><filename>TCLIBC</filename></link>,
+                    which controls the variant of the GNU standard C library
+                    (<filename>libc</filename>) used during the build process:
+                    <filename>eglibc</filename> or <filename>uclibc</filename>.
                 </para>
             </glossdef>
         </glossentry>
