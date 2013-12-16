@@ -1000,6 +1000,38 @@
         <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></link>
         variable.
     </para>
+
+    <para>
+        Inheriting the <filename>icecc</filename> class changes all sstate
+        signatures.
+        Consequently, if a development team has a dedicated build system
+        that populates
+        <link linkend='var-SSTATE_MIRRORS'><filename>STATE_MIRRORS</filename></link>
+        and they want to reuse sstate from
+        <filename>STATE_MIRRORS</filename>, then all developers and the
+        build system need to either inherit the <filename>icecc</filename>
+        class or nobody should.
+    </para>
+
+    <para>
+        At the distribution level, you can inherit the
+        <filename>icecc</filename> class to be sure that all builders start
+        with the same sstate signatures.
+        After inheriting the class, you can then disable the feature by setting
+        the
+        <link linkend='var-ICECC_DISABLED'><filename>ICECC_DISABLED</filename></link>
+        variable to "1" as follows:
+        <literallayout class='monospaced'>
+     INHERIT_DISTRO += "icecc"
+     ICECC_DISABLED ??= "1"
+        </literallayout>
+        This practice makes sure everyone is using the same signatures but also
+        requires individuals that do want to use Icecream to enable the feature
+        individually as follows in your <filename>local.conf</filename> file:
+        <literallayout class='monospaced'>
+     ICECC_DISABLED = ""
+        </literallayout>
+    </para>
 </section>
 
 <section id='ref-classes-image'>
