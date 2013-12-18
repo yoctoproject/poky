@@ -1397,10 +1397,78 @@ the target, etc.
             <title>Installing</title>
 
             <para>
-                install: for autotools/cmake recipes, if the recipe passes through do_install
-successfully, nothing needs to be done (at this stage). If not, diagnose the
-failure. For non-autotools recipes you need to define your own do_install
-(which may well just run "oe_runmake install").
+                During installation, files your recipe builds are copied from
+                locations where work is being done to locations on the target
+                device.
+                The installation process moves the
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>,
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink><filename>}</filename>,
+                and
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename>
+                to the
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>
+                to create the structure as it should appear on the target
+                system.
+                <note>
+                    During the installation process, some of the files might also
+                    be modified to suit the target layout as well.
+                </note>
+            </para>
+
+            <para>
+                How your software is built affects what you must do to be
+                sure your software is installed correctly.
+                The following list describes what you must do for installation
+                depending on how your recipe builds your software:
+                <itemizedlist>
+                    <listitem><para><emphasis>Autotools and <filename>cmake</filename>:</emphasis>
+                        If the software your recipe is building uses Autotools
+                        or <filename>cmake</filename>, the OpenEmbedded build
+                        system understands how to install the software.
+                        Consequently, you do not have to have a
+                        <filename>do_install</filename> task as part of your
+                        recipe.
+                        You just need to make sure the install portion of the
+                        build completes with no issues.</para></listitem>
+                    <listitem><para><emphasis><filename>make install</filename>:</emphasis>
+                        You need to define a
+                        <filename>do_install</filename> function in your
+                        recipe.
+                        The function should call
+                        <filename>oe_runmake install</filename> and will likely
+                        need to pass in the destination directory as well.
+                        How you pass that path is dependent on how the
+                        <filename>Makefile</filename> being run is written
+                        (e.g. <filename>DESTDIR=${D}</filename>,
+                        <filename>PREFIX=${D}</filename>,
+                        <filename>INSTALLROOT=${D}</filename>, and so forth).
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>install</filename>:</emphasis>
+                        You need to define a
+                        <filename>do_install</filename> function in your
+                        recipe.
+                        The function must first use
+                        <filename>install -d</filename> to create the
+                        directories.
+                        Once the directories exist, your function can use
+                        <filename>install</filename> to manually install the
+                        built software into the directories.</para>
+                        <para>You can find more information on
+                        <filename>install</filename> at
+                        <ulink url='http://www.gnu.org/software/coreutils/manual/html_node/install-invocation.html'></ulink>.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                For the scenarios that do not use Autotools or
+                <filename>cmake</filename>, you need to track the installation
+                and diagnose and fix any issues until everything installs
+                correctly.
+                You need to look in the default location of
+                <filename>${D}</filename>, which is
+                <filename>${WORKDIR}/image</filename>, to be sure your
+                files have been installed correctly.
             </para>
         </section>
 
@@ -1418,20 +1486,18 @@ section though.
             <para>
                 If you are adding services and the service initialization
                 script or the service file itself is not installed, you must
-                provide for that installation in your recipe.
+                provide for that installation in your recipe using a
+                <filename>do_install_append</filename> function.
                 If your recipe already has a <filename>do_install</filename>
-                function, you will need to create a
-                <filename>do_install_append</filename> function to handle the
-                installation of your services.
-            </para>
-
-            <para>
+                function, you will need to be sure to change it so that it
+                handles the installation of your services.
                 When you create the installation for your services, you need
                 to accomplish what is normally done by "make install".
                 In other words, make sure your installation puts the output
                 in a layout that is similar to how they will be laid out on the
                 target system.
             </para>
+
         </section>
 
         <section id='new-recipe-packaging'>
