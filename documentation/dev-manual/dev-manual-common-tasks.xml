@@ -1183,9 +1183,19 @@
                     <listitem><para><emphasis>Use and modify the following
                         skeleton recipe:</emphasis>
                         <literallayout class='monospaced'>
-     I need a simple
-     skeleton recipe
-     here
+     inherit &lt;stuff&gt;
+
+     SUMMARY = ""
+     HOMEPAGE = ""
+     LICENSE = ""
+
+     LIC_FILES_CHKSUM = ""
+
+     SRC_URI = ""
+     SRC_URI[md5sum] = ""
+     SRC_URI[sha256sum] = ""
+
+     S = ${WORKDIR}/${PN}-${PV}
                         </literallayout>
                         Modifying this recipe is the recommended method for
                         creating a new recipe.
@@ -1335,16 +1345,48 @@
                         </literallayout></para></listitem>
                 </itemizedlist>
             </para>
+
+            <para>
+                Also part of the <filename>SRC_URI</filename> variable are the
+                <filename>SRC_URI[md5sum] = ""</filename> and
+                <filename>SRC_URI[sha256sum] = ""</filename> statements.
+                These two checksums ensure that the remote file (and hence
+                the source code you are building) has not changed since the
+                recipe was written.
+                You must provide these two checksums whenever you fetch
+                source from anywhere other than an SCM or a local file.
+            </para>
+
+            <para>
+                To find these checksums, you can comment the statements out
+                and then attempt to build the software.
+                The build will produce an error for each missing checksum
+                and as part of the error message provide the correct checksum
+                string.
+                Once you have the correct checksums, simply copy them into your
+                recipe for a subsequent build.
+            </para>
         </section>
 
         <section id='new-recipe-unpacking-code'>
             <title>Unpacking Code</title>
 
             <para>
-                unpacking: ensure S matches the directory that contains the source. Often the
-default will work for a source archive, but it depends on how the upstream
-project structures their archive. If SRC_URI specifies to fetch the source from
-an SCM such as git or svn you'll definitely need to set S.
+                During the build, source code that is fetched needs to be
+                unpacked.
+                The OpenEmbedded build system uses the
+                <filename>do_unpack</filename> task to organize the source
+                files into the temporary work directory pointed to by
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>.
+            </para>
+
+            <para>
+                If you are fetching your source files from an upstream source
+                archived tarball then you normally do not need to set
+                <filename>S</filename>.
+                However, if <filename>SRC_URI</filename> specifies to fetch
+                source from an SCM like Git or Subversion, your recipe needs
+                to define <filename>S</filename>.
             </para>
         </section>
 
@@ -1352,33 +1394,193 @@ an SCM such as git or svn you'll definitely need to set S.
             <title>Licensing</title>
 
             <para>
-                licensing: set correct values for LICENSE and LIC_FILES_CHKSUM, i.e. look for
-a license statement somewhere (COPYING, LICENSE, part of a README, top of a
-source file etc.) and then set the two variables accordingly. You need to go
-through this several steps, i.e. look in the directory containing the
-extracted source, then set LIC_FILES_CHKSUM to point to the file without the
-md5 value specified, and then run bitbake on the recipe again and it will error
-out with the actual md5 value which you can then put into the recipe. I notice
-we don't necessarily have a list anywhere of the common values for LICENSE
-either, so maybe we need to add this to the variable reference entry for this
-variable. We should also cover what to do if there is no file specifying the
-license shipped with the source.
+                Your recipe needs to have both the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE'><filename>LICENSE</filename></ulink>
+                and
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM'><filename>LIC_FILES_CHKSUM</filename></ulink>
+                variables:
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>LICENSE</filename>:</emphasis>
+                        If you do not know the license under which the software
+                        you are building is distributed, you can go to the
+                        source code and look for that information.
+                        Places that hold this information are the
+                        <filename>COPYING</filename>,
+                        <filename>LICENSE</filename>, and
+                        <filename>README</filename> files.
+                        You could also find the information near the top of
+                        a source file.
+                        The key is to find something that states the public
+                        license needed for the software.
+                        For example, the
+                        <ulink url='http://sourceforge.net/p/htop/code/HEAD/tree/trunk/COPYING'><filename>COPYING</filename></ulink>
+                        file for the <filename>htop</filename> software states
+                        clearly that the software is licensed under the
+                        "GNU GENERAL PUBLIC LICENSE Version 2, June 1991".
+                        Consequently, if you were writing a recipe to build
+                        <filename>htop</filename>, you would include the
+                        following:
+                        <literallayout class='monospaced'>
+     LICENSE = "GPLv2"
+                        </literallayout></para></listitem>
+                    <listitem><para><emphasis><filename>LIC_FILES_CHKSUM</filename>:</emphasis>
+                        The OpenEmbedded build system uses this variable to
+                        make sure the license text has not changed.
+                        If it has, the build produces an error and it affords
+                        you the chance to figure it out and correct the problem.
+                        </para>
+                        <para>You need to specify all applicable licensing
+                        files for the software.
+                        At the end of the configuration step, the build process
+                        will compare the checksums of the files to be sure
+                        the text has not changed.
+                        Any differences result in an error with the message
+                        containing the proper checksum.
+                        For more explanation and examples of how to set the
+                        <filename>LIC_FILES_CHKSUM</filename> variable, see the
+                        "<ulink url='&YOCTO_DOCS_REF_URL;#usingpoky-configuring-LIC_FILES_CHKSUM'>Tracking License Changes</ulink>"
+                        section in the Yocto Project Reference Manual.</para>
+                        <para>To determine the correct checksum string, you
+                        can list the appropriate files in the
+                        <filename>LIC_FILES_CHKSUM</filename> variable with
+                        incorrect md5 strings, attempt to build the software,
+                        and then note the resulting error messages that will
+                        report the correct md5 strings.
+                        Here is an example that assumes the software has a
+                        <filename>COPYING</filename> file:
+                        <literallayout class='monospaced'>
+     LIC_FILES_CHKSUM = "file://COPYING;md5=xxx"
+                        </literallayout>
+                        When you try to build the software, the build system
+                        will produce an error and give you the correct string
+                        that you can substitute into the recipe file for a
+                        subsequent build.
+                        </para></listitem>
+                </itemizedlist>
             </para>
+
+<!--
+
+            <para>
+                For trying this out I created a new recipe named
+                <filename>htop_1.0.2.bb</filename> and put it in
+                <filename>poky/meta/recipes-extended/htop</filename>.
+                There are two license type statements in my very simple
+                recipe:
+                <literallayout class='monospaced'>
+     LICENSE = ""
+
+     LIC_FILES_CHKSUM = ""
+
+     SRC_URI[md5sum] = ""
+     SRC_URI[sha256sum] = ""
+                </literallayout>
+                Evidently, you need to run a <filename>bitbake -c cleanall htop</filename>.
+                Next, you delete or comment out the two <filename>SRC_URI</filename>
+                lines at the end and then attempt to build the software with
+                <filename>bitbake htop</filename>.
+                Doing so causes BitBake to report some errors and and give
+                you the actual strings you need for the last two
+                <filename>SRC_URI</filename> lines.
+                Prior to this, you have to dig around in the home page of the
+                source for <filename>htop</filename> and determine that the
+                software is released under GPLv2.
+                You can provide that in the <filename>LICENSE</filename>
+                statement.
+                Now you edit your recipe to have those two strings for
+                the <filename>SRC_URI</filename> statements:
+                <literallayout class='monospaced'>
+     LICENSE = "GPLv2"
+
+     LIC_FILES_CHKSUM = ""
+
+     SRC_URI = "${SOURCEFORGE_MIRROR}/htop/htop-${PV}.tar.gz"
+     SRC_URI[md5sum] = "0d01cca8df3349c74569cefebbd9919e"
+     SRC_URI[sha256sum] = "ee60657b044ece0df096c053060df7abf3cce3a568ab34d260049e6a37ccd8a1"
+                </literallayout>
+                At this point, you can build the software again using the
+                <filename>bitbake htop</filename> command.
+                There is just a set of errors now associated with the
+                empty <filename>LIC_FILES_CHKSUM</filename> variable now.
+            </para>
+-->
+
         </section>
 
         <section id='new-recipe-configuring-the-recipe'>
             <title>Configuring the Recipe</title>
 
             <para>
-                configure: this depends on whether you're using autotools or not; if you are
-then you should set EXTRA_OECONF to pass any needed configure options specific
-to this recipe. If you are not using autotools, you need to define your own
-do_configure function, assuming there is anything to configure. At this point
-you may also need to tweak DEPENDS if the configure scripts complain about any
-required dependencies being missing, assuming it's not just looking in the
-wrong place for the dependency in which case it's usually a matter of
-supplying the appropriate configure options to point to the correct location
-within the sysroot.
+                Configurations for your recipe might include passing in
+                configuration options in the case of an Autotools or CMake
+                enabled software or tweaking with the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
+                situation.
+                Regardless, you need to consider this part of the recipe.
+            </para>
+
+            <para>
+                If the software you are building uses Autotools or CMake to
+                get built, you do not have to create a
+                <filename>do_configure</filename> task in your recipe.
+                You might still want to make some adjustments however.
+                For example, you can set
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></ulink>
+                to pass any needed configure options that are specific to the
+                recipe.
+            </para>
+
+            <para>
+                If the source files have a <filename>configure.ac</filename>
+                or <filename>CMakeLists.txt</filename> file, then your software
+                is built using Autotools or CMake, respectively.
+                For either of these cases, you just need to worry about
+                tweaking the configuration.
+                However, if you don't have these files then your software is
+                being built by some other system and you need to provide a
+                <filename>do_configure</filename> task in your recipe.
+            </para>
+
+            <para>
+                Even if you are using Autotools or CMake and configuration
+                succeeds during the build, it is always good practice to look
+                at the <filename>log.do_configure</filename> file to ensure
+                that nothing needs to be added to
+                <filename>DEPENDS</filename>.
+                For example, if the configure script reports that it found
+                something not mentioned in <filename>DEPENDS</filename>, or that
+                it did not find something that it needed for some desired
+                optional functionality, then you would need to add
+                those to <filename>DEPENDS</filename>.
+                Looking at the log might also reveal items being checked for
+                and/or enabled that you do not want, or items not being found
+                that are in <filename>DEPENDS</filename>, in which case
+                you would need to look at passing extra options to the
+                configure script as needed using
+                <filename>EXTRA_OECONF</filename>.
+            </para>
+
+            <para>
+                You should also realize that required build-time or runtime
+                dependencies might or might not be noted in the software's
+                documentation.
+            </para>
+
+            <para>
+                Even if your software is not being built by Autotools or CMake,
+                you still might not need to deal with any configuration issues.
+                You to determine if configuration is even a required step.
+                You might need to modify a Makefile or some configuration file
+                used for the build to specify necessary build options.
+                Or, perhaps you might need to run a hand-written configuration
+                script as opposed to something that
+                <filename>autoconf</filename> would run.
+            </para>
+
+            <para>
+                For the case involving a hand-written configuration script, you
+                would run <filename>./configure --help</filename> and look for
+                the options you need to set.
             </para>
         </section>
 
@@ -1386,10 +1588,18 @@ within the sysroot.
             <title>Compiling the Recipe</title>
 
             <para>
-                compile: if the recipe passes through do_compile successfully, nothing needs
-to be done. If not, diagnose the failure. We might be able to highlight common
-issues here such as parallel build failures, host path usage when building for
-the target, etc.
+                During a build, the <filename>do_compile</filename> task
+                happens after source is fetched, unpacked, and configured.
+                If the recipe passes through <filename>do_compile</filename>
+                successfully, nothing needs to be done.
+            </para>
+
+            <para>
+                However, if the compile step fails, you need to diagnose the
+                failure.
+                Some common issues for failure are parallel build failures,
+                improper host path usage when building for the target, and
+                so forth.
             </para>
         </section>
 
@@ -1397,9 +1607,9 @@ the target, etc.
             <title>Installing</title>
 
             <para>
-                During installation, files your recipe builds are copied from
-                locations where work is being done to locations on the target
-                device.
+                During <filename>do_install</filename>, files your recipe builds
+                are copied from locations where work is being done to locations
+                on the target device.
                 The installation process moves the
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>,
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink><filename>}</filename>,
@@ -1409,28 +1619,26 @@ the target, etc.
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>
                 to create the structure as it should appear on the target
                 system.
-                <note>
-                    During the installation process, some of the files might also
-                    be modified to suit the target layout as well.
-                </note>
             </para>
 
             <para>
                 How your software is built affects what you must do to be
                 sure your software is installed correctly.
                 The following list describes what you must do for installation
-                depending on how your recipe builds your software:
+                depending on the type of build system used by the software
+                being built:
                 <itemizedlist>
-                    <listitem><para><emphasis>Autotools and <filename>cmake</filename>:</emphasis>
+                    <listitem><para><emphasis>Autotools and CMake:</emphasis>
                         If the software your recipe is building uses Autotools
-                        or <filename>cmake</filename>, the OpenEmbedded build
+                        or CMake, the OpenEmbedded build
                         system understands how to install the software.
                         Consequently, you do not have to have a
                         <filename>do_install</filename> task as part of your
                         recipe.
                         You just need to make sure the install portion of the
                         build completes with no issues.</para></listitem>
-                    <listitem><para><emphasis><filename>make install</filename>:</emphasis>
+                    <listitem><para><emphasis>Other (using
+                        <filename>make install</filename>):</emphasis>
                         You need to define a
                         <filename>do_install</filename> function in your
                         recipe.
@@ -1443,7 +1651,7 @@ the target, etc.
                         <filename>PREFIX=${D}</filename>,
                         <filename>INSTALLROOT=${D}</filename>, and so forth).
                         </para></listitem>
-                    <listitem><para><emphasis><filename>install</filename>:</emphasis>
+                    <listitem><para><emphasis>Manual:</emphasis>
                         You need to define a
                         <filename>do_install</filename> function in your
                         recipe.
@@ -1462,7 +1670,7 @@ the target, etc.
 
             <para>
                 For the scenarios that do not use Autotools or
-                <filename>cmake</filename>, you need to track the installation
+                CMake, you need to track the installation
                 and diagnose and fix any issues until everything installs
                 correctly.
                 You need to look in the default location of
@@ -1470,18 +1678,37 @@ the target, etc.
                 <filename>${WORKDIR}/image</filename>, to be sure your
                 files have been installed correctly.
             </para>
+
+            <note>
+                During the installation process, you might need to modify
+                some of the installed files to suit the target layout.
+                For example, you might need to replace hard-coded paths in an
+                initscript with values of variables provided by the build
+                system, such as replacing <filename>/usr/bin/</filename> with
+                <filename>${bindir}</filename>.
+                If you do perform such modifications during
+                <filename>do_install</filename>, be sure to modify the
+                destination file after copying rather than before copying.
+                Modifying after copying ensures that the build system can
+                re-execute <filename>do_install</filename> if needed.
+            </note>
+
+            <note>
+                <filename>oe_runmake install</filename>, which can be run
+                directly or can be run indirectly by the autotools and CMake
+                classes, runs make install in parallel.
+                Sometimes, a Makefile can have missing dependencies between
+                targets that can result in race conditions.
+                If you experience intermittent failures during
+                <filename>do_install</filename>, you might be able to work
+                around them by setting
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKEINST'><filename>PARALLEL_MAKEINST</filename></ulink>
+                to and empty string in the recipe.
+            </note>
         </section>
 
         <section id='new-recipe-optionally-supporting-services'>
             <title>Supporting Services</title>
-
-            <para>
-                We'll probably also need some subsections on specific extra functions needed in
-some recipes e.g. how to add support for services (sysvinit and systemd),
-adding PACKAGECONFIG options, dealing with alternatives, etc. There's a
-question in my mind on how some of these will overlap with the class reference
-section though.
-            </para>
 
             <para>
                 If you are adding services and the service initialization
@@ -1491,6 +1718,9 @@ section though.
                 If your recipe already has a <filename>do_install</filename>
                 function, you will need to be sure to change it so that it
                 handles the installation of your services.
+            </para>
+
+            <para>
                 When you create the installation for your services, you need
                 to accomplish what is normally done by "make install".
                 In other words, make sure your installation puts the output
@@ -1498,17 +1728,32 @@ section though.
                 target system.
             </para>
 
+            <para>
+                <emphasis>Paul</emphasis> - We need to get some detail here on specific extra
+                functions needed in some recipes (e.g. how to add support for
+                services like sysvinit and systemd, how to add
+                <filename>PACKAGECONFIG</filename> options, how to
+                deal with alternatives, and so forth).
+            </para>
         </section>
 
         <section id='new-recipe-packaging'>
             <title>Packaging</title>
 
             <para>
-                packaging: ensure that the files are packaged correctly. Resolve any package QA
-issues (we need to have more detailed docs on this, probably as its own
-section). This can also involve looking at packages-split under the work
-directory and checking if files are where they need to be; if not, set
-PACKAGES, FILES, do_install(_append) etc. as needed.
+                The <filename>do_package</filename> task ensures that files
+                are packaged correctly.
+                To be sure your packages are correct, examine the
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}/packages-split</filename>
+                directory and make sure files are where you expect them to be.
+            </para>
+
+            <para>
+                If you discover problems, you can set
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'><filename>PACKAGES</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'><filename>FILES</filename></ulink>,
+                <filename>do_install(_append)</filename>, and so forth as
+                needed.
             </para>
         </section>
 
@@ -1516,8 +1761,10 @@ PACKAGES, FILES, do_install(_append) etc. as needed.
             <title>Testing</title>
 
             <para>
-                runtime testing: add the output package(s) to your image and ensure that they
-work at runtime.
+                The final step for completing your recipe is to be sure that
+                the software you built runs correctly.
+                To accomplish runtime testing, add the build's output
+                packages to your image and test them on the target.
             </para>
         </section>
     </section>
