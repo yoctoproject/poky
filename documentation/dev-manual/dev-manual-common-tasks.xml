@@ -1183,8 +1183,6 @@
                     <listitem><para><emphasis>Use and modify the following
                         skeleton recipe:</emphasis>
                         <literallayout class='monospaced'>
-     inherit &lt;stuff&gt;
-
      SUMMARY = ""
      HOMEPAGE = ""
      LICENSE = ""
@@ -1195,13 +1193,144 @@
      SRC_URI[md5sum] = ""
      SRC_URI[sha256sum] = ""
 
-     S = ${WORKDIR}/${PN}-${PV}
+     S = "${WORKDIR}/${PN}-${PV}"
+
+     inherit &lt;stuff&gt;
                         </literallayout>
                         Modifying this recipe is the recommended method for
                         creating a new recipe.
                         The recipe provides the fundamental areas that you need
                         to include, exclude, or alter to fit your needs.
                         </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='new-recipe-naming-the-recipe'>
+            <title>Naming the Recipe</title>
+
+            <para>
+                Once you have your base recipe, you need to name it and be
+                sure that it resides where the OpenEmbedded build system
+                can find it.
+            </para>
+
+            <para>
+                When you name your recipe, you need to follow this naming
+                convention:
+                <literallayout class='monospaced'>
+     &lt;basename&gt;_&lt;version&gt;.bb
+                </literallayout>
+                Use lower-cased characters and do not include the reserved
+                suffixes <filename>-native</filename>,
+                <filename>-cross</filename>, <filename>-initial</filename>,
+                or <filename>-dev</filename>.
+                Here are some examples:
+                <literallayout class='monospaced'>
+     cups_1.7.0.bb
+     gawk_4.0.2.bb
+     xdg-utils_1.1.0-rc1.bb
+                </literallayout>
+            </para>
+
+            <para>
+                The OpenEmbedded build system locates your recipe through
+                the <filename>layer.conf</filename> file and the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'><filename>BBFILES</filename></ulink>
+                variable.
+                This variable sets up a path from which the build system can
+                locate recipes.
+                Here is the typical use:
+                <literallayout class='monospaced'>
+     BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
+                 ${LAYERDIR}/recipes-*/*/*.bbappend"
+                </literallayout>
+                Consequently, you need to be sure you locate your new recipe
+                inside your layer such that it can be found.
+            </para>
+
+            <para>
+                You can find more information on how layers are structured
+                in the
+                "<link linkend='understanding-and-creating-layers'>Understanding and Creating Layers</link>"
+                section.
+            </para>
+        </section>
+
+        <section id='new-recipe-running-a-build-on-the-recipe'>
+            <title>Running a Build on the Recipe</title>
+
+            <para>
+                Creating a new recipe is an iterative process that requires
+                using BitBake to process the recipe multiple times in order to
+                progressively discover and add information to the recipe.
+            </para>
+
+            <para>
+                To process the recipe, use the following BitBake command form
+                from within the
+                <link linkend='build-directory'>Build Directory</link>:
+                <literallayout class='monospaced'>
+     $ bitbake &lt;base-recipe-name&gt;
+                </literallayout>
+                Before you run BitBake, be sure that you source a build
+                environment setup script (i.e.
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
+                or
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>.
+            </para>
+
+            <para>
+                The OpenEmbedded build system creates a temporary work
+                directory
+                (<filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename>)
+                where it keeps extracted source files, log files, images, and
+                so forth.
+            </para>
+
+            <para>
+                This temporary work directory is constructed depending on
+                several factors.
+                For packages that are not dependent on a particular machine,
+                <filename>WORKDIR</filename> is defined as follows:
+                <literallayout class='monospaced'>
+     ${TMPDIR}/work/${PACKAGE_ARCH}-poky-${TARGET_OS}/${PN}/${PV}-${PR}
+                </literallayout>
+                As an example, assume a Source Directory top-level folder name
+                <filename>poky</filename>, a default Build Directory at
+                <filename>poky/build</filename>, a <filename>qemux86</filename>
+                package architecture, and a <filename>linux</filename> target
+                operating system.
+                Furthermore, suppose your recipe is named
+                <filename>foo_1.3.0-r0.bb</filename>.
+                In this case, the work directory the build system uses to
+                build the package would be as follows:
+                <literallayout class='monospaced'>
+     poky/build/tmp/work/qemux86-poky-linux/foo/1.3.0-r0
+                </literallayout>
+                Inside this directory you can find sub-directories such as
+                <filename>image</filename>, <filename>package-split</filename>,
+                and <filename>temp</filename>.
+                After the build, you can examine these to determine how well
+                the build went.
+            </para>
+
+            <para>
+                You can find more information about the build process in the
+                "<ulink url='&YOCTO_DOCS_REF_URL;#closer-look'>A Closer Look at the Yocto Project Development Environment</ulink>"
+                chapter of the Yocto Project Reference Manual.
+            </para>
+
+            <para>
+                You can also reference the following variables in the
+                Yocto Project Reference Manual's glossary for more information:
+                <itemizedlist>
+                    <listitem>The temporary directory - <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink></listitem>
+                    <listitem>The package architecture - <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink></listitem>
+                    <listitem>The target operating system - <ulink url='&YOCTO_DOCS_REF_URL;#var-TARGET_OS'><filename>TARGET_OS</filename></ulink></listitem>
+                    <listitem>The recipe name - <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink></listitem>
+                    <listitem>The recipe version - <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink></listitem>
+                    <listitem>The recipe revision - <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink></listitem>
                 </itemizedlist>
             </para>
         </section>
@@ -1268,7 +1397,7 @@
                 you provide the <filename>SRC_URI</filename> variable in your
                 recipe:
                 <itemizedlist>
-                    <listitem><para>
+                    <listitem><para><emphasis>Avoid hard-coding URLs:</emphasis>
                         Rather than hard-coding the version in an URL, it is
                         good practice to use
                         <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink><filename>}</filename>,
@@ -1279,7 +1408,7 @@
                         as renaming the recipe to match the new version.
                         Notice that the two examples in the previous paragraph
                         both use <filename>${PV}</filename>.</para></listitem>
-                    <listitem><para>
+                    <listitem><para><emphasis>Using the <filename>file://</filename> URI protocol:</emphasis>
                         When you specify local files using the
                         <filename>file://</filename> URI protocol, the build
                         system fetches files from the local machine.
@@ -1297,7 +1426,24 @@
                         For more information, see the
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
                         variable.</para></listitem>
-                    <listitem><para>
+                    <listitem><para><emphasis>Specifying patch files:</emphasis>
+                        Files mentioned in <filename>SRC_URI</filename> whose
+                        names end in <filename>.patch</filename> or
+                        <filename>.diff</filename> are treated as patches and
+                        are automatically applied during the
+                        <filename>do_patch</filename> task.</para>
+                        <para>The build system should be able to apply patches
+                        with the "-p1" option (i.e. one directory level in the
+                        path will be stripped off).
+                        If your patch needs to have more directory levels
+                        stripped off, specify the number of levels using the
+                        "striplevel" option in the <filename>SRC_URI</filename>
+                        entry for the patch.
+                        Alternatively, if your patch needs to be applied in a
+                        specific subdirectory that is not specified in the patch
+                        file, use the "patchdir" option in the entry.
+                        </para></listitem>
+                    <listitem><para><emphasis>Extracting archived source files:</emphasis>
                         Files mentioned in <filename>SRC_URI</filename> whose
                         names end in a typical archive extension
                         (e.g. <filename>.tar</filename>,
@@ -1307,25 +1453,7 @@
                         are automatically extracted during
                         the <filename>do_unpack</filename> task.
                         </para></listitem>
-                    <listitem><para>
-                        Files mentioned in <filename>SRC_URI</filename> whose
-                        names end in <filename>.patch</filename> or
-                        <filename>.diff</filename> are treated as patches and
-                        are automatically applied during the
-                        <filename>do_patch</filename> task.</para></listitem>
-                    <listitem><para>
-                        Patches should be applicable with the "-p1" option to
-                        patch (i.e. one directory level in the path will be
-                        stripped off.)
-                        If your patch needs to have more directory levels
-                        stripped off, specify the number of levels using the
-                        "striplevel" option in the <filename>SRC_URI</filename>
-                        entry for the patch.
-                        Alternatively, if your patch needs to be applied in a
-                        specific subdirectory that is not specified in the patch
-                        file, use the "patchdir" option in the entry.
-                        </para></listitem>
-                    <listitem><para>
+                    <listitem><para><emphasis>Specifying source from an SCM:</emphasis>
                         For Git repositories, you must specify
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
                         and you should specify
@@ -1347,14 +1475,36 @@
             </para>
 
             <para>
-                Also part of the <filename>SRC_URI</filename> variable are the
+                If your <filename>SRC_URI</filename> statement includes
+                URLs pointing to individual files fetched from a remote server
+                other than a version control system, BitBake attempts to
+                verify the files against checksums defined in your recipe to
+                ensure they have not been tampered with or otherwise modified
+                since the recipe was written.
+                Two checksums are used:
                 <filename>SRC_URI[md5sum] = ""</filename> and
-                <filename>SRC_URI[sha256sum] = ""</filename> statements.
-                These two checksums ensure that the remote file (and hence
-                the source code you are building) has not changed since the
-                recipe was written.
-                You must provide these two checksums whenever you fetch
-                source from anywhere other than an SCM or a local file.
+                <filename>SRC_URI[sha256sum] = ""</filename>.
+            </para>
+
+            <para>
+                If your <filename>SRC_URI</filename> variable points to
+                more than a single URL (excluding SCM URLs), you need to
+                provide the <filename>md5</filename> and
+                <filename>sha256</filename> checksums for each URL.
+                For these cases, you provide a name for each URL as part of
+                the <filename>SRC_URI</filename> and then reference that name
+                in the subsequent checksum statements.
+                Here is an example:
+                <literallayout class='monospaced'>
+     SRC_URI = "${DEBIAN_MIRROR}/main/a/apmd/apmd_3.2.2.orig.tar.gz;name=tarball \
+                ${DEBIAN_MIRROR}/main/a/apmd/apmd_${PV}.diff.gz;name=patch
+
+     SRC_URI[tarball.md5sum] = "b1e6309e8331e0f4e6efd311c2d97fa8"
+     SRC_URI[tarball.sha256sum] = "7f7d9f60b7766b852881d40b8ff91d8e39fccb0d1d913102a5c75a2dbb52332d"
+
+     SRC_URI[patch.md5sum] = "57e1b689264ea80f78353519eece0c92"
+     SRC_URI[patch.sha256sum] = "7905ff96be93d725544d0040e425c42f9c05580db3c272f11cff75b9aa89d430"
+                </literallayout>
             </para>
 
             <para>
@@ -1371,13 +1521,14 @@
         <section id='new-recipe-unpacking-code'>
             <title>Unpacking Code</title>
 
+do_unpack unpacks the source, and S must be set
+> to point to where it will be unpacked
+
             <para>
-                During the build, source code that is fetched needs to be
-                unpacked.
-                The OpenEmbedded build system uses the
-                <filename>do_unpack</filename> task to organize the source
-                files into the temporary work directory pointed to by
-                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>.
+                During the build, the <filename>do_unpack</filename> task
+                unpacks the source and
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>
+                points to where it will be unpacked.
             </para>
 
             <para>
@@ -1387,6 +1538,13 @@
                 However, if <filename>SRC_URI</filename> specifies to fetch
                 source from an SCM like Git or Subversion, your recipe needs
                 to define <filename>S</filename>.
+            </para>
+
+            <para>
+                If processing your recipe using BitBake successfully unpacks
+                the source files, you need to be sure that the structure
+                created in <filename>${S}</filename> matches the structure
+                from the source.
             </para>
         </section>
 
@@ -1401,10 +1559,11 @@
                 variables:
                 <itemizedlist>
                     <listitem><para><emphasis><filename>LICENSE</filename>:</emphasis>
+                        This variable specifies the license for the software.
                         If you do not know the license under which the software
                         you are building is distributed, you can go to the
                         source code and look for that information.
-                        Places that hold this information are the
+                        Typical files containing this information include
                         <filename>COPYING</filename>,
                         <filename>LICENSE</filename>, and
                         <filename>README</filename> files.
@@ -1412,17 +1571,20 @@
                         a source file.
                         The key is to find something that states the public
                         license needed for the software.
-                        For example, the
-                        <ulink url='http://sourceforge.net/p/htop/code/HEAD/tree/trunk/COPYING'><filename>COPYING</filename></ulink>
-                        file for the <filename>htop</filename> software states
-                        clearly that the software is licensed under the
-                        "GNU GENERAL PUBLIC LICENSE Version 2, June 1991".
-                        Consequently, if you were writing a recipe to build
-                        <filename>htop</filename>, you would include the
-                        following:
+                        For example, given a piece of software licensed under
+                        the GNU General Public License version 2, you would
+                        set <filename>LICENSE</filename> as follows:
                         <literallayout class='monospaced'>
      LICENSE = "GPLv2"
-                        </literallayout></para></listitem>
+                        </literallayout></para>
+                        <para>The licenses you specify with
+                        <filename>LICENSE</filename> be any name as long as
+                        you do not use spaces.
+                        For standard licenses, use the names of the files in
+                        <filename>meta/files/common-licenses/</filename>
+                        or the <filename>SPDXLICENSEMAP</filename> flag names
+                        defined in <filename>meta/conf/licenses.conf</filename>.
+                        </para></listitem>
                     <listitem><para><emphasis><filename>LIC_FILES_CHKSUM</filename>:</emphasis>
                         The OpenEmbedded build system uses this variable to
                         make sure the license text has not changed.
@@ -1435,7 +1597,7 @@
                         will compare the checksums of the files to be sure
                         the text has not changed.
                         Any differences result in an error with the message
-                        containing the proper checksum.
+                        containing the current checksum.
                         For more explanation and examples of how to set the
                         <filename>LIC_FILES_CHKSUM</filename> variable, see the
                         "<ulink url='&YOCTO_DOCS_REF_URL;#usingpoky-configuring-LIC_FILES_CHKSUM'>Tracking License Changes</ulink>"
@@ -1511,76 +1673,94 @@
             <title>Configuring the Recipe</title>
 
             <para>
-                Configurations for your recipe might include passing in
-                configuration options in the case of an Autotools or CMake
-                enabled software or tweaking with the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
-                situation.
-                Regardless, you need to consider this part of the recipe.
+                Most software provides some means of setting build-time
+                configuration options before compilation.
+                Typically, setting these options is accomplished by running a
+                configure script with some options, or by modifying a build
+                configuration file.
             </para>
 
             <para>
-                If the software you are building uses Autotools or CMake to
-                get built, you do not have to create a
-                <filename>do_configure</filename> task in your recipe.
-                You might still want to make some adjustments however.
-                For example, you can set
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></ulink>
-                to pass any needed configure options that are specific to the
-                recipe.
+                When considering configuration, you should realize that
+                required build-time or runtime dependencies might or might not
+                be noted in the software's documentation.
             </para>
 
             <para>
-                If the source files have a <filename>configure.ac</filename>
-                or <filename>CMakeLists.txt</filename> file, then your software
-                is built using Autotools or CMake, respectively.
-                For either of these cases, you just need to worry about
-                tweaking the configuration.
-                However, if you don't have these files then your software is
-                being built by some other system and you need to provide a
-                <filename>do_configure</filename> task in your recipe.
+                The following list provides configuration items of note based
+                on how your software is built:
+                <itemizedlist>
+                    <listitem><para><emphasis>Autotools:</emphasis>
+                        If your source files have a
+                        <filename>configure.ac</filename> file, then your
+                        software is built using Autotools.
+                        If this is the case, you just need to worry about
+                        tweaking the configuration.</para>
+                        <para>When using Autotools, your recipe needs to inherit
+                        the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-autotools'><filename>autotools</filename></ulink>
+                        class and your recipe does not have to contain a
+                        <filename>do_configure</filename> task.
+                        However, you might still want to make some adjustments.
+                        For example, you can set
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></ulink>
+                        to pass any needed configure options that are specific
+                        to the recipe.</para></listitem>
+                    <listitem><para><emphasis>CMake:</emphasis>
+                        If your source files have a
+                        <filename>CMakeLists.txt</filename> file, then your
+                        software is built using CMake.
+                        If this is the case, you just need to worry about
+                        tweaking the configuration.</para>
+                        <para>When you use CMake, your recipe needs to inherit
+                        the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-cmake'><filename>cmake</filename></ulink>
+                        class and your recipe does not have to contain a
+                        <filename>do_configure</filename> task.
+                        You can make some adjustments by setting
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OECMAKE'><filename>EXTRA_OECMAKE</filename></ulink>
+                        to pass any needed configure options that are specific
+                        to the recipe.</para></listitem>
+                    <listitem><para><emphasis>Other:</emphasis>
+                        If your source files do not have a
+                        <filename>configure.ac</filename> or
+                        <filename>CMakeLists.txt</filename> file, then your
+                        software is built using some method other than Autotools
+                        or CMake.
+                        If this is the case, you need to provide a
+                        <filename>do_configure</filename> task in your recipe.
+                        </para>
+                        <para>Even if your software is not being built by
+                        Autotools or CMake, you still might not need to deal
+                        with any configuration issues.
+                        You need to determine if configuration is even a required step.
+                        You might need to modify a Makefile or some configuration file
+                        used for the build to specify necessary build options.
+                        Or, perhaps you might need to run a hand-written configuration
+                        script as opposed to something that
+                        <filename>autoconf</filename> would run.</para>
+                        <para>For the case involving a hand-written
+                        configuration script, you would run
+                        <filename>./configure --help</filename> and look for
+                        the options you need to set.</para></listitem>
+                </itemizedlist>
             </para>
 
             <para>
-                Even if you are using Autotools or CMake and configuration
-                succeeds during the build, it is always good practice to look
-                at the <filename>log.do_configure</filename> file to ensure
-                that nothing needs to be added to
+                Once configuration succeeds, it is always good practice to
+                look at the <filename>log.do_configure</filename> file to
+                ensure that nothing needs to be added to
                 <filename>DEPENDS</filename>.
                 For example, if the configure script reports that it found
-                something not mentioned in <filename>DEPENDS</filename>, or that
-                it did not find something that it needed for some desired
-                optional functionality, then you would need to add
+                something not mentioned in <filename>DEPENDS</filename>, or
+                that it did not find something that it needed for some
+                desired optional functionality, then you would need to add
                 those to <filename>DEPENDS</filename>.
                 Looking at the log might also reveal items being checked for
                 and/or enabled that you do not want, or items not being found
                 that are in <filename>DEPENDS</filename>, in which case
                 you would need to look at passing extra options to the
-                configure script as needed using
-                <filename>EXTRA_OECONF</filename>.
-            </para>
-
-            <para>
-                You should also realize that required build-time or runtime
-                dependencies might or might not be noted in the software's
-                documentation.
-            </para>
-
-            <para>
-                Even if your software is not being built by Autotools or CMake,
-                you still might not need to deal with any configuration issues.
-                You to determine if configuration is even a required step.
-                You might need to modify a Makefile or some configuration file
-                used for the build to specify necessary build options.
-                Or, perhaps you might need to run a hand-written configuration
-                script as opposed to something that
-                <filename>autoconf</filename> would run.
-            </para>
-
-            <para>
-                For the case involving a hand-written configuration script, you
-                would run <filename>./configure --help</filename> and look for
-                the options you need to set.
+                configure script as needed.
             </para>
         </section>
 
