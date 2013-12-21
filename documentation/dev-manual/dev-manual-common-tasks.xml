@@ -1777,9 +1777,40 @@ do_unpack unpacks the source, and S must be set
             <para>
                 However, if the compile step fails, you need to diagnose the
                 failure.
-                Some common issues for failure are parallel build failures,
-                improper host path usage when building for the target, and
-                so forth.
+                Here are some common issues that cause failures:
+                <itemizedlist>
+                    <listitem><para><emphasis>Parallel build failures:</emphasis>
+                        These failures manifest themselves as intermittent
+                        errors, or errors reporting that a file or directory
+                        that should be created by some other part of the build
+                        process could not be found.
+                        This type of failure can occur even if, upon inspection,
+                        the file or directory does exist after the build has
+                        failed, because that part of the build process happened
+                        in the wrong order.</para>
+                        <para>To fix the problem, you need to either satisfy
+                        the missing dependency in the Makefile or whatever
+                        script produced the Makefile, or (as a workaround)
+                        set
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink>
+                        to an empty string:
+                        <literallayout class='monospaced'>
+     PARALLEL_MAKE = ""
+                        </literallayout></para></listitem>
+                    <listitem><para><emphasis>Improper host path usage:</emphasis>
+                        This failure applies to recipes building for the target
+                        or <filename>nativesdk</filename> only.
+                        The failure occurs when the compilation process uses
+                        headers, libraries, or other files from the host system
+                        when the process is cross-compiling for the target and
+                        should not be.</para>
+                        <para>To fix the problem, you should be able to see
+                        the host paths being used (e.g.
+                        <filename>/usr/include</filename>,
+                        <filename>/usr/lib</filename>, and so forth) by
+                        examining the <filename>log.do_configure</filename>
+                        file.</para></listitem>
+                </itemizedlist>
             </para>
         </section>
 
@@ -1787,9 +1818,9 @@ do_unpack unpacks the source, and S must be set
             <title>Installing</title>
 
             <para>
-                During <filename>do_install</filename>, files your recipe builds
-                are copied from locations where work is being done to locations
-                on the target device.
+                During <filename>do_install</filename>, the files and their
+                structure that your recipe built are copied to locations on the
+                target device.
                 The installation process moves the
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>,
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink><filename>}</filename>,
@@ -1881,9 +1912,14 @@ do_unpack unpacks the source, and S must be set
                 targets that can result in race conditions.
                 If you experience intermittent failures during
                 <filename>do_install</filename>, you might be able to work
-                around them by setting
+                around them by disabling parallel make install by adding the
+                following to the recipe:
+                <literallayout class='monospaced'>
+     PARALLEL_MAKEINST = ""
+                </literallayout>
+                See
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKEINST'><filename>PARALLEL_MAKEINST</filename></ulink>
-                to and empty string in the recipe.
+                for additional information.
             </note>
         </section>
 
@@ -1891,13 +1927,20 @@ do_unpack unpacks the source, and S must be set
             <title>Supporting Services</title>
 
             <para>
+                If you want to install a service, which is a process that
+                usually starts on boot and runs in the background, then
+                you must include some additional definitions in your recipe.
+            </para>
+
+            <para>
                 If you are adding services and the service initialization
                 script or the service file itself is not installed, you must
                 provide for that installation in your recipe using a
                 <filename>do_install_append</filename> function.
                 If your recipe already has a <filename>do_install</filename>
-                function, you will need to be sure to change it so that it
-                handles the installation of your services.
+                function, update the function near its end rather than
+                adding an additional <filename>do_install_append</filename>
+                function.
             </para>
 
             <para>
@@ -1909,11 +1952,39 @@ do_unpack unpacks the source, and S must be set
             </para>
 
             <para>
-                <emphasis>Paul</emphasis> - We need to get some detail here on specific extra
-                functions needed in some recipes (e.g. how to add support for
-                services like sysvinit and systemd, how to add
-                <filename>PACKAGECONFIG</filename> options, how to
-                deal with alternatives, and so forth).
+                Here are some examples:
+                <itemizedlist>
+                    <listitem><para><emphasis>SysVinit:</emphasis>
+                        The SysVinit service is a group of processes that
+                        control the very basic functions of your system.
+                        SysVinit includes the init program, the first program
+                        started by the Linux kernel when the system boots.
+                        Init then controls the startup, running and shutdown
+                        of all other programs.</para>
+                        <para>To include this service, your recipe needs to
+                        inherit the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-update-rc.d'><filename>update-rc.d</filename></ulink>
+                        class.
+                        The class helps facilitate safely installing the
+                        package on the target.</para>
+                        <para>You will need to set the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-INITSCRIPT_PACKAGES'><filename>INITSCRIPT_PACKAGES</filename></ulink>,
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-INITSCRIPT_NAME'><filename>INITSCRIPT_NAME</filename></ulink>,
+                        and
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-INITSCRIPT_PARAMS'><filename>INITSCRIPT_PARAMS</filename></ulink>
+                        variables within your recipe.</para></listitem>
+                    <listitem><para><emphasis>Systemd:</emphasis>
+                        The Systemd service is a system management daemon
+                        designed for the Linux startup process.
+                        Systemd is the first process to execute and is
+                        therefore the parent process of all child processes.
+                        </para>
+                        <para>To include this service, your recipe needs to
+                        inherit the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-systemd'><filename>systemd</filename></ulink>
+                        class.
+                        See the class for more information.</para></listitem>
+                </itemizedlist>
             </para>
         </section>
 
@@ -1921,9 +1992,18 @@ do_unpack unpacks the source, and S must be set
             <title>Packaging</title>
 
             <para>
+                The <filename>do_package</filename> task splits the files
+                produced by the recipe into logical components.
+                Even software that produces a single binary might still have
+                debug symbols, documentation, and other logical components.
                 The <filename>do_package</filename> task ensures that files
-                are packaged correctly.
-                To be sure your packages are correct, examine the
+                are split up and packaged correctly.
+            </para>
+
+            <para>
+                After you build your software you need to be sure your packages
+                are correct.
+                Examine the
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}/packages-split</filename>
                 directory and make sure files are where you expect them to be.
             </para>
@@ -1945,6 +2025,15 @@ do_unpack unpacks the source, and S must be set
                 the software you built runs correctly.
                 To accomplish runtime testing, add the build's output
                 packages to your image and test them on the target.
+            </para>
+
+            <para>
+                To facilitate testing, you can customize your image to include
+                the <filename>-dbg</filename> package.
+                For information on how to customize your image by adding
+                specific packages, see the
+                "<link linkend='usingpoky-extend-customimage-customtasks'>Customizing Images Using Custom Package Groups</link>"
+                section.
             </para>
         </section>
     </section>
