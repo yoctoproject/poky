@@ -1470,14 +1470,16 @@
                         certain order:
                         <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BPN'><filename>BPN</filename></ulink><filename>}</filename>,
                         <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BP'><filename>BP</filename></ulink><filename>}</filename>,
-                        and
-                        <filename>files</filename>.
+                        and <filename>files</filename>.
                         The directories are assumed to be subdirectories of
                         the directory in which the recipe or append file
-                        resides.
-                        For more information, see the
+                        resides.</para>
+                        <para>For more information, see the
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                        variable.</para></listitem>
+                        variable.
+                        You can also reference the
+                        "<link linkend='usingpoky-extend-addpkg-singlec'>Single .c File Package (Hello World!)</link>"
+                        section for an example recipe.</para></listitem>
                     <listitem><para><emphasis>Specifying patch files:</emphasis>
                         Files mentioned in <filename>SRC_URI</filename> whose
                         names end in <filename>.patch</filename> or
@@ -1504,7 +1506,12 @@
                         <filename>.zip</filename>, and so forth),
                         are automatically extracted during
                         the <filename>do_unpack</filename> task.
-                        </para></listitem>
+                        </para>
+                        <para>See the
+                        "<link linkend='usingpoky-extend-addpkg-autotools'>Autotooled Package</link>"
+                        section for an example recipe that uses Autotools and
+                        whose <filename>SRC_URI</filename> points to archived
+                        source files.</para></listitem>
                     <listitem><para><emphasis>Specifying source from an SCM:</emphasis>
                         For Git repositories, you must specify
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
@@ -1913,7 +1920,11 @@ do_unpack unpacks the source, and S must be set
                         (e.g. <filename>DESTDIR=${D}</filename>,
                         <filename>PREFIX=${D}</filename>,
                         <filename>INSTALLROOT=${D}</filename>, and so forth).
-                        </para></listitem>
+                        </para>
+                        <para>For an example recipe using
+                        <filename>make install</filename>, see the
+                        "<link linkend='usingpoky-extend-addpkg-makefile'>Makefile-Based Package</link>"
+                        section.</para></listitem>
                     <listitem><para><emphasis>Manual:</emphasis>
                         You need to define a
                         <filename>do_install</filename> function in your
@@ -2038,6 +2049,13 @@ do_unpack unpacks the source, and S must be set
                         See the class for more information.</para></listitem>
                 </itemizedlist>
             </para>
+
+            <para>
+                For an example showing how to install a post-installation
+                script, see the
+                "<link linkend='usingpoky-extend-addpkg-postinstalls'>Post-Installation Scripts</link>"
+                section.
+            </para>
         </section>
 
         <section id='new-recipe-packaging'>
@@ -2067,6 +2085,13 @@ do_unpack unpacks the source, and S must be set
                 <filename>do_install(_append)</filename>, and so forth as
                 needed.
             </para>
+
+            <para>
+                See the
+                "<link linkend='splitting-an-application-into-multiple-packages'>Splitting an Application into Multiple Packages</link>"
+                section for an example that shows how you might split
+                your software into more than one package.
+            </para>
         </section>
 
         <section id='new-recipe-testing'>
@@ -2089,30 +2114,38 @@ do_unpack unpacks the source, and S must be set
             </para>
         </section>
 
-        <section id='new-recipe-testing-hello-world-example'>
-            <title>Hello World Example</title>
+        <section id='new-recipe-testing-examples'>
+            <title>Examples</title>
 
             <para>
                 To help summarize how to write a recipe, this section provides
-                an example recipe that builds a single "Hello World!" package.
+                some examples given various scenarios:
+                <itemizedlist>
+                    <listitem><para>Recipes that use local files</para></listitem>
+                    <listitem><para>Using an Autotooled package</para></listitem>
+                    <listitem><para>Using a Makefile-based package</para></listitem>
+                    <listitem><para>Splitting an application into multiple packages</para></listitem>
+                    <listitem><para>Installing a post-initialization script</para></listitem>
+                </itemizedlist>
             </para>
 
             <section id='usingpoky-extend-addpkg-singlec'>
                 <title>Single .c File Package (Hello World!)</title>
 
                 <para>
-                    Building an application from a single file that is stored locally (e.g. under
-                    <filename>files/</filename>) requires a recipe that has the file listed in
-                    the
+                    Building an application from a single file that is stored
+                    locally (e.g. under <filename>files/</filename>) requires
+                    a recipe that has the file listed in the
                     <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>
                     variable.
-                    Additionally, you need to manually write the <filename>do_compile</filename> and
+                    Additionally, you need to manually write the
+                    <filename>do_compile</filename> and
                     <filename>do_install</filename> tasks.
                     The <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink></filename>
-                    variable defines the
-                    directory containing the source code, which is set to
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'>
-                    WORKDIR</ulink></filename> in this case - the directory BitBake uses for the build.
+                    variable defines the directory containing the source code,
+                    which is set to
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink>
+                    in this case - the directory BitBake uses for the build.
                     <literallayout class='monospaced'>
      DESCRIPTION = "Simple helloworld application"
      SECTION = "examples"
@@ -2136,11 +2169,13 @@ do_unpack unpacks the source, and S must be set
                 </para>
 
                 <para>
-                    By default, the <filename>helloworld</filename>, <filename>helloworld-dbg</filename>,
-                    and <filename>helloworld-dev</filename> packages are built.
-                    For information on how to customize the packaging process, see the
-                    "<link linkend='splitting-an-application-into-multiple-packages'>Splitting an Application
-                    into Multiple Packages</link>" section.
+                    By default, the <filename>helloworld</filename>,
+                    <filename>helloworld-dbg</filename>, and
+                    <filename>helloworld-dev</filename> packages are built.
+                    For information on how to customize the packaging process,
+                    see the
+                    "<link linkend='splitting-an-application-into-multiple-packages'>Splitting an Application into Multiple Packages</link>"
+                    section.
                 </para>
             </section>
 
@@ -2150,8 +2185,9 @@ do_unpack unpacks the source, and S must be set
                     Applications that use Autotools such as <filename>autoconf</filename> and
                     <filename>automake</filename> require a recipe that has a source archive listed in
                     <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename> and
-                    also inherits Autotools, which instructs BitBake to use the
-                    <filename>autotools.bbclass</filename> file, which contains the definitions of all the steps
+                    also inherit the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-autotools'><filename>autotools</filename></ulink>
+                    class, which contains the definitions of all the steps
                     needed to build an Autotool-based application.
                     The result of the build is automatically packaged.
                     And, if the application uses NLS for localization, packages with local information are
@@ -2368,25 +2404,6 @@ do_unpack unpacks the source, and S must be set
                     is unset when executed on the first boot.
                 </para>
             </section>
-
-
-
-
-
-        </section>
-
-        <section id='writer-notes'>
-            <title>Writer Notes</title>
-
-            <para>
-                <itemizedlist>
-                    <listitem><para>
-                        Need to edit the faq.xml chapter and find the single reference to
-                        <filename>usingpoky-extend-addpkg</filename> and replace it
-                        with <filename>new-recipe-testing-hello-world-example</filename>.
-                        </para></listitem>
-                </itemizedlist>
-            </para>
         </section>
     </section>
 
