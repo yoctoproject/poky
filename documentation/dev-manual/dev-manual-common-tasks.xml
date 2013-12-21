@@ -1146,6 +1146,12 @@
             requires a recipe to define the component.
             This section describes how to create, write, and test a new
             recipe.
+            <note>
+                For information on variables that are useful for recipes and
+                for information about recipe naming issues, see the
+                "<ulink url='&YOCTO_DOCS_REF_URL;#ref-varlocality-recipe-required'>Required</ulink>"
+                section of the Yocto Project Reference Manual.
+            </note>
         </para>
 
         <section id='new-recipe-overview'>
@@ -1161,6 +1167,16 @@
 
         <section id='new-recipe-locate-a-base-recipe'>
             <title>Locate a Base Recipe</title>
+
+            <para>
+                Before writing a recipe from scratch, it is often useful to
+                check whether someone else has written one already.
+                OpenEmbedded is a good place to look as it has a wider scope
+                and range of packages.
+                Because the Yocto Project aims to be compatible with
+                OpenEmbedded, most recipes you find there should work for
+                you.
+            </para>
 
             <para>
                 Working from an existing recipe or a skeleton recipe is the
@@ -1204,6 +1220,42 @@
                         </para></listitem>
                 </itemizedlist>
             </para>
+
+            <note>
+                <para>When writing shell functions, you need to be aware of BitBake's
+                curly brace parsing.
+                If a recipe uses a closing curly brace within the function and
+                the character has no leading spaces, BitBake produces a parsing
+                error.
+                If you use a pair of curly brace in a shell function, the
+                closing curly brace must not be located at the start of the line
+                without leading spaces.</para>
+                <para>Here is an example that causes BitBake to produce a parsing
+                error:
+                <literallayout class='monospaced'>
+     fakeroot create_shar() {
+         cat &lt;&lt; "EOF" &gt; ${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.sh
+     usage()
+     {
+       echo "test"
+       ###### The following "}" at the start of the line causes a parsing error ######
+     }
+     EOF
+     }
+                </literallayout>
+                Writing the recipe this way avoids the error:
+                <literallayout class='monospaced'>
+     fakeroot create_shar() {
+         cat &lt;&lt; "EOF" &gt; ${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.sh
+     usage()
+     {
+       echo "test"
+       ######The following "}" with a leading space at the start of the line avoids the error ######
+      }
+     EOF
+     }
+                </literallayout></para>
+            </note>
         </section>
 
         <section id='new-recipe-naming-the-recipe'>
@@ -2036,89 +2088,32 @@ do_unpack unpacks the source, and S must be set
                 section.
             </para>
         </section>
-    </section>
 
-    <section id='usingpoky-extend-addpkg'>
-        <title>Writing a Recipe to Add a Package to Your Image</title>
-
-        <para>
-            Recipes let you define packages you can add to your image.
-            Writing a recipe means creating a <filename>.bb</filename> file that sets some
-            variables.
-            For information on variables that are useful for recipes and for information about recipe naming
-            issues, see the
-            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-varlocality-recipe-required'>Required</ulink>"
-            section of the Yocto Project Reference Manual.
-        </para>
-
-        <para>
-            Before writing a recipe from scratch, it is often useful to check
-            whether someone else has written one already.
-            OpenEmbedded is a good place to look as it has a wider scope and range of packages.
-            Because the Yocto Project aims to be compatible with OpenEmbedded, most recipes
-            you find there should work for you.
-        </para>
-
-        <para>
-            For new packages, the simplest way to add a recipe is to base it on a similar
-            pre-existing recipe.
-            The sections that follow provide some examples that show how to add standard
-            types of packages.
-        </para>
-
-        <note>
-            <para>When writing shell functions, you need to be aware of BitBake's
-            curly brace parsing.
-            If a recipe uses a closing curly brace within the function and
-            the character has no leading spaces, BitBake produces a parsing
-            error.
-            If you use a pair of curly brace in a shell function, the
-            closing curly brace must not be located at the start of the line
-            without leading spaces.</para>
-            <para>Here is an example that causes BitBake to produce a parsing
-            error:
-            <literallayout class='monospaced'>
-     fakeroot create_shar() {
-         cat &lt;&lt; "EOF" &gt; ${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.sh
-     usage()
-     {
-       echo "test"
-       ###### The following "}" at the start of the line causes a parsing error ######
-     }
-     EOF
-     }
-            </literallayout>
-            Writing the recipe this way avoids the error:
-            <literallayout class='monospaced'>
-     fakeroot create_shar() {
-         cat &lt;&lt; "EOF" &gt; ${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.sh
-     usage()
-     {
-       echo "test"
-       ######The following "}" with a leading space at the start of the line avoids the error ######
-      }
-     EOF
-     }
-            </literallayout></para>
-        </note>
-
-        <section id='usingpoky-extend-addpkg-singlec'>
-            <title>Single .c File Package (Hello World!)</title>
+        <section id='new-recipe-testing-hello-world-example'>
+            <title>Hello World Example</title>
 
             <para>
-                Building an application from a single file that is stored locally (e.g. under
-                <filename>files/</filename>) requires a recipe that has the file listed in
-                the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>
-                variable.
-                Additionally, you need to manually write the <filename>do_compile</filename> and
-                <filename>do_install</filename> tasks.
-                The <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink></filename>
-                variable defines the
-                directory containing the source code, which is set to
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'>
-                WORKDIR</ulink></filename> in this case - the directory BitBake uses for the build.
-                <literallayout class='monospaced'>
+                To help summarize how to write a recipe, this section provides
+                an example recipe that builds a single "Hello World!" package.
+            </para>
+
+            <section id='usingpoky-extend-addpkg-singlec'>
+                <title>Single .c File Package (Hello World!)</title>
+
+                <para>
+                    Building an application from a single file that is stored locally (e.g. under
+                    <filename>files/</filename>) requires a recipe that has the file listed in
+                    the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>
+                    variable.
+                    Additionally, you need to manually write the <filename>do_compile</filename> and
+                    <filename>do_install</filename> tasks.
+                    The <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink></filename>
+                    variable defines the
+                    directory containing the source code, which is set to
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'>
+                    WORKDIR</ulink></filename> in this case - the directory BitBake uses for the build.
+                    <literallayout class='monospaced'>
      DESCRIPTION = "Simple helloworld application"
      SECTION = "examples"
      LICENSE = "MIT"
@@ -2137,32 +2132,32 @@ do_unpack unpacks the source, and S must be set
      	install -d ${D}${bindir}
      	install -m 0755 helloworld ${D}${bindir}
      }
-                </literallayout>
-            </para>
+                    </literallayout>
+                </para>
 
-            <para>
-                By default, the <filename>helloworld</filename>, <filename>helloworld-dbg</filename>,
-                and <filename>helloworld-dev</filename> packages are built.
-                For information on how to customize the packaging process, see the
-                "<link linkend='splitting-an-application-into-multiple-packages'>Splitting an Application
-                into Multiple Packages</link>" section.
-            </para>
-        </section>
+                <para>
+                    By default, the <filename>helloworld</filename>, <filename>helloworld-dbg</filename>,
+                    and <filename>helloworld-dev</filename> packages are built.
+                    For information on how to customize the packaging process, see the
+                    "<link linkend='splitting-an-application-into-multiple-packages'>Splitting an Application
+                    into Multiple Packages</link>" section.
+                </para>
+            </section>
 
-        <section id='usingpoky-extend-addpkg-autotools'>
-            <title>Autotooled Package</title>
-            <para>
-                Applications that use Autotools such as <filename>autoconf</filename> and
-                <filename>automake</filename> require a recipe that has a source archive listed in
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename> and
-                also inherits Autotools, which instructs BitBake to use the
-                <filename>autotools.bbclass</filename> file, which contains the definitions of all the steps
-                needed to build an Autotool-based application.
-                The result of the build is automatically packaged.
-                And, if the application uses NLS for localization, packages with local information are
-                generated (one package per language).
-                Following is one example: (<filename>hello_2.3.bb</filename>)
-                <literallayout class='monospaced'>
+            <section id='usingpoky-extend-addpkg-autotools'>
+                <title>Autotooled Package</title>
+                <para>
+                    Applications that use Autotools such as <filename>autoconf</filename> and
+                    <filename>automake</filename> require a recipe that has a source archive listed in
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename> and
+                    also inherits Autotools, which instructs BitBake to use the
+                    <filename>autotools.bbclass</filename> file, which contains the definitions of all the steps
+                    needed to build an Autotool-based application.
+                    The result of the build is automatically packaged.
+                    And, if the application uses NLS for localization, packages with local information are
+                    generated (one package per language).
+                    Following is one example: (<filename>hello_2.3.bb</filename>)
+                    <literallayout class='monospaced'>
      DESCRIPTION = "GNU Helloworld application"
      SECTION = "examples"
      LICENSE = "GPLv2+"
@@ -2172,49 +2167,49 @@ do_unpack unpacks the source, and S must be set
      SRC_URI = "${GNU_MIRROR}/hello/hello-${PV}.tar.gz"
 
      inherit autotools gettext
-                 </literallayout>
-            </para>
+                     </literallayout>
+                </para>
 
-            <para>
-                The variable
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM'>LIC_FILES_CHKSUM</ulink></filename>
-                is used to track source license changes as described in the
-                "<ulink url='&YOCTO_DOCS_REF_URL;#usingpoky-configuring-LIC_FILES_CHKSUM'>Tracking License Changes</ulink>" section.
-                You can quickly create Autotool-based recipes in a manner similar to the previous example.
-            </para>
-        </section>
+                <para>
+                    The variable
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM'>LIC_FILES_CHKSUM</ulink></filename>
+                    is used to track source license changes as described in the
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#usingpoky-configuring-LIC_FILES_CHKSUM'>Tracking License Changes</ulink>" section.
+                    You can quickly create Autotool-based recipes in a manner similar to the previous example.
+                </para>
+            </section>
 
-        <section id='usingpoky-extend-addpkg-makefile'>
-            <title>Makefile-Based Package</title>
+            <section id='usingpoky-extend-addpkg-makefile'>
+                <title>Makefile-Based Package</title>
 
-            <para>
-                Applications that use GNU <filename>make</filename> also require a recipe that has
-                the source archive listed in
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>.
-                You do not need to add a <filename>do_compile</filename> step since by default BitBake
-                starts the <filename>make</filename> command to compile the application.
-                If you need additional <filename>make</filename> options, you should store them in the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OEMAKE'>EXTRA_OEMAKE</ulink></filename>
-                variable.
-                BitBake passes these options into the <filename>make</filename> GNU invocation.
-                Note that a <filename>do_install</filename> task is still required.
-                Otherwise, BitBake runs an empty <filename>do_install</filename> task by default.
-            </para>
+                <para>
+                    Applications that use GNU <filename>make</filename> also require a recipe that has
+                    the source archive listed in
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>.
+                    You do not need to add a <filename>do_compile</filename> step since by default BitBake
+                    starts the <filename>make</filename> command to compile the application.
+                    If you need additional <filename>make</filename> options, you should store them in the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OEMAKE'>EXTRA_OEMAKE</ulink></filename>
+                    variable.
+                    BitBake passes these options into the <filename>make</filename> GNU invocation.
+                    Note that a <filename>do_install</filename> task is still required.
+                    Otherwise, BitBake runs an empty <filename>do_install</filename> task by default.
+                </para>
 
-            <para>
-                Some applications might require extra parameters to be passed to the compiler.
-                For example, the application might need an additional header path.
-                You can accomplish this by adding to the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink></filename> variable.
-                The following example shows this:
-                <literallayout class='monospaced'>
+               <para>
+                    Some applications might require extra parameters to be passed to the compiler.
+                    For example, the application might need an additional header path.
+                    You can accomplish this by adding to the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink></filename> variable.
+                    The following example shows this:
+                    <literallayout class='monospaced'>
      CFLAGS_prepend = "-I ${S}/include "
-                </literallayout>
-            </para>
+                    </literallayout>
+                </para>
 
-            <para>
-            In the following example, <filename>mtd-utils</filename> is a makefile-based package:
-                <literallayout class='monospaced'>
+                <para>
+                In the following example, <filename>mtd-utils</filename> is a makefile-based package:
+                    <literallayout class='monospaced'>
      DESCRIPTION = "Tools for managing memory technology devices."
      SECTION = "base"
      DEPENDS = "zlib lzo e2fsprogs util-linux"
@@ -2245,46 +2240,46 @@ do_unpack unpacks the source, and S must be set
      PARALLEL_MAKE = ""
 
      BBCLASSEXTEND = "native"
-                </literallayout>
-            </para>
+                    </literallayout>
+                </para>
 
-            <para>
-                If your sources are available as a tarball instead of a Git repository, you
-                will need to provide the URL to the tarball as well as an
-                <filename>md5</filename> or <filename>sha256</filename> sum of
-                the download.
-                Here is an example:
-                <literallayout class='monospaced'>
+                <para>
+                    If your sources are available as a tarball instead of a Git repository, you
+                    will need to provide the URL to the tarball as well as an
+                    <filename>md5</filename> or <filename>sha256</filename> sum of
+                    the download.
+                    Here is an example:
+                    <literallayout class='monospaced'>
      SRC_URI="ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-1.4.9.tar.bz2"
      SRC_URI[md5sum]="82b8e714b90674896570968f70ca778b"
-                </literallayout>
-                You can generate the <filename>md5</filename> or <filename>sha256</filename> sums
-                by using the <filename>md5sum</filename> or <filename>sha256sum</filename> commands
-                with the target file as the only argument.
-                Here is an example:
-                <literallayout class='monospaced'>
+                    </literallayout>
+                    You can generate the <filename>md5</filename> or <filename>sha256</filename> sums
+                    by using the <filename>md5sum</filename> or <filename>sha256sum</filename> commands
+                    with the target file as the only argument.
+                    Here is an example:
+                    <literallayout class='monospaced'>
      $ md5sum mtd-utils-1.4.9.tar.bz2
      82b8e714b90674896570968f70ca778b mtd-utils-1.4.9.tar.bz2
-                </literallayout>
-            </para>
-        </section>
+                   </literallayout>
+                </para>
+            </section>
 
-        <section id='splitting-an-application-into-multiple-packages'>
-            <title>Splitting an Application into Multiple Packages</title>
+            <section id='splitting-an-application-into-multiple-packages'>
+                <title>Splitting an Application into Multiple Packages</title>
 
-            <para>
-                You can use the variables
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename> and
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'>FILES</ulink></filename>
-                to split an application into multiple packages.
-            </para>
+                <para>
+                    You can use the variables
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename> and
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'>FILES</ulink></filename>
+                    to split an application into multiple packages.
+                </para>
 
-            <para>
-                Following is an example that uses the <filename>libXpm</filename> recipe.
-                By default, this recipe generates a single package that contains the library along
-                with a few binaries.
-                You can modify the recipe to split the binaries into separate packages:
-                <literallayout class='monospaced'>
+                <para>
+                    Following is an example that uses the <filename>libXpm</filename> recipe.
+                    By default, this recipe generates a single package that contains the library along
+                    with a few binaries.
+                    You can modify the recipe to split the binaries into separate packages:
+                    <literallayout class='monospaced'>
      require xorg-lib-common.inc
 
      DESCRIPTION = "X11 Pixmap library"
@@ -2299,61 +2294,61 @@ do_unpack unpacks the source, and S must be set
      PACKAGES =+ "sxpm cxpm"
      FILES_cxpm = "${bindir}/cxpm"
      FILES_sxpm = "${bindir}/sxpm"
-                </literallayout>
-            </para>
+                    </literallayout>
+                </para>
 
-            <para>
-                In the previous example, we want to ship the <filename>sxpm</filename>
-                and <filename>cxpm</filename> binaries in separate packages.
-                Since <filename>bindir</filename> would be packaged into the main
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'>PN</ulink></filename>
-                package by default, we prepend the <filename>PACKAGES</filename>
-                variable so additional package names are added to the start of list.
-                This results in the extra <filename>FILES_*</filename>
-                variables then containing information that define which files and
-                directories go into which packages.
-                Files included by earlier packages are skipped by latter packages.
-                Thus, the main <filename>PN</filename> package
-                does not include the above listed files.
-            </para>
-        </section>
+                <para>
+                    In the previous example, we want to ship the <filename>sxpm</filename>
+                    and <filename>cxpm</filename> binaries in separate packages.
+                    Since <filename>bindir</filename> would be packaged into the main
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'>PN</ulink></filename>
+                    package by default, we prepend the <filename>PACKAGES</filename>
+                    variable so additional package names are added to the start of list.
+                    This results in the extra <filename>FILES_*</filename>
+                    variables then containing information that define which files and
+                    directories go into which packages.
+                    Files included by earlier packages are skipped by latter packages.
+                    Thus, the main <filename>PN</filename> package
+                    does not include the above listed files.
+                </para>
+            </section>
 
-        <section id='usingpoky-extend-addpkg-postinstalls'>
-            <title>Post-Installation Scripts</title>
+            <section id='usingpoky-extend-addpkg-postinstalls'>
+                <title>Post-Installation Scripts</title>
 
-            <para>
-                To add a post-installation script to a package, add a
-                <filename>pkg_postinst_PACKAGENAME()</filename> function to the
-                <filename>.bb</filename> file and use
-                <filename>PACKAGENAME</filename> as the name of the package you want to attach to the
-                <filename>postinst</filename> script.
-                Normally,
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'>PN</ulink></filename>
-                can be used, which automatically expands to <filename>PACKAGENAME</filename>.
-                A post-installation function has the following structure:
-                <literallayout class='monospaced'>
+                <para>
+                    To add a post-installation script to a package, add a
+                    <filename>pkg_postinst_PACKAGENAME()</filename> function to the
+                    <filename>.bb</filename> file and use
+                    <filename>PACKAGENAME</filename> as the name of the package you want to attach to the
+                    <filename>postinst</filename> script.
+                    Normally,
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'>PN</ulink></filename>
+                    can be used, which automatically expands to <filename>PACKAGENAME</filename>.
+                    A post-installation function has the following structure:
+                    <literallayout class='monospaced'>
      pkg_postinst_PACKAGENAME () {
      #!/bin/sh -e
      # Commands to carry out
      }
-                </literallayout>
-            </para>
+                    </literallayout>
+                </para>
 
-            <para>
-                The script defined in the post-installation function is called when the
-                root filesystem is created.
-                If the script succeeds, the package is marked as installed.
-                If the script fails, the package is marked as unpacked and the script is
-                executed when the image boots again.
-            </para>
+                <para>
+                    The script defined in the post-installation function is called when the
+                    root filesystem is created.
+                    If the script succeeds, the package is marked as installed.
+                    If the script fails, the package is marked as unpacked and the script is
+                    executed when the image boots again.
+                </para>
 
-            <para>
-                Sometimes it is necessary for the execution of a post-installation
-                script to be delayed until the first boot.
-                For example, the script might need to be executed on the device itself.
-                To delay script execution until boot time, use the following structure in the
-                post-installation script:
-                <literallayout class='monospaced'>
+                <para>
+                    Sometimes it is necessary for the execution of a post-installation
+                    script to be delayed until the first boot.
+                    For example, the script might need to be executed on the device itself.
+                    To delay script execution until boot time, use the following structure in the
+                    post-installation script:
+                    <literallayout class='monospaced'>
      pkg_postinst_PACKAGENAME () {
      #!/bin/sh -e
      if [ x"$D" = "x" ]; then
@@ -2362,15 +2357,35 @@ do_unpack unpacks the source, and S must be set
           exit 1
      fi
      }
-                </literallayout>
-            </para>
+                    </literallayout>
+                </para>
+
+                <para>
+                    The previous example delays execution until the image boots again because the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'>D</ulink></filename>
+                    variable points
+                    to the directory containing the image when the root filesystem is created at build time but
+                    is unset when executed on the first boot.
+                </para>
+            </section>
+
+
+
+
+
+        </section>
+
+        <section id='writer-notes'>
+            <title>Writer Notes</title>
 
             <para>
-                The previous example delays execution until the image boots again because the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'>D</ulink></filename>
-                variable points
-                to the directory containing the image when the root filesystem is created at build time but
-                is unset when executed on the first boot.
+                <itemizedlist>
+                    <listitem><para>
+                        Need to edit the faq.xml chapter and find the single reference to
+                        <filename>usingpoky-extend-addpkg</filename> and replace it
+                        with <filename>new-recipe-testing-hello-world-example</filename>.
+                        </para></listitem>
+                </itemizedlist>
             </para>
         </section>
     </section>
