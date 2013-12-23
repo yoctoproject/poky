@@ -22,7 +22,7 @@ reference manual which can be found at:
 
 OpenEmbedded-Core is a layer containing the core metadata for current versions
 of OpenEmbedded. It is distro-less (can build a functional image with
-DISTRO = "") and contains only emulated machine support.
+DISTRO = "nodistro") and contains only emulated machine support.
 
 For information about OpenEmbedded, see the OpenEmbedded website:
     http://www.openembedded.org/
