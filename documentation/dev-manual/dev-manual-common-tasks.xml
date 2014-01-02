@@ -5436,8 +5436,8 @@
                 sure all post-installation scripts succeed.
                 If any of these scripts still need to be run after the root
                 filesystem is created, the build immediately fails.
-                These checks during build time ensure that the build fails
-                rather than the target device fails later during its
+                These build-time checks ensure that the build fails
+                rather than the target device failing later during its
                 initial boot operation.
             </para>
 
@@ -5447,7 +5447,7 @@
                 so that they can run during root filesystem creation
                 (e.g. post-installation scripts for caching fonts).
                 However, if you create and add custom scripts, you need
-                to be sure they can be run during file system creation.
+                to be sure they can be run during this file system creation.
             </para>
 
             <para>
@@ -5455,18 +5455,22 @@
                 post-installation scripts from running during root filesystem
                 creation:
                 <itemizedlist>
-                    <listitem><para><emphasis>Not using $D in front of absolute paths:</emphasis>
+                    <listitem><para>
+                        <emphasis>Not using $D in front of absolute
+                        paths:</emphasis>
                         The build system defines
                         <filename>$</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink>
-                        at root filesystem creation time, and
-                        it is blank when run on the target device.
+                        when the root filesystem is created.
+                        Furthermore, <filename>$D</filename> is blank when the
+                        script is run on the target device.
                         This implies two purposes for <filename>$D</filename>:
                         ensuring paths are valid in both the host and target
                         environments, and checking to determine which
                         environment is being used as a method for taking
                         appropriate actions.
                         </para></listitem>
-                    <listitem><para><emphasis>Attempting to run processes that are
+                    <listitem><para>
+                        <emphasis>Attempting to run processes that are
                         specific to or dependent on the target
                         architecture:</emphasis>
                         You can work around these attempts by using native
@@ -5475,10 +5479,8 @@
                         which has the <filename>qemu_run_binary</filename>
                         function.
                         For more information, see the
-                        <filename>meta/classes/qemu.bbclass</filename>
-                        class in the
-                        <link linkend='source-directory'>Source Directory</link>.
-                        </para></listitem>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-qemu'><filename>qemu</filename></ulink>
+                        class.</para></listitem>
                 </itemizedlist>
             </para>
         </section>
