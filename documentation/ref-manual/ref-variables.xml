@@ -3034,6 +3034,49 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-INITRAMFS_IMAGE'><glossterm>INITRAMFS_IMAGE</glossterm>
+            <glossdef>
+                <para>
+                    Causes the OpenEmbedded build system to build an additional
+                    recipe as a dependency to your root filesystem recipe
+                    (e.g. <filename>core-image-sato</filename>).
+                    The additional recipe is used to create an initial RAM disk
+                    (initramfs) that might be needed during the initial boot of
+                    the target system to accomplish such things as loading
+                    kernel modules prior to mounting the root file system.
+                </para>
+
+                <para>
+                    When you set the variable, specify the name of the
+                    initramfs you want created.
+                    The following example, which is set in the
+                    <filename>local.conf</filename> configuration file, causes
+                    a separate recipe to be created that results in an
+                    initramfs image named
+                    <filename>core-image-sato-initramfs.bb</filename> to be
+                    created:
+                    <literallayout class='monospaced'>
+     INITRAMFS_IMAGE = "core-image-minimal-initramfs"
+                    </literallayout>
+                    By default, the
+                    <link linkend='ref-classes-kernel'><filename>kernel</filename></link>
+                    class sets this variable to a null string as follows:
+                    <literallayout class='monospaced'>
+     INITRAMFS_IMAGE = ""
+                    </literallayout>
+                </para>
+
+                <para>
+                    See the
+                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto/conf/local.conf.sample.extended'><filename>local.conf.sample.extended</filename></ulink>
+                    file for additional information.
+                    You can also reference the
+                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/kernel.bbclass'><filename>kernel.bbclass</filename></ulink>
+                    file to see how the variable is used.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-INITRAMFS_IMAGE_BUNDLE'><glossterm>INITRAMFS_IMAGE_BUNDLE</glossterm>
             <glossdef>
                 <para>
@@ -3068,7 +3111,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                         You cannot set the variable in a recipe file.
                     </note>
                     See the
-                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto/conf/local.conf.sample.extended'>local.conf.sample.extended</ulink>
+                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto/conf/local.conf.sample.extended'><filename>local.conf.sample.extended</filename></ulink>
                     file for additional information.
                 </para>
             </glossdef>
