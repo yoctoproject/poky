@@ -1407,29 +1407,55 @@
             </para>
 
             <para>
-                The <filename>do_fetch</filename> task uses the
-                <filename>SRC_URI</filename> variable and its prefix to
-                determine what fetcher to use to get your source files.
+                The <filename>do_fetch</filename> task uses the prefix of
+                each entry in the <filename>SRC_URI</filename> variable value
+                to determine what fetcher to use to get your source files.
                 It is the <filename>SRC_URI</filename> variable that triggers
                 the fetcher.
                 The <filename>do_patch</filename> task uses the variable after
                 source is fetched to apply patches.
                 The OpenEmbedded build system uses
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESOVERRIDES'><filename>FILESOVERRIDES</filename></ulink>
-                when scanning directory names for files in
+                for scanning directory locations for local files in
                 <filename>SRC_URI</filename>.
             </para>
 
             <para>
-                The instance of the <filename>SRC_URI</filename>
-                variable in your recipe must define each unique location
-                for your source files.
+                The <filename>SRC_URI</filename> variable in your recipe must
+                define each unique location for your source files.
+                It is good practice to not hard-code pathnames in an URL used
+                in <filename>SRC_URI</filename>.
+                Rather than hard-code these paths, use
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink><filename>}</filename>,
+                which causes the fetch process to use the version specified in
+                the recipe filename.
+                Specifying the version in this manner means that upgrading the
+                recipe to a future version is as simple as renaming the recipe
+                to match the new version.
+            </para>
+
+            <para>
                 Here is a simple example from the
                 <filename>meta/recipes-devtools/cdrtools/cdrtools-native_3.01a17.bb</filename>
-                recipe where the source comes from a single tarball:
+                recipe where the source comes from a single tarball.
+                Notice the use of the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
+                variable:
                 <literallayout class='monospaced'>
      SRC_URI = "ftp://ftp.berlios.de/pub/cdrecord/alpha/cdrtools-${PV}.tar.bz2"
                 </literallayout>
+            </para>
+
+            <para>
+                Files mentioned in <filename>SRC_URI</filename> whose names end
+                in a typical archive extension (e.g. <filename>.tar</filename>,
+                <filename>.tar.gz</filename>, <filename>.tar.bz2</filename>,
+                <filename>.zip</filename>, and so forth), are automatically
+                extracted during the <filename>do_unpack</filename> task.
+                For another example that specifies these types of files, see
+                the
+                "<link linkend='usingpoky-extend-addpkg-autotools'>Autotooled Package</link>"
+                section.
             </para>
 
             <para>
@@ -1437,8 +1463,8 @@
                 <filename>meta/recipes-sato/rxvt-unicode/rxvt-unicode_9.19.bb</filename>
                 recipe.
                 The example uses a <filename>SRC_URI</filename> statement
-                that identifies a tarball, a patch file, a desktop file, and a
-                figure all as source code.
+                that identifies a tarball, a patch file, a desktop file, and an
+                icon as the source files for the recipe.
                 <literallayout class='monospaced'>
      SRC_URI = "http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-${PV}.tar.bz2 \
                 file://xwc.patch \
@@ -1448,83 +1474,54 @@
             </para>
 
             <para>
-                The following list discusses some information worth noting when
-                you provide the <filename>SRC_URI</filename> variable in your
-                recipe:
-                <itemizedlist>
-                    <listitem><para><emphasis>Avoid hard-coding URLs:</emphasis>
-                        Rather than hard-coding the version in an URL, it is
-                        good practice to use
-                        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink><filename>}</filename>,
-                        which causes the fetch process to use the version
-                        specified in the recipe filename.
-                        Specifying the version in this manner means that
-                        upgrading the recipe to a future version is as simple
-                        as renaming the recipe to match the new version.
-                        Notice that the two examples in the previous paragraph
-                        both use <filename>${PV}</filename>.</para></listitem>
-                    <listitem><para><emphasis>Using the <filename>file://</filename> URI protocol:</emphasis>
-                        When you specify local files using the
-                        <filename>file://</filename> URI protocol, the build
-                        system fetches files from the local machine.
-                        The path is relative to the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
-                        variable and searches specific directories in a
-                        certain order:
-                        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BPN'><filename>BPN</filename></ulink><filename>}</filename>,
-                        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BP'><filename>BP</filename></ulink><filename>}</filename>,
-                        and <filename>files</filename>.
-                        The directories are assumed to be subdirectories of
-                        the directory in which the recipe or append file
-                        resides.</para>
-                        <para>For more information, see the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                        variable.
-                        You can also reference the
-                        "<link linkend='usingpoky-extend-addpkg-singlec'>Single .c File Package (Hello World!)</link>"
-                        section for an example recipe.</para></listitem>
-                    <listitem><para><emphasis>Specifying patch files:</emphasis>
-                        Files mentioned in <filename>SRC_URI</filename> whose
-                        names end in <filename>.patch</filename> or
-                        <filename>.diff</filename> are treated as patches and
-                        are automatically applied during the
-                        <filename>do_patch</filename> task.</para>
-                        <para>The build system should be able to apply patches
-                        with the "-p1" option (i.e. one directory level in the
-                        path will be stripped off).
-                        If your patch needs to have more directory levels
-                        stripped off, specify the number of levels using the
-                        "striplevel" option in the <filename>SRC_URI</filename>
-                        entry for the patch.
-                        Alternatively, if your patch needs to be applied in a
-                        specific subdirectory that is not specified in the patch
-                        file, use the "patchdir" option in the entry.
-                        </para></listitem>
-                    <listitem><para><emphasis>Extracting archived source files:</emphasis>
-                        Files mentioned in <filename>SRC_URI</filename> whose
-                        names end in a typical archive extension
-                        (e.g. <filename>.tar</filename>,
-                        <filename>.tar.gz</filename>,
-                        <filename>.tar.bz2</filename>,
-                        <filename>.zip</filename>, and so forth),
-                        are automatically extracted during
-                        the <filename>do_unpack</filename> task.
-                        </para>
-                        <para>See the
-                        "<link linkend='usingpoky-extend-addpkg-autotools'>Autotooled Package</link>"
-                        section for an example recipe that uses Autotools and
-                        whose <filename>SRC_URI</filename> points to archived
-                        source files.</para></listitem>
-                    <listitem><para><emphasis>Specifying source from an SCM:</emphasis>
-                        For Git repositories, you must specify
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
-                        and you should specify
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
-                        to include the revision with
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCPV'><filename>SRCPV</filename></ulink>.
-                        Here is an example from the recipe
-                        <filename>meta/recipes-kernel/blktrace/blktrace_git.bb</filename>:
-                        <literallayout class='monospaced'>
+                When you specify local files using the
+                <filename>file://</filename> URI protocol, the build system
+                fetches files from the local machine.
+                The path is relative to the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
+                variable and searches specific directories in a certain order:
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BPN'><filename>BPN</filename></ulink><filename>}</filename>,
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BP'><filename>BP</filename></ulink><filename>}</filename>,
+                and <filename>files</filename>.
+                The directories are assumed to be subdirectories of the
+                directory in which the recipe or append file resides.
+                For another example that specifies these types of files, see the
+                "<link linkend='usingpoky-extend-addpkg-singlec'>Single .c File Package (Hello World!)</link>"
+                section.
+            </para>
+
+            <para>
+                The previous example also specifies a patch file.
+                Patch files are files whose names end in
+                <filename>.patch</filename> or <filename>.diff</filename>.
+                The build system automatically applies patches as described
+                in the
+                "<link linkend='new-recipe-patching-code'>Patching Code</link>" section.
+            </para>
+
+            <para>
+                The build system should be able to apply patches with the "-p1"
+                option (i.e. one directory level in the path will be stripped
+                off).
+                If your patch needs to have more directory levels stripped off,
+                specify the number of levels using the "striplevel" option in
+                the <filename>SRC_URI</filename> entry for the patch.
+                Alternatively, if your patch needs to be applied in a specific
+                subdirectory that is not specified in the patch file, use the
+                "patchdir" option in the entry.
+            </para>
+
+            <para>
+                A final way of specifying source is from an SCM.
+                For Git repositories, you must specify
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
+                and you should specify
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
+                to include the revision with
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCPV'><filename>SRCPV</filename></ulink>.
+                Here is an example from the recipe
+                <filename>meta/recipes-kernel/blktrace/blktrace_git.bb</filename>:
+                <literallayout class='monospaced'>
      SRCREV = "d6918c8832793b4205ed3bfede78c2f915c23385"
 
      PR = "r6"
@@ -1532,8 +1529,7 @@
 
      SRC_URI = "git://git.kernel.dk/blktrace.git \
                 file://ldflags.patch"
-                        </literallayout></para></listitem>
-                </itemizedlist>
+                </literallayout>
             </para>
 
             <para>
@@ -1544,8 +1540,8 @@
                 ensure they have not been tampered with or otherwise modified
                 since the recipe was written.
                 Two checksums are used:
-                <filename>SRC_URI[md5sum] = ""</filename> and
-                <filename>SRC_URI[sha256sum] = ""</filename>.
+                <filename>SRC_URI[md5sum]</filename> and
+                <filename>SRC_URI[sha256sum]</filename>.
             </para>
 
             <para>
@@ -1577,6 +1573,20 @@
                 string.
                 Once you have the correct checksums, simply copy them into your
                 recipe for a subsequent build.
+            </para>
+        </section>
+
+        <section id='new-recipe-patching-code'>
+            <title>Patching Code</title>
+
+            <para>
+                Sometimes it is necessary to patch code after it has been
+                fetched.
+                Any files mentioned in <filename>SRC_URI</filename> whose
+                names end in <filename>.patch</filename> or
+                <filename>.diff</filename> are treated as patches.
+                The <filename>do_patch</filename> task automatically applies
+                these patches.
             </para>
         </section>
 
