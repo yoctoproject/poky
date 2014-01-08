@@ -1264,55 +1264,53 @@
             </para>
         </section>
 
-        <section id='new-recipe-naming-the-recipe'>
-            <title>Naming the Recipe</title>
+        <section id='new-recipe-storing-and-naming-the-recipe'>
+            <title>Storing and Naming the Recipe</title>
 
             <para>
-                Once you have your base recipe, you need to name it and be
-                sure that it resides where the OpenEmbedded build system
-                can find it.
+                Once you have your base recipe, you should put it in your
+                own layer and name it appropriately.
+                Locating it correctly ensures that the OpenEmbedded build
+                system can find it when you use BitBake to process the
+                recipe.
             </para>
 
-            <para>
-                When you name your recipe, you need to follow this naming
-                convention:
-                <literallayout class='monospaced'>
+            <itemizedlist>
+                <listitem><para><emphasis>Storing Your Recipe:</emphasis>
+                    The OpenEmbedded build system locates your recipe
+                    through the <filename>layer.conf</filename> file and the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'><filename>BBFILES</filename></ulink>
+                    variable.
+                    This variable sets up a path from which the build system can
+                    locate recipes.
+                    Here is the typical use:
+                    <literallayout class='monospaced'>
+     BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
+                 ${LAYERDIR}/recipes-*/*/*.bbappend"
+                    </literallayout>
+                    Consequently, you need to be sure you locate your new recipe
+                    inside your layer such that it can be found.</para>
+                    <para>You can find more information on how layers are
+                    structured in the
+                    "<link linkend='understanding-and-creating-layers'>Understanding and Creating Layers</link>"
+                    section.</para></listitem>
+                <listitem><para><emphasis>Naming Your Recipe:</emphasis>
+                    When you name your recipe, you need to follow this naming
+                    convention:
+                    <literallayout class='monospaced'>
      &lt;basename&gt;_&lt;version&gt;.bb
-                </literallayout>
-                Use lower-cased characters and do not include the reserved
-                suffixes <filename>-native</filename>,
-                <filename>-cross</filename>, <filename>-initial</filename>,
-                or <filename>-dev</filename>.
-                Here are some examples:
-                <literallayout class='monospaced'>
+                    </literallayout>
+                    Use lower-cased characters and do not include the reserved
+                    suffixes <filename>-native</filename>,
+                    <filename>-cross</filename>, <filename>-initial</filename>,
+                    or <filename>-dev</filename>.
+                    Here are some examples:
+                    <literallayout class='monospaced'>
      cups_1.7.0.bb
      gawk_4.0.2.bb
      xdg-utils_1.1.0-rc1.bb
-                </literallayout>
-            </para>
-
-            <para>
-                The OpenEmbedded build system locates your recipe through
-                the <filename>layer.conf</filename> file and the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'><filename>BBFILES</filename></ulink>
-                variable.
-                This variable sets up a path from which the build system can
-                locate recipes.
-                Here is the typical use:
-                <literallayout class='monospaced'>
-     BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
-                 ${LAYERDIR}/recipes-*/*/*.bbappend"
-                </literallayout>
-                Consequently, you need to be sure you locate your new recipe
-                inside your layer such that it can be found.
-            </para>
-
-            <para>
-                You can find more information on how layers are structured
-                in the
-                "<link linkend='understanding-and-creating-layers'>Understanding and Creating Layers</link>"
-                section.
-            </para>
+                    </literallayout></para></listitem>
+            </itemizedlist>
         </section>
 
         <section id='new-recipe-running-a-build-on-the-recipe'>
