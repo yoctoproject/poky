@@ -1876,15 +1876,33 @@
                         This failure applies to recipes building for the target
                         or <filename>nativesdk</filename> only.
                         The failure occurs when the compilation process uses
-                        headers, libraries, or other files from the host system
-                        when the process is cross-compiling for the target and
-                        should not be.</para>
+                        improper headers, libraries, or other files from the
+                        host system during cross-compiling for the target.
+                        </para>
                         <para>To fix the problem, you should be able to see
                         the host paths being used (e.g.
                         <filename>/usr/include</filename>,
                         <filename>/usr/lib</filename>, and so forth) by
-                        examining the <filename>log.do_configure</filename>
+                        examining the <filename>log.do_compile</filename>
                         file.</para></listitem>
+                    <listitem><para><emphasis>Failure to find required
+                        libraries/headers:</emphasis>
+                        If a build-time dependency is missing because it has
+                        not been declared in
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>,
+                        or because the dependency exists but the path used by
+                        the build process to find the file is incorrect and the
+                        configure step did not detect it, the compilation
+                        process could fail.
+                        For either of these failures, the compilation process
+                        notes that files could not be found.
+                        In these cases, you need to go back and add additional
+                        options to the configure script as well as possibly
+                        add additional build-time dependencies to
+                        <filename>DEPENDS</filename>.
+                        Occasionally, it is necessary to apply a patch to the
+                        source to ensure the correct paths are used.
+                        </para></listitem>
                 </itemizedlist>
             </para>
         </section>
