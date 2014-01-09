@@ -2142,6 +2142,87 @@
             </para>
         </section>
 
+        <section id='usingpoky-extend-addpkg-postinstalls'>
+            <title>Post-Installation Scripts</title>
+
+            <para>
+                Post-installation scripts run immediately after installing
+                a package on the target, or during image creation when a
+                package is included in an image.
+                To add a post-installation script to a package, add a
+                <filename>pkg_postinst_PACKAGENAME()</filename> function to
+                the <filename>.bb</filename> file and use
+                <filename>PACKAGENAME</filename> as the name of the package
+                you want to attach to the <filename>postinst</filename>
+                script.
+                To apply the post-installation script to the main package
+                for the recipe, which is usually what is required, specify
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>
+                in place of <filename>PACKAGENAME</filename>.
+            </para>
+
+            <para>
+                A post-installation function has the following structure:
+                <literallayout class='monospaced'>
+     pkg_postinst_PACKAGENAME () {
+     #!/bin/sh -e
+     # Commands to carry out
+     }
+                </literallayout>
+            </para>
+
+            <para>
+                The script defined in the post-installation function is
+                called when the root filesystem is created.
+                If the script succeeds, the package is marked as installed.
+                If the script fails, the package is marked as unpacked and
+                the script is executed when the image boots again.
+            </para>
+
+            <para>
+                Sometimes it is necessary for the execution of a
+                post-installation script to be delayed until the first boot.
+                For example, the script might need to be executed on the
+                device itself.
+                To delay script execution until boot time, use the following
+                structure in the post-installation script:
+                <literallayout class='monospaced'>
+     pkg_postinst_PACKAGENAME () {
+     #!/bin/sh -e
+     if [ x"$D" = "x" ]; then
+          # Actions to carry out on the device go here
+     else
+          exit 1
+     fi
+     }
+                </literallayout>
+            </para>
+
+            <para>
+                The previous example delays execution until the image boots
+                again because the
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'>D</ulink></filename>
+                variable points to the directory containing the image when
+                the root filesystem is created at build time but is unset
+                when executed on the first boot.
+            </para>
+
+            <note>
+                Equivalent support for <filename>pre-install</filename>,
+                <filename>pre-uninstall</filename>, and
+                <filename>post-uninstall</filename> scripts exist
+                by way of <filename>pkg_preinst</filename>,
+                <filename>pkg_prerm</filename>, and
+                <filename>pkg_postrm</filename>, respectively.
+                These scrips work in exactly the same way as does
+                <filename>pkg_postinst</filename> with the exception that they
+                run at different times.
+                Also, because of when they run, they are not applicable to
+                being run at image creation time like
+                <filename>pkg_postinst</filename>.
+            </note>
+        </section>
+
         <section id='new-recipe-testing'>
             <title>Testing</title>
 
@@ -2171,7 +2252,6 @@
                     <listitem><para>Using an Autotooled package</para></listitem>
                     <listitem><para>Using a Makefile-based package</para></listitem>
                     <listitem><para>Splitting an application into multiple packages</para></listitem>
-                    <listitem><para>Installing a post-initialization script</para></listitem>
                 </itemizedlist>
             </para>
 
@@ -2193,11 +2273,10 @@
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink>
                     in this case - the directory BitBake uses for the build.
                     <literallayout class='monospaced'>
-     DESCRIPTION = "Simple helloworld application"
+     SUMMARY = "Simple helloworld application"
      SECTION = "examples"
      LICENSE = "MIT"
      LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
-     PR = "r0"
 
      SRC_URI = "file://helloworld.c"
 
@@ -2240,11 +2319,10 @@
                     generated (one package per language).
                     Following is one example: (<filename>hello_2.3.bb</filename>)
                     <literallayout class='monospaced'>
-     DESCRIPTION = "GNU Helloworld application"
+     SUMMARY = "GNU Helloworld application"
      SECTION = "examples"
      LICENSE = "GPLv2+"
      LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
-     PR = "r0"
 
      SRC_URI = "${GNU_MIRROR}/hello/hello-${PV}.tar.gz"
 
@@ -2292,7 +2370,7 @@
                 <para>
                 In the following example, <filename>mtd-utils</filename> is a makefile-based package:
                     <literallayout class='monospaced'>
-     DESCRIPTION = "Tools for managing memory technology devices."
+     SUMMARY = "Tools for managing memory technology devices."
      SECTION = "base"
      DEPENDS = "zlib lzo e2fsprogs util-linux"
      HOMEPAGE = "http://www.linux-mtd.infradead.org/"
@@ -2324,26 +2402,6 @@
      BBCLASSEXTEND = "native"
                     </literallayout>
                 </para>
-
-                <para>
-                    If your sources are available as a tarball instead of a Git repository, you
-                    will need to provide the URL to the tarball as well as an
-                    <filename>md5</filename> or <filename>sha256</filename> sum of
-                    the download.
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     SRC_URI="ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-1.4.9.tar.bz2"
-     SRC_URI[md5sum]="82b8e714b90674896570968f70ca778b"
-                    </literallayout>
-                    You can generate the <filename>md5</filename> or <filename>sha256</filename> sums
-                    by using the <filename>md5sum</filename> or <filename>sha256sum</filename> commands
-                    with the target file as the only argument.
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     $ md5sum mtd-utils-1.4.9.tar.bz2
-     82b8e714b90674896570968f70ca778b mtd-utils-1.4.9.tar.bz2
-                   </literallayout>
-                </para>
             </section>
 
             <section id='splitting-an-application-into-multiple-packages'>
@@ -2357,21 +2415,21 @@
                 </para>
 
                 <para>
-                    Following is an example that uses the <filename>libXpm</filename> recipe.
+                    Following is an example that uses the <filename>libxpm</filename> recipe.
                     By default, this recipe generates a single package that contains the library along
                     with a few binaries.
                     You can modify the recipe to split the binaries into separate packages:
                     <literallayout class='monospaced'>
      require xorg-lib-common.inc
 
-     DESCRIPTION = "X11 Pixmap library"
+     SUMMARY = "X11 Pixmap library"
      LICENSE = "X-BSD"
      LIC_FILES_CHKSUM = "file://COPYING;md5=3e07763d16963c3af12db271a31abaa5"
      DEPENDS += "libxext libsm libxt"
      PR = "r3"
      PE = "1"
 
-     XORG_PN = "libXpm"
+     XORG_PN = "libxpm"
 
      PACKAGES =+ "sxpm cxpm"
      FILES_cxpm = "${bindir}/cxpm"
@@ -2392,62 +2450,6 @@
                     Files included by earlier packages are skipped by latter packages.
                     Thus, the main <filename>PN</filename> package
                     does not include the above listed files.
-                </para>
-            </section>
-
-            <section id='usingpoky-extend-addpkg-postinstalls'>
-                <title>Post-Installation Scripts</title>
-
-                <para>
-                    To add a post-installation script to a package, add a
-                    <filename>pkg_postinst_PACKAGENAME()</filename> function to the
-                    <filename>.bb</filename> file and use
-                    <filename>PACKAGENAME</filename> as the name of the package you want to attach to the
-                    <filename>postinst</filename> script.
-                    Normally,
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'>PN</ulink></filename>
-                    can be used, which automatically expands to <filename>PACKAGENAME</filename>.
-                    A post-installation function has the following structure:
-                    <literallayout class='monospaced'>
-     pkg_postinst_PACKAGENAME () {
-     #!/bin/sh -e
-     # Commands to carry out
-     }
-                    </literallayout>
-                </para>
-
-                <para>
-                    The script defined in the post-installation function is called when the
-                    root filesystem is created.
-                    If the script succeeds, the package is marked as installed.
-                    If the script fails, the package is marked as unpacked and the script is
-                    executed when the image boots again.
-                </para>
-
-                <para>
-                    Sometimes it is necessary for the execution of a post-installation
-                    script to be delayed until the first boot.
-                    For example, the script might need to be executed on the device itself.
-                    To delay script execution until boot time, use the following structure in the
-                    post-installation script:
-                    <literallayout class='monospaced'>
-     pkg_postinst_PACKAGENAME () {
-     #!/bin/sh -e
-     if [ x"$D" = "x" ]; then
-          # Actions to carry out on the device go here
-     else
-          exit 1
-     fi
-     }
-                    </literallayout>
-                </para>
-
-                <para>
-                    The previous example delays execution until the image boots again because the
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'>D</ulink></filename>
-                    variable points
-                    to the directory containing the image when the root filesystem is created at build time but
-                    is unset when executed on the first boot.
                 </para>
             </section>
         </section>
