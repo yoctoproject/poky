@@ -1749,12 +1749,10 @@
                 Typically, setting these options is accomplished by running a
                 configure script with some options, or by modifying a build
                 configuration file.
-            </para>
-
-            <para>
-                When considering configuration, you should realize that
-                required build-time or runtime dependencies might or might not
-                be noted in the software's documentation.
+                <note>
+                    It is possible that required build-time or runtime dependencies
+                    exist in the software's documentation.
+                </note>
             </para>
 
             <para>
@@ -1798,8 +1796,9 @@
                         <filename>CMakeLists.txt</filename> file, then your
                         software is built using some method other than Autotools
                         or CMake.
-                        If this is the case, you need to provide a
-                        <filename>do_configure</filename> task in your recipe.
+                        If this is the case, you normally need to provide a
+                        <filename>do_configure</filename> task in your recipe
+                        unless, of course, there is nothing to configure.
                         </para>
                         <para>Even if your software is not being built by
                         Autotools or CMake, you still might not need to deal
@@ -1807,11 +1806,10 @@
                         You need to determine if configuration is even a required step.
                         You might need to modify a Makefile or some configuration file
                         used for the build to specify necessary build options.
-                        Or, perhaps you might need to run a hand-written configuration
-                        script as opposed to something that
-                        <filename>autoconf</filename> would run.</para>
-                        <para>For the case involving a hand-written
-                        configuration script, you would run
+                        Or, perhaps you might need to run a provided, custom
+                        configure script with the appropriate options.</para>
+                        <para>For the case involving a custom configure
+                        script, you would run
                         <filename>./configure --help</filename> and look for
                         the options you need to set.</para></listitem>
                 </itemizedlist>
@@ -1820,7 +1818,8 @@
             <para>
                 Once configuration succeeds, it is always good practice to
                 look at the <filename>log.do_configure</filename> file to
-                ensure that nothing needs to be added to
+                ensure that the appropriate options have been enabled and no
+                additional build-time dependencies need to be added to
                 <filename>DEPENDS</filename>.
                 For example, if the configure script reports that it found
                 something not mentioned in <filename>DEPENDS</filename>, or
@@ -1832,6 +1831,11 @@
                 that are in <filename>DEPENDS</filename>, in which case
                 you would need to look at passing extra options to the
                 configure script as needed.
+                For reference information on configure options specific to the
+                software you are building, you can consult the output of the
+                <filename>./configure --help</filename> command within
+                <filename>${S}</filename> or consult the upstream
+                documentation.
             </para>
         </section>
 
