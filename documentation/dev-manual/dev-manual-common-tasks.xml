@@ -1911,18 +1911,18 @@
             <title>Installing</title>
 
             <para>
-                During <filename>do_install</filename>, the files and their
-                structure that your recipe built are copied to locations on the
-                target device.
-                The installation process moves the
+                During <filename>do_install</filename>, the task copies the
+                built files along with their hierarchy to locations that
+                would mirror their locations on the target device.
+                The installation process copies files from the
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>,
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink><filename>}</filename>,
                 and
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename>
-                to the
+                directories to the
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>
-                to create the structure as it should appear on the target
-                system.
+                directory to create the structure as it should appear on the
+                target system.
             </para>
 
             <para>
@@ -1939,6 +1939,12 @@
                         Consequently, you do not have to have a
                         <filename>do_install</filename> task as part of your
                         recipe.
+                        However, if you wish to install additional files not
+                        already being installed by
+                        <filename>make install</filename>, you should do this
+                        using a <filename>do_install_append</filename> function
+                        using the install command as described in
+                        <emphasis>Manual</emphasis> later in this list.
                         You just need to make sure the install portion of the
                         build completes with no issues.</para></listitem>
                     <listitem><para><emphasis>Other (using
@@ -2003,7 +2009,10 @@
 
             <note>
                 <filename>oe_runmake install</filename>, which can be run
-                directly or can be run indirectly by the autotools and CMake
+                directly or can be run indirectly by the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-autotools'><filename>autotools</filename></ulink>
+                and
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-cmake'><filename>cmake</filename></ulink>
                 classes, runs make install in parallel.
                 Sometimes, a Makefile can have missing dependencies between
                 targets that can result in race conditions.
