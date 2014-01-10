@@ -114,6 +114,46 @@
             configuration files or class files on which the
             <filename>.bb</filename> file depends change.
         </para>
+
+        <note>
+            <para>
+                You need to be aware of how BitBake parses curly braces.
+                If a recipe uses a closing curly brace within the function and
+                the character has no leading spaces, BitBake produces a parsing
+                error.
+                If you use a pair of curly brace in a shell function, the
+                closing curly brace must not be located at the start of the line
+                without leading spaces.
+            </para>
+
+            <para>
+                Here is an example that causes BitBake to produce a parsing
+                error:
+                <literallayout class='monospaced'>
+     fakeroot create_shar() {
+         cat &lt;&lt; "EOF" &gt; ${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.sh
+     usage()
+     {
+       echo "test"
+       ###### The following "}" at the start of the line causes a parsing error ######
+     }
+     EOF
+     }
+                </literallayout>
+                Writing the recipe this way avoids the error:
+                <literallayout class='monospaced'>
+     fakeroot create_shar() {
+         cat &lt;&lt; "EOF" &gt; ${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.sh
+     usage()
+     {
+       echo "test"
+       ######The following "}" with a leading space at the start of the line avoids the error ######
+      }
+     EOF
+     }
+                </literallayout>
+            </para>
+        </note>
     </section>
 
     <section id='ref-bitbake-providers'>
