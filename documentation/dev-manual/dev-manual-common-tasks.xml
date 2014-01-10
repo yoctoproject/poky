@@ -1172,11 +1172,10 @@
                 Before writing a recipe from scratch, it is often useful to
                 discover whether someone else has already written one that
                 meets (or comes close to meeting) your needs.
-                The Yocto Project and OpenEmbedded communities contain
-                and maintain many recipes that might be candidates for what
-                you are doing.
+                The Yocto Project and OpenEmbedded communities maintain many
+                recipes that might be candidates for what you are doing.
                 You can find a good central index of these recipes in the
-                <ulink url='http://layers.openembedded.org/layerindex/branch/master/layer/meta-oe/'>OpenEmbedded metadata index</ulink>.
+                <ulink url='http://layers.openembedded.org'>OpenEmbedded metadata index</ulink>.
             </para>
 
             <para>
@@ -1221,47 +1220,6 @@
                         </para></listitem>
                 </itemizedlist>
             </para>
-
-            <para>
-                Regardless of where you get a base recipe, you will need to
-                make changes to support your needs.
-                When you do, you need to be aware of how BitBake parses curly
-                braces.
-                If a recipe uses a closing curly brace within the function and
-                the character has no leading spaces, BitBake produces a parsing
-                error.
-                If you use a pair of curly brace in a shell function, the
-                closing curly brace must not be located at the start of the line
-                without leading spaces.
-            </para>
-
-            <para>
-                Here is an example that causes BitBake to produce a parsing
-                error:
-                <literallayout class='monospaced'>
-     fakeroot create_shar() {
-         cat &lt;&lt; "EOF" &gt; ${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.sh
-     usage()
-     {
-       echo "test"
-       ###### The following "}" at the start of the line causes a parsing error ######
-     }
-     EOF
-     }
-                </literallayout>
-                Writing the recipe this way avoids the error:
-                <literallayout class='monospaced'>
-     fakeroot create_shar() {
-         cat &lt;&lt; "EOF" &gt; ${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.sh
-     usage()
-     {
-       echo "test"
-       ######The following "}" with a leading space at the start of the line avoids the error ######
-      }
-     EOF
-     }
-                </literallayout>
-            </para>
         </section>
 
         <section id='new-recipe-storing-and-naming-the-recipe'>
@@ -1278,7 +1236,8 @@
             <itemizedlist>
                 <listitem><para><emphasis>Storing Your Recipe:</emphasis>
                     The OpenEmbedded build system locates your recipe
-                    through the <filename>layer.conf</filename> file and the
+                    through the layer's <filename>conf/layer.conf</filename>
+                    file and the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'><filename>BBFILES</filename></ulink>
                     variable.
                     This variable sets up a path from which the build system can
@@ -1303,7 +1262,8 @@
                     Use lower-cased characters and do not include the reserved
                     suffixes <filename>-native</filename>,
                     <filename>-cross</filename>, <filename>-initial</filename>,
-                    or <filename>-dev</filename>.
+                    or <filename>-dev</filename> casually (i.e. do not use them
+                    as part of your recipe name unless the string applies).
                     Here are some examples:
                     <literallayout class='monospaced'>
      cups_1.7.0.bb
@@ -1331,19 +1291,21 @@
                 and you are in the
                 <link linkend='build-directory'>Build Directory</link>,
                 use BitBake to process your recipe.
-                All you need to provide is the base name of your recipe:
+                All you need to provide is the
+                <filename>&lt;basename&gt;</filename> of the recipe as described
+                in the previous section:
                 <literallayout class='monospaced'>
      $ bitbake &lt;basename&gt;
                 </literallayout>
+
             </para>
 
             <para>
                 During the build, the OpenEmbedded build system creates a
                 temporary work directory for the recipe
                 (<filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename>)
-                where it keeps extracted source files, log files, images, and
-                so forth.
-                You can find individual logs in this area for each task.
+                where it keeps extracted source files, log files, intermediate
+                compilation and packaging files, and so forth.
             </para>
 
             <para>
@@ -1368,6 +1330,15 @@
                 and <filename>temp</filename>.
                 After the build, you can examine these to determine how well
                 the build went.
+                <note>
+                    You can find individual log files for individual recipes in
+                    their <filename>temp</filename> directory (e.g.
+                    <filename>poky/build/tmp/work/qemux86-poky-linux/foo/1.3.0-r0/temp</filename>).
+                    Log files are named <filename>log.do_&lt;taskname&gt;</filename>
+                    (e.g. <filename>log.do_configure</filename>,
+                    <filename>log.do_fetch</filename>, and
+                    <filename>log.do_compile</filename>).
+                </note>
             </para>
 
             <para>
@@ -1381,9 +1352,10 @@
                 Yocto Project Reference Manual's glossary for more information:
                 <itemizedlist>
                     <listitem>The temporary directory - <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink></listitem>
-                    <listitem>The machine architecture - <ulink url='&YOCTO_DOCS_REF_URL;#var-MULTIMACH_TARGET_SYS'><filename>MULTIMACH_TARGET_SYS</filename></ulink></listitem>
+                    <listitem>The target architecture - <ulink url='&YOCTO_DOCS_REF_URL;#var-MULTIMACH_TARGET_SYS'><filename>MULTIMACH_TARGET_SYS</filename></ulink></listitem>
                     <listitem>The recipe name - <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink></listitem>
-                    <listitem>The epoch - <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTENDPE'><filename>EXTENDPE</filename></ulink></listitem>
+                    <listitem>The epoch - <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTENDPE'><filename>EXTENDPE</filename></ulink>
+                    (if specified - blank for most recipes)</listitem>
                     <listitem>The recipe version - <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink></listitem>
                     <listitem>The recipe revision - <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink></listitem>
                 </itemizedlist>
@@ -1459,60 +1431,7 @@
             </para>
 
             <para>
-                This next example is more complicated and is from the
-                <filename>meta/recipes-sato/rxvt-unicode/rxvt-unicode_9.19.bb</filename>
-                recipe.
-                The example uses a <filename>SRC_URI</filename> statement
-                that identifies a tarball, a patch file, a desktop file, and an
-                icon as the source files for the recipe.
-                <literallayout class='monospaced'>
-     SRC_URI = "http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-${PV}.tar.bz2 \
-                file://xwc.patch \
-                file://rxvt.desktop \
-                file://rxvt.png"
-                </literallayout>
-            </para>
-
-            <para>
-                When you specify local files using the
-                <filename>file://</filename> URI protocol, the build system
-                fetches files from the local machine.
-                The path is relative to the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
-                variable and searches specific directories in a certain order:
-                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BPN'><filename>BPN</filename></ulink><filename>}</filename>,
-                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BP'><filename>BP</filename></ulink><filename>}</filename>,
-                and <filename>files</filename>.
-                The directories are assumed to be subdirectories of the
-                directory in which the recipe or append file resides.
-                For another example that specifies these types of files, see the
-                "<link linkend='usingpoky-extend-addpkg-singlec'>Single .c File Package (Hello World!)</link>"
-                section.
-            </para>
-
-            <para>
-                The previous example also specifies a patch file.
-                Patch files are files whose names end in
-                <filename>.patch</filename> or <filename>.diff</filename>.
-                The build system automatically applies patches as described
-                in the
-                "<link linkend='new-recipe-patching-code'>Patching Code</link>" section.
-            </para>
-
-            <para>
-                The build system should be able to apply patches with the "-p1"
-                option (i.e. one directory level in the path will be stripped
-                off).
-                If your patch needs to have more directory levels stripped off,
-                specify the number of levels using the "striplevel" option in
-                the <filename>SRC_URI</filename> entry for the patch.
-                Alternatively, if your patch needs to be applied in a specific
-                subdirectory that is not specified in the patch file, use the
-                "patchdir" option in the entry.
-            </para>
-
-            <para>
-                A final way of specifying source is from an SCM.
+                Another way of specifying source is from an SCM.
                 For Git repositories, you must specify
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
                 and you should specify
@@ -1574,19 +1493,46 @@
                 Once you have the correct checksums, simply copy them into your
                 recipe for a subsequent build.
             </para>
-        </section>
-
-        <section id='new-recipe-patching-code'>
-            <title>Patching Code</title>
 
             <para>
-                Sometimes it is necessary to patch code after it has been
-                fetched.
-                Any files mentioned in <filename>SRC_URI</filename> whose
-                names end in <filename>.patch</filename> or
-                <filename>.diff</filename> are treated as patches.
-                The <filename>do_patch</filename> task automatically applies
-                these patches.
+                This final example is a bit more complicated and is from the
+                <filename>meta/recipes-sato/rxvt-unicode/rxvt-unicode_9.19.bb</filename>
+                recipe.
+                The example's <filename>SRC_URI</filename> statement identifies
+                multiple files as the source files for the recipe: a tarball, a
+                patch file, a desktop file, and an icon.
+                <literallayout class='monospaced'>
+     SRC_URI = "http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-${PV}.tar.bz2 \
+                file://xwc.patch \
+                file://rxvt.desktop \
+                file://rxvt.png"
+                </literallayout>
+            </para>
+
+            <para>
+                When you specify local files using the
+                <filename>file://</filename> URI protocol, the build system
+                fetches files from the local machine.
+                The path is relative to the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
+                variable and searches specific directories in a certain order:
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BPN'><filename>BPN</filename></ulink><filename>}</filename>,
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BP'><filename>BP</filename></ulink><filename>}</filename>,
+                and <filename>files</filename>.
+                The directories are assumed to be subdirectories of the
+                directory in which the recipe or append file resides.
+                For another example that specifies these types of files, see the
+                "<link linkend='usingpoky-extend-addpkg-singlec'>Single .c File Package (Hello World!)</link>"
+                section.
+            </para>
+
+            <para>
+                The previous example also specifies a patch file.
+                Patch files are files whose names end in
+                <filename>.patch</filename> or <filename>.diff</filename>.
+                The build system automatically applies patches as described
+                in the
+                "<link linkend='new-recipe-patching-code'>Patching Code</link>" section.
             </para>
         </section>
 
@@ -1617,6 +1563,32 @@
                 the source files, you need to be sure that the directory
                 pointed to by <filename>${S}</filename> matches the structure
                 of the source.
+            </para>
+        </section>
+
+        <section id='new-recipe-patching-code'>
+            <title>Patching Code</title>
+
+            <para>
+                Sometimes it is necessary to patch code after it has been
+                fetched.
+                Any files mentioned in <filename>SRC_URI</filename> whose
+                names end in <filename>.patch</filename> or
+                <filename>.diff</filename> are treated as patches.
+                The <filename>do_patch</filename> task automatically applies
+                these patches.
+            </para>
+
+            <para>
+                The build system should be able to apply patches with the "-p1"
+                option (i.e. one directory level in the path will be stripped
+                off).
+                If your patch needs to have more directory levels stripped off,
+                specify the number of levels using the "striplevel" option in
+                the <filename>SRC_URI</filename> entry for the patch.
+                Alternatively, if your patch needs to be applied in a specific
+                subdirectory that is not specified in the patch file, use the
+                "patchdir" option in the entry.
             </para>
         </section>
 
