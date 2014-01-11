@@ -1136,7 +1136,7 @@
         </section>
     </section>
 
-    <section id='usingpoky-writing-a-new-recipe'>
+    <section id='new-recipe-writing-a-new-recipe'>
         <title>Writing a New Recipe</title>
 
         <para>
@@ -1426,7 +1426,7 @@
                 extracted during the <filename>do_unpack</filename> task.
                 For another example that specifies these types of files, see
                 the
-                "<link linkend='usingpoky-extend-addpkg-autotools'>Autotooled Package</link>"
+                "<link linkend='new-recipe-autotooled-package'>Autotooled Package</link>"
                 section.
             </para>
 
@@ -1522,7 +1522,7 @@
                 The directories are assumed to be subdirectories of the
                 directory in which the recipe or append file resides.
                 For another example that specifies these types of files, see the
-                "<link linkend='usingpoky-extend-addpkg-singlec'>Single .c File Package (Hello World!)</link>"
+                "<link linkend='new-recipe-single-c-file-package-hello-world'>Single .c File Package (Hello World!)</link>"
                 section.
             </para>
 
@@ -1716,15 +1716,13 @@
             <title>Configuring the Recipe</title>
 
             <para>
+                Configuration, such as build-time or runtime dependencies,
+                is typically accomplished by running a configure script with
+                some options, or by modifying a build configuration file.
                 Most software provides some means of setting build-time
                 configuration options before compilation.
-                Typically, setting these options is accomplished by running a
-                configure script with some options, or by modifying a build
-                configuration file.
-                <note>
-                    It is possible that required build-time or runtime dependencies
-                    exist in the software's documentation.
-                </note>
+                You can often find build-time or runtime dependencies in the
+                software's documentation.
             </para>
 
             <para>
@@ -1849,14 +1847,15 @@
                         or <filename>nativesdk</filename> only.
                         The failure occurs when the compilation process uses
                         improper headers, libraries, or other files from the
-                        host system during cross-compiling for the target.
+                        host system when cross-compiling for the target.
                         </para>
-                        <para>To fix the problem, you should be able to see
+                        <para>To fix the problem, examine the
+                        <filename>log.do_compile</filename> file to identify
                         the host paths being used (e.g.
                         <filename>/usr/include</filename>,
-                        <filename>/usr/lib</filename>, and so forth) by
-                        examining the <filename>log.do_compile</filename>
-                        file.</para></listitem>
+                        <filename>/usr/lib</filename>, and so forth) and then
+                        either add configure options, apply a patch, or do both.
+                        </para></listitem>
                     <listitem><para><emphasis>Failure to find required
                         libraries/headers:</emphasis>
                         If a build-time dependency is missing because it has
@@ -1911,14 +1910,15 @@
                         Consequently, you do not have to have a
                         <filename>do_install</filename> task as part of your
                         recipe.
+                        You just need to make sure the install portion of the
+                        build completes with no issues.
                         However, if you wish to install additional files not
                         already being installed by
                         <filename>make install</filename>, you should do this
                         using a <filename>do_install_append</filename> function
                         using the install command as described in
                         <emphasis>Manual</emphasis> later in this list.
-                        You just need to make sure the install portion of the
-                        build completes with no issues.</para></listitem>
+                        </para></listitem>
                     <listitem><para><emphasis>Other (using
                         <filename>make install</filename>):</emphasis>
                         You need to define a
@@ -1935,7 +1935,7 @@
                         </para>
                         <para>For an example recipe using
                         <filename>make install</filename>, see the
-                        "<link linkend='usingpoky-extend-addpkg-makefile'>Makefile-Based Package</link>"
+                        "<link linkend='new-recipe-makefile-based-package'>Makefile-Based Package</link>"
                         section.</para></listitem>
                     <listitem><para><emphasis>Manual:</emphasis>
                         You need to define a
@@ -2030,7 +2030,8 @@
             </para>
 
             <para>
-                Here are some examples:
+                The OpenEmbedded build system provides support for two
+                different ways of starting services:
                 <itemizedlist>
                     <listitem><para><emphasis>SysVinit:</emphasis>
                         SysVinit is a system and service manager that
@@ -2040,8 +2041,8 @@
                         started by the Linux kernel when the system boots.
                         Init then controls the startup, running and shutdown
                         of all other programs.</para>
-                        <para>To include this service, your recipe needs to
-                        inherit the
+                        <para>To enable a service using SysVinit, your recipe
+                        needs to inherit the
                         <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-update-rc.d'><filename>update-rc.d</filename></ulink>
                         class.
                         The class helps facilitate safely installing the
@@ -2059,11 +2060,12 @@
                         homepage at
                         <ulink url='http://freedesktop.org/wiki/Software/systemd/'></ulink>.
                         </para>
-                        <para>To include this service, your recipe needs to
-                        inherit the <filename>systemd</filename> class.
-                        See the
-                        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/systemd.bbclass'><filename>systemd.bbclass</filename></ulink>
-                        file or the
+                        <para>To enable a service using Systemd, your recipe
+                        needs to inherit the <filename>systemd</filename> class.
+                        See the <filename>systemd.bbclass</filename> file
+                        located in your
+                        <link linkend='source-directory'>Source Directory</link>
+                        in <filename>meta/classes</filename> or the
                         "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-systemd'><filename>systemd.bbclass</filename></ulink>"
                         section for more information.</para></listitem>
                 </itemizedlist>
@@ -2109,12 +2111,12 @@
             <para>
                 For an example showing how to install a post-installation
                 script, see the
-                "<link linkend='usingpoky-extend-addpkg-postinstalls'>Post-Installation Scripts</link>"
+                "<link linkend='new-recipe-post-installation-scripts'>Post-Installation Scripts</link>"
                 section.
             </para>
         </section>
 
-        <section id='usingpoky-extend-addpkg-postinstalls'>
+        <section id='new-recipe-post-installation-scripts'>
             <title>Post-Installation Scripts</title>
 
             <para>
@@ -2180,10 +2182,9 @@
             </para>
 
             <note>
-                Equivalent support for <filename>pre-install</filename>,
-                <filename>pre-uninstall</filename>, and
-                <filename>post-uninstall</filename> scripts exist
-                by way of <filename>pkg_preinst</filename>,
+                Equivalent support for pre-install, pre-uninstall, and
+                post-uninstall scripts exist by way of
+                <filename>pkg_preinst</filename>,
                 <filename>pkg_prerm</filename>, and
                 <filename>pkg_postrm</filename>, respectively.
                 These scrips work in exactly the same way as does
@@ -2208,7 +2209,7 @@
             <para>
                 For information on how to customize your image by adding
                 specific packages, see the
-                "<link linkend='usingpoky-extend-customimage-customtasks'>Customizing Images Using Custom Package Groups</link>"
+                "<link linkend='usingpoky-extend-customimage'>Customizing Images</link>"
                 section.
             </para>
         </section>
@@ -2227,7 +2228,7 @@
                 </itemizedlist>
             </para>
 
-            <section id='usingpoky-extend-addpkg-singlec'>
+            <section id='new-recipe-single-c-file-package-hello-world'>
                 <title>Single .c File Package (Hello World!)</title>
 
                 <para>
@@ -2276,7 +2277,7 @@
                 </para>
             </section>
 
-            <section id='usingpoky-extend-addpkg-autotools'>
+            <section id='new-recipe-autotooled-package'>
                 <title>Autotooled Package</title>
                 <para>
                     Applications that use Autotools such as <filename>autoconf</filename> and
@@ -2311,7 +2312,7 @@
                 </para>
             </section>
 
-            <section id='usingpoky-extend-addpkg-makefile'>
+            <section id='new-recipe-makefile-based-package'>
                 <title>Makefile-Based Package</title>
 
                 <para>
@@ -2401,7 +2402,7 @@
      PR = "r3"
      PE = "1"
 
-     XORG_PN = "libxpm"
+     XORG_PN = "libXpm"
 
      PACKAGES =+ "sxpm cxpm"
      FILES_cxpm = "${bindir}/cxpm"
