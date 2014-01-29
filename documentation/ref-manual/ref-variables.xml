@@ -547,9 +547,18 @@
 
         <glossentry id='var-BB_NUMBER_THREADS'><glossterm>BB_NUMBER_THREADS</glossterm>
             <glossdef>
-                <para>The maximum number of tasks BitBake should run in parallel at any one time.
-                    If your host development system supports multiple cores, a good rule of thumb
-                    is to set this variable to twice the number of cores.</para>
+                <para>
+                    The maximum number of tasks BitBake should run in parallel
+                    at any one time.
+                    If your host development system supports multiple cores,
+                    a good rule of thumb is to set this variable to twice the
+                    number of cores.
+                </para>
+
+                <para>
+                    The default value for <filename>BB_NUMBER_THREADS</filename>
+                    is equal to the number of cores your build system has.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -4792,9 +4801,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>-j 4</filename>, where the number
                     represents the maximum number of parallel threads make can
                     run.
+                </para>
+
+                <para>
                     If you development host supports multiple cores a good
                     rule of thumb is to set this variable to twice the number
                     of cores on the host.
+                    If you do not set <filename>PARALLEL_MAKE</filename>, it
+                    defaults to the number of cores your build system has.
                     <note>
                         Individual recipes might clear out this variable if
                         the software being built has problems running its
