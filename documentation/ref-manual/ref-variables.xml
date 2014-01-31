@@ -5480,13 +5480,26 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
      ROOT_HOME ??= "/home/root"
                     </literallayout>
+                    <note>
+                        This default value is likely used because some
+                        embedded solutions prefer to have a read-only root
+                        filesystem and prefer to keep writeable data in one
+                        place.
+                    </note>
+                </para>
+
+                <para>
                     You can override the default by setting the variable
-                    in any layer or in the
-                    <filename>local.conf</filename> file using the following
-                    form:
+                    in any layer or in the <filename>local.conf</filename> file.
+                    Because the default is set using a "weak" assignment
+                    (i.e. "??="), you can use either of the following forms
+                    to define your override:
                     <literallayout class='monospaced'>
-     ROOT_HOME ?= "&lt;path&gt;"
+     ROOT_HOME = "/root"
+     ROOT_HOME ?= "/root"
                     </literallayout>
+                    These override examples use <filename>/root</filename>,
+                    which is probably the most commonly used override.
                 </para>
             </glossdef>
         </glossentry>
