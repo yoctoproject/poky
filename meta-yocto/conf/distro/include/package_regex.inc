@@ -1,7 +1,7 @@
 # package_regex.inc - This file contains data that tracks
 # upstream project associated with a given recipe. This list is needed
 # for recipes that version information can not be automagically discovered.
-# As we automate this checking, this file will slowed be reduced.
+# As we automate this checking, this file will slowly be reduced.
 #"
 # This data is used by the package reporting system (packages.yoctoproject.org)
 #"
