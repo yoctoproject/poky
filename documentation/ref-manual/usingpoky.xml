@@ -445,7 +445,9 @@
     </para>
 
     <para>
-        The <filename>buildhistory</filename> class exists to help you maintain
+        The
+        <link linkend='ref-classes-buildhistory'><filename>buildhistory</filename></link>
+        class exists to help you maintain
         the quality of your build output.
         You can use the class to highlight unexpected and possibly unwanted
         changes in the build output.
@@ -506,8 +508,10 @@
 
         <para>
             To disable the build history functionality without causing the
-            packaging tasks to be re-run, add this statement to your
-            <filename>conf/local.conf</filename> file:
+            packaging tasks to be re-run, set the
+            <link linkend='var-BUILDHISTORY_FEATURES'><filename>BUILDHISTORY_FEATURES</filename></link>
+            variable as follows in your <filename>conf/local.conf</filename>
+            file:
             <literallayout class='monospaced'>
      BUILDHISTORY_FEATURES = ""
             </literallayout>
@@ -520,7 +524,9 @@
         <para>
             Build history information is kept in
             <filename>$</filename><link linkend='var-TMPDIR'><filename>TMPDIR</filename></link><filename>/buildhistory</filename>
-            in the Build Directory.
+            in the Build Directory as defined by the
+            <link linkend='var-BUILDHISTORY_DIR'><filename>BUILDHISTORY_DIR</filename></link>
+            variable.
             The following is an example abbreviated listing:
             <imagedata fileref="figures/buildhistory.png" align="center" width="6in" depth="4in" />
         </para>
@@ -721,16 +727,19 @@
                 including dependency graphs, so you can see why something
                 was pulled into the image.
                 If you are just interested in this information and not
-                interested in collecting history or any package information,
+                interested in collecting specific package or SDK information,
                 you can enable writing only image information without
-                any history by adding the following
-                to your <filename>conf/local.conf</filename> file found in the
+                any history by adding the following to your
+                <filename>conf/local.conf</filename> file found in the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
                 <literallayout class='monospaced'>
      INHERIT += "buildhistory"
      BUILDHISTORY_COMMIT = "0"
      BUILDHISTORY_FEATURES = "image"
                 </literallayout>
+                Here, you set the
+                <link linkend='var-BUILDHISTORY_FEATURES'><filename>BUILDHISTORY_FEATURES</filename></link>
+                variable to use the image feature only.
             </para>
         </section>
 
@@ -741,6 +750,17 @@
                 of SDKs (e.g., <filename>meta-toolchain</filename>
                 or <filename>bitbake -c populate_sdk imagename</filename>)
                 as compared to information it collects for images.
+                If you want information on the SDK, you need to list that
+                feature using the
+                <link linkend='var-BUILDHISTORY_FEATURES'><filename>BUILDHISTORY_FEATURES</filename></link>
+                variable as follows in your <filename>conf/local.conf</filename>
+                file found in the
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
+                <literallayout class='monospaced'>
+     INHERIT += "buildhistory"
+     BUILDHISTORY_COMMIT = "0"
+     BUILDHISTORY_FEATURES = "sdk"
+                </literallayout>:
                 The following list shows the files produced for each SDK:
                 <itemizedlist>
                     <listitem><para><filename>files-in-sdk.txt:</filename>
