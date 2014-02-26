@@ -917,85 +917,12 @@
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-BUILDHISTORY_DIR_IMAGE'><glossterm>BUILDHISTORY_DIR_IMAGE</glossterm>
-            <glossdef>
-                <para>
-                    When inheriting the
-                    <link linkend='ref-classes-buildhistory'><filename>buildhistory</filename></link>
-                    class, specifies the base name of the image analyzed using
-                    the build history feature.
-                    For more information on how the variable works, see the
-                    <filename>buildhistory.class</filename>.
-                    For more information on how build history works, see the
-                    "<link linkend='maintaining-build-output-quality'>Maintaining Build Output Quality</link>"
-                    section.
-                </para>
-
-                <para>
-                    By default, the <filename>buildhistory</filename> class
-                    sets the image name as follows:
-                    <literallayout class='monospaced'>
-     BUILDHISTORY_DIR_IMAGE = "${BUILDHISTORY_DIR}/images/${MACHINE_ARCH}/${TCLIBC}/${IMAGE_BASENAME}"
-                    </literallayout>
-                </para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-BUILDHISTORY_DIR_PACKAGE'><glossterm>BUILDHISTORY_DIR_PACKAGE</glossterm>
-            <glossdef>
-                <para>
-                    When inheriting the
-                    <link linkend='ref-classes-buildhistory'><filename>buildhistory</filename></link>
-                    class, specifies the name of the package analyzed using
-                    the build history feature.
-                    For more information on how the variable works, see the
-                    <filename>buildhistory.class</filename>.
-                    For more information on how build history works, see the
-                    "<link linkend='maintaining-build-output-quality'>Maintaining Build Output Quality</link>"
-                    section.
-                </para>
-
-                <para>
-                    By default, the <filename>buildhistory</filename> class
-                    sets the package name as follows:
-                    <literallayout class='monospaced'>
-     BUILDHISTORY_DIR_PACKAGE = "${BUILDHISTORY_DIR}/packages/${MULTIMACH_TARGET_SYS}/${PN}"
-                    </literallayout>
-                </para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-BUILDHISTORY_DIR_SDK'><glossterm>BUILDHISTORY_DIR_SDK</glossterm>
-            <glossdef>
-                <para>
-                    When inheriting the
-                    <link linkend='ref-classes-buildhistory'><filename>buildhistory</filename></link>
-                    class, specifies the name of the software development kit
-                    (SDK) analyzed using the build history feature.
-                    For more information on how the variable works, see the
-                    <filename>buildhistory.class</filename>.
-                    For more information on how build history works, see the
-                    "<link linkend='maintaining-build-output-quality'>Maintaining Build Output Quality</link>"
-                    section.
-                </para>
-
-                <para>
-                    By default, the <filename>buildhistory</filename> class
-                    sets the SDK name as follows:
-                    <literallayout class='monospaced'>
-     BUILDHISTORY_DIR_SDK = "${BUILDHISTORY_DIR}/sdk/${SDK_NAME}/${IMAGE_BASENAME}"
-                    </literallayout>
-                </para>
-            </glossdef>
-        </glossentry>
-
         <glossentry id='var-BUILDHISTORY_FEATURES'><glossterm>BUILDHISTORY_FEATURES</glossterm>
             <glossdef>
                 <para>
                     When inheriting the
                     <link linkend='ref-classes-buildhistory'><filename>buildhistory</filename></link>
-                    class, specifies the build history features the
-                    OpenEmbedded build system uses.
+                    class, specifies the build history features to be enabled.
                     For more information on how build history works, see the
                     "<link linkend='maintaining-build-output-quality'>Maintaining Build Output Quality</link>"
                     section.
@@ -1025,6 +952,34 @@
                     enables all three features:
                     <literallayout class='monospaced'>
      BUILDHISTORY_FEATURES ?= "image package sdk"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BUILDHISTORY_IMAGE_FILES'><glossterm>BUILDHISTORY_IMAGE_FILES</glossterm>
+            <glossdef>
+                <para>
+                    When inheriting the
+                    <link linkend='ref-classes-buildhistory'><filename>buildhistory</filename></link>
+                    class, specifies a list of paths to files copied from the
+                    image contents into the build history directory under
+                    an "image-files" directory in the directory for
+                    the image, so that you can track the contents of each file.
+                    The default is to copy <filename>/etc/passwd</filename>
+                    and <filename>/etc/group</filename>, which allows you to
+                    monitor for changes in user and group entries.
+                    You can modify the list to include any file.
+                    Specifying an invalid path does not produce an error.
+                    Consequently, you can include files that might
+                    not always be present.
+                </para>
+
+                <para>
+                    By default, the <filename>buildhistory</filename> class
+                    provides paths to the following files:
+                    <literallayout class='monospaced'>
+     BUILDHISTORY_IMAGE_FILES ?= "/etc/passwd /etc/group"
                     </literallayout>
                 </para>
             </glossdef>
