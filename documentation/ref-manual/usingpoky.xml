@@ -475,7 +475,10 @@
 
         <para>
             Build history is disabled by default.
-            To enable it, add the following statements to the end of your
+            To enable it, add the following <filename>INHERIT</filename>
+            statement and set the
+            <link linkend='var-BUILDHISTORY_COMMIT'><filename>BUILDHISTORY_COMMIT</filename></link>
+            variable to "1" at the end of your
             <filename>conf/local.conf</filename> file found in the
             <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
             <literallayout class='monospaced'>
@@ -496,25 +499,6 @@
         <para>
             You can disable build history by removing the previous statements
             from your <filename>conf/local.conf</filename> file.
-            However, you should realize that enabling and disabling
-            build history in this manner can change the
-            <filename>do_package</filename> task checksums which, if you
-            are using the OEBasicHash signature generator (the default
-            for many current distro configurations including
-            <filename>DISTRO = "poky"</filename> and
-            <filename>DISTRO = ""</filename>) will result in the packaging
-            tasks being re-run during the subsequent build.
-        </para>
-
-        <para>
-            To disable the build history functionality without causing the
-            packaging tasks to be re-run, set the
-            <link linkend='var-BUILDHISTORY_FEATURES'><filename>BUILDHISTORY_FEATURES</filename></link>
-            variable as follows in your <filename>conf/local.conf</filename>
-            file:
-            <literallayout class='monospaced'>
-     BUILDHISTORY_FEATURES = ""
-            </literallayout>
         </para>
     </section>
 
@@ -660,7 +644,7 @@
                         A directory containing selected files from the root
                         filesystem.
                         The files are defined by
-                        <filename>BUILDHISTORY_IMAGE_FILES</filename>.
+                        <link linkend='var-BUILDHISTORY_IMAGE_FILES'><filename>BUILDHISTORY_IMAGE_FILES</filename></link>.
                         </para></listitem>
                     <listitem><para><filename>build-id:</filename>
                         Human-readable information about the build configuration
@@ -747,20 +731,9 @@
             <title>Build History SDK Information</title>
             <para>
                 Build history collects similar information on the contents
-                of SDKs (e.g., <filename>meta-toolchain</filename>
+                of SDKs (e.g. <filename>meta-toolchain</filename>
                 or <filename>bitbake -c populate_sdk imagename</filename>)
                 as compared to information it collects for images.
-                If you want information on the SDK, you need to list that
-                feature using the
-                <link linkend='var-BUILDHISTORY_FEATURES'><filename>BUILDHISTORY_FEATURES</filename></link>
-                variable as follows in your <filename>conf/local.conf</filename>
-                file found in the
-                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
-                <literallayout class='monospaced'>
-     INHERIT += "buildhistory"
-     BUILDHISTORY_COMMIT = "0"
-     BUILDHISTORY_FEATURES = "sdk"
-                </literallayout>:
                 The following list shows the files produced for each SDK:
                 <itemizedlist>
                     <listitem><para><filename>files-in-sdk.txt:</filename>
@@ -830,7 +803,8 @@
 
             <para>
                 To see any changes that have occurred (assuming you have
-                <filename>BUILDHISTORY_COMMIT = "1"</filename>), you can simply
+                <link linkend='var-BUILDHISTORY_COMMIT'><filename>BUILDHISTORY_COMMIT = "1"</filename></link>),
+                you can simply
                 use any Git command that allows you to view the history of
                 a repository.
                 Here is one method:
