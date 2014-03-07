@@ -1293,6 +1293,38 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-CONFIG_INITRAMFS_SOURCE'><glossterm>CONFIG_INITRAMFS_SOURCE</glossterm>
+            <glossdef>
+                <para>
+                    Identifies the initial RAM disk (initramfs) source files.
+                    The OpenEmbedded build system receives and uses
+                    this kernel Kconfig variable as an environment variable.
+                    By default, the variable is set to null ("").
+                </para>
+
+                <para>
+                    The <filename>CONFIG_INITRAMFS_SOURCE</filename> can be
+                    either a single cpio archive with a
+                    <filename>.cpio</filename> suffix or a
+                    space-separated list of directories and files for building
+                    the initramfs image.
+                    A cpio archive should contain a filesystem archive
+                    to be used as an initramfs image.
+                    Directories should contain a filesystem layout to be
+                    included in the initramfs image.
+                    Files should contain entries according to the format
+                    described by the
+                    <filename>usr/gen_init_cpio</filename> program in the
+                    kernel tree.
+                </para>
+
+                <para>
+                    If you specify multiple directories and files, the
+                    initramfs image will be the aggregate of all of them.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-CONFIG_SITE'><glossterm>CONFIG_SITE</glossterm>
             <glossdef>
                 <para>
@@ -3312,6 +3344,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     is run through an extra pass during kernel compilation
                     in order to build a single binary that contains both the
                     kernel image and the initial RAM disk (initramfs).
+                    Using an extra compilation pass ensures that when a kernel
+                    attempts to use an initramfs, it does not encounter
+                    circular dependencies should the initramfs include kernel
+                    modules.
+                </para>
+
+                <para>
                     The combined binary is deposited into the
                     <filename>tmp/deploy</filename> directory, which is part
                     of the
