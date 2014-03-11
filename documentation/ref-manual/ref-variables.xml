@@ -3652,6 +3652,29 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-KERNEL_IMAGE_BASE_NAME'><glossterm>KERNEL_IMAGE_BASE_NAME</glossterm>
+            <glossdef>
+                <para>
+                    The base name of the kernel image.
+                    This variable is set in the
+                    <link linkend='ref-classes-kernel'>kernel</link> class
+                    as follows:
+                    <literallayout class='monospaced'>
+     KERNEL_IMAGE_BASE_NAME ?= "${KERNEL_IMAGETYPE}-${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${DATETIME}"
+                    </literallayout>
+                    See the
+                    <link linkend='var-KERNEL_IMAGETYPE'><filename>KERNEL_IMAGETYPE</filename></link>,
+                    <link linkend='var-PKGE'><filename>PKGE</filename></link>,
+                    <link linkend='var-PKGV'><filename>PKGV</filename></link>,
+                    <link linkend='var-PKGR'><filename>PKGR</filename></link>,
+                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link>,
+                    and
+                    <link linkend='var-DATETIME'><filename>DATETIME</filename></link>
+                    variables for additional information.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-KERNEL_IMAGETYPE'><glossterm>KERNEL_IMAGETYPE</glossterm>
             <glossdef>
                 <para>The type of kernel to build for a device, usually set by the
@@ -4438,6 +4461,28 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-MODULE_IMAGE_BASE_NAME'><glossterm>MODULE_IMAGE_BASE_NAME</glossterm>
+            <glossdef>
+                <para>
+                    The base name of the kernel modules tarball.
+                    This variable is set in the
+                    <link linkend='ref-classes-kernel'>kernel</link> class
+                    as follows:
+                    <literallayout class='monospaced'>
+     MODULE_IMAGE_BASE_NAME ?= "modules-${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${DATETIME}"
+                    </literallayout>
+                    See the
+                    <link linkend='var-PKGE'><filename>PKGE</filename></link>,
+                    <link linkend='var-PKGV'><filename>PKGV</filename></link>,
+                    <link linkend='var-PKGR'><filename>PKGR</filename></link>,
+                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link>,
+                    and
+                    <link linkend='var-DATETIME'><filename>DATETIME</filename></link>
+                    variables for additional information.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-MODULE_TARBALL_DEPLOY'><glossterm>MODULE_TARBALL_DEPLOY</glossterm>
             <glossdef>
                 <para>
@@ -5145,9 +5190,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-PE'><glossterm>PE</glossterm>
             <glossdef>
                 <para>
-                    the epoch of the recipe.
+                    The epoch of the recipe.
                     By default, this variable is unset.
-                    The field is used to make upgrades possible when the
+                    The variable is used to make upgrades possible when the
                     versioning scheme changes in some backwards incompatible
                     way.
                 </para>
@@ -5179,6 +5224,23 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     (i.e. <filename>${</filename><link linkend='var-PN'><filename>PN</filename></link><filename>}</filename>).
                     Use this variable if the loaders you need are in a package
                     other than that main package.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PKG'><glossterm>PKG</glossterm>
+            <glossdef>
+                <para>
+                    The name of the resulting package created by the
+                    OpenEmbedded build system.
+                    <note>
+                        When using the <filename>PKG</filename> variable, you
+                        must use a package name override.
+                    </note>
+                    For example, when the
+                    <link linkend='ref-classes-debian'><filename>debian</filename></link>
+                    class renames the output package, it does so by setting
+                    <filename>PKG_&lt;packagename&gt;</filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -5255,6 +5317,39 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PKGE'><glossterm>PKGE</glossterm>
+            <glossdef>
+                <para>
+                    The epoch of the output package built by the
+                    OpenEmbedded build system.
+                    By default, <filename>PKGE</filename> is set to
+                    <link linkend='var-PE'><filename>PE</filename></link>.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PKGR'><glossterm>PKGR</glossterm>
+            <glossdef>
+                <para>
+                    The revision of the output package built by the
+                    OpenEmbedded build system.
+                    By default, <filename>PKGR</filename> is set to
+                    <link linkend='var-PR'><filename>PR</filename></link>.
+                    </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PKGV'><glossterm>PKGV</glossterm>
+            <glossdef>
+                <para>
+                    The version of the output package built by the
+                    OpenEmbedded build system.
+                    By default, <filename>PKGV</filename> is set to
+                    <link linkend='var-PV'><filename>PV</filename></link>.
+                 </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PN'><glossterm>PN</glossterm>
             <glossdef>
                 <para>This variable can have two separate functions depending on the context: a recipe
@@ -5305,7 +5400,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PR'><glossterm>PR</glossterm>
             <glossdef>
-                <para>The revision of the recipe.
+                <para>
+                    The revision of the recipe.
                     The default value for this variable is "r0".
                     </para>
             </glossdef>
@@ -5464,7 +5560,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PV'><glossterm>PV</glossterm>
             <glossdef>
-                <para>The version of the recipe.
+                <para>
+                    The version of the recipe.
                     The version is normally extracted from the recipe filename.
                     For example, if the recipe is named
                     <filename>expat_2.0.1.bb</filename>, then the default value of <filename>PV</filename>
