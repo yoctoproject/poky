@@ -342,32 +342,25 @@
                         <literallayout class='monospaced'>
      $ bitbake linux-yocto -c kernel_configme -f
                         </literallayout></para></listitem>
-                    <listitem><para>Copy and rename the resulting
-                        <filename>.config</filename> file (e.g.
-                        <filename>config.orig</filename>).
-                        </para></listitem>
                     <listitem><para>Run the <filename>menuconfig</filename>
                         command:
                         <literallayout class='monospaced'>
      $ bitbake linux-yocto -c menuconfig
                         </literallayout></para></listitem>
-                    <listitem><para>Prepare a configuration fragment based on
-                        the differences between the two files.
-                        </para></listitem>
+                    <listitem><para>Run the <filename>diffconfig</filename>
+                        command to prepare a configuration fragment.
+                        The resulting file <filename>fragment.cfg</filename>
+                        will be placed in the
+                        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename> directory:
+                        <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c diffconfig
+                        </literallayout></para></listitem>
                 </orderedlist>
             </para>
 
             <para>
-                Ultimately, the configuration fragment file needs to be a
+                The <filename>diffconfig</filename> command creates a file that is a
                 list of Linux kernel <filename>CONFIG_</filename> assignments.
-                It cannot be in <filename>diff</filename> format.
-                Here is an example of a command that creates your
-                configuration fragment file.
-                Regardless of the exact command you use, plan on reviewing
-                the output as you can usually remove some of the defaults:
-                <literallayout class='monospaced'>
-     $ diff -Nurp config.orig .config | sed -n "s/^\+//p" > frag.cfg
-                </literallayout>
                 See the "<link linkend='changing-the-configuration'>Changing the Configuration</link>"
                 section for information on how to use the output as a
                 configuration fragment.
