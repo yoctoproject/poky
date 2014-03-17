@@ -81,14 +81,15 @@
                 them for the supported distributions.
                 </para></listitem>
             <listitem id='local-yp-release'><para><emphasis>Yocto Project Release:</emphasis>
-                You need a release of the Yocto Project installed locally on
+                You need a release of the Yocto Project locally installed on
                 your development system.
-                This local area is referred to as the
-                <link linkend='source-directory'>Source Directory</link>
-                and is created when you use
+                The documentation refers to this set of locally installed files
+                as the <link linkend='source-directory'>Source Directory</link>.
+                You create your Source Directory by using
                 <link linkend='git'>Git</link> to clone a local copy
                 of the upstream <filename>poky</filename> repository,
-                or when you download an official release of the corresponding tarball.</para>
+                or by downloading and unpacking a tarball of an official
+                Yocto Project release.</para>
                 <para>Working from a copy of the upstream repository allows you
                 to contribute back into the Yocto Project or simply work with
                 the latest software on a development branch.
@@ -110,18 +111,19 @@
                 <literallayout class='monospaced'>
      $ git clone git://git.yoctoproject.org/poky
      Cloning into 'poky'...
-     remote: Counting objects: 203728, done.
-     remote: Compressing objects: 100% (52371/52371), done.
-     remote: Total 203728 (delta 147444), reused 202891 (delta 146614)
-     Receiving objects: 100% (203728/203728), 95.54 MiB | 308 KiB/s, done.
-     Resolving deltas: 100% (147444/147444), done.
+     remote: Counting objects: 226790, done.
+     remote: Compressing objects: 100% (57465/57465), done.
+     remote: Total 226790 (delta 165212), reused 225887 (delta 164327)
+     Receiving objects: 100% (226790/226790), 100.98 MiB | 263 KiB/s, done.
+     Resolving deltas: 100% (165212/165212), done.
                 </literallayout></para>
                 <para>For another example of how to set up your own local Git
                 repositories, see this
                 <ulink url='&YOCTO_WIKI_URL;/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>
-                wiki page</ulink>, which describes how to create both
-                <filename>poky</filename> and <filename>meta-intel</filename>
-                Git repositories.</para></listitem>
+                wiki page</ulink>, which describes how to create local
+                Git repositories for both
+                <filename>poky</filename> and <filename>meta-intel</filename>.
+                </para></listitem>
             <listitem id='local-kernel-files'><para><emphasis>Yocto Project Kernel:</emphasis>
                 If you are going to be making modifications to a supported Yocto Project kernel, you
                 need to establish local copies of the source.
@@ -132,7 +134,7 @@
                 copying that cloned repository.
                 You can create the bare clone and the copy of the bare clone anywhere you like.
                 For simplicity, it is recommended that you create these structures outside of the
-                Source Directory (usually <filename>poky</filename>).</para>
+                Source Directory, which is usually named <filename>poky</filename>.</para>
                 <para>As an example, the following transcript shows how to create the bare clone
                 of the <filename>linux-yocto-3.10</filename> kernel and then create a copy of
                 that clone.
@@ -182,7 +184,7 @@
      remote: Counting objects: 727, done.
      remote: Compressing objects: 100% (452/452), done.
      remote: Total 727 (delta 260), reused 719 (delta 252)
-     Receiving objects: 100% (727/727), 536.36 KiB | 102 KiB/s, done.
+     Receiving objects: 100% (727/727), 536.36 KiB | 240 KiB/s, done.
      Resolving deltas: 100% (260/260), done.
                </literallayout></para></listitem>
            <listitem><para id='supported-board-support-packages-(bsps)'><emphasis>Supported Board
@@ -227,11 +229,11 @@
      $ cd ~/poky
      $ git clone git://git.yoctoproject.org/meta-intel.git
      Cloning into 'meta-intel'...
-     remote: Counting objects: 7366, done.
-     remote: Compressing objects: 100% (2491/2491), done.
-     remote: Total 7366 (delta 3997), reused 7299 (delta 3930)
-     Receiving objects: 100% (7366/7366), 2.31 MiB | 95 KiB/s, done.
-     Resolving deltas: 100% (3997/3997), done.
+     remote: Counting objects: 8844, done.
+     remote: Compressing objects: 100% (2864/2864), done.
+     remote: Total 8844 (delta 4931), reused 8780 (delta 4867)
+     Receiving objects: 100% (8844/8844), 2.48 MiB | 264 KiB/s, done.
+     Resolving deltas: 100% (4931/4931), done.
                 </literallayout></para>
                 <para>The same
                 <ulink url='&YOCTO_WIKI_URL;/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>wiki page</ulink>
@@ -263,8 +265,12 @@
         <orderedlist>
             <listitem><para>Make sure you have set up the Source Directory described in the
                 previous section.</para></listitem>
-            <listitem><para>Initialize the build environment by sourcing a build environment
-                script.</para></listitem>
+            <listitem><para>Initialize the build environment by sourcing a build
+                environment script (i.e.
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
+                or
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>).
+                </para></listitem>
             <listitem><para>Optionally ensure the <filename>conf/local.conf</filename> configuration file,
                 which is found in the
                 <link linkend='build-directory'>Build Directory</link>,
@@ -277,10 +283,11 @@
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'>PARALLEL_MAKE</ulink></filename> variables, and
                 a centralized tarball download directory through the
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'>DL_DIR</ulink></filename> variable.</para></listitem>
-            <listitem><para>Build the image using the <filename>bitbake</filename> command.
-                If you want information on BitBake, see the user manual included in the
-                <filename>bitbake/doc/manual</filename> directory of the
-                <link linkend='source-directory'>Source Directory</link>.</para></listitem>
+            <listitem><para>
+                Build the image using the <filename>bitbake</filename> command.
+                If you want information on BitBake, see the
+                <ulink url='&YOCTO_DOCS_BB_URL;'>BitBake User Manual</ulink>.
+                </para></listitem>
             <listitem><para>Run the image either on the actual hardware or using the QEMU
                 emulator.</para></listitem>
         </orderedlist>
