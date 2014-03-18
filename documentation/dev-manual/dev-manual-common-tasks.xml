@@ -1324,7 +1324,7 @@
                 <literallayout class='monospaced'>
      ${TMPDIR}/work/${MULTIMACH_TARGET_SYS}/${PN}/${EXTENDPE}${PV}-${PR}
                 </literallayout>
-                As an example, assume a Source Directory top-level folder name
+                As an example, assume a Source Directory top-level folder named
                 <filename>poky</filename>, a default Build Directory at
                 <filename>poky/build</filename>, and a
                 <filename>qemux86-poky-linux</filename> machine target system.
@@ -1559,9 +1559,9 @@
 
             <para>
                 During the build, the <filename>do_unpack</filename> task
-                unpacks the source and
+                unpacks the source with
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>
-                points to where it will be unpacked.
+                pointing to where it is unpacked.
             </para>
 
             <para>
@@ -1833,7 +1833,7 @@
                 For reference information on configure options specific to the
                 software you are building, you can consult the output of the
                 <filename>./configure --help</filename> command within
-                <filename>${S}</filename> or consult the upstream
+                <filename>${S}</filename> or consult the software's upstream
                 documentation.
             </para>
         </section>
@@ -2014,13 +2014,13 @@
                 <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-autotools'><filename>autotools</filename></ulink>
                 and
                 <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-cmake'><filename>cmake</filename></ulink>
-                classes, runs make install in parallel.
+                classes, runs <filename>make install</filename> in parallel.
                 Sometimes, a Makefile can have missing dependencies between
                 targets that can result in race conditions.
                 If you experience intermittent failures during
                 <filename>do_install</filename>, you might be able to work
-                around them by disabling parallel make install by adding the
-                following to the recipe:
+                around them by disabling parallel Makefile installs
+                by adding the following to the recipe:
                 <literallayout class='monospaced'>
      PARALLEL_MAKEINST = ""
                 </literallayout>
@@ -2052,15 +2052,15 @@
 
             <para>
                 When you create the installation for your services, you need
-                to accomplish what is normally done by "make install".
-                In other words, make sure your installation puts the output
-                in a layout that is similar to how they will be laid out on the
-                target system.
+                to accomplish what is normally done by
+                <filename>make install</filename>.
+                In other words, make sure your installation arranges the output
+                similar to how it is arranged on the target system.
             </para>
 
             <para>
-                The OpenEmbedded build system provides support for two
-                different ways of starting services:
+                The OpenEmbedded build system provides support for starting
+                services two different ways:
                 <itemizedlist>
                     <listitem><para><emphasis>SysVinit:</emphasis>
                         SysVinit is a system and service manager that
@@ -2083,19 +2083,19 @@
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-INITSCRIPT_PARAMS'><filename>INITSCRIPT_PARAMS</filename></ulink>
                         variables within your recipe.</para></listitem>
                     <listitem><para><emphasis>Systemd:</emphasis>
-                        Systemd was designed to replace SysVinit and provide
+                        Systemd was designed to replace SysVinit and to provide
                         enhanced management of services.
                         For more information on Systemd, see the Systemd
                         homepage at
                         <ulink url='http://freedesktop.org/wiki/Software/systemd/'></ulink>.
                         </para>
                         <para>To enable a service using Systemd, your recipe
-                        needs to inherit the <filename>systemd</filename> class.
+                        needs to inherit the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-systemd'><filename>systemd.bbclass</filename></ulink>
+                        class.
                         See the <filename>systemd.bbclass</filename> file
                         located in your
-                        <link linkend='source-directory'>Source Directory</link>
-                        in <filename>meta/classes</filename> or the
-                        "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-systemd'><filename>systemd.bbclass</filename></ulink>"
+                        <link linkend='source-directory'>Source Directory</link>.
                         section for more information.</para></listitem>
                 </itemizedlist>
             </para>
@@ -2154,7 +2154,7 @@
                 package is included in an image.
                 To add a post-installation script to a package, add a
                 <filename>pkg_postinst_PACKAGENAME()</filename> function to
-                the <filename>.bb</filename> file and use
+                the recipe file (<filename>.bb</filename>) and use
                 <filename>PACKAGENAME</filename> as the name of the package
                 you want to attach to the <filename>postinst</filename>
                 script.
