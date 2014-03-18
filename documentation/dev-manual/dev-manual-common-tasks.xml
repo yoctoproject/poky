@@ -2461,34 +2461,47 @@
         <title>Adding a New Machine</title>
 
         <para>
-            Adding a new machine to the Yocto Project is a straightforward process.
-            This section provides information that gives you an idea of the changes you must make.
-            The information covers adding machines similar to those the Yocto Project already supports.
-            Although well within the capabilities of the Yocto Project, adding a totally new architecture
-            might require
-            changes to <filename>gcc/eglibc</filename> and to the site information, which is
-            beyond the scope of this manual.
+            Adding a new machine to the Yocto Project is a straight forward
+            process.
+            This section describes how to add machines that are similar
+            to those that the Yocto Project already supports.
+            <note>
+                Although well within the capabilities of the Yocto Project,
+                adding a totally new architecture might require
+                changes to <filename>gcc/eglibc</filename> and to the site
+                information, which is beyond the scope of this manual.
+            </note>
         </para>
 
         <para>
             For a complete example that shows how to add a new machine,
             see the
             "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a New BSP Layer Using the yocto-bsp Script</ulink>"
-            in the Yocto Project Board Support Package (BSP) Developer's Guide.
+            section in the Yocto Project Board Support Package (BSP) Developer's Guide.
         </para>
 
         <section id="platdev-newmachine-conffile">
             <title>Adding the Machine Configuration File</title>
 
             <para>
-                To add a machine configuration, you need to add a <filename>.conf</filename> file
-                with details of the device being added to the <filename>conf/machine/</filename> file.
-                The name of the file determines the name the OpenEmbedded build system
-                uses to reference the new machine.
+                To add a new machine, you need to add a new machine
+                configuration file to the layer's
+                <filename>conf/machine</filename> directory.
+                This configuration file provides details about the device
+                you are adding.
             </para>
 
             <para>
-                The most important variables to set in this file are as follows:
+                The OpenEmbedded build system uses the root name of the
+                machine configuration file to reference the new machine.
+                For example, given a machine configuration file named
+                <filename>crownbay.conf</filename>, the build system
+                recognizes the machine as "crownbay".
+            </para>
+
+            <para>
+                The most important variables you must set in your machine
+                configuration file are as follows:
                 <itemizedlist>
                     <listitem><para><filename><ulink url='&YOCTO_DOCS_REF_URL;#var-TARGET_ARCH'>TARGET_ARCH</ulink></filename>
                         (e.g. "arm")</para></listitem>
@@ -2512,9 +2525,10 @@
             </para>
 
             <para>
-                You can find full details on these variables in the reference section.
-                You can leverage many existing machine <filename>.conf</filename> files from
-                <filename>meta/conf/machine/</filename>.
+                You can find full details on these variables in the reference
+                section.
+                You can leverage existing machine <filename>.conf</filename>
+                files from <filename>meta-yocto-bsp/conf/machine/</filename>.
             </para>
         </section>
 
@@ -2522,37 +2536,46 @@
             <title>Adding a Kernel for the Machine</title>
 
             <para>
-                The OpenEmbedded build system needs to be able to build a kernel for the machine.
-                You need to either create a new kernel recipe for this machine, or extend an
-                existing recipe.
-                You can find several kernel examples in the
-                Source Directory at <filename>meta/recipes-kernel/linux</filename>
+                The OpenEmbedded build system needs to be able to build a kernel
+                for the machine.
+                You need to either create a new kernel recipe for this machine,
+                or extend an existing kernel recipe.
+                You can find several kernel recipe examples in the
+                Source Directory at
+                <filename>meta/recipes-kernel/linux</filename>
                 that you can use as references.
             </para>
 
             <para>
-                If you are creating a new recipe, normal recipe-writing rules apply for setting
-                up a
+                If you are creating a new kernel recipe, normal recipe-writing
+                rules apply for setting up a
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>.
                 Thus, you need to specify any necessary patches and set
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink></filename> to point at the source code.
-                You need to create a <filename>configure</filename> task that configures the
-                unpacked kernel with a defconfig.
-                You can do this by using a <filename>make defconfig</filename> command or,
-                more commonly, by copying in a suitable <filename>defconfig</filename> file and then running
+                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'>S</ulink></filename>
+                to point at the source code.
+                You need to create a <filename>do_configure</filename> task that
+                configures the unpacked kernel with a
+                <filename>defconfig</filename> file.
+                You can do this by using a <filename>make defconfig</filename>
+                command or, more commonly, by copying in a suitable
+                <filename>defconfig</filename> file and then running
                 <filename>make oldconfig</filename>.
-                By making use of <filename>inherit kernel</filename> and potentially some of the
-                <filename>linux-*.inc</filename> files, most other functionality is
-                centralized and the defaults of the class normally work well.
+                By making use of <filename>inherit kernel</filename> and
+                potentially some of the <filename>linux-*.inc</filename> files,
+                most other functionality is centralized and the defaults of the
+                class normally work well.
             </para>
 
             <para>
-                If you are extending an existing kernel, it is usually a matter of adding a
-                suitable defconfig file.
-                The file needs to be added into a location similar to defconfig files
-                used for other machines in a given kernel.
+                If you are extending an existing kernel recipe, it is usually
+                a matter of adding a suitable <filename>defconfig</filename>
+                file.
+                The file needs to be added into a location similar to
+                <filename>defconfig</filename> files used for other machines
+                in a given kernel recipe.
                 A possible way to do this is by listing the file in the
-                <filename>SRC_URI</filename> and adding the machine to the expression in
+                <filename>SRC_URI</filename> and adding the machine to the
+                expression in
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'>COMPATIBLE_MACHINE</ulink></filename>:
                 <literallayout class='monospaced'>
      COMPATIBLE_MACHINE = '(qemux86|qemumips)'
@@ -2587,7 +2610,7 @@
             </para>
 
             <para>
-                Following is an example for qemuarm:
+                Following is an example for "qemuarm" machine:
                 <literallayout class='monospaced'>
      HAVE_TOUCHSCREEN=1
      HAVE_KEYBOARD=1
@@ -2714,8 +2737,7 @@
 
             <para>
                 Aside from this wiki page, several examples exist in the
-                <ulink url='&YOCTO_GIT_URL;/cgit.cgi/poky/tree/meta-skeleton'><filename>meta-skeleton</filename></ulink>
-                layer found in the
+                <filename>meta-skeleton</filename> layer found in the
                <link linkend='source-directory'>Source Directory</link>:
                 <itemizedlist>
                     <listitem><para><filename>conf/multilib-example.conf</filename>
@@ -2746,7 +2768,8 @@
                     done using the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></ulink>
                     variable.
-                    Eventually, all recipes will be covered and this list will be unneeded.
+                    Eventually, all recipes will be covered and this list will
+                    not be needed.
                 </para>
 
                 <para>
