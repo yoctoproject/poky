@@ -64,8 +64,8 @@
                 the string <filename>meta-</filename>.
                 <note>
                     It is not a requirement that a layer name begin with the
-                    prefix <filename>meta-</filename>, but it's a commonly accepted
-                    standard in the Yocto Project community.
+                    prefix <filename>meta-</filename>, but it is a commonly
+                    accepted standard in the Yocto Project community.
                 </note>
                 For example, when you set up the Source Directory structure,
                 you will see several layers:
@@ -194,8 +194,8 @@
                                 variable then assigns a priority to the layer.
                                 Applying priorities is useful in situations
                                 where the same package might appear in multiple
-                                layers and allows you to choose what layer
-                                should take precedence.</para></listitem>
+                                layers and allows you to choose the layer
+                                that takes precedence.</para></listitem>
                             <listitem><para>The
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERVERSION'>LAYERVERSION</ulink></filename>
                                 variable optionally specifies the version of a
@@ -206,16 +206,17 @@
                         variable, which expands to the directory of the current
                         layer.</para>
                         <para>Through the use of the <filename>BBPATH</filename>
-                        variable, BitBake locates <filename>.bbclass</filename>
-                        files, configuration files, and files that are included
+                        variable, BitBake locates class files
+                        (<filename>.bbclass</filename>),
+                        configuration files, and files that are included
                         with <filename>include</filename> and
                         <filename>require</filename> statements.
                         For these cases, BitBake uses the first file that
                         matches the name found in <filename>BBPATH</filename>.
                         This is similar to the way the <filename>PATH</filename>
                         variable is used for binaries.
-                        We recommend, therefore, that you use unique
-                        <filename>.bbclass</filename> and configuration
+                        It is recommended, therefore, that you use unique
+                        class and configuration
                         filenames in your custom layer.</para></listitem>
                     <listitem><para><emphasis>Add Content:</emphasis> Depending
                         on the type of layer, add the content.
@@ -253,7 +254,8 @@
                     configuration.
                     In other words, do not copy an entire recipe into your
                     layer and then modify it.
-                    Rather, use <filename>.bbappend</filename> files to override
+                    Rather, use an append file (<filename>.bbappend</filename>)
+                    to override
                     only those parts of the original recipe you need to modify.
                 </para>
             </section>
@@ -263,7 +265,8 @@
 
                 <para>
                     Avoid duplicating include files.
-                    Use <filename>.bbappend</filename> files for each recipe
+                    Use append files (<filename>.bbappend</filename>)
+                    for each recipe
                     that uses an include file.
                     Or, if you are introducing a new recipe that requires
                     the included file, use the path relative to the original
@@ -285,7 +288,7 @@
                     However, OpenEmbedded's layer <filename>meta-oe</filename>
                     does.
                     Consequently, <filename>meta-oe</filename> uses
-                    <filename>.bbappend</filename> files to modify the
+                    append files to modify the
                     <filename>QT_SQL_DRIVER_FLAGS</filename> variable to
                     enable the appropriate plug-ins.
                     This variable was added to the <filename>qt4.inc</filename>
@@ -392,7 +395,7 @@
                             as shown above, put it in
                             <filename>meta-one/recipes-core/base-files/base-files/one/</filename>.
                             Not only does this make sure the file is used
-                            only when building for machine "one" but the
+                            only when building for machine "one", but the
                             build process locates the file more quickly.</para>
                             <para>In summary, you need to place all files
                             referenced from <filename>SRC_URI</filename>
@@ -526,12 +529,12 @@
                 "meta" layer at
                 <filename>meta/recipes-bsp/formfactor</filename>:
                 <literallayout class='monospaced'>
-     DESCRIPTION = "Device formfactor information"
+     SUMMARY = "Device formfactor information"
      SECTION = "base"
      LICENSE = "MIT"
      LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690 \
-                         file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
-     PR = "r41"
+                    file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
+     PR = "r44"
 
      SRC_URI = "file://config file://machconfig"
      S = "${WORKDIR}"
@@ -540,12 +543,12 @@
      INHIBIT_DEFAULT_DEPS = "1"
 
      do_install() {
-     	# Only install file if it has a contents
+	     # Only install file if it has a contents
              install -d ${D}${sysconfdir}/formfactor/
              install -m 0644 ${S}/config ${D}${sysconfdir}/formfactor/
-     	if [ -s "${S}/machconfig" ]; then
-     	        install -m 0644 ${S}/machconfig ${D}${sysconfdir}/formfactor/
-     	fi
+	     if [ -s "${S}/machconfig" ]; then
+	             install -m 0644 ${S}/machconfig ${D}${sysconfdir}/formfactor/
+	     fi
      }
                 </literallayout>
                 In the main recipe, note the
@@ -596,16 +599,22 @@
                 <filename>THISDIR</filename>.
                 The trailing colon character is important as it ensures that
                 items in the list remain colon-separated.
-                <note><para>BitBake automatically defines the
-                    <filename>THISDIR</filename> variable.
-                    You should never set this variable yourself.
-                    Using <filename>_prepend</filename> ensures your path will
-                    be searched prior to other paths in the final list.</para>
-                    <para>Also, not all append files add extra files.
-                    Many append files simply exist to add build options
-                    (e.g. <filename>systemd</filename>).
-                    For these cases, it is not necessary to use the
-                    "_prepend" part of the statement.</para>
+                <note>
+                    <para>
+                        BitBake automatically defines the
+                        <filename>THISDIR</filename> variable.
+                        You should never set this variable yourself.
+                        Using "_prepend" ensures your path will
+                        be searched prior to other paths in the final list.
+                    </para>
+
+                    <para>
+                        Also, not all append files add extra files.
+                        Many append files simply exist to add build options
+                        (e.g. <filename>systemd</filename>).
+                        For these cases, it is not necessary to use the
+                        "_prepend" part of the statement.
+                    </para>
                 </note>
             </para>
         </section>
