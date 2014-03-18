@@ -2989,7 +2989,7 @@
             </para>
 
             <para>
-                Consider an example that configures the <filename>linux-yocto-3.4</filename>
+                Consider an example that configures the <filename>linux-yocto-3.14</filename>
                 kernel.
                 The OpenEmbedded build system recognizes this kernel as
                 <filename>linux-yocto</filename>.
@@ -3023,18 +3023,18 @@
                 The actual <filename>.config</filename> is located in the area where the
                 specific kernel is built.
                 For example, if you were building a Linux Yocto kernel based on the
-                Linux 3.4 kernel and you were building a QEMU image targeted for
+                Linux 3.14 kernel and you were building a QEMU image targeted for
                 <filename>x86</filename> architecture, the
                 <filename>.config</filename> file would be located here:
                 <literallayout class='monospaced'>
-     poky/build/tmp/work/qemux86-poky-linux/linux-yocto-3.4.11+git1+84f...
+     poky/build/tmp/work/qemux86-poky-linux/linux-yocto-3.14.11+git1+84f...
         ...656ed30-r1/linux-qemux86-standard-build
                 </literallayout>
                 <note>
                     The previous example directory is artificially split and many of the characters
                     in the actual filename are omitted in order to make it more readable.
                     Also, depending on the kernel you are using, the exact pathname
-                    for <filename>linux-yocto-3.4...</filename> might differ.
+                    for <filename>linux-yocto-3.14...</filename> might differ.
                 </note>
             </para>
 
@@ -3227,7 +3227,9 @@
 
         <para>
             The example assumes a clean build exists for the <filename>qemux86</filename>
-            machine in a Source Directory named <filename>poky</filename>.
+            machine in a
+            <link linkend='source-directory'>Source Directory</link>
+            named <filename>poky</filename>.
             Furthermore, the <link linkend='build-directory'>Build Directory</link> is
             <filename>build</filename> and is located in <filename>poky</filename> and
             the kernel is based on the Linux 3.4 kernel.
@@ -3246,7 +3248,20 @@
             <title>Create a Layer for your Changes</title>
 
             <para>
-                The first step is to create a layer so you can isolate your changes:
+                The first step is to create a layer so you can isolate your
+                changes.
+                Rather than use the <filename>yocto-layer</filename> script
+                to create the layer, this example steps through the process
+                by hand.
+                If you want information on the script that creates a general
+                layer, see the
+                "<link linkend='creating-a-general-layer-using-the-yocto-layer-script'>Creating a General Layer Using the yocto-layer Script</link>"
+                section.
+            </para>
+
+            <para>
+                These two commands create a directory you can use for your
+                layer:
                 <literallayout class='monospaced'>
      $ cd ~/poky
      $ mkdir meta-mylayer
