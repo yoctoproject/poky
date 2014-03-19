@@ -4104,18 +4104,23 @@
         <para>
             This section describes a few tasks that involve packages:
             <itemizedlist>
-                <listitem><para>Excluding packages from an image
+                <listitem><para>
+                    <link linkend='excluding-packages-from-an-image'>Excluding packages from an image</link>
                     </para></listitem>
-                <listitem><para>Incrementing a package revision number
+                <listitem><para>
+                    <link linkend='incrementing-a-package-revision-number'>Incrementing a package revision number</link>
                     </para></listitem>
-                <listitem><para>Handling a package name alias
+                <listitem><para>
+                    <link linkend='usingpoky-configuring-DISTRO_PN_ALIAS'>Handling a package name alias</link>
                     </para></listitem>
-                <listitem><para>Handling optional module packaging
+                <listitem><para>
+                    <link linkend='handling-optional-module-packaging'>Handling optional module packaging</link>
                     </para></listitem>
-                <listitem><para>Using Runtime Package Management
+                <listitem><para>
+                    <link linkend='using-runtime-package-management'>Using Runtime Package Management</link>
                     </para></listitem>
-                <listitem><para>Setting up and running package test
-                    (ptest)
+                <listitem><para>
+                    <link linkend='testing-packages-with-ptest'>Setting up and running package test (ptest)</link>
                     </para></listitem>
             </itemizedlist>
         </para>
@@ -4203,7 +4208,7 @@
                 <para>
                     As mentioned, attempting to maintain revision numbers in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>
-                    is error prone, inaccurate and causes problems for people
+                    is error prone, inaccurate, and causes problems for people
                     submitting recipes.
                     Conversely, the PR Service automatically generates
                     increasing numbers, particularly the revision field,
@@ -4222,7 +4227,7 @@
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PE'><filename>PE</filename></ulink>,
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>, and
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
-                    for epoch, version and revision, respectively).
+                    for epoch, version, and revision, respectively).
                     The values are highly dependent on the policies and
                     procedures of a given distribution and package feed.
                 </para>
@@ -4257,7 +4262,7 @@
                     <filename>r0.2</filename> and so forth.
                     This scheme allows existing <filename>PR</filename> values
                     to be used for whatever reasons, which include manual
-                    <filename>PR</filename> bumps should it be necessary.
+                    <filename>PR</filename> bumps, should it be necessary.
                 </para>
 
                 <para>
@@ -4302,7 +4307,7 @@
                 </para>
 
                 <para>
-                    It is also recommended you use Build History, which adds
+                    It is also recommended you use build history, which adds
                     some sanity checks to package versions, in conjunction with
                     the server that is running the PR Service.
                     To enable build history, add the following to each building
@@ -4312,7 +4317,7 @@
      INHERIT += "buildhistory"
      BUILDHISTORY_COMMIT = "1"
                     </literallayout>
-                    For information on Build History, see the
+                    For information on build history, see the
                     "<ulink url='&YOCTO_DOCS_REF_URL;#maintaining-build-output-quality'>Maintaining Build Output Quality</ulink>"
                     section in the Yocto Project Reference Manual.
                 </para>
@@ -4454,9 +4459,9 @@
                 To handle optional module packaging, you need to do two things:
                 <itemizedlist>
                     <listitem><para>Ensure the module packaging is actually
-                        done</para></listitem>
+                        done.</para></listitem>
                     <listitem><para>Ensure that any dependencies on optional
-                        modules from other recipes are satisfied by your recipe
+                        modules from other recipes are satisfied by your recipe.
                         </para></listitem>
                 </itemizedlist>
             </para>
@@ -4494,7 +4499,7 @@
                         <listitem><para>A directory within the files installed
                             by your recipe through <filename>do_install</filename>
                             in which to search.</para></listitem>
-                        <listitem><para>A regular expression to match module
+                        <listitem><para>A regular expression used to match module
                             files in that directory.
                             In the example, note the parentheses () that mark
                             the part of the expression from which the module
@@ -4759,7 +4764,7 @@
 
                 <para>
                     When BitBake generates packages it needs to know
-                    what format(s) to use.
+                    what format or formats to use.
                     In your configuration, you use the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink>
                     variable to specify the format.
@@ -5092,7 +5097,9 @@
             </para>
 
             <note>
-                A recipe is "ptest-enabled" if it inherits ptest.
+                A recipe is "ptest-enabled" if it inherits the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-ptest'><filename>ptest</filename></ulink>
+                class.
             </note>
 
             <section id='adding-ptest-to-your-build'>
@@ -5140,7 +5147,9 @@
                     Here is what you have to do for each recipe:
                     <itemizedlist>
                         <listitem><para><emphasis>Be sure the recipe
-                            inherits ptest:</emphasis>
+                            inherits the
+                            <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-ptest'><filename>ptest</filename></ulink>
+                            class:</emphasis>
                             Include the following line in each recipe:
                             <literallayout class='monospaced'>
      inherit ptest
@@ -5216,7 +5225,7 @@
                             </para></listitem>
                        <listitem><para><emphasis>Install the test
                             suite:</emphasis>
-                            The <filename>ptest.bbclass</filename> class
+                            The <filename>ptest</filename> class
                             automatically copies the file
                             <filename>run-ptest</filename> to the target and
                             then runs make <filename>install-ptest</filename>
