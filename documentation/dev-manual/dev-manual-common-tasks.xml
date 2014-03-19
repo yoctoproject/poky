@@ -5304,64 +5304,51 @@
         <title>Selecting an Initialization Manager</title>
 
         <para>
-            By default, the Yocto Project uses
-            <filename>SysVinit</filename> as the initialization manager.
-            However, support also exists for <filename>systemd</filename>,
-            which is a full replacement for <filename>init</filename> with
+            By default, the Yocto Project uses SysVinit as the initialization
+            manager.
+            However, support also exists for Systemd,
+            which is a full replacement for init with
             parallel starting of services, reduced shell overhead and other
             features that are used by many distributions.
         </para>
 
         <para>
-            If you want to use <filename>sysvinit</filename>, you do
+            If you want to use SysVinit, you do
             not have to do anything.
-            But, if you want to use <filename>systemd</filename>, you must
+            But, if you want to use Systemd, you must
             take some steps as described in the following sections.
         </para>
 
-<!--
-        <note>
-            It is recommended that you create your own distribution configuration
-            file to hold these settings instead of using your
-            <filename>local.conf</filename> file.
-            For information on creating your own distribution, see the
-            "<link linkend='creating-your-own-distribution'>Creating Your Own Distribution</link>"
-            section.
-        </note>
--->
-
         <section id='using-systemd-exclusively'>
-            <title>Using systemd Exclusively</title>
+            <title>Using Systemd Exclusively</title>
 
             <para>
-                Set the following variables in your distribution configuration
+                Set the these variables in your distribution configuration
                 file as follows:
                 <literallayout class='monospaced'>
      DISTRO_FEATURES_append = " systemd"
      VIRTUAL-RUNTIME_init_manager = "systemd"
                 </literallayout>
-                You can also prevent the <filename>sysvinit</filename>
+                You can also prevent the SysVinit
                 distribution feature from
                 being automatically enabled as follows:
                 <literallayout class='monospaced'>
      DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
                 </literallayout>
-                Doing so removes any redundant <filename>sysvinit</filename>
-                scripts.
+                Doing so removes any redundant SysVinit scripts.
             </para>
 
             <para>
                 For information on the backfill variable, see
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES_BACKFILL_CONSIDERED'><filename>DISTRO_FEATURES_BACKFILL_CONSIDERED</filename></ulink>
-                in the Yocto Project Reference Manual.
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES_BACKFILL_CONSIDERED'><filename>DISTRO_FEATURES_BACKFILL_CONSIDERED</filename></ulink>.
             </para>
         </section>
 
         <section id='using-systemd-for-the-main-image-and-using-sysvinit-for-the-rescue-image'>
-            <title>Using systemd for the Main Image and Using SysVinit for the Rescue Image</title>
+            <title>Using Systemd for the Main Image and Using SysVinit for the Rescue Image</title>
 
             <para>
-                Set the following variables in your distribution configuration
+                Set the these variables in your distribution configuration
                 file as follows:
                 <literallayout class='monospaced'>
      DISTRO_FEATURES_append = " systemd"
@@ -5369,54 +5356,14 @@
                 </literallayout>
                 Doing so causes your main image to use the
                 <filename>packagegroup-core-boot.bb</filename> recipe and
-                <filename>systemd</filename>.
+                Systemd.
                 The rescue/minimal image cannot use this package group.
-                However, it can install <filename>sysvinit</filename>
+                However, it can install SysVinit
                 and the appropriate packages will have support for both
-                <filename>systemd</filename> and <filename>sysvinit</filename>.
+                Systemd and SysVinit.
             </para>
         </section>
     </section>
-
-<!--
-    <section id='excluding-recipes-from-the-build'>
-        <title>Excluding Recipes From the Build</title>
-
-        <para>
-            You might find that there are groups of recipes or append files
-            that you want to filter out of the build process.
-            Usually, this is not necessary.
-            However, on rare occasions where you might want to use a
-            layer but exclude parts that are causing problems, such
-            as introducing a different version of a recipe, you can
-            use
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-BBMASK'><filename>BBMASK</filename></ulink>
-            to exclude the recipe.
-        </para>
-
-        <para>
-            It is possible to filter or mask out <filename>.bb</filename> and
-            <filename>.bbappend</filename> files.
-            You can do this by providing an expression with the
-            <filename>BBMASK</filename> variable.
-            Here is one example:
-            <literallayout class='monospaced'>
-     BBMASK = "/meta-mymachine/recipes-maybe/"
-            </literallayout>
-            Here, all <filename>.bb</filename> and
-            <filename>.bbappend</filename> files in the directory that match
-            the expression are ignored during the build process.
-        </para>
-
-        <note>
-            The value you provide is passed to Python's regular expression
-            compiler.
-            The expression is compared against the full paths to the files.
-            For complete syntax information, see Python's documentation at
-            <ulink url='http://docs.python.org/release/2.3/lib/re-syntax.html'></ulink>.
-        </note>
-    </section>
--->
 
     <section id="platdev-appdev-srcrev">
         <title>Using an External SCM</title>
