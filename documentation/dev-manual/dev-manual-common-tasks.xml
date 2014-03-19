@@ -5575,8 +5575,7 @@
             </note>
             These tests are written in Python making use of the
             <filename>unittest</filename> module, and the majority of them
-            run commands on the target system over
-            <filename>ssh</filename>.
+            run commands on the target system over SSH.
             This section describes how you set up the environment to use these
             tests, run available tests, and write and add your own tests.
         </para>
@@ -5623,7 +5622,7 @@
                     <listitem><para><emphasis>Be sure your host's firewall
                         accepts incoming connections from
                         192.168.7.0/24:</emphasis>
-                        Some of the tests (in particular smart tests) start a
+                        Some of the tests (in particular smart tests) start an
                         HTTP server on a random high number port, which is
                         used to serve files to the target.
                         The smart module serves
@@ -5649,7 +5648,7 @@
             <para>
                 You can start the tests automatically or manually:
                 <itemizedlist>
-                    <listitem><para><emphasis>Automatically Running Tests:</emphasis>
+                    <listitem><para><emphasis>Automatically running tests:</emphasis>
                         To run the tests automatically after the
                         OpenEmbedded build system successfully creates an image,
                         first set the
@@ -5660,16 +5659,17 @@
                         <literallayout class='monospaced'>
      TEST_IMAGE = "1"
                         </literallayout>
-                        Next, simply build your image.
+                        Next, build your image.
                         If the image successfully builds, the tests will be
                         run:
                         <literallayout class='monospaced'>
      bitbake core-image-sato
                         </literallayout></para></listitem>
-                    <listitem><para><emphasis>Manually Running Tests:</emphasis>
-                        To manually run the tests, first globally inherit
-                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-testimage'><filename>testimage.class</filename></ulink>
-                        by editing your <filename>local.conf</filename> file:
+                    <listitem><para><emphasis>Manually running tests:</emphasis>
+                        To manually run the tests, first globally inherit the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-testimage'><filename>testimage</filename></ulink>
+                        class by editing your <filename>local.conf</filename>
+                        file:
                         <literallayout class='monospaced'>
     INHERIT += "testimage"
                         </literallayout>
@@ -5704,7 +5704,7 @@
                     <listitem><para>Each test module loads in the order found
                         in <filename>TEST_SUITES</filename>.
                         You can find the full output of the commands run over
-                        <filename>ssh</filename> in
+                        SSH in
                         <filename>${WORKDIR}/testimgage/ssh_target_log</filename>.
                         </para></listitem>
                     <listitem><para>If no failures occur, the task running the
@@ -5723,7 +5723,7 @@
                 A test name maps directly to a Python module.
                 Each test module may contain a number of individual tests.
                 Tests are usually grouped together by the area
-                tested (e.g tests for <filename>systemd</filename> reside in
+                tested (e.g tests for Systemd reside in
                 <filename>meta/lib/oeqa/runtime/systemd.py</filename>).
             </para>
 
@@ -5749,7 +5749,7 @@
                 required test for the image.
                 Test modules named within <filename>TEST_SUITES</filename>
                 cannot be skipped even if a test is not suitable for an image
-                (e.g. running the rpm tests on an image without
+                (e.g. running the RPM tests on an image without
                 <filename>rpm</filename>).
                 Appending "auto" to <filename>TEST_SUITES</filename> causes the
                 build system to try to run all tests that are suitable for the
@@ -5758,13 +5758,13 @@
 
             <para>
                 The order you list tests in <filename>TEST_SUITES</filename>
-                is important.
-                The order influences test dependencies.
+                is important and influences test dependencies.
                 Consequently, tests that depend on other tests should be added
                 after the test on which they depend.
-                For example, since <filename>ssh</filename> depends on the
-                <filename>ping</filename> test, <filename>ssh</filename>
-                needs to come after <filename>ping</filename> in the list.
+                For example, since the <filename>ssh</filename> test
+                depends on the
+                <filename>ping</filename> test, "ssh" needs to come after
+                "ping" in the list.
                 The test class provides no re-ordering or dependency handling.
                 <note>
                     Each module can have multiple classes with multiple test
@@ -5887,7 +5887,7 @@
                             following attributes:
                             <itemizedlist>
                                 <listitem><para><emphasis><filename>d</filename>:</emphasis>
-                                    The BitBake data store, which allows you to
+                                    The BitBake datastore, which allows you to
                                     use stuff such as
                                     <filename>oeRuntimeTest.tc.d.getVar("VIRTUAL-RUNTIME_init_manager")</filename>.
                                     </para></listitem>
