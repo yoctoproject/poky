@@ -5384,11 +5384,18 @@
         </para>
 
         <para>
-            To enable this behavior, simply add the following to the <filename>local.conf</filename>
-            configuration file found in the
-            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
+            To enable this behavior, the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
+            of the recipe needs to reference
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCPV'><filename>SRCPV</filename></ulink>.
+            Here is an example:
             <literallayout class='monospaced'>
-     SRCREV_pn-&lt;PN&gt; = "${AUTOREV}"
+     PV = "1.2.3+git${SRCPV}
+            </literallayout>
+            Then, you can add the following to your
+            <filename>local.conf</filename>:
+            <literallayout class='monospaced'>
+     SRCREV_pn-&lt;PN&gt; = "${AUTOREF}"
             </literallayout>
             <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink>
             is the name of the recipe for which you want to enable automatic source
@@ -5396,7 +5403,16 @@
         </para>
 
         <para>
-            In fact, the Yocto Project provides a distribution named
+            If you do not want to update your local configuration file, you can
+            add the following directly to the recipe to finish enabling
+            the feature:
+            <literallayout class='monospaced'>
+     SRCREV = "${AUTOREV}"
+            </literallayout>
+        </para>
+
+        <para>
+            The Yocto Project provides a distribution named
             <filename>poky-bleeding</filename>, whose configuration
             file contains the line:
             <literallayout class='monospaced'>
