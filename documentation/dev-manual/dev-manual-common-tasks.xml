@@ -5588,77 +5588,116 @@
         <para>
             The OpenEmbedded build system makes available a series of automated
             tests for images to verify runtime functionality.
-            <note>
-                Currently, there is only support for running these tests
-                under QEMU.
-            </note>
-            These tests are written in Python making use of the
+            You can run these tests on either QEMU or actual target hardware.
+            Tests are written in Python making use of the
             <filename>unittest</filename> module, and the majority of them
             run commands on the target system over SSH.
             This section describes how you set up the environment to use these
             tests, run available tests, and write and add your own tests.
         </para>
 
-        <section id="qemu-image-enabling-tests">
+        <section id='enabling-tests'>
             <title>Enabling Tests</title>
 
             <para>
-                In order to run tests, you need to do the following:
-                <itemizedlist>
-                    <listitem><para><emphasis>Set up to avoid interaction
-                        with <filename>sudo</filename> for networking:</emphasis>
-                        To accomplish this, you must do one of the
-                        following:
-                        <itemizedlist>
-                            <listitem><para>Add
-                                <filename>NOPASSWD</filename> for your user
-                                in <filename>/etc/sudoers</filename> either for
-                                ALL commands or just for
-                                <filename>runqemu-ifup</filename>.
-                                You must provide the full path as that can
-                                change if you are using multiple clones of the
-                                source repository.
-                                <note>
-                                    On some distributions, you also need to
-                                    comment out "Defaults requiretty" in
-                                    <filename>/etc/sudoers</filename>.
-                                </note></para></listitem>
-                            <listitem><para>Manually configure a tap interface
-                                for your system.</para></listitem>
-                            <listitem><para>Run as root the script in
-                                <filename>scripts/runqemu-gen-tapdevs</filename>,
-                                which should generate a list of tap devices.
-                                This is the option typically chosen for
-                                Autobuilder-type environments.
-                                </para></listitem>
-                        </itemizedlist></para></listitem>
-                    <listitem><para><emphasis>Set the
-                        <filename>DISPLAY</filename> variable:</emphasis>
-                        You need to set this variable so that you have an X
-                        server available (e.g. start
-                        <filename>vncserver</filename> for a headless machine).
-                        </para></listitem>
-                    <listitem><para><emphasis>Be sure your host's firewall
-                        accepts incoming connections from
-                        192.168.7.0/24:</emphasis>
-                        Some of the tests (in particular smart tests) start an
-                        HTTP server on a random high number port, which is
-                        used to serve files to the target.
-                        The smart module serves
-                        <filename>${DEPLOY_DIR}/rpm</filename> so it can run
-                        smart channel commands. That means your host's firewall
-                        must accept incoming connections from 192.168.7.0/24,
-                        which is the default IP range used for tap devices
-                        by <filename>runqemu</filename>.</para></listitem>
-                </itemizedlist>
+                Depending on whether you are planning on running tests using
+                QEMU or on running them on the hardware, you have to take
+                different steps to enable the tests.
+                See the following subsections for information on how to
+                enable both types of tests.
             </para>
 
-            <note>
-                Regardless of how you initiate the tests, if you built your
-                image using <filename>rm_work</filename>,
-                most of the tests will fail with errors because they rely on
-                <filename>${WORKDIR}/installed_pkgs.txt</filename>.
-            </note>
+            <section id='qemu-image-enabling-tests'>
+                <title>QEMU</title>
+
+                <para>
+                    In order to run tests, you need to do the following:
+                    <itemizedlist>
+                        <listitem><para><emphasis>Set up to avoid interaction
+                            with <filename>sudo</filename> for networking:</emphasis>
+                            To accomplish this, you must do one of the
+                            following:
+                            <itemizedlist>
+                                <listitem><para>Add
+                                    <filename>NOPASSWD</filename> for your user
+                                    in <filename>/etc/sudoers</filename> either for
+                                    ALL commands or just for
+                                    <filename>runqemu-ifup</filename>.
+                                    You must provide the full path as that can
+                                    change if you are using multiple clones of the
+                                    source repository.
+                                    <note>
+                                        On some distributions, you also need to
+                                        comment out "Defaults requiretty" in
+                                        <filename>/etc/sudoers</filename>.
+                                    </note></para></listitem>
+                                <listitem><para>Manually configure a tap interface
+                                    for your system.</para></listitem>
+                                <listitem><para>Run as root the script in
+                                    <filename>scripts/runqemu-gen-tapdevs</filename>,
+                                    which should generate a list of tap devices.
+                                    This is the option typically chosen for
+                                    Autobuilder-type environments.
+                                    </para></listitem>
+                            </itemizedlist></para></listitem>
+                        <listitem><para><emphasis>Set the
+                            <filename>DISPLAY</filename> variable:</emphasis>
+                            You need to set this variable so that you have an X
+                            server available (e.g. start
+                            <filename>vncserver</filename> for a headless machine).
+                            </para></listitem>
+                        <listitem><para><emphasis>Be sure your host's firewall
+                            accepts incoming connections from
+                            192.168.7.0/24:</emphasis>
+                            Some of the tests (in particular smart tests) start an
+                            HTTP server on a random high number port, which is
+                            used to serve files to the target.
+                            The smart module serves
+                            <filename>${DEPLOY_DIR}/rpm</filename> so it can run
+                            smart channel commands. That means your host's firewall
+                            must accept incoming connections from 192.168.7.0/24,
+                            which is the default IP range used for tap devices
+                            by <filename>runqemu</filename>.</para></listitem>
+                    </itemizedlist>
+                </para>
+
+                <note>
+                    Regardless of how you initiate the tests, if you built your
+                    image using <filename>rm_work</filename>,
+                    most of the tests will fail with errors because they rely on
+                    <filename>${WORKDIR}/installed_pkgs.txt</filename>.
+                </note>
+            </section>
+
+            <section id='hardware-image-enabling-tests'>
+                <title>Hardware</title>
+
+                <para>
+                    This section needs the information specific to enabling
+                    tests to run on actual hardware.
+                    Here are some developer notes:
+                    <itemizedlist>
+                        <listitem><para>
+                            Paul says this "If you have deployed the image yourself,
+                            you can manually boot it, you know the IP address
+                            it will show up under, and SSH is installed with no
+                            password, then you can now run tests on any real
+                            machine."
+                            </para></listitem>
+                        <listitem><para>
+                            <filename>TEST_TARGET</filename> variable needs to equal
+                            "simpleremote"
+                            </para></listitem>
+                        <listitem><para>
+                            Here are some notes from the patch - "The remote machine
+                            must be up with network and ssh and you need to set
+                            <filename>TEST_TARGET_IP</filename> with the IP address
+                            of the remote machine (it can still be a qemu instance that
+                            was manually started)
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
         </section>
 
         <section id="qemu-image-running-tests">
@@ -5677,6 +5716,18 @@
                         <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
                         <literallayout class='monospaced'>
      TEST_IMAGE = "1"
+                        </literallayout>
+                        Next, also in the <filename>local.conf</filename>, set the
+                        <filename>TEST_TARGET</filename> variable to
+                        "simpleremote" if you want to run tests on real hardware or
+                        set it to "qemu" if you want to run tests using QEMU.
+                        file:
+                        <literallayout class='monospaced'>
+     TEST_TARGET = "simpleremote"
+                        </literallayout>
+                        or
+                        <literallayout class='monospaced'>
+     TEST_TARGET = "qemu"
                         </literallayout>
                         Next, build your image.
                         If the image successfully builds, the tests will be
