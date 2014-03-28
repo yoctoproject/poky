@@ -48,8 +48,6 @@
             A common practice is to use a different Build Directory for different targets.
             For example, <filename>~/build/x86</filename> for a <filename>qemux86</filename>
             target, and <filename>~/build/arm</filename> for a <filename>qemuarm</filename> target.
-            See the "<link linkend="structure-core-script"><filename>&OE_INIT_FILE;</filename></link>"
-            section for more information on this script.
         </para>
 
         <para>
@@ -111,14 +109,28 @@
     <title>Debugging Build Failures</title>
 
     <para>
-        The exact method for debugging build failures depends on the nature of the
-        problem and on the system's area from which the bug originates.
+        The exact method for debugging build failures depends on the nature of
+        the problem and on the system's area from which the bug originates.
         Standard debugging practices such as comparison against the last
-        known working version with examination of the changes and the re-application of steps
-        to identify the one causing the problem are
+        known working version with examination of the changes and the
+        re-application of steps to identify the one causing the problem are
         valid for the Yocto Project just as they are for any other system.
         Even though it is impossible to detail every possible potential failure,
         this section provides some general tips to aid in debugging.
+    </para>
+
+    <para>
+        A useful feature for debugging is the error reporting tool.
+        Configuring the Yocto Project to use this tool causes the
+        OpenEmbedded build system to produce error reporting commands as
+        part of the console output.
+        You can enter the commands after the build completes
+        to log error information
+        into a common database, that can help you figure out what might be
+        going wrong.
+        For information on how to enable and use this feature, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#using-the-error-reporting-tool'>Using the Error Reporting Tool</ulink>"
+        section in the Yocto Project Development Manual.
     </para>
 
     <para>
@@ -129,6 +141,14 @@
         sections in the Yocto Project Development Manual.
     </para>
 
+    <note>
+        The remainder of this section presents many examples of the
+        <filename>bitbake</filename> command.
+        You can learn about BitBake by reading the
+        <ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual'>BitBake User Manual</ulink>.
+    </note>
+
+
     <section id='usingpoky-debugging-taskfailures'>
         <title>Task Failures</title>
 
@@ -137,7 +157,9 @@
             For example, the <filename>compile</filename> task for the QEMU minimal image for the x86
             machine (<filename>qemux86</filename>) might be
             <filename>tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/temp/log.do_compile.20830</filename>.
-            To see what BitBake runs to generate that log, look at the corresponding
+            To see what
+            <ulink url='&YOCTO_DOCS_DEV_URL;#bitbake-term'>BitBake</ulink>
+            runs to generate that log, look at the corresponding
             <filename>run.do_taskname.pid</filename> file located in the same directory.
         </para>
 
@@ -285,7 +307,7 @@
             </literallayout>
             This command form does not check for dependencies.
             Consequently, you should use it
-            only when you know dependencies already exist.
+            only when you know existing dependencies have been met.
             <note>
                 You can also specify fragments of the filename.
                 In this case, BitBake checks for a unique match.
