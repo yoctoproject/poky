@@ -33,13 +33,14 @@
             <listitem><para><emphasis>Source Files:</emphasis>
                 Upstream releases, local projects, and SCMs.</para></listitem>
             <listitem><para><emphasis>Build System:</emphasis>
-                Processes under the control of BitBake.
+                Processes under the control of
+                <ulink url='&YOCTO_DOCS_DEV_URL;#bitbake-term'>BitBake</ulink>.
                 This block expands on how BitBake fetches source, applies
                 patches, completes compilation, analyzes output for package
                 generation, creates and tests packages, generates images, and
                 generates cross-development tools.</para></listitem>
             <listitem><para><emphasis>Package Feeds:</emphasis>
-                Directories containing output packages (rpm, deb or ipk),
+                Directories containing output packages (RPM, DEB or IPK),
                 which are subsequently used in the construction of an image or
                 SDK, produced by the build system.
                 These feeds can also be copied and shared using a web server or
@@ -48,8 +49,6 @@
                 enabled.</para></listitem>
             <listitem><para><emphasis>Images:</emphasis>
                 Images produced by the development process.
-                Where do they go?
-                Can you mess with them (i.e. freely delete them or move them?).
                 </para></listitem>
             <listitem><para><emphasis>Application Development SDK:</emphasis>
                 Cross-development tools that are produced along with an image
@@ -545,7 +544,7 @@
             <para>
                 The canonical method through which to include a local project
                 is to use the
-                <link linkend='ref-classes-externalsrc'><filename>externalsrc.bbclass</filename></link>
+                <link linkend='ref-classes-externalsrc'><filename>externalsrc</filename></link>
                 class to include that local project.
                 You use either the <filename>local.conf</filename> or a
                 recipe's append file to override or set the
@@ -555,7 +554,7 @@
 
             <para>
                 For information on how to use the
-                <filename>externalsrc.bbclass</filename>, see the
+                <filename>externalsrc</filename> class, see the
                 "<link linkend='ref-classes-externalsrc'><filename>externalsrc.bbclass</filename></link>"
                 section.
             </para>
@@ -639,13 +638,13 @@
 
         <para>
             Package feeds are an intermediary step in the build process.
-            BitBake generates packages whose type is defined by the
+            BitBake generates packages whose types are defined by the
             <link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>
             variable.
             Before placing the packages into package feeds,
             the build process validates them with generated output quality
             assurance checks through the
-            <link linkend='ref-classes-insane'><filename>insane.bbclass</filename></link>
+            <link linkend='ref-classes-insane'><filename>insane</filename></link>
             class.
         </para>
 
@@ -674,11 +673,20 @@
         <title>BitBake</title>
 
         <para>
-            The OpenEmbedded build system uses BitBake to produce images.
+            The OpenEmbedded build system uses
+            <ulink url='&YOCTO_DOCS_DEV_URL;#bitbake-term'>BitBake</ulink>
+            to produce images.
             You can see from the
             <link linkend='general-yocto-environment-figure'>general Yocto Project Development Environment figure</link>,
             the BitBake area consists of several functional areas.
             This section takes a closer look at each of those areas.
+        </para>
+
+        <para>
+            Separate documentation exists for the BitBake tool.
+            See the
+            <ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual'>BitBake User Manual</ulink>
+            for reference material on BitBake.
         </para>
 
         <section id='source-fetching-dev-environment'>
@@ -713,30 +721,33 @@
                 You can see the variables that define these directories
                 by looking at the figure:
                 <itemizedlist>
-                    <listitem><para><link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
+                    <listitem><para><link linkend='var-TMPDIR'><filename>TMPDIR</filename></link> -
+                        The base directory where the OpenEmbedded build system
+                        performs all its work during the build.
                         </para></listitem>
-                    <listitem><para><link linkend='var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></link>
+                    <listitem><para><link linkend='var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></link> -
+                        The architecture of the built package or packages.
                         </para></listitem>
-                    <listitem><para><link linkend='var-TARGET_OS'><filename>TARGET_OS</filename></link>
+                    <listitem><para><link linkend='var-TARGET_OS'><filename>TARGET_OS</filename></link> -
+                        The operating system of the target device.
                         </para></listitem>
-                    <listitem><para><link linkend='var-PN'><filename>PN</filename></link>
+                    <listitem><para><link linkend='var-PN'><filename>PN</filename></link> -
+                        The name of the built package.
                         </para></listitem>
-                    <listitem><para><link linkend='var-PV'><filename>PV</filename></link>
+                    <listitem><para><link linkend='var-PV'><filename>PV</filename></link> -
+                        The version of the recipe used to build the package.
                         </para></listitem>
-                    <listitem><para><link linkend='var-PR'><filename>PR</filename></link>
+                    <listitem><para><link linkend='var-PR'><filename>PR</filename></link> -
+                        The revision of the recipe used to build the package.
                         </para></listitem>
-                    <listitem><para><link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
+                    <listitem><para><link linkend='var-WORKDIR'><filename>WORKDIR</filename></link> -
+                        The location within <filename>TMPDIR</filename> where
+                        a specific package is built.
                         </para></listitem>
-                    <listitem><para><link linkend='var-S'><filename>S</filename></link>
+                    <listitem><para><link linkend='var-S'><filename>S</filename></link> -
+                        Contains the unpacked source files for a given recipe.
                         </para></listitem>
                 </itemizedlist>
-            </para>
-
-            <para>
-                Briefly, the <filename>S</filename> directory contains the
-                unpacked source files for a recipe.
-                The <filename>WORKDIR</filename> directory is where all the
-                building goes on for a given recipe.
             </para>
         </section>
 
@@ -802,8 +813,9 @@
                         to source code configuration for the source code
                         being built by the recipe.</para>
 
-                        <para>If you are using
-                        <link linkend='ref-classes-autotools'><filename>autotools.bbclass</filename></link>,
+                        <para>If you are using the
+                        <link linkend='ref-classes-autotools'><filename>autotools</filename></link>
+                        class,
                         you can add additional configuration options by using
                         the <link linkend='var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></link>
                         variable.
@@ -861,21 +873,30 @@
                 Working, staged, and intermediate results of the analysis
                 and package splitting process use these areas:
                 <itemizedlist>
-                    <listitem><para><link linkend='var-PKGD'><filename>PKGD</filename></link>
+                    <listitem><para><link linkend='var-PKGD'><filename>PKGD</filename></link> -
+                        The destination directory for packages before they are
+                        split.
                         </para></listitem>
-                    <listitem><para><link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>
+                    <listitem><para><link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link> -
+                        A shared, global-state directory that holds data
+                        generated during the packaging process.
                         </para></listitem>
-                    <listitem><para><link linkend='var-PKGDESTWORK'><filename>PKGDESTWORK</filename></link>
+                    <listitem><para><link linkend='var-PKGDESTWORK'><filename>PKGDESTWORK</filename></link> -
+                        A temporary work area used by the
+                        <filename>do_package</filename> task.
                         </para></listitem>
-                    <listitem><para><link linkend='var-PKGDEST'><filename>PKGDEST</filename></link>
+                    <listitem><para><link linkend='var-PKGDEST'><filename>PKGDEST</filename></link> -
+                        The parent directory for packages after they have
+                        been split.
                         </para></listitem>
                 </itemizedlist>
                 The <link linkend='var-FILES'><filename>FILES</filename></link>
                 variable defines the files that go into each package in
                 <link linkend='var-PACKAGES'><filename>PACKAGES</filename></link>.
                 If you want details on how this is accomplished, you can
-                look at
-                <link linkend='ref-classes-package'><filename>package.bbclass</filename></link>.
+                look at the
+                <link linkend='ref-classes-package'><filename>package</filename></link>
+                class.
             </para>
 
             <para>
@@ -954,8 +975,8 @@
                 If you are using a
                 <ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-read-only-root-filesystem'>read-only root filesystem</ulink>,
                 all the post installation scripts must succeed during the
-                package installation phase since the root filesystem cannot be
-                written into.
+                package installation phase since the root filesystem is
+                read-only.
             </para>
 
             <para>
@@ -1075,7 +1096,7 @@
             root filesystem that are ready to boot on a target device.
             You can see from the
             <link linkend='general-yocto-environment-figure'>general Yocto Project Development Environment figure</link>
-            that BitBake output in part consists of images.
+            that BitBake output, in part, consists of images.
             This section is going to look more closely at this output:
             <imagedata fileref="figures/images.png" align="center" width="5.5in" depth="5.5in" />
         </para>
