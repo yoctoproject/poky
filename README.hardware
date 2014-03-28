@@ -46,7 +46,6 @@ Hardware Reference Boards
 
 The following boards are supported by the meta-yocto-bsp layer:
 
-  * Texas Instruments Beagleboard (beagleboard)
   * Freescale MPC8315E-RDB (mpc8315e-rdb)
   * Ubiquiti Networks RouterStation Pro (routerstationpro)
 
@@ -178,96 +177,6 @@ USB Device:
 
   For more details on the USB-ZIP scenario, see the syslinux documentation:
   http://git.kernel.org/?p=boot/syslinux/syslinux.git;a=blob_plain;f=doc/usbkey.txt;hb=HEAD
-
-
-Texas Instruments Beagleboard (beagleboard)
-===========================================
-
-The Beagleboard is an ARM Cortex-A8 development board with USB, DVI-D, S-Video,
-2D/3D accelerated graphics, audio, serial, JTAG, and SD/MMC. The xM adds a
-faster CPU, more RAM, an ethernet port, more USB ports, microSD, and removes
-the NAND flash. The beagleboard MACHINE is tested on the following platforms:
-
-  o Beagleboard C4
-  o Beagleboard xM rev A & B
-
-The Beagleboard C4 has NAND, while the xM does not. For the sake of simplicity,
-these instructions assume you have erased the NAND on the C4 so its boot
-behavior matches that of the xM. To do this, issue the following commands from
-the u-boot prompt (note that the unlock may be unecessary depending on the
-version of u-boot installed on your board and only one of the erase commands
-will succeed):
-
-    # nand unlock
-    # nand erase
-    # nand erase.chip
-
-To further tailor these instructions for your board, please refer to the
-documentation at http://www.beagleboard.org.
-
-From a Linux system with access to the image files perform the following steps
-as root, replacing mmcblk0* with the SD card device on your machine (such as sdc
-if used via a usb card reader):
-
-  1. Partition and format an SD card:
-     # fdisk -lu /dev/mmcblk0
-     
-     Disk /dev/mmcblk0: 3951 MB, 3951034368 bytes
-     255 heads, 63 sectors/track, 480 cylinders, total 7716864 sectors
-     Units = sectors of 1 * 512 = 512 bytes
-     
-             Device Boot      Start         End      Blocks  Id System
-     /dev/mmcblk0p1   *          63      144584       72261   c Win95 FAT32 (LBA)
-     /dev/mmcblk0p2          144585      465884      160650  83 Linux
-
-     # mkfs.vfat -F 16 -n "boot" /dev/mmcblk0p1
-     # mke2fs -j -L "root" /dev/mmcblk0p2
-
-  The following assumes the SD card partition 1 and 2 are mounted at
-  /media/boot and /media/root respectively. Removing the card and reinserting
-  it will do just that on most modern Linux desktop environments.
-  
-  The files referenced below are made available after the build in
-  build/tmp/deploy/images.
-
-  2. Install the boot loaders
-     # cp MLO-beagleboard /media/boot/MLO
-     # cp u-boot-beagleboard.bin /media/boot/u-boot.bin
-
-  3. Install the root filesystem
-     # tar x -C /media/root -f core-image-$IMAGE_TYPE-beagleboard.tar.bz2
-     # tar x -C /media/root -f modules-$KERNEL_VERSION-beagleboard.tgz
-
-  4. Install the kernel uImage
-     # cp uImage-beagleboard.bin /media/boot/uImage
-
-  5. Prepare a u-boot script to simplify the boot process
-     The Beagleboard can be made to boot at this point from the u-boot command
-     shell. To automate this process, generate a user.scr script as follows.
-
-     Install uboot-mkimage (from uboot-mkimage on Ubuntu or uboot-tools on Fedora).
-
-     Prepare a script config:
-
-     # (cat << EOF
-     setenv bootcmd 'mmc init; fatload mmc 0:1 0x80300000 uImage; bootm 0x80300000'
-     setenv bootargs 'console=tty0 console=ttyO2,115200n8 root=/dev/mmcblk0p2 rootwait rootfstype=ext3 ro'
-     boot
-     EOF
-     ) > serial-boot.cmd
-     # mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Core Minimal" -d ./serial-boot.cmd ./boot.scr
-     # cp boot.scr /media/boot
-
-   6. Unmount the SD partitions, insert the SD card into the Beagleboard, and
-      boot the Beagleboard
-
-Note: As of the 2.6.37 linux-yocto kernel recipe, the Beagleboard uses the
-      OMAP_SERIAL device (ttyO2). If you are using an older kernel, such as the
-      2.6.34 linux-yocto-stable, be sure to replace ttyO2 with ttyS2 above. You
-      should also override the machine SERIAL_CONSOLE in your local.conf in
-      order to setup the getty on the serial line:
-
-      SERIAL_CONSOLE_beagleboard = "115200 ttyS2"
 
 
 Freescale MPC8315E-RDB (mpc8315e-rdb)

@@ -319,7 +319,6 @@ DESCRIPTION
         ["yocto/pvr", "yocto/pvr"]
         ["yocto/standard/arm-versatile-926ejs", "yocto/standard/arm-versatile-926ejs"]
         ["yocto/standard/base", "yocto/standard/base"]
-        ["yocto/standard/beagleboard", "yocto/standard/beagleboard"]
         ["yocto/standard/cedartrail", "yocto/standard/cedartrail"]
         .
         .
