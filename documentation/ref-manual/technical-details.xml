@@ -6,41 +6,46 @@
 <title>Technical Details</title>
 
     <para>
-        This chapter provides technical details for various parts of the Yocto Project.
+        This chapter provides technical details for various parts of the
+        Yocto Project.
         Currently, topics include Yocto Project components,
-        shared state (sstate) cache, x32, and Licenses.
+        cross-toolchain generation, shared state (sstate) cache,
+        x32, Wayland support, and Licenses.
     </para>
 
 <section id='usingpoky-components'>
     <title>Yocto Project Components</title>
 
     <para>
-        The BitBake task executor together with various types of configuration files form the
-        OpenEmbedded Core.
-        This section overviews these by describing what they are used for
-        and how they interact.
+        The
+        <ulink url='&YOCTO_DOCS_DEV_URL;#bitbake-term'>BitBake</ulink>
+        task executor together with various types of configuration files form
+        the OpenEmbedded Core.
+        This section overviews these components by describing their use and
+        how they interact.
     </para>
 
     <para>
         BitBake handles the parsing and execution of the data files.
         The data itself is of various types:
-    <itemizedlist>
-        <listitem><para><emphasis>Recipes:</emphasis>  Provides details about particular
-            pieces of software.</para></listitem>
-        <listitem><para><emphasis>Class Data:</emphasis>  Abstracts common build
-            information (e.g. how to build a Linux kernel).</para></listitem>
-        <listitem><para><emphasis>Configuration Data:</emphasis>  Defines machine-specific settings,
-            policy decisions, and so forth.
-            Configuration data acts as the glue to bind everything together.</para></listitem>
-    </itemizedlist>
-        For more information on data, see the
-        "<ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-terms'>Yocto Project Terms</ulink>"
-        section in the Yocto Project Development Manual.
+        <itemizedlist>
+            <listitem><para><emphasis>Recipes:</emphasis> Provides details
+                about particular pieces of software.
+                </para></listitem>
+            <listitem><para><emphasis>Class Data:</emphasis> Abstracts
+                common build information (e.g. how to build a Linux kernel).
+                </para></listitem>
+            <listitem><para><emphasis>Configuration Data:</emphasis> Defines
+                machine-specific settings, policy decisions, and so forth.
+                Configuration data acts as the glue to bind everything
+                together.
+                </para></listitem>
+        </itemizedlist>
     </para>
 
     <para>
-        BitBake knows how to combine multiple data sources together and refers to each data source
-        as a layer.
+        BitBake knows how to combine multiple data sources together and refers
+        to each data source as a layer.
         For information on layers, see the
         "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and
         Creating Layers</ulink>" section of the Yocto Project Development Manual.
@@ -48,8 +53,10 @@
 
     <para>
         Following are some brief details on these core components.
-        For more detailed information on these components, see the
-        "<link linkend='ref-structure'>Source Directory Structure</link>" chapter.
+        For additional information on how these components interact during
+        a build, see the
+        "<link linkend='closer-look'>A Closer Look at the Yocto Project Development Environment</link>"
+        Chapter.
     </para>
 
     <section id='usingpoky-components-bitbake'>
@@ -60,6 +67,15 @@
             and is responsible for parsing the
             <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>,
             generating a list of tasks from it, and then executing those tasks.
+        </para>
+
+        <para>
+            This section briefly introduces BitBake.
+            If you want more information on BitBake, see the
+            <ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual'>BitBake User Manual</ulink>.
+        </para>
+
+        <para>
             To see a list of the options BitBake supports, use either of
             the following commands:
             <literallayout class='monospaced'>
@@ -72,7 +88,9 @@
             The most common usage for BitBake is <filename>bitbake &lt;packagename&gt;</filename>, where
             <filename>packagename</filename> is the name of the package you want to build
             (referred to as the "target" in this manual).
-            The target often equates to the first part of a <filename>.bb</filename> filename.
+            The target often equates to the first part of a recipe's filename
+            (e.g. "foo" for a recipe named
+            <filename>foo_1.3.0-r0.bb</filename>).
             So, to process the <filename>matchbox-desktop_1.2.3.bb</filename> recipe file, you
             might type the following:
             <literallayout class='monospaced'>
@@ -99,11 +117,12 @@
         <para>
             A useful BitBake option to consider is the <filename>-k</filename> or
             <filename>--continue</filename> option.
-            This option instructs BitBake to try and continue processing the job as much
-            as possible even after encountering an error.
+            This option instructs BitBake to try and continue processing the job
+            as long as possible even after encountering an error.
             When an error occurs, the target that
             failed and those that depend on it cannot be remade.
-            However, when you use this option other dependencies can still be processed.
+            However, when you use this option other dependencies can still be
+            processed.
         </para>
     </section>
 
@@ -111,12 +130,15 @@
         <title>Metadata (Recipes)</title>
 
         <para>
-            The <filename>.bb</filename> files are usually referred to as "recipes."
-            In general, a recipe contains information about a single piece of software.
+            Files that have the <filename>.bb</filename> suffix are "recipes"
+            files.
+            In general, a recipe contains information about a single piece of
+            software.
             This information includes the location from which to download the
             unaltered source, any source patches to be applied to that source
             (if needed), which special configuration options to apply,
-            how to compile the source files, and how to package the compiled output.
+            how to compile the source files, and how to package the compiled
+            output.
         </para>
 
         <para>
@@ -134,10 +156,12 @@
             Class files (<filename>.bbclass</filename>) contain information that
             is useful to share between
             <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink> files.
-            An example is the Autotools class, which contains
-            common settings for any application that Autotools uses.
-            The "<link linkend='ref-classes'>Classes</link>" chapter provides details
-            about common classes and how to use them.
+            An example is the
+            <link linkend='ref-classes-autotools'><filename>autotools</filename></link>
+            class, which contains common settings for any application that
+            Autotools uses.
+            The "<link linkend='ref-classes'>Classes</link>" chapter provides
+            details about classes and how to use them.
         </para>
     </section>
 
