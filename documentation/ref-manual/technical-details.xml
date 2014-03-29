@@ -422,7 +422,8 @@
         as part of the shared state packages.
         Consequently, considerations exist that affect maintaining shared
         state feeds.
-        For information on how the OpenEmbedded works with packages and can
+        For information on how the OpenEmbedded build system
+        works with packages and can
         track incrementing <filename>PR</filename> information, see the
         "<ulink url='&YOCTO_DOCS_DEV_URL;#incrementing-a-package-revision-number'>Incrementing a Package Revision Number</ulink>"
         section.
@@ -510,8 +511,11 @@
             <literallayout class='monospaced'>
      PACKAGE_ARCHS[vardepsexclude] = "MACHINE"
             </literallayout>
-            This example ensures that the <filename>PACKAGE_ARCHS</filename> variable does not
-            depend on the value of <filename>MACHINE</filename>, even if it does reference it.
+            This example ensures that the <filename>PACKAGE_ARCHS</filename>
+            variable does not
+            depend on the value of
+            <link linkend='var-MACHINE'><filename>MACHINE</filename></link>,
+            even if it does reference it.
         </para>
 
         <para>
@@ -599,12 +603,20 @@
             It is also worth noting that the end result of these signature generators is to
             make some dependency and hash information available to the build.
             This information includes:
-            <literallayout class='monospaced'>
-     BB_BASEHASH_task-&lt;taskname&gt; - the base hashes for each task in the recipe
-     BB_BASEHASH_&lt;filename:taskname&gt; - the base hashes for each dependent task
-     BBHASHDEPS_&lt;filename:taskname&gt; - The task dependencies for each task
-     BB_TASKHASH - the hash of the currently running task
-            </literallayout>
+            <itemizedlist>
+                <listitem><para><filename>BB_BASEHASH_task-&lt;taskname&gt;</filename>:
+                    The base hashes for each task in the recipe.
+                    </para></listitem>
+                <listitem><para><filename>BB_BASEHASH_&lt;filename:taskname&gt;</filename>:
+                    The base hashes for each dependent task.
+                    </para></listitem>
+                <listitem><para><filename>BBHASHDEPS_&lt;filename:taskname&gt;</filename>:
+                    The task dependencies for each task.
+                    </para></listitem>
+                <listitem><para><filename>BB_TASKHASH</filename>:
+                    The hash of the currently running task.
+                    </para></listitem>
+            </itemizedlist>
         </para>
     </section>
 
@@ -619,8 +631,10 @@
         </para>
 
         <para>
-            The shared state class (<filename>sstate.bbclass</filename>)
-            is a relatively generic implementation of how to "capture" a snapshot of a given task.
+            The
+            <link linkend='ref-classes-sstate'><filename>sstate</filename></link>
+            class is a relatively generic implementation of how to "capture"
+            a snapshot of a given task.
             The idea is that the build process does not care about the source of a task's output.
             Output could be freshly built or it could be downloaded and unpacked from
             somewhere - the build process does not need to worry about its origin.
@@ -636,11 +650,13 @@
         </para>
 
         <para>
-            The Yocto Project team has tried to keep the details of the implementation hidden in
-            <filename>sstate.bbclass</filename>.
+            The Yocto Project team has tried to keep the details of the
+            implementation hidden in <filename>sstate</filename> class.
             From a user's perspective, adding shared state wrapping to a task
-            is as simple as this <filename>do_deploy</filename> example taken from
-            <filename>deploy.bbclass</filename>:
+            is as simple as this <filename>do_deploy</filename> example taken
+            from the
+            <link linkend='ref-classes-deploy'><filename>deploy</filename></link>
+            class:
             <literallayout class='monospaced'>
      DEPLOYDIR = "${WORKDIR}/deploy-${PN}"
      SSTATETASKS += "do_deploy"
@@ -744,7 +760,7 @@
 
             <para>
                 When things go wrong, debugging needs to be straightforward.
-                Because of this, the Yocto Project team included strong debugging
+                Because of this, the Yocto Project includes strong debugging
                 tools:
                 <itemizedlist>
                     <listitem><para>Whenever a shared state package is written out, so is a
@@ -782,7 +798,7 @@
                 As with all schemes, this one has some drawbacks.
                 It is possible that you could make implicit changes to your
                 code that the checksum calculations do not take into
-                account (i.e. implicit changes).
+                account.
                 These implicit changes affect a task's output but do not trigger
                 the shared state code into rebuilding a recipe.
                 Consider an example during which a tool changes its output.
@@ -806,7 +822,7 @@
                 Realize that changes you make directly to a function
                 are automatically factored into the checksum calculation.
                 Thus, these explicit changes invalidate the associated area of
-                sstate cache.
+                shared state cache.
                 However, you need to be aware of any implicit changes that
                 are not obvious changes to the code and could affect the output
                 of a given task.
