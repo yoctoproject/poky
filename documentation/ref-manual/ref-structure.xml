@@ -323,9 +323,36 @@
     <para>
         The OpenEmbedded build system creates the
         <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-        during the build.
-        By default, this directory is named <filename>build</filename>.
+        when you run one of the build environment setup scripts (i.e.
+        <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
+        or
+        <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>).
     </para>
+
+    <para>
+        If you do not give the Build Directory a specific name when you run
+        a setup script, the name defaults to <filename>build</filename>.
+    </para>
+
+    <para>
+        The
+        <link linkend='var-TOPDIR'><filename>TOPDIR</filename></link> variable
+        points to the Build Directory.
+    </para>
+
+    <section id='structure-build-buildhistory'>
+        <title><filename>build/buildhistory</filename></title>
+
+        <para>
+            The OpenEmbedded build system creates this directory when you
+            enable the build history feature.
+            The directory tracks build information into image, packages, and
+            SDK subdirectories.
+            For information on the build history feature, see the
+            "<link linkend='maintaining-build-output-quality'>Maintaining Build Output Quality</link>"
+            section.
+        </para>
+    </section>
 
     <section id='structure-build-conf-local.conf'>
         <title><filename>build/conf/local.conf</filename></title>
@@ -488,10 +515,18 @@
         <title><filename>build/tmp/</filename></title>
 
         <para>
-            This directory receives all of the OpenEmbedded build system's output.
+            The OpenEmbedded build system creates and uses this directory
+            for all the build system's output.
+            The
+            <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
+            variable points to this directory.
+        </para>
+
+        <para>
             BitBake creates this directory if it does not exist.
-            As a last resort, to clean up a build and start it from scratch (other than the downloads),
-            you can remove everything in the <filename>tmp</filename> directory or get rid of the
+            As a last resort, to clean up a build and start it from scratch
+            (other than the downloads), you can remove everything in the
+            <filename>tmp</filename> directory or get rid of the
             directory completely.
             If you do, you should also completely remove the
             <filename>build/sstate-cache</filename> directory.
@@ -604,6 +639,19 @@
      $ bitbake -c clean virtual/kernel
      $ bitbake virtual/kernel
             </literallayout>
+        </para>
+    </section>
+
+    <section id='structure-build-tmp-deploy-sdk'>
+        <title><filename>build/tmp/deploy/sdk/</filename></title>
+
+        <para>
+            The OpenEmbedded build system creates this directory to hold
+            toolchain installer scripts, which when executed, install the
+            sysroot that matches your target hardware.
+            You can find out more about these installers in the
+            "<ulink url='&YOCTO_DOCS_ADT_URL;#optionally-building-a-toolchain-installer'>Optionally Building a Toolchain Installer</ulink>"
+            section in the Yocto Project Application Developer's Guide.
         </para>
     </section>
 
