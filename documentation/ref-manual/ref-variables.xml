@@ -21,7 +21,7 @@
        <link linkend='var-CFLAGS'>C</link>
        <link linkend='var-D'>D</link>
        <link linkend='var-ENABLE_BINARY_LOCALE_GENERATION'>E</link>
-       <link linkend='var-FEED_DEPLOYDIR_BASE_URI'>F</link>
+       <link linkend='var-FEATURE_PACKAGES'>F</link>
        <link linkend='var-GROUPADD_PARAM'>G</link>
        <link linkend='var-HOMEPAGE'>H</link>
        <link linkend='var-ICECC_DISABLED'>I</link>
@@ -2169,6 +2169,34 @@
     </glossdiv>
 
     <glossdiv id='var-glossary-f'><title>F</title>
+
+        <glossentry id='var-FEATURE_PACKAGES'><glossterm>FEATURE_PACKAGES</glossterm>
+            <glossdef>
+                <para>
+                    Defines one or more packages to include in an image when
+                    a specific item is included in
+                    <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>.
+                    When setting the value, <filename>FEATURE_PACKAGES</filename>
+                    should have the name of the feature item as an override.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     FEATURE_PACKAGES_widget = "package1 package2"
+                    </literallayout>
+                    In this example, if "widget" were added to
+                    <filename>IMAGE_FEATURES</filename>, "package1" and
+                    "package2" would be included in the image.
+                    <note>
+                        Packages installed by features defined through
+                        <filename>FEATURE_PACKAGES</filename> are often package
+                        groups.
+                        While similarly named, you should not confuse the
+                        <filename>FEATURE_PACKAGES</filename> variable with
+                        package groups, which are discussed elsewhere in the
+                        documentation.
+                    </note>
+                </para>
+            </glossdef>
+        </glossentry>
 
         <glossentry id='var-FEED_DEPLOYDIR_BASE_URI'><glossterm>FEED_DEPLOYDIR_BASE_URI</glossterm>
             <glossdef>
@@ -4942,28 +4970,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PACKAGE_GROUP'><glossterm>PACKAGE_GROUP</glossterm>
             <glossdef>
+
                 <para>
-                    Defines one or more packages to include in an image when
-                    a specific item is included in
-                    <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>.
-                    When setting the value, <filename>PACKAGE_GROUP</filename>
-                    should have the name of the feature item as an override.
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     PACKAGE_GROUP_widget = "package1 package2"
-                    </literallayout>
-                    In this example, if "widget" were added to
-                    <filename>IMAGE_FEATURES</filename>, "package1" and
-                    "package2" would be included in the image.
-                    <note>
-                        Packages installed by features defined through
-                        <filename>PACKAGE_GROUP</filename> are often package
-                        groups.
-                        While similarly named, you should not confuse the
-                        <filename>PACKAGE_GROUP</filename> variable with
-                        package groups, which are discussed elsewhere in the
-                        documentation.
-                    </note>
+                    The <filename>PACKAGE_GROUP</filename> variable has been
+                    renamed to
+                    <link linkend='var-FEATURE_PACKAGES'><filename>FEATURE_PACKAGES</filename></link>.
+                    See the variable description for
+                    <filename>FEATURE_PACKAGES</filename> for information.
+                </para>
+
+                <para>
+                    If if you use the <filename>PACKAGE_GROUP</filename>
+                    variable, the OpenEmbedded build system issues a warning
+                    message.
                 </para>
             </glossdef>
         </glossentry>
