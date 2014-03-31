@@ -1112,16 +1112,150 @@
         <title>BitBake</title>
 
         <para>
-            Sample section.
+            The following changes have been made to
+            <ulink url='&YOCTO_DOCS_DEV_URL;#bitbake-term'>BitBake</ulink>.
         </para>
+
+        <section id='migration-1.6-bitbake-deps'>
+            <title>Python Definition substitutions</title>
+
+            <para>
+                had some previously deprecated Python definitions within
+                its <filename>bb</filename> module removed.
+                You should use their sub-module counterparts instead:
+                <itemizedlist>
+                    <listitem><para><filename>bb.MalformedUrl</filename>:
+                        Use <filename>bb.fetch.MalformedUrl</filename>.
+                        </para></listitem>
+                    <listitem><para><filename>bb.encodeurl</filename>:
+                        Use <filename>bb.fetch: encodeurl</filename>.
+                        </para></listitem>
+                    <listitem><para><filename>bb.decodeurl</filename>:
+                        Use <filename>bb.fetch.decodeurl</filename>
+                        </para></listitem>
+                    <listitem><para><filename>bb.mkdirhier</filename>:
+                        Use <filename>bb.utils.mkdirhier</filename>.
+                        </para></listitem>
+                    <listitem><para><filename>bb.movefile</filename>:
+                        Use <filename>bb.utils.movefile</filename>.
+                        </para></listitem>
+                    <listitem><para><filename>bb.copyfile</filename>:
+                        Use <filename>bb.utils.copyfile</filename>.
+                        </para></listitem>
+                    <listitem><para><filename>bb.which</filename>:
+                        Use <filename>bb.utils.which</filename>.
+                        </para></listitem>
+                    <listitem><para><filename>bb.vercmp_string</filename>:
+                        Use <filename>bb.utils.vercmp_string</filename>.
+                        </para></listitem>
+                    <listitem><para><filename>bb.vercmp</filename>:
+                        Use <filename>bb.utils.vercmp</filename>.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='migration-1.6-bitbake-fetcher'>
+            <title>SVK Fetcher</title>
+
+            <para>
+                The SVK fetcher has been removed from BitBake.
+            </para>
+        </section>
     </section>
 
-    <section id='migration-1.6-qa-warnings'>
-        <title>QA Warnings</title>
+    <section id='migration-1.6-variable-changes'>
+        <title>Changes to Variables</title>
 
         <para>
-            Sample section.
+            The following variables have changed.
+            For information on the OpenEmbedded build system variables, see the
+            "<link linkend='ref-variables-glos'>Variables Glossary</link>" Chapter.
         </para>
+
+        <section id='migration-1.6-variable-changes-TMPDIR'>
+            <title><filename>TMPDIR</filename></title>
+
+            <para>
+                <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
+                can no longer be on an NFS mount.
+                NFS does not offer full POSIX locking and inode consistency
+                and can cause unexpected issues if used to store
+                <filename>TMPDIR</filename>.
+            </para>
+
+            <para>
+                The check for this does not occur on startup.
+                If <filename>TMPDIR</filename> is detected on an NFS mount,
+                an error occurs.
+                For more information on this restriction, see the
+                <filename>TMPDIR</filename> description in the
+                "<link linkend='ref-variables-glos'>Variables Glossary</link>".
+            </para>
+        </section>
+
+        <section id='migration-1.6-variable-changes-PRINC'>
+            <title><filename>PRINC</filename></title>
+
+            <para>
+                The
+                <link linkend='var-PRINC'><filename>PRINC</filename></link>
+                variable has been deprecated and triggers a warning if
+                detected during a build.
+                For
+                <link linkend='var-PR'><filename>PR</filename></link>
+                increments on changes, use the PR service instead.
+                You can find out more about this service in the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#working-with-a-pr-service'>Working With a PR Service</ulink>"
+                section in the Yocto Project Development Manual.
+            </para>
+        </section>
+
+        <section id='migration-1.6-variable-changes-IMAGE_TYPES'>
+            <title><filename>IMAGE_TYPES</filename></title>
+
+            <para>
+                The "sum.jffs2" option for
+                <link linkend='var-IMAGE_TYPES'><filename>IMAGE_TYPES</filename></link>
+                has been replaced by the "jffs2.sum" option, which fits the
+                processing order.
+            </para>
+        </section>
+
+        <section id='migration-1.6-variable-changes-COPY_LIC_MANIFEST'>
+            <title><filename>COPY_LIC_MANIFEST</filename></title>
+
+            <para>
+                The <filename>COPY_LIC_MANIFEST</filename> variable must
+                now be set to "1" rather than any value in order to enable
+                it.
+            </para>
+        </section>
+
+        <section id='migration-1.6-variable-changes-COPY_LIC_DIRS'>
+            <title><filename>COPY_LIC_DIRS</filename></title>
+
+            <para>
+                The <filename>COPY_LIC_DIRS</filename> variable must
+                now be set to "1" rather than any value in order to enable
+                it.
+            </para>
+        </section>
+
+        <section id='migration-1.6-variable-changes-PACKAGE_GROUP'>
+            <title><filename>PACKAGE_GROUP</filename></title>
+
+            <para>
+                The
+                <link linkend='var-PACKAGE_GROUP'><filename>PACKAGE_GROUP</filename></link>
+                variable has been renamed to
+                <link linkend='var-FEATURE_PACKAGES'><filename>FEATURE_PACKAGES</filename></link>
+                to more accurately reflect its purpose.
+                You can still use <filename>PACKAGE_GROUP</filename> but
+                the OpenEmbedded build system produces a warning message when
+                it encounters the variable.
+            </para>
+        </section>
     </section>
 
     <section id='migration-1.6-directory-layout-changes'>
