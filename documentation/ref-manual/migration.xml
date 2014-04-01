@@ -1092,19 +1092,44 @@
         Yocto Project 1.6 Release from the prior release.
     </para>
 
-    <section id='migration-1.6-host-dependency-changes'>
-        <title>Host Dependency Changes</title>
+
+    <section id='migration-1.6-archiver-class'>
+        <title><filename>archiver</filename> Class</title>
 
         <para>
-            Sample section.
+            The
+            <link linkend='ref-classes-archiver'><filename>archiver</filename></link>
+            class has been rewritten and its configuration has been simplified.
+            For more details on the source archiver, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#maintaining-open-source-license-compliance-during-your-products-lifecycle'>Maintaining Open Source License Compliance During Your Product's Lifecycle</ulink>"
+            section in the Yocto Project Development Manual.
         </para>
     </section>
 
-    <section id='migration-1.6-atom-pc-bsp'>
-        <title><filename>atom-pc</filename> Board Support Package (BSP)</title>
+    <section id='migration-1.6-packaging-changes'>
+        <title>Packaging Changes</title>
 
         <para>
-            Sample section.
+            The following packaging changes have been made:
+            <itemizedlist>
+                <listitem><para>
+                    The <filename>binutils</filename> recipe no longer produces
+                    a <filename>binutils-symlinks</filename> package.
+                    <filename>update-alternatives</filename> is now used to
+                    handle the preferred <filename>binutils</filename>
+                    variant on the target instead.
+                    </para></listitem>
+                <listitem><para>
+                    The tc (traffic control) utilities have been split out of
+                    the main <filename>iproute2</filename> package and put
+                    into the <filename>iproute2-tc</filename> package.
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>gtk-engines</filename> schemas have been
+                    moved to a dedicated
+                    <filename>gtk-engines-schemas</filename> package.
+                    </para></listitem>
+            </itemizedlist>
         </para>
     </section>
 
@@ -1266,87 +1291,160 @@
         <title>Directory Layout Changes</title>
 
         <para>
-            Sample section.
+            The <filename>meta-hob</filename> layer has been removed from
+            the top-level of the
+            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+            The contents of this layer are no longer needed by the Hob
+            user interface for building images and toolchains.
         </para>
     </section>
 
-    <section id='migration-1.6-shortened-git-srcrev-values'>
-        <title>Shortened Git <filename>SRCREV</filename> Values</title>
+    <section id='migration-1.6-build-changes'>
+        <title>Build Changes</title>
 
         <para>
-            Sample section.
+            Separate build and source directories have been enabled
+            by default for selected recipes where it is known to work
+            (a whitelist) and for when using the
+            <link linkend='ref-classes-cmake'><filename>cmake</filename></link>
+            class.
+            In future releases the
+            <link linkend='ref-classes-autotools'><filename>autotools</filename></link>
+            class will enable a separate build directory by default as
+            well.
+            Recipes building <filename>autotools-based</filename>
+            software that fails to build with a separate build directory
+            should be changed to inherit from the
+            <link linkend='ref-classes-autotools-brokensep'><filename>autotools-brokensep</filename></link>
+            class instead of the <filename>autotools</filename> class.
         </para>
     </section>
 
-    <section id='migration-1.6-image-features'>
-        <title><filename>IMAGE_FEATURES</filename></title>
+    <section id='migration-1.6-building-qemu-native'>
+        <title><filename>qemu-native</filename></title>
 
         <para>
-            Sample section.
+            <filename>qemu-native</filename> now builds without
+            SDL-based graphical output support by default.
+            The following additional lines are needed in your
+            <filename>local.conf</filename> to enable it.
+            Remove the comments from the following two lines when you
+            need to build a headless server:
+            <literallayout class='monospaced'>
+     PACKAGECONFIG_pn-qemu-native = "sdl"
+     ASSUME_PROVIDED += "libsdl-native"
+            </literallayout>
+            <note>
+                The default <filename>local.conf</filename>
+                contains these statements as comments.
+            </note>
         </para>
     </section>
 
-    <section id='migration-1.6-run'>
-        <title><filename>run</filename></title>
+    <section id='migration-1.6-core-image-basic'>
+        <title><filename>core-image-basic</filename></title>
 
         <para>
-            Sample section.
+            <filename>core-image-basic</filename> has been renamed to
+            <filename>core-image-full-cmdline</filename>.
         </para>
-    </section>
-
-    <section id='migration-1.6-removal-of-package-manager-database-within-image-recipes'>
-        <title>Removal of Package Manager Database Within Image Recipes</title>
 
         <para>
-            Sample section.
+            In addition to <filename>core-image-basic</filename> being renamed,
+            <filename>packagegroup-core-basic</filename> has been renamed to
+            <filename>packagegroup-core-full-cmdline</filename> to match.
         </para>
     </section>
 
-    <section id='migration-1.6-images-now-rebuild-only-on-changes-instead-of-every-time'>
-        <title>Images Now Rebuild Only on Changes Instead of Every Time</title>
+    <section id='migration-1.6-licensing'>
+        <title>Licensing</title>
 
         <para>
-            Sample section.
+            The top-level <filename>LICENSE</filename> file has been changed
+            to better describe the license of the various components of
+            OE-Core.
+            Normally, this change would not cause any side-effects.
+            However, some recipes point to this file within
+            <link linkend='var-LIC_FILES_CHKSUM'><filename>LIC_FILES_CHKSUM</filename></link>
+            (as <filename>${COREBASE}/LICENSE</filename>) and thus the
+            accompanying checksum must be changed from
+            3f40d7994397109285ec7b81fdeb3b58 to
+            4d92cd373abda3937c2bc47fbc49d690.
         </para>
     </section>
 
-    <section id='migration-1.6-task-recipes'>
+    <section id='migration-1.6-cflags-options'>
+        <title><filename>CFLAGS</filename> Options</title>
+
+        <para>
+            The "-fpermissive" option has been removed from the default
+            <link linkend='var-CFLAGS'><filename>CFLAGS</filename></link>
+            value.
+            Individual recipes that fail to build without it should either
+            be patched to fix the issues reported by the compiler.
+            Alternatively, you can add "-fpermissive" to
+            <filename>CFLAGS</filename> in the recipe.
+        </para>
+    </section>
+
+    <section id='migration-1.6-custom-images'>
+        <title>Custom Images</title>
+
+        <para>
+            Custom image output types, as selected using
+            <link linkend='var-IMAGE_TYPES'><filename>IMAGE_TYPES</filename></link>,
+            must declare their dependencies on other image types (if any) using
+            a new
+            <link linkend='var-IMAGE_TYPEDEP'><filename>IMAGE_TYPEDEP</filename></link>
+            variable.
+        </para>
+    </section>
+
+    <section id='migration-1.6-do-package-write-task'>
         <title>Task Recipes</title>
 
         <para>
-            Sample section.
+            The <filename>do_package_write</filename> task has been removed.
+            The task is no longer needed.
         </para>
     </section>
 
-    <section id='migration-1.6-busybox'>
-        <title>BusyBox</title>
+    <section id='migration-1.6-update-alternatives-provider'>
+        <title><filename>update-alternative</filename> Provider</title>
 
         <para>
-            Sample section.
+            The default <filename>update-alternatives</filename> provider has
+            been changed from <filename>opkg</filename> to
+            <filename>opkg-utils</filename>.
+            This change resolves some troublesome circular dependencies.
+            The runtime package has also been renamed from
+            <filename>update-alternatives-cworth</filename>
+            to <filename>update-alternatives-opkg</filename>.
         </para>
     </section>
 
-    <section id='migration-1.6-automated-image-testing'>
-        <title>Automated Image Testing</title>
+    <section id='migration-1.6-virtclass-overrides'>
+        <title><filename>virtclass</filename> Overrides</title>
 
         <para>
-            Sample section.
+            The <filename>virtclass</filename> overrides are now deprecated.
+            Use the equivalent class overrides instead (e.g.
+            <filename>virtclass-native</filename> becomes
+            <filename>class-native</filename>.
         </para>
     </section>
 
-    <section id='migration-1.6-build-history'>
-        <title>Build History</title>
+    <section id='migration-1.6-task-taskname-overrides'>
+        <title><filename>task-&lt;taskname&gt;</filename> Overrides</title>
 
         <para>
-            Sample section.
-        </para>
-    </section>
-
-    <section id='migration-1.6-udev'>
-        <title><filename>udev</filename></title>
-
-        <para>
-            Sample section.
+            <filename>task-&lt;taskname&gt;</filename> overrides have been
+            adjusted so that tasks whose names contain underscores have the
+            underscores replaced by hyphens for the override so that they
+            now function properly.
+            For example, the task override for
+            <filename>do_populate_sdk</filename> is
+            <filename>task-populate-sdk</filename>.
         </para>
     </section>
 
@@ -1354,15 +1452,76 @@
         <title>Removed and Renamed Recipes</title>
 
         <para>
-            Sample section.
+            The following recipes have been removed:
+            <itemizedlist>
+                <listitem><para><filename>packagegroup-toolset-native</filename> -
+                    This recipe is largely unused.
+                    </para></listitem>
+                <listitem><para><filename>linux-yocto-3.8</filename> -
+                    Support for the Linux yocto 3.8 kernel has been dropped.
+                    Support for the 3.10 and 3.14 kernels have been added
+                    with the <filename>linux-yocto-3.10</filename> and
+                    <filename>linux-yocto-3.14</filename> recipes.
+                    </para></listitem>
+                <listitem><para><filename>ocf-linux</filename> -
+                    This recipe has been functionally replaced using
+                    <filename>cryptodev-linux</filename>.
+                    </para></listitem>
+                <listitem><para><filename>genext2fs</filename> -
+                    This upstream is no longer needed or maintained.
+                    </para></listitem>
+                <listitem><para><filename>js</filename> -
+                    This supported an ancient version of Mozilla's javascript
+                    engine that is no longer needed.
+                    </para></listitem>
+                <listitem><para><filename>zaurusd</filename> -
+                    The recipe has been moved to the
+                    <filename>meta-handheld</filename> layer.
+                    </para></listitem>
+                <listitem><para><filename>eglibc 2.17</filename> -
+                    Replaced by the <filename>eglibc 2.19</filename>
+                    recipe.
+                    </para></listitem>
+                <listitem><para><filename>gcc 4.7.2</filename> -
+                    Replaced by the now stable
+                    <filename>gcc 4.8.2</filename>.
+                    </para></listitem>
+                <listitem><para><filename>external-sourcery-toolchain</filename> -
+                    this recipe is now maintained in the
+                    <filename>meta-sourcery</filename> layer.
+                    </para></listitem>
+                <listitem><para><filename>linux-libc-headers-yocto 3.4+git</filename> -
+                    Now using version 3.10 of the
+                    <filename>linux-libc-headers</filename> by default.
+                    </para></listitem>
+                <listitem><para><filename>meta-toolchain-gmae</filename> -
+                    This recipe is obsolete.
+                    </para></listitem>
+                <listitem><para><filename>packagegroup-core-sdk-gmae</filename> -
+                    This recipe is obsolete.
+                    </para></listitem>
+                <listitem><para><filename>packagegroup-core-standalone-gmae-sdk-target</filename> -
+                    This recipe is obsolete.
+                    </para></listitem>
+            </itemizedlist>
         </para>
     </section>
 
-    <section id='migration-1.6-other-changes'>
-        <title>Other Changes</title>
+    <section id='migration-1.6-removed-classes'>
+        <title>Removed Classes</title>
 
         <para>
-            Sample section.
+            The following classes have become obsolete and have been removed:
+            <itemizedlist>
+                <listitem><para><filename>module_strip</filename>
+                    </para></listitem>
+                <listitem><para><filename>pkg_metainfo</filename>
+                    </para></listitem>
+                <listitem><para><filename>pkg_distribute</filename>
+                    </para></listitem>
+                <listitem><para><filename>image-empty</filename>
+                    </para></listitem>
+            </itemizedlist>
         </para>
     </section>
 </section>
