@@ -5731,6 +5731,52 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PYTHON_ABI'><glossterm>PYTHON_ABI</glossterm>
+            <glossdef>
+                <para>
+                    Denotes the Application Binary Interface (ABI) currently
+                    in use for Python.
+                    By default, the ABI is "m".
+                </para>
+
+                <para>
+                    The OpenEmbedded build system uses the ABI to construct
+                    directory names used when installing the Python headers
+                    and libraries in sysroot
+                    (e.g. <filename>.../python3.3m/...</filename>).
+                </para>
+
+                <para>
+                    Recipes that inherit the
+                    <link linkend='ref-classes-distutils'><filename>distutils</filename></link>
+                    class during cross-builds also use this variable to
+                    locate the headers and libraries of the appropriate Python
+                    that the extension is targeting.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PYTHON_PN'><glossterm>PYTHON_PN</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the major Python version being built.
+                    For Python 2.x, <filename>PYTHON_PN</filename> would
+                    be "python2".  For Python 3.x, the variable would be
+                    "python3".
+                </para>
+
+                <para>
+                    The variable allows recipes to use common infrastructure
+                    such as the following:
+                    <literallayout class='monospaced'>
+     DEPENDS += "${PYTHON_PN}-native"
+                    </literallayout>
+                    In the previous example, the version of the dependency
+                    is <filename>PYTHON_PN</filename>.
+                </para>
+            </glossdef>
+        </glossentry>
+
     </glossdiv>
 
     <glossdiv id='var-glossary-q'><title>Q</title>
