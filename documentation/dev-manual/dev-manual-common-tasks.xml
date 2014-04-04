@@ -6933,12 +6933,9 @@
                 you would not generally release.
                 However, the more serious issue for most companies is accidental
                 release of proprietary software.
-                The Yocto Project provides an archiver class to help avoid
-                some of these concerns.
-                See the
-                "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-archiver'><filename>archive*.bbclass</filename></ulink>"
-                section in the Yocto Project Reference Manual for information
-                on this class.
+                The Yocto Project provides an
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-archiver'><filename>archiver</filename></ulink>
+                class to help avoid some of these concerns.
             </para>
 
             <para>
@@ -6947,16 +6944,17 @@
                 provide source.
                 The source archiver class can generate tarballs and SRPMs
                 and can create them with various levels of compliance in mind.
+            </para>
+
+            <para>
                 One way of doing this (but certainly not the only way) is to
-                release just the original source as a tarball.
+                release just the source as a tarball.
                 You can do this by adding the following to the
                 <filename>local.conf</filename> file found in the
                 <link linkend='build-directory'>Build Directory</link>:
                 <literallayout class='monospaced'>
-     ARCHIVER_MODE ?= "original"
-     ARCHIVER_CLASS = "${@'archive-${ARCHIVER_MODE}-source' if ARCHIVER_MODE != 'none' else ''}"
-     INHERIT += "${ARCHIVER_CLASS}"
-     SOURCE_ARCHIVE_PACKAGE_TYPE = "tar"
+     INHERIT += "archiver"
+     ARCHIVER_MODE[src] = "original"
                 </literallayout>
                 During the creation of your image, the source from all
                 recipes that deploy packages to the image is placed within
