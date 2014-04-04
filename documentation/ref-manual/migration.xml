@@ -1145,15 +1145,15 @@
             <title>Python Definition substitutions</title>
 
             <para>
-                had some previously deprecated Python definitions within
-                its <filename>bb</filename> module removed.
+                BitBake had some previously deprecated Python definitions
+                within its <filename>bb</filename> module removed.
                 You should use their sub-module counterparts instead:
                 <itemizedlist>
                     <listitem><para><filename>bb.MalformedUrl</filename>:
                         Use <filename>bb.fetch.MalformedUrl</filename>.
                         </para></listitem>
-                    <listitem><para><filename>bb.encodeurl</filename>:
-                        Use <filename>bb.fetch: encodeurl</filename>.
+                    <listitem><para><filename>bb.fetch.encodeurl</filename>:
+                        Use <filename>bb.fetch.encodeurl</filename>.
                         </para></listitem>
                     <listitem><para><filename>bb.decodeurl</filename>:
                         Use <filename>bb.fetch.decodeurl</filename>
@@ -1187,6 +1187,20 @@
                 The SVK fetcher has been removed from BitBake.
             </para>
         </section>
+
+        <section id='migration-1.6-task-taskname-overrides'>
+            <title><filename>task-&lt;taskname&gt;</filename> Overrides</title>
+
+            <para>
+                <filename>task-&lt;taskname&gt;</filename> overrides have been
+                adjusted so that tasks whose names contain underscores have the
+                underscores replaced by hyphens for the override so that they
+                now function properly.
+                For example, the task override for
+                <filename>do_populate_sdk</filename> is
+                <filename>task-populate-sdk</filename>.
+            </para>
+        </section>
     </section>
 
     <section id='migration-1.6-variable-changes'>
@@ -1210,12 +1224,9 @@
             </para>
 
             <para>
-                The check for this does not occur on startup.
+                The check for this occurs on startup.
                 If <filename>TMPDIR</filename> is detected on an NFS mount,
                 an error occurs.
-                For more information on this restriction, see the
-                <filename>TMPDIR</filename> description in the
-                "<link linkend='ref-variables-glos'>Variables Glossary</link>".
             </para>
         </section>
 
@@ -1305,14 +1316,14 @@
         <para>
             Separate build and source directories have been enabled
             by default for selected recipes where it is known to work
-            (a whitelist) and for when using the
+            (a whitelist) and for all recipes that inherit the
             <link linkend='ref-classes-cmake'><filename>cmake</filename></link>
             class.
             In future releases the
             <link linkend='ref-classes-autotools'><filename>autotools</filename></link>
             class will enable a separate build directory by default as
             well.
-            Recipes building <filename>autotools-based</filename>
+            Recipes building Autotools-based
             software that fails to build with a separate build directory
             should be changed to inherit from the
             <link linkend='ref-classes-autotools-brokensep'><filename>autotools-brokensep</filename></link>
@@ -1327,16 +1338,17 @@
             <filename>qemu-native</filename> now builds without
             SDL-based graphical output support by default.
             The following additional lines are needed in your
-            <filename>local.conf</filename> to enable it.
-            Remove the comments from the following two lines when you
-            need to build a headless server:
+            <filename>local.conf</filename> to enable it:
             <literallayout class='monospaced'>
      PACKAGECONFIG_pn-qemu-native = "sdl"
      ASSUME_PROVIDED += "libsdl-native"
             </literallayout>
             <note>
                 The default <filename>local.conf</filename>
-                contains these statements as comments.
+                contains these statements.
+                Consequently, if you are building a headless system and using
+                a default <filename>local.conf</filename> file, you will need
+                comment these two lines out.
             </note>
         </para>
     </section>
@@ -1363,6 +1375,10 @@
             The top-level <filename>LICENSE</filename> file has been changed
             to better describe the license of the various components of
             OE-Core.
+            However, the licensing itself remains unchanged.
+        </para>
+
+        <para>
             Normally, this change would not cause any side-effects.
             However, some recipes point to this file within
             <link linkend='var-LIC_FILES_CHKSUM'><filename>LIC_FILES_CHKSUM</filename></link>
@@ -1370,6 +1386,11 @@
             accompanying checksum must be changed from
             3f40d7994397109285ec7b81fdeb3b58 to
             4d92cd373abda3937c2bc47fbc49d690.
+            A better alternative is to have
+            <filename>LIC_FILES_CHKSUM</filename> point to a file
+            describing the license that is distributed with the source
+            that the recipe is building, if possible, rather than pointing
+            to <filename>${COREBASE}/LICENSE</filename>.
         </para>
     </section>
 
@@ -1380,19 +1401,20 @@
             The "-fpermissive" option has been removed from the default
             <link linkend='var-CFLAGS'><filename>CFLAGS</filename></link>
             value.
-            Individual recipes that fail to build without it should either
-            be patched to fix the issues reported by the compiler.
-            Alternatively, you can add "-fpermissive" to
-            <filename>CFLAGS</filename> in the recipe.
+            You need to take action on individual recipes that fail when
+            building with this option.
+            You need to either patch the recipes to fix the issues reported by
+            the compiler, or you to add "-fpermissive" to
+            <filename>CFLAGS</filename> in the recipes.
         </para>
     </section>
 
     <section id='migration-1.6-custom-images'>
-        <title>Custom Images</title>
+        <title>Custom Image Output Types</title>
 
         <para>
             Custom image output types, as selected using
-            <link linkend='var-IMAGE_TYPES'><filename>IMAGE_TYPES</filename></link>,
+            <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>,
             must declare their dependencies on other image types (if any) using
             a new
             <link linkend='var-IMAGE_TYPEDEP'><filename>IMAGE_TYPEDEP</filename></link>
@@ -1401,7 +1423,7 @@
     </section>
 
     <section id='migration-1.6-do-package-write-task'>
-        <title>Task Recipes</title>
+        <title>Tasks</title>
 
         <para>
             The <filename>do_package_write</filename> task has been removed.
@@ -1430,21 +1452,7 @@
             The <filename>virtclass</filename> overrides are now deprecated.
             Use the equivalent class overrides instead (e.g.
             <filename>virtclass-native</filename> becomes
-            <filename>class-native</filename>.
-        </para>
-    </section>
-
-    <section id='migration-1.6-task-taskname-overrides'>
-        <title><filename>task-&lt;taskname&gt;</filename> Overrides</title>
-
-        <para>
-            <filename>task-&lt;taskname&gt;</filename> overrides have been
-            adjusted so that tasks whose names contain underscores have the
-            underscores replaced by hyphens for the override so that they
-            now function properly.
-            For example, the task override for
-            <filename>do_populate_sdk</filename> is
-            <filename>task-populate-sdk</filename>.
+            <filename>class-native</filename>.)
         </para>
     </section>
 
@@ -1468,10 +1476,11 @@
                     <filename>cryptodev-linux</filename>.
                     </para></listitem>
                 <listitem><para><filename>genext2fs</filename> -
-                    This upstream is no longer needed or maintained.
+                    <filename>genext2fs</filename> is no longer used by the
+                    build system and is unmaintained upstream.
                     </para></listitem>
                 <listitem><para><filename>js</filename> -
-                    This supported an ancient version of Mozilla's javascript
+                    This provided an ancient version of Mozilla's javascript
                     engine that is no longer needed.
                     </para></listitem>
                 <listitem><para><filename>zaurusd</filename> -
@@ -1522,6 +1531,33 @@
                 <listitem><para><filename>image-empty</filename>
                     </para></listitem>
             </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.6-reference-bsps'>
+        <title>Reference Board Support Packages (BSPs)</title>
+
+        <para>
+            The following reference BSPs changes occurred:
+            <itemizedlist>
+                <listitem><para>The BeagleBoard
+                    (<filename>beagleboard</filename>) ARM reference hardware
+                    has been replaced by the BeagleBone
+                    (<filename>beaglebone</filename>) hardware.
+                    </para></listitem>
+                <listitem><para>The RouterStation Pro
+                    (<filename>routerstationpro</filename>) MIPS reference
+                    hardware has been replaced by the EdgeRouter Lite
+                    (<filename>edgerouter</filename>) hardware.
+                    </para></listitem>
+            </itemizedlist>
+            The previous reference BSPs for the
+            <filename>beagleboard</filename> and
+            <filename>routerstationpro</filename> machines are still available
+            in a new <filename>meta-yocto-bsp-old</filename> layer in the
+            <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink>
+            at
+            <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/meta-yocto-bsp-old/'>http://git.yoctoproject.org/cgit/cgit.cgi/meta-yocto-bsp-old/</ulink>.
         </para>
     </section>
 </section>
