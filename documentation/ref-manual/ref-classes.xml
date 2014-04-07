@@ -3137,11 +3137,11 @@
 </section>
 
 <section id='ref-classes-useradd-staticids'>
-    <title><filename>-useradd-staticids.bbclass</filename></title>
+    <title><filename>useradd-staticids.bbclass</filename></title>
 
     <para>
-        The <filename>useradd-staticids</filename> class supports the addition of
-        users or groups that have static user identification
+        The <filename>useradd-staticids</filename> class supports the addition
+        of users or groups that have static user identification
         (<filename>uid</filename>) and group identification
         (<filename>gid</filename>) values.
     </para>
@@ -3150,28 +3150,31 @@
         The default behavior of the OpenEmbedded build system for assigning
         <filename>uid</filename> and <filename>gid</filename> values when
         packages add users and groups during package install time is to
-        look in
-        <link linkend='var-BBPATH'><filename>BBPATH</filename></link> for
-        <filename>files/passwd</filename> and <filename>files/group</filename>
-        files for the values.
+        add them dynamically.
         This works fine for programs that do not care what the values of the
         resulting users and groups become.
         In these cases, the order of the installation determines the final
         <filename>uid</filename> and <filename>gid</filename> values.
-    </para>
-
-    <para>
-        If non-deterministic
+        However, if non-deterministic
         <filename>uid</filename> and <filename>gid</filename> values are a
         problem, you can override the default, dynamic application of these
         values by setting static values.
+        When you set static values, the OpenEmbedded build system looks in
+        <link linkend='var-BBPATH'><filename>BBPATH</filename></link> for
+        <filename>files/passwd</filename> and <filename>files/group</filename>
+        files for the values.
+    </para>
+
+    <para>
+        To use static <filename>uid</filename> and <filename>gid</filename>
+        values, you need to set some variables.
         See the
         <link linkend='var-USERADDEXTENSION'><filename>USERADDEXTENSION</filename></link>,
         <link linkend='var-USERADD_UID_TABLES'><filename>USERADD_UID_TABLES</filename></link>,
         <link linkend='var-USERADD_GID_TABLES'><filename>USERADD_GID_TABLES</filename></link>,
         and
         <link linkend='var-USERADD_ERROR_DYNAMIC'><filename>USERADD_ERROR_DYNAMIC</filename></link>
-        variables for more information.
+        variables.
         You can also see the
         <link linkend='ref-classes-useradd'><filename>useradd</filename></link>
         class for additional information.

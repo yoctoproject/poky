@@ -7853,26 +7853,24 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    The default behavior for the build system is to look in
+                    When applying static group identification
+                    (<filename>gid</filename>) values, the OpenEmbedded build
+                    system looks in
                     <link linkend='var-BBPATH'><filename>BBPATH</filename></link>
-                    for a <filename>files/group</filename> file and then dynamically
-                    apply <filename>uid</filename> values.
-                    However, you can override this behavior by using the
-                    <link linkend='var-USERADDEXTENSION'><filename>USERADDEXTENSION</filename></link>
-                    variable.
-                    When you do use static values, you must also set the
-                    <filename>USERADD_GID_TABLES</filename> variable in your
-                    <filename>local.conf</filename> file as follows:
+                    for a <filename>files/group</filename> file and then applies
+                    those <filename>uid</filename> values.
+                    Set the variable as follows in your
+                    <filename>local.conf</filename> file:
                     <literallayout class='monospaced'>
      USERADD_GID_TABLES = "files/group"
                     </literallayout>
                 </para>
 
                 <note>
-                    When using static information for user adds, you must
-                    also use the
-                    <link linkend='var-USERADD_UID_TABLES'><filename>USERADD_UID_TABLES</filename></link>
-                    variable.
+                    Setting the
+                    <link linkend='var-USERADDEXTENSION'><filename>USERADDEXTENSION</filename></link>
+                    variable to "useradd-staticids" causes the build system
+                    to use static <filename>gid</filename> values.
                 </note>
             </glossdef>
         </glossentry>
@@ -7887,26 +7885,24 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    The default behavior for the build system is to look in
+                    When applying static user identification
+                    (<filename>uid</filename>) values, the OpenEmbedded build
+                    system looks in
                     <link linkend='var-BBPATH'><filename>BBPATH</filename></link>
-                    for the <filename>files/passwd</filename> file and
-                    then dynamically apply <filename>uid</filename> values.
-                    However, you can override this behavior by using the
-                    <link linkend='var-USERADDEXTENSION'><filename>USERADDEXTENSION</filename></link>
-                    variable.
-                    When you do use static values, you must also set the
-                    <filename>USERADD_UID_TABLES</filename> variable in your
-                    <filename>local.conf</filename> file as follows:
+                    for a <filename>files/passwd</filename> file and then applies
+                    those <filename>uid</filename> values.
+                    Set the variable as follows in your
+                    <filename>local.conf</filename> file:
                     <literallayout class='monospaced'>
      USERADD_UID_TABLES = "files/passwd"
                     </literallayout>
                 </para>
 
                 <note>
-                    When using static information for group adds, you must
-                    also use the
-                    <link linkend='var-USERADD_GID_TABLES'><filename>USERADD_GID_TABLES</filename></link>
-                    variable.
+                    Setting the
+                    <link linkend='var-USERADDEXTENSION'><filename>USERADDEXTENSION</filename></link>
+                    variable to "useradd-staticids" causes the build system
+                    to use static <filename>uid</filename> values.
                 </note>
             </glossdef>
         </glossentry>
@@ -7976,7 +7972,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     OpenEmbedded build system to base all user and group
                     additions on a static
                     <filename>passwd</filename> and
-                    <filename>group</filename> files.
+                    <filename>group</filename> files found in
+                    <link linkend='var-BBPATH'><filename>BBPATH</filename></link>.
+                </para>
+
+                <para>
                     To use static user identification (<filename>uid</filename>)
                     and group identification (<filename>gid</filename>)
                     values, set the variable
