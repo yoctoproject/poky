@@ -7853,8 +7853,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    The default behavior for the build system is to dynamically
-                    apply <filename>gid</filename> values.
+                    The default behavior for the build system is to look in
+                    <link linkend='var-BBPATH'><filename>BBPATH</filename></link>
+                    for a <filename>files/group</filename> file and then dynamically
+                    apply <filename>uid</filename> values.
                     However, you can override this behavior by using the
                     <link linkend='var-USERADDEXTENSION'><filename>USERADDEXTENSION</filename></link>
                     variable.
@@ -7885,8 +7887,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    The default behavior for the build system is to dynamically
-                    apply <filename>uid</filename> values.
+                    The default behavior for the build system is to look in
+                    <link linkend='var-BBPATH'><filename>BBPATH</filename></link>
+                    for the <filename>files/passwd</filename> file and
+                    then dynamically apply <filename>uid</filename> values.
                     However, you can override this behavior by using the
                     <link linkend='var-USERADDEXTENSION'><filename>USERADDEXTENSION</filename></link>
                     variable.
@@ -7965,7 +7969,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-USERADDEXTENSION'><glossterm>USERADDEXTENTION</glossterm>
+        <glossentry id='var-USERADDEXTENSION'><glossterm>USERADDEXTENSION</glossterm>
             <glossdef>
                 <para>
                     When set to "useradd-staticids", causes the
@@ -7980,6 +7984,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
      USERADDEXTENSION = "useradd-staticids"
                     </literallayout>
+                    <note>
+                        Setting this variable to use static
+                        <filename>uid</filename> and <filename>gid</filename>
+                        values causes the OpenEmbedded build system to employ
+                        the
+                        <link linkend='ref-classes-useradd-staticids'><filename>useradd-staticids</filename></link>
+                        class.
+                    </note>
                 </para>
 
                 <para>
