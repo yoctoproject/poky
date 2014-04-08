@@ -7484,6 +7484,71 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-TEST_TARGET'><glossterm>TEST_TARGET</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the target controller to use when running tests
+                    against a test image.
+                    The default controller to use is "qemu":
+                    <literallayout class='monospaced'>
+     TEST_TARGET = "qemu"
+                    </literallayout>
+                    A target controller is a class that defines how an
+                    image gets deployed on a target and how a target is started.
+                    A layer can extend the controllers by adding a module
+                    in the layer's <filename>/lib/oeqa/controllers</filename>
+                    directory and by inheriting the
+                    <filename>BaseTarget</filename> class, which is an abstract
+                    class that cannot be used as a value of
+                    <filename>TEST_TARGET</filename>.
+                </para>
+
+                <para>
+                    You can provide the following arguments with
+                    <filename>TEST_TARGET</filename>:
+                    <itemizedlist>
+                        <listitem><para><emphasis>"qemu":</emphasis>
+                            Boots a QEMU image and runs the tests.
+                            See the
+                            "<ulink url='&YOCTO_DOCS_DEV_URL;#qemu-image-enabling-tests'>QEMU</ulink>"
+                            section in the Yocto Project Development Manual for
+                            more information.
+                            </para></listitem>
+                        <listitem><para><emphasis>"QemuTarget":</emphasis>
+                            Identical to "qemu".
+                            </para></listitem>
+                        <listitem><para><emphasis>"simpleremote":</emphasis>
+                            Runs the tests on target hardware that is already
+                            up and running.
+                            The hardware can be on the network or it can be
+                            a device running an image on QEMU.
+                            You must also set
+                            <link linkend='var-TEST_TARGET_IP'><filename>TEST_TARGET_IP</filename></link>
+                            when you use "simpleremote".
+                            <note>
+                                This argument is defined in
+                                <filename>meta/lib/oeqa/targetcontrol.py</filename>.
+                                The small caps names are kept for compatibility
+                                reasons.
+                            </note>
+                            </para></listitem>
+                        <listitem><para><emphasis>"SimpleRemoteTarget":</emphasis>
+                            Identical to "simpleremote".
+                            </para></listitem>
+                        <listitem><para><emphasis>"GummibootTarget":</emphasis>
+                            Automatically deploys and runs tests on an
+                            EFI-enabled machine that has a master image
+                            installed.
+                            <note>
+                                This argument is defined in
+                                <filename>meta/lib/oeqa/controllers/masterimage.py</filename>.
+                            </note>
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-TEST_SUITES'><glossterm>TEST_SUITES</glossterm>
             <glossdef>
                 <para>
