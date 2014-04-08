@@ -1609,6 +1609,40 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-DISK_SIGNATURE'><glossterm>DISK_SIGNATURE</glossterm>
+            <glossdef>
+                <para>
+                    Automatically generated random signature that allows the
+                    OpenEmbedded build system to create a boot
+                    loader configuration.
+                    <filename>DISK_SIGNATURE</filename> is different each time
+                    a <filename>directdisk</filename> image is built.
+                    <note>
+                        The "live" option used with
+                        <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                        produces an image file that can be copied directly to
+                        a CD or USB device and run as is.
+                    </note>
+                    The auto-generated <filename>DISK_SIGNATURE</filename> sets
+                    <filename>SYSLINUX_ROOT</filename> as follows:
+                    <literallayout class='monospaced'>
+     SYSLINUX_ROOT = "root=PARTUUID=${DISK_SIGNATURE}-02"
+                    </literallayout>
+                </para>
+
+                <para>
+                    It is possible to set the
+                    <filename>DISK_SIGNATURE</filename> variable in your
+                    <filename>local.conf</filename> file to a fixed
+                    value if you do not want <filename>syslinux.cfg</filename>
+                    changing for each build.
+                    You might find this useful when you want to upgrade the
+                    root filesystem on a device without having to recreate or
+                    modify the master boot record.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-DISTRO'><glossterm>DISTRO</glossterm>
             <glossdef>
                 <para>
