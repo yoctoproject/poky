@@ -52,4 +52,4 @@ SRC_URI += "file://{{=machine}}-preempt-rt.scc \
 # the appropriate changes committed to the upstream linux-yocto repo
 #SRCREV_machine_pn-linux-yocto-rt_{{=machine}} ?= "f35992f80c81dc5fa1a97165dfd5cbb84661f7cb"
 #SRCREV_meta_pn-linux-yocto-rt_{{=machine}} ?= "1b534b2f8bbe9b8a773268cfa30a4850346f6f5f"
-#LINUX_VERSION = "3.10.9"
+#LINUX_VERSION = "3.10.35"
