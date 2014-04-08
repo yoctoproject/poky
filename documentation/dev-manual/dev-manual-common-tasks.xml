@@ -5712,6 +5712,41 @@
                             by <filename>runqemu</filename>.</para></listitem>
                     </itemizedlist>
                 </para>
+
+                <para>
+                    Once you start running the tests, the following happens:
+                    <itemizedlist>
+                        <listitem><para>A copy of the root filesystem is written
+                            to <filename>${WORKDIR}/testimage</filename>.
+                            </para></listitem>
+                        <listitem><para>The image is booted under QEMU using the
+                            standard <filename>runqemu</filename> script.
+                            </para></listitem>
+                        <listitem><para>A default timeout of 500 seconds occurs
+                            to allow for the boot process to reach the login prompt.
+                            You can change the timeout period by setting
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_QEMUBOOT_TIMEOUT'><filename>TEST_QEMUBOOT_TIMEOUT</filename></ulink>
+                            in the <filename>local.conf</filename> file.
+                            </para></listitem>
+                        <listitem><para>Once the boot process is reached and the
+                            login prompt appears, the tests run.
+                            The full boot log is written to
+                            <filename>${WORKDIR}/testimage/qemu_boot_log</filename>.
+                            </para></listitem>
+                        <listitem><para>Each test module loads in the order found
+                            in <filename>TEST_SUITES</filename>.
+                            You can find the full output of the commands run over
+                            SSH in
+                            <filename>${WORKDIR}/testimgage/ssh_target_log</filename>.
+                            </para></listitem>
+                        <listitem><para>If no failures occur, the task running the
+                            tests ends successfully.
+                            You can find the output from the
+                            <filename>unittest</filename> in the task log at
+                            <filename>${WORKDIR}/temp/log.do_testimage</filename>.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
             </section>
 
             <section id='hardware-image-enabling-tests'>
@@ -5792,42 +5827,6 @@
                         <literallayout class='monospaced'>
      bitbake -c testimage &lt;image&gt;
                         </literallayout></para></listitem>
-                </itemizedlist>
-            </para>
-
-            <para>
-                Regardless of how you run the tests, once they start, the
-                following happens:
-                <itemizedlist>
-                    <listitem><para>A copy of the root filesystem is written
-                        to <filename>${WORKDIR}/testimage</filename>.
-                        </para></listitem>
-                    <listitem><para>The image is booted under QEMU using the
-                        standard <filename>runqemu</filename> script.
-                        </para></listitem>
-                    <listitem><para>A default timeout of 500 seconds occurs
-                        to allow for the boot process to reach the login prompt.
-                        You can change the timeout period by setting
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_QEMUBOOT_TIMEOUT'><filename>TEST_QEMUBOOT_TIMEOUT</filename></ulink>
-                        in the <filename>local.conf</filename> file.
-                        </para></listitem>
-                    <listitem><para>Once the boot process is reached and the
-                        login prompt appears, the tests run.
-                        The full boot log is written to
-                        <filename>${WORKDIR}/testimage/qemu_boot_log</filename>.
-                        </para></listitem>
-                    <listitem><para>Each test module loads in the order found
-                        in <filename>TEST_SUITES</filename>.
-                        You can find the full output of the commands run over
-                        SSH in
-                        <filename>${WORKDIR}/testimgage/ssh_target_log</filename>.
-                        </para></listitem>
-                    <listitem><para>If no failures occur, the task running the
-                        tests ends successfully.
-                        You can find the output from the
-                        <filename>unittest</filename> in the task log at
-                        <filename>${WORKDIR}/temp/log.do_testimage</filename>.
-                        </para></listitem>
                 </itemizedlist>
             </para>
 
