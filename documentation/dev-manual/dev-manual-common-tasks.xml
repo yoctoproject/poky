@@ -6004,6 +6004,72 @@
             </para>
         </section>
 
+        <section id="exporting-tests">
+            <title>Exporting Tests</title>
+
+            <para>
+                You can export tests so that they can run independently of
+                the build system.
+                Exporting tests is required if you want to be able to hand
+                the test execution off to a scheduler.
+                You can only export tests that are defined in
+                Tests exported are the ones defined in
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_SUITES'><filename>TEST_SUITES</filename></ulink>.
+            </para>
+
+            <para>
+                If you image is already built, make sure the following are set
+                in your <filename>local.conf</filename> file.
+                Be sure to provide the IP address you need:
+                <literallayout class='monospaced'>
+     TEST_EXPORT_ONLY = "1"
+     TEST_TARGET = "simpleremote"
+     TEST_TARGET_IP = "192.168.7.2"
+     TEST_SERVER_IP = "192.168.7.1"
+                </literallayout>
+                You can then export the tests with the following:
+                <literallayout class='monospaced'>
+     $ bitbake core-image-sato -c testimage
+                </literallayout>
+                Exporting the tests places them in the
+                <link linkend='build-directory'>Build Directory</link> in
+                <filename>tmp/testimage/core-image-sato</filename>, which
+                is controlled by the
+                <filename>TEST_EXPORT_DIR</filename> variable.
+            </para>
+
+            <para>
+                The exported data (i.e. <filename>testdata.json</filename>)
+                contains paths to the Build Directory.
+                Thus, the contents of the directory can be moved
+                to another machine as long as you update some paths in the
+                JSON.
+                Usually you only care about the
+                ${DEPLOY_DIR}/rpm directory (assuming the RPM and Smart tests
+                are enabled).
+                Consequently, running the tests on other machine
+                means that you have to move the contents and call
+                <filename>runexported</filename> with "--deploy-dir PATH:
+                ./runexported.py --deploy-dir /new/path/on/this/machine testdata.json
+                runexported.py accepts other arguments as well, see --help.
+            </para>
+
+            <para>
+                You can now run the tests outside of the build environment:
+                <literallayout class='monospaced'>
+     $ cd tmp/testimage/core-image-sato
+     $ ./runexported.py testdata.json
+                </literallayout>
+                <note>
+                    This "export" feature does not deploy or boot the target
+                    image.
+                    Your target (be it a Qemu or hardware one)
+                    has to already be up and running when you call
+                    <filename>runexported.py</filename>
+                </note>
+            </para>
+        </section>
+
         <section id="qemu-image-writing-new-tests">
             <title>Writing New Tests</title>
 
