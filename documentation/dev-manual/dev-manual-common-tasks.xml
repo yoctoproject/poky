@@ -5753,27 +5753,120 @@
                 <title>Hardware</title>
 
                 <para>
-                    This section needs the information specific to enabling
-                    tests to run on actual hardware.
-                    Here are some developer notes:
+                    In order to run tests on hardware, you need to set
+                    <filename>TEST_TARGET</filename> to an appropriate value.
+                    For QEMU, you do not have to change anything, the default
+                    value is "QemuTarget".
+                    For running tests on hardware, two options exits:
+                    "SimpleRemoteTarget" and "GummiBootTarget".
+                    <itemizedlist>
+                        <listitem><para><emphasis>"SimpleRemoteTarget":</emphasis>
+                            Choose "SimpleRemoteTarget" if you are going to
+                            run tests on a target system that is already up and
+                            running either on the network or as an image in
+                            QEMU.
+                            </para></listitem>
+                        <listitem><para><emphasis>"GummiBootTarget":</emphasis>
+                            Choose "GummiBootTarget" if your hardware is
+                            a running EFI machine with
+                            <filename>gummiboot</filename> as bootloader and
+                            <filename>core-image-testmaster</filename>
+                            (or something similar) is installed.
+                            Also, your hardware under test must be in a
+                            DHCP-enabled network that gives it the same IP
+                            address for each reboot.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+
+                <para>
+                    If you set <filename>TEST_TARGET</filename> to
+                    "GummiBootTarget", you also need to
+                    setup your master image by doing the following:
+                    <orderedlist>
+                        <listitem><para><emphasis>Set <filename>EFI_PROVIDER</filename>:</emphasis>
+                            Be sure that <filename>EFI_PROVIDER</filename>
+                            is as follows:
+                            <literallayout class='monospaced'>
+     EFI_PROVIDER = "gummiboot"
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para><emphasis>Build the master image:</emphasis>
+                            Build the <filename>core-image-testmaster</filename>
+                            image.
+                            </para></listitem>
+                        <listitem><para><emphasis>Install image:</emphasis>
+                            Install the image on the target system.
+                            </para></listitem>
+                    </orderedlist>
+                </para>
+
+                <para>
+                    The final thing you need to do when setting
+                    <filename>TEST_TARGET</filename> to "GummiBootTarget" is
+                    to set up the test image:
+                    <orderedlist>
+                        <listitem><para><emphasis>Set up your <filename>local.conf</filename> file:</emphasis>
+                            Make sure you have the following statements in
+                            your <filename>local.conf</filename> file:
+                            <literallayout class='monospaced'>
+     IMAGE_FSTYPES += "tar.gz"
+     INHERIT += "testimage"
+     TEST_TARGET = "GummibootTarget"
+     TEST_TARGET_IP = "192.168.2.3"
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para><emphasis>Build your test image:</emphasis>
+                            Use BitBake to build the image:
+                            <literallayout class='monospaced'>
+     $ bitbake core-image-sato
+                            </literallayout>
+                            </para></listitem>
+                    </orderedlist>
+                </para>
+
+                <para>
+                    Here is some additional information regarding running
+                    "GummibootTarget" as your test target:
                     <itemizedlist>
                         <listitem><para>
-                            Paul says this "If you have deployed the image yourself,
-                            you can manually boot it, you know the IP address
-                            it will show up under, and SSH is installed with no
-                            password, then you can now run tests on any real
-                            machine."
+                            You can use
+                            <filename>TEST_POWERCONTROL_CMD</filename>
+                            together with
+                            <filename>TEST_POWERCONTROL_EXTRA_ARGS</filename>
+                            as a command that runs on the host and does power
+                            cycling.
+                            The test code passes one argument to that command:
+                            off, on or cycle (off then on).
+                            Here is an example that could appear in your
+                            <filename>local.conf</filename> file:
+                            <literallayout class='monospaced'>
+     TEST_POWERCONTROL_CMD = "powercontrol.exp test 10.11.12.1 nuc1"
+                            </literallayout>
+                            In this example, the expect script does the
+                            following:
+                            <literallayout class='monospaced'>
+     ssh test@10.11.12.1 "pyctl nuc1 &lt;arg&gt;"
+                            </literallayout>
+                            It then runs a Python script that controls power
+                            for a label called <filename>nuc1</filename>.
+                            <note>
+                                You need to customize
+                                <filename>TEST_POWERCONTROL_CMD</filename>
+                                and <filename>_ARGS</filename> for your own
+                                setup.
+                                The one requirement is that it accepts
+                                "on", "off", and "cycle" as the last argument.
+                            </note>
                             </para></listitem>
                         <listitem><para>
-                            <filename>TEST_TARGET</filename> variable needs to equal
-                            "simpleremote"
-                            </para></listitem>
-                        <listitem><para>
-                            Here are some notes from the patch - "The remote machine
-                            must be up with network and ssh and you need to set
-                            <filename>TEST_TARGET_IP</filename> with the IP address
-                            of the remote machine (it can still be a qemu instance that
-                            was manually started)
+                            When no command is defined, it uses classic reboot.
+                            Classic reboot is fine as long as the machine
+                            actually reboots (i.e. the SSH test has not
+                            failed).
+                            It is useful for scenarios where you have a simple
+                            setup, typically with a single board, and where
+                            some manual interaction is okay from time to time.
                             </para></listitem>
                     </itemizedlist>
                 </para>
