@@ -515,20 +515,32 @@
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
+
+     COMPATIBLE_MACHINE_crownbay = "crownbay"
+     KMACHINE_crownbay = "crownbay"
+     KBRANCH_crownbay = "standard/crownbay"
+     KERNEL_FEATURES_append_crownbay = " features/drm-emgd/drm-emgd-1.18 cfg/vesafb"
+
      COMPATIBLE_MACHINE_crownbay-noemgd = "crownbay-noemgd"
      KMACHINE_crownbay-noemgd = "crownbay"
      KBRANCH_crownbay-noemgd = "standard/crownbay"
      KERNEL_FEATURES_append_crownbay-noemgd = " cfg/vesafb"
 
-     LINUX_VERSION = "3.10.11"
+     LINUX_VERSION_crownbay = "3.10.35"
+     SRCREV_meta_crownbay = "b6e58b33dd427fe471f8827c83e311acdf4558a4"
+     SRCREV_machine_crownbay = "cee957655fe67826b2e827e2db41f156fa8f0cc4"
+     SRCREV_emgd_crownbay = "42d5e4548e8e79e094fa8697949eed4cf6af00a3"
 
-     SRCREV_meta_crownbay-noemgd = "285f93bf942e8f6fa678ffc6cc53696ed5400718"
-     SRCREV_machine_crownbay-noemgd = "702040ac7c7ec66a29b4d147665ccdd0ff015577"
+     LINUX_VERSION_crownbay-noemgd = "3.10.35"
+     SRCREV_meta_crownbay-noemgd = "b6e58b33dd427fe471f8827c83e311acdf4558a4"
+     SRCREV_machine_crownbay-noemgd = "cee957655fe67826b2e827e2db41f156fa8f0cc4"
+
+     SRC_URI_crownbay = "git://git.yoctoproject.org/linux-yocto-3.10.git;protocol=git;nocheckout=1;branch=${KBRANCH},${KMETA},emgd-1.18;name=machine,meta,emgd"
                 </literallayout>
                 This append file contains statements used to support the Crown Bay BSP.
-                The file defines <filename>crownbay</filename> as the
+                The file defines machines using the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>
-                and uses the
+                variable and uses the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink> variable to
                 ensure the machine name used by the OpenEmbedded build system maps to the
                 machine name used by the Linux Yocto kernel.
@@ -538,11 +550,15 @@
                 kernel branch.
                 The
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES'><filename>KERNEL_FEATURES</filename></ulink>
-                variable enables features specific to the kernel.
-                Finally, the append file points to specific commits in the
+                variable enables features specific to the kernel
+                (e.g. graphics support in this case).
+                The append file points to specific commits in the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink> Git
                 repository and the <filename>meta</filename> Git repository branches to identify the
                 exact kernel needed to build the Crown Bay BSP.
+                Finally, the file includes the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                statement to locate the source files.
             </para>
 
             <para>
@@ -553,8 +569,9 @@
                 You can accomplish this definition by putting the configurations in a file or a set of files
                 inside a directory located at the same level as your kernel's append file and having the same
                 name as the kernel's main recipe file.
-                With all these conditions met, simply reference those files in a
-                <filename>SRC_URI</filename> statement in the append file.
+                With all these conditions met, simply reference those files in the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                statement in the append file.
             </para>
 
             <para>
