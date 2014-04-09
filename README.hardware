@@ -291,13 +291,85 @@ Load the kernel, and boot the system as follows:
 
 --- Booting from USB root ---
 
-NOTE: Since the USB disk is inside the edgerouter box, it's inconvenient to
-      plug and unplug the USB disk. So in the following instructions it is
-      assumed that you have already booted the device from NFS. Additionally,
-      since vmlinux is not contained in core-image-xxx by default, it is
-      necessary to copy it to the USB disk separately.
+To boot from the USB disk, you either need to remove it from the edgerouter
+box and populate it from another computer, or use a previously booted NFS
+image and populate from the edgerouter itself.
 
-Load the kernel, and boot the system as follows:
+Type 1: Mounted USB disk
+------------------------
+
+To boot from the USB disk there are two available partitions on the factory
+USB storage. The rest of this guide assumes that these partitions are left
+intact. If you change the partition scheme, you must update your boot method
+appropriately.
+
+The standard partitions are:
+
+  - 1: vfat partition containing factory kernels
+  - 2: ext3 partition for the root filesystem.
+
+You can place the kernel on either partition 1, or partition 2, but the roofs
+must go on partition 2 (due to its size).
+
+Note: If you place the kernel on the ext3 partition, you must re-create the
+      ext3 filesystem, since the factory u-boot can only handle 128 byte inodes and
+      cannot read the partition otherwise.
+
+Steps:
+
+ 1. Remove the USB disk from the edgerouter and insert it into a computer
+    that has access to your build artifacts.
+
+ 2. Copy the kernel image to the USB storage (assuming discovered as 'sdb' on
+    the development machine):
+
+    2a) if booting from vfat
+ 
+        # mount /dev/sdb1 /mnt
+        # cp tmp/deploy/images/edgerouter/vmlinux /mnt
+        # umount /mnt
+
+    2b) if booting from ext3
+
+        # mkfs.ext3 -I 128 /dev/sdb2
+        # mount /dev/sdb2 /mnt
+        # mkdir /mnt/boot
+        # cp tmp/deploy/images/edgerouter/vmlinux /mnt/boot
+        # umount /mnt
+
+ 3. Extract the rootfs to the USB storage ext3 partition
+
+        # mount /dev/sdb2 /mnt
+        # tar -xvjpf core-image-minimal-XXX.tar.bz2 -C /mnt
+        # umount /mnt
+
+ 4. Reboot the board and press a key on the terminal when prompted to get to the U-Boot
+    command line:
+
+ 5. Load the kernel and boot:
+
+    5a) vfat boot
+
+         => fatload usb 0:1 $loadaddr vmlinux
+
+    5b) ext3 boot
+
+         => ext2load usb 0:2 $loadaddr boot/vmlinux
+ 
+    => bootoctlinux $loadaddr coremask=0x3 root=/dev/sda2 rw rootwait mtdparts=phys_mapped_flash:512k(boot0),512k(boot1),64k@3072k(eeprom)
+ 
+
+Type 2: NFS
+-----------
+
+Note: If you place the kernel on the ext3 partition, you must re-create the
+      ext3 filesystem, since the factory u-boot can only handle 128 byte inodes and
+      cannot read the partition otherwise.
+
+      These boot instructions assume that you have recreated the ext3 filesystem with
+      128 byte inodes, you have an updated uboot or you are running and image capable
+      of making the filesystem on the board itself.
+
 
  1. Boot from NFS root
 
@@ -309,11 +381,11 @@ Load the kernel, and boot the system as follows:
 
     and then,
   
-    # mount /dev/sda2 /media/sda2
-    # tar -xvjpf core-image-minimal-XXX.tar.bz2 -C /media/sda2
-    # cp vmlinux /media/sda2/boot/vmlinux
-    # umount /media/sda2
-    # reboot
+      # mount /dev/sda2 /media/sda2
+      # tar -xvjpf core-image-minimal-XXX.tar.bz2 -C /media/sda2
+      # cp vmlinux /media/sda2/boot/vmlinux
+      # umount /media/sda2
+      # reboot
 
  3. Reboot the board and press a key on the terminal when prompted to get to the U-Boot
     command line:
@@ -322,6 +394,5 @@ Load the kernel, and boot the system as follows:
 
  4. Load the kernel and boot:
 
- => ext2load usb 0:2 $loadaddr boot/vmlinux
- => bootoctlinux $loadaddr coremask=0x3 root=/dev/sda2 rw rootwait mtdparts=phys_mapped_flash:512k(boot0),512k(boot1),64k@3072k(eeprom)
-
+      => ext2load usb 0:2 $loadaddr boot/vmlinux
+      => bootoctlinux $loadaddr coremask=0x3 root=/dev/sda2 rw rootwait mtdparts=phys_mapped_flash:512k(boot0),512k(boot1),64k@3072k(eeprom)
