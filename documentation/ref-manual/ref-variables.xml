@@ -2962,33 +2962,52 @@
             <glossdef>
                 <para>
                     Specifies the packages to install into an image.
-                    The <filename>IMAGE_INSTALL</filename> variable is a mechanism for an image
-                    recipe and you should use it with care to avoid ordering issues.
+                    The <filename>IMAGE_INSTALL</filename> variable is a
+                    mechanism for an image recipe and you should use it
+                    with care to avoid ordering issues.
+                    <note>
+                        When working with an
+                        <link linkend='images-core-image-minimal-initramfs'><filename>core-image-minimal-initramfs</filename></link>
+                        image, do not use the <filename>IMAGE_INSTALL</filename>
+                        variable to specify packages for installation.
+                        Instead, use the
+                        <link linkend='var-PACKAGE_INSTALL'><filename>PACKAGE_INSTALL</filename></link>
+                        variable, which allows the initial RAM disk (initramfs)
+                        recipe to use a fixed set of packages and not be
+                        affected by <filename>IMAGE_INSTALL</filename>.
+                    </note>
                 </para>
 
                 <para>
-                    Image recipes set <filename>IMAGE_INSTALL</filename> to specify the
-                    packages to install into an image through <filename>image.bbclass</filename>.
-                    Additionally, "helper" classes exist, such as <filename>core-image.bbclass</filename>,
-                    that can take
-                    <filename><link linkend='var-IMAGE_FEATURES'>IMAGE_FEATURES</link></filename> lists
-                    and turn these into auto-generated entries in
-                    <filename>IMAGE_INSTALL</filename> in addition to its default contents.
+                    Image recipes set <filename>IMAGE_INSTALL</filename>
+                    to specify the packages to install into an image through
+                    <filename>image.bbclass</filename>.
+                    Additionally, "helper" classes exist, such as
+                    <filename>core-image.bbclass</filename>, that can take
+                    <filename><link linkend='var-IMAGE_FEATURES'>IMAGE_FEATURES</link></filename>
+                    lists and turn these into auto-generated entries in
+                    <filename>IMAGE_INSTALL</filename> in addition to its
+                    default contents.
                 </para>
 
                 <para>
-                    Using <filename>IMAGE_INSTALL</filename> with the <filename>+=</filename>
-                    operator from the <filename>/conf/local.conf</filename> file or from within
-                    an image recipe is not recommended as it can cause ordering issues.
-                    Since <filename>core-image.bbclass</filename> sets <filename>IMAGE_INSTALL</filename>
-                    to a default value using the <filename>?=</filename> operator, using a
-                    <filename>+=</filename> operation against <filename>IMAGE_INSTALL</filename>
-                    will result in unexpected behavior when used in
+                    Using <filename>IMAGE_INSTALL</filename> with the
+                    <filename>+=</filename> operator from the
+                    <filename>/conf/local.conf</filename> file or from within
+                    an image recipe is not recommended as it can cause ordering
+                    issues.
+                    Since <filename>core-image.bbclass</filename> sets
+                    <filename>IMAGE_INSTALL</filename> to a default value using
+                    the <filename>?=</filename> operator, using a
+                    <filename>+=</filename> operation against
+                    <filename>IMAGE_INSTALL</filename> will result in
+                    unexpected behavior when used in
                     <filename>conf/local.conf</filename>.
-                    Furthermore, the same operation from within an image recipe may or may not
-                    succeed depending on the specific situation.
-                    In both these cases, the behavior is contrary to how most users expect
-                    the <filename>+=</filename> operator to work.
+                    Furthermore, the same operation from within an image
+                    recipe may or may not succeed depending on the specific
+                    situation.
+                    In both these cases, the behavior is contrary to how most
+                    users expect the <filename>+=</filename> operator to work.
                 </para>
 
                 <para>
@@ -2996,8 +3015,8 @@
                     <literallayout class='monospaced'>
      IMAGE_INSTALL_append = " package-name"
                     </literallayout>
-                    Be sure to include the space between the quotation character and the start of the
-                    package name or names.
+                    Be sure to include the space between the quotation character
+                    and the start of the package name or names.
                 </para>
             </glossdef>
         </glossentry>
@@ -5196,18 +5215,25 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     The final list of packages passed to the package manager
                     for installation into the image.
+                </para>
+
+                <para>
                     Because the package manager controls actual installation
                     of all packages, the list of packages passed using
                     <filename>PACKAGE_INSTALL</filename> is not the final list
                     of packages that are actually installed.
-                </para>
-
-                <para>
                     This variable is internal to the image construction
                     code.
-                    Use the
+                    Consequently, in general, you should use the
                     <link linkend='var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></link>
                     variable to specify packages for installation.
+                    The exception to this is when working with
+                    the
+                    <link linkend='images-core-image-minimal-initramfs'><filename>core-image-minimal-initramfs</filename></link>
+                    image.
+                    When working with an initial RAM disk (initramfs)
+                    image, use the <filename>PACKAGE_INSTALL</filename>
+                    variable.
                 </para>
             </glossdef>
         </glossentry>
