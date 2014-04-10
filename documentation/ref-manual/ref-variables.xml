@@ -4655,6 +4655,99 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-module_autoload'><glossterm>module_autoload</glossterm>
+            <glossdef>
+                <para>
+                    Lists kernel modules that need to be auto-loaded during
+                    boot.
+                </para>
+
+                <para>
+                    You can use this variable anywhere (e.g. machine
+                    configuration file or a distribution configuration file)
+                    including an append file for an
+                    out-of-tree kernel module recipe.
+                </para>
+
+                <para>
+                    Specify it as follows:
+                    <literallayout class='monospaced'>
+     module_autoload_&lt;modname&gt; = "modname1 modname2 modname3"
+                    </literallayout>
+                    You must use the kernel module name override.
+                </para>
+
+                <para>
+                    Including <filename>module_autoload</filename> causes the
+                    OpenEmbedded build system to populate the
+                    <filename>/etc/modules-load.d/modname.conf</filename>
+                    file with the list of modules to be auto-loaded on boot.
+                    The modules appear one-per-line in the file.
+                    Here is an example of the most common use case:
+                    <literallayout class='monospaced'>
+     module_autoload_modname = "modname"
+                    </literallayout>
+                </para>
+
+                <para>
+                    For information on how to populate the
+                    <filename>modname.conf</filename> file with
+                    <filename>modprobe.d</filename> syntax lines, see the
+                    <link linkend='var-module_conf'><filename>module_conf</filename></link>
+                    variable.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-module_conf'><glossterm>module_conf</glossterm>
+            <glossdef>
+                <para>
+                    Specifies <filename>modprobe.d</filename> syntax lines
+                    for inclusion in the
+                    <filename>/etc/modprobe.d/modname.conf</filename> file.
+                </para>
+
+                <para>
+                    You can use this variable anywhere (e.g. machine
+                    configuration file or a distribution configuration file)
+                    including an append file for an
+                    out-of-tree kernel module recipe.
+                </para>
+
+                <para>
+                    Here is the general syntax:
+                    <literallayout class='monospaced'>
+     module_conf_&lt;modname&gt; = "modprobe.d-syntax"
+                    </literallayout>
+                    You must use the kernel module name override.
+                </para>
+
+                <para>
+                    Run <filename>man modprobe.d</filename> in the shell to
+                    find out more information on the exact syntax for lines
+                    you want to provide with <filename>module_conf</filename>.
+                </para>
+
+                <para>
+                    Including <filename>module_conf</filename> causes the
+                    OpenEmbedded build system to populate the
+                    <filename>/etc/modprobe.d/modname.conf</filename>
+                    file with <filename>modprobe.d</filename> syntax lines.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     module_conf_&lt;modname&gt; = "options modname arg1=val1 arg2=val2"
+                    </literallayout>
+                </para>
+
+                <para>
+                    For information on how to specify kernel modules to
+                    auto-load on boot, see the
+                    <link linkend='var-module_autoload'><filename>module_autoload</filename></link>
+                    variable.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-MODULE_IMAGE_BASE_NAME'><glossterm>MODULE_IMAGE_BASE_NAME</glossterm>
             <glossdef>
                 <para>
