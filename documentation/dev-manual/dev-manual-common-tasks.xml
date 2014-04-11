@@ -5660,7 +5660,7 @@
             </para>
 
             <section id='qemu-image-enabling-tests'>
-                <title>QEMU</title>
+                <title>Enabling Runtime Tests on QEMU</title>
 
                 <para>
                     In order to run tests, you need to do the following:
@@ -5750,7 +5750,43 @@
             </section>
 
             <section id='hardware-image-enabling-tests'>
-                <title>Hardware</title>
+                <title>Enabling Runtime Tests on Hardware</title>
+
+                <para>
+                    The OpenEmbedded build system can run tests on real
+                    hardware, and for certain devices it can also deploy
+                    the image to be tested onto the device beforehand.
+                </para>
+
+                <para>
+                    For automated deployment, a "master image" is installed
+                    onto the hardware once as part of setup.
+                    Then, each time tests are to be run, the following
+                    occurs:
+                    <orderedlist>
+                        <listitem><para>The master image is booted into and
+                            used to write the image to be tested to
+                            a second partition.
+                            </para></listitem>
+                        <listitem><para>The device is then rebooted using an
+                            external script that you need to provide.
+                            </para></listitem>
+                        <listitem><para>The device boots into the image to be
+                            tested.
+                            </para></listitem>
+                    </orderedlist>
+                </para>
+
+                <para>
+                    When running tests (independent of whether the image
+                    has been deployed automatically or not), the device is
+                    expected to be connected to a network on a
+                    pre-determined IP address.
+                    You can either use static IP addresses written into
+                    the image, or set the image to use DHCP and have your
+                    DHCP server on the test network assign a known IP address
+                    based on the MAC address of the device.
+                </para>
 
                 <para>
                     In order to run tests on hardware, you need to set
@@ -5762,13 +5798,17 @@
                     <itemizedlist>
                         <listitem><para><emphasis>"SimpleRemoteTarget":</emphasis>
                             Choose "SimpleRemoteTarget" if you are going to
-                            run tests on a target system that is already up and
-                            running either on the network or as an image in
-                            QEMU.
+                            run tests on a target system that is already
+                            running the image to be tested and is available
+                            on the network.
+                            You can use "SimpleRemoteTarget" in conjunction
+                            with either real hardware or an image running
+                            within a separately started QEMU or any
+                            other virtual machine manager.
                             </para></listitem>
                         <listitem><para><emphasis>"GummiBootTarget":</emphasis>
                             Choose "GummiBootTarget" if your hardware is
-                            a running EFI machine with
+                            an EFI-based machine with
                             <filename>gummiboot</filename> as bootloader and
                             <filename>core-image-testmaster</filename>
                             (or something similar) is installed.
@@ -5781,8 +5821,8 @@
 
                 <para>
                     If you set <filename>TEST_TARGET</filename> to
-                    "GummiBootTarget", you also need to
-                    setup your master image by doing the following:
+                    "GummiBootTarget", you also need to perform a one-time
+                    setup of your master image by doing the following:
                     <orderedlist>
                         <listitem><para><emphasis>Set <filename>EFI_PROVIDER</filename>:</emphasis>
                             Be sure that <filename>EFI_PROVIDER</filename>
@@ -5797,6 +5837,8 @@
                             </para></listitem>
                         <listitem><para><emphasis>Install image:</emphasis>
                             Install the image on the target system.
+                            &lt;Need some clarification here from Stefan,
+                            partition layout, etc.&gt;
                             </para></listitem>
                     </orderedlist>
                 </para>
@@ -5853,14 +5895,17 @@
                             <note>
                                 You need to customize
                                 <filename>TEST_POWERCONTROL_CMD</filename>
-                                and <filename>_ARGS</filename> for your own
-                                setup.
+                                and
+                                <filename>TEST_POWERCONTROL_EXTRA_ARGS</filename>
+                                for your own setup.
                                 The one requirement is that it accepts
                                 "on", "off", and "cycle" as the last argument.
                             </note>
                             </para></listitem>
                         <listitem><para>
-                            When no command is defined, it uses classic reboot.
+                            When no command is defined, it connects to the
+                            device over SSH and uses the classic reboot command
+                            to reboot the device.
                             Classic reboot is fine as long as the machine
                             actually reboots (i.e. the SSH test has not
                             failed).
@@ -5889,18 +5934,6 @@
                         <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
                         <literallayout class='monospaced'>
      TEST_IMAGE = "1"
-                        </literallayout>
-                        Next, also in the <filename>local.conf</filename>, set the
-                        <filename>TEST_TARGET</filename> variable to
-                        "simpleremote" if you want to run tests on real hardware or
-                        set it to "qemu" if you want to run tests using QEMU.
-                        file:
-                        <literallayout class='monospaced'>
-     TEST_TARGET = "simpleremote"
-                        </literallayout>
-                        or
-                        <literallayout class='monospaced'>
-     TEST_TARGET = "qemu"
                         </literallayout>
                         Next, build your image.
                         If the image successfully builds, the tests will be
@@ -6013,7 +6046,6 @@
                 Exporting tests is required if you want to be able to hand
                 the test execution off to a scheduler.
                 You can only export tests that are defined in
-                Tests exported are the ones defined in
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_SUITES'><filename>TEST_SUITES</filename></ulink>.
             </para>
 
