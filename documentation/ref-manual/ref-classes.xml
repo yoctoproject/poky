@@ -1283,118 +1283,6 @@
         <filename>WARN_QA</filename> and <filename>ERROR_QA</filename>
         variables:
         <itemizedlist>
-            <listitem><para><emphasis><filename>ldflags:</filename></emphasis>
-                Ensures that the binaries were linked with the
-                <filename>LDFLAGS</filename> options provided by the build system.
-                If this test fails, check that the <filename>LDFLAGS</filename> variable
-                is being passed to the linker command.</para></listitem>
-            <listitem><para><emphasis><filename>useless-rpaths:</filename></emphasis>
-                Checks for dynamic library load paths (rpaths) in the binaries that
-                by default on a standard system are searched by the linker (e.g.
-                <filename>/lib</filename> and <filename>/usr/lib</filename>).
-                While these paths will not cause any breakage, they do waste space and
-                are unnecessary.</para></listitem>
-            <listitem><para><emphasis><filename>rpaths:</filename></emphasis>
-                Checks for rpaths in the binaries that contain build system paths such
-                as <filename>TMPDIR</filename>.
-                If this test fails, bad <filename>-rpath</filename> options are being
-                passed to the linker commands and your binaries have potential security
-                issues.</para></listitem>
-            <listitem><para><emphasis><filename>dev-so:</filename></emphasis>
-                Checks that the <filename>.so</filename> symbolic links are in the
-                <filename>-dev</filename> package and not in any of the other packages.
-                In general, these symlinks are only useful for development purposes.
-                Thus, the <filename>-dev</filename> package is the correct location for
-                them.
-                Some very rare cases do exist for dynamically loaded modules where
-                these symlinks are needed instead in the main package.
-                </para></listitem>
-            <listitem><para><emphasis><filename>debug-files:</filename></emphasis>
-                Checks for <filename>.debug</filename> directories in anything but the
-                <filename>-dbg</filename> package.
-                The debug files should all be in the <filename>-dbg</filename> package.
-                Thus, anything packaged elsewhere is incorrect packaging.</para></listitem>
-            <listitem><para><emphasis><filename>arch:</filename></emphasis>
-                Checks the Executable and Linkable Format (ELF) type, bit size, and endianness
-                of any binaries to ensure they match the target architecture.
-                This test fails if any binaries don't match the type since there would be an
-                incompatibility.
-                Sometimes software, like bootloaders, might need to bypass this check.
-                </para></listitem>
-            <listitem><para><emphasis><filename>debug-deps:</filename></emphasis>
-                Checks that <filename>-dbg</filename> packages only depend on other
-                <filename>-dbg</filename> packages and not on any other types of packages,
-                which would cause a packaging bug.</para></listitem>
-            <listitem><para><emphasis><filename>dev-deps:</filename></emphasis>
-                Checks that <filename>-dev</filename> packages only depend on other
-                <filename>-dev</filename> packages and not on any other types of packages,
-                which would be a packaging bug.</para></listitem>
-            <listitem><para><emphasis><filename>pkgconfig:</filename></emphasis>
-                Checks <filename>.pc</filename> files for any
-                <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>/<link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
-                paths.
-                Any <filename>.pc</filename> file containing these paths is incorrect
-                since <filename>pkg-config</filename> itself adds the correct sysroot prefix
-                when the files are accessed.</para></listitem>
-            <listitem><para><emphasis><filename>textrel:</filename></emphasis>
-                Checks for ELF binaries that contain relocations in their
-                <filename>.text</filename> sections, which can result in a
-                performance impact at runtime.</para></listitem>
-            <listitem><para><emphasis><filename>pkgvarcheck:</filename></emphasis>
-                Checks through the variables
-                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>,
-                <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>,
-                <link linkend='var-RSUGGESTS'><filename>RSUGGESTS</filename></link>,
-                <link linkend='var-RCONFLICTS'><filename>RCONFLICTS</filename></link>,
-                <link linkend='var-RPROVIDES'><filename>RPROVIDES</filename></link>,
-                <link linkend='var-RREPLACES'><filename>RREPLACES</filename></link>,
-                <link linkend='var-FILES'><filename>FILES</filename></link>,
-                <link linkend='var-ALLOW_EMPTY'><filename>ALLOW_EMPTY</filename></link>,
-                <filename>pkg_preinst</filename>,
-                <filename>pkg_postinst</filename>,
-                <filename>pkg_prerm</filename>
-                and <filename>pkg_postrm</filename>, and reports if there are
-                variable sets that are not package-specific.
-                Using these variables without a package suffix is bad practice,
-                and might unnecessarily complicate dependencies of other packages
-                within the same recipe or have other unintended consequences.
-                </para></listitem>
-            <listitem><para><emphasis><filename>xorg-driver-abi:</filename></emphasis>
-                Checks that all packages containing Xorg drivers have ABI
-                dependencies.
-                The <filename>xserver-xorg</filename> recipe provides driver
-                ABI names.
-                All drivers should depend on the ABI versions that they have
-                been built against.
-                Driver recipes that include
-                <filename>xorg-driver-input.inc</filename>
-                or <filename>xorg-driver-video.inc</filename> will
-                automatically get these versions.
-                Consequently, you should only need to explicitly add
-                dependencies to binary driver recipes.
-                </para></listitem>
-            <listitem><para><emphasis><filename>libexec:</filename></emphasis>
-                Checks if a package contains files in
-                <filename>/usr/libexec</filename>.
-                This check is not performed if the
-                <filename>libexecdir</filename> variable has been set
-                explicitly to <filename>/usr/libexec</filename>.
-                </para></listitem>
-            <listitem><para><emphasis><filename>staticdev:</filename></emphasis>
-                Checks for static library files (<filename>*.a</filename>) in
-                non-<filename>staticdev</filename> packages.
-                </para></listitem>
-            <listitem><para><emphasis><filename>la:</filename></emphasis>
-                Checks <filename>.la</filename> files for any <filename>TMPDIR</filename>
-                paths.
-                Any <filename>.la</filename> file containing these paths is incorrect since
-                <filename>libtool</filename> adds the correct sysroot prefix when using the
-                files automatically itself.</para></listitem>
-            <listitem><para><emphasis><filename>desktop:</filename></emphasis>
-                Runs the <filename>desktop-file-validate</filename> program
-                against any <filename>.desktop</filename> files to validate
-                their contents against the specification for
-                <filename>.desktop</filename> files.</para></listitem>
             <listitem><para><emphasis><filename>already-stripped:</filename></emphasis>
                 Checks that produced binaries have not already been
                 stripped prior to the build system extracting debug symbols.
@@ -1404,15 +1292,85 @@
                 <filename>-dbg</filename> packages, this stripping must be
                 disabled.
                 </para></listitem>
-            <listitem><para><emphasis><filename>split-strip:</filename></emphasis>
-                Reports that splitting or stripping debug symbols from binaries
-                has failed.
-                </para></listitem>
             <listitem><para><emphasis><filename>arch:</filename></emphasis>
-                Checks to ensure the architecture, bit size, and endianness
-                of all output binaries matches that of the target.
-                This test can detect when the wrong compiler or compiler options
-                have been used.
+                Checks the Executable and Linkable Format (ELF) type, bit size,
+                and endianness of any binaries to ensure they match the target
+                architecture.
+                This test fails if any binaries do not match the type since
+                there would be an incompatibility.
+                The test could indicate that the
+                wrong compiler or compiler options have been used.
+                Sometimes software, like bootloaders, might need to bypass
+                this check.
+                </para></listitem>
+            <listitem><para><emphasis><filename>buildpaths:</filename></emphasis>
+                Checks for paths to locations on the build host inside the
+                output files.
+                Currently, this test triggers too many false positives and
+                thus is not normally enabled.
+                </para></listitem>
+            <listitem><para><emphasis><filename>compile-host-path:</filename></emphasis>
+                Checks the <filename>do_compile</filename> log for indications
+                that paths to locations on the build host were used.
+                Using such paths might result in host contamination of the
+                build output.
+                </para></listitem>
+            <listitem><para><emphasis><filename>debug-deps:</filename></emphasis>
+                Checks that <filename>-dbg</filename> packages only depend on other
+                <filename>-dbg</filename> packages and not on any other types of packages,
+                which would cause a packaging bug.</para></listitem>
+            <listitem><para><emphasis><filename>debug-files:</filename></emphasis>
+                Checks for <filename>.debug</filename> directories in anything but the
+                <filename>-dbg</filename> package.
+                The debug files should all be in the <filename>-dbg</filename> package.
+                Thus, anything packaged elsewhere is incorrect packaging.</para></listitem>
+            <listitem><para><emphasis><filename>dep-cmp:</filename></emphasis>
+                Checks for invalid version comparison statements in runtime
+                dependency relationships between packages (i.e. in
+                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>,
+                <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>,
+                <link linkend='var-RSUGGESTS'><filename>RSUGGESTS</filename></link>,
+                <link linkend='var-RPROVIDES'><filename>RPROVIDES</filename></link>,
+                <link linkend='var-RREPLACES'><filename>RREPLACES</filename></link>,
+                and
+                <link linkend='var-RCONFLICTS'><filename>RCONFLICTS</filename></link>
+                variable values).
+                Any invalid comparisons might trigger failures or undesirable
+                behavior when passed to the package manager.
+                </para></listitem>
+            <listitem><para><emphasis><filename>desktop:</filename></emphasis>
+                Runs the <filename>desktop-file-validate</filename> program
+                against any <filename>.desktop</filename> files to validate
+                their contents against the specification for
+                <filename>.desktop</filename> files.</para></listitem>
+            <listitem><para><emphasis><filename>dev-deps:</filename></emphasis>
+                Checks that <filename>-dev</filename> packages only depend on other
+                <filename>-dev</filename> packages and not on any other types of packages,
+                which would be a packaging bug.</para></listitem>
+            <listitem><para><emphasis><filename>dev-so:</filename></emphasis>
+                Checks that the <filename>.so</filename> symbolic links are in the
+                <filename>-dev</filename> package and not in any of the other packages.
+                In general, these symlinks are only useful for development purposes.
+                Thus, the <filename>-dev</filename> package is the correct location for
+                them.
+                Some very rare cases do exist for dynamically loaded modules where
+                these symlinks are needed instead in the main package.
+                </para></listitem>
+            <listitem><para><emphasis><filename>files-invalid:</filename></emphasis>
+                Checks for
+                <link linkend='var-FILES'><filename>FILES</filename></link>
+                variable values that contain "//", which is invalid.
+                </para></listitem>
+            <listitem><para><emphasis><filename>incompatible-license:</filename></emphasis>
+                Report when packages are excluded from being created due to
+                being marked with a license that is in
+                <link linkend='var-INCOMPATIBLE_LICENSE'><filename>INCOMPATIBLE_LICENSE</filename></link>.
+                </para></listitem>
+            <listitem><para><emphasis><filename>install-host-path:</filename></emphasis>
+                Checks the <filename>do_install</filename> log for indications
+                that paths to locations on the build host were used.
+                Using such paths might result in host contamination of the
+                build output.
                 </para></listitem>
             <listitem><para><emphasis><filename>installed-vs-shipped:</filename></emphasis>
                 Reports when files have been installed within
@@ -1428,42 +1386,17 @@
                 <filename>do_install</filename> if the files are not
                 needed in any package.
                 </para></listitem>
-            <listitem><para><emphasis><filename>dep-cmp:</filename></emphasis>
-                Checks for invalid version comparison statements in runtime
-                dependency relationships between packages (i.e. in
-                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>,
-                <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>,
-                <link linkend='var-RSUGGESTS'><filename>RSUGGESTS</filename></link>,
-                <link linkend='var-RPROVIDES'><filename>RPROVIDES</filename></link>,
-                <link linkend='var-RREPLACES'><filename>RREPLACES</filename></link>,
-                and
-                <link linkend='var-RCONFLICTS'><filename>RCONFLICTS</filename></link>
-                variable values).
-                Any invalid comparisons might trigger failures or undesirable
-                behavior when passed to the package manager.
-                </para></listitem>
-            <listitem><para><emphasis><filename>files-invalid:</filename></emphasis>
-                Checks for
-                <link linkend='var-FILES'><filename>FILES</filename></link>
-                variable values that contain "//", which is invalid.
-                </para></listitem>
-            <listitem><para><emphasis><filename>incompatible-license:</filename></emphasis>
-                Report when packages are excluded from being created due to
-                being marked with a license that is in
-                <link linkend='var-INCOMPATIBLE_LICENSE'><filename>INCOMPATIBLE_LICENSE</filename></link>.
-                </para></listitem>
-            <listitem><para><emphasis><filename>compile-host-path:</filename></emphasis>
-                Checks the <filename>do_compile</filename> log for indications
-                that paths to locations on the build host were used.
-                Using such paths might result in host contamination of the
-                build output.
-                </para></listitem>
-            <listitem><para><emphasis><filename>install-host-path:</filename></emphasis>
-                Checks the <filename>do_install</filename> log for indications
-                that paths to locations on the build host were used.
-                Using such paths might result in host contamination of the
-                build output.
-                </para></listitem>
+            <listitem><para><emphasis><filename>la:</filename></emphasis>
+                Checks <filename>.la</filename> files for any <filename>TMPDIR</filename>
+                paths.
+                Any <filename>.la</filename> file containing these paths is incorrect since
+                <filename>libtool</filename> adds the correct sysroot prefix when using the
+                files automatically itself.</para></listitem>
+            <listitem><para><emphasis><filename>ldflags:</filename></emphasis>
+                Ensures that the binaries were linked with the
+                <filename>LDFLAGS</filename> options provided by the build system.
+                If this test fails, check that the <filename>LDFLAGS</filename> variable
+                is being passed to the linker command.</para></listitem>
             <listitem><para><emphasis><filename>libdir:</filename></emphasis>
                 Checks for libraries being installed into incorrect
                 (possibly hardcoded) installation paths.
@@ -1473,6 +1406,13 @@
                 Another example is when recipes install
                 <filename>/usr/lib64/foo.so</filename> when
                 <filename>${libdir}</filename> is "/usr/lib".
+                </para></listitem>
+            <listitem><para><emphasis><filename>libexec:</filename></emphasis>
+                Checks if a package contains files in
+                <filename>/usr/libexec</filename>.
+                This check is not performed if the
+                <filename>libexecdir</filename> variable has been set
+                explicitly to <filename>/usr/libexec</filename>.
                 </para></listitem>
             <listitem><para><emphasis><filename>packages-list:</filename></emphasis>
                 Checks for the same package being listed multiple times through
@@ -1493,11 +1433,44 @@
                 Reports lines in <filename>fs-perms.txt</filename> that
                 specify 'link' where the specified target already exists.
                 </para></listitem>
+            <listitem><para><emphasis><filename>perms:</filename></emphasis>
+                Currently, this check is unused but reserved.
+                </para></listitem>
+            <listitem><para><emphasis><filename>pkgconfig:</filename></emphasis>
+                Checks <filename>.pc</filename> files for any
+                <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>/<link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
+                paths.
+                Any <filename>.pc</filename> file containing these paths is incorrect
+                since <filename>pkg-config</filename> itself adds the correct sysroot prefix
+                when the files are accessed.</para></listitem>
             <listitem><para><emphasis><filename>pkgname:</filename></emphasis>
                 Checks that all packages in
                 <link linkend='var-PACKAGES'><filename>PACKAGES</filename></link>
                 have names that do not contain invalid characters (i.e.
                 characters other than 0-9, a-z, ., +, and -).
+                </para></listitem>
+            <listitem><para><emphasis><filename>pkgv-undefined:</filename></emphasis>
+                Checks to see if the <filename>PKGV</filename> variable
+                is undefined during <filename>do_package</filename>.
+                </para></listitem>
+            <listitem><para><emphasis><filename>pkgvarcheck:</filename></emphasis>
+                Checks through the variables
+                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>,
+                <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>,
+                <link linkend='var-RSUGGESTS'><filename>RSUGGESTS</filename></link>,
+                <link linkend='var-RCONFLICTS'><filename>RCONFLICTS</filename></link>,
+                <link linkend='var-RPROVIDES'><filename>RPROVIDES</filename></link>,
+                <link linkend='var-RREPLACES'><filename>RREPLACES</filename></link>,
+                <link linkend='var-FILES'><filename>FILES</filename></link>,
+                <link linkend='var-ALLOW_EMPTY'><filename>ALLOW_EMPTY</filename></link>,
+                <filename>pkg_preinst</filename>,
+                <filename>pkg_postinst</filename>,
+                <filename>pkg_prerm</filename>
+                and <filename>pkg_postrm</filename>, and reports if there are
+                variable sets that are not package-specific.
+                Using these variables without a package suffix is bad practice,
+                and might unnecessarily complicate dependencies of other packages
+                within the same recipe or have other unintended consequences.
                 </para></listitem>
             <listitem><para><emphasis><filename>pn-overrides:</filename></emphasis>
                 Checks that a recipe does not have a name
@@ -1516,6 +1489,20 @@
                 <filename>FILES_${PN} = "xyz"</filename> effectively turn into
                 <filename>FILES = "xyz"</filename>.
                 </para></listitem>
+           <listitem><para><emphasis><filename>rpaths:</filename></emphasis>
+                Checks for rpaths in the binaries that contain build system paths such
+                as <filename>TMPDIR</filename>.
+                If this test fails, bad <filename>-rpath</filename> options are being
+                passed to the linker commands and your binaries have potential security
+                issues.</para></listitem>
+            <listitem><para><emphasis><filename>split-strip:</filename></emphasis>
+                Reports that splitting or stripping debug symbols from binaries
+                has failed.
+                </para></listitem>
+            <listitem><para><emphasis><filename>staticdev:</filename></emphasis>
+                Checks for static library files (<filename>*.a</filename>) in
+                non-<filename>staticdev</filename> packages.
+                </para></listitem>
             <listitem><para><emphasis><filename>symlink-to-sysroot:</filename></emphasis>
                 Checks for symlinks in packages that point into
                 <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
@@ -1523,6 +1510,10 @@
                 Such symlinks will work on the host, but are clearly invalid
                 when running on the target.
                 </para></listitem>
+            <listitem><para><emphasis><filename>textrel:</filename></emphasis>
+                Checks for ELF binaries that contain relocations in their
+                <filename>.text</filename> sections, which can result in a
+                performance impact at runtime.</para></listitem>
             <listitem><para><emphasis><filename>unsafe-references-in-binaries:</filename></emphasis>
                 Reports when a binary installed in
                 <filename>${base_libdir}</filename>,
@@ -1565,6 +1556,12 @@
                     <filename>/usr</filename>.
                 </note>
                 </para></listitem>
+            <listitem><para><emphasis><filename>useless-rpaths:</filename></emphasis>
+                Checks for dynamic library load paths (rpaths) in the binaries that
+                by default on a standard system are searched by the linker (e.g.
+                <filename>/lib</filename> and <filename>/usr/lib</filename>).
+                While these paths will not cause any breakage, they do waste space and
+                are unnecessary.</para></listitem>
             <listitem><para><emphasis><filename>var-undefined:</filename></emphasis>
                 Reports when variables fundamental to packaging (i.e.
                 <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>,
@@ -1573,19 +1570,6 @@
                 <link linkend='var-PN'><filename>PN</filename></link>, and
                 <link linkend='var-PKGD'><filename>PKGD</filename></link>) are
                 undefined during <filename>do_package</filename>.
-                </para></listitem>
-            <listitem><para><emphasis><filename>pkgv-undefined:</filename></emphasis>
-                Checks to see if the <filename>PKGV</filename> variable
-                is undefined during <filename>do_package</filename>.
-                </para></listitem>
-            <listitem><para><emphasis><filename>buildpaths:</filename></emphasis>
-                Checks for paths to locations on the build host inside the
-                output files.
-                Currently, this test triggers too many false positives and
-                thus is not normally enabled.
-                </para></listitem>
-            <listitem><para><emphasis><filename>perms:</filename></emphasis>
-                Currently, this check is unused but reserved.
                 </para></listitem>
             <listitem><para><emphasis><filename>version-going-backwards:</filename></emphasis>
                 If Build History is enabled, reports when a package
@@ -1601,6 +1585,20 @@
                     target system, then you do not need to worry about
                     this situation.
                 </note>
+                </para></listitem>
+            <listitem><para><emphasis><filename>xorg-driver-abi:</filename></emphasis>
+                Checks that all packages containing Xorg drivers have ABI
+                dependencies.
+                The <filename>xserver-xorg</filename> recipe provides driver
+                ABI names.
+                All drivers should depend on the ABI versions that they have
+                been built against.
+                Driver recipes that include
+                <filename>xorg-driver-input.inc</filename>
+                or <filename>xorg-driver-video.inc</filename> will
+                automatically get these versions.
+                Consequently, you should only need to explicitly add
+                dependencies to binary driver recipes.
                 </para></listitem>
         </itemizedlist>
     </para>
