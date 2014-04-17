@@ -7231,62 +7231,83 @@
             </note>
         </para>
 
-        <para>
-            If you want to set up your own error reporting server, you
-            can obtain the code from the Git repository at
-            <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/error-report-web/'></ulink>.
-            Instructions on how to set it up are in the README document.
-        </para>
+        <section id='enabling-and-using-the-tool'>
+            <title>Enabling and Using the Tool</title>
 
-        <para>
-            By default, the error reporting tool is disabled.
-            You can enable it by inheriting the
-            <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-report-error'><filename>report-error</filename></ulink>
-            class by adding the following statement to the end of
-            your <filename>local.conf</filename> file in your
-            <link linkend='build-directory'>Build Directory</link>.
-            <literallayout class='monospaced'>
+            <para>
+                By default, the error reporting tool is disabled.
+                You can enable it by inheriting the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-report-error'><filename>report-error</filename></ulink>
+                class by adding the following statement to the end of
+                your <filename>local.conf</filename> file in your
+                <link linkend='build-directory'>Build Directory</link>.
+                <literallayout class='monospaced'>
      INHERIT += "report-error"
-            </literallayout>
-            To disable the feature, simply remove or comment out the statement.
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            By default, the error reporting feature stores information in
-            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LOG_DIR'><filename>LOG_DIR</filename></ulink><filename>}/error-report</filename>.
-            However, you can specify a directory to use by adding the following
-            to your <filename>local.conf</filename> file:
-            <literallayout class='monospaced'>
+            <para>
+                By default, the error reporting feature stores information in
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LOG_DIR'><filename>LOG_DIR</filename></ulink><filename>}/error-report</filename>.
+                However, you can specify a directory to use by adding the following
+                to your <filename>local.conf</filename> file:
+                <literallayout class='monospaced'>
      ERR_REPORT_DIR = "path"
-            </literallayout>
-            Enabling error reporting causes the build process to collect
-            the errors and store them in a file as previously described.
-            When the build system encounters an error, it includes a command
-            as part of the console output.
-            You can run the command to send the error file to the server.
-            For example, the following command sends the errors to an upstream
-            server:
-            <literallayout class='monospaced'>
+                </literallayout>
+                Enabling error reporting causes the build process to collect
+                the errors and store them in a file as previously described.
+                When the build system encounters an error, it includes a command
+                as part of the console output.
+                You can run the command to send the error file to the server.
+                For example, the following command sends the errors to an upstream
+                server:
+                <literallayout class='monospaced'>
      send-error-report /home/brandusa/project/poky/build/tmp/log/error-report/error_report_201403141617.txt [server]
-            </literallayout>
-            In the above example, the <filename>server</filename> parameter is
-            optional.
-            By default, the errors are sent to a database used by the entire
-            community.
-            If you specify a particular server, you can send them to a different
-            database.
-        </para>
+                </literallayout>
+                In the above example, the <filename>server</filename> parameter is
+                optional.
+                By default, the errors are sent to a database used by the entire
+                community.
+                If you specify a particular server, you can send them to a different
+                database.
+            </para>
 
-        <para>
-            When sending the error file, you receive a link that corresponds
-            to your entry in the database.
-            For example, here is a typical link:
-            <literallayout class='monospaced'>
+            <para>
+                When sending the error file, you receive a link that corresponds
+                to your entry in the database.
+                For example, here is a typical link:
+                <literallayout class='monospaced'>
      http://localhost:8000/Errors/Search/1/158
-            </literallayout>
-            Following the link takes you to a web interface where you can
-            browse, query the errors, and view statistics.
-         </para>
+                </literallayout>
+                Following the link takes you to a web interface where you can
+                browse, query the errors, and view statistics.
+             </para>
+        </section>
+
+        <section id='disabling-the-tool'>
+            <title>Disabling the Tool</title>
+
+            <para>
+                To disable the error reporting feature, simply remove or comment
+                out the following statement from the end of your
+                <filename>local.conf</filename> file in your
+                <link linkend='build-directory'>Build Directory</link>.
+                <literallayout class='monospaced'>
+     INHERIT += "report-error"
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='setting-up-your-own-error-reporting-server'>
+            <title>Setting Up Your Own Error Reporting Server</title>
+
+            <para>
+                If you want to set up your own error reporting server, you
+                can obtain the code from the Git repository at
+                <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/error-report-web/'></ulink>.
+                Instructions on how to set it up are in the README document.
+            </para>
+        </section>
      </section>
 </chapter>
 
