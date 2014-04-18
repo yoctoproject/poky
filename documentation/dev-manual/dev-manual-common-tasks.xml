@@ -5801,13 +5801,31 @@
                             (or something similar) is installed.
                             Also, your hardware under test must be in a
                             DHCP-enabled network that gives it the same IP
-                            address for each reboot.
+                            address for each reboot.</para>
+                            <para>If you choose "GummibootTarget", there are
+                            additional requirements and considerations.
+                            See the
+                            "<link linkend='selecting-gummiboottarget'>Selecting GummibootTarget</link>"
+                            section, which follows, for more information.
                             </para></listitem>
                     </itemizedlist>
                 </para>
+            </section>
+
+            <section id='selecting-gummiboottarget'>
+                <title>Selecting GummibootTarget</title>
 
                 <para>
-                    If you set <filename>TEST_TARGET</filename> to
+                    If you did not set <filename>TEST_TARGET</filename> to
+                    "GummibootTarget", then you do not need any information
+                    in this section.
+                    You can skip down to the
+                    "<link linkend='qemu-image-running-tests'>Running Tests</link>"
+                    section.
+                </para>
+
+                <para>
+                    If you did set <filename>TEST_TARGET</filename> to
                     "GummibootTarget", you also need to perform a one-time
                     setup of your master image by doing the following:
                     <orderedlist>
@@ -5821,11 +5839,57 @@
                         <listitem><para><emphasis>Build the master image:</emphasis>
                             Build the <filename>core-image-testmaster</filename>
                             image.
+                            The <filename>core-image-testmaster</filename>
+                            recipe is provided as an example for a
+                            "master" image and you can customize the image
+                            recipe as you would any other recipe.
+                            </para>
+                            <para>Here are the image recipe requirements:
+                            <itemizedlist>
+                                <listitem><para>Inherits
+                                    <filename>core-image</filename>
+                                    so that kernel modules are installed.
+                                    </para></listitem>
+                                <listitem><para>Installs normal linux utilities
+                                    not busybox ones (e.g.
+                                    <filename>bash</filename>,
+                                    <filename>coreutils</filename>,
+                                    <filename>tar</filename>,
+                                    <filename>gzip</filename>, and
+                                    <filename>kmod</filename>).
+                                    </para></listitem>
+                                <listitem><para>Uses a custom
+                                    initramfs image with a custom installer.
+                                    A normal image that you can install usually
+                                    creates a single rootfs partition.
+                                    This image uses another installer that
+                                    creates a specific partition layout.
+                                    Not all Board Support Packages (BSPs)
+                                    can use an installer.
+                                    For such cases, you need to manually create
+                                    the following partition layout on the
+                                    target:
+                                    <itemizedlist>
+                                        <listitem><para>First partition mounted
+                                            under <filename>/boot</filename>,
+                                            labeled "boot".
+                                            </para></listitem>
+                                        <listitem><para>The main rootfs
+                                            partition where this image gets
+                                            installed, which is mounted under
+                                            <filename>/</filename>.
+                                            </para></listitem>
+                                        <listitem><para>Another partition
+                                            labeled "testrootfs" where test
+                                            images get deployed.
+                                            </para></listitem>
+                                    </itemizedlist>
+                                    </para></listitem>
+                            </itemizedlist>
                             </para></listitem>
                         <listitem><para><emphasis>Install image:</emphasis>
-                            Install the image on the target system.
-                            &lt;Need some clarification here from Stefan,
-                            partition layout, etc.&gt;
+                            Install the image that you just built on the target
+                            system.
                             </para></listitem>
                     </orderedlist>
                 </para>
