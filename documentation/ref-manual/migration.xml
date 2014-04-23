@@ -829,10 +829,10 @@
     </section>
 
     <section id='migration-1.5-run'>
-        <title><filename>run</filename></title>
+        <title><filename>/run</filename></title>
 
         <para>
-            The <filename>run</filename> directory from the Filesystem
+            The <filename>/run</filename> directory from the Filesystem
             Hierarchy Standard 3.0 has been introduced.
             You can find some of the implications for this change
             <ulink url='http://cgit.openembedded.org/openembedded-core/commit/?id=0e326280a15b0f2c4ef2ef4ec441f63f55b75873'>here</ulink>.
@@ -878,7 +878,7 @@
         <para>
             The previously deprecated <filename>task.bbclass</filename> has
             now been dropped.
-            For recipes that previously inherited from this task, you should
+            For recipes that previously inherited from this class, you should
             rename them from <filename>task-*</filename> to
             <filename>packagegroup-*</filename> and inherit packagegroup
             instead.
@@ -1149,6 +1149,31 @@
             The following changes have been made to
             <ulink url='&YOCTO_DOCS_DEV_URL;#bitbake-term'>BitBake</ulink>.
         </para>
+
+        <section id='migration-1.6-matching-branch-requirement-for-git-fetching'>
+            <title>Matching Branch Requirement for Git Fetching</title>
+
+            <para>
+                When fetching source from a Git repository using
+                <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>,
+                BitBake will now validate the
+                <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
+                value against the branch.
+                You can specify the branch using the following form:
+                <literallayout class='monospaced'>
+     SRC_URI = "git://server.name/repository;branch=&lt;branchname&gt;"
+                </literallayout>
+                If you do not specify a branch, BitBake looks
+                in the default "master" branch.
+            </para>
+
+            <para>
+                Alternatively, if you need to bypass this check (e.g.
+                if you are fetching a revision corresponding to a tag that
+                is not on any branch), you can add ";nobranch=1" to
+                the end of the URL within <filename>SRC_URI</filename>.
+            </para>
+        </section>
 
         <section id='migration-1.6-bitbake-deps'>
             <title>Python Definition substitutions</title>
