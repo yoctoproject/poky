@@ -1278,7 +1278,7 @@
                     <literallayout class='monospaced'>
      cups_1.7.0.bb
      gawk_4.0.2.bb
-     xdg-utils_1.1.0-rc1.bb
+     irssi_0.8.16-rc1.bb
                     </literallayout></para></listitem>
             </itemizedlist>
         </section>
@@ -2144,6 +2144,43 @@
                 script, see the
                 "<link linkend='new-recipe-post-installation-scripts'>Post-Installation Scripts</link>"
                 section.
+            </para>
+        </section>
+
+        <section id='properly-versioning-pre-release-recipes'>
+            <title>Properly Versioning Pre-Release Recipes</title>
+
+            <para>
+                Sometimes the name of a recipe can lead to versioning
+                problems when the recipe is upgraded to a final release.
+                For example, consider the
+                <filename>irssi_0.8.16-rc1.bb</filename> recipe file in
+                the list of example recipes in the
+                "<link linkend='new-recipe-storing-and-naming-the-recipe'>Storing and Naming the Recipe</link>"
+                section.
+                This recipe is at a release candidate stage (i.e.
+                "rc1").
+                When the recipe is released, the recipe filename becomes
+                <filename>irssi_0.8.16.bb</filename>.
+                The version change from <filename>0.8.16-rc1</filename>
+                to <filename>0.8.16</filename> is seen as a decrease by the
+                build system and package managers, so the resulting packages
+                will not correctly trigger an upgrade.
+            </para>
+
+            <para>
+                In order to ensure the versions compare properly, the
+                recommended convention is to set
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
+                within the recipe to
+                "&lt;previous version&gt;+&lt;current version&gt;".
+                You can use an additional variable so that you can use the
+                current version elsewhere.
+                Here is an example:
+                <literallayout class='monospaced'>
+     REALPV = "0.8.16-rc1"
+     PV = "0.8.15+${REALPV}"
+                </literallayout>
             </para>
         </section>
 
