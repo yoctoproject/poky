@@ -1290,6 +1290,21 @@
                 The basic items that make up a BitBake recipe file are
                 as follows:
                 <itemizedlist>
+                    <listitem><para><emphasis>Variable Assignments and Manipulations:</emphasis>
+                        Variable assignments allow a value to be assigned to a
+                        variable.
+                        The assignment can be static text or might include
+                        the contents of other variables.
+                        In addition to the assignment, appending and prepending
+                        operations are also supported.</para>
+                        <para>The following example shows some of the ways
+                        you can use variables in recipes:
+                        <literallayout class='monospaced'>
+     S = "${WORKDIR}/postfix-${PV}"
+     CFLAGS += "-DNO_ASM"
+     SRC_URI_append = " file://fixup.patch"
+                        </literallayout>
+                        </para></listitem>
                     <listitem><para><emphasis>Functions:</emphasis>
                         Functions provide a series of actions to be performed.
                         You usually use functions to override the default
@@ -1313,25 +1328,9 @@
                         new functions are not replacing or complimenting the
                         default functions.
                         You can implement functions in Python
-                        instead of <filename>sh</filename>.
+                        instead of shell.
                         Both of these options are not seen in the majority of
                         recipes.</para></listitem>
-                    <listitem><para><emphasis>Variable Assignments and Manipulations:</emphasis>
-                        Variable assignments allow a value to be assigned to a
-                        variable.
-                        The assignment can be static text or might include
-                        the contents of other variables.
-                        In addition to the assignment, appending and prepending
-                        operations are also supported.</para>
-                        <para>The following example shows some of the ways
-                        you can use variables in recipes:
-                        <literallayout class='monospaced'>
-     S = "${WORKDIR}/postfix-${PV}"
-     PR = "r4"
-     CFLAGS += "-DNO_ASM"
-     SRC_URI_append = "file://fixup.patch"
-                        </literallayout>
-                        </para></listitem>
                     <listitem><para><emphasis>Keywords:</emphasis>
                         BitBake recipes use only a few keywords.
                         You use keywords to include common
@@ -1389,7 +1388,8 @@
                         </literallayout>
                         </para></listitem>
                     <listitem><para><emphasis>Quote All Assignments: <filename>"&lt;value&gt;"</filename></emphasis> -
-                        Use double quotes to make all variable assignments.
+                        Use double quotes around the value in all variable
+                        assignments.
                         <literallayout class='monospaced'>
      VAR1 = "${OTHERVAR}"
      VAR2 = "The version is ${PV}"
@@ -1401,13 +1401,14 @@
                         unset.
                         Use the question mark followed by the equal sign
                         (<filename>?=</filename>) to make a "soft" assignment
-                        used for conditional assignment.</para>
-                        <para>Typically, you use conditional assignment to
-                        provide
-                        a default value for use when no specific definition is
-                        provided by the machine or distro configuration in
-                        your <filename>local.conf</filename> configuration.
-                        </para>
+                        used for conditional assignment.
+                        Typically, "soft" assignments are used in the
+                        <filename>local.conf</filename> file for variables
+                        that are allowed to come through from the external
+                        environment.
+                        Doing so allows you to actually set variables from
+                        the external environment that would otherwise be
+                        overwritten.</para>
                         <para>Here is an example:
                         <literallayout class='monospaced'>
      VAR1 ?= "New value"
@@ -1455,7 +1456,9 @@
                         This operator does not add any additional space.
                         Also, the operator is applied after all the
                         <filename>+=</filename>, and
-                        <filename>=+</filename> operators have been applied.
+                        <filename>=+</filename> operators have been applied and
+                        after all <filename>=</filename> assignments have
+                        occurred.
                         </para>
                         <para>The following example shows the space being
                         explicitly added to the start to ensure the appended
@@ -1470,26 +1473,17 @@
                         <literallayout class='monospaced'>
      SRC_URI_append_sh4 = " file://fix-makefile.patch"
                         </literallayout>
-                        <note>
-                            The appended information is a variable itself.
-                            Therefore, it is possible to use the
-                            <filename>+=</filename> or
-                            <filename>=+</filename> operators to assign
-                            variables to the <filename>_append</filename>
-                            information:
-                            <literallayout class='monospaced'>
-     SRC_URI_append = " file://fix-makefile.patch"
-     SRC_URI_append += "file://fix-install.patch"
-                            </literallayout>
-                        </note>
                         </para></listitem>
                     <listitem><para><emphasis>Prepending: <filename>_prepend</filename></emphasis> -
                         Use the <filename>_prepend</filename> operator to
                         prepend values to existing variables.
                         This operator does not add any additional space.
-                        Also, it is applied after all the
-                        <filename>+=</filename> and
-                        <filename>=+</filename> operators have been applied.
+                        This operator does not add any additional space.
+                        Also, the operator is applied after all the
+                        <filename>+=</filename>, and
+                        <filename>=+</filename> operators have been applied and
+                        after all <filename>=</filename> assignments have
+                        occurred.
                         </para>
                         <para>The following example shows the space being
                         explicitly added to the end to ensure the prepended
@@ -1504,45 +1498,29 @@
                         <literallayout class='monospaced'>
      CFLAGS_prepend_sh4 = " file://fix-makefile.patch"
                         </literallayout>
-                        <note>
-                            The appended information is a variable itself.
-                            Therefore, it is possible to use the
-                            <filename>+=</filename> or
-                            <filename>=+</filename> operators to assign
-                            variables to the <filename>_prepend</filename>
-                            information:
-                            <literallayout class='monospaced'>
-     CFLAGS_prepend = "-I${S}/myincludes "
-     CFLAGS_prepend += "-I${S}/myincludes2 "
-                            </literallayout>
-                            Notice in this example no spacing is used at the
-                            front of the value string.
-                            Recall that the <filename>+=</filename> operator
-                            adds space itself.
-                        </note>
                         </para></listitem>
-                    <listitem><para><emphasis>Spaces as Compared to Tabs:</emphasis>
+                    <listitem><para><emphasis>Indentation:</emphasis>
                         Use spaces for indentation rather than than tabs.
-                        Both currently work, however it is a policy decision
-                        of the Yocto Project to use tabs in shell functions
-                        and spaces in Python.
-                        However, realize that some layers use a policy of all
-                        spaces.
+                        For shell functions, both currently work.
+                        However, it is a policy decision of the Yocto Project
+                        to use tabs in shell functions.
+                        Realize that some layers have a policy to use spaces
+                        for all indentation.
                         </para></listitem>
-                    <listitem><para><emphasis>Using Python for Complex Operations: <filename>${@...}</filename></emphasis> -
+                    <listitem><para><emphasis>Using Python for Complex Operations: <filename>${@&lt;variable&gt;}</filename></emphasis> -
                         For more advanced processing, it is possible to use
                         Python code during variable assignments (e.g.
                         search and replacement on a variable).</para>
-                        <para>You indicate Python code using a preceding
-                        <filename>@</filename> character in the variable
-                        assignment:
+                        <para>You indicate Python code using the
+                        <filename>${@&lt;variable&gt;}</filename> syntax for the
+                        variable assignment:
                         <literallayout class='monospaced'>
-     CXXFLAGS := "${@'${CXXFLAGS}'.replace('-frename-registers', '')}"
+     SRC_URI = "ftp://ftp.info-zip.org/pub/infozip/src/zip${@d.getVar('PV',1).replace('.', '')}.tgz
                         </literallayout>
                         </para></listitem>
-                    <listitem><para><emphasis>Shell Syntax:</emphasis>
-                        Use shell syntax as if you were writing a shell script
-                        when you describe a list of actions to take.
+                    <listitem><para><emphasis>Shell Function Syntax:</emphasis>
+                        Use shell function syntax as if you were writing a shell
+                        script when you describe a list of actions to take.
                         You should ensure that your script works with a generic
                         <filename>sh</filename> and that it does not require
                         any <filename>bash</filename> or other shell-specific
