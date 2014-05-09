@@ -25,8 +25,9 @@
         <title><filename>do_build</filename></title>
 
         <para>
-            Default task for a recipe - depends on all other normal tasks
-            required to 'build' a recipe.
+            The default task for all recipes.
+            This task depends on all other normal tasks
+            required to build a recipe.
         </para>
     </section>
 
@@ -34,7 +35,9 @@
         <title><filename>do_compile</filename></title>
 
         <para>
-            Compiles the source in the compilation directory.
+            Compiles the source in the compilation directory, which is pointed
+            to by the
+            <link linkend='var-B'><filename>B</filename></link> variable.
         </para>
     </section>
 
@@ -69,7 +72,10 @@
         <title><filename>do_deploy</filename></title>
 
         <para>
-            Writes deployable output files to the deploy directory.
+            Writes output files that are to be deployed to the deploy
+            directory, which is defined by the
+            <link linkend='var-DEPLOYDIR'><filename>DEPLOYDIR</filename></link>
+            variable.
         </para>
     </section>
 
@@ -78,6 +84,12 @@
 
         <para>
             Fetches the source code.
+            This task uses the
+            <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
+            variable and the argument's prefix to determine the correct
+            fetcher module.
+            Unpacked source files reside in the
+            <link linkend='var-S'><filename>S</filename></link> directory.
         </para>
     </section>
 
@@ -85,7 +97,11 @@
         <title><filename>do_install</filename></title>
 
         <para>
-            Copies files from the compilation directory to a holding area.
+            Copies files from the compilation directory, which is defined by
+            the
+            <link linkend='var-B'><filename>B</filename></link> variable,
+            to a holding area defined by the
+            <link linkend='var-D'><filename>D</filename></link> variable.
         </para>
     </section>
 
@@ -111,7 +127,9 @@
         <title><filename>do_package_index</filename></title>
 
         <para>
-            Creates or updates the index in the Package Feed area.
+            Creates or updates the index in the
+            <link linkend='package-feeds-dev-environment'>Package Feeds</link>
+            area.
         </para>
     </section>
 
@@ -119,7 +137,8 @@
         <title><filename>do_package_write_deb</filename></title>
 
         <para>
-            Creates the actual DEB packages and places them in the Package Feed
+            Creates the actual DEB packages and places them in the
+            <link linkend='package-feeds-dev-environment'>Package Feeds</link>
             area.
         </para>
     </section>
@@ -128,7 +147,8 @@
         <title><filename>do_package_write_ipk</filename></title>
 
         <para>
-            Creates the actual IPK packages and places them in the Package Feed
+            Creates the actual IPK packages and places them in the
+            <link linkend='package-feeds-dev-environment'>Package Feeds</link>
             area.
         </para>
     </section>
@@ -137,7 +157,8 @@
         <title><filename>do_package_write_rpm</filename></title>
 
         <para>
-            Creates the actual RPM packages and places them in the Package Feed
+            Creates the actual RPM packages and places them in the
+            <link linkend='package-feeds-dev-environment'>Package Feeds</link>
             area.
         </para>
     </section>
@@ -146,8 +167,9 @@
         <title><filename>do_package_write_tar</filename></title>
 
         <para>
-            Creates tar archives for packages and places them in the Package
-            Feed area.
+            Creates tar archives for packages and places them in the
+            <link linkend='package-feeds-dev-environment'>Package Feeds</link>
+            area.
         </para>
     </section>
 
@@ -165,6 +187,9 @@
 
         <para>
             Locates patch files and applies them to the source code.
+            See the
+            "<link linkend='patching-dev-environment'>Patching</link>"
+            section for more information.
         </para>
     </section>
 
@@ -182,6 +207,9 @@
 
         <para>
             Creates the file and directory structure for an installable SDK.
+            See the
+            "<link linkend='sdk-generation-dev-environment'>SDK Generation</link>"
+            section for more information.
         </para>
     </section>
 
@@ -200,7 +228,11 @@
         <title><filename>do_rm_work</filename></title>
 
         <para>
-            Removes work files after the build system has finished with them.
+            Removes work files after the OpenEmbedded build system has
+            finished with them.
+            You can learn more by looking at the
+            "<link linkend='ref-classes-rm-work'><filename>rm_work.bbclass</filename></link>"
+            section.
         </para>
     </section>
 
@@ -218,6 +250,9 @@
 
         <para>
             Unpacks the source code into a working directory.
+            For more information on fetching and unpacking source files, see the
+            "<link linkend='source-fetching-dev-environment'>Source Fetching</link>"
+            section.
         </para>
     </section>
 </section>
@@ -234,7 +269,9 @@
         <title><filename>do_checkuri</filename></title>
 
         <para>
-            Validates the SRC_URI value.
+            Validates the
+            <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
+            value.
         </para>
     </section>
 
@@ -242,8 +279,9 @@
         <title><filename>do_checkuriall</filename></title>
 
         <para>
-            Validates the SRC_URI value for all recipes required to build a
-            target.
+            Validates the
+            <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
+            value for all recipes required to build a target.
         </para>
     </section>
 
@@ -259,8 +297,9 @@
         <title><filename>do_cleanall</filename></title>
 
         <para>
-            Removes all output files, shared state cache, and downloaded source
-            files for a target.
+            Removes all output files, shared state
+            (<link linkend='shared-state-cache'>sstate</link>) cache, and
+            downloaded source files for a target.
         </para>
     </section>
 
@@ -268,7 +307,9 @@
         <title><filename>do_cleansstate</filename></title>
 
         <para>
-            Removes all output files and shared state cache for a target.
+            Removes all output files and shared state
+            (<link linkend='shared-state-cache'>sstate</link>)
+            cache for a target.
         </para>
     </section>
 
@@ -284,8 +325,12 @@
         <title><filename>do_devshell</filename></title>
 
         <para>
-            Starts a shell with the environment set up for
-            development/debugging.
+            Starts a shell whose environment is set up for
+            development, debugging, or both.
+            See the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#platdev-appdev-devshell'>Using a Development Shell</ulink>"
+            section in the Yocto Project Development Manual for more
+            information about using <filename>devshell</filename>.
         </para>
     </section>
 
@@ -310,6 +355,9 @@
 
         <para>
             Creates a bootable live image.
+            See the
+            <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+            variable for additional information on live image types.
         </para>
     </section>
 
@@ -317,8 +365,11 @@
         <title><filename>do_bundle_initramfs</filename></title>
 
         <para>
-            Combines an initial ramdisk image and kernel together to form
-            a single image.
+            Combines an initial RAM disk (initramfs) image and kernel
+            together to form a single image.
+            The
+            <link linkend='var-CONFIG_INITRAMFS_SOURCE'><filename>CONFIG_INITRAMFS_SOURCE</filename></link>
+            variable has some more information about these types of images.
         </para>
     </section>
 
@@ -328,6 +379,9 @@
         <para>
             Creates the root filesystem (file and directory structure) for an
             image.
+            See the
+            "<link linkend='image-generation-dev-environment'>Image Generation</link>"
+            section for more information on how the root filesystem is created.
         </para>
     </section>
 
@@ -352,8 +406,9 @@
         <title><filename>do_vmdkimg</filename></title>
 
         <para>
-            Creates a .vmdk image for use with VMware and compatible virtual
-            machine hosts.
+            Creates a <filename>.vmdk</filename> image for use with
+            <ulink url='http://www.vmware.com/'>VMware</ulink>
+            and compatible virtual machine hosts.
         </para>
     </section>
 </section>
@@ -363,10 +418,10 @@
 
     <para>
         The following tasks are applicable to kernel recipes.
-        Some of them (e.g. the
+        Some of these tasks (e.g. the
         <link linkend='ref-tasks-menuconfig'><filename>do_menuconfig</filename></link>
         task) are also applicable to recipes that use
-        Linux kernel style configuration (e.g. BusyBox).
+        Linux kernel style configuration such as the BusyBox recipe.
     </para>
 
     <section id='ref-tasks-compile_kernelmodules'>
@@ -415,7 +470,8 @@
         <title><filename>do_kernel_link_vmlinux</filename></title>
 
         <para>
-            Creates a symbolic link in arch/$arch/boot for vmlinux kernel
+            Creates a symbolic link in
+            <filename>arch/$arch/boot</filename> for vmlinux kernel
             images.
         </para>
     </section>
@@ -424,7 +480,10 @@
         <title><filename>do_menuconfig</filename></title>
 
         <para>
-            Runs 'make menuconfig' for the kernel.
+            Runs <filename>make menuconfig</filename> for the kernel.
+            For information on <filename>menuconfig</filename>, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#using-menuconfig'>Using&nbsp;&nbsp;<filename>menuconfig</filename></ulink>"
+            section in the Yocto Project Development Manual.
         </para>
     </section>
 
@@ -440,8 +499,8 @@
         <title><filename>do_sizecheck</filename></title>
 
         <para>
-            Checks the size of the kernel image against KERNEL_IMAGE_MAXSIZE
-            (if set).
+            Checks the size of the kernel image against
+            <filename>KERNEL_IMAGE_MAXSIZE</filename> when set.
         </para>
     </section>
 
@@ -465,8 +524,10 @@
         <title><filename>do_validate_branches</filename></title>
 
         <para>
-            Ensures that the source/meta branches are on the locations
-            specified by their SRCREV values for a linux-yocto style kernel.
+            Ensures that the source, metadata (or both) branches are on the
+            locations specified by their
+            <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
+            values for a linux-yocto style kernel.
         </para>
     </section>
 </section>
@@ -482,7 +543,8 @@
         <title><filename>do_generate_qt_config_file</filename></title>
 
         <para>
-            Writes a qt.conf file for building a Qt-based application.
+            Writes a <filename>qt.conf</filename> configuration
+            file used for building a Qt-based application.
         </para>
     </section>
 
@@ -492,6 +554,9 @@
         <para>
             A build stage that takes the source code and scans it on a remote
             FOSSOLOGY server in order to produce an SPDX document.
+            This task applies only to the
+            <link linkend='ref-classes-spdx'><filename>spdx</filename></link>
+            class.
         </para>
     </section>
 </section>
