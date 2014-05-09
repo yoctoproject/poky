@@ -88,8 +88,6 @@
             <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
             variable and the argument's prefix to determine the correct
             fetcher module.
-            Unpacked source files reside in the
-            <link linkend='var-S'><filename>S</filename></link> directory.
         </para>
     </section>
 
@@ -120,16 +118,6 @@
         <para>
             Analyzes the content of the holding area and splits it into subsets
             based on available packages and files.
-        </para>
-    </section>
-
-    <section id='ref-tasks-package_index'>
-        <title><filename>do_package_index</filename></title>
-
-        <para>
-            Creates or updates the index in the
-            <link linkend='package-feeds-dev-environment'>Package Feeds</link>
-            area.
         </para>
     </section>
 
@@ -249,10 +237,16 @@
         <title><filename>do_unpack</filename></title>
 
         <para>
-            Unpacks the source code into a working directory.
-            For more information on fetching and unpacking source files, see the
+            Unpacks the source code into a working directory pointed to
+            by
+            <filename>${</filename><link linkend='var-WORKDIR'><filename>WORKDIR</filename></link><filename>}</filename>.
+            The
+            <link linkend='var-S'><filename>S</filename></link> variable also
+            plays a role in where unpacked source files ultimately reside.
+            For more information on how source files are unpacked, see the
             "<link linkend='source-fetching-dev-environment'>Source Fetching</link>"
-            section.
+            section and the <filename>WORKDIR</filename> and
+            <filename>S</filename> variable descriptions.
         </para>
     </section>
 </section>
@@ -262,7 +256,7 @@
 
     <para>
         These tasks are typically manually triggered (e.g. by using the
-        <filename>bitbake -c</filename> command line option):
+        <filename>bitbake -c</filename> command-line option):
     </para>
 
     <section id='ref-tasks-checkuri'>
@@ -290,6 +284,16 @@
 
         <para>
             Removes all output files for a target.
+            When this task is run, the
+            <link linkend='shared-state-cache'>sstate</link>) cache
+            files are not deleted.
+            Consequently, if no changes have been made and the recipe is
+            rebuilt after cleaning, output files are simply restored from the
+            sstate cache.
+            If you want to remove the sstate cache files for the recipe,
+            you need to use the
+            <link linkend='ref-tasks-cleansstate'><filename>do_cleansstate</filename></link>
+            task instead (i.e. <filename>bitbake -c cleansstate &lt;recipe&gt;</filename>).
         </para>
     </section>
 
@@ -313,14 +317,6 @@
         </para>
     </section>
 
-    <section id='ref-tasks-fetchall'>
-        <title><filename>do_fetchall</filename></title>
-
-        <para>
-            Fetches all remote sources required to build a target.
-        </para>
-    </section>
-
     <section id='ref-tasks-devshell'>
         <title><filename>do_devshell</filename></title>
 
@@ -334,11 +330,38 @@
         </para>
     </section>
 
+    <section id='ref-tasks-fetchall'>
+        <title><filename>do_fetchall</filename></title>
+
+        <para>
+            Fetches all remote sources required to build a target.
+        </para>
+    </section>
+
     <section id='ref-tasks-listtasks'>
         <title><filename>do_listtasks</filename></title>
 
         <para>
             Lists all defined tasks for a target.
+        </para>
+    </section>
+
+    <section id='ref-tasks-package_index'>
+        <title><filename>do_package_index</filename></title>
+
+        <para>
+            Creates or updates the index in the
+            <link linkend='package-feeds-dev-environment'>Package Feeds</link>
+            area.
+            <note>
+                This task is not triggered with the
+                <filename>bitbake -c</filename> command-line option as
+                are the other tasks in this section.
+                Because this task is specifically for the
+                <filename>package-index</filename> recipe,
+                you run it using
+                <filename>bitbake package-index</filename>.
+            </note>
         </para>
     </section>
 </section>
@@ -390,6 +413,9 @@
 
         <para>
             Boots an image and performs runtime tests within the image.
+            For information on automatically testing images, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing'>Performing Automated Runtime Testing</ulink>"
+            section in the Yocto Project Development Manual.
         </para>
     </section>
 
@@ -399,6 +425,15 @@
         <para>
             Boots an image and performs runtime tests within the image
             immediately after it has been built.
+            This task is enabled when you set
+            <link linkend='var-TEST_IMAGE'><filename>TEST_IMAGE</filename></link>
+            equal to "1".
+        </para>
+
+        <para>
+            For information on automatically testing images, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing'>Performing Automated Runtime Testing</ulink>"
+            section in the Yocto Project Development Manual.
         </para>
     </section>
 
