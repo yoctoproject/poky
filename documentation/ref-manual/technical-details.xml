@@ -442,7 +442,10 @@
             works on a per-task basis rather than a per-recipe basis.
             You might wonder why using a per-task basis is preferred over a per-recipe basis.
             To help explain, consider having the IPK packaging backend enabled and then switching to DEB.
-            In this case, <filename>do_install</filename> and <filename>do_package</filename>
+            In this case,
+            <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+            and
+            <link linkend='ref-tasks-package'><filename>do_package</filename></link>
             outputs are still valid.
             However, with a per-recipe approach, the build would not include the
             <filename>.deb</filename> files.
@@ -643,8 +646,10 @@
         <para>
             There are two types of output, one is just about creating a directory
             in <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>.
-            A good example is the output of either <filename>do_install</filename> or
-            <filename>do_package</filename>.
+            A good example is the output of either
+            <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+            or
+            <link linkend='ref-tasks-package'><filename>do_package</filename></link>.
             The other type of output occurs when a set of data is merged into a shared directory
             tree such as the sysroot.
         </para>
@@ -653,8 +658,9 @@
             The Yocto Project team has tried to keep the details of the
             implementation hidden in <filename>sstate</filename> class.
             From a user's perspective, adding shared state wrapping to a task
-            is as simple as this <filename>do_deploy</filename> example taken
-            from the
+            is as simple as this
+            <link linkend='ref-tasks-deploy'><filename>do_deploy</filename></link>
+            example taken from the
             <link linkend='ref-classes-deploy'><filename>deploy</filename></link>
             class:
             <literallayout class='monospaced'>
@@ -737,7 +743,9 @@
 
         <para>
             As a real world example, the aim is when building an IPK-based image,
-            only the <filename>do_package_write_ipk</filename> tasks would have their
+            only the
+            <link linkend='ref-tasks-package_write_ipk'><filename>do_package_write_ipk</filename></link>
+            tasks would have their
             shared state packages fetched and extracted.
             Since the sysroot is not used, it would never get extracted.
             This is another reason why a task-based approach is preferred over a
@@ -834,8 +842,9 @@
                 The steps you can take are as simple as changing a function's
                 comments in the source code.
                 For example, to invalidate package shared state files, change
-                the comment statements of <filename>do_package</filename> or
-                the comments of one of the functions it calls.
+                the comment statements of
+                <link linkend='ref-tasks-package'><filename>do_package</filename></link>
+                or the comments of one of the functions it calls.
                 Even though the change is purely cosmetic, it causes the
                 checksum to be recalculated and forces the OpenEmbedded build
                 system to run the task again.

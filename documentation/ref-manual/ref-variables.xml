@@ -189,7 +189,8 @@
                             Finally, if the file referenced has not been
                             renamed, the alternatives system will rename it to
                             avoid the need to rename alternative files in the
-                            <filename>do_install</filename> task while
+                            <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+                            task while
                             retaining support for the command if necessary.
                         </para>
                     </note>
@@ -1434,7 +1435,9 @@
                 <para>
                     The destination directory.
                     The location in the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-                    where components are installed by the <filename>do_install</filename> task.
+                    where components are installed by the
+                    <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+                    task.
                     This location defaults to:
                     <literallayout class='monospaced'>
      ${WORKDIR}/image
@@ -1518,8 +1521,9 @@
      DEPENDS = "b"
                     </literallayout>
                     Here, the dependency is such that the
-                    <filename>do_configure</filename> task for recipe "a"
-                    depends on the <filename>do_populate_sysroot</filename>
+                    <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>
+                    task for recipe "a" depends on the
+                    <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
                     task of recipe "b".
                     This means anything that recipe "b" puts into sysroot
                     is available when recipe "a" is configuring itself.
@@ -1750,8 +1754,9 @@
                     In most cases, the presence or absence of a feature in
                     <filename>DISTRO_FEATURES</filename> is translated to the
                     appropriate option supplied to the configure script
-                    during <filename>do_configure</filename> for recipes that
-                    optionally support the feature.
+                    during the
+                    <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>
+                    task for recipes that optionally support the feature.
                     For example, specifying "x11" in
                     <filename>DISTRO_FEATURES</filename>, causes
                     every piece of software built for the target that can
@@ -2763,8 +2768,9 @@
             <glossdef>
                 <para>
                     Extra options passed to the <filename>make</filename>
-                    command during the <filename>do_compile</filename> task
-                    that specify parallel compilation.
+                    command during the
+                    <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>
+                    task that specify parallel compilation.
                     This variable usually takes the form of
                     <filename>-j 4</filename>, where the number
                     represents the maximum number of parallel threads
@@ -3222,7 +3228,9 @@
             <glossdef>
                 <para>
                     The location of the root filesystem while it is under
-                    construction (i.e. during <filename>do_rootfs</filename>).
+                    construction (i.e. during the
+                    <link linkend='ref-tasks-rootfs'><filename>do_rootfs</filename></link>
+                    task).
                     This variable is not configurable.
                     Do not change it.
                 </para>
@@ -5395,7 +5403,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     produced, then the other package will be broken.
                     Thus, if you attempt to include that package in an image,
                     you will get a dependency failure from the packaging system
-                    during <filename>do_rootfs</filename>.
+                    during the
+                    <link linkend='ref-tasks-rootfs'><filename>do_rootfs</filename></link>
+                    task.
                 </para>
                 <para>
                     Typically, if there is a chance that such a situation can
@@ -5419,8 +5429,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     Extra options passed to the <filename>make</filename>
-                    command during the <filename>do_compile</filename> task
-                    in order to specify parallel compilation on the local
+                    command during the
+                    <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>
+                    task in order to specify parallel compilation on the local
                     build host.
                     This variable is usually in the form "-j &lt;x&gt;",
                     where x represents the maximum number of parallel threads
@@ -5447,8 +5458,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Extra options passed to the
                     <filename>make install</filename> command during the
-                    <filename>do_install</filename> task in order to specify
-                    parallel installation.
+                    <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+                    task in order to specify parallel installation.
                     This variable defaults to the value of
                     <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></link>.
                     <note>
@@ -5488,7 +5499,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     Specifies the utility used to apply patches for a recipe
-                    during <filename>do_patch</filename>.
+                    during the
+                    <link linkend='ref-tasks-patch'><filename>do_patch</filename></link>
+                    task.
                     You can specify one of three utilities: "patch", "quilt", or
                     "git".
                     The default utility used is "quilt" except for the
@@ -5587,9 +5600,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Points to a shared, global-state directory that holds data
                     generated during the packaging process.
                     During the packaging process, the
-                    <filename>do_packagedata</filename> task packages
-                    data for each recipe and installs it into this temporary,
-                    shared area.
+                    <link linkend='ref-tasks-packagedata'><filename>do_packagedata</filename></link>
+                    task packages data for each recipe and installs it into
+                    this temporary, shared area.
                     This directory defaults to the following:
                     <literallayout class='monospaced'>
      ${STAGING_DIR_HOST}/pkgdata
@@ -5620,8 +5633,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     Points to a temporary work area used by the
-                    <filename>do_package</filename> task to write output
-                    from the <filename>do_packagedata</filename> task.
+                    <link linkend='ref-tasks-package'><filename>do_package</filename></link>
+                    task to write output from the
+                    <link linkend='ref-tasks-packagedata'><filename>do_packagedata</filename></link>
+                    task.
                     The <filename>PKGDESTWORK</filename> location defaults to
                     the following:
                     <literallayout class='monospaced'>
@@ -6069,8 +6084,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     When you use the <filename>RDEPENDS</filename> variable
                     in a recipe, you are essentially stating that the recipe's
-                    <filename>do_build</filename> task depends on the existence
-                    of a specific package.
+                    <link linkend='ref-tasks-build'><filename>do_build</filename></link>
+                    task depends on the existence of a specific package.
                     Consider this simple example for two recipes named "a" and
                     "b" that produce similarly named IPK packages.
                     In this example, the <filename>RDEPENDS</filename>
@@ -6080,8 +6095,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     </literallayout>
                     Here, the dependency is such that the
                     <filename>do_build</filename> task for recipe "a" depends
-                    on the <filename>do_package_write_ipk</filename> task
-                    of recipe "b".
+                    on the
+                    <link linkend='ref-tasks-package_write_ipk'><filename>do_package_write_ipk</filename></link>
+                    task of recipe "b".
                     This means the package file for "b" must be available when
                     the output for recipe "a" has been completely built.
                     More importantly, package "a" will be marked as depending
@@ -6126,7 +6142,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>RDEPENDS</filename> variable must appear
                     as it would in the <filename>PACKAGES</filename>
                     namespace before any renaming of the output package by
-                    classes like <filename>debian.bbclass</filename>.
+                    classes like
+                    <link linkend='ref-classes-debian'><filename>debian.bbclass</filename></link>.
                 </para>
 
                 <para>

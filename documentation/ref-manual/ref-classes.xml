@@ -105,18 +105,18 @@
         It's useful to have some idea of how the tasks defined by this class work
         and what they do behind the scenes.
         <itemizedlist>
-            <listitem><para><filename>do_configure</filename> &dash; Regenerates the
+            <listitem><para><link linkend='ref-tasks-configure'><filename>do_configure</filename></link> &dash; Regenerates the
                 configure script (using <filename>autoreconf</filename>) and then launches it
                 with a standard set of arguments used during cross-compilation.
                 You can pass additional parameters to <filename>configure</filename> through the
                 <filename><link linkend='var-EXTRA_OECONF'>EXTRA_OECONF</link></filename> variable.
                 </para></listitem>
-            <listitem><para><filename>do_compile</filename> &dash; Runs <filename>make</filename> with
+            <listitem><para><link linkend='ref-tasks-compile'><filename>do_compile</filename></link> &dash; Runs <filename>make</filename> with
                 arguments that specify the compiler and linker.
                 You can pass additional arguments through
                 the <filename><link linkend='var-EXTRA_OEMAKE'>EXTRA_OEMAKE</link></filename> variable.
                 </para></listitem>
-            <listitem><para><filename>do_install</filename> &dash; Runs <filename>make install</filename>
+            <listitem><para><link linkend='ref-tasks-install'><filename>do_install</filename></link> &dash; Runs <filename>make install</filename>
                 and passes in
                 <filename>${</filename><link linkend='var-D'><filename>D</filename></link><filename>}</filename>
                 as <filename>DESTDIR</filename>.
@@ -550,12 +550,14 @@
         The main function of this class is to allow the deploy step to be
         accelerated by shared state.
         Recipes that inherit this class should define their own
-        <filename>do_deploy</filename> function to copy the files to be
-        deployed to
+        <link linkend='ref-tasks-deploy'><filename>do_deploy</filename></link>
+        function to copy the files to be deployed to
         <link linkend='var-DEPLOYDIR'><filename>DEPLOYDIR</filename></link>,
         and use <filename>addtask</filename> to add the task at the appropriate
-        place, which is usually after <filename>do_compile</filename> or
-        <filename>do_install</filename>.
+        place, which is usually after
+        <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>
+        or
+        <link linkend='ref-tasks-install'><filename>do_install</filename></link>.
         The class then takes care of staging the files from
         <filename>DEPLOYDIR</filename> to
         <filename>DEPLOY_DIR_IMAGE</filename>.
@@ -1174,7 +1176,8 @@
     <para>
         The <filename>image-mklibs</filename> class
         enables the use of the <filename>mklibs</filename> utility during the
-        <filename>do_rootfs</filename> task, which optimizes the size of
+        <link linkend='ref-tasks-rootfs'><filename>do_rootfs</filename></link>
+        task, which optimizes the size of
         libraries contained in the image.
     </para>
 
@@ -1195,7 +1198,9 @@
     <para>
         The <filename>image-prelink</filename> class
         enables the use of the <filename>prelink</filename> utility during
-        the <filename>do_rootfs</filename> task, which optimizes the dynamic
+        the
+        <link linkend='ref-tasks-rootfs'><filename>do_rootfs</filename></link>
+        task, which optimizes the dynamic
         linking of shared libraries to reduce executable startup time.
     </para>
 
@@ -1310,7 +1315,9 @@
                 thus is not normally enabled.
                 </para></listitem>
             <listitem><para><emphasis><filename>compile-host-path:</filename></emphasis>
-                Checks the <filename>do_compile</filename> log for indications
+                Checks the
+                <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>
+                log for indications
                 that paths to locations on the build host were used.
                 Using such paths might result in host contamination of the
                 build output.
@@ -1367,7 +1374,9 @@
                 <link linkend='var-INCOMPATIBLE_LICENSE'><filename>INCOMPATIBLE_LICENSE</filename></link>.
                 </para></listitem>
             <listitem><para><emphasis><filename>install-host-path:</filename></emphasis>
-                Checks the <filename>do_install</filename> log for indications
+                Checks the
+                <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+                log for indications
                 that paths to locations on the build host were used.
                 Using such paths might result in host contamination of the
                 build output.
@@ -1451,7 +1460,8 @@
                 </para></listitem>
             <listitem><para><emphasis><filename>pkgv-undefined:</filename></emphasis>
                 Checks to see if the <filename>PKGV</filename> variable
-                is undefined during <filename>do_package</filename>.
+                is undefined during
+                <link linkend='ref-tasks-package'><filename>do_package</filename></link>.
                 </para></listitem>
             <listitem><para><emphasis><filename>pkgvarcheck:</filename></emphasis>
                 Checks through the variables
@@ -1569,7 +1579,8 @@
                 <link linkend='var-D'><filename>D</filename></link>,
                 <link linkend='var-PN'><filename>PN</filename></link>, and
                 <link linkend='var-PKGD'><filename>PKGD</filename></link>) are
-                undefined during <filename>do_package</filename>.
+                undefined during
+                <link linkend='ref-tasks-package'><filename>do_package</filename></link>.
                 </para></listitem>
             <listitem><para><emphasis><filename>version-going-backwards:</filename></emphasis>
                 If Build History is enabled, reports when a package
@@ -1803,8 +1814,11 @@
         <link linkend='ref-classes-module-base'><filename>module-base</filename></link>
         and
         <link linkend='ref-classes-kernel-module-split'><filename>kernel-module-split</filename></link>
-        classes, and implements <filename>do_compile</filename> and
-        <filename>do_install</filename> functions.
+        classes, and implements the
+        <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>
+        and
+        <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+        tasks.
         The class provides everything needed to build and package a kernel
         module.
     </para>
@@ -2216,7 +2230,9 @@
 
     <para>
         The <filename>patch</filename> class provides all functionality for
-        applying patches during the <filename>do_patch</filename> task.
+        applying patches during the
+        <link linkend='ref-tasks-patch'><filename>do_patch</filename></link>
+        task.
     </para>
 
     <para>
@@ -2285,7 +2301,9 @@
         The <filename>populate_sdk</filename> class provides support for
         SDK-only recipes.
         For information on advantages gained when building a cross-development
-        toolchain using the <filename>do_populate_sdk</filename> task, see the
+        toolchain using the
+        <link linkend='ref-tasks-populate_sdk'><filename>do_populate_sdk</filename></link>
+        task, see the
         "<ulink url='&YOCTO_DOCS_ADT_URL;#optionally-building-a-toolchain-installer'>Optionally Building a Toolchain Installer</ulink>"
         section in the Yocto Project Application Developer's Guide.
     </para>
@@ -2360,7 +2378,8 @@
         section.
         For information on advantages gained when building a
         cross-development toolchain using the
-        <filename>do_populate_sdk</filename> task, see the
+        <link linkend='ref-tasks-populate_sdk'><filename>do_populate_sdk</filename></link>
+        task, see the
         "<ulink url='&YOCTO_DOCS_ADT_URL;#optionally-building-a-toolchain-installer'>Optionally Building a Toolchain Installer</ulink>"
         section in the Yocto Project Application Developer's Guide.
     </para>
@@ -2722,7 +2741,9 @@
         provides functionality for handling site configuration.
         The class is used by the
         <link linkend='ref-classes-autotools'><filename>autotools</filename></link>
-        class to accelerate the <filename>do_configure</filename> task.
+        class to accelerate the
+        <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>
+        task.
     </para>
 </section>
 
@@ -2802,7 +2823,8 @@
     <para>
         The <filename>staging</filename> class provides support for staging
         files into the sysroot during the
-        <filename>do_populate_sysroot</filename> task.
+        <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
+        task.
         The class is enabled by default because it is inherited by the
         <link linkend='ref-classes-base'><filename>base</filename></link>
         class.
@@ -2873,8 +2895,9 @@
 
     <para>
         Under this class, the recipe or Makefile (i.e. whatever the recipe is
-        calling during the <filename>do_install</filename> task) installs unit
-        files into
+        calling during the
+        <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+        task) installs unit files into
         <filename>${</filename><link linkend='var-D'><filename>D</filename></link><filename>}${systemd_unitdir}/system</filename>.
         If the unit files being installed go into packages other than the
         main package, you need to set
@@ -3192,8 +3215,9 @@
     <para>
         The <filename>utility-tasks</filename> class provides support for
         various "utility" type tasks that are applicable to all recipes,
-        such as <filename>do_clean</filename> and
-        <filename>do_listtasks</filename>.
+        such as
+        <link linkend='ref-tasks-clean'><filename>do_clean</filename></link> and
+        <link linkend='ref-tasks-listtasks'><filename>do_listtasks</filename></link>.
     </para>
 
     <para>
