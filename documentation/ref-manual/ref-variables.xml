@@ -879,6 +879,43 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-BUILD_CFLAGS'><glossterm>BUILD_CFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C compiler when building
+                    for the build host.
+                    When building in the <filename>-native</filename> context,
+                    <link linkend='var-CFLAGS'><filename>CFLAGS</filename></link>
+                    is set to the value of this variable by default.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BUILD_CPPFLAGS'><glossterm>BUILD_CPPFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C pre-processor and
+                    eventually to both the C and C++ compilers when building
+                    for the build host.
+                    When building in the <filename>native</filename> context,
+                    <link linkend='var-CPPFLAGS'><filename>CPPFLAGS</filename></link>
+                    is set to the value of this variable by default.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BUILD_CXXFLAGS'><glossterm>BUILD_CXXFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C++ compiler when
+                    building for the build host.
+                    When building in the <filename>native</filename> context,
+                    <link linkend='var-CXXFLAGS'><filename>CXXFLAGS</filename></link>
+                    is set to the value of this variable by default.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-BUILD_LDFLAGS'><glossterm>BUILD_LDFLAGS</glossterm>
             <glossdef>
                 <para>
@@ -1087,6 +1124,46 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-BUILDSDK_CFLAGS'><glossterm>BUILDSDK_CFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C compiler when building
+                    for the SDK.
+                    When building in the <filename>nativesdk</filename>
+                    context,
+                    <link linkend='var-CFLAGS'><filename>CFLAGS</filename></link>
+                    is set to the value of this variable by default.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BUILDSDK_CPPFLAGS'><glossterm>BUILDSDK_CPPFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C pre-processor and
+                    eventually to both the C and C++ compilers when building
+                    for the SDK.
+                    When building in the <filename>nativesdk</filename>
+                    context,
+                    <link linkend='var-CPPFLAGS'><filename>CPPFLAGS</filename></link>
+                    is set to the value of this variable by default.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BUILDSDK_CXXFLAGS'><glossterm>BUILDSDK_CXXFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C++ compiler when
+                    building for the SDK.
+                    When building in the <filename>nativesdk</filename>
+                    context,
+                    <link linkend='var-CXXFLAGS'><filename>CXXFLAGS</filename></link>
+                    is set to the value of this variable by default.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-BUILDSDK_LDFLAGS'><glossterm>BUILDSDK_LDFLAGS</glossterm>
             <glossdef>
                 <para>
@@ -1140,12 +1217,31 @@
         <glossentry id='var-CFLAGS'><glossterm>CFLAGS</glossterm>
             <glossdef>
                 <para>
-                    Flags passed to the C compiler for the target system.
-                    This variable evaluates to the same as
-                    <filename><link linkend='var-TARGET_CFLAGS'>TARGET_CFLAGS</link></filename>.
+                    Specifies the flags to pass to the C compiler.
+                    This variable is exported to an environment
+                    variable and thus made visible to the software being
+                    built during the compilation step.
                 </para>
 
                 <para>
+                    Default initialization for <filename>CFLAGS</filename>
+                    varies depending on what is being built:
+                    <itemizedlist>
+                        <listitem><para>
+                            <link linkend='var-TARGET_CFLAGS'><filename>TARGET_CFLAGS</filename></link>
+                            when building for the target
+                            </para></listitem>
+                        <listitem><para>
+                            <link linkend='var-BUILD_CFLAGS'><filename>BUILD_CFLAGS</filename></link>
+                            when building for the build host (i.e.
+                            <filename>-native</filename>)
+                            </para></listitem>
+                        <listitem><para>
+                            <link linkend='var-BUILDSDK_CFLAGS'><filename>BUILDSDK_CFLAGS</filename></link>
+                            when building for an SDK (i.e.
+                            <filename>nativesdk-</filename>)
+                            </para></listitem>
+                    </itemizedlist>
                     For information on flags that help with creating more
                     secure code, see the
                     "<ulink url='&YOCTO_DOCS_DEV_URL;#making-images-more-secure'>Making Images More Secure</ulink>"
@@ -1447,6 +1543,79 @@
                     the <filename>poky</filename> folder because it is the
                     parent directory of the <filename>poky/meta</filename>
                     layer.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-CPPFLAGS'><glossterm>CPPFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C pre-processor and the
+                    C compiler.
+                    This variable is exported to an environment
+                    variable and thus made visible to the software being
+                    built during the compilation step.
+                </para>
+
+                <para>
+                    Default initialization for <filename>CPPFLAGS</filename>
+                    varies depending on what is being built:
+                    <itemizedlist>
+                        <listitem><para>
+                            <link linkend='var-TARGET_CPPFLAGS'><filename>TARGET_CPPFLAGS</filename></link>
+                            when building for the target
+                            </para></listitem>
+                        <listitem><para>
+                            <link linkend='var-BUILD_CPPFLAGS'><filename>BUILD_CPPFLAGS</filename></link>
+                            when building for the build host (i.e.
+                            <filename>-native</filename>)
+                            </para></listitem>
+                        <listitem><para>
+                            <link linkend='var-BUILDSDK_CPPFLAGS'><filename>BUILDSDK_CPPFLAGS</filename></link>
+                            when building for an SDK (i.e.
+                            <filename>nativesdk-</filename>)
+                            </para></listitem>
+                    </itemizedlist>
+                    For information on flags that help with creating more
+                    secure code, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#making-images-more-secure'>Making Images More Secure</ulink>"
+                    section in the Yocto Project Development Manual.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-CXXFLAGS'><glossterm>CXXFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C++ compiler.
+                    This variable is exported to an environment
+                    variable and thus made visible to the software being
+                    built during the compilation step.
+                </para>
+
+                <para>
+                    Default initialization for <filename>CXXFLAGS</filename>
+                    varies depending on what is being built:
+                    <itemizedlist>
+                        <listitem><para>
+                            <link linkend='var-TARGET_CXXFLAGS'><filename>TARGET_CXXFLAGS</filename></link>
+                            when building for the target
+                            </para></listitem>
+                        <listitem><para>
+                            <link linkend='var-BUILD_CXXFLAGS'><filename>BUILD_CXXFLAGS</filename></link>
+                            when building for the build host (i.e.
+                            <filename>-native</filename>)
+                            </para></listitem>
+                        <listitem><para>
+                            <link linkend='var-BUILDSDK_CXXFLAGS'><filename>BUILDSDK_CXXFLAGS</filename></link>
+                            when building for an SDK (i.e.
+                            <filename>nativesdk</filename>)
+                            </para></listitem>
+                    </itemizedlist>
+                    For information on flags that help with creating more
+                    secure code, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#making-images-more-secure'>Making Images More Secure</ulink>"
+                    section in the Yocto Project Development Manual.
                 </para>
             </glossdef>
         </glossentry>
@@ -7535,13 +7704,39 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-TARGET_CFLAGS'><glossterm>TARGET_CFLAGS</glossterm>
             <glossdef>
                 <para>
-                    Flags passed to the C compiler for the target system.
-                    This variable evaluates to the same as
-                    <filename><link linkend='var-CFLAGS'>CFLAGS</link></filename>.
+                    Specifies the flags to pass to the C compiler when building
+                    for the target.
+                    When building in the target context,
+                    <link linkend='var-CFLAGS'><filename>CFLAGS</filename></link>
+                    is set to the value of this variable by default.
                 </para>
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-TARGET_CPPFLAGS'><glossterm>TARGET_CPPFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C pre-processor and
+                    eventually to both the C and C++ compilers when building
+                    for the target.
+                    When building in the target context,
+                    <link linkend='var-CPPFLAGS'><filename>CPPFLAGS</filename></link>
+                    is set to the value of this variable by default.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TARGET_CXXFLAGS'><glossterm>TARGET_CXXFLAGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the flags to pass to the C++ compiler when
+                    building for the target.
+                    When building in the target context,
+                    <link linkend='var-CXXFLAGS'><filename>CXXFLAGS</filename></link>
+                    is set to the value of this variable by default.
+                </para>
+            </glossdef>
+        </glossentry>
 
         <glossentry id='var-TARGET_FPU'><glossterm>TARGET_FPU</glossterm>
             <glossdef>
