@@ -3577,32 +3577,227 @@
         <title>Making Images More Secure</title>
 
         <para>
-            The Yocto Project has security flags that you can enable that
-            help make your build output more secure.
-            The security flags are in the
-            <filename>meta/conf/distro/include/security_flags.inc</filename>
-            file in your
-            <link linkend='source-directory'>Source Directory</link>
-            (e.g. <filename>poky</filename>).
+            Security is of increasing concern for embedded devices.
+            Consider the issues and problems discussed in just this
+            sampling of work found across the Internet:
+            <itemizedlist>
+                <listitem><para><emphasis>
+                    "<ulink url='https://www.schneier.com/blog/archives/2014/01/security_risks_9.html'>Security Risks of Embedded Systems</ulink>"</emphasis>
+                    by Bruce Schneier
+                    </para></listitem>
+                <listitem><para><emphasis>
+                    "<ulink url='http://internetcensus2012.bitbucket.org/paper.html'>Internet Census 2012</ulink>"</emphasis>
+                    by Carna Botnet</para></listitem>
+                <listitem><para><emphasis>
+                    "<ulink url='http://elinux.org/images/6/6f/Security-issues.pdf'>Security Issues for Embedded Devices</ulink>"</emphasis>
+                    by Jake Edge
+                    </para></listitem>
+                <listitem><para><emphasis>
+                    "<ulink url='https://www.nccgroup.com/media/18475/exploiting_security_gateways_via_their_web_interfaces.pdf'>They ought to know better: Exploiting Security
+Gateways via their Web Interfaces</ulink>"</emphasis>
+                    by Ben Williams
+                    </para></listitem>
+            </itemizedlist>
         </para>
 
         <para>
-            These GCC/LD flags enable more secure code generation.
-            By including the <filename>security_flags.inc</filename>
-            file, you enable flags to the compiler and linker that cause
-            them to generate more secure code.
+            When securing your image is of concern, there are steps, tools,
+            and variables that you can consider to help you reach the
+            security goals you need for your particular device.
+            Not all situations are identical when it comes to making an
+            image secure.
+            Consequently, this section provides some guidance and suggestions
+            for consideration when you want to make your image more secure.
             <note>
-                These flags are enabled by default in the
-                <filename>poky-lsb</filename> distribution.
+                Because the security requirements and risks are
+                different for every type of device, this section cannot
+                provide a complete reference on securing your custom OS.
+                It is strongly recommended that you also consult other sources
+                of information on embedded Linux system hardening and on
+                security.
             </note>
-            Use the following line in your
-            <filename>local.conf</filename> file
-            to enable the security compiler and
-            linker flags to your build:
-            <literallayout class='monospaced'>
-     require conf/distro/include/security_flags.inc
-            </literallayout>
         </para>
+
+        <section id='general-considerations'>
+            <title>General Considerations</title>
+
+            <para>
+                General considerations exist that help you create more
+                secure images.
+                You should consider the following suggestions to help
+                make your device more secure:
+                <itemizedlist>
+                    <listitem><para>
+                        Scan additional code you are adding to the system
+                        (e.g. application code) by using static analysis
+                        tools.
+                        Look for buffer overflows and other potential
+                        security problems.
+                    </para></listitem>
+                    <listitem><para>
+                        Pay particular attention to to the security for
+                        any web-based administration interface.
+                        </para>
+                        <para>Web interfaces typically need to perform
+                        administrative functions and tend to need to run with
+                        elevated privileges.
+                        Thus, the consequences resulting from the interface's
+                        security becoming compromised can be serious.
+                        Look for common web vulnerabilities such as
+                        cross-site-scripting (XSS), unvalidated inputs,
+                        and so forth.</para>
+                        <para>As with system passwords, the default credentials
+                        for accessing a web-based interface should not be the
+                        same across all devices.
+                        This is particularly true if the interface is enabled
+                        by default as it can be assumed that many end-users
+                        will not change the credentials.
+                    </para></listitem>
+                    <listitem><para>
+                        Ensure you can update the software on the device to
+                        mitigate vulnerabilities discovered in the future.
+                        This consideration especially applies when your
+                        device is network-enabled.
+                    </para></listitem>
+                    <listitem><para>
+                        Ensure you remove or disable debugging functionality
+                        before producing the final image.
+                        For information on how to do this, see the
+                        "<link linkend='considerations-specific-to-the-openembedded-build-system'>Considerations Specific to the OpenEmbedded Build System</link>"
+                        section.
+                        </para></listitem>
+                    <listitem><para>
+                        Ensure you have no network services listening that
+                        are not needed.
+                    </para></listitem>
+                    <listitem><para>
+                        Remove any software from the image that is not needed.
+                    </para></listitem>
+                    <listitem><para>
+                        Enable hardware support for secure boot functionality
+                        when your device supports this functionality.
+                    </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='security-flags'>
+            <title>Security Flags</title>
+
+            <para>
+                The Yocto Project has security flags that you can enable that
+                help make your build output more secure.
+                The security flags are in the
+                <filename>meta/conf/distro/include/security_flags.inc</filename>
+                file in your
+                <link linkend='source-directory'>Source Directory</link>
+                (e.g. <filename>poky</filename>).
+                <note>
+                    Depending on the recipe, certain security flags are enabled
+                    and disabled by default.
+                </note>
+            </para>
+
+            <para>
+<!--
+                The GCC/LD flags in <filename>security_flags.inc</filename>
+                enable more secure code generation.
+                By including the <filename>security_flags.inc</filename>
+                file, you enable flags to the compiler and linker that cause
+                them to generate more secure code.
+                <note>
+                    The GCC/LD flags are enabled by default in the
+                    <filename>poky-lsb</filename> distribution.
+                </note>
+-->
+                Use the following line in your
+                <filename>local.conf</filename> file or in your custom
+                distribution configuration file to enable the security
+                compiler and linker flags to your build:
+                <literallayout class='monospaced'>
+     require conf/distro/include/security_flags.inc
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='considerations-specific-to-the-openembedded-build-system'>
+            <title>Considerations Specific to the OpenEmbedded Build System</title>
+
+            <para>
+                You can take some steps that are specific to the
+                OpenEmbedded build system to make your images more secure:
+                <itemizedlist>
+                    <listitem><para>
+                        Ensure "debug-tweaks" is not listed with
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>.
+                        The default is to enable "debug-tweaks" by adding it
+                        to
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
+                        in <filename>local.conf</filename>.
+                        However, you should comment out the variable or be
+                        sure that it does not have "debug-tweaks" before
+                        producing your final image.
+                        Among other things, leaving this in place sets the
+                        root password as blank, which makes logging in for
+                        debugging or inspection easy during
+                        development but also means anyone can easily log in
+                        during production.
+                        </para></listitem>
+                    <listitem><para>
+                        It is possible to set a root password for the image
+                        and also to set passwords for any extra users you might
+                        add (e.g. administrative or service type users).
+                        When you set up passwords for multiple images or
+                        users, you should not duplicate passwords.
+                        </para>
+                        <para>
+                        To set up passwords, use the
+                        <filename>extrausers</filename> class, which is the
+                        preferred method.
+                        For an example on how to set up both root and user
+                        passwords, see the
+                        "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-extrausers'><filename>extrausers.bbclass</filename></ulink>"
+                        section.
+                        <note>
+                            When adding extra user accounts or setting a
+                            root password, be cautious about setting the
+                            same password on every device.
+                            If you do this, and the password you have set
+                            is exposed, then every device is now potentially
+                            compromised.
+                            If you need this access but want to ensure
+                            security, consider setting a different,
+                            random password for each device.
+                            Typically, you do this as a separate step after
+                            you deploy the image onto the device.
+                        </note>
+                        </para></listitem>
+                    <listitem><para>
+                        Consider enabling a Mandatory Access Control (MAC)
+                        framework (such as SMACK or SELinux) and tuning it
+                        appropriately for your device's usage.
+                        You can find more information in the
+                        <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/'><filename>meta-selinux</filename></ulink>
+                        layer.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+            </para>
+        </section>
+
+        <section id='tools-for-hardening-your-image'>
+            <title>Tools for Hardening Your Image</title>
+
+            <para>
+                The Yocto Project provides tools for making your image
+                more secure.
+                You can find these tools in the
+                <filename>meta-security</filename> layer of the
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi'>Yocto Project Source Repositories</ulink>.
+            </para>
+        </section>
     </section>
 
     <section id='creating-your-own-distribution'>
