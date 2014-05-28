@@ -12,10 +12,10 @@
         When building a recipe, the OpenEmbedded build system performs
         various QA checks on the output to ensure that common issues are
         detected and reported.
-        Some software builds that use new recipes complete with no problems.
-        However, some do not.
-        When issues are reported, it could take a little time
-        to resolve them.
+        Sometimes when you create a new recipe to build new software,
+        it will build with no problems.
+        When this is not the case, or when you have QA issues building any
+        software, it could take a little time to resolve them.
     </para>
 
     <para>
@@ -36,7 +36,7 @@
             <title>Notes</title>
             <itemizedlist>
                 <listitem><para>
-                    At the end of each message, the name of the offending
+                    At the end of each message, the name of the associated
                     QA test (as listed in the
                     "<link linkend='ref-classes-insane'><filename>insane.bbclass</filename></link>"
                     section) appears within square brackets.
@@ -595,8 +595,9 @@
                     (i.e. a package whose name does not end in
                     <filename>-dbg</filename>) and a package that is a
                     <filename>dbg</filename> package.
-                    The <filename>dbg</filename> packages contain debug symbols
-                    that are brought in a number of ways:
+                    The <filename>dbg</filename> packages contain
+                    debug symbols and are brought in using several
+                    different methods:
                     <itemizedlist>
                         <listitem><para>
                             Using the <filename>dbg-pkgs</filename>
@@ -608,9 +609,9 @@
                             <link linkend='var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></link>.
                             </para></listitem>
                         <listitem><para>
-                            Using either of the previous methods
-                            as a dependency of another
-                            <filename>dbg</filename> package.
+                            As a dependency of another
+                            <filename>dbg</filename> package that was brought
+                            in using one of the above methods.
                             </para></listitem>
                     </itemizedlist>
                     The dependency might have been automatically added
@@ -643,13 +644,24 @@
                     <filename>-dev</filename>) and a package that is a
                     <filename>dev</filename> package.
                     The <filename>dev</filename> packages contain development
-                    headers and are usually brought in using the
-                    <filename>dev-pkgs</filename>
-                    <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>
-                    value or explicitly brought into the image using
-                    <link linkend='var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></link>
-                    (or as a dependency of another <filename>dev</filename>
-                    package brought in using either method).
+                    headers and are usually brought in using several different
+                    methods:
+                    <itemizedlist>
+                        <listitem><para>
+                            Using the <filename>dev-pkgs</filename>
+                            <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>
+                            value.
+                            </para></listitem>
+                        <listitem><para>
+                            Using
+                            <link linkend='var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></link>.
+                            </para></listitem>
+                        <listitem><para>
+                            As a dependency of another
+                            <filename>dev</filename> package that was brought
+                            in using one of the above methods.
+                            </para></listitem>
+                    </itemizedlist>
                     The dependency might have been automatically added (because
                     the <filename>dev</filename> package erroneously contains
                     files that it should not have (e.g. a non-symlink
@@ -1115,12 +1127,13 @@ enabled by default:
     <title>Configuring and Disabling QA Checks</title>
 
     <para>
-        You can configure the sanity checks so that specific test failures
-        either raise a warning or an error message.
-        You can also use the
+        You can configure the QA checks globally so that specific check
+        failures either raise a warning or an error message, using the
         <link linkend='var-WARN_QA'><filename>WARN_QA</filename></link> and
         <link linkend='var-ERROR_QA'><filename>ERROR_QA</filename></link>
-        variables to configure warning and error reporting.
+        variables, respectively.
+        You can also disable checks within a particular recipe using
+        <link linkend='var-INSANE_SKIP'><filename>INSANE_SKIP</filename></link>.
         For information on how to work with the QA checks, see the
         "<link linkend='ref-classes-insane'><filename>insane.bbclass</filename></link>"
         section.
