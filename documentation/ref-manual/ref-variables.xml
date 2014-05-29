@@ -5449,7 +5449,27 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PACKAGE_ARCH'><glossterm>PACKAGE_ARCH</glossterm>
             <glossdef>
-                <para>The architecture of the resulting package or packages.</para>
+                <para>
+                    The architecture of the resulting package or packages.
+                </para>
+
+                <para>
+                    By default, the value of this variable is set to
+                    <link linkend='var-TUNE_PKGARCH'><filename>TUNE_PKGARCH</filename></link>
+                    when building for the target,
+                    <link linkend='var-BUILD_ARCH'><filename>BUILD_ARCH</filename></link>
+                    when building for the build host and
+                    "${SDK_ARCH}-${SDKPKGSUFFIX}" when building for the SDK.
+                    However, if your recipe's output packages are built
+                    specific to the target machine rather than general for
+                    the architecture of the machine, you should set
+                    <filename>PACKAGE_ARCH</filename> to the value of
+                    <link linkend='var-MACHINE_ARCH'><filename>MACHINE_ARCH</filename></link>
+                    in the recipe as follows:
+                    <literallayout class='monospaced'>
+     PACKAGE_ARCH = "${MACHINE_ARCH}"
+                    </literallayout>
+                </para>
             </glossdef>
         </glossentry>
 
