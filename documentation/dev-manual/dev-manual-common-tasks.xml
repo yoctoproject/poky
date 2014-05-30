@@ -3841,14 +3841,46 @@
         <title>Making Images More Secure</title>
 
         <para>
-            If securing your image is of concern, there are steps, tools,
+            Security for a device is always a concern.
+            Consider the issues and problems discussed in just this
+            sampling of work found across the Internet:
+            <itemizedlist>
+                <listitem><para><emphasis>
+                    "<ulink url='https://www.schneier.com/blog/archives/2014/01/security_risks_9.html'>Security Risks of Embedded Systems</ulink>"</emphasis>
+                    by Bruce Schneier
+                    </para></listitem>
+                <listitem><para><emphasis>
+                    "<ulink url='http://internetcensus2012.bitbucket.org/paper.html'>Internet Census 2012</ulink>"</emphasis>
+                    by Carna Botnet</para></listitem>
+                <listitem><para><emphasis>
+                    "<ulink url='http://elinux.org/images/6/6f/Security-issues.pdf'>Security Issues for Embedded Devices</ulink>"</emphasis>
+                    by Jake Edge
+                    </para></listitem>
+                <listitem><para><emphasis>
+                    "<ulink url='https://www.nccgroup.com/media/18475/exploiting_security_gateways_via_their_web_interfaces.pdf'>They ought to know better: Exploiting Security
+Gateways via their Web Interfaces</ulink>"</emphasis>
+                    by Ben Williams
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            When securing your image is of concern, there are steps, tools,
             and variables that you can consider to help you reach the
             security goals you need for your particular device.
             Not all situations are identical when it comes to making an
             image secure.
             Consequently, this section provides some guidance and suggestions
             for consideration when you want to make your image more secure.
-            The section does not offer a complete solution.
+        </para>
+
+        <para>
+            Because the security requirements and risks are
+            different for every type of device, this section cannot
+            provide a complete reference on securing your custom OS.
+            It is strongly recommended that you also consult other sources
+            of information on embedded Linux system hardening and on
+            security.
         </para>
 
         <section id='general-considerations'>
@@ -3895,7 +3927,10 @@
                     <listitem><para>
                         Ensure you remove or disable debugging functionality
                         before producing the final image.
-                    </para></listitem>
+                        For information on how to do this, see the
+                        "<link linkend='considerations-specific-to-the-openembedded-build-system'>Considerations Specific to the OpenEmbedded Build System</link>
+                        section.
+                        </para></listitem>
                     <listitem><para>
                         Ensure you have no network services listening that
                         are not needed.
@@ -3929,6 +3964,7 @@
             </para>
 
             <para>
+<!--
                 The GCC/LD flags in <filename>security_flags.inc</filename>
                 enable more secure code generation.
                 By including the <filename>security_flags.inc</filename>
@@ -3938,10 +3974,11 @@
                     The GCC/LD flags are enabled by default in the
                     <filename>poky-lsb</filename> distribution.
                 </note>
+-->
                 Use the following line in your
-                <filename>local.conf</filename> file
-                to enable the security compiler and
-                linker flags to your build:
+                <filename>local.conf</filename> file or in your custom
+                distribution configuration file to enable the security
+                compiler and linker flags to your build:
                 <literallayout class='monospaced'>
      require conf/distro/include/security_flags.inc
                 </literallayout>
@@ -3966,37 +4003,64 @@
                         sure that it does not have "debug-tweaks" before
                         producing your final image.
                         Among other things, leaving this in place sets the
-                        root password as blank.
+                        root password as blank, which makes logging in for
+                        debugging or inspection easy during
+                        development but also means anyone can easily log in
+                        during production.
                         </para></listitem>
                     <listitem><para>
                         It is possible to set a root password for the image.
-                        For information on how to do that, see the
-                        <ulink url='https://wiki.yoctoproject.org/wiki/FAQ:How_do_I_set_or_change_the_root_password'>How do I set or change the root password</ulink>
-                        Wiki page.
+                        When you set up root passwords for multiple images,
+                        you should not duplicate them.
+                        See the note on passwords at the end of this list.
+                        </para>
+                        <para>
+                        To set up a root password,
+                        use the <filename>extrausers</filename>
+                        class, which is the preferred method.
+                        For an example on how to set up the root password,
+                        see the
+                        "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-extrausers'><filename>extrausers.bbclass</filename></ulink>"
+                        section.
+                        <note>
+                            You can also see the the example in the
+                            <ulink url='https://wiki.yoctoproject.org/wiki/FAQ:How_do_I_set_or_change_the_root_password'>How do I set or change the root password Wiki</ulink>
+                            page as an alternative method.
+                        </note>
                         </para></listitem>
                     <listitem><para>
                         It is possible to add an additional user account
-                        for later administrative or service access using the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-extrausers'><filename>extrausers</filename></ulink>
-                        class or the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-ROOTFS_POSTPROCESS_COMMAND'><filename>ROOTFS_POSTPROCESS_COMMAND</filename></ulink>
-                        variable.
-                        For an example on how to add users, see the
-                        "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-extrausers'><filename>extrausers.bbclass</filename></ulink>"
-                        section.
+                        for later administrative or service access.
+                        As with root passwords, be sure to not duplicate
+                        passwords for generic users (e.g. tester, qa, and
+                        so forth) across multiple devices.
+                        See the note on passwords following this list.
                         </para>
-                        <para>If you do add extra user accounts,
-                        be cautious about setting
-                        the same password for every device.
-                        If you want the device to remain secure
-                        from unauthorized access, and the password set on
-                        all devices becomes compromised, then every device
-                        becomes compromised.
-                        If you need this access but want to ensure security,
-                        consider setting a different, random password for each
-                        device.
+                        <para>
+                        As with the root password, you also use the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-extrausers'><filename>extrausers</filename></ulink>
+                        class.
+                        </para></listitem>
+                    <listitem><para>
+                        Consider enabling a Mandatory Access Control (MAC)
+                        framework (such as SMACK or SELinux) and tuning it
+                        appropriately for your device's usage.
                         </para></listitem>
                 </itemizedlist>
+            </para>
+
+            <para>
+                <note><title>A Note about Passwords</title>
+                    When adding extra user accounts or deciding on root
+                    passwords for multiple devices, be cautious about setting
+                    the same passwords for multiple users or devices.
+                    If you want the device to remain secure from unauthorized
+                    access, and the password set on all devices becomes
+                    compromised, then every device becomes compromised.
+                    If you need this access but want to ensure security,
+                    consider setting a different, random passwords for each
+                    user or device.
+                </note>
             </para>
         </section>
 
