@@ -932,7 +932,7 @@
             <glossdef>
                 <para>
                     Specifies the optimization flags passed to the C compiler
-                    when building for the host or the SDK.
+                    when building for the build host or the SDK.
                     The flags are passed through the
                     <link linkend='var-BUILD_CFLAGS'><filename>BUILD_CFLAGS</filename></link>
                     and
@@ -2350,6 +2350,12 @@
                     Specifies additional options for the image
                     creation command that has been specified in
                     <link linkend='var-IMAGE_CMD'><filename>IMAGE_CMD</filename></link>.
+                    When setting this variable, you should
+                    use an override for the associated type.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     EXTRA_IMAGECMD_ext3 ?= "-i 4096"
+                    </literallayout>
                 </para>
             </glossdef>
         </glossentry>
@@ -3196,9 +3202,10 @@
                     created under <filename>/dev</filename> within the image.
                     If <filename>IMAGE_DEVICE_TABLES</filename> is not set,
                     <filename>files/device_table-minimal.txt</filename> is
-                    used.
+                    used, which is located by
+                    <link linkend='var-BBPATH'><filename>BBPATH</filename></link>.
                     For details on how you should write device table files,
-                    see the <filename>files/device_table-minimal.txt</filename>
+                    see <filename>files/device_table-minimal.txt</filename>
                     as an example.
                 </para>
             </glossdef>
@@ -3533,7 +3540,7 @@
                     If the size of the image is not a multiple of
                     this value, then the size is rounded up to the nearest
                     multiple of the value.
-                    The default value is 1 Kbyte.
+                    The default value is "1".
                     See
                     <link linkend='var-IMAGE_ROOTFS_SIZE'><filename>IMAGE_ROOTFS_SIZE</filename></link>
                     for additional information.
@@ -5478,10 +5485,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Specifies a list of architectures compatible with
                     the target machine.
-                    Separate the entries using spaces and list them in order
-                    of priority.
                     This variable is set automatically and should not
                     normally be hand-edited.
+                    Entries are separated using spaces and listed in order
+                    of priority.
                     The default value for
                     <filename>PACKAGE_ARCHS</filename> is "all any noarch
                     ${PACKAGE_EXTRA_ARCHS} ${MACHINE_ARCH}".
@@ -7096,10 +7103,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Specifies a list of architectures compatible with
                     the SDK machine.
-                    Separate the entries using spaces and list them in order
-                    of priority.
                     This variable is set automatically and should not
                     normally be hand-edited.
+                    Entries are separated using spaces and listed in order
+                    of priority.
                     The default value for
                     <filename>SDK_PACKAGE_ARCHS</filename> is "all any noarch
                     ${SDK_ARCH}-${SDKPKGSUFFIX}".
@@ -7132,6 +7139,20 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>.conf</filename> file under
                     <filename>conf/machine-sdk/</filename>.
                 </para>
+
+                <para>
+                     You can use "i686" and "x86_64" as possible values
+                     for this variable. The variable defaults to "i686"
+                     and is set in the local.conf file in the Build Directory.
+                     <literallayout class='monospaced'>
+     SDKMACHINE ?= "i686"
+                     </literallayout>
+                     <note>
+                         You cannot set the <filename>SDKMACHINE</filename>
+                         variable in your distribution configuration file.
+                         If you do, the configuration will not take affect.
+                     </note>
+                </para>
             </glossdef>
         </glossentry>
 
@@ -7161,7 +7182,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Specifies the optimization flags passed to the C compiler
                     when building for the target.
-                    The flags are passed through the default
+                    The flags are passed through the default value of the
                     <link linkend='var-TARGET_CFLAGS'><filename>TARGET_CFLAGS</filename></link>
                     variable.
                 </para>
@@ -7635,8 +7656,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     If set to "1", allows fetches from
                     mirrors that are specified in
                     <link linkend='var-SSTATE_MIRRORS'><filename>SSTATE_MIRRORS</filename></link>
-                    to work even when <filename>BB_NO_NETWORK</filename>
-                    is set to "1", which disables fetching from the network.
+                    to work even when fetching from the network has been
+                    disabled by setting <filename>BB_NO_NETWORK</filename>
+                    to "1".
                     Using the
                     <filename>SSTATE_MIRROR_ALLOW_NETWORK</filename>
                     variable is useful if you have set
