@@ -888,119 +888,6 @@
         </section>
     </section>
 
-    <section id='creating-a-custom-template-configuration-directory'>
-        <title>Creating a Custom Template Configuration Directory</title>
-
-        <para>
-            You might find yourself repeating the same configurations for
-            a particular build or group of builds.
-            If so, rather than repeatedly editing your
-            <filename>local.conf</filename> and possibly your
-            <filename>bblayers.conf</filename>, you can set up a
-            custom directory that has your configurations, and then
-            point the OpenEmbedded build system to that directory to find
-            the configurations.
-        </para>
-
-        <para>
-            The OpenEmbedded build system uses the environment variable
-            <filename>TEMPLATECONF</filename> to point to the directory
-            from which it gathers configuration information that ultimately
-            ends up in the
-            <link linkend='build-directory'>Build Directory's</link>
-            <filename>conf</filename> directory.
-            By default, <filename>TEMPLATECONF</filename> points here:
-            <literallayout class='monospaced'>
-     TEMPLATECONF=${TEMPLATECONF:-meta-yocto/conf}
-            </literallayout>
-            This is the directory that the build system finds templates
-            with which to build some key configuration files.
-            If you look at this directory, you will see the
-            <filename>bblayers.conf.sample</filename>,
-            <filename>local.conf.sample</filename>, and
-            <filename>site.conf.sample</filename> configuration files.
-            The build system uses these files to form the respective
-            <filename>bblayers.conf</filename>,
-            <filename>local.conf</filename>, and the
-            <filename>site.conf</filename> configuration files it places in
-            the <filename>conf</filename> directory with the
-            Build Directory.
-        </para>
-
-        <para>
-            To override these default configuration files with
-            configurations you want used with every build, simply point the
-            <filename>TEMPLATECONF</filename> to your directory.
-            The <filename>TEMPLATECONF</filename> variable is set in the
-            <filename>.templateconf</filename> file, which is in the
-            top-level
-            <link linkend='source-directory'>Source Directory</link>
-            folder (e.g. <filename>poky</filename>).
-            Edit the <filename>.templateconf</filename> so that it points
-            to your directory.
-            Best practices dictate that you should keep your
-            template configuration directory in your custom distribution layer.
-            For example, suppose you have a layer named
-            <filename>meta-mylayer</filename> located in your home directory
-            and you want your template configuration directory named
-            <filename>myconf</filename>.
-            Changing the <filename>.templateconf</filename> as follows
-            causes the OpenEmbedded build system to look in your directory
-            and base its configuration files on the
-            <filename>*.sample</filename> configuration files it finds.
-            The final configuration files (i.e.
-            <filename>local.conf</filename> and
-            <filename>bblayers.conf</filename> ultimately still end up in
-            your Build Directory, but they are based on your
-            <filename>*.sample</filename> files.
-            <literallayout class='monospaced'>
-     TEMPLATECONF=${TEMPLATECONF:-meta-mylayer/myconf}
-            </literallayout>
-        </para>
-
-        <para>
-            Aside from the <filename>*.sample</filename> configuration files,
-            the <filename>conf-notes.txt</filename> also resides in the
-            default <filename>meta-yocto/conf</filename> directory.
-            The scripts that set up the build environment
-            (i.e.
-            <ulink url="&YOCTO_DOCS_REF_URL;#structure-core-script"><filename>&OE_INIT_FILE;</filename></ulink>
-            and
-            <ulink url="&YOCTO_DOCS_REF_URL;#structure-memres-core-script"><filename>oe-init-build-env-memres</filename></ulink>)
-            use this file to display BitBake targets as part of the script
-            output.
-            Customizing this <filename>conf-notes.txt</filename> file is a
-            good way to make sure your list of custom targets appears
-            as part of the script's output.
-        </para>
-
-        <para>
-            Here is output from either of the setup scripts by default:
-            <literallayout class='monospaced'>
-     $ source oe-init-build-env-memres
-     No port specified, using dynamically selected port
-
-     ### Shell environment set up for builds. ###
-
-     You can now run 'bitbake &lt;target&gt;'
-
-     Common targets are:
-         core-image-minimal
-         core-image-sato
-         meta-toolchain
-         adt-installer
-         meta-ide-support
-            </literallayout>
-        </para>
-
-        <para>
-            Changing the listed common targets is as easy as editing your
-            version of <filename>conf-notes.txt</filename> in your
-            custom template configuration directory and making sure you
-            have <filename>TEMPLATECONF</filename> pointing to it.
-        </para>
-    </section>
-
     <section id='usingpoky-extend-customimage'>
         <title>Customizing Images</title>
 
@@ -4346,6 +4233,117 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                             recipes.</para></listitem>
                     </itemizedlist></para></listitem>
             </itemizedlist>
+        </para>
+    </section>
+
+    <section id='creating-a-custom-template-configuration-directory'>
+        <title>Creating a Custom Template Configuration Directory</title>
+
+        <para>
+            If you're producing your own customized version
+            of the build system for use by other users, you might
+            want to customize the message shown by the setup script or
+            you might want to change the template configuration files (i.e.
+            (<filename>local.conf</filename> and
+            <filename>bblayers.conf</filename>) that are created in
+            a new build directory.
+        </para>
+
+        <para>
+            The OpenEmbedded build system uses the environment variable
+            <filename>TEMPLATECONF</filename> locate the directory
+            from which it gathers configuration information that ultimately
+            ends up in the
+            <link linkend='build-directory'>Build Directory's</link>
+            <filename>conf</filename> directory.
+            By default, <filename>TEMPLATECONF</filename> is set as
+            follows in the <filename>poky</filename> repository:
+            <literallayout class='monospaced'>
+     TEMPLATECONF=${TEMPLATECONF:-meta-yocto/conf}
+            </literallayout>
+            This is the directory that the build system finds templates
+            with which to build some key configuration files.
+            If you look at this directory, you will see the
+            <filename>bblayers.conf.sample</filename>,
+            <filename>local.conf.sample</filename>, and
+            <filename>conf-notes.txt</filename> files.
+            The build system uses these files to form the respective
+            <filename>bblayers.conf</filename> file,
+            <filename>local.conf</filename> file, and display the list of
+            BitBake targets when running the setup script.
+        </para>
+
+        <para>
+            To override these default configuration files with
+            configurations you want used within every new
+            Build Directory, simply set the
+            <filename>TEMPLATECONF</filename> variable to your directory.
+            The <filename>TEMPLATECONF</filename> variable is set in the
+            <filename>.templateconf</filename> file, which is in the
+            top-level
+            <link linkend='source-directory'>Source Directory</link>
+            folder (e.g. <filename>poky</filename>).
+            Edit the <filename>.templateconf</filename> so that it can locate
+            your directory.
+        </para>
+
+        <para>
+            Best practices dictate that you should keep your
+            template configuration directory in your custom distribution layer.
+            For example, suppose you have a layer named
+            <filename>meta-mylayer</filename> located in your home directory
+            and you want your template configuration directory named
+            <filename>myconf</filename>.
+            Changing the <filename>.templateconf</filename> as follows
+            causes the OpenEmbedded build system to look in your directory
+            and base its configuration files on the
+            <filename>*.sample</filename> configuration files it finds.
+            The final configuration files (i.e.
+            <filename>local.conf</filename> and
+            <filename>bblayers.conf</filename> ultimately still end up in
+            your Build Directory, but they are based on your
+            <filename>*.sample</filename> files.
+            <literallayout class='monospaced'>
+     TEMPLATECONF=${TEMPLATECONF:-meta-mylayer/myconf}
+            </literallayout>
+        </para>
+
+        <para>
+            Aside from the <filename>*.sample</filename> configuration files,
+            the <filename>conf-notes.txt</filename> also resides in the
+            default <filename>meta-yocto/conf</filename> directory.
+            The scripts that set up the build environment
+            (i.e.
+            <ulink url="&YOCTO_DOCS_REF_URL;#structure-core-script"><filename>&OE_INIT_FILE;</filename></ulink>
+            and
+            <ulink url="&YOCTO_DOCS_REF_URL;#structure-memres-core-script"><filename>oe-init-build-env-memres</filename></ulink>)
+            use this file to display BitBake targets as part of the script
+            output.
+            Customizing this <filename>conf-notes.txt</filename> file is a
+            good way to make sure your list of custom targets appears
+            as part of the script's output.
+        </para>
+
+        <para>
+            Here is the default list of targets displayed as a result of
+            running either of the setup scripts:
+            <literallayout class='monospaced'>
+     You can now run 'bitbake &lt;target&gt;'
+
+     Common targets are:
+         core-image-minimal
+         core-image-sato
+         meta-toolchain
+         adt-installer
+         meta-ide-support
+            </literallayout>
+        </para>
+
+        <para>
+            Changing the listed common targets is as easy as editing your
+            version of <filename>conf-notes.txt</filename> in your
+            custom template configuration directory and making sure you
+            have <filename>TEMPLATECONF</filename> set to your directory.
         </para>
     </section>
 
