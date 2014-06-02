@@ -1498,7 +1498,7 @@
                             or tabs after the slash character.
                         </note>
                         </para></listitem>
-                    <listitem><para><emphasis>Using Variables: <filename>{...}</filename></emphasis> -
+                    <listitem><para><emphasis>Using Variables: <filename>${...}</filename></emphasis> -
                         Use the <filename>${&lt;varname&gt;}</filename> syntax to
                         access the contents of a variable:
                         <literallayout class='monospaced'>
@@ -1615,6 +1615,30 @@
      CFLAGS_prepend_sh4 = " file://fix-makefile.patch"
                         </literallayout>
                         </para></listitem>
+                    <listitem><para><emphasis>Overrides:</emphasis> -
+                        You can use overrides to set a value conditionally,
+                        typically on how the recipe is being built.
+                        For example, to set the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-KBRANCH'><filename>KBRANCH</filename></ulink>
+                        variable's value to "standard/base" for any target
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>,
+                        except for qemuarm where it should be set to
+                        "standard/arm-versatile-926ejs", you would do the
+                        following:
+                        <literallayout class='monospaced'>
+     KBRANCH = "standard/base"
+     KBRANCH_qemuarm  = "standard/arm-versatile-926ejs"
+                        </literallayout>
+                        Overrides are also used to separate alternate values
+                        of a variable in other situations.
+                        For example, when setting variables such as
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'><filename>FILES</filename></ulink>
+                        and
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>,
+                        that are specific to individual packages produced by
+                        a recipe, you should always use an override that
+                        specifies the name of the package.
+                        </para></listitem>
                     <listitem><para><emphasis>Indentation:</emphasis>
                         Use spaces for indentation rather than than tabs.
                         For shell functions, both currently work.
@@ -1623,13 +1647,13 @@
                         Realize that some layers have a policy to use spaces
                         for all indentation.
                         </para></listitem>
-                    <listitem><para><emphasis>Using Python for Complex Operations: <filename>${@&lt;variable&gt;}</filename></emphasis> -
+                    <listitem><para><emphasis>Using Python for Complex Operations: <filename>${@&lt;python_code&gt;}</filename></emphasis> -
                         For more advanced processing, it is possible to use
                         Python code during variable assignments (e.g.
                         search and replacement on a variable).</para>
                         <para>You indicate Python code using the
-                        <filename>${@&lt;variable&gt;}</filename> syntax for the
-                        variable assignment:
+                        <filename>${@&lt;python_code&gt;}</filename>
+                        syntax for the variable assignment:
                         <literallayout class='monospaced'>
      SRC_URI = "ftp://ftp.info-zip.org/pub/infozip/src/zip${@d.getVar('PV',1).replace('.', '')}.tgz
                         </literallayout>
