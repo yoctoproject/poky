@@ -79,7 +79,12 @@
             A console-only image with more full-featured Linux system
             functionality installed.</para></listitem>
         <listitem><para><emphasis><filename>core-image-lsb</filename>:</emphasis>
-            An image that conforms to the Linux Standard Base (LSB) specification.
+            An image that conforms to the Linux Standard Base (LSB)
+            specification.
+            This image requires a distribution configuration that
+            enables LSB compliance (e.g. <filename>poky-lsb</filename>).
+            If you build <filename>core-image-lsb</filename> without that
+            configuration, the image will not be LSB-compliant.
             </para></listitem>
         <listitem><para><emphasis><filename>core-image-testmaster</filename>:</emphasis>
             A "master" image designed to be used for automated runtime testing.
@@ -95,10 +100,19 @@
             using the host.
             The image includes headers and libraries you can use in a host development
             environment.
+            This image requires a distribution configuration that
+            enables LSB compliance (e.g. <filename>poky-lsb</filename>).
+            If you build <filename>core-image-lsb-dev</filename> without that
+            configuration, the image will not be LSB-compliant.
             </para></listitem>
         <listitem><para><emphasis><filename>core-image-lsb-sdk</filename>:</emphasis>
-            A <filename>core-image-lsb</filename> that includes everything in meta-toolchain
-            but also includes development headers and libraries to form a complete standalone SDK.
+            A <filename>core-image-lsb</filename> that includes everything in
+            meta-toolchain but also includes development headers and libraries
+            to form a complete standalone SDK.
+            This image requires a distribution configuration that
+            enables LSB compliance (e.g. <filename>poky-lsb</filename>).
+            If you build <filename>core-image-lsb-sdk</filename> without that
+            configuration, the image will not be LSB-compliant.
             This image is suitable for development using the target.</para></listitem>
         <listitem><para><emphasis><filename>core-image-clutter</filename>:</emphasis>
             An image with support for the Open GL-based toolkit Clutter, which enables development of
@@ -110,7 +124,8 @@
             A very basic X11 image with a terminal.
             </para></listitem>
         <listitem><para><emphasis><filename>core-image-weston</filename>:</emphasis>
-            An image that provides the Wayland protocol libraries and the
+            A very basic Wayland image with a terminal.
+            This image provides the Wayland protocol libraries and the
             reference Weston compositor.
             For more information, see the
             "<link linkend='wayland'>Wayland</link>" section.
@@ -144,23 +159,7 @@
             A <filename>core-image-sato</filename> image that includes everything in meta-toolchain.
             The image also includes development headers and libraries to form a complete standalone SDK
             and is suitable for development using the target.</para></listitem>
-        <listitem><para><emphasis><filename>core-image-multilib-example</filename>:</emphasis>
-            An example image that includes a <filename>lib32</filename> version
-            of Bash into an otherwise standard <filename>sato</filename> image.
-            The image assumes a "lib32" multilib has been enabled in the your
-            configuration.</para></listitem>
     </itemizedlist>
-
-    <tip>
-        From the Yocto Project release 1.1 onwards, <filename>-live</filename> and
-        <filename>-directdisk</filename> images have been replaced by a "live"
-        option in <filename>IMAGE_FSTYPES</filename> that will work with any image to produce an
-        image file that can be
-        copied directly to a CD or USB device and run as is.
-        To build a live image, simply add
-        "live" to <filename>IMAGE_FSTYPES</filename> within the <filename>local.conf</filename>
-        file or wherever appropriate and then build the desired image as normal.
-    </tip>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
