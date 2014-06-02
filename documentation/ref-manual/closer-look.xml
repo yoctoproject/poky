@@ -713,8 +713,19 @@
                 <link linkend='ref-tasks-fetch'><filename>do_fetch</filename></link>
                 and
                 <link linkend='ref-tasks-unpack'><filename>do_unpack</filename></link>
-                tasks fetch the source files
-                and unpack them into the work directory.
+                tasks fetch the source files and unpack them into the work
+                directory.
+                <note>
+                    For every local file (e.g. <filename>file://</filename>)
+                    that is part of a recipe's
+                    <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
+                    statement, the OpenEmbedded build system takes a checksum
+                    of the file for the recipe and inserts the checksum into
+                    the signature for the <filename>do_fetch</filename>.
+                    If any local file has been modified, the
+                    <filename>do_fetch</filename> task and all tasks that
+                    depend on it are re-executed.
+                </note>
                 By default, everything is accomplished in the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>,
                 which has a defined structure.
