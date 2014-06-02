@@ -3841,7 +3841,7 @@
         <title>Making Images More Secure</title>
 
         <para>
-            Security for a device is always a concern.
+            Security is of increasing concern for embedded devices.
             Consider the issues and problems discussed in just this
             sampling of work found across the Internet:
             <itemizedlist>
@@ -3872,15 +3872,14 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
             image secure.
             Consequently, this section provides some guidance and suggestions
             for consideration when you want to make your image more secure.
-        </para>
-
-        <para>
-            Because the security requirements and risks are
-            different for every type of device, this section cannot
-            provide a complete reference on securing your custom OS.
-            It is strongly recommended that you also consult other sources
-            of information on embedded Linux system hardening and on
-            security.
+            <note>
+                Because the security requirements and risks are
+                different for every type of device, this section cannot
+                provide a complete reference on securing your custom OS.
+                It is strongly recommended that you also consult other sources
+                of information on embedded Linux system hardening and on
+                security.
+            </note>
         </para>
 
         <section id='general-considerations'>
@@ -3928,7 +3927,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                         Ensure you remove or disable debugging functionality
                         before producing the final image.
                         For information on how to do this, see the
-                        "<link linkend='considerations-specific-to-the-openembedded-build-system'>Considerations Specific to the OpenEmbedded Build System</link>
+                        "<link linkend='considerations-specific-to-the-openembedded-build-system'>Considerations Specific to the OpenEmbedded Build System</link>"
                         section.
                         </para></listitem>
                     <listitem><para>
@@ -4009,37 +4008,33 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                         during production.
                         </para></listitem>
                     <listitem><para>
-                        It is possible to set a root password for the image.
-                        When you set up root passwords for multiple images,
-                        you should not duplicate them.
-                        See the note on passwords at the end of this list.
+                        It is possible to set a root password for the image
+                        and also to set passwords for any extra users you might
+                        add (e.g. administrative or service type users).
+                        When you set up passwords for multiple images or
+                        users, you should not duplicate passwords.
                         </para>
                         <para>
-                        To set up a root password,
-                        use the <filename>extrausers</filename>
-                        class, which is the preferred method.
-                        For an example on how to set up the root password,
-                        see the
+                        To set up passwords, use the
+                        <filename>extrausers</filename> class, which is the
+                        preferred method.
+                        For an example on how to set up both root and user
+                        passwords, see the
                         "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-extrausers'><filename>extrausers.bbclass</filename></ulink>"
                         section.
                         <note>
-                            You can also see the the example in the
-                            <ulink url='https://wiki.yoctoproject.org/wiki/FAQ:How_do_I_set_or_change_the_root_password'>How do I set or change the root password Wiki</ulink>
-                            page as an alternative method.
+                            When adding extra user accounts or setting a
+                            root password, be cautious about setting the
+                            same password on every device.
+                            If you do this, and the password you have set
+                            is exposed, then every device is now potentially
+                            compromised.
+                            If you need this access but want to ensure
+                            security, consider setting a different,
+                            random password for each device.
+                            Typically, you do this as a separate step after
+                            you deploy the image onto the device.
                         </note>
-                        </para></listitem>
-                    <listitem><para>
-                        It is possible to add an additional user account
-                        for later administrative or service access.
-                        As with root passwords, be sure to not duplicate
-                        passwords for generic users (e.g. tester, qa, and
-                        so forth) across multiple devices.
-                        See the note on passwords following this list.
-                        </para>
-                        <para>
-                        As with the root password, you also use the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-extrausers'><filename>extrausers</filename></ulink>
-                        class.
                         </para></listitem>
                     <listitem><para>
                         Consider enabling a Mandatory Access Control (MAC)
@@ -4050,17 +4045,6 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
             </para>
 
             <para>
-                <note><title>A Note about Passwords</title>
-                    When adding extra user accounts or deciding on root
-                    passwords for multiple devices, be cautious about setting
-                    the same passwords for multiple users or devices.
-                    If you want the device to remain secure from unauthorized
-                    access, and the password set on all devices becomes
-                    compromised, then every device becomes compromised.
-                    If you need this access but want to ensure security,
-                    consider setting a different, random passwords for each
-                    user or device.
-                </note>
             </para>
         </section>
 
