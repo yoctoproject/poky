@@ -625,55 +625,100 @@
         </para>
     </section>
 
-    <section id='incorporating-out-of-tree-modules'>
-        <title>Incorporating Out-of-Tree Modules</title>
+    <section id='working-with-out-of-tree-modules'>
+        <title>Working with Out-of-Tree Modules</title>
 
         <para>
-            While it is always preferable to work with sources integrated
-            into the Linux kernel sources, if you need an external kernel
-            module, the <filename>hello-mod.bb</filename> recipe is available
-            as a template from which you can create your own out-of-tree
-            Linux kernel module recipe.
+            This section describes steps you need to take to be able
+            to build out-of-tree modules on your target and how to
+            incorporate out-of-tree modules in the build.
         </para>
 
-        <para>
-            This template recipe is located in the
-            <filename>poky</filename> Git repository of the
-            Yocto Project <ulink url='&YOCTO_GIT_URL;'>Source Repository</ulink>
-            at:
-            <literallayout class="monospaced">
+        <section id='building-out-of-tree-modules-on-the-target'>
+            <title>Building Out-of-Tree Modules on the Target</title>
+
+            <para>
+                If you want to be able to build out-of-tree modules on
+                the target, there are some steps you need to take
+                on the target that has your SDK image running.
+                Briefly, the <filename>kernel-dev</filename> package
+                is installed by default on all
+                <filename>*.sdk</filename> images.
+                However, you need to create some scripts prior to
+                attempting to build the out-of-tree modules on the target
+                that is running that image.
+            </para>
+
+            <para>
+                Prior to attempting to build the out-of-tree modules,
+                you need to be on the target as root and change to the
+                <filename>/usr/src/kernel</filename> directory and
+                then <filename>make</filename> the scripts:
+                <literallayout class='monospaced'>
+     # cd /usr/src/kernel
+     # make scripts
+                </literallayout>
+                Because all SDK image recipes include
+                <filename>dev-pkgs</filename> the
+                <filename>kernel-dev</filename> packages will be installed
+                as part of the SDK image.
+                The SDK uses the scripts when building out-of-tree
+                modules.
+                Once you have switched to that directory and created the
+                scripts, you should be able to build your out-of-tree modules
+                on the target.
+            </para>
+        </section>
+
+        <section id='incorporating-out-of-tree-modules'>
+            <title>Incorporating Out-of-Tree Modules</title>
+
+            <para>
+                While it is always preferable to work with sources integrated
+                into the Linux kernel sources, if you need an external kernel
+                module, the <filename>hello-mod.bb</filename> recipe is available
+                as a template from which you can create your own out-of-tree
+                Linux kernel module recipe.
+            </para>
+
+            <para>
+                This template recipe is located in the
+                <filename>poky</filename> Git repository of the
+                Yocto Project <ulink url='&YOCTO_GIT_URL;'>Source Repository</ulink>
+                at:
+                <literallayout class="monospaced">
      poky/meta-skeleton/recipes-kernel/hello-mod/hello-mod_0.1.bb
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            To get started, copy this recipe to your layer and give it a
-            meaningful name (e.g. <filename>mymodule_1.0.bb</filename>).
-            In the same directory, create a directory named
-            <filename>files</filename> where you can store any source files,
-            patches, or other files necessary for building
-            the module that do not come with the sources.
-            Finally, update the recipe as appropriate for the module.
-            Typically you will need to set the following variables:
-            <itemizedlist>
-                <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-DESCRIPTION'><filename>DESCRIPTION</filename></ulink>
-                    </para></listitem>
-                <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE'><filename>LICENSE*</filename></ulink>
-                    </para></listitem>
-                <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                    </para></listitem>
-                <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
-                    </para></listitem>
-            </itemizedlist>
-        </para>
+            <para>
+                To get started, copy this recipe to your layer and give it a
+                meaningful name (e.g. <filename>mymodule_1.0.bb</filename>).
+                In the same directory, create a directory named
+                <filename>files</filename> where you can store any source files,
+                patches, or other files necessary for building
+                the module that do not come with the sources.
+                Finally, update the recipe as appropriate for the module.
+                Typically you will need to set the following variables:
+                <itemizedlist>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-DESCRIPTION'><filename>DESCRIPTION</filename></ulink>
+                        </para></listitem>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE'><filename>LICENSE*</filename></ulink>
+                        </para></listitem>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                        </para></listitem>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
+                        </para></listitem>
+                </itemizedlist>
+            </para>
 
-        <para>
-            Depending on the build system used by the module sources, you might
-            need to make some adjustments.
-            For example, a typical module <filename>Makefile</filename> looks
-            much like the one provided with the <filename>hello-mod</filename>
-            template:
-            <literallayout class='monospaced'>
+            <para>
+                Depending on the build system used by the module sources, you might
+                need to make some adjustments.
+                For example, a typical module <filename>Makefile</filename> looks
+                much like the one provided with the <filename>hello-mod</filename>
+                template:
+                <literallayout class='monospaced'>
      obj-m := hello.o
 
      SRC := $(shell pwd)
@@ -684,67 +729,69 @@
      modules_install:
          $(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules_install
      ...
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            The important point to note here is the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_SRC'><filename>KERNEL_SRC</filename></ulink>
-            variable.
-            The class <filename>module.bbclass</filename> sets this variable,
-            as well as the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_PATH'><filename>KERNEL_PATH</filename></ulink>
-            variable to
-            <filename>${<ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_KERNEL_DIR'><filename>STAGING_KERNEL_DIR</filename></ulink>}</filename>
-            with the necessary Linux kernel build information to build modules.
-            If your module <filename>Makefile</filename> uses a different
-            variable, you might want to override the
-            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-compile'><filename>do_compile()</filename></ulink>
-            step, or create a patch to
-            the <filename>Makefile</filename> to work with the more typical
-            <filename>KERNEL_SRC</filename> or <filename>KERNEL_PATH</filename>
-            variables.
-        </para>
+            <para>
+                The important point to note here is the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_SRC'><filename>KERNEL_SRC</filename></ulink>
+                variable.
+                The class <filename>module.bbclass</filename> sets this variable,
+                as well as the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_PATH'><filename>KERNEL_PATH</filename></ulink>
+                variable to
+                <filename>${<ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_KERNEL_DIR'><filename>STAGING_KERNEL_DIR</filename></ulink>}</filename>
+                with the necessary Linux kernel build information to build modules.
+                If your module <filename>Makefile</filename> uses a different
+                variable, you might want to override the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-compile'><filename>do_compile()</filename></ulink>
+                step, or create a patch to
+                the <filename>Makefile</filename> to work with the more typical
+                <filename>KERNEL_SRC</filename> or <filename>KERNEL_PATH</filename>
+                variables.
+            </para>
 
-        <para>
-            After you have prepared your recipe, you will likely want to
-            include the module in your images.
-            To do this, see the documentation for the following variables in
-            the Yocto Project Reference Manual and set one of them as
-            appropriate in your machine configuration file:
-            <itemizedlist>
-                <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS'><filename>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</filename></ulink>
-                    </para></listitem>
-                <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS'><filename>MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</filename></ulink>
-                    </para></listitem>
-                <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RDEPENDS'><filename>MACHINE_EXTRA_RDEPENDS</filename></ulink>
-                    </para></listitem>
-                <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RRECOMMENDS'><filename>MACHINE_EXTRA_RRECOMMENDS</filename></ulink>
-                    </para></listitem>
-            </itemizedlist>
-        </para>
+            <para>
+                After you have prepared your recipe, you will likely want to
+                include the module in your images.
+                To do this, see the documentation for the following variables in
+                the Yocto Project Reference Manual and set one of them as
+                appropriate in your machine configuration file:
+                <itemizedlist>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS'><filename>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</filename></ulink>
+                        </para></listitem>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS'><filename>MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</filename></ulink>
+                        </para></listitem>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RDEPENDS'><filename>MACHINE_EXTRA_RDEPENDS</filename></ulink>
+                        </para></listitem>
+                    <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RRECOMMENDS'><filename>MACHINE_EXTRA_RRECOMMENDS</filename></ulink>
+                        </para></listitem>
+                </itemizedlist>
+            </para>
 
-        <para>
-            modules are often not required for boot and can be excluded from
-            certain build configurations.
-            The following allows for the most flexibility:
-            <literallayout class='monospaced'>
+            <para>
+                modules are often not required for boot and can be excluded from
+                certain build configurations.
+                The following allows for the most flexibility:
+                <literallayout class='monospaced'>
      MACHINE_EXTRA_RRECOMMENDS += "kernel-module-mymodule"
-            </literallayout>
-            Where the value is derived by appending the module filename without
-            the <filename>.ko</filename> extension to the string
-            "kernel-module-".
-        </para>
+                </literallayout>
+                Where the value is derived by appending the module filename without
+                the <filename>.ko</filename> extension to the string
+                "kernel-module-".
+            </para>
 
-        <para>
-            Because the variable is
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'><filename>RRECOMMENDS</filename></ulink>
-            and not a
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>
-            variable, the build will not fail if this module is not available
-            to include in the image.
-        </para>
+            <para>
+                Because the variable is
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'><filename>RRECOMMENDS</filename></ulink>
+                and not a
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>
+                variable, the build will not fail if this module is not available
+                to include in the image.
+            </para>
+        </section>
     </section>
+
 
     <section id='inspecting-changes-and-commits'>
         <title>Inspecting Changes and Commits</title>
