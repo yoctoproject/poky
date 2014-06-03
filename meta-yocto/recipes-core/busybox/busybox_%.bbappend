@@ -1,2 +1,2 @@
-FILESEXTRAPATHS_prepend_poky := "${THISDIR}/${P}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
 
