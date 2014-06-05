@@ -3,19 +3,17 @@
 
   <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/xhtml/docbook.xsl" />
 
+  <xsl:include href="../template/permalinks.xsl"/>
+  <xsl:include href="../template/section.title.xsl"/>
+  <xsl:include href="../template/component.title.xsl"/>
+  <xsl:include href="../template/division.title.xsl"/>
+  <xsl:include href="../template/formal.object.heading.xsl"/>
+
   <xsl:param name="html.stylesheet" select="'ref-style.css'" />
   <xsl:param name="chapter.autolabel" select="1" />
   <xsl:param name="appendix.autolabel" select="A" />
   <xsl:param name="section.autolabel" select="1" />
   <xsl:param name="section.label.includes.component.label" select="1" />
-
-  <xsl:attribute-set name="normal.para.spacing">
-    <xsl:attribute name="text-indent">
-      <xsl:choose>
-        <xsl:when test="self::para">2em</xsl:when>
-        <xsl:otherwise>inherit</xsl:otherwise>
-      </xsl:choose>
-    </xsl:attribute>
-  </xsl:attribute-set>
+  <xsl:param name="generate.id.attributes" select="1" />
 
 </xsl:stylesheet>
