@@ -31,9 +31,9 @@
             <title>BSP Layers</title>
 
             <para>
-                The BSP consists of a file structure inside a base directory.
-                Collectively, you can think of the base directory and the file structure
-                as a BSP Layer.
+                A BSP consists of a file structure inside a base directory.
+                Collectively, you can think of the base directory, its file structure,
+                and the contents as a BSP Layer.
                 Although not a strict requirement, layers in the Yocto Project use the
                 following well established naming convention:
                 <literallayout class='monospaced'>
@@ -44,12 +44,45 @@
             </para>
 
             <para>
+                To help understand the BSP layer concept, consider the BSPs that the
+                Yocto Project supports and provides with each release.
+                You can see the layers in the
+                <ulink url='&YOCTO_DOCS_DEV_URL;#yocto-project-repositories'>Yocto Project Source Repositories</ulink>
+                through a web interface at
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi'></ulink>.
+                If you go to that interface you will find near the bottom of the list
+                under "Yocto Metadata Layers" several BSP layers all of which are
+                supported by the Yocto Project (e.g. <filename>meta-minnow</filename>,
+                <filename>meta-raspberrypi</filename>, and
+                <filename>meta-intel</filename>).
+                Each of these layers is a repository unto itself and clicking on a
+                layer reveals information that includes two links from which you can choose
+                to set up a clone of the layer's repository on your local host system.
+                Here is an example that clones the Minnow Board BSP layer:
+                <literallayout class='monospaced'>
+     $ git clone git://git.yoctoproject.org/meta-minnow
+                </literallayout>
+                For information on the BSP development workflow, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#developing-a-board-support-package-bsp'>Developing a Board Support Package (BSP)</ulink>"
+                section in the Yocto Project Development Manual.
+                For more information on how to set up a local copy of source files
+                from a Git repository, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#getting-setup'>Getting Set Up</ulink>"
+                section also in the Yocto Project Development Manual.
+            </para>
+
+            <para>
                 The layer's base directory (<filename>meta-&lt;bsp_name&gt;</filename>) is the root
                 of the BSP Layer.
                 This root is what you add to the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'><filename>BBLAYERS</filename></ulink>
                 variable in the <filename>conf/bblayers.conf</filename> file found in the
-                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>,
+                which is establishe after you run one of the OpenEmbedded build environment
+                setup scripts (i.e.
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
+                and
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>).
                 Adding the root allows the OpenEmbedded build system to recognize the BSP
                 definition and from it build an image.
                 Here is an example:
