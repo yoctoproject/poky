@@ -3,7 +3,19 @@
 
   <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/xhtml/docbook.xsl" />
 
-  <xsl:param name="generate.toc" select="'chapter toc'"></xsl:param>
+  <xsl:param name="generate.toc">
+   appendix  toc
+   chapter   toc
+   article   nop
+   book      nop
+   part      nop
+   preface   nop
+   qandadiv  nop
+   qandaset  nop
+   reference nop
+   section   nop
+   set       nop
+  </xsl:param>
 
   <xsl:include href="../template/permalinks.xsl"/>
   <xsl:include href="../template/section.title.xsl"/>
