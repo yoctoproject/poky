@@ -30,11 +30,14 @@ from oeqa.controllers.masterimage import MasterImageHardwareTarget
 
 class BeagleBoneTarget(MasterImageHardwareTarget):
 
+    dtbs = {'uImage-am335x-bone.dtb': 'am335x-bone.dtb', 'uImage-am335x-boneblack.dtb': 'am335x-boneblack.dtb'}
+
+    @classmethod
+    def get_extra_files(self):
+        return list(self.dtbs.keys())
+
     def __init__(self, d):
         super(BeagleBoneTarget, self).__init__(d)
-
-        self.dtbs = [('uImage-am335x-bone.dtb', 'am335x-bone.dtb'),
-                     ('uImage-am335x-boneblack.dtb', 'am335x-boneblack.dtb')]
 
         self.deploy_cmds = [
                 'mkdir -p /mnt/testrootfs',
@@ -44,7 +47,7 @@ class BeagleBoneTarget(MasterImageHardwareTarget):
                 '[ -e /mnt/testrootfs/boot/uImage ] || cp ~/test-kernel /mnt/testrootfs/boot/uImage',
                 ]
 
-        for _, dtbfn in self.dtbs:
+        for _, dtbfn in self.dtbs.iteritems():
             # Kernel and dtb files may not be in the image, so copy them if not
             self.deploy_cmds.append('[ -e /mnt/testrootfs/boot/{0} ] || cp ~/{0} /mnt/testrootfs/boot/'.format(dtbfn))
 
@@ -58,7 +61,7 @@ class BeagleBoneTarget(MasterImageHardwareTarget):
         # Kernel and dtb files may not be in the image, so copy them just in case
         self.master.copy_to(self.kernel, "~/test-kernel")
         kernelpath = os.path.dirname(self.kernel)
-        for dtborig, dtbfn in self.dtbs:
+        for dtborig, dtbfn in self.dtbs.iteritems():
             dtbfile = os.path.join(kernelpath, dtborig)
             if os.path.exists(dtbfile):
                 self.master.copy_to(dtbfile, "~/%s" % dtbfn)
