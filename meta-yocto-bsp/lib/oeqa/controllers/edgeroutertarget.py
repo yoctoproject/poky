@@ -44,13 +44,14 @@ class EdgeRouterTarget(MasterImageHardwareTarget):
     def __init__(self, d):
         super(EdgeRouterTarget, self).__init__(d)
 
+	self.image_fstype = self.get_image_fstype(d)
         self.deploy_cmds = [
                 'mount -L boot /boot',
                 'mkdir -p /mnt/testrootfs',
                 'mount -L testrootfs /mnt/testrootfs',
                 'cp ~/test-kernel /boot',
                 'rm -rf /mnt/testrootfs/*',
-                'tar xzvf ~/test-rootfs.tar.gz -C /mnt/testrootfs'
+                'tar xvf ~/test-rootfs.%s -C /mnt/testrootfs' % self.image_fstype
                 ]
         if not self.serialcontrol_cmd:
             bb.fatal("This TEST_TARGET needs a TEST_SERIALCONTROL_CMD defined in local.conf.")
@@ -60,7 +61,7 @@ class EdgeRouterTarget(MasterImageHardwareTarget):
         self.master.run("umount /mnt/testrootfs;")
         self.master.ignore_status = False
         self.master.copy_to(self.kernel, "~/test-kernel")
-        self.master.copy_to(self.rootfs, "~/test-rootfs.tar.gz")
+        self.master.copy_to(self.rootfs, "~/test-rootfs.%s" % self.image_fstype)
         for cmd in self.deploy_cmds:
             self.master.run(cmd)
 
