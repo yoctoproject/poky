@@ -39,11 +39,12 @@ class BeagleBoneTarget(MasterImageHardwareTarget):
     def __init__(self, d):
         super(BeagleBoneTarget, self).__init__(d)
 
+        self.image_fstype = self.get_image_fstype(d)
         self.deploy_cmds = [
                 'mkdir -p /mnt/testrootfs',
                 'mount -L testrootfs /mnt/testrootfs',
                 'rm -rf /mnt/testrootfs/*',
-                'tar xzvf ~/test-rootfs.tar.gz -C /mnt/testrootfs',
+                'tar xvf ~/test-rootfs.%s -C /mnt/testrootfs' % self.image_fstype,
                 '[ -e /mnt/testrootfs/boot/uImage ] || cp ~/test-kernel /mnt/testrootfs/boot/uImage',
                 ]
 
@@ -65,7 +66,7 @@ class BeagleBoneTarget(MasterImageHardwareTarget):
             dtbfile = os.path.join(kernelpath, dtborig)
             if os.path.exists(dtbfile):
                 self.master.copy_to(dtbfile, "~/%s" % dtbfn)
-        self.master.copy_to(self.rootfs, "~/test-rootfs.tar.gz")
+        self.master.copy_to(self.rootfs, "~/test-rootfs.%s" % self.image_fstype)
         for cmd in self.deploy_cmds:
             self.master.run(cmd)
 
