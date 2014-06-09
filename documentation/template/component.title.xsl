@@ -3,20 +3,20 @@
   xmlns:d="http://docbook.org/ns/docbook"
   xmlns="http://www.w3.org/1999/xhtml"
   exclude-result-prefixes="d">
-  
+
   <xsl:template name="component.title">
     <xsl:param name="node" select="."/>
-    
+
     <xsl:variable name="level">
       <xsl:choose>
         <xsl:when test="ancestor::d:section">
           <xsl:value-of select="count(ancestor::d:section)+1"/>
         </xsl:when>
-        <xsl:when test="ancestor::d:sect5">6</xsl:when>
-        <xsl:when test="ancestor::d:sect4">5</xsl:when>
-        <xsl:when test="ancestor::d:sect3">4</xsl:when>
-        <xsl:when test="ancestor::d:sect2">3</xsl:when>
-        <xsl:when test="ancestor::d:sect1">2</xsl:when>
+        <xsl:when test="ancestor::sect5">6</xsl:when>
+        <xsl:when test="ancestor::sect4">5</xsl:when>
+        <xsl:when test="ancestor::sect3">4</xsl:when>
+        <xsl:when test="ancestor::sect2">3</xsl:when>
+        <xsl:when test="ancestor::sect1">2</xsl:when>
         <xsl:otherwise>1</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
