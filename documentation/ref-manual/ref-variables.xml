@@ -7707,6 +7707,231 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-STAGING_BASE_LIBDIR_NATIVE'><glossterm>STAGING_BASE_LIBDIR_NATIVE</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the <filename>/lib</filename>
+                    subdirectory of the sysroot directory for the
+                    build host.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_BASELIBDIR'><glossterm>STAGING_BASELIBDIR</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the <filename>/lib</filename>
+                    subdirectory of the sysroot directory for which the target
+                    is being built
+                    (<link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>).
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_BINDIR'><glossterm>STAGING_BINDIR</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the
+                    <filename>/usr/bin</filename> subdirectory of the
+                    sysroot directory for which the target is being built
+                    (<link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>).
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_BINDIR_CROSS'><glossterm>STAGING_BINDIR_CROSS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the directory containing binary
+                    configuration scripts.
+                    These scripts provide configuration information for
+                    other software that wants to make use of libraries or
+                    include files provided by the software associated with
+                    the script.
+                    <note>
+                        This style of build configuration has been largely
+                        replaced by <filename>pkg-config</filename>.
+                        Consequently, if <filename>pkg-config</filename>
+                        is supported by the library to which you are linking,
+                        it is recommended you use
+                        <filename>pkg-config</filename> instead of a
+                        provided configuration script.
+                    </note>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_BINDIR_NATIVE'><glossterm>STAGING_BINDIR_NATIVE</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the
+                    <filename>/usr/bin</filename> subdirectory of the
+                    sysroot directory for the build host.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_DATADIR'><glossterm>STAGING_DATADIR</glossterm>
+            <glossdef>
+                <para>
+                     Specifies the path to the <filename>/usr/share</filename>
+                     subdirectory of the sysroot directory for which the
+                     target is being built
+                     (<link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>).
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_DIR'><glossterm>STAGING_DIR</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the top-level sysroots directory
+                    (i.e.
+                    <filename>${</filename><link linkend='var-TMPDIR'><filename>TMPDIR</filename></link><filename>}/sysroots</filename>).
+                    <note>
+                        Recipes should never write files directly under
+                        this directory because the OpenEmbedded build system
+                        the directory automatically.
+                        Instead, files should be installed to
+                        <filename>${</filename><link linkend='var-D'><filename>D</filename></link><filename>}</filename>
+                        within your recipe's
+                        <link linkend='ref-tasks-install'><filename>install</filename></link>
+                        task and then the OpenEmbedded build system will
+                        stage a subset of those files into the sysroot.
+                    </note>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_DIR_HOST'><glossterm>STAGING_DIR_HOST</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the primary sysroot directory for
+                    which the target is being built.
+                    Depending on the type of recipe and the build target, the
+                    recipe's value is as follows:
+                    <itemizedlist>
+                        <listitem><para><emphasis>Recipes Building for the Target Machine</emphasis>:
+                           The value is "${STAGING_DIR}/${MACHINE}".
+                           </para></listitem>
+                        <listitem><para><emphasis>Native Recipes Building for the Build Host</emphasis>:
+                           The value is empty given the assumption that when
+                           building for the build host, the build host's own
+                           directories should be used.
+                           </para></listitem>
+                        <listitem><para><emphasis><filename>nativesdk</filename> Recipes that Build for the SDK</emphasis>:
+                           The value is "${STAGING_DIR}/${MULTIMACH_HOST_SYS}".
+                           </para></listitem>
+                    </itemizedlist>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_DATADIR_NATIVE'><glossterm>STAGING_DATADIR_NATIVE</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the <filename>/usr/share</filename>
+                    subdirectory of the sysroot directory for the build host.
+                </para>
+            </glossdef>
+        </glossentry>
+
+
+
+        <glossentry id='var-STAGING_DIR_NATIVE'><glossterm>STAGING_DIR_NATIVE</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the sysroot directory for the
+                    build host.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_DIR_TARGET'><glossterm>STAGING_DIR_TARGET</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the sysroot directory for which
+                    the target is being built.
+                    In most cases, this path is the
+                    <link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>.
+                </para>
+
+                <para>
+                    Some recipes build binaries that can run on the target
+                    system but those binaries in turn generate code for
+                    another different system (e.g. cross-canadian recipes).
+                    Using terminology from GNU, the primary system is referred
+                    to as the "HOST" and the secondary, or different, system is
+                    referred to as the "TARGET".
+                    Thus, the binaries run on the "HOST" system and
+                    and generate binaries for the "TARGET" system.
+                    <filename>STAGING_DIR_TARGET</filename> points to the
+                    sysroot used for the "TARGET" system.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_ETCDIR_NATIVE'><glossterm>STAGING_ETCDIR_NATIVE</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the <filename>/etc</filename>
+                    subdirectory of the sysroot directory for the
+                    build host.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_EXECPREFIXDIR'><glossterm>STAGING_EXECPREFIXDIR</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the <filename>/usr</filename>
+                    subdirectory of the sysroot directory for which the
+                    target is being built
+                    (<link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>).
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_INCDIR'><glossterm>STAGING_INCDIR</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the
+                    <filename>/usr/include</filename> subdirectory of the
+                    sysroot directory for which the target is being built
+                    (<link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>).
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_INCDIR_NATIVE'><glossterm>STAGING_INCDIR_NATIVE</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the <filename>/usr/include</filename>
+                    subdirectory of the sysroot directory for the build host.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_LIBDIR'><glossterm>STAGING_LIBDIR</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the <filename>/usr/lib</filename>
+                    subdirectory of the sysroot directory for which the target
+                    is being built
+                    (<link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>).
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_LIBDIR_NATIVE'><glossterm>STAGING_LIBDIR_NATIVE</glossterm>
+            <glossdef>
+                <para>
+                    Specifies the path to the <filename>/usr/lib</filename>
+                    subdirectory of the sysroot directory for the build host.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-STAGING_KERNEL_DIR'><glossterm>STAGING_KERNEL_DIR</glossterm>
             <glossdef>
                 <para>
