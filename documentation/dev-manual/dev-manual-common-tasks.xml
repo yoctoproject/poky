@@ -7302,6 +7302,247 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
         </section>
     </section>
 
+    <section id='debugging-parallel-make-races'>
+        <title>Debugging Parallel Make Races</title>
+
+        <para>
+            A parallel <filename>make</filename> race occurs when the build
+            consists of several parts that are run simultaneously and
+            a situation occurs when the output or result of one
+            part is not ready for use with a different part of the build that
+            depends on that output.
+            Parallel make races are annoying and can sometimes be difficult
+            to reproduce and fix.
+            However, some simple tips and tricks exist that can help
+            you debug and fix them.
+            This section presents a real-world example of an error encountered
+            on the Yocto Project autobuilder and the process used to fix it.
+        </para>
+
+        <section id='the-failure'>
+            <title>The Failure</title>
+
+            <para>
+                For this example, assume that you are building an image that
+                depends on the "neard" package.
+                And, during the build, BitBake runs into problems and
+                creates the following output.
+                <note>
+                    This example log file has longer lines artifically
+                    broken to make the listing easier to read.
+                </note>
+                If you examine the output or the log file, you see the
+                failure during the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-compile'><filename>do_compile</filename></ulink>
+                task for "neard":
+                <literallayout class='monospaced'>
+     | DEBUG: SITE files ['endian-little', 'bit-32', 'ix86-common', 'common-linux', 'common-glibc', 'i586-linux', 'common']
+     | DEBUG: Executing shell function do_compile
+     | NOTE: make -j 16
+     | make --no-print-directory all-am
+     | /bin/mkdir -p include/near
+     | /bin/mkdir -p include/near
+     | /bin/mkdir -p include/near
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/types.h include/near/types.h
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/log.h include/near/log.h
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/plugin.h include/near/plugin.h
+     | /bin/mkdir -p include/near
+     | /bin/mkdir -p include/near
+     | /bin/mkdir -p include/near
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/tag.h include/near/tag.h
+     | /bin/mkdir -p include/near
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/adapter.h include/near/adapter.h
+     | /bin/mkdir -p include/near
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/ndef.h include/near/ndef.h
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/tlv.h include/near/tlv.h
+     | /bin/mkdir -p include/near
+     | /bin/mkdir -p include/near
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/setting.h include/near/setting.h
+     | /bin/mkdir -p include/near
+     | /bin/mkdir -p include/near
+     | /bin/mkdir -p include/near
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/device.h include/near/device.h
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/nfc_copy.h include/near/nfc_copy.h
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/snep.h include/near/snep.h
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/version.h include/near/version.h
+     | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
+       0.14-r0/neard-0.14/include/dbus.h include/near/dbus.h
+     | ./src/genbuiltin nfctype1 nfctype2 nfctype3 nfctype4 p2p > src/builtin.h
+     | i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/
+       build/build/tmp/sysroots/qemux86 -DHAVE_CONFIG_H -I. -I./include -I./src -I./gdbus  -I/home/pokybuild/
+       yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/sysroots/qemux86/usr/include/glib-2.0
+       -I/home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/sysroots/qemux86/usr/
+       lib/glib-2.0/include  -I/home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/
+       tmp/sysroots/qemux86/usr/include/dbus-1.0 -I/home/pokybuild/yocto-autobuilder/yocto-slave/
+       nightly-x86/build/build/tmp/sysroots/qemux86/usr/lib/dbus-1.0/include  -I/home/pokybuild/yocto-autobuilder/
+       yocto-slave/nightly-x86/build/build/tmp/sysroots/qemux86/usr/include/libnl3
+       -DNEAR_PLUGIN_BUILTIN -DPLUGINDIR=\""/usr/lib/near/plugins"\"
+       -DCONFIGDIR=\""/etc/neard\"" -O2 -pipe -g -feliminate-unused-debug-types -c
+       -o tools/snep-send.o tools/snep-send.c
+     | In file included from tools/snep-send.c:16:0:
+     | tools/../src/near.h:41:23: fatal error: near/dbus.h: No such file or directory
+     |  #include &lt;near/dbus.h&gt;
+     |                        ^
+     | compilation terminated.
+     | make[1]: *** [tools/snep-send.o] Error 1
+     | make[1]: *** Waiting for unfinished jobs....
+     | make: *** [all] Error 2
+     | ERROR: oe_runmake failed
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='reproducing-the-error'>
+            <title>Reproducing the Error</title>
+
+            <para>
+                Because race conditions are intermittent, they do not
+                manifest themselves every time you do the build.
+                In fact, most times the build will complete without problems
+                even though the potential race condition exists.
+                Thus, once the error surfaces, you need a way to reproduce it.
+            </para>
+
+            <para>
+                In this example, compiling the "neard" package is causing the
+                problem.
+                So the first thing to do is build "neard" locally.
+                Before you start the build, set the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink>
+                variable in your <filename>local.conf</filename> file to
+                a high number (e.g. 20).
+                Using a high value for <filename>PARALLEL_MAKE</filename>
+                increases the chances of the race condition showing up:
+                <literallayout class='monospaced'>
+     $ bitbake neard
+                </literallayout>
+            </para>
+
+            <para>
+                Once the local build for "neard" completes, start a
+                <filename>devshell</filename> build:
+                <literallayout class='monospaced'>
+     $ bitbake neard -c devshell
+                </literallayout>
+                For information on how to use a
+                <filename>devshell</filename>, see the
+                "<link linkend='platdev-appdev-devshell'>Using a Development Shell</link>"
+                section.
+            </para>
+
+            <para>
+                In the <filename>devshell</filename>, do the following:
+                <literallayout class='monospaced'>
+     $ make clean
+     $ make tools/snep-send.o
+                </literallayout>
+                The <filename>devshell</filename> commands cause the failure
+                to clearly be visible.
+                In this case, a missing dependency exists for the "neard"
+                Makefile target.
+            </para>
+        </section>
+
+        <section id='creating-a-patch-for-the-fix'>
+            <title>Creating a Patch for the Fix</title>
+
+            <para>
+                Because there is a missing dependency for the Makefile
+                target, you need to patch the
+                <filename>Makefile.am</filename> file, which is generated
+                from <filename>Makefile.in</filename>.
+                You can use Quilt to create the patch:
+                <literallayout class='monospaced'>
+     $ quilt new parallelmake.patch
+     $ quilt add Makefile.am
+                </literallayout>
+                For more information on using Quilt, see the
+                "<link linkend='using-a-quilt-workflow'>Using a Quilt Workflow</link>"
+                section.
+            </para>
+
+            <para>
+                At this point you need to make the edits to
+                <filename>Makefile.am</filename> to add the missing
+                dependency.
+                For our example, you have to add the a
+                <filename>"tools/snep-send.$(OBJEXT): include/near/dbus.h"</filename>
+                line.
+            </para>
+
+            <para>
+                Once you have edited the file, use the
+                <filename>refresh</filename> command to create the patch:
+                <literallayout class='monospaced'>
+     $ quilt refresh
+                </literallayout>
+                Once the patch file exists, you need to add it back to the
+                originating recipe folder:
+                <literallayout class='monospaced'>
+     $ cp patches/parallemake.patch &lt;location-of-neard-0.14-recipe-folder&gt;
+                </literallayout>
+                The final thing you need to do to implement the fix in the
+                build is to add the patch to the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                statement in the "neard" recipe
+                (<filename>neard-0.14.bb</filename>).
+            </para>
+
+            <para>
+                With the patch complete and moved to the correct folder and
+                the <filename>SRC_URI</filename> statement updated, you can
+                exit the <filename>devshell</filename>:
+                <literallayout class='monospaced'>
+     $ exit
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='testing-the-build'>
+            <title>Testing the Build</title>
+
+            <para>
+                With everything in place, you can get back to trying the
+                build again locally:
+                <literallayout class='monospaced'>
+     $ bitbake neard
+                </literallayout>
+                This build should succeed.
+            </para>
+
+            <para>
+                Now you can open up a <filename>devshell</filename> again
+                and repeat the clean and make operations as follows:
+                <literallayout class='monospaced'>
+     $ make clean
+     $ make tools/snep-send.o
+                </literallayout>
+                The build should work without issue.
+            </para>
+
+            <para>
+                As with all solved problems, if they originated upstream, you
+                need to submit the fix for the recipe in OE-Core and upstream
+                so that the problem is taken care of at its source.
+                See the
+                "<link linkend='how-to-submit-a-change'>How to Submit a Change</link>"
+                section for more information.
+            </para>
+        </section>
+    </section>
+
     <section id="examining-builds-using-toaster">
         <title>Examining Builds Using the Toaster API</title>
 
