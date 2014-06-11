@@ -3548,7 +3548,7 @@
 
             <para>
                 As part of the kernel build process, the
-                <filename>kernel_configcheck</filename> task runs.
+                <filename>do_kernel_configcheck</filename> task runs.
                 This task validates the kernel configuration by checking the final
                 <filename>.config</filename> file against the input files.
                 During the check, the task produces warning messages for the following
@@ -3565,8 +3565,9 @@
                         In other words, the option does not appear anywhere.</para></listitem>
                 </itemizedlist>
                 <note>
-                    The <filename>kernel_configcheck</filename> task can also optionally report
-                    if an option is overridden during processing.
+                    The <filename>do_kernel_configcheck</filename> task can
+                    also optionally report if an option is overridden during
+                    processing.
                 </note>
             </para>
 
@@ -3580,29 +3581,45 @@
             <para>
                 To streamline the configuration, do the following:
                 <orderedlist>
-                    <listitem><para>Start with a full configuration that you know
-                        works - it builds and boots successfully.
-                        This configuration file will be your baseline.</para></listitem>
-                    <listitem><para>Separately run the <filename>configme</filename> and
-                        <filename>kernel_configcheck</filename> tasks.</para></listitem>
+                    <listitem><para>Start with a full configuration that you
+                        know works - it builds and boots successfully.
+                        This configuration file will be your baseline.
+                        </para></listitem>
+                    <listitem><para>Separately run the
+                        <filename>do_configme</filename> and
+                        <filename>do_kernel_configcheck</filename> tasks.
+                        </para></listitem>
                     <listitem><para>Take the resulting list of files from the
-                        <filename>kernel_configcheck</filename> task warnings and do the following:
+                        <filename>do_kernel_configcheck</filename> task
+                        warnings and do the following:
                         <itemizedlist>
-                            <listitem><para>Drop values that are redefined in the fragment but do not
-                                change the final <filename>.config</filename> file.</para></listitem>
-                            <listitem><para>Analyze and potentially drop values from the
-                                <filename>.config</filename> file that override required
-                                configurations.</para></listitem>
-                            <listitem><para>Analyze and potentially remove non-board specific options.
+                            <listitem><para>
+                                Drop values that are redefined in the fragment
+                                but do not change the final
+                                <filename>.config</filename> file.
                                 </para></listitem>
-                            <listitem><para>Remove repeated and invalid options.</para></listitem>
+                            <listitem><para>
+                                Analyze and potentially drop values from the
+                                <filename>.config</filename> file that override
+                                required configurations.
+                                </para></listitem>
+                            <listitem><para>
+                                Analyze and potentially remove non-board
+                                specific options.
+                                </para></listitem>
+                            <listitem><para>
+                                Remove repeated and invalid options.
+                                </para></listitem>
                         </itemizedlist></para></listitem>
-                    <listitem><para>After you have worked through the output of the kernel configuration
-                        audit, you can re-run the <filename>configme</filename>
-                        and <filename>kernel_configcheck</filename> tasks to see the results of your
-                        changes.
-                        If you have more issues, you can deal with them as described in the
-                        previous step.</para></listitem>
+                    <listitem><para>
+                        After you have worked through the output of the kernel
+                        configuration audit, you can re-run the
+                        <filename>do_configme</filename> and
+                        <filename>do_kernel_configcheck</filename> tasks to
+                        see the results of your changes.
+                        If you have more issues, you can deal with them as
+                        described in the previous step.
+                        </para></listitem>
                 </orderedlist>
             </para>
 
@@ -5149,14 +5166,18 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
         <section id="usingpoky-configuring-DISTRO_PN_ALIAS">
             <title>Handling a Package Name Alias</title>
             <para>
-                Sometimes a package name you are using might exist under an alias or as a similarly named
-                package in a different distribution.
-                The OpenEmbedded build system implements a <filename>distro_check</filename>
+                Sometimes a package name you are using might exist under
+                an alias or as a similarly named package in a different
+                distribution.
+                The OpenEmbedded build system implements a
+                <filename>do_distro_check</filename>
                 task that automatically connects to major distributions
                 and checks for these situations.
-                If the package exists under a different name in a different distribution, you get a
-                <filename>distro_check</filename> mismatch.
-                You can resolve this problem by defining a per-distro recipe name alias using the
+                If the package exists under a different name in a different
+                distribution, you get a <filename>distro_check</filename>
+                mismatch.
+                You can resolve this problem by defining a per-distro recipe
+                name alias using the
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_PN_ALIAS'>DISTRO_PN_ALIAS</ulink></filename>
                 variable.
             </para>
@@ -6922,7 +6943,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                             Returns "True" if <filename>pkg</filename> is in the
                             installed package list of the image, which is based
                             on the manifest file that is generated during the
-                            <filename>do.rootfs</filename> task.
+                            <filename>do_rootfs</filename> task.
                             </para></listitem>
                         <listitem><para><emphasis><filename>hasFeature(feature)</filename>:</emphasis>
                             Returns "True" if the feature is in

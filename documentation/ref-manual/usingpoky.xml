@@ -173,17 +173,20 @@
 
         <para>
             Any given package consists of a set of tasks.
-            The standard BitBake behavior in most cases is: <filename>fetch</filename>,
-            <filename>unpack</filename>,
-            <filename>patch</filename>, <filename>configure</filename>,
-            <filename>compile</filename>, <filename>install</filename>, <filename>package</filename>,
-            <filename>package_write</filename>, and <filename>build</filename>.
-            The default task is <filename>build</filename> and any tasks on which it depends
-            build first.
-            Some tasks, such as <filename>devshell</filename>, are not part of the
-            default build chain.
-            If you wish to run a task that is not part of the default build chain, you can use the
-            <filename>-c</filename> option in BitBake.
+            The standard BitBake behavior in most cases is:
+            <filename>do_fetch</filename>,
+            <filename>do_unpack</filename>,
+            <filename>do_patch</filename>, <filename>do_configure</filename>,
+            <filename>do_compile</filename>, <filename>do_install</filename>,
+            <filename>do_package</filename>,
+            <filename>do_package_write</filename>, and
+            <filename>do_build</filename>.
+            The default task is <filename>do_build</filename> and any tasks
+            on which it depends build first.
+            Some tasks, such as <filename>do_devshell</filename>, are not part
+            of the default build chain.
+            If you wish to run a task that is not part of the default build
+            chain, you can use the <filename>-c</filename> option in BitBake.
             Here is an example:
             <literallayout class='monospaced'>
      $ bitbake matchbox-desktop -c devshell
@@ -210,14 +213,16 @@
         <para>
             This sequence first builds and then recompiles
             <filename>matchbox-desktop</filename>.
-            The last command reruns all tasks (basically the packaging tasks) after the compile.
-            BitBake recognizes that the <filename>compile</filename> task was rerun and therefore
-            understands that the other tasks also need to be run again.
+            The last command reruns all tasks (basically the packaging tasks)
+            after the compile.
+            BitBake recognizes that the <filename>do_compile</filename>
+            task was rerun and therefore understands that the other tasks
+            also need to be run again.
         </para>
 
         <para>
             You can view a list of tasks in a given package by running the
-            <filename>listtasks</filename> task as follows:
+            <filename>do_listtasks</filename> task as follows:
             <literallayout class='monospaced'>
      $ bitbake matchbox-desktop -c listtasks
             </literallayout>
