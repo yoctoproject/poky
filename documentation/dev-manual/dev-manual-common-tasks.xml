@@ -7328,7 +7328,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                 And, during the build, BitBake runs into problems and
                 creates the following output.
                 <note>
-                    This example log file has longer lines artifically
+                    This example log file has longer lines artificially
                     broken to make the listing easier to read.
                 </note>
                 If you examine the output or the log file, you see the
@@ -7422,7 +7422,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                 Before you start the build, set the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink>
                 variable in your <filename>local.conf</filename> file to
-                a high number (e.g. 20).
+                a high number (e.g. "-j 20").
                 Using a high value for <filename>PARALLEL_MAKE</filename>
                 increases the chances of the race condition showing up:
                 <literallayout class='monospaced'>
@@ -7452,6 +7452,22 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                 to clearly be visible.
                 In this case, a missing dependency exists for the "neard"
                 Makefile target.
+                Here is some abbreviated, sample output with the
+                missing dependency clearly visible at the end:
+                <literallayout class='monospaced'>
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/home/scott-lenovo/......
+        .
+        .
+        .
+     tools/snep-send.c
+     In file included from tools/snep-send.c:16:0:
+     tools/../src/near.h:41:23: fatal error: near/dbus.h: No such file or directory
+      #include &lt;near/dbus.h&gt;
+                       ^
+     compilation terminated.
+     make: *** [tools/snep-send.o] Error 1
+     $
+                </literallayout>
             </para>
         </section>
 
@@ -7466,7 +7482,9 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                 You can use Quilt to create the patch:
                 <literallayout class='monospaced'>
      $ quilt new parallelmake.patch
+     Patch patches/parallelmake.patch is now on top
      $ quilt add Makefile.am
+     File Makefile.am added to patch patches/parallelmake.patch
                 </literallayout>
                 For more information on using Quilt, see the
                 "<link linkend='using-a-quilt-workflow'>Using a Quilt Workflow</link>"
@@ -7477,9 +7495,11 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                 At this point you need to make the edits to
                 <filename>Makefile.am</filename> to add the missing
                 dependency.
-                For our example, you have to add the a
-                <filename>"tools/snep-send.$(OBJEXT): include/near/dbus.h"</filename>
-                line.
+                For our example, you have to add the following line
+                to the file:
+                <literallayout class='monospaced'>
+     tools/snep-send.$(OBJEXT): include/near/dbus.h
+                </literallayout>
             </para>
 
             <para>
@@ -7487,17 +7507,31 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                 <filename>refresh</filename> command to create the patch:
                 <literallayout class='monospaced'>
      $ quilt refresh
+     Refreshed patch patches/parallelmake.patch
                 </literallayout>
                 Once the patch file exists, you need to add it back to the
-                originating recipe folder:
+                originating recipe folder.
+                Here is an example assuming a top-level
+                <link linkend='source-directory'>Source Directory</link>
+                named <filename>poky</filename>:
                 <literallayout class='monospaced'>
-     $ cp patches/parallemake.patch &lt;location-of-neard-0.14-recipe-folder&gt;
+     $ cp patches/parallelmake.patch poky/meta/recipes-connectivity/neard/neard
                 </literallayout>
                 The final thing you need to do to implement the fix in the
-                build is to add the patch to the
+                build is to update the "neard" recipe (i.e.
+                <filename>neard-0.14.bb</filename> so that the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                statement in the "neard" recipe
-                (<filename>neard-0.14.bb</filename>).
+                statement includes the patch file.
+                The recipe file is in the folder above the patch.
+                Here is what the edited <filename>SRC_URI</filename>
+                statement would look like:
+                <literallayout class='monospaced'>
+     SRC_URI = "${KERNELORG_MIRROR}/linux/network/nfc/${BPN}-${PV}.tar.xz \
+                file://neard.in \
+                file://neard.service.in \
+                file://parallelmake.patch \
+               "
+                </literallayout>
             </para>
 
             <para>
@@ -7526,6 +7560,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                 Now you can open up a <filename>devshell</filename> again
                 and repeat the clean and make operations as follows:
                 <literallayout class='monospaced'>
+     $ bitbake neard -c devshell
      $ make clean
      $ make tools/snep-send.o
                 </literallayout>
