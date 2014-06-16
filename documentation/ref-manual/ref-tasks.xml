@@ -283,10 +283,28 @@
         <title><filename>do_clean</filename></title>
 
         <para>
-            Removes all output files for a target.
-            When this task is run, the
+            Removes all output files for a target from the
+            <link linkend='ref-tasks-unpack'><filename>do_unpack</filename></link>
+            task forward (i.e.
+            <link linkend='ref-tasks-patch'><filename>do_unpack</filename></link>,
+            <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>,
+            <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>,
+            <link linkend='ref-tasks-install'><filename>do_install</filename></link>,
+            and
+            <link linkend='ref-tasks-package'><filename>do_package</filename></link>).
+        </para>
+
+        <para>
+            You can run this task using BitBake as follows:
+            <literallayout class='monospaced'>
+     $ bitbake -c clean &lt;recipe&gt;
+            </literallayout>
+        </para>
+
+        <para>
+            Running this task does not remove the
             <link linkend='shared-state-cache'>sstate</link>) cache
-            files are not deleted.
+            files.
             Consequently, if no changes have been made and the recipe is
             rebuilt after cleaning, output files are simply restored from the
             sstate cache.
@@ -304,6 +322,25 @@
             Removes all output files, shared state
             (<link linkend='shared-state-cache'>sstate</link>) cache, and
             downloaded source files for a target.
+            Essentially, the <filename>do_cleanall</filename> task is
+            identical to the
+            <link linkend='ref-tasks-cleansstate'><filename>do_cleansstate</filename></link>
+            task with the added removal of downloaded source files.
+        </para>
+
+        <para>
+            You can run this task using BitBake as follows:
+            <literallayout class='monospaced'>
+     $ bitbake -c cleanall &lt;recipe&gt;
+            </literallayout>
+        </para>
+
+        <para>
+            Typically, you would not normally use the
+            <filename>cleanall</filename> task.
+            Do so only if you want to start fresh with the
+            <link linkend='ref-tasks-fetch'><filename>do_fetch</filename></link>
+            task.
         </para>
     </section>
 
@@ -314,8 +351,27 @@
             Removes all output files and shared state
             (<link linkend='shared-state-cache'>sstate</link>)
             cache for a target.
+            Essentially, the <filename>do_cleansstate</filename> task is
+            identical to the
+            <link linkend='ref-tasks-clean'><filename>do_clean</filename></link>
+            task with the added removal of shared state
+            (<link linkend='shared-state-cache'>sstate</link>) cache.
         </para>
-    </section>
+
+        <para>
+            You can run this task using BitBake as follows:
+            <literallayout class='monospaced'>
+     $ bitbake -c cleansstate &lt;recipe&gt;
+            </literallayout>
+        </para>
+
+        <para>
+            When you run the <filename>do_cleanstate</filename> task,
+            the OpenEmbedded build system no longer uses any
+            sstate.
+            Consequently, building the recipe from scratch is guaranteed.
+        </para>
+     </section>
 
     <section id='ref-tasks-devshell'>
         <title><filename>do_devshell</filename></title>
