@@ -594,56 +594,61 @@
                 <literallayout class='monospaced'>
      BB_NO_NETWORK = "1"
                 </literallayout>
-                 This statement tells BitBake to issue an error instead of
-                 trying to access the Internet.
-                 This technique is useful if you want to ensure code builds
-                 only from local sources.
-             </para>
-             <para>
-                 Here is another technique:
-                 <literallayout class='monospaced'>
+                This statement tells BitBake to issue an error instead of
+                trying to access the Internet.
+                This technique is useful if you want to ensure code builds
+                only from local sources.
+            </para>
+            <para>
+                Here is another technique:
+                <literallayout class='monospaced'>
      BB_FETCH_PREMIRRORONLY = "1"
-                 </literallayout>
-                 This statement limits the build system to pulling source
-                 from the <filename>PREMIRRORS</filename> only.
-                 Again, this technique is useful for reproducing builds.
-             </para>
-             <para>
-                 Here is another technique:
-                 <literallayout class='monospaced'>
+                </literallayout>
+                This statement limits the build system to pulling source
+                from the <filename>PREMIRRORS</filename> only.
+                Again, this technique is useful for reproducing builds.
+            </para>
+            <para>
+                Here is another technique:
+                <literallayout class='monospaced'>
      BB_GENERATE_MIRROR_TARBALLS = "1"
-                 </literallayout>
-                 This statement tells the build system to generate mirror
-                 tarballs.
-                 This technique is useful if you want to create a mirror server.
-                 If not, however, the technique can simply waste time during
-                 the build.
-             </para>
-             <para>
-                 Finally, consider an example where you are behind an
-                 HTTP-only firewall.
-                 You could make the following changes to the
-                 <filename>local.conf</filename> configuration file as long as
-                 the <filename>PREMIRRORS</filename> server is current:
-                 <literallayout class='monospaced'>
+                </literallayout>
+                This statement tells the build system to generate mirror
+                tarballs.
+                This technique is useful if you want to create a mirror server.
+                If not, however, the technique can simply waste time during
+                the build.
+            </para>
+            <para>
+                Finally, consider an example where you are behind an
+                HTTP-only firewall.
+                You could make the following changes to the
+                <filename>local.conf</filename> configuration file as long as
+                the <filename>PREMIRRORS</filename> server is current:
+                <literallayout class='monospaced'>
      PREMIRRORS_prepend = "\
      ftp://.*/.* http://www.yoctoproject.org/sources/ \n \
      http://.*/.* http://www.yoctoproject.org/sources/ \n \
      https://.*/.* http://www.yoctoproject.org/sources/ \n"
      BB_FETCH_PREMIRRORONLY = "1"
-                 </literallayout>
-                 These changes would cause the build system to successfully
-                 fetch source over HTTP and any network accesses to anything
-                 other than the <filename>PREMIRRORS</filename> would fail.
-             </para>
-             <para>
-                 The build system also honors the standard shell environment
-                 variables <filename>http_proxy</filename>,
-                 <filename>ftp_proxy</filename>,
-                 <filename>https_proxy</filename>, and
-                 <filename>all_proxy</filename> to redirect requests through
-                 proxy servers.
-             </para>
+                </literallayout>
+                These changes would cause the build system to successfully
+                fetch source over HTTP and any network accesses to anything
+                other than the <filename>PREMIRRORS</filename> would fail.
+            </para>
+            <para>
+                The build system also honors the standard shell environment
+                variables <filename>http_proxy</filename>,
+                <filename>ftp_proxy</filename>,
+                <filename>https_proxy</filename>, and
+                <filename>all_proxy</filename> to redirect requests through
+                proxy servers.
+            </para>
+            <note>
+                 You can find more information on the
+                 "<ulink url='&YOCTO_WIKI_URL;/wiki/Working_Behind_a_Network_Proxy'>Working Behind a Network Proxy</ulink>"
+                 Wiki page.
+            </note>
         </answer>
     </qandaentry>
 
