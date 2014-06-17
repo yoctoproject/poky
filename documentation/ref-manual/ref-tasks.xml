@@ -77,6 +77,14 @@
             <link linkend='var-DEPLOYDIR'><filename>DEPLOYDIR</filename></link>
             variable.
         </para>
+
+        <para>
+            The <filename>do_deploy</filename> task is a
+            shared state (sstate) task, which means that the task can
+            be accelerated through sstate use.
+            Realize also that if the task is re-executed, any previous output
+            is removed (i.e. "cleaned").
+        </para>
     </section>
 
     <section id='ref-tasks-fetch'>
@@ -210,6 +218,14 @@
             task into the sysroot in order to make them available to other
             recipes.
         </para>
+
+        <para>
+            The <filename>do_populate_sysroot</filename> task is a
+            shared state (sstate) task, which means that the task can
+            be accelerated through sstate use.
+            Realize also that if the task is re-executed, any previous output
+            is removed (i.e. "cleaned").
+        </para>
     </section>
 
     <section id='ref-tasks-rm_work'>
@@ -321,7 +337,8 @@
         <para>
             Removes all output files, shared state
             (<link linkend='shared-state-cache'>sstate</link>) cache, and
-            downloaded source files for a target.
+            downloaded source files for a target (i.e. the contents of
+            <link linkend='var-DL_DIR'><filename>DL_DIR</filename></link>).
             Essentially, the <filename>do_cleanall</filename> task is
             identical to the
             <link linkend='ref-tasks-cleansstate'><filename>do_cleansstate</filename></link>
@@ -366,10 +383,19 @@
         </para>
 
         <para>
-            When you run the <filename>do_cleanstate</filename> task,
+            When you run the <filename>do_cleansstate</filename> task,
             the OpenEmbedded build system no longer uses any
             sstate.
             Consequently, building the recipe from scratch is guaranteed.
+            <note>
+                The <filename>do_cleansstate</filename> task cannot remove
+                sstate from a remote sstate mirror.
+                If you need to build a target from scratch using remote
+                mirrors, use the "-f" option as follows:
+                <literallayout class='monospaced'>
+     $ bitbake -f -c do_cleansstate &lt;target&gt;
+                </literallayout>
+            </note>
         </para>
      </section>
 
