@@ -895,42 +895,14 @@
         <para>
             A good deal that goes into a Yocto Project build is simply
             downloading all of the source tarballs.
-            Maybe you have been working with another build system
-            (OpenEmbedded or Angstrom) for which you have built up a sizable
-            directory of source tarballs.
-            Or, perhaps someone else has such a directory for which you have
-            read access.
-            If so, you can save time by adding statements to your
-            configuration file so that the build process checks local
-            directories first for existing tarballs before checking the
-            Internet.
-            Here is an efficient way to set it up in your
-            <filename>local.conf</filename> file:
-            <literallayout class='monospaced'>
-     SOURCE_MIRROR_URL ?= "file:///home/you/your-download-dir/"
-     INHERIT += "own-mirrors"
-     BB_GENERATE_MIRROR_TARBALLS = "1"
-     # BB_NO_NETWORK = "1"
-            </literallayout>
-        </para>
-
-        <para>
-            In the previous example, the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_GENERATE_MIRROR_TARBALLS'><filename>BB_GENERATE_MIRROR_TARBALLS</filename></ulink>
-            variable causes the OpenEmbedded build system to generate tarballs
-            of the Git repositories and store them in the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink>
-            directory.
-            Due to performance reasons, generating and storing these tarballs
-            is not the build system's default behavior.
-        </para>
-
-        <para>
-            You can also use the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-PREMIRRORS'><filename>PREMIRRORS</filename></ulink>
-            variable.
-            For an example, see the variable's glossary entry in the
-            Yocto Project Reference Manual.
+            Steps exist that can help you be more efficient with gathering
+            source files.
+            For example, you can set up local mirrors that hold your
+            source tarballs or you can pre-fetch all your source without
+            initiating a build until later.
+            For more information, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#working-with-source-files'>Working with Source Files</ulink>"
+            section in the Yocto Project Development Manual.
         </para>
     </section>
 
@@ -949,25 +921,13 @@
         </para>
 
         <para>
-            Here are some variations on the build process that could be helpful:
-            <itemizedlist>
-                <listitem><para>Fetch all the necessary sources without starting
-                    the build:
-                    <literallayout class='monospaced'>
-     $ bitbake -c fetchall core-image-minimal
-                    </literallayout>
-                    This variation guarantees that you have all the sources for
-                    that BitBake target should you disconnect from the net and
-                    want to do the build later offline.</para></listitem>
-                <listitem><para>Specify to continue the build even if BitBake
-                    encounters an error.
-                    By default, BitBake aborts the build when it encounters an
-                    error.
-                    This command keeps a faulty build going:
-                    <literallayout class='monospaced'>
+            By default, BitBake aborts when it encounters an error during
+            the build.
+            If you want to make sure the build continues even when BitBake
+            encounters an error, use this variation:
+            <literallayout class='monospaced'>
      $ bitbake -k core-image-minimal
-                    </literallayout></para></listitem>
-            </itemizedlist>
+            </literallayout>
         </para>
 
         <para>

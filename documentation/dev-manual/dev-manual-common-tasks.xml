@@ -6025,6 +6025,103 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
         </section>
     </section>
 
+    <section id='working-with-source-files'>
+        <title>Working with Source Files</title>
+
+        <para>
+            The OpenEmbedded build system works with source files located
+            through the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+            variable.
+            When you build something using BitBake, a big part of the operation
+            is locating and downloading all the source tarballs.
+            For images, downloading all the source for various packages can
+            take a significant amount of time.
+        </para>
+
+        <para>
+            This section presents information for working with source
+            files that can lead to more efficient use of resources and
+            time.
+        </para>
+
+        <section id='setting-up-effective-mirrors'>
+            <title>Setting up Effective Mirrors</title>
+
+            <para>
+                As mentioned, a good deal that goes into a Yocto Project
+                build is simply downloading all of the source tarballs.
+                Maybe you have been working with another build system
+                (OpenEmbedded or Angstrom) for which you have built up a
+                sizable directory of source tarballs.
+                Or, perhaps someone else has such a directory for which you
+                have read access.
+                If so, you can save time by adding statements to your
+                configuration file so that the build process checks local
+                directories first for existing tarballs before checking the
+                Internet.
+            </para>
+
+            <para>
+                Here is an efficient way to set it up in your
+                <filename>local.conf</filename> file:
+                <literallayout class='monospaced'>
+     SOURCE_MIRROR_URL ?= "file:///home/you/your-download-dir/"
+     INHERIT += "own-mirrors"
+     BB_GENERATE_MIRROR_TARBALLS = "1"
+     # BB_NO_NETWORK = "1"
+                </literallayout>
+            </para>
+
+            <para>
+                In the previous example, the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_GENERATE_MIRROR_TARBALLS'><filename>BB_GENERATE_MIRROR_TARBALLS</filename></ulink>
+                variable causes the OpenEmbedded build system to generate
+                tarballs of the Git repositories and store them in the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink>
+                directory.
+                Due to performance reasons, generating and storing these
+                tarballs is not the build system's default behavior.
+            </para>
+
+            <para>
+                You can also use the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PREMIRRORS'><filename>PREMIRRORS</filename></ulink>
+                variable.
+                For an example, see the variable's glossary entry in the
+                Yocto Project Reference Manual.
+            </para>
+        </section>
+
+        <section id='getting-source-files-and-suppressing-the-build'>
+            <title>Getting Source Files and Suppressing the Build</title>
+
+            <para>
+                Another technique you can use to ready yourself for a
+                successive string of build operations, is to pre-fetch
+                all the source files without actually starting a build.
+                This technique lets you work through any download issues
+                and ultimately gathers all the source files into your
+                download directory
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-build-downloads'><filename>build/downloads</filename></ulink>,
+                which is located with
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink>.
+            </para>
+
+            <para>
+                Use the following BitBake command form to fetch all the
+                necessary sources without starting the build:
+                <literallayout class='monospaced'>
+     $ bitbake -c fetchall &lt;target&gt;
+                </literallayout>
+                This variation of the BitBake command guarantees that you
+                have all the sources for that BitBake target should you
+                disconnect from the Internet and want to do the build
+                later offline.
+            </para>
+        </section>
+    </section>
+
     <section id="building-software-from-an-external-source">
         <title>Building Software from an External Source</title>
 
