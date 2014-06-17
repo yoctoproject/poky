@@ -324,6 +324,22 @@ Load the kernel and dtb (device tree blob), and boot the system as follows:
  => tftp 2000000 uImage-mpc8315e-rdb.dtb
  => bootm 1000000 - 2000000
 
+--- Booting from JFFS2 root ---
+
+ 1. First boot the board with NFS root.
+
+ 2. Erase the MTD partition which will be used as root:
+
+    $ flash_eraseall  /dev/mtd3
+
+ 3. Copy the JFFS2 image to the MTD partition:
+
+    $ flashcp core-image-minimal-mpc8315e-rdb.jffs2 /dev/mtd3
+
+ 4. Then reboot the board and set up the environment in U-Boot:
+
+    => setenv bootargs root=/dev/mtdblock3 rootfstype=jffs2 console=ttyS0,115200
+
 
 Ubiquiti Networks EdgeRouter Lite (edgerouter)
 ==============================================
