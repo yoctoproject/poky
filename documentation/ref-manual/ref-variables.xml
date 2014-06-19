@@ -8208,6 +8208,22 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-TARGET_AS_ARCH'><glossterm>TARGET_AS_ARCH</glossterm>
+            <glossdef>
+                <para>
+                    Specifies architecture-specific assembler flags for the
+                    target system.
+                    <filename>TARGET_AS_ARCH</filename> is initialized from
+                    <link linkend='var-TUNE_ASARGS'><filename>TUNE_ASARGS</filename></link>
+                    by default in the BitBake configuration file
+                    (<filename>meta/conf/bitbake.conf</filename>):
+                    <literallayout class='monospaced'>
+     TARGET_AS_ARCH = "${TUNE_ASARGS}"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-TARGET_CC_ARCH'><glossterm>TARGET_CC_ARCH</glossterm>
             <glossdef>
                 <para>
@@ -8851,6 +8867,30 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      mips
      mipsel
                     </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TUNE_ASARGS'><glossterm>TUNE_ASARGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies architecture-specific assembler flags for
+                    the target system.
+                    The set of flags is based on the selected tune features.
+                    <filename>TUNE_ASARGS</filename> is set using
+                    the tune include files, which are typically under
+                    <filename>meta/conf/machine/include/</filename> and are
+                    influenced through <filename>TUNE_FEATURES</filename>.
+                    For example, the
+                    <filename>meta/conf/machine/include/x86/arch-x86.inc</filename>
+                    file defines the flags for the x86 architecture as follows:
+                    <literallayout class='monospaced'>
+     TUNE_ASARGS += "${@bb.utils.contains("TUNE_FEATURES", "mx32", "-x32", "", d)}"
+                    </literallayout>
+                    <note>
+                        Board Support Packages (BSPs) can supply their own
+                        set of flags.
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
