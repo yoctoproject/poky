@@ -251,6 +251,34 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-AVAILTUNES'><glossterm>AVAILTUNES</glossterm>
+            <glossdef>
+                <para>
+                    The list of defined CPU and Application Binary Interface
+                    (ABI) tunings (i.e.  "tunes") available for use by the
+                    OpenEmbedded build system.
+                </para>
+
+                <para>
+                    The list simply presents the tunes that are available.
+                    Not all tunes may be compatible with a particular
+                    machine configuration, or with each other in a
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#combining-multiple-versions-library-files-into-one-image'>Multilib</ulink>
+                    configuration.
+                </para>
+
+                <para>
+                    To add a tune to the list, be sure to append it with
+                    spaces using the "+=" BitBake operator.
+                    Do not simply replace the list by using the "=" operator.
+                    See the
+                    "<ulink url='&YOCTO_DOCS_BB_URL;#basic-syntax'>Basic Syntax</ulink>"
+                    section in the BitBake User Manual for more information.
+                </para>
+            </glossdef>
+        </glossentry>
+
+
     </glossdiv>
 
     <glossdiv id='var-glossary-b'><title>B</title>
@@ -1701,6 +1729,27 @@
                     if that variable is different between two layers
                     that contain different versions of the same recipe.
                 </note>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-DEFAULTTUNE'><glossterm>DEFAULTTUNE</glossterm>
+            <glossdef>
+                <para>
+                    The default CPU and Application Binary Interface (ABI)
+                    tunings (i.e.  the "tune") used by the OpenEmbedded build
+                    system.
+                    The <filename>DEFAULTTUNE</filename> helps define
+                    <link linkend='var-TUNE_FEATURES'><filename>TUNE_FEATURES</filename></link>.
+                </para>
+
+                <para>
+                    The default tune is either implicitly or explicitly set
+                    by the machine
+                    (<link linkend='var-MACHINE'><filename>MACHINE</filename></link>).
+                    However, you can override the setting using available tunes
+                    as defined with
+                    <link linkend='var-AVAILTUNES'><filename>AVAILTUNES</filename></link>.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -8949,6 +8998,36 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                         Board Support Packages (BSPs) can supply their own
                         set of flags.
                     </note>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TUNE_FEATURES'><glossterm>TUNE_FEATURES</glossterm>
+            <glossdef>
+                <para>
+                    Features used to "tune" a compiler for optimal use
+                    given a specific processor.
+                    The features are defined within the tune files and allow
+                    arguments (i.e. <filename>TUNE_*ARGS</filename>) to be
+                    dynamically generated based on the features.
+                </para>
+
+                <para>
+                    The OpenEmbedded build system verifies the features
+                    to be sure they are not conflicting and that they are
+                    supported.
+                </para>
+
+                <para>
+                    The BitBake configuration file
+                    (<filename>meta/conf/bitbake.conf</filename>) defines
+                    <filename>TUNE_FEATURES</filename> as follows:
+                    <literallayout class='monospaced'>
+     TUNE_FEATURES ??= "${TUNE_FEATURES_tune-${DEFAULTTUNE}}"
+                    </literallayout>
+                    See the
+                    <link linkend='var-DEFAULTTUNE'><filename>DEFAULTTUNE</filename></link>
+                    variable for more information.
                 </para>
             </glossdef>
         </glossentry>
