@@ -8320,6 +8320,22 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-TARGET_LD_ARCH'><glossterm>TARGET_LD_ARCH</glossterm>
+            <glossdef>
+                <para>
+                    Specifies architecture-specific linker flags for the
+                    target system.
+                    <filename>TARGET_LD_ARCH</filename> is initialized from
+                    <link linkend='var-TUNE_LDARGS'><filename>TUNE_LDARGS</filename></link>
+                    by default in the BitBake configuration file
+                    (<filename>meta/conf/bitbake.conf</filename>):
+                    <literallayout class='monospaced'>
+     TARGET_LD_ARCH = "${TUNE_LDARGS}"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-TARGET_LDFLAGS'><glossterm>TARGET_LDFLAGS</glossterm>
             <glossdef>
                 <para>
@@ -8905,6 +8921,30 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     the tune include files, which are typically under
                     <filename>meta/conf/machine/include/</filename> and are
                     influenced through <filename>TUNE_FEATURES</filename>.
+                    <note>
+                        Board Support Packages (BSPs) can supply their own
+                        set of flags.
+                    </note>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TUNE_LDARGS'><glossterm>TUNE_LDARGS</glossterm>
+            <glossdef>
+                <para>
+                    Specifies architecture-specific linker flags for
+                    the target system.
+                    The set of flags is based on the selected tune features.
+                    <filename>TUNE_LDARGS</filename> is set using
+                    the tune include files, which are typically under
+                    <filename>meta/conf/machine/include/</filename> and are
+                    influenced through <filename>TUNE_FEATURES</filename>.
+                    For example, the
+                    <filename>meta/conf/machine/include/x86/arch-x86.inc</filename>
+                    file defines the flags for the x86 architecture as follows:
+                    <literallayout class='monospaced'>
+     TUNE_LDARGS += "${@bb.utils.contains("TUNE_FEATURES", "mx32", "-m elf32_x86_64", "", d)}"
+                    </literallayout>
                     <note>
                         Board Support Packages (BSPs) can supply their own
                         set of flags.
