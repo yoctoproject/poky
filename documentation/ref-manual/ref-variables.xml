@@ -9068,15 +9068,65 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     An underlying Application Binary Interface (ABI) used by
                     a particular tuning in a given toolchain layer.
-                    Providers that use prebuilt libraries can use
-                    <filename>TUNEABI</filename> to check compatibility
-                    of a tuning against their selection of libraries.
+                    Providers that use prebuilt libraries can use the
+                    <filename>TUNEABI</filename>,
+                    <link linkend='var-TUNEABI_OVERRIDE'><filename>TUNEABI_OVERRIDE</filename></link>,
+                    and
+                    <link linkend='var-TUNEABI_WHITELIST'><filename>TUNEABI_WHITELIST</filename></link>
+                    variables to check compatibility of tunings against their
+                    selection of libraries.
                 </para>
 
                 <para>
-                    The OpenEmbedded build system checks this variable for
-                    "True" or "".
-                    If the variable is undefined, then every tune is allowed.
+                    If <filename>TUNEABI</filename> is undefined, then every
+                    tuning is allowed.
+                    See the
+                    <link linkend='ref-classes-sanity'><filename>sanity</filename></link>
+                    class to see how the variable is used.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TUNEABI_OVERRIDE'><glossterm>TUNEABI_OVERRIDE</glossterm>
+            <glossdef>
+                <para>
+                    If set, the OpenEmbedded system ignores the
+                    <link linkend='var-TUNEABI_WHITELIST'><filename>TUNEABI_WHITELIST</filename></link>
+                    variable.
+                    Providers that use prebuilt libraries can use the
+                    <filename>TUNEABI_OVERRIDE</filename>,
+                    <filename>TUNEABI_WHITELIST</filename>,
+                    and
+                    <link linkend='var-TUNEABI'><filename>TUNEABI</filename></link>
+                    variables to check compatibility of a tuning against their
+                    selection of libraries.
+                </para>
+
+                <para>
+                    See the
+                    <link linkend='ref-classes-sanity'><filename>sanity</filename></link>
+                    class to see how the variable is used.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TUNEABI_WHITELIST'><glossterm>TUNEABI_WHITELIST</glossterm>
+            <glossdef>
+                <para>
+                    A whitelist of permissible
+                    <link linkend='var-TUNEABI'><filename>TUNEABI</filename></link>
+                    values.
+                    If <filename>TUNEABI_WHITELIST</filename> is not set,
+                    all tunes are allowed.
+                    Providers that use prebuilt libraries can use the
+                    <filename>TUNEABI_WHITELIST</filename>,
+                    <link linkend='var-TUNEABI_OVERRIDE'><filename>TUNEABI_OVERRIDE</filename></link>,
+                    and <filename>TUNEABI</filename> variables to check
+                    compatibility of a tuning against their selection of
+                    libraries.
+                </para>
+
+                <para>
                     See the
                     <link linkend='ref-classes-sanity'><filename>sanity</filename></link>
                     class to see how the variable is used.
