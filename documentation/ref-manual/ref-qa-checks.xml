@@ -271,7 +271,7 @@
             <listitem>
                 <para>
                     <code>
-     Architecture did not match (&lt;machine_arch&gt; to &lt;file_arch&gt;) on &lt;file&gt;
+     Architecture did not match (&lt;machine_arch&gt; to &lt;file_arch&gt;) on &lt;file&gt; [arch]
                     </code>
                 </para>
 
@@ -310,7 +310,7 @@
             <listitem>
                 <para>
                     <code>
-     Bit size did not match (&lt;machine_bits&gt; to &lt;file_bits&gt;) &lt;recipe&gt; on &lt;file&gt;
+     Bit size did not match (&lt;machine_bits&gt; to &lt;file_bits&gt;) &lt;recipe&gt; on &lt;file&gt; [arch]
                     </code>
                 </para>
 
@@ -946,11 +946,18 @@
                     In order for debugging to work on the target using
                     <filename>-dbg</filename> packages, this stripping must be
                     disabled.
+                </para>
+
+                <para>
                     Depending on the build system used by the software being
                     built, disabling this stripping could be as easy as
                     specifying an additional configure option.
                     If not, disabling stripping might involve patching
                     the build scripts.
+                    In the latter case, look for references to "strip" or
+                    "STRIP", or the "-s" or "-S" command-line options being
+                    specified on the linker command line (possibly
+                    through the compiler command line if preceded with "-Wl,").
                     <note>
                         Disabling stripping here does not mean that the final
                         packaged binaries will be unstripped.
