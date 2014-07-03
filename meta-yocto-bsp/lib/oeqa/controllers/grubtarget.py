@@ -55,7 +55,7 @@ class GrubTarget(MasterImageHardwareTarget):
             serialconn = pexpect.spawn(self.serialcontrol_cmd, env=self.origenv, logfile=sys.stdout)
             serialconn.expect("GNU GRUB  version 2.00")
             serialconn.expect("Linux")
-            serialconn.sendline("OB\r")
+            serialconn.sendline("x")
             serialconn.expect("login:", timeout=120)
             serialconn.close()
         except pexpect.ExceptionPexpect as e:
