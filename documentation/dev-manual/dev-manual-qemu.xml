@@ -1,0 +1,129 @@
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
+
+<chapter id='dev-manual-qemu'>
+
+<title>Using the Quick EMUlator</title>
+
+<para>
+    Quick EMUlator (QEMU) is an Open Source project the Yocto Project uses
+    as part of its development "toolset".
+    As such, the information in this chapter is limited to the
+    Yocto Project instatiation of QEMU and not QEMU in general.
+    For official information and documentation on QEMU, see the
+    following references:
+    <itemizedlist>
+        <listitem><para><emphasis><ulink url='http://wiki.qemu.org/Main_Page'>QEMU Website</ulink>:</emphasis>
+            The official website for the QEMU Open Source project.
+            </para></listitem>
+        <listitem><para><emphasis><ulink url='http://wiki.qemu.org/Manual'>Documentation</ulink>:</emphasis>
+            The QEMU user manual.
+            </para></listitem>
+    </itemizedlist>
+</para>
+
+<para>
+    This chapter provides an overview of the Yocto Project instantiation of
+    QEMU, a description of how you use QEMU and its various options and modes,
+    and a few tips and tricks you might find helpful when using QEMU.
+</para>
+
+<section id='qemu-overview'>
+    <title>Overview</title>
+
+    <para>
+        Within the context of the Yocto Project, QEMU is an
+        emulator and virtualization machine that allows you to run a complete
+        image you have built using the Yocto Project as just another task
+        on your build system.
+        QEMU is useful for running and testing images and applications on
+        supported Yocto Project architectures without having actual hardware.
+    </para>
+
+    <para>
+        QEMU is made available with the Yocto Project a number of ways.
+        The easiest and recommended method for getting QEMU is to run the
+        ADT installer.  For more information on how to make sure you have
+        QEMU available, see the
+        "<ulink url='&YOCTO_DOCS_ADT_URL;#the-qemu-emulator'>The QEMU Emulator</ulink>"
+        section in the Yocto Project Application Developer's Guide.
+    </para>
+</section>
+
+<section id='qemu-running-qemu'>
+    <title>Running QEMU</title>
+
+    <para>
+        Running QEMU involves having your build environment set up, having the
+        right artifacts available, and understanding how to use the many
+        options that are available to you when you start QEMU using the
+        <filename>runqemu</filename> command.
+    </para>
+
+    <section id='qemu-setting-up-the-environment'>
+        <title>Setting Up the Environment</title>
+
+        <para>
+            You run QEMU in the same environment from which you run BitBake.
+            This means you need to source a build environment script (i.e.
+            <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
+            or
+            <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>).
+        </para>
+    </section>
+
+    <section id='qemu-using-the-runqemu-command'>
+        <title>Using the <filename>runqemu</filename> Command</title>
+
+        <para>
+            The basic <filename>runqemu</filename> command syntax is as
+            follows:
+            <literallayout class='monospaced'>
+     $ runqemu [<replaceable>option</replaceable> ]  [<replaceable>option</replaceable> ] [...]
+            </literallayout>
+            <filename>runqemu</filename> does a good job based on what you
+            provide with the command at figuring out what you are trying
+            to do.
+            Minimally, through the use of options, you must provide either
+            a machine name, a virtual machine image
+            (<filename>*.vmdk</filename>), or a kernel image
+            (<filename>*.bin</filename>).
+        </para>
+
+        <para>
+            If you do provide some "illegal" combination or options or perhaps
+            do not provide enough in the way of options,
+            <filename>runqemu</filename> provides appropriate error messaging
+            to help you figure it out.
+        </para>
+
+        <para>
+            Following is a description of <filename>runqemu</filename>
+            options you can provide on the command line:
+            <itemizedlist>
+                <listitem><para><emphasis><replaceable>QEMUARCH</replaceable>:</emphasis>
+                    The QEMU machine architecture, which can be "qemux86",
+                    "qemux86-64", "qemuarm", "qemumips", "qemumipsel",
+                    “qemumips64", "qemush4", "qemuppc", "qemumicroblaze",
+                    or "qemuzynq".
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
+
+<section id='qemu-modes'>
+    <title>Modes</title>
+
+</section>
+
+<section id='qemu-tips-and-tricks'>
+    <title>Tips and Tricks</title>
+
+</section>
+
+</chapter>
+<!--
+vim: expandtab tw=80 ts=4
+-->
