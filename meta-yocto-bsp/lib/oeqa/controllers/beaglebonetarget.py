@@ -45,7 +45,7 @@ class BeagleBoneTarget(MasterImageHardwareTarget):
                 'mount -L testrootfs /mnt/testrootfs',
                 'rm -rf /mnt/testrootfs/*',
                 'tar xvf ~/test-rootfs.%s -C /mnt/testrootfs' % self.image_fstype,
-                '[ -e /mnt/testrootfs/boot/uImage ] || cp ~/test-kernel /mnt/testrootfs/boot/uImage',
+                '[ -e /mnt/testrootfs/boot/uImage ] || [ -L /mnt/testrootfs/boot/uImage ] || cp ~/test-kernel /mnt/testrootfs/boot/uImage',
                 ]
 
         for _, dtbfn in self.dtbs.iteritems():
