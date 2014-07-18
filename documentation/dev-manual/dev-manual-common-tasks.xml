@@ -1940,7 +1940,7 @@
             format the device requires.
             Should your device require multiple partitions on an SD card, flash,
             or an HDD, you can use the OpenEmbedded Image Creator
-            () to create the properly partitioned image.
+            to create the properly partitioned image.
         </para>
 
         <para>
@@ -1949,8 +1949,10 @@
             Image generation is driven by partitioning commands contained
             in an Openembedded kickstart file (<filename>.wks</filename>)
             specified either directly on the command-line or as one of a
-            selection of canned <filename>.wks</filename> files
-            (see 'wic list images').
+            selection of canned <filename>.wks</filename> files as shown
+            with the <filename>wic list images</filename> command in the
+            "<link linkend='using-a-provided-kickstart_file'>Using a Provided Kickstart File</link>"
+            section.
             When applied to a given set of build artifacts, the result is an
             image or set of images that can be directly written onto media and
             used on a particular system.
@@ -2002,34 +2004,6 @@
                 </itemizedlist>
             </para>
         </section>
-
-<!--
-
-        <para>
-            This section covers the mechanics of invoking and providing help for
-the command and sub-commands; it contains hooks for future commits to
-connect with the actual functionality, once implemented.
-        </para>
-
-        <para>
-            Help is integrated into the 'wic' command itself - you can also see
-that for details and reminders on usage (simply invoke 'wic' without
-any arguments to get started).
-        </para>
-
-        <note>
-            Just because 'wic' can generate an image does not mean that it
-will boot on a given machine. 'wic' tries to spot the most obvious
-usages that are likely to cause problems but, as a relatively
-low-level tool, it can't in general figure out whether a generated
-image is appropriate for a given piece of hardware - it's really up to
-you to provide intelligent inputs to the image creation process. If
-you suspect that your image is not working as expected due to some bug
-or missing feature of the tool, please file a bug report describing
-the details.
-        </note>
-
--->
 
         <section id='wic-requirements'>
             <title>Requirements</title>
@@ -2131,14 +2105,65 @@ the details.
                 </itemizedlist>
             </para>
 
+            <para>
+                Regardless of the mode you use, you need to have the build
+                artifacts ready and available.
+                Additionally, the environment must be set up using the
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
+                or
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>
+                script found in the
+                <link linkend='build-directory'>Build Directory</link>.
+            </para>
+
             <section id='raw-mode'>
                 <title>Raw Mode</title>
 
                 <para>
                     The general form of the 'wic' command in raw mode is:
                     <literallayout class='monospaced'>
-     $ wic create &lt;image_name&gt;.wks -r &lt;rootfs_dir&gt; -b &lt;bootimg_dir&gt; /
-           -k &lt;kernel_dir&gt; -n &lt;native_sysroot&gt;
+     $ wic create <replaceable>image_name</replaceable>.wks [<replaceable>options</replaceable>] [...]
+
+         Where:
+
+             <replaceable>image_name</replaceable>.wks
+                               An an OpenEmbedded kickstart file.  You can provide
+                               your own custom file or use a file from a set of
+                               provided files as described by further options.
+
+             -o <replaceable>OUTDIR</replaceable>, --outdir=<replaceable>OUTDIR</replaceable>
+                               The name of a directory in which to create image.
+
+             -i <replaceable>PROPERTIES_FILE</replaceable>, --infile=<replaceable>PROPERTIES_FILE</replaceable>
+                               The name of a file containing the values for image
+                               properties as a JSON file.
+
+             -e <replaceable>IMAGE_NAME</replaceable>, --image-name=<replaceable>IMAGE_NAME</replaceable>
+                               The name of the image from which to use the artifacts
+                               (e.g. <filename>core-image-sato</filename>).
+
+             -r <replaceable>ROOTFS_DIR</replaceable>, --rootfs-dir=<replaceable>ROOTFS_DIR</replaceable>
+                               The path to the <filename>/rootfs</filename> directory to use as the
+                               <filename>.wks</filename> rootfs source.
+
+             -b <replaceable>BOOTIMG_DIR</replaceable>, --bootimg-dir=<replaceable>BOOTIMG_DIR</replaceable>
+                               The path to the directory containing the boot artifacts
+                               (e.g. <filename>/EFI</filename> or <filename>/syslinux</filename>) to use as the <filename>.wks</filename> bootimg
+                               source.
+
+             -k <replaceable>KERNEL_DIR</replaceable>, --kernel-dir=<replaceable>KERNEL_DIR</replaceable>
+                               The path to the directory containing the kernel to use
+                               in the <filename>.wks</filename> boot image.
+
+             -n <replaceable>NATIVE_SYSROOT</replaceable>, --native-sysroot=<replaceable>NATIVE_SYSROOT</replaceable>
+                               The path to the native sysroot containing the tools to use
+                               to build the image.
+
+             -p, --skip-build-check
+                               Skips the build check.
+
+             -D, --debug
+                               Output debug information.
                     </literallayout>
                     <note>
                         You do not need root privileges to run
@@ -2146,37 +2171,6 @@ the details.
                         In fact, you should not run as root when using the
                         utility.
                     </note>
-                </para>
-
-                <para>
-                    Following is a description of the <filename>wic</filename>
-                    parameters and options:
-                    <itemizedlist>
-                        <listitem><para><emphasis><filename>&lt;image_name&gt;.wks</filename>:</emphasis>
-                            An OpenEmbedded kickstart file.
-                            You can provide your own custom file or use a
-                            file from a set of provided files as described
-                            following this list.</para></listitem>
-                        <listitem><para><emphasis><filename>-r &lt;rootfs_dir&gt;</filename>:</emphasis>
-                            Specifies the path to the root filesystem directory
-                            to be used and the <filename>.wks</filename>
-                            root filesystem source.</para></listitem>
-                        <listitem><para><emphasis><filename>-b &lt;bootimg_dir&gt;</filename>:</emphasis>
-                            Specifies the path to the directory that contains
-                            the boot artifacts (e.g. the
-                            <filename>EFI</filename> or
-                            <filename>syslinux</filename> directories) to use
-                            as the <filename>.wks</filename> boot image source.
-                            </para></listitem>
-                        <listitem><para><emphasis><filename>-k &lt;kernel_dir&gt;</filename>:</emphasis>
-                            Specifies the path to the dir containing the kernel
-                            to use in the <filename>.wks</filename> boot
-                            image.</para></listitem>
-                        <listitem><para><emphasis><filename>-n &lt;native_sysroot&gt;</filename>:</emphasis>
-                             Specifies the path to the native sysroot
-                             that contains the tools used to build the image.
-                             </para></listitem>
-                    </itemizedlist>
                 </para>
             </section>
 
@@ -2187,27 +2181,23 @@ the details.
                     The general form of the <filename>wic</filename> command
                     using Cooked Mode is:
                     <literallayout class='monospaced'>
-     $ wic create &lt;kickstart_file&gt; -e &lt;image_name&gt;
+     $ wic create <replaceable>kickstart_file</replaceable> -e <replaceable>image_name</replaceable>
+
+         Where:
+
+             <replaceable>kickstart_file</replaceable>
+                               An OpenEmbedded kickstart file. You can provide your own
+                               custom file or supplied file.
+
+             <replaceable>image_name</replaceable>
+                               Specifies the image built using the OpenEmbedded build
+                               system.
                     </literallayout>
                     This form is the simplest and most user-friendly, as it
                     does not require specifying all individual parameters.
                     All you need to provide is your own
                     <filename>.wks</filename> file or one provided with the
                     release.
-                </para>
-
-                <para>
-                    Following is a description of the <filename>wic</filename>
-                    parameters and options:
-                    <itemizedlist>
-                        <listitem><para><emphasis><filename>&lt;kickstart&gt;</filename>:</emphasis>
-                            An OpenEmbedded kickstart file.
-                            You can provide your own custom file or supplied
-                            file.</para></listitem>
-                        <listitem><para><emphasis><filename>-e &lt;image_name&gt;</filename>:</emphasis>
-                            Specifies the image built using the OpenEmbedded
-                            build system.</para></listitem>
-                    </itemizedlist>
                 </para>
             </section>
         </section>
@@ -2222,16 +2212,16 @@ the details.
                 Use the following command to list the available files:
                 <literallayout class='monospaced'>
      $ wic list images
-     mkefidisk Create an EFI disk image
      directdisk Create a 'pcbios' direct disk image
+     mkefidisk Create an EFI disk image
                  </literallayout>
                  When you use a provided file, you do not have to use the
                  <filename>.wks</filename> extension.
                  Here is an example in Raw Mode that uses the
                  <filename>directdisk</filename> file:
                  <literallayout class='monospaced'>
-     $ wic create directdisk -r &lt;rootfs_dir&gt; -b &lt;bootimg_dir&gt; \
-           -k &lt;kernel_dir&gt; -n &lt;native_sysroot&gt;
+     $ wic create directdisk -r <replaceable>rootfs_dir</replaceable> -b <replaceable>bootimg_dir</replaceable> \
+           -k <replaceable>kernel_dir</replaceable> -n <replaceable>native_sysroot</replaceable>
                 </literallayout>
             </para>
 
@@ -2244,13 +2234,13 @@ the details.
      # long-description: Creates a partitioned EFI disk image that the user
      # can directly dd to boot media.
 
-     part /boot --source bootimg --ondisk sda --fstype=efi --label msdos --active --align 1024
+     part /boot &dash;&dash;source bootimg-efi &dash;&dash;ondisk sda &dash;&dash;fstype=efi &dash;&dash;active
 
-     part / --source rootfs --ondisk sda --fstype=ext3 --label platform --align 1024
+     part / &dash;&dash;source rootfs &dash;&dash;ondisk sda &dash;&dash;fstype=ext3 &dash;&dash;label platform
 
-     part swap --ondisk sda --size 44 --label swap1 --fstype=swap
+     part swap &dash;&dash;ondisk sda &dash;&dash;size 44 &dash;&dash;label swap1 &dash;&dash;fstype=swap
 
-     bootloader --timeout=10 --append="rootwait rootfstype=ext3 console=ttyPCH0,115200 console=tty0 vmalloc=256MB snd-hda-     intel.enable_msi=0"
+     bootloader  &dash;&dash;timeout=10  &dash;&dash;append="rootwait console=ttyPCH0,115200"
                 </literallayout>
             </para>
         </section>
@@ -2377,7 +2367,8 @@ the details.
                     directory and then changing the lines that specify the
                     target disk from which to boot.
                     <literallayout class='monospaced'>
-     $ cp /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisk.wks /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisksdb.wks
+     $ cp /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisk.wks \
+          /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/directdisksdb.wks
                     </literallayout>
                     Next, the example modifies the
                     <filename>directdisksdb.wks</filename> file and changes all
@@ -2474,7 +2465,11 @@ the details.
                     somewhere other than the default
                     <filename>/var/tmp/wic</filename> directory:
                     <literallayout class='monospaced'>
-     $ wic create ~/test.wks -o /home/trz/testwic --rootfs-dir /home/trz/yocto/yocto-image/build/tmp/work/crownbay_noemgd-poky-linux/core-image-minimal/1.0-r0/rootfs --bootimg-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/share  --kernel-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel --native-sysroot /home/trz/yocto/yocto-image/build/tmp/sysroots/x86_64-linux
+     $ wic create ~/test.wks -o /home/trz/testwic --rootfs-dir \
+          /home/trz/yocto/yocto-image/build/tmp/work/crownbay_noemgd-poky-linux/core-image-minimal/1.0-r0/rootfs \
+          --bootimg-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/share \
+          --kernel-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel \
+          --native-sysroot /home/trz/yocto/yocto-image/build/tmp/sysroots/x86_64-linux
 
      Creating image(s)...
 
