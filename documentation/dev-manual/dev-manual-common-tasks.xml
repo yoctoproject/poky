@@ -2668,6 +2668,7 @@
                     <listitem><para>Using an Autotooled package</para></listitem>
                     <listitem><para>Using a Makefile-based package</para></listitem>
                     <listitem><para>Splitting an application into multiple packages</para></listitem>
+                    <listitem><para>Adding binaries to an image</para></listitem>
                 </itemizedlist>
             </para>
 
@@ -2866,6 +2867,96 @@
                     Files included by earlier packages are skipped by latter packages.
                     Thus, the main <filename>PN</filename> package
                     does not include the above listed files.
+                </para>
+            </section>
+
+            <section id='packaging-externally-produced-binaries'>
+                <title>Packaging Externally Produced Binaries</title>
+
+                <para>
+                    Sometimes, you need to add pre-compiled binaries to an
+                    image.
+                    For example, suppose that binaries for proprietary code
+                    exist, which are created by a particular division of a
+                    company.
+                    Your part of the company needs to use those binaries as
+                    part of an image that you are building using the
+                    OpenEmbedded build system.
+                    Since you only have the binaries and not the source code,
+                    you cannot use a typical recipe that expects to fetch the
+                    source specified in
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                    and then compile it.
+                </para>
+
+                <para>
+                    One method is to package the binaries and then install them
+                    as part of the image.
+                    Generally, it is not a good idea to package binaries
+                    since, among other things, it can hinder the ability to
+                    reproduce builds and could lead to compatibility problems
+                    with ABI in the future.
+                    However, sometimes you have no choice.
+                </para>
+
+                <para>
+                    The easiest solution is to create a recipe that uses
+                    the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-bin-package'><filename>bin_package</filename></ulink>
+                    class and to be sure that you are using default locations
+                    for build artifacts.
+                    In most cases, the <filename>bin_package</filename> class
+                    handles "skipping" the configure and compile steps as well
+                    as sets things up to grab packages from the appropriate
+                    area.
+                    In particular, this class sets <filename>noexec</filename>
+                    on both the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-configure'><filename>do_configure</filename></ulink>
+                    and
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-compile'><filename>do_compile</filename></ulink>
+                    tasks, sets
+                    <filename>FILES_${PN}</filename> to "/" so that it picks
+                    up all files, and sets up a
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
+                    task, which effectively copies all files from
+                    <filename>${S}</filename> to <filename>${D}</filename>.
+                    For more information on these variables, see the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'><filename>FILES</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>,
+                    and
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink>
+                    variables in the Yocto Project Reference Manual's variable
+                    glossary.
+                </para>
+
+                <para>
+                    If you can't use the <filename>bin_package</filename>
+                    class, you need to be sure you are doing the following:
+                    <itemizedlist>
+                        <listitem><para>Create a recipe where the
+                            <filename>do_configure</filename> and
+                            <filename>do_compile</filename> tasks do nothing:
+                            <literallayout class='monospaced'>
+     do_configure[noexec] = "1"
+     do_compile[noexec] = "1"
+                            </literallayout>
+                            Alternatively, you can make these tasks an empty
+                            function.
+                            </para></listitem>
+                        <listitem><para>make sure your
+                            <filename>do_install</filename> task installs the
+                            binaries appropriately.
+                            </para></listitem>
+                        <listitem><para>Ensure that you set up
+                            <filename>FILES</filename> (usually
+                            <filename>FILES_${PN}</filename>) to point to the
+                            files you have installed, which of course depends
+                            on where you have installed them and whether
+                            those files are in different locations than the
+                            defaults.
+                            </para></listitem>
+                    </itemizedlist>
                 </para>
             </section>
         </section>
