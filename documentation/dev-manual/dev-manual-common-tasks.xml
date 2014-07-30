@@ -4007,6 +4007,159 @@
             </section>
         </section>
 
+        <section id='openembedded-kickstart-plugins'>
+            <title>Plugins</title>
+
+            <para>
+	            Plugins allow <filename>wic</filename> functionality to
+	            be extended and specialized by users.
+                This section documents the plugin interface, which is
+                currently restricted to source plugins.
+            </para>
+
+            <para>
+	            Source plugins provide a mechanism to customize
+	            various aspects of the image generation process in
+	            <filename>wic</filename>, mainly the contents of
+	            partitions.
+	            The plugins provide a mechanism for mapping values
+	            specified in <filename>.wks</filename> files using the
+	            <filename>&dash;&dash;source</filename> keyword to a
+                particular plugin implementation that populates a
+                corresponding partition.
+            </para>
+
+            <para>
+	            A source plugin is created as a subclass of
+	            <filename>SourcePlugin</filename>.
+                The plugin file containing it is added to
+	            <filename>scripts/lib/mic/plugins/source/</filename> to
+	            make the plugin implementation available to the
+	            <filename>wic</filename> implementation.
+                For more information, see
+	            <filename>scripts/lib/mic/pluginbase.py</filename>.
+            </para>
+
+            <para>
+	            Source plugins can also be implemented and added by
+	            external layers.
+                As such, any plugins found in a
+	            <filename>scripts/lib/mic/plugins/source/</filename>
+	            directory in an external layer are also made
+	            available.
+            </para>
+
+            <para>
+	            When the <filename>wic</filename> implementation needs
+	            to invoke a partition-specific implementation, it looks
+	            for the plugin that has the same name as the
+	            <filename>&dash;&dash;source</filename> parameter given to
+                that partition.
+                For example, if the partition is set up as follows:
+                <literallayout class='monospaced'>
+     part /boot --source bootimg-pcbios   ...
+                </literallayout>
+	            The methods defined as class members of the plugin
+	            having the matching <filename>bootimg-pcbios.name</filename>
+                class member are used.
+            </para>
+
+            <para>
+	            To be more concrete, here is the plugin definition that
+	            matches a
+                <filename>'&dash;&dash;source bootimg-pcbios'</filename> usage,
+                along with an example
+	            method called by the <filename>wic</filename> implementation
+                when it needs to invoke an implementation-specific
+	            partition-preparation function:
+                <literallayout class='monospaced'>
+    class BootimgPcbiosPlugin(SourcePlugin):
+        name = 'bootimg-pcbios'
+
+    @classmethod
+        def do_prepare_partition(self, part, ...)
+                </literallayout>
+	            If the subclass itself does not implement a function, a
+	            default version in a superclass is located and
+	            used, which is why all plugins must be derived from
+	            <filename>SourcePlugin</filename>.
+            </para>
+
+            <para>
+	            The <filename>SourcePlugin</filename> class defines the
+	            following methods, which is the current set of methods
+	            that can be implemented or overridden by
+	            <filename>&dash;&dash;source</filename> plugins.
+                Any methods not implemented by a
+                <filename>SourcePlugin</filename> subclass inherit the
+                implementations present in the
+	            <filename>SourcePlugin</filename> class.
+                For more information, see the
+	            <filename>SourcePlugin</filename> source for details:
+            </para>
+
+            <para>
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>do_prepare_partition()</filename>:</emphasis>
+                        Called to do the actual content population for a
+                        partition.
+                        In other words, the method prepares the final
+                        partition image that is incorporated into the
+                        disk image.
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>do_configure_partition()</filename>:</emphasis>
+                        Called before
+                        <filename>do_prepare_partition()</filename>.
+                        This method is typically used to create custom
+                        configuration files for a partition (e.g. syslinux or
+                        grub configuration files).
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>do_install_disk()</filename>:</emphasis>
+                        Called after all partitions have been prepared and
+                        assembled into a disk image.
+                        This method provides a hook to allow finalization of a
+                        disk image, (e.g. writing an MBR).
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>do_stage_partition()</filename>:</emphasis>
+                        Special content-staging hook called before
+                        <filename>do_prepare_partition()</filename>.
+                        This method is normally empty.</para>
+                        <para>Typically, a partition just uses the passed-in
+                        parameters (e.g. the unmodified value of
+		                <filename>bootimg_dir</filename>).
+                        However, in some cases things might need to be
+                        more tailored.
+                        As an example, certain files might additionally
+                        need to be taken from
+                        <filename>bootimg_dir + /boot</filename>.
+		                This hook allows those files to be staged in a
+		                customized fashion.
+                        <note>
+                            <filename>get_bitbake_var()</filename>
+                            allows you to access non-standard variables
+                            that you might want to use for this.
+                        </note>
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                This scheme is extensible.
+                Adding more hooks is a simple matter of adding more
+                plugin methods to <filename>SourcePlugin</filename> and
+                derived classes.
+                The code that then needs to call the plugin methods uses
+                <filename>plugin.get_source_plugin_methods()</filename>
+                to find the method or methods needed by the call.
+                Location is accomplished by filling up a dict with keys
+                containing the method names of interest.
+                On success, these will be filled in with the actual
+                methods.
+                Please see the <filename>wic</filename>
+                implementation for examples and details.
+            </para>
+        </section>
+
         <section id='openembedded-kickstart-wks-reference'>
             <title>OpenEmbedded Kickstart (.wks) Reference</title>
 
