@@ -1789,13 +1789,25 @@
             </para>
 
             <para>
-                Ideally, you should locate these checksums from the upstream
-                website and use them in your recipe.
-                However, many websites do not provide the checksums.
-                If such is the case, you can use a "build-fail" method that
-                retrieves the exact strings you need.
-                To use the "build-fail" method, comment the statements out
-                and then attempt to build the software.
+                Finding proper values for <filename>md5</filename> and
+                <filename>sha256</filename> checksums can involve some work.
+                Initially, you should locate any available signatures from
+                the upstream source (i.e. <filename>md5</filename>,
+                <filename>sha1</filename>, <filename>sha256</filename>,
+                <filename>GPG</filename>, and so forth).
+                Because the OpenEmbedded build system only deals with
+                <filename>sha256sum</filename> and <filename>md5sum</filename>,
+                you should verify all the signatures you find by hand.
+            </para>
+
+            <para>
+                After you have verified as many signatures as you can,
+                you can use a "build-fail" method that retrieves the exact
+                <filename>sha256sum</filename> and <filename>md5sum</filename>
+                checksums you need.
+                To use the "build-fail" method, comment the
+                <filename>SRC_URI</filename> statements out that provide the
+                checksums and then attempt to build the software.
                 The build will produce an error for each missing checksum
                 and as part of the error message provide the correct checksum
                 string.
@@ -4206,18 +4218,9 @@
                 <filename>partition</filename> (or <filename>part</filename>
                 for short) and <filename>bootloader</filename>.
                 <note>
-                    <para>
-                    Bootloader functionality and boot partitions are
-                    implemented by the various
-                    <filename>&dash;&dash;source</filename>
-			        plugins that implement bootloader functionality.
-                    The bootloader command essentially provides a means of
-                    modifying bootloader configuration.
-                    </para>
-                    <para>
                     Future updates will implement more commands and options.
                     If you use anything that is not specifically
-                    supported, results can be unpredictable.</para>
+                    supported, results can be unpredictable.
                 </note>
             </para>
 
@@ -4364,7 +4367,15 @@
 
                 <para>
                     This command specifies how the boot loader should be
-                    and supports the following options:
+                    configured and supports the following options:
+                    <note>
+                        Bootloader functionality and boot partitions are
+                        implemented by the various
+                        <filename>&dash;&dash;source</filename>
+			            plugins that implement bootloader functionality.
+                        The bootloader command essentially provides a means of
+                        modifying bootloader configuration.
+                    </note>
                     <itemizedlist>
                         <listitem><para><emphasis><filename>&dash;&dash;timeout</filename>:</emphasis>
                             Specifies the number of seconds before the
