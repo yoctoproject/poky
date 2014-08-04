@@ -71,6 +71,7 @@
                 you will see several layers:
                 <filename>meta</filename>,
                 <filename>meta-skeleton</filename>,
+                <filename>meta-selftest</filename>,
                 <filename>meta-yocto</filename>, and
                 <filename>meta-yocto-bsp</filename>.
                 Each of these folders represents a distinct layer.
@@ -151,7 +152,7 @@
      BBFILE_COLLECTIONS += "yoctobsp"
      BBFILE_PATTERN_yoctobsp = "^${LAYERDIR}/"
      BBFILE_PRIORITY_yoctobsp = "5"
-     LAYERVERSION_yoctobsp = "2"
+     LAYERVERSION_yoctobsp = "3"
                         </literallayout></para>
                         <para>Here is an explanation of the example:
                         <itemizedlist>
@@ -193,7 +194,7 @@
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename>
                                 variable then assigns a priority to the layer.
                                 Applying priorities is useful in situations
-                                where the same package might appear in multiple
+                                where the same recipe might appear in multiple
                                 layers and allows you to choose the layer
                                 that takes precedence.</para></listitem>
                             <listitem><para>The
@@ -346,6 +347,12 @@
                             <literallayout class='monospaced'>
      DEPENDS_append_one = " foo"
      DEPENDS_prepend_one = "foo "
+                            </literallayout>
+                            As an actual example, here's a line from the recipe for
+                            the OProfile profiler, which lists an extra build-time
+                            dependency when building specifically for 64-bit PowerPC:
+                            <literallayout class='monospaced'>
+     DEPENDS_append_powerpc64 = " libpfm4"
                             </literallayout>
                             <note>
                                 Avoiding "+=" and "=+" and using
@@ -534,7 +541,7 @@
      LICENSE = "MIT"
      LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690 \
                     file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
-     PR = "r44"
+     PR = "r45"
 
      SRC_URI = "file://config file://machconfig"
      S = "${WORKDIR}"
@@ -543,7 +550,7 @@
      INHIBIT_DEFAULT_DEPS = "1"
 
      do_install() {
-	     # Only install file if it has a contents
+	     # Install file only if it has contents
              install -d ${D}${sysconfdir}/formfactor/
              install -m 0644 ${S}/config ${D}${sysconfdir}/formfactor/
 	     if [ -s "${S}/machconfig" ]; then
