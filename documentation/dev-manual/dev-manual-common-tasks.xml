@@ -5104,7 +5104,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                         security problems.
                     </para></listitem>
                     <listitem><para>
-                        Pay particular attention to to the security for
+                        Pay particular attention to the security for
                         any web-based administration interface.
                         </para>
                         <para>Web interfaces typically need to perform
@@ -5182,7 +5182,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                 Use the following line in your
                 <filename>local.conf</filename> file or in your custom
                 distribution configuration file to enable the security
-                compiler and linker flags to your build:
+                compiler and linker flags for your build:
                 <literallayout class='monospaced'>
      require conf/distro/include/security_flags.inc
                 </literallayout>
@@ -5197,15 +5197,19 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                 OpenEmbedded build system to make your images more secure:
                 <itemizedlist>
                     <listitem><para>
-                        Ensure "debug-tweaks" is not listed with
+                        Ensure "debug-tweaks" is not one of your selected
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>.
-                        The default is to enable "debug-tweaks" by adding it
-                        to
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
-                        in <filename>local.conf</filename>.
-                        However, you should comment out the variable or be
-                        sure that it does not have "debug-tweaks" before
-                        producing your final image.
+                        When creating a new project, the default is to provide you
+                        with an initial <filename>local.conf</filename> file that
+                        enables this feature using the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink> variable with the line:
+                <literallayout class='monospaced'>
+     EXTRA_IMAGE_FEATURES = "debug-tweaks"
+                </literallayout>
+                        To disable that feature, simply comment out that line in your
+                        <filename>local.conf</filename> file, or
+                        make sure <filename>IMAGE_FEATURES</filename> does not contain
+                        "debug-tweaks" before producing your final image.
                         Among other things, leaving this in place sets the
                         root password as blank, which makes logging in for
                         debugging or inspection easy during
