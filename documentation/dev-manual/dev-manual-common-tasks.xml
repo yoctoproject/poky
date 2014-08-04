@@ -1320,7 +1320,7 @@
                     <listitem><para><emphasis>Functions:</emphasis>
                         Functions provide a series of actions to be performed.
                         You usually use functions to override the default
-                        implementation of a task function or to compliment
+                        implementation of a task function or to complement
                         a default function (i.e. append or prepend to an
                         existing function).
                         Standard functions use <filename>sh</filename> shell
@@ -1332,12 +1332,13 @@
      do_install () {
          autotools_do_install
          install -d ${D}${base_bindir}
-         mv ${D}${bindir}/sed ${D}${base_bindir}/sed.${PN}
+         mv ${D}${bindir}/sed ${D}${base_bindir}/sed
+         rmdir ${D}${bindir}/
      }
                         </literallayout>
                         It is also possible to implement new functions that
                         are called between existing tasks as long as the
-                        new functions are not replacing or complimenting the
+                        new functions are not replacing or complementing the
                         default functions.
                         You can implement functions in Python
                         instead of shell.
@@ -1488,7 +1489,6 @@
                         Use the <filename>_prepend</filename> operator to
                         prepend values to existing variables.
                         This operator does not add any additional space.
-                        This operator does not add any additional space.
                         Also, the operator is applied after all the
                         <filename>+=</filename>, and
                         <filename>=+</filename> operators have been applied and
@@ -1506,12 +1506,12 @@
                         only being performed for the specified target or
                         machine:
                         <literallayout class='monospaced'>
-     CFLAGS_prepend_sh4 = " file://fix-makefile.patch"
+     CFLAGS_prepend_sh4 = "-I${S}/myincludes "
                         </literallayout>
                         </para></listitem>
                     <listitem><para><emphasis>Overrides:</emphasis> -
                         You can use overrides to set a value conditionally,
-                        typically on how the recipe is being built.
+                        typically based on how the recipe is being built.
                         For example, to set the
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-KBRANCH'><filename>KBRANCH</filename></ulink>
                         variable's value to "standard/base" for any target
@@ -1528,7 +1528,7 @@
                         For example, when setting variables such as
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'><filename>FILES</filename></ulink>
                         and
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>,
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>
                         that are specific to individual packages produced by
                         a recipe, you should always use an override that
                         specifies the name of the package.
@@ -1577,7 +1577,7 @@
                 Creating a new recipe is usually an iterative process that
                 requires using BitBake to process the recipe multiple times in
                 order to progressively discover and add information to the
-                recipe.
+                recipe file.
             </para>
 
             <para>
@@ -1599,17 +1599,18 @@
 
             <para>
                 During the build, the OpenEmbedded build system creates a
-                temporary work directory for the recipe
+                temporary work directory for each recipe
                 (<filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename>)
                 where it keeps extracted source files, log files, intermediate
                 compilation and packaging files, and so forth.
             </para>
 
             <para>
-                The temporary work directory is constructed as follows and
+                The per-recipe temporary work directory is constructed as follows and
                 depends on several factors:
                 <literallayout class='monospaced'>
-     ${TMPDIR}/work/${MULTIMACH_TARGET_SYS}/${PN}/${EXTENDPE}${PV}-${PR}
+     BASE_WORKDIR ?= "${TMPDIR}/work"
+     WORKDIR = "${BASE_WORKDIR}/${MULTIMACH_TARGET_SYS}/${PN}/${EXTENDPE}${PV}-${PR}"
                 </literallayout>
                 As an example, assume a Source Directory top-level folder named
                 <filename>poky</filename>, a default Build Directory at
@@ -1687,7 +1688,7 @@
                 The
                 <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-fetch'><filename>do_fetch</filename></ulink>
                 task uses the prefix of each entry in the
-                <filename>SRC_URI</filename> variable value to determine what
+                <filename>SRC_URI</filename> variable value to determine which
                 fetcher to use to get your source files.
                 It is the <filename>SRC_URI</filename> variable that triggers
                 the fetcher.
@@ -1717,7 +1718,7 @@
 
             <para>
                 Here is a simple example from the
-                <filename>meta/recipes-devtools/cdrtools/cdrtools-native_3.01a17.bb</filename>
+                <filename>meta/recipes-devtools/cdrtools/cdrtools-native_3.01a20.bb</filename>
                 recipe where the source comes from a single tarball.
                 Notice the use of the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
@@ -1824,7 +1825,7 @@
 
             <para>
                 This final example is a bit more complicated and is from the
-                <filename>meta/recipes-sato/rxvt-unicode/rxvt-unicode_9.19.bb</filename>
+                <filename>meta/recipes-sato/rxvt-unicode/rxvt-unicode_9.20.bb</filename>
                 recipe.
                 The example's <filename>SRC_URI</filename> statement identifies
                 multiple files as the source files for the recipe: a tarball, a
@@ -1844,8 +1845,8 @@
                 The path is relative to the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
                 variable and searches specific directories in a certain order:
-                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BPN'><filename>BPN</filename></ulink><filename>}</filename>,
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BP'><filename>BP</filename></ulink><filename>}</filename>,
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BPN'><filename>BPN</filename></ulink><filename>}</filename>,
                 and <filename>files</filename>.
                 The directories are assumed to be subdirectories of the
                 directory in which the recipe or append file resides.
@@ -2434,7 +2435,7 @@
                         needs to inherit the
                         <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-systemd'><filename>systemd</filename></ulink>
                         class.
-                        See the <filename>systemd.class</filename> file
+                        See the <filename>systemd.bbclass</filename> file
                         located in your
                         <link linkend='source-directory'>Source Directory</link>.
                         section for more information.
@@ -2606,7 +2607,7 @@
             <para>
                 A post-installation function has the following structure:
                 <literallayout class='monospaced'>
-     pkg_postinst_PACKAGENAME () {
+     pkg_postinst_PACKAGENAME() {
      #!/bin/sh -e
      # Commands to carry out
      }
@@ -2629,7 +2630,7 @@
                 To delay script execution until boot time, use the following
                 structure in the post-installation script:
                 <literallayout class='monospaced'>
-     pkg_postinst_PACKAGENAME () {
+     pkg_postinst_PACKAGENAME() {
      #!/bin/sh -e
      if [ x"$D" = "x" ]; then
           # Actions to carry out on the device go here
@@ -2811,32 +2812,35 @@
                 <para>
                 In the following example, <filename>mtd-utils</filename> is a makefile-based package:
                     <literallayout class='monospaced'>
-     SUMMARY = "Tools for managing memory technology devices."
+     SUMMARY = "Tools for managing memory technology devices"
      SECTION = "base"
      DEPENDS = "zlib lzo e2fsprogs util-linux"
      HOMEPAGE = "http://www.linux-mtd.infradead.org/"
      LICENSE = "GPLv2+"
      LIC_FILES_CHKSUM = "file://COPYING;md5=0636e73ff0215e8d672dc4c32c317bb3 \
-                    file://include/common.h;beginline=1;endline=17;md5=ba05b07912a44ea2bf81ce409380049c"
+                         file://include/common.h;beginline=1;endline=17;md5=ba05b07912a44ea2bf81ce409380049c"
 
-     SRC_URI = "git://git.infradead.org/mtd-utils.git;protocol=git;tag=995cfe51b0a3cf32f381c140bf72b21bf91cef1b \
-	     	file://add-exclusion-to-mkfs-jffs2-git-2.patch"
+     # Use the latest version at 26 Oct, 2013
+     SRCREV = "9f107132a6a073cce37434ca9cda6917dd8d866b"
+     SRC_URI = "git://git.infradead.org/mtd-utils.git \
+                     file://add-exclusion-to-mkfs-jffs2-git-2.patch \
+     "
+
+     PV = "1.5.1+git${SRCPV}"
 
      S = "${WORKDIR}/git/"
 
-     PR = "r1"
-
-     EXTRA_OEMAKE = "'CC=${CC}' 'RANLIB=${RANLIB}' 'AR=${AR}' \
-        'CFLAGS=${CFLAGS} -I${S}/include -DWITHOUT_XATTR' 'BUILDDIR=${S}'"
+     EXTRA_OEMAKE = "'CC=${CC}' 'RANLIB=${RANLIB}' 'AR=${AR}' 'CFLAGS=${CFLAGS} -I${S}/include -DWITHOUT_XATTR' 'BUILDDIR=${S}'"
 
      do_install () {
-	     oe_runmake install DESTDIR=${D} SBINDIR=${sbindir} MANDIR=${mandir} \
-            INCLUDEDIR=${includedir}
-	     install -d ${D}${includedir}/mtd/
-	     for f in ${S}/include/mtd/*.h; do
-	     	install -m 0644 $f ${D}${includedir}/mtd/
-	     done
+             oe_runmake install DESTDIR=${D} SBINDIR=${sbindir} MANDIR=${mandir} INCLUDEDIR=${includedir}
      }
+
+     PACKAGES =+ "mtd-utils-jffs2 mtd-utils-ubifs mtd-utils-misc"
+
+     FILES_mtd-utils-jffs2 = "${sbindir}/mkfs.jffs2 ${sbindir}/jffs2dump ${sbindir}/jffs2reader ${sbindir}/sumtool"
+     FILES_mtd-utils-ubifs = "${sbindir}/mkfs.ubifs ${sbindir}/ubi*"
+     FILES_mtd-utils-misc = "${sbindir}/nftl* ${sbindir}/ftl* ${sbindir}/rfd* ${sbindir}/doc* ${sbindir}/serve_image ${sbindir}/recv_image"
 
      PARALLEL_MAKE = ""
 
