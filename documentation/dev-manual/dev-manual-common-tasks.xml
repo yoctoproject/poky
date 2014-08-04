@@ -2994,7 +2994,7 @@
         <title>Adding a New Machine</title>
 
         <para>
-            Adding a new machine to the Yocto Project is a straight forward
+            Adding a new machine to the Yocto Project is a straightforward
             process.
             This section describes how to add machines that are similar
             to those that the Yocto Project already supports.
@@ -3034,7 +3034,8 @@
 
             <para>
                 The most important variables you must set in your machine
-                configuration file are as follows:
+                configuration file or include from a lower-level configuration
+                file are as follows:
                 <itemizedlist>
                     <listitem><para><filename><ulink url='&YOCTO_DOCS_REF_URL;#var-TARGET_ARCH'>TARGET_ARCH</ulink></filename>
                         (e.g. "arm")</para></listitem>
@@ -3192,41 +3193,47 @@
                 variables in the
                 <filename>meta/conf/bitbake.conf</filename> configuration file define how files installed
                 by the <filename>do_install</filename> task are packaged.
-                By default, the <filename>PACKAGES</filename> variable contains
-                <filename>${PN}-staticdev</filename>, which includes all static library files.
+                By default, the <filename>PACKAGES</filename> variable includes
+                <filename>${PN}-staticdev</filename>, which represents all static library files.
                 <note>
                     Some previously released versions of the Yocto Project
                     defined the static library files through
                     <filename>${PN}-dev</filename>.
                 </note>
-                Following, is part of the BitBake configuration file.
-                You can see where the static library files are defined:
+                Following is part of the BitBake configuration file, where
+                you can see how the static library files are defined:
                 <literallayout class='monospaced'>
-     PACKAGES = "${PN}-dbg ${PN} ${PN}-doc ${PN}-dev ${PN}-staticdev ${PN}-locale"
-     PACKAGES_DYNAMIC = "${PN}-locale-*"
+     PACKAGE_BEFORE_PN ?= ""
+     PACKAGES = "${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale ${PACKAGE_BEFORE_PN} ${PN}"
+     PACKAGES_DYNAMIC = "^${PN}-locale-.*"
      FILES = ""
 
      FILES_${PN} = "${bindir}/* ${sbindir}/* ${libexecdir}/* ${libdir}/lib*${SOLIBS} \
                  ${sysconfdir} ${sharedstatedir} ${localstatedir} \
                  ${base_bindir}/* ${base_sbindir}/* \
                  ${base_libdir}/*${SOLIBS} \
+                 ${base_prefix}/lib/udev/rules.d ${prefix}/lib/udev/rules.d \
                  ${datadir}/${BPN} ${libdir}/${BPN}/* \
                  ${datadir}/pixmaps ${datadir}/applications \
                  ${datadir}/idl ${datadir}/omf ${datadir}/sounds \
                  ${libdir}/bonobo/servers"
 
+     FILES_${PN}-bin = "${bindir}/* ${sbindir}/*"
+
      FILES_${PN}-doc = "${docdir} ${mandir} ${infodir} ${datadir}/gtk-doc \
                  ${datadir}/gnome/help"
      SECTION_${PN}-doc = "doc"
 
-     FILES_${PN}-dev = "${includedir} ${libdir}/lib*${SOLIBSDEV} ${libdir}/*.la \
+     FILES_SOLIBSDEV ?= "${base_libdir}/lib*${SOLIBSDEV} ${libdir}/lib*${SOLIBSDEV}"
+     FILES_${PN}-dev = "${includedir} ${FILES_SOLIBSDEV} ${libdir}/*.la \
                      ${libdir}/*.o ${libdir}/pkgconfig ${datadir}/pkgconfig \
-                     ${datadir}/aclocal ${base_libdir}/*.o"
+                     ${datadir}/aclocal ${base_libdir}/*.o \
+                     ${libdir}/${BPN}/*.la ${base_libdir}/*.la"
      SECTION_${PN}-dev = "devel"
      ALLOW_EMPTY_${PN}-dev = "1"
      RDEPENDS_${PN}-dev = "${PN} (= ${EXTENDPKGV})"
 
-     FILES_${PN}-staticdev = "${libdir}/*.a ${base_libdir}/*.a"
+     FILES_${PN}-staticdev = "${libdir}/*.a ${base_libdir}/*.a ${libdir}/${BPN}/*.a"
      SECTION_${PN}-staticdev = "devel"
      RDEPENDS_${PN}-staticdev = "${PN}-dev (= ${EXTENDPKGV})"
                 </literallayout>
@@ -3256,7 +3263,7 @@
                 While the Multilib feature is most commonly used for 32 and 64-bit differences,
                 the approach the build system uses facilitates different target optimizations.
                 You could compile some binaries to use one set of libraries and other binaries
-                to use other different sets of libraries.
+                to use a different set of libraries.
                 The libraries could differ in architecture, compiler options, or other
                 optimizations.
             </para>
@@ -3315,8 +3322,9 @@
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>,
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-RPROVIDES'><filename>RPROVIDES</filename></ulink>,
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'><filename>RRECOMMENDS</filename></ulink>,
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'><filename>PACKAGES</filename></ulink>,
-                    and <filename>PACKAGES_DYNAMIC</filename> are automatically extended by the system.
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'><filename>PACKAGES</filename></ulink>, and
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES_DYNAMIC'><filename>PACKAGES_DYNAMIC</filename></ulink>
+                    are automatically extended by the system.
                     If you are extending any manual code in the recipe, you can use the
                     <filename>${MLPREFIX}</filename> variable to ensure those names are extended
                     correctly.
@@ -3360,7 +3368,7 @@
                     </literallayout>
                     You can also build Multilib packages specifically with a command like this:
                     <literallayout class='monospaced'>
-     $  bitbake lib32-connman
+     $ bitbake lib32-connman
                     </literallayout>
                 </para>
             </section>
@@ -3434,7 +3442,7 @@
             </para>
 
             <para>
-                The process is straight forward as long as the libraries use
+                The process is straightforward as long as the libraries use
                 proper versioning.
                 With properly versioned libraries, all you need to do to
                 individually specify the libraries is create separate,
@@ -3488,7 +3496,7 @@
             from existing OpenEmbedded build artifacts.
             Image generation is driven by partitioning commands contained
             in an Openembedded kickstart file (<filename>.wks</filename>)
-            specified either directly on the command-line or as one of a
+            specified either directly on the command line or as one of a
             selection of canned <filename>.wks</filename> files as shown
             with the <filename>wic list images</filename> command in the
             "<link linkend='using-a-provided-kickstart_file'>Using an Existing Kickstart File</link>"
@@ -3545,7 +3553,7 @@
                         standalone utility that initially provides
                         easier-to-use and more flexible replacements for a
                         couple bits of existing functionality in OE Core's
-                        <filename>directdisk.bbclass</filename> and
+                        <filename>boot-directdisk.bbclass</filename> and
                         <filename>mkefidisk.sh</filename> scripts.
                         The difference between
                         <filename>wic</filename> and those examples is
@@ -3650,7 +3658,7 @@
                 <literallayout class='monospaced'>
      $ wic list &lt;image&gt; help
                 </literallayout>
-                Where <filename>&lt;image&gt;</filename> is either
+                where <filename>&lt;image&gt;</filename> is either
                 <filename>directdisk</filename> or
                 <filename>mkefidisk</filename>.
             </para>
@@ -3698,7 +3706,7 @@
          Where:
 
              <replaceable>image_name</replaceable>.wks
-                               An an OpenEmbedded kickstart file.  You can provide
+                               An OpenEmbedded kickstart file.  You can provide
                                your own custom file or use a file from a set of
                                existing files as described by further options.
 
@@ -3730,7 +3738,7 @@
                                The path to the native sysroot containing the tools to use
                                to build the image.
 
-             -p, &dash;&dash;skip-build-check
+             -s, &dash;&dash;skip-build-check
                                Skips the build check.
 
              -D, &dash;&dash;debug
@@ -3805,13 +3813,13 @@
      # long-description: Creates a partitioned EFI disk image that the user
      # can directly dd to boot media.
 
-     part /boot &dash;&dash;source bootimg-efi &dash;&dash;ondisk sda &dash;&dash;active
+     part /boot --source bootimg-efi --ondisk sda --label msdos --active --align 1024
 
-     part / &dash;&dash;source rootfs &dash;&dash;ondisk sda &dash;&dash;fstype=ext3 &dash;&dash;label platform
+     part / --source rootfs --ondisk sda --fstype=ext3 --label platform --align 1024
 
-     part swap &dash;&dash;ondisk sda &dash;&dash;size 44 &dash;&dash;label swap1 &dash;&dash;fstype=swap
+     part swap --ondisk sda --size 44 --label swap1 --fstype=swap
 
-     bootloader  &dash;&dash;timeout=10  &dash;&dash;append="rootwait console=ttyPCH0,115200"
+     bootloader  --timeout=10  --append="rootwait rootfstype=ext3 console=ttyPCH0,115200 console=tty0 vmalloc=256MB snd-hda-intel.enable_msi=0"
                 </literallayout>
             </para>
         </section>
