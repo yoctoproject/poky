@@ -1797,10 +1797,10 @@
             </para>
 
             <para>
-                Finding proper values for <filename>md5</filename> and
-                <filename>sha256</filename> checksums can involve some work.
-                Initially, you should locate any available signatures from
-                the upstream source (i.e. <filename>md5</filename>,
+                Proper values for <filename>md5</filename> and
+                <filename>sha256</filename> checksums might be available
+                with other signatures on the download page for the upstream
+                source (e.g. <filename>md5</filename>,
                 <filename>sha1</filename>, <filename>sha256</filename>,
                 <filename>GPG</filename>, and so forth).
                 Because the OpenEmbedded build system only deals with
@@ -1809,18 +1809,19 @@
             </para>
 
             <para>
-                After you have verified as many signatures as you can,
-                you can use a "build-fail" method that retrieves the exact
-                <filename>sha256sum</filename> and <filename>md5sum</filename>
-                checksums you need.
-                To use the "build-fail" method, comment the
-                <filename>SRC_URI</filename> statements out that provide the
-                checksums and then attempt to build the software.
-                The build will produce an error for each missing checksum
-                and as part of the error message provide the correct checksum
-                string.
-                Once you have the correct checksums, simply copy them into your
-                recipe for a subsequent build.
+                If no <filename>SRC_URI</filename> checksums are specified
+                when you attempt to build the recipe, the build will produce
+                an error for each missing checksum.
+                As part of the error message, the build system provides
+                the checksum string corresponding to the fetched file.
+                Once you have the correct checksums, you can copy and paste
+                them into your recipe and then run the build again to continue.
+                <note>
+                    As mentioned, if the upstream source provides signatures
+                    for verifying the downloaded source code, you should
+                    verify those manually before setting the checksum values
+                    in the recipe and continuing with the build.
+                </note>
             </para>
 
             <para>
