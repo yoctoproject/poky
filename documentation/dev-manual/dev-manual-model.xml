@@ -161,11 +161,16 @@
                     and <filename>edgerouter</filename> (MIPS).
                     The recipes and configurations for these five BSPs are located and dispersed
                     within the <link linkend='source-directory'>Source Directory</link>.
-                    On the other hand, BSP layers for Crown Bay,
+                    On the other hand, the <filename>meta-intel</filename> layer
+                    contains BSP layers for many supported BSPs (e.g.
                     Crystal Forest, Emenlow, Fish River Island 2, Haswell,
-                    Jasper Forest, NUC DC3217IYE,
-                    Romley, Sugar Bay, and tlk exist in their own separate layers
-                    within the larger <filename>meta-intel</filename> layer.</note>
+                    Jasper Forest, and so forth).
+                    Aside from the BSPs in the <filename>meta-intel</filename>
+                    layer, the
+                    <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink>
+                    contain additional BSP layers such as
+                    <filename>meta-minnow</filename> and
+                    <filename>meta-raspberrypi</filename>.</note>
                     <para>When you set up a layer for a new BSP, you should follow a standard layout.
                     This layout is described in the
                     "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-filelayout'>Example Filesystem Layout</ulink>"
@@ -603,7 +608,11 @@
                     QEMU through the project's preferences.
                     If you are not using the Eclipse IDE, then you need to deploy the application
                     to the hardware using other methods.
-                    Or, if you are using QEMU, you need to use that tool and load your image in for testing.
+                    Or, if you are using QEMU, you need to use that tool and
+                    load your image in for testing.
+                    See the
+                    "<link linkend='dev-manual-qemu'>Using the Quick EMUlator (QEMU)</link>"
+                    chapter for information on using QEMU.
                     </para></listitem>
                 <listitem><para><emphasis>Test and debug the application</emphasis>:
                     Once your application is deployed, you need to test it.
@@ -1076,7 +1085,7 @@
                                 <filename>Build system derived toolchain</filename>,
                                 the target kernel you built will be located in
                                 the Build Directory in
-                                <filename>tmp/deploy/images/&lt;machine&gt;</filename>
+                                <filename>tmp/deploy/images/<replaceable>machine</replaceable></filename>
                                 directory.
                                 If you selected
                                 <filename>Standalone pre-built toolchain</filename>,
@@ -1244,6 +1253,11 @@
             <para>
                 To start the QEMU emulator from within Eclipse, follow these
                 steps:
+                <note>
+                    See the
+                    "<link linkend='dev-manual-qemu'>Using the Quick EMUlator (QEMU)</link>"
+                    chapter for more information on using QEMU.
+                </note>
                 <orderedlist>
                     <listitem><para>Expose and select "External Tools" from
                         the "Run" menu.
@@ -1484,7 +1498,7 @@
                             Project Location.
                             The Yocto project's Metadata files will be put under
                             the directory
-                            <filename>&lt;project_location&gt;/&lt;project_name&gt;</filename>.
+                            <filename><replaceable>project_location</replaceable>/<replaceable>project_name</replaceable></filename>.
                             If that directory does not exist, you need to check
                             the "Clone from Yocto Git Repository" box, which
                             would execute a <filename>git clone</filename>
@@ -1627,7 +1641,11 @@
                     If you need to separately install and use the QEMU
                     emulator, you can go to
                     <ulink url='http://wiki.qemu.org/Main_Page'>QEMU Home Page</ulink>
-                    to download and learn about the emulator.</para></listitem>
+                    to download and learn about the emulator.
+                    You can see the
+                    "<link linkend='dev-manual-qemu'>Using the Quick EMUlator (QEMU)</link>"
+                    chapter for information on using QEMU within the Yocto
+                    Project.</para></listitem>
             </orderedlist>
         </para>
     </section>
@@ -1778,7 +1796,7 @@
                     <filename>do_compile</filename> task as shown in the
                     following example:
                     <literallayout class='monospaced'>
-     $ bitbake -c compile -f &lt;name_of_package&gt;
+     $ bitbake -c compile -f <replaceable>name_of_package</replaceable>
                     </literallayout>
                     The <filename>-f</filename> or <filename>--force</filename>
                     option forces the specified task to execute.
@@ -1790,9 +1808,9 @@
                     or
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleanall'><filename>do_cleanall</filename></ulink>
                     tasks using BitBake (i.e.
-                    <filename>bitbake -c clean &lt;name_of_package&gt;</filename>
+                    <filename>bitbake -c clean <replaceable>name_of_package</replaceable></filename>
                     and
-                    <filename>bitbake -c cleanall &lt;name_of_package&gt;</filename>).
+                    <filename>bitbake -c cleanall <replaceable>name_of_package</replaceable></filename>).
                     Modifications will also disappear if you use the <filename>rm_work</filename>
                     feature as described in the
                     "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>"
@@ -1883,7 +1901,7 @@
                     <filename>do_compile</filename> task as shown in the
                     following example:
                     <literallayout class='monospaced'>
-     $ bitbake -c compile -f &lt;name_of_package&gt;
+     $ bitbake -c compile -f <replaceable>name_of_package</replaceable>
                     </literallayout>
                     The <filename>-f</filename> or <filename>--force</filename>
                     option forces the specified task to execute.
@@ -1917,11 +1935,11 @@
                     Once you have committed the files, you can use the <filename>git log</filename>
                     command to see your changes:
                     <literallayout class='monospaced'>
-     $ git commit -m "&lt;commit-summary-message&gt;"
+     $ git commit -m "<replaceable>commit-summary-message</replaceable>"
      $ git log
                     </literallayout>
                     <note>The name of the patch file created in the next step is based on your
-                        <filename>commit-summary-message</filename>.</note></para></listitem>
+                        <replaceable>commit-summary-message</replaceable>.</note></para></listitem>
                 <listitem><para><emphasis>Generate the Patch:</emphasis>
                     Once the changes are committed, use the <filename>git format-patch</filename>
                     command to generate a patch file:
@@ -1948,7 +1966,7 @@
                     of the recipe.
                     Here is an example:
                     <literallayout class='monospaced'>
-     SRC_URI += "file://0001-&lt;commit-summary-message&gt;.patch"
+     SRC_URI += "file://0001-<replaceable>commit-summary-message</replaceable>.patch"
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Increment the Recipe Revision Number:</emphasis>
                     Finally, don't forget to 'bump' the
