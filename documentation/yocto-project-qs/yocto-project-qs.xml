@@ -86,10 +86,12 @@
                 the Yocto Project Reference Manual.
                 </para></listitem>
             <listitem><para><emphasis>Developer Screencast:</emphasis> The
-                <ulink url='http://vimeo.com/36450321'>Getting Started with the Yocto Project - New
-                Developer Screencast Tutorial</ulink> provides a 30-minute video
-                created for users unfamiliar with the Yocto Project but familiar
-                with Linux build systems.</para></listitem>
+                <ulink url='http://vimeo.com/36450321'>Getting Started with the Yocto Project - New Developer Screencast Tutorial</ulink>
+                provides a 30-minute video created for users unfamiliar with
+                the Yocto Project but familiar with Linux build systems.
+                While this screencast is somewhat dated, the introductory
+                and fundamental concepts are useful for the beginner.
+                </para></listitem>
         </itemizedlist>
     </para>
 </section>
@@ -177,7 +179,8 @@
             decrease the time needed to build images.
             </para></listitem>
         <listitem><para>
-            The right packages.
+            Appropriate packages installed on the system you are using for
+            builds.
             </para></listitem>
         <listitem><para>
             A release of the Yocto Project.
@@ -509,7 +512,7 @@
              Another couple of variables of interest are the
              <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink> and the
              <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink> variables.
-             By default, these variables are set to how ever many processor
+             By default, these variables are set to the number of processor
              cores your build host uses.
              However, if your build host uses multiple processor cores,
              you should increase these settings to twice the number of
@@ -546,7 +549,7 @@
                  "<ulink url='&YOCTO_DOCS_REF_URL;#required-git-tar-and-python-versions'>Required Git, tar, and Python</ulink>"
                  section in the Yocto Project Reference Manual.
              </note>
-             The final command runs the image:
+             The final command runs the image using the QEMU emulator:
              <literallayout class='monospaced'>
      $ runqemu qemux86
              </literallayout>
@@ -622,25 +625,25 @@
             </para>
 
             <literallayout class='monospaced'>
-     poky-eglibc-&lt;<emphasis>host_system</emphasis>&gt;-&lt;<emphasis>image_type</emphasis>&gt;-&lt;<emphasis>arch</emphasis>&gt;-toolchain-&lt;<emphasis>release_version</emphasis>&gt;.sh
+     poky-eglibc-<replaceable>host_system</replaceable>-<replaceable>image_type</replaceable>-<replaceable>arch</replaceable>-toolchain-<replaceable>release_version</replaceable>.sh
 
      Where:
-         &lt;<emphasis>host_system</emphasis>&gt; is a string representing your development system:
+         <replaceable>host_system</replaceable> is a string representing your development system:
 
                     i686 or x86_64.
 
-         &lt;<emphasis>image_type</emphasis>&gt; is a string representing the image you wish to
+         <replaceable>image_type</replaceable> is a string representing the image you wish to
                 develop a Software Development Toolkit (SDK) for use against.
                 The Yocto Project builds toolchain installers using the
                 following BitBake command:
 
                     bitbake core-image-sato -c populate_sdk
 
-         &lt;<emphasis>arch</emphasis>&gt; is a string representing the tuned target architecture:
+         <replaceable>arch</replaceable> is a string representing the tuned target architecture:
 
                     i586, x86_64, powerpc, mips, armv7a or armv5te
 
-         &lt;<emphasis>release_version</emphasis>&gt; is a string representing the release number of the
+         <replaceable>release_version</replaceable> is a string representing the release number of the
                 Yocto Project:
 
                     &DISTRO;, &DISTRO;+snapshot
@@ -706,11 +709,11 @@
             <para>
                 Most kernel files have one of the following forms:
                 <literallayout class='monospaced'>
-     *zImage-qemu&lt;<emphasis>arch</emphasis>&gt;.bin
-     vmlinux-qemu&lt;<emphasis>arch</emphasis>&gt;.bin
+     *zImage-qemu<replaceable>arch</replaceable>.bin
+     vmlinux-qemu<replaceable>arch</replaceable>.bin
 
      Where:
-         &lt;<emphasis>arch</emphasis>&gt; is a string representing the target architecture:
+         <replaceable>arch</replaceable> is a string representing the target architecture:
                 x86, x86-64, ppc, mips, or arm.
                 </literallayout>
             </para>
@@ -740,17 +743,17 @@
                 The <filename>tar</filename> form can be flattened out in your host development system
                 and used for build purposes with the Yocto Project.
                 <literallayout class='monospaced'>
-     core-image-&lt;<emphasis>profile</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;.ext3
-     core-image-&lt;<emphasis>profile</emphasis>&gt;-qemu&lt;<emphasis>arch</emphasis>&gt;.tar.bz2
+     core-image-<replaceable>profile</replaceable>-qemu<replaceable>arch</replaceable>.ext3
+     core-image-<replaceable>profile</replaceable>-qemu<replaceable>arch</replaceable>.tar.bz2
 
      Where:
-         &lt;<emphasis>profile</emphasis>&gt; is the filesystem image's profile:
+         <replaceable>profile</replaceable> is the filesystem image's profile:
                    lsb, lsb-dev, lsb-sdk, lsb-qt3, minimal, minimal-dev, sato,
                    sato-dev, or sato-sdk. For information on these types of image
-                   profiles, see the "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>" chapter in the Yocto Project
-                   Reference Manual.
+                   profiles, see the "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
+                   chapter in the Yocto Project Reference Manual.
 
-         &lt;<emphasis>arch</emphasis>&gt; is a string representing the target architecture:
+         <replaceable>arch</replaceable> is a string representing the target architecture:
                 x86, x86-64, ppc, mips, or arm.
                 </literallayout>
             </para>
@@ -763,13 +766,13 @@
                 Before you start the QEMU emulator, you need to set up the emulation environment.
                 The following command form sets up the emulation environment.
                 <literallayout class='monospaced'>
-     $ source &YOCTO_ADTPATH_DIR;/environment-setup-&lt;<emphasis>arch</emphasis>&gt;-poky-linux-&lt;<emphasis>if</emphasis>&gt;
+     $ source &YOCTO_ADTPATH_DIR;/environment-setup-<replaceable>arch</replaceable>-poky-linux-<replaceable>if</replaceable>
 
      Where:
-         &lt;<emphasis>arch</emphasis>&gt; is a string representing the target architecture:
+         <replaceable>arch</replaceable> is a string representing the target architecture:
                 i586, x86_64, ppc603e, mips, or armv5te.
 
-         &lt;<emphasis>if</emphasis>&gt; is a string representing an embedded application binary interface.
+         <replaceable>if</replaceable> is a string representing an embedded application binary interface.
               Not all setup scripts include this string.
                 </literallayout>
             </para>
@@ -777,15 +780,15 @@
             <para>
                 Finally, this command form invokes the QEMU emulator
                 <literallayout class='monospaced'>
-     $ runqemu &lt;<emphasis>qemuarch</emphasis>&gt; &lt;<emphasis>kernel-image</emphasis>&gt; &lt;<emphasis>filesystem-image</emphasis>&gt;
+     $ runqemu <replaceable>qemuarch</replaceable> <replaceable>kernel-image</replaceable> <replaceable>filesystem-image</replaceable>
 
      Where:
-         &lt;<emphasis>qemuarch</emphasis>&gt; is a string representing the target architecture: qemux86, qemux86-64,
+         <replaceable>qemuarch</replaceable> is a string representing the target architecture: qemux86, qemux86-64,
                     qemuppc, qemumips, or qemuarm.
 
-         &lt;<emphasis>kernel-image</emphasis>&gt; is the architecture-specific kernel image.
+         <replaceable>kernel-image</replaceable> is the architecture-specific kernel image.
 
-         &lt;<emphasis>filesystem-image</emphasis>&gt; is the .ext3 filesystem image.
+         <replaceable>filesystem-image</replaceable> is the .ext3 filesystem image.
 
                 </literallayout>
             </para>
