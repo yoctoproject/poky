@@ -7110,31 +7110,40 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     A list of packages that extends the usability of a package
                     being built.
                     The package being built does not depend on this list of
-                    packages in order to successfully build, but needs them for
-                    the extended usability.
+                    packages in order to successfully build, but rather
+                    uses them for extended usability.
                     To specify runtime dependencies for packages, see the
                     <filename><link linkend='var-RDEPENDS'>RDEPENDS</link></filename>
                     variable.
                 </para>
 
                 <para>
-                    The OpenEmbedded build process automatically installs the
-                    list of packages as part of the built package.
-                    However, you can remove these packages later if you want.
-                    If, during the build, a package from the
-                    <filename>RRECOMMENDS</filename> list cannot be
-                    found, the build process continues without an error.
-                </para>
-
-                <para>
-                    You can also prevent packages in the list from being
-                    installed by using several variables.
-                    See the
+                    The package manager will automatically install the
+                    <filename>RRECOMMENDS</filename> list of packages when
+                    installing the built package.
+                    However, you can prevent listed packages from being
+                    installed by using the
                     <link linkend='var-BAD_RECOMMENDATIONS'><filename>BAD_RECOMMENDATIONS</filename></link>,
                     <link linkend='var-NO_RECOMMENDATIONS'><filename>NO_RECOMMENDATIONS</filename></link>,
                     and
                     <link linkend='var-PACKAGE_EXCLUDE'><filename>PACKAGE_EXCLUDE</filename></link>
-                    variables for more information.
+                    variables.
+                </para>
+
+                <para>
+                    Packages specified in
+                    <filename>RRECOMMENDS</filename> need not actually be
+                    produced.
+                    However, a recipe must exist that provides each package,
+                    either through the
+                    <link linkend='var-PACKAGES'><filename>PACKAGES</filename></link>
+                    or
+                    <link linkend='var-PACKAGES_DYNAMIC'><filename>PACKAGES_DYNAMIC</filename></link>
+                    variables or the
+                    <link linkend='var-RPROVIDES'><filename>RPROVIDES</filename></link>
+                    variable, or an error will occur during the build.
+                    If such a recipe does exist and the package is not produced,
+                    the build continues without error.
                 </para>
 
                 <para>
