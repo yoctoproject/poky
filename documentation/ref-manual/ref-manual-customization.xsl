@@ -9,6 +9,7 @@
   <xsl:include href="../template/division.title.xsl"/>
   <xsl:include href="../template/formal.object.heading.xsl"/>
   <xsl:include href="../template/gloss-permalinks.xsl"/>
+  <xsl:include href="../template/qa-code-permalinks.xsl"/>
 
   <xsl:param name="html.stylesheet" select="'ref-style.css'" />
   <xsl:param name="chapter.autolabel" select="1" />

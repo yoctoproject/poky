@@ -59,10 +59,21 @@
 <section id='qa-errors-and-warnings'>
     <title>Errors and Warnings</title>
 
+<!--
+This section uses the <para><code> construct to enable permalinks for the
+various QA issue and warning messages.  The file templates/qa-code-permalinks.xsl
+is used to locate the construct and generate the permalink.  This solution
+leverages the fact that right now this section in the ref-manual is the only
+place is all the YP docs that uses the <para><code> construct.  If, in the
+future, that construct were to appear in the ref-manual, a generic permalink
+would be generated for the text between <code></code>.  If a better solution
+can be found then it should be implemented.  I can't find one at the moment.
+-->
+
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-libexec'>
                     <code>
      &lt;packagename&gt;: &lt;path&gt; is using libexec please relocate to &lt;libexecdir&gt; [libexec]
                     </code>
@@ -87,7 +98,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-rpaths'>
                     <code>
      package &lt;packagename&gt; contains bad RPATH &lt;rpath&gt; in file &lt;file&gt; [rpaths]
                     </code>
@@ -119,7 +130,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-useless-rpaths'>
                     <code>
      &lt;packagename&gt;: &lt;file&gt; contains probably-redundant RPATH &lt;rpath&gt; [useless-rpaths]
                     </code>
@@ -147,7 +158,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-dev-so'>
                     <code>
      non -dev/-dbg/-nativesdk package contains symlink .so: &lt;packagename&gt; path '&lt;path&gt;' [dev-so]
                     </code>
@@ -178,7 +189,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-staticdev'>
                     <code>
      non -staticdev package contains static .a library: &lt;packagename&gt; path '&lt;path&gt;' [staticdev]
                     </code>
@@ -205,7 +216,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-libdir'>
                     <code>
      &lt;packagename&gt;: found library in wrong location [libdir]
                     </code>
@@ -236,7 +247,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-debug-files'>
                     <code>
      non debug package contains .debug directory: &lt;packagename&gt; path &lt;path&gt; [debug-files]
                     </code>
@@ -269,7 +280,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-arch'>
                     <code>
      Architecture did not match (&lt;machine_arch&gt; to &lt;file_arch&gt;) on &lt;file&gt; [arch]
                     </code>
@@ -308,7 +319,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-arch-bit-size-no-match'>
                     <code>
      Bit size did not match (&lt;machine_bits&gt; to &lt;file_bits&gt;) &lt;recipe&gt; on &lt;file&gt; [arch]
                     </code>
@@ -347,7 +358,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-arch-endianness-no-match'>
                     <code>
      Endianness did not match (&lt;machine_endianness&gt; to &lt;file_endianness&gt;) on &lt;file&gt; [arch]
                     </code>
@@ -386,7 +397,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-textrel'>
                     <code>
      ELF binary '&lt;file&gt;' has relocations in .text [textrel]
                     </code>
@@ -397,13 +408,6 @@
                     <filename>.text</filename> sections.
                     This situation can result in a performance impact
                     at runtime.
-                    <note>
-                        A bug currently exists that causes this
-                        warning to appear erroneously.
-                        See
-                        <ulink url='https://bugzilla.yoctoproject.org/show_bug.cgi?id=6104'></ulink>
-                        for more information.
-                    </note>
                 </para>
 
                 <para>
@@ -416,7 +420,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-ldflags'>
                     <code>
      No GNU_HASH in the elf binary: '&lt;file&gt;' [ldflags]
                     </code>
@@ -448,7 +452,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-xorg-driver-abi'>
                     <code>
      Package &lt;packagename&gt; contains Xorg driver (&lt;driver&gt;) but no xorg-abi- dependencies [xorg-driver-abi]
                     </code>
@@ -478,7 +482,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-infodir'>
                     <code>
      The /usr/share/info/dir file is not meant to be shipped in a particular package. [infodir]
                     </code>
@@ -506,7 +510,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-symlink-to-sysroot'>
                     <code>
      Symlink &lt;path&gt; in &lt;packagename&gt; points to TMPDIR [symlink-to-sysroot]
                     </code>
@@ -533,7 +537,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-la'>
                     <code>
      &lt;file&gt; failed sanity test (workdir) in path &lt;path&gt; [la]
                     </code>
@@ -559,7 +563,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-pkgconfig'>
                     <code>
      &lt;file&gt; failed sanity test (tmpdir) in path &lt;path&gt; [pkgconfig]
                     </code>
@@ -584,7 +588,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-debug-deps'>
                     <code>
      &lt;packagename&gt; rdepends on &lt;debug_packagename&gt; [debug-deps]
                     </code>
@@ -632,7 +636,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-dev-deps'>
                     <code>
      &lt;packagename&gt; rdepends on &lt;dev_packagename&gt; [dev-deps]
                     </code>
@@ -680,7 +684,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-dep-cmp'>
                     <code>
      &lt;var&gt;_&lt;packagename&gt; is invalid: &lt;comparison&gt; (&lt;value&gt;)   only comparisons &lt;, =, &gt;, &lt;=, and &gt;= are allowed [dep-cmp]
                     </code>
@@ -711,7 +715,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-compile-host-path'>
                     <code>
      &lt;recipename&gt;: The compile log indicates that host include and/or library paths were used. Please check the log '&lt;logfile&gt;' for more information. [compile-host-path]
                     </code>
@@ -736,7 +740,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-install-host-path'>
                     <code>
      &lt;recipename&gt;: The install log indicates that host include and/or library paths were used. Please check the log '&lt;logfile&gt;' for more information. [install-host-path]
                     </code>
@@ -761,7 +765,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-autoconf-log'>
                     <code>
      This autoconf log indicates errors, it looked at host include and/or library paths while determining system capabilities. Rerun configure task after fixing this. The path was '&lt;path&gt;'
                     </code>
@@ -786,7 +790,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-pkgname'>
                     <code>
      &lt;packagename&gt; doesn't match the [a-z0-9.+-]+ regex [pkgname]
                     </code>
@@ -818,7 +822,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-unknown-configure-option'>
                     <code>
      &lt;recipe&gt;: configure was passed unrecognized options: &lt;options&gt; [unknown-configure-option]
                     </code>
@@ -854,7 +858,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-pn-overrides'>
                     <code>
      Recipe &lt;recipefile&gt; has PN of "&lt;recipename&gt;" which is in OVERRIDES, this can result in unexpected behavior. [pn-overrides]
                     </code>
@@ -894,7 +898,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-pkgvarcheck'>
                     <code>
      &lt;recipefile&gt;: Variable &lt;variable&gt; is set as not being package specific, please fix this. [pkgvarcheck]
                     </code>
@@ -932,7 +936,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-already-stripped'>
                     <code>
      File '&lt;file&gt;' from &lt;recipename&gt; was already stripped, this will prevent future debugging! [already-stripped]
                     </code>
@@ -977,7 +981,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-packages-list'>
                     <code>
      &lt;packagename&gt; is listed in PACKAGES multiple times, this leads to packaging errors. [packages-list]
                     </code>
@@ -1002,7 +1006,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-files-invalid'>
                     <code>
      FILES variable for package &lt;packagename&gt; contains '//' which is invalid. Attempting to fix this but you should correct the metadata. [files-invalid]
                     </code>
@@ -1025,7 +1029,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-installed-vs-shipped'>
                     <code>
       &lt;recipename&gt;: Files/directories were installed but not shipped [installed-vs-shipped]
                     </code>
@@ -1065,7 +1069,7 @@
     <para>
         <itemizedlist>
             <listitem>
-                <para>
+                <para id='qa-issue-old-and-new-package-and-version-names'>
                     <code>
      &lt;oldpackage&gt;-&lt;oldpkgversion&gt; was registered as shlib provider for &lt;library&gt;, changing it to &lt;newpackage&gt;-&lt;newpkgversion&gt; because it was built later
                     </code>
@@ -1151,7 +1155,6 @@ enabled by default:
         </note>
     </para>
 </section>
-
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
