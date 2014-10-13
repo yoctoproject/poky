@@ -5344,8 +5344,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-module_conf'><glossterm>module_conf</glossterm>
             <glossdef>
                 <para>
-                    Specifies <filename>modprobe.d</filename> syntax lines
-                    for inclusion in the
+                    Specifies
+                    <ulink url='http://linux.die.net/man/5/modprobe.d'><filename>modprobe.d</filename></ulink>
+                    syntax lines for inclusion in the
                     <filename>/etc/modprobe.d/modname.conf</filename> file.
                 </para>
 
@@ -5355,19 +5356,23 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     module recipe (e.g. a machine configuration file, a
                     distribution configuration file, an append file for the
                     recipe, or the recipe itself).
+                    If you use this variable, you must also be sure to list
+                    the module name in the
+                    <filename>KERNEL_MODULE_PROBECONF</filename>
+                    variable.
                 </para>
 
                 <para>
                     Here is the general syntax:
                     <literallayout class='monospaced'>
-     module_conf_&lt;modname&gt; = "modprobe.d-syntax"
+     module_conf_&lt;modname&gt; = "&lt;modprobe.d syntax&gt;"
                     </literallayout>
                     You must use the kernel module name override.
                 </para>
 
                 <para>
                     Run <filename>man modprobe.d</filename> in the shell to
-                    find out more information on the exact syntax for lines
+                    find out more information on the exact syntax
                     you want to provide with <filename>module_conf</filename>.
                 </para>
 
@@ -5376,9 +5381,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     OpenEmbedded build system to populate the
                     <filename>/etc/modprobe.d/modname.conf</filename>
                     file with <filename>modprobe.d</filename> syntax lines.
-                    Here is an example:
+                    Here is an example that adds the options
+                    <filename>arg1</filename> and <filename>arg2</filename>
+                    to a module named <filename>mymodule</filename>:
                     <literallayout class='monospaced'>
-     module_conf_&lt;modname&gt; = "options modname arg1=val1 arg2=val2"
+     module_conf_mymodule = "options mymodule arg1=val1 arg2=val2"
                     </literallayout>
                 </para>
 
