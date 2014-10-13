@@ -4434,6 +4434,56 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-KERNEL_MODULE_AUTOLOAD'><glossterm>KERNEL_MODULE_AUTOLOAD</glossterm>
+            <glossdef>
+                <para>
+                    Lists kernel modules that need to be auto-loaded during
+                    boot.
+                    <note>
+                        This variable replaces the deprecated
+                        <link linkend='var-module_autoload'><filename>module_autoload</filename></link>
+                        variable.
+                    </note>
+                </para>
+
+                <para>
+                    You can use the <filename>KERNEL_MODULE_AUTOLOAD</filename>
+                    variable anywhere that it can be
+                    recognized by the kernel recipe or by an out-of-tree kernel
+                    module recipe (e.g. a machine configuration file, a
+                    distribution configuration file, an append file for the
+                    recipe, or the recipe itself).
+                </para>
+
+                <para>
+                    Specify it as follows:
+                    <literallayout class='monospaced'>
+     KERNEL_MODULE_AUTOLOAD = "modname1 modname2 modname3"
+                    </literallayout>
+                </para>
+
+                <para>
+                    Including <filename>KERNEL_MODULE_AUTOLOAD</filename> causes
+                    the OpenEmbedded build system to populate the
+                    <filename>/etc/modules-load.d/modname.conf</filename>
+                    file with the list of modules to be auto-loaded on boot.
+                    The modules appear one-per-line in the file.
+                    Here is an example of the most common use case:
+                    <literallayout class='monospaced'>
+     KERNEL_MODULE_AUTOLOAD = "modname"
+                    </literallayout>
+                </para>
+
+                <para>
+                    For information on how to populate the
+                    <filename>modname.conf</filename> file with
+                    <filename>modprobe.d</filename> syntax lines, see the
+                    <link linkend='var-KERNEL_MODULE_PROBECONF'><filename>KERNEL_MODULE_PROBECONF</filename></link>
+                    variable.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-KERNEL_MODULE_PROBECONF'><glossterm>KERNEL_MODULE_PROBECONF</glossterm>
             <glossdef>
                 <para>
