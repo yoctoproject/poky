@@ -1691,6 +1691,304 @@
         </para>
     </section>
 </section>
+
+<section id='moving-to-the-yocto-project-1.7-release'>
+    <title>Moving to the Yocto Project 1.7 Release</title>
+
+    <para>
+        This section provides migration information for moving to the
+        Yocto Project 1.7 Release from the prior release.
+    </para>
+
+
+    <section id='migration-1.7-autotools-class-changes'>
+        <title>Autotools Class Changes</title>
+
+        <para>
+            The following
+            <link linkend='ref-classes-autotools'><filename>autotools</filename></link>
+            class changes occurred:
+            <itemizedlist>
+                <listitem><para><emphasis>
+                    A separate build directory in Autotools recipes is
+                    handled:</emphasis>
+                    The <filename>autotools</filename> class has been changed
+                    to use a directory for building
+                    (<link linkend='var-B'><filename>B</filename></link>),
+                    which is separate from the source directory
+                    (<link linkend='var-S'><filename>S</filename></link>).
+                    If the software being built is already capable of
+                    building in a directory separate from the source, you
+                    do not need to do anything.
+                    However, if this capability does not exist, you will
+                    need to either patch the software so that it can build
+                    separately, or you will need to change the recipe to
+                    inherit the
+                    <link linkend='ref-classes-autotools-brokensep'><filename>autotools-brokensep</filename></link>
+                    class instead of the <filename>autotools</filename> class.
+                    </para></listitem>
+                <listitem><para><emphasis>
+                    Handle "foreign":</emphasis>
+                    The <filename>--foreign</filename> option is no longer
+                    passed to <filename>automake</filename> when running
+                    <filename>autoreconf</filename>.
+                    This option tells <filename>automake</filename> that a
+                    particular software package does not follow the GNU
+                    standards and therefore should not be expected
+                    to distribute certain files such as
+                    <filename>ChangeLog</filename>,
+                    <filename>AUTHORS</filename>, and so forth.
+                    The majority of upstream software packages already tell
+                    <filename>automake</filename> these packages are foreign
+                    and thus this option is mostly superfluous.
+                    However, some recipes will need patches for this change.
+                    You can easily make the change by patching
+                    <filename>configure.ac</filename> so that it passes
+                    "foreign" to <filename>AM_INIT_AUTOMAKE()</filename>.
+                    See
+                    <ulink url='http://cgit.openembedded.org/openembedded-core/commit/?id=01943188f85ce6411717fb5bf702d609f55813f2'></ulink>
+                    for an example showing how to make the patch.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.7-binary-configuration-scripts-disabled'>
+        <title>Binary Configuration Scripts Disabled</title>
+
+        <para>
+            Some of the core recipes that previously packaged binary
+            configuration scripts now disable the scripts instead due to the
+            scripts previously requiring error-prone path substitution.
+            Software that links against these libraries using these scripts
+            should use the much more robust
+            <filename>pkg-config</filename> instead.
+            The list of recipes changed in this version (and their
+            configuration scripts) is as follows:
+            <literallayout class='monospaced'>
+     directfb (directfb-config)
+     freetype (freetype-config)
+     gpgme (gpgme-config)
+     libassuan (libassuan-config)
+     libcroco (croco-6.0-config)
+     libgcrypt (libgcrypt-config)
+     libgpg-error (gpg-error-config)
+     libksba (ksba-config)
+     libpcap (pcap-config)
+     libpcre (pcre-config)
+     libpng (libpng-config, libpng16-config)
+     libsdl (sdl-config)
+     libusb-compat (libusb-config)
+     libxml2 (xml2-config)
+     libxslt (xslt-config)
+     ncurses (ncurses-config)
+     neon (neon-config)
+     npth (npth-config)
+     pth (pth-config)
+     taglib (taglib-config)
+            </literallayout>
+            <note>
+                Support for <filename>pkg-config</filename> has been added to
+                some recipes in the previous list in the rare cases
+                where the upstream software package does not already provide
+                it.
+            </note>
+        </para>
+    </section>
+
+    <section id='migration-1.7-glibc-replaces-eglibc'>
+        <title><filename>eglibc 2.19</filename> Replaced with <filename>glibc 2.20</filename></title>
+
+        <para>
+            Because <filename>eglibc</filename> and
+            <filename>glibc</filename> were already fairly close, this
+            replacement should not require any significant changes to other
+            software that links to <filename>eglibc</filename>.
+            However, there were a number of minor changes in
+            <filename>glibc 2.20</filename> upstream that could require
+            patching some software (e.g. the removal of the
+            <filename>_BSD_SOURCE</filename> feature test macro).
+        </para>
+
+        <para>
+            <filename>glibc 2.20</filename> also minimally requires version
+            2.6.32 of the Linux kernel.
+            Thus, older kernels will no longer be usable in conjunction with it.
+        </para>
+
+        <para>
+            For full details on the changes in <filename>glibc 2.20</filename>,
+            see the upstream release notes at
+            <ulink url='https://sourceware.org/ml/libc-alpha/2014-09/msg00088.html'></ulink>.
+        </para>
+    </section>
+
+    <section id='migration-1.7-kernel-module-autoloading'>
+        <title>Kernel Module Autoloading</title>
+
+        <para>
+            The
+            <link linkend='var-module_autoload'><filename>module_autoload_*</filename></link>
+            and
+            <link linkend='var-module_conf'><filename>module_conf_*</filename></link>
+            variables have been replaced with the variables
+            <link linkend='var-KERNEL_MODULE_AUTOLOAD'><filename>KERNEL_MODULE_AUTOLOAD</filename></link>
+            and
+            <link linkend='var-KERNEL_MODULE_PROBECONF'><filename>KERNEL_MODULE_PROBECONF</filename></link>,
+            respectively.
+            These variables no longer require you to specify the module name
+            as part of the variable name.
+            This change not only simplifies usage but also allows the values
+            of these variables to be appropriately incorporated into task
+            signatures and thus trigger the appropriate tasks to re-execute
+            when changed.
+            You should replace any references to
+            <filename>module_autoload_*</filename> or
+            <filename>module_conf_*</filename> with the new variables.
+            <note>
+                While it is recommended that you replace occurrences of the
+                <filename>module_conf_*</filename> variable with the
+                <filename>KERNEL_MODULE_PROBECONF</filename> variable, the
+                OpenEmbedded build system still recognizes the
+                <filename>module_conf_*</filename> variable.
+                However, you must be sure that any module name used in the
+                override with the <filename>module_conf</filename> variable
+                is included in the <filename>KERNEL_MODULE_PROBECONF</filename>
+                variable.
+            </note>
+        </para>
+
+        <para>
+            For more information, see the
+            <link linkend='var-KERNEL_MODULE_AUTOLOAD'><filename>KERNEL_MODULE_AUTOLOAD</filename></link>
+            and
+            <link linkend='var-KERNEL_MODULE_PROBECONF'><filename>KERNEL_MODULE_PROBECONF</filename></link>
+            descriptions in the variable's glossary.
+        </para>
+    </section>
+
+    <section id='migration-1.7-removed-recipes'>
+        <title>Removed Recipes</title>
+
+        <para>
+            The following recipes have been removed:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>x-load</filename>:
+                    This recipe has been superseded by
+                    U-boot SPL for all Cortex-based TI SoCs.
+                    For legacy boards, the <filename>meta-ti</filename>
+                    layer, which contains a maintained recipe, should be used
+                    instead.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>ubootchart</filename>:
+                    This recipe is obsolete.
+                    A <filename>bootchart2</filename> recipe has been added
+                    to functionally replace it.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>linux-yocto 3.4</filename>:
+                    Support for the linux-yocto 3.4 kernel has been dropped.
+                    Support for the 3.10 and 3.14 kernels remains, while
+                    support for version 3.17 has been added.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>eglibc</filename> has been removed in favor of
+                    <filename>glibc</filename>.
+                    See the
+                    "<link linkend='migration-1.7-glibc-replaces-eglibc'><filename>eglibc 2.19</filename> Replaced with <filename>glibc 2.20</filename></link>"
+                    section for more information.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.7-minimum-git-version'>
+        <title>Minimum Git version</title>
+
+        <para>
+            The minimum
+            <ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink> version required
+            on the build host is now 1.7.8 because the
+            <filename>&dash;&dash;list</filename> option is now required by
+            BitBake's Git fetcher.
+            As always, if your host distribution does not provide a version of
+            Git that meets this requirement, you can use the
+            <filename>buildtools-tarball</filename> that does.
+            See the
+            "<link linkend='required-git-tar-and-python-versions'>Required Git, tar, and Python Versions</link>"
+            section for more information.
+        </para>
+    </section>
+
+    <section id='migration-1.7-qa-check-changes'>
+        <title>QA Check Changes</title>
+
+        <para>
+            The following changes have occurred to the QA check process:
+            <itemizedlist>
+                <listitem><para>
+                    Additional QA checks <filename>file-rdeps</filename>
+                    and <filename>build-deps</filename> have been added in
+                    order to verify that file dependencies are satisfied
+                    (e.g. package contains a script requiring
+                    <filename>/bin/bash</filename>) and build-time dependencies
+                    are declared, respectively.
+                    For more information, please see the
+                    "<link linkend='ref-qa-checks'>QA Error and Warning Messages</link>"
+                    chapter.
+                    </para></listitem>
+                <listitem><para>
+                    Package QA checks are now performed during a new
+                    <filename>do_package_qa</filename> task rather
+                    than being part of the
+                    <link linkend='ref-tasks-package'><filename>do_package</filename></link>
+                    task.
+                    This allows more parallel execution.
+                    This change is unlikely to be an issue except for highly
+                    customized recipes that disable packaging tasks themselves
+                    by marking them as <filename>noexec</filename>.
+                    For those packages, you will need to disable the
+                    <filename>do_package_qa</filename> task as well.
+                    </para></listitem>
+                <listitem><para>
+                    Files being overwritten during the
+                    <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
+                    task now trigger an error instead of a warning.
+                    Recipes should not be overwriting files written to the
+                    sysroot by other recipes.
+                    If you have these types of recipes, you need to alter them
+                    so that they do not overwrite these files.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.7-miscellaneous-changes'>
+        <title>Miscellaneous Changes</title>
+
+        <para>
+            The following miscellaneous change occurred:
+            <itemizedlist>
+                <listitem><para>
+                    The build history feature now writes
+                    <filename>build-id.txt</filename> instead of
+                    <filename>build-id</filename>.
+                    Additionally, <filename>build-id.txt</filename>
+                    now contains the full build header as printed by
+                    BitBake upon starting the build.
+                    You should manually remove old "build-id" files from your
+                    existing build history repositories to avoid confusion.
+                    For information on the build history feature, see the
+                    "<link linkend='maintaining-build-output-quality'>Maintaining Build Output Quality</link>"
+                    section.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
+
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
