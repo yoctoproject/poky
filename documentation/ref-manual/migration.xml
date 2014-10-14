@@ -1710,17 +1710,19 @@
             class changes occurred:
             <itemizedlist>
                 <listitem><para><emphasis>
-                    A separate build directory in Autotools recipes is
-                    handled:</emphasis>
+                    A separate build directory is now used by default:</emphasis>
                     The <filename>autotools</filename> class has been changed
                     to use a directory for building
                     (<link linkend='var-B'><filename>B</filename></link>),
                     which is separate from the source directory
                     (<link linkend='var-S'><filename>S</filename></link>).
-                    If the software being built is already capable of
+                    This is commonly referred to as
+                    <filename>B != S</filename>, or an out-of-tree build.</para>
+                    <para>If the software being built is already capable of
                     building in a directory separate from the source, you
                     do not need to do anything.
-                    However, if this capability does not exist, you will
+                    However, if the software is not capable of being built
+                    in this manner, you will
                     need to either patch the software so that it can build
                     separately, or you will need to change the recipe to
                     inherit the
@@ -1728,25 +1730,24 @@
                     class instead of the <filename>autotools</filename> class.
                     </para></listitem>
                 <listitem><para><emphasis>
-                    Handle "foreign":</emphasis>
-                    The <filename>--foreign</filename> option is no longer
-                    passed to <filename>automake</filename> when running
-                    <filename>autoreconf</filename>.
+                    The <filename>&dash;&dash;foreign</filename> option is
+                    no longer passed to <filename>automake</filename> when
+                    running <filename>autoconf</filename>:</emphasis>
                     This option tells <filename>automake</filename> that a
                     particular software package does not follow the GNU
                     standards and therefore should not be expected
                     to distribute certain files such as
                     <filename>ChangeLog</filename>,
                     <filename>AUTHORS</filename>, and so forth.
-                    The majority of upstream software packages already tell
-                    <filename>automake</filename> these packages are foreign
-                    and thus this option is mostly superfluous.
+                    Because the majority of upstream software packages already
+                    tell <filename>automake</filename> to enable foreign mode
+                    themselves, the option is mostly superfluous.
                     However, some recipes will need patches for this change.
                     You can easily make the change by patching
                     <filename>configure.ac</filename> so that it passes
                     "foreign" to <filename>AM_INIT_AUTOMAKE()</filename>.
                     See
-                    <ulink url='http://cgit.openembedded.org/openembedded-core/commit/?id=01943188f85ce6411717fb5bf702d609f55813f2'></ulink>
+                    <ulink url='http://cgit.openembedded.org/openembedded-core/commit/?id=01943188f85ce6411717fb5bf702d609f55813f2'>this commit</ulink>
                     for an example showing how to make the patch.
                     </para></listitem>
             </itemizedlist>
@@ -1757,12 +1758,12 @@
         <title>Binary Configuration Scripts Disabled</title>
 
         <para>
-            Some of the core recipes that previously packaged binary
-            configuration scripts now disable the scripts instead due to the
+            Some of the core recipes that package binary configuration scripts
+            now disable the scripts instead due to the
             scripts previously requiring error-prone path substitution.
             Software that links against these libraries using these scripts
-            should use the much more robust
-            <filename>pkg-config</filename> instead.
+            should use the much more robust <filename>pkg-config</filename>
+            instead.
             The list of recipes changed in this version (and their
             configuration scripts) is as follows:
             <literallayout class='monospaced'>
@@ -1787,12 +1788,10 @@
      pth (pth-config)
      taglib (taglib-config)
             </literallayout>
-            <note>
-                Support for <filename>pkg-config</filename> has been added to
-                some recipes in the previous list in the rare cases
-                where the upstream software package does not already provide
-                it.
-            </note>
+            Additionally, support for <filename>pkg-config</filename> has been
+            added to some recipes in the previous list in the rare cases
+            where the upstream software package does not already provide
+            it.
         </para>
     </section>
 
@@ -1811,15 +1810,15 @@
         </para>
 
         <para>
-            <filename>glibc 2.20</filename> also minimally requires version
-            2.6.32 of the Linux kernel.
+            <filename>glibc 2.20</filename> requires version 2.6.32 or greater
+            of the Linux kernel.
             Thus, older kernels will no longer be usable in conjunction with it.
         </para>
 
         <para>
             For full details on the changes in <filename>glibc 2.20</filename>,
-            see the upstream release notes at
-            <ulink url='https://sourceware.org/ml/libc-alpha/2014-09/msg00088.html'></ulink>.
+            see the upstream release notes
+            <ulink url='https://sourceware.org/ml/libc-alpha/2014-09/msg00088.html'>here</ulink>.
         </para>
     </section>
 
@@ -1829,33 +1828,25 @@
         <para>
             The
             <link linkend='var-module_autoload'><filename>module_autoload_*</filename></link>
-            and
-            <link linkend='var-module_conf'><filename>module_conf_*</filename></link>
-            variables have been replaced with the variables
+            variable is now deprecated and a new
             <link linkend='var-KERNEL_MODULE_AUTOLOAD'><filename>KERNEL_MODULE_AUTOLOAD</filename></link>
-            and
-            <link linkend='var-KERNEL_MODULE_PROBECONF'><filename>KERNEL_MODULE_PROBECONF</filename></link>,
-            respectively.
-            These variables no longer require you to specify the module name
+            variable should be used instead.
+            Also,
+            <link linkend='var-module_conf'><filename>module_conf_*</filename></link>
+            must now be used in conjunction with a new
+            <link linkend='var-KERNEL_MODULE_PROBECONF'><filename>KERNEL_MODULE_PROBECONF</filename></link>
+            variable.
+            The new variables no longer require you to specify the module name
             as part of the variable name.
             This change not only simplifies usage but also allows the values
             of these variables to be appropriately incorporated into task
             signatures and thus trigger the appropriate tasks to re-execute
             when changed.
             You should replace any references to
-            <filename>module_autoload_*</filename> or
-            <filename>module_conf_*</filename> with the new variables.
-            <note>
-                While it is recommended that you replace occurrences of the
-                <filename>module_conf_*</filename> variable with the
-                <filename>KERNEL_MODULE_PROBECONF</filename> variable, the
-                OpenEmbedded build system still recognizes the
-                <filename>module_conf_*</filename> variable.
-                However, you must be sure that any module name used in the
-                override with the <filename>module_conf</filename> variable
-                is included in the <filename>KERNEL_MODULE_PROBECONF</filename>
-                variable.
-            </note>
+            <filename>module_autoload_*</filename> with
+            <filename>KERNEL_MODULE_AUTOLOAD</filename>, and add any modules
+            for which <filename>module_conf_*</filename> is specified to
+            <filename>KERNEL_MODULE_PROBECONF</filename>.
         </para>
 
         <para>
@@ -1863,7 +1854,7 @@
             <link linkend='var-KERNEL_MODULE_AUTOLOAD'><filename>KERNEL_MODULE_AUTOLOAD</filename></link>
             and
             <link linkend='var-KERNEL_MODULE_PROBECONF'><filename>KERNEL_MODULE_PROBECONF</filename></link>
-            descriptions in the variable's glossary.
+            variables.
         </para>
     </section>
 

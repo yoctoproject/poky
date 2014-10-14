@@ -4458,7 +4458,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Specify it as follows:
                     <literallayout class='monospaced'>
-     KERNEL_MODULE_AUTOLOAD = "modname1 modname2 modname3"
+     KERNEL_MODULE_AUTOLOAD += "modname1 modname2 modname3"
                     </literallayout>
                 </para>
 
@@ -4470,7 +4470,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The modules appear one-per-line in the file.
                     Here is an example of the most common use case:
                     <literallayout class='monospaced'>
-     KERNEL_MODULE_AUTOLOAD = "modname"
+     KERNEL_MODULE_AUTOLOAD += "modname"
                     </literallayout>
                 </para>
 
@@ -4487,58 +4487,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-KERNEL_MODULE_PROBECONF'><glossterm>KERNEL_MODULE_PROBECONF</glossterm>
             <glossdef>
                 <para>
-                    Specifies
-                    <ulink url='http://linux.die.net/man/5/modprobe.d'><filename>modprobe.d</filename></ulink>
-                    syntax lines for inclusion in the
-                    <filename>/etc/modprobe.d/modname.conf</filename> file.
-                    <note>
-                        The <filename>KERNEL_MODULE_PROBECONF</filename>
-                        variable behaves the same as the
-                        <link linkend='var-module_conf'><filename>module_conf</filename></link>
-                        variable with the exception of not having to use a
-                        module name override.
-                    </note>
-                </para>
-
-                <para>
-                    You can use the
-                    <filename>KERNEL_MODULE_PROBECONF</filename> variable
-                    anywhere it can be recognized by the kernel recipe or
-                    an out-of-tree kernel module recipe (e.g. a machine
-                    configuration file, a distribution configuration file, an
-                    append file for the recipe, or the recipe itself).
-                </para>
-
-                <para>
-                    Here is the general syntax:
-                    <literallayout class='monospaced'>
-     KERNEL_MODULE_PROBECONF = "&lt;modprobe.d syntax&gt;"
-                    </literallayout>
-                </para>
-
-                <para>
-                    Run <filename>man modprobe.d</filename> in the shell to
-                    find out more information on the exact syntax
-                    you want to provide with <filename>KERNEL_MODULE_PROBECONF</filename>.
-                </para>
-
-                <para>
-                    Including <filename>KERNEL_MODULE_PROBECONF</filename> causes
-                    the OpenEmbedded build system to populate the
-                    <filename>/etc/modprobe.d/modname.conf</filename>
-                    file with <filename>modprobe.d</filename> syntax lines.
-                    Here is an example that adds the options
-                    <filename>arg1</filename> and <filename>arg2</filename>
-                    to a module named <filename>mymodule</filename>:
-                    <literallayout class='monospaced'>
-     KERNEL_MODULE_PROBECONF = "options mymodule arg1=val1 arg2=val2"
-                    </literallayout>
-                </para>
-
-                <para>
-                    For information on how to specify kernel modules to
-                    auto-load on boot, see the
-                    <filename>KERNEL_MODULE_AUTOLOAD</filename> variable.
+                    Provides a list of modules for which the OpenEmbedded
+                    build system expects to find
+                    <link linkend='var-module_conf'><filename>module_conf_&lt;modname&gt;</filename></link>
+                    values that specify configuration for each of the modules.
+                    For information on how to provide those module
+                    configurations, see the
+                    <link linkend='var-module_conf'><filename>module_conf_*</filename></link>
+                    variable.
                 </para>
             </glossdef>
         </glossentry>
@@ -5410,12 +5366,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     This variable has been replaced by the
                     <filename>KERNEL_MODULE_AUTOLOAD</filename> variable.
-                    You should replace all occurrences of the
-                    <filename>module_autoload</filename> variable with
-                    <filename>KERNEL_MODULE_AUTOLOAD</filename> variables.
+                    You should replace all occurrences of
+                    <filename>module_autoload</filename> with additions to
+                    <filename>KERNEL_MODULE_AUTOLOAD</filename>, for example:
+                    <literallayout class='monospaced'>
+     module_autoload_rfcomm = "rfcomm"
+                    </literallayout>
+                    should now be replaced with:
+                    <literallayout class='monospaced'>
+     KERNEL_MODULE_AUTOLOAD += "rfcomm"
+                    </literallayout>
                     See the
                     <link linkend='var-KERNEL_MODULE_AUTOLOAD'><filename>KERNEL_MODULE_AUTOLOAD</filename></link>
-                    variable for a description of the variable.
+                    variable for more information.
                 </para>
             </glossdef>
         </glossentry>
@@ -5437,7 +5400,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     recipe, or the recipe itself).
                     If you use this variable, you must also be sure to list
                     the module name in the
-                    <link linkend='var-KERNEL_MODULE_PROBECONF'><filename>KERNEL_MODULE_PROBECONF</filename></link>
+                    <link linkend='var-KERNEL_MODULE_AUTOLOAD'><filename>KERNEL_MODULE_AUTOLOAD</filename></link>
                     variable.
                 </para>
 
@@ -5471,7 +5434,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     For information on how to specify kernel modules to
                     auto-load on boot, see the
-                    <link linkend='var-module_autoload'><filename>module_autoload</filename></link>
+                    <link linkend='var-KERNEL_MODULE_AUTOLOAD'><filename>KERNEL_MODULE_AUTOLOAD</filename></link>
                     variable.
                 </para>
             </glossdef>
