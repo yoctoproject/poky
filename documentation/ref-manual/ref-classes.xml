@@ -1387,6 +1387,25 @@
                 Some very rare cases do exist for dynamically loaded modules where
                 these symlinks are needed instead in the main package.
                 </para></listitem>
+            <listitem><para><emphasis><filename>file-redeps:</filename></emphasis>
+                Checks that file-level dependencies identified by the
+                OpenEmbedded build system are satisfied.
+                For example, a shell script might start with the line
+                <filename>#!/bin/bash</filename>.
+                This line would translate to a file dependency on
+                <filename>/bin/bash</filename>.
+                Of the three package managers that the OpenEmbedded build
+                system supports, only RPM directly handles file-level
+                dependencies, resolving them automatically to packages
+                providing the files.
+                However, the lack of that functionality in the other two
+                package managers does not mean the dependencies do not still
+                need resolving.
+                This QA check attempts to ensure that explicitly declared
+                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
+                exist to handle any file-level dependency detected in
+                packaged files.
+                </para></listitem>
             <listitem><para><emphasis><filename>files-invalid:</filename></emphasis>
                 Checks for
                 <link linkend='var-FILES'><filename>FILES</filename></link>
