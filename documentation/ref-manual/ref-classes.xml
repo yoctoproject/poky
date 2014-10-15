@@ -1336,6 +1336,34 @@
                 Currently, this test triggers too many false positives and
                 thus is not normally enabled.
                 </para></listitem>
+            <listitem><para><emphasis><filename>build-deps:</filename></emphasis>
+                Determines if a build-time dependency that is specified through
+                <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>,
+                explicit
+                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>,
+                or task-level dependencies exists to match any runtime
+                dependency.
+                This determination is particularly useful to discover where
+                runtime dependencies are detected and added during packaging.
+                At this point in the build it is too late to ensure that
+                the dependency is built, and thus you can end up with an
+                error when the package is installed into the image during the
+                <link linkend='ref-tasks-rootfs'><filename>do_rootfs</filename></link>
+                task because the auto-detected dependency was not satisfied.
+                An example of this would be where the
+                <link linkend='ref-classes-update-rc.d'><filename>update-rc.d</filename></link>
+                class automatically adds a dependency on the
+                <filename>initscripts-functions</filename> package to packages
+                that install an <filename>initscript</filename> that refers to
+                <filename>/etc/init.d/functions</filename>.
+                The recipe should really have an explicit
+                <filename>RDEPENDS</filename> for the package in question on
+                <filename>initscripts-functions</filename> so that the
+                OpenEmbedded build system is able to ensure that the
+                <filename>initscripts</filename> recipe is actually built and
+                thus the <filename>initscripts-functions</filename> package is
+                made available.
+                </para></listitem>
             <listitem><para><emphasis><filename>compile-host-path:</filename></emphasis>
                 Checks the
                 <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>
