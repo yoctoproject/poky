@@ -184,6 +184,36 @@ can be found then it should be implemented.  I can't find one at the moment.
     <para>
         <itemizedlist>
             <listitem>
+                <para id='qa-issue-build-deps'>
+                    <code>
+     &lt;packagename1&gt; rdepends on &lt;packagename2&gt;, but it isn't a builddependency? [build-deps]
+                    </code>
+                </para>
+
+                <para>
+                    A runtime dependency exists between the two specified
+                    packages, but there is nothing explicit within the recipe
+                    to enable the OpenEmbedded build system to ensure that
+                    dependency is satisfied.
+                    This condition is usually triggered by an
+                    <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
+                    value being added at the packaging stage rather than up
+                    front, which is usually automatic based on the contents of
+                    the package.
+                    In most cases, you should change the recipe to add an
+                    explicit <filename>RDEPENDS</filename> for the dependency.
+                </para>
+
+                <para>
+                    &nbsp;
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
                 <para id='qa-issue-dev-so'>
                     <code>
      non -dev/-dbg/-nativesdk package contains symlink .so: &lt;packagename&gt; path '&lt;path&gt;' [dev-so]
