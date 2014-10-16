@@ -110,7 +110,7 @@
                 appended to the path used to access the mirror.
                 Here is an example:
                 <literallayout class='monospaced'>
-     SSTATE_MIRRORS = "file://.* http://someserver.tld/share/sstate/PATH"
+     SSTATE_MIRRORS = "file://.* http://<replaceable>someserver</replaceable>.tld/share/sstate/PATH"
                 </literallayout>
             </para>
         </section>
@@ -375,10 +375,11 @@
                 <listitem><para><emphasis>Shared State Code:</emphasis>
                     The shared state code has been optimized to avoid running
                     unnecessary tasks.
-                    For example,
-                    <filename>bitbake -c rootfs some-image</filename> from
-                    shared state no longer populates the target sysroot
-                    since that is not necessary.
+                    For example, the following no longer populates the target
+                    sysroot since that is not necessary:
+                    <literallayout class='monospaced'>
+     $ bitbake -c rootfs <replaceable>some-image</replaceable>
+                    </literallayout>
                     Instead, the system just needs to extract the output
                     package contents, re-create the packages, and construct
                     the root filesystem.
@@ -832,7 +833,7 @@
                     This directory is located under
                     <filename>sysroots</filename> and uses a machine-specific
                     name (i.e.
-                    <filename>tmp/sysroots/&lt;machine&gt;/pkgdata</filename>).
+                    <filename>tmp/sysroots/<replaceable>machine</replaceable>/pkgdata</filename>).
                     </para></listitem>
             </itemizedlist>
         </para>
@@ -1100,7 +1101,7 @@
                     </para></listitem>
                 <listitem><para>
                     <filename>base-files</filename>: Remove the unnecessary
-                    <filename>media/xxx</filename> directories.
+                    <filename>media/</filename><replaceable>xxx</replaceable> directories.
                     </para></listitem>
                 <listitem><para>
                     <filename>alsa-state</filename>: Provide an empty
@@ -1228,7 +1229,7 @@
                 value against the branch.
                 You can specify the branch using the following form:
                 <literallayout class='monospaced'>
-     SRC_URI = "git://server.name/repository;branch=&lt;branchname&gt;"
+     SRC_URI = "git://server.name/repository;branch=<replaceable>branchname</replaceable>"
                 </literallayout>
                 If you do not specify a branch, BitBake looks
                 in the default "master" branch.
@@ -1305,10 +1306,10 @@
         </section>
 
         <section id='migration-1.6-task-taskname-overrides'>
-            <title><filename>task-&lt;taskname&gt;</filename> Overrides</title>
+            <title><filename>task-</filename><replaceable>taskname</replaceable> Overrides</title>
 
             <para>
-                <filename>task-&lt;taskname&gt;</filename> overrides have been
+                <filename>task-</filename><replaceable>taskname</replaceable> overrides have been
                 adjusted so that tasks whose names contain underscores have the
                 underscores replaced by hyphens for the override so that they
                 now function properly.
@@ -1932,8 +1933,8 @@
                     </para></listitem>
                 <listitem><para>
                     Package QA checks are now performed during a new
-                    <filename>do_package_qa</filename> task rather
-                    than being part of the
+                    <link linkend='ref-tasks-package_qa'><filename>do_package_qa</filename></link>
+                    task rather than being part of the
                     <link linkend='ref-tasks-package'><filename>do_package</filename></link>
                     task.
                     This allows more parallel execution.

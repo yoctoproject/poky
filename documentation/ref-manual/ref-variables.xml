@@ -136,7 +136,7 @@
                     <note>
                         If <filename>ALTERNATIVE_LINK_NAME</filename> is not
                         defined, it defaults to
-                        <filename>${bindir}/&lt;name&gt;</filename>.
+                        <filename>${bindir}/<replaceable>name</replaceable></filename>.
                     </note>
                 </para>
 
@@ -159,9 +159,9 @@
                     a default for specific commands tied to particular packages.
                     Here are the available syntax forms:
                     <literallayout class='monospaced'>
-     ALTERNATIVE_PRIORITY = "&lt;priority&gt;"
-     ALTERNATIVE_PRIORITY[&lt;name&gt;] = "&lt;priority&gt;"
-     ALTERNATIVE_PRIORITY_&lt;pkg&gt;[&lt;name&gt;] = "&lt;priority&gt;"
+     ALTERNATIVE_PRIORITY = "<replaceable>priority</replaceable>"
+     ALTERNATIVE_PRIORITY[<replaceable>name</replaceable>] = "<replaceable>priority</replaceable>"
+     ALTERNATIVE_PRIORITY_<replaceable>pkg</replaceable>[<replaceable>name</replaceable>] = "<replaceable>priority</replaceable>"
                     </literallayout>
                 </para>
 
@@ -185,9 +185,9 @@
                     a default for specific commands tied to particular packages.
                     Here are the available syntax forms:
                     <literallayout class='monospaced'>
-     ALTERNATIVE_TARGET = "&lt;target&gt;"
-     ALTERNATIVE_TARGET[&lt;name&gt;] = "&lt;target&gt;"
-     ALTERNATIVE_TARGET_&lt;pkg&gt;[&lt;name&gt;] = "&lt;target&gt;"
+     ALTERNATIVE_TARGET = "<replaceable>target</replaceable>"
+     ALTERNATIVE_TARGET[<replaceable>name</replaceable>] = "<replaceable>target</replaceable>"
+     ALTERNATIVE_TARGET_<replaceable>pkg</replaceable>[<replaceable>name</replaceable>] = "<replaceable>target</replaceable>"
                     </literallayout>
                     <note>
                         <para>
@@ -338,13 +338,13 @@
                     being installed by listing them with the
                     <filename>BAD_RECOMMENDATIONS</filename> variable:
                     <literallayout class='monospaced'>
-     BAD_RECOMMENDATIONS = "&lt;package_name&gt; &lt;package_name&gt; &lt;package_name&gt; ..."
+     BAD_RECOMMENDATIONS = "<replaceable>package_name</replaceable> <replaceable>package_name</replaceable> <replaceable>package_name</replaceable> ..."
                     </literallayout>
                     You can set this variable globally in your
                     <filename>local.conf</filename> file or you can attach it to
                     a specific image recipe by using the recipe name override:
                     <literallayout class='monospaced'>
-     BAD_RECOMMENDATIONS_pn-&lt;target_image&gt; = "&lt;package_name&gt;"
+     BAD_RECOMMENDATIONS_pn-<replaceable>target_image</replaceable> = "<replaceable>package_name</replaceable>"
                     </literallayout>
                 </para>
 
@@ -445,11 +445,11 @@
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
                     Use the following form:
                     <literallayout class='monospaced'>
-     BB_DISKMON_DIRS = "&lt;action&gt;,&lt;dir&gt;,&lt;threshold&gt; [...]"
+     BB_DISKMON_DIRS = "<replaceable>action</replaceable>,<replaceable>dir</replaceable>,<replaceable>threshold</replaceable> [...]"
 
      where:
 
-        &lt;action&gt; is:
+        <replaceable>action</replaceable> is:
            ABORT:     Immediately abort the build when
                       a threshold is broken.
            STOPTASKS: Stop the build after the currently
@@ -463,14 +463,14 @@
                       which must be defined in the
                       conf/local.conf file.
 
-        &lt;dir&gt; is:
+        <replaceable>dir</replaceable> is:
            Any directory you choose. You can specify one or
            more directories to monitor by separating the
            groupings with a space.  If two directories are
            on the same device, only the first directory
            is monitored.
 
-        &lt;threshold&gt; is:
+        <replaceable>threshold</replaceable> is:
            Either the minimum available disk space,
            the minimum number of free inodes, or
            both.  You must specify at least one.  To
@@ -559,16 +559,16 @@
                     When specifying the variable in your configuration file,
                     use the following form:
                     <literallayout class='monospaced'>
-     BB_DISKMON_WARNINTERVAL = "&lt;disk_space_interval&gt;,&lt;disk_inode_interval&gt;"
+     BB_DISKMON_WARNINTERVAL = "<replaceable>disk_space_interval</replaceable>,<replaceable>disk_inode_interval</replaceable>"
 
      where:
 
-        &lt;disk_space_interval&gt; is:
+        <replaceable>disk_space_interval</replaceable> is:
            An interval of memory expressed in either
            G, M, or K for Gbytes, Mbytes, or Kbytes,
            respectively. You cannot use GB, MB, or KB.
 
-        &lt;disk_inode_interval&gt; is:
+        <replaceable>disk_inode_interval</replaceable> is:
            An interval of free inodes expressed in either
            G, M, or K for Gbytes, Mbytes, or Kbytes,
            respectively. You cannot use GB, MB, or KB.
@@ -643,7 +643,7 @@
                     which is a compiler built to run on the build machine but produces binaries
                     that run on the target <link linkend='var-MACHINE'><filename>MACHINE</filename></link>;
                     "nativesdk", which targets the SDK machine instead of <filename>MACHINE</filename>;
-                    and "mulitlibs" in the form "<filename>multilib:&lt;multilib_name&gt;</filename>".
+                    and "mulitlibs" in the form "<filename>multilib:</filename><replaceable>multilib_name</replaceable>".
                 </para>
 
                 <para>
@@ -651,7 +651,7 @@
                     is as simple as adding the following to your recipe:
                     <literallayout class='monospaced'>
      BBCLASSEXTEND =+ "native nativesdk"
-     BBCLASSEXTEND =+ "multilib:&lt;multilib_name&gt;"
+     BBCLASSEXTEND =+ "multilib:<replaceable>multilib_name</replaceable>"
                     </literallayout>
                 </para>
              </glossdef>
@@ -856,9 +856,9 @@
                         Set the variable as you would any environment variable
                         and then run BitBake:
                         <literallayout class='monospaced'>
-     $ BBPATH = "&lt;build_directory&gt;"
+     $ BBPATH = "<replaceable>build_directory</replaceable>"
      $ export BBPATH
-     $ bitbake &lt;target&gt;
+     $ bitbake <replaceable>target</replaceable>
                         </literallayout>
                     </note>
                 </para>
@@ -2241,7 +2241,7 @@
                     you want the error reporting tool to store the debug files
                     as follows in your <filename>local.conf</filename> file:
                     <literallayout class='monospaced'>
-     ERR_REPORT_DIR = "path"
+     ERR_REPORT_DIR = "<replaceable>path</replaceable>"
                     </literallayout>
                 </para>
             </glossdef>
@@ -2585,11 +2585,11 @@
                     should have the name of the feature item as an override.
                     Here is an example:
                     <literallayout class='monospaced'>
-     FEATURE_PACKAGES_widget = "package1 package2"
+     FEATURE_PACKAGES_widget = "<replaceable>package1</replaceable> <replaceable>package2</replaceable>"
                     </literallayout>
                     In this example, if "widget" were added to
-                    <filename>IMAGE_FEATURES</filename>, "package1" and
-                    "package2" would be included in the image.
+                    <filename>IMAGE_FEATURES</filename>, <replaceable>package1</replaceable> and
+                    <replaceable>package2</replaceable> would be included in the image.
                     <note>
                         Packages installed by features defined through
                         <filename>FEATURE_PACKAGES</filename> are often package
@@ -3468,7 +3468,7 @@
                 <para>
                     When you use this variable, it is best to use it as follows:
                     <literallayout class='monospaced'>
-     IMAGE_INSTALL_append = " package-name"
+     IMAGE_INSTALL_append = " <replaceable>package-name</replaceable>"
                     </literallayout>
                     Be sure to include the space between the quotation character
                     and the start of the package name or names.
@@ -3520,7 +3520,7 @@
                     The file contains package information on a line-per-package
                     basis as follows:
                     <literallayout class='monospaced'>
-     &lt;packagename&gt; &lt;packagearch&gt; &lt;version&gt;
+     <replaceable>packagename</replaceable> <replaceable>packagearch</replaceable> <replaceable>version</replaceable>
                     </literallayout>
                 </para>
 
@@ -3653,7 +3653,7 @@
                     OpenEmbedded build system has created the image.
                     You can specify shell commands separated by semicolons:
                     <literallayout class='monospaced'>
-     IMAGE_POSTPROCESS_COMMAND += "&lt;shell_command&gt;; ... "
+     IMAGE_POSTPROCESS_COMMAND += "<replaceable>shell_command</replaceable>; ... "
                     </literallayout>
                     If you need to pass the path to the root filesystem within
                     the command, you can use
@@ -4458,7 +4458,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Specify it as follows:
                     <literallayout class='monospaced'>
-     KERNEL_MODULE_AUTOLOAD += "modname1 modname2 modname3"
+     KERNEL_MODULE_AUTOLOAD += "<replaceable>module_name1</replaceable> <replaceable>module_name2</replaceable> <replaceable>module_name3</replaceable>"
                     </literallayout>
                 </para>
 
@@ -4470,7 +4470,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The modules appear one-per-line in the file.
                     Here is an example of the most common use case:
                     <literallayout class='monospaced'>
-     KERNEL_MODULE_AUTOLOAD += "modname"
+     KERNEL_MODULE_AUTOLOAD += "<replaceable>module_name</replaceable>"
                     </literallayout>
                 </para>
 
@@ -4489,7 +4489,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Provides a list of modules for which the OpenEmbedded
                     build system expects to find
-                    <link linkend='var-module_conf'><filename>module_conf_&lt;modname&gt;</filename></link>
+                    <filename>module_conf_</filename><replaceable>modname</replaceable>
                     values that specify configuration for each of the modules.
                     For information on how to provide those module
                     configurations, see the
@@ -4505,7 +4505,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The location of the kernel sources.
                     This variable is set to the value of the
                     <link linkend='var-STAGING_KERNEL_DIR'><filename>STAGING_KERNEL_DIR</filename></link>
-                    within the <filename>module.bbclass</filename> class.
+                    within the
+                    <link linkend='ref-classes-module'><filename>module</filename></link>
+                    class.
                     For information on how this variable is used, see the
                     "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#incorporating-out-of-tree-modules'>Incorporating Out-of-Tree Modules</ulink>"
                     section.
@@ -4530,7 +4532,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The location of the kernel sources.
                     This variable is set to the value of the
                     <link linkend='var-STAGING_KERNEL_DIR'><filename>STAGING_KERNEL_DIR</filename></link>
-                    within the <filename>module.bbclass</filename> class.
+                    within the
+                    <link linkend='ref-classes-module'><filename>module</filename></link>
+                    class.
                     For information on how this variable is used, see the
                     "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#incorporating-out-of-tree-modules'>Incorporating Out-of-Tree Modules</ulink>"
                     section.
@@ -4796,10 +4800,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     This variable must be defined for all recipes (unless
                     <link linkend='var-LICENSE'><filename>LICENSE</filename></link>
-                    is set to "CLOSED")</para>
+                    is set to "CLOSED").</para>
                 <para>For more information, see the
-                    <link linkend='usingpoky-configuring-LIC_FILES_CHKSUM'>
-                    Tracking License Changes</link> section</para>
+                    "<link linkend='usingpoky-configuring-LIC_FILES_CHKSUM'>
+                    Tracking License Changes</link>" section.</para>
             </glossdef>
         </glossentry>
 
@@ -4912,7 +4916,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The <filename>LICENSE_PATH</filename> variable allows you to extend that
                     location to other areas that have additional licenses:
                     <literallayout class='monospaced'>
-     LICENSE_PATH += "/path/to/additional/common/licenses"
+     LICENSE_PATH += "<replaceable>path-to-additional-common-licenses</replaceable>"
                     </literallayout></para>
             </glossdef>
         </glossentry>
@@ -5407,7 +5411,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Here is the general syntax:
                     <literallayout class='monospaced'>
-     module_conf_&lt;modname&gt; = "&lt;modprobe.d syntax&gt;"
+     module_conf_<replaceable>module_name</replaceable> = "<replaceable>modprobe.d-syntax</replaceable>"
                     </literallayout>
                     You must use the kernel module name override.
                 </para>
@@ -5531,7 +5535,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>local.conf</filename> file or you can attach it to
                     a specific image recipe by using the recipe name override:
                     <literallayout class='monospaced'>
-     NO_RECOMMENDATIONS_pn-&lt;target_image&gt; = "&lt;package_name&gt;"
+     NO_RECOMMENDATIONS_pn-<replaceable>target_image</replaceable> = "<replaceable>package_name</replaceable>"
                     </literallayout>
                 </para>
 
@@ -5909,13 +5913,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Lists packages that should not be installed into an image.
                     For example:
                     <literallayout class='monospaced'>
-     PACKAGE_EXCLUDE = "&lt;package_name&gt; &lt;package_name&gt; &lt;package_name&gt; ..."
+     PACKAGE_EXCLUDE = "<replaceable>package_name</replaceable> <replaceable>package_name</replaceable> <replaceable>package_name</replaceable> ..."
                     </literallayout>
                     You can set this variable globally in your
                     <filename>local.conf</filename> file or you can attach it to
                     a specific image recipe by using the recipe name override:
                     <literallayout class='monospaced'>
-     PACKAGE_EXCLUDE_pn-&lt;target_image&gt; = "&lt;package_name&gt;"
+     PACKAGE_EXCLUDE_pn-<replaceable>target_image</replaceable> = "<replaceable>package_name</replaceable>"
                     </literallayout>
                 </para>
 
@@ -6099,8 +6103,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <itemizedlist>
                         <listitem><para><emphasis>Append file:</emphasis>
                             Create an append file named
-                            <filename>&lt;recipename&gt;.bbappend</filename> in your
-                            layer and override the value of
+                            <replaceable>recipename</replaceable><filename>.bbappend</filename>
+                            in your layer and override the value of
                             <filename>PACKAGECONFIG</filename>.
                             You can either completely override the variable:
                             <literallayout class='monospaced'>
@@ -6114,15 +6118,15 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                             This method is identical to changing the block
                             through an append file except you edit your
                             <filename>local.conf</filename> or
-                            <filename>&lt;mydistro&gt;.conf</filename> file.
+                            <filename><replaceable>mydistro</replaceable>.conf</filename> file.
                             As with append files previously described,
                             you can either completely override the variable:
                             <literallayout class='monospaced'>
-     PACKAGECONFIG_pn-&lt;recipename&gt;="f4 f5"
+     PACKAGECONFIG_pn-<replaceable>recipename</replaceable>="f4 f5"
                             </literallayout>
                             Or, you can just amend the variable:
                             <literallayout class='monospaced'>
-     PACKAGECONFIG_append_pn-&lt;recipename&gt; = " f4"
+     PACKAGECONFIG_append_pn-<replaceable>recipename</replaceable> = " f4"
                             </literallayout></para></listitem>
                     </itemizedlist>
                 </para>
@@ -6345,7 +6349,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     For example, when the
                     <link linkend='ref-classes-debian'><filename>debian</filename></link>
                     class renames the output package, it does so by setting
-                    <filename>PKG_&lt;packagename&gt;</filename>.
+                    <filename>PKG_<replaceable>packagename</replaceable></filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -6868,7 +6872,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                    them in conjunction with a package name override.
                    Here is an example:
                    <literallayout class='monospaced'>
-     RCONFLICTS_${PN} = "another-conflicting-package-name"
+     RCONFLICTS_${PN} = "<replaceable>another-conflicting-package-name</replaceable>"
                    </literallayout>
                 </para>
 
@@ -6880,7 +6884,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Here is the general syntax to specify versions with
                     the <filename>RCONFLICTS</filename> variable:
                     <literallayout class='monospaced'>
-     RCONFLICTS_${PN} = "&lt;package&gt; (&lt;operator&gt; &lt;version&gt;)"
+     RCONFLICTS_${PN} = "<replaceable>package</replaceable> (<replaceable>operator</replaceable> <replaceable>version</replaceable>)"
                     </literallayout>
                     For <filename>operator</filename>, you can specify the
                     following:
@@ -6972,7 +6976,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     as it would in the <filename>PACKAGES</filename>
                     namespace before any renaming of the output package by
                     classes like
-                    <link linkend='ref-classes-debian'><filename>debian.bbclass</filename></link>.
+                    <link linkend='ref-classes-debian'><filename>debian</filename></link>.
                 </para>
 
                 <para>
@@ -7006,7 +7010,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Here is the general syntax to specify versions with
                     the <filename>RDEPENDS</filename> variable:
                     <literallayout class='monospaced'>
-     RDEPENDS_${PN} = "&lt;package&gt; (&lt;operator&gt; &lt;version&gt;)"
+     RDEPENDS_${PN} = "<replaceable>package</replaceable> (<replaceable>operator</replaceable> <replaceable>version</replaceable>)"
                     </literallayout>
                     For <filename>operator</filename>, you can specify the
                     following:
@@ -7136,7 +7140,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     OpenEmbedded build system has created the root filesystem.
                     You can specify shell commands separated by semicolons:
                     <literallayout class='monospaced'>
-     ROOTFS_POSTPROCESS_COMMAND += "&lt;shell_command&gt;; ... "
+     ROOTFS_POSTPROCESS_COMMAND += "<replaceable>shell_command</replaceable>; ... "
                     </literallayout>
                     If you need to pass the path to the root filesystem within
                     the command, you can use
@@ -7224,7 +7228,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     that is extended to support wireless functionality.
                     In this case, you would use the following:
                     <literallayout class='monospaced'>
-     RRECOMMENDS_${PN}-dev += "&lt;wireless_package_name&gt;"
+     RRECOMMENDS_${PN}-dev += "<replaceable>wireless_package_name</replaceable>"
                     </literallayout>
                     In the example, the package name
                     (<filename>${<link linkend='var-PN'>PN</link>}-dev</filename>)
@@ -7242,7 +7246,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Here is the general syntax to specify versions with
                     the <filename>RRECOMMENDS</filename> variable:
                     <literallayout class='monospaced'>
-     RRECOMMENDS_${PN} = "&lt;package&gt; (&lt;operator&gt; &lt;version&gt;)"
+     RRECOMMENDS_${PN} = "<replaceable>package</replaceable> (<replaceable>operator</replaceable> <replaceable>version</replaceable>)"
                     </literallayout>
                     For <filename>operator</filename>, you can specify the
                     following:
@@ -7280,7 +7284,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                    override.
                    Here is an example:
                    <literallayout class='monospaced'>
-     RREPLACES_${PN} = "other-package-being-replaced"
+     RREPLACES_${PN} = "<replaceable>other-package-being-replaced</replaceable>"
                    </literallayout>
                 </para>
 
@@ -7292,7 +7296,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Here is the general syntax to specify versions with
                     the <filename>RREPLACES</filename> variable:
                     <literallayout class='monospaced'>
-     RREPLACES_${PN} = "&lt;package&gt; (&lt;operator&gt; &lt;version&gt;)"
+     RREPLACES_${PN} = "<replaceable>package</replaceable> (<replaceable>operator</replaceable> <replaceable>version</replaceable>)"
                     </literallayout>
                     For <filename>operator</filename>, you can specify the
                     following:
@@ -7327,7 +7331,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                    override.
                    Here is an example:
                    <literallayout class='monospaced'>
-     RSUGGESTS_${PN} = "useful-package another-package"
+     RSUGGESTS_${PN} = "<replaceable>useful-package</replaceable> <replaceable>another-package</replaceable>"
                    </literallayout>
                 </para>
             </glossdef>
@@ -7503,7 +7507,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     However, this variable applies to the SDK generated from an
                     image using the following command:
                     <literallayout class='monospaced'>
-     $ bitbake -c populate_sdk imagename
+     $ bitbake -c populate_sdk <replaceable>imagename</replaceable>
                     </literallayout>
                 </para>
             </glossdef>
@@ -8083,8 +8087,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     directory structure.
                     <literallayout class='monospaced'>
      SSTATE_MIRRORS ?= "\
-     file://.* http://someserver.tld/share/sstate/PATH \n \
-     file://.* file:///some/local/dir/sstate/PATH"
+     file://.* http://<replaceable>someserver</replaceable>.tld/share/sstate/PATH \n \
+     file://.* file:///<replaceable>some-local-dir</replaceable>/sstate/PATH"
                     </literallayout>
                 </para>
             </glossdef>
@@ -9090,7 +9094,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     You can add your own tests to the list of tests by
                     appending <filename>TEST_SUITES</filename> as follows:
                     <literallayout class='monospaced'>
-     TEST_SUITES_append = " mytest"
+     TEST_SUITES_append = " <replaceable>mytest</replaceable>"
                     </literallayout>
                     Alternatively, you can provide the "auto" option to
                     have all applicable tests run against the image.
@@ -9511,11 +9515,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-TUNECONFLICT'><glossterm>TUNECONFLICT[&lt;feature&gt;]</glossterm>
+        <glossentry id='var-TUNECONFLICT'><glossterm>TUNECONFLICT[<replaceable>feature</replaceable>]</glossterm>
             <glossdef>
                 <para>
                     Specifies CPU or Application Binary Interface (ABI)
-                    tuning features that conflict with &gt;feature&lt;.
+                    tuning features that conflict with <replaceable>feature</replaceable>.
                 </para>
 
                 <para>
@@ -9533,7 +9537,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-TUNEVALID'><glossterm>TUNEVALID[&lt;feature&gt;]</glossterm>
+        <glossentry id='var-TUNEVALID'><glossterm>TUNEVALID[<replaceable>feature</replaceable>]</glossterm>
             <glossdef>
                 <para>
                     Specifies a valid CPU or Application Binary Interface (ABI)
@@ -9644,7 +9648,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The value indicates the target platform configuration.
                     You typically set this variable from the machine
                     configuration file (i.e.
-                    <filename>conf/machine/&lt;machine_name&gt;.conf</filename>).
+                    <filename>conf/machine/<replaceable>machine_name</replaceable>.conf</filename>).
                 </para>
 
                 <para>
