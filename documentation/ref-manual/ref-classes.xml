@@ -1345,7 +1345,8 @@
                 dependency.
                 This determination is particularly useful to discover where
                 runtime dependencies are detected and added during packaging.
-                At this point in the build it is too late to ensure that
+                If no explicit dependency has been specified within the
+                metadata, at the packaging stage it is too late to ensure that
                 the dependency is built, and thus you can end up with an
                 error when the package is installed into the image during the
                 <link linkend='ref-tasks-rootfs'><filename>do_rootfs</filename></link>
@@ -1354,7 +1355,7 @@
                 <link linkend='ref-classes-update-rc.d'><filename>update-rc.d</filename></link>
                 class automatically adds a dependency on the
                 <filename>initscripts-functions</filename> package to packages
-                that install an <filename>initscript</filename> that refers to
+                that install an initscript that refers to
                 <filename>/etc/init.d/functions</filename>.
                 The recipe should really have an explicit
                 <filename>RDEPENDS</filename> for the package in question on
@@ -1415,9 +1416,9 @@
                 Some very rare cases do exist for dynamically loaded modules where
                 these symlinks are needed instead in the main package.
                 </para></listitem>
-            <listitem><para><emphasis><filename>file-redeps:</filename></emphasis>
+            <listitem><para><emphasis><filename>file-rdeps:</filename></emphasis>
                 Checks that file-level dependencies identified by the
-                OpenEmbedded build system are satisfied.
+                OpenEmbedded build system at packaging time are satisfied.
                 For example, a shell script might start with the line
                 <filename>#!/bin/bash</filename>.
                 This line would translate to a file dependency on
