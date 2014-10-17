@@ -2391,7 +2391,7 @@
         <itemizedlist>
             <listitem><para><emphasis><filename>populate_sdk_base</filename>:</emphasis>
                 The base class supporting SDK creation under all package
-                managers (i.e. DEB, RPM, and IPK).</para></listitem>
+                managers (i.e. DEB, RPM, and opkg).</para></listitem>
             <listitem><para><emphasis><filename>populate_sdk_deb</filename>:</emphasis>
                 Supports creation of the SDK given the Debian package manager.
                 </para></listitem>
@@ -2399,13 +2399,14 @@
                 Supports creation of the SDK given the RPM package manager.
                 </para></listitem>
             <listitem><para><emphasis><filename>populate_sdk_ipk</filename>:</emphasis>
-                Supports creation of the SDK given the IPK package manager.
+                Supports creation of the SDK given the opkg (IPK format)
+                package manager.
                 </para></listitem>
         </itemizedlist>
     </para>
 
     <para>
-        The <filename>populate_sdk_base</filename> package inherits the
+        The <filename>populate_sdk_base</filename> class inherits the
         appropriate <filename>populate_sdk_*</filename> (i.e.
         <filename>deb</filename>, <filename>rpm</filename>, and
         <filename>ipk</filename>) based on
@@ -2416,8 +2417,8 @@
         The base class ensures all source and destination directories are
         established and then populates the SDK.
         After populating the SDK, the <filename>populate_sdk_base</filename>
-        class constructs two images:
-        <link linkend='var-SDK_ARCH'><filename>SDK_ARCH</filename></link><filename>-nativesdk</filename>,
+        class constructs two sysroots:
+        <filename>${</filename><link linkend='var-SDK_ARCH'><filename>SDK_ARCH</filename></link><filename>}-nativesdk</filename>,
         which contains the cross-compiler and associated tooling, and the
         target, which contains a target root filesystem that is configured for
         the SDK usage.
@@ -2425,8 +2426,8 @@
         <link linkend='var-SDK_OUTPUT'><filename>SDK_OUTPUT</filename></link>,
         which consists of the following:
         <literallayout class='monospaced'>
-     ${SDK_OUTPUT}/&lt;sdk_arch-nativesdk pkgs&gt;
-     ${SDK_OUTPUT}/${SDKTARGETSYSROOT}/&lt;target pkgs&gt;
+     ${SDK_OUTPUT}/${SDK_ARCH}<replaceable>-nativesdk-pkgs</replaceable>
+     ${SDK_OUTPUT}/${SDKTARGETSYSROOT}/<replaceable>target-pkgs</replaceable>
         </literallayout>
     </para>
 
