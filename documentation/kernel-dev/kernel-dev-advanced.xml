@@ -214,7 +214,7 @@
             Here is an example that shows a trivial tree of kernel Metadata
             stored in recipe-space within a BSP layer:
             <literallayout class='monospaced'>
-     meta-my_bsp_layer/
+     meta-<replaceable>my_bsp_layer</replaceable>/
      `-- recipes-kernel
          `-- linux
              `-- linux-yocto
@@ -370,7 +370,7 @@
         of Metadata.
         The following Metadata file hierarchy is recommended:
         <literallayout class='monospaced'>
-     &lt;base&gt;/
+     <replaceable>base</replaceable>/
         bsp/
         cfg/
         features/
@@ -513,7 +513,7 @@
         patch mypatch.patch
 
      patches/mypatch.patch:
-        &lt;typical-patch&gt;
+        <replaceable>typical-patch</replaceable>
             </literallayout>
             You can create the typical <filename>.patch</filename>
             file using <filename>diff -Nurp</filename> or
@@ -968,37 +968,38 @@
             hierarchical branching system similar to what the linux-yocto Linux
             kernel repositories use:
             <literallayout class='monospaced'>
-     &lt;common&gt;/&lt;kernel_type&gt;/&lt;machine&gt;
+     <replaceable>common</replaceable>/<replaceable>kernel_type</replaceable>/<replaceable>machine</replaceable>
             </literallayout>
         </para>
 
         <para>
             If you had two kernel types, "standard" and "small" for
-            instance, and three machines, the branches in your
+            instance, three machines, and <replaceable>common</replaceable>
+            as <filename>mydir</filename>, the branches in your
             Git repository might look like this:
             <literallayout class='monospaced'>
-     common/base
-     common/standard/base
-     common/standard/machine_a
-     common/standard/machine_b
-     common/standard/machine_c
-     common/small/base
-     common/small/machine_a
+     mydir/base
+     mydir/standard/base
+     mydir/standard/machine_a
+     mydir/standard/machine_b
+     mydir/standard/machine_c
+     mydir/small/base
+     mydir/small/machine_a
             </literallayout>
         </para>
 
         <para>
             This organization can help clarify the branch relationships.
-            In this case, <filename>common/standard/machine_a</filename>
-            includes everything in <filename>common/base</filename> and
-            <filename>common/standard/base</filename>.
+            In this case, <filename>mydir/standard/machine_a</filename>
+            includes everything in <filename>mydir/base</filename> and
+            <filename>mydir/standard/base</filename>.
             The "standard" and "small" branches add sources specific to those
             kernel types that for whatever reason are not appropriate for the
             other branches.
             <note>The "base" branches are an artifact of the way Git manages
                 its data internally on the filesystem: Git will not allow you
-                to use <filename>common/standard</filename> and
-                <filename>common/standard/machine_a</filename> because it
+                to use <filename>mydir/standard</filename> and
+                <filename>mydir/standard/machine_a</filename> because it
                 would have to create a file and a directory named "standard".
             </note>
         </para>
