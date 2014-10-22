@@ -242,7 +242,19 @@
          <glossentry id='var-ASSUME_PROVIDED'><glossterm>ASSUME_PROVIDED</glossterm>
             <glossdef>
                 <para>
-                    I need a description here.
+                    Lists recipe names
+                    (<link linkend='var-PN'><filename>PN</filename></link>
+                    values) BitBake does not attempt to build.
+                    Instead, BitBake assumes these recipes have already been
+                    built.
+                </para>
+
+                <para>
+                    In OpenEmbedded Core, <filename>ASSUME_PROVIDED</filename>
+                    mostly specifies native tools that should not be built.
+                    An example is <filename>git-native</filename>, which when
+                    specified, allows for the Git binary from the host to be
+                    used rather than building <filename>git-native</filename>.
                 </para>
             </glossdef>
          </glossentry>
@@ -898,11 +910,23 @@
         <glossentry id='var-BINCONFIG'><glossterm>BINCONFIG</glossterm>
             <glossdef>
                 <para>
-                    Specifies binary configuration scripts to disable
-                    rather than installing them using
-                    <filename>pkg-config</filename>.
-                    The OpenEmbedded build system returns an error for the
-                    disabled scripts.
+                    When inheriting the
+                    <link linkend='ref-classes-binconfig-disabled'><filename>binconfig-disabled</filename></link>
+                    class, this variable specifies binary configuration
+                    scripts to disable in favor of using
+                    <filename>pkg-config</filename> to query the information.
+                    The <filename>binconfig-disabled</filename> class will
+                    modify the specified scripts to return an error so that
+                    calls to them can be easily found and replaced.
+                </para>
+
+                <para>
+                    To add multiple scripts, separate them by spaces.
+                    Here is an example from the <filename>libpng</filename>
+                    recipe:
+                    <literallayout class='monospaced'>
+     BINCONFIG = "${bindir}/libpng-config ${bindir}/libpng16-config"
+                    </literallayout>
                 </para>
             </glossdef>
         </glossentry>
@@ -2216,14 +2240,17 @@
         <glossentry id='var-DOC_COMPRESS'><glossterm>DOC_COMPRESS</glossterm>
             <glossdef>
                 <para>
-                    Sets the compression policy used when the OpenEmbedded
-                    build system compresses man pages and info pages.
-                    By default, the compression method used is gs (gzip).
+                    When inheriting <filename>compress_doc.bbclass</filename>
+                    from a recipe, this variable sets the compression policy
+                    used when the OpenEmbedded build system compresses man
+                    pages and info pages.
+                    By default, the compression method used is gz (gzip).
+                    Other policies available are xz and bz2.
                 </para>
 
                 <para>
-                    For information on how to use this variable, see the
-                    comments in the
+                    For information on policies and on how to use this
+                    variable, see the comments in the
                     <filename>compress_doc.bbclass</filename> file.
                 </para>
             </glossdef>
@@ -2235,21 +2262,21 @@
 
         <glossentry id='var-EFI_PROVIDER'><glossterm>EFI_PROVIDER</glossterm>
             <glossdef>
-                <para></para>
                 <para>
-                    Setting this variable to "gummiboot" causes the
-                    OpenEmbedded build system to use the Gummiboot bootloader.
+                    When building bootable images (i.e. where
+                    <filename>hddimg</filename> or <filename>vmdk</filename>
+                    is in
+                    <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>),
+                    The <filename>EFI_PROVIDER</filename> variable specifies
+                    the EFI bootloader to use.
+                    The default is "grub-efi", but "gummiboot" can be used
+                    instead.
                 </para>
 
                 <para>
                     See the
                     <link linkend='ref-classes-gummiboot'><filename>gummiboot</filename></link>
                     class for more information.
-                </para>
-
-                <para>
-                    For information on Gummiboot, see the
-                    <ulink url='https://wiki.archlinux.org/index.php/Gummiboot'>Gummiboot documentation</ulink>.
                 </para>
             </glossdef>
         </glossentry>
@@ -3069,7 +3096,11 @@
         <glossentry id='var-GUMMIBOOT_CFG'><glossterm>GUMMIBOOT_CFG</glossterm>
             <glossdef>
                 <para>
-                    Specifies the configuration file that should be used.
+                    When
+                    <link linkend='var-EFI_PROVIDER'><filename>EFI_PROVIDER</filename></link>
+                    is set to "gummiboot", the
+                    <filename>GUMMIBOOT_CFG</filename> variable specifies the
+                    configuration file that should be used.
                     By default, the
                     <link linkend='ref-classes-gummiboot'><filename>gummiboot</filename></link>
                     class sets the <filename>GUMMIBOOT_CFG</filename> as
@@ -3081,7 +3112,7 @@
 
                 <para>
                     For information on Gummiboot, see the
-                    <ulink url='https://wiki.archlinux.org/index.php/Gummiboot'>Gummiboot documentation</ulink>.
+                    <ulink url='http://freedesktop.org/wiki/Software/gummiboot/'>Gummiboot documentation</ulink>.
                 </para>
             </glossdef>
         </glossentry>
@@ -3089,7 +3120,11 @@
         <glossentry id='var-GUMMIBOOT_ENTRIES'><glossterm>GUMMIBOOT_ENTRIES</glossterm>
             <glossdef>
                 <para>
-                    Specifies a list of entry files
+                    When
+                    <link linkend='var-EFI_PROVIDER'><filename>EFI_PROVIDER</filename></link>
+                    is set to "gummiboot", the
+                    <filename>GUMMIBOOT_ENTRIES</filename> variable specifies
+                    a list of entry files
                     (<filename>*.conf</filename>) to be installed
                     containing one boot entry per file.
                     By default, the
@@ -3103,7 +3138,7 @@
 
                 <para>
                     For information on Gummiboot, see the
-                    <ulink url='https://wiki.archlinux.org/index.php/Gummiboot'>Gummiboot documentation</ulink>.
+                    <ulink url='http://freedesktop.org/wiki/Software/gummiboot/'>Gummiboot documentation</ulink>.
                 </para>
             </glossdef>
         </glossentry>
@@ -3111,7 +3146,11 @@
         <glossentry id='var-GUMMIBOOT_TIMEOUT'><glossterm>GUMMIBOOT_TIMEOUT</glossterm>
             <glossdef>
                 <para>
-                    Specifies the boot menu timeout in seconds.
+                    When
+                    <link linkend='var-EFI_PROVIDER'><filename>EFI_PROVIDER</filename></link>
+                    is set to "gummiboot", the
+                    <filename>GUMMIBOOT_TIMEOUT</filename> variable specifies
+                    the boot menu timeout in seconds.
                     By default, the
                     <link linkend='ref-classes-gummiboot'><filename>gummiboot</filename></link>
                     class sets the <filename>GUMMIBOOT_TIMEOUT</filename> as
@@ -3123,7 +3162,7 @@
 
                 <para>
                     For information on Gummiboot, see the
-                    <ulink url='https://wiki.archlinux.org/index.php/Gummiboot'>Gummiboot documentation</ulink>.
+                    <ulink url='http://freedesktop.org/wiki/Software/gummiboot/'>Gummiboot documentation</ulink>.
                 </para>
             </glossdef>
         </glossentry>
@@ -5197,7 +5236,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
          <glossentry id='var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS'><glossterm>MACHINE_ESSENTIAL_EXTRA_RDEPENDS</glossterm>
             <glossdef>
-                <para></para>
                 <para>
                     A list of required machine-specific packages to install as part of
                     the image being built.
@@ -5229,7 +5267,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
          <glossentry id='var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS'><glossterm>MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</glossterm>
             <glossdef>
-                <para></para>
                 <para>
                     A list of recommended machine-specific packages to install as part of
                     the image being built.
@@ -5316,7 +5353,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
          <glossentry id='var-MACHINE_EXTRA_RRECOMMENDS'><glossterm>MACHINE_EXTRA_RRECOMMENDS</glossterm>
             <glossdef>
-                <para></para>
                 <para>
                     A list of machine-specific packages to install as part of the
                     image being built that are not essential for booting the machine.
@@ -7493,7 +7529,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
         <glossentry id='var-SANITY_REQUIRED_UTILITIES'><glossterm>SANITY_REQUIRED_UTILITIES</glossterm>
             <glossdef>
                 <para>
-                    Need a description here.
+                    Specifies a list of command-line utilities that should be
+                    checked for during the initial sanity checking process when
+                    running BitBake.
+                    If any of the utilities are not installed on the build host,
+                    then BitBake immediately exits with an error.
                 </para>
             </glossdef>
         </glossentry>
@@ -8088,7 +8128,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-SRC_URI_OVERRIDES_PACKAGE_ARCH'><glossterm>SRC_URI_OVERRIDES_PACKAGE_ARCH</glossterm>
             <glossdef>
-                <para></para>
                 <para>
                     By default, the OpenEmbedded build system automatically detects whether
                     <filename><link linkend='var-SRC_URI'>SRC_URI</link></filename>
