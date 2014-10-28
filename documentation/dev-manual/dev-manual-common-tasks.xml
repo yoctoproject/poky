@@ -7742,8 +7742,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                     <filename>TEST_TARGET</filename> to an appropriate value.
                     For QEMU, you do not have to change anything, the default
                     value is "QemuTarget".
-                    For running tests on hardware, two options exist:
-                    "SimpleRemoteTarget" and "GummibootTarget".
+                    For running tests on hardware, the following options exist:
                     <itemizedlist>
                         <listitem><para><emphasis>"SimpleRemoteTarget":</emphasis>
                             Choose "SimpleRemoteTarget" if you are going to
@@ -7769,6 +7768,45 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                             See the
                             "<link linkend='selecting-gummiboottarget'>Selecting GummibootTarget</link>"
                             section, which follows, for more information.
+                            </para></listitem>
+                        <listitem><para><emphasis>"BeagleBoneTarget":</emphasis>
+                            Choose "BeagleBoneTarget" if you are deploying
+                            images and running tests on the BeagleBone
+                            "Black" or original "White" hardware.
+                            For information on how to use these tests, see the
+                            comments at the top of the BeagleBoneTarget
+                            <filename>meta-yocto-bsp/lib/oeqa/controllers/beaglebonetarget.py</filename>
+                            file.
+                            </para></listitem>
+                        <listitem><para><emphasis>"EdgeRouterTarget":</emphasis>
+                            Choose "EdgeRouterTarget" is you are deploying
+                            images and running tests on the Ubiquiti Networks
+                            EdgeRouter Lite.
+                            For information on how to use these tests, see the
+                            comments at the top of the EdgeRouterTarget
+                            <filename>meta-yocto-bsp/lib/oeqa/controllers/edgeroutertarget.py</filename>
+                            file.
+                            </para></listitem>
+                        <listitem><para><emphasis>"GrubTarget":</emphasis>
+                            Choose the "supports deploying images and running
+                            tests on any generic PC that boots using GRUB.
+                            For information on how to use these tests, see the
+                            comments at the top of the GrubTarget
+                            <filename>meta-yocto-bsp/lib/oeqa/controllers/grubtarget.py</filename>
+                            file.
+                            </para></listitem>
+                        <listitem><para><emphasis>"<replaceable>your-target</replaceable>":</emphasis>
+                            Create your own custom target if you want to run
+                            tests when you are deploying images and running
+                            tests on a custom machine within your BSP layer.
+                            To do this, you need to add a Python unit that
+                            defines the target class under
+                            <filename>lib/oeqa/controllers/</filename> within
+                            your layer.
+                            You must also provide an empty
+                            <filename>__init__.py</filename>.
+                            For examples, see files in
+                            <filename>meta-yocto-bsp/lib/oeqa/controllers/</filename>.
                             </para></listitem>
                     </itemizedlist>
                 </para>
@@ -7880,10 +7918,14 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                             </para></listitem>
                     </orderedlist>
                 </para>
+            </section>
+
+            <section id='power-control'>
+                <title>Power Control</title>
 
                 <para>
-                    Here is some additional information regarding running
-                    "GummibootTarget" as your test target:
+                    For most hardware targets other than SimpleRemoteTarget,
+                    you can control power:
                     <itemizedlist>
                         <listitem><para>
                             You can use
@@ -7928,6 +7970,63 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                             some manual interaction is okay from time to time.
                             </para></listitem>
                     </itemizedlist>
+                    If you have no hardware to automatically perform power
+                    control but still wish to experiment with automated
+                    hardware testing, you can use the dialog-power-control
+                    script that shows a dialog prompting you to perform the
+                    required power action.
+                    This script requires either KDialog or Zenity to be
+                    installed.
+                    To use this script, set the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_POWERCONTROL_CMD'><filename>TEST_POWERCONTROL_CMD</filename></ulink>
+                    variable as follows:
+                    <literallayout class='monospaced'>
+     TEST_POWERCONTROL_CMD = "${COREBASE}/scripts/contrib/dialog-power-control"
+                    </literallayout>
+                </para>
+            </section>
+
+            <section id='serial-console-connection'>
+                <title>Serial Console Connection</title>
+
+                <para>
+                    For test target classes requiring a serial console
+                    to interact with the bootloader (e.g. BeagleBoneTarget,
+                    EdgeRouterTarget, and GrubTarget), you need to
+                    specify a command to use to connect to the serial console
+                    of the target machine by using the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_POWERCONTROL_CMD'><filename>TEST_POWERCONTROL_CMD</filename></ulink>
+                    variable and optionally the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-TEST_SERIALCONTROL_EXTRA_ARGS'><filename>TEST_SERIALCONTROL_EXTRA_ARGS</filename></ulink>
+                    variable.
+                </para>
+
+                <para>
+                    These cases could be a serial terminal program if the
+                    machine is connected to a local serial port, or a
+                    <filename>telnet</filename> or
+                    <filename>ssh</filename> command connecting to a remote
+                    console server.
+                    Regardless of the case, the command simply needs to
+                    connect to the serial console and forward that connection
+                    to standard input and output as any normal terminal
+                    program does.
+                    For example, to use the picocom terminal program on
+                    serial device <filename>/dev/ttyUSB0</filename>
+                    at 115200bps, you would set the variable as follows:
+                    <literallayout class='monospaced'>
+     TEST_SERIALCONTROL_CMD = "picocom /dev/ttyUSB0 -b 115200"
+                    </literallayout>
+                    For local devices where the serial port device disappears
+                    when the device reboots, an additional "serdevtry" wrapper
+                    script is provided.
+                    To use this wrapper, simply prefix the terminal command
+                    with
+                    <filename>${COREBASE}/scripts/contrib/serdevtry</filename>:
+                    <literallayout class='monospaced'>
+     TEST_SERIALCONTROL_CMD = "${COREBASE}/scripts/contrib/serdevtry picocom -b
+115200 /dev/ttyUSB0"
+                    </literallayout>
                 </para>
             </section>
         </section>
