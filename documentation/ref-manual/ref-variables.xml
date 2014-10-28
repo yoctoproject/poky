@@ -9122,6 +9122,37 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-TEST_POWERCONTROL_CMD'><glossterm>TEST_POWERCONTROL_CMD</glossterm>
+            <glossdef>
+                <para>
+                    For automated hardware testing, specifies the command to
+                    use to control the power of the target machine under test.
+                    Typically, this command would point to a script that
+                    performs the appropriate action (e.g. interacting
+                    with a web-enabled power strip).
+                    The specified command should expect to receive as the last
+                    argument "off", "on" or "cycle" specifying to power off,
+                    on, or cycle (power off and then power on) the device,
+                    respectively.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TEST_POWERCONTROL_EXTRA_ARGS'><glossterm>TEST_POWERCONTROL_EXTRA_ARGS</glossterm>
+            <glossdef>
+                <para>
+                    For automated hardware testing, specifies additional
+                    arguments to pass through to the command specified in
+                    <link linkend='var-TEST_POWERCONTROL_CMD'><filename>TEST_POWERCONTROL_CMD</filename></link>.
+                    Setting <filename>TEST_POWERCONTROL_EXTRA_ARGS</filename>
+                    is optional.
+                    You can use it if you wish, for example, to separate the
+                    machine-specific and non-machine-specific parts of the
+                    arguments.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-TEST_QEMUBOOT_TIMEOUT'><glossterm>TEST_QEMUBOOT_TIMEOUT</glossterm>
             <glossdef>
                 <para>
@@ -9138,6 +9169,43 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     For more information on testing images, see the
                     "<ulink url='&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing'>Performing Automated Runtime Testing</ulink>"
                     section in the Yocto Project Development Manual.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TEST_SERIALCONTROL_CMD'><glossterm>TEST_SERIALCONTROL_CMD</glossterm>
+            <glossdef>
+                <para>
+                    For automated hardware testing, specifies the command
+                    to use to connect to the serial console of the target
+                    machine under test.
+                    This command simply needs to connect to the serial console
+                    and forward that connection to standard input and output
+                    as any normal terminal program does.
+                </para>
+
+                <para>
+                    For example, to use the Picocom terminal program on
+                    serial device <filename>/dev/ttyUSB0</filename> at
+                    115200bps, you would set the variable as follows:
+                    <literallayout class='monospaced'>
+     TEST_SERIALCONTROL_CMD = "picocom /dev/ttyUSB0 -b 115200"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TEST_SERIALCONTROL_EXTRA_ARGS'><glossterm>TEST_SERIALCONTROL_EXTRA_ARGS</glossterm>
+            <glossdef>
+                <para>
+                    For automated hardware testing, specifies additional
+                    arguments to pass through to the command specified in
+                    <link linkend='var-TEST_SERIALCONTROL_CMD'><filename>TEST_SERIALCONTROL_CMD</filename></link>.
+                    Setting <filename>TEST_SERIALCONTROL_EXTRA_ARGS</filename>
+                    is optional.
+                    You can use it if you wish, for example, to separate the
+                    machine-specific and non-machine-specific parts of the
+                    command.
                 </para>
             </glossdef>
         </glossentry>
