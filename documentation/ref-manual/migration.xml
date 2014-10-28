@@ -1701,6 +1701,45 @@
         Yocto Project 1.7 Release from the prior release.
     </para>
 
+    <section id='migration-1.7-changes-to-setting-qemu-packageconfig-options'>
+        <title>Changes to Setting QEMU <filename>PACKAGECONFIG</filename> Options in <filename>local.conf</filename></title>
+
+        <para>
+            The QEMU recipe now uses a number of
+            <link linkend='var-PACKAGECONFIG'><filename>PACKAGECONFIG</filename></link>
+            options to enable various optional features.
+            The method used to set defaults for these options means that
+            existing
+            <filename>local.conf</filename> files will need to be be
+            modified to append to <filename>PACKAGECONFIG</filename> for
+            <filename>qemu-native</filename> and
+            <filename>nativesdk-qemu</filename> instead of setting it.
+            In other words, to enable graphical output for QEMU, you should
+            now have these lines in <filename>local.conf</filename>:
+            <literallayout class='monospaced'>
+     PACKAGECONFIG_append_pn-qemu-native = " sdl"
+     PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='migration-1.7-minimum-git-version'>
+        <title>Minimum Git version</title>
+
+        <para>
+            The minimum
+            <ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink> version required
+            on the build host is now 1.7.8 because the
+            <filename>&dash;&dash;list</filename> option is now required by
+            BitBake's Git fetcher.
+            As always, if your host distribution does not provide a version of
+            Git that meets this requirement, you can use the
+            <filename>buildtools-tarball</filename> that does.
+            See the
+            "<link linkend='required-git-tar-and-python-versions'>Required Git, tar, and Python Versions</link>"
+            section for more information.
+        </para>
+    </section>
 
     <section id='migration-1.7-autotools-class-changes'>
         <title>Autotools Class Changes</title>
@@ -1859,61 +1898,6 @@
         </para>
     </section>
 
-    <section id='migration-1.7-removed-recipes'>
-        <title>Removed Recipes</title>
-
-        <para>
-            The following recipes have been removed:
-            <itemizedlist>
-                <listitem><para>
-                    <filename>x-load</filename>:
-                    This recipe has been superseded by
-                    U-boot SPL for all Cortex-based TI SoCs.
-                    For legacy boards, the <filename>meta-ti</filename>
-                    layer, which contains a maintained recipe, should be used
-                    instead.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>ubootchart</filename>:
-                    This recipe is obsolete.
-                    A <filename>bootchart2</filename> recipe has been added
-                    to functionally replace it.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>linux-yocto 3.4</filename>:
-                    Support for the linux-yocto 3.4 kernel has been dropped.
-                    Support for the 3.10 and 3.14 kernels remains, while
-                    support for version 3.17 has been added.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>eglibc</filename> has been removed in favor of
-                    <filename>glibc</filename>.
-                    See the
-                    "<link linkend='migration-1.7-glibc-replaces-eglibc'><filename>eglibc 2.19</filename> Replaced with <filename>glibc 2.20</filename></link>"
-                    section for more information.
-                    </para></listitem>
-            </itemizedlist>
-        </para>
-    </section>
-
-    <section id='migration-1.7-minimum-git-version'>
-        <title>Minimum Git version</title>
-
-        <para>
-            The minimum
-            <ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink> version required
-            on the build host is now 1.7.8 because the
-            <filename>&dash;&dash;list</filename> option is now required by
-            BitBake's Git fetcher.
-            As always, if your host distribution does not provide a version of
-            Git that meets this requirement, you can use the
-            <filename>buildtools-tarball</filename> that does.
-            See the
-            "<link linkend='required-git-tar-and-python-versions'>Required Git, tar, and Python Versions</link>"
-            section for more information.
-        </para>
-    </section>
-
     <section id='migration-1.7-qa-check-changes'>
         <title>QA Check Changes</title>
 
@@ -1951,7 +1935,55 @@
                     Recipes should not be overwriting files written to the
                     sysroot by other recipes.
                     If you have these types of recipes, you need to alter them
-                    so that they do not overwrite these files.
+                    so that they do not overwrite these files.</para>
+                    <para>You might now receive this error after changes in
+                    configuration or metadata resulting in orphaned files
+                    being left in the sysroot.
+                    If you do receive this error, the way to resolve the issue
+                    is to delete your
+                    <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
+                    or to move it out of the way and then re-start the build.
+                    Anything that has been fully built up to that point and
+                    does not need rebuilding will be restored from the shared
+                    state cache and the rest of the build will be able to
+                    proceed as normal.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.7-removed-recipes'>
+        <title>Removed Recipes</title>
+
+        <para>
+            The following recipes have been removed:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>x-load</filename>:
+                    This recipe has been superseded by
+                    U-boot SPL for all Cortex-based TI SoCs.
+                    For legacy boards, the <filename>meta-ti</filename>
+                    layer, which contains a maintained recipe, should be used
+                    instead.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>ubootchart</filename>:
+                    This recipe is obsolete.
+                    A <filename>bootchart2</filename> recipe has been added
+                    to functionally replace it.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>linux-yocto 3.4</filename>:
+                    Support for the linux-yocto 3.4 kernel has been dropped.
+                    Support for the 3.10 and 3.14 kernels remains, while
+                    support for version 3.17 has been added.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>eglibc</filename> has been removed in favor of
+                    <filename>glibc</filename>.
+                    See the
+                    "<link linkend='migration-1.7-glibc-replaces-eglibc'><filename>eglibc 2.19</filename> Replaced with <filename>glibc 2.20</filename></link>"
+                    section for more information.
                     </para></listitem>
             </itemizedlist>
         </para>
