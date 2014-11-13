@@ -1,7 +1,13 @@
-# This is a single Makefile to handle all generated Yocto Project documents.
-# The Makefile needs to live in the documentation/ directory and all figures
-# used in any manuals must be .PNG files and live in the individual book's
-# figures/ directory as well as in the figures/ directory for the mega-manual.
+# This is a single Makefile to handle all generated Yocto Project documents,
+# which includes the BitBake User Manual and the Toaster User Manual.
+# The Makefile needs to live in the documents directory and all figures used
+# in any manuals must be .PNG files and live in the individual book's figures
+# directory as well as in the figures directory for the mega-manual.
+#
+# Some manuals are available as linked help through the Eclipse development
+# system.  These manuals also include an "eclipse" sub-directory as part of
+# the make process.
+#
 # Note that the figures for the Yocto Project Development Manual
 # differ depending on the BRANCH being built.
 #
@@ -65,17 +71,17 @@
 #
 # Examples:
 #
-#    make publish DOC=bsp-guide VER=1.3
-#    make publish DOC=adt-manual VER=1.3
+#    make publish DOC=bsp-guide VER=1.7
+#    make publish DOC=adt-manual VER=1.6
 #    make publish DOC=dev-manual VER=1.1.1 BRANCH=edison
 #    make publish DOC=dev-manual VER=1.2 BRANCH=denzil
 #
-# The first example publishes the 1.3 version of both the HTML version
-# of the BSP Guide.  The second example publishes the 1.3 version of the
-# HTML version of the YP Application Developer's Guide. The third example publishes
-# the HTML 'edison' versions of the YP Development Manual and, if applicable, the
-# Eclipse version.  The fourth example publishes the HTML 'denzil' version and,
-# if applicable, the Eclipse version of the YP Development Manual.
+# The first example publishes the 1.7 version of both the PDF and HTML versions of
+# the BSP Guide.  The second example publishes the 1.6 version of both the PDF and
+# HTML versions of the ADT Manual. The third example publishes the 1.1.1 version of
+# the PDF and HTML YP Development Manual for the 'edison' branch.  The fourth example
+# publishes the 1.2 version of the PDF and HTML YP Development Manual for the
+# 'denzil' branch.
 #
 
 ifeq ($(DOC),bsp-guide)
@@ -315,6 +321,15 @@ TARFILES = kernel-dev.html kernel-dev-style.css \
            figures/kernel-architecture-overview.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
+FIGURES = figures
+STYLESHEET = $(DOC)/*.css
+endif
+
+ifeq ($(DOC),toaster-manual)
+XSLTOPTS = --xinclude
+ALLPREQ = html pdf tarball
+TARFILES = toaster-manual.html toaster-manual.pdf toaster-manual-style.css figures/toaster-title.png
+MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
