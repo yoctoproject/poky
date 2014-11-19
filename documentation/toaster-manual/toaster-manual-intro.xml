@@ -6,8 +6,363 @@
 <title>Introduction</title>
 
     <para>
-        Placeholder text
+        Toaster is an Application Programming Interface (API) and
+        web-based interface to the OpenEmbedded build system, which uses
+        BitBake.
+        Both interfaces are based on a Representational State Transfer
+        (REST) API that queries for and returns build information using
+        <filename>GET</filename> and <filename>JSON</filename>.
+        These types of search operations retrieve sets of objects from
+        a datastore used to collect build information.
+        The results contain all the data for the objects being returned.
+        You can order the results of the search by key and the search
+        parameters are consistent for all object types.
     </para>
+
+    <para>
+        Using the interfaces you can do the following:
+        <itemizedlist>
+            <listitem><para>See information about the tasks executed
+                and reused during the build.</para></listitem>
+            <listitem><para>See what is built (recipes and
+                packages) and what packages were installed into the final
+                image.</para></listitem>
+            <listitem><para>See performance-related information such
+                as build time, CPU usage, and disk I/O.</para></listitem>
+            <listitem><para>Examine error, warning and trace messages
+                to aid in debugging.</para></listitem>
+        </itemizedlist>
+    </para>
+
+    <note>
+        <para>This release of Toaster provides you with information
+        about a BitBake run.
+        The tool does not allow you to configure and launch a build.
+        However, future development includes plans to integrate the
+        configuration and build launching capabilities of
+        <ulink url='&YOCTO_HOME_URL;/tools-resources/projects/hob'>Hob</ulink>.
+        </para>
+        <para>For more information on using Hob to build an image,
+        see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#image-development-using-hob'>Image Development Using Hob</ulink>"
+        section in the Yocto Project Development Manual.</para>
+    </note>
+
+    <para>
+        The remainder of this manual describes what you need to have in
+        place to use Toaster, how to start it, use it, and stop it.
+        For additional information on installing and running Toaster, see the
+        "<ulink url='https://wiki.yoctoproject.org/wiki/Toaster#Installation_and_Running'>Installation and Running</ulink>"
+        section of the "Toaster" wiki page.
+        For complete information on the API and its search operation
+        URI, parameters, and responses, see the
+        <ulink url='https://wiki.yoctoproject.org/wiki/REST_API_Contracts'>REST API Contracts</ulink>
+        Wiki page.
+    </para>
+
+    <section id='toaster-manual-dev-notes'>
+        <title>Manual development notes:</title>
+
+        <itemizedlist>
+            <listitem><para>
+                Need chapter on getting your system ready for Toaster and
+                installing Toaster.
+                Probably should consider some past releases of YP in here
+                one way or another.
+                </para></listitem>
+            <listitem><para>
+                Need a chapter on configuring Toaster.
+                </para></listitem>
+            <listitem><para>
+                Need a chapter on setting up instances of Toaster.
+                We will want two sub-sections here: 1) a local instance, and
+                2) a production instance.
+                </para></listitem>
+            <listitem><para>
+                Need a chapter on starting and stopping Toaster.
+                Need to cover starting in managed mode here.
+                </para></listitem>
+            <listitem><para>
+                We need a chapter on the user interface.
+                Need to decide if we want to stick with the slick videos that
+                currently live on the YP site.
+                Pros for this are they are cool and convey information nicely.
+                Cons are they are release dependent and would be high
+                maintenance over the long haul.
+                Standard practices usually dictate going with a method that
+                is as divorced as possible from video shots and images of
+                actual GUIs for a product.
+                Rationale is that a person can invoke the tool and see the
+                actual GUI as they read along with any documentation.
+                Changing textual descriptions is a lot less headache than
+                updating videos and screenshots.
+                </para></listitem>
+            <listitem><para>
+                We need a chapter on Toaster's build functionality.
+                My understanding is that this is the new thing for 1.8.
+                Here are some topics identified that would translate into
+                individual sections:
+                <itemizedlist>
+                    <listitem><para>
+                        Using Virtualenv
+                        </para></listitem>
+                    <listitem><para>
+                        manage.py commands
+                        </para></listitem>
+                    <listitem><para>
+                        Custom layer index
+                        </para></listitem>
+                </itemizedlist>
+                I lifted these from the
+                <ulink url='https://wiki.yoctoproject.org/wiki/Toaster'>wiki</ulink>.
+                Some items in the list, such as configuration and setting
+                up instances of Toaster, will be covered in different
+                chapters.
+                </para></listitem>
+            <listitem><para>
+                Could think about a chapter on using Toaster to debug common
+                issues such as failed dependencies and whatever would be
+                something people might run into.
+                </para></listitem>
+            <listitem><para>
+                Could maybe include a chapter on the database and other
+                "under-the-cover" stuff that might be useful.
+                I am not sure if any of it would be but it is a thought.
+                </para></listitem>
+        </itemizedlist>
+    </section>
+
+
+
+
+<!--
+    <section id="examining-builds-using-toaster">
+        <title>Examining Builds Using the Toaster API</title>
+
+        <para>
+            Toaster is an Application Programming Interface (API) and
+            web-based interface to the OpenEmbedded build system, which uses
+            BitBake.
+            Both interfaces are based on a Representational State Transfer
+            (REST) API that queries for and returns build information using
+            <filename>GET</filename> and <filename>JSON</filename>.
+            These types of search operations retrieve sets of objects from
+            a datastore used to collect build information.
+            The results contain all the data for the objects being returned.
+            You can order the results of the search by key and the search
+            parameters are consistent for all object types.
+        </para>
+
+        <para>
+            Using the interfaces you can do the following:
+            <itemizedlist>
+                <listitem><para>See information about the tasks executed
+                    and reused during the build.</para></listitem>
+                <listitem><para>See what is built (recipes and
+                    packages) and what packages were installed into the final
+                    image.</para></listitem>
+                <listitem><para>See performance-related information such
+                    as build time, CPU usage, and disk I/O.</para></listitem>
+                <listitem><para>Examine error, warning and trace messages
+                    to aid in debugging.</para></listitem>
+            </itemizedlist>
+        </para>
+
+        <note>
+            <para>This release of Toaster provides you with information
+            about a BitBake run.
+            The tool does not allow you to configure and launch a build.
+            However, future development includes plans to integrate the
+            configuration and build launching capabilities of
+            <ulink url='&YOCTO_HOME_URL;/tools-resources/projects/hob'>Hob</ulink>.
+            </para>
+            <para>For more information on using Hob to build an image,
+            see the
+            "<link linkend='image-development-using-hob'>Image Development Using Hob</link>"
+            section.</para>
+        </note>
+
+        <para>
+            The remainder of this section describes what you need to have in
+            place to use Toaster, how to start it, use it, and stop it.
+            For additional information on installing and running Toaster, see the
+            "<ulink url='https://wiki.yoctoproject.org/wiki/Toaster#Installation_and_Running'>Installation and Running</ulink>"
+            section of the "Toaster" wiki page.
+            For complete information on the API and its search operation
+            URI, parameters, and responses, see the
+            <ulink url='https://wiki.yoctoproject.org/wiki/REST_API_Contracts'>REST API Contracts</ulink>
+            Wiki page.
+        </para>
+
+        <section id='starting-toaster'>
+            <title>Starting Toaster</title>
+
+            <para>
+                Getting set up to use and start Toaster is simple.
+                First, be sure you have met the following requirements:
+                <itemizedlist>
+                    <listitem><para>You have set up your
+                        <link linkend='source-directory'>Source Directory</link>
+                        by cloning the upstream <filename>poky</filename>
+                        repository.
+                        See the
+                        <link linkend='local-yp-release'>Yocto Project Release</link>
+                        item for information on how to set up the Source
+                        Directory.</para></listitem>
+                    <listitem><para>Be sure your build machine has
+                        <ulink url='http://en.wikipedia.org/wiki/Django_%28web_framework%29'>Django</ulink>
+                        version 1.5 installed.</para></listitem>
+                    <listitem><para>Make sure that port 8000 and 8200 are
+                        free (i.e. they have no servers on them).
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Once you have met the requirements, follow these steps to
+                start Toaster running in the background of your shell:
+                <orderedlist>
+                    <listitem><para><emphasis>Set up your build environment:</emphasis>
+                        Source a build environment script (i.e.
+                        <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
+                        or
+                        <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>).
+                        </para></listitem>
+                    <listitem><para><emphasis>Start Toaster:</emphasis>
+                        Start the Toaster service using this
+                        command from within your
+                        <link linkend='build-directory'>Build Directory</link>:
+                        <literallayout class='monospaced'>
+     $ source toaster start
+                        </literallayout></para></listitem>
+                        <note>
+                            The Toaster must be started and running in order
+                            for it to collect data.
+     Seinäjoen monitoimihalli täyttää vuoden
+
+Seinäjoen Monitoimihalli on monipuolinen harjoitushalli, jossa on mm. tekonurmikenttä, juoksusuora, pituushyppypaikka, heittoseinä, korkeus- ja seiväshyppypaikka sekä monitoimialue, jossa voi harjoitella mm. cheerleedingia, futsalia, salibandya ja tennistä. Lisäksi hallissa on trampoliini ja siirrettävä ajanottolaitteisto erilaisia mittauksia ja testauksia varten. Halli on tehty yhteistyössä paikallisten eri lajien urheiluseurojen kanssa.
+
+Seinäjoen monitoimihalli voitti hiljattain vuoden liikuntateko palkinnon.
+
+Vuoden liikuntateko -palkinto myönnetään liikuntapaikalle tai sen osalle, jonka rakentamisessa tai korjaamisessa on kehitetty tai toteutettu jotain uutta. Kilpailun tavoitteena on nostaa esiin liikuntapaikkarakentamisen innovaatioita ja edistää liikuntapaikkojen ja liikuntaolosuhteiden kehittämistä.
+
+Seinäjoen monitoimihallilla, Bullerintiellä on ovet avoimet lauantaina 22.11. klo 17.00-20.00
+Halliin voi tutustua ja suorituspaikkoja kokeilla.
+
+Paikalla on seurojen urheilijoita opastamassa lajeihin ja välineisiin.
+
+Tule tutustumaan halliin ja lajeihin
+
+Tervetuloa
+Seinäjoen monitoimihalli Oy                   </note>
+                </orderedlist>
+            </para>
+
+            <para>
+                When Toaster starts, it creates some additional files in your
+                Build Directory.
+                Deleting these files will cause you to lose data or interrupt
+                Toaster:
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>toaster.sqlite</filename>:</emphasis>
+                        Toaster's database file.</para></listitem>
+                    <listitem><para><emphasis><filename>toaster_web.log</filename>:</emphasis>
+                        The log file of the web server.</para></listitem>
+                    <listitem><para><emphasis><filename>toaster_ui.log</filename>:</emphasis>
+                        The log file of the user interface component.
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>toastermain.pid</filename>:</emphasis>
+                        The PID of the web server.</para></listitem>
+                    <listitem><para><emphasis><filename>toasterui.pid</filename>:</emphasis>
+                        The PID of the DSI data bridge.</para></listitem>
+                    <listitem><para><emphasis><filename>bitbake-cookerdaemon.log</filename>:</emphasis>
+                        The BitBake server's log file.</para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='using-toaster'>
+            <title>Using Toaster</title>
+
+            <para>
+                Once Toaster is running, it logs information for any BitBake
+                run from your Build Directory.
+                This logging is automatic.
+                All you need to do is access and use the information.
+            </para>
+
+            <para>
+                You access the information one of two ways:
+                <itemizedlist>
+                    <listitem><para>Open a Browser and enter
+                        <filename>http://localhost:8000</filename>
+                        for the URL.
+                        </para></listitem>
+                    <listitem><para>Use the <filename>xdg-open</filename>
+                        tool from the shell and pass it the same URL.
+                        </para></listitem>
+                </itemizedlist>
+                Either method opens the home page for the Toaster interface.
+            </para>
+
+            <note><title>Notes</title>
+                <itemizedlist>
+                    <listitem><para>
+                        For information on how to delete information from the
+                        Toaster database, see the
+                        <ulink url='https://wiki.yoctoproject.org/wiki/Toaster#Deleting_a_Build_from_the_Toaster_Database'>Deleting a Build from the Toaster Database</ulink>
+                        wiki page.
+                        </para></listitem>
+                    <listitem><para>
+                        For information on how to set up an instance of Toaster
+                        on a remote host, see the
+                        <ulink url='https://wiki.yoctoproject.org/wiki/Toaster#Setting_up_a_Toaster_Instance_on_a_Remote_Host'>Setting Up a Toaster Instance on a Remote Host</ulink>
+                        wiki page.
+                        </para></listitem>
+                </itemizedlist>
+            </note>
+        </section>
+
+        <section id='examining-toaster-data'>
+            <title>Examining Toaster Data</title>
+
+            <para>
+                The Toaster database is persistent regardless of whether you
+                start or stop the service.
+            </para>
+
+            <para>
+                Toaster's interface shows you a list of builds
+                (successful and unsuccessful) for which it has data.
+                You can click on any build to see related information.
+                This information includes configuration details, information
+                about tasks, all recipes and packages built and their
+                dependencies, packages and their directory structure as
+                installed in your final image,
+                execution time, CPU usage and disk I/O per task.
+            </para>
+
+            <para>
+                For details on the interface, see the
+                <ulink url='https://www.yoctoproject.org/documentation/toaster-manual'>Toaster Manual</ulink>.
+            </para>
+        </section>
+
+        <section id='stopping-toaster'>
+            <title>Stopping Toaster</title>
+
+            <para>
+                Stop the Toaster service with the following command
+                from with the
+                <link linkend='build-directory'>Build Directory</link>:
+                <literallayout class='monospaced'>
+     $ source toaster stop
+                </literallayout>
+                The service stops but the Toaster database remains persistent.
+            </para>
+        </section>
+    </section>
+-->
 
 </chapter>
 <!--
