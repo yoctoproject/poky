@@ -6061,10 +6061,10 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                     architecture through the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>,
                     The OpenEmbedded build system defaults to the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-TUNE_ARCH'><filename>TUNE_ARCH</filename></ulink>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-TUNE_PKGARCH'><filename>TUNE_PKGARCH</filename></ulink>
                     setting:
                     <literallayout class='monospaced'>
-     PACKAGE_ARCH = "${TUNE_ARCH}"
+     PACKAGE_ARCH = "${TUNE_PKGARCH}"
                     </literallayout>
                     </para></listitem>
                 <listitem><para><emphasis>Choose a Generic Tuning File if Possible:</emphasis>
@@ -6117,12 +6117,24 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                     using shared state between machines when you think it
                     should be.
                     These types of situations are usually due to references
-                    to variables such as <filename>MACHINE</filename>
-                    in code that is supposed to only be "tune" specific.</para>
+                    to machine-specific variables such as
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SERIAL_CONSOLE'><filename>SERIAL_CONSOLE</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-XSERVER'><filename>XSERVER</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></ulink>,
+                    and so forth in code that is supposed to only be
+                    tune-specific or when the recipe depends
+                    (<ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'><filename>RRECOMMENDS</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-RSUGGESTS'><filename>RSUGGESTS</filename></ulink>,
+                    and so forth) on some other recipe that already has
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>
+                    defined as "${MACHINE_ARCH}".
                     <note>
                         Patches to fix any issues identified are most welcome
                         as these issues occasionally do occur.
-                    </note>
+                    </note></para>
                     <para>For such cases, you can use some tools to help you
                     sort out the situation:
                     <itemizedlist>
