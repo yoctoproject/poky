@@ -5988,10 +5988,10 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
             CPU core used in a system might enable some micro optimizations
             in GCC for that particular system but would otherwise not gain
             you much of a performance difference across the other systems
-            as compared to using a more general tuning across all the builds.
-            Another example is setting
+            as compared to using a more general tuning across all the builds
+            (e.g. setting
             <ulink url='var-DEFAULTTUNE'><filename>DEFAULTTUNE</filename></ulink>
-            specifically for each machine's build.
+            specifically for each machine's build).
             Rather than "max out" each build's tunings, you can take steps that
             cause the OpenEmbedded build system to reuse software across the
             various machines where it makes sense.
@@ -6044,7 +6044,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-allarch'><filename>allarch</filename></ulink>
                     class.
                     This class is useful for "all" architectures because it
-                    contains many other variables that can be used across
+                    configures many variables so packages can be used across
                     multiple architectures.</para>
                     <para>If your recipe needs to generate packages that are
                     machine-specific or when one of the build or runtime
@@ -6057,17 +6057,14 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                     <literallayout class='monospaced'>
      PACKAGE_ARCH = "${MACHINE_ARCH}"
                     </literallayout>
-                    If you select a specific tuning for the recipe,
-                    the OpenEmbedded build system enables the package
-                    architecture defined by that tuning file.</para>
-                    <para>When you do not specifically enable a package
+                    When you do not specifically enable a package
                     architecture through the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>,
                     The OpenEmbedded build system defaults to the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-TUNE_ARCH'><filename>TUNE_ARCH</filename></ulink>
                     setting:
                     <literallayout class='monospaced'>
-     PACKAGE_ARCH == TUNE_ARCH
+     PACKAGE_ARCH = "${TUNE_ARCH}"
                     </literallayout>
                     </para></listitem>
                 <listitem><para><emphasis>Choose a Generic Tuning File if Possible:</emphasis>
@@ -6076,7 +6073,9 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                     run on <filename>armv6</filename> and
                     <filename>armv7</filename> processors in most cases).
                     Similarly, <filename>i486</filename> binaries could work
-                    on <filename>i586</filename> and higher processors.</para>
+                    on <filename>i586</filename> and higher processors.
+                    You should realize, however, that advances on newer
+                    processor versions would not be used.</para>
                     <para>If you select the same tune for several different
                     machines, the OpenEmbedded build system reuses software
                     previously built, thus speeding up the overall build time.
@@ -6085,7 +6084,7 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                     package feed exists.
                     </para></listitem>
                 <listitem><para><emphasis>Manage Granular Level Packaging:</emphasis>
-                    Sometimes cases exist where where injecting another level
+                    Sometimes cases exist where injecting another level
                     of package architecture beyond the three higher levels
                     noted earlier can be useful.
                     For example, consider the <filename>emgd</filename>
@@ -6096,7 +6095,8 @@ Gateways via their Web Interfaces</ulink>"</emphasis>
                     generic packages.
                     You can examine the key code in the
                     <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>Source Repositories</ulink>
-                    in <filename>classes/emgd-gl.bbclass</filename>.
+                    "daisy" branch in
+                    <filename>classes/emgd-gl.bbclass</filename>.
                     For a specific set of packages, the code redefines
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>.
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_EXTRA_ARCHS'><filename>PACKAGE_EXTRA_ARCHS</filename></ulink>
