@@ -230,6 +230,7 @@ DESCRIPTION
         powerpc
         i386
         mips
+        mips64
         x86_64
         qemu
 
