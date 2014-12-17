@@ -1,3 +1,4 @@
+# yocto-bsp-filename {{ if kernel_choice == "custom": }} this
 # This file was derived from the linux-yocto-custom.bb recipe in
 # oe-core.
 #
