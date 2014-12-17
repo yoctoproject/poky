@@ -25,11 +25,13 @@
 # Tom Zanussi <tom.zanussi (at] intel.com>
 #
 
-OPEN_TAG =    "{{"
-CLOSE_TAG =   "}}"
-ASSIGN_TAG =  "{{="
-INPUT_TAG =   "input"
-IF_TAG =      "if"
+OPEN_TAG =     "{{"
+CLOSE_TAG =    "}}"
+ASSIGN_TAG =   "{{="
+INPUT_TAG =    "input"
+IF_TAG =       "if"
+FILENAME_TAG = "yocto-bsp-filename"
+DIRNAME_TAG =  "yocto-bsp-dirname"
 
 INDENT_STR =  "    "
 

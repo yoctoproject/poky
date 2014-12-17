@@ -756,6 +756,8 @@ class CheckInputLine(ListValInputLine):
         return None
 
 
+dirname_substitutions = {}
+
 class SubstrateBase(object):
     """
     Base class for both expanded and unexpanded file and dir container
@@ -764,6 +766,7 @@ class SubstrateBase(object):
     def __init__(self, filename, filebase, out_filebase):
         self.filename = filename
         self.filebase = filebase
+        self.translated_filename = filename
         self.out_filebase = out_filebase
         self.raw_lines = []
         self.expanded_lines = []
@@ -869,6 +872,167 @@ class SubstrateBase(object):
 
         return self.expand_input_tag(tag, lineno)
 
+    def append_translated_filename(self, filename):
+        """
+        Simply append filename to translated_filename
+        """
+        self.translated_filename = os.path.join(self.translated_filename, filename)
+
+    def get_substituted_file_or_dir_name(self, first_line, tag):
+        """
+        If file or dir names contain name substitutions, return the name
+        to substitute.  Note that this is just the file or dirname and
+        doesn't include the path.
+        """
+        filename = first_line.find(tag)
+        if filename != -1:
+            filename += len(tag)
+        substituted_filename = first_line[filename:].strip()
+        this = substituted_filename.find(" this")
+        if this != -1:
+            head, tail = os.path.split(self.filename)
+            substituted_filename = substituted_filename[:this + 1] + tail
+            if tag == DIRNAME_TAG: # get rid of .noinstall in dirname
+                substituted_filename = substituted_filename.split('.')[0]
+
+        return substituted_filename
+
+    def get_substituted_filename(self, first_line):
+        """
+        If a filename contains a name substitution, return the name to
+        substitute.  Note that this is just the filename and doesn't
+        include the path.
+        """
+        return self.get_substituted_file_or_dir_name(first_line, FILENAME_TAG)
+
+    def get_substituted_dirname(self, first_line):
+        """
+        If a dirname contains a name substitution, return the name to
+        substitute.  Note that this is just the dirname and doesn't
+        include the path.
+        """
+        return self.get_substituted_file_or_dir_name(first_line, DIRNAME_TAG)
+
+    def substitute_filename(self, first_line):
+        """
+        Find the filename in first_line and append it to translated_filename.
+        """
+        substituted_filename = self.get_substituted_filename(first_line)
+        self.append_translated_filename(substituted_filename);
+
+    def substitute_dirname(self, first_line):
+        """
+        Find the dirname in first_line and append it to translated_filename.
+        """
+        substituted_dirname = self.get_substituted_dirname(first_line)
+        self.append_translated_filename(substituted_dirname);
+
+    def is_filename_substitution(self, line):
+        """
+        Do we have a filename subustition?
+        """
+        if line.find(FILENAME_TAG) != -1:
+            return True
+        return False
+
+    def is_dirname_substitution(self, line):
+        """
+        Do we have a dirname subustition?
+        """
+        if line.find(DIRNAME_TAG) != -1:
+            return True
+        return False
+
+    def translate_dirname(self, first_line):
+        """
+        Just save the first_line mapped by filename.  The later pass
+        through the directories will look for a dirname.noinstall
+        match and grab the substitution line.
+        """
+        dirname_substitutions[self.filename] = first_line
+
+    def translate_dirnames_in_path(self, path):
+        """
+        Translate dirnames below this file or dir, not including tail.
+        dirname_substititions is keyed on actual untranslated filenames.
+        translated_path contains the subsititutions for each element.
+        """
+        remainder = path[len(self.filebase)+1:]
+        translated_path = untranslated_path = self.filebase
+
+        untranslated_dirs = remainder.split(os.sep)
+
+        for dir in untranslated_dirs:
+            key = os.path.join(untranslated_path, dir + '.noinstall')
+            try:
+                first_line = dirname_substitutions[key]
+            except KeyError:
+                translated_path = os.path.join(translated_path, dir)
+                untranslated_path = os.path.join(untranslated_path, dir)
+                continue
+            substituted_dir = self.get_substituted_dirname(first_line)
+            translated_path = os.path.join(translated_path, substituted_dir)
+            untranslated_path = os.path.join(untranslated_path, dir)
+
+        return translated_path
+
+    def translate_file_or_dir_name(self):
+        """
+        Originally we were allowed to use open/close/assign tags and python
+        code in the filename, which fit in nicely with the way we
+        processed the templates and generated code.  Now that we can't
+        do that, we make those tags proper file contents and have this
+        pass substitute the nice but non-functional names with those
+        'strange' ones, and then proceed as usual.
+
+        So, if files or matching dir<.noinstall> files contain
+        filename substitutions, this function translates them into the
+        corresponding 'strange' names, which future passes will expand
+        as they always have.  The resulting pathname is kept in the
+        file or directory's translated_filename.  Another way to think
+        about it is that self.filename is the input filename, and
+        translated_filename is the output filename before expansion.
+        """
+        # remove leaf file or dirname
+        head, tail = os.path.split(self.filename)
+        translated_path = self.translate_dirnames_in_path(head)
+        self.translated_filename = translated_path
+
+        # This is a dirname - does it have a matching .noinstall with
+        # a substitution?  If so, apply the dirname subsititution.
+        if not os.path.isfile(self.filename):
+            key = self.filename + ".noinstall"
+            try:
+                first_line = dirname_substitutions[key]
+            except KeyError:
+                self.append_translated_filename(tail)
+                return
+            self.substitute_dirname(first_line)
+            return
+
+        f = open(self.filename)
+        first_line = f.readline()
+        f.close()
+
+        # This is a normal filename not needing translation, just use
+        # it as-is.
+        if not first_line or not first_line.startswith("#"):
+            self.append_translated_filename(tail)
+            return
+
+        # If we have a filename substitution (first line in the file
+        # is a FILENAME_TAG line) do the substitution now.  If we have
+        # a dirname substitution (DIRNAME_TAG in dirname.noinstall
+        # meta-file), hash it so we can apply it when we see the
+        # matching dirname later.  Otherwise we have a regular
+        # filename, just use it as-is.
+        if self.is_filename_substitution(first_line):
+            self.substitute_filename(first_line)
+        elif self.is_dirname_substitution(first_line):
+            self.translate_dirname(first_line)
+        else:
+            self.append_translated_filename(tail)
+
     def expand_file_or_dir_name(self):
         """
         Expand file or dir names into codeline.  Dirnames and
@@ -878,7 +1042,7 @@ class SubstrateBase(object):
         """
         lineno = 0
 
-        line = self.filename[len(self.filebase):]
+        line = self.translated_filename[len(self.filebase):]
         if line.startswith("/"):
             line = line[1:]
         opentag_start = -1
@@ -897,7 +1061,6 @@ class SubstrateBase(object):
                 self.parse_error("No close tag found for open tag", lineno, line)
             # we have a {{ tag i.e. code
             tag = line[opentag_start + len(OPEN_TAG):end].strip()
-
             if not tag.lstrip().startswith(IF_TAG):
                 self.parse_error("Only 'if' tags are allowed in file or directory names",
                                  lineno, line)
@@ -933,6 +1096,7 @@ class SubstrateBase(object):
         Expand the file or dir name first, eventually this ends up
         creating the file or dir.
         """
+        self.translate_file_or_dir_name()
         self.expand_file_or_dir_name()
 
 
@@ -955,6 +1119,9 @@ class SubstrateFile(SubstrateBase):
         self.read()
 
         for lineno, line in enumerate(self.raw_lines):
+            # only first line can be a filename substitition
+            if lineno == 0 and line.startswith("#") and FILENAME_TAG in line:
+                continue # skip it - we've already expanded it
             expanded_line = self.expand_tag(line, lineno + 1) # humans not 0-based
             if not expanded_line:
                 expanded_line = NormalLine(line.rstrip())
@@ -1141,7 +1308,7 @@ def gather_inputlines(files):
     for file in files:
         if isinstance(file, SubstrateFile):
             group = None
-            basename = os.path.basename(file.filename)
+            basename = os.path.basename(file.translated_filename)
 
             codeline = conditional_filename(basename)
             if codeline:
