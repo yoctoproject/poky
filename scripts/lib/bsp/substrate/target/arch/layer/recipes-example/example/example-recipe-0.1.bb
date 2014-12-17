@@ -1,3 +1,4 @@
+# yocto-bsp-filename {{=example_recipe_name}}_0.1.bb
 #
 # This file was derived from the 'Hello World!' example recipe in the
 # Yocto Project Development Manual.

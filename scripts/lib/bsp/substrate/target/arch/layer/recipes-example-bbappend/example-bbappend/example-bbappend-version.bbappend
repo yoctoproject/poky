@@ -1,3 +1,4 @@
+# yocto-bsp-filename {{=example_bbappend_name}}_{{=example_bbappend_version}}.bbappend
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
 #
