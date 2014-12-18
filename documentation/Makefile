@@ -130,7 +130,7 @@ XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = yocto-project-qs.html qs-style.css figures/yocto-environment.png \
            figures/building-an-image.png figures/using-a-pre-built-image.png \
-           figures/yocto-project-qs-title.png \
+           figures/yocto-project-transp.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
@@ -201,7 +201,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png figures
 	figures/package-feeds.png figures/layer-input.png figures/images.png figures/sdk.png \
 	figures/source-fetching.png figures/patching.png figures/configuration-compile-autoreconf.png \
 	figures/analysis-for-package-splitting.png figures/image-generation.png \
-	figures/sdk-generation.png figures/recipe-workflow.png figures/yocto-project-qs-title.png
+	figures/sdk-generation.png figures/recipe-workflow.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
