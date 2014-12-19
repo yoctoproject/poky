@@ -3863,9 +3863,12 @@
             <glossdef>
                 <para>
                     A space-separated list of files installed into the
-                    boot partition when preparing an image.
-                    By default, the files are installed under the same name as
-                    the source files.
+                    boot partition when preparing an image using the
+                    <filename>wic</filename> tool with the
+                    <filename>bootimg-partition</filename> source
+                    plugin.
+                    By default, the files are installed under
+                    the same name as the source files.
                     To change the installed name, separate it from the
                     original name with a semi-colon (;).
                     Source files need to be located in
@@ -3875,7 +3878,27 @@
                     <literallayout class="monospaced">
      IMAGE_BOOT_FILES = "u-boot.img uImage;kernel"
      IMAGE_BOOT_FILES = "u-boot.${UBOOT_SUFFIX} ${KERNEL_IMAGETYPE}"
-                    </literallayout></para>
+                    </literallayout>
+                    Alternatively, source files can be picked up using
+                    a glob pattern.
+                    In this case, the destination file
+                    will have the same name as the base name of the source file
+                    path.
+                    To install files into a directory within the
+                    target location, pass its name after a semi-colon
+                    (;).
+                    Here are two examples:
+                    <literallayout class="monospaced">
+     IMAGE_BOOT_FILES = "bcm2835-bootfiles/*"
+     IMAGE_BOOT_FILES = "bcm2835-bootfiles/*;boot/"
+                    </literallayout>
+                    The first example installs all files from
+                    <filename>${DEPLOY_DIR_IMAGE}/bcm2835-bootfiles</filename>
+                    into the root of the target partition.
+                    The second example installs the same files into a
+                    <filename>boot</filename> directory within the
+                    target partition.
+                </para>
             </glossdef>
         </glossentry>
 
