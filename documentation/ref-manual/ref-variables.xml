@@ -10749,7 +10749,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>TUNE_ASARGS</filename> is set using
                     the tune include files, which are typically under
                     <filename>meta/conf/machine/include/</filename> and are
-                    influenced through <filename>TUNE_FEATURES</filename>.
+                    influenced through
+                    <link linkend='var-TUNE_FEATURES'><filename>TUNE_FEATURES</filename></link>.
                     For example, the
                     <filename>meta/conf/machine/include/x86/arch-x86.inc</filename>
                     file defines the flags for the x86 architecture as follows:
@@ -10757,8 +10758,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      TUNE_ASARGS += "${@bb.utils.contains("TUNE_FEATURES", "mx32", "-x32", "", d)}"
                     </literallayout>
                     <note>
-                        Board Support Packages (BSPs) can supply their own
-                        set of flags.
+                        Board Support Packages (BSPs) select the tune.
+                        The selected tune, in turn, affects the tune variables
+                        themselves (i.e. the tune can supply its own
+                        set of flags).
                     </note>
                 </para>
             </glossdef>
@@ -10776,10 +10779,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>TUNE_CCARGS</filename> is set using
                     the tune include files, which are typically under
                     <filename>meta/conf/machine/include/</filename> and are
-                    influenced through <filename>TUNE_FEATURES</filename>.
+                    influenced through
+                    <link linkend='var-TUNE_FEATURES'><filename>TUNE_FEATURES</filename></link>.
                     <note>
-                        Board Support Packages (BSPs) can supply their own
-                        set of flags.
+                        Board Support Packages (BSPs) select the tune.
+                        The selected tune, in turn, affects the tune variables
+                        themselves (i.e. the tune can supply its own
+                        set of flags).
                     </note>
                 </para>
             </glossdef>
@@ -10797,7 +10803,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>TUNE_LDARGS</filename> is set using
                     the tune include files, which are typically under
                     <filename>meta/conf/machine/include/</filename> and are
-                    influenced through <filename>TUNE_FEATURES</filename>.
+                    influenced through
+                    <link linkend='var-TUNE_FEATURES'><filename>TUNE_FEATURES</filename></link>.
                     For example, the
                     <filename>meta/conf/machine/include/x86/arch-x86.inc</filename>
                     file defines the flags for the x86 architecture as follows:
@@ -10805,8 +10812,10 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      TUNE_LDARGS += "${@bb.utils.contains("TUNE_FEATURES", "mx32", "-m elf32_x86_64", "", d)}"
                     </literallayout>
                     <note>
-                        Board Support Packages (BSPs) can supply their own
-                        set of flags.
+                        Board Support Packages (BSPs) select the tune.
+                        The selected tune, in turn, affects the tune variables
+                        themselves (i.e. the tune can supply its own
+                        set of flags).
                     </note>
                 </para>
             </glossdef>
@@ -10854,19 +10863,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The package architecture understood by the packaging
                     system to define the architecture, ABI, and tuning of
                     output packages.
-                </para>
-            </glossdef>
-        </glossentry>
-
-        <glossentry id='var-TUNE_PKGARCH_tune'><glossterm><imagedata fileref="figures/define-generic.png" />TUNE_PKGARCH_tune</glossterm>
-            <info>
-                TUNE_PKGARCH_tune[doc] = "The CPU or Application Binary Interface (ABI) specific tuning of the TUNE_PKGARCH."
-            </info>
-            <glossdef>
-                <para>
-                    The CPU or Application Binary Interface (ABI) specific
-                    tuning of the
-                    <link linkend='var-TUNE_PKGARCH'><filename>TUNE_PKGARCH</filename></link>.
+                    The specific tune is defined using the "_tune" override
+                    as follows:
+                    <literallayout class='monospaced'>
+     TUNE_PKGARCH_tune-<replaceable>tune</replaceable> = "<replaceable>tune</replaceable>"
+                    </literallayout>
                 </para>
 
                 <para>
