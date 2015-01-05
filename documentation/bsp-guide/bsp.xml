@@ -456,11 +456,10 @@
                 append file used to augment the recipe that starts the build.
                 Furthermore, there are machine-specific settings used during the
                 build that are defined by the <filename>machconfig</filename> file.
-                In the Crown Bay example, two <filename>machconfig</filename> files
-                exist: one that supports the Intel® Embedded Media and Graphics
-                Driver (Intel® EMGD) and one that does not:
+                In the Crown Bay example, the <filename>machconfig</filename> file
+                supports the Video Electronics Standards Association (VESA) graphics
+                driver:
                 <literallayout class='monospaced'>
-     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
      meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/machconfig
      meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
                 </literallayout>
@@ -489,13 +488,17 @@
                 This optional directory contains recipes for the BSP if it has
                 special requirements for graphics support.
                 All files that are needed for the BSP to support a display are kept here.
-                For example, the Crown Bay BSP's <filename>xorg.conf</filename> file
-                detects the graphics support needed (i.e. the Intel® Embedded Media
-                Graphics Driver (EMGD) or the Video Electronics Standards Association
-                (VESA) graphics):
+                For example, the <filename>meta-emenlow</filename> layer, which supports
+                the eMenlow platform consisting of the
+                <trademark class='registered'>Intel</trademark>
+                <trademark class='trade'>Atom</trademark>
+                Z5xx processor with the
+                <trademark class='registered'>Intel</trademark>
+                System Controller Hub US15W uses these files for supporting the Video
+                Electronics Standards Association (VESA) graphics:
                 <literallayout class='monospaced'>
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xorg.conf
+     meta-emenlow/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
+     meta-emenlow/recipes-graphics/xorg-xserver/xserver-xf86-config/emenlow-noemgd/xorg.conf
                 </literallayout>
             </para>
             </section>
@@ -552,26 +555,14 @@
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 
-     COMPATIBLE_MACHINE_crownbay = "crownbay"
-     KMACHINE_crownbay = "crownbay"
-     KBRANCH_crownbay = "standard/crownbay"
-     KERNEL_FEATURES_append_crownbay = " features/drm-emgd/drm-emgd-1.18 cfg/vesafb"
-
      COMPATIBLE_MACHINE_crownbay-noemgd = "crownbay-noemgd"
      KMACHINE_crownbay-noemgd = "crownbay"
      KBRANCH_crownbay-noemgd = "standard/crownbay"
      KERNEL_FEATURES_append_crownbay-noemgd = " cfg/vesafb"
 
-     LINUX_VERSION_crownbay = "3.10.35"
-     SRCREV_meta_crownbay = "b6e58b33dd427fe471f8827c83e311acdf4558a4"
-     SRCREV_machine_crownbay = "cee957655fe67826b2e827e2db41f156fa8f0cc4"
-     SRCREV_emgd_crownbay = "42d5e4548e8e79e094fa8697949eed4cf6af00a3"
-
-     LINUX_VERSION_crownbay-noemgd = "3.10.35"
-     SRCREV_meta_crownbay-noemgd = "b6e58b33dd427fe471f8827c83e311acdf4558a4"
-     SRCREV_machine_crownbay-noemgd = "cee957655fe67826b2e827e2db41f156fa8f0cc4"
-
-     SRC_URI_crownbay = "git://git.yoctoproject.org/linux-yocto-3.10.git;protocol=git;nocheckout=1;branch=${KBRANCH},${KMETA},emgd-1.18;name=machine,meta,emgd"
+     LINUX_VERSION_crownbay-noemgd = "3.10.55"
+     SRCREV_meta_crownbay-noemgd = "f79a00265eefbe2fffc2cdb03f67235497a9a87e"
+     SRCREV_machine_crownbay-noemgd = "3677ea7f9476458aa6dec440243de3a6fb1343a9"
                 </literallayout>
                 This append file contains statements used to support the Crown Bay BSP.
                 The file defines machines using the
@@ -587,14 +578,11 @@
                 The
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES'><filename>KERNEL_FEATURES</filename></ulink>
                 variable enables features specific to the kernel
-                (e.g. graphics support in this case).
+                (e.g. VESA graphics support in this case).
                 The append file points to specific commits in the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink> Git
                 repository and the <filename>meta</filename> Git repository branches to identify the
                 exact kernel needed to build the Crown Bay BSP.
-                Finally, the file includes the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                statement to locate the source files.
             </para>
 
             <para>
