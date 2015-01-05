@@ -902,8 +902,15 @@
                        <filename>recipes-bsp</filename>, <filename>recipes-graphics</filename>,
                        <filename>recipes-core</filename>, and so forth).
                        </para></listitem>
-                   <listitem><para>Place the BSP-specific files in the directory named for
-                       your machine inside the BSP layer.
+                   <listitem><para>Place the BSP-specific files in the proper directory
+                       inside the BSP layer.
+                       How expansive the layer is affects where you must place these files.
+                       For example, if your layer supports several different machine types,
+                       you need to be sure your layer's directory structure includes hierarchy
+                       that separates the files out according to machine.
+                       If your layer does not support multiple machines, the layer would not
+                       have that additional hierarchy and the files would obviously not be
+                       able to reside in a machine-specific directory.
                        </para></listitem>
                </itemizedlist>
            </para>
@@ -912,7 +919,8 @@
                Following is a specific example to help you better understand the process.
                Consider an example that customizes a recipe by adding
                a BSP-specific configuration file named <filename>interfaces</filename> to the
-               <filename>init-ifupdown_1.0.bb</filename> recipe for machine "xyz".
+               <filename>init-ifupdown_1.0.bb</filename> recipe for machine "xyz" where the
+               BSP layer also supports several other machines.
                Do the following:
                <orderedlist>
                    <listitem><para>Edit the <filename>init-ifupdown_1.0.bbappend</filename> file so that it
@@ -926,8 +934,17 @@
                    <listitem><para>Create and place the new <filename>interfaces</filename>
                        configuration file in the BSP's layer here:
                        <literallayout class='monospaced'>
-     meta-xyz/recipes-core/init-ifupdown/files/xyz/interfaces
+     meta-xyz/recipes-core/init-ifupdown/files/xyz-machine-one/interfaces
                        </literallayout>
+                       <note>
+                           If the <filename>meta-xyz</filename> layer did not support
+                           multiple machines, you would place the
+                           <filename>interfaces</filename> configuration file in the
+                           layer here:
+                           <literallayout class='monospaced'>
+     meta-xyz/recipes-core/init-ifupdown/files/interfaces
+                           </literallayout>
+                       </note>
                        The
                        <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
                        variable in the append files extends the search path
