@@ -200,25 +200,17 @@
      meta-crownbay/conf/
      meta-crownbay/conf/layer.conf
      meta-crownbay/conf/machine/
-     meta-crownbay/conf/machine/crownbay.conf
      meta-crownbay/conf/machine/crownbay-noemgd.conf
      meta-crownbay/recipes-bsp/
      meta-crownbay/recipes-bsp/formfactor/
      meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
      meta-crownbay/recipes-bsp/formfactor/formfactor/
-     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/
-     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay/machconfig
      meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/
      meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/machconfig
-     meta-crownbay/recipes-graphics/
-     meta-crownbay/recipes-graphics/xorg-xserver/
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/
-     meta-crownbay/recipes-graphics/xorg-xserver/xserver-xf86-config/crownbay/xorg.conf
      meta-crownbay/recipes-kernel/
+     meta-crownbay/recipes-kernel/kmod
+     meta-crownbay/recipes-kernel/kmod/kmod_git.bbappend
      meta-crownbay/recipes-kernel/linux/
-     meta-crownbay/recipes-kernel/linux/linux-yocto-dev.bbappend
      meta-crownbay/recipes-kernel/linux/linux-yocto-rt_3.10.bbappend
      meta-crownbay/recipes-kernel/linux/linux-yocto_3.10.bbappend
                 </literallayout>
@@ -351,9 +343,11 @@
      BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
              ${LAYERDIR}/recipes-*/*/*.bbappend"
 
-     BBFILE_COLLECTIONS += "bsp"
-     BBFILE_PATTERN_bsp = "^${LAYERDIR}/"
-     BBFILE_PRIORITY_bsp = "6"
+     BBFILE_COLLECTIONS += "<replaceable>bsp</replaceable>"
+     BBFILE_PATTERN_<replaceable>bsp</replaceable> = "^${LAYERDIR}/"
+     BBFILE_PRIORITY_<replaceable>bsp</replaceable> = "6"
+
+     LAYERDEPENDS_<replaceable>bsp</replaceable> = "intel"
                 </literallayout>
             </para>
 
@@ -361,9 +355,18 @@
                 To illustrate the string substitutions, here are the corresponding statements
                 from the Crown Bay <filename>conf/layer.conf</filename> file:
                <literallayout class='monospaced'>
+     # We have a conf and classes directory, add to BBPATH
+     BBPATH .= ":${LAYERDIR}"
+
+     # We have a recipes directory, add to BBFILES
+     BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
+	     ${LAYERDIR}/recipes-*/*/*.bbappend"
+
      BBFILE_COLLECTIONS += "crownbay"
-     BBFILE_PATTERN_crownbay = "^${LAYERDIR}/"
+     BBFILE_PATTERN_crownbay := "^${LAYERDIR}/"
      BBFILE_PRIORITY_crownbay = "6"
+
+     LAYERDEPENDS_crownbay = "intel"
                 </literallayout>
             </para>
 
@@ -425,12 +428,12 @@
 
             <para>
                 To use an include file, you simply include them in the machine configuration file.
-                For example, the Crown Bay BSP <filename>crownbay.conf</filename> contains the
+                For example, the Crown Bay BSP <filename>crownbay-noemgd.conf</filename> contains the
                 following statements:
                 <literallayout class='monospaced'>
-     require conf/machine/include/intel-core2-32-common.inc
      require conf/machine/include/meta-intel.inc
-     require conf/machine/include/meta-intel-emgd.inc
+     require conf/machine/include/intel-core2-32-common.inc
+     require conf/machine/include/intel-common-pkgarch.inc
                 </literallayout>
             </para>
             </section>
