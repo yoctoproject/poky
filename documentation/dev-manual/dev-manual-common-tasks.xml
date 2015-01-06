@@ -1100,18 +1100,27 @@
                 an image is to create a custom package group recipe that is
                 used to build the image or images.
                 A good example of a package group recipe is
-                <filename>meta/recipes-core/packagegroups/packagegroup-core-boot.bb</filename>.
-                The
+                <filename>meta/recipes-core/packagegroups/packagegroup-base.bb</filename>.
+            </para>
+
+            <para>
+                If you examine that recipe, you see that the
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'>PACKAGES</ulink></filename>
-                variable lists the package group packages you wish to produce.
-                <filename>inherit packagegroup</filename> sets appropriate
-                default values and automatically adds <filename>-dev</filename>,
-                <filename>-dbg</filename>, and <filename>-ptest</filename>
-                complementary packages for every package specified in
-                <filename>PACKAGES</filename>.
-                Note that the inherit line should be towards
-                the top of the recipe, certainly before you set
-                <filename>PACKAGES</filename>.
+                variable lists the package group packages to produce.
+                The <filename>inherit packagegroup</filename> statement
+                sets appropriate default values and automatically adds
+                <filename>-dev</filename>, <filename>-dbg</filename>, and
+                <filename>-ptest</filename> complementary packages for each
+                package specified in the <filename>PACKAGES</filename>
+                statement.
+                <note>
+                    The <filename>inherit packages</filename> should be
+                    located near the top of the recipe, certainly before
+                    the <filename>PACKAGES</filename> statement.
+                </note>
+            </para>
+
+            <para>
                 For each package you specify in <filename>PACKAGES</filename>,
                 you can use
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'>RDEPENDS</ulink></filename>
@@ -1119,7 +1128,13 @@
                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'>RRECOMMENDS</ulink></filename>
                 entries to provide a list of packages the parent task package
                 should contain.
-                Following is an example:
+                You can see examples of these further down in the
+                <filename>packagegroup-base.bb</filename> recipe.
+            </para>
+
+            <para>
+                Here is a short, fabricated example showing the same basic
+                pieces:
                 <literallayout class='monospaced'>
      DESCRIPTION = "My Custom Package Groups"
 
