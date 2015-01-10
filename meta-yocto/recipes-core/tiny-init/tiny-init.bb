@@ -11,6 +11,8 @@ SRC_URI = "file://init \
 	   file://rc.local.sample \
 	  "
 
+S = "${WORKDIR}"
+
 do_configure() {
 	:
 }
