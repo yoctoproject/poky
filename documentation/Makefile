@@ -6,6 +6,9 @@
 # differ depending on the BRANCH being built.
 #
 # The Makefile has these targets:
+#    all:       If you leave off the target then "all" is implied.
+#               You will generate HTML, eclipse help (if applicable),
+#               and a tarball of files.
 #
 #    pdf:	generates a PDF version of a manual.  Not valid for the
 #		Quick Start or the mega-manual (single, large HTML file
@@ -18,11 +21,11 @@
 #    publish:	pushes generated files to the Yocto Project website
 #    clean:	removes files
 #
-# The Makefile generates an HTML and PDF version of every document except the
+# The Makefile can generate an HTML and PDF version of every document except the
 # Yocto Project Quick Start and the single, HTML mega-manual, which is comprised
-# of all the individual Yocto Project manuals.  These two manuals are in HTML
-# form only.  The variable DOC indicates the folder name for a given manual. The
-# variable VER represents the distro version of the Yocto Release for which the
+# of all the individual Yocto Project manuals.  You can generate these two manuals
+# in HTML form only.  The variable DOC indicates the folder name for a given manual.
+# The variable VER represents the distro version of the Yocto Release for which the
 # manuals are being generated.  The variable BRANCH is used to indicate the
 # branch (edison or denzil) and is used only when DOC=dev-manual or
 # DOC=mega-manual.  If you do not specify a BRANCH, the default branch used
@@ -39,24 +42,26 @@
 # Examples:
 #
 #     make DOC=bsp-guide
-#     make DOC=yocto-project-qs
+#     make html DOC=yocto-project-qs
 #     make pdf DOC=ref-manual
 #     make DOC=dev-manual BRANCH=edison
 #     make DOC=mega-manual BRANCH=denzil
 #
-# The first example generates the HTML and PDF versions of the BSP Guide.
+# The first example generates the HTML and Eclipse help versions of the BSP Guide.
 # The second example generates the HTML version only of the Quick Start.  Note
-# that the Quick Start only has an HTML version available.  The third example
+# that the Quick Start only has an HTML version available.  So, the
+# 'make DOC=yocto-project-qs' command would be equivalent. The third example
 # generates just the PDF version of the Yocto Project Reference Manual.
-# The fourth example generates both the PDF and HTML 'edison' versions
-# of the YP Development Manual.  The last example generates the HTML version
-# of the mega-manual and uses the 'denzil' branch when choosing figures for the
-# tarball of figures.  Any example that does not use the BRANCH argument
-# builds the current version of the manual set.
+# The fourth example generates the HTML 'edison' version and (if available)
+# the Eclipse help version of the YP Development Manual.  The last example
+# generates the HTML version of the mega-manual and uses the 'denzil'
+# branch when choosing figures for the tarball of figures.  Any example that does
+# not use the BRANCH argument builds the current version of the manual set.
 #
-# Use the publish target to push the generated manuals to the Yocto Project
-# website.  All files needed for the manual's HTML form are pushed as well as
-# the PDF version (if applicable).
+# The publish target pushes the generated manuals to the Yocto Project
+# website.  Unless you are a developer on the YP team, you will not succeed in
+# pushing manuals to this server.  All files needed for the manual's HTML form are
+# pushed as well as applicable Eclipse versions.
 #
 # Examples:
 #
@@ -65,19 +70,20 @@
 #    make publish DOC=dev-manual VER=1.1.1 BRANCH=edison
 #    make publish DOC=dev-manual VER=1.2 BRANCH=denzil
 #
-# The first example publishes the 1.3 version of both the PDF and HTML versions
-# of the BSP Guide.  The second example publishes the 1.3 version of both the
-# PDF and HTML versions of the ADT Manual. The third example publishes the PDF
-# and HTML 'edison' versions of the YP Development Manual.  The fourth example
-# publishes the PDF and HTML 'denzil' versions of the YP Development Manual.
+# The first example publishes the 1.3 version of both the HTML version
+# of the BSP Guide.  The second example publishes the 1.3 version of the
+# HTML version of the YP Application Developer's Guide. The third example publishes
+# the HTML 'edison' versions of the YP Development Manual and, if applicable, the
+# Eclipse version.  The fourth example publishes the HTML 'denzil' version and,
+# if applicable, the Eclipse version of the YP Development Manual.
 #
 
 ifeq ($(DOC),bsp-guide)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf eclipse tarball
-TARFILES = bsp-style.css bsp-guide.html bsp-guide.pdf figures/bsp-title.png \
+ALLPREQ = html eclipse tarball
+TARFILES = bsp-style.css bsp-guide.html figures/bsp-title.png \
            eclipse
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 
@@ -85,7 +91,7 @@ endif
 
 ifeq ($(DOC),dev-manual)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf eclipse tarball
+ALLPREQ = html eclipse tarball
 #
 # Note that the tarfile might produce the "Cannot stat: No such file or
 # directory" error message for .PNG files that are not present when building
@@ -95,7 +101,7 @@ ALLPREQ = html pdf eclipse tarball
 #
 
 	ifeq ($(BRANCH),edison)
-TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
+TARFILES = dev-style.css dev-manual.html \
            figures/app-dev-flow.png figures/bsp-dev-flow.png \
            figures/dev-title.png figures/git-workflow.png \
            figures/index-downloads.png figures/kernel-dev-flow.png \
@@ -105,7 +111,7 @@ TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
 	else ifeq ($(BRANCH),denzil)
-TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
+TARFILES = dev-style.css dev-manual.html \
            figures/app-dev-flow.png figures/bsp-dev-flow.png \
            figures/dev-title.png figures/git-workflow.png \
            figures/index-downloads.png figures/kernel-dev-flow.png \
@@ -115,7 +121,7 @@ TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
         else
-TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
+TARFILES = dev-style.css dev-manual.html \
            figures/app-dev-flow.png figures/bsp-dev-flow.png \
            figures/dev-title.png figures/git-workflow.png \
            figures/index-downloads.png figures/kernel-dev-flow.png \
@@ -125,7 +131,7 @@ TARFILES = dev-style.css dev-manual.html dev-manual.pdf \
            eclipse
 	endif
 
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 
@@ -239,7 +245,7 @@ endif
 
 ifeq ($(DOC),ref-manual)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf eclipse tarball
+ALLPREQ = html eclipse tarball
 TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/buildhistory.png figures/buildhistory-web.png eclipse \
         figures/cross-development-toolchains.png figures/layer-input.png \
@@ -249,7 +255,7 @@ TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/patching.png figures/configuration-compile-autoreconf.png \
 	figures/analysis-for-package-splitting.png figures/image-generation.png \
 	figures/sdk-generation.png
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
@@ -257,18 +263,18 @@ endif
 
 ifeq ($(DOC),adt-manual)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf eclipse tarball
-TARFILES = adt-manual.html adt-manual.pdf adt-style.css figures/adt-title.png \
+ALLPREQ = html eclipse tarball
+TARFILES = adt-manual.html adt-style.css figures/adt-title.png \
 			eclipse
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),profile-manual)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf eclipse tarball
-TARFILES = profile-manual.html profile-manual.pdf profile-manual-style.css \
+ALLPREQ = html eclipse tarball
+TARFILES = profile-manual.html profile-manual-style.css \
            figures/profile-title.png figures/kernelshark-all.png \
            figures/kernelshark-choose-events.png \
            figures/kernelshark-i915-display.png \
@@ -295,19 +301,19 @@ TARFILES = profile-manual.html profile-manual.pdf profile-manual-style.css \
            figures/sched-wakeup-profile.png figures/sysprof-callers.png \
            figures/sysprof-copy-from-user.png figures/sysprof-copy-to-user.png \
            eclipse
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),kernel-dev)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf eclipse tarball
-TARFILES = kernel-dev.html kernel-dev.pdf kernel-dev-style.css \
+ALLPREQ = html eclipse tarball
+TARFILES = kernel-dev.html kernel-dev-style.css \
            figures/kernel-dev-title.png \
            figures/kernel-architecture-overview.png \
            eclipse
-MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf $(DOC)/eclipse
+MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 endif
