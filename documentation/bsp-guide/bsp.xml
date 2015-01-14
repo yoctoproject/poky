@@ -191,29 +191,35 @@
             </para>
 
             <para>
-                Below is an example of the Crown Bay BSP:
+                Below is an example of the eMenlow BSP:
 
                 <literallayout class='monospaced'>
-     meta-crownbay/COPYING.MIT
-     meta-crownbay/README
-     meta-crownbay/README.sources
-     meta-crownbay/binary/
-     meta-crownbay/conf/
-     meta-crownbay/conf/layer.conf
-     meta-crownbay/conf/machine/
-     meta-crownbay/conf/machine/crownbay-noemgd.conf
-     meta-crownbay/recipes-bsp/
-     meta-crownbay/recipes-bsp/formfactor/
-     meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
-     meta-crownbay/recipes-bsp/formfactor/formfactor/
-     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/
-     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/machconfig
-     meta-crownbay/recipes-kernel/
-     meta-crownbay/recipes-kernel/kmod
-     meta-crownbay/recipes-kernel/kmod/kmod_git.bbappend
-     meta-crownbay/recipes-kernel/linux/
-     meta-crownbay/recipes-kernel/linux/linux-yocto-rt_3.10.bbappend
-     meta-crownbay/recipes-kernel/linux/linux-yocto_3.10.bbappend
+     meta-emenlow/COPYING.MIT
+     meta-emenlow/README
+     meta-emenlow/README.sources
+     meta-emenlow/binary/
+     meta-emenlow/conf/
+     meta-emenlow/conf/layer.conf
+     meta-emenlow/conf/machine/
+     meta-emenlow/conf/machine/emenlow-noemgd.conf
+     meta-emenlow/recipes-bsp/
+     meta-emenlow/recipes-bsp/formfactor/
+     meta-emenlow/recipes-bsp/formfactor/formfactor/
+     meta-emenlow/recipes-bsp/formfactor/formfactor_0.0.bbappend
+     meta-emenlow/recipes-bsp/formfactor/formfactor/emenlow-noemgd/
+     meta-emenlow/recipes-bsp/formfactor/formfactor/emenlow-noemgd/machconfig
+     meta-emenlow/recipes-graphics/
+     meta-emenlow/recipes-graphics/xorg-xserver
+     meta-emenlow/recipes-graphics/xorg-xserver/xserver-xf86-config
+     meta-emenlow/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
+     meta-emenlow/recipes-graphics/xorg-xserver/xserver-xf86-config/emenlow-noemgd
+     meta-emenlow/recipes-graphics/xorg-xserver/xserver-xf86-config/emenlow-noemgd/xorg.config
+     meta-emenlow/recipes-kernel/
+     meta-emenlow/recipes-kernel/linux/
+     meta-emenlow/recipes-kernel/linux/linux-yocto-dev.bbappend
+     meta-emenlow/recipes-kernel/linux/linux-yocto-rt_3.10.bbappend
+     meta-emenlow/recipes-kernel/linux/linux-yocto_3.10.bbappend
+     meta-emenlow/recipes-kernel/linux/linux-yocto_3.14.bbappend
                 </literallayout>
             </para>
 
@@ -234,7 +240,7 @@
             <para>
                 These optional files satisfy licensing requirements for the BSP.
                 The type or types of files here can vary depending on the licensing requirements.
-                For example, in the Crown Bay BSP all licensing requirements are handled with the
+                For example, in the eMenlow BSP all licensing requirements are handled with the
                 <filename>COPYING.MIT</filename> file.
             </para>
 
@@ -278,12 +284,21 @@
             </para>
 
             <para>
-                This file provides information on where to locate the BSP source files.
-                For example, information provides where to find the sources that comprise
-                the images shipped with the BSP.
-                Information is also included to help you find the
+                This file provides information on where to locate the BSP
+                source files used to build the images (if any) that reside in
+                <filename>meta-<replaceable>bsp_name</replaceable>/binary</filename>.
+                Images in the <filename>binary</filename> would be images
+                released with the BSP.
+                The information in the <filename>README.sources</filename>
+                file also helps you find the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>
                 used to generate the images that ship with the BSP.
+                <note>
+                    If the BSP's <filename>binary</filename> directory is
+                    missing or the directory has no images, an existing
+                    <filename>README.sources</filename> file is
+                    meaningless.
+                </note>
             </para>
             </section>
 
@@ -297,21 +312,26 @@
             </para>
 
             <para>
-                This optional area contains useful pre-built kernels and user-space filesystem
-                images appropriate to the target system.
-                This directory typically contains graphical (e.g. Sato) and minimal live images
-                when the BSP tarball has been created and made available in the
+                This optional area contains useful pre-built kernels and
+                user-space filesystem images released with the BSP that are
+                appropriate to the target system.
+                This directory typically contains graphical (e.g. Sato) and
+                minimal live images when the BSP tarball has been created and
+                made available in the
                 <ulink url='&YOCTO_HOME_URL;'>Yocto Project</ulink> website.
-                You can use these kernels and images to get a system running and quickly get started
-                on development tasks.
+                You can use these kernels and images to get a system running
+                and quickly get started on development tasks.
             </para>
 
             <para>
-                The exact types of binaries present are highly hardware-dependent.
-                However, a <filename>README</filename> file should be present in the BSP Layer that explains how to use
-                the kernels and images with the target hardware.
-                If pre-built binaries are present, source code to meet licensing requirements must also
-                exist in some form.
+                The exact types of binaries present are highly
+                hardware-dependent.
+                The <filename>README</filename> file should be present in the
+                BSP Layer and it will explain how to use the images with the
+                target hardware.
+                Additionally, the <filename>README.sources</filename> file
+                should be present to locate the sources used to build the
+                images and provide information on the Metadata.
             </para>
             </section>
 
@@ -354,20 +374,20 @@
 
             <para>
                 To illustrate the string substitutions, here are the corresponding statements
-                from the Crown Bay <filename>conf/layer.conf</filename> file:
+                from the eEmenlow <filename>conf/layer.conf</filename> file:
                <literallayout class='monospaced'>
      # We have a conf and classes directory, add to BBPATH
      BBPATH .= ":${LAYERDIR}"
 
-     # We have a recipes directory, add to BBFILES
+     # We have recipes-* directories, add to BBFILES
      BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
 	     ${LAYERDIR}/recipes-*/*/*.bbappend"
 
-     BBFILE_COLLECTIONS += "crownbay"
-     BBFILE_PATTERN_crownbay := "^${LAYERDIR}/"
-     BBFILE_PRIORITY_crownbay = "6"
+     BBFILE_COLLECTIONS += "emenlow"
+     BBFILE_PATTERN_emenlow := "^${LAYERDIR}/"
+     BBFILE_PRIORITY_emenlow = "6"
 
-     LAYERDEPENDS_crownbay = "intel"
+     LAYERDEPENDS_emenlow = "intel"
                 </literallayout>
             </para>
 
@@ -412,11 +432,10 @@
             </para>
 
             <para>
-                This <filename>crownbay.conf</filename> file could also include
-                a hardware "tuning" file that is commonly used to
-                define the package architecture and specify
-                optimization flags, which are carefully chosen to give best
-                performance on a given processor.
+                This configuration file could also include a hardware "tuning"
+                file that is commonly used to define the package architecture
+                and specify optimization flags, which are carefully chosen
+                to give best performance on a given processor.
             </para>
 
             <para>
@@ -428,13 +447,15 @@
             </para>
 
             <para>
-                To use an include file, you simply include them in the machine configuration file.
-                For example, the Crown Bay BSP <filename>crownbay-noemgd.conf</filename> contains the
+                To use an include file, you simply include them in the
+                machine configuration file.
+                For example, the eEmenlow BSP
+                <filename>emenlow-noemgd.conf</filename> contains the
                 following statements:
                 <literallayout class='monospaced'>
-     require conf/machine/include/meta-intel.inc
      require conf/machine/include/intel-core2-32-common.inc
      require conf/machine/include/intel-common-pkgarch.inc
+     require conf/machine/include/meta-intel.inc
                 </literallayout>
             </para>
             </section>
@@ -449,19 +470,23 @@
             </para>
 
             <para>
-                This optional directory contains miscellaneous recipe files for the BSP.
+                This optional directory contains miscellaneous recipe files for
+                the BSP.
                 Most notably would be the formfactor files.
-                For example, in the Crown Bay BSP there is the
+                For example, in the eMenlow BSP there is the
                 <filename>formfactor_0.0.bbappend</filename> file, which is an
                 append file used to augment the recipe that starts the build.
-                Furthermore, there are machine-specific settings used during the
-                build that are defined by the <filename>machconfig</filename> file.
-                In the Crown Bay example, the <filename>machconfig</filename> file
-                supports the Video Electronics Standards Association (VESA) graphics
-                driver:
+                Furthermore, there are machine-specific settings used during
+                the build that are defined by the
+                <filename>machconfig</filename> file further down in the
+                directory.
+                In the eMenlow example, the <filename>machconfig</filename>
+                file supports the Video Electronics Standards Association
+                (VESA) graphics driver:
                 <literallayout class='monospaced'>
-     meta-crownbay/recipes-bsp/formfactor/formfactor/crownbay-noemgd/machconfig
-     meta-crownbay/recipes-bsp/formfactor/formfactor_0.0.bbappend
+     # Assume a USB mouse and keyboard are connected
+     HAVE_TOUCHSCREEN=0
+     HAVE_KEYBOARD=1
                 </literallayout>
             </para>
 
@@ -487,15 +512,16 @@
             <para>
                 This optional directory contains recipes for the BSP if it has
                 special requirements for graphics support.
-                All files that are needed for the BSP to support a display are kept here.
-                For example, the <filename>meta-emenlow</filename> layer, which supports
-                the eMenlow platform consisting of the
+                All files that are needed for the BSP to support a display are
+                kept here.
+                For example, the <filename>meta-emenlow</filename> layer,
+                which supports the eMenlow platform consisting of the
                 <trademark class='registered'>Intel</trademark>
                 <trademark class='trade'>Atom</trademark>
                 Z5xx processor with the
                 <trademark class='registered'>Intel</trademark>
-                System Controller Hub US15W uses these files for supporting the Video
-                Electronics Standards Association (VESA) graphics:
+                System Controller Hub US15W, uses these files for supporting
+                the Video Electronics Standards Association (VESA) graphics:
                 <literallayout class='monospaced'>
      meta-emenlow/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
      meta-emenlow/recipes-graphics/xorg-xserver/xserver-xf86-config/emenlow-noemgd/xorg.conf
@@ -542,10 +568,10 @@
                 specific BSP settings to the kernel, thus configuring the kernel for your particular BSP.
             </para>
             <para>
-                As an example, look at the existing Crown Bay BSP.
+                As an example, look at the existing eMenlow BSP.
                 The append file used is:
                 <literallayout class='monospaced'>
-     meta-crownbay/recipes-kernel/linux/linux-yocto_3.10.bbappend
+     meta-emenlow/recipes-kernel/linux/linux-yocto_3.10.bbappend
                 </literallayout>
                 The following listing shows the file.
                 Be aware that the actual commit ID strings in this example listing might be different
@@ -554,35 +580,37 @@
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
+     COMPATIBLE_MACHINE_emenlow-noemgd = "emenlow-noemgd"
+     KMACHINE_emenlow-noemgd = "emenlow"
+     KBRANCH_emenlow-noemgd = "standard/emenlow"
+     KERNEL_FEATURES_append_emenlow-noemgd = " features/drm-gma500/drm-gma500"
 
-     COMPATIBLE_MACHINE_crownbay-noemgd = "crownbay-noemgd"
-     KMACHINE_crownbay-noemgd = "crownbay"
-     KBRANCH_crownbay-noemgd = "standard/crownbay"
-     KERNEL_FEATURES_append_crownbay-noemgd = " cfg/vesafb"
-
-     LINUX_VERSION_crownbay-noemgd = "3.10.55"
-     SRCREV_meta_crownbay-noemgd = "f79a00265eefbe2fffc2cdb03f67235497a9a87e"
-     SRCREV_machine_crownbay-noemgd = "3677ea7f9476458aa6dec440243de3a6fb1343a9"
+     LINUX_VERSION_emenlow-noemgd = "3.10.55"
+     SRCREV_meta_emenlow-noemgd = "f79a00265eefbe2fffc2cdb03f67235497a9a87e"
+     SRCREV_machine_emenlow-noemgd = "3677ea7f9476458aa6dec440243de3a6fb1343a9"
                 </literallayout>
-                This append file contains statements used to support the Crown Bay BSP.
+                This append file contains statements used to support the
+                eMenlow BSP.
                 The file defines machines using the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>
                 variable and uses the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink> variable to
-                ensure the machine name used by the OpenEmbedded build system maps to the
-                machine name used by the Linux Yocto kernel.
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>
+                variable to ensure the machine name used by the OpenEmbedded
+                build system maps to the machine name used by the Linux Yocto
+                kernel.
                 The file also uses the optional
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-KBRANCH'><filename>KBRANCH</filename></ulink> variable
-                to ensure the build process uses the <filename>standard/crownbay</filename>
-                kernel branch.
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KBRANCH'><filename>KBRANCH</filename></ulink>
+                variable to ensure the build process uses the
+                <filename>standard/emenlow</filename> kernel branch.
                 The
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES'><filename>KERNEL_FEATURES</filename></ulink>
                 variable enables features specific to the kernel
                 (e.g. VESA graphics support in this case).
                 The append file points to specific commits in the
-                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink> Git
-                repository and the <filename>meta</filename> Git repository branches to identify the
-                exact kernel needed to build the Crown Bay BSP.
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+                Git repository and the <filename>meta</filename> Git repository
+                branches to identify the exact kernel needed to build the
+                eMenlow BSP.
             </para>
 
             <para>
