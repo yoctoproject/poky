@@ -1252,12 +1252,12 @@
      $ yocto-bsp list karch
      Architectures available:
          qemu
+         mips64
+         powerpc
+         x86_64
          arm
          mips
-         x86_64
          i386
-         powerpc
-         mips64
                     </literallayout>
                 </para>
 
@@ -1291,37 +1291,35 @@
      $ yocto-bsp create myarm qemu
      Checking basic git connectivity...
      Done.
-
      Which qemu architecture would you like to use? [default: i386]
-     	     1) i386    (32-bit)
-	     2) x86_64  (64-bit)
-	     3) ARM     (32-bit)
-	     4) PowerPC (32-bit)
-	     5) MIPS    (32-bit)
-             6) MIPS64  (64-bit)
+         1) i386    (32-bit)
+         2) x86_64  (64-bit)
+         3) ARM     (32-bit)
+         4) PowerPC (32-bit)
+         5) MIPS    (32-bit)
+         6) MIPS64  (64-bit)
      3
      Would you like to use the default (3.17) kernel? (y/n) [default: y] y
      Do you need a new machine branch for this BSP (the alternative is to re-use an existing branch)? [y/n] [default: y]
      Getting branches from remote repo git://git.yoctoproject.org/linux-yocto-3.17.git...
      Please choose a machine branch to base your new BSP branch on: [default: standard/base]
-	     1) standard/arm-versatile-926ejs
-	     2) standard/base
-	     3) standard/beagleboard
-	     4) standard/beaglebone
-	     5) standard/ck
-             6) standard/common-pc
-             7) standard/crownbay
-             8) standard/edgerouter
-             9) standard/fsl-mpc8315e-rdb
-             10) standard/mti-malta32
-             11) standard/mti-malta64
-             12) standard/qemuarm64
-	     13) standard/qemuppc
+         1) standard/arm-versatile-926ejs
+         2) standard/base
+         3) standard/beagleboard
+         4) standard/beaglebone
+         5) standard/ck
+         6) standard/common-pc
+         7) standard/crownbay
+         8) standard/edgerouter
+         9) standard/fsl-mpc8315e-rdb
+         10) standard/mti-malta32
+         11) standard/mti-malta64
+         12) standard/qemuarm64
+         13) standard/qemuppc
      1
      Would you like SMP support? (y/n) [default: y]
      Does your BSP have a touchscreen? (y/n) [default: n]
      Does your BSP have a keyboard? (y/n) [default: y]
-
      New qemu BSP created in meta-myarm
                     </literallayout>
                     Take a closer look at the example now:
@@ -1409,13 +1407,10 @@
                     Recall that the easiest way to see exactly what sub-commands are available
                     is to use the <filename>yocto-kernel</filename> built-in help as follows:
                     <literallayout class='monospaced'>
-     $ yocto-kernel
+     $ yocto-kernel --help
      Usage:
-
       Modify and list Yocto BSP kernel config items and patches.
-
       usage: yocto-kernel [--version] [--help] COMMAND [ARGS]
-
       Current 'yocto-kernel' commands are:
         config list       List the modifiable set of bare kernel config options for a BSP
         config add        Add or modify bare kernel config options for a BSP
@@ -1430,11 +1425,7 @@
         feature describe  Describe a particular feature
         feature create    Create a new BSP-local feature
         feature destroy   Remove a BSP-local feature
-
       See 'yocto-kernel help COMMAND' for more information on a specific command.
-
-
-
      Options:
        --version    show program's version number and exit
        -h, --help   show this help message and exit
@@ -1449,11 +1440,11 @@
                     <literallayout class='monospaced'>
      $ yocto-kernel patch add myarm ~/test.patch
      Added patches:
-             test.patch
+       test.patch
 
      $ yocto-kernel patch add myarm ~/yocto-testmod.patch
      Added patches:
-             yocto-testmod.patch
+       yocto-testmod.patch
                     </literallayout>
                     <note>Although the previous example adds patches one at a time, it is possible
                     to add multiple patches at the same time.</note>
@@ -1466,8 +1457,8 @@
                     <literallayout class='monospaced'>
      $ yocto-kernel patch list myarm
      The current set of machine-specific patches for myarm is:
-             1) test.patch
-             2) yocto-testmod.patch
+       1) test.patch
+       2) yocto-testmod.patch
                     </literallayout>
                 </para>
 
@@ -1478,11 +1469,11 @@
                     <literallayout class='monospaced'>
      $ yocto-kernel patch rm myarm
      Specify the patches to remove:
-             1) test.patch
-             2) yocto-testmod.patch
+       1) test.patch
+       2) yocto-testmod.patch
      1
      Removed patches:
-             test.patch
+       test.patch
                     </literallayout>
                 </para>
 
@@ -1492,7 +1483,7 @@
                     <literallayout class='monospaced'>
      $ yocto-kernel patch list myarm
      The current set of machine-specific patches for myarm is:
-             1) yocto-testmod.patch
+       1) yocto-testmod.patch
                     </literallayout>
                 </para>
 
@@ -1503,15 +1494,17 @@
                     <filename>myarm</filename> BSP:
                     <literallayout class='monospaced'>
      $ yocto-kernel config add myarm CONFIG_MISC_DEVICES=y
-     Added items:
-             CONFIG_MISC_DEVICES=y
+     Added item:
+       CONFIG_MISC_DEVICES=y
 
      $ yocto-kernel config add myarm CONFIG_YOCTO_TESTMOD=y
-     Added items:
-             CONFIG_YOCTO_TESTMOD=y
+     Added item:
+       CONFIG_YOCTO_TESTMOD=y
                     </literallayout>
-                    <note>Although the previous example adds config items one at a time, it is possible
-                    to add multiple config items at the same time.</note>
+                    <note>
+                        Although the previous example adds config items one at a time, it is possible
+                        to add multiple config items at the same time.
+                    </note>
                 </para>
 
                 <para>
