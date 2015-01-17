@@ -946,7 +946,7 @@
                 Furthermore, you must use <filename>_append</filename> instead
                 of the <filename>+=</filename> operator if you want to avoid
                 ordering issues.
-                The reason for this is because doing so unconditionally appends
+                The reason for this is because doing so un>+conditionally appends
                 to the variable and avoids ordering problems due to the
                 variable being set in image recipes and
                 <filename>.bbclass</filename> files with operators like
@@ -7583,6 +7583,113 @@
                 However, it can install SysVinit
                 and the appropriate packages will have support for both
                 systemd and SysVinit.
+            </para>
+        </section>
+    </section>
+
+    <section id="selecting-dev-manager">
+        <title>Selecting a Device Manager</title>
+
+        <para>
+            The Yocto Project provides multiple ways to manage the device
+            manager (<filename>/dev</filename>):
+            <itemizedlist>
+                <listitem><para><emphasis>Persistent and Pre-Populated<filename>/dev</filename>:</emphasis>
+                    For this case, the <filename>/dev</filename> directory
+                    is persistent and the required device nodes are created
+                    during the build.
+                    </para></listitem>
+                <listitem><para><emphasis>Use <filename>devtmps</filename> with a Device Manager:</emphasis>
+                    For this case, the <filename>/dev</filename> directory
+                    is provided by the kernel as an in-memory file system and
+                    is automatically populated by the kernel at runtime.
+                    Additional configuration of device nodes is done in user
+                    space by a device manager like
+                    <filename>udev</filename> or
+                    <filename>busybox-mdev</filename>.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <section id="static-dev-management">
+            <title>Using Persistent and Pre-Populated<filename>/dev</filename></title>
+
+            <para>
+                To use the static method for device population, you need to
+                set the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-USE_DEVFS'><filename>USE_DEVFS</filename></ulink>
+                variable to "0" as follows:
+                <literallayout class='monospaced'>
+     USE_DEVFS = "0"
+                </literallayout>
+            </para>
+
+            <para>
+                The content of the resulting <filename>/dev</filename>
+                directory is defined in a Device Table file.
+                The
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_DEVICE_TABLES'><filename>IMAGE_DEVICE_TABLES</filename></ulink>
+                variable defines the Device Table to use and should be set
+                in the machine or distro configuration file.
+                Alternatively, you can set this variable in your
+                <filename>local.conf</filename> configuration file.
+            </para>
+
+            <para>
+                If you do not define the
+                <filename>IMAGE_DEVICE_TABLES</filename> variable, the default
+                <filename>device_table-minimal.txt</filename> is used:
+                <literallayout class='monospaced'>
+     IMAGE_DEVICE_TABLES = "device_table-mymachine.txt"
+                </literallayout>
+            </para>
+
+            <para>
+                The population is handled by the <filename>makedevs</filename>
+                utility during image creation:
+            </para>
+        </section>
+
+        <section id="devtmps-dev-management">
+            <title>Using <filename>devtmpfs</filename> and a Device Manager</title>
+
+            <para>
+                To use the dynamic method for device population, you need to
+                use (or be sure to set) the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-USE_DEVFS'><filename>USE_DEVFS</filename></ulink>
+                variable to "1", which is the default:
+                <literallayout class='monospaced'>
+     USE_DEVFS = "1"
+                </literallayout>
+                With this setting, the resulting <filename>/dev</filename>
+                is populated by the kernel using <filename>devtmpfs</filename>.
+                Make sure the corresponding kernel configuration variable
+                <filename>CONFIG_DEVTMPFS</filename> is set when building
+                you build a linux kernel.
+            </para>
+
+            <para>
+                All devices created by <filename>devtmpfs</filename> will be
+                owned by <filename>root</filename> and have permissions
+                <filename>0600</filename>.
+            </para>
+
+            <para>
+                To have more control over the device nodes, you can use a
+                device manager like <filename>udev</filename> or
+                <filename>busybox-mdev</filename>.
+                You choose the device manager by defining the
+                <filename>VIRTUAL-RUNTIME_dev_manager</filename> variable
+                in your machine or distro configuration file.
+                Alternatively, you can set this variable in your
+                <filename>local.conf</filename> configuration file:
+                <literallayout class='monospaced'>
+     VIRTUAL-RUNTIME_dev_manager = "udev"
+
+     # Some alternative values
+     # VIRTUAL-RUNTIME_dev_manager = "busybox-mdev"
+     # VIRTUAL-RUNTIME_dev_manager = "systemd"
+                </literallayout>
             </para>
         </section>
     </section>
