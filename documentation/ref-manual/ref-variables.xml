@@ -729,20 +729,17 @@
 
         <glossentry id='var-BB_NUMBER_THREADS'><glossterm><imagedata fileref="figures/define-generic.png" />BB_NUMBER_THREADS</glossterm>
             <info>
-                BB_NUMBER_THREADS[doc] = "The maximum number of tasks BitBake should run in parallel at any one time. A good rule of thumb is for this variable to be twice the number of cores."
+                BB_NUMBER_THREADS[doc] = "The maximum number of tasks BitBake should run in parallel at any one time. This variable is automatically configured to be equal to the number of build system cores."
             </info>
             <glossdef>
                 <para>
                     The maximum number of tasks BitBake should run in parallel
                     at any one time.
-                    If your host development system supports multiple cores,
-                    a good rule of thumb is to have this variable be twice the
-                    number of cores.
-                </para>
-
-                <para>
-                    The default value for <filename>BB_NUMBER_THREADS</filename>
-                    is equal to the number of cores your build system has.
+                    The OpenEmbedded build system automatically configures
+                    this variable to be equal to the number of cores on the
+                    build system.
+                    To gain optimal parallelism, you should not have to
+                    override this variable.
                 </para>
             </glossdef>
         </glossentry>
@@ -7380,11 +7377,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    If your development host supports multiple cores, a good
-                    rule of thumb is to set this variable to twice the number
-                    of cores on the host.
-                    If you do not set <filename>PARALLEL_MAKE</filename>, it
-                    defaults to the number of cores your build system has.
+                    The OpenEmbedded build system automatically sets this
+                    variable to be equal to the number of cores the build
+                    system uses.
                     <note>
                         Individual recipes might clear out this variable if
                         the software being built has problems running its

@@ -509,15 +509,17 @@
          </para>
 
          <para>
-             Another couple of variables of interest are the
-             <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink> and the
-             <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink> variables.
-             By default, these variables are set to the number of processor
-             cores your build host uses.
-             However, if your build host uses multiple processor cores,
-             you should increase these settings to twice the number of
-             cores used.
-             Doing so can significantly shorten your build time.
+             Another three variables of interest are the
+             <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink>,
+             <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink>,
+             and
+             <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_NUMBER_PARSE_THREADS'><filename>BB_NUMBER_PARSE_THREADS</filename></ulink>
+             variables.
+             By default, these variables are optimally set based on the
+             number of processor cores your build host uses.
+             Although it is possible to override these variables, the
+             default values the OpenEmbedded build system derives provide you
+             with parallelism during the build.
          </para>
 
         <para>
@@ -898,18 +900,10 @@
             <filename>conf/local.conf</filename> configuration file
             in the Build Directory.
             You need to manually edit this file to specify the machine you
-            are building and to optimize your build time.
-            Here are the minimal changes to make:
+            are building:
             <literallayout class='monospaced'>
-     BB_NUMBER_THREADS = "8"
-     PARALLEL_MAKE = "-j 8"
      MACHINE ?= "beaglebone"
             </literallayout>
-            Briefly, set
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink>
-            and
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink> to
-            twice your host processor's number of cores.
         </para>
 
         <para>
