@@ -283,12 +283,12 @@
             <ulink url='&YOCTO_RELEASE_NOTES;'>Release Notes</ulink>
             for a look at all release-related issues.
             <itemizedlist>
-                <listitem><para><emphasis><filename>eglibc-initial</filename> fails to build</emphasis>:
+                <listitem><para><emphasis><filename>glibc-initial</filename> fails to build</emphasis>:
                     If your development host system has the unpatched
                     <filename>GNU Make 3.82</filename>,
                     the
                     <link linkend='ref-tasks-install'><filename>do_install</filename></link>
-                    task fails for <filename>eglibc-initial</filename> during
+                    task fails for <filename>glibc-initial</filename> during
                     the build.</para>
                     <para>Typically, every distribution that ships
                     <filename>GNU Make 3.82</filename> as
@@ -564,19 +564,22 @@
             <para>
                 The history for each package contains a text file that has
                 name-value pairs with information about the package.
-                For example, <filename>buildhistory/packages/core2-poky-linux/busybox/busybox/latest</filename>
+                For example, <filename>buildhistory/packages/i586-poky-linux/busybox/busybox/latest</filename>
                 contains the following:
                 <literallayout class='monospaced'>
-     PV = 1.19.3
-     PR = r3
-     RDEPENDS = update-rc.d eglibc (>= 2.13)
-     RRECOMMENDS = busybox-syslog busybox-udhcpc
-     PKGSIZE = 564701
-     FILES = /usr/bin/* /usr/sbin/* /usr/libexec/* /usr/lib/lib*.so.* \
-        /etc /com /var /bin/* /sbin/* /lib/*.so.* /usr/share/busybox \
-        /usr/lib/busybox/* /usr/share/pixmaps /usr/share/applications \
-        /usr/share/idl /usr/share/omf /usr/share/sounds /usr/lib/bonobo/servers
-     FILELIST = /etc/busybox.links /etc/init.d/hwclock.sh /bin/busybox /bin/sh
+     PV = 1.22.1
+     PR = r32
+     RPROVIDES =
+     RDEPENDS = glibc (>= 2.20) update-alternatives-opkg
+     RRECOMMENDS = busybox-syslog busybox-udhcpc update-rc.d
+     PKGSIZE = 540168
+     FILES = /usr/bin/* /usr/sbin/* /usr/lib/busybox/* /usr/lib/lib*.so.* \
+        /etc /com /var /bin/* /sbin/* /lib/*.so.* /lib/udev/rules.d \
+        /usr/lib/udev/rules.d /usr/share/busybox /usr/lib/busybox/* \
+        /usr/share/pixmaps /usr/share/applications /usr/share/idl \
+        /usr/share/omf /usr/share/sounds /usr/lib/bonobo/servers
+     FILELIST = /bin/busybox /bin/busybox.nosuid /bin/busybox.suid /bin/sh \
+        /etc/busybox.links.nosuid /etc/busybox.links.suid
                 </literallayout>
                 Most of these name-value pairs correspond to variables used
                 to produce the package.
@@ -589,15 +592,16 @@
             <para>
                 There is also a file corresponding to the recipe from which the
                 package came (e.g.
-                <filename>buildhistory/packages/core2-poky-linux/busybox/latest</filename>):
+                <filename>buildhistory/packages/i586-poky-linux/busybox/latest</filename>):
                 <literallayout class='monospaced'>
-     PV = 1.19.3
-     PR = r3
-     DEPENDS = virtual/i586-poky-linux-gcc virtual/i586-poky-linux-compilerlibs \
-        virtual/libc update-rc.d-native
-     PACKAGES = busybox-httpd busybox-udhcpd busybox-udhcpc busybox-syslog \
-        busybox-mdev busybox-dbg busybox busybox-doc busybox-dev \
-        busybox-staticdev busybox-locale
+     PV = 1.22.1
+     PR = r32
+     DEPENDS = initscripts kern-tools-native update-rc.d-native \
+        virtual/i586-poky-linux-compilerlibs virtual/i586-poky-linux-gcc \
+        virtual/libc virtual/update-alternatives
+     PACKAGES = busybox-ptest busybox-httpd busybox-udhcpd busybox-udhcpc \
+        busybox-syslog busybox-mdev busybox-hwclock busybox-dbg \
+        busybox-staticdev busybox-dev busybox-doc busybox-locale busybox
                 </literallayout>
             </para>
 
@@ -611,31 +615,44 @@
                 is set to
                 <filename>${<link linkend='var-AUTOREV'>AUTOREV</link>}</filename>.
                 Here is an example assuming
-                <filename>buildhistory/packages/emenlow-poky-linux/linux-yocto/latest_srcrev</filename>):
+                <filename>buildhistory/packages/qemux86-poky-linux/linux-yocto/latest_srcrev</filename>):
                 <literallayout class='monospaced'>
-     # SRCREV_machine = "b5c37fe6e24eec194bb29d22fdd55d73bcc709bf"
-     SRCREV_machine = "b5c37fe6e24eec194bb29d22fdd55d73bcc709bf"
-     # SRCREV_emgd = "caea08c988e0f41103bbe18eafca20348f95da02"
-     SRCREV_emgd = "caea08c988e0f41103bbe18eafca20348f95da02"
-     # SRCREV_meta = "c2ed0f16fdec628242a682897d5d86df4547cf24"
-     SRCREV_meta = "c2ed0f16fdec628242a682897d5d86df4547cf24"
+     # SRCREV_machine = "38cd560d5022ed2dbd1ab0dca9642e47c98a0aa1"
+     SRCREV_machine = "38cd560d5022ed2dbd1ab0dca9642e47c98a0aa1"
+     # SRCREV_meta = "a227f20eff056e511d504b2e490f3774ab260d6f"
+     SRCREV_meta = "a227f20eff056e511d504b2e490f3774ab260d6f"
                 </literallayout>
                 You can use the <filename>buildhistory-collect-srcrevs</filename>
-                command to collect the stored <filename>SRCREV</filename> values
-                from build history and report them in a format suitable for use in
-                global configuration (e.g., <filename>local.conf</filename>
-                or a distro include file) to override floating
-                <filename>AUTOREV</filename> values to a fixed set of revisions.
+                command with the <filename>-a</filename> option to
+                collect the stored <filename>SRCREV</filename> values
+                from build history and report them in a format suitable for
+                use in global configuration (e.g.,
+                <filename>local.conf</filename> or a distro include file) to
+                override floating <filename>AUTOREV</filename> values to a
+                fixed set of revisions.
                 Here is some example output from this command:
                 <literallayout class='monospaced'>
-     # emenlow-poky-linux
-     SRCREV_machine_pn-linux-yocto = "b5c37fe6e24eec194bb29d22fdd55d73bcc709bf"
-     SRCREV_emgd_pn-linux-yocto = "caea08c988e0f41103bbe18eafca20348f95da02"
-     SRCREV_meta_pn-linux-yocto = "c2ed0f16fdec628242a682897d5d86df4547cf24"
-     # core2-poky-linux
-     SRCREV_pn-kmod = "62081c0f68905b22f375156d4532fd37fa5c8d33"
-     SRCREV_pn-blktrace = "d6918c8832793b4205ed3bfede78c2f915c23385"
-     SRCREV_pn-opkg = "649"
+     $ buildhistory-collect-srcrevs -a
+     # i586-poky-linux
+     SRCREV_pn-glibc = "b8079dd0d360648e4e8de48656c5c38972621072"
+     SRCREV_pn-glibc-initial = "b8079dd0d360648e4e8de48656c5c38972621072"
+     SRCREV_pn-opkg-utils = "53274f087565fd45d8452c5367997ba6a682a37a"
+     SRCREV_pn-kmod = "fd56638aed3fe147015bfa10ed4a5f7491303cb4"
+     # x86_64-linux
+     SRCREV_pn-gtk-doc-stub-native = "1dea266593edb766d6d898c79451ef193eb17cfa"
+     SRCREV_pn-dtc-native = "65cc4d2748a2c2e6f27f1cf39e07a5dbabd80ebf"
+     SRCREV_pn-update-rc.d-native = "eca680ddf28d024954895f59a241a622dd575c11"
+     SRCREV_glibc_pn-cross-localedef-native = "b8079dd0d360648e4e8de48656c5c38972621072"
+     SRCREV_localedef_pn-cross-localedef-native = "c833367348d39dad7ba018990bfdaffaec8e9ed3"
+     SRCREV_pn-prelink-native = "faa069deec99bf61418d0bab831c83d7c1b797ca"
+     SRCREV_pn-opkg-utils-native = "53274f087565fd45d8452c5367997ba6a682a37a"
+     SRCREV_pn-kern-tools-native = "23345b8846fe4bd167efdf1bd8a1224b2ba9a5ff"
+     SRCREV_pn-kmod-native = "fd56638aed3fe147015bfa10ed4a5f7491303cb4"
+     # qemux86-poky-linux
+     SRCREV_machine_pn-linux-yocto = "38cd560d5022ed2dbd1ab0dca9642e47c98a0aa1"
+     SRCREV_meta_pn-linux-yocto = "a227f20eff056e511d504b2e490f3774ab260d6f"
+     # all-poky-linux
+     SRCREV_pn-update-rc.d = "eca680ddf28d024954895f59a241a622dd575c11"
                 </literallayout>
                 <note>
                     Here are some notes on using the
@@ -660,7 +677,7 @@
                             However, the script does place a
                             comment before each set of values that specifies
                             which triplet to which they belong as shown above
-                            (e.g., <filename>emenlow-poky-linux</filename>).
+                            (e.g., <filename>i586-poky-linux</filename>).
                             </para></listitem>
                     </itemizedlist>
                 </note>
@@ -717,17 +734,21 @@
                 Here is an example of <filename>image-info.txt</filename>:
                 <literallayout class='monospaced'>
      DISTRO = poky
-     DISTRO_VERSION = 1.1+snapshot-20120207
-     USER_CLASSES = image-mklibs image-prelink
+     DISTRO_VERSION = 1.7
+     USER_CLASSES = buildstats image-mklibs image-prelink
      IMAGE_CLASSES = image_types
-     IMAGE_FEATURES = debug-tweaks x11-base apps-x11-core \
-        package-management ssh-server-dropbear package-management
-     IMAGE_LINGUAS = en-us en-gb
-     IMAGE_INSTALL = packagegroup-core-boot packagegroup-base-extended
+     IMAGE_FEATURES = debug-tweaks
+     IMAGE_LINGUAS =
+     IMAGE_INSTALL = packagegroup-core-boot run-postinsts
      BAD_RECOMMENDATIONS =
-     ROOTFS_POSTPROCESS_COMMAND = buildhistory_get_image_installed ;   rootfs_update_timestamp ;
-     IMAGE_POSTPROCESS_COMMAND = buildhistory_get_imageinfo ;
-     IMAGESIZE = 171816
+     NO_RECOMMENDATIONS =
+     PACKAGE_EXCLUDE =
+     ROOTFS_POSTPROCESS_COMMAND = write_package_manifest; license_create_manifest; \
+        write_image_manifest ; buildhistory_list_installed_image ; \
+        buildhistory_get_image_installed ; ssh_allow_empty_password;  \
+        postinst_enable_logging; rootfs_update_timestamp ; ssh_disable_dns_lookup ;
+     IMAGE_POSTPROCESS_COMMAND =   buildhistory_get_imageinfo ;
+     IMAGESIZE = 6900
                 </literallayout>
                 Other than <filename>IMAGESIZE</filename>, which is the
                 total size of the files in the image in Kbytes, the
@@ -811,7 +832,7 @@
                 <literallayout class='monospaced'>
      DISTRO = poky
      DISTRO_VERSION = 1.3+snapshot-20130327
-     SDK_NAME = poky-eglibc-i686-arm
+     SDK_NAME = poky-glibc-i686-arm
      SDK_VERSION = 1.3+snapshot
      SDKMACHINE =
      SDKIMAGE_FEATURES = dev-pkgs dbg-pkgs
@@ -858,12 +879,12 @@
                 Here is an example:
                 <literallayout class='monospaced'>
      $ ~/poky/poky/scripts/buildhistory-diff . HEAD^
-     Changes to images/qemux86_64/eglibc/core-image-minimal (files-in-image.txt):
+     Changes to images/qemux86_64/glibc/core-image-minimal (files-in-image.txt):
         /etc/anotherpkg.conf was added
         /sbin/anotherpkg was added
         * (installed-package-names.txt):
         *   anotherpkg was added
-     Changes to images/qemux86_64/eglibc/core-image-minimal (installed-package-names.txt):
+     Changes to images/qemux86_64/glibc/core-image-minimal (installed-package-names.txt):
         anotherpkg was added
      packages/qemux86_64-poky-linux/v86d: PACKAGES: added "v86d-extras"
         * PR changed from "r0" to "r1"
