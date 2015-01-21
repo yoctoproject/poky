@@ -6204,9 +6204,6 @@
                     <link linkend='incrementing-a-package-revision-number'>Incrementing a package revision number</link>
                     </para></listitem>
                 <listitem><para>
-                    <link linkend='usingpoky-configuring-DISTRO_PN_ALIAS'>Handling a package name alias</link>
-                    </para></listitem>
-                <listitem><para>
                     <link linkend='handling-optional-module-packaging'>Handling optional module packaging</link>
                     </para></listitem>
                 <listitem><para>
@@ -6490,53 +6487,6 @@
                     These guidelines define how versions are compared and what "increasing" a version means.
                 </para>
             </section>
-        </section>
-
-        <section id="usingpoky-configuring-DISTRO_PN_ALIAS">
-            <title>Handling a Package Name Alias</title>
-            <para>
-                Sometimes a package name you are using might exist under
-                an alias or as a similarly named package in a different
-                distribution.
-                The OpenEmbedded build system implements a
-                <filename>do_distro_check</filename>
-                task that automatically connects to major distributions
-                and checks for these situations.
-                If the package exists under a different name in a different
-                distribution, you get a <filename>distro_check</filename>
-                mismatch.
-                You can resolve this problem by defining a per-distro recipe
-                name alias using the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_PN_ALIAS'>DISTRO_PN_ALIAS</ulink></filename>
-                variable.
-            </para>
-
-            <para>
-                Following is an example that shows how you specify the <filename>DISTRO_PN_ALIAS</filename>
-                variable:
-                <literallayout class='monospaced'>
-     DISTRO_PN_ALIAS_pn-PACKAGENAME = "distro1=package_name_alias1 \
-                                       distro2=package_name_alias2 \
-                                       distro3=package_name_alias3 \
-                                       ..."
-                </literallayout>
-            </para>
-
-            <para>
-                If you have more than one distribution alias, separate them with a space.
-                Note that the build system currently automatically checks the
-                Fedora, OpenSUSE, Debian, Ubuntu,
-                and Mandriva distributions for source package recipes without having to specify them
-                using the <filename>DISTRO_PN_ALIAS</filename> variable.
-                For example, the following command generates a report that lists the Linux distributions
-                that include the sources for each of the recipes.
-                <literallayout class='monospaced'>
-     $ bitbake world -f -c distro_check
-                </literallayout>
-                The results are stored in the <filename>build/tmp/log/distro_check-${DATETIME}.results</filename>
-                file found in the
-                <link linkend='source-directory'>Source Directory</link>.
-            </para>
         </section>
 
         <section id='handling-optional-module-packaging'>
