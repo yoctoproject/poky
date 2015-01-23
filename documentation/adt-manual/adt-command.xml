@@ -210,19 +210,28 @@
 <title>Makefile-Based Projects</title>
 
     <para>
-        For Makefile-based projects, you make sure your
-        <filename>Makefile</filename> has statements that ensure proper
-        use of the cross-toolchain.
-        For example, the following statements inside a
-        <filename>Makefile</filename> ensure the C compiler, linker, flags
-        passed to the C compiler, and flags passed to the C++ compiler are
-        specifically defined for the build:
+        For Makefile-based projects, the cross-toolchain environment
+        variables established by running the cross-toolchain environment
+        setup script override any settings you might have in your
+        <filename>Makefile</filename>.
+        For example, if you had settings such as the following in your
+        <filename>Makefile</filename>, the environment variables defined
+        by the script would override them:
         <literallayout class='monospaced'>
      <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'>CC</ulink>=arm-poky-linux-gnueabi-gcc
      <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'>LD</ulink>=arm-poky-linux-gnueabi-ld
      <ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink>=”${CFLAGS} --sysroot=&lt;sysroot-dir&gt;”
      <ulink url='&YOCTO_DOCS_REF_URL;#var-CXXFLAGS'>CXXFLAGS</ulink>=”${CXXFLAGS} --sysroot=&lt;sysroot-dir&gt;”
         </literallayout>
+        Consequently, you should not set variables like
+        <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'><filename>CC</filename></ulink>
+        and
+        <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'><filename>LD</filename></ulink>
+        in your <filename>Makefile</filename>.
+        For the list of variables set up by the cross-toolchain environment
+        setup script, see the
+        "<link linkend='setting-up-the-cross-development-environment'>Setting Up the Cross-Development Environment</link>"
+        section.
     </para>
 </section>
 
