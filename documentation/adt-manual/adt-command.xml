@@ -24,6 +24,10 @@
         are also defined so that, for example, <filename>configure.sh</filename>
         can find pre-generated test results for tests that need target hardware
         on which to run.
+        You can see the
+        "<link linkend='setting-up-the-cross-development-environment'>Setting Up the Cross-Development Environment</link>"
+        section for the list of cross-toolchain environment variables
+        established by the script.
     </para>
 
     <para>
@@ -99,7 +103,7 @@
                     "poky-linux".
                     Here is an example that sources a script from the
                     default ADT installation directory that uses the
-                    32-bit Intel x86 Architecture and using the
+                    32-bit Intel x86 Architecture and the
                     &DISTRO_NAME; Yocto Project release:
                     <literallayout class='monospaced'>
      $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
@@ -128,7 +132,11 @@
      $ automake -a
                     </literallayout></para></listitem>
                 <listitem><para><emphasis>Cross-compile the project:</emphasis>
-                    This command compiles the project using the cross-compiler:
+                    This command compiles the project using the cross-compiler.
+                    The
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-CONFIGURE_FLAGS'><filename>CONFIGURE_FLAGS</filename></ulink>
+                    environment variable provides the minimal arguments for
+                    GNU configure:
                     <literallayout class='monospaced'>
      $ ./configure ${CONFIGURE_FLAGS}
                     </literallayout></para></listitem>
@@ -174,16 +182,12 @@
             is <filename>armv5te-poky-linux-gnueabi</filename>.
             You will notice that the name of the script is
             <filename>environment-setup-armv5te-poky-linux-gnueabi</filename>.
-            Thus, the following command works:
+            Thus, the following command works to update your project and
+            rebuild it using the appropriate cross-toolchain tools:
             <literallayout class='monospaced'>
      $ ./configure --host=armv5te-poky-linux-gnueabi \
         --with-libtool-sysroot=<replaceable>sysroot-dir</replaceable>
             </literallayout>
-        </para>
-
-        <para>
-            This single command updates your project and rebuilds it using the appropriate
-            cross-toolchain tools.
             <note>
                 If the <filename>configure</filename> script results in problems recognizing the
                 <filename>--with-libtool-sysroot=</filename><replaceable>sysroot-dir</replaceable> option,
@@ -206,14 +210,18 @@
 <title>Makefile-Based Projects</title>
 
     <para>
-        For a Makefile-based project, you use the cross-toolchain by making sure
-        the tools are used.
-        You can do this as follows:
+        For Makefile-based projects, you make sure your
+        <filename>Makefile</filename> has statements that ensure proper
+        use of the cross-toolchain.
+        For example, the following statements inside a
+        <filename>Makefile</filename> ensure the C compiler, linker, flags
+        passed to the C compiler, and flags passed to the C++ compiler are
+        specifically defined for the build:
         <literallayout class='monospaced'>
-     CC=arm-poky-linux-gnueabi-gcc
-     LD=arm-poky-linux-gnueabi-ld
-     CFLAGS=”${CFLAGS} --sysroot=&lt;sysroot-dir&gt;”
-     CXXFLAGS=”${CXXFLAGS} --sysroot=&lt;sysroot-dir&gt;”
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'>CC</ulink>=arm-poky-linux-gnueabi-gcc
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'>LD</ulink>=arm-poky-linux-gnueabi-ld
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink>=”${CFLAGS} --sysroot=&lt;sysroot-dir&gt;”
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CXXFLAGS'>CXXFLAGS</ulink>=”${CXXFLAGS} --sysroot=&lt;sysroot-dir&gt;”
         </literallayout>
     </para>
 </section>
