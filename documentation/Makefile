@@ -127,7 +127,7 @@ TARFILES = dev-style.css dev-manual.html \
            figures/index-downloads.png figures/kernel-dev-flow.png \
            figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
            figures/source-repos.png figures/yp-download.png \
-           figures/recipe-workflow.png \
+           figures/recipe-workflow.png figures/build-workspace-directory.png \
            eclipse
 	endif
 
@@ -234,7 +234,8 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
         figures/configuration-compile-autoreconf.png \
 	figures/analysis-for-package-splitting.png \
         figures/image-generation.png \
-	figures/sdk-generation.png figures/recipe-workflow.png
+	figures/sdk-generation.png figures/recipe-workflow.png \
+	figures/build-workspace-directory.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html

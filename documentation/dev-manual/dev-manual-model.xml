@@ -1242,7 +1242,7 @@
                         <filename>aclocal</filename>,
                         <filename>autoconf</filename>,
                         <filename>autoheader</filename>,
-                        <filename>automake --a</filename>, and
+                        <filename>automake &dash;&dash;a</filename>, and
                         <filename>./configure</filename>.
                         Click on the "Console" tab beneath your source code to
                         see the results of reconfiguring your project.
@@ -1668,28 +1668,716 @@
     </section>
 </section>
 
-<section id="modifying-temporary-source-code">
-    <title>Modifying Temporary Source Code</title>
+<section id="dev-modifying-source-code">
+    <title>Modifying Source Code</title>
 
     <para>
-        You might
-        find it helpful during development to modify the temporary source code used by recipes
-        to build packages.
-        For example, suppose you are developing a patch and you need to experiment a bit
-        to figure out your solution.
-        After you have initially built the package, you can iteratively tweak the
-        source code, which is located in the
-        <link linkend='build-directory'>Build Directory</link>, and then
-        you can force a re-compile and quickly test your altered code.
-        Once you settle on a solution, you can then preserve your changes in the form of
-        patches.
-        You can accomplish these steps all within either a
-        <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink> or
-        <link linkend='git'>Git</link> workflow.
+        A common development workflow consists of modifying project source
+        files that are external to the Yocto Project and then integrating
+        that project's build output into an image built using the Yocto
+        Project.
+        Given this scenario, development engineers typically want to stick
+        to their familiar project development tools and methods, which allows
+        them to just focus on the project.
     </para>
 
+    <para>
+        Several workflows exist that allow you to develop, build, and test
+        code that is going to be integrated into an image built using the
+        Yocto Project.
+        This section describes two:
+        <itemizedlist>
+            <listitem><para><emphasis><filename>devtool</filename>:</emphasis>
+                A set of tools and
+                enhancements put together by the Yocto Project team that
+                makes it easier for you to modify code that is external to
+                the Yocto Project.
+                Section
+                "<link linkend='using-devtool-in-your-workflow'>Using <filename>devtool</filename> in Your Workflow</link>"
+                describes this workflow.
+                If you want more information that showcases the workflow, click
+                <ulink url='https://drive.google.com/a/linaro.org/file/d/0B3KGzY5fW7laTDVxUXo3UDRvd2s/view'>here</ulink>
+                for an excellent presentation by Trevor Woerner that
+                provides detailed background information and a complete
+                working tutorial.
+                </para></listitem>
+            <listitem><para><emphasis><ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink>:</emphasis>
+                A powerful tool that allows you to capture source
+                code changes without having a clean source tree.
+                While Quilt is not the preferred workflow of the two, this
+                section includes it for users that are committed to using
+                the tool.
+                See the
+                "<link linkend='using-a-quilt-workflow'>Using Quilt in Your Workflow</link>"
+                section for more information.
+                </para></listitem>
+        </itemizedlist>
+    </para>
+
+    <section id='using-devtool-in-your-workflow'>
+        <title>Using <filename>devtool</filename> in Your Workflow</title>
+
+        <para>
+            As mentioned earlier, <filename>devtool</filename> helps
+            you easily develop projects whose build output must be part of
+            an image built using the Yocto Project.
+            The remainder of this section presents the workflow you would
+            use that includes <filename>devtool</filename>.
+            <note>
+                The workflow considers the entire build process for the
+                image and not just modification of the external source
+                code.
+            </note>
+        </para>
+
+        <section id='establish-the-reference-image'>
+            <title>Establish the Reference Image</title>
+
+            <para>
+                Local repositories for both the Yocto Project and your
+                project must exist in addition to the image built by
+                the OpenEmbedded build system.
+                The steps to clone the <filename>poky</filename> Git
+                repository, build out an image, and test it using QEMU
+                are well documented as follows:
+                <itemizedlist>
+                    <listitem><para>
+                        For information on how to set up a local copy of the
+                        <filename>poky</filename> repository and on how to
+                        build a Yocto Project image, see the
+                        "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>"
+                        section in the Yocto Project Quick Start.
+                        </para></listitem>
+                    <listitem><para>
+                        For information on how to test an image using QEMU, see
+                        the
+                        "<link linkend='dev-manual-qemu'>Using the Quick EMUlator (QEMU)</link>"
+                        section.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Before you start making modifications to your project's
+                source code, you should be sure you have the appropriate
+                local repositories and have a base image built using
+                BitBake that you can run on QEMU.
+            </para>
+        </section>
+
+        <section id='update-your-external-source'>
+            <title>Update Your External Source</title>
+
+            <para>
+                Part of the development flow using
+                <filename>devtool</filename> of course involves updating
+                your source files.
+                Several opportunities exist in the workflow to extract and
+                work on the files.
+                For now, just realize that you need to be able to have
+                access to and edit files in your layer.
+                One obvious solution is to initially extract the code into its
+                own layer in preparation for modification.
+            </para>
+
+            <para>
+                Another option is to use the <filename>devtool</filename>
+                command.
+                <filename>devtool</filename> makes use of a
+                "workspace" layer where much of the transitional work
+                occurs, which is needed for setting up Metadata used by the
+                OpenEmbedded build system that lets you build your software.
+                Options exist using <filename>devtool</filename> that
+                enable you to use the tool to extract source code.
+            </para>
+        </section>
+
+        <section id='use-devtool-to-integrate-your-code-with-the-image'>
+            <title>Use <filename>dev-tool</filename> to Integrate Your Code with the Image</title>
+
+            <para>
+                <filename>devtool</filename> automatically
+                generates the needed Metadata that allows the OpenEmbedded
+                build system to build your code into the image.
+                Use the following command form:
+                <literallayout class='monospaced'>
+     $ devtool add <replaceable>your-project-name</replaceable>&nbsp;<replaceable>path-to-source</replaceable>/<replaceable>your-project-name</replaceable>
+                </literallayout>
+                Running <filename>devtool</filename> modifies the
+                <filename>bblayers.conf</filename> used to build the
+                image in the Yocto Project.
+                For more information on the <filename>bblayers.conf</filename>,
+                see the
+                "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
+                section in the Yocto Project Board Support Package (BSP) Developer's Guide.
+            </para>
+
+            <para>
+                Running <filename>devtool</filename> adds a new workspace
+                layer to the <filename>bblayers.conf</filename> file that
+                is based on your project's location:
+                <literallayout class='monospaced'>
+     <replaceable>path-to-source</replaceable>/<replaceable>build-directory</replaceable>/<replaceable>workspace-layer</replaceable>
+                </literallayout>
+                By default, the name of the workspace layer is "workplace".
+            </para>
+
+            <para>
+                For details on the workspace layer created in the
+                <replaceable>build-directory</replaceable>,
+                see the
+                "<link linkend='devtool-adding-a-new-recipe-to-the-workspace'>Adding a New Recipe to the Workspace Layer</link>"
+                section.
+            </para>
+
+            <para>
+                Of course, each layer must have a
+                <filename>layer.conf</filename> configuration file.
+                <filename>devtool</filename> also creates this configuration
+                file:
+                <literallayout class='monospaced'>
+     $ cat workspace/conf/layer.conf
+     # ### workspace layer auto­generated by devtool ###
+     BBPATH =. "${LAYERDIR}:"
+     BBFILES += "${LAYERDIR}/recipes/*/*.bb \
+                 ${LAYERDIR}/appends/*.bbappend"
+     BBFILE_COLLECTIONS += "workspacelayer"
+     BBFILE_PATTERN_workspacelayer = "^${LAYERDIR}/"
+     BBFILE_PATTERN_IGNORE_EMPTY_workspacelayer = "1"
+     BBFILE_PRIORITY_workspacelayer = "99"
+                </literallayout>
+            </para>
+
+            <para>
+                Running <filename>devtool</filename> also automatically
+                generates your recipe:
+                <literallayout class='monospaced'>
+     $ cat workspace/recipes/<replaceable>your-project-name</replaceable>/<replaceable>your-project-name</replaceable>.bb
+     # Recipe created by recipetool
+     # This is the basis of a recipe and may need further editing in order to be fully functional.
+     # (Feel free to remove these comments when editing.)
+     #
+     # Unable to find any files that looked like license statements. Check the accompanying
+     # documentation and source headers and set LICENSE and LIC_FILES_CHKSUM accordingly.
+     LICENSE = "CLOSED"
+     LIC_FILES_CHKSUM = ""
+
+     # No information for SRC_URI yet (only an external source tree was
+     # specified)
+     SRC_URI = ""
+
+     DEPENDS = "libx11"
+     # NOTE: if this software is not capable of being built in a separate build directory
+     # from the source, you should replace autotools with autotools­-brokensep in the
+     # inherit line
+     inherit autotools
+
+     # Specify any options you want to pass to the configure script using EXTRA_OECONF:
+     EXTRA_OECONF = ""
+                </literallayout>
+            </para>
+
+            <para>
+                Lastly, the <filename>devtool</filename> creates the
+                <filename>.bbappend</filename> file:
+                <literallayout class='monospaced'>
+     $ cat workspace/appends/<replaceable>your-project-name</replaceable>.bbappend
+     inherit externalsrc
+     EXTERNALSRC = "/<replaceable>path-to-source</replaceable>/<replaceable>your-project-name</replaceable>"
+
+     # initial_rev: <replaceable>commit-ID</replaceable>
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='build-your-project'>
+            <title>Build Your Project</title>
+
+            <para>
+                You can use BitBake or <filename>devtool</filename> to build
+                your modified project.
+            </para>
+
+            <para>
+                To use BitBake, use the following:
+                <literallayout class='monospaced'>
+     $ bitbake <replaceable>your-project-name</replaceable>
+                </literallayout>
+                To use <filename>devtool</filename>, run the tool with the
+                <filename>build</filename> option:
+                <literallayout class='monospaced'>
+     $ devtool build <replaceable>your-project-name</replaceable>
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='dev-build-the-image'>
+            <title>Build the Image</title>
+
+            <para>
+                The final step before testing is to rebuild the base image
+                with your project changes as part of the image.
+                Simply run BitBake again on your image.
+                Here is an example that assumes
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                is set to "qemux86":
+                <literallayout class='monospaced'>
+     $ bitbake qemux86 <replaceable>image</replaceable>
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='dev-testing-the-image'>
+            <title>Testing the Image</title>
+
+            <para>
+                Once you have the image, you can test it using QEMU.
+                Here is an example assuming "qemux86":
+                <literallayout class='monospaced'>
+     $ runqemu qemux86 <replaceable>image</replaceable>
+                </literallayout>
+                For information on how to test an image using QEMU, see the
+                "<link linkend='dev-manual-qemu'>Using the Quick EMUlator (QEMU)</link>"
+                section.
+            </para>
+        </section>
+    </section>
+
+    <section id='devtool-quick-reference'>
+        <title><filename>devtool</filename> Quick Reference</title>
+
+        <para>
+            <filename>devtool</filename> has more functionality than simply
+            adding a new recipe and the supporting Metadata to a temporary
+            workspace layer.
+            This section provides a short reference on
+            <filename>devtool</filename> for most of the commands.
+        </para>
+
+        <section id='devtool-getting-help'>
+            <title>Getting Help</title>
+
+            <para>
+                The easiest way to get help with the
+                <filename>devtool</filename> command is using the
+                <filename>&dash;&dash;help</filename> option:
+                <literallayout class='monospaced'>
+     $ devtool &dash;&dash;help
+     usage: devtool [-h] [&dash;&dash;basepath BASEPATH] [-d] [-q]
+                    [&dash;&dash;color {auto,always,never}]
+                    {create-workspace,deploy-target,undeploy-target,add,modify,extract,update-recipe,status,build,reset}
+                    ...
+
+     OpenEmbedded development tool
+
+     positional arguments:
+       {create-workspace,deploy-target,undeploy-target,add,modify,extract,update-recipe,status,build,reset}
+         create-workspace    Set up a workspace
+         deploy-target       Deploy recipe output files to live target machine
+         undeploy-target     Undeploy recipe output files in live target machine
+         add                 Add a new recipe
+         modify              Modify the source for an existing recipe
+         extract             Extract the source for an existing recipe
+         update-recipe       Apply changes from external source tree to recipe
+         status              Show status
+         build               Build recipe
+         reset               Remove a recipe from your workspace
+
+     optional arguments:
+       -h, &dash;&dash;help            show this help message and exit
+       &dash;&dash;basepath BASEPATH   Base directory of SDK / build directory
+       -d, &dash;&dash;debug           Enable debug output
+       -q, &dash;&dash;quiet           Print only errors
+       &dash;&dash;color {auto,always,never}
+                             Colorize output
+
+     Use devtool &lt;command&gt; &dash;&dash;help to get help on a specific command
+                </literallayout>
+            </para>
+
+            <para>
+                As directed in the general help output, you can get more
+                syntax on a specific command by providing the command
+                name and using <filename>&dash;&dash;help</filename>:
+                <literallayout class='monospaced'>
+     $ devtool add &dash;&dash;help
+     usage: devtool add [-h] [&dash;&dash;version VERSION] recipename srctree
+
+     positional arguments:
+       recipename            Name for new recipe to add
+       srctree               Path to external source tree
+
+     optional arguments:
+       -h, &dash;&dash;help            show this help message and exit
+       &dash;&dash;version VERSION, -V VERSION
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='devtool-adding-a-new-recipe-to-the-workspace'>
+            <title>Adding a New Recipe to the Workspace Layer</title>
+
+            <para>
+                Use the <filename>add</filename> command to add a new recipe
+                to the workspace layer.
+                The recipe you add should not exist -
+                <filename>devtool</filename> creates it for you.
+                The source files the recipe uses should exist in an external
+                area.
+            </para>
+
+            <para>
+                The following example creates and adds a new recipe named
+                <filename>jackson-2.0</filename> to the workspace layer.
+                The source code built by the recipes resides in
+                <filename>/home/scottrif/sources/jackson</filename>:
+                <literallayout class='monospaced'>
+     $ devtool add jackson-2.0 /home/scottrif/sources/jackson
+                </literallayout>
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool add &dash;&dash;help</filename> command.
+                </note>
+            </para>
+
+            <para>
+                If you add a recipe and the workspace layer does not exist,
+                the command creates the layer and populates it as follows:
+            </para>
+
+            <para>
+                <imagedata fileref="figures/build-workspace-directory.png"
+                    width="6in" depth="4in" align="center" scale="100" />
+            </para>
+
+            <para>
+                <literallayout class='monospaced'>
+     README - Provides information on what is in workspace layer and how to
+              manage it.
+
+     appends - A directory that contains *.bbappend files.
+
+     conf - A configuration directory that contains the layer.conf file.
+
+     recipes - A directory containing recipes.  This directory contains a
+               folder for each directory added whose name matches that of the
+               added recipe.  devtool places the <replaceable>recipe</replaceable>.bb file
+               within that sub-directory.
+                </literallayout>
+            </para>
+
+            <para>
+                Running <filename>devtool add</filename> when the
+                workspace layer exists causes the tool to add the recipe
+                and append files into the existing workspace layer.
+            </para>
+        </section>
+
+        <section id='devtool-creating-the-workspace'>
+            <title>Creating the Workspace Layer</title>
+
+            <para>
+                Use the <filename>create-workspace</filename> command to
+                create a new workspace layer in your
+                <link linkend='build-directory'>Build Directory</link>.
+                When you create a new workspace layer, it is populated with the
+                <filename>README</filename> file and the
+                <filename>conf</filename> directory only.
+            </para>
+
+            <para>
+                The following example creates a new workspace layer in your
+                current working and by default names the workspace layer
+                "workspace":
+                <literallayout class='monospaced'>
+     $ devtool create-workspace
+                </literallayout>
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool create-workspace &dash;&dash;help</filename> command.
+                </note>
+            </para>
+
+            <para>
+                You can create a workspace layer anywhere by supplying
+                a pathname with the command.
+                The following command creates a new workspace layer named
+                "new-workspace":
+                <literallayout class='monospaced'>
+     $ devtool create-workspace /home/scottrif/new-workspace
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='devtool-modifying-a-recipe'>
+            <title>Modifying a Recipe</title>
+
+            <para>
+                Use the <filename>modify</filename> command to configure
+                an external recipe in the workspace layer.
+                This command is very similar to the
+                <link linkend='devtool-adding-a-new-recipe-to-the-workspace'><filename>add</filename></link>
+                command except that it does not physically create the
+                recipe in the workspace layer because the recipe already
+                exists in an external layer.
+            </para>
+
+            <para>
+                The <filename>modify</filename> command provides options
+                that allow you to extract the source and provide a
+                development branch name where you can do your work.
+                You can use the following command to checkout the source
+                files:
+                <literallayout class='monospaced'>
+     $ devtool modify -x <replaceable>recipe</replaceable>&nbsp;<replaceable>path-to-source</replaceable>
+                </literallayout>
+                Using the above command form, the default development branch
+                would be "devtool".
+            </para>
+
+            <para>
+                If you want to name a development branch, use the
+                <filename>-b</filename> option with the
+                <filename>-x</filename> option:
+                <literallayout class='monospaced'>
+     $ devtool modify -x -b <replaceable>branch</replaceable>&nbsp;<replaceable>recipe</replaceable>&nbsp;<replaceable>path-to-source</replaceable>
+                </literallayout>
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool modify &dash;&dash;help</filename> command.
+                </note>
+            </para>
+        </section>
+
+        <section id='devtool-resetting-a-recipe'>
+            <title>Resetting a Recipe</title>
+
+            <para>
+                Use the <filename>reset</filename> command to remove a
+                recipe and its configuration (e.g. the corresponding
+                <filename>.bbappend</filename> file) from the workspace layer.
+                Realize that this command deletes the recipe and and the
+                append file.
+                The command does not physically move them for you.
+                Consequently, you must be sure to physically relocate your
+                updated recipe and the append file outside of the workspace
+                layer before running the <filename>reset</filename> command.
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool reset &dash;&dash;help</filename> command.
+                </note>
+            </para>
+        </section>
+
+        <section id='devtool-updating-a-recipe'>
+            <title>Updating a Recipe</title>
+
+            <para>
+                Use the <filename>update-recipe</filename> command to cause
+                <filename>devtool</filename> to update your recipe with patches
+                that reflect changes you make to the source files.
+                For example, if you know you are going to work on some
+                code, you could first use the
+                <link linkend='devtool-modifying-a-recipe'><filename>modify</filename></link>
+                command to extract the code and set up the workspace.
+                After which, you could modify, compile, and test the code
+                in its own layer to which it was extracted.
+                When you are satisfied with the results you can then
+                run the <filename>update-recipe</filename> to create the
+                patches and update the recipe in the external layer:
+                <literallayout class='monospaced'>
+     $ devtool update-recipe <replaceable>recipe</replaceable>
+                </literallayout>
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool update-recipe &dash;&dash;help</filename> command.
+                </note>
+            </para>
+        </section>
+
+        <section id='devtool-building-your-software'>
+            <title>Building Your Software</title>
+
+            <para>
+                Use the <filename>build</filename> command to cause the
+                OpenEmbedded build system to build your software based
+                on the recipe file:
+                <literallayout class='monospaced'>
+     $ devtool build <replaceable>recipe</replaceable>
+                </literallayout>
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool update-recipe &dash;&dash;help</filename> command.
+                </note>
+                Building your software using <filename>build</filename> is
+                identical to using BitBake to build the software.
+            </para>
+        </section>
+
+        <section id='devtool-deploying-your-software-on-the-target-machine'>
+            <title>Deploying Your Software on the Target Machine</title>
+
+            <para>
+                Use the <filename>deploy-target</filename> command to deploy
+                the recipe's build output to the the live target machine:
+                <literallayout class='monospaced'>
+     $ devtool deploy-target <replaceable>recipe</replaceable>&nbsp;<replaceable>target</replaceable>
+                </literallayout>
+                The <replaceable>target</replaceable> is the actual
+                target running on an SSH server (i.e.
+                <filename>user@hostname[:destdir]</filename>.
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool deploy-target &dash;&dash;help</filename> command.
+                </note>
+            </para>
+        </section>
+
+        <section id='devtool-removing-your-software-from-the-target-machine'>
+            <title>Removing Your Software from the Target Machine</title>
+
+            <para>
+                Use the <filename>undeploy-target</filename> command to remove
+                deployed build output from the target machine.
+                For <filename>undeploy-target</filename> command to work,
+                you must have previously used the
+                <link linkend='devtool-deploying-your-software-on-the-target-machine'><filename>deploy-target</filename></link>
+                command.
+                <literallayout class='monospaced'>
+     $ devtool undeploy-target <replaceable>recipe</replaceable>&nbsp;<replaceable>target</replaceable>
+                </literallayout>
+                The <replaceable>target</replaceable> is the actual
+                target running on an SSH server (i.e.
+                <filename>user@hostname</filename>.
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool undeploy-target &dash;&dash;help</filename> command.
+                </note>
+            </para>
+        </section>
+    </section>
+
+    <section id="using-a-quilt-workflow">
+        <title>Using Quilt in Your Workflow</title>
+
+        <para>
+            <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink>
+            is a powerful tool that allows you to capture source code changes without having
+            a clean source tree.
+            This section outlines the typical workflow you can use to modify temporary source code,
+            test changes, and then preserve the changes in the form of a patch all using Quilt.
+        </para>
+
+        <para>
+            Follow these general steps:
+            <orderedlist>
+                <listitem><para><emphasis>Find the Source Code:</emphasis>
+                    The temporary source code used by the OpenEmbedded build system is kept in the
+                    Build Directory.
+                    See the
+                    "<link linkend='finding-the-temporary-source-code'>Finding Temporary Source Code</link>"
+                    section to learn how to locate the directory that has the temporary source code for a
+                    particular package.</para></listitem>
+                <listitem><para><emphasis>Change Your Working Directory:</emphasis>
+                    You need to be in the directory that has the temporary source code.
+                    That directory is defined by the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
+                    variable.</para></listitem>
+                <listitem><para><emphasis>Create a New Patch:</emphasis>
+                    Before modifying source code, you need to create a new patch.
+                    To create a new patch file, use <filename>quilt new</filename> as below:
+                    <literallayout class='monospaced'>
+     $ quilt new my_changes.patch
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Notify Quilt and Add Files:</emphasis>
+                    After creating the patch, you need to notify Quilt about the files
+                    you plan to edit.
+                    You notify Quilt by adding the files to the patch you just created:
+                    <literallayout class='monospaced'>
+     $ quilt add file1.c file2.c file3.c
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para><emphasis>Edit the Files:</emphasis>
+                    Make your changes in the temporary source code to the files you added
+                    to the patch.</para></listitem>
+                <listitem><para><emphasis>Test Your Changes:</emphasis>
+                    Once you have modified the source code, the easiest way to
+                    your changes is by calling the
+                    <filename>do_compile</filename> task as shown in the
+                    following example:
+                    <literallayout class='monospaced'>
+     $ bitbake -c compile -f <replaceable>name_of_package</replaceable>
+                    </literallayout>
+                    The <filename>-f</filename> or <filename>&dash;&dash;force</filename>
+                    option forces the specified task to execute.
+                    If you find problems with your code, you can just keep editing and
+                    re-testing iteratively until things work as expected.
+                    <note>All the modifications you make to the temporary source code
+                    disappear once you run the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-clean'><filename>do_clean</filename></ulink>
+                    or
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleanall'><filename>do_cleanall</filename></ulink>
+                    tasks using BitBake (i.e.
+                    <filename>bitbake -c clean <replaceable>name_of_package</replaceable></filename>
+                    and
+                    <filename>bitbake -c cleanall <replaceable>name_of_package</replaceable></filename>).
+                    Modifications will also disappear if you use the <filename>rm_work</filename>
+                    feature as described in the
+                    "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>"
+                    section of the Yocto Project Quick Start.
+                    </note></para></listitem>
+                <listitem><para><emphasis>Generate the Patch:</emphasis>
+                    Once your changes work as expected, you need to use Quilt to generate the final patch that
+                    contains all your modifications.
+                    <literallayout class='monospaced'>
+     $ quilt refresh
+                    </literallayout>
+                    At this point, the <filename>my_changes.patch</filename> file has all your edits made
+                    to the <filename>file1.c</filename>, <filename>file2.c</filename>, and
+                    <filename>file3.c</filename> files.</para>
+                    <para>You can find the resulting patch file in the <filename>patches/</filename>
+                    subdirectory of the source (<filename>S</filename>) directory.</para></listitem>
+                <listitem><para><emphasis>Copy the Patch File:</emphasis>
+                    For simplicity, copy the patch file into a directory named <filename>files</filename>,
+                    which you can create in the same directory that holds the recipe
+                    (<filename>.bb</filename>) file or the
+                    append (<filename>.bbappend</filename>) file.
+                    Placing the patch here guarantees that the OpenEmbedded build system will find
+                    the patch.
+                    Next, add the patch into the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>
+                    of the recipe.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     SRC_URI += "file://my_changes.patch"
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Increment the Recipe Revision Number:</emphasis>
+                    Finally, don't forget to 'bump' the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'>PR</ulink></filename>
+                    value in the recipe since the resulting packages have changed.</para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+
     <section id='finding-the-temporary-source-code'>
-        <title>Finding the Temporary Source Code</title>
+        <title>Finding Temporary Source Code</title>
+
+        <para>
+            You might
+            find it helpful during development to modify the temporary source code used by recipes
+            to build packages.
+            For example, suppose you are developing a patch and you need to experiment a bit
+            to figure out your solution.
+            After you have initially built the package, you can iteratively tweak the
+            source code, which is located in the
+            <link linkend='build-directory'>Build Directory</link>, and then
+            you can force a re-compile and quickly test your altered code.
+            Once you settle on a solution, you can then preserve your changes in the form of
+            patches.
+            You can accomplish these steps all within either a
+            <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink> or
+            <link linkend='git'>Git</link> workflow.
+        </para>
 
         <para>
             During a build, the unpacked temporary source code used by recipes
@@ -1761,235 +2449,6 @@
             Now that you know where to locate the directory that has the temporary source code,
             you can use a Quilt or Git workflow to make your edits, test the changes,
             and preserve the changes in the form of patches.
-        </para>
-    </section>
-
-    <section id="using-a-quilt-workflow">
-        <title>Using a Quilt Workflow</title>
-
-        <para>
-            <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink>
-            is a powerful tool that allows you to capture source code changes without having
-            a clean source tree.
-            This section outlines the typical workflow you can use to modify temporary source code,
-            test changes, and then preserve the changes in the form of a patch all using Quilt.
-        </para>
-
-        <para>
-            Follow these general steps:
-            <orderedlist>
-                <listitem><para><emphasis>Find the Source Code:</emphasis>
-                    The temporary source code used by the OpenEmbedded build system is kept in the
-                    Build Directory.
-                    See the
-                    "<link linkend='finding-the-temporary-source-code'>Finding the Temporary Source Code</link>"
-                    section to learn how to locate the directory that has the temporary source code for a
-                    particular package.</para></listitem>
-                <listitem><para><emphasis>Change Your Working Directory:</emphasis>
-                    You need to be in the directory that has the temporary source code.
-                    That directory is defined by the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
-                    variable.</para></listitem>
-                <listitem><para><emphasis>Create a New Patch:</emphasis>
-                    Before modifying source code, you need to create a new patch.
-                    To create a new patch file, use <filename>quilt new</filename> as below:
-                    <literallayout class='monospaced'>
-     $ quilt new my_changes.patch
-                    </literallayout></para></listitem>
-                <listitem><para><emphasis>Notify Quilt and Add Files:</emphasis>
-                    After creating the patch, you need to notify Quilt about the files
-                    you plan to edit.
-                    You notify Quilt by adding the files to the patch you just created:
-                    <literallayout class='monospaced'>
-     $ quilt add file1.c file2.c file3.c
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para><emphasis>Edit the Files:</emphasis>
-                    Make your changes in the temporary source code to the files you added
-                    to the patch.</para></listitem>
-                <listitem><para><emphasis>Test Your Changes:</emphasis>
-                    Once you have modified the source code, the easiest way to
-                    your changes is by calling the
-                    <filename>do_compile</filename> task as shown in the
-                    following example:
-                    <literallayout class='monospaced'>
-     $ bitbake -c compile -f <replaceable>name_of_package</replaceable>
-                    </literallayout>
-                    The <filename>-f</filename> or <filename>--force</filename>
-                    option forces the specified task to execute.
-                    If you find problems with your code, you can just keep editing and
-                    re-testing iteratively until things work as expected.
-                    <note>All the modifications you make to the temporary source code
-                    disappear once you run the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-clean'><filename>do_clean</filename></ulink>
-                    or
-                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleanall'><filename>do_cleanall</filename></ulink>
-                    tasks using BitBake (i.e.
-                    <filename>bitbake -c clean <replaceable>name_of_package</replaceable></filename>
-                    and
-                    <filename>bitbake -c cleanall <replaceable>name_of_package</replaceable></filename>).
-                    Modifications will also disappear if you use the <filename>rm_work</filename>
-                    feature as described in the
-                    "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>"
-                    section of the Yocto Project Quick Start.
-                    </note></para></listitem>
-                <listitem><para><emphasis>Generate the Patch:</emphasis>
-                    Once your changes work as expected, you need to use Quilt to generate the final patch that
-                    contains all your modifications.
-                    <literallayout class='monospaced'>
-     $ quilt refresh
-                    </literallayout>
-                    At this point, the <filename>my_changes.patch</filename> file has all your edits made
-                    to the <filename>file1.c</filename>, <filename>file2.c</filename>, and
-                    <filename>file3.c</filename> files.</para>
-                    <para>You can find the resulting patch file in the <filename>patches/</filename>
-                    subdirectory of the source (<filename>S</filename>) directory.</para></listitem>
-                <listitem><para><emphasis>Copy the Patch File:</emphasis>
-                    For simplicity, copy the patch file into a directory named <filename>files</filename>,
-                    which you can create in the same directory that holds the recipe
-                    (<filename>.bb</filename>) file or the
-                    append (<filename>.bbappend</filename>) file.
-                    Placing the patch here guarantees that the OpenEmbedded build system will find
-                    the patch.
-                    Next, add the patch into the
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>
-                    of the recipe.
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     SRC_URI += "file://my_changes.patch"
-                    </literallayout></para></listitem>
-                <listitem><para><emphasis>Increment the Recipe Revision Number:</emphasis>
-                    Finally, don't forget to 'bump' the
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'>PR</ulink></filename>
-                    value in the recipe since the resulting packages have changed.</para></listitem>
-            </orderedlist>
-        </para>     </section>
-
-    <section id='using-a-git-workflow'>
-        <title>Using a Git Workflow</title>
-        <para>
-            Git is an even more powerful tool that allows you to capture source code changes without having
-            a clean source tree.
-            This section outlines the typical workflow you can use to modify temporary source code,
-            test changes, and then preserve the changes in the form of a patch all using Git.
-            For general information on Git as it is used in the Yocto Project, see the
-            "<link linkend='git'>Git</link>" section.
-        </para>
-
-        <note>
-            This workflow uses Git only for its ability to manage local changes to the source code
-            and produce patches independent of any version control system used with the Yocto Project.
-        </note>
-
-        <para>
-            Follow these general steps:
-            <orderedlist>
-                <listitem><para><emphasis>Find the Source Code:</emphasis>
-                    The temporary source code used by the OpenEmbedded build system is kept in the
-                    Build Directory.
-                    See the
-                    "<link linkend='finding-the-temporary-source-code'>Finding the Temporary Source Code</link>"
-                    section to learn how to locate the directory that has the temporary source code for a
-                    particular package.</para></listitem>
-                <listitem><para><emphasis>Change Your Working Directory:</emphasis>
-                    You need to be in the directory that has the temporary source code.
-                    That directory is defined by the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
-                    variable.</para></listitem>
-                <listitem><para><emphasis>If needed, initialize a Git Repository:</emphasis>
-                    If the recipe you are working with does not use a Git fetcher,
-                    you need to set up a Git repository as follows:
-                    <literallayout class='monospaced'>
-     $ git init
-     $ git add *
-     $ git commit -m "initial revision"
-                    </literallayout>
-                    The above Git commands initialize a Git repository that is based on the
-                    files in your current working directory, stage all the files, and commit
-                    the files.
-                    At this point, your Git repository is aware of all the source code files.
-                    Any edits you now make to files can be committed later and will be tracked by
-                    Git.</para></listitem>
-                <listitem><para><emphasis>Edit the Files:</emphasis>
-                    Make your changes to the temporary source code.</para></listitem>
-                <listitem><para><emphasis>Test Your Changes:</emphasis>
-                    Once you have modified the source code, the easiest way
-                    to test your changes is by calling the
-                    <filename>do_compile</filename> task as shown in the
-                    following example:
-                    <literallayout class='monospaced'>
-     $ bitbake -c compile -f <replaceable>name_of_package</replaceable>
-                    </literallayout>
-                    The <filename>-f</filename> or <filename>--force</filename>
-                    option forces the specified task to execute.
-                    If you find problems with your code, you can just keep editing and
-                    re-testing iteratively until things work as expected.
-                    <note>All the modifications you make to the temporary source code
-                    disappear once you <filename>-c clean</filename>, <filename>-c cleansstate</filename>,
-                    or <filename>-c cleanall</filename> with BitBake for the package.
-                    Modifications will also disappear if you use the <filename>rm_work</filename>
-                    feature as described in the
-                    "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>"
-                    section of the Yocto Project Quick Start.
-                    </note></para></listitem>
-                <listitem><para><emphasis>See the List of Files You Changed:</emphasis>
-                    Use the <filename>git status</filename> command to see what files you have actually edited.
-                    The ability to have Git track the files you have changed is an advantage that this
-                    workflow has over the Quilt workflow.
-                    Here is the Git command to list your changed files:
-                    <literallayout class='monospaced'>
-     $ git status
-                    </literallayout></para></listitem>
-                <listitem><para><emphasis>Stage the Modified Files:</emphasis>
-                    Use the <filename>git add</filename> command to stage the changed files so they
-                    can be committed as follows:
-                    <literallayout class='monospaced'>
-     $ git add file1.c file2.c file3.c
-                    </literallayout></para></listitem>
-                <listitem><para><emphasis>Commit the Staged Files and View Your Changes:</emphasis>
-                    Use the <filename>git commit</filename> command to commit the changes to the
-                    local repository.
-                    Once you have committed the files, you can use the <filename>git log</filename>
-                    command to see your changes:
-                    <literallayout class='monospaced'>
-     $ git commit -m "<replaceable>commit-summary-message</replaceable>"
-     $ git log
-                    </literallayout>
-                    <note>The name of the patch file created in the next step is based on your
-                        <replaceable>commit-summary-message</replaceable>.</note></para></listitem>
-                <listitem><para><emphasis>Generate the Patch:</emphasis>
-                    Once the changes are committed, use the <filename>git format-patch</filename>
-                    command to generate a patch file:
-                    <literallayout class='monospaced'>
-     $ git format-patch -1
-                    </literallayout>
-                    Specifying "-1" causes Git to generate the
-                    patch file for the most recent commit.</para>
-                    <para>At this point, the patch file has all your edits made
-                    to the <filename>file1.c</filename>, <filename>file2.c</filename>, and
-                    <filename>file3.c</filename> files.
-                    You can find the resulting patch file in the current directory and it
-                    is named according to the <filename>git commit</filename> summary line.
-                    The patch file ends with <filename>.patch</filename>.</para></listitem>
-                <listitem><para><emphasis>Copy the Patch File:</emphasis>
-                    For simplicity, copy the patch file into a directory named <filename>files</filename>,
-                    which you can create in the same directory that holds the recipe
-                    (<filename>.bb</filename>) file or the
-                    append (<filename>.bbappend</filename>) file.
-                    Placing the patch here guarantees that the OpenEmbedded build system will find
-                    the patch.
-                    Next, add the patch into the
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>
-                    of the recipe.
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     SRC_URI += "file://0001-<replaceable>commit-summary-message</replaceable>.patch"
-                    </literallayout></para></listitem>
-                <listitem><para><emphasis>Increment the Recipe Revision Number:</emphasis>
-                    Finally, don't forget to 'bump' the
-                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'>PR</ulink></filename>
-                    value in the recipe since the resulting packages have changed.</para></listitem>
-            </orderedlist>
         </para>
     </section>
 </section>
@@ -2109,6 +2568,3 @@
 </section>
 
 </chapter>
-<!--
-vim: expandtab tw=80 ts=4
--->
