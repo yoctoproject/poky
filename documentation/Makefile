@@ -235,7 +235,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/analysis-for-package-splitting.png \
         figures/image-generation.png \
 	figures/sdk-generation.png figures/recipe-workflow.png \
-	figures/build-workspace-directory.png
+	figures/build-workspace-directory.png figures/mega-title.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
