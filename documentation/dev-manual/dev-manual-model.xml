@@ -2264,20 +2264,23 @@
             <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink>
             is a powerful tool that allows you to capture source code changes without having
             a clean source tree.
-            This section outlines the typical workflow you can use to modify temporary source code,
-            test changes, and then preserve the changes in the form of a patch all using Quilt.
+            This section outlines the typical workflow you can use to modify
+            source code, test changes, and then preserve the changes in the
+            form of a patch all using Quilt.
         </para>
 
         <para>
             Follow these general steps:
             <orderedlist>
                 <listitem><para><emphasis>Find the Source Code:</emphasis>
-                    The temporary source code used by the OpenEmbedded build system is kept in the
-                    Build Directory.
+                    Temporary source code used by the OpenEmbedded build system
+                    is kept in the
+                    <link linkend='build-directory'>Build Directory</link>.
                     See the
                     "<link linkend='finding-the-temporary-source-code'>Finding Temporary Source Code</link>"
-                    section to learn how to locate the directory that has the temporary source code for a
-                    particular package.</para></listitem>
+                    section to learn how to locate the directory that has the
+                    temporary source code for a particular package.
+                    </para></listitem>
                 <listitem><para><emphasis>Change Your Working Directory:</emphasis>
                     You need to be in the directory that has the temporary source code.
                     That directory is defined by the
@@ -2298,15 +2301,16 @@
                     </literallayout>
                     </para></listitem>
                 <listitem><para><emphasis>Edit the Files:</emphasis>
-                    Make your changes in the temporary source code to the files you added
-                    to the patch.</para></listitem>
+                    Make your changes in the source code to the files you added
+                    to the patch.
+                    </para></listitem>
                 <listitem><para><emphasis>Test Your Changes:</emphasis>
                     Once you have modified the source code, the easiest way to
                     your changes is by calling the
                     <filename>do_compile</filename> task as shown in the
                     following example:
                     <literallayout class='monospaced'>
-     $ bitbake -c compile -f <replaceable>name_of_package</replaceable>
+     $ bitbake -c compile -f <replaceable>package</replaceable>
                     </literallayout>
                     The <filename>-f</filename> or <filename>&dash;&dash;force</filename>
                     option forces the specified task to execute.
@@ -2318,9 +2322,9 @@
                     or
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleanall'><filename>do_cleanall</filename></ulink>
                     tasks using BitBake (i.e.
-                    <filename>bitbake -c clean <replaceable>name_of_package</replaceable></filename>
+                    <filename>bitbake -c clean <replaceable>package</replaceable></filename>
                     and
-                    <filename>bitbake -c cleanall <replaceable>name_of_package</replaceable></filename>).
+                    <filename>bitbake -c cleanall <replaceable>package</replaceable></filename>).
                     Modifications will also disappear if you use the <filename>rm_work</filename>
                     feature as described in the
                     "<ulink url='&YOCTO_DOCS_QS_URL;#building-image'>Building an Image</ulink>"
@@ -2363,20 +2367,19 @@
         <title>Finding Temporary Source Code</title>
 
         <para>
-            You might
-            find it helpful during development to modify the temporary source code used by recipes
-            to build packages.
-            For example, suppose you are developing a patch and you need to experiment a bit
-            to figure out your solution.
-            After you have initially built the package, you can iteratively tweak the
-            source code, which is located in the
+            You might find it helpful during development to modify the
+            temporary source code used by recipes to build packages.
+            For example, suppose you are developing a patch and you need to
+            experiment a bit to figure out your solution.
+            After you have initially built the package, you can iteratively
+            tweak the source code, which is located in the
             <link linkend='build-directory'>Build Directory</link>, and then
             you can force a re-compile and quickly test your altered code.
-            Once you settle on a solution, you can then preserve your changes in the form of
-            patches.
-            You can accomplish these steps all within either a
-            <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink> or
-            <link linkend='git'>Git</link> workflow.
+            Once you settle on a solution, you can then preserve your changes
+            in the form of patches.
+            If you are using Quilt for development, see the
+            "<link linkend='using-a-quilt-workflow'>Using Quilt in Your Workflow</link>"
+            section for more information.
         </para>
 
         <para>
@@ -2432,7 +2435,7 @@
 
         <para>
             As an example, assume a Source Directory top-level folder
-            name <filename>poky</filename>, a default Build Directory at
+            named <filename>poky</filename>, a default Build Directory at
             <filename>poky/build</filename>, and a
             <filename>qemux86-poky-linux</filename> machine target
             system.
@@ -2446,9 +2449,11 @@
         </para>
 
         <para>
-            Now that you know where to locate the directory that has the temporary source code,
-            you can use a Quilt or Git workflow to make your edits, test the changes,
-            and preserve the changes in the form of patches.
+            Now that you know where to locate the directory that has the
+            temporary source code, you can use a Quilt as described in section
+            "<link linkend='using-a-quilt-workflow'>Using Quilt in Your Workflow</link>"
+            to make your edits, test the changes, and preserve the changes in
+            the form of patches.
         </para>
     </section>
 </section>
