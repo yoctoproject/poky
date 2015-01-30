@@ -1213,40 +1213,154 @@
             </para>
         </section>
 
-        <section id='new-recipe-locate-a-base-recipe'>
-            <title>Locate a Base Recipe</title>
+        <section id='new-recipe-locate-or-automatically-create-a-base-recipe'>
+            <title>Locate or Automatically Create a Base Recipe</title>
 
             <para>
-                Before writing a recipe from scratch, it is often useful to
-                discover whether someone else has already written one that
-                meets (or comes close to meeting) your needs.
-                The Yocto Project and OpenEmbedded communities maintain many
-                recipes that might be candidates for what you are doing.
-                You can find a good central index of these recipes in the
-                <ulink url='http://layers.openembedded.org'>OpenEmbedded metadata index</ulink>.
+                You can always write a recipe from scratch.
+                However, two choices exist that can help you quickly get a
+                start on a new recipe:
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>recipetool</filename>:</emphasis>
+                        A tool provided by the Yocto Project that automates
+                        creation of a base recipe based on the source
+                        files.
+                        </para></listitem>
+                    <listitem><para><emphasis>Existing Recipes:</emphasis>
+                        Location and modification of an existing recipe that is
+                        similar in function to the recipe you need.
+                        </para></listitem>
+                </itemizedlist>
             </para>
 
-            <para>
-                Working from an existing recipe or a skeleton recipe is the
-                best way to get started.
-                Here are some points on both methods:
-                <itemizedlist>
-                    <listitem><para><emphasis>Locate and modify a recipe that
-                        is close to what you want to do:</emphasis>
-                        This method works when you are familiar with the
-                        current recipe space.
-                        The method does not work so well for those new to
-                        the Yocto Project or writing recipes.</para>
-                        <para>Some risks associated with this method are
-                        using a recipe that has areas totally unrelated to
-                        what you are trying to accomplish with your recipe,
-                        not recognizing areas of the recipe that you might
-                        have to add from scratch, and so forth.
-                        All these risks stem from unfamiliarity with the
-                        existing recipe space.</para></listitem>
-                    <listitem><para><emphasis>Use and modify the following
-                        skeleton recipe:</emphasis>
-                        <literallayout class='monospaced'>
+            <section id='new-recipe-creating-the-base-recipe-using-recipetool'>
+                <title>Creating the Base Recipe Using <filename>recipetool</filename></title>
+
+                <para>
+                    <filename>recipetool</filename> automates creation of
+                    a base recipe given a set of source code files.
+                    As long as you can extract or point to the source files,
+                    the tool will construct a recipe and automatically
+                    configure all pre-build information into the recipe.
+                    For example, suppose you have an application that builds
+                    using Autotools.
+                    Creating the base recipe using
+                    <filename>recipetool</filename> results in a recipe
+                    that has the pre-build dependencies, license requirements,
+                    and checksums configured.
+                </para>
+
+                <para>
+                    To run the tool, you just need to be in your
+                    <link linkend='build-directory'>Build Directory</link>
+                    and have sourced the build environment setup script
+                    (i.e.
+                    <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>oe-init-build-env</filename></ulink>
+                    or
+                    <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>).
+                    Here is the basic <filename>recipetool</filename> syntax:
+                    <literallayout class='monospaced'>
+     recipetool -h
+     recipetool create [-h]
+     recipetool [-d] [-q] [--color auto | always | never ] create [-o <replaceable>OUTFILE</replaceable>] [-m] [-x <replaceable>EXTERNALSRC</replaceable>] <replaceable>source</replaceable>
+
+          -d       Enables debug output.
+          -q       Outputs only errors (quiet mode).
+          --color  Colorizes the output automatically, always, or never.
+          -h       Displays Python generated syntax for recipetool.
+          create   Causes recipetool to create a base recipe.  The create
+                   command is further defined with these options:
+
+                   -o <replaceable>OUTFILE</replaceable>      Specifies the full path and filename for the generated
+                                   recipe.
+                   -m              Causes the recipe to be machine-specific rather than
+                                   architecture-specific (default).
+                   -x <replaceable>EXTERNALSRC</replaceable>  Fetches and extracts source files from <replaceable>source</replaceable>
+                                   and places them in <replaceable>EXTERNALSRC</replaceable>.
+                                   <replaceable>source</replaceable> must be a URL.
+                   -h              Displays Python-generated syntax for create.
+                   <replaceable>source</replaceable>          Specifies the source code on which to base the
+                                   recipe.
+                    </literallayout>
+                </para>
+
+                <para>
+                    Running <filename>recipetool</filename> creates the base
+                    recipe and locates it properly in the layer that contains
+                    your source files.
+                    Following are some syntax examples:
+                </para>
+
+                <para>
+                    Use this syntax to generate a recipe based on <replaceable>source</replaceable>.
+                    Once generated, the recipe resides in the existing source
+                    code layer:
+                    <literallayout class='monospaced'>
+     recipetool create <replaceable>source</replaceable>
+                    </literallayout>
+                    Use this syntax to generate a recipe using code that you
+                    extract from <replaceable>source</replaceable>.
+                    The extracted code is placed in its own layer defined
+                    by <replaceable>EXTERNALSRC</replaceable>.
+                    <literallayout class='monospaced'>
+     recipetool create -x <replaceable>EXTERNALSRC</replaceable> <replaceable>source</replaceable>
+                    </literallayout>
+                    Use this syntax to generate a recipe and override the
+                    tool's default placement of the recipe by specifying both
+                    its location and name using <replaceable>OUTFILE</replaceable>.
+                    <literallayout class='monospaced'>
+     recipetool create -o <replaceable>OUTFILE</replaceable> <replaceable>source</replaceable>
+                    </literallayout>
+                    Use this syntax to generate a recipe based on <replaceable>source</replaceable>.
+                    The options direct <filename>recipetool</filename> to
+                    run in "quiet mode" and to generate debugging information.
+                    Once generated, the recipe resides in the existing source
+                    code layer:
+                    <literallayout class='monospaced'>
+     recipetool create -o <replaceable>OUTFILE</replaceable> <replaceable>source</replaceable>
+                    </literallayout>
+                </para>
+            </section>
+
+            <section id='new-recipe-locating-and-using-a-similar-recipe'>
+                <title>Locating and Using a Similar Recipe</title>
+
+                <para>
+                    Before writing a recipe from scratch, it is often useful to
+                    discover whether someone else has already written one that
+                    meets (or comes close to meeting) your needs.
+                    The Yocto Project and OpenEmbedded communities maintain many
+                    recipes that might be candidates for what you are doing.
+                    You can find a good central index of these recipes in the
+                    <ulink url='http://layers.openembedded.org'>OpenEmbedded metadata index</ulink>.
+                </para>
+
+                <para>
+                    Working from an existing recipe or a skeleton recipe is the
+                    best way to get started.
+                    Here are some points on both methods:
+                    <itemizedlist>
+                        <listitem><para><emphasis>Locate and modify a recipe that
+                            is close to what you want to do:</emphasis>
+                            This method works when you are familiar with the
+                            current recipe space.
+                            The method does not work so well for those new to
+                            the Yocto Project or writing recipes.</para>
+                            <para>Some risks associated with this method are
+                            using a recipe that has areas totally unrelated to
+                            what you are trying to accomplish with your recipe,
+                            not recognizing areas of the recipe that you might
+                            have to add from scratch, and so forth.
+                            All these risks stem from unfamiliarity with the
+                            existing recipe space.</para></listitem>
+                        <listitem><para><emphasis>Use and modify the following
+                            skeleton recipe:</emphasis>
+                            If for some reason you do not want to use
+                            <filename>recipetool</filename> and you cannot
+                            find an existing recipe that is close to meeting
+                            your needs, you can use the following structure to
+                            provide the fundamental areas of a new recipe.
+                            <literallayout class='monospaced'>
      DESCRIPTION = ""
      HOMEPAGE = ""
      LICENSE = ""
@@ -1255,14 +1369,11 @@
      LIC_FILES_CHKSUM = ""
 
      SRC_URI = ""
-                        </literallayout>
-                        Modifying this recipe is the recommended method for
-                        creating a new recipe.
-                        The recipe provides the fundamental areas that you need
-                        to include, exclude, or alter to fit your needs.
-                        </para></listitem>
-                </itemizedlist>
-            </para>
+                            </literallayout>
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
         </section>
 
         <section id='new-recipe-storing-and-naming-the-recipe'>
