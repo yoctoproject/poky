@@ -1,0 +1,75 @@
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[<!ENTITY % poky SYSTEM "../poky.ent"> %poky; ] >
+
+<chapter id='toaster-manual-start'>
+
+<title>Preparing to Use Toaster</title>
+
+    <para>
+        This chapter describes how you need to prepare your system in order to
+        use Toaster.
+        Toaster requires some packages that you must have installed before trying
+        to run Toaster.
+    </para>
+
+    <section id='toaster-setting-up-the-basic-system-requirements'>
+        <title>Setting Up the Basic System Requirements</title>
+
+        <para>
+            You first need to be sure your build system is set up to run
+            the Yocto Project.
+            See the
+            "<ulink url='&YOCTO_DOCS_QS_URL;#yp-resources'>What You Need and How You Get It</ulink>"
+            section in the Yocto Project Quick Start for information on how
+            to set up your system for the Yocto Project.
+        </para>
+    </section>
+
+    <section id='toaster-establishing-toaster-system-dependencies'>
+        <title>Establishing Toaster System Dependencies</title>
+
+        <para>
+            Toaster requires extra Python dependencies that Bitbake
+            does not need in order to run.
+            In order to make it easy to run Toaster, a requirements file
+            located in the root directory of
+            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+            <filename>bitbake/</filename>
+            (e.g. <filename>poky/bitbake/toaster-requirements.txt</filename>).
+            The dependencies appear in a <filename>pip</filename>,
+            install-compatible format:
+            <literallayout class='monospaced'>
+     Django==1.6
+     South==0.8.4
+     argparse==1.2.1
+     wsgiref==0.1.2
+            </literallayout>
+            Follow these steps to get set up:
+            <orderedlist>
+                <listitem><para><emphasis>Create and activate a virtual environment:</emphasis>
+                    <literallayout class='monospaced'>
+     $ virtualenv venv
+     $ source venv/bin/activate
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para><emphasis>Use <filename>pip</filename> to install needed packages:</emphasis>
+                    <literallayout class='monospaced'>
+     $ pip install -r bitbake/toaster-requirements.txt
+                    </literallayout>
+                    </para></listitem>
+            </orderedlist>
+            Once you complete these steps, you execute in a lightweight
+            "virtual environment” with its own site directories that are
+            optionally isolated from system site directories.
+            The virtual environment has its own Python binary
+            (allowing creation of environments with various Python versions)
+            and can have its own independent set of installed Python packages
+            in its site directories.
+        </para>
+    </section>
+
+</chapter>
+<!--
+vim: expandtab tw=80 ts=4
+-->
