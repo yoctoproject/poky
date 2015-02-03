@@ -24,7 +24,7 @@
   <xsl:include href="../template/formal.object.heading.xsl"/>
   <xsl:include href="../template/gloss-permalinks.xsl"/>
 
-  <xsl:param name="html.stylesheet" select="'ref-style.css'" />
+  <xsl:param name="html.stylesheet" select="'mega-style.css'" />
   <xsl:param name="chapter.autolabel" select="1" />
   <xsl:param name="appendix.autolabel">A</xsl:param>
   <xsl:param name="section.autolabel" select="1" />
