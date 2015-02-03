@@ -327,7 +327,7 @@ endif
 
 ifeq ($(DOC),toaster-manual)
 XSLTOPTS = --xinclude
-ALLPREQ = html pdf tarball
+ALLPREQ = html tarball
 TARFILES = toaster-manual.html toaster-manual.pdf toaster-manual-style.css figures/toaster-title.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
