@@ -364,6 +364,41 @@
     <qandaentry>
         <question>
             <para>
+                When I try to build a native recipe, the build fails with <filename>iconv.h</filename> problems.
+            </para>
+        </question>
+        <answer>
+            <para>
+                If you get an error message that indicates GNU
+                <filename>libiconv</filename> is not in use but
+                <filename>iconv.h</filename> has been included from
+                <filename>libiconv</filename>, you need to check to see if
+                you have a previously installed version of the header file
+                in <filename>/usr/local/include</filename>.
+                <literallayout class='monospaced'>
+     #error GNU libiconv not in use but included iconv.h is from libiconv
+                </literallayout>
+                If you find a previously installed file, you should either
+                uninstall it or temporarily rename it and try the build again.
+            </para>
+
+            <para>
+                This issue is just a single manifestation of "system
+                leakage" issues caused when the OpenEbedded build system
+                finds and uses previously installed files during a native
+                build.
+                This type of issue might not be limited to
+                <filename>iconv.h</filename>.
+                Be sure that leakage cannot occur from
+                <filename>/usr/local/include</filename> and
+                <filename>/opt</filename> locations.
+            </para>
+        </answer>
+    </qandaentry>
+
+    <qandaentry>
+        <question>
+            <para>
                 What do we need to ship for license compliance?
             </para>
         </question>
