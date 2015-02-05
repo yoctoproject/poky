@@ -1,3 +1,5 @@
+# Provide some extensions to sanity.bbclass to handle poky-specific conf file upgrades
+
 python poky_update_bblayersconf() {
     current_version = int(d.getVar('LCONF_VERSION', True) or -1)
     latest_version = int(d.getVar('LAYER_CONF_VERSION', True) or -1)
@@ -5,7 +7,8 @@ python poky_update_bblayersconf() {
     bblayers_fn = bblayers_conf_file(d)
     lines = sanity_conf_read(bblayers_fn)
 
-    if current_version == 5 and latest_version == 6:
+    if current_version == 5 and latest_version > 5:
+        # Handle split out of meta-yocto-bsp from meta-yocto
         if '/meta-yocto-bsp' not in d.getVar('BBLAYERS', True):
             index, meta_yocto_line = sanity_conf_find_line('meta-yocto\s*\\\\\\n', lines)
             if meta_yocto_line:
@@ -21,4 +24,5 @@ python poky_update_bblayersconf() {
     sys.exit()
 }
 
-BBLAYERS_CONF_UPDATE_FUNCS += "poky_update_bblayersconf"
+# Prepend to ensure our function runs before the OE-Core one
+BBLAYERS_CONF_UPDATE_FUNCS =+ "poky_update_bblayersconf"
