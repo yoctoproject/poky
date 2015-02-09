@@ -309,16 +309,27 @@
 
         <glossentry id='var-ASSUME_SHLIBS'><glossterm><imagedata fileref="figures/define-generic.png" />ASSUME_SHLIBS</glossterm>
             <info>
-                ASSUME_SHLIBS[doc] = "List of shlib:package[_version] mappings. Useful for lib packages in ASSUME_PROVIDED, for which automatic shlib dependency tracking does not work."
+                ASSUME_SHLIBS[doc] = Provides additional shlibs provider mapping information, which adds to or overwrites the information provided automatically by the system."
             </info>
             <glossdef>
                 <para>
-                    List of <filename>shlib:package[_version]</filename>
-                    mappings.
-                    This variable is useful for library packages in
-                    <link linkend='var-ASSUME_PROVIDED'><filename>ASSUME_PROVIDED</filename></link>,
-                    for which automatic <filename>shlib</filename> dependency
-                    tracking does not work.
+                    Provides additional <filename>shlibs</filename> provider
+                    mapping information, which adds to or overwrites the
+                    information provided automatically by the system.
+                </para>
+
+                <para>
+                    As an example, use the following form to add an
+                    <filename>shlib</filename> provider of
+                    <replaceable>shlibname</replaceable> in
+                    <replaceable>packagename</replaceable> with the optional
+                    <replaceable>version</replaceable>:
+                    <literallayout class='monospaced'>
+     <replaceable>shlibname:packagename</replaceable>[_<replaceable>version</replaceable>]
+                    </literallayout>
+                    <note>
+                        Separate multiple entries using spaces.
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
@@ -902,8 +913,12 @@ meta/conf/machine/include/<architecture>/arch-<architecture>.inc
             </info>
             <glossdef>
                 <para>
-                    The number of log lines the OpenEmbedded build system
-                    prints upon failure.
+                    If
+                    <link linkend='var-BBINCLUDELOGS'><filename>BBINCLUDELOGS</filename></link>
+                    is set, specifies the maximum number of lines from the
+                    task log file to print when reporting a failed task.
+                    If you do not set <filename>BBINCLUDELOGS_LINES</filename>,
+                    the entire log is printed.
                 </para>
             </glossdef>
         </glossentry>
@@ -1198,6 +1213,9 @@ meta/conf/machine/include/<architecture>/arch-<architecture>.inc
                 <para>
                     Specifies the architecture of the build system
                     (e.g. <filename>i686</filename>).
+                    The <filename>uname</filename> command, as reported by the
+                    machine name, sets the value of
+                    <filename>BUILD_ARCH</filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -1293,7 +1311,12 @@ meta/conf/machine/include/<architecture>/arch-<architecture>.inc
             <glossdef>
                 <para>
                     Specifies the operating system in use on the build
-                    system (e.g. Linux).
+                    host (e.g. Linux).
+                    The operating system, as reported by the
+                    <filename>uname</filename> command, sets
+                    <filename>BUILD_OS</filename>.
+                    When set, the first word of the value converts to
+                    lower-case characters.
                 </para>
             </glossdef>
         </glossentry>
@@ -1628,11 +1651,15 @@ meta/conf/machine/include/<architecture>/arch-<architecture>.inc
 
         <glossentry id='var-CACHE'><glossterm><imagedata fileref="figures/define-generic.png" />CACHE</glossterm>
             <info>
-                CACHE[doc]  = "The directory holding the cache of the metadata."
+                CACHE[doc]  = "The directory BitBake uses to store a cache of the metadata."
             </info>
             <glossdef>
                 <para>
-                    The directory that contains the cache for the Metadata.
+                    Specifies the directory BitBake uses to store a cache
+                    of the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#metadata'>Metadata</ulink>
+                    so it does not need to be parsed every time BitBake is
+                    started.
                 </para>
             </glossdef>
         </glossentry>
@@ -2126,6 +2153,12 @@ meta/conf/machine/include/<architecture>/arch-<architecture>.inc
                     same as the
                     <link linkend='var-TARGET_PREFIX'><filename>TARGET_PREFIX</filename></link>
                     variable.
+                    <note>
+                        The OpenEmbedded build system sets the
+                        <filename>CROSS_COMPILE</filename> variable only in
+                        certain contexts (e.g. when building for kernel
+                        and kernel module recipes).
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
@@ -2219,7 +2252,8 @@ meta/conf/machine/include/<architecture>/arch-<architecture>.inc
             <glossdef>
                 <para>
                     The date the build was started.
-                    Dates appear using the year, month, and day (YMD) format.
+                    Dates appear using the year, month, and day (YMD) format
+                    (e.g. "20150209" for February 9th and 2015).
                 </para>
             </glossdef>
         </glossentry>
@@ -4079,13 +4113,23 @@ meta/conf/machine/include/<architecture>/arch-<architecture>.inc
                     Specifies the system, including the architecture and the
                     operating system, for which the build is occurring
                     in the context of the current recipe.
-                    The OpenEmbedded build system automatically sets this
-                    variable.
-                    You do not need to set the variable yourself.
                 </para>
 
                 <para>
-                    Here are two examples:
+                    The OpenEmbedded build system automatically sets this
+                    variable based on
+                    <link linkend='var-HOST_ARCH'><filename>HOST_ARCH</filename></link>,
+                    <link linkend='var-HOST_VENDOR'><filename>HOST_VENDOR</filename></link>,
+                    and
+                    <link linkend='var-HOST_OS'><filename>HOST_OS</filename></link>
+                    variables.
+                    <note>
+                        You do not need to set the variable yourself.
+                    </note>
+                </para>
+
+                <para>
+                    Consider these two examples:
                     <itemizedlist>
                         <listitem><para>Given a native recipe on a 32-bit
                             x86 machine running Linux, the value is
@@ -7472,12 +7516,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PACKAGE_INSTALL_ATTEMPTONLY'><glossterm><imagedata fileref="figures/define-generic.png" />PACKAGE_INSTALL_ATTEMPTONLY</glossterm>
             <info>
-                PACKAGE_INSTALL_ATTEMPTONLY[doc] = "List of packages attempted to be installed. If a listed package fails to install, the build system does not generate an error. This variable is generally not user-defined."
+                PACKAGE_INSTALL_ATTEMPTONLY[doc] = "List of packages attempted to be installed when creating an image. If a listed package fails to install, the build system does not generate an error. This variable is generally not user-defined."
             </info>
             <glossdef>
                 <para>
                     Specifies a list of packages the OpenEmbedded build
-                    system attempts to install.
+                    system attempts to install when creating an image.
                     If a listed package fails to install, the build system
                     does not generate an error.
                     This variable is generally not user-defined.
@@ -8250,10 +8294,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
                 <para>
                     Indicates the importance of a package.
+                </para>
+
+                <para>
+                    <filename>PRIORITY</filename> is considered to be part of
+                    the distribution policy because the importance of any given
+                    recipe depends on the purpose for which the distribution
+                    is being produced.
+                    Thus, <filename>PRIORITY</filename> is not normally set
+                    within recipes.
+                </para>
+
+                <para>
                     You can set <filename>PRIORITY</filename> to "required",
                     "standard", "extra", and "optional", which is the default.
                 </para>
--->
             </glossdef>
         </glossentry>
 
@@ -9535,12 +9590,27 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </info>
             <glossdef>
                 <para>
-                    Setting this variable within a source mirror generation
-                    script causes the OpenEmbedded build system to skip
-                    <link linkend='var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></link>
-                    and
-                    <link linkend='var-COMPATIBLE_HOST'><filename>COMPATIBLE_HOST</filename></link>
-                    checks.
+                    When you are creating a source mirror, setting
+                    <filename>SOURCE_MIRROR_FETCH</filename> to "1" in your
+                    <filename>local.conf</filename> configuration file ensures
+                    the source for all recipes are fetched regardless of
+                    whether or not source is marked for exclusion.
+                    <note>
+                        When source files are incompatible with the currently
+                        configured
+                        <link linkend='var-MACHINE'><filename>MACHINE</filename></link>
+                        via the
+                        <link linkend='var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></link>
+                        variable and via the
+                        <link linkend='var-COMPATIBLE_HOST'><filename>COMPATIBLE_HOST</filename></link>
+                        variable, they are marked for exclusion.
+                    </note>
+
+                    <note><title>Warning</title>
+                        Do not set the
+                        <filename>SOURCE_MIRROR_FETCH</filename> variable
+                        during a normal build.
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
@@ -10783,6 +10853,29 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     The toolchain binary prefix for the target tools.
                 </para>
+
+                <para>
+                    Depending on what you are building your image for, the
+                    OpenEmbedded build system sets
+                    <filename>TARGET_PREFIX</filename> as follows:
+                    <itemizedlist>
+                        <listitem><para>
+                            For targets, which is the default, the build
+                            system sets the variable to
+                            "${<link linkend='var-TARGET_SYS'>TARGET_SYS</link>}-".
+                            </para></listitem>
+                        <listitem><para>
+                            For a <filename>native</filename> recipe, the build
+                            system sets the variable to the value of
+                            <filename>BUILD_PREFIX</filename>.
+                            </para></listitem>
+                        <listitem><para>
+                            For a <filename>nativesdk</filename> recipe, the
+                            build system sets the variable to the value of
+                            <filename>SDK_PREFIX</filename>.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
             </glossdef>
         </glossentry>
 
@@ -10792,11 +10885,39 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </info>
             <glossdef>
                 <para>
-                    The target system, which is comprised of
+                    Specifies the system, including the architecture and the
+                    operating system, for which the build is occurring in
+                    the context of the current recipe.
+                </para>
+
+                <para>
+                    The OpenEmbedded build system automatically sets this
+                    variable based on
                     <link linkend='var-TARGET_ARCH'><filename>TARGET_ARCH</filename></link>,
                     <link linkend='var-TARGET_VENDOR'><filename>TARGET_VENDOR</filename></link>,
                     and
-                    <link linkend='var-TARGET_OS'><filename>TARGET_OS</filename></link>.
+                    <link linkend='var-TARGET_OS'><filename>TARGET_OS</filename></link>
+                    variables.
+                    <note>
+                        You do not need to set the
+                        <filename>TARGET_SYS</filename> variable yourself.
+                    </note>
+                </para>
+
+                <para>
+                    Consider these two examples:
+                    <itemizedlist>
+                        <listitem><para>
+                            Given a <filename>native</filename> recipe on a
+                            32-bit, x86 machine running Linux, the value is
+                            "i686-linux".
+                            </para></listitem>
+                        <listitem><para>
+                            Given a recipe being built for a little-endian,
+                            MIPS target running Linux, the value might be
+                            "mipsel-linux".
+                            </para></listitem>
+                    </itemizedlist>
                 </para>
             </glossdef>
         </glossentry>
@@ -11307,7 +11428,9 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     The time the build was started.
-                    Times appear using the hour, minute, and second (HMS) format.
+                    Times appear using the hour, minute, and second (HMS)
+                    format (e.g. "140159" for one minute and fifty-nine
+                    seconds past 1400 hours).
                 </para>
             </glossdef>
         </glossentry>
