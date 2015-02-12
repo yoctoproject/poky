@@ -1220,7 +1220,7 @@ meta/conf/machine/include/<architecture>/arch-<architecture>.inc
             </info>
             <glossdef>
                 <para>
-                    Specifies the architecture of the build system
+                    Specifies the architecture of the build host
                     (e.g. <filename>i686</filename>).
                     The OpenEmbedded build system sets the value of
                     <filename>BUILD_ARCH</filename> from the machine name
@@ -1340,6 +1340,31 @@ meta/conf/machine/include/<architecture>/arch-<architecture>.inc
                     <filename>BUILD_PREFIX</filename> value to set the
                     <link linkend='var-TARGET_PREFIX'><filename>TARGET_PREFIX</filename></link>
                     when building for native recipes.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-BUILD_SYS'><glossterm>BUILD_SYS<imagedata fileref="figures/define-generic.png" /></glossterm>
+            <info>
+                BUILD_SYS[doc] = "The toolchain binary prefix used for native recipes."
+            </info>
+            <glossdef>
+                <para>
+                    Specifies the system, including the architecture and
+                    the operating system, to use when building for the build
+                    host (i.e. when building <filename>native</filename>
+                    recipes).
+                </para>
+
+                <para>
+                    The OpenEmbedded build system automatically sets this
+                    variable based on
+                    <link linkend='var-BUILD_ARCH'><filename>BUILD_ARCH</filename></link>,
+                    <link linkend='var-BUILD_VENDOR'><filename>BUILD_VENDOR</filename></link>,
+                    and
+                    <link linkend='var-BUILD_OS'><filename>BUILD_OS</filename></link>.
+                    You do not need to set the <filename>BUILD_SYS</filename>
+                    variable yourself.
                 </para>
             </glossdef>
         </glossentry>
@@ -9334,6 +9359,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>SDK_PREFIX</filename> value to set the
                     <link linkend='var-TARGET_PREFIX'><filename>TARGET_PREFIX</filename></link>
                     when building <filename>nativesdk</filename> recipes.
+                    The default value is "${SDK_SYS}-".
                 </para>
             </glossdef>
         </glossentry>
@@ -10946,12 +10972,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-TARGET_PREFIX'><glossterm>TARGET_PREFIX<imagedata fileref="figures/define-generic.png" /></glossterm>
             <info>
-                TARGET_PREFIX[doc] = "Toolchain binary prefix for the target tools."
+                TARGET_PREFIX[doc] = "The prefix used for the toolchain binary target tools."
             </info>
             <glossdef>
                 <para>
-                    Specifies the prefix used for the path of the toolchain
-                    binary target tools.
+                    Specifies the prefix used for the toolchain binary target
+                    tools.
                 </para>
 
                 <para>
