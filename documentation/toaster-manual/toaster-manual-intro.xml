@@ -6,10 +6,13 @@
 <title>Introduction</title>
 
     <para>
-        Toaster is an Application Programming Interface (API) and
-        web-based interface to the OpenEmbedded build system, which uses
+        Toaster is web interface to the OpenEmbedded build system, which uses
         BitBake.
-        Both interfaces are based on a Representational State Transfer
+        The interface allows you to access a datastore that retains build
+        information and report out on the information.
+    </para>
+<!--THE FOLLOWING IS DETAIL THAT I THINK BELEN WANTED OUT FOR THE MOMENT
+        The interface is based on a Representational State Transfer
         (REST) API that queries for and returns build information using
         <filename>GET</filename> and <filename>JSON</filename>.
         These types of search operations retrieve sets of objects from
@@ -18,64 +21,95 @@
         You can order the results of the search by key and the search
         parameters are consistent for all object types.
     </para>
+-->
 
     <para>
         You can use Toaster in several different modes:
         <itemizedlist>
-            <listitem><para><emphasis>Interactive Mode:</emphasis>
+            <listitem><para><emphasis>Analysis Mode:</emphasis>
                 In this mode, you can record builds and statistics.
-                In Interactive Mode, you have direct access to the
+                In Analysis Mode, you have direct access to the
                 <filename>bitbake</filename> command, which you use to build
-                images.
+                images.</para>
+                <para>Analysis Mode requires you to have first started
+                Toaster and then to initiate your build using the
+                <filename>bitbake</filename> command from the shell.
+                Toaster must be started before the build or it will not
+                collect build data.
                 </para></listitem>
-            <listitem><para><emphasis>Managed Mode:</emphasis>
+            <listitem><para><emphasis>Build Mode:</emphasis>
                 In this mode, Toaster handles the build configuration GUI
-                (through Project pages) and build scheduling and execution.
-                Additionally, in addition to these features, builds are
-                triggered through the web interface.
+                (through project pages) and build scheduling and execution.
+                In this mode, all your interaction with the build system
+                happens through the web interface.
                 You do not have direct access to the
                 <filename>bitbake</filename> command.</para>
-
-                <para>Managed Mode also works two separate ways: Local
-                Managed Mode and Remote Managed Mode.
-                Local Managed Mode is the out-of-box mode available once
-                you checkout poky and allows you to perform builds on your
-                local machine.
-                Remote Managed Mode, also known as Hosted Toaster, is a
-                production setup best for organizations supporting multiple
-                users and for organizations using customized Toaster
-                installations.
+                <para>Using this mode, you configure and start your builds
+                with Toaster's GUI.
+                Each configuration is a project, which requires version and
+                build system selection.
+                As shipped, Toaster supports the Yocto Project releases
+                1.8 and beyond.
+                Aside from these supported releases, you can also select
+                the "Local Yocto Project", which allows you to use your
+                local clone of the Yocto Project
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+                (e.g. <filename>poky</filename>).</para>
+                <para>Build Mode also works two separate ways: locally and
+                remotely.
+                While you can use Build Mode locally, it is best to use
+                Toaster's Build Mode through a hosted service where it can
+                shared by multiple user.
                 </para></listitem>
         </itemizedlist>
     </para>
 
     <para>
-        Using the interfaces you can do the following:
+        Using Toaster, you can do the following:
+        <note><title>REVIEWER NOTE</title>
+            Belen suggested we split this list out into things that
+            Analysis Mode and Build Mode can do.
+            Also, we can structure the lists so the Build Mode list
+            leverages off what is listed for Analysis Mode.
+            I do not know the information for the complete lists.
+            Someone needs to help me out here.
+            For now, I am leaving the list as follows and will need some
+            information.
+        </note>
         <itemizedlist>
-            <listitem><para>See information about the tasks executed
-                and reused during the build.</para></listitem>
-            <listitem><para>See what is built (recipes and
+            <listitem><para>
+                See information about the tasks executed
+                and reused during the build.
+                </para></listitem>
+            <listitem><para>
+                See what is built (recipes and
                 packages) and what packages were installed into the final
-                image.</para></listitem>
-            <listitem><para>See performance-related information such
-                as build time, CPU usage, and disk I/O.</para></listitem>
-            <listitem><para>Examine error, warning and trace messages
-                to aid in debugging.</para></listitem>
+                image.
+                </para></listitem>
+            <listitem><para>
+                See performance-related information such
+                as build time, CPU usage, and disk I/O.
+                </para></listitem>
+            <listitem><para>
+                Examine error, warning and trace messages
+                to aid in debugging.
+                </para></listitem>
         </itemizedlist>
     </para>
 
     <note>
         <para>
-            This release of Toaster provides you with information
-            about a BitBake run.
-            The tool does not allow you to configure and launch a build.
-            However, future development includes plans to integrate the
-            configuration and build launching capabilities of
+            This release of Toaster does allow you to configure and initiate
+            builds.
+            However, you cannot use Toaster to customize image recipes, which
+            still must either be done by hand or through
             <ulink url='&YOCTO_HOME_URL;/tools-resources/projects/hob'>Hob</ulink>.
+            As Toaster matures, it eventually will equal and surpass Hob
+            functionality, at which time Hob will be deprecated.
         </para>
 
         <para>
-            For more information on using Hob to build an image,
+            For more information on Hob,
             see the
             "<ulink url='&YOCTO_DOCS_DEV_URL;#image-development-using-hob'>Image Development Using Hob</ulink>"
            section in the Yocto Project Development Manual.
@@ -85,6 +119,9 @@
     <para>
         The remainder of this manual describes what you need to have in
         place to use Toaster, how to start it, use it, and stop it.
+    </para>
+
+<!--THIS EXTRA INFORMATION PROBABLY WILL GO AWAY
         For additional information on installing and running Toaster, see the
         "<ulink url='https://wiki.yoctoproject.org/wiki/Toaster#Installation_and_Running'>Installation and Running</ulink>"
         section of the "Toaster" wiki page.
@@ -93,7 +130,5 @@
         <ulink url='https://wiki.yoctoproject.org/wiki/REST_API_Contracts'>REST API Contracts</ulink>
         Wiki page.
     </para>
-</chapter>
-<!--
-vim: expandtab tw=80 ts=4
 -->
+</chapter>

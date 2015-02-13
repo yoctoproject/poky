@@ -7,273 +7,317 @@
 <title>Setting Up and Using Toaster</title>
 
     <para>
-        You can set up local and production instances of Toaster.
-        This chapter describes how to set up both these types of instances.
+        You can set up Toaster as a local instance or as a hosted service.
+        Furthermore, you can use Toaster in Analysis Mode or Build Mode
+        from both set ups.
     </para>
 
-    <section id='toaster-setting-up-a-local-instance'>
-        <title>Setting Up a Local Instance</title>
+    <section id='using-toaster-in-analysis-mode'>
+        <title>Using Toaster in Analysis Mode</title>
 
         <para>
-            Follow these steps to set up and run a local instance of Toaster:
-            <orderedlist>
-                <listitem><para><emphasis>Prepare your build system:</emphasis>
-                    Be sure your system has the Toaster requirements
-                    by following the steps in the
-                    "<link linkend='toaster-establishing-toaster-system-dependencies'>Establishing Toaster System Dependencies</link>"
-                    section.
-                    </para></listitem>
-                <listitem><para><emphasis>Get Set Up to Use the Yocto Project:</emphasis>
-                    Get the requirements set up so that you can use the
-                    Yocto Project to build images.
-                    See the
-                    "<ulink url='&YOCTO_DOCS_QS_URL;#yp-resources'>What You Need and How You Get It</ulink>"
-                    section in the Yocto Project Quick Start for information.
-                    </para></listitem>
-                <listitem><para><emphasis>Be sure Ports are free:</emphasis>
-                    Make sure that port 8000 and 8200 are free.
-                    In other words, make sure the ports do not have servers
-                    on them.
-                    </para></listitem>
-                <listitem><para><emphasis>Source your Build Environment Setup Script:</emphasis>
-                    From your
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-                    (e.g. <filename>poky/build</filename>), source the build
-                    environment setup script (i.e.
-                    <ulink url="&YOCTO_DOCS_REF_URL;#structure-core-script"><filename>&OE_INIT_FILE;</filename></ulink>
-                    or
-                    <ulink url="&YOCTO_DOCS_REF_URL;#structure-memres-core-script"><filename>oe-init-build-env-memres</filename></ulink>).
-                    </para></listitem>
-                <listitem><para><emphasis>Start Toaster:</emphasis>
-                    From the
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>,
-                    start Toaster:
-                    <literallayout class='monospaced'>
+            This section describes how to use Toaster in Analysis Mode
+            after setting Toaster up as a local instance or as a hosted
+            service.
+        </para>
+
+        <section id='setting-up-locally-and-running-in-analysis-mode'>
+            <title>Setting Up Locally and Running in Analysis Mode</title>
+
+            <para>
+                Follow these steps to set up a local instance of Toaster and
+                then run in Analysis Mode:
+                <orderedlist>
+                    <listitem><para><emphasis>Prepare your Build System:</emphasis>
+                        Be sure your system has the Toaster requirements
+                        by following the steps in the
+                        "<link linkend='toaster-establishing-toaster-system-dependencies'>Establishing Toaster System Dependencies</link>"
+                        section.
+                        </para></listitem>
+                    <listitem><para><emphasis>Get Set Up to Use the Yocto Project:</emphasis>
+                        Get the requirements set up so that you can use the
+                        Yocto Project to build images.
+                        See the
+                        "<ulink url='&YOCTO_DOCS_QS_URL;#yp-resources'>What You Need and How You Get It</ulink>"
+                        section in the Yocto Project Quick Start for information.
+                        </para></listitem>
+                    <listitem><para><emphasis>Be Sure Ports are Free:</emphasis>
+                        Make sure that port 8000 and 8200 are free.
+                        In other words, make sure the ports do not have servers
+                        on them.
+                        </para></listitem>
+                    <listitem><para><emphasis>Source your Build Environment Setup Script:</emphasis>
+                        From your
+                        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+                        (e.g. <filename>poky/build</filename>), source the build
+                        environment setup script (i.e.
+                        <ulink url="&YOCTO_DOCS_REF_URL;#structure-core-script"><filename>&OE_INIT_FILE;</filename></ulink>
+                        or
+                        <ulink url="&YOCTO_DOCS_REF_URL;#structure-memres-core-script"><filename>oe-init-build-env-memres</filename></ulink>).
+                        </para></listitem>
+                    <listitem><para><emphasis>Start Toaster:</emphasis>
+                        From the
+                        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>,
+                        start Toaster:
+                        <literallayout class='monospaced'>
      $ source toaster start
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para><emphasis>Start Your Build using BitBake:</emphasis>
-                    Use the <filename>bitbake</filename> command to start your
-                    build.
-                    Here is an example that builds the
-                    <filename>core-image-minimal</filename> image:
-                    <literallayout class='monospaced'>
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para><emphasis>Start Your Build Using BitBake:</emphasis>
+                        Use the <filename>bitbake</filename> command to start your
+                        build.
+                        Here is an example that builds the
+                        <filename>core-image-minimal</filename> image:
+                        <literallayout class='monospaced'>
      $ bitbake core-image-minimal
-                    </literallayout>
-                    </para></listitem>
-            </orderedlist>
-        </para>
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
+            </para>
 
-        <para>
-            For information on how to use Toaster, see the
-            "<link linkend='using-the-toaster-interface'>Using the Toaster Interface</link>"
-            section.
-        </para>
-    </section>
+            <para>
+                For information on how to use Toaster, see the
+                "<link linkend='using-the-toaster-interface'>Using the Toaster Interface</link>"
+                section.
+            </para>
+        </section>
 
-    <section id='toaster-setting-up-a-production-instance'>
-        <title>Setting Up a Production Instance</title>
+        <section id='setting-up-a-hosted-service-and-running-in-analysis-mode'>
+            <title>Setting Up a Hosted Service and Running in Analysis Mode</title>
 
-        <para>
-            A production instance of Toaster resides on a server and allows
-            multiple users to take advantage of Toaster.
-            In a production environment, you might want to have multiple
-            instances of Toaster running on various remote build machines.
-            You can create this situation by basically modifying how Toaster
-            starts.
-        </para>
+            <para>
+                A hosted service resides on a server and allows
+                multiple users to take advantage of Toaster.
+                In a production environment, you might want to have multiple
+                local instances of Toaster, which run on various remote
+                build machines, and have those local instances access and use
+                a single hosted Toaster service.
+            </para>
 
-        <para>
-            Starting Toaster with the <filename>toaster</filename> command
-            (i.e. the script), causes three things to start:
-            <itemizedlist>
-                <listitem><para>
-                    The BitBake server.
-                    </para></listitem>
-                <listitem><para>
-                     the Toaster User Interface, which connects to the
-                     BitBake server on one side and to the SQL
-                     database on the other side.
-                     </para></listitem>
-                <listitem><para>
-                     The web server, which reads the database and displays the
-                     web user interface.
-                     </para></listitem>
-            </itemizedlist>
-            Rather than starting Toaster with the script, you can set up
-            and start multiple instances of Toaster by manually starting
-            as many or few of these three components across your environment.
-            This is possible because it is not required that Toaster starts
-            all three of its separate components in order to run.
-            Minimally, an instance of Toaster requires just one of the
-            components.
-        </para>
+            <para>
+                Starting Toaster with the <filename>toaster</filename> command
+                (i.e. the script), causes three things to start:
+                <itemizedlist>
+                    <listitem><para>
+                        The BitBake server.
+                        </para></listitem>
+                    <listitem><para>
+                        The Toaster User Interface, which connects to the
+                        BitBake server on one side and to the SQL
+                        database on the other side.
+                        </para></listitem>
+                    <listitem><para>
+                        The web server, which reads the database and displays
+                        the web user interface.
+                        </para></listitem>
+                </itemizedlist>
+                Rather than starting Toaster with the script, you can set up
+                and start multiple instances of Toaster by manually starting
+                as many or few of these three components across your
+                environment.
+                This is possible because it is not required that Toaster starts
+                all three of its separate components in order to run.
+                Minimally, a local instance of Toaster requires just one of the
+                components.
+            </para>
 
-        <para>
-            The concepts for setting up multiple instances of Toaster revolve
-            around maintaining a common SQL database and Web server that
-            show data from that common database as well as setting up
-            separate instances of BitBake servers and Toaster user interfaces
-            for each separate BitBake build directory.
-            The common SQL database and the Web server show data from all the
-            various BitBake builds.
-            Setting the SQL database outside of any
-            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-            maintains a separation layer between the various builds.
-            The database is persistent because the logging database is set
-            up external to the database server (e.g. MySQL).
-            It is not even necessary to run the BitBake servers, the SQL
-            server, and the Web server on the same machine.
-            Each component can be run on its own machine.
-        </para>
+            <para>
+                The concepts for setting up multiple local instances of
+                Toaster that share a single hosted service revolve
+                around maintaining a common SQL database and Web server that
+                shows data from that common database as well as setting up
+                separate local instances of BitBake servers and Toaster user
+                interfaces for each of those separate BitBake build
+                directories.
+            </para>
 
-        <para>
-            Follow these steps to set up and run a production instance of
-            Toaster:
-            <orderedlist>
-                <listitem><para><emphasis>Prepare your build system:</emphasis>
-                    Be sure your system has the Toaster requirements
-                    by following the steps in the
-                    "<link linkend='toaster-establishing-toaster-system-dependencies'>Establishing Toaster System Dependencies</link>"
-                    section.
-                    </para></listitem>
-                <listitem><para><emphasis>Get Set Up to Use the Yocto Project:</emphasis>
-                    Get the requirements set up so that you can use the
-                    Yocto Project to build images.
-                    See the
-                    "<ulink url='&YOCTO_DOCS_QS_URL;#yp-resources'>What You Need and How You Get It</ulink>"
-                    section in the Yocto Project Quick Start for information.
-                    </para></listitem>
-                <listitem><para><emphasis>Be sure Ports are free:</emphasis>
-                    Make sure that port 8000 and 8200 are free.
-                    In other words, make sure the ports do not have servers
-                    on them.
-                    </para></listitem>
-                <listitem><para><emphasis>Set up the SQL Logging Server and the Web Server:</emphasis>
-                    You can use any SQL server out of the box (e.g.
-                    <filename>mysgl-server</filename> for an Ubuntu build
-                    system).
-                    <note>
-                        If you are concerned about performance, you might want
-                        to hand-tune the server.
-                    </note>
-                    You must set up proper username and password access for
-                    the server for everyone that will be using Toaster.
-                    You need administration rights for the
-                    <filename>mysql</filename> root account, which is not the
-                    same thing as root access on the machine.</para>
+            <para>
+                The common SQL database and the Web server show data from
+                all the various BitBake builds.
+                Setting the SQL database outside of any
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+                maintains a separation layer between the various local builds
+                and the common database.
+                The database is persistent because the logging database is set
+                up external to the BitBake database server (e.g. MySQL).
+                It is not even necessary to run the BitBake servers, the SQL
+                server, and the Web server on the same machine.
+                Each component can be run on its own machine.
+            </para>
 
-                    <para>Clone a separate, local Git repository of the
-                    Toaster master branch to use for running the Web server:
-                    <literallayout class='monospaced'>
-     $ git clone (NEED THE GIT REPO URL HERE)
-                    </literallayout>
-                    You do not perform builds on this tree.
-                    You need to create this local repository away from any
-                    build areas.</para>
-
-                    <para>In the separately cloned tree for the Web server,
-                    edit the
-                    <filename>bitbake/lib/toaster/toastermain/settings.py</filename>
-                    file so that the <filename>DATABASES</filename> value
-                    points to the previously created database server.
-                    Use the username and password established earlier.</para>
-
-                    <para>Run the database sync scripts to create the needed
-                    tables as follows:
-                    <literallayout class='monospaced'>
+            <para>
+                Follow these steps to set up and run a hosted service and run
+                Toaster in Analysis Mode:
+                <orderedlist>
+                    <listitem><para><emphasis>Prepare your Build System:</emphasis>
+                        Be sure your system has the Toaster requirements
+                        by following the steps in the
+                        "<link linkend='toaster-establishing-toaster-system-dependencies'>Establishing Toaster System Dependencies</link>"
+                        section.
+                        </para></listitem>
+                    <listitem><para><emphasis>Get Set Up to Use the Yocto Project:</emphasis>
+                        Get the requirements set up so that you can use the
+                        Yocto Project to build images.
+                        See the
+                        "<ulink url='&YOCTO_DOCS_QS_URL;#yp-resources'>What You Need and How You Get It</ulink>"
+                        section in the Yocto Project Quick Start for information.
+                        </para></listitem>
+                    <listitem><para><emphasis>Be Sure Ports are Free:</emphasis>
+                        Make sure that port 8000 and 8200 are free.
+                        In other words, make sure the ports do not have servers
+                        on them.
+                        </para></listitem>
+                    <listitem><para><emphasis>Set up the SQL Logging Server and the Web Server:</emphasis>
+                        You can use any SQL server out of the box (e.g.
+                        <filename>mysgl-server</filename> for an Ubuntu build
+                        system).
+                        <note>
+                            If you are concerned about performance, you might
+                            want to hand-tune the server.
+                        </note>
+                        You must set up proper username and password access on
+                        the shared server for everyone that will be using
+                        Toaster.
+                        You need administration rights for the
+                        <filename>mysql</filename> root account, which is not
+                        the same thing as root access on the machine.</para>
+                        <para>Clone a separate, local Git repository of the
+                        Toaster master branch to use for running the Web
+                        server.
+                        The Git repository for Toaster is part of the
+                        Yocto Project
+                        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+                        Consequently, you just need to set up a separate
+                        local clone of the Yocto Project Source Directory
+                        (e.g. <filename>poky</filename>):
+                        <literallayout class='monospaced'>
+     $ git clone git://git.yoctoproject.org/poky
+                        </literallayout>
+                        You do not perform builds on this tree.
+                        You need to create this local repository away from any
+                        build areas.</para>
+                        <para>In the separately cloned tree for the Web server,
+                        edit the
+                        <filename>bitbake/lib/toaster/toastermain/settings.py</filename>
+                        file so that the <filename>DATABASES</filename> value
+                        points to the previously created database server.
+                        Use the username and password established
+                        earlier.</para>
+                        <para>Run the database sync scripts to create the
+                        needed tables as follows:
+                        <literallayout class='monospaced'>
      $ python bitbake/lib/toaster/manage.py syncdb
      $ python bitbake/lib/toaster/manage.py migrate orm
-                    </literallayout>
-                    You can start the web server in the foreground or the
-                    background using these commands, respectively:
-                    <literallayout class='monospaced'>
+                        </literallayout>
+                        You can start the Web server in the foreground or the
+                        background using these commands, respectively:
+                        <literallayout class='monospaced'>
      $ python bitbake/lib/toaster/manage.py runserver
      $ nohup python bitbake/lib/toaster/manage.py runserver 2>toaster_web.log >toaster_web.log &amp;
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para><emphasis>Enable Build Logging to the Common SQL Server for Each Build Directory you are Using</emphasis>
-                    For each build system that will be using Toaster and the
-                    SQL server, you need to edit the
-                    <filename>bitbake/lib/toaster/toastermain/settings.py</filename>
-                    to alter the <filename>DATABASES</filename> value to point
-                    to the common SQL logging server.
-                    (I DON'T SEE HOW TO DO THIS FROM THE WIKI - I NEED MORE
-                    CLARIFICATION).</para>
-
-                    <para>In the Build Directory, create the required
-                    <filename>conf/toaster.conf</filename> file as described in
-                    <ulink url='https://wiki.yoctoproject.org/wiki/Setting_up_a_local_instance_of_Toaster'>BitBake Extra Options</ulink>.
-                    Briefly, for each Build Directory, you need to inherit the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-toaster'>toaster</ulink>
-                    class by setting the following in your
-                    <filename>local.conf</filename> configuration file:
-                    <literallayout class='monospaced'>
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para><emphasis>Enable Build Logging to the Common SQL Server for Each Build Directory you are Using:</emphasis>
+                        For each build system that will be using Toaster and
+                        the shared SQL server, you need to edit the
+                        <filename>bitbake/lib/toaster/toastermain/settings.py</filename>
+                        file to alter the <filename>DATABASES</filename> value
+                        so that it points to the common SQL logging server.
+                        <note><title>REVIEWER NOTE</title>
+                            I don't see how to do this from the Wiki.
+                            I need more clarification.
+                        </note></para>
+                        <para>In the Build Directory, create the required
+                        <filename>conf/toaster.conf</filename> file as
+                        described in
+                        <ulink url='https://wiki.yoctoproject.org/wiki/Setting_up_a_local_instance_of_Toaster'>BitBake Extra Options</ulink>.
+                        Briefly, for each Build Directory, you need to inherit
+                        the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-toaster'>toaster</ulink>
+                        class by setting the following in your
+                        <filename>local.conf</filename> configuration file:
+                        <literallayout class='monospaced'>
      INHERIT += "toaster"
      INHERIT += "buildhistory"
      BUILDHISTORY_COMMIT = "1"
-                    </literallayout>
-                    Start the BitBake server using the following command:
-                    <literallayout class='monospaced'>
-     $ bitbake --postread conf/toaster.conf --server-only -t xmlrpc -B localhost:0 &amp;&amp; export BBSERVER=localhost:-1
-                    </literallayout>
-                    Start the logging user interface using the following
-                    command:
-                    <literallayout class='monospaced'>
-     $ nohup bitbake --observe-only -u toasterui >toaster_ui.log &amp;
-                    </literallayout>
-                    <note>
-                        No hard-coded ports are used as there is enough code
-                        to run <filename>autodiscovery</filename>
-                        for ports to prevent collisions.
-                    </note>
-                    </para></listitem>
-                <listitem><para><emphasis>Source your Build Environment Setup Script:</emphasis>
-                    From your
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-                    on each of the build systems,
-                    (e.g. <filename>poky/build</filename>), source the build
-                    environment setup script (i.e.
-                    <ulink url="&YOCTO_DOCS_REF_URL;#structure-core-script"><filename>&OE_INIT_FILE;</filename></ulink>
-                    or
-                    <ulink url="&YOCTO_DOCS_REF_URL;#structure-memres-core-script"><filename>oe-init-build-env-memres</filename></ulink>).
-                    </para></listitem>
-                <listitem><para><emphasis>Start Builds Using BitBake:</emphasis>
-                    Use the <filename>bitbake</filename> command to start a
-                    build on a build system.
-                    Here is an example that builds the
-                    <filename>core-image-minimal</filename> image:
-                    <literallayout class='monospaced'>
+                        </literallayout>
+                        Start the BitBake server using the following command:
+                        <literallayout class='monospaced'>
+     $ bitbake &dash;&dash;postread conf/toaster.conf &dash;&dash;server-only -t xmlrpc -B localhost:0 &amp;&amp; export BBSERVER=localhost:-1
+                        </literallayout>
+                        Start the logging user interface using the following
+                        command:
+                        <literallayout class='monospaced'>
+     $ nohup bitbake &dash;&dash;observe-only -u toasterui >toaster_ui.log &amp;
+                        </literallayout>
+                        <note>
+                            No hard-coded ports are used as there is enough code
+                            to run <filename>autodiscovery</filename>
+                            for ports to prevent collisions.
+                        </note>
+                        </para></listitem>
+                    <listitem><para><emphasis>Source your Build Environment Setup Script:</emphasis>
+                        From your
+                        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+                        on each of the build systems,
+                        (e.g. <filename>poky/build</filename>), source the
+                        build environment setup script (i.e.
+                        <ulink url="&YOCTO_DOCS_REF_URL;#structure-core-script"><filename>&OE_INIT_FILE;</filename></ulink>
+                        or
+                        <ulink url="&YOCTO_DOCS_REF_URL;#structure-memres-core-script"><filename>oe-init-build-env-memres</filename></ulink>).
+                        </para></listitem>
+                    <listitem><para><emphasis>Start Builds Using BitBake:</emphasis>
+                        Use the <filename>bitbake</filename> command to start a
+                        build on a build system.
+                        Here is an example that builds the
+                        <filename>core-image-minimal</filename> image:
+                        <literallayout class='monospaced'>
      $ bitbake core-image-minimal
-                    </literallayout>
-                    When you are finished with a build in a given
-                    Build Directory, be sure to <filename>kill</filename>
-                    the BitBake server for that build area:
-                    <literallayout class='monospaced'>
+                        </literallayout>
+                        When you are finished with a build in a given
+                        Build Directory, be sure to <filename>kill</filename>
+                        the BitBake server for that build area:
+                        <literallayout class='monospaced'>
      $ bitbake -m
-                    </literallayout>
-                    </para></listitem>
-            </orderedlist>
-        </para>
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
+            </para>
 
-        <para>
-            For information on how to use Toaster, see the
-            "<link linkend='using-the-toaster-interface'>Using the Toaster Interface</link>"
-            section.
-        </para>
+            <para>
+                For information on how to use Toaster, see the
+                "<link linkend='using-the-toaster-interface'>Using the Toaster Interface</link>"
+                section.
+            </para>
+        </section>
     </section>
 
-    <section id='setting-up-a-hosted-managed-mode-for-toaster'>
-        <title>Setting Up a Hosted Managed Mode for Toaster</title>
+    <section id='using-toaster-in-build-mode'>
+        <title>Using Toaster in Build Mode</title>
 
         <para>
-            (RIGHT NOW, THE
-            <ulink url='https://wiki.yoctoproject.org/wiki/Setting_up_a_hosted_managed_mode_for_Toaster'>WIKI PAGE</ulink>
-            HAS SOME INFORMATION ON THIS.
-            I DON'T GET IT THOUGH.
-            I NEED SOME MORE INFORMATION IN ORDER TO UNDERSTAND THIS AND
-            CREATE A SECTION.
+            This section describes how to use Toaster in Build Mode
+            after setting Toaster up as a local instance or as a hosted
+            service.
         </para>
+
+        <section id='setting-up-locally-and-running-in-build-mode'>
+            <title>Setting Up Locally and Running in Build Mode</title>
+
+            <note><title>REVIEWER NOTE</title>
+                I need the information on how to do this.
+            </note>
+        </section>
+
+        <section id='setting-up-a-hosted-service-and-running-in-build-mode'>
+            <title>Setting Up a Hosted Service and Running in Build Mode</title>
+
+            <note><title>REVIEWER NOTE</title>
+                Right now, the
+                <ulink url='https://wiki.yoctoproject.org/wiki/Setting_up_a_hosted_managed_mode_for_Toaster'>WIKI PAGE</ulink>
+                has some information on this but I don't understand it.
+                I need more information.
+            </note>
+        </section>
     </section>
 
     <section id='using-the-toaster-interface'>
@@ -312,15 +356,12 @@
             Toaster interface, see the
             <ulink url='https://www.yoctoproject.org/documentation/toaster-manual-17'>Toaster Documentation</ulink>
             on the Yocto Project website.
-            (SO WE NEED TO DECIDE IF THESE VIDS ARE GOING TO ROLL OVER INTO
-            1.8 AND REMAIN ON A "TOASTER MANUAL" PAGE AS THEY DO IN 1.7.
-            OR, IF WE ARE GOING TO GET THE LINKS TO THE VIDS HERE IN THIS
-            MANUAL.)
+            <note><title>REVIEWER NOTE</title>
+               We have agreed to get rid of the manual page on the website,
+               contains the links to the GUI videos.
+               We have agreed to host the videos on Vimeo and to embed the
+               videos in this new Toaster manual.
+            </note>
         </para>
     </section>
 </chapter>
-
-
-<!--
-vim: expandtab tw=80 ts=4
--->
