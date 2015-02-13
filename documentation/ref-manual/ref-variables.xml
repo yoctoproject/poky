@@ -396,13 +396,30 @@
                 AUTOREV[doc] = "When SRCREV is set to the value of this variable, it specifies to use the latest source revision in the repository."
             </info>
             <glossdef>
-                <para>When <filename><link linkend='var-SRCREV'>SRCREV</link></filename>
+                <para>
+                    When
+                    <filename><link linkend='var-SRCREV'>SRCREV</link></filename>
                     is set to the value of this variable, it specifies to use
                     the latest source revision in the repository.
                     Here is an example:
                     <literallayout class='monospaced'>
      SRCREV = "${AUTOREV}"
                     </literallayout>
+                </para>
+
+                <para>
+                    If you use the previous statement to inherit the latest
+                    version of software, you need to be sure
+                    <link linkend='var-PV'><filename>PV</filename></link>
+                    contains
+                    <filename>${</filename><link linkend='var-SRCPV'><filename>SRCPV</filename></link><filename>}</filename>.
+                    For example, suppose you have a kernel recipe that needs
+                    to inherit the latest kernel and you use the previous
+                    statement.
+                    In this example, <filename>${SRCPV}</filename> does not
+                    get into <filename>PV</filename>.
+                    Consequently, you need to change <filename>PV</filename>
+                    so that it does contain <filename>${SRCPV}</filename>.
                 </para>
             </glossdef>
         </glossentry>
@@ -10035,13 +10052,22 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para>
                     The revision of the source code used to build the package.
-                    This variable applies to Subversion, Git, Mercurial and Bazaar
-                    only.
-                    Note that if you wish to build a fixed revision and you wish
-                    to avoid performing a query on the remote repository every time
-                    BitBake parses your recipe, you should specify a <filename>SRCREV</filename> that is a
+                    This variable applies to Subversion, Git, Mercurial and
+                    Bazaar only.
+                    Note that if you want to build a fixed revision and you
+                    want to avoid performing a query on the remote repository
+                    every time BitBake parses your recipe, you should specify
+                    a <filename>SRCREV</filename> that is a
                     full revision identifier and not just a tag.
                 </para>
+
+                <note>
+                    For information on limitations when inheriting the latest
+                    revision of software using <filename>SRCREV</filename>,
+                    see the
+                    <link linkend='var-AUTOREV'><filename>AUTOREV</filename></link>
+                    variable description.
+                </note>
             </glossdef>
         </glossentry>
 
@@ -11165,7 +11191,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     In summary, you must be sure to add the layer to your
                     <filename>bblayers.conf</filename> file in front of the
                     <filename>meta</filename> layer and then set the
-                    <link linkend='var-EXTERNAL_TOOLCHAIN'><filename>EXTERNAL_TOOLCHAIN</filename></link>
+                    <filename>EXTERNAL_TOOLCHAIN</filename>
                     variable in your <filename>local.conf</filename> file
                     to the location in which you installed the toolchain.
                 </para>
