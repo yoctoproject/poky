@@ -9,8 +9,6 @@
     <para>
         This chapter describes how you need to prepare your system in order to
         use Toaster.
-        Toaster requires some packages that you must have installed before
-        trying to run Toaster.
     </para>
 
     <section id='toaster-setting-up-the-basic-system-requirements'>
@@ -30,54 +28,103 @@
         <title>Establishing Toaster System Dependencies</title>
 
         <para>
-            Toaster requires extra Python dependencies that Bitbake
-            does not need in order to run.
-            In order to make it easy to run Toaster, a requirements file
-            located in the root directory of
+            Toaster requires extra Python dependencies and
+            <ulink url='http://www.libslack.org/daemon/'><filename>daemon</filename></ulink>
+            in order to run.
+            A Toaster requirements file named
+            <filename>toaster-requirements.txt</filename> defines the
+            Python dependencies.
+            The requirements file is located in the
+            <filename>bitbake</filename> directory, which is located in the
+            root directory of the
             <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
-            <filename>bitbake/</filename>
             (e.g. <filename>poky/bitbake/toaster-requirements.txt</filename>).
             The dependencies appear in a <filename>pip</filename>,
-            install-compatible format:
-            <literallayout class='monospaced'>
-     Django==1.6
-     South==0.8.4
-     argparse==1.2.1
-     wsgiref==0.1.2
-            </literallayout>
-            Follow these steps to get set up:
-            <orderedlist>
-                <listitem><para><emphasis>Install <filename>virtualenv</filename>:</emphasis>
-                    <filename>virtualenv</filename> is a tool to create
-                    isolated Python environments by creating folders that
-                    contain all the necessary executables to use the packages
-                    that Python projects need.
-                    You can use <filename>pip</filename> to install
-                    <filename>virtualenv</filename>:
-                    <literallayout class='monospaced'>
-     $ pip install virtualenv
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para><emphasis>Create and activate a virtual environment:</emphasis>
-                    <literallayout class='monospaced'>
+            install-compatible format.
+        </para>
+
+        <section id='toaster-optional-virtual-environment'>
+            <title>Optionally Setting Up a Python Virtual Environment</title>
+
+            <para>
+                It is highly recommended that you use a Python virtual
+                environment that allows you to maintain a dedicated Python
+                executable and its own set of installed modules.
+                Doing so separates the executable from the Python and modules
+                provided by the operating system and therefore avoids any
+                version conflicts.
+            </para>
+
+            <para>
+                Follow these steps to set up your virtual environment.
+                These steps assume a Ubuntu distribution:
+                <orderedlist>
+                    <listitem><para><emphasis>Install <filename>virtualenv</filename>:</emphasis>
+                        Install the supported
+                        <filename>python-virtualenv</filename> package from your
+                        distribution rather than using <filename>pip</filename>.
+                        <literallayout class='monospaced'>
+     $ sudo apt-get install python-virtualenv
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para><emphasis>Create and Activate a Virtual Environment:</emphasis>
+                        <literallayout class='monospaced'>
      $ virtualenv venv
      $ source venv/bin/activate
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para><emphasis>Use <filename>pip</filename> to install needed packages:</emphasis>
-                    <literallayout class='monospaced'>
-     $ pip install -r bitbake/toaster-requirements.txt
-                    </literallayout>
-                    </para></listitem>
-            </orderedlist>
-            Once you complete these steps, you execute in a lightweight
-            "virtual environment” with its own site directories that are
-            optionally isolated from system site directories.
-            The virtual environment has its own Python binary
-            (allowing creation of environments with various Python versions)
-            and can have its own independent set of installed Python packages
-            in its site directories.
-        </para>
-    </section>
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
 
+        <section id='toaster-load-packages'>
+            <title>Install Toaster Packages</title>
+
+            <para>
+                You need to install the packages that Toaster requires.
+                Use this command:
+                <literallayout class='monospaced'>
+     $ pip install -r bitbake/toaster-requirements.txt
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='toaster-install-daemon'>
+            <title>Install <filename>daemon</filename></title>
+
+            <para>
+                Toaster depends on
+                <ulink url='http://www.libslack.org/daemon/'><filename>daemon</filename></ulink>.
+                Depending on your distribution, how you install
+                <filename>daemon</filename> differs:
+                <itemizedlist>
+                    <listitem><para><emphasis>Debian-Based Systems:</emphasis>
+                        If you are running a Debian-based distribution,
+                        install <filename>daemon</filename> using the
+                        following command:
+                        <literallayout class='monospaced'>
+     $ sudo apt-get install daemon​
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para><emphasis>Non-Debian-Based Systems:</emphasis>
+                        If you are not running a Debian-based distribution
+                        (Redhat-based distribution such as Fedora),
+                        you need to download ​the file relevant to the
+                        architecture and then install
+                        <filename>daemon</filename> manually.
+                        Following are the commands for 64-bit distributions:
+                        <literallayout class='monospaced'>
+     $ wget http://libslack.org/daemon/download/daemon-0.6.4-1.x86_64.rpm
+     $ sudo rpm -i daemon-0.6.4-1.x86_64.rpm
+                        </literallayout>
+                        Here are the commands for a 32-bit distribution:
+                        <literallayout class='monospaced'>
+     $ wget http://libslack.org/daemon/download/daemon-0.6.4-1.i686.rpm
+     $ sudo rpm -i ​daemon-0.6.4-1.i686.rpm​
+                        </literallayout>
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+    </section>
 </chapter>
