@@ -225,8 +225,6 @@
      meta-emenlow/recipes-kernel/
      meta-emenlow/recipes-kernel/linux/
      meta-emenlow/recipes-kernel/linux/linux-yocto-dev.bbappend
-     meta-emenlow/recipes-kernel/linux/linux-yocto-rt_3.10.bbappend
-     meta-emenlow/recipes-kernel/linux/linux-yocto_3.10.bbappend
      meta-emenlow/recipes-kernel/linux/linux-yocto_3.14.bbappend
                 </literallayout>
             </para>
@@ -558,28 +556,28 @@
                 the <filename>meta-<replaceable>bsp_name</replaceable>/recipes-kernel/linux</filename> directory).
             </para>
             <para>
-                Suppose you are using the <filename>linux-yocto_3.10.bb</filename> recipe to build
+                Suppose you are using the <filename>linux-yocto_3.14.bb</filename> recipe to build
                 the kernel.
                 In other words, you have selected the kernel in your
                 <replaceable>bsp_name</replaceable><filename>.conf</filename> file by adding these types
                 of statements:
                 <literallayout class='monospaced'>
      PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-     PREFERRED_VERSION_linux-yocto ?= "3.10%"
+     PREFERRED_VERSION_linux-yocto ?= "3.14%"
                 </literallayout>
                 <note>
                     When the preferred provider is assumed by default, the
                     <filename>PREFERRED_PROVIDER</filename> statement does not appear in the
                     <replaceable>bsp_name</replaceable><filename>.conf</filename> file.
                 </note>
-                You would use the <filename>linux-yocto_3.10.bbappend</filename> file to append
+                You would use the <filename>linux-yocto_3.14.bbappend</filename> file to append
                 specific BSP settings to the kernel, thus configuring the kernel for your particular BSP.
             </para>
             <para>
                 As an example, look at the existing eMenlow BSP.
                 The append file used is:
                 <literallayout class='monospaced'>
-     meta-emenlow/recipes-kernel/linux/linux-yocto_3.10.bbappend
+     meta-emenlow/recipes-kernel/linux/linux-yocto_3.14.bbappend
                 </literallayout>
                 The following listing shows the file.
                 Be aware that the actual commit ID strings in this example listing might be different
@@ -590,12 +588,12 @@
 
      COMPATIBLE_MACHINE_emenlow-noemgd = "emenlow-noemgd"
      KMACHINE_emenlow-noemgd = "emenlow"
-     KBRANCH_emenlow-noemgd = "standard/emenlow"
+     KBRANCH_emenlow-noemgd = "standard/base"
      KERNEL_FEATURES_append_emenlow-noemgd = " features/drm-gma500/drm-gma500"
 
-     LINUX_VERSION_emenlow-noemgd = "3.10.55"
-     SRCREV_meta_emenlow-noemgd = "f79a00265eefbe2fffc2cdb03f67235497a9a87e"
-     SRCREV_machine_emenlow-noemgd = "3677ea7f9476458aa6dec440243de3a6fb1343a9"
+     LINUX_VERSION_emenlow-noemgd = "3.14.19"
+     SRCREV_machine_emenlow-noemgd = "902f34d36102a4b2008b776ecae686f80d307e12"
+     SRCREV_meta_emenlow-noemgd = "28e39741b8b3018334021d981369d3fd61f18f5b"
                 </literallayout>
                 This append file contains statements used to support the
                 eMenlow BSP.
@@ -613,7 +611,7 @@
                 The
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES'><filename>KERNEL_FEATURES</filename></ulink>
                 variable enables features specific to the kernel
-                (e.g. VESA graphics support in this case).
+                (e.g. Intel GMA-500 DRM Driver in this case).
                 The append file points to specific commits in the
                 <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
                 Git repository and the <filename>meta</filename> Git repository
@@ -1335,9 +1333,9 @@
          5) MIPS    (32-bit)
          6) MIPS64  (64-bit)
      3
-     Would you like to use the default (3.17) kernel? (y/n) [default: y] y
+     Would you like to use the default (3.19) kernel? (y/n) [default: y] y
      Do you need a new machine branch for this BSP (the alternative is to re-use an existing branch)? [y/n] [default: y]
-     Getting branches from remote repo git://git.yoctoproject.org/linux-yocto-3.17.git...
+     Getting branches from remote repo git://git.yoctoproject.org/linux-yocto-3.19.git...
      Please choose a machine branch to base your new BSP branch on: [default: standard/base]
          1) standard/arm-versatile-926ejs
          2) standard/base
@@ -1365,7 +1363,7 @@
                             In the example, we use the ARM architecture.
                             </para></listitem>
                         <listitem><para>The script then prompts you for the kernel.
-                            The default 3.17 kernel is acceptable.
+                            The default 3.19 kernel is acceptable.
                             So, the example accepts the default.
                             If you enter 'n', the script prompts you to further enter the kernel
                             you do want to use.</para></listitem>
