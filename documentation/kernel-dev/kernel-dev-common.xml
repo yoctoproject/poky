@@ -156,23 +156,27 @@
             <title>Changing the Configuration</title>
 
             <para>
-                You can make wholesale or incremental changes to the Linux
-                kernel <filename>.config</filename> file by including a
-                <filename>defconfig</filename> and by specifying
+                You can make wholesale or incremental changes to the final
+                <filename>.config</filename> file used for the eventual
+                Linux kernel configuration by including a
+                <filename>defconfig</filename> file and by specifying
                 configuration fragments in the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                to be applied to that file.
             </para>
 
             <para>
-                If you have a final Linux kernel <filename>.config</filename>
-                file you want to use, copy it to a directory named
-                <filename>files</filename>, which must be in
-                your layer's <filename>recipes-kernel/linux</filename>
-                directory, and name the file "defconfig".
-                Then, add the following lines to your linux-yocto
+                If you have a complete, working Linux kernel
+                <filename>.config</filename>
+                file you want to use for the configuration, as before, copy
+                that file to the appropriate <filename>${PN}</filename>
+                directory in your layer's
+                <filename>recipes-kernel/linux</filename> directory,
+                and rename the copied file to "defconfig".
+                Then, add the following lines to the linux-yocto
                 <filename>.bbappend</filename> file in your layer:
                 <literallayout class='monospaced'>
-     FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
      SRC_URI += "file://defconfig"
                 </literallayout>
                 The <filename>SRC_URI</filename> tells the build system how to
@@ -181,7 +185,7 @@
                 extends the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
                 variable (search directories) to include the
-                <filename>files</filename> directory you created for the
+                <filename>${PN}</filename> directory you created to hold the
                 configuration changes.
             </para>
 
