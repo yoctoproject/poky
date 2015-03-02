@@ -145,9 +145,9 @@
         </literallayout>
         The value of the entries in <filename>KERNEL_FEATURES</filename>
         are dependent on their location within the kernel Metadata itself.
-        The examples here are taken from the
-        <filename>linux-yocto-3.4</filename> repository where "features"
-        and "cfg" are subdirectories within the
+        The examples here are taken from the <filename>meta</filename>
+        branch of the <filename>linux-yocto-3.19</filename> repository.
+        Within that branch, "features" and "cfg" are subdirectories of the
         <filename>meta/cfg/kernel-cache</filename> directory.
         For more information, see the
         "<link linkend='kernel-metadata-syntax'>Kernel Metadata Syntax</link>" section.
@@ -442,22 +442,27 @@
             feature.
             This feature consists of one or more Linux kernel configuration
             parameters in a configuration fragment file
-            (<filename>.cfg</filename>) and an <filename>.scc</filename> file
+            (<filename>.cfg</filename>) and a <filename>.scc</filename> file
             that describes the fragment.
         </para>
 
         <para>
             The Symmetric Multi-Processing (SMP) fragment included in the
-            <filename>linux-yocto-3.4</filename> Git repository
+            <filename>linux-yocto-3.19</filename> Git repository
             consists of the following two files:
             <literallayout class='monospaced'>
      cfg/smp.scc:
         define KFEATURE_DESCRIPTION "Enable SMP"
+        define KFEATURE_COMPATIBILITY all
+
         kconf hardware smp.cfg
 
      cfg/smp.cfg:
         CONFIG_SMP=y
         CONFIG_SCHED_SMT=y
+        # Increase default NR_CPUS from 8 to 64 so that platform with
+        # more than 8 processors can be all activated at boot time
+        CONFIG_NR_CPUS=64
             </literallayout>
             You can find information on configuration fragment files in the
             "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-config-fragments'>Creating Configuration Fragments</ulink>"
@@ -584,7 +589,7 @@
         </para>
 
         <para>
-            As an example, the <filename>linux-yocto-3.4</filename>
+            As an example, the <filename>linux-yocto-3.19</filename>
             tree defines three kernel types: "standard",
             "tiny", and "preempt-rt":
             <itemizedlist>
@@ -671,15 +676,15 @@
             The hardware-specific portion is typically defined
             independently, and then aggregated with each supported kernel
             type.
-            Consider this simple BSP description that supports the "mybsp"
-            machine:
+            Consider this simple BSP description that supports the
+            <replaceable>mybsp</replaceable> machine:
             <literallayout class='monospaced'>
-     mybsp.scc:
-        define KMACHINE mybsp
+     <replaceable>mybsp</replaceable>.scc:
+        define KMACHINE <replaceable>mybsp</replaceable>
         define KTYPE standard
         define KARCH i386
 
-        kconf mybsp.cfg
+        kconf <replaceable>mybsp</replaceable>.cfg
             </literallayout>
             Every BSP description should define the
             <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>,
@@ -724,13 +729,13 @@
             a single <filename>.cfg</filename> file.
             Consider the following:
             <literallayout class='monospaced'>
-     mybsp.scc:
+     <replaceable>mybsp</replaceable>.scc:
         define KMACHINE mybsp
         define KTYPE standard
         define KARCH i386
 
         include standard.scc
-        include mybsp-hw.scc
+        include <replaceable>mybsp</replaceable>-hw.scc
             </literallayout>
         </para>
 
@@ -738,8 +743,10 @@
             In the above example, <filename>standard.scc</filename>
             aggregates all the configuration fragments, patches, and
             features that make up your standard kernel policy whereas
-            <filename>mybsp-hw.scc</filename> aggregates all those necessary
-            to support the hardware available on the "mybsp" machine.
+            <replaceable>mybsp</replaceable><filename>-hw.scc</filename>
+            aggregates all those necessary
+            to support the hardware available on the
+            <replaceable>mybsp</replaceable> machine.
             For information on how to break a complete
             <filename>.config</filename> file into the various
             configuration fragments, see the
@@ -751,99 +758,98 @@
             Many real-world examples are more complex.
             Like any other <filename>.scc</filename> file, BSP
             descriptions can aggregate features.
-            Consider the Fish River Island 2 (fri2)
-            BSP definition from the <filename>linux-yocto-3.4</filename>
+            Consider the Minnow BSP definition from the
+            <filename>linux-yocto-3.19</filename>
             Git repository:
             <literallayout class='monospaced'>
-     fri2.scc:
-        kconf hardware fri2.cfg
-
+     minnow.scc:
         include cfg/x86.scc
         include features/eg20t/eg20t.scc
         include cfg/dmaengine.scc
-        include features/ericsson-3g/f5521gw.scc
         include features/power/intel.scc
         include cfg/efi.scc
         include features/usb/ehci-hcd.scc
         include features/usb/ohci-hcd.scc
-        include features/iwlwifi/iwlwifi.scc
+        include features/usb/usb-gadgets.scc
+        include features/usb/touchscreen-composite.scc
+        include cfg/timer/hpet.scc
+        include cfg/timer/rtc.scc
+        include features/leds/leds.scc
+        include features/spi/spidev.scc
+        include features/i2c/i2cdev.scc
+
+        # Earlyprintk and port debug requires 8250
+        kconf hardware cfg/8250.cfg
+
+        kconf hardware minnow.cfg
+        kconf hardware minnow-dev.cfg
             </literallayout>
         </para>
 
         <para>
-            The <filename>fri2.scc</filename> description file includes
+            The <filename>minnow.scc</filename> description file includes
             a hardware configuration fragment
-            (<filename>fri2.cfg</filename>) specific to the Fish River
-            Island 2 BSP as well as several more general configuration
+            (<filename>minnow.cfg</filename>) specific to the Minnow
+            BSP as well as several more general configuration
             fragments and features enabling hardware found on the
             machine.
             This description file is then included in each of the three
-            "fri2" description files for the supported kernel types
+            "minnow" description files for the supported kernel types
             (i.e. "standard", "preempt-rt", and "tiny").
-            Consider the "fri2" description for the "standard" kernel
+            Consider the "minnow" description for the "standard" kernel
             type:
             <literallayout class='monospaced'>
-     fri2-standard.scc:
-        define KMACHINE fri2
+     minnow-standard.scc:
+        define KMACHINE minnow
         define KTYPE standard
         define KARCH i386
 
-        include ktypes/standard/standard.scc
-        branch fri2
+        include ktypes/standard
 
-        git merge emgd-1.14
+        include minnow.scc
 
-        include fri2.scc
-
-        # Extra fri2 configs above the minimal defined in fri2.scc
+        # Extra minnow configs above the minimal defined in minnow.scc
         include cfg/efi-ext.scc
-        include features/drm-emgd/drm-emgd.scc
-        include cfg/vesafb.scc
+        include features/media/media-all.scc
+        include features/sound/snd_hda_intel.scc
 
-        # default policy for standard kernels
+        # The following should really be in standard.scc
+        # USB live-image support
         include cfg/usb-mass-storage.scc
+        include cfg/boot-live.scc
+
+        # Basic profiling
+        include features/latencytop/latencytop.scc
+        include features/profiling/profiling.scc
+
+        # Requested drivers that don't have an existing scc
+        kconf hardware minnow-drivers-extra.cfg
             </literallayout>
             The <filename>include</filename> command midway through the file
-            includes the <filename>fri2.scc</filename> description that
+            includes the <filename>minnow.scc</filename> description that
             defines all hardware enablements for the BSP that is common to all
             kernel types.
             Using this command significantly reduces duplication.
         </para>
 
         <para>
-            This "fri2" standard description introduces a few more variables
-            and commands that are worth further discussion.
-            Notice the <filename>branch fri2</filename> command, which creates
-            a machine-specific branch into which source changes are applied.
-            With this branch set up, the <filename>git merge</filename> command
-            uses Git to merge in a feature branch named "emgd-1.14".
-            You could also handle this with the <filename>patch</filename>
-            command.
-            However, for commonly used features such as this, feature branches
-            are a convenient mechanism.
-            See the "<link linkend='feature-branches'>Feature Branches</link>"
-            section for more information.
-        </para>
-
-        <para>
-            Now consider the "fri2" description for the "tiny" kernel type:
+            Now consider the "minnow" description for the "tiny" kernel type:
             <literallayout class='monospaced'>
-     fri2-tiny.scc:
-        define KMACHINE fri2
+     minnow-tiny.scc:
+        define KMACHINE minnow
         define KTYPE tiny
         define KARCH i386
 
-        include ktypes/tiny/tiny.scc
-        branch fri2
+        include ktypes/tiny
 
-        include fri2.scc
+        include minnow.scc
             </literallayout>
             As you might expect, the "tiny" description includes quite a
             bit less.
             In fact, it includes only the minimal policy defined by the
             "tiny" kernel type and the hardware-specific configuration required
             for booting the machine along with the most basic functionality of
-            the system as defined in the base "fri2" description file.
+            the system as defined in the base "minnow" description file.
         </para>
 
         <para>
