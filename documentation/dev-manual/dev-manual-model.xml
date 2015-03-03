@@ -654,8 +654,8 @@
             The Eclipse IDE is a popular development environment and it fully
             supports development using the Yocto Project.
             <note>
-                This release of the Yocto Project supports both the Kepler
-                and Juno versions of the Eclipse IDE.
+                This release of the Yocto Project supports both the Luna
+                and Kepler versions of the Eclipse IDE.
                 Thus, the following information provides setup information for
                 both versions.
             </note>
@@ -708,18 +708,19 @@
                 <title>Installing the Eclipse IDE</title>
 
                 <para>
-                    It is recommended that you have the Kepler 4.3.2 version of
-                    the Eclipse IDE installed on your development system.
-                    However, if you currently have the Juno 4.2 version
+                    It is recommended that you have the Luna SR2 (4.4.2)
+                    version of the Eclipse IDE installed on your development
+                    system.
+                    However, if you currently have the Kepler 4.3.2 version
                     installed and you do not want to upgrade the IDE, you can
-                    configure Juno to work with the Yocto Project.
+                    configure Kepler to work with the Yocto Project.
                 </para>
 
                 <para>
-                    If you do not have the Kepler 4.3.2 Eclipse IDE installed,
-                    you can find the tarball at
+                    If you do not have the Luna SR2 (4.4.2) Eclipse IDE
+                    installed, you can find the tarball at
                     <ulink url='&ECLIPSE_MAIN_URL;'></ulink>.
-                    From that site, choose the Eclipse Standard 4.3.2 version
+                    From that site, choose the Luna SR2 4.3.2 version
                     particular to your development host.
                     This version contains the Eclipse Platform, the Java
                     Development Tools (JDT), and the Plug-in Development
@@ -734,7 +735,7 @@
                     using the default name <filename>eclipse</filename>:
                     <literallayout class='monospaced'>
      $ cd ~
-     $ tar -xzvf ~/Downloads/eclipse-standard-kepler-SR2-linux-gtk-x86_64.tar.gz
+     $ tar -xzvf ~/Downloads/eclipse-java-luna-SR2-linux-gtk-x86_64.tar.gz
                     </literallayout>
                 </para>
             </section>
@@ -757,24 +758,32 @@
                             select "Install New Software" from the "Help"
                             pull-down menu.</para></listitem>
                         <listitem><para>Select
-                            <filename>Kepler - &ECLIPSE_KEPLER_URL;</filename>
+                            <filename>Luna - &ECLIPSE_LUNA_URL;</filename>
                             from the "Work with:" pull-down menu.
                             <note>
-                                For Juno, select
-                                <filename>Juno - &ECLIPSE_JUNO_URL;</filename>
+                                For Kepler, select
+                                <filename>Kepler - &ECLIPSE_KEPLER_URL;</filename>
                             </note>
                             </para></listitem>
                         <listitem><para>Expand the box next to "Linux Tools"
                             and select the
-                            <filename>LTTng - Linux Tracing Toolkit</filename>
-                            boxes.</para></listitem>
+                            <filename>Linux Tools LTTng Tracer Control</filename>,
+                            <filename>Linux Tools LTTng Userspace Analysis</filename>,
+                            and
+                            <filename>LTTng Kernel Analysis</filename> boxes.
+                            <note>
+                                For Kepler, select the
+                                <filename>LTTng - Linux Tracing Toolkit</filename>
+                                box.
+                            </note>
+                            </para></listitem>
                         <listitem><para>Expand the box next to "Mobile and
                             Device Development" and select the following boxes:
                             <itemizedlist>
                                 <listitem><para><filename>C/C++ Remote Launch (Requires RSE Remote System Explorer)</filename></para></listitem>
                                 <listitem><para><filename>Remote System Explorer End-user Runtime</filename></para></listitem>
                                 <listitem><para><filename>Remote System Explorer User Actions</filename></para></listitem>
-                                <listitem><para><filename>Target Management Terminal</filename></para></listitem>
+                                <listitem><para><filename>Target Management Terminal (Core SDK)</filename></para></listitem>
                                 <listitem><para><filename>TCF Remote System Explorer add-in</filename></para></listitem>
                                 <listitem><para><filename>TCF Target Explorer</filename></para></listitem>
                             </itemizedlist></para></listitem>
@@ -814,12 +823,12 @@
                             <listitem><para>Click "Add..." in the "Work with:"
                                 area.</para></listitem>
                            <listitem><para>Enter
-                                <filename>&ECLIPSE_DL_PLUGIN_URL;/kepler</filename>
+                                <filename>&ECLIPSE_DL_PLUGIN_URL;/luna</filename>
                                 in the URL field and provide a meaningful name
                                 in the "Name" field.
                                 <note>
-                                    If you are using Juno, use
-                                    <filename>&ECLIPSE_DL_PLUGIN_URL;/juno</filename>
+                                    If you are using Kepler, use
+                                    <filename>&ECLIPSE_DL_PLUGIN_URL;/kepler</filename>
                                     in the URL field.
                                 </note></para></listitem>
                             <listitem><para>Click "OK" to have the entry added
@@ -879,8 +888,13 @@
                                 For example, if you are using Kepler, do the
                                 following:
                                 <literallayout class='monospaced'>
-     $ git checkout kepler
+     $ git checkout luna-master
                                 </literallayout>
+                                <note>
+                                    If you are building kepler, checkout the
+                                    <filename>kepler-master</filename>
+                                    branch.
+                                </note>
                                 </para></listitem>
                             <listitem><para>Change to the
                                 <filename>scripts</filename>
@@ -910,6 +924,15 @@
                                 <literallayout class='monospaced'>
      $ ECLIPSE_HOME=/home/scottrif/eclipse-poky/scripts/eclipse ./build.sh &DISTRO_NAME; &DISTRO_NAME;
                                 </literallayout>
+                                <note><title>REVIEWER NOTE</title>
+                                    Here is the actual guidance from the script.
+                                    I need some help understanding this thing:
+                                    <literallayout class='monospaced'>
+     ECLIPSE_HOME=/home/scottrif/eclipse-poky/scripts/eclipse ./build.sh
+        &lt;plugin branch or tag name&gt; &lt;documentation branch or tag name&gt;
+        &lt;release name&gt; 2&gt;&amp;1 | tee -a build.log
+                                    </literallayout>
+                                </note>
                                 After running the script, the file
                                 <filename>org.yocto.sdk-</filename><replaceable>release</replaceable><filename>-</filename><replaceable>date</replaceable><filename>-archive.zip</filename>
                                 is in the current directory.</para></listitem>
