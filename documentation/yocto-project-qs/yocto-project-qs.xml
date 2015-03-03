@@ -369,22 +369,24 @@
     <title>A Quick Test Run</title>
 
     <para>
-        Now that you have your system requirements in order, you can give the Yocto Project a try.
+        Now that you have your system requirements in order, you can give
+        the Yocto Project a try.
         This section presents some steps that let you do the following:
-    </para>
-
-    <itemizedlist>
-        <listitem>
-            <para>
+        <itemizedlist>
+            <listitem><para>
                 Build an image and run it in the QEMU emulator.
-            </para>
-        </listitem>
-        <listitem>
-            <para>
+                </para></listitem>
+            <listitem><para>
                 Use a pre-built image and run it in the QEMU emulator.
-            </para>
-        </listitem>
-    </itemizedlist>
+                </para></listitem>
+        </itemizedlist>
+        <note>
+            This section does not provide detail, but rather provides minimal,
+            working commands and examples designed to just get you started.
+            For more details, see the appropriate manuals in the
+            <ulink url='&YOCTO_HOME_URL;/documentation'>Yocto Project manual set</ulink>.
+        </note>
+    </para>
 
     <section id='building-image'>
         <title>Building an Image</title>
@@ -463,8 +465,9 @@
                  a local repository named <filename>poky</filename> that is a
                  clone of the upstream Yocto Project
                  <filename>poky</filename> repository.</para></listitem>
-             <listitem><para>The third command checks out a local branch and
-                 names it <filename>&DISTRO_NAME;</filename>.
+             <listitem><para>The third command checks out the current
+                 Yocto Project release into a local branch whose name matches
+                 the release (i.e. <filename>&DISTRO_NAME;</filename>).
                  The local branch tracks the upstream branch of the same name.
                  Creating your own branch based on the released branch ensures
                  you are using the latest files for that release.
@@ -509,17 +512,17 @@
          </para>
 
          <para>
-             Another three variables of interest are the
+             Three other variables of interest are the
              <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink>,
              <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink>,
              and
              <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_NUMBER_PARSE_THREADS'><filename>BB_NUMBER_PARSE_THREADS</filename></ulink>
              variables.
-             By default, these variables are optimally set based on the
-             number of processor cores your build host uses.
-             Although it is possible to override these variables, the
-             default values the OpenEmbedded build system derives provide you
-             with parallelism during the build.
+             By default, the OpenEmbedded build system sets these variables
+             based on the number of processor cores your build host uses.
+             Thus, you typically do not need to uncomment these variables in
+             your <filename>local.conf</filename> file to gain optimal build
+             times.
          </para>
 
         <para>
@@ -533,39 +536,54 @@
              section in the Yocto Project Reference Manual.
         </para>
 
-         <para>
-             Continue with the following command to build an OS image for the target, which is
-             <filename>core-image-sato</filename> in this example.
-             For information on the <filename>-k</filename> option use the
-             <filename>bitbake --help</filename> command, see the
-             "<ulink url='&YOCTO_DOCS_REF_URL;#usingpoky-components-bitbake'>BitBake</ulink>"
-             section in the Yocto Project Reference Manual, or see the
-             "<ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual-command'>BitBake Command</ulink>"
-             section in the BitBake User Manual.
-             <literallayout class='monospaced'>
+        <para>
+            Continue with the following command to build an OS image for the
+            target, which is <filename>core-image-sato</filename> in this
+            example.
+            For information on the <filename>-k</filename> option use the
+            <filename>bitbake --help</filename> command, see the
+            "<ulink url='&YOCTO_DOCS_REF_URL;#usingpoky-components-bitbake'>BitBake</ulink>"
+            section in the Yocto Project Reference Manual, or see the
+            "<ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual-command'>BitBake Command</ulink>"
+            section in the BitBake User Manual.
+            For information on other targets, see the
+            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
+            chapter in the Yocto Project Reference Manual.
+            <literallayout class='monospaced'>
      $ bitbake -k core-image-sato
-             </literallayout>
-             <note>
-                 BitBake requires Python 2.6 or 2.7.  For more information on
-                 this requirement, see the
-                 "<ulink url='&YOCTO_DOCS_REF_URL;#required-git-tar-and-python-versions'>Required Git, tar, and Python</ulink>"
-                 section in the Yocto Project Reference Manual.
-             </note>
-             The final command runs the image using the QEMU emulator:
-             <literallayout class='monospaced'>
+            </literallayout>
+            <note>
+                BitBake requires Python 2.6 or 2.7.  For more information on
+                this requirement, see the
+                "<ulink url='&YOCTO_DOCS_REF_URL;#required-git-tar-and-python-versions'>Required Git, tar, and Python</ulink>"
+                section in the Yocto Project Reference Manual.
+            </note>
+            The final command runs the image using the QEMU emulator:
+            <literallayout class='monospaced'>
      $ runqemu qemux86
-             </literallayout>
-             <note>
-                 <para>
-                     Depending on the number of processors and cores, the amount
-                     of RAM, the speed of your Internet connection and other
-                     factors, the build process could take several hours the
-                     first time you run it.
-                     Subsequent builds run much faster since parts of the build
-                     are cached.
-                 </para>
-             </note>
-         </para>
+            </literallayout>
+            <note>
+                <para>
+                    Depending on the number of processors and cores, the amount
+                    of RAM, the speed of your Internet connection and other
+                    factors, the build process could take several hours the
+                    first time you run it.
+                    Subsequent builds run much faster since parts of the build
+                    are cached.
+                </para>
+            </note>
+            If you want to learn more about running QEMU, see the
+            "<ulink url="&YOCTO_DOCS_DEV_URL;#dev-manual-qemu">Using the Quick EMUlator (QEMU)</ulink>"
+            chapter in the Yocto Project Development Manual.
+        </para>
+
+        <para>
+            For information on how to use a pre-built binary, continue reading
+            into the next section.
+            Otherwise, you might be interested in reading the early chapters
+            of the
+            <ulink url='&YOCTO_DOCS_DEV_URL;'>Yocto Project Development Manual</ulink>.
+        </para>
     </section>
 
     <section id='using-pre-built'>
@@ -821,6 +839,13 @@
             </para>
         </section>
     </section>
+
+    <para>
+        For more detailed information on using the Yocto Project for
+        image and application develop, the best place to continue reading is
+        in the
+        <ulink url='&YOCTO_DOCS_DEV_URL;'>Yocto Project Development Manual</ulink>.
+    </para>
 </section>
 
 <section id='super-user'>
