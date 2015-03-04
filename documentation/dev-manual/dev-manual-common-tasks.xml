@@ -741,13 +741,13 @@
      ...
      DESCRIPTION = "A useful utility"
      ...
-     EXTRA_OECONF = "&dash;&dash;enable-something"
+     EXTRA_OECONF = "--enable-something"
      ...
 
      #### bbappended from meta-anotherlayer ####
 
      DESCRIPTION = "Customized utility"
-     EXTRA_OECONF += "&dash;&dash;enable-somethingelse"
+     EXTRA_OECONF += "--enable-somethingelse"
                                 </literallayout>
                                 Ideally, you would tidy up these utilities as
                                 follows:
@@ -755,7 +755,7 @@
      ...
      DESCRIPTION = "Customized utility"
      ...
-     EXTRA_OECONF = "&dash;&dash;enable-something &dash;&dash;enable-somethingelse"
+     EXTRA_OECONF = "--enable-something --enable-somethingelse"
      ...
                                 </literallayout></para></listitem>
                         </itemizedlist></para></listitem>
@@ -2275,7 +2275,7 @@
                         configure script with the appropriate options.</para>
                         <para>For the case involving a custom configure
                         script, you would run
-                        <filename>./configure &dash;&dash;help</filename> and look for
+                        <filename>./configure --help</filename> and look for
                         the options you need to set.</para></listitem>
                 </itemizedlist>
             </para>
@@ -2298,7 +2298,7 @@
                 configure script as needed.
                 For reference information on configure options specific to the
                 software you are building, you can consult the output of the
-                <filename>./configure &dash;&dash;help</filename> command within
+                <filename>./configure --help</filename> command within
                 <filename>${S}</filename> or consult the software's upstream
                 documentation.
             </para>
@@ -3780,7 +3780,7 @@
                 or by entering the command with a help argument as follows:
                 <literallayout class='monospaced'>
      $ wic -h
-     $ wic &dash;&dash;help
+     $ wic --help
                 </literallayout>
             </para>
 
@@ -3796,7 +3796,7 @@
             <para>
                 You can also get detailed help on a number of topics
                 from the help system.
-                The output of <filename>wic &dash;&dash;help</filename>
+                The output of <filename>wic --help</filename>
                 displays a list of available help
                 topics under a "Help topics" heading.
                 You can have the help system display the help text for
@@ -3866,38 +3866,38 @@
                                your own custom file or use a file from a set of
                                existing files as described by further options.
 
-             -o <replaceable>OUTDIR</replaceable>, &dash;&dash;outdir=<replaceable>OUTDIR</replaceable>
+             -o <replaceable>OUTDIR</replaceable>, --outdir=<replaceable>OUTDIR</replaceable>
                                The name of a directory in which to create image.
 
-             -i <replaceable>PROPERTIES_FILE</replaceable>, &dash;&dash;infile=<replaceable>PROPERTIES_FILE</replaceable>
+             -i <replaceable>PROPERTIES_FILE</replaceable>, --infile=<replaceable>PROPERTIES_FILE</replaceable>
                                The name of a file containing the values for image
                                properties as a JSON file.
 
-             -e <replaceable>IMAGE_NAME</replaceable>, &dash;&dash;image-name=<replaceable>IMAGE_NAME</replaceable>
+             -e <replaceable>IMAGE_NAME</replaceable>, --image-name=<replaceable>IMAGE_NAME</replaceable>
                                The name of the image from which to use the artifacts
                                (e.g. <filename>core-image-sato</filename>).
 
-             -r <replaceable>ROOTFS_DIR</replaceable>, &dash;&dash;rootfs-dir=<replaceable>ROOTFS_DIR</replaceable>
+             -r <replaceable>ROOTFS_DIR</replaceable>, --rootfs-dir=<replaceable>ROOTFS_DIR</replaceable>
                                The path to the <filename>/rootfs</filename> directory to use as the
                                <filename>.wks</filename> rootfs source.
 
-             -b <replaceable>BOOTIMG_DIR</replaceable>, &dash;&dash;bootimg-dir=<replaceable>BOOTIMG_DIR</replaceable>
+             -b <replaceable>BOOTIMG_DIR</replaceable>, --bootimg-dir=<replaceable>BOOTIMG_DIR</replaceable>
                                The path to the directory containing the boot artifacts
                                (e.g. <filename>/EFI</filename> or <filename>/syslinux</filename>) to use as the <filename>.wks</filename> bootimg
                                source.
 
-             -k <replaceable>KERNEL_DIR</replaceable>, &dash;&dash;kernel-dir=<replaceable>KERNEL_DIR</replaceable>
+             -k <replaceable>KERNEL_DIR</replaceable>, --kernel-dir=<replaceable>KERNEL_DIR</replaceable>
                                The path to the directory containing the kernel to use
                                in the <filename>.wks</filename> boot image.
 
-             -n <replaceable>NATIVE_SYSROOT</replaceable>, &dash;&dash;native-sysroot=<replaceable>NATIVE_SYSROOT</replaceable>
+             -n <replaceable>NATIVE_SYSROOT</replaceable>, --native-sysroot=<replaceable>NATIVE_SYSROOT</replaceable>
                                The path to the native sysroot containing the tools to use
                                to build the image.
 
-             -s, &dash;&dash;skip-build-check
+             -s, --skip-build-check
                                Skips the build check.
 
-             -D, &dash;&dash;debug
+             -D, --debug
                                Output debug information.
                     </literallayout>
                     <note>
@@ -4107,13 +4107,13 @@
                     </literallayout>
                     Next, the example modifies the
                     <filename>directdisksdb.wks</filename> file and changes all
-                    instances of "<filename>&dash;&dash;ondisk sda</filename>"
-                    to "<filename>&dash;&dash;ondisk sdb</filename>".
+                    instances of "<filename>--ondisk sda</filename>"
+                    to "<filename>--ondisk sdb</filename>".
                     The example changes the following two lines and leaves the
                     remaining lines untouched:
                     <literallayout class='monospaced'>
-     part /boot &dash;&dash;source bootimg-pcbios &dash;&dash;ondisk sdb &dash;&dash;label boot &dash;&dash;active &dash;&dash;align 1024
-     part / &dash;&dash;source rootfs &dash;&dash;ondisk sdb &dash;&dash;fstype=ext3 &dash;&dash;label platform &dash;&dash;align 1024
+     part /boot --source bootimg-pcbios --ondisk sdb --label boot --active --align 1024
+     part / --source rootfs --ondisk sdb --fstype=ext3 --label platform --align 1024
                     </literallayout>
                     Once the lines are changed, the example generates the
                     <filename>directdisksdb</filename> image.
@@ -4200,11 +4200,11 @@
                     somewhere other than the default
                     <filename>/var/tmp/wic</filename> directory:
                     <literallayout class='monospaced'>
-     $ wic create ~/test.wks -o /home/trz/testwic &dash;&dash;rootfs-dir \
+     $ wic create ~/test.wks -o /home/trz/testwic --rootfs-dir \
           /home/trz/yocto/yocto-image/build/tmp/work/crownbay_noemgd-poky-linux/core-image-minimal/1.0-r0/rootfs \
-          &dash;&dash;bootimg-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/share \
-          &dash;&dash;kernel-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel \
-          &dash;&dash;native-sysroot /home/trz/yocto/yocto-image/build/tmp/sysroots/x86_64-linux
+          --bootimg-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/share \
+          --kernel-dir /home/trz/yocto/yocto-image/build/tmp/sysroots/crownbay-noemgd/usr/src/kernel \
+          --native-sysroot /home/trz/yocto/yocto-image/build/tmp/sysroots/x86_64-linux
 
      Creating image(s)...
 
@@ -4247,7 +4247,7 @@
 	            partitions.
 	            The plugins provide a mechanism for mapping values
 	            specified in <filename>.wks</filename> files using the
-	            <filename>&dash;&dash;source</filename> keyword to a
+	            <filename>--source</filename> keyword to a
                 particular plugin implementation that populates a
                 corresponding partition.
             </para>
@@ -4276,11 +4276,11 @@
 	            When the <filename>wic</filename> implementation needs
 	            to invoke a partition-specific implementation, it looks
 	            for the plugin that has the same name as the
-	            <filename>&dash;&dash;source</filename> parameter given to
+	            <filename>--source</filename> parameter given to
                 that partition.
                 For example, if the partition is set up as follows:
                 <literallayout class='monospaced'>
-     part /boot &dash;&dash;source bootimg-pcbios   ...
+     part /boot --source bootimg-pcbios   ...
                 </literallayout>
 	            The methods defined as class members of the plugin
 	            having the matching <filename>bootimg-pcbios.name</filename>
@@ -4290,7 +4290,7 @@
             <para>
 	            To be more concrete, here is the plugin definition that
 	            matches a
-                <filename>&dash;&dash;source bootimg-pcbios</filename> usage,
+                <filename>--source bootimg-pcbios</filename> usage,
                 along with an example
 	            method called by the <filename>wic</filename> implementation
                 when it needs to invoke an implementation-specific
@@ -4312,7 +4312,7 @@
 	            The <filename>SourcePlugin</filename> class defines the
 	            following methods, which is the current set of methods
 	            that can be implemented or overridden by
-	            <filename>&dash;&dash;source</filename> plugins.
+	            <filename>--source</filename> plugins.
                 Any methods not implemented by a
                 <filename>SourcePlugin</filename> subclass inherit the
                 implementations present in the
@@ -4444,13 +4444,13 @@
                 <para>
                     Following are the supported options:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>&dash;&dash;size</filename>:</emphasis>
+                        <listitem><para><emphasis><filename>--size</filename>:</emphasis>
                             The minimum partition size in MBytes.
                             Specify an integer value such as 500.
                             Do not append the number with "MB".
                             You do not need this option if you use
-                            <filename>&dash;&dash;source</filename>.</para></listitem>
-                        <listitem><para><emphasis><filename>&dash;&dash;source</filename>:</emphasis>
+                            <filename>--source</filename>.</para></listitem>
+                        <listitem><para><emphasis><filename>--source</filename>:</emphasis>
                             This option is a
                             <filename>wic</filename>-specific option that
                             names the source of the data that populates
@@ -4462,7 +4462,7 @@
                             "<link linkend='openembedded-kickstart-plugins'>Plugins</link>"
                             section.</para>
                             <para>If you use
-                            <filename>&dash;&dash;source rootfs</filename>,
+                            <filename>--source rootfs</filename>,
                             <filename>wic</filename> creates a partition as
                             large as needed and to fill it with the contents of
 			                the root filesystem pointed to by the
@@ -4472,14 +4472,14 @@
 			                option.
                             The filesystem type used to create the
                             partition is driven by the value of the
-			                <filename>&dash;&dash;fstype</filename> option
+			                <filename>--fstype</filename> option
 			                specified for the partition.
                             See the entry on
-                            <filename>&dash;&dash;fstype</filename> that
+                            <filename>--fstype</filename> that
                             follows for more information.
 			                </para>
                             <para>If you use
-                            <filename>&dash;&dash;source <replaceable>plugin-name</replaceable></filename>,
+                            <filename>--source <replaceable>plugin-name</replaceable></filename>,
                             <filename>wic</filename> creates a partition as
                             large as needed and fills it with the contents of
                             the partition that is generated by the
@@ -4492,10 +4492,10 @@
 			                filesystem type end up being are dependent
 			                on the given plugin implementation.
                             </para></listitem>
-                        <listitem><para><emphasis><filename>&dash;&dash;ondisk</filename> or <filename>&dash;&dash;ondrive</filename>:</emphasis>
+                        <listitem><para><emphasis><filename>--ondisk</filename> or <filename>--ondrive</filename>:</emphasis>
                             Forces the partition to be created on a particular
                             disk.</para></listitem>
-                        <listitem><para><emphasis><filename>&dash;&dash;fstype</filename>:</emphasis>
+                        <listitem><para><emphasis><filename>--fstype</filename>:</emphasis>
                             Sets the file system type for the partition.
                             Valid values are:
                             <itemizedlist>
@@ -4512,7 +4512,7 @@
                                 <listitem><para><filename>swap</filename>
                                 </para></listitem>
                             </itemizedlist></para></listitem>
-                        <listitem><para><emphasis><filename>&dash;&dash;fsoptions</filename>:</emphasis>
+                        <listitem><para><emphasis><filename>--fsoptions</filename>:</emphasis>
                             Specifies a free-form string of options to be
                             used when mounting the filesystem.
                             This string will be copied into the
@@ -4522,15 +4522,15 @@
                             If not specified, the default string
                             is "defaults".
                             </para></listitem>
-                        <listitem><para><emphasis><filename>&dash;&dash;label label</filename>:</emphasis>
+                        <listitem><para><emphasis><filename>--label label</filename>:</emphasis>
                             Specifies the label to give to the filesystem to
                             be made on the partition.
                             If the given label is already in use by another
                             filesystem, a new label is created for the
                             partition.</para></listitem>
-                        <listitem><para><emphasis><filename>&dash;&dash;active</filename>:</emphasis>
+                        <listitem><para><emphasis><filename>--active</filename>:</emphasis>
                             Marks the partition as active.</para></listitem>
-                        <listitem><para><emphasis><filename>&dash;&dash;align (in KBytes)</filename>:</emphasis>
+                        <listitem><para><emphasis><filename>--align (in KBytes)</filename>:</emphasis>
                             This option is a <filename>wic</filename>-specific
                             option that says to start a partition on an
                             x KBytes boundary.</para></listitem>
@@ -4547,17 +4547,17 @@
                     <note>
                         Bootloader functionality and boot partitions are
                         implemented by the various
-                        <filename>&dash;&dash;source</filename>
+                        <filename>--source</filename>
 			            plugins that implement bootloader functionality.
                         The bootloader command essentially provides a means of
                         modifying bootloader configuration.
                     </note>
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>&dash;&dash;timeout</filename>:</emphasis>
+                        <listitem><para><emphasis><filename>--timeout</filename>:</emphasis>
                             Specifies the number of seconds before the
                             bootloader times out and boots the default option.
                             </para></listitem>
-                        <listitem><para><emphasis><filename>&dash;&dash;append</filename>:</emphasis>
+                        <listitem><para><emphasis><filename>--append</filename>:</emphasis>
                             Specifies kernel parameters.
                             These parameters will be added to the syslinux
                             <filename>APPEND</filename> or
@@ -6484,7 +6484,7 @@
                     For this scenario, you need to start the PR Service using
                     the <filename>bitbake-prserv</filename> command:
                     <literallayout class='monospaced'>
-     bitbake-prserv &dash;&dash;host <replaceable>ip</replaceable> &dash;&dash;port <replaceable>port</replaceable> &dash;&dash;start
+     bitbake-prserv --host <replaceable>ip</replaceable> --port <replaceable>port</replaceable> --start
                     </literallayout>
                     In addition to hand-starting the service, you need to
                     update the <filename>local.conf</filename> file of each
@@ -7136,9 +7136,9 @@
                         Given this example, issue the following commands on the
                         target:
                         <literallayout class='monospaced'>
-     # smart channel &dash;&dash;add all type=rpm-md baseurl=http://server.name/rpm/all
-     # smart channel &dash;&dash;add i585 type=rpm-md baseurl=http://server.name/rpm/i586
-     # smart channel &dash;&dash;add qemux86 type=rpm-md baseurl=http://server.name/rpm/qemux86
+     # smart channel --add all type=rpm-md baseurl=http://server.name/rpm/all
+     # smart channel --add i585 type=rpm-md baseurl=http://server.name/rpm/i586
+     # smart channel --add qemux86 type=rpm-md baseurl=http://server.name/rpm/qemux86
                         </literallayout>
                         Also from the target machine, fetch the repository
                         information using this command:
@@ -8588,13 +8588,13 @@
                 Consequently, running the tests on other machine
                 means that you have to move the contents and call
                 <filename>runexported.py</filename> with
-                "&dash;&dash;deploy-dir <replaceable>path</replaceable>" as
+                "--deploy-dir <replaceable>path</replaceable>" as
                 follows:
                 <literallayout class='monospaced'>
-     ./runexported.py &dash;&dash;deploy-dir /new/path/on/this/machine testdata.json
+     ./runexported.py --deploy-dir /new/path/on/this/machine testdata.json
                 </literallayout>
                 <filename>runexported.py</filename> accepts other arguments
-                as well as described using <filename>&dash;&dash;help</filename>.
+                as well as described using <filename>--help</filename>.
             </para>
         </section>
 
@@ -9054,7 +9054,7 @@
      | DEBUG: SITE files ['endian-little', 'bit-32', 'ix86-common', 'common-linux', 'common-glibc', 'i586-linux', 'common']
      | DEBUG: Executing shell function do_compile
      | NOTE: make -j 16
-     | make &dash;&dash;no-print-directory all-am
+     | make --no-print-directory all-am
      | /bin/mkdir -p include/near
      | /bin/mkdir -p include/near
      | /bin/mkdir -p include/near
@@ -9095,7 +9095,7 @@
      | ln -s /home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/work/i586-poky-linux/neard/
        0.14-r0/neard-0.14/include/dbus.h include/near/dbus.h
      | ./src/genbuiltin nfctype1 nfctype2 nfctype3 nfctype4 p2p > src/builtin.h
-     | i586-poky-linux-gcc  -m32 -march=i586 &dash;&dash;sysroot=/home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/
+     | i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/
        build/build/tmp/sysroots/qemux86 -DHAVE_CONFIG_H -I. -I./include -I./src -I./gdbus  -I/home/pokybuild/
        yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/sysroots/qemux86/usr/include/glib-2.0
        -I/home/pokybuild/yocto-autobuilder/yocto-slave/nightly-x86/build/build/tmp/sysroots/qemux86/usr/
@@ -9170,7 +9170,7 @@
                 Here is some abbreviated, sample output with the
                 missing dependency clearly visible at the end:
                 <literallayout class='monospaced'>
-     i586-poky-linux-gcc  -m32 -march=i586 &dash;&dash;sysroot=/home/scott-lenovo/......
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/home/scott-lenovo/......
         .
         .
         .
@@ -9565,14 +9565,14 @@
 
             <para>
                 <literallayout class='monospaced'>
-     # opcontrol &dash;&dash;reset
-     # opcontrol &dash;&dash;start &dash;&dash;separate=lib &dash;&dash;no-vmlinux -c 5
+     # opcontrol --reset
+     # opcontrol --start --separate=lib --no-vmlinux -c 5
               .
               .
         [do whatever is being profiled]
               .
               .
-     # opcontrol &dash;&dash;stop
+     # opcontrol --stop
      $ opreport -cl
                 </literallayout>
             </para>
@@ -9585,7 +9585,7 @@
                 five levels deep.
                 <note>
                     To profile the kernel, you would specify the
-                    <filename>&dash;&dash;vmlinux=/path/to/vmlinux</filename> option.
+                    <filename>--vmlinux=/path/to/vmlinux</filename> option.
                     The <filename>vmlinux</filename> file is usually in the source directory in the
                     <filename>/boot/</filename> directory and must match the running kernel.
                 </note>
@@ -9648,7 +9648,7 @@
                     With this connection, you just need to run "oprofile-server" on the device.
                     By default, OProfile listens on port 4224.
                     <note>
-                        You can change the port using the <filename>&dash;&dash;port</filename> command-line
+                        You can change the port using the <filename>--port</filename> command-line
                         option.
                     </note>
                 </para>
@@ -9738,14 +9738,14 @@
                     If network access to the target is unavailable, you can generate
                     an archive for processing in <filename>oprofile-viewer</filename> as follows:
                     <literallayout class='monospaced'>
-     # opcontrol &dash;&dash;reset
-     # opcontrol &dash;&dash;start &dash;&dash;separate=lib &dash;&dash;no-vmlinux -c 5
+     # opcontrol --reset
+     # opcontrol --start --separate=lib --no-vmlinux -c 5
             .
             .
      [do whatever is being profiled]
             .
             .
-     # opcontrol &dash;&dash;stop
+     # opcontrol --stop
      # oparchive -o my_archive
                     </literallayout>
                 </para>
