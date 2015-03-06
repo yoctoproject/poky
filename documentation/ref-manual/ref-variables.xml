@@ -6085,92 +6085,42 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" />
                     The machine as known by the kernel.
-                    Sometimes the machine name used by the kernel does not match the machine name
-                    used by the OpenEmbedded build system.
-                    For example, the machine name that the OpenEmbedded build system understands as
-                    <filename>qemuarm</filename> goes by a different name in the Linux Yocto kernel.
-                    The kernel understands that machine as <filename>arm_versatile926ejs</filename>.
-                    For cases like these, the <filename>KMACHINE</filename> variable maps the
-                    kernel machine name to the OpenEmbedded build system machine name.
+                    Sometimes the machine name used by the kernel does not
+                    match the machine name used by the OpenEmbedded build
+                    system.
+                    For example, the machine name that the OpenEmbedded build
+                    system understands as
+                    <filename>core2-32-intel-common</filename> goes by a
+                    different name in the Linux Yocto kernel.
+                    The kernel understands that machine as
+                    <filename>intel-core2-32</filename>.
+                    For cases like these, the <filename>KMACHINE</filename>
+                    variable maps the kernel machine name to the OpenEmbedded
+                    build system machine name.
                 </para>
 
                 <para>
-                    Kernel machine names are initially defined in the
+                    These mappings between different names occur in the
                     Yocto Linux Kernel's <filename>meta</filename> branch.
-                    From the <filename>meta</filename> branch, look in
-                    the <filename>meta/cfg/kernel-cache/bsp/&lt;bsp_name&gt;/&lt;bsp-name&gt;-&lt;kernel-type&gt;.scc</filename> file.
-                    For example, from the <filename>meta</filename> branch in the
-                    <filename>linux-yocto-3.0</filename> kernel, the
-                    <filename>meta/cfg/kernel-cache/bsp/cedartrail/cedartrail-standard.scc</filename> file
-                    has the following:
+                    As an example take a look in the
+                    <filename>common/recipes-kernel/linux/linux-yocto_3.19.bbappend</filename>
+                    file:
                     <literallayout class='monospaced'>
-     define KMACHINE cedartrail
-     define KTYPE standard
-     define KARCH i386
-
-     include ktypes/standard
-     branch cedartrail
-
-     include cedartrail.scc
+     LINUX_VERSION_core2-32-intel-common = "3.19.0"
+     COMPATIBLE_MACHINE_core2-32-intel-common = "${MACHINE}"
+     SRCREV_meta_core2-32-intel-common = "8897ef68b30e7426bc1d39895e71fb155d694974"
+     SRCREV_machine_core2-32-intel-common = "43b9eced9ba8a57add36af07736344dcc383f711"
+     KMACHINE_core2-32-intel-common = "intel-core2-32"
+     KBRANCH_core2-32-intel-common = "standard/base"
+     KERNEL_FEATURES_append_core2-32-intel-common = "${KERNEL_FEATURES_INTEL_COMMON}"
                     </literallayout>
-                    You can see that the kernel understands the machine name for
-                    the Cedar Trail Board Support Package (BSP) as
-                    <filename>cedartrail</filename>.
+                    The <filename>KMACHINE</filename> statement says that
+                    the kernel understands the machine name as
+                    "intel-core2-32".
+                    However, the OpenEmbedded build system understands the
+                    machine as "core2-32-intel-common".
                 </para>
 
-                <para>
-                    If you look in the Cedar Trail BSP layer in the
-                    <filename>meta-intel</filename>
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-repositories'>Source Repositories</ulink>
-                    at <filename>meta-cedartrail/recipes-kernel/linux/linux-yocto_3.0.bbappend</filename>,
-                    you will find the following statements among others:
-                    <literallayout class='monospaced'>
-     COMPATIBLE_MACHINE_cedartrail = "cedartrail"
-     KMACHINE_cedartrail  = "cedartrail"
-     KBRANCH_cedartrail  = "yocto/standard/cedartrail"
-     KERNEL_FEATURES_append_cedartrail += "bsp/cedartrail/cedartrail-pvr-merge.scc"
-     KERNEL_FEATURES_append_cedartrail += "cfg/efi-ext.scc"
-
-     COMPATIBLE_MACHINE_cedartrail-nopvr = "cedartrail"
-     KMACHINE_cedartrail-nopvr  = "cedartrail"
-     KBRANCH_cedartrail-nopvr  = "yocto/standard/cedartrail"
-     KERNEL_FEATURES_append_cedartrail-nopvr += " cfg/smp.scc"
-                    </literallayout>
-                    The <filename>KMACHINE</filename> statements in the kernel's append file make sure that
-                    the OpenEmbedded build system and the Yocto Linux kernel understand the same machine
-                    names.
-                </para>
-
-                <para>
-                    This append file uses two <filename>KMACHINE</filename> statements.
-                    The first is not really necessary but does ensure that the machine known to the
-                    OpenEmbedded build system as <filename>cedartrail</filename> maps to the machine
-                    in the kernel also known as <filename>cedartrail</filename>:
-                    <literallayout class='monospaced'>
-     KMACHINE_cedartrail  = "cedartrail"
-                    </literallayout>
-                </para>
-
-                <para>
-                    The second statement is a good example of why the <filename>KMACHINE</filename> variable
-                    is needed.
-                    In this example, the OpenEmbedded build system uses the <filename>cedartrail-nopvr</filename>
-                    machine name to refer to the Cedar Trail BSP that does not support the proprietary
-                    PowerVR driver.
-                    The kernel, however, uses the machine name <filename>cedartrail</filename>.
-                    Thus, the append file must map the <filename>cedartrail-nopvr</filename> machine name to
-                    the kernel's <filename>cedartrail</filename> name:
-                    <literallayout class='monospaced'>
-     KMACHINE_cedartrail-nopvr  = "cedartrail"
-                    </literallayout>
-                </para>
-
-                <para>
-                    BSPs that ship with the Yocto Project release provide all mappings between the Yocto
-                    Project kernel machine names and the OpenEmbedded machine names.
-                    Be sure to use the <filename>KMACHINE</filename> if you create a BSP and the machine
-                    name you use is different than that used in the kernel.
-                </para>
             </glossdef>
         </glossentry>
 
