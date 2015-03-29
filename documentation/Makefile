@@ -241,7 +241,9 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/analysis-for-package-splitting.png \
         figures/image-generation.png \
 	figures/sdk-generation.png figures/recipe-workflow.png \
-	figures/build-workspace-directory.png figures/mega-title.png
+	figures/build-workspace-directory.png figures/mega-title.png \
+	figures/toaster-title.png figures/hosted-service.png \
+	figures/simple-configuration.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
@@ -329,8 +331,8 @@ ifeq ($(DOC),toaster-manual)
 XSLTOPTS = --xinclude
 ALLPREQ = html tarball
 TARFILES = toaster-manual.html toaster-manual-style.css \
-           figures/toaster-title.png figures/simple-configuration.png \
-           figures/hosted-service.png
+	   figures/toaster-title.png figures/simple-configuration.png \
+	   figures/hosted-service.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/$(DOC).pdf
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
