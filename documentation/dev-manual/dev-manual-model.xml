@@ -1683,10 +1683,8 @@
         This section describes two:
         <itemizedlist>
             <listitem><para><emphasis><filename>devtool</filename>:</emphasis>
-                A set of tools and
-                enhancements put together by the Yocto Project team that
-                makes it easier for you to modify code that is external to
-                the Yocto Project.
+                A set of tools to aid in working on the source code built by
+                the OpenEmbedded build system.
                 Section
                 "<link linkend='using-devtool-in-your-workflow'>Using <filename>devtool</filename> in Your Workflow</link>"
                 describes this workflow.
@@ -1739,9 +1737,6 @@
             <title>Establish the Reference Image</title>
 
             <para>
-                Local repositories for both the Yocto Project and your
-                project must exist in addition to the image built by
-                the OpenEmbedded build system.
                 The steps to clone the <filename>poky</filename> Git
                 repository, build out an image, and test it using QEMU
                 are well documented as follows:
@@ -1786,29 +1781,37 @@
             </para>
 
             <para>
-                Another option is to use the <filename>devtool</filename>
-                command.
-                <filename>devtool</filename> makes use of a
-                "workspace" layer where much of the transitional work
-                occurs, which is needed for setting up Metadata used by the
-                OpenEmbedded build system that lets you build your software.
-                Options exist using <filename>devtool</filename> that
-                enable you to use the tool to extract source code.
+                Another option is to use the
+                <filename>devtool modify</filename> command.
+                This command makes use of a "workspace" layer where much of
+                the transitional work occurs, which is needed for setting up
+                Metadata used by the OpenEmbedded build system that lets you
+                build your software.
+                Options (i.e. "-x") exist using <filename>devtool</filename>
+                that enable you to use the tool to extract source code.
             </para>
         </section>
 
         <section id='use-devtool-to-integrate-your-code-with-the-image'>
-            <title>Use <filename>devtool</filename> to Integrate Your Code with the Image</title>
+            <title>Use <filename>devtool add</filename> to Integrate Your Code with the Image</title>
 
             <para>
-                <filename>devtool</filename> automatically
+                The <filename>devtool add</filename> command automatically
                 generates the needed Metadata that allows the OpenEmbedded
                 build system to build your code into the image.
+                <note>
+                    If a package or packages produced by the recipe on which
+                    you are working are not already in
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>
+                    for the image, you must add them.
+                    The <filename>devtool add</filename> command does not
+                    add them for you.
+                </note>
                 Use the following command form:
                 <literallayout class='monospaced'>
      $ devtool add <replaceable>your-project-name</replaceable>&nbsp;<replaceable>path-to-source</replaceable>
                 </literallayout>
-                Running <filename>devtool</filename> modifies the
+                Running <filename>devtool add</filename> modifies the
                 <filename>bblayers.conf</filename> that the
                 OpenEmbedded build system uses to build an image.
                 For more information on the <filename>bblayers.conf</filename>,
@@ -1818,7 +1821,7 @@
             </para>
 
             <para>
-                Running <filename>devtool</filename> adds a new workspace
+                Running <filename>devtool add</filename> adds a new workspace
                 layer to the <filename>bblayers.conf</filename> file that
                 is based on your project's location:
                 <literallayout class='monospaced'>
@@ -1856,7 +1859,7 @@
 -->
 
             <para>
-                Running <filename>devtool</filename> automatically
+                Running <filename>devtool add</filename> automatically
                 generates your recipe:
                 <literallayout class='monospaced'>
      $ cat workspace/recipes/<replaceable>your-project-name</replaceable>/<replaceable>your-project-name</replaceable>.bb
@@ -1885,7 +1888,7 @@
             </para>
 
             <para>
-                Lastly, the <filename>devtool</filename> creates the
+                Lastly, the <filename>devtool add</filename> command creates the
                 <filename>.bbappend</filename> file:
                 <literallayout class='monospaced'>
      $ cat workspace/appends/<replaceable>your-project-name</replaceable>.bbappend
@@ -1901,8 +1904,8 @@
             <title>Build Your Project</title>
 
             <para>
-                You can use BitBake or <filename>devtool</filename> to build
-                your modified project.
+                You can use BitBake or <filename>devtool build</filename> to
+                build your modified project.
             </para>
 
             <para>
@@ -2063,7 +2066,8 @@
      README - Provides information on what is in workspace layer and how to
               manage it.
 
-     appends - A directory that contains *.bbappend files.
+     appends - A directory that contains *.bbappend files, which point to
+               external source.
 
      conf - A configuration directory that contains the layer.conf file.
 
@@ -2078,6 +2082,8 @@
                 Running <filename>devtool add</filename> when the
                 workspace layer exists causes the tool to add the recipe
                 and append files into the existing workspace layer.
+                The <filename>.bbappend</filename> file is created to point
+                to the external source tree.
             </para>
         </section>
 
@@ -2192,8 +2198,8 @@
 
             <para>
                 Use the <filename>devtool update-recipe</filename> command to
-                cause <filename>devtool</filename> to update your recipe with
-                patches that reflect changes you make to the source files.
+                update your recipe with patches that reflect changes you make
+                to the source files.
                 For example, if you know you are going to work on some
                 code, you could first use the
                 <link linkend='devtool-modifying-a-recipe'><filename>devtool modify</filename></link>
