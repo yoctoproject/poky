@@ -1669,8 +1669,8 @@
     <para>
         A common development workflow consists of modifying project source
         files that are external to the Yocto Project and then integrating
-        that project's build output into an image built using the Yocto
-        Project.
+        that project's build output into an image built using the
+        OpenEmbedded build system.
         Given this scenario, development engineers typically want to stick
         to their familiar project development tools and methods, which allows
         them to just focus on the project.
@@ -1679,7 +1679,7 @@
     <para>
         Several workflows exist that allow you to develop, build, and test
         code that is going to be integrated into an image built using the
-        Yocto Project.
+        OpenEmbedded build system.
         This section describes two:
         <itemizedlist>
             <listitem><para><emphasis><filename>devtool</filename>:</emphasis>
@@ -1715,7 +1715,7 @@
         <para>
             As mentioned earlier, <filename>devtool</filename> helps
             you easily develop projects whose build output must be part of
-            an image built using the Yocto Project.
+            an image built using the OpenEmbedded build system.
             The remainder of this section presents the workflow you would
             use that includes <filename>devtool</filename>.
             <note>
@@ -1770,9 +1770,9 @@
                 Several opportunities exist in the workflow to extract and
                 work on the files.
                 For now, just realize that you need to be able to have
-                access to and edit files in your layer.
-                One obvious solution is to initially extract the code into its
-                own layer in preparation for modification.
+                access to and edit files.
+                One obvious solution is to initially extract the code into an
+                isolated area in preparation for modification.
             </para>
 
             <para>
@@ -1788,7 +1788,7 @@
         </section>
 
         <section id='use-devtool-to-integrate-your-code-with-the-image'>
-            <title>Use <filename>dev-tool</filename> to Integrate Your Code with the Image</title>
+            <title>Use <filename>devtool</filename> to Integrate Your Code with the Image</title>
 
             <para>
                 <filename>devtool</filename> automatically
@@ -1796,15 +1796,15 @@
                 build system to build your code into the image.
                 Use the following command form:
                 <literallayout class='monospaced'>
-     $ devtool add <replaceable>your-project-name</replaceable>&nbsp;<replaceable>path-to-source</replaceable>/<replaceable>your-project-name</replaceable>
+     $ devtool add <replaceable>your-project-name</replaceable>&nbsp;<replaceable>path-to-source</replaceable>
                 </literallayout>
                 Running <filename>devtool</filename> modifies the
-                <filename>bblayers.conf</filename> used to build the
-                image in the Yocto Project.
+                <filename>bblayers.conf</filename> that the
+                OpenEmbedded build system uses to build an image.
                 For more information on the <filename>bblayers.conf</filename>,
                 see the
-                "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
-                section in the Yocto Project Board Support Package (BSP) Developer's Guide.
+                "<ulink url='&YOCTO_DOCS_REF_URL;#structure-build-conf-bblayers.conf'><filename>build/conf/bblayers.conf</filename></ulink>"
+                section in the Yocto Project Reference Manual.
             </para>
 
             <para>
@@ -1814,7 +1814,7 @@
                 <literallayout class='monospaced'>
      <replaceable>path-to-source</replaceable>/<replaceable>build-directory</replaceable>/<replaceable>workspace-layer</replaceable>
                 </literallayout>
-                By default, the name of the workspace layer is "workplace".
+                By default, the name of the workspace layer is "workspace".
             </para>
 
             <para>
@@ -1825,6 +1825,7 @@
                 section.
             </para>
 
+<!--
             <para>
                 Of course, each layer must have a
                 <filename>layer.conf</filename> configuration file.
@@ -1842,9 +1843,10 @@
      BBFILE_PRIORITY_workspacelayer = "99"
                 </literallayout>
             </para>
+-->
 
             <para>
-                Running <filename>devtool</filename> also automatically
+                Running <filename>devtool</filename> automatically
                 generates your recipe:
                 <literallayout class='monospaced'>
      $ cat workspace/recipes/<replaceable>your-project-name</replaceable>/<replaceable>your-project-name</replaceable>.bb
@@ -1898,8 +1900,10 @@
                 <literallayout class='monospaced'>
      $ bitbake <replaceable>your-project-name</replaceable>
                 </literallayout>
-                To use <filename>devtool</filename>, run the tool with the
-                <filename>build</filename> option:
+                Alternatively, you can use
+                <filename>devtool build</filename>, which is equivalent to
+                <filename>bitbake -c install</filename>.
+                For example:
                 <literallayout class='monospaced'>
      $ devtool build <replaceable>your-project-name</replaceable>
                 </literallayout>
@@ -1913,11 +1917,9 @@
                 The final step before testing is to rebuild the base image
                 with your project changes as part of the image.
                 Simply run BitBake again on your image.
-                Here is an example that assumes
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
-                is set to "qemux86":
+                Here is an example:
                 <literallayout class='monospaced'>
-     $ bitbake qemux86 <replaceable>image</replaceable>
+     $ bitbake <replaceable>image</replaceable>
                 </literallayout>
             </para>
         </section>
@@ -1958,35 +1960,32 @@
                 <filename>--help</filename> option:
                 <literallayout class='monospaced'>
      $ devtool --help
-     usage: devtool [-h] [--basepath BASEPATH] [-d] [-q]
-                    [--color {auto,always,never}]
-                    {create-workspace,deploy-target,undeploy-target,add,modify,extract,update-recipe,status,build,reset}
-                    ...
+     usage: devtool [-h] [--basepath BASEPATH] [-d] [-q] [--color COLOR]
+               &lt;subcommand&gt; ...
 
      OpenEmbedded development tool
 
-     positional arguments:
-       {create-workspace,deploy-target,undeploy-target,add,modify,extract,update-recipe,status,build,reset}
-         create-workspace    Set up a workspace
-         deploy-target       Deploy recipe output files to live target machine
-         undeploy-target     Undeploy recipe output files in live target machine
-         add                 Add a new recipe
-         modify              Modify the source for an existing recipe
-         extract             Extract the source for an existing recipe
-         update-recipe       Apply changes from external source tree to recipe
-         status              Show status
-         build               Build recipe
-         reset               Remove a recipe from your workspace
-
      optional arguments:
-       -h, --help            show this help message and exit
-       --basepath BASEPATH   Base directory of SDK / build directory
-       -d, --debug           Enable debug output
-       -q, --quiet           Print only errors
-       --color {auto,always,never}
-                             Colorize output
+       -h, --help           show this help message and exit
+       --basepath BASEPATH  Base directory of SDK / build directory
+       -d, --debug          Enable debug output
+       -q, --quiet          Print only errors
+       --color COLOR        Colorize output (where COLOR is auto, always, never)
 
-     Use devtool &lt;command&gt; --help to get help on a specific command
+     subcommands:
+       &lt;subcommand&gt;
+         create-workspace   Set up a workspace
+         deploy-target      Deploy recipe output files to live target machine
+         undeploy-target    Undeploy recipe output files in live target machine
+         add                Add a new recipe
+         modify             Modify the source for an existing recipe
+         extract            Extract the source for an existing recipe
+         update-recipe      Apply changes from external source tree to recipe
+         status             Show workspace status
+         build              Build a recipe
+         reset              Remove a recipe from your workspace
+
+     Use devtool &lt;subcommand&gt; --help to get help on a specific command
                 </literallayout>
             </para>
 
@@ -1996,7 +1995,9 @@
                 name and using <filename>--help</filename>:
                 <literallayout class='monospaced'>
      $ devtool add --help
-     usage: devtool add [-h] [--version VERSION] recipename srctree
+     usage: devtool add [-h] [--same-dir] [--version VERSION] recipename srctree
+
+     Adds a new recipe
 
      positional arguments:
        recipename            Name for new recipe to add
@@ -2004,7 +2005,9 @@
 
      optional arguments:
        -h, --help            show this help message and exit
+       --same-dir, -s        Build in same directory as source (default: False)
        --version VERSION, -V VERSION
+                             Version to use within recipe (PV) (default: None)
                 </literallayout>
             </para>
         </section>
@@ -2013,7 +2016,7 @@
             <title>Adding a New Recipe to the Workspace Layer</title>
 
             <para>
-                Use the <filename>add</filename> command to add a new recipe
+                Use the <filename>devtool add</filename> command to add a new recipe
                 to the workspace layer.
                 The recipe you add should not exist -
                 <filename>devtool</filename> creates it for you.
@@ -2072,7 +2075,7 @@
             <title>Creating the Workspace Layer</title>
 
             <para>
-                Use the <filename>create-workspace</filename> command to
+                Use the <filename>devtool create-workspace</filename> command to
                 create a new workspace layer in your
                 <link linkend='build-directory'>Build Directory</link>.
                 When you create a new workspace layer, it is populated with the
@@ -2108,19 +2111,21 @@
             <title>Modifying a Recipe</title>
 
             <para>
-                Use the <filename>modify</filename> command to configure
-                an external recipe in the workspace layer.
+                Use the <filename>devtool modify</filename> command to begin
+                modifying the source of an existing recipe.
                 This command is very similar to the
                 <link linkend='devtool-adding-a-new-recipe-to-the-workspace'><filename>add</filename></link>
                 command except that it does not physically create the
                 recipe in the workspace layer because the recipe already
-                exists in an external layer.
+                exists in an another layer.
             </para>
 
             <para>
-                The <filename>modify</filename> command provides options
-                that allow you to extract the source and provide a
-                development branch name where you can do your work.
+                The <filename>devtool modify</filename> command extracts the
+                source for a recipe, sets it up as a Git repository if the
+                source had not already been fetched from Git, checks out a
+                branch for development, and applies any patches from the recipe
+                as commits on top.
                 You can use the following command to checkout the source
                 files:
                 <literallayout class='monospaced'>
@@ -2148,15 +2153,23 @@
             <title>Resetting a Recipe</title>
 
             <para>
-                Use the <filename>reset</filename> command to remove a
+                Use the <filename>devtool reset</filename> command to remove a
                 recipe and its configuration (e.g. the corresponding
                 <filename>.bbappend</filename> file) from the workspace layer.
-                Realize that this command deletes the recipe and and the
+                Realize that this command deletes the recipe and the
                 append file.
                 The command does not physically move them for you.
                 Consequently, you must be sure to physically relocate your
                 updated recipe and the append file outside of the workspace
-                layer before running the <filename>reset</filename> command.
+                layer before running the <filename>devtool reset</filename>
+                command.
+            </para>
+
+            <para>
+                If the <filename>devtool reset</filename> command detects that
+                the recipe or the append files have been modified, the
+                command preserves the modified files in a separate "attic"
+                subdirectory under the workspace layer.
                 <note>
                     For complete syntax, use the
                     <filename>devtool reset --help</filename> command.
@@ -2168,18 +2181,17 @@
             <title>Updating a Recipe</title>
 
             <para>
-                Use the <filename>update-recipe</filename> command to cause
-                <filename>devtool</filename> to update your recipe with patches
-                that reflect changes you make to the source files.
+                Use the <filename>devtool update-recipe</filename> command to
+                cause <filename>devtool</filename> to update your recipe with
+                patches that reflect changes you make to the source files.
                 For example, if you know you are going to work on some
                 code, you could first use the
-                <link linkend='devtool-modifying-a-recipe'><filename>modify</filename></link>
+                <link linkend='devtool-modifying-a-recipe'><filename>devtool modify</filename></link>
                 command to extract the code and set up the workspace.
-                After which, you could modify, compile, and test the code
-                in its own layer to which it was extracted.
+                After which, you could modify, compile, and test the code.
                 When you are satisfied with the results you can then
-                run the <filename>update-recipe</filename> to create the
-                patches and update the recipe in the external layer:
+                run the <filename>devtool update-recipe</filename> to create the
+                patches and update the recipe:
                 <literallayout class='monospaced'>
      $ devtool update-recipe <replaceable>recipe</replaceable>
                 </literallayout>
@@ -2194,9 +2206,12 @@
             <title>Building Your Software</title>
 
             <para>
-                Use the <filename>build</filename> command to cause the
+                Use the <filename>devtool build</filename> command to cause the
                 OpenEmbedded build system to build your software based
-                on the recipe file:
+                on the recipe file.
+                The <filename>devtool build</filename> command is equivalent to
+                <filename>bitbake -c install</filename>.
+                Here is an example:
                 <literallayout class='monospaced'>
      $ devtool build <replaceable>recipe</replaceable>
                 </literallayout>
@@ -2204,8 +2219,8 @@
                     For complete syntax, use the
                     <filename>devtool update-recipe --help</filename> command.
                 </note>
-                Building your software using <filename>build</filename> is
-                identical to using BitBake to build the software.
+                Building your software using <filename>devtool build</filename>
+                is identical to using BitBake to build the software.
             </para>
         </section>
 
@@ -2213,17 +2228,36 @@
             <title>Deploying Your Software on the Target Machine</title>
 
             <para>
-                Use the <filename>deploy-target</filename> command to deploy
-                the recipe's build output to the the live target machine:
+                Use the <filename>devtool deploy-target</filename> command to
+                deploy the recipe's build output to the live target machine:
                 <literallayout class='monospaced'>
      $ devtool deploy-target <replaceable>recipe</replaceable>&nbsp;<replaceable>target</replaceable>
                 </literallayout>
-                The <replaceable>target</replaceable> is the actual
-                target running on an SSH server (i.e.
-                <filename>user@hostname[:destdir]</filename>.
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool deploy-target --help</filename> command.
+                The <replaceable>target</replaceable> is the address of the
+                target machine, which must be running an SSH server (i.e.
+                <filename>user@hostname[:destdir]</filename>).
+            </para>
+
+            <para>
+                This command deploys all files installed during the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
+                task.
+                Furthermore, you do not need to have package management enabled
+                within the target machine.
+                If you do, the package manager is bypassed.
+                <note><title>Notes</title>
+                    <para>
+                        The <filename>deploy-target</filename>
+                        functionality is for development only.
+                        You should never use it to update an image that will be
+                        used in production.
+                    </para>
+
+                    <para>
+                        For complete syntax, use the
+                        <filename>devtool deploy-target --help</filename>
+                        command.
+                    </para>
                 </note>
             </para>
         </section>
@@ -2232,18 +2266,18 @@
             <title>Removing Your Software from the Target Machine</title>
 
             <para>
-                Use the <filename>undeploy-target</filename> command to remove
-                deployed build output from the target machine.
-                For <filename>undeploy-target</filename> command to work,
-                you must have previously used the
-                <link linkend='devtool-deploying-your-software-on-the-target-machine'><filename>deploy-target</filename></link>
+                Use the <filename>devtool undeploy-target</filename> command to
+                remove deployed build output from the target machine.
+                For the <filename>devtool undeploy-target</filename> command to
+                work, you must have previously used the
+                <link linkend='devtool-deploying-your-software-on-the-target-machine'><filename>devtool deploy-target</filename></link>
                 command.
                 <literallayout class='monospaced'>
      $ devtool undeploy-target <replaceable>recipe</replaceable>&nbsp;<replaceable>target</replaceable>
                 </literallayout>
-                The <replaceable>target</replaceable> is the actual
-                target running on an SSH server (i.e.
-                <filename>user@hostname</filename>.
+                The <replaceable>target</replaceable> is the address of the
+                target machine, which must be running an SSH server (i.e.
+                <filename>user@hostname</filename>).
                 <note>
                     For complete syntax, use the
                     <filename>devtool undeploy-target --help</filename> command.
@@ -2257,11 +2291,19 @@
 
         <para>
             <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink>
-            is a powerful tool that allows you to capture source code changes without having
-            a clean source tree.
+            is a powerful tool that allows you to capture source code changes
+            without having a clean source tree.
             This section outlines the typical workflow you can use to modify
             source code, test changes, and then preserve the changes in the
             form of a patch all using Quilt.
+            <note><title>Tip</title>
+                With regard to preserving changes to source files if you
+                clean a recipe or have <filename>rm_work</filename> enabled,
+                the workflow described in the
+                "<link linkend='using-devtool-in-your-workflow'>Using <filename>devtool</filename> in Your Workflow</link>"
+                section is a safer development flow than than the flow that
+                uses Quilt.
+            </note>
         </para>
 
         <para>
