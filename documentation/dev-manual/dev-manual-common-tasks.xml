@@ -1294,10 +1294,16 @@
                     or
                     <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>).
                     Here is the basic <filename>recipetool</filename> syntax:
+                    <note>
+                        Running <filename>recipetool -h</filename> or
+                        <filename>recipetool create -h</filename> produces the
+                        Python-generated help, which presented differently
+                        than what follows here.
+                    </note>
                     <literallayout class='monospaced'>
      recipetool -h
      recipetool create [-h]
-     recipetool [-d] [-q] [--color auto | always | never ] create [-o <replaceable>OUTFILE</replaceable>] [-m] [-x <replaceable>EXTERNALSRC</replaceable>] <replaceable>source</replaceable>
+     recipetool [-d] [-q] [--color auto | always | never ] create -o <replaceable>OUTFILE</replaceable> [-m] [-x <replaceable>EXTERNALSRC</replaceable>] <replaceable>source</replaceable>
 
           -d       Enables debug output.
           -q       Outputs only errors (quiet mode).
@@ -1320,9 +1326,9 @@
                 </para>
 
                 <para>
-                    Running <filename>recipetool</filename> creates the base
-                    recipe and locates it properly in the layer that contains
-                    your source files.
+                    Running <filename>recipetool create -o</filename>&nbsp;<replaceable>OUTFILE</replaceable>
+                    creates the base recipe and locates it properly in the
+                    layer that contains your source files.
                     Following are some syntax examples:
                 </para>
 
@@ -1331,20 +1337,14 @@
                     Once generated, the recipe resides in the existing source
                     code layer:
                     <literallayout class='monospaced'>
-     recipetool create <replaceable>source</replaceable>
+     recipetool create -o <replaceable>OUTFILE</replaceable>&nbsp;<replaceable>source</replaceable>
                     </literallayout>
                     Use this syntax to generate a recipe using code that you
                     extract from <replaceable>source</replaceable>.
                     The extracted code is placed in its own layer defined
                     by <replaceable>EXTERNALSRC</replaceable>.
                     <literallayout class='monospaced'>
-     recipetool create -x <replaceable>EXTERNALSRC</replaceable> <replaceable>source</replaceable>
-                    </literallayout>
-                    Use this syntax to generate a recipe and override the
-                    tool's default placement of the recipe by specifying both
-                    its location and name using <replaceable>OUTFILE</replaceable>.
-                    <literallayout class='monospaced'>
-     recipetool create -o <replaceable>OUTFILE</replaceable> <replaceable>source</replaceable>
+     recipetool create -o <replaceable>OUTFILE</replaceable> -x <replaceable>EXTERNALSRC</replaceable> <replaceable>source</replaceable>
                     </literallayout>
                     Use this syntax to generate a recipe based on <replaceable>source</replaceable>.
                     The options direct <filename>recipetool</filename> to
