@@ -342,7 +342,7 @@ endif
 ##
 # These URI should be rewritten by your distribution's xml catalog to
 # match your locally installed XSL stylesheets.
-XSL_BASE_URI  = http://docbook.sourceforge.net/release/xsl/current
+XSL_BASE_URI  = http://docbook.sourceforge.net/release/xsl/1.76.1
 XSL_XHTML_URI = $(XSL_BASE_URI)/xhtml/docbook.xsl
 
 all: $(ALLPREQ)
