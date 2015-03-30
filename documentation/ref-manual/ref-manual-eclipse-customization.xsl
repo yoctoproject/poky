@@ -6,7 +6,7 @@
 	version="1.0">
 
   <xsl:import
-	  href="http://docbook.sourceforge.net/release/xsl/current/eclipse/eclipse3.xsl" />
+	  href="http://docbook.sourceforge.net/release/xsl/1.76.1/eclipse/eclipse3.xsl" />
 
   <xsl:param name="chunker.output.indent" select="'yes'"/>
   <xsl:param name="chunk.quietly" select="1"/>
