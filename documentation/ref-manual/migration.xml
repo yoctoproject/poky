@@ -2013,6 +2013,237 @@
     </section>
 </section>
 
+<section id='moving-to-the-yocto-project-1.8-release'>
+    <title>Moving to the Yocto Project 1.8 Release</title>
+
+    <para>
+        This section provides migration information for moving to the
+        Yocto Project 1.8 Release from the prior release.
+    </para>
+
+    <section id='migration-1.8-removed-recipes'>
+        <title>Removed Recipes</title>
+
+        <para>
+            The following recipes have been removed:
+            <itemizedlist>
+                <listitem><para><filename>owl-video</filename>:
+                    Functionality replaced by <filename>gst-player</filename>.
+                    </para></listitem>
+                <listitem><para><filename>gaku</filename>:
+                    Functionality replaced by <filename>gst-player</filename>.
+                    </para></listitem>
+                <listitem><para><filename>gnome-desktop</filename>:
+                    No longer needed.
+                    </para></listitem>
+                <listitem><para><filename>gsettings-desktop-schemas</filename>:
+                    No longer needed.
+                    </para></listitem>
+                <listitem><para><filename>python-argparse</filename>:
+                    The <filename>argparse</filename> module is already
+                    provided in the default Python distribution in a
+                    package named <filename>python-argparse</filename>.
+                    Consequently, the separate
+                    <filename>python-argparse</filename> recipe is no
+                    longer needed.
+                    </para></listitem>
+                <listitem><para><filename>telepathy-python, libtelepathy, telepathy-glib, telepathy-idle, telepathy-mission-control</filename>:
+                    All these recipes have moved to
+                    <filename>meta-oe</filename> and are consequently no
+                    longer needed by any recipes in OpenEmbedded-Core.
+                    </para></listitem>
+                <listitem><para><filename>linux-yocto_3.10</filename> and <filename>linux-yocto_3.17</filename>:
+                    Support for the linux-yocto 3.10 and 3.17 kernels has been
+                    dropped.
+                    Support for the 3.14 kernel remains, while support for
+                    3.19 kernel has been added.
+                    </para></listitem>
+                <listitem><para><filename>poky-feed-config-opkg</filename>:
+                    No longer needed.
+                    </para></listitem>
+                <listitem><para><filename>libav 0.8.x</filename>:
+                    <filename>libav 9.x</filename> is now used.
+                    </para></listitem>
+                <listitem><para><filename>sed-native</filename>:
+                    No longer needed.
+                    A working version of <filename>sed</filename> is expected
+                    to be provided by the host distribution.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.8-bluez'>
+        <title>BlueZ 4.x / 5.x Selection</title>
+
+        <para>
+            Proper built-in support for selecting BlueZ 5.x in preference
+            to the default of 4.x now exists.
+            To use BlueZ 5.x, simply add "bluez5" to your
+            <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>
+            value.
+            If you had previously added append files
+            (<filename>*.bbappend</filename>) to make this selection, you can
+            now remove them.
+        </para>
+
+        <para>
+            Additionally, a
+            <link linkend='ref-classes-bluetooth'><filename>bluetooth</filename></link>
+            class has been added to make selection of the appropriate bluetooth
+            support within a recipe a little easier.
+            If you wish to make use of this class in a recipe, add something
+            such as the following:
+            <literallayout class='monospaced'>
+     inherit bluetooth
+     PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', '${BLUEZ}', '', d)}
+     PACKAGECONFIG[bluez4] = "--enable-bluetooth,--disable-bluetooth,bluez4"
+     PACKAGECONFIG[bluez5] = "--enable-bluez5,--disable-bluez5,bluez5"
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='migration-1.8-ssl'>
+        <title>SSL 3.0 is Now Disabled in OpenSSL</title>
+
+        <para>
+            SSL 3.0 is now disabled when building OpenSSL.
+            Disabling SSL 3.0 avoids any lingering instances of the POODLE
+            vulnerability.
+            If you feel you must re-enable SSL 3.0, then you can add an
+            append file (<filename>*.bbappend</filename>) for the
+            <filename>openssl</filename> recipe to remove "-no-ssl3"
+            from
+            <link linkend='var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></link>.
+        </para>
+    </section>
+
+    <section id='migration-1.8-default-sysroot-poisoning'>
+        <title>Default Sysroot Poisoning</title>
+
+        <para>
+            <filename>gcc's</filename> default sysroot and include directories
+            are now "poisoned".
+            In other words, the sysroot and include directories are being
+            redirected to a non-existent location in order to catch when
+            host directories are being used due to the correct options not
+            being passed.
+            This poisoning applies both to the cross-compiler used within the
+            build and to the cross-compiler produced in the SDK.
+        </para>
+
+        <para>
+            If this change causes something in the build to fail, it almost
+            certainly means the various compiler flags and commands are not
+            being passed correctly to the underlying piece of software.
+            In such cases, you need to take corrective steps.
+        </para>
+    </section>
+
+    <section id='migration-1.8-rebuild-improvements'>
+        <title>Rebuild Improvements</title>
+
+        <para>
+            Changes have been made to the
+            <link linkend='ref-classes-base'><filename>base</filename></link>,
+            <link linkend='ref-classes-autotools'><filename>autotools</filename></link>,
+            and
+            <link linkend='ref-classes-cmake'><filename>cmake</filename></link>
+            classes to clean out generated files when the
+            <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>
+            task needs to be re-executed.
+        </para>
+
+        <para>
+            One of the improvements is to attempt to run "make clean" during
+            the <filename>do_configure</filename> task if a
+            <filename>Makefile</filename> exists.
+            Some software packages do not provide a working clean target
+            within their make files.
+            If you have such recipes, you need to set
+            <link linkend='var-CLEANBROKEN'><filename>CLEANBROKEN</filename></link>
+            to "1".
+            <literallayout class='monospaced'>
+     CLEANBROKEN = "1"
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='migration-1.8-qa-check-and-validation-changes'>
+        <title>QA Check and Validation Changes</title>
+
+        <para>
+            The following QA Check and Validation Changes have occurred:
+            <itemizedlist>
+                <listitem><para>
+                    Usage of
+                    <link linkend='var-PRINC'><filename>PRINC</filename></link>
+                    previously triggered a warning.
+                    It now triggers an error.
+                    You should remove any remaining usage of
+                    <filename>PRINC</filename> in any recipe or append file.
+                    </para></listitem>
+                <listitem><para>
+                    An additional QA check has been added to detect usage of
+                    <filename>${D}</filename> in
+                    <link linkend='var-FILES'><filename>FILES</filename></link>
+                    values where
+                    <link linkend='var-D'><filename>D</filename></link> values
+                    should not be used at all.
+                    The same check ensures that <filename>$D</filename> is used
+                    in
+                    <filename>pkg_preinst/pkg_postinst/pkg_prerm/pkg_postrm</filename>
+                    functions.
+                    </para></listitem>
+                <listitem><para>
+                    <link linkend='var-S'><filename>S</filename></link> now
+                    needs to be set to a valid value within a recipe.
+                    If <filename>S</filename> is not set in the recipe, the
+                    directory is not automatically created.
+                    If <filename>S</filename> does not point to a directory
+                    that exists at the time the
+                    <link linkend='ref-tasks-unpack'><filename>do_unpack</filename></link>
+                    task finishes, a warning will be shown.
+                    </para></listitem>
+                <listitem><para>
+                    <link linkend='var-LICENSE'><filename>LICENSE</filename></link>
+                    is now validated for correct formatting of multiple
+                    licenses.
+                    If the format is invalid (e.g. multiple licenses are
+                    specified with no operators to specify how the multiple
+                    licenses interact), then a warning will be shown.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-1.8-miscellaneous-changes'>
+        <title>Miscellaneous Changes</title>
+
+        <para>
+            The following miscellaneous changes have occurred:
+            <itemizedlist>
+                <listitem><para>
+                    The <filename>send-error-report</filename> script now
+                    expects a "-s" option to be specified before the server
+                    address.
+                    This assumes a server address is being specified.
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>oe-pkgdata-util</filename> script now
+                    expects a "-p" option to be specified before the
+                    <filename>pkgdata</filename> directory, which is now
+                    optional.
+                    If the <filename>pkgdata</filename> directory is not
+                    specified, the script will run BitBake to query
+                    <link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>
+                    from the build environment.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
+
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
