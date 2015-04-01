@@ -12,19 +12,18 @@
         This final chapter provides conceptual information on layer sources,
         releases, and JSON configuration files.
         Also provided is a quick look at some useful
-        <filename>manage.py</filename> commands.
+        <filename>manage.py</filename> commands that are Toaster-specific.
         Information on <filename>manage.py</filename> commands does exist
         across the Web and the information in this manual by no means
-        attempts to provide a command reference.
-        However, having relevant command useful for the Toaster context
-        is helpful.
+        attempts to provide a command comprehensive reference.
     </para>
 
     <section id='layer-source'>
         <title>Layer Source</title>
 
         <para>
-            In general, a layer source is some source of existing layers.
+            In general, a "layer source" is a source of information about
+            existing layers.
             In particular, we are concerned with layers that you can use
             with the Yocto Project and Toaster.
             This chapter describes a particular type of layer source called
@@ -145,7 +144,7 @@
                 </section>
 
                 <section id='select-the-toasterconf-json-file'>
-                    <title>Select the <filename>toasterconf.json</filename> File</title>
+                    <title>Select for Use the <filename>toasterconf.json</filename> File</title>
 
                     <para>
                         If you do not want to use the Administration
@@ -155,8 +154,8 @@
                     </para>
 
                     <para>
-                        When you set up Toaster in Build Mode, you are prompted to
-                        select a Toaster configuration file.
+                        When you set up Toaster in Build Mode, you are prompted
+                        to select a Toaster configuration file.
                         This configuration file is used to set up the initial
                         configuration values within the Toaster database
                         including the layer sources.
@@ -309,9 +308,8 @@
      $ bitbake/lib/toaster/manage.py loadconf /home/scottrif/poky/meta-yocto/conf/toasterconf.json
                         </literallayout>
                         After entering this command, you need to update the
-                        information from the layer index to populate the
-                        Toaster database with the information from your layer
-                        index.
+                        Toaster database with the information coming from your
+                        new layer source.
                         To do that, you should run the
                         "<filename>lsupdates</filename>" command from the directory
                         that contains the Toaster database.
@@ -329,7 +327,7 @@
                         information is available by using the Toaster web interface.
                         To do that, visit the "All compatible layers" page inside a
                         Toaster project.
-                        The layers from your layer index should be listed there.
+                        The layers from your layer source should be listed there.
                     </para>
                 </section>
             </section>
@@ -340,6 +338,8 @@
         <title>Releases</title>
 
         <para>
+            When you create a Toaster project using the web interface,
+            you are asked to choose a "Release."
             In the context of Toaster, the term "Release" refers to a set of
             layers and a BitBake version the OpenEmbedded build system uses
             to build something.
@@ -347,8 +347,6 @@
             correspond to Yocto Project release branches.
             However, you can modify, delete, and create new releases
             according to your needs.
-            When you create a Toaster project using the web interface,
-            you are asked to choose a "Release."
             This section provides some background information on releases.
         </para>
 
@@ -461,7 +459,7 @@
                                 This name is never exposed through Toaster.
                                 </para></listitem>
                             <listitem><para><emphasis>Git URL:</emphasis>
-                                The URL <filename>giturl</filename>
+                                The URL (<filename>giturl</filename>)
                                 for the BitBake Git repository cloned
                                 for Toaster projects.
                                 </para></listitem>
@@ -493,9 +491,6 @@
                         (<filename>defaultlayers</filename>) automatically
                         added to the project configuration when a project is
                         created.
-                        You can download the recommended configuration
-                        for this case from
-                        <ulink url='&YOCTO_WIKI_URL;/wiki/File:Toasterconf.json.txt.patch'></ulink>.
                         </para></listitem>
                     <listitem><para><emphasis>Layer Source Priorities</emphasis>
                         A specification of
@@ -522,9 +517,11 @@
             <para>
                 To summarize what comprises a release, consider the following
                 example from a Toaster JSON file.
-                The configuration names the release "master" and sets it to
-                use the master branch of the
-                <filename>openembedded-core</filename> layer.
+                The configuration names the release "master" and uses the
+                "master" branch provided by the layer source of type
+                "layerindex", which is called "OpenEmbedded", and sets
+                the <filename>openembedded-core</filename> layer as the one
+                to be added by default to any projects created in Toaster.
                 The BitBake version used would be defined as shown earlier
                 in the previous list:
                 <literallayout class='monospaced'>
@@ -548,13 +545,13 @@
         <title>JSON Files</title>
 
         <para>
-            If you are going to be using the Toaster in Build Mode, it must
+            If you are going to be using Toaster in Build Mode, it must
             be initially configured before use.
             Configuration customizes layer source settings and Toaster defaults
             for all users and is performed by the person responsible for
             Toaster Configuration (i.e  the Toaster Administrator).
             The Toaster Administrator performs this configuration through the
-            admin web interface.
+            Django administration interface.
         </para>
 
         <para>
@@ -575,10 +572,10 @@
             <filename>toasterconf.json</filename>.
             The Toaster Administrator can customize the file prior to loading
             it into Toaster.
-            In the Local Toaster Build Mode, the system startup script
-            actively looks for compatible configuration files and prompts
-            you to select a file to load if it detects that the database has
-            not been configured.
+            When you set up Toaster locally to run in Build Mode, the system
+            startup script actively looks for compatible configuration files
+            and prompts you to select a file to load if it detects that the
+            database has not been configured.
         </para>
 
         <section id='json-file-choices'>
@@ -630,7 +627,7 @@
             <para>
                 The <filename>toasterconf.json</filename> file consists of
                 easily readable areas: configuration, layer sources, BitBake,
-                default, and releases.
+                default release, and releases.
             </para>
 
             <section id='json-config-area'>
@@ -760,8 +757,13 @@
                 <para>
                     This area of the JSON file defines the version of
                     BitBake Toaster uses.
-                    As shipped, Toaster is configured to recognize three
+                    As shipped, Toaster is configured to recognize four
                     versions of BitBake: master, dizzy, and HEAD.
+                    <note>
+                        HEAD is a special option that builds whatever is
+                        available on disk, without checking out any remote
+                        Git repositories.
+                    </note>
                 </para>
 
                 <para>
@@ -937,14 +939,16 @@
                 using the
                 <link linkend='toaster-command-builddelete'><filename>builddelete</filename></link>
                 command.
-                For example, assuming default repository and build directory
-                names, the following two commands put you in the
-                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-                and then return a list of the current builds, which would
-                be one in this case:
+                Here is an example that assumes default repository and build
+                directory names:
                 <literallayout class='monospaced'>
-     $ cd $HOME/poky/build
+     $ cd ~/poky/build
      $ python ../bitbake/lib/toaster/manage.py buildslist
+                </literallayout>
+                If your Toaster database had only one build, the above
+                <filename>buildslist</filename> command would return something
+                like the following:
+                <literallayout class='monospaced'>
      1: qemux86 poky core-image-minimal
                 </literallayout>
             </para>
@@ -1000,7 +1004,7 @@
                 <literallayout class='monospaced'>
      $ bitbake/lib/toaster/manage.py checksettings
                 </literallayout>
-                In Managed Mode, Toaster uses settings that are based on the
+                In Build Mode, Toaster uses settings that are based on the
                 database to configure the building tasks.
                 The <filename>checksettings</filename> command verifies that
                 the database settings are valid in the sense that they have
@@ -1026,8 +1030,8 @@
             <title><filename>loadconf</filename></title>
 
             <para>
-                The <filename>loadconf</filename> command loads a Toaster
-                configuration file (JSON file).
+                The <filename>loadconf</filename> command loads an
+                existing Toaster configuration file (JSON file).
                 You must run this on a new database that does not have any
                 data.
                 Running this command on an existing database that has data
@@ -1037,8 +1041,8 @@
      $ bitbake/lib/toaster/manage.py loadconf <replaceable>filepath</replaceable>
                 </literallayout>
                 The <filename>loadconf</filename> command configures a database
-                based on the supplied <filename>toasterconf.json</filename>
-                file.
+                based on the supplied existing
+                <filename>toasterconf.json</filename> file.
                 For information on the <filename>toasterconf.json</filename>,
                 see the
                 "<link linkend='toaster-json-files'>JSON Files</link>"
@@ -1050,7 +1054,7 @@
             <title><filename>runbuilds</filename></title>
 
             <para>
-                The <filename>runbuilds</filename> command launched
+                The <filename>runbuilds</filename> command launches
                 scheduled builds.
                 Access the command as follows:
                 <literallayout class='monospaced'>
@@ -1061,8 +1065,8 @@
                 per schedule.
                 The command returns after the builds start but before they
                 complete.
-                The "toasterui" build recorded updates the database when the
-                builds complete.
+                The Toaster Logging Interface records and updates the database
+                when the builds complete.
             </para>
         </section>
     </section>

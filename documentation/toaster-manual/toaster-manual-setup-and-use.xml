@@ -209,7 +209,7 @@
                         you install and set up a front-end web server.
                         This server allows for load balancing and
                         multi-threading over Toaster and
-                        <filename>django</filename> WSGI.
+                        <ulink url='https://docs.djangoproject.com/en/1.7/howto/deployment/wsgi/'><filename>django</filename> WSGI</ulink>.
                         Here is an example that uses Apache web server.
                         <literallayout class='monospaced'>
      $ apt-get install apache2 libapache2-mod-wsgi
@@ -282,19 +282,41 @@
                         </para></listitem>
                     <listitem><para><emphasis>Enable Build Logging to the Common SQL Server for Each Build Directory you are Using:</emphasis>
                         In the Build Directory, create the required
-                        <filename>conf/toaster.conf</filename> file as
-                        described in
-                        <ulink url='https://wiki.yoctoproject.org/wiki/Setting_up_a_local_instance_of_Toaster'>BitBake Extra Options</ulink>.
-                        Briefly, for each Build Directory, you need to inherit
-                        the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-toaster'>toaster</ulink>
-                        class by setting the following in your
-                        <filename>local.conf</filename> configuration file:
-                        <literallayout class='monospaced'>
+                        <filename>conf/toaster.conf</filename> file by doing
+                        the following:
+                        <note>
+                            The following statements are automatically added
+                            to the <filename>toaster.conf</filename> file
+                            when Toaster starts through the
+                            <filename>toaster start</filename> command.
+                        </note>
+                        <itemizedlist>
+                            <listitem><para>
+                                Be sure that Toaster inherits the
+                                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-toaster'><filename>toaster</filename></ulink>
+                                class and it is enabled in Bitbake in order to
+                                record target image package information:
+                                <literallayout class='monospaced'>
      INHERIT += "toaster"
+                                </literallayout>
+                                </para></listitem>
+                            <listitem><para>
+                                Enable build history in BitBake.
+                                Build history is needed to record target image
+                                package information:
+                                <literallayout class='monospaced'>
      INHERIT += "buildhistory"
      BUILDHISTORY_COMMIT = "1"
-                        </literallayout>
+                                </literallayout>
+                                This last command is not strictly needed.
+                                However, without it build history will not
+                                properly work.
+                                For information on build history, see the
+                                "<ulink url='&YOCTO_DOCS_REF_URL;#maintaining-build-output-quality'>Maintaining Build Output Quality</ulink>"
+                                section in the Yocto Project Development
+                                Manual.
+                                </para></listitem>
+                        </itemizedlist>
                         You also need to point to the database.
                         You can do this by exporting the
                         <filename>DATABASE_URL</filename> variable as follows:
@@ -434,8 +456,7 @@
                         Toaster configuration file.
                         Toaster configurations are stored in
                         JSON files called
-                        <filename>toasterconf.json</filename> and supports
-                        several types.
+                        <filename>toasterconf.json</filename>.
                         For information on JSON files, see the
                         "<link linkend='toaster-json-files'>JSON Files</link>"
                         section.</para>
@@ -497,27 +518,6 @@
                         <literallayout class='monospaced'>
      MANAGED="True"
                         </literallayout>
-                        </para></listitem>
-                    <listitem><para><emphasis>Configure the Build Environment:</emphasis>
-                        Configure the build environment by running the
-                        following:
-                        <literallayout class='monospaced'>
-     bitbake/lib/toaster/manage.py checksettings
-                        </literallayout>
-                        For reference information on Toaster-specific
-                        <filename>manage.py</filename> commands, see the
-                        "<link linkend='toaster-useful-commands'>Useful Commands</link>"
-                        section.
-                        </para></listitem>
-                    <listitem><para><emphasis>Load a Configuration File:</emphasis>
-                        Load a configuration file by running the following:
-                        <literallayout class='monospaced'>
-     bitbake/lib/toaster/manage.py loadconf <replaceable>path-to-toasterconf.json-file</replaceable>
-                        </literallayout>
-                        For reference information on Toaster-specific
-                        <filename>manage.py</filename> commands, see the
-                        "<link linkend='toaster-useful-commands'>Useful Commands</link>"
-                        section.
                         </para></listitem>
                     <listitem><para><emphasis>Set Up Toaster for Normal Usage:</emphasis>
                         You need to configure each build environment, layer
@@ -675,7 +675,7 @@
                         build artifacts, downloading sources, and running
                         builds.
                         All three directories need to be writable by
-                        the "poky" user.
+                        the user, which is "poky" in this example.
                         The build artifacts directory needs to readable by the
                         apache user.
                         You also need free disk space in the range of
@@ -688,33 +688,42 @@
                         </literallayout>
                         </para></listitem>
                     <listitem><para><emphasis>Set Up the <filename>toasterconf.json</filename> File:</emphasis>
-                        Download the <filename>toasterconf.json</filename> file
-                        from the
-                        <ulink url='https://wiki.yoctoproject.org/wiki/File:Toasterconf.json.txt.patch'>File:Toasterconf.json.txt.patch</ulink>
-                        wiki page and edit it to suit your environment.
+                        <ulink url='https://wiki.yoctoproject.org/wiki/File:Toasterconf.json.txt.patch'>Download the hosted <filename>toasterconf.json</filename> file</ulink>
+                        from the Yocto Project wiki and edit it to suit your
+                        environment.
                         For information on the relevant sections of the file,
                         see the
                         "<link linkend='toaster-json-files'>JSON Files</link>"
+                        section.</para>
+                        <para>After editing the file, load it by running
+                        the following:
+                        <literallayout class='monospaced'>
+     $ bitbake/lib/toaster/manage.py loadconf path-to-toasterconf.json-file
+                        </literallayout>
+                        For reference information on Toaster-specific
+                        <filename>manage.py</filename>, see the
+                        "<link linkend='toaster-useful-commands'>Useful Commands</link>"
                         section.
                         </para></listitem>
                     <listitem><para><emphasis>Check the Toaster Settings:</emphasis>
-                        You can check the Toaster settings by running this
-                        command:
+                        Configure the build environment by running the
+                        following:
                         <literallayout class='monospaced'>
      $ bitbake/lib/toaster/manage.py checksettings
                         </literallayout>
                         When prompted, paste in the directory paths created
-                        previously during Step 9.
-                        Alternatively, you can select the edited
-                        <filename>toasterconf.json</filename> file set up in
-                        Step 5.
+                        previously during Step 7.
+                        For reference information on Toaster-specific
+                        <filename>manage.py</filename>, see the
+                        "<link linkend='toaster-useful-commands'>Useful Commands</link>"
+                        section.
                         </para></listitem>
                     <listitem><para><emphasis>Install and Set Up the Web Server:</emphasis>
                         For a production environment, it is recommended that
                         you install and set up a front-end web server.
                         This server allows for load balancing and
                         multi-threading over Toaster and
-                        <filename>django</filename> WSGI.
+                        <ulink url='https://docs.djangoproject.com/en/1.7/howto/deployment/wsgi/'><filename>django</filename> WSGI</ulink>.
                         Here is an example that uses Apache web server:
                         <literallayout class='monospaced'>
      $ apt-get install apache2 libapache2-mod-wsgi
@@ -764,7 +773,7 @@
                         </literallayout>
                         </para></listitem>
                     <listitem><para><emphasis>Start Toaster:</emphasis>
-                        Synchronize the databases for toaster, and then start
+                        Synchronize the databases for Toaster, and then start
                         up the web server.
                         Here is an example that continues with the assumed
                         components from the previous steps:
@@ -803,13 +812,13 @@
                     <listitem><para><emphasis>Open the Browser:</emphasis>
                         Once the Apache server is running, connect to it with
                         your favorite browser and verify that the Toaster
-                        interface comes up.
-                        You can track accesses and errors in the Apache
-                        service logs:
+                        interface comes up:
                         <literallayout class='monospaced'>
      http://localhost:8000/toastergui
                         </literallayout>
-                        You can now use the Toaster web interface.
+                        You can now use the Toaster web interface to do thing
+                        such as track accesses and errors in the Apache
+                        service logs.
                         </para></listitem>
                 </orderedlist>
             </para>
@@ -823,8 +832,10 @@
             The Toaster web interface allows you to do the following:
             <itemizedlist>
                 <listitem><para>
-                    Browse all OpenEmbedded layers available for your
-                    selected version of the build system
+                    Browse published layers in the
+                    <ulink url='http://layers.openembedded.org'>OpenEmbedded Metadata Index</ulink>
+                    that are available for your selected version of the build
+                    system.
                     </para></listitem>
                 <listitem><para>
                     Import your own layers for building.
