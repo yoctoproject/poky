@@ -30,4 +30,4 @@ s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/bsp-guide\
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/profile-manual\/profile-manual.html\" target=\"_top\">Yocto Project Profiling and Tracing Manual<\/a>/Yocto Project Profiling and Tracing Manual/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/kernel-dev\/kernel-dev.html\" target=\"_top\">Yocto Project Linux Kernel Development Manual<\/a>/Yocto Project Linux Kernel Development Manual/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/ref-manual\/ref-manual.html\" target=\"_top\">Yocto Project Reference Manual<\/a>/Yocto Project Reference Manual/g
-s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/toaster-manual\/toaster-manual.html\" target=\"_top\">Yocto Project Toaster User Manual<\/a>/Yocto Project Toaster User Manual/g
+s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/toaster-manual\/toaster-manual.html\" target=\"_top\">Toaster User Manual<\/a>/Toaster User Manual/g
