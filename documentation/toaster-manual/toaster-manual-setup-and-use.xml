@@ -281,48 +281,35 @@
                         section.
                         </para></listitem>
                     <listitem><para><emphasis>Enable Build Logging to the Common SQL Server for Each Build Directory you are Using:</emphasis>
-                        In the Build Directory, create the required
-                        <filename>conf/toaster.conf</filename> file by doing
-                        the following:
-                        <note>
-                            The following statements are automatically added
-                            to the <filename>toaster.conf</filename> file
-                            when Toaster starts through the
-                            <filename>toaster start</filename> command.
-                        </note>
-                        <itemizedlist>
-                            <listitem><para>
-                                Be sure that Toaster inherits the
-                                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-toaster'><filename>toaster</filename></ulink>
-                                class and it is enabled in Bitbake in order to
-                                record target image package information:
-                                <literallayout class='monospaced'>
-     INHERIT += "toaster"
-                                </literallayout>
-                                </para></listitem>
-                            <listitem><para>
-                                Enable build history in BitBake.
-                                Build history is needed to record target image
-                                package information:
-                                <literallayout class='monospaced'>
-     INHERIT += "buildhistory"
-     BUILDHISTORY_COMMIT = "1"
-                                </literallayout>
-                                This last command is not strictly needed.
-                                However, without it build history will not
-                                properly work.
-                                For information on build history, see the
-                                "<ulink url='&YOCTO_DOCS_REF_URL;#maintaining-build-output-quality'>Maintaining Build Output Quality</ulink>"
-                                section in the Yocto Project Development
-                                Manual.
-                                </para></listitem>
-                        </itemizedlist>
-                        You also need to point to the database.
-                        You can do this by exporting the
-                        <filename>DATABASE_URL</filename> variable as follows:
+                        You need to make sure that the 
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-toaster'><filename>toaster</filename></ulink>
+                        class and build history are enabled. 
+                        This is done in a 
+                        <filename>toaster.conf</filename> file that is 
+                        created automatically by the toaster 
+                        <filename>start</filename> command, 
+                        and that lives inside the 
+                        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+                        in <filename>/conf/toaster.conf</filename>.</para>
+                        <para>That file should include the following line:
                         <literallayout class='monospaced'>
-     export DATABASE_URL=mysql://<replaceable>newuser</replaceable>:<replaceable>password</replaceable>@192.168.0.25:3306/toaster
+     INHERIT += "toaster buildhistory"
                         </literallayout>
+                        For information on build history, see the
+                        "<ulink url='&YOCTO_DOCS_REF_URL;#maintaining-build-output-quality'>Maintaining Build Output Quality</ulink>"
+                        section in the Yocto Project Development
+                        Manual.</para>
+                        <para>You also need to point to the database that you set 
+                        up in step 3. 
+                        You can do this by exporting the <filename>DATABASE_URL</filename>
+                        variable as follows:
+                        <literallayout class='monospaced'>
+     export DATABASE_URL=mysql://newuser:password@192.168.0.25:3306/toaster
+                        </literallayout>
+                        This example assumes that you are using 
+                        <filename>mysql-server</filename>. 
+                        The IP address should be the IP address of your 
+                        database server.
                         </para></listitem>
                     <listitem><para><emphasis>Source your Build Environment Setup Script:</emphasis>
                         From your
@@ -572,7 +559,7 @@
      # Save your changes and exit
 
      # Go to Home, Bitbake Versions, Add bitbake version;
-     # take version infor from : http://git.openembedded.org/bitbake/refs/heads,
+     # take version information from : http://git.openembedded.org/bitbake/refs/heads,
      # this manual assumes the master version
      # set Name: master, Giturl git://git.openembedded.org/bitbake
      # branch master, dirpath /
@@ -816,8 +803,7 @@
                         <literallayout class='monospaced'>
      http://localhost:8000/toastergui
                         </literallayout>
-                        You can now use the Toaster web interface to do thing
-                        such as track accesses and errors in the Apache
+                        You can track accesses and errors in the Apache 
                         service logs.
                         </para></listitem>
                 </orderedlist>
@@ -885,7 +871,7 @@
             <itemizedlist>
                 <listitem><para><emphasis>New Toaster Functionality:</emphasis>
                     This
-                    <ulink url='https://www.youtube.com/watch?v=f3gDg75FwFo'>video</ulink>
+                    <ulink url='https://www.youtube.com/watch?v=qYgDZ8YzV6w'>video</ulink>
                     introduces the new Toaster functionality for this release.
                     </para></listitem>
                 <listitem><para><emphasis>Toaster Homepage and Table Controls:</emphasis>
@@ -911,8 +897,7 @@
                 <listitem><para><emphasis>Configuration:</emphasis>
                     This
                     <ulink url='https://www.youtube.com/watch?v=UW-j-T2TzIg'>video</ulink>
-                    shows the information Toaster provides about build
-                    configuration.
+                    provides Toaster build configuration information.
                     </para></listitem>
                 <listitem><para><emphasis>Tasks:</emphasis>
                     This
@@ -1019,7 +1004,7 @@
                     <videoobject>
                         <videodata width="640px" height="480px" fileref="http://www.youtube.com/v/x-6dx4huNnw"></videodata>
                     </videoobject>
-                </mediaobject>
+                </mediaobject>qYgDZ8YzV6w
             </para>
         </section>
         <section id='toaster-gui-vids-7'>
