@@ -2034,10 +2034,12 @@
                     Functionality replaced by <filename>gst-player</filename>.
                     </para></listitem>
                 <listitem><para><filename>gnome-desktop</filename>:
-                    No longer needed.
+                    This recipe is now available in 
+                    <filename>meta-gnome</filename> and is no longer needed.
                     </para></listitem>
                 <listitem><para><filename>gsettings-desktop-schemas</filename>:
-                    No longer needed.
+                    This recipe is now available in 
+                    <filename>meta-gnome</filename> and is no longer needed.
                     </para></listitem>
                 <listitem><para><filename>python-argparse</filename>:
                     The <filename>argparse</filename> module is already
@@ -2059,7 +2061,9 @@
                     3.19 kernel has been added.
                     </para></listitem>
                 <listitem><para><filename>poky-feed-config-opkg</filename>:
-                    No longer needed.
+                    This recipe has become obsolete and is no longer needed.
+                    Use <filename>distro-feed-config</filename> from
+                    <filename>meta-oe</filename> instead.
                     </para></listitem>
                 <listitem><para><filename>libav 0.8.x</filename>:
                     <filename>libav 9.x</filename> is now used.
@@ -2099,6 +2103,32 @@
      PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', '${BLUEZ}', '', d)}
      PACKAGECONFIG[bluez4] = "--enable-bluetooth,--disable-bluetooth,bluez4"
      PACKAGECONFIG[bluez5] = "--enable-bluez5,--disable-bluez5,bluez5"
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='migration-1.8-kernel-build-changes'>
+        <title>Kernel Build Changes</title>
+
+        <para>
+            The kernel build process was changed to place the source
+            in a common shared work area and to place build artifacts
+            separately in the source code tree.
+            In theory, migration paths have been provided for most common
+            usages in kernel recipes but this might not work in all cases.
+            In particular, users need to ensure that
+            <filename>${S}</filename> (source files) and 
+            <filename>${B}</filename> (build artifacts) are used
+            correctly in functions such as
+            <link linkend='ref-tasks-install'><filename>do_install</filename></link>.
+        </para>
+ 
+        <para>
+            Recipes that rely on the kernel source code and do not inherit
+            the module classes might need to add explicit dependencies on
+            the <filename>do_shared_workdir</filename> kernel task, for example:
+            <literallayout class='monospaced'>
+     do_configure[depends] += "virtual/kernel:do_shared_workdir"
             </literallayout>
         </para>
     </section>
@@ -2162,7 +2192,7 @@
             within their make files.
             If you have such recipes, you need to set
             <link linkend='var-CLEANBROKEN'><filename>CLEANBROKEN</filename></link>
-            to "1".
+            to "1" within the recipe, for example:
             <literallayout class='monospaced'>
      CLEANBROKEN = "1"
             </literallayout>
@@ -2193,7 +2223,7 @@
                     The same check ensures that <filename>$D</filename> is used
                     in
                     <filename>pkg_preinst/pkg_postinst/pkg_prerm/pkg_postrm</filename>
-                    functions.
+                    functions instead of <filename>${D}</filename>.
                     </para></listitem>
                 <listitem><para>
                     <link linkend='var-S'><filename>S</filename></link> now
