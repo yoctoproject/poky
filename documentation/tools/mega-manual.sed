@@ -19,6 +19,7 @@ s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/dev-manual\/dev-man
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/kernel-dev\/kernel-dev.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/profile-manual\/profile-manual.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/ref-manual\/ref-manual.html#/\"link\" href=\"#/g
+s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/toaster-manual\/toaster-manual.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/1.8\/yocto-project-qs\/yocto-project-qs.html#/\"link\" href=\"#/g
 
 # Process cases where just an external manual is referenced without an id anchor
