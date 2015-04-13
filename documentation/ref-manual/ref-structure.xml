@@ -317,21 +317,42 @@
             <literallayout class='monospaced'>
      $ source oe-init-build-env-memres <replaceable>port_number</replaceable> <replaceable>build_dir</replaceable>
             </literallayout>
-            The script uses other scripts within the
-            <filename>scripts</filename> directory to do the bulk of the work.
-        </para>
-
-        <para>
-            If you do not provide a port number with the script, the
-            BitBake server starts at a randomly selected port.
+            Following are some considerations when sourcing this script:
+            <itemizedlist>
+                <listitem><para>
+                    The script uses other scripts within the
+                    <filename>scripts</filename> directory to do the bulk of
+                    the work.
+                    </para></listitem>
+                <listitem><para>
+                    If you do not provide a port number with the script, the
+                    BitBake server starts at a randomly selected port.
+                    </para></listitem>
+                <listitem><para>
+                    The script's parameters are positionally dependent.
+                    Consequently, you cannot run the script and provide a
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+                    name without also providing a port number.
+                    In other words, the following syntax is illegal:
+                    <literallayout class='monospaced'>
+     $ source oe-initbuild-env-memres <replaceable>build_dir</replaceable>
+                    </literallayout>
+                    <note>
+                        The previous restriction might be resolved in the
+                        future.
+                        See
+                        <ulink url='https://bugzilla.yoctoproject.org/show_bug.cgi?id=7555'>Bug 7555</ulink>
+                        for more information.
+                    </note>
+                    </para></listitem>
+            </itemizedlist>
         </para>
 
         <para>
             When you run this script, your Yocto Project environment is set
-            up, a
-            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-            is created, your working directory becomes the Build Directory,
-            and you are presented with a list of common BitBake targets.
+            up, a Build Directory is created, your working directory becomes
+            the Build Directory, and you are presented with a list of common
+            BitBake targets.
             Here is an example:
             <literallayout class='monospaced'>
      $ source oe-init-build-env-memres
@@ -349,6 +370,7 @@
          meta-ide-support
 
      You can also run generated qemu images with a command like 'runqemu qemux86'
+     Bitbake server address: 127.0.0.1, server port: 53995
      Bitbake server started on demand as needed, use bitbake -m to shut it down
             </literallayout>
             The script gets its default list of common targets from the
@@ -369,16 +391,24 @@
             <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
             argument creates a build directory named
             <filename>build</filename>.
-            If you provide a Build Directory argument when you
+            If you provide a Build Directory argument and port number when you
             <filename>source</filename> the script, the Build Directory is
             created using that name.
             For example, the following command starts the BitBake server using
-            a randomly selected port and creates a Build Directory named
+            port 53995 and creates a Build Directory named
             <filename>mybuilds</filename> that is outside of the
             <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>:
             <literallayout class='monospaced'>
-     $ source oe-init-build-env-memres ~/mybuilds
+     $ source oe-init-build-env-memres 53995 ~/mybuilds
             </literallayout>
+            The <filename>oe-init-build-env-memres</filename> script starts a
+            memory resident BitBake server.
+            This BitBake instance uses the
+            <filename>bitbake-cookerdaemon.log</filename> file, which is
+            located in the Build Directory.
+        </para>
+
+        <para>
             The OpenEmbedded build system uses the template configuration
             files, which are found by default in the
             <filename>meta-yocto/conf</filename> directory in the
