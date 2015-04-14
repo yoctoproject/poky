@@ -210,31 +210,55 @@
 <title>Makefile-Based Projects</title>
 
     <para>
-        For Makefile-based projects, the cross-toolchain environment
-        variables established by running the cross-toolchain environment
-        setup script override any settings you might have in your
-        <filename>Makefile</filename>.
-        For example, if you had settings such as the following in your
-        <filename>Makefile</filename>, the environment variables defined
-        by the script would override them:
+        For Makefile-based projects, the cross-toolchain environment variables
+        established by running the cross-toolchain environment setup script
+        are subject to general <filename>make</filename> rules.
+    </para>
+
+    <para>
+        To illustrate this, consider the following four cross-toolchain
+        environment variables:
         <literallayout class='monospaced'>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'>CC</ulink>=arm-poky-linux-gnueabi-gcc
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'>LD</ulink>=arm-poky-linux-gnueabi-ld
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink>=”${CFLAGS} --sysroot=&lt;sysroot-dir&gt;”
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-CXXFLAGS'>CXXFLAGS</ulink>=”${CXXFLAGS} --sysroot=&lt;sysroot-dir&gt;”
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'>CC</ulink>=i586-poky-linux-gcc -m32 -march=i586 --sysroot=/opt/poky/1.8/sysroots/i586-poky-linux
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'>LD</ulink>=i586-poky-linux-ld --sysroot=/opt/poky/1.8/sysroots/i586-poky-linux
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink>=-O2 -pipe -g -feliminate-unused-debug-types
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CXXFLAGS'>CXXFLAGS</ulink>=-O2 -pipe -g -feliminate-unused-debug-types
         </literallayout>
-        Consequently, you should not set variables like
-        <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'><filename>CC</filename></ulink>
-        and
-        <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'><filename>LD</filename></ulink>
-        in your <filename>Makefile</filename>.
-        For the list of variables set up by the cross-toolchain environment
-        setup script, see the
-        "<link linkend='setting-up-the-cross-development-environment'>Setting Up the Cross-Development Environment</link>"
-        section.
+        Now, consider the following three cases:
+        <itemizedlist>
+            <listitem><para><emphasis>Case 1 - No Variables Set in the <filename>Makefile</filename>:</emphasis>
+                Because these variables are not specifically set in the
+                <filename>Makefile</filename>, the variables retain their
+                values based on the environment.
+                </para></listitem>
+            <listitem><para><emphasis>Case 2 - Variables Set in the <filename>Makefile</filename>:</emphasis>
+                Specifically setting variables in the
+                <filename>Makefile</filename> during the build results in the
+                environment settings of the variables being overwritten.
+                </para></listitem>
+            <listitem><para><emphasis>Case 3 - Variables Set when the <filename>Makefile</filename> is Executed from the Command Line:</emphasis>
+                Executing the <filename>Makefile</filename> from the command
+                line results in the variables being overwritten with
+                command-line content regardless of what is being set in the
+                <filename>Makefile</filename>.
+                In this case, environment variables are not considered unless
+                you use the "-e" flag during the build:
+                <literallayout class='monospaced'>
+     $ make -e <replaceable>file</replaceable>
+                </literallayout>
+                If you use this flag, then the environment values of the
+                variables override any variables specifically set in the
+                <filename>Makefile</filename>.
+                </para></listitem>
+        </itemizedlist>
+        <note>
+            For the list of variables set up by the cross-toolchain environment
+            setup script, see the
+            "<link linkend='setting-up-the-cross-development-environment'>Setting Up the Cross-Development Environment</link>"
+            section.
+        </note>
     </para>
 </section>
-
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
