@@ -871,131 +871,352 @@
 </title>
 
     <para>
-        This section
-        <footnote>
-            <para>
-                Kudos and thanks to Robert P. J. Day of
-                <ulink url='http://www.crashcourse.ca'>CrashCourse</ulink> for providing the basis
-                for this "expert" section with information from one of his
-                <ulink url='http://www.crashcourse.ca/wiki/index.php/Yocto_Project_Quick_Start'>wiki</ulink>
-                pages.
-            </para>
-        </footnote>
-        gives you a minimal description of how to use the Yocto Project to build
-        images for Beaglebone hardware starting from scratch.
-        The steps were performed on a 64-bit Ubuntu 12.04 system that
-        has four cores.
+        This section provides minimal instruction for using the Yocto Project
+        to build an image for Beaglebone hardware and for building and
+        booting an image for the third-party
+        <ulink url='http://www.minnowboard.org/meet-minnowboard-max/'>MinnowBoard MAX</ulink>.
+        <note>
+            The steps used in this section were performed on a 64-bit
+            Ubuntu 14.10 system that has four cores.
+        </note>
     </para>
 
-    <section id='getting-yocto'>
-        <title>Getting the Yocto Project</title>
+    <section id='building-beaglebone-from-scratch'>
+        <title>Building Beaglebone from Scratch</title>
 
         <para>
-            Set up your
-            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
-            by using Git to clone the <filename>poky</filename>
-            repository and then check out the release branch:
-            <literallayout class='monospaced'>
+            This section
+            <footnote>
+                <para>
+                    Kudos and thanks to Robert P. J. Day of
+                    <ulink url='http://www.crashcourse.ca'>CrashCourse</ulink>
+                    for providing the basis for this "expert" section with
+                    information from one of his
+                    <ulink url='http://www.crashcourse.ca/wiki/index.php/Yocto_Project_Quick_Start'>wiki</ulink>
+                    pages.
+                </para>
+            </footnote>
+            gives you a minimal description of how to use the Yocto Project to
+            build images for Beaglebone hardware starting from scratch.
+        </para>
+
+        <section id='getting-yocto'>
+            <title>Getting the Yocto Project</title>
+
+            <para>
+                Set up your
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+                by using Git to clone the <filename>poky</filename>
+                repository and then check out the release branch:
+                <literallayout class='monospaced'>
      $ cd ~
      $ git clone git://git.yoctoproject.org/poky
      $ cd poky
      $ git checkout -b &DISTRO_NAME; origin/&DISTRO_NAME;
-            </literallayout>
-        </para>
-    </section>
+                </literallayout>
+            </para>
+        </section>
 
-    <section id='setting-up-your-host'>
-        <title>Setting Up Your Host</title>
+        <section id='setting-up-your-host'>
+            <title>Setting Up Your Host</title>
 
-        <para>
-            You need some packages for everything to work.
-            Rather than duplicate them here, look at the
-            "<link linkend='packages'>The Packages</link>"
-            section earlier in this quick start.
-        </para>
-    </section>
+            <para>
+                You need some packages for everything to work.
+                Rather than duplicate them here, look at the
+                "<link linkend='packages'>The Packages</link>"
+                section earlier in this quick start.
+            </para>
+        </section>
 
-    <section id='initializing-the-build-environment'>
-        <title>Initializing the Build Environment</title>
+        <section id='initializing-the-build-environment'>
+            <title>Initializing the Build Environment</title>
 
-        <para>
-            From the root directory of your
-            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>,
-            initialize your environment and provide a meaningful
-            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-            name:
-            <literallayout class='monospaced'>
+            <para>
+                From the root directory of your
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>,
+                initialize your environment and provide a meaningful
+                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+                name:
+                <literallayout class='monospaced'>
      $ source &OE_INIT_FILE; mybuilds
-            </literallayout>
-            At this point, the <filename>mybuilds</filename> directory has
-            been created for you and it is now your current working directory.
-            If you do not provide your own directory name,
-            it defaults to <filename>build</filename>,
-            which is inside the Source Directory.
-        </para>
-    </section>
+                </literallayout>
+                At this point, the <filename>mybuilds</filename> directory has
+                been created for you and it is now your current working directory.
+                If you do not provide your own directory name,
+                it defaults to <filename>build</filename>,
+                which is inside the Source Directory.
+            </para>
+        </section>
 
-    <section id='configuring-the-local.conf-file'>
-        <title>Configuring the local.conf File</title>
+        <section id='configuring-the-local.conf-file'>
+            <title>Configuring the local.conf File</title>
 
-        <para>
-            Initializing the build environment creates a
-            <filename>conf/local.conf</filename> configuration file
-            in the Build Directory.
-            You need to manually edit this file to specify the machine you
-            are building:
-            <literallayout class='monospaced'>
+            <para>
+                Initializing the build environment creates a
+                <filename>conf/local.conf</filename> configuration file
+                in the Build Directory.
+                You need to manually edit this file to specify the machine you
+                are building:
+                <literallayout class='monospaced'>
      MACHINE ?= "beaglebone"
-            </literallayout>
-        </para>
+                </literallayout>
+            </para>
 
-        <para>
-            A good deal that goes into a Yocto Project build is simply
-            downloading all of the source tarballs.
-            Steps exist that can help you be more efficient with gathering
-            source files.
-            For example, you can set up local mirrors that hold your
-            source tarballs or you can pre-fetch all your source without
-            initiating a build until later.
-            For more information, see the
-            "<ulink url='&YOCTO_DOCS_DEV_URL;#working-with-source-files'>Working with Source Files</ulink>"
-            section in the Yocto Project Development Manual.
-        </para>
+            <para>
+                A good deal that goes into a Yocto Project build is simply
+                downloading all of the source tarballs.
+                Steps exist that can help you be more efficient with gathering
+                source files.
+                For example, you can set up local mirrors that hold your
+                source tarballs or you can pre-fetch all your source without
+                initiating a build until later.
+                For more information, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#working-with-source-files'>Working with Source Files</ulink>"
+                section in the Yocto Project Development Manual.
+            </para>
+        </section>
+
+        <section id='building-the-image'>
+            <title>Building the Image</title>
+
+            <para>
+                At this point, you need to select an image to build for the
+                Beaglebone hardware.
+                If this is your first build using the Yocto Project, you should
+                try the smallest and simplest image:
+                <literallayout class='monospaced'>
+     $ bitbake core-image-minimal
+                </literallayout>
+                Now you just wait for the build to finish.
+            </para>
+
+            <para>
+                You might encounter various warning messages during the
+                build.
+                For example, if a source file fetch initially fails,
+                the OpenEmbedded build system notes that and attempts to
+                find the files using mirrors.
+                Another example could be values requested for but not
+                found in the final kernel <filename>.config</filename>
+                file.
+                For information on configuration warnings, see the
+                "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#generating-configuration-files'>Generating Configuration Files</ulink>"
+                section in the Yocto Project Linux Kernel Development Manual.
+            </para>
+
+            <para>
+                By default, BitBake aborts when it encounters an error during
+                the build.
+                If you want to make sure the build continues even when BitBake
+                encounters an error, use this variation:
+                <literallayout class='monospaced'>
+     $ bitbake -k core-image-minimal
+                </literallayout>
+            </para>
+
+            <para>
+                Once you have your image, you can take steps to load and boot
+                it on the target hardware.
+            </para>
+
+            <para>
+                You can learn about BitBake in general by reading the
+                <ulink url='&YOCTO_DOCS_BB_URL;'>BitBake User Manual</ulink>.
+            </para>
+        </section>
     </section>
 
-    <section id='building-the-image'>
-        <title>Building the Image</title>
+    <section id='building-and-booting-minnowboard-max'>
+        <title>Building and Booting MinnowBoard MAX</title>
 
         <para>
-            At this point, you need to select an image to build for the
-            Beaglebone hardware.
-            If this is your first build using the Yocto Project, you should try
-            the smallest and simplest image:
-            <literallayout class='monospaced'>
+            As of the Yocto Project 1.6 release, the MinnowBoard MAX is
+            supported by the Yocto Project and the
+            <filename>meta-intel</filename>
+            <filename>intel-corei7-64</filename> and
+            <filename>intel-core2-32</filename> Board Support Packages (BSPs).
+            <note>
+                The MinnowBoard MAX ships with 64-bit firmware.
+                If you want to use the board in 32-bit mode, you must
+                download the
+                <ulink url='http://firmware.intel.com/projects/minnowboard-max'>32-bit firmware</ulink>.
+            </note>
+        </para>
+
+        <section id='mm-getting-yocto-and-meta-intel'>
+            <title>Getting the Yocto Project and <filename>meta-intel</filename></title>
+
+            <para>
+                Set up your
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+                and the <filename>meta-intel</filename> layer
+                by using Git to clone the <filename>poky</filename>
+                and <filename>meta-intel</filename> repositories.
+                These commands use the "&DISTRO_NAME;" branch:
+                <literallayout class='monospaced'>
+     $ cd ~
+     $ mkdir source
+     $ cd source
+     $ git clone -b &DISTRO_NAME; git://git.yoctoproject.org/poky
+     $ cd poky
+     $ git clone -b &DISTRO_NAME; git://git.yoctoproject.org/meta-intel
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='mm-setting-up-your-host'>
+            <title>Setting Up Your Host</title>
+
+            <para>
+                You need some packages for everything to work.
+                Rather than duplicate them here, look at the
+                "<link linkend='packages'>The Packages</link>"
+                section earlier in this quick start.
+            </para>
+        </section>
+
+        <section id='mm-initializing-the-build-environment'>
+            <title>Initializing the Build Environment</title>
+
+            <para>
+                From the root directory of your
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>,
+                initialize your environment by running the build environment
+                initialization script:
+                <literallayout class='monospaced'>
+     $ source &OE_INIT_FILE;
+                </literallayout>
+                At this point, the <filename>build</filename> directory has
+                been created for you and it is now your current working
+                directory.
+            </para>
+        </section>
+
+        <section id='mm-configure-the-build'>
+            <title>Configure the Build</title>
+
+            <para>
+                To configure the build, you edit the
+                <filename>bblayers.conf</filename> and
+                <filename>local.conf</filename> files, both of which are
+                located in the <filename>build/conf</filename> directory.
+            </para>
+
+            <para>
+                Here is a quick way to make the edits.
+                The first command adds the <filename>meta-intel</filename>
+                branch, which contains the <filename>intel-core*</filename>
+                BSPs to the build.
+                The second command selects the BSP by setting the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                variable.
+                <literallayout class='monospaced'>
+     $ echo 'BBLAYERS += "~/source/poky/meta-intel"' >> conf/bblayers.conf
+     $ echo 'MACHINE = "intel-corei7-64"' >> conf/local.conf
+                </literallayout>
+                <note><title>Notes</title>
+                    <para>
+                        If you want a 64-bit build, use the following:
+                        <literallayout class='monospaced'>
+     $ echo 'MACHINE = "intel-corei7-64"' >> conf/local.conf
+                        </literallayout>
+                    </para>
+
+                    <para>
+                        If you want 32-bit images, use the following:
+                        <literallayout class='monospaced'>
+     $ echo 'MACHINE = "intel-core2-32"' >> conf/local.conf
+                        </literallayout>
+                    </para>
+                </note>
+            </para>
+        </section>
+
+        <section id='mm-build-the-image'>
+            <title>Build the Image</title>
+
+            <para>
+                Use this command to build the minimal image for
+                MinnowBoard MAX:
+                <literallayout class='monospaced'>
      $ bitbake core-image-minimal
-            </literallayout>
-            Now you just wait for the build to finish.
-        </para>
+                </literallayout>
+                Once the build completes, the resulting basic console image
+                is located in the Build Directory here:
+                <literallayout class='monospaced'>
+     tmp/deploy/images/intel-corei7-64/core-image-minimal-intel-corei7-64.hddimg
+                </literallayout>
+            </para>
+        </section>
 
-        <para>
-            By default, BitBake aborts when it encounters an error during
-            the build.
-            If you want to make sure the build continues even when BitBake
-            encounters an error, use this variation:
-            <literallayout class='monospaced'>
-     $ bitbake -k core-image-minimal
-            </literallayout>
-        </para>
+        <section id='mm-write-the-image'>
+            <title>Write the Image</title>
 
-        <para>
-            Once you have your image, you can take steps to load and boot it on
-            the target hardware.
-        </para>
+            <para>
+                You can write the image to a USB key, SATA drive, or SD card
+                by using the <filename>mkefidisk.sh</filename> script,
+                which is included in the <filename>poky</filename>
+                repository at <filename>scripts/contrib/mkefidisk.sh</filename>:
+                <literallayout class='monospaced'>
+     $ sudo $HOME/source/poky/scripts/contrib/mkefidisk.sh <replaceable>HOST_DEVICE</replaceable> \
+        tmp/deploy/images/intel-corei7-64/core-image-minimal-intel-corei7-64.hddimg <replaceable>TARGET_DEVICE</replaceable>
+                </literallayout>
+                In the previous command, <replaceable>HOST_DEVICE</replaceable>
+                is the device node on the build system (e.g.
+                <filename>/dev/sdc</filename> or
+                <filename>/dev/mmcblk0</filename>).
+                <replaceable>TARGET_DEVICE</replaceable> is the name of the
+                device as the MinnowBoard MAX sees it (e.g.
+                <filename>/dev/sda</filename> or
+                <filename>/dev/mmcblk0</filename>).
+            </para>
+        </section>
 
-        <para>
-            You can learn about BitBake in general by reading the
-            <ulink url='&YOCTO_DOCS_BB_URL;'>BitBake User Manual</ulink>.
-        </para>
+        <section id='mm-boot-the-image'>
+            <title>Boot the Image</title>
+
+            <para>
+                With the boot device provisioned, you can insert the media into
+                the MinnowBoard MAX and boot the hardware.
+                The board should automatically detect the media and boot to
+                the bootloader and subsequently the operating system.
+            </para>
+
+            <para>
+                If the board does not boot automatically, you can boot it
+                manually from the EFI shell as follows:
+                <literallayout class='monospaced'>
+     Shell> connect -r
+     Shell> map -r
+     Shell> fs0:
+     Shell> bootx64
+                </literallayout>
+                <note>
+                    For a 32-bit image use the following:
+                    <literallayout class='monospaced'>
+     Shell> bootia32
+                    </literallayout>
+                </note>
+            </para>
+        </section>
+
+        <section id='mm-next-steps'>
+            <title>Next Steps</title>
+
+            <para>
+                Now that you can build a basic image, you could experiment
+                by building some other example images:
+                <literallayout class='monospaced'>
+     $ bitbake core-image-sato
+     $ bitbake core-image-sato-sdk
+                </literallayout>
+                Another possibility is to experiment creating your own image
+                recipes that add packages to suit your needs.
+                For information on how to create recipes, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#new-recipe-writing-a-new-recipe'>Writing a New Recipe</ulink>"
+                section in the Yocto Project Development Manual.
+            </para>
+        </section>
     </section>
 </section>
 
