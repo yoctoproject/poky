@@ -50,7 +50,6 @@ RECIPE_UPSTREAM_DATE_pn-pseudo = "Jan 23, 2015"
 CHECK_DATE_pseudo = "Feb 12, 2015"
 
 # NO UPDATE REASONS
-RECIPE_NO_UPDATE_REASON_pn-bluez4 = "BlueZ 5.x is not backward-compatible; components that interact with bluez not updated"
 RECIPE_NO_UPDATE_REASON_pn-build-appliance = "Always reports behind"
 RECIPE_NO_UPDATE_REASON_pn-cdrtools = "v3.x uses incompatible CDDL license"
 RECIPE_NO_UPDATE_REASON_pn-createrepo = "Versions after 0.9.* use YUM, so we hold at 0.4.11"
