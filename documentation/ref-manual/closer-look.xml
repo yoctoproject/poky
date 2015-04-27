@@ -640,7 +640,9 @@
 
         <para>
             Package feeds are an intermediary step in the build process.
-            BitBake generates packages whose types are defined by the
+            The OpenEmbedded build system provides classes to generate
+            different package types, and you specify which classes to enable
+            through the
             <link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>
             variable.
             Before placing the packages into package feeds,
@@ -651,22 +653,41 @@
         </para>
 
         <para>
-            The package feed area resides in
-            <filename>tmp/deploy</filename> of the Build Directory.
-            Folders are created that correspond to the package type
-            (IPK, DEB, or RPM) created.
-            Further organization is derived through the value of the
-            <link linkend='var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></link>
-            variable for each package.
-            For example, packages can exist for the i586 or qemux86
-            architectures.
-            The package files themselves reside within the appropriate
-            architecture folder.
+            The package feed area resides in the Build Directory.
+            The directory the build system uses to temporarily store packages
+            is determined by a combination of variables and the particular
+            package manager in use.
+            See the "Package Feeds" box in the illustration and note the
+            information to the right of that area.
+            In particular, the following defines where package files are
+            kept:
+            <itemizedlist>
+                <listitem><para><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link>:
+                    Defined as <filename>tmp/deploy</filename> in the Build
+                    Directory.
+                    </para></listitem>
+                <listitem><para><filename>DEPLOY_DIR_*</filename>:
+                    Depending on the package manager used, the package type
+                    sub-folder.
+                    Given RPM, IPK, or DEB packaging and tarball creation, the
+                    <link linkend='var-DEPLOY_DIR_RPM'><filename>DEPLOY_DIR_RPM</filename></link>,
+                    <link linkend='var-DEPLOY_DIR_IPK'><filename>DEPLOY_DIR_IPK</filename></link>,
+                    <link linkend='var-DEPLOY_DIR_DEB'><filename>DEPLOY_DIR_DEB</filename></link>,
+                    or
+                    <link linkend='var-DEPLOY_DIR_TAR'><filename>DEPLOY_DIR_TAR</filename></link>,
+                    variables are used, respectively.
+                    </para></listitem>
+                <listitem><para><link linkend='var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></link>:
+                    Defines architecture-specific sub-folders.
+                    For example, packages could exist for the i586 or qemux86
+                    architectures.
+                    </para></listitem>
+            </itemizedlist>
         </para>
 
         <para>
             BitBake uses the <filename>do_package_write_*</filename> tasks to
-            place generated packages into the package holding area (e.g.
+            generate packages and place them into the package holding area (e.g.
             <filename>do_package_write_ipk</filename> for IPK packages).
             See the
             "<link linkend='ref-tasks-package_write_deb'><filename>do_package_write_deb</filename></link>",
@@ -675,6 +696,13 @@
             and
             "<link linkend='ref-tasks-package_write_tar'><filename>do_package_write_tar</filename></link>"
             sections for additional information.
+            As an example, consider a scenario where an IPK packaging manager
+            is being used and package architecture support for both i586
+            and qemux86 exist.
+            Packages for the i586 architecture are placed in
+            <filename>build/tmp/deploy/ipk/i586</filename>, while packages for
+            the qemux86 architecture are placed in
+            <filename>build/tmp/deploy/ipk/qemux86</filename>.
         </para>
     </section>
 
