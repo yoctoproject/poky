@@ -668,8 +668,8 @@
             The Eclipse IDE is a popular development environment and it fully
             supports development using the Yocto Project.
             <note>
-                This release of the Yocto Project supports both the Kepler
-                and Juno versions of the Eclipse IDE.
+                This release of the Yocto Project supports both the Luna
+                and Kepler versions of the Eclipse IDE.
                 Thus, the following information provides setup information for
                 both versions.
             </note>
@@ -722,19 +722,20 @@
                 <title>Installing the Eclipse IDE</title>
 
                 <para>
-                    It is recommended that you have the Kepler 4.3.2 version of
-                    the Eclipse IDE installed on your development system.
-                    However, if you currently have the Juno 4.2 version
+                    It is recommended that you have the Luna SR2 (4.4.2)
+                    version of the Eclipse IDE installed on your development
+                    system.
+                    However, if you currently have the Kepler 4.3.2 version
                     installed and you do not want to upgrade the IDE, you can
-                    configure Juno to work with the Yocto Project.
+                    configure Kepler to work with the Yocto Project.
                 </para>
 
                 <para>
-                    If you do not have the Kepler 4.3.2 Eclipse IDE installed,
-                    you can find the tarball at
+                    If you do not have the Luna SR2 (4.4.2) Eclipse IDE
+                    installed, you can find the tarball at
                     <ulink url='&ECLIPSE_MAIN_URL;'></ulink>.
-                    From that site, choose the Eclipse Standard 4.3.2 version
-                    particular to your development host.
+                    From that site, choose the appropriate download from the
+                    "Eclipse IDE for C/C++ Developers".
                     This version contains the Eclipse Platform, the Java
                     Development Tools (JDT), and the Plug-in Development
                     Environment.
@@ -748,7 +749,7 @@
                     using the default name <filename>eclipse</filename>:
                     <literallayout class='monospaced'>
      $ cd ~
-     $ $ tar -xzvf ~/Downloads/eclipse-standard-kepler-SR2-linux-gtk-x86_64.tar.gz
+     $ tar -xzvf ~/Downloads/eclipse-cpp-luna-SR2-linux-gtk-x86_64.tar.gz
                     </literallayout>
                 </para>
             </section>
@@ -771,24 +772,37 @@
                             select "Install New Software" from the "Help"
                             pull-down menu.</para></listitem>
                         <listitem><para>Select
-                            <filename>Kepler - &ECLIPSE_KEPLER_URL;</filename>
+                            <filename>Luna - &ECLIPSE_LUNA_URL;</filename>
                             from the "Work with:" pull-down menu.
                             <note>
-                                For Juno, select
-                                <filename>Juno - &ECLIPSE_JUNO_URL;</filename>
+                                For Kepler, select
+                                <filename>Kepler - &ECLIPSE_KEPLER_URL;</filename>
                             </note>
                             </para></listitem>
                         <listitem><para>Expand the box next to "Linux Tools"
                             and select the
-                            <filename>LTTng - Linux Tracing Toolkit</filename>
-                            boxes.</para></listitem>
+                            <filename>Linux Tools LTTng Tracer Control</filename>,
+                            <filename>Linux Tools LTTng Userspace Analysis</filename>,
+                            and
+                            <filename>LTTng Kernel Analysis</filename> boxes.
+                            If these selections do not appear in the list,
+                            that means the items are already installed.
+                            <note>
+                                For Kepler, select
+                                <filename>LTTng - Linux Tracing Toolkit</filename>
+                                box.
+                            </note>
+                            </para></listitem>
                         <listitem><para>Expand the box next to "Mobile and
-                            Device Development" and select the following boxes:
+                            Device Development" and select the following boxes.
+                            Again, if any of the following items are not
+                            available for selection, that means the items are
+                            already installed:
                             <itemizedlist>
                                 <listitem><para><filename>C/C++ Remote Launch (Requires RSE Remote System Explorer)</filename></para></listitem>
                                 <listitem><para><filename>Remote System Explorer End-user Runtime</filename></para></listitem>
                                 <listitem><para><filename>Remote System Explorer User Actions</filename></para></listitem>
-                                <listitem><para><filename>Target Management Terminal</filename></para></listitem>
+                                <listitem><para><filename>Target Management Terminal (Core SDK)</filename></para></listitem>
                                 <listitem><para><filename>TCF Remote System Explorer add-in</filename></para></listitem>
                                 <listitem><para><filename>TCF Target Explorer</filename></para></listitem>
                             </itemizedlist></para></listitem>
@@ -796,7 +810,10 @@
                             Languages" and select the
                             <filename>C/C++ Autotools Support</filename>
                             and <filename>C/C++ Development Tools</filename>
-                            boxes.</para></listitem>
+                            boxes.
+                            For Luna, these items do not appear on the list
+                            as they are already installed.
+                            </para></listitem>
                         <listitem><para>Complete the installation and restart
                             the Eclipse IDE.</para></listitem>
                     </orderedlist>
@@ -828,12 +845,12 @@
                             <listitem><para>Click "Add..." in the "Work with:"
                                 area.</para></listitem>
                            <listitem><para>Enter
-                                <filename>&ECLIPSE_DL_PLUGIN_URL;/kepler</filename>
+                                <filename>&ECLIPSE_DL_PLUGIN_URL;/luna</filename>
                                 in the URL field and provide a meaningful name
                                 in the "Name" field.
                                 <note>
-                                    If you are using Juno, use
-                                    <filename>&ECLIPSE_DL_PLUGIN_URL;/juno</filename>
+                                    If you are using Kepler, use
+                                    <filename>&ECLIPSE_DL_PLUGIN_URL;/kepler</filename>
                                     in the URL field.
                                 </note></para></listitem>
                             <listitem><para>Click "OK" to have the entry added
@@ -851,6 +868,11 @@
                             <listitem><para>Complete the remaining software
                                 installation steps and then restart the Eclipse
                                 IDE to finish the installation of the plug-in.
+                                <note>
+                                    You can click "OK" when prompted about
+                                    installing software that contains unsigned
+                                    content.
+                                </note>
                                 </para></listitem>
                         </orderedlist>
                     </para>
@@ -870,17 +892,25 @@
                                     <listitem><para>Use the Oracle JDK.
                                         If you don't have that, go to
                                         <ulink url='http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html'></ulink>
-                                        and download the appropriate tarball
-                                        for your development system and
+                                        and download the latest appropriate
+                                        Java SE Development Kit tarball for
+                                        your development system and
                                         extract it into your home directory.
                                         </para></listitem>
                                     <listitem><para>In the shell you are going
                                         to do your work, export the location of
-                                        the Oracle Java as follows:
+                                        the Oracle Java.
+                                        The previous step creates a new folder
+                                        for the extracted software.
+                                        You need to use the following
+                                        <filename>export</filename> command
+                                        and provide the specific location:
                                         <literallayout class='monospaced'>
-     export PATH=~/jdk1.7.0_40/bin:$PATH
-                                        </literallayout></para></listitem>
-                                </orderedlist></para></listitem>
+     export PATH=~/<replaceable>extracted_jdk_location</replaceable>/bin:$PATH
+                                        </literallayout>
+                                        </para></listitem>
+                                </orderedlist>
+                                </para></listitem>
                             <listitem><para>In the same shell, create a Git
                                 repository with:
                                 <literallayout class='monospaced'>
@@ -888,53 +918,69 @@
      $ git clone git://git.yoctoproject.org/eclipse-poky
                                 </literallayout>
                                 </para></listitem>
-                            <listitem><para>Be sure to checkout the specific
-                                plug-in branch.
-                                For example, if you are using Kepler, do the
+                            <listitem><para>Be sure to checkout the correct
+                                tag.
+                                For example, if you are using Luna, do the
                                 following:
                                 <literallayout class='monospaced'>
-     $ git checkout kepler
+     $ git checkout luna/yocto-1.8
                                 </literallayout>
+                                This puts you in a detached HEAD state, which
+                                is fine since you are only going to be building
+                                and not developing.
+                                <note>
+                                    If you are building kepler, checkout the
+                                    <filename>kepler/yocto-1.8</filename>
+                                    branch.
+                                </note>
                                 </para></listitem>
                             <listitem><para>Change to the
                                 <filename>scripts</filename>
                                 directory within the Git repository:
                                 <literallayout class='monospaced'>
      $ cd scripts
-                                </literallayout></para></listitem>
+                                </literallayout>
+                                </para></listitem>
                             <listitem><para>Set up the local build environment
                                 by running the setup script:
                                 <literallayout class='monospaced'>
      $ ./setup.sh
-                                </literallayout></para></listitem>
+                                </literallayout>
+                                </para></listitem>
                             <listitem><para>When the script finishes execution,
                                 it prompts you with instructions on how to run
                                 the <filename>build.sh</filename> script, which
                                 is also in the <filename>scripts</filename>
-                                directory of
-                                the Git repository created earlier.
+                                directory of the Git repository created
+                                earlier.
                                 </para></listitem>
-                            <listitem><para>Run the <filename>build.sh</filename> script
-                                as directed.
-                                Be sure to provide the name of the Git branch
-                                along with the Yocto Project release you are
-                                using.
+                            <listitem><para>Run the <filename>build.sh</filename>
+                                script as directed.
+                                Be sure to provide the tag name, documentation
+                                branch, and a release name.
                                 Here is an example that uses the
-                                <filename>&DISTRO_NAME;</filename> branch:
+                                <filename>luna/yocto-1.8</filename> tag, the
+                                <filename>master</filename> documentation
+                                branch, and
+                                <filename>&DISTRO_NAME;</filename> for the
+                                release name:
                                 <literallayout class='monospaced'>
-     $ ECLIPSE_HOME=/home/scottrif/eclipse-poky/scripts/eclipse ./build.sh &DISTRO_NAME; &DISTRO_NAME;
+     $ ECLIPSE_HOME=/home/scottrif/eclipse-poky/scripts/eclipse ./build.sh luna/yocto-1.8 master &DISTRO_NAME; 2>&amp;1 | tee -a build.log
                                 </literallayout>
                                 After running the script, the file
                                 <filename>org.yocto.sdk-</filename><replaceable>release</replaceable><filename>-</filename><replaceable>date</replaceable><filename>-archive.zip</filename>
-                                is in the current directory.</para></listitem>
+                                is in the current directory.
+                                </para></listitem>
                             <listitem><para>If necessary, start the Eclipse IDE
                                 and be sure you are in the Workbench.
                                 </para></listitem>
-                            <listitem><para>Select "Install New Software" from the "Help" pull-down menu.
+                            <listitem><para>Select "Install New Software" from
+                                the "Help" pull-down menu.
                                 </para></listitem>
                             <listitem><para>Click "Add".</para></listitem>
                             <listitem><para>Provide anything you want in the
-                                "Name" field.</para></listitem>
+                                "Name" field.
+                                </para></listitem>
                             <listitem><para>Click "Archive" and browse to the
                                 ZIP file you built in step eight.
                                 This ZIP file should not be "unzipped", and must
@@ -942,13 +988,24 @@
                                 created by running the
                                 <filename>build.sh</filename> script.
                                 </para></listitem>
-                            <listitem><para>Click through the "Okay" buttons.
+                            <listitem><para>Click the "OK" button.
                                 </para></listitem>
-                            <listitem><para>Check the boxes
-                                in the installation window and complete
-                                the installation.</para></listitem>
+                            <listitem><para>Check the boxes that appear in
+                                the installation window to install the
+                                <filename>Yocto Project ADT Plug-in</filename>,
+                                <filename>Yocto Project Bitbake Commander Plug-in</filename>,
+                                and the
+                                <filename>Yocto Project Documentation plug-in</filename>.
+                                </para></listitem>
+                            <listitem><para>Finish the installation by clicking
+                                through the appropriate buttons.
+                                You can click "OK" when prompted about
+                                installing software that contains unsigned
+                                content.
+                                </para></listitem>
                             <listitem><para>Restart the Eclipse IDE if
-                                necessary.</para></listitem>
+                                necessary.
+                                </para></listitem>
                         </orderedlist>
                     </para>
 
@@ -977,9 +1034,10 @@
                     Eclipse IDE:
                     <itemizedlist>
                         <listitem><para>Choose "Preferences" from the
-                            "Windows" menu to display the Preferences Dialog.
+                            "Window" menu to display the Preferences Dialog.
                             </para></listitem>
-                        <listitem><para>Click "Yocto Project ADT".
+                        <listitem><para>Click "Yocto Project ADT" to display
+                            the configuration screen.
                             </para></listitem>
                     </itemizedlist>
                 </para>
@@ -1055,10 +1113,13 @@
                                 the target hardware resides.
                                 If you used the ADT Installer script and
                                 accepted the default installation directory,
-                                then the location is
-                                <filename>/opt/poky/&DISTRO;/sysroots</filename>.
+                                then the location in your home directory
+                                in a folder named
+                                <filename>test-yocto/</filename><replaceable>target_arch</replaceable>.
                                 Additionally, when you use the ADT Installer
-                                script, the same location is used for the QEMU
+                                script, the
+                                <filename>/opt/poky/&DISTRO;/sysroots</filename>
+                                location is used for the QEMU
                                 user-space tools and the NFS boot process.
                                 </para>
                                 <para>If you used either of the other two
@@ -1183,7 +1244,7 @@
                         </para></listitem>
                     <listitem><para>Double click <filename>C Project</filename>
                         to create the project.</para></listitem>
-                    <listitem><para>Expand <filename>Yocto Project ADT Project</filename>.
+                    <listitem><para>Expand <filename>Yocto Project ADT Autotools Project</filename>.
                         </para></listitem>
                     <listitem><para>Select <filename>Hello World ANSI C Autotools Project</filename>.
                         This is an Autotools-based project based on a Yocto
@@ -1236,14 +1297,9 @@
                         </para></listitem>
                     <listitem><para>Make your configurations for the project
                         and click "OK".
-                        If you are running the Juno version of Eclipse, you can
-                        skip down to the next section where you build the
-                        project.
-                        If you are not working with Juno, you need to reconfigure the
-                        project as described in the next step.
                         </para></listitem>
-                    <listitem><para>Select "Reconfigure Project" from the
-                        "Project" menu.
+                    <listitem><para>Right-click in the navigation pane and
+                        select "Reconfigure Project" from the pop-up menu.
                         This selection reconfigures the project by running
                         <filename>autogen.sh</filename> in the workspace for
                         your project.
@@ -1264,9 +1320,7 @@
             <title>Building the Project</title>
 
             <para>
-                To build the project in Juno, right click on the project in
-                the navigator pane and select "Build Project".
-                If you are not running Juno, select "Build Project" from the
+                To build the project select "Build Project" from the
                 "Project" menu.
                 The console should update and you can note the cross-compiler
                 you are using.
@@ -1290,7 +1344,8 @@
                         Your image should appear as a selectable menu item.
                         </para></listitem>
                     <listitem><para>Select your image from the menu to launch
-                        the emulator in a new window.</para></listitem>
+                        the emulator in a new window.
+                        </para></listitem>
                     <listitem><para>If needed, enter your host root password in
                         the shell window at the prompt.
                         This sets up a <filename>Tap 0</filename> connection
@@ -1299,9 +1354,10 @@
                     <listitem><para>Wait for QEMU to launch.</para></listitem>
                     <listitem><para>Once QEMU launches, you can begin operating
                         within that environment.
-                        For example, you could determine the IP Address
-                       for the user-space NFS by using the
-                       <filename>ifconfig</filename> command.</para></listitem>
+                        One useful task at this point would be to determine the
+                        IP Address for the user-space NFS by using the
+                       <filename>ifconfig</filename> command.
+                       </para></listitem>
                 </orderedlist>
             </para>
         </section>
@@ -1345,7 +1401,7 @@
                     <listitem><para>Use the drop-down menu now in the
                         "Connection" field and pick the IP Address you entered.
                          </para></listitem>
-                    <listitem><para>Click "Run" to bring up a login screen
+                    <listitem><para>Click "Debug" to bring up a login screen
                         and login.</para></listitem>
                     <listitem><para>Accept the debug perspective.
                         </para></listitem>
@@ -1362,7 +1418,7 @@
                 These tools are aids in developing and debugging applications
                 and images.
                 You can run these user-space tools from within the Eclipse
-                IDE through the "YoctoTools" menu.
+                IDE through the "YoctoProjectTools" menu.
             </para>
 
             <para>
@@ -1403,7 +1459,7 @@
                         installed by default on the
                         <filename>core-image-sato-sdk</filename> image.</note>
                         </para></listitem>
-                    <listitem><para><emphasis><filename>Lttng2.0 ust trace import</filename>:</emphasis>
+                    <listitem><para><emphasis><filename>Lttng2.0 trace import</filename>:</emphasis>
                         Selecting this tool transfers the remote target's
                         <filename>Lttng</filename> tracing data back to the
                         local host machine and uses the Lttng Eclipse plug-in
@@ -1420,13 +1476,15 @@
                             This tool no longer has any upstream support.</note>
                         </para>
                         <para>Before you use the
-                        <filename>Lttng2.0 ust trace import</filename> tool,
+                        <filename>Lttng2.0 trace import</filename> tool,
                         you need to setup the Lttng Eclipse plug-in and create a
                         Tracing project.
                         Do the following:
                         <orderedlist>
                             <listitem><para>Select "Open Perspective" from the
-                                "Window" menu and then select "Tracing".
+                                "Window" menu and then select "Other..." to
+                                bring up a menu of other perspectives.
+                                Choose "Tracing".
                                 </para></listitem>
                             <listitem><para>Click "OK" to change the Eclipse
                                 perspective into the Tracing perspective.
@@ -1435,11 +1493,14 @@
                                 selecting "Project" from the "File -> New" menu.
                                 </para></listitem>
                             <listitem><para>Choose "Tracing Project" from the
-                                "Tracing" menu.
+                                "Tracing" menu and click "Next".
+                                </para></listitem>
+                            <listitem><para>Provide a name for your tracing
+                                project and click "Finish".
                                 </para></listitem>
                             <listitem><para>Generate your tracing data on the
                                 remote target.</para></listitem>
-                            <listitem><para>Select "Lttng2.0 ust trace import"
+                            <listitem><para>Select "Lttng2.0 trace import"
                                 from the "Yocto Project Tools" menu to
                                 start the data import process.</para></listitem>
                             <listitem><para>Specify your remote connection name.
@@ -1487,128 +1548,32 @@
                         section in the Yocto Project Profiling and Tracing
                         Manual.
                         </para></listitem>
+                    <listitem><para><emphasis><filename>SystemTap</filename>:</emphasis>
+                        Systemtap is a tool that lets you create and reuse
+                        scripts to examine the activities of a live Linux
+                        system.
+                        You can easily extract, filter, and summarize data
+                        that helps you diagnose complex performance or
+                        functional problems.
+                        For more information on setting up and using
+                        <filename>SystemTap</filename>, see the
+                        <ulink url='https://sourceware.org/systemtap/documentation.html'>SystemTap Documentation</ulink>.
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>yocto-bsp</filename>:</emphasis>
+                        The <filename>yocto-bsp</filename> tool lets you
+                        quickly set up a Board Support Package (BSP) layer.
+                        The tool requires a Metadata location, build location,
+                        BSP name, BSP output location, and a kernel
+                        architecture.
+                        For more information on the
+                        <filename>yocto-bsp</filename> tool outside of Eclipse,
+                        see the
+                        "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a new BSP Layer Using the yocto-bsp Script</ulink>"
+                        section in the Yocto Project Board Support Package
+                        (BSP) Developer's Guide.
+                        </para></listitem>
                 </itemizedlist>
             </para>
-        </section>
-
-        <section id='customizing-an-image-using-a-bitbake-commander-project-and-hob'>
-            <title>Customizing an Image Using a BitBake Commander Project and Hob</title>
-
-            <para>
-                Within the Eclipse IDE, you can create a Yocto BitBake Commander
-                project, edit the <link linkend='metadata'>Metadata</link>, and
-                then use
-                <ulink url='&YOCTO_HOME_URL;/tools-resources/projects/hob'>Hob</ulink> to build a customized image all within one IDE.
-            </para>
-
-            <section id='creating-the-yocto-bitbake-commander-project'>
-                <title>Creating the Yocto BitBake Commander Project</title>
-
-                <para>
-                    To create a Yocto BitBake Commander project, follow these
-                    steps:
-                    <orderedlist>
-                        <listitem><para>Select "Other" from the
-                            "Window -> Open Perspective" menu
-                            and then choose "Bitbake Commander".
-                            </para></listitem>
-                        <listitem><para>Click "OK" to change the perspective to
-                            Bitbake Commander.</para></listitem>
-                        <listitem><para>Select "Project" from the "File -> New"
-                            menu to create a new Yocto
-                            Bitbake Commander project.</para></listitem>
-                        <listitem><para>Choose "New Yocto Project" from the
-                            "Yocto Project Bitbake Commander" menu and click
-                            "Next".</para></listitem>
-                        <listitem><para>Enter the Project Name and choose the
-                            Project Location.
-                            The Yocto project's Metadata files will be put under
-                            the directory
-                            <filename><replaceable>project_location</replaceable>/<replaceable>project_name</replaceable></filename>.
-                            If that directory does not exist, you need to check
-                            the "Clone from Yocto Git Repository" box, which
-                            would execute a <filename>git clone</filename>
-                            command to get the project's Metadata files.
-                            <note>
-                                Do not specify your BitBake Commander project
-                                location as your Eclipse workspace.
-                                Doing so causes an error indicating that the
-                                current project overlaps the location of
-                                another project.
-                                This error occurs even if no such project exits.
-                            </note></para></listitem>
-                        <listitem><para>Select <filename>Finish</filename> to
-                            create the project.</para></listitem>
-                    </orderedlist>
-                </para>
-            </section>
-
-            <section id='editing-the-metadata'>
-                <title>Editing the Metadata</title>
-
-                <para>
-                    After you create the Yocto Bitbake Commander project, you
-                    can modify the <link linkend='metadata'>Metadata</link>
-                    files by opening them in the project.
-                    When editing recipe files (<filename>.bb</filename> files),
-                    you can view BitBake variable values and information by
-                    hovering the mouse pointer over the variable name and
-                    waiting a few seconds.
-                </para>
-
-                <para>
-                    To edit the Metadata, follow these steps:
-                    <orderedlist>
-                        <listitem><para>Select your Yocto Bitbake Commander
-                            project.</para></listitem>
-                        <listitem><para>Select "BitBake Recipe" from the
-                        "File -> New -> Yocto BitBake Commander" menu
-                            to open a new recipe wizard.</para></listitem>
-                        <listitem><para>Point to your source by filling in the
-                            "SRC_URL" field.
-                            For example, you can add a recipe to your
-                            <link linkend='source-directory'>Source Directory</link>
-                            by defining "SRC_URL" as follows:
-                            <literallayout class='monospaced'>
-     ftp://ftp.gnu.org/gnu/m4/m4-1.4.9.tar.gz
-                            </literallayout></para></listitem>
-                        <listitem><para>Click "Populate" to calculate the
-                            archive md5, sha256, license checksum values and to
-                            auto-generate the recipe filename.</para></listitem>
-                        <listitem><para>Fill in the "Description" field.
-                            </para></listitem>
-                        <listitem><para>Be sure values for all required
-                            fields exist.</para></listitem>
-                        <listitem><para>Click "Finish".</para></listitem>
-                    </orderedlist>
-                </para>
-            </section>
-
-            <section id='biding-and-customizing-the-image-using-hob'>
-                <title>Building and Customizing the Image Using Hob</title>
-
-                <para>
-                    To build and customize the image using Hob from within the
-                    Eclipse IDE, follow these steps:
-                    <orderedlist>
-                        <listitem><para>Select your Yocto Bitbake Commander
-                            project.</para></listitem>
-                        <listitem><para>Select "Launch Hob" from the "Project"
-                            menu.</para></listitem>
-                        <listitem><para>Enter the
-                            <link linkend='build-directory'>Build Directory</link>
-                            where you want to put your final images.
-                            </para></listitem>
-                        <listitem><para>Click "OK" to launch Hob.
-                            </para></listitem>
-                        <listitem><para>Use Hob to customize and build your own
-                            images.
-                            For information on Hob, see the
-                            <ulink url='&YOCTO_HOME_URL;/tools-resources/projects/hob'>Hob Project Page</ulink>
-                            on the Yocto Project website.</para></listitem>
-                    </orderedlist>
-                </para>
-            </section>
         </section>
     </section>
 
