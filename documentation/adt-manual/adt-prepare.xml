@@ -622,50 +622,56 @@
 
     <para>
         As an alternative to locating and downloading a toolchain installer,
-        you can build the toolchain installer one of two ways if you have a
-        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>:
-        <itemizedlist>
-            <listitem><para>
-                Use <filename>bitbake meta-toolchain</filename>.
-                This method requires you to still install the target
-                sysroot by installing and extracting it separately.
-                For information on how to install the sysroot, see the
-                "<link linkend='extracting-the-root-filesystem'>Extracting the Root Filesystem</link>"
-                section.
-                </para></listitem>
-            <listitem><para>
-                Use <filename>bitbake</filename> <replaceable>image</replaceable> <filename>-c populate_sdk</filename>.
-                This method has significant advantages over the previous method
-                because it results in a toolchain installer that contains the
-                sysroot that matches your target root filesystem.
-                </para>
+        you can build the toolchain installer if you have a
+        <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+        <note>
+            Although not the preferred method, it is also possible to use
+            <filename>bitbake meta-toolchain</filename> to build the toolchain
+            installer.
+            If you do use this method, you must separately install and extract
+            the target sysroot.
+            For information on how to install the sysroot, see the
+            "<link linkend='extracting-the-root-filesystem'>Extracting the Root Filesystem</link>"
+            section.
+        </note>
+    </para>
 
-                <para>Another powerful feature is that the toolchain is
-                completely self-contained.
-                The binaries are linked against their own copy of
-                <filename>libc</filename>, which results in no dependencies
-                on the target system.
-                To achieve this, the pointer to the dynamic loader is
-                configured at install time since that path cannot be dynamically
-                altered.
-                This is the reason for a wrapper around the
-                <filename>populate_sdk</filename> archive.</para>
+    <para>
+        To build the toolchain installer and populate the SDK image, use the
+        following command:
+        <literallayout class='monospaced'>
+     $ bitbake <replaceable>image</replaceable> -c populate_sdk
+        </literallayout>
+        The command results in a toolchain installer that contains the sysroot
+        that matches your target root filesystem.
+    </para>
 
-                <para>Another feature is that only one set of cross-canadian
-                toolchain binaries are produced per architecture.
-                This feature takes advantage of the fact that the target
-                hardware can be passed to <filename>gcc</filename> as a set of
-                compiler options.
-                Those options are set up by the environment script and
-                contained in variables such as
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'><filename>CC</filename></ulink>
-                and
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'><filename>LD</filename></ulink>.
-                This reduces the space needed for the tools.
-                Understand, however, that a sysroot is still needed for every
-                target since those binaries are target-specific.
-                </para></listitem>
-        </itemizedlist>
+    <para>
+        Another powerful feature is that the toolchain is completely
+        self-contained.
+        The binaries are linked against their own copy of
+        <filename>libc</filename>, which results in no dependencies
+        on the target system.
+        To achieve this, the pointer to the dynamic loader is
+        configured at install time since that path cannot be dynamically
+        altered.
+        This is the reason for a wrapper around the
+        <filename>populate_sdk</filename> archive.
+    </para>
+
+    <para>
+        Another feature is that only one set of cross-canadian toolchain
+        binaries are produced per architecture.
+        This feature takes advantage of the fact that the target hardware can
+        be passed to <filename>gcc</filename> as a set of compiler options.
+        Those options are set up by the environment script and contained in
+        variables such as
+        <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'><filename>CC</filename></ulink>
+        and
+        <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'><filename>LD</filename></ulink>.
+        This reduces the space needed for the tools.
+        Understand, however, that a sysroot is still needed for every target
+        since those binaries are target-specific.
     </para>
 
     <para>
