@@ -10020,6 +10020,39 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-SDK_HOST_MANIFEST'><glossterm>SDK_HOST_MANIFEST</glossterm>
+            <info>
+                SDK_HOST_MANIFEST[doc] = "The manifest file for the host part of the SDK. This file lists all the installed packages that make up the host part of the SDK."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    The manifest file for the host part of the SDK.
+                    This file lists all the installed packages that make up
+                    the host part of SDK.
+                    The file contains package information on a line-per-package
+                    basis as follows:
+                    <literallayout class='monospaced'>
+     <replaceable>packagename</replaceable> <replaceable>packagearch</replaceable> <replaceable>version</replaceable>
+                    </literallayout>
+                </para>
+
+                <para>
+                    The
+                    <link linkend='ref-classes-populate-sdk-*'><filename>populate_sdk_base</filename></link>
+                    class defines the manifest file as follows:
+                    <literallayout class='monospaced'>
+     SDK_HOST_MANIFEST = "${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.host.manifest"
+                    </literallayout>
+                    The location is derived using the
+                    <link linkend='var-SDK_DEPLOY'><filename>SDK_DEPLOY</filename></link>
+                    and
+                    <link linkend='var-TOOLCHAIN_OUTPUTNAME'><filename>TOOLCHAIN_OUTPUTNAME</filename></link>
+                    variables.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-SDK_NAME'><glossterm>SDK_NAME</glossterm>
             <info>
                 SDK_NAME[doc] = "The base name for SDK output files."
@@ -10146,6 +10179,39 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-SDK_TARGET_MANIFEST'><glossterm>SDK_TARGET_MANIFEST</glossterm>
+            <info>
+                SDK_TARGET_MANIFEST[doc] = "The manifest file for the target part of the SDK. This file lists all the installed packages that make up the target part of the SDK."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    The manifest file for the target part of the SDK.
+                    This file lists all the installed packages that make up
+                    the target part of the SDK.
+                    The file contains package information on a line-per-package
+                    basis as follows:
+                    <literallayout class='monospaced'>
+     <replaceable>packagename</replaceable> <replaceable>packagearch</replaceable> <replaceable>version</replaceable>
+                    </literallayout>
+                </para>
+
+                <para>
+                    The
+                    <link linkend='ref-classes-populate-sdk-*'><filename>populate_sdk_base</filename></link>
+                    class defines the manifest file as follows:
+                    <literallayout class='monospaced'>
+     SDK_TARGET_MANIFEST = "${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.target.manifest"
+                    </literallayout>
+                    The location is derived using the
+                    <link linkend='var-SDK_DEPLOY'><filename>SDK_DEPLOY</filename></link>
+                    and
+                    <link linkend='var-TOOLCHAIN_OUTPUTNAME'><filename>TOOLCHAIN_OUTPUTNAME</filename></link>
+                    variables.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-SDK_VENDOR'><glossterm>SDK_VENDOR</glossterm>
             <info>
                 SDK_VENDOR[doc] = "Specifies the name of the SDK vendor."
@@ -10154,6 +10220,32 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     Specifies the name of the SDK vendor.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SDK_VERSION'><glossterm>SDK_VERSION</glossterm>
+            <info>
+                SDK_VERSION[doc] = "Specifies the version for the SDK."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies the version of the SDK.
+                    The distribution configuration file (e.g.
+                    <filename>/meta-yocto/conf/distro/poky.conf</filename>)
+                    defines the <filename>SDK_VERSION</filename> as follows:
+                    <literallayout class='monospaced'>
+     SDK_VERSION := "${@'${DISTRO_VERSION}'.replace('snapshot-${DATE}','snapshot')}"
+                    </literallayout>
+                </para>
+
+                <para>
+                    For additional information, see the
+                    <link linkend='var-DISTRO_VERSION'><filename>DISTRO_VERSION</filename></link>
+                    and
+                    <link linkend='var-DATE'><filename>DATE</filename></link>
+                    variables.
                 </para>
             </glossdef>
         </glossentry>
@@ -12546,6 +12638,32 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     environment, see the
                     "<ulink url='&YOCTO_DOCS_ADT_URL;#installing-the-adt'>Installing the ADT and Toolchains</ulink>"
                     section in the Yocto Project Application Developer's Guide.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-TOOLCHAIN_OUTPUTNAME'><glossterm>TOOLCHAIN_OUTPUTNAME</glossterm>
+            <info>
+                TOOLCHAIN_OUTPUTNAME[doc] = "Defines the name used for the toolchain output."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    This variable defines the name used for the toolchain
+                    output.
+                    The
+                    <link linkend='ref-classes-populate-sdk-*'><filename>populate_sdk_base</filename></link>
+                    class sets the
+                    <filename>TOOLCHAIN_OUTPUTNAME</filename> variable as
+                    follows:
+                    <literallayout class='monospaced'>
+     TOOLCHAIN_OUTPUTNAME ?= "${SDK_NAME}-toolchain-${SDK_VERSION}"
+                    </literallayout>
+                    See the
+                    <link linkend='var-SDK_NAME'><filename>SDK_NAME</filename></link>
+                    and
+                    <link linkend='var-SDK_VERSION'><filename>SDK_VERSION</filename></link>
+                    variables for additional information.
                 </para>
             </glossdef>
         </glossentry>
