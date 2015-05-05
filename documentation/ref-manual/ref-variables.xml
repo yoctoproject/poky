@@ -8525,13 +8525,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    The OpenEmbedded build system automatically sets this
-                    variable to be equal to the number of cores the build
-                    system uses.
+                    By default, the OpenEmbedded build system automatically
+                    sets this variable to be equal to the number of cores the
+                    build system uses.
                     <note>
-                        Individual recipes might clear out this variable if
-                        the software being built has problems running its
-                        <filename>make</filename> process in parallel.
+                        If the software being built experiences dependency
+                        issues during the <filename>do_compile</filename>
+                        task that result in race conditions, you can clear
+                        the <filename>PARALLEL_MAKE</filename> variable within
+                        the recipe as a workaround.
+                        For information on addressing race conditions, see the
+                        "<ulink url='&YOCTO_DOCS_DEV_URL;#debugging-parallel-make-races'>Debugging Parallel Make Races</ulink>"
+                        section in the Yocto Project Development Manual.
                     </note>
                     For single socket systems (i.e. one CPU), you should not
                     have to override this variable to gain optimal parallelism
@@ -8539,7 +8544,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     However, if you have very large systems that employ
                     multiple physical CPUs, you might want to make sure the
                     <filename>PARALLEL_MAKE</filename> variable is not
-                    set higher than "20".
+                    set higher than "-j 20".
                 </para>
 
                 <para>
@@ -8564,9 +8569,15 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     This variable defaults to the value of
                     <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></link>.
                     <note>
-                        Individual recipes might clear out this variable if
-                        the software being built has problems running its
-                        <filename>make install</filename> process in parallel.
+                        If the software being built experiences dependency
+                        issues during the
+                        <filename>do_install</filename> task that result in
+                        race conditions, you can clear the
+                        <filename>PARALLEL_MAKEINST</filename> variable within
+                        the recipe as a workaround.
+                        For information on addressing race conditions, see the
+                        "<ulink url='&YOCTO_DOCS_DEV_URL;#debugging-parallel-make-races'>Debugging Parallel Make Races</ulink>"
+                        section in the Yocto Project Development Manual.
                     </note>
                 </para>
             </glossdef>
