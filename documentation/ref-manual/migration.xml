@@ -1413,6 +1413,35 @@
                 it encounters the variable.
             </para>
         </section>
+
+        <section id='migration-1.6-variable-changes-variable-entry-behavior'>
+            <title>Preprocess and Post Process Command Variable Behavior</title>
+
+            <para>
+                The following variables now expect a semicolon separated
+                list of functions to call and not arbitrary shell commands:
+                <literallayout class='monospaced'>
+     <link linkend='var-ROOTFS_PREPROCESS_COMMAND'>ROOTFS_PREPROCESS_COMMAND</link>
+     <link linkend='var-ROOTFS_POSTPROCESS_COMMAND'>ROOTFS_POSTPROCESS_COMMAND</link>
+     <link linkend='var-SDK_POSTPROCESS_COMMAND'>SDK_POSTPROCESS_COMMAND</link>
+     <link linkend='var-POPULATE_SDK_POST_TARGET_COMMAND'>POPULATE_SDK_POST_TARGET_COMMAND</link>
+     <link linkend='var-POPULATE_SDK_POST_HOST_COMMAND'>POPULATE_SDK_POST_HOST_COMMAND</link>
+     <link linkend='var-IMAGE_POSTPROCESS_COMMAND'>IMAGE_POSTPROCESS_COMMAND</link>
+     <link linkend='var-IMAGE_PREPROCESS_COMMAND'>IMAGE_PREPROCESS_COMMAND</link>
+     <link linkend='var-ROOTFS_POSTUNINSTALL_COMMAND'>ROOTFS_POSTUNINSTALL_COMMAND</link>
+     <link linkend='var-ROOTFS_POSTINSTALL_COMMAND'>ROOTFS_POSTINSTALL_COMMAND</link>
+                </literallayout>
+                For migration purposes, you can simply wrap shell commands in
+                a shell function and then call the function.
+                Here is an example:
+                <literallayout class='monospaced'>
+     my_postprocess_function() {
+        echo "hello" > ${IMAGE_ROOTFS}/hello.txt
+     }
+     ROOTFS_POSTPROCESS_COMMAND += "my_postprocess_function; "
+                </literallayout>
+            </para>
+        </section>
     </section>
 
     <section id='migration-1.6-directory-layout-changes'>

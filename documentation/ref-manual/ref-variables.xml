@@ -5433,24 +5433,50 @@
 
         <glossentry id='var-IMAGE_POSTPROCESS_COMMAND'><glossterm>IMAGE_POSTPROCESS_COMMAND</glossterm>
             <info>
-                IMAGE_POSTPROCESS_COMMAND[doc] = "Added by classes to run post processing commands once the OpenEmbedded build system has created the image."
+                IMAGE_POSTPROCESS_COMMAND[doc] = "Specifies a list of functions to call once the OpenEmbedded build system has created the final image output files."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Added by classes to run post processing commands once the
-                    OpenEmbedded build system has created the image.
-                    You can specify shell commands separated by semicolons:
+                    Specifies a list of functions to call once the
+                    OpenEmbedded build system has created the final image
+                    output files.
+                    You can specify functions separated by semicolons:
                     <literallayout class='monospaced'>
-     IMAGE_POSTPROCESS_COMMAND += "<replaceable>shell_command</replaceable>; ... "
+     IMAGE_POSTPROCESS_COMMAND += "<replaceable>function</replaceable>; ... "
                     </literallayout>
                 </para>
 
                 <para>
-                    If you need to pass the path to the root filesystem within
-                    the command, you can use
+                    If you need to pass the root filesystem path to a command
+                    within the function, you can use
                     <filename>${IMAGE_ROOTFS}</filename>, which points to
-                    the root filesystem image.
+                    the directory that becomes the root filesystem image.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-IMAGE_PREPROCESS_COMMAND'><glossterm>IMAGE_PREPROCESS_COMMAND</glossterm>
+            <info>
+                IMAGE_PREPROCESS_COMMAND[doc] = "Specifies a list of functions to call before the OpenEmbedded build system has created the final image output files."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies a list of functions to call before the
+                    OpenEmbedded build system has created the final image
+                    output files.
+                    You can specify functions separated by semicolons:
+                    <literallayout class='monospaced'>
+     IMAGE_PREPROCESS_COMMAND += "<replaceable>function</replaceable>; ... "
+                    </literallayout>
+                </para>
+
+                <para>
+                    If you need to pass the root filesystem path to a command
+                    within the function, you can use
+                    <filename>${IMAGE_ROOTFS}</filename>, which points to
+                    the directory that becomes the root filesystem image.
                 </para>
             </glossdef>
         </glossentry>
@@ -8948,6 +8974,64 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-POPULATE_SDK_POST_HOST_COMMAND'><glossterm>POPULATE_SDK_POST_HOST_COMMAND</glossterm>
+            <info>
+                POPULATE_SDK_POST_HOST_COMMAND[doc] = "Specifies a list of functions to call once the OpenEmbedded build system has created host part of the SDK."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies a list of functions to call once the
+                    OpenEmbedded build system has created the host part of
+                    the SDK.
+                    You can specify functions separated by semicolons:
+                    <literallayout class='monospaced'>
+     POPULATE_SDK_POST_HOST_COMMAND += "<replaceable>function</replaceable>; ... "
+                    </literallayout>
+                </para>
+
+                <para>
+                    If you need to pass the SDK path to a command
+                    within a function, you can use
+                    <filename>${SDK_DIR}</filename>, which points to
+                    the parent directory used by the OpenEmbedded build
+                    system when creating SDK output.
+                    See the
+                    <link linkend='var-SDK_DIR'><filename>SDK_DIR</filename></link>
+                    variable for more information.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-POPULATE_SDK_POST_TARGET_COMMAND'><glossterm>POPULATE_SDK_POST_TARGET_COMMAND</glossterm>
+            <info>
+                POPULATE_SDK_POST_TARGET_COMMAND[doc] = "Specifies a list of functions to call once the OpenEmbedded build system has created target part of the SDK."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies a list of functions to call once the
+                    OpenEmbedded build system has created the target part of
+                    the SDK.
+                    You can specify functions separated by semicolons:
+                    <literallayout class='monospaced'>
+     POPULATE_SDK_POST_TARGET_COMMAND += "<replaceable>function</replaceable>; ... "
+                    </literallayout>
+                </para>
+
+                <para>
+                    If you need to pass the SDK path to a command
+                    within a function, you can use
+                    <filename>${SDK_DIR}</filename>, which points to
+                    the parent directory used by the OpenEmbedded build
+                    system when creating SDK output.
+                    See the
+                    <link linkend='var-SDK_DIR'><filename>SDK_DIR</filename></link>
+                    variable for more information.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PR'><glossterm>PR</glossterm>
             <info>
                 PR[doc] = "The revision of the recipe. The default value for this variable is 'r0'."
@@ -9691,26 +9775,113 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-ROOTFS_POSTPROCESS_COMMAND'><glossterm>ROOTFS_POSTPROCESS_COMMAND</glossterm>
+        <glossentry id='var-ROOTFS_POSTINSTALL_COMMAND'><glossterm>ROOTFS_POSTINSTALL_COMMAND</glossterm>
             <info>
-                ROOTFS_POSTPROCESS_COMMAND[doc] = "Added by classes to run post processing commands once the OpenEmbedded build system has created the root filesystem."
+                ROOTFS_POSTINSTALL_COMMAND[doc] = "Specifies a list of functions to call after installing packages."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Added by classes to run post processing commands once the
-                    OpenEmbedded build system has created the root filesystem.
-                    You can specify shell commands separated by semicolons:
+                    Specifies a list of functions to call after the
+                    OpenEmbedded build system has installed packages.
+                    You can specify functions separated by semicolons:
                     <literallayout class='monospaced'>
-     ROOTFS_POSTPROCESS_COMMAND += "<replaceable>shell_command</replaceable>; ... "
+     ROOTFS_POSTINSTALL_COMMAND += "<replaceable>function</replaceable>; ... "
                     </literallayout>
                 </para>
 
                 <para>
-                    If you need to pass the path to the root filesystem within
-                    the command, you can use
+                    If you need to pass the root filesystem path to a command
+                    within a function, you can use
                     <filename>${IMAGE_ROOTFS}</filename>, which points to
-                    the root filesystem image.
+                    the directory that becomes the root filesystem image.
+                    See the
+                    <link linkend='var-IMAGE_ROOTFS'><filename>IMAGE_ROOTFS</filename></link>
+                    variable for more information.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-ROOTFS_POSTPROCESS_COMMAND'><glossterm>ROOTFS_POSTPROCESS_COMMAND</glossterm>
+            <info>
+                ROOTFS_POSTPROCESS_COMMAND[doc] = "Specifies a list of functions to call once the OpenEmbedded build system has created the root filesystem."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies a list of functions to call once the
+                    OpenEmbedded build system has created the root filesystem.
+                    You can specify functions separated by semicolons:
+                    <literallayout class='monospaced'>
+     ROOTFS_POSTPROCESS_COMMAND += "<replaceable>function</replaceable>; ... "
+                    </literallayout>
+                </para>
+
+                <para>
+                    If you need to pass the root filesystem path to a command
+                    within a function, you can use
+                    <filename>${IMAGE_ROOTFS}</filename>, which points to
+                    the directory that becomes the root filesystem image.
+                    See the
+                    <link linkend='var-IMAGE_ROOTFS'><filename>IMAGE_ROOTFS</filename></link>
+                    variable for more information.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-ROOTFS_POSTUNINSTALL_COMMAND'><glossterm>ROOTFS_POSTUNINSTALL_COMMAND</glossterm>
+            <info>
+                ROOTFS_POSTUNINSTALL_COMMAND[doc] = "Specifies a list of functions to call after removal of unneeded packages."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies a list of functions to call after the
+                    OpenEmbedded build system has removed unnecessary
+                    packages.
+                    When runtime package management is disabled in the
+                    image, several packages are removed including
+                    <filename>base-passwd</filename>,
+                    <filename>shadow</filename>, and
+                    <filename>update-alternatives</filename>.
+                    You can specify functions separated by semicolons:
+                    <literallayout class='monospaced'>
+     ROOTFS_POSTUNINSTALL_COMMAND += "<replaceable>function</replaceable>; ... "
+                    </literallayout>
+                </para>
+
+                <para>
+                    If you need to pass the root filesystem path to a command
+                    within a function, you can use
+                    <filename>${IMAGE_ROOTFS}</filename>, which points to
+                    the directory that becomes the root filesystem image.
+                    See the
+                    <link linkend='var-IMAGE_ROOTFS'><filename>IMAGE_ROOTFS</filename></link>
+                    variable for more information.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-ROOTFS_PREPROCESS_COMMAND'><glossterm>ROOTFS_PREPROCESS_COMMAND</glossterm>
+            <info>
+                ROOTFS_PREPROCESS_COMMAND[doc] = "Specifies a list of functions to call before the OpenEmbedded build system has created the root filesystem."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies a list of functions to call before the
+                    OpenEmbedded build system has created the root filesystem.
+                    You can specify functions separated by semicolons:
+                    <literallayout class='monospaced'>
+     ROOTFS_PREPROCESS_COMMAND += "<replaceable>function</replaceable>; ... "
+                    </literallayout>
+                </para>
+
+                <para>
+                    If you need to pass the root filesystem path to a command
+                    within a function, you can use
+                    <filename>${IMAGE_ROOTFS}</filename>, which points to
+                    the directory that becomes the root filesystem image.
                     See the
                     <link linkend='var-IMAGE_ROOTFS'><filename>IMAGE_ROOTFS</filename></link>
                     variable for more information.
@@ -10178,6 +10349,34 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The default value for
                     <filename>SDK_PACKAGE_ARCHS</filename> is "all any noarch
                     ${SDK_ARCH}-${SDKPKGSUFFIX}".
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-SDK_POSTPROCESS_COMMAND'><glossterm>SDK_POSTPROCESS_COMMAND</glossterm>
+            <info>
+                SDK_POSTPROCESS_COMMAND[doc] = "Specifies a list of functions to call once the OpenEmbedded build system has created the SDK."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies a list of functions to call once the
+                    OpenEmbedded build system has created the SDK.
+                    You can specify functions separated by semicolons:
+                    <literallayout class='monospaced'>
+     SDK_POSTPROCESS_COMMAND += "<replaceable>function</replaceable>; ... "
+                    </literallayout>
+                </para>
+
+                <para>
+                    If you need to pass an SDK path to a command within a
+                    function, you can use
+                    <filename>${SDK_DIR}</filename>, which points to
+                    the parent directory used by the OpenEmbedded build system
+                    when creating SDK output.
+                    See the
+                    <link linkend='var-SDK_DIR'><filename>SDK_DIR</filename></link>
+                    variable for more information.
                 </para>
             </glossdef>
         </glossentry>
