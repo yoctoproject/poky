@@ -914,42 +914,51 @@
 
     <para>
         Build time can be an issue.
-        By default, the build system uses three simple controls to try and
-        maximize build efficiency:
+        By default, the build system uses simple controls to try and maximize
+        build efficiency.
+        In general, the default settings for all the following variables
+        result in the most efficient build times when dealing with single
+        socket systems (i.e. a single CPU).
+        If you have multiple CPUs, you might try increasing the default
+        values to gain more speed.
+        See the descriptions in the glossary for each variable for more
+        information:
         <itemizedlist>
             <listitem><para>
-                <link linkend='var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></link>
+                <link linkend='var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename>:</link>
+                The maximum number of threads BitBake simultaneously executes.
                 </para></listitem>
             <listitem><para>
-                <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_NUMBER_PARSE_THREADS'><filename>BB_NUMBER_PARSE_THREADS</filename></ulink>
+                <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_NUMBER_PARSE_THREADS'><filename>BB_NUMBER_PARSE_THREADS</filename>:</ulink>
+                The number of threads BitBake uses during parsing.
                 </para></listitem>
             <listitem><para>
-                <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></link>
+                <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename>:</link>
+                Extra options passed to the <filename>make</filename> command
+                during the
+                <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>
+                task in order to specify parallel compilation on the
+                local build host.
+                </para></listitem>
+            <listitem><para>
+                <link linkend='var-PARALLEL_MAKEINST'><filename>PARALLEL_MAKEINST</filename>:</link>
+                Extra options passed to the <filename>make</filename> command
+                during the
+                <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+                task in order to specify parallel installation on the
+                local build host.
                 </para></listitem>
         </itemizedlist>
-        These three variables all scale to the number of processor cores
-        available on the build system.
-        This auto-scaling ensures that the build system fundamentally takes
-        advantage of potential parallel operations during the build
-        based on the build machine's capabilities.
+        As mentioned, these variables all scale to the number of processor
+        cores available on the build system.
+        For single socket systems, this auto-scaling ensures that the build
+        system fundamentally takes advantage of potential parallel operations
+        during the build based on the build machine's capabilities.
     </para>
 
     <para>
-        If you need to achieve even faster builds than what the build system
-        produces by default, you can consider and implement some of the
-        following:
+        Following are additional factors that can affect build speed:
         <itemizedlist>
-            <listitem><para>
-                <filename>BB_NUMBER_THREADS</filename>,
-                <filename>BB_NUMBER_PARSE_THREADS</filename>, and
-                <filename>PARALLEL_MAKE</filename>:
-                As previously mentioned, the build system scales the values
-                for these variables so you should probably not override
-                these to try to speed up a build.
-                However, for completeness regarding this list, it is worth
-                mentioning that you can manually override these variables
-                by setting them in your <filename>local.conf</filename> file.
-                </para></listitem>
             <listitem><para>
                 File system type:
                 The file system type that the build is being performed on can
@@ -981,7 +990,9 @@
                 helps.
                 </para></listitem>
             <listitem><para>
-                Using <filename>/tmp</filename> as a temporary file system:
+                Using <filename>tmpfs</filename> for
+                <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
+                as a temporary file system:
                 While this can help speed up the build, the benefits are
                 limited due to the compiler using
                 <filename>-pipe</filename>.
@@ -1013,6 +1024,11 @@
         Aside from the previous list, you should keep some trade offs in
         mind that can help you speed up the build:
         <itemizedlist>
+            <listitem><para>
+                Remove items from
+                <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>
+                that you might not need.
+                </para></listitem>
             <listitem><para>
                 Exclude debug symbols and other debug information:
                 If you do not need these symbols and other debug information,
