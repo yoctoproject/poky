@@ -872,8 +872,26 @@
                     The OpenEmbedded build system automatically configures
                     this variable to be equal to the number of cores on the
                     build system.
-                    To gain optimal parallelism, you should not have to
-                    override this variable.
+                    For example, a system with a dual core processor that
+                    also uses hyper-threading causes the
+                    <filename>BB_NUMBER_THREADS<filename> variable to default
+                    to "4".
+                </para>
+
+                <para>
+                    For single socket systems (i.e. one CPU), you should not
+                    have to override this variable to gain optimal parallelism
+                    during builds.
+                    However, if you have very large systems that employ
+                    multiple physical CPUs, you might want to make sure the
+                    <filename>BB_NUMBER_THREADS</filename> variable is not
+                    set higher than "20".
+                </para>
+
+                <para>
+                    For more information on speeding up builds, see the
+                    "<link linkend='speeding-up-the-build'>Speeding Up the Build</link>"
+                    section.
                 </para>
             </glossdef>
         </glossentry>
@@ -8499,7 +8517,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>
                     task in order to specify parallel compilation on the local
                     build host.
-                    This variable is usually in the form "-j &lt;x&gt;",
+                    This variable is usually in the form "-j <replaceable>x</replaceable>",
                     where x represents the maximum number of parallel threads
                     <filename>make</filename> can run.
                 </para>
@@ -8513,6 +8531,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                         the software being built has problems running its
                         <filename>make</filename> process in parallel.
                     </note>
+                    For single socket systems (i.e. one CPU), you should not
+                    have to override this variable to gain optimal parallelism
+                    during builds.
+                    However, if you have very large systems that employ
+                    multiple physical CPUs, you might want to make sure the
+                    <filename>PARALLEL_MAKE</filename> variable is not
+                    set higher than "20".
+                </para>
+
+                <para>
+                    For more information on speeding up builds, see the
+                    "<link linkend='speeding-up-the-build'>Speeding Up the Build</link>"
+                    section.
                 </para>
             </glossdef>
         </glossentry>
