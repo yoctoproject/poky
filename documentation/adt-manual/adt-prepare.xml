@@ -480,8 +480,8 @@
             and are ideal for experimentation using Yocto Project.
             For information on the image types you can build using the OpenEmbedded build system,
             see the
-            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>" chapter in
-            the Yocto Project Reference Manual.
+            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
+            chapter in the Yocto Project Reference Manual.
         </para>
 
         <para>
@@ -492,62 +492,28 @@
         </para>
 
         <para>
-            Furthermore, if you plan on remotely deploying and debugging your
-            application from within the
-            Eclipse IDE, you must have an image that contains the Yocto Target Communication
-            Framework (TCF) agent (<filename>tcf-agent</filename>).
-            By default, the Yocto Project provides only one type of pre-built
-            image that contains the <filename>tcf-agent</filename>.
-            And, those images are SDK (e.g.<filename>core-image-sato-sdk</filename>).
-        </para>
-
-        <para>
-            If you want to use a different image type that contains the <filename>tcf-agent</filename>,
-            you can do so one of two ways:
-            <itemizedlist>
-                <listitem><para>Modify the <filename>conf/local.conf</filename> configuration in
-                    the <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
-                    and then rebuild the image.
-                    With this method, you need to modify the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
-                    variable to have the value of "tools-debug" before rebuilding the image.
-                    Once the image is rebuilt, the <filename>tcf-agent</filename> will be included
-                    in the image and is launched automatically after the boot.</para></listitem>
-                <listitem><para>Manually build the <filename>tcf-agent</filename>.
-                    To build the agent, follow these steps:
-                    <orderedlist>
-                        <listitem><para>Be sure the ADT is installed as described in the
-                            "<link linkend='installing-the-adt'>Installing the ADT and Toolchains</link>" section.
-                            </para></listitem>
-                        <listitem><para>Set up the cross-development environment as described in the
-                            "<link linkend='setting-up-the-cross-development-environment'>Setting
-                            Up the Cross-Development Environment</link>" section.</para></listitem>
-                        <listitem><para>Get the <filename>tcf-agent</filename> source code using
-                            the following commands:
-                            <literallayout class='monospaced'>
-     $ git clone http://git.eclipse.org/gitroot/tcf/org.eclipse.tcf.agent.git
-     $ cd org.eclipse.tcf.agent/agent
-                            </literallayout></para></listitem>
-                        <listitem><para>Locate the
-                            <filename>Makefile.inc</filename> file inside the
-                            <filename>agent</filename> folder and modify it
-                            for the cross-compilation environment by setting the
-                            <filename>OPSYS</filename> and
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
-                            variables according to your target.
-                            </para></listitem>
-                        <listitem><para>Use the cross-development tools to build the
-                            <filename>tcf-agent</filename>.
-                            Before you "Make" the file, be sure your cross-tools are set up first.
-                            See the "<link linkend='makefile-based-projects'>Makefile-Based Projects</link>"
-                            section for information on how to make sure the cross-tools are set up
-                            correctly.</para>
-                            <para>If the build is successful, the <filename>tcf-agent</filename> output will
-                            be <filename>obj/$(OPSYS)/$(MACHINE)/Debug/agent</filename>.</para></listitem>
-                        <listitem><para>Deploy the agent into the image's root filesystem.</para></listitem>
-                    </orderedlist>
-                </para></listitem>
-            </itemizedlist>
+            If you plan on remotely deploying and debugging your
+            application from within the Eclipse IDE, you must have an image
+            that contains the Yocto Target Communication Framework (TCF) agent
+            (<filename>tcf-agent</filename>).
+            You can do this by including the <filename>eclipse-debug</filename>
+            image feature.
+            <note>
+                See the
+                "<ulink url='&YOCTO_DOCS_REF_URL;#ref-features-image'>Image Features</ulink>"
+                section in the Yocto Project Reference Manual for information on
+                image features.
+            </note>
+            To include the <filename>eclipse-debug</filename> image feature,
+            modify your <filename>local.conf</filename> file in the
+            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
+            so that the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
+            variable includes the "eclipse-debug" feature.
+            After modifying the configuration file, you can rebuild the image.
+            Once the image is rebuilt, the <filename>tcf-agent</filename>
+            will be included in the image and is launched automatically after
+            the boot.
         </para>
     </section>
 
