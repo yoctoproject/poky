@@ -491,28 +491,44 @@
                         changing source files.
                         However, if you have to do this, you make the changes to the files in the
                         Build Directory.</para></listitem>
-                    <listitem><para><emphasis>Make kernel configuration changes
-                        if applicable</emphasis>:
-                        If your situation calls for changing the kernel's configuration, you can
-                        use the <filename>yocto-kernel</filename> script or <filename>menuconfig</filename>
-                        to enable and disable kernel configurations.
-                        Using the script lets you interactively set up kernel configurations.
-                        Using <filename>menuconfig</filename> allows you to interactively develop and test the
+                    <listitem><para><emphasis>Make kernel configuration changes if applicable</emphasis>:
+                        If your situation calls for changing the kernel's
+                        configuration, you can use
+                        <ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#generating-configuration-files'><filename>menuconfig</filename></ulink>,
+                        which allows you to interactively develop and test the
                         configuration changes you are making to the kernel.
-                        When saved, changes using <filename>menuconfig</filename> update the kernel's
-                        <filename>.config</filename> file.
-                        Try to resist the temptation of directly editing the <filename>.config</filename>
-                        file found in the Build Directory at
-                        <filename>tmp/sysroots/&lt;machine-name&gt;/kernel</filename>.
-                        Doing so, can produce unexpected results when the OpenEmbedded build system
-                        regenerates the configuration file.</para>
-                        <para>Once you are satisfied with the configuration changes made using
-                        <filename>menuconfig</filename>, you can directly compare the
-                        <filename>.config</filename> file against a saved original and gather those
-                        changes into a config fragment to be referenced from within the kernel's
-                        <filename>.bbappend</filename> file.</para></listitem>
+                        Saving changes you make with
+                        <filename>menuconfig</filename> updates
+                        the kernel's <filename>.config</filename> file.
+                        <note><title>Warning</title>
+                            Try to resist the temptation to directly edit an
+                            existing <filename>.config</filename> file, which is
+                            found in the Build Directory at
+                            <filename>tmp/sysroots/<replaceable>machine-name</replaceable>/kernel</filename>.
+                            Doing so, can produce unexpected results when the
+                            OpenEmbedded build system regenerates the configuration
+                            file.
+                        </note>
+                        Once you are satisfied with the configuration
+                        changes made using <filename>menuconfig</filename>
+                        and you have saved them, you can directly compare the
+                        resulting <filename>.config</filename> file against an
+                        existing original and gather those changes into a
+                        <link linkend='creating-config-fragments'>configuration fragment file</link>
+                        to be referenced from within the kernel's
+                        <filename>.bbappend</filename> file.</para>
+
+                        <para>Additionally, if you are working in a BSP layer
+                        and need to modify the BSP's kernel's configuration,
+                        you can use the
+                        <ulink url='&YOCTO_DOCS_BSP_URL;#managing-kernel-patches-and-config-items-with-yocto-kernel'><filename>yocto-kernel</filename></ulink>
+                        script as well as <filename>menuconfig</filename>.
+                        The <filename>yocto-kernel</filename> script lets
+                        you interactively set up kernel configurations.
+                        </para></listitem>
                     <listitem><para><emphasis>Rebuild the kernel image with your changes</emphasis>:
-                        Rebuilding the kernel image applies your changes.</para></listitem>
+                        Rebuilding the kernel image applies your changes.
+                        </para></listitem>
                 </orderedlist>
             </para>
         </section>
