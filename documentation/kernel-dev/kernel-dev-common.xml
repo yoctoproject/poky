@@ -238,6 +238,65 @@
                 section in the Yocto Project Development Manual.
             </para>
         </section>
+
+        <section id='using-an-in-tree-defconfig-file'>
+            <title>Using an "In-Tree"&nbsp;&nbsp;<filename>defconfig</filename> File</title>
+
+            <para>
+                It might be desirable to have kernel configuration fragment
+                support through a <filename>defconfig</filename> file that
+                is pulled from the kernel source tree for the configured
+                machine.
+                By default, the OpenEmbedded build system looks for
+                <filename>defconfig</filename> files in the layer used for
+                Metadata, which is "out-of-tree", and then configures them
+                using the following:
+                <literallayout class='monospaced'>
+     SRC_URI += "file://defconfig"
+                </literallayout>
+                If you do not want to maintain copies of
+                <filename>defconfig</filename> files in your layer but would
+                rather allow users to use the default configuration from the
+                kernel tree and still be able to add configuration fragments
+                to the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                through, for example, append files, you can direct the
+                OpenEmbedded build system to use a
+                <filename>defconfig</filename> file that is "in-tree".
+            </para>
+
+            <para>
+                To specify an "in-tree" <filename>defconfig</filename> file,
+                edit the recipe that builds your kernel so that it has the
+                following command form:
+                <literallayout class='monospaced'>
+     KBUILD_DEFCONFIG_<ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'>KMACHINE</ulink> ?= <replaceable>defconfig_file</replaceable>
+                </literallayout>
+                You need to append the variable with
+                <filename>KMACHINE</filename> and then supply the path to
+                your "in-tree" <filename>defconfig</filename> file.
+            </para>
+
+            <para>
+                Aside from modifying your kernel recipe and providing your own
+                <filename>defconfig</filename> file, you need to be sure no
+                files or statements set <filename>SRC_URI</filename> to use a
+                <filename>defconfig</filename> other than your "in-tree"
+                file (e.g. a kernel's <filename>linux-</filename><replaceable>machine</replaceable><filename>.inc</filename>
+                file).
+                In other words, if the build system detects a statement
+                that identifies an "out-of-tree"
+                <filename>defconfig</filename> file, that statement
+                will override your
+                <filename>KBUILD_DEFCONFIG</filename> variable.
+            </para>
+
+            <para>
+                See the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KBUILD_DEFCONFIG'><filename>KBUILD_DEFCONFIG</filename></ulink>
+                variable description for more information.
+            </para>
+        </section>
     </section>
 
     <section id='using-an-iterative-development-process'>
