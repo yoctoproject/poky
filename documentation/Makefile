@@ -147,7 +147,6 @@ ifeq ($(DOC),yocto-project-qs)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = yocto-project-qs.html qs-style.css figures/yocto-environment.png \
-           figures/building-an-image.png figures/using-a-pre-built-image.png \
            figures/yocto-project-transp.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
@@ -263,7 +262,7 @@ TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/images.png figures/sdk.png figures/source-fetching.png \
 	figures/patching.png figures/configuration-compile-autoreconf.png \
 	figures/analysis-for-package-splitting.png figures/image-generation.png \
-	figures/sdk-generation.png
+	figures/sdk-generation.png figures/building-an-image.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
@@ -274,7 +273,8 @@ ifeq ($(DOC),adt-manual)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = adt-manual.html adt-style.css figures/adt-title.png \
-			eclipse
+           figures/using-a-pre-built-image.png \
+           eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
