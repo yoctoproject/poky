@@ -631,15 +631,35 @@
                     to store your patches and configuration files (e.g.
                     <filename>linux-yocto-myproject</filename>).
                     </para></listitem>
+                <listitem><para>Make sure you have either a
+                    <filename>defconfig</filename> file or configuration
+                    fragment files.
+                    When you use the <filename>linux-yocto-custom.bb</filename>
+                    recipe, you must specify a configuration.
+                    If you do not have a <filename>defconfig</filename> file,
+                    you can run the following:
+                    <literallayout class='monospaced'>
+     $ make defconfig
+                    </literallayout>
+                    After running the command, copy the resulting
+                    <filename>.config</filename> to the
+                    <filename>files</filename> directory as "defconfig" and
+                    then add it to the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                    variable in the recipe.
+                    </para></listitem>
                 <listitem><para>Edit the following variables in your recipe
                     as appropriate for your project:
                     <itemizedlist>
                         <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>:
-                            The <filename>SRC_URI</filename> should be a Git
-                            repository that uses one of the supported Git fetcher
-                            protocols (i.e. <filename>file</filename>,
+                            The <filename>SRC_URI</filename> should specify
+                            a Git repository that uses one of the supported Git
+                            fetcher protocols (i.e. <filename>file</filename>,
                             <filename>git</filename>, <filename>http</filename>,
                             and so forth).
+                            The <filename>SRC_URI</filename> variable should
+                            also specify either a <filename>defconfig</filename>
+                            file or some configuration fragment files.
                             The skeleton recipe provides an example
                             <filename>SRC_URI</filename> as a syntax reference.
                             </para></listitem>
