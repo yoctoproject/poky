@@ -134,3 +134,18 @@ GITTAGREGEX_pn-linux-yocto-dev = "${GITTAGREGEX_COMMON}"
 GITTAGREGEX_pn-uclibc = "${GITTAGREGEX_COMMON}"
 GITTAGREGEX_pn-glibc = "${GITTAGREGEX_COMMON}"
 GITTAGREGEX_pn-xf86-video-omap = "${GITTAGREGEX_COMMON}"
+
+# GNOME related.
+#
+# GNOME2_STABLE picks stable releases in the 2.x series (so not 2.90 onwards,
+# which were GNOME 3 betas.
+#
+# GNOME_STABLE picks the latest stable release.
+
+GNOME2_STABLE = "(?P<pver>2\.([0-8]*[02468])+\.\d+)"
+GNOME_STABLE = "(?P<pver>\d+\.(\d*[02468])+\.\d+)"
+
+REGEX_pn-glib-2.0 = "${GNOME_STABLE}"
+REGEX_pn-atk = "${GNOME_STABLE}"
+REGEX_pn-gtk+ = "${GNOME2_STABLE}"
+REGEX_pn-gtk+3 = "${GNOME_STABLE}"
