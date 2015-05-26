@@ -295,7 +295,29 @@
                     class, determines the type of information used to create
                     a released archive.
                     You can use this variable to create archives of patched
-                    source, original source, configured source, and so forth.
+                    source, original source, configured source, and so forth
+                    by employing the following variable flags (varflags):
+                    <literallayout class='monospaced'>
+     ARCHIVER_MODE[src] = "original"                 # Uses original (unpacked) source
+                                                     # files.
+
+     ARCHIVER_MODE[src] = "patched"                  # Uses patched source files. This is
+                                                     # the default.
+
+     ARCHIVER_MODE[src] = "configured"               # Uses configured source files.
+
+     ARCHIVER_MODE[diff] = "1"                       # Uses patches between do_unpack and
+                                                     # do_patch.
+
+     ARCHIVER_MODE[diff-exclude] ?= "<replaceable>file</replaceable> <replaceable>file</replaceable> ..."  # Lists files and directories to
+                                                     # exclude from diff.
+
+     ARCHIVER_MODE[dumpdata] = "1"                   # Uses environment data.
+
+     ARCHIVER_MODE[recipe] = "1"                     # Uses recipe and include files.
+
+     ARCHIVER_MODE[srpm] = "1"                       # Uses RPM package files.
+                    </literallayout>
                     For information on how the variable works, see the
                     <filename>meta/classes/archiver.bbclass</filename> file
                     in the
