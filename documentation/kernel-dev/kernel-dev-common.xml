@@ -736,12 +736,26 @@
             <title>Building Out-of-Tree Modules on the Target</title>
 
             <para>
+                While the traditional Yocto Project development model would be
+                to include kernel modules as part of the normal build
+                process, you might find it useful to build modules on the
+                target.
+                This could be the case if your target system is capable
+                and powerful enough to handle the necessary compilation.
+                Before deciding to build on your target, however, you should
+                consider the benefits of using a proper cross-development
+                environment from your build host.
+            </para>
+
+            <para>
                 If you want to be able to build out-of-tree modules on
                 the target, there are some steps you need to take
                 on the target that is running your SDK image.
                 Briefly, the <filename>kernel-dev</filename> package
                 is installed by default on all
-                <filename>*.sdk</filename> images.
+                <filename>*.sdk</filename> images and the
+                <filename>kernel-devsrc</filename> package is installed
+                on many of the <filename>*.sdk</filename> images.
                 However, you need to create some scripts prior to
                 attempting to build the out-of-tree modules on the target
                 that is running that image.
@@ -759,7 +773,9 @@
                 Because all SDK image recipes include
                 <filename>dev-pkgs</filename>, the
                 <filename>kernel-dev</filename> packages will be installed
-                as part of the SDK image.
+                as part of the SDK image and the
+                <filename>kernel-devsrc</filename> packages will be installed
+                as part of applicable SDK images.
                 The SDK uses the scripts when building out-of-tree
                 modules.
                 Once you have switched to that directory and created the
