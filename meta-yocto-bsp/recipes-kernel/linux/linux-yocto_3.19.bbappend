@@ -1,11 +1,20 @@
 KBRANCH_genericx86  = "standard/common-pc"
 KBRANCH_genericx86-64  = "standard/common-pc-64/base"
+KBRANCH_edgerouter = "standard/edgerouter"
+KBRANCH_beaglebone = "standard/beaglebone"
+KBRANCH_mpc8315e-rdb = "standard/fsl-mpc8315e-rdb"
 
 KMACHINE_genericx86 ?= "common-pc"
 KMACHINE_genericx86-64 ?= "common-pc-64"
 
 SRCREV_machine_genericx86 ?= "0befa35f40997c90936047e57fbbdd7edbf7e525"
 SRCREV_machine_genericx86-64 ?= "0befa35f40997c90936047e57fbbdd7edbf7e525"
+SRCREV_machine_edgerouter ?= "2a5e3b16afa1e599df55aa4c3341c66f317172c9"
+SRCREV_machine_beaglebone ?= "2a5e3b16afa1e599df55aa4c3341c66f317172c9"
+SRCREV_machine_mpc8315e-rdb ?= "2d5ac895707436a0d9afcbb96cd3b68a6e443771"
 
 COMPATIBLE_MACHINE_genericx86 = "genericx86"
 COMPATIBLE_MACHINE_genericx86-64 = "genericx86-64"
+COMPATIBLE_MACHINE_edgerouter = "edgerouter"
+COMPATIBLE_MACHINE_beaglebone = "beaglebone"
+COMPATIBLE_MACHINE_mpc8315e-rdb = "mpc8315e-rdb"
