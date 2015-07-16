@@ -66,7 +66,6 @@ REGEX_URI_pn-db = "http://www.oracle.com/technetwork/products/berkeleydb/downloa
 REGEX_URI_pn-python-smartpm="https://launchpad.net/smart/trunk/"
 REGEX_URI_pn-libatomics-ops="http://www.hpl.hp.com/research/linux/atomic_ops/download.php4"
 REGEX_URI_pn-libmad = "ftp://ftp.mars.org/pub/mpeg/"
-REGEX_URI_pn-gamin = "http://ftp.gnome.org/pub/gnome/sources/gamin/0.1/"
 REGEX_URI_pn-lsof = "ftp://sunsite.ualberta.ca/pub/Mirror/lsof/"
 
 # The engine tries to use directory versioning but is a false-positive
