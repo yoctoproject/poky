@@ -51,6 +51,22 @@
         that produce executable binaries (such as building the cross-compiler
         and a C library as pre-requisites, and splitting out of debug symbols
         during packaging).
+        <note>
+            Unlike e.g. Debian, OpenEmbedded recipes that produce packages
+            which
+            <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
+            on
+            <link linkend='var-TUNE_PKGARCH'><filename>TUNE_PKGARCH</filename></link>
+            packages should never be made <filename>allarch</filename>, even
+            if they do not produce architecture-specific output. This would
+            cause the do_package_write_* tasks to have different signatures
+            for
+            <link linkend='var-MACHINE'><filename>MACHINE</filename></link>s
+            with different
+            <link linkend='var-TUNE_PKGARCH'><filename>TUNE_PKGARCH</filename></link>,
+            thus unnecessary rebuilds every single time an image for a different
+            MACHINE is built (even without any change to the recipe).
+        </note>
     </para>
 
     <para>
