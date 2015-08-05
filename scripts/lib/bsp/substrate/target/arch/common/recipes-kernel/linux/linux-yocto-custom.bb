@@ -52,7 +52,6 @@ LINUX_VERSION_EXTENSION ?= "{{=custom_kernel_linux_version_extension}}"
 
 SRCREV="{{=custom_kernel_srcrev}}"
 
-PR = "r0"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 COMPATIBLE_MACHINE_{{=machine}} = "{{=machine}}"
