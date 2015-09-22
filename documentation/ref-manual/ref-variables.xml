@@ -3535,18 +3535,29 @@
 
         <glossentry id='var-EXCLUDE_FROM_SHLIBS'><glossterm>EXCLUDE_FROM_SHLIBS</glossterm>
             <info>
-                EXCLUDE_FROM_SHLIBS[doc] = "Causes the OpenEmbedded build system's shared resolver to exclued an entire package when scanning for shared libraries."
+                EXCLUDE_FROM_SHLIBS[doc] = "Causes the OpenEmbedded build system's shared libraries resolver to exclude an entire package when scanning for shared libraries."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Triggers the OpenEmbedded build system's shared resolver to
-                    exclude an entire package when scanning for shared
-                    libraries (i.e. the <filename>shlib</filename> procedure.
+                    Triggers the OpenEmbedded build system's shared libraries
+                    resolver to exclude an entire package when scanning for
+                    shared libraries.
+                    <note>
+                        The shared libraries resolver's functionality results
+                        in part from the internal function
+                        <filename>package_do_shlibs</filename>, which is part of
+                        the
+                        <link linkend='ref-tasks-package'><filename>do_package</filename></link>
+                        task.
+                        You should be aware that the shared libraries resolver
+                        might implicitly define some dependencies between
+                        packages.
+                    </note>
                     The <filename>EXCLUDE_FROM_SHLIBS</filename> variable is
                     similar to the
                     <link linkend='var-PRIVATE_LIBS'><filename>PRIVATE_LIBS</filename></link>
-                    variable, which exludes a package's particular libraries
+                    variable, which excludes a package's particular libraries
                     only and not the whole package.
                 </para>
 
@@ -3555,7 +3566,7 @@
                     <filename>EXCLUDE_FROM_SHLIBS</filename> variable by
                     setting it to "1" for a particular package:
                     <literallayout class='monospaced'>
-     EXCLUDE_FROM_SHLIB = "1"
+     EXCLUDE_FROM_SHLIBS = "1"
                     </literallayout>
                 </para>
             </glossdef>
