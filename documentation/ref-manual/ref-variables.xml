@@ -6454,6 +6454,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-KERNEL_ALT_IMAGETYPE'><glossterm>KERNEL_ALT_IMAGETYPE</glossterm>
+            <info>
+                KERNEL_ALT_IMAGETYPE[doc] = "Specifies an alternate kernel image type for creation."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies an alternate kernel image type for creation in
+                    addition to the kernel image type specified using the
+                    <link linkend='var-KERNEL_IMAGETYPE'><filename>KERNEL_IMAGETYPE</filename></link>
+                    variable.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-KERNEL_CLASSES'><glossterm>KERNEL_CLASSES</glossterm>
             <info>
                 KERNEL_CLASSES[doc] = "A list of classes defining kernel image types that kernel class should inherit."
@@ -6471,6 +6486,34 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>meta/classes/kernel-fitimage.bbclass</filename>.
                     You can register custom kernel image types with the
                     <filename>kernel</filename> class using this variable.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-KERNEL_DEVICETREE'><glossterm>KERNEL_DEVICETREE</glossterm>
+            <info>
+                KERNEL_DEVICETREE[doc] = "Specifies the name of the generated Linux kernel device tree (i.e. the <filename>.dtb</filename>) file."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies the name of the generated Linux kernel device tree
+                    (i.e. the <filename>.dtb</filename>) file.
+                    <note>
+                        Legacy support exists for specifying the full path
+                        to the device tree.
+                        However, providing just the <filename>.dtb</filename>
+                        file is preferred.
+                    </note>
+                    In order to use this variable, you must have the include
+                    files in your kernel recipe:
+                    <literallayout class='monospaced'>
+     require recipes-kernel/linux/linux-dtb.inc
+                    </literallayout>
+                    or
+                    <literallayout class='monospaced'>
+     require recipes-kernel/linux/linux-yocto.inc
+                    </literallayout>
                 </para>
             </glossdef>
         </glossentry>
@@ -6603,6 +6646,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     This variable is used
                     when building the kernel and is passed to <filename>make</filename> as the target to
                     build.
+                </para>
+
+                <para>
+                    If you want to build an alternate kernel image type, use the
+                    <link linkend='var-KERNEL_ALT_IMAGETYPE'><filename>KERNEL_ALT_IMAGETYPE</filename></link>
+                    variable.
                 </para>
             </glossdef>
         </glossentry>
@@ -6738,6 +6787,46 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>KERNEL_SRC</filename> variable.
                     Both variables are common variables used by external
                     Makefiles to point to the kernel source directory.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-KERNEL_VERSION'><glossterm>KERNEL_VERSION</glossterm>
+            <info>
+                KERNEL_VERSION[doc] = "Specifies the version of the kernel as extracted from version.h or utsrelease.h within the kernel sources."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies the version of the kernel as extracted from
+                    <filename>version.h</filename> or
+                    <filename>utsrelease.h</filename> within the kernel sources.
+                    Effects of setting this variable do not take affect until
+                    the kernel has been configured.
+                    Consequently, attempting to refer to this variable in
+                    contexts prior to configuration will not work.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-KERNELDEPMODDEPEND'><glossterm>KERNELDEPMODDEPEND</glossterm>
+            <info>
+                KERNELDEPMODDEPEND[doc] = "Specifies whether or not to use the data referenced through the PKGDATA_DIR directory."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies whether the data referenced through
+                    <link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>
+                    is needed or not.
+                    The <filename>KERNELDEPMODDEPEND</filename> does not
+                    control whether or not that data exists,
+                    but simply whether or not it is used.
+                    If you do not need to use the data, set the
+                    <filename>KERNELDEPMODDEPEND</filename> variable in your
+                    <filename>initramfs</filename> recipe.
+                    Setting the variable there when the data is not needed
+                    avoids a potential dependency loop.
                 </para>
             </glossdef>
         </glossentry>
@@ -11731,6 +11820,25 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     Specifies the path to the <filename>/usr/include</filename>
                     subdirectory of the sysroot directory for the build host.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-STAGING_KERNEL_BUILDDIR'><glossterm>STAGING_KERNEL_BUILDDIR</glossterm>
+            <info>
+                STAGING_KERNEL_BUILDDIR[doc] = "Points to the directory containing the kernel build artifacts."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Points to the directory containing the kernel build
+                    artifacts.
+                    Recipes building software that needs to access kernel
+                    build artifacts
+                    (e.g. <filename>systemtap-uprobes</filename>) can look in
+                    the directory specified with the
+                    <filename>STAGING_KERNEL_BUILDDIR</filename> variable to
+                    find these artifacts after the kernel has been built.
                 </para>
             </glossdef>
         </glossentry>
