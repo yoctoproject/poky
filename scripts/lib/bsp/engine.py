@@ -1685,8 +1685,8 @@ def yocto_layer_list_properties(arch, scripts_path, properties_file, expand_comm
             sys.exit(1)
 
         json.dump(properties, of)
-
-    print_dict(properties)
+    else:
+        print_dict(properties)
 
 
 def split_nested_property(property):
