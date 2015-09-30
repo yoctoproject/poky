@@ -11240,7 +11240,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    The following list explains the available URI protocols:
+                    The following list explains the available URI protocols.
+                    URI protocols are highly dependent on particular BitBake
+                    Fetcher submodules.
+                    Depending on the fetcher BitBake uses, various URL
+                    parameters are employed.
+                    For specifics on the supported Fetchers, see the
+                    "<ulink url='&YOCTO_DOCS_BB_URL;#bb-fetchers'>Fetchers</ulink>"
+                    section in the BitBake User Manual.
                     <itemizedlist>
                         <listitem><para><emphasis><filename>file://</filename> -</emphasis>
                             Fetches files, which are usually files shipped with
@@ -11368,11 +11375,25 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                         <listitem><para><emphasis><filename>unpack</filename> -</emphasis> Controls
                             whether or not to unpack the file if it is an archive.
                             The default action is to unpack the file.</para></listitem>
+                        <listitem><para><emphasis><filename>destsuffix</filename> -</emphasis> Places the file
+                            (or extracts its contents) into the specified
+                            subdirectory of <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
+                            when the Git fetcher is used.
+                            </para></listitem>
                         <listitem><para><emphasis><filename>subdir</filename> -</emphasis> Places the file
                             (or extracts its contents) into the specified
-                            subdirectory of <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>.
-                            This option is useful for unusual tarballs or other archives that
-                            do not have their files already in a subdirectory within the archive.
+                            subdirectory of <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
+                            when the local (<filename>file://</filename>)
+                            fetcher is used.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>localdir</filename> -</emphasis> Places the file
+                            (or extracts its contents) into the specified
+                            subdirectory of <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
+                            when the CVS fetcher is used.
+                            </para></listitem>
+                        <listitem><para><emphasis><filename>subpath</filename> -</emphasis>
+                            Limits the checkout to a specific subpath of the
+                            tree when using the Git fetcher is used.
                             </para></listitem>
                         <listitem><para><emphasis><filename>name</filename> -</emphasis> Specifies a
                             name to be used for association with <filename>SRC_URI</filename> checksums
