@@ -867,58 +867,113 @@
                     CPU usage, and disk I/O.
                     </para></listitem>
             </itemizedlist>
-            Following are several videos that show how to use the Toaster GUI:
-            <itemizedlist>
-                <listitem><para><emphasis>Build Configuration:</emphasis>
-                    This
-                    <ulink url='https://www.youtube.com/watch?v=qYgDZ8YzV6w'>video</ulink>
-                    overviews and demonstrates build configuration for Toaster.
-                    </para></listitem>
-                <listitem><para><emphasis>Toaster Homepage and Table Controls:</emphasis>
-                    This
-                    <ulink url='https://www.youtube.com/watch?v=QEARDnrR1Xw'>video</ulink>
-                    goes over the Toaster entry page, and provides
-                    an overview of the data manipulation capabilities of
-                    Toaster, which include search, sorting and filtering by
-                    different criteria.
-                    </para></listitem>
-                <listitem><para><emphasis>Build Dashboard:</emphasis>
-                    This
-                    <ulink url='https://www.youtube.com/watch?v=KKqHYcnp2gE'>video</ulink>
-                    shows you the build dashboard, a page providing an
-                    overview of the information available for a selected build.
-                    </para></listitem>
-                <listitem><para><emphasis>Image Information:</emphasis>
-                    This
-                    <ulink url='https://www.youtube.com/watch?v=XqYGFsmA0Rw'>video</ulink>
-                    walks through the information Toaster provides
-                    about images: packages installed and root file system.
-                    </para></listitem>
-                <listitem><para><emphasis>Configuration:</emphasis>
-                    This
-                    <ulink url='https://www.youtube.com/watch?v=UW-j-T2TzIg'>video</ulink>
-                    provides Toaster build configuration information.
-                    </para></listitem>
-                <listitem><para><emphasis>Tasks:</emphasis>
-                    This
-                    <ulink url='https://www.youtube.com/watch?v=D4-9vGSxQtw'>video</ulink>
-                    shows the information Toaster provides about the
-                    tasks run by the build system.
-                    </para></listitem>
-                <listitem><para><emphasis>Recipes and Packages Built:</emphasis>
-                    This
-                    <ulink url='https://www.youtube.com/watch?v=x-6dx4huNnw'>video</ulink>
-                    shows the information Toaster provides about recipes
-                    and packages built.
-                    </para></listitem>
-                <listitem><para><emphasis>Performance Data:</emphasis>
-                    This
-                    <ulink url='https://www.youtube.com/watch?v=qWGMrJoqusQ'>video</ulink>
-                    shows the build performance data provided by
-                    Toaster.
-                    </para></listitem>
-            </itemizedlist>
         </para>
+
+        <section id='web-interface-videos'>
+            <title>Toaster Web Interface Videos</title>
+
+            <para>
+                Following are several videos that show how to use the Toaster GUI:
+                <itemizedlist>
+                    <listitem><para><emphasis>Build Configuration:</emphasis>
+                        This
+                        <ulink url='https://www.youtube.com/watch?v=qYgDZ8YzV6w'>video</ulink>
+                        overviews and demonstrates build configuration for Toaster.
+                        </para></listitem>
+                    <listitem><para><emphasis>Toaster Homepage and Table Controls:</emphasis>
+                        This
+                        <ulink url='https://www.youtube.com/watch?v=QEARDnrR1Xw'>video</ulink>
+                        goes over the Toaster entry page, and provides
+                        an overview of the data manipulation capabilities of
+                        Toaster, which include search, sorting and filtering by
+                        different criteria.
+                        </para></listitem>
+                    <listitem><para><emphasis>Build Dashboard:</emphasis>
+                        This
+                        <ulink url='https://www.youtube.com/watch?v=KKqHYcnp2gE'>video</ulink>
+                        shows you the build dashboard, a page providing an
+                        overview of the information available for a selected build.
+                        </para></listitem>
+                    <listitem><para><emphasis>Image Information:</emphasis>
+                        This
+                        <ulink url='https://www.youtube.com/watch?v=XqYGFsmA0Rw'>video</ulink>
+                        walks through the information Toaster provides
+                        about images: packages installed and root file system.
+                        </para></listitem>
+                    <listitem><para><emphasis>Configuration:</emphasis>
+                        This
+                        <ulink url='https://www.youtube.com/watch?v=UW-j-T2TzIg'>video</ulink>
+                        provides Toaster build configuration information.
+                        </para></listitem>
+                    <listitem><para><emphasis>Tasks:</emphasis>
+                        This
+                        <ulink url='https://www.youtube.com/watch?v=D4-9vGSxQtw'>video</ulink>
+                        shows the information Toaster provides about the
+                        tasks run by the build system.
+                        </para></listitem>
+                    <listitem><para><emphasis>Recipes and Packages Built:</emphasis>
+                        This
+                        <ulink url='https://www.youtube.com/watch?v=x-6dx4huNnw'>video</ulink>
+                        shows the information Toaster provides about recipes
+                        and packages built.
+                        </para></listitem>
+                    <listitem><para><emphasis>Performance Data:</emphasis>
+                        This
+                        <ulink url='https://www.youtube.com/watch?v=qWGMrJoqusQ'>video</ulink>
+                        shows the build performance data provided by
+                        Toaster.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='toaster-web-interface-preferred-version'>
+            <title>Building a Specific Recipe Given Multiple Versions</title>
+
+            <para>
+                Occasionally, a layer might provide more than one version of
+                the same recipe.
+                For example, the <filename>openembedded-core</filename> layer
+                provides two versions of the <filename>bash</filename> recipe
+                (i.e. 3.2.48 and 4.3.30-r0) and two versions of the
+                <filename>which</filename> recipe (i.e. 2.21 and 2.18).
+                The following figure shows this exact scenario:
+                <imagedata fileref="figures/bash-oecore.png" align="center" width="9in" depth="6in" />
+            </para>
+
+            <para>
+                By default, the OpenEmbedded build system builds one of the
+                two recipes.
+                For the <filename>bash</filename> case, version 4.3.30-r0 is
+                built by default.
+                Unfortunately, Toaster as it exists, is not able to override
+                the default recipe version.
+                If you would like to build bash 3.2.48, you need to set the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_VERSION'><filename>PREFERRED_VERSION</filename></ulink>
+                variable.
+                You can do so from Toaster, using the "Add variable" form,
+                which is available in the "BitBake variables" page of the
+                project configuration section as shown in the following screen:
+                <imagedata fileref="figures/add-variable.png" align="center" width="9in" depth="6in" />
+            </para>
+
+            <para>
+                To specify <filename>bash</filename> 3.2.48 as the version to build,
+                enter "PREFERRED_VERSION_bash" in the "Variable" field, and "3.2.48"
+                in the "Value" field.
+                Next, click the "Add variable" button:
+                <imagedata fileref="figures/set-variable.png" align="center" width="9in" depth="6in" />
+            </para>
+
+            <para>
+                After clicking the "Add variable" button, the settings for
+                <filename>PREFERRED_VERSION</filename> are added to the bottom
+                of the BitBake variables list.
+                With these settings, the OpenEmbedded build system builds the
+                desired version of the recipe rather than the default version:
+                <imagedata fileref="figures/variable-added.png" align="center" width="9in" depth="6in" />
+            </para>
+        </section>
     </section>
 
 <!--
