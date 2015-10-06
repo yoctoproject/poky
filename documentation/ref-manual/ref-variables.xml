@@ -8537,6 +8537,144 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PACKAGE_FEED_ARCHS'><glossterm>PACKAGE_FEED_ARCHS</glossterm>
+            <info>
+                PACKAGE_FEED_ARCHS[doc] = "Specifies user-defined package architectures when constructing package feed URIs."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies the package architectures used as part of the
+                    package feed URIs during the build.
+                    The <filename>PACKAGE_FEED_ARCHS</filename> variable is
+                    appended to the final package feed URI, which is constructed
+                    using the
+                    <link linkend='var-PACKAGE_FEED_URIS'><filename>PACKAGE_FEED_URIS</filename></link>
+                    and
+                    <link linkend='var-PACKAGE_FEED_BASE_PATHS'><filename>PACKAGE_FEED_BASE_PATHS</filename></link>
+                    variables.
+                </para>
+
+                <para>
+                    Consider the following example where the
+                    <filename>PACKAGE_FEED_URIS</filename>,
+                    <filename>PACKAGE_FEED_BASE_PATHS</filename>, and
+                    <filename>PACKAGE_FEED_ARCHS</filename> variables are
+                    defined in your <filename>local.conf</filename> file:
+                    <literallayout class='monospaced'>
+     PACKAGE_FEED_URIS = "https://example.com/packagerepos/release \
+                          https://example.com/packagerepos/updates"
+     PACKAGE_FEED_BASE_PATHS = "rpm rpm-dev"
+     PACKAGE_FEED_ARCHS = "all core2-64"
+                    </literallayout>
+                    Given these settings, the resulting package feeds are
+                    as follows:
+                    <literallayout class='monospaced'>
+     https://example.com/packagerepos/release/rpm/all
+     https://example.com/packagerepos/release/rpm/core2-64
+     https://example.com/packagerepos/release/rpm-dev/all
+     https://example.com/packagerepos/release/rpm-dev/core2-64
+     https://example.com/packagerepos/updates/rpm/all
+     https://example.com/packagerepos/updates/rpm/core2-64
+     https://example.com/packagerepos/updates/rpm-dev/all
+     https://example.com/packagerepos/updates/rpm-dev/core2-64
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PACKAGE_FEED_BASE_PATHS'><glossterm>PACKAGE_FEED_BASE_PATHS</glossterm>
+            <info>
+                PACKAGE_FEED_BASE_PATHS[doc] = "Specifies base path used when constructing package feed URIs."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies the base path used when constructing package feed
+                    URIs.
+                    The <filename>PACKAGE_FEED_BASE_PATHS</filename> variable
+                    makes up the middle portion of a package feed URI used
+                    by the OpenEmbedded build system.
+                    The base path lies between the
+                    <link linkend='var-PACKAGE_FEED_URIS'><filename>PACKAGE_FEED_URIS</filename></link>
+                    and
+                    <link linkend='var-PACKAGE_FEED_ARCHS'><filename>PACKAGE_FEED_ARCHS</filename></link>
+                    variables.
+                </para>
+
+                <para>
+                    Consider the following example where the
+                    <filename>PACKAGE_FEED_URIS</filename>,
+                    <filename>PACKAGE_FEED_BASE_PATHS</filename>, and
+                    <filename>PACKAGE_FEED_ARCHS</filename> variables are
+                    defined in your <filename>local.conf</filename> file:
+                    <literallayout class='monospaced'>
+     PACKAGE_FEED_URIS = "https://example.com/packagerepos/release \
+                          https://example.com/packagerepos/updates"
+     PACKAGE_FEED_BASE_PATHS = "rpm rpm-dev"
+     PACKAGE_FEED_ARCHS = "all core2-64"
+                    </literallayout>
+                    Given these settings, the resulting package feeds are
+                    as follows:
+                    <literallayout class='monospaced'>
+     https://example.com/packagerepos/release/rpm/all
+     https://example.com/packagerepos/release/rpm/core2-64
+     https://example.com/packagerepos/release/rpm-dev/all
+     https://example.com/packagerepos/release/rpm-dev/core2-64
+     https://example.com/packagerepos/updates/rpm/all
+     https://example.com/packagerepos/updates/rpm/core2-64
+     https://example.com/packagerepos/updates/rpm-dev/all
+     https://example.com/packagerepos/updates/rpm-dev/core2-64
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-PACKAGE_FEED_URIS'><glossterm>PACKAGE_FEED_URIS</glossterm>
+            <info>
+                PACKAGE_FEED_URIS[doc] = "Specifies the front portion of the package feed URI used by the OpenEmbedded build system."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Specifies the front portion of the package feed URI
+                    used by the OpenEmbedded build system.
+                    Each final package feed URI is comprised of
+                    <filename>PACKAGE_FEED_URIS</filename>,
+                    <link linkend='var-PACKAGE_FEED_BASE_PATHS'><filename>PACKAGE_FEED_BASE_PATHS</filename></link>,
+                    and
+                    <link linkend='var-PACKAGE_FEED_ARCHS'><filename>PACKAGE_FEED_ARCHS</filename></link>
+                    variables.
+                </para>
+
+                <para>
+                    Consider the following example where the
+                    <filename>PACKAGE_FEED_URIS</filename>,
+                    <filename>PACKAGE_FEED_BASE_PATHS</filename>, and
+                    <filename>PACKAGE_FEED_ARCHS</filename> variables are
+                    defined in your <filename>local.conf</filename> file:
+                    <literallayout class='monospaced'>
+     PACKAGE_FEED_URIS = "https://example.com/packagerepos/release \
+                          https://example.com/packagerepos/updates"
+     PACKAGE_FEED_BASE_PATHS = "rpm rpm-dev"
+     PACKAGE_FEED_ARCHS = "all core2-64"
+                    </literallayout>
+                    Given these settings, the resulting package feeds are
+                    as follows:
+                    <literallayout class='monospaced'>
+     https://example.com/packagerepos/release/rpm/all
+     https://example.com/packagerepos/release/rpm/core2-64
+     https://example.com/packagerepos/release/rpm-dev/all
+     https://example.com/packagerepos/release/rpm-dev/core2-64
+     https://example.com/packagerepos/updates/rpm/all
+     https://example.com/packagerepos/updates/rpm/core2-64
+     https://example.com/packagerepos/updates/rpm-dev/all
+     https://example.com/packagerepos/updates/rpm-dev/core2-64
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PACKAGE_GROUP'><glossterm>PACKAGE_GROUP</glossterm>
             <info>
                 PACKAGE_GROUP[doc] = "Defines one or more packages to include in an image when a specific item is included in IMAGE_FEATURES."
