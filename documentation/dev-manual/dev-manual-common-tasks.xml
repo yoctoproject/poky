@@ -2249,6 +2249,19 @@
                 Typically, setting these options is accomplished by running a
                 configure script with some options, or by modifying a build
                 configuration file.
+                <note>
+                    As of Yocto Project Release 7.1, some of the core recipes
+                    that package binary configuration scripts now disable the
+                    scripts due to the scripts previously requiring error-prone
+                    path substitution.
+                    The OpenEmbedded build system uses
+                    <filename>pkg-config</filename> now, which is much more
+                    robust.
+                    You can find a list of the <filename>*-config</filename>
+                    scripts that are disabled list in the
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#migration-1.7-binary-configuration-scripts-disabled'>Binary Configuration Scripts Disabled</ulink>"
+                    section in the Yocto Project Reference Manual.
+                </note>
             </para>
 
             <para>
@@ -2364,7 +2377,16 @@
             <para>
                 However, if the compile step fails, you need to diagnose the
                 failure.
-                Here are some common issues that cause failures:
+                Here are some common issues that cause failures.
+                <note>
+                    For cases where improper paths are detected for
+                    configuration files or for when libraries/headers cannot
+                    be found, be sure you are using the more robust
+                    <filename>pkg-config</filename>.
+                    See the note in section
+                    "<link linkend='new-recipe-configuring-the-recipe'>Configuring the Recipe</link>"
+                    for additional information.
+                </note>
                 <itemizedlist>
                     <listitem><para><emphasis>Parallel build failures:</emphasis>
                         These failures manifest themselves as intermittent
