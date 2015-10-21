@@ -52,20 +52,22 @@
         and a C library as pre-requisites, and splitting out of debug symbols
         during packaging).
         <note>
-            Unlike e.g. Debian, OpenEmbedded recipes that produce packages
-            which
+            <para>Unlike some distro recipes (e.g. Debian), OpenEmbedded recipes
+            that produce packages that depend on tunings through use of the
             <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
-            on
+            and
             <link linkend='var-TUNE_PKGARCH'><filename>TUNE_PKGARCH</filename></link>
-            packages should never be made <filename>allarch</filename>, even
-            if they do not produce architecture-specific output. This would
-            cause the do_package_write_* tasks to have different signatures
-            for
-            <link linkend='var-MACHINE'><filename>MACHINE</filename></link>s
-            with different
-            <link linkend='var-TUNE_PKGARCH'><filename>TUNE_PKGARCH</filename></link>,
-            thus unnecessary rebuilds every single time an image for a different
-            MACHINE is built (even without any change to the recipe).
+            variables, should never be configured for all architectures
+            using <filename>allarch</filename>.
+            This is the case even if the recipes do not produce
+            architecture-specific output.</para>
+            <para>Configuring such recipes for all architectures causes the
+            <link linkend='ref-tasks-package_write_deb'><filename>do_package_write_*</filename></link>
+            tasks to have different signatures for the machines with different
+            tunings.
+            Additionally, unnecessary rebuilds occur every time an
+            image for a different <filename>MACHINE</filename> is built
+            even when the recipe never changes.</para>
         </note>
     </para>
 
