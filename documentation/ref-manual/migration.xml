@@ -2642,12 +2642,12 @@
             The following QA checks have been added:
             <itemizedlist>
                 <listitem><para>
-                    Added a "host-user-contaminated" check for any paths
-                    of packaged files outside of
-                    <filename>/home</filename> that are owned by the user
-                    and run BitBake.
-                    The existence of these types of paths usually
-                    indicates ownership has been incorrectly set.
+                    Added a "host-user-contaminated" check for ownership
+                    issues for packaged files outside of
+                    <filename>/home</filename>.
+                    The check looks for files that are incorrectly owned by the
+                    user that ran BitBake instead of owned by a valid user in
+                    the target system.
                     </para></listitem>
                 <listitem><para>
                     Added an "invalid-chars" check for invalid (non-UTF8)
@@ -2658,10 +2658,11 @@
                     <link linkend='var-LICENSE'><filename>LICENSE</filename></link>,
                     and
                     <link linkend='var-SECTION'><filename>SECTION</filename></link>).
-                    Some package managers do not support these variables.
+                    Some package managers do not support these characters.
                     </para></listitem>
                 <listitem><para>
-                    Added a check for any options specified in
+                    Added an "invalid-packageconfig" check for any options
+                    specified in
                     <link linkend='var-PACKAGECONFIG'><filename>PACKAGECONFIG</filename></link>
                     that do not match any <filename>PACKAGECONFIG</filename>
                     option defined for the recipe.
