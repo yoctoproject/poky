@@ -14,6 +14,7 @@ s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/poky-ref-manual\/po
 # s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/[a-z]*-[a-z]*\/[a-z]*-[a-z]*.html#/\"link\" href=\"#/g
 
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/adt-manual\/adt-manual.html#/\"link\" href=\"#/g
+s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/sdk-manual\/sdk-manual.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/bsp-guide\/bsp-guide.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/dev-manual\/dev-manual.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/kernel-dev\/kernel-dev.html#/\"link\" href=\"#/g
@@ -26,6 +27,7 @@ s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/yocto-project-qs\/y
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/yocto-project-qs\/yocto-project-qs.html\" target=\"_top\">Yocto Project Quick Start<\/a>/Yocto Project Quick Start/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/dev-manual\/dev-manual.html\" target=\"_top\">Yocto Project Development Manual<\/a>/Yocto Project Development Manual/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/adt-manual\/adt-manual.html\" target=\"_top\">Yocto Project Application Developer's Guide<\/a>/Yocto Project Application Developer's Guide/g
+s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/sdk-manual\/sdk-manual.html\" target=\"_top\">Yocto Project Software Development Kit (SDK) Developer's Guide<\/a>/Yocto Project Software Development Kit (SDK) Developer's Guide/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/bsp-guide\/bsp-guide.html\" target=\"_top\">Yocto Project Board Support Package (BSP) Developer's Guide<\/a>/Yocto Project Board Support Package (BSP) Developer's Guide/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/profile-manual\/profile-manual.html\" target=\"_top\">Yocto Project Profiling and Tracing Manual<\/a>/Yocto Project Profiling and Tracing Manual/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.1\/kernel-dev\/kernel-dev.html\" target=\"_top\">Yocto Project Linux Kernel Development Manual<\/a>/Yocto Project Linux Kernel Development Manual/g
