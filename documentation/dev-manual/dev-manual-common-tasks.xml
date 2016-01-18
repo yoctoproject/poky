@@ -4491,11 +4491,18 @@
                 <title>Command: part or partition</title>
 
                 <para>
-                This command creates a partition on the system and uses the
-                following syntax:
+                Either of these commands create a partition on the system
+                and uses the following syntax:
                     <literallayout class='monospaced'>
-     part <replaceable>mntpoint</replaceable>
+     part [<replaceable>mntpoint</replaceable>]
+     partition [<replaceable>mntpoint</replaceable>]
                     </literallayout>
+                    If you do not provide
+                    <replaceable>mntpoint</replaceable>, wic creates a partition
+                    but does not mount it.
+                </para>
+
+                <para>
                     The <filename><replaceable>mntpoint</replaceable></filename>
                     is where the
                     partition will be mounted and must be of one of the
@@ -4503,16 +4510,36 @@
                     <itemizedlist>
                         <listitem><para><filename>/<replaceable>path</replaceable></filename>:
                             For example, <filename>/</filename>,
-                            <filename>/usr</filename>, and
+                            <filename>/usr</filename>, or
                             <filename>/home</filename></para></listitem>
                         <listitem><para><filename>swap</filename>:
-                            The partition will be used as swap space.
+                            The created partition is used as swap space.
                             </para></listitem>
                     </itemizedlist>
                 </para>
 
                 <para>
-                    Following are the supported options:
+                    Specifying a <replaceable>mntpoint</replaceable> causes
+                    the partition to automatically be mounted.
+                    Wic achieves this by adding entries to the filesystem
+                    table (fstab) during image generation.
+                    In order for wic to generate a valid fstab, you must
+                    also provide one of the <filename>--ondrive</filename>,
+                    <filename>--ondisk</filename>, or
+                    <filename>--use-uuid</filename> partition options as part
+                    of the command.
+                    Here is an example using "/" as the mountpoint.
+                    The command uses "--ondisk" to force the partition onto
+                    the <filename>sdb</filename> disk:
+                    <literallayout class='monospaced'>
+     part / --source rootfs --ondisk sdb --fstype=ext3 --label platform --align 1024
+                    </literallayout>
+                </para>
+
+                <para>
+                    Here is a list that describes other supported options you
+                    can use with the <filename>part</filename> and
+                    <filename>partition</filename> commands:
                     <itemizedlist>
                         <listitem><para><emphasis><filename>--size</filename>:</emphasis>
                             The minimum partition size in MBytes.
