@@ -1970,31 +1970,38 @@
                 <filename>devtool</filename> command is using the
                 <filename>--help</filename> option:
                 <literallayout class='monospaced'>
-     $ devtool --help
-     usage: devtool [-h] [--basepath BASEPATH] [-d] [-q] [--color COLOR]
-               &lt;subcommand&gt; ...
+     usage: devtool [--basepath BASEPATH] [--bbpath BBPATH] [-d] [-q]
+                    [--color COLOR] [-h]
+                    &lt;subcommand&gt; ...
 
      OpenEmbedded development tool
 
      optional arguments:
-       -h, --help           show this help message and exit
        --basepath BASEPATH  Base directory of SDK / build directory
+       --bbpath BBPATH      Explicitly specify the BBPATH, rather than getting it
+                            from the metadata
        -d, --debug          Enable debug output
        -q, --quiet          Print only errors
        --color COLOR        Colorize output (where COLOR is auto, always, never)
+       -h, --help           show this help message and exit
 
      subcommands:
        &lt;subcommand&gt;
-         create-workspace   Set up a workspace
+         create-workspace   Set up workspace in an alternative location
+         upgrade            Upgrade an existing recipe
          deploy-target      Deploy recipe output files to live target machine
          undeploy-target    Undeploy recipe output files in live target machine
+         search             Search available recipes
+         build              Build a recipe
          add                Add a new recipe
          modify             Modify the source for an existing recipe
          extract            Extract the source for an existing recipe
+         sync               Synchronize the source tree for an existing recipe
          update-recipe      Apply changes from external source tree to recipe
          status             Show workspace status
-         build              Build a recipe
          reset              Remove a recipe from your workspace
+         edit-recipe        Edit a recipe file in your workspace
+         build-image        Build image including workspace recipe packages
 
      Use devtool &lt;subcommand&gt; --help to get help on a specific command
                 </literallayout>
@@ -2006,22 +2013,40 @@
                 name and using <filename>--help</filename>:
                 <literallayout class='monospaced'>
      $ devtool add --help
-     usage: devtool add [-h] [--same-dir] [--fetch URI] [--version VERSION]
-                        recipename srctree
+     usage: devtool add [-h] [--same-dir | --no-same-dir] [--fetch URI]
+                        [--version VERSION] [--no-git] [--binary] [--also-native]
+                        [recipename] [srctree] [fetchuri]
 
-     Adds a new recipe
+     Adds a new recipe to the workspace to build a specified source tree. Can
+     optionally fetch a remote URI and unpack it to create the source tree.
 
      positional arguments:
-       recipename            Name for new recipe to add
-       srctree               Path to external source tree
+       recipename            Name for new recipe to add (just name - no version,
+                             path or extension). If not specified, will attempt to
+                             auto-detect it.
+       srctree               Path to external source tree. If not specified, a
+                             subdirectory of
+                             /home/<replaceable>user</replaceable>/poky/build/workspace/sources will be
+                             used.
+       fetchuri              Fetch the specified URI and extract it to create the
+                             source tree
 
      optional arguments:
        -h, --help            show this help message and exit
        --same-dir, -s        Build in same directory as source
+       --no-same-dir         Force build in a separate build directory
        --fetch URI, -f URI   Fetch the specified URI and extract it to create the
-                             source tree
+                             source tree (deprecated - pass as positional argument
+                             instead)
        --version VERSION, -V VERSION
                              Version to use within recipe (PV)
+       --no-git, -g          If fetching source, do not set up source tree as a git
+                             repository
+       --binary, -b          Treat the source tree as something that should be
+                             installed verbatim (no compilation, same directory
+                             structure). Useful with binary packages e.g. RPMs.
+       --also-native         Also add native variant (i.e. support building recipe
+                             for the build host as well as the target machine)
                 </literallayout>
             </para>
         </section>
