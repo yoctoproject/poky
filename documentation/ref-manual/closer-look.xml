@@ -993,11 +993,13 @@
 
             <para>
                 The image generation process consists of several stages and
-                depends on many variables.
+                depends on several tasks and variables.
                 The
                 <link linkend='ref-tasks-rootfs'><filename>do_rootfs</filename></link>
-                task uses these key variables
-                to help create the list of packages to actually install:
+                task creates the root filesystem (file and directory structure)
+                for an image.
+                This task uses several key variables to help create the list
+                of packages to actually install:
                 <itemizedlist>
                     <listitem><para><link linkend='var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></link>:
                         Lists out the base set of packages to install from
@@ -1017,7 +1019,20 @@
                         Determines the language(s) for which additional
                         language support packages are installed.
                         </para></listitem>
+                    <listitem><para><link linkend='var-PACKAGE_INSTALL'><filename>PACKAGE_INSTALL</filename></link>:
+                        The final list of packages passed to the package manager
+                        for installation into the image.
+                        </para></listitem>
                 </itemizedlist>
+            </para>
+
+            <para>
+                With
+                <link linkend='var-IMAGE_ROOTFS'><filename>IMAGE_ROOTFS</filename></link>
+                pointing to the location of the filesystem under construction and
+                the <filename>PACKAGE_INSTALL</filename> variable providing the
+                final list of packages to install, the root file system is
+                created.
             </para>
 
             <para>
@@ -1027,13 +1042,11 @@
                 At the end of the process, if package management is not
                 enabled for the target, the package manager's data files
                 are deleted from the root filesystem.
-            </para>
-
-            <para>
-                During image generation, the build system attempts to run
-                all post-installation scripts.
-                Any that fail to run on the build host are run on the
-                target when the target system is first booted.
+                As part of the final stage of package installation, postinstall
+                scripts that are part of the packages are run.
+                Any scripts that fail to run
+                on the build host are run on the target when the target system
+                is first booted.
                 If you are using a
                 <ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-read-only-root-filesystem'>read-only root filesystem</ulink>,
                 all the post installation scripts must succeed during the
@@ -1042,24 +1055,17 @@
             </para>
 
             <para>
-                During Optimization, optimizing processes are run across
-                the image.
-                These processes include <filename>mklibs</filename> and
-                <filename>prelink</filename>.
-                The <filename>mklibs</filename> process optimizes the size
-                of the libraries.
-                A <filename>prelink</filename> process optimizes the dynamic
-                linking of shared libraries to reduce start up time of
-                executables.
+                The final stages of the <filename>do_rootfs</filename> task
+                handle post processing.
+                Post processing includes creation of a manifest file and
+                optimizations.
             </para>
 
             <para>
-                Along with writing out the root filesystem image, the
-                <filename>do_rootfs</filename> task creates a manifest file
-                (<filename>.manifest</filename>) in the same directory as
-                the root filesystem image that lists out, line-by-line, the
-                installed packages.
-                This manifest file is useful for the
+                The manifest file (<filename>.manifest</filename>) resides
+                in the same directory as the root filesystem image.
+                This file lists out, line-by-line, the installed packages.
+                The manifest file is useful for the
                 <link linkend='ref-classes-testimage*'><filename>testimage</filename></link>
                 class, for example, to determine whether or not to run
                 specific tests.
@@ -1069,19 +1075,52 @@
             </para>
 
             <para>
-                Part of the image generation process includes compressing the
-                root filesystem image.
-                Compression is accomplished through several optimization
-                routines designed to reduce the overall size of the image.
+                Optimizing processes run across the image include
+                <filename>mklibs</filename>, <filename>prelink</filename>,
+                and any other post-processing commands as defined by the
+                <link linkend='var-ROOTFS_POSTPROCESS_COMMAND'><filename>ROOTFS_POSTPROCESS_COMMAND</filename></link>
+                variable.
+                The <filename>mklibs</filename> process optimizes the size
+                of the libraries, while the
+                <filename>prelink</filename> process optimizes the dynamic
+                linking of shared libraries to reduce start up time of
+                executables.
             </para>
 
             <para>
-                After the root filesystem has been constructed, the image
-                generation process turns everything into an image file or
-                a set of image files.
+                After the root filesystem is built, processing begins on
+                the image through the <filename>do_image</filename> task.
+                The build system runs any pre-processing commands as defined
+                by the
+                <link linkend='var-IMAGE_PREPROCESS_COMMAND'><filename>IMAGE_PREPROCESS_COMMAND</filename></link>
+                variable.
+                This variable specifies a list of functions to call before
+                the OpenEmbedded build system creates the final image output
+                files.
+            </para>
+
+            <para>
+                The <filename>do_image</filename> task dynamically creates
+                other <filename>do_image_*</filename> tasks as needed, which
+                include compressing the root filesystem image to reduce the
+                overall size of the image.
+                The process turns everything into an image file or a set of
+                image files.
                 The formats used for the root filesystem depend on the
                 <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
                 variable.
+            </para>
+
+            <para>
+                The final task involved in image creation is the
+                <filename>do_image_complete</filename> task.
+                This task completes the image by applying any image
+                post processing as defined through the
+                <link linkend='var-IMAGE_POSTPROCESS_COMMAND'><filename>IMAGE_POSTPROCESS_COMMAND</filename></link>
+                variable.
+                The variable specifies a list of functions to call once the
+                OpenEmbedded build system has created the final image output
+                files.
             </para>
 
             <note>

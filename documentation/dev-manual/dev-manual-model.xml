@@ -2113,6 +2113,55 @@
             </para>
         </section>
 
+        <section id='devtool-extracting-the-source-for-an-existing-recipe'>
+            <title>Extracting the Source for an Existing Recipe</title>
+
+            <para>
+                Use the <filename>devtool extract</filename> command to
+                extract the source for an existing recipe.
+                When you use this command, you must supply the root name
+                of the recipe (i.e. no version, paths, or extensions), and
+                you must supply the directory to which you want the source
+                extracted.
+            </para>
+
+            <para>
+                Additional command options let you control the name of a
+                development branch into which you can checkout the source
+                and whether or not to keep a temporary directory, which is
+                useful for debugging.
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool extract --help</filename> command.
+                </note>
+            </para>
+        </section>
+
+        <section id='devtool-synchronizing-a-recipes-extracted-source-tree'>
+            <title>Synchronizing a Recipe's Extracted Source Tree</title>
+
+            <para>
+                Use the <filename>devtool sync</filename> command to
+                synchronize a previously extracted source tree for an
+                existing recipe.
+                When you use this command, you must supply the root name
+                of the recipe (i.e. no version, paths, or extensions), and
+                you must supply the directory to which you want the source
+                extracted.
+            </para>
+
+            <para>
+                Additional command options let you control the name of a
+                development branch into which you can checkout the source
+                and whether or not to keep a temporary directory, which is
+                useful for debugging.
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool sync --help</filename> command.
+                </note>
+            </para>
+        </section>
+
         <section id='devtool-modifying-a-recipe'>
             <title>Modifying an Existing Recipe</title>
 
@@ -2142,6 +2191,33 @@
                 <note>
                     For complete syntax, use the
                     <filename>devtool modify --help</filename> command.
+                </note>
+            </para>
+        </section>
+
+        <section id='devtool-edit-an-existing-recipe'>
+            <title>Edit an Existing Recipe</title>
+
+            <para>
+                Use the <filename>devtool edit-recipe</filename> command
+                to run the default editor, which is identified using the
+                <filename>EDITOR</filename> variable, on the specified recipe.
+            </para>
+
+            <para>
+                When you use the <filename>devtool edit-recipe</filename>
+                command, you must supply the root name of the recipe
+                (i.e. no version, paths, or extensions).
+                Also, the recipe file itself must reside in the workspace
+                as a result of the <filename>devtool add</filename> or
+                <filename>devtool upgrade</filename> commands.
+                However, you can override that requirement by using the
+                "-a" or "--any-recipe" option.
+                Using either of these options allows you to edit any recipe
+                regardless of its location.
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool edit-recipe --help</filename> command.
                 </note>
             </para>
         </section>
@@ -2199,6 +2275,36 @@
             </para>
         </section>
 
+        <section id='devtool-upgrading-a-recipe'>
+            <title>Upgrading a Recipe</title>
+
+            <para>
+                Use the <filename>devtool upgrade</filename> command
+                to upgrade an existing recipe to a new upstream version.
+                The command puts the upgraded recipe file into the
+                workspace along with any associated files, and extracts
+                the source tree to a specified location should patches
+                need rebased or added to as a result of the upgrade.
+            </para>
+
+            <para>
+                When you use the <filename>devtool upgrade</filename> command,
+                you must supply the root name of the recipe (i.e. no version,
+                paths, or extensions), and you must supply the directory
+                to which you want the source extracted.
+                Additional command options let you control things such as
+                the version number to which you want to upgrade (i.e. the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>),
+                the source revision to which you want to upgrade (i.e. the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>,
+                whether or not to apply patches, and so forth.
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool upgrade --help</filename> command.
+                </note>
+            </para>
+        </section>
+
         <section id='devtool-resetting-a-recipe'>
             <title>Resetting a Recipe</title>
 
@@ -2227,15 +2333,22 @@
             </para>
         </section>
 
-        <section id='devtool-building-your-software'>
-            <title>Building Your Software</title>
+        <section id='devtool-building-your-recipe'>
+            <title>Building Your Recipe</title>
 
             <para>
                 Use the <filename>devtool build</filename> command to cause the
-                OpenEmbedded build system to build your software based
-                on the recipe file.
+                OpenEmbedded build system to build your recipe.
                 The <filename>devtool build</filename> command is equivalent to
                 <filename>bitbake -c populate_sysroot</filename>.
+            </para>
+
+            <para>
+                When you use the <filename>devtool build</filename> command,
+                you must supply the root name of the recipe (i.e. no version,
+                paths, or extensions).
+                You can use either the "-s" or the "--disable-parallel-make"
+                option to disable parallel makes during the build.
                 Here is an example:
                 <literallayout class='monospaced'>
      $ devtool build <replaceable>recipe</replaceable>
@@ -2244,8 +2357,25 @@
                     For complete syntax, use the
                     <filename>devtool build --help</filename> command.
                 </note>
-                Building your software using <filename>devtool build</filename>
-                is identical to using BitBake to build the software.
+            </para>
+        </section>
+
+        <section id='devtool-building-your-image'>
+            <title>Building Your Image</title>
+
+            <para>
+                Use the <filename>devtool build-image</filename> command
+                to build an image, extending it to include packages from
+                recipes in the workspace.
+            </para>
+
+            <para>
+                When you use the <filename>devtool build-image</filename>
+                command, you must supply the name of the image.
+                This command has no command line options:
+                <literallayout class='monospaced'>
+     $ devtool build-image <replaceable>image</replaceable>
+                </literallayout>
             </para>
         </section>
 
@@ -2343,6 +2473,49 @@
                 <literallayout class='monospaced'>
      $ devtool create-workspace /home/scottrif/new-workspace
                 </literallayout>
+            </para>
+        </section>
+
+        <section id='devtool-get-the-status-of-the-recipes-in-your-workspace'>
+            <title>Get the Status of the Recipes in Your Workspace</title>
+
+            <para>
+                Use the <filename>devtool status</filename> command to
+                list the recipes currently in your workspace.
+                Information includes the paths to their respective
+                external source trees.
+            </para>
+
+            <para>
+                The <filename>devtool status</filename> command has no
+                command-line options:
+                <literallayout class='monospaced'>
+     devtool status
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='devtool-search-for-available-target-recipes'>
+            <title>Search for Available Target Recipes</title>
+
+            <para>
+                Use the <filename>devtool search</filename> command to
+                search for available target recipes.
+                The command matches the recipe name, package name,
+                description, and installed files.
+                The command displays the recipe name as a result of a
+                match.
+            </para>
+
+            <para>
+                When you use the <filename>devtool search</filename> command,
+                you must supply a <replaceable>keyword</replaceable>.
+                The command uses the <replaceable>keyword</replaceable> when
+                searching for a match.
+                <note>
+                    For complete syntax, use the
+                    <filename>devtool search --help</filename> command.
+                </note>
             </para>
         </section>
     </section>
