@@ -288,6 +288,7 @@ ifeq ($(DOC),sdk-manual)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = sdk-manual.html sdk-style.css figures/sdk-title.png \
+           figures/sdk-environment.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
