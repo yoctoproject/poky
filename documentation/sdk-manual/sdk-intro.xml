@@ -27,7 +27,19 @@
     </para>
 
     <para>
-        Describe what a standard SDK is as compared to the extensible SDK.
+        A standard SDK consists of a cross-development toolchain that contains
+        a compiler, debugger, and various miscellaneous tools; libraries,
+        headers, and symbols to match an image; and environment setup script.
+        You can use this SDK to independently develop and test code that is
+        destined to run on some target machine.
+    </para>
+
+    <para>
+        An extensible SDK consists of everything that the standard SDK has plus
+        tools that allow you to easily add new applications and libraries to
+        an image, modify the source of an existing component, test changes on
+        the target hardware, and easily integrate an application into the
+        the Yocto Project build system.
     </para>
 </section>
 
@@ -35,10 +47,27 @@
     <title>SDK Development Model</title>
 
     <para>
-        * Development Model - provide a figure that shows the development
-          pieces using boxes and arrows.
-          Include all possible methods, inputs and outputs.
-          <imagedata fileref="figures/sdk-environment.png" align="center" width="6in" depth="5in" scalefit="100" />
+        Fundamentally, the SDK fits into the development process as follows:
+        <imagedata fileref="figures/sdk-environment.png" align="center" width="6in" depth="5in" scalefit="100" />
+        The SDK is installed on any machine and can be used to develop
+        applications, images, and kernels.
+        An SDK can even be used by a QA Engineer or Release Engineer.
+        The fundamental concept is that the machine that has the SDK installed
+        does not have to be associated with the machine that has the
+        Yocto Project installed.
+        A developer can independently compile and test an object on their
+        machine and then, when the object is ready for integration into an
+        image, they can simply make it available to the machine that has the
+        the Yocto Project.
+        Once the object is available, the image can be rebuilt using the
+        Yocto Project to produce the modified image.
+    </para>
+
+    <para>
+        The remainder of this manual describes how to use both the standard
+        SDK and the extensible SDK.
+        Information also exists in appendix form that describes how you can
+        build, install, and modify an SDK.
     </para>
 </section>
 
