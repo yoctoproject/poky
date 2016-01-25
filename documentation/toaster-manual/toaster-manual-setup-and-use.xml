@@ -276,6 +276,7 @@
              'PASSWORD': 'yourpasswordhere',
              'HOST': 'localhost',
              'PORT': '3306',
+        }
      }
                                 </literallayout>
                                 </para></listitem>
@@ -298,7 +299,7 @@
                         server defined earlier:
                         <literallayout class='monospaced'>
      $ mysql -u root -p
-     mysql> CREATE DATABASE toaster;
+     mysql> CREATE DATABASE toaster_data;
      mysql> CREATE USER 'toaster'@'localhost' identified by 'yourpasswordhere';
      mysql> GRANT all on toaster_data.* to 'toaster'@'localhost';
      mysql> quit
@@ -309,9 +310,9 @@
                         default data, and gather the statically-served files:
                         <literallayout class='monospaced'>
      $ cd  /var/www/toaster/poky/
-     $ ./bitbake/lib/toaster/manage.py syncdb --migrate
-     $ ./bitbake/lib/toaster/manage.py loadconf ./meta-yocto/conf/toasterconf.json
-     $ ./bitbake/lib/toaster/manage.py lsupdates
+     $ ./bitbake/lib/toaster/manage.py syncdb
+     $ ./bitbake/lib/toaster/manage.py migrate
+     $ TOASTER_DIR=`pwd` TOASTER_CONF=./meta-yocto/conf/toasterconf.json ./bitbake/lib/toaster/manage.py checksettings
      $ ./bitbake/lib/toaster/manage.py collectstatic
                         </literallayout>
                         </para>
@@ -319,33 +320,20 @@
                         <para>
                             For the above set of commands, after moving to the
                             <filename>poky</filename> directory,
-                            the <filename>syncdb</filename> command with the
-                            <filename>migrate</filename> option makes sure the database
+                            the <filename>syncdb</filename> and <filename>migrate</filename>
+                            commands ensure the database
                             schema has had changes propagated correctly (i.e.
                             migrations).
-                            See the
-                            <ulink url='https://south.readthedocs.org/en/latest/commands.html#syncdb'><filename>syncdb</filename></ulink>
-                            command for more information.
                         </para>
 
                         <para>
-                            The
-                            <link linkend='toaster-command-loadconf'><filename>loadconf</filename></link>
-                            command loads the
-                            <filename>./meta-yocto/conf/toasterconf.json</filename>
-                            JSON file.
-                        </para>
-
-                        <para>
-                            The <filename>lsupdates</filename> command fetches
-                            information about machines, recipes and
-                            layers available as part of OpenEmbedded.
-                            The information is fetched from the
-                            <ulink url='http://layers.openembedded.org/'>OpenEmbedded Metadata Index</ulink>.
-                            This information provides easy access to metadata
-                            from Toaster, and it is key for Toaster's usability.
-                            It is not recommended that you use Toaster without
-                            fetching this information."
+                            The next line sets the Toaster root directory
+                            <filename>TOASTER_DIR</filename>, and the location of
+                            the Toaster configuration file <filename>TOASTER_CONF</filename>,
+                            relative to the root directory. For more information on the
+                            Toaster configuration file see the
+                            "<link linkend='toaster-json-files'>JSON Files</link>"
+                            section of this manual.
                         </para>
 
                         <para>
@@ -353,8 +341,6 @@
                             is a Django framework command that collects all the
                             statically served files into a designated directory to
                             be served up by the Apache web server.
-                            For more information on this Django command, see
-                            <ulink url='https://docs.djangoproject.com/en/1.7/ref/contrib/staticfiles/'></ulink>.
                         </para></listitem>
                     <listitem><para>
                         Add an Apache configuration file for Toaster to your Apache web
@@ -389,6 +375,7 @@
                         <literallayout class='monospaced'>
      $ sudo a2enmod wsgi
      $ sudo a2enconf toaster
+     $ chmod +x bitbake/lib/toaster/toastermain/wsgi.py
                         </literallayout>
                         Finally, restart Apache to make sure all new configuration
                         is loaded.
