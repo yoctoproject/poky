@@ -19,7 +19,7 @@
 
   <xsl:param name="html.stylesheet" select="'sdk-style.css'" />
   <xsl:param name="chapter.autolabel" select="1" />
-  <xsl:param name="appendix.autolabel" select="A" />
+  <xsl:param name="appendix.autolabel">A</xsl:param>
   <xsl:param name="section.autolabel" select="1" />
   <xsl:param name="section.label.includes.component.label" select="1" />
   <xsl:param name="generate.id.attributes" select="1" />
