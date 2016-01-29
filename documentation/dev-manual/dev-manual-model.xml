@@ -6,6 +6,10 @@
 
 <title>Common Development Models</title>
 
+<para role='writernotes'>
+    Test paragraph.
+</para>
+
 <para>
     Many development models exist for which you can use the Yocto Project.
     This chapter overviews simple methods that use tools provided by the
@@ -1743,212 +1747,211 @@
             As mentioned earlier, <filename>devtool</filename> helps
             you easily develop projects whose build output must be part of
             an image built using the OpenEmbedded build system.
-            The remainder of this section presents the workflow you would
-            use that includes <filename>devtool</filename>.
-            <footnote>
-                <para>
-                    Kudos and thanks to
-                    <ulink url='mailto:twoerner@gmail.com'>Trevor Woerner</ulink>
-                    whose
-                    "<ulink url='https://drive.google.com/file/d/0B3KGzY5fW7laTDVxUXo3UDRvd2s/view'>Yocto Project Developer Workflow Tutorial</ulink>"
-                    paper contributed nicely towards the development of this
-                    section.
-                </para>
-            </footnote>
         </para>
 
         <para>
-            The steps in this section assume you have a previously built
-            image that is already either running in QEMU or running on actual
-            hardware.
-            Also, it is assumed that for deployment of the image to the
-            target, SSH is installed in the image and if the image is running
-            on real hardware that you have network access to and from your
-            development machine.
+            Three entry points exist that allow you develop using
+            <filename>devtool</filename>:
+            <itemizedlist>
+                <listitem><para><emphasis><filename>devtool add</filename></emphasis>
+                    </para></listitem>
+                <listitem><para><emphasis><filename>devtool modify</filename></emphasis>
+                    </para></listitem>
+                <listitem><para><emphasis><filename>devtool upgrade</filename></emphasis>
+                    </para></listitem>
+            </itemizedlist>
         </para>
 
-        <section id='update-your-external-source'>
-            <title>Update Your External Source</title>
+        <para>
+            The remainder of this section presents these workflows.
+            <note>
+                The steps in this section assume you have a previously built
+                image that is already either running in QEMU or running on actual
+                hardware.
+                Also, it is assumed that for deployment of the image to the
+                target, SSH is installed in the image and if the image is running
+                on real hardware that you have network access to and from your
+                development machine.
+            </note>
+        </para>
+
+        <section id='use-devtool-to-integrate-new-code'>
+            <title>Use <filename>devtool add</filename> to Integrate New Code</title>
 
             <para>
-                Part of the development flow using
-                <filename>devtool</filename> of course involves updating
-                your source files.
-                Several opportunities exist in the workflow to extract and
-                work on the files.
-                For now, just realize that you need to be able to have
-                access to and edit files.
-                One obvious solution is to initially extract the code into an
-                isolated area in preparation for modification.
+                This section describes the <filename>devtool</filename>
+                workflow to integrate new code.
+                With this workflow, you can either build and deploy
+                your code or rebuild an image that contains your code.
             </para>
 
             <para>
-                Another option is to use the
-                <filename>devtool modify</filename> command.
-                This command makes use of a "workspace" layer where much of
-                the transitional work occurs, which is needed for setting up
-                Metadata used by the OpenEmbedded build system that lets you
-                build your software.
-                Options (i.e. "-x") exist using <filename>devtool</filename>
-                that enable you to use the tool to extract source code.
+                <imagedata fileref="figures/devtool-add-flow.png" align="center" />
+            </para>
+
+            <para>
+                <orderedlist>
+                    <listitem><para><emphasis>Add a New Recipe</emphasis>:
+                        The <filename>devtool add</filename> command automatically
+                        generates the needed Metadata that allows the OpenEmbedded
+                        build system to build your code.
+                        Following are some forms you can use to enter the command:
+                        <literallayout class='monospaced'>
+     $ devtool add [<replaceable>recipe_name</replaceable>]&nbsp;<replaceable>source_path</replaceable>
+     $ devtool add [<replaceable>recipe_name</replaceable>]&nbsp;<replaceable>source_path remote_URL</replaceable>
+     $ devtool add [<replaceable>recipe_name</replaceable>]&nbsp;<replaceable>remote_URL</replaceable>
+                        </literallayout>
+                        The <filename>devtool</filename> command automatically detects the
+                        <replaceable>recipe_name</replaceable> and, in many cases, the
+                        version if you do not supply a name or version with the command.</para>
+                        <para>Running <filename>devtool</filename> for the first time
+                        creates a workspace layer, which by default is named
+                        "workspace", and adds it to your
+                        <filename>conf/bblayers.conf</filename> file:
+                        <literallayout class='monospaced'>
+     <replaceable>source_path</replaceable>/<replaceable>build_directory</replaceable>/<replaceable>workspace_layer</replaceable>
+                        </literallayout>
+                        For details on the workspace layer created in the
+                        <replaceable>build-directory</replaceable>,
+                        see the
+                        "<link linkend='devtool-the-workspace-layer-structure'>The Workspace Layer Structure</link>"
+                        section.</para>
+                        <para>You can also specify a <replaceable>remote_URL</replaceable>
+                        from which to download source instead of (or in addition
+                        to) specifying a <replaceable>source_path</replaceable>.
+                        If you specify a URL but not a <replaceable>source_path</replaceable>,
+                        <filename>devtool</filename> uses a subdirectory called "sources"
+                        within <filename>workspace</filename> to house the source files.</para>
+                        <para>Here is an example command that provides the
+                        <replaceable>remote_URL</replaceable> only:
+                        <literallayout class='monospaced'>
+     $ devtool add ftp://ftp.bitwizard.nl/mtr/mtr-0.86.tar.gz
+     NOTE: Creating workspace layer in /home/scottrif/poky/build/workspace
+     NOTE: Enabling workspace layer in bblayers.conf
+     NOTE: Using default source tree path /home/scottrif/poky/build/workspace/sources/mtr
+     NOTE: Recipe /home/scottrif/poky/build/workspace/recipes/mtr/mtr_0.86.bb
+        has been automatically created; further editing may be required to
+        make it fully functional
+     $
+                        </literallayout>
+                        In this example, <filename>devtool</filename> detected both
+                        a recipe name and version from the software for use when
+                        creating the <filename>mtr_0.86.bb</filename> recipe file.
+                        Because no <filename>source_path</filename> was provided, the
+                        tool also created the default directory
+                        <filename>sources/mtr/</filename> in the created
+                        <filename>workspace</filename> directory.</para>
+                        <para>If you are using <filename>devtool add</filename>
+                        to fetch source from a remote URL, the command turns
+                        the source directory into a Git repository if one does
+                        not already exist.
+                        You can disable this behavior by using the "--no-git"
+                        option.
+                        The <filename>devtool add</filename> command does this in
+                        order to support using
+                        <filename>devtool update-recipe</filename>, shown as step
+                        5 in the flow diagram, to later create patches.
+                        <tip>
+                            In case you ever need to locate the directory in which
+                            <filename>devtool</filename> creates the recipe or, you
+                            need to locate the source, you can use <filename>devtool</filename>
+                            to check status:
+                            <literallayout class='monospaced'>
+     $ devtool status
+     mtr: /home/scottrif/poky/build/workspace/sources/mtr (/home/scottrif/poky/build/workspace/recipes/mtr/mtr_0.86.bb)
+     $
+                            </literallayout>
+                            Continuing with the example, the tool returns the location
+                            for the source followed by the location and name of the
+                            recipe.
+                        </tip>
+                        </para></listitem>
+                    <listitem><para><emphasis>Edit the Recipe</emphasis>:
+                        At this point, you can use <filename>devtool edit-recipe</filename>
+                        to open up the editor as defined by the
+                        <filename>$EDITOR</filename> environment variable
+                        and modify the file:
+                        <literallayout class='monospaced'>
+     $ devtool edit-recipe <replaceable>recipe</replaceable>
+                        </literallayout>
+                        From within the editor, you can make modifications to the
+                        recipe that take affect when you build it later.
+                        </para></listitem>
+                    <listitem><para><emphasis>Build the Recipe or Rebuild the Image</emphasis>:
+                        At this point in the flow, the next step you
+                        take depends on what you are going to do with
+                        the new code.</para>
+                        <para>If you need to take the build output and eventually
+                        move it to the target hardware, you would use
+                        <filename>devtool build</filename>:
+                        <literallayout class='monospaced'>
+     $ devtool build <replaceable>recipe</replaceable>
+                        </literallayout></para>
+                        <para>On the other hand, if you want an image to
+                        contain the recipe's packages for immediate deployment
+                        onto a device (e.g. for testing purposes), you can use
+                        the <filename>devtool build-image</filename> command:
+                        <literallayout class='monospaced'>
+     $ devtool build-image <replaceable>image</replaceable>
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para><emphasis>Deploy the Build Output</emphasis>:
+                        When you use the <filename>devtool build</filename>
+                        command to build out your recipe, you probably want to
+                        see if the resulting build output works as expected on target
+                        hardware.
+                        You can deploy your build output to that target hardware by
+                        using the <filename>devtool deploy-target</filename> command:
+                        <literallayout class='monospaced'>
+     $ devtool deploy-target <replaceable>recipe target</replaceable>
+                        </literallayout>
+                        The <replaceable>target</replaceable> is a live target machine
+                        running as an SSH server.</para>
+
+                        <para>You can, of course, also deploy the image you build
+                        using the <filename>devtool build-image</filename> command
+                        to actual hardware.
+                        However, <filename>devtool</filename> does not provide a
+                        specific command that allows you to do this.
+                        </para></listitem>
+                    <listitem><para><emphasis>Optionally Update the Recipe With Patch Files</emphasis>:
+                        Once you are satisfied with the recipe you probably want
+                        to generate patch files that go with the recipe.
+                        You do this before moving the recipe
+                        to its final layer and cleaning up the workspace area
+                        <filename>devtool</filename> uses.
+                        This optional step is especially relevant if you are
+                        using or adding third-party software.</para>
+                        <para>To convert commits created using Git to patch files,
+                        use the <filename>devtool update-recipe</filename> command.
+                        <note>
+                            Any patches added, removed, or otherwise must be
+                            previously committed to the upstream Git repository.
+                        </note>
+                        <literallayout class='monospaced'>
+     $ devtool update-recipe <replaceable>recipe_name</replaceable>
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para><emphasis>Move the Recipe to its Permanent Layer</emphasis>:
+                        Before cleaning up the workspace, you need to move the
+                        final recipe to its permanent layer.
+                        You must do this before using the
+                        <filename>devtool reset</filename> command if you want to
+                        retain the recipe.
+                        </para></listitem>
+                    <listitem><para><emphasis>Reset the Recipe</emphasis>:
+                        As a final step, you can restore the state such that
+                        standard layers and the upstream source is used to build
+                        the recipe rather than data in the workspace.
+                        To reset the recipe, use the <filename>devtool reset</filename>
+                        command:
+                        <literallayout class='monospaced'>
+     $ devtool reset <replaceable>recipe</replaceable>
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
             </para>
         </section>
-
-        <section id='use-devtool-to-integrate-your-code-with-the-image'>
-            <title>Use <filename>devtool add</filename> to Integrate Your Code with the Image</title>
-
-            <para>
-                The <filename>devtool add</filename> command automatically
-                generates the needed Metadata that allows the OpenEmbedded
-                build system to build your code into the image.
-                <note>
-                    If a package or packages produced by the recipe on which
-                    you are working are not already in
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>
-                    for the image, you must add them.
-                    The <filename>devtool add</filename> command does not
-                    add them for you.
-                </note>
-                Use the following command form:
-                <literallayout class='monospaced'>
-     $ devtool add <replaceable>your-project-name</replaceable>&nbsp;<replaceable>path-to-source</replaceable>
-                </literallayout>
-            </para>
-
-            <para>
-                Running <filename>devtool</filename> for the first time
-                creates a workspace layer through the
-                <filename>bblayers.conf</filename> file that
-                is based on your project's location:
-                <literallayout class='monospaced'>
-     <replaceable>path-to-source</replaceable>/<replaceable>build-directory</replaceable>/<replaceable>workspace-layer</replaceable>
-                </literallayout>
-                By default, the name of the workspace layer is "workspace".
-            </para>
-
-            <para>
-                For details on the workspace layer created in the
-                <replaceable>build-directory</replaceable>,
-                see the
-                "<link linkend='devtool-adding-a-new-recipe-to-the-workspace'>Adding a New Recipe to the Workspace Layer</link>"
-                section.
-            </para>
-
-<!--
-            <para>
-                Of course, each layer must have a
-                <filename>layer.conf</filename> configuration file.
-                <filename>devtool</filename> also creates this configuration
-                file:
-                <literallayout class='monospaced'>
-     $ cat workspace/conf/layer.conf
-     # ### workspace layer auto­generated by devtool ###
-     BBPATH =. "${LAYERDIR}:"
-     BBFILES += "${LAYERDIR}/recipes/*/*.bb \
-                 ${LAYERDIR}/appends/*.bbappend"
-     BBFILE_COLLECTIONS += "workspacelayer"
-     BBFILE_PATTERN_workspacelayer = "^${LAYERDIR}/"
-     BBFILE_PATTERN_IGNORE_EMPTY_workspacelayer = "1"
-     BBFILE_PRIORITY_workspacelayer = "99"
-                </literallayout>
-            </para>
--->
-
-            <para>
-                Running <filename>devtool add</filename> automatically
-                generates your recipe:
-                <literallayout class='monospaced'>
-     $ cat workspace/recipes/<replaceable>your-project-name</replaceable>/<replaceable>your-project-name</replaceable>.bb
-     # Recipe created by recipetool
-     # This is the basis of a recipe and may need further editing in order to be fully functional.
-     # (Feel free to remove these comments when editing.)
-     #
-     # Unable to find any files that looked like license statements. Check the accompanying
-     # documentation and source headers and set LICENSE and LIC_FILES_CHKSUM accordingly.
-     LICENSE = "CLOSED"
-     LIC_FILES_CHKSUM = ""
-
-     # No information for SRC_URI yet (only an external source tree was
-     # specified)
-     SRC_URI = ""
-
-     DEPENDS = "libx11"
-     # NOTE: if this software is not capable of being built in a separate build directory
-     # from the source, you should replace autotools with autotools­-brokensep in the
-     # inherit line
-     inherit autotools
-
-     # Specify any options you want to pass to the configure script using EXTRA_OECONF:
-     EXTRA_OECONF = ""
-                </literallayout>
-            </para>
-
-            <para>
-                Lastly, the <filename>devtool add</filename> command creates the
-                <filename>.bbappend</filename> file:
-                <literallayout class='monospaced'>
-     $ cat workspace/appends/<replaceable>your-project-name</replaceable>.bbappend
-     inherit externalsrc
-     EXTERNALSRC = "/<replaceable>path-to-source</replaceable>/<replaceable>your-project-name</replaceable>"
-
-     # initial_rev: <replaceable>commit-ID</replaceable>
-                </literallayout>
-            </para>
-        </section>
-
-        <section id='build-your-project'>
-            <title>Build Your Project</title>
-
-            <para>
-                You can use BitBake or <filename>devtool build</filename> to
-                build your modified project.
-            </para>
-
-            <para>
-                To use BitBake, use the following:
-                <literallayout class='monospaced'>
-     $ bitbake <replaceable>your-project-name</replaceable>
-                </literallayout>
-                Alternatively, you can use
-                <filename>devtool build</filename>, which is equivalent to
-                <filename>bitbake -c populate_sysroot</filename>.
-                For example:
-                <literallayout class='monospaced'>
-     $ devtool build <replaceable>your-project-name</replaceable>
-                </literallayout>
-            </para>
-        </section>
-
-<!--
-        <section id='dev-build-the-image'>
-            <title>Build the Image</title>
-
-            <para>
-                The final step before testing is to rebuild the base image
-                with your project changes as part of the image.
-                Simply run BitBake again on your image.
-                Here is an example:
-                <literallayout class='monospaced'>
-     $ bitbake <replaceable>image</replaceable>
-                </literallayout>
-            </para>
-        </section>
-
-        <section id='dev-testing-the-image'>
-            <title>Testing the Image</title>
-
-            <para>
-                Once you have the image, you can test it using QEMU.
-                Here is an example assuming "qemux86":
-                <literallayout class='monospaced'>
-     $ runqemu qemux86 <replaceable>image</replaceable>
-                </literallayout>
-                For information on how to test an image using QEMU, see the
-                "<link linkend='dev-manual-qemu'>Using the Quick EMUlator (QEMU)</link>"
-                section.
-            </para>
-        </section>
--->
     </section>
 
     <section id='devtool-quick-reference'>
@@ -1959,7 +1962,7 @@
             adding a new recipe and the supporting Metadata to a temporary
             workspace layer.
             This section provides a short reference on
-            <filename>devtool</filename> for most of the commands.
+            <filename>devtool</filename> and its commands.
         </para>
 
         <section id='devtool-getting-help'>
@@ -1993,6 +1996,8 @@
          undeploy-target    Undeploy recipe output files in live target machine
          search             Search available recipes
          build              Build a recipe
+         edit-recipe        Edit a recipe file in your workspace
+         configure-help     Get help on configure script options
          add                Add a new recipe
          modify             Modify the source for an existing recipe
          extract            Extract the source for an existing recipe
@@ -2000,7 +2005,6 @@
          update-recipe      Apply changes from external source tree to recipe
          status             Show workspace status
          reset              Remove a recipe from your workspace
-         edit-recipe        Edit a recipe file in your workspace
          build-image        Build image including workspace recipe packages
 
      Use devtool &lt;subcommand&gt; --help to get help on a specific command
@@ -2015,6 +2019,7 @@
      $ devtool add --help
      usage: devtool add [-h] [--same-dir | --no-same-dir] [--fetch URI]
                         [--version VERSION] [--no-git] [--binary] [--also-native]
+                        [--src-subdir SUBDIR]
                         [recipename] [srctree] [fetchuri]
 
      Adds a new recipe to the workspace to build a specified source tree. Can
@@ -2026,7 +2031,7 @@
                              auto-detect it.
        srctree               Path to external source tree. If not specified, a
                              subdirectory of
-                             /home/<replaceable>user</replaceable>/poky/build/workspace/sources will be
+                             /home/scottrif/poky/build/workspace/sources will be
                              used.
        fetchuri              Fetch the specified URI and extract it to create the
                              source tree
@@ -2047,6 +2052,52 @@
                              structure). Useful with binary packages e.g. RPMs.
        --also-native         Also add native variant (i.e. support building recipe
                              for the build host as well as the target machine)
+       --src-subdir SUBDIR   Specify subdirectory within source tree to use
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='devtool-the-workspace-layer-structure'>
+            <title>The Workspace Layer Structure</title>
+
+            <para>
+                <filename>devtool</filename> uses a "Workspace" layer
+                in which to accomplish builds.
+                This layer is not specific to any single
+                <filename>devtool</filename> command but is rather a common
+                working area used across the tool.
+            </para>
+
+            <para>
+                The following figure shows the workspace structure:
+            </para>
+
+            <para>
+                <imagedata fileref="figures/build-workspace-directory.png"
+                    width="6in" depth="5in" align="left" scale="70" />
+            </para>
+
+            <para>
+                <literallayout class='monospaced'>
+     README - Provides information on what is in workspace layer and how to
+              manage it.
+
+     .devtool_md5 - A checksum file used by devtool.
+
+     appends - A directory that contains *.bbappend files, which point to
+               external source.
+
+     conf - A configuration directory that contains the layer.conf file.
+
+     recipes - A directory containing recipes.  This directory contains a
+               folder for each directory added whose name matches that of the
+               added recipe.  devtool places the <replaceable>recipe</replaceable>.bb file
+               within that sub-directory.
+
+     sources - A directory containing a working copy of the source files used
+               when building the recipe.  This directory contains a
+               folder for each set of source files matched to a corresponding
+               recipe.
                 </literallayout>
             </para>
         </section>
@@ -2065,49 +2116,26 @@
 
             <para>
                 The following example creates and adds a new recipe named
-                <filename>jackson</filename> to the workspace layer.
+                <filename>jackson</filename> to a workspace layer the tool creates.
                 The source code built by the recipes resides in
                 <filename>/home/scottrif/sources/jackson</filename>:
                 <literallayout class='monospaced'>
      $ devtool add jackson /home/scottrif/sources/jackson
                 </literallayout>
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool add --help</filename> command.
-                </note>
             </para>
 
             <para>
                 If you add a recipe and the workspace layer does not exist,
-                the command creates the layer and populates it as follows:
-            </para>
-
-            <para>
-                <imagedata fileref="figures/build-workspace-directory.png"
-                    width="6in" depth="4in" align="center" scale="100" />
-            </para>
-
-            <para>
-                <literallayout class='monospaced'>
-     README - Provides information on what is in workspace layer and how to
-              manage it.
-
-     appends - A directory that contains *.bbappend files, which point to
-               external source.
-
-     conf - A configuration directory that contains the layer.conf file.
-
-     recipes - A directory containing recipes.  This directory contains a
-               folder for each directory added whose name matches that of the
-               added recipe.  devtool places the <replaceable>recipe</replaceable>.bb file
-               within that sub-directory.
-                </literallayout>
+                the command creates the layer and populates it as
+                described in
+                "<link linkend='devtool-the-workspace-layer-structure'>The Workspace Layer Structure</link>"
+                section.
             </para>
 
             <para>
                 Running <filename>devtool add</filename> when the
-                workspace layer exists causes the tool to add the recipe
-                and append files into the existing workspace layer.
+                workspace layer exists causes the tool to add the recipe,
+                append files, and source files into the existing workspace layer.
                 The <filename>.bbappend</filename> file is created to point
                 to the external source tree.
             </para>
@@ -2130,10 +2158,6 @@
                 development branch into which you can checkout the source
                 and whether or not to keep a temporary directory, which is
                 useful for debugging.
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool extract --help</filename> command.
-                </note>
             </para>
         </section>
 
@@ -2155,10 +2179,6 @@
                 development branch into which you can checkout the source
                 and whether or not to keep a temporary directory, which is
                 useful for debugging.
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool sync --help</filename> command.
-                </note>
             </para>
         </section>
 
@@ -2188,10 +2208,6 @@
                 </literallayout>
                 Using the above command form, the default development branch
                 would be "devtool".
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool modify --help</filename> command.
-                </note>
             </para>
         </section>
 
@@ -2215,10 +2231,6 @@
                 "-a" or "--any-recipe" option.
                 Using either of these options allows you to edit any recipe
                 regardless of its location.
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool edit-recipe --help</filename> command.
-                </note>
             </para>
         </section>
 
@@ -2268,10 +2280,6 @@
                  file.
                  If an append file already exists, the command updates it
                  appropriately.
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool update-recipe --help</filename> command.
-                </note>
             </para>
         </section>
 
@@ -2298,10 +2306,6 @@
                 the source revision to which you want to upgrade (i.e. the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>,
                 whether or not to apply patches, and so forth.
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool upgrade --help</filename> command.
-                </note>
             </para>
         </section>
 
@@ -2326,10 +2330,18 @@
                 the recipe or the append files have been modified, the
                 command preserves the modified files in a separate "attic"
                 subdirectory under the workspace layer.
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool reset --help</filename> command.
-                </note>
+            </para>
+
+            <para>
+                Here is an example that resets the workspace directory that
+                contains the <filename>mtr</filename> recipe:
+                <literallayout class='monospaced'>
+     $ devtool reset mtr
+     NOTE: Cleaning sysroot for recipe mtr...
+     NOTE: Leaving source tree /home/scottrif/poky/build/workspace/sources/mtr as-is; if you no
+        longer need it then please delete it manually
+     $
+                </literallayout>
             </para>
         </section>
 
@@ -2353,10 +2365,6 @@
                 <literallayout class='monospaced'>
      $ devtool build <replaceable>recipe</replaceable>
                 </literallayout>
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool build --help</filename> command.
-                </note>
             </para>
         </section>
 
@@ -2367,6 +2375,10 @@
                 Use the <filename>devtool build-image</filename> command
                 to build an image, extending it to include packages from
                 recipes in the workspace.
+                Using this command is useful when you want an image that
+                ready for immediate deployment onto a device for testing.
+                For proper integration into a final image, you need to
+                edit your custom image recipe appropriately.
             </para>
 
             <para>
@@ -2407,12 +2419,6 @@
                         You should never use it to update an image that will be
                         used in production.
                     </para>
-
-                    <para>
-                        For complete syntax, use the
-                        <filename>devtool deploy-target --help</filename>
-                        command.
-                    </para>
                 </note>
             </para>
         </section>
@@ -2433,10 +2439,6 @@
                 The <replaceable>target</replaceable> is the address of the
                 target machine, which must be running an SSH server (i.e.
                 <filename>user@hostname</filename>).
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool undeploy-target --help</filename> command.
-                </note>
             </para>
         </section>
 
@@ -2459,10 +2461,6 @@
                 <literallayout class='monospaced'>
      $ devtool create-workspace
                 </literallayout>
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool create-workspace --help</filename> command.
-                </note>
             </para>
 
             <para>
@@ -2492,6 +2490,15 @@
                 <literallayout class='monospaced'>
      devtool status
                 </literallayout>
+                Following is sample output after using
+                <link linkend='devtool-adding-a-new-recipe-to-the-workspace'><filename>devtool add</filename></link>
+                to create and add the <filename>mtr_0.86.bb</filename> recipe
+                to the <filename>workspace</filename> directory:
+                <literallayout class='monospaced'>
+     $ devtool status
+     mtr: /home/scottrif/poky/build/workspace/sources/mtr (/home/scottrif/poky/build/workspace/recipes/mtr/mtr_0.86.bb)
+     $
+                </literallayout>
             </para>
         </section>
 
@@ -2512,10 +2519,6 @@
                 you must supply a <replaceable>keyword</replaceable>.
                 The command uses the <replaceable>keyword</replaceable> when
                 searching for a match.
-                <note>
-                    For complete syntax, use the
-                    <filename>devtool search --help</filename> command.
-                </note>
             </para>
         </section>
     </section>
