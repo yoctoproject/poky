@@ -7129,6 +7129,39 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-LICENSE_CREATE_PACKAGE'><glossterm>LICENSE_CREATE_PACKAGE</glossterm>
+            <info>
+                LICENSE_CREATE_PACKAGE[doc] = "Creates an extra package (i.e. ${PN}-lic) for each recipe and adds that package to the RRECOMMENDS+${PN}."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                        Setting <filename>LICENSE_CREATE_PACKAGE</filename>
+                        to "1" causes the OpenEmbedded build system to create
+                        an extra package (i.e.
+                        <filename>${</filename><link linkend='var-PN'><filename>PN</filename></link><filename>}-lic</filename>)
+                        for each recipe and to add those packages to the
+                        <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link><filename>_${PN}</filename>.
+                </para>
+
+                <para>
+                    The <filename>${PN}-lic</filename> package installs a
+                    directory in <filename>/usr/share-licenses</filename>
+                    named <filename>${PN}</filename>, which is the recipe's
+                    base name, and installs files in that directory that
+                    contain license and copyright information (i.e. copies of
+                    the appropriate license files from
+                    <filename>meta/common-licenses</filename> that match the
+                    licenses specified in the
+                    <link linkend='var-LICENSE'><filename>LICENSE</filename></link>
+                    variable of the recipe metadata and copies of files marked
+                    in
+                    <link linkend='var-LIC_FILES_CHKSUM'><filename>LIC_FILES_CHKSUM</filename></link>
+                    as containing license text).
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-LICENSE_FLAGS'><glossterm>LICENSE_FLAGS</glossterm>
             <info>
                 LICENSE_FLAGS[doc] = "Specifies additional flags for a recipe you must whitelist through LICENSE_FLAGS_WHITELIST in order to allow the recipe to be built."
