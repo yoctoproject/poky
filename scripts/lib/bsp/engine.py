@@ -438,7 +438,7 @@ class ListInputLine(InputLine):
                 self.parse_error("No entries available for input list",
                                  self.lineno, self.line)
             choicepairs = self.gen_choicepair_list()
-            
+
         return choicepairs
 
     def gen_choices(self, context = None, checklist = False):
@@ -1822,7 +1822,7 @@ def yocto_layer_list_property_values(arch, property, scripts_path, properties_fi
             sys.exit(1)
 
         json.dump(values_list, of)
-    
+
     print_values(type, values_list)
 
 
