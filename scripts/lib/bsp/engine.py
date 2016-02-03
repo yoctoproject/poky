@@ -1598,7 +1598,7 @@ def yocto_layer_create(layer_name, scripts_path, layer_output_dir, codedump, pro
     yocto_common_create(layer_name, "layer", scripts_path, layer_output_dir, codedump, properties_file, properties, False)
 
     print "\nNew layer created in %s.\n" % (layer_output_dir)
-    print "Don't forget to add it to your BBLAYERS (for details see %s\README)." % (layer_output_dir)
+    print "Don't forget to add it to your BBLAYERS (for details see %s/README)." % (layer_output_dir)
 
 
 def yocto_bsp_create(machine, arch, scripts_path, bsp_output_dir, codedump, properties_file, properties=None):
