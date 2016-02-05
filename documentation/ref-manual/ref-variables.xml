@@ -10486,17 +10486,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The location in the
                     <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
                     where unpacked recipe source code resides.
-                    This location is within the work directory
-                    (<filename><link linkend='var-WORKDIR'>WORKDIR</link></filename>),
-                    which is not static.
-                    The unpacked source location depends on the recipe name
-                    (<filename><link linkend='var-PN'>PN</link></filename>) and
-                    recipe version
-                    (<filename><link linkend='var-PV'>PV</link></filename>) as
-                    follows:
-                    <literallayout class='monospaced'>
-     ${WORKDIR}/${PN}-${PV}
-                    </literallayout>
+                    By default, this directory is
+                    <filename>${</filename><link linkend='var-WORKDIR'><filename>WORKDIR</filename></link><filename>}/${</filename><link linkend='var-BPN'><filename>BPN</filename></link><filename>}-${</filename><link linkend='var-PV'><filename>PV</filename></link><filename>}</filename>,
+                    where <filename>${BPN}</filename> is the base recipe name
+                    and <filename>${PV}</filename> is the recipe version.
+                    If the source tarball extracts the code to a directory
+                    named anything other than <filename>${BPN}-${PV}</filename>,
+                    or if the source code if fetched from an SCM such as
+                    Git or Subversion, then you must set <filename>S</filename>
+                    in the recipe so that the OpenEmbedded build system
+                    knows where to find the unpacked source.
                 </para>
 
                 <para>
@@ -10510,6 +10509,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
      poky/build/tmp/work/qemux86-poky-linux/db/5.1.19-r3/db-5.1.19
                     </literallayout>
+                    The unpacked source code resides in the
+                    <filename>db-5.1.19</filename> folder.
                 </para>
             </glossdef>
         </glossentry>
