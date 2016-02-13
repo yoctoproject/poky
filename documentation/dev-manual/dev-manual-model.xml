@@ -1779,10 +1779,24 @@
             <title>Use <filename>devtool add</filename> to Integrate New Code</title>
 
             <para>
-                This section describes the <filename>devtool</filename>
-                workflow to integrate new code.
-                With this workflow, you can either build and deploy
-                your code or rebuild an image that contains your code.
+                The <filename>devtool add</filename> command generates
+                a new recipe based on existing source code.
+                This command takes advantage of the
+                <link linkend='devtool-the-workspace-layer-structure'>workspace</link>
+                layer that many <filename>devtool</filename> commands
+                use.
+                The command is flexible enough to allow you to extract source
+                code into both the workspace or a separate local Git repository
+                and to use existing code that does not need to be extracted.
+            </para>
+
+            <para>
+                Depending on your particular scenario, the arguments and options
+                you use with <filename>devtool add</filename> form different
+                combinations.
+                The following diagram shows common development flows
+                you would use with the <filename>devtool add</filename>
+                command:
             </para>
 
             <para>
@@ -1791,6 +1805,106 @@
 
             <para>
                 <orderedlist>
+                    <listitem><para><emphasis>Generating the New Recipe</emphasis>:
+                        The top part of the flow shows three scenarios by which
+                        you could use <filename>devtool add</filename> to
+                        generate a recipe based on existing source code.</para>
+
+                        <para>In a shared development environment, it is
+                        typical where other developers are responsible for
+                        various areas of source code.
+                        As a developer, you are probably interested in using
+                        that source code as part of your development using
+                        the Yocto Project.
+                        All you need is access to the code, a recipe, and a
+                        controlled area in which to do your work.</para>
+
+                        <para>Within the diagram, three possible scenarios
+                        feed into the <filename>devtool add</filename> workflow:
+                        <itemizedlist>
+                            <listitem><para><emphasis>Left</emphasis>:
+                                The left scenario represents a situation
+                                where the source tree (srctree) exists as a
+                                previously extracted Git structure outside of
+                                the <filename>devtool</filename> workspace.
+                                </para>
+
+                                <para>The following command names the recipe
+                                and identifies where the existing source tree
+                                is located:
+                                <literallayout class='monospaced'>
+     $ devtool add <replaceable>recipe srctree</replaceable>
+                                </literallayout>
+                                <note>
+                                    If a recipe exists that is associated with
+                                    source code, <filename>devtool</filename>
+                                    can leverage off that if it knows about the
+                                    layer in which the recipe resides.
+                                    Be sure to update your
+                                    <filename>conf/bblayers.conf</filename> file
+                                    to include the layers you want
+                                    <filename>devtool</filename> to know about
+                                    when looking for an existing recipe.
+                                </note>
+                                The command examines the source code and creates
+                                a recipe for it placing the recipe into the
+                                workspace.</para>
+
+                                <para>Because the extracted source code already exists,
+                                <filename>devtool</filename> does not try to
+                                relocate it into the workspace - just the new
+                                (or a modified copy of) the recipe is placed in
+                                the workspace.</para>
+
+                                <para>Aside from a recipe folder, the command
+                                also creates an append folder and places an initial
+                                <filename>*.bbappend</filename> within.
+                                </para></listitem>
+                            <listitem><para><emphasis>Middle</emphasis>:
+                                The middle scenario represents a situation where
+                                the source code does not exist locally.
+                                In this case, the code is in an upstream Git
+                                repository and needs to be extracted to some
+                                local area.
+                                Furthermore, the first positional argument
+                                <replaceable>srctree</replaceable> in this case
+                                identifies where the
+                                <filename>devtool add</filename> command
+                                will locate the extracted code outside of the
+                                workspace:
+                                <literallayout class='monospaced'>
+     $ devtool add <replaceable>srctree fetchuri</replaceable>
+                                </literallayout>
+                                In summary, the source code is pulled from
+                                <replaceable>fetchuri</replaceable> and extracted
+                                into the location defined by
+                                <replaceable>srctree</replaceable> as a local
+                                Git repository.</para>
+
+                                <para>Within workspace, <filename>devtool</filename>
+                                creates both the recipe and an append file
+                                for the recipe.
+                                </para></listitem>
+                            <listitem><para><emphasis>Right</emphasis>:
+                                The right scenario represents another situation
+                                where the source code does not exist locally
+                                and again needs to be extracted.
+                                However, in this situation, you want to extract the
+                                source into the workspace.
+                                Thus, everything you need will be located in the
+                                workspace:
+                                <literallayout class='monospaced'>
+     $ devtool add <replaceable>recipe fetchuri</replaceable>
+                                </literallayout>
+                                With this command, <filename>devtool</filename>
+                                creates a recipe and an append file in the
+                                workspace as well as extracts the upstream
+                                source files into a local Git repository also
+                                within the <filename>sources</filename> folder.
+                                </para></listitem>
+                        </itemizedlist>
+                        </para></listitem>
+<!--
                     <listitem><para><emphasis>Add a New Recipe</emphasis>:
                         The <filename>devtool add</filename> command automatically
                         generates the needed Metadata that allows the OpenEmbedded
@@ -1845,7 +1959,7 @@
                         to fetch source from a remote URL, the command turns
                         the source directory into a Git repository if one does
                         not already exist.
-                        You can disable this behavior by using the "--no-git"
+                        You can disable this behavior by using the "&dash;&dash;no-git"
                         option.
                         The <filename>devtool add</filename> command does this in
                         order to support using
@@ -1866,6 +1980,7 @@
                             recipe.
                         </tip>
                         </para></listitem>
+-->
                     <listitem><para><emphasis>Edit the Recipe</emphasis>:
                         At this point, you can use <filename>devtool edit-recipe</filename>
                         to open up the editor as defined by the
