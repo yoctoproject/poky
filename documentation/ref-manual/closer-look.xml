@@ -254,9 +254,24 @@
 
         <para>
             When you launch your build with the
-            <filename>bitbake <replaceable>target</replaceable></filename> command, BitBake
-            sorts out the configurations to ultimately define your build
-            environment.
+            <filename>bitbake <replaceable>target</replaceable></filename>
+            command, BitBake sorts out the configurations to ultimately
+            define your build environment.
+            It is important to understand that the OpenEmbedded build system
+            reads the configuration files in a specific order:
+            <filename>site.conf</filename>, <filename>auto.conf</filename>,
+            and <filename>local.conf</filename>.
+            And, the build system applies the normal assignment statement
+            rules.
+            Because the files are parsed in a specific order, variable
+            assignments for the same variable could be affected.
+            For example, if the <filename>auto.conf</filename> file and
+            the <filename>local.conf</filename> set
+            <replaceable>variable1</replaceable> to different values, because
+            the build system parses <filename>local.conf</filename> after
+            <filename>auto.conf</filename>,
+            <replaceable>variable1</replaceable> is assigned the value from
+            the <filename>local.conf</filename> file.
         </para>
     </section>
 
