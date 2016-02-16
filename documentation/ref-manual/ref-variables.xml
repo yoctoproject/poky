@@ -1396,15 +1396,22 @@
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     The bare name of the recipe.
-                    This variable is a version of the <link linkend='var-PN'><filename>PN</filename></link> variable
-                    but removes common suffixes such as "-native" and "-cross" as well
-                    as removes common prefixes such as multilib's "lib64-" and "lib32-".
+                    This variable is a version of the
+                    <link linkend='var-PN'><filename>PN</filename></link>
+                    variable but removes common suffixes such as
+                    <filename>-native</filename> and
+                    <filename>-cross</filename> as well
+                    as removes common prefixes such as multilib's
+                    <filename>lib64-</filename> and
+                    <filename>lib32-</filename>.
                     The exact list of suffixes removed is specified by the
-                    <link linkend='var-SPECIAL_PKGSUFFIX'><filename>SPECIAL_PKGSUFFIX</filename></link> variable.
+                    <link linkend='var-SPECIAL_PKGSUFFIX'><filename>SPECIAL_PKGSUFFIX</filename></link>
+                    variable.
                     The exact list of prefixes removed is specified by the
-                    <link linkend='var-MLPREFIX'><filename>MLPREFIX</filename></link> variable.
+                    <link linkend='var-MLPREFIX'><filename>MLPREFIX</filename></link>
+                    variable.
                     Prefixes are removed for <filename>multilib</filename>
-                    and <filename>nativesdk</filename> cases.
+                    and <filename>nativesdk-</filename> cases.
                 </para>
             </glossdef>
         </glossentry>
@@ -1467,7 +1474,7 @@
                     Specifies the flags to pass to the C pre-processor
                     (i.e. to both the C and the C++ compilers) when building
                     for the build host.
-                    When building in the <filename>native</filename> context,
+                    When building in the <filename>-native</filename> context,
                     <link linkend='var-CPPFLAGS'><filename>CPPFLAGS</filename></link>
                     is set to the value of this variable by default.
                 </para>
@@ -1483,7 +1490,7 @@
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     Specifies the flags to pass to the C++ compiler when
                     building for the build host.
-                    When building in the <filename>native</filename> context,
+                    When building in the <filename>-native</filename> context,
                     <link linkend='var-CXXFLAGS'><filename>CXXFLAGS</filename></link>
                     is set to the value of this variable by default.
                 </para>
@@ -1558,7 +1565,7 @@
                     The OpenEmbedded build system uses the
                     <filename>BUILD_PREFIX</filename> value to set the
                     <link linkend='var-TARGET_PREFIX'><filename>TARGET_PREFIX</filename></link>
-                    when building for native recipes.
+                    when building for <filename>native</filename> recipes.
                 </para>
             </glossdef>
         </glossentry>
@@ -1839,7 +1846,7 @@
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     Specifies the flags to pass to the C compiler when building
                     for the SDK.
-                    When building in the <filename>nativesdk</filename>
+                    When building in the <filename>nativesdk-</filename>
                     context,
                     <link linkend='var-CFLAGS'><filename>CFLAGS</filename></link>
                     is set to the value of this variable by default.
@@ -1857,7 +1864,7 @@
                     Specifies the flags to pass to the C pre-processor
                     (i.e. to both the C and the C++ compilers) when building
                     for the SDK.
-                    When building in the <filename>nativesdk</filename>
+                    When building in the <filename>nativesdk-</filename>
                     context,
                     <link linkend='var-CPPFLAGS'><filename>CPPFLAGS</filename></link>
                     is set to the value of this variable by default.
@@ -1874,7 +1881,7 @@
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     Specifies the flags to pass to the C++ compiler when
                     building for the SDK.
-                    When building in the <filename>nativesdk</filename>
+                    When building in the <filename>nativesdk-</filename>
                     context,
                     <link linkend='var-CXXFLAGS'><filename>CXXFLAGS</filename></link>
                     is set to the value of this variable by default.
@@ -2031,7 +2038,7 @@
                     and then can be used as an override.
                     Here is an example where "python-native" is added to
                     <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
-                    only when building for the native case:
+                    only when building for the <filename>-native</filename> case:
                     <literallayout class='monospaced'>
      DEPENDS_append_class-native = " python-native"
                     </literallayout>
@@ -2567,7 +2574,7 @@
                         <listitem><para>
                             <link linkend='var-BUILDSDK_CXXFLAGS'><filename>BUILDSDK_CXXFLAGS</filename></link>
                             when building for an SDK (i.e.
-                            <filename>nativesdk</filename>)
+                            <filename>nativesdk-</filename>)
                             </para></listitem>
                     </itemizedlist>
                 </para>
@@ -4736,12 +4743,12 @@
                         <listitem><para>
                             <filename>BUILD_CC_ARCH</filename>
                             when building for the build host (i.e.
-                            <filename>native</filename>)
+                            <filename>-native</filename>)
                             </para></listitem>
                         <listitem><para>
                             <filename>BUILDSDK_CC_ARCH</filename>
                             when building for an SDK (i.e.
-                            <filename>nativesdk</filename>)
+                            <filename>nativesdk-</filename>)
                             </para></listitem>
                     </itemizedlist>
                 </para>
@@ -11898,14 +11905,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                         <listitem><para>For recipes building for the target
                            machine, the value is "${STAGING_DIR}/${MACHINE}".
                            </para></listitem>
-                        <listitem><para>For <filename>native</filename>
-                           recipes building
+                        <listitem><para>For native recipes building
                            for the build host, the value is empty given the
                            assumption that when building for the build host,
                            the build host's own directories should be used.
                            </para></listitem>
-                        <listitem><para>For <filename>nativesdk</filename>
-                           recipes that build for the SDK, the value is
+                        <listitem><para>For native SDK
+                           recipes that build for the SDK
+                           (<filename>nativesdk</filename>), the value is
                            "${STAGING_DIR}/${MULTIMACH_HOST_SYS}".
                            </para></listitem>
                     </itemizedlist>
@@ -12713,12 +12720,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                             "${<link linkend='var-TARGET_SYS'>TARGET_SYS</link>}-".
                             </para></listitem>
                         <listitem><para>
-                            For <filename>native</filename> recipes, the build
-                            system sets the variable to the value of
+                            For native recipes, the build system sets the
+                            variable to the value of
                             <filename>BUILD_PREFIX</filename>.
                             </para></listitem>
                         <listitem><para>
-                            For <filename>nativesdk</filename> recipes, the
+                            For native SDK recipes
+                            (<filename>nativesdk</filename>), the
                             build system sets the variable to the value of
                             <filename>SDK_PREFIX</filename>.
                             </para></listitem>
@@ -12757,9 +12765,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Consider these two examples:
                     <itemizedlist>
                         <listitem><para>
-                            Given a <filename>native</filename> recipe on a
-                            32-bit, x86 machine running Linux, the value is
-                            "i686-linux".
+                            Given a native recipe on a 32-bit, x86 machine
+                            running Linux, the value is "i686-linux".
                             </para></listitem>
                         <listitem><para>
                             Given a recipe being built for a little-endian,
@@ -13365,11 +13372,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     toolchain set that runs on the
                     <link linkend='var-SDKMACHINE'><filename>SDKMACHINE</filename></link>,
                     and each package should usually have the prefix
-                    "nativesdk-".
-                    When building an SDK using
-                    <filename>bitbake -c populate_sdk &lt;imagename&gt;</filename>,
-                    a default list of packages is set in this variable, but
-                    you can add additional packages to the list.
+                    <filename>nativesdk-</filename>.
+                    For example, consider the following command when
+                    building an SDK:
+                    <literallayout class='monospaced'>
+     $ bitbake -c populate_sdk <replaceable>imagename</replaceable>
+                    </literallayout>
+                    In this case, a default list of packages is set in this
+                    variable, but you can add additional packages to the list.
                 </para>
 
                 <para>
