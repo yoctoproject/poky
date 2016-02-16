@@ -173,7 +173,7 @@ DESCRIPTION
 
     BBLAYERS ?= " \\
       /path/to/poky/meta \\
-      /path/to/poky/meta-yocto \\
+      /path/to/poky/meta-poky \\
       /path/to/poky/meta-mybsp \\
       "
 """
