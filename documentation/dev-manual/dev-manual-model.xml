@@ -2051,10 +2051,9 @@
                                 </para>
 
                                 <para>The following command identifies the recipe
-                                and instructs <filename>devtool</filename> to
-                                extract the source files using the "-x" option:
+                                and by default extracts the source files:
                                 <literallayout class='monospaced'>
-     $ devtool modify -x <replaceable>recipe</replaceable>
+     $ devtool modify <replaceable>recipe</replaceable>
                                 </literallayout>
                                 Once <filename>devtool</filename>locates the recipe,
                                 it uses the
@@ -2069,10 +2068,11 @@
                                 </note>
                                 With this scenario, however, since no
                                 <replaceable>srctree</replaceable> argument exists, the
-                                <filename>devtool modify</filename> command extracts the
-                                source files to a Git structure using the default
-                                location within the workspace.
-                                The result is that the command set up both the source
+                                <filename>devtool modify</filename> command by default
+                                extracts the source files to a Git structure.
+                                Furthermore, the location for the extracted source is the
+                                default area within the workspace.
+                                The result is that the command sets up both the source
                                 code and an append file within the workspace with the
                                 recipe remaining in its original location.
                                 </para></listitem>
@@ -2087,18 +2087,20 @@
 
                                 <para>The following command tells
                                 <filename>devtool</filename> what recipe with
-                                which to work and also uses the "-x" option to
-                                instruct <filename>devtool</filename> to locate and
-                                extract the source code:
+                                which to work and, in this case, identifies a local
+                                area for the extracted source files that is outside
+                                of the default workspace:
                                 <literallayout class='monospaced'>
-     $ devtool modify -x <replaceable>recipe srctree</replaceable>
+     $ devtool modify <replaceable>recipe srctree</replaceable>
                                 </literallayout>
                                 As with all extractions, the command uses
                                 the recipe's <filename>SRC_URI</filename> to locate the
                                 source files.
-                                Once the files are located, the command extracts
-                                them to the location specified by
-                                <replaceable>srctree</replaceable>.</para>
+                                Once the files are located, the command by default
+                                extracts them.
+                                Providing the <replaceable>srctree</replaceable>
+                                argument instructs <filename>devtool</filename> where
+                                place the extracted source.</para>
 
                                 <para>Within workspace, <filename>devtool</filename>
                                 creates an append file for the recipe.
@@ -2108,7 +2110,8 @@
                                 </para></listitem>
                             <listitem><para><emphasis>Right</emphasis>:
                                 The right scenario represents a situation
-                                where the source tree (srctree) exists as a
+                                where the source tree
+                                (<replaceable>srctree</replaceable>) exists as a
                                 previously extracted Git structure outside of
                                 the <filename>devtool</filename> workspace.
                                 In this example, the recipe also exists
@@ -2117,11 +2120,12 @@
 
                                 <para>The following command tells
                                 <filename>devtool</filename> the recipe
-                                with which to work and uses
+                                with which to work, uses the "-n" option to indicate
+                                source does not need to be extracted, and uses
                                 <replaceable>srctree</replaceable> to point to the
                                 previously extracted source files:
                                 <literallayout class='monospaced'>
-     $ devtool modify <replaceable>recipe srctree</replaceable>
+     $ devtool modify -n <replaceable>recipe srctree</replaceable>
                                 </literallayout>
                                 </para>
 
