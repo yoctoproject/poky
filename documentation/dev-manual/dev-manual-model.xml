@@ -2832,10 +2832,33 @@
     </para>
 
     <para>
-        When you are finished, you just exit the shell or close the terminal window.
+        To manually run a specific task using <filename>devshell</filename>,
+        run the corresponding <filename>run.*</filename> script in
+        the
+        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}/temp</filename>
+        (e.g., <filename>run.do_configure.</filename><replaceable>pid</replaceable>).
+        If a task's script does not exist, which would be the case if the task was
+        skipped by way of the sstate cache, you can create the task by first running
+        it outside of the <filename>devshell</filename>:
+        <literallayout class='monospaced'>
+     $ bitbake -c <replaceable>task</replaceable>
+        </literallayout>
     </para>
 
-    <note>
+    <para>
+        Remember, that the <filename>devshell</filename> is a mechanism that allows
+        you to get into the BitBake task execution environment.
+        And as such, all commands must be called just as BitBake would call them.
+        That means you need to provide the appropriate options for
+        cross-compilation and so forth as applicable.
+    </para>
+
+    <para>
+        When you are finished using <filename>devshell</filename>, exit the shell
+        or close the terminal window.
+    </para>
+
+    <note><title>Notes</title>
         <para>
             It is worth remembering that when using <filename>devshell</filename>
             you need to use the full compiler name such as <filename>arm-poky-linux-gnueabi-gcc</filename>
