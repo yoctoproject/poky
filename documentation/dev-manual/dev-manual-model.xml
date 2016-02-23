@@ -6,10 +6,6 @@
 
 <title>Common Development Models</title>
 
-<para role='writernotes'>
-    Test paragraph.
-</para>
-
 <para>
     Many development models exist for which you can use the Yocto Project.
     This chapter overviews simple methods that use tools provided by the
@@ -2219,6 +2215,175 @@
                 </orderedlist>
             </para>
         </section>
+
+        <section id='devtool-use-devtool-upgrade-to-create-a-version-of-the-recipe-that-supports-a-newer-version-of-the-software'>
+            <title>Use <filename>devtool upgrade</filename> to Create a Version of the Recipe that Supports a Newer Version of the Software</title>
+
+            <para>
+                The <filename>devtool upgrade</filename> command updates
+                an existing recipe so that you can build it for an updated
+                set of source files.
+                The command is flexible enough to allow you to specify
+                source code revision and versioning schemes, extract code into
+                or out of the <filename>devtool</filename> workspace, and
+                work with any source file forms that the fetchers support.
+            </para>
+
+            <para>
+                Depending on your particular scenario, the arguments and options
+                you use with <filename>devtool upgrade</filename> form different
+                combinations.
+                The following diagram shows a common development flow
+                you would use with the <filename>devtool modify</filename>
+                command:
+            </para>
+
+            <para>
+                <imagedata fileref="figures/devtool-upgrade-flow.png" align="center" />
+            </para>
+
+            <para>
+                <orderedlist>
+                    <listitem><para><emphasis>Initiate the Upgrade</emphasis>:
+                        The top part of the flow shows a typical scenario by which
+                        you could use <filename>devtool upgrade</filename>.
+                        The following conditions exist:
+                        <itemizedlist>
+                            <listitem><para>The recipe exists in some layer external
+                                to the <filename>devtool</filename> workspace.
+                                </para></listitem>
+                            <listitem><para>The source files for the new release
+                                exist adjacent to the same location pointed to by
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                                in the recipe (e.g. a tarball with the new version
+                                number in the name, or as a different revision in
+                                the upstream Git repository).
+                                </para></listitem>
+                        </itemizedlist>
+                        A common situation is where third-party software has
+                        undergone a revision so that it has been upgraded.
+                        The recipe you have access to is likely in your own layer.
+                        Thus, you need to upgrade the recipe to use the
+                        newer version of the software:
+                        <literallayout class='monospaced'>
+     $ devtool upgrade -V <replaceable>version recipe</replaceable>
+                        </literallayout>
+                        By default, the <filename>devtool upgrade</filename> command
+                        extracts source code into the <filename>sources</filename>
+                        directory in the workspace.
+                        If you want the code extracted to any other location, you
+                        need to provide the <replaceable>srctree</replaceable>
+                        positional argument with the command as follows:
+                        <literallayout class='monospaced'>
+     $ devtool upgrade -V <replaceable>version recipe srctree</replaceable>
+                        </literallayout>
+                        Also, in this example, the "-V" option is used to specify
+                        the new version.
+                        If the source files pointed to by the
+                        <filename>SRC_URI</filename> statement in the recipe are
+                        in a Git repository, you must provide the "-S" option and
+                        specify a revision for the software.</para>
+
+                        <para>Once <filename>devtool</filename> locates the recipe,
+                        it uses the <filename>SRC_URI</filename> variable to locate
+                        the source code and any local patch files from other
+                        developers are located.
+                        The result is that the command sets up the source
+                        code, the new version of the recipe, and an append file
+                        all within the workspace.
+                        </para></listitem>
+                    <listitem><para><emphasis>Resolve any Conflicts created by the Upgrade</emphasis>:
+                        At this point, there could be some conflicts due to the
+                        software being upgraded to a new version.
+                        This would occur if your recipe specifies some patch files in
+                        <filename>SRC_URI</filename> that conflict with changes
+                        made in the new version of the software.
+                        If this is the case, you need to resolve the conflicts
+                        by editing the source and following the normal
+                        <filename>git rebase</filename> conflict resolution
+                        process.</para>
+
+                        <para>Before moving onto the next step, be sure to resolve any
+                        such conflicts created through use of a newer or different
+                        version of the software.
+                        </para></listitem>
+                    <listitem><para><emphasis>Build the Recipe</emphasis>:
+                        Once you have your recipe in order, you can build it.
+                        You can either use <filename>devtool build</filename> or
+                        <filename>bitbake</filename>.
+                        Either method produces build output that is stored
+                        in
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>.
+                        </para></listitem>
+                    <listitem><para><emphasis>Deploy the Build Output</emphasis>:
+                        When you use the <filename>devtool build</filename>
+                        command or <filename>bitbake</filename> to build out your
+                        recipe, you probably want to see if the resulting build
+                        output works as expected on target hardware.
+                        <note>
+                            This step assumes you have a previously built
+                            image that is already either running in QEMU or
+                            running on actual hardware.
+                            Also, it is assumed that for deployment of the image
+                            to the target, SSH is installed in the image and if
+                            the image is running on real hardware that you have
+                            network access to and from your development machine.
+                        </note>
+                        You can deploy your build output to that target hardware by
+                        using the <filename>devtool deploy-target</filename> command:
+                        <literallayout class='monospaced'>
+     $ devtool deploy-target <replaceable>recipe target</replaceable>
+                        </literallayout>
+                        The <replaceable>target</replaceable> is a live target machine
+                        running as an SSH server.</para>
+
+                        <para>You can, of course, also deploy the image you build
+                        using the <filename>devtool build-image</filename> command
+                        to actual hardware.
+                        However, <filename>devtool</filename> does not provide a
+                        specific command that allows you to do this.
+                        </para></listitem>
+                    <listitem><para><emphasis>Optionally Create Patch Files for Your Changes</emphasis>:
+                        After you have debugged your changes, you can
+                        use <filename>devtool update-recipe</filename> to
+                        generate patch files for all the commits you have
+                        made.
+                        <note>
+                            Patch files are generated only for changes
+                            you have committed.
+                        </note>
+                        <literallayout class='monospaced'>
+     $ devtool update-recipe <replaceable>recipe</replaceable>
+                        </literallayout>
+                        By default, the
+                        <filename>devtool update-recipe</filename> command
+                        creates the patch files in a folder named the same
+                        as the recipe beneath the folder in which the recipe
+                        resides, and updates the recipe's
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                        statement to point to the generated patch files.
+                        </para></listitem>
+                    <listitem><para><emphasis>Move the Recipe to its Permanent Layer</emphasis>:
+                        Before cleaning up the workspace, you need to move the
+                        final recipe to its permanent layer.
+                        You can either overwrite the original recipe or you can
+                        overlay the upgraded recipe into a separate layer.
+                        You must do this before using the
+                        <filename>devtool reset</filename> command if you want to
+                        retain the upgraded recipe.
+                        </para></listitem>
+                    <listitem><para><emphasis>Restore the Workspace</emphasis>:
+                        The <filename>devtool reset</filename> restores the
+                        state so that standard layers and upstream sources are
+                        used to build the recipe rather than what is in the
+                        workspace.
+                        <literallayout class='monospaced'>
+     $ devtool reset <replaceable>recipe</replaceable>
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
     </section>
 
     <section id='devtool-quick-reference'>
@@ -2256,24 +2421,27 @@
        -h, --help           show this help message and exit
 
      subcommands:
-       &lt;subcommand&gt;
-         create-workspace   Set up workspace in an alternative location
-         upgrade            Upgrade an existing recipe
-         deploy-target      Deploy recipe output files to live target machine
-         undeploy-target    Undeploy recipe output files in live target machine
-         search             Search available recipes
-         build              Build a recipe
-         edit-recipe        Edit a recipe file in your workspace
-         configure-help     Get help on configure script options
-         add                Add a new recipe
-         modify             Modify the source for an existing recipe
-         extract            Extract the source for an existing recipe
-         sync               Synchronize the source tree for an existing recipe
-         update-recipe      Apply changes from external source tree to recipe
-         status             Show workspace status
-         reset              Remove a recipe from your workspace
-         build-image        Build image including workspace recipe packages
-
+       Beginning work on a recipe:
+         add                  Add a new recipe
+         modify               Modify the source for an existing recipe
+         upgrade              Upgrade an existing recipe
+       Getting information:
+         status               Show workspace status
+         search               Search available recipes
+       Working on a recipe in the workspace:
+         build                Build a recipe
+         edit-recipe          Edit a recipe file in your workspace
+         configure-help       Get help on configure script options
+         update-recipe        Apply changes from external source tree to recipe
+         reset                Remove a recipe from your workspace
+       Testing changes on target:
+         deploy-target        Deploy recipe output files to live target machine
+         undeploy-target      Undeploy recipe output files in live target machine
+         build-image          Build image including workspace recipe packages
+       Advanced:
+         create-workspace     Set up workspace in an alternative location
+         extract              Extract the source for an existing recipe
+         sync                 Synchronize the source tree for an existing recipe
      Use devtool &lt;subcommand&gt; --help to get help on a specific command
                 </literallayout>
             </para>
