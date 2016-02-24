@@ -3236,9 +3236,13 @@
     <para>
         When debugging certain commands or even when just editing packages,
         <filename>devshell</filename> can be a useful tool.
-        When you invoke <filename>devshell</filename>, source files are
-        extracted into your working directory and patches are applied.
-        Then, a new terminal is opened and you are placed in the working directory.
+        When you invoke <filename>devshell</filename>, all tasks up to and
+        including
+        <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-patch'><filename>do_patch</filename></ulink>
+        are run for the specified target.
+        Then, a new terminal is opened and you are placed in
+        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>,
+        the source directory.
         In the new terminal, all the OpenEmbedded build-related environment variables are
         still defined so you can use commands such as <filename>configure</filename> and
         <filename>make</filename>.
@@ -3286,7 +3290,8 @@
         run the corresponding <filename>run.*</filename> script in
         the
         <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}/temp</filename>
-        (e.g., <filename>run.do_configure.</filename><replaceable>pid</replaceable>).
+        directory (e.g.,
+        <filename>run.do_configure.</filename><replaceable>pid</replaceable>).
         If a task's script does not exist, which would be the case if the task was
         skipped by way of the sstate cache, you can create the task by first running
         it outside of the <filename>devshell</filename>:
