@@ -23,8 +23,9 @@
 <section id='sdk-standard-sdk-intro'>
     <title>Why use the Standard SDK and What is in It?</title>
 
-    <para role='writernotes'>
-        <emphasis>MANUAL DEVELOPMENT NOTES:</emphasis>
+    <para>
+        Fundamentally, the standard SDK exists so that you can access
+        cross-development tools.
         This paragraph describes why you use the Standard SDK.
         Probably need to compare that against why you would not be interested
         in the extensible SDK here as well.
@@ -35,46 +36,6 @@
         you have.
         That pretty much sums it up.
         If there is more detail, I need to know about it.
-    </para>
-
-    <para role='writernotes'>
-        <emphasis>MANUAL DEVELOPMENT NOTES:</emphasis>
-        Here is a list of items I think need addressed in these early
-        sections:
-        <itemizedlist>
-            <listitem><para role='writernotes'><emphasis>What is your situation?</emphasis></para>
-                <para role='writernotes'>In other words, is the developer on a machine that
-                has YP on it?
-                Are they on a machine that does not?
-                Is the image they are developing against available as a
-                pre-built, down-loadable image and can they get it?</para>
-                <para role='writernotes'>Depending on the scenario, there are different ways
-                to make sure the machine they are using is ready to use a
-                standard SDK.
-                I think we need to cover the various situations in this
-                section.
-                </para></listitem>
-            <listitem><para role='writernotes'><emphasis>What are the recommendations?</emphasis></para>
-                <para role='writernotes'>What is the most common development scenario?
-                Is there a recommended development flow we want to present
-                when using a standard SDK?
-                What conditions in a development scenario warrant use of
-                just the standard SDK as compared to the extensible SDK?
-                </para></listitem>
-            <listitem><para role='writernotes'><emphasis>What procedures do we want to cover to set up
-                the standard SDK?</emphasis></para>
-                <para role='writernotes'>There is a ton of setup information in the
-                current ADT manual regarding getting, building, and installing
-                an SDK.
-                We would ignore the stuff about the ADT installer script
-                since I presume that is going away.
-                But, there are steps to download and existing
-                <filename>.sh</filename> install script, build out the
-                toolchains assuming your system has YP on it and you can run
-                BitBake, getting the root filesystem, getting an image so you
-                run QEMU on your system, etc.
-                </para></listitem>
-        </itemizedlist>
     </para>
 
     <para>
@@ -161,15 +122,16 @@
         into <filename>/opt/poky</filename>.
         However, when you run the SDK installer, you can choose an
         installation directory.
+        <note>
+            You must change the permissions on the toolchain
+            installer script so that it is executable.
+        </note>
     </para>
 
     <para>
         The following command shows how to run the installer given a
         toolchain tarball for a 64-bit x86 development host system and
         a 32-bit x86 target architecture.
-        When you run the installer, the script prompts you for a
-        system password so that you permissions can change enabling
-        you to run the installer script.
         The example assumes the toolchain installer is located in
         <filename>~/Downloads/</filename>.
         <note>
@@ -180,17 +142,16 @@
             run the installer again.
         </note>
         <literallayout class='monospaced'>
-     $ ~/Downloads/poky-glibc-x86_64-core-image-sato-i586-toolchain-&DISTRO;.sh
-     Poky (Yocto Project Reference Distro) SDK installer version 2.1+snapshot
-     ========================================================================
-     Enter target directory for SDK (default: /opt/poky/2.1+snapshot):
-     You are about to install the SDK to "/opt/poky/2.1+snapshot". Proceed[Y/n]? Y
-     [sudo] password for scottrif:
-     Extracting SDK.......................done
+     $ ./poky-glibc-x86_64-core-image-sato-i586-toolchain-2.1.sh
+     Poky (Yocto Project Reference Distro) SDK installer version 2.0
+     ===============================================================
+     Enter target directory for SDK (default: /opt/poky/2.1):
+     You are about to install the SDK to "/opt/poky/2.1". Proceed[Y/n]? Y
+     Extracting SDK.......................................................................done
      Setting it up...done
      SDK has been successfully set up and is ready to be used.
      Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
-      $ . /opt/poky/2.1+snapshot/environment-setup-i586-poky-linux
+      $ . /opt/poky/2.1/environment-setup-i586-poky-linux
         </literallayout>
     </para>
 
@@ -221,11 +182,11 @@
         Environment setup scripts begin with the string
         "<filename>environment-setup</filename>" and include as part of their
         name the tuned target architecture.
-        For example, the setup script for an IA-based target machine using
-        i586 tuning and located in the default SDK installation
-        directory is as follows:
+        For example, the command to source a setup script for an IA-based
+        target machine using i586 tuning and located in the default SDK
+        installation directory is as follows:
         <literallayout class='monospaced'>
-     $ source /opt/poky/&DISTRO;+snapshot/environment-setup-i586-poky-linux
+     $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
         </literallayout>
         When you run the setup script, many environment variables are
         defined:
@@ -253,6 +214,228 @@
      <ulink url='&YOCTO_DOCS_REF_URL;#var-LDFLAGS'><filename>LDFLAGS</filename></ulink> - Suggested linker flags when you use CC to link
      <ulink url='&YOCTO_DOCS_REF_URL;#var-CPPFLAGS'><filename>CPPFLAGS</filename></ulink> - Suggested preprocessor flags
         </literallayout>
+    </para>
+</section>
+
+<section id='autotools-based-projects'>
+    <title>Autotools-Based Projects</title>
+
+    <para>
+        Once you have a suitable cross-toolchain installed, it is very easy to
+        develop a project outside of the OpenEmbedded build system.
+        This section presents a simple "Helloworld" example that shows how
+        to set up, compile, and run the project.
+    </para>
+
+    <section id='creating-and-running-a-project-based-on-gnu-autotools'>
+        <title>Creating and Running a Project Based on GNU Autotools</title>
+
+        <para>
+            Follow these steps to create a simple Autotools-based project:
+            <orderedlist>
+                <listitem><para><emphasis>Create your directory:</emphasis>
+                    Create a clean directory for your project and then make
+                    that directory your working location:
+                    <literallayout class='monospaced'>
+     $ mkdir $HOME/helloworld
+     $ cd $HOME/helloworld
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Populate the directory:</emphasis>
+                    Create <filename>hello.c</filename>, <filename>Makefile.am</filename>,
+                    and <filename>configure.in</filename> files as follows:
+                    <itemizedlist>
+                        <listitem><para>For <filename>hello.c</filename>, include
+                            these lines:
+                            <literallayout class='monospaced'>
+     #include &lt;stdio.h&gt;
+
+     main()
+        {
+           printf("Hello World!\n");
+        }
+                            </literallayout></para></listitem>
+                        <listitem><para>For <filename>Makefile.am</filename>,
+                            include these lines:
+                            <literallayout class='monospaced'>
+     bin_PROGRAMS = hello
+     hello_SOURCES = hello.c
+                            </literallayout></para></listitem>
+                        <listitem><para>For <filename>configure.in</filename>,
+                            include these lines:
+                            <literallayout class='monospaced'>
+     AC_INIT(hello.c)
+     AM_INIT_AUTOMAKE(hello,0.1)
+     AC_PROG_CC
+     AC_PROG_INSTALL
+     AC_OUTPUT(Makefile)
+                            </literallayout></para></listitem>
+                    </itemizedlist></para></listitem>
+                <listitem><para><emphasis>Source the cross-toolchain
+                    environment setup file:</emphasis>
+                    Installation of the cross-toolchain creates a cross-toolchain
+                    environment setup script in the directory that the ADT
+                    was installed.
+                    Before you can use the tools to develop your project, you must
+                    source this setup script.
+                    The script begins with the string "environment-setup" and contains
+                    the machine architecture, which is followed by the string
+                    "poky-linux".
+                    Here is an example that sources a script from the
+                    default ADT installation directory that uses the
+                    32-bit Intel x86 Architecture and the
+                    &DISTRO_NAME; Yocto Project release:
+                    <literallayout class='monospaced'>
+     $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Generate the local aclocal.m4
+                    files and create the configure script:</emphasis>
+                    The following GNU Autotools generate the local
+                    <filename>aclocal.m4</filename> files and create the
+                    configure script:
+                    <literallayout class='monospaced'>
+     $ aclocal
+     $ autoconf
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Generate files needed by GNU
+                    coding standards:</emphasis>
+                    GNU coding standards require certain files in order for the
+                    project to be compliant.
+                    This command creates those files:
+                    <literallayout class='monospaced'>
+     $ touch NEWS README AUTHORS ChangeLog
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Generate the configure
+                    file:</emphasis>
+                    This command generates the <filename>configure</filename>:
+                    <literallayout class='monospaced'>
+     $ automake -a
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Cross-compile the project:</emphasis>
+                    This command compiles the project using the cross-compiler.
+                    The
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-CONFIGURE_FLAGS'><filename>CONFIGURE_FLAGS</filename></ulink>
+                    environment variable provides the minimal arguments for
+                    GNU configure:
+                    <literallayout class='monospaced'>
+     $ ./configure ${CONFIGURE_FLAGS}
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Make and install the project:</emphasis>
+                    These two commands generate and install the project into the
+                    destination directory:
+                    <literallayout class='monospaced'>
+     $ make
+     $ make install DESTDIR=./tmp
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Verify the installation:</emphasis>
+                    This command is a simple way to verify the installation
+                    of your project.
+                    Running the command prints the architecture on which
+                    the binary file can run.
+                    This architecture should be the same architecture that
+                    the installed cross-toolchain supports.
+                    <literallayout class='monospaced'>
+     $ file ./tmp/usr/local/bin/hello
+                    </literallayout></para></listitem>
+                <listitem><para><emphasis>Execute your project:</emphasis>
+                    To execute the project in the shell, simply enter the name.
+                    You could also copy the binary to the actual target hardware
+                    and run the project there as well:
+                    <literallayout class='monospaced'>
+     $ ./hello
+                    </literallayout>
+                    As expected, the project displays the "Hello World!" message.
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+
+    <section id='passing-host-options'>
+        <title>Passing Host Options</title>
+
+        <para>
+            For an Autotools-based project, you can use the cross-toolchain by just
+            passing the appropriate host option to <filename>configure.sh</filename>.
+            The host option you use is derived from the name of the environment setup
+            script found in the directory in which you installed the cross-toolchain.
+            For example, the host option for an ARM-based target that uses the GNU EABI
+            is <filename>armv5te-poky-linux-gnueabi</filename>.
+            You will notice that the name of the script is
+            <filename>environment-setup-armv5te-poky-linux-gnueabi</filename>.
+            Thus, the following command works to update your project and
+            rebuild it using the appropriate cross-toolchain tools:
+            <literallayout class='monospaced'>
+     $ ./configure --host=armv5te-poky-linux-gnueabi \
+        --with-libtool-sysroot=<replaceable>sysroot_dir</replaceable>
+            </literallayout>
+            <note>
+                If the <filename>configure</filename> script results in problems recognizing the
+                <filename>--with-libtool-sysroot=</filename><replaceable>sysroot-dir</replaceable> option,
+                regenerate the script to enable the support by doing the following and then
+                run the script again:
+                <literallayout class='monospaced'>
+     $ libtoolize --automake
+     $ aclocal -I ${OECORE_NATIVE_SYSROOT}/usr/share/aclocal \
+        [-I <replaceable>dir_containing_your_project-specific_m4_macros</replaceable>]
+     $ autoconf
+     $ autoheader
+     $ automake -a
+                </literallayout>
+            </note>
+        </para>
+    </section>
+</section>
+
+<section id='makefile-based-projects'>
+    <title>Makefile-Based Projects</title>
+
+    <para>
+        For Makefile-based projects, the cross-toolchain environment variables
+        established by running the cross-toolchain environment setup script
+        are subject to general <filename>make</filename> rules.
+    </para>
+
+    <para>
+        To illustrate this, consider the following four cross-toolchain
+        environment variables:
+        <literallayout class='monospaced'>
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'>CC</ulink>=i586-poky-linux-gcc -m32 -march=i586 --sysroot=/opt/poky/1.8/sysroots/i586-poky-linux
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'>LD</ulink>=i586-poky-linux-ld --sysroot=/opt/poky/1.8/sysroots/i586-poky-linux
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink>=-O2 -pipe -g -feliminate-unused-debug-types
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CXXFLAGS'>CXXFLAGS</ulink>=-O2 -pipe -g -feliminate-unused-debug-types
+        </literallayout>
+        Now, consider the following three cases:
+        <itemizedlist>
+            <listitem><para><emphasis>Case 1 - No Variables Set in the <filename>Makefile</filename>:</emphasis>
+                Because these variables are not specifically set in the
+                <filename>Makefile</filename>, the variables retain their
+                values based on the environment.
+                </para></listitem>
+            <listitem><para><emphasis>Case 2 - Variables Set in the <filename>Makefile</filename>:</emphasis>
+                Specifically setting variables in the
+                <filename>Makefile</filename> during the build results in the
+                environment settings of the variables being overwritten.
+                </para></listitem>
+            <listitem><para><emphasis>Case 3 - Variables Set when the <filename>Makefile</filename> is Executed from the Command Line:</emphasis>
+                Executing the <filename>Makefile</filename> from the command
+                line results in the variables being overwritten with
+                command-line content regardless of what is being set in the
+                <filename>Makefile</filename>.
+                In this case, environment variables are not considered unless
+                you use the "-e" flag during the build:
+                <literallayout class='monospaced'>
+     $ make -e <replaceable>file</replaceable>
+                </literallayout>
+                If you use this flag, then the environment values of the
+                variables override any variables specifically set in the
+                <filename>Makefile</filename>.
+                </para></listitem>
+        </itemizedlist>
+        <note>
+            For the list of variables set up by the cross-toolchain environment
+            setup script, see the
+            "<link linkend='sdk-running-the-sdk-environment-setup-script'>Running the SDK Environment Setup Script</link>"
+            section.
+        </note>
     </para>
 </section>
 
