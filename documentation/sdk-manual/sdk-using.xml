@@ -273,7 +273,7 @@
                 <listitem><para><emphasis>Source the cross-toolchain
                     environment setup file:</emphasis>
                     Installation of the cross-toolchain creates a cross-toolchain
-                    environment setup script in the directory that the ADT
+                    environment setup script in the directory that the SDK
                     was installed.
                     Before you can use the tools to develop your project, you must
                     source this setup script.
@@ -281,7 +281,7 @@
                     the machine architecture, which is followed by the string
                     "poky-linux".
                     Here is an example that sources a script from the
-                    default ADT installation directory that uses the
+                    default SDK installation directory that uses the
                     32-bit Intel x86 Architecture and the
                     &DISTRO_NAME; Yocto Project release:
                     <literallayout class='monospaced'>
@@ -439,15 +439,1050 @@
     </para>
 </section>
 
-<section id='sdk-using-the-sdk-to-task-1'>
-    <title>Using the SDK to <replaceable>item 1</replaceable></title>
+<section id='sdk-developing-applications-using-eclipse'>
+    <title>Devloping Applications Using <trademark class='trade'>Eclipse</trademark></title>
 
-    <para role='writernotes'>
-        Describe the specific task you are going to accomplish with the SDK.
-        Provide a diagram showing the rough flow of the task.
-        Provide specific steps using a real example that works through the
-        task.
+    <para>
+        If you are familiar with the popular Eclipse IDE, you can use an
+        Eclipse Yocto Plug-in to allow you to develop, deploy, and test your
+        application all from within Eclipse.
+        This section describes general workflow using the SDK and Eclipse
+        and how to configure and set up Eclipse.
     </para>
+
+    <section id='workflow-using-eclipse'>
+
+        <title>Workflow Using <trademark class='trade'>Eclipse</trademark></title>
+
+        <para>
+            The following figure and supporting list summarize the application
+            development general workflow that employs both the SDK Eclipse.
+        </para>
+
+        <para>
+            <imagedata fileref="figures/sdk-eclipse-dev-flow.png"
+                width="7in" depth="7in" align="center" scale="100" />
+        </para>
+
+        <para>
+            <orderedlist>
+                <listitem><para><emphasis>Prepare the host system for the Yocto Project</emphasis>:
+                    See
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#detailed-supported-distros'>Supported Linux Distributions</ulink>"
+                    and
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#required-packages-for-the-host-development-system'>Required Packages for the Host Development System</ulink>" sections both
+                    in the Yocto Project Reference Manual for requirements.
+                    In particular, be sure your host system has the
+                    <filename>xterm</filename> package installed.
+                    </para></listitem>
+                <listitem><para><emphasis>Secure the Yocto Project kernel target image</emphasis>:
+                    You must have a target kernel image that has been built using the OpenEmbedded
+                    build system.</para>
+                    <para>Depending on whether the Yocto Project has a pre-built image that matches your target
+                    architecture and where you are going to run the image while you develop your application
+                    (QEMU or real hardware), the area from which you get the image differs.
+                        <itemizedlist>
+                            <listitem><para>Download the image from
+                                <ulink url='&YOCTO_MACHINES_DL_URL;'><filename>machines</filename></ulink>
+                                if your target architecture is supported and you are going to develop
+                                and test your application on actual hardware.</para></listitem>
+                            <listitem><para>Download the image from
+                                <ulink url='&YOCTO_QEMU_DL_URL;'>
+                                <filename>machines/qemu</filename></ulink> if your target architecture is supported
+                                and you are going to develop and test your application using the QEMU
+                                emulator.</para></listitem>
+                            <listitem><para>Build your image if you cannot find a pre-built image that matches
+                                your target architecture.
+                                If your target architecture is similar to a supported architecture, you can
+                                modify the kernel image before you build it.
+                                See the
+                                "<ulink url='&YOCTO_DOCS_DEV_URL;#patching-the-kernel'>Patching the Kernel</ulink>"
+                                section in the Yocto Project Development
+                                manual for an example.</para></listitem>
+                        </itemizedlist></para>
+                    <para>For information on pre-built kernel image naming schemes for images
+                    that can run on the QEMU emulator, see the
+                    <ulink url='&YOCTO_DOCS_SDK_URL;#sdk-manual'>Yocto Project Software Development Kit (SDK) Developer's Guide</ulink>.
+                    </para></listitem>
+                <listitem><para><emphasis>Install the SDK</emphasis>:
+                    The SDK provides a target-specific cross-development toolchain, the root filesystem,
+                    the QEMU emulator, and other tools that can help you develop your application.
+                    For information on how to install the SDK, see the
+                    "<link linkend='sdk-installing-the-sdk'>Installing the SDK</link>"
+                    section.
+                    </para></listitem>
+                <listitem><para><emphasis>Secure the target root filesystem
+                    and the Cross-development toolchain</emphasis>:
+                    You need to find and download the appropriate root filesystem and
+                    the cross-development toolchain.</para>
+                    <para>You can find the tarballs for the root filesystem in the same area used
+                    for the kernel image.
+                    Depending on the type of image you are running, the root filesystem you need differs.
+                    For example, if you are developing an application that runs on an image that
+                    supports Sato, you need to get a root filesystem that supports Sato.</para>
+                    <para>You can find the cross-development toolchains at
+                    <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'><filename>toolchains</filename></ulink>.
+                    Be sure to get the correct toolchain for your development host and your
+                    target architecture.
+                    See the "<link linkend='sdk-locating-pre-built-sdk-installers'>Locating Pre-Built SDK Installers</link>"
+                    section for information and the
+                    "<link linkend='sdk-installing-the-sdk'>Installing the SDK</link>"
+                    section for installation information.
+                    </para></listitem>
+                <listitem><para><emphasis>Create and build your application</emphasis>:
+                    At this point, you need to have source files for your application.
+                    Once you have the files, you can use the Eclipse IDE to import them and build the
+                    project.
+                    If you are not using Eclipse, you need to use the cross-development tools you have
+                    installed to create the image.</para></listitem>
+                <listitem><para><emphasis>Deploy the image with the application</emphasis>:
+                    If you are using the Eclipse IDE, you can deploy your image to the hardware or to
+                    QEMU through the project's preferences.
+                    If you are not using the Eclipse IDE, then you need to deploy the application
+                    to the hardware using other methods.
+                    Or, if you are using QEMU, you need to use that tool and
+                    load your image in for testing.
+                    See the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#dev-manual-qemu'>Using the Quick EMUlator (QEMU)</ulink>"
+                    chapter in the Yocto Project Development Manual
+                    for information on using QEMU.
+                    </para></listitem>
+                <listitem><para><emphasis>Test and debug the application</emphasis>:
+                    Once your application is deployed, you need to test it.
+                    Within the Eclipse IDE, you can use the debugging environment along with the
+                    set of installed user-space tools to debug your application.
+                    Of course, the same user-space tools are available separately if you choose
+                    not to use the Eclipse IDE.</para></listitem>
+           </orderedlist>
+        </para>
+    </section>
+
+    <section id='adt-eclipse'>
+        <title>Working Within Eclipse</title>
+
+        <para>
+            The Eclipse IDE is a popular development environment and it fully
+            supports development using the Yocto Project.
+            <note>
+                This release of the Yocto Project supports both the Luna
+                and Kepler versions of the Eclipse IDE.
+                Thus, the following information provides setup information for
+                both versions.
+            </note>
+        </para>
+
+        <para>
+            When you install and configure the Eclipse Yocto Project Plug-in
+            into the Eclipse IDE, you maximize your Yocto Project experience.
+            Installing and configuring the Plug-in results in an environment
+            that has extensions specifically designed to let you more easily
+            develop software.
+            These extensions allow for cross-compilation, deployment, and
+            execution of your output into a QEMU emulation session as well as
+            actual target hardware.
+            You can also perform cross-debugging and profiling.
+            The environment also supports a suite of tools that allows you
+            to perform remote profiling, tracing, collection of power data,
+            collection of latency data, and collection of performance data.
+        </para>
+
+        <para>
+            This section describes how to install and configure the Eclipse IDE
+            Yocto Plug-in and how to use it to develop your application.
+        </para>
+
+        <section id='setting-up-the-eclipse-ide'>
+            <title>Setting Up the Eclipse IDE</title>
+
+            <para>
+                To develop within the Eclipse IDE, you need to do the following:
+                <orderedlist>
+                    <listitem><para>Install the optimal version of the Eclipse
+                       IDE.</para></listitem>
+                    <listitem><para>Configure the Eclipse IDE.
+                       </para></listitem>
+                    <listitem><para>Install the Eclipse Yocto Plug-in.
+                       </para></listitem>
+                    <listitem><para>Configure the Eclipse Yocto Plug-in.
+                       </para></listitem>
+                </orderedlist>
+                <note>
+                    Do not install Eclipse from your distribution's package
+                    repository.
+                    Be sure to install Eclipse from the official Eclipse
+                    download site as directed in the next section.
+                </note>
+            </para>
+
+            <section id='installing-eclipse-ide'>
+                <title>Installing the Eclipse IDE</title>
+
+                <para>
+                    It is recommended that you have the Luna SR2 (4.4.2)
+                    version of the Eclipse IDE installed on your development
+                    system.
+                    However, if you currently have the Kepler 4.3.2 version
+                    installed and you do not want to upgrade the IDE, you can
+                    configure Kepler to work with the Yocto Project.
+                </para>
+
+                <para>
+                    If you do not have the Luna SR2 (4.4.2) Eclipse IDE
+                    installed, you can find the tarball at
+                    <ulink url='&ECLIPSE_MAIN_URL;'></ulink>.
+                    From that site, choose the appropriate download from the
+                    "Eclipse IDE for C/C++ Developers".
+                    This version contains the Eclipse Platform, the Java
+                    Development Tools (JDT), and the Plug-in Development
+                    Environment.
+                </para>
+
+                <para>
+                    Once you have downloaded the tarball, extract it into a
+                    clean directory.
+                    For example, the following commands unpack and install the
+                    downloaded Eclipse IDE tarball into a clean directory
+                    using the default name <filename>eclipse</filename>:
+                    <literallayout class='monospaced'>
+     $ cd ~
+     $ tar -xzvf ~/Downloads/eclipse-cpp-luna-SR2-linux-gtk-x86_64.tar.gz
+                    </literallayout>
+                </para>
+            </section>
+
+            <section id='configuring-the-eclipse-ide'>
+                <title>Configuring the Eclipse IDE</title>
+
+                <para>
+                    This section presents the steps needed to configure the
+                    Eclipse IDE.
+                </para>
+
+                <para>
+                    Before installing and configuring the Eclipse Yocto Plug-in,
+                    you need to configure the Eclipse IDE.
+                    Follow these general steps:
+                    <orderedlist>
+                        <listitem><para>Start the Eclipse IDE.</para></listitem>
+                        <listitem><para>Make sure you are in your Workbench and
+                            select "Install New Software" from the "Help"
+                            pull-down menu.</para></listitem>
+                        <listitem><para>Select
+                            <filename>Luna - &ECLIPSE_LUNA_URL;</filename>
+                            from the "Work with:" pull-down menu.
+                            <note>
+                                For Kepler, select
+                                <filename>Kepler - &ECLIPSE_KEPLER_URL;</filename>
+                            </note>
+                            </para></listitem>
+                        <listitem><para>Expand the box next to "Linux Tools"
+                            and select the
+                            <filename>Linux Tools LTTng Tracer Control</filename>,
+                            <filename>Linux Tools LTTng Userspace Analysis</filename>,
+                            and
+                            <filename>LTTng Kernel Analysis</filename> boxes.
+                            If these selections do not appear in the list,
+                            that means the items are already installed.
+                            <note>
+                                For Kepler, select
+                                <filename>LTTng - Linux Tracing Toolkit</filename>
+                                box.
+                            </note>
+                            </para></listitem>
+                        <listitem><para>Expand the box next to "Mobile and
+                            Device Development" and select the following boxes.
+                            Again, if any of the following items are not
+                            available for selection, that means the items are
+                            already installed:
+                            <itemizedlist>
+                                <listitem><para><filename>C/C++ Remote Launch (Requires RSE Remote System Explorer)</filename></para></listitem>
+                                <listitem><para><filename>Remote System Explorer End-user Runtime</filename></para></listitem>
+                                <listitem><para><filename>Remote System Explorer User Actions</filename></para></listitem>
+                                <listitem><para><filename>Target Management Terminal (Core SDK)</filename></para></listitem>
+                                <listitem><para><filename>TCF Remote System Explorer add-in</filename></para></listitem>
+                                <listitem><para><filename>TCF Target Explorer</filename></para></listitem>
+                            </itemizedlist></para></listitem>
+                        <listitem><para>Expand the box next to "Programming
+                            Languages" and select the
+                            <filename>C/C++ Autotools Support</filename>
+                            and <filename>C/C++ Development Tools</filename>
+                            boxes.
+                            For Luna, these items do not appear on the list
+                            as they are already installed.
+                            </para></listitem>
+                        <listitem><para>Complete the installation and restart
+                            the Eclipse IDE.</para></listitem>
+                    </orderedlist>
+                </para>
+            </section>
+
+            <section id='installing-the-eclipse-yocto-plug-in'>
+                <title>Installing or Accessing the Eclipse Yocto Plug-in</title>
+
+                <para>
+                    You can install the Eclipse Yocto Plug-in into the Eclipse
+                    IDE one of two ways:  use the Yocto Project's Eclipse
+                    Update site to install the pre-built plug-in or build and
+                    install the plug-in from the latest source code.
+                </para>
+
+                <section id='new-software'>
+                    <title>Installing the Pre-built Plug-in from the Yocto Project Eclipse Update Site</title>
+
+                    <para>
+                        To install the Eclipse Yocto Plug-in from the update
+                        site, follow these steps:
+                        <orderedlist>
+                            <listitem><para>Start up the Eclipse IDE.
+                                </para></listitem>
+                            <listitem><para>In Eclipse, select "Install New
+                                Software" from the "Help" menu.
+                                </para></listitem>
+                            <listitem><para>Click "Add..." in the "Work with:"
+                                area.</para></listitem>
+                           <listitem><para>Enter
+                                <filename>&ECLIPSE_DL_PLUGIN_URL;/luna</filename>
+                                in the URL field and provide a meaningful name
+                                in the "Name" field.
+                                <note>
+                                    If you are using Kepler, use
+                                    <filename>&ECLIPSE_DL_PLUGIN_URL;/kepler</filename>
+                                    in the URL field.
+                                </note></para></listitem>
+                            <listitem><para>Click "OK" to have the entry added
+                                to the "Work with:" drop-down list.
+                                </para></listitem>
+                            <listitem><para>Select the entry for the plug-in
+                                from the "Work with:" drop-down list.
+                                </para></listitem>
+                            <listitem><para>Check the boxes next to
+                                <filename>Yocto Project ADT Plug-in</filename>,
+                                <filename>Yocto Project Bitbake Commander Plug-in</filename>,
+                                and
+                                <filename>Yocto Project Documentation plug-in</filename>.
+                                </para></listitem>
+                            <listitem><para>Complete the remaining software
+                                installation steps and then restart the Eclipse
+                                IDE to finish the installation of the plug-in.
+                                <note>
+                                    You can click "OK" when prompted about
+                                    installing software that contains unsigned
+                                    content.
+                                </note>
+                                </para></listitem>
+                        </orderedlist>
+                    </para>
+                </section>
+
+               <section id='zip-file-method'>
+                   <title>Installing the Plug-in Using the Latest Source Code</title>
+
+                   <para>
+                        To install the Eclipse Yocto Plug-in from the latest
+                        source code, follow these steps:
+                        <orderedlist>
+                            <listitem><para>Be sure your development system
+                                is not using OpenJDK to build the plug-in
+                                by doing the following:
+                                <orderedlist>
+                                    <listitem><para>Use the Oracle JDK.
+                                        If you don't have that, go to
+                                        <ulink url='http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html'></ulink>
+                                        and download the latest appropriate
+                                        Java SE Development Kit tarball for
+                                        your development system and
+                                        extract it into your home directory.
+                                        </para></listitem>
+                                    <listitem><para>In the shell you are going
+                                        to do your work, export the location of
+                                        the Oracle Java.
+                                        The previous step creates a new folder
+                                        for the extracted software.
+                                        You need to use the following
+                                        <filename>export</filename> command
+                                        and provide the specific location:
+                                        <literallayout class='monospaced'>
+     export PATH=~/<replaceable>extracted_jdk_location</replaceable>/bin:$PATH
+                                        </literallayout>
+                                        </para></listitem>
+                                </orderedlist>
+                                </para></listitem>
+                            <listitem><para>In the same shell, create a Git
+                                repository with:
+                                <literallayout class='monospaced'>
+     $ cd ~
+     $ git clone git://git.yoctoproject.org/eclipse-poky
+                                </literallayout>
+                                </para></listitem>
+                            <listitem><para>Be sure to checkout the correct
+                                tag.
+                                For example, if you are using Luna, do the
+                                following:
+                                <literallayout class='monospaced'>
+     $ git checkout luna/yocto-&DISTRO;
+                                </literallayout>
+                                This puts you in a detached HEAD state, which
+                                is fine since you are only going to be building
+                                and not developing.
+                                <note>
+                                    If you are building kepler, checkout the
+                                    <filename>kepler/yocto-&DISTRO;</filename>
+                                    branch.
+                                </note>
+                                </para></listitem>
+                            <listitem><para>Change to the
+                                <filename>scripts</filename>
+                                directory within the Git repository:
+                                <literallayout class='monospaced'>
+     $ cd scripts
+                                </literallayout>
+                                </para></listitem>
+                            <listitem><para>Set up the local build environment
+                                by running the setup script:
+                                <literallayout class='monospaced'>
+     $ ./setup.sh
+                                </literallayout>
+                                </para></listitem>
+                            <listitem><para>When the script finishes execution,
+                                it prompts you with instructions on how to run
+                                the <filename>build.sh</filename> script, which
+                                is also in the <filename>scripts</filename>
+                                directory of the Git repository created
+                                earlier.
+                                </para></listitem>
+                            <listitem><para>Run the <filename>build.sh</filename>
+                                script as directed.
+                                Be sure to provide the tag name, documentation
+                                branch, and a release name.
+                                Here is an example that uses the
+                                <filename>luna/yocto-&DISTRO;</filename> tag, the
+                                <filename>master</filename> documentation
+                                branch, and
+                                <filename>&DISTRO_NAME;</filename> for the
+                                release name:
+                                <literallayout class='monospaced'>
+     $ ECLIPSE_HOME=/home/scottrif/eclipse-poky/scripts/eclipse ./build.sh luna/yocto-&DISTRO; master &DISTRO_NAME; 2>&amp;1 | tee -a build.log
+                                </literallayout>
+                                After running the script, the file
+                                <filename>org.yocto.sdk-</filename><replaceable>release</replaceable><filename>-</filename><replaceable>date</replaceable><filename>-archive.zip</filename>
+                                is in the current directory.
+                                </para></listitem>
+                            <listitem><para>If necessary, start the Eclipse IDE
+                                and be sure you are in the Workbench.
+                                </para></listitem>
+                            <listitem><para>Select "Install New Software" from
+                                the "Help" pull-down menu.
+                                </para></listitem>
+                            <listitem><para>Click "Add".</para></listitem>
+                            <listitem><para>Provide anything you want in the
+                                "Name" field.
+                                </para></listitem>
+                            <listitem><para>Click "Archive" and browse to the
+                                ZIP file you built in step eight.
+                                This ZIP file should not be "unzipped", and must
+                                be the <filename>*archive.zip</filename> file
+                                created by running the
+                                <filename>build.sh</filename> script.
+                                </para></listitem>
+                            <listitem><para>Click the "OK" button.
+                                </para></listitem>
+                            <listitem><para>Check the boxes that appear in
+                                the installation window to install the
+                                <filename>Yocto Project ADT Plug-in</filename>,
+                                <filename>Yocto Project Bitbake Commander Plug-in</filename>,
+                                and the
+                                <filename>Yocto Project Documentation plug-in</filename>.
+                                </para></listitem>
+                            <listitem><para>Finish the installation by clicking
+                                through the appropriate buttons.
+                                You can click "OK" when prompted about
+                                installing software that contains unsigned
+                                content.
+                                </para></listitem>
+                            <listitem><para>Restart the Eclipse IDE if
+                                necessary.
+                                </para></listitem>
+                        </orderedlist>
+                    </para>
+
+                    <para>
+                        At this point you should be able to configure the
+                        Eclipse Yocto Plug-in as described in the
+                        "<link linkend='configuring-the-eclipse-yocto-plug-in'>Configuring the Eclipse Yocto Plug-in</link>"
+                        section.</para>
+                </section>
+            </section>
+
+            <section id='configuring-the-eclipse-yocto-plug-in'>
+                <title>Configuring the Eclipse Yocto Plug-in</title>
+
+                <para>
+                    Configuring the Eclipse Yocto Plug-in involves setting the
+                    Cross Compiler options and the Target options.
+                    The configurations you choose become the default settings
+                    for all projects.
+                    You do have opportunities to change them later when
+                    you configure the project (see the following section).
+                </para>
+
+                <para>
+                    To start, you need to do the following from within the
+                    Eclipse IDE:
+                    <itemizedlist>
+                        <listitem><para>Choose "Preferences" from the
+                            "Window" menu to display the Preferences Dialog.
+                            </para></listitem>
+                        <listitem><para>Click "Yocto Project ADT" to display
+                            the configuration screen.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+
+                <section id='configuring-the-cross-compiler-options'>
+                    <title>Configuring the Cross-Compiler Options</title>
+
+                    <para>
+                        To configure the Cross Compiler Options, you must select
+                        the type of toolchain, point to the toolchain, specify
+                        the sysroot location, and select the target
+                        architecture.
+                        <itemizedlist>
+                            <listitem><para><emphasis>Selecting the Toolchain Type:</emphasis>
+                                Choose between
+                                <filename>Standalone pre-built toolchain</filename>
+                                and
+                                <filename>Build system derived toolchain</filename>
+                                for Cross Compiler Options.
+                                    <itemizedlist>
+                                        <listitem><para><emphasis>
+                                            <filename>Standalone Pre-built Toolchain:</filename></emphasis>
+                                            Select this mode when you are using
+                                            a stand-alone cross-toolchain.
+                                            For example, suppose you are an
+                                            application developer and do not
+                                            need to build a target image.
+                                            Instead, you just want to use an
+                                            architecture-specific toolchain on
+                                            an existing kernel and target root
+                                            filesystem.</para></listitem>
+                                       <listitem><para><emphasis>
+                                            <filename>Build System Derived Toolchain:</filename></emphasis>
+                                            Select this mode if the
+                                            cross-toolchain has been installed
+                                            and built as part of the
+                                            <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                                            When you select
+                                            <filename>Build system derived toolchain</filename>,
+                                            you are using the toolchain bundled
+                                            inside the Build Directory.
+                                            </para></listitem>
+                                    </itemizedlist>
+                                </para></listitem>
+                            <listitem><para><emphasis>Point to the Toolchain:</emphasis>
+                                If you are using a stand-alone pre-built
+                                toolchain, you should be pointing to where it is
+                                installed.
+                                See the
+                                "<link linkend='sdk-installing-the-sdk'>Installing the SDK</link>"
+                                section for information about how the SDK is
+                                installed.</para>
+                                <para>If you are using a system-derived
+                                toolchain, the path you provide for the
+                                <filename>Toolchain Root Location</filename>
+                                field is the
+                                <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>.
+                                See the
+                                "<link linkend='sdk-optionally-building-a-toolchain-installer'>Optionally Building a Toolchain Installer</link>"
+                                section.</para></listitem>
+                            <listitem><para><emphasis>Specify the Sysroot Location:</emphasis>
+                                This location is where the root filesystem for
+                                the target hardware resides.
+                                </para>
+                                <para>The location of
+                                the sysroot filesystem depends on where you
+                                separately extracted and installed the
+                                filesystem.</para>
+                                <para>For information on how to install the
+                                toolchain and on how to extract and install the
+                                sysroot filesystem, see the
+                                "<link linkend='sdk-optionally-building-a-toolchain-installer'>Optionally Building a Toolchain Installer</link>"
+                                section.
+                                </para></listitem>
+                            <listitem><para><emphasis>Select the Target Architecture:</emphasis>
+                                The target architecture is the type of hardware
+                                you are going to use or emulate.
+                                Use the pull-down
+                                <filename>Target Architecture</filename> menu
+                                to make your selection.
+                                The pull-down menu should have the supported
+                                architectures.
+                                If the architecture you need is not listed in
+                                the menu, you will need to build the image.
+                                See the
+                                "<ulink url='&YOCTO_DOCS_QS_URL;#qs-building-images'>Building Images</ulink>"
+                                section of the Yocto Project Quick Start for
+                                more information.</para></listitem>
+                        </itemizedlist>
+                    </para>
+                </section>
+
+                <section id='configuring-the-target-options'>
+                    <title>Configuring the Target Options</title>
+
+                    <para>
+                        You can choose to emulate hardware using the QEMU
+                        emulator, or you can choose to run your image on actual
+                        hardware.
+                        <itemizedlist>
+                            <listitem><para><emphasis>QEMU:</emphasis>
+                                Select this option if you will be using the
+                                QEMU emulator.
+                                If you are using the emulator, you also need to
+                                locate the kernel and specify any custom
+                                options.</para>
+                                <para>If you selected
+                                <filename>Build system derived toolchain</filename>,
+                                the target kernel you built will be located in
+                                the Build Directory in
+                                <filename>tmp/deploy/images/<replaceable>machine</replaceable></filename>
+                                directory.
+                                If you selected
+                                <filename>Standalone pre-built toolchain</filename>,
+                                the pre-built image you downloaded is located
+                                in the directory you specified when you
+                                downloaded the image.</para>
+                                <para>Most custom options are for advanced QEMU
+                                users to further customize their QEMU instance.
+                                These options are specified between paired
+                                angled brackets.
+                                Some options must be specified outside the
+                                brackets.
+                                In particular, the options
+                                <filename>serial</filename>,
+                                <filename>nographic</filename>, and
+                                <filename>kvm</filename> must all be outside the
+                                brackets.
+                                Use the <filename>man qemu</filename> command
+                                to get help on all the options and their use.
+                                The following is an example:
+                               <literallayout class='monospaced'>
+    serial ‘&lt;-m 256 -full-screen&gt;’
+                                </literallayout></para>
+                                <para>
+                                Regardless of the mode, Sysroot is already
+                                defined as part of the Cross-Compiler Options
+                                configuration in the
+                                <filename>Sysroot Location:</filename> field.
+                                </para></listitem>
+                            <listitem><para><emphasis>External HW:</emphasis>
+                                Select this option if you will be using actual
+                                hardware.</para></listitem>
+                        </itemizedlist>
+                    </para>
+
+                    <para>
+                        Click the "OK" to save your plug-in configurations.
+                    </para>
+                </section>
+            </section>
+        </section>
+
+        <section id='creating-the-project'>
+            <title>Creating the Project</title>
+
+            <para>
+                You can create two types of projects:  Autotools-based, or
+                Makefile-based.
+                This section describes how to create Autotools-based projects
+                from within the Eclipse IDE.
+                For information on creating Makefile-based projects in a
+                terminal window, see the
+                "<link linkend='makefile-based-projects'>Makefile-Based Projects</link>"
+                section.
+                <note>
+                    Do not use special characters in project names
+                    (e.g. spaces, underscores, etc.).  Doing so can
+                    cause configuration to fail.
+                </note>
+            </para>
+
+            <para>
+                To create a project based on a Yocto template and then display
+                the source code, follow these steps:
+                <orderedlist>
+                    <listitem><para>Select "Project" from the "File -> New" menu.
+                        </para></listitem>
+                    <listitem><para>Double click <filename>CC++</filename>.
+                        </para></listitem>
+                    <listitem><para>Double click <filename>C Project</filename>
+                        to create the project.</para></listitem>
+                    <listitem><para>Expand <filename>Yocto Project ADT Autotools Project</filename>.
+                        </para></listitem>
+                    <listitem><para>Select <filename>Hello World ANSI C Autotools Project</filename>.
+                        This is an Autotools-based project based on a Yocto
+                        template.</para></listitem>
+                    <listitem><para>Put a name in the <filename>Project name:</filename>
+                        field.
+                        Do not use hyphens as part of the name.
+                        </para></listitem>
+                    <listitem><para>Click "Next".</para></listitem>
+                    <listitem><para>Add information in the
+                        <filename>Author</filename> and
+                        <filename>Copyright notice</filename> fields.
+                        </para></listitem>
+                    <listitem><para>Be sure the <filename>License</filename>
+                        field is correct.</para></listitem>
+                    <listitem><para>Click "Finish".</para></listitem>
+                    <listitem><para>If the "open perspective" prompt appears,
+                        click "Yes" so that you in the C/C++ perspective.
+                        </para></listitem>
+                    <listitem><para>The left-hand navigation pane shows your
+                        project.
+                        You can display your source by double clicking the
+                        project's source file.</para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+
+        <section id='configuring-the-cross-toolchains'>
+            <title>Configuring the Cross-Toolchains</title>
+
+            <para>
+                The earlier section,
+                "<link linkend='configuring-the-eclipse-yocto-plug-in'>Configuring the Eclipse Yocto Plug-in</link>",
+                sets up the default project configurations.
+                You can override these settings for a given project by following
+                these steps:
+                <orderedlist>
+                    <listitem><para>Select "Change Yocto Project Settings" from
+                        the "Project" menu.
+                        This selection brings up the Yocto Project Settings
+                        Dialog and allows you to make changes specific to an
+                        individual project.</para>
+                        <para>By default, the Cross Compiler Options and Target
+                        Options for a project are inherited from settings you
+                        provided using the Preferences Dialog as described
+                        earlier in the
+                        "<link linkend='configuring-the-eclipse-yocto-plug-in'>Configuring the Eclipse Yocto Plug-in</link>" section.
+                        The Yocto Project Settings Dialog allows you to override
+                        those default settings for a given project.
+                        </para></listitem>
+                    <listitem><para>Make your configurations for the project
+                        and click "OK".
+                        </para></listitem>
+                    <listitem><para>Right-click in the navigation pane and
+                        select "Reconfigure Project" from the pop-up menu.
+                        This selection reconfigures the project by running
+                        <filename>autogen.sh</filename> in the workspace for
+                        your project.
+                        The script also runs <filename>libtoolize</filename>,
+                        <filename>aclocal</filename>,
+                        <filename>autoconf</filename>,
+                        <filename>autoheader</filename>,
+                        <filename>automake --a</filename>, and
+                        <filename>./configure</filename>.
+                        Click on the "Console" tab beneath your source code to
+                        see the results of reconfiguring your project.
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+
+        <section id='building-the-project'>
+            <title>Building the Project</title>
+
+            <para>
+                To build the project select "Build Project" from the
+                "Project" menu.
+                The console should update and you can note the cross-compiler
+                you are using.
+                <note>
+                    When building "Yocto Project ADT Autotools" projects, the Eclipse
+                    IDE might display error messages for Functions/Symbols/Types
+                    that cannot be "resolved", even when the related include file
+                    is listed at the project navigator and when the project is
+                    able to build.
+                    For these cases only, it is recommended to add a new linked
+                    folder to the appropriate sysroot.
+                    Use these steps to add the linked folder:
+                    <orderedlist>
+                        <listitem><para>
+                            Select the project.
+                            </para></listitem>
+                        <listitem><para>
+                            Select "Folder" from the
+                            <filename>File > New</filename> menu.
+                            </para></listitem>
+                        <listitem><para>
+                            In the "New Folder" Dialog, select "Link to alternate
+                            location (linked folder)".
+                            </para></listitem>
+                        <listitem><para>
+                            Click "Browse" to navigate to the include folder inside
+                            the same sysroot location selected in the Yocto Project
+                            configuration preferences.
+                            </para></listitem>
+                        <listitem><para>
+                            Click "OK".
+                            </para></listitem>
+                        <listitem><para>
+                            Click "Finish" to save the linked folder.
+                            </para></listitem>
+                    </orderedlist>
+                </note>
+            </para>
+        </section>
+
+        <section id='starting-qemu-in-user-space-nfs-mode'>
+            <title>Starting QEMU in User-Space NFS Mode</title>
+
+            <para>
+                To start the QEMU emulator from within Eclipse, follow these
+                steps:
+                <note>
+                    See the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#dev-manual-qemu'>Using the Quick EMUlator (QEMU)</ulink>"
+                    chapter in the Yocto Project Development Manual
+                    for more information on using QEMU.
+                </note>
+                <orderedlist>
+                    <listitem><para>Expose and select "External Tools" from
+                        the "Run" menu.
+                        Your image should appear as a selectable menu item.
+                        </para></listitem>
+                    <listitem><para>Select your image from the menu to launch
+                        the emulator in a new window.
+                        </para></listitem>
+                    <listitem><para>If needed, enter your host root password in
+                        the shell window at the prompt.
+                        This sets up a <filename>Tap 0</filename> connection
+                        needed for running in user-space NFS mode.
+                        </para></listitem>
+                    <listitem><para>Wait for QEMU to launch.</para></listitem>
+                    <listitem><para>Once QEMU launches, you can begin operating
+                        within that environment.
+                        One useful task at this point would be to determine the
+                        IP Address for the user-space NFS by using the
+                       <filename>ifconfig</filename> command.
+                       </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+
+        <section id='deploying-and-debugging-the-application'>
+            <title>Deploying and Debugging the Application</title>
+
+            <para>
+                Once the QEMU emulator is running the image, you can deploy
+                your application using the Eclipse IDE and then use
+                the emulator to perform debugging.
+                Follow these steps to deploy the application.
+                <orderedlist>
+                    <listitem><para>Select "Debug Configurations..." from the
+                        "Run" menu.</para></listitem>
+                    <listitem><para>In the left area, expand
+                        <filename>C/C++Remote Application</filename>.
+                        </para></listitem>
+                    <listitem><para>Locate your project and select it to bring
+                        up a new tabbed view in the Debug Configurations Dialog.
+                        </para></listitem>
+                    <listitem><para>Enter the absolute path into which you want
+                        to deploy the application.
+                        Use the "Remote Absolute File Path for
+                        C/C++Application:" field.
+                        For example, enter
+                        <filename>/usr/bin/<replaceable>programname</replaceable></filename>.
+                        </para></listitem>
+                    <listitem><para>Click on the "Debugger" tab to see the
+                        cross-tool debugger you are using.</para></listitem>
+                    <listitem><para>Click on the "Main" tab.</para></listitem>
+                    <listitem><para>Create a new connection to the QEMU instance
+                        by clicking on "new".</para></listitem>
+                    <listitem><para>Select <filename>TCF</filename>, which means
+                        Target Communication Framework.</para></listitem>
+                    <listitem><para>Click "Next".</para></listitem>
+                    <listitem><para>Clear out the "host name" field and enter
+                        the IP Address determined earlier.</para></listitem>
+                    <listitem><para>Click "Finish" to close the
+                        New Connections Dialog.</para></listitem>
+                    <listitem><para>Use the drop-down menu now in the
+                        "Connection" field and pick the IP Address you entered.
+                         </para></listitem>
+                    <listitem><para>Click "Debug" to bring up a login screen
+                        and login.</para></listitem>
+                    <listitem><para>Accept the debug perspective.
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+
+        <section id='running-user-space-tools'>
+            <title>Running User-Space Tools</title>
+
+            <para>
+                As mentioned earlier in the manual, several tools exist that
+                enhance your development experience.
+                These tools are aids in developing and debugging applications
+                and images.
+                You can run these user-space tools from within the Eclipse
+                IDE through the "YoctoProjectTools" menu.
+            </para>
+
+            <para>
+                Once you pick a tool, you need to configure it for the remote
+                target.
+                Every tool needs to have the connection configured.
+                You must select an existing TCF-based RSE connection to the
+                remote target.
+                If one does not exist, click "New" to create one.
+            </para>
+
+            <para>
+                Here are some specifics about the remote tools:
+                <itemizedlist>
+                    <listitem><para><emphasis><filename>OProfile</filename>:</emphasis>
+                        Selecting this tool causes the
+                        <filename>oprofile-server</filename> on the remote
+                        target to launch on the local host machine.
+                        The <filename>oprofile-viewer</filename> must be
+                        installed on the local host machine and the
+                        <filename>oprofile-server</filename> must be installed
+                        on the remote target, respectively, in order to use.
+                        You must compile and install the
+                        <filename>oprofile-viewer</filename> from the source
+                        code on your local host machine.
+                        Furthermore, in order to convert the target's sample
+                        format data into a form that the host can use, you must
+                        have OProfile version 0.9.4 or greater installed on the
+                        host.</para>
+                        <para>You can locate both the viewer and server from
+                        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/oprofileui/'></ulink>.
+                        You can also find more information on setting up and
+                        using this tool in the
+                        "<ulink url='&YOCTO_DOCS_PROF_URL;#profile-manual-oprofile'>oprofile</ulink>"
+                        section of the Yocto Project Profiling and Tracing
+                        Manual.
+                        <note>The <filename>oprofile-server</filename> is
+                        installed by default on the
+                        <filename>core-image-sato-sdk</filename> image.</note>
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>Lttng2.0 trace import</filename>:</emphasis>
+                        Selecting this tool transfers the remote target's
+                        <filename>Lttng</filename> tracing data back to the
+                        local host machine and uses the Lttng Eclipse plug-in
+                        to graphically display the output.
+                        For information on how to use Lttng to trace an
+                        application,
+                        see <ulink url='http://lttng.org/documentation'></ulink>
+                        and the
+                        "<ulink url='&YOCTO_DOCS_PROF_URL;#lttng-linux-trace-toolkit-next-generation'>LTTng (Linux Trace Toolkit, next generation)</ulink>"
+                        section, which is in the Yocto Project Profiling and
+                        Tracing Manual.
+                        <note>Do not use
+                            <filename>Lttng-user space (legacy)</filename> tool.
+                            This tool no longer has any upstream support.</note>
+                        </para>
+                        <para>Before you use the
+                        <filename>Lttng2.0 trace import</filename> tool,
+                        you need to setup the Lttng Eclipse plug-in and create a
+                        Tracing project.
+                        Do the following:
+                        <orderedlist>
+                            <listitem><para>Select "Open Perspective" from the
+                                "Window" menu and then select "Other..." to
+                                bring up a menu of other perspectives.
+                                Choose "Tracing".
+                                </para></listitem>
+                            <listitem><para>Click "OK" to change the Eclipse
+                                perspective into the Tracing perspective.
+                                </para></listitem>
+                            <listitem><para>Create a new Tracing project by
+                                selecting "Project" from the "File -> New" menu.
+                                </para></listitem>
+                            <listitem><para>Choose "Tracing Project" from the
+                                "Tracing" menu and click "Next".
+                                </para></listitem>
+                            <listitem><para>Provide a name for your tracing
+                                project and click "Finish".
+                                </para></listitem>
+                            <listitem><para>Generate your tracing data on the
+                                remote target.</para></listitem>
+                            <listitem><para>Select "Lttng2.0 trace import"
+                                from the "Yocto Project Tools" menu to
+                                start the data import process.</para></listitem>
+                            <listitem><para>Specify your remote connection name.
+                                </para></listitem>
+                            <listitem><para>For the Ust directory path, specify
+                                the location of your remote tracing data.
+                                Make sure the location ends with
+                                <filename>ust</filename> (e.g.
+                                <filename>/usr/mysession/ust</filename>).
+                                </para></listitem>
+                            <listitem><para>Click "OK" to complete the import
+                                process.
+                                The data is now in the local tracing project
+                                you created.</para></listitem>
+                            <listitem><para>Right click on the data and then use
+                                the menu to Select "Generic CTF Trace" from the
+                                "Trace Type... -> Common Trace Format" menu to
+                                map the tracing type.</para></listitem>
+                            <listitem><para>Right click the mouse and select
+                                "Open" to bring up the Eclipse Lttng Trace
+                                Viewer so you view the tracing data.
+                                </para></listitem>
+                        </orderedlist></para></listitem>
+                    <listitem><para><emphasis><filename>PowerTOP</filename>:</emphasis>
+                        Selecting this tool runs PowerTOP on the remote target
+                        machine and displays the results in a new view called
+                        PowerTOP.</para>
+                        <para>The "Time to gather data(sec):" field is the time
+                        passed in seconds before data is gathered from the
+                        remote target for analysis.</para>
+                        <para>The "show pids in wakeups list:" field corresponds
+                        to the <filename>-p</filename> argument passed to
+                        <filename>PowerTOP</filename>.</para></listitem>
+                    <listitem><para><emphasis><filename>LatencyTOP and Perf</filename>:</emphasis>
+                        LatencyTOP identifies system latency, while
+                        Perf monitors the system's performance counter
+                        registers.
+                        Selecting either of these tools causes an RSE terminal
+                        view to appear from which you can run the tools.
+                        Both tools refresh the entire screen to display results
+                        while they run.
+                        For more information on setting up and using
+                        <filename>perf</filename>, see the
+                        "<ulink url='&YOCTO_DOCS_PROF_URL;#profile-manual-perf'>perf</ulink>"
+                        section in the Yocto Project Profiling and Tracing
+                        Manual.
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>SystemTap</filename>:</emphasis>
+                        Systemtap is a tool that lets you create and reuse
+                        scripts to examine the activities of a live Linux
+                        system.
+                        You can easily extract, filter, and summarize data
+                        that helps you diagnose complex performance or
+                        functional problems.
+                        For more information on setting up and using
+                        <filename>SystemTap</filename>, see the
+                        <ulink url='https://sourceware.org/systemtap/documentation.html'>SystemTap Documentation</ulink>.
+                        </para></listitem>
+                    <listitem><para><emphasis><filename>yocto-bsp</filename>:</emphasis>
+                        The <filename>yocto-bsp</filename> tool lets you
+                        quickly set up a Board Support Package (BSP) layer.
+                        The tool requires a Metadata location, build location,
+                        BSP name, BSP output location, and a kernel
+                        architecture.
+                        For more information on the
+                        <filename>yocto-bsp</filename> tool outside of Eclipse,
+                        see the
+                        "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a new BSP Layer Using the yocto-bsp Script</ulink>"
+                        section in the Yocto Project Board Support Package
+                        (BSP) Developer's Guide.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+    </section>
 </section>
 
 <section id='sdk-using-the-sdk-to-task-2'>

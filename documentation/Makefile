@@ -128,7 +128,7 @@ TARFILES = dev-style.css dev-manual.html \
            figures/wip.png
         else
 TARFILES = dev-style.css dev-manual.html \
-           figures/app-dev-flow.png figures/bsp-dev-flow.png \
+           figures/bsp-dev-flow.png \
            figures/dev-title.png figures/git-workflow.png \
            figures/index-downloads.png figures/kernel-dev-flow.png \
            figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
@@ -202,7 +202,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
         figures/buildhistory-web.png \
 	figures/adt-title.png figures/sdk-title.png figures/bsp-title.png \
 	figures/kernel-dev-title.png figures/kernel-architecture-overview.png \
-	figures/app-dev-flow.png figures/bsp-dev-flow.png \
+	figures/bsp-dev-flow.png \
         figures/dev-title.png \
 	figures/git-workflow.png figures/index-downloads.png \
         figures/kernel-dev-flow.png \
@@ -249,7 +249,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/compatible-layers.png figures/import-layer.png figures/new-project.png \
 	figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png \
 	figures/sdk-devtool-add-flow.png figures/sdk-installed-extensible-sdk-directory.png \
-	figures/sdk-devtool-modify-flow.png
+	figures/sdk-devtool-modify-flow.png figures/sdk-eclipse-dev-flow.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
@@ -293,7 +293,7 @@ ALLPREQ = html eclipse tarball
 TARFILES = sdk-manual.html sdk-style.css figures/sdk-title.png \
            figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png \
 	   figures/sdk-installed-extensible-sdk-directory.png figures/sdk-devtool-add-flow.png \
-	   figures/sdk-devtool-modify-flow.png \
+	   figures/sdk-devtool-modify-flow.png figures/sdk-eclipse-dev-flow.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
