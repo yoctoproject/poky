@@ -800,16 +800,17 @@
         <section id='build-history-sdk-information'>
             <title>Build History SDK Information</title>
 
-The files that get copied in are controlled by the BUILDHISTORY_SDK_FILES  variable.  Default is to copy the local.conf, bblayers.conf, auto.conf, lockdef.inc, devtool.conf.  There is a "conf" directory under "sdk" that has these files.
-
-
-
             <para>
                 Build history collects similar information on the contents
                 of SDKs (e.g. <filename>meta-toolchain</filename>
                 or <filename>bitbake -c populate_sdk imagename</filename>)
                 as compared to information it collects for images.
-                The following list shows the files produced for each SDK:
+                Furthermore, this information differs depending on whether an
+                extensible or standard SDK is being produced.
+            </para>
+
+            <para>
+                The following list shows the files produced for SDKs:
                 <itemizedlist>
                     <listitem><para><filename>files-in-sdk.txt:</filename>
                         A list of files in the SDK with permissions,
@@ -822,33 +823,49 @@ The files that get copied in are controlled by the BUILDHISTORY_SDK_FILES  varia
                         about the SDK.
                         See the following listing example for more information.
                         </para></listitem>
-                    <listitem><para><filename>sstate-task-sizes:</filename>
-                        A folder containing files that show the sizes of task
-                        groups (e.g. <filename>do_sysroot</filename> tasks has
-                        a total size).
+                    <listitem><para><filename>sstate-task-sizes.txt:</filename>
+                        A text file containing name-value pairs with information
+                        about task group sizes
+                        (e.g. <filename>do_populate_sysroot</filename> tasks
+                        have a total size).
+                        The <filename>sstate-task-sizes.txt</filename> file
+                        exists only when an extensible SDK is created.
                         </para></listitem>
-                    <listitem><para><filename>sstate-package-sizes:</filename>
-                        A folder containing files that show the shared-state
-                        packages in the SDK.
+                    <listitem><para><filename>sstate-package-sizes.txt:</filename>
+                        A text file containing name-value pairs with information
+                        for the shared-state packages and sizes in the SDK.
+                        The <filename>sstate-package-sizes.txt</filename> file
+                        exists only when an extensible SDK is created.
                         </para></listitem>
-                    <listitem><para><filename>conf:</filename>
-                        A folder containing the
-                        <filename>local.conf</filename>,
-                        <filename>bblayers.conf</filename>,
-                        <filename>auto.conf</filename>,
-                        <filename>lockdef.inc</filename>, and
-                        <filename>devtool.conf</filename> files.
-                        By default, these files get copied into the
-                        <filename>sdk</filename> directory.
-                        You can control the files that get copied into this
-                        directory by setting the
-                        <filename>BUILDHISTORY_SDK_FILES</filename> variable.
+                    <listitem><para><filename>sdk-files:</filename>
+                        A folder that contains copies of the files mentioned in
+                        <filename>BUILDHISTORY_SDK_FILES</filename> if the
+                        files are present in the output.
+                        Additionally, the default value of
+                        <filename>BUILDHISTORY_SDK_FILES</filename> is specific
+                        to the extensible SDK although you can set it
+                        differently if you would like to pull in specific files
+                        from the standard SDK.</para>
+                        <para>The default files are
+                        <filename>conf/local.conf</filename>,
+                        <filename>conf/bblayers.conf</filename>,
+                        <filename>conf/auto.conf</filename>,
+                        <filename>conf/locked-sigs.inc</filename>, and
+                        <filename>conf/devtool.conf</filename>.
+                        Thus, for an extensible SDK, these files get copied
+                        into the <filename>sdk-files</filename> directory.
                         </para></listitem>
                     <listitem><para>The following information appears under
                         each of the <filename>host</filename>
                         and <filename>target</filename> directories
                         for the portions of the SDK that run on the host and
                         on the target, respectively:
+                        <note>
+                            The following files for the most part are empty
+                            when producing an extensible SDK because this
+                            type of SDK is not constructed from packages as is
+                            the standard SDK.
+                        </note>
                         <itemizedlist>
                             <listitem><para><filename>depends.dot:</filename>
                                 Dependency graph for the SDK that is
