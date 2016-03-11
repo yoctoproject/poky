@@ -2465,7 +2465,7 @@
                 </para>
 
                 <para>
-                    Copying these files is needed because
+                    Being able to list explicit files is needed because
                     <filename>COREBASE</filename> typically contains build
                     directories and other files that should not normally
                     be copied into the extensible SDK.
@@ -10726,13 +10726,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-SDK_EXT_TYPE'><glossterm>SDK_EXT_TYPE</glossterm>
             <info>
-                SDK_EXT_TYPE[doc] = "Specifies the required shared state artifacts for the extensible SDK."
+                SDK_EXT_TYPE[doc] = "Controls whether or not shared state artifacts are copied into the extensible SDK."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Specifies the required shared state artifacts for the
-                    extensible SDK.
+                    Controls whether or not shared state artifacts are copied
+                    into the extensible SDK.
                     The default value of "full" copies all of the required
                     shared state artifacts into the extensible SDK.
                     The value "minimal" leaves these artifacts out of the
@@ -10829,13 +10829,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-SDK_LOCAL_CONF_BLACKLIST'><glossterm>SDK_LOCAL_CONF_BLACKLIST</glossterm>
             <info>
-                SDK_LOCAL_CONF_BLACKLIST[doc] = "A list of variables allowed through from the build system configuration into the extensible SDK configuration."
+                SDK_LOCAL_CONF_BLACKLIST[doc] = "A list of variables not allowed through from the build system configuration into the extensible SDK configuration."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    A list of variables allowed through from the build system
-                    configuration into the extensible SDK configuration.
+                    A list of variables not allowed through from the build
+                    system configuration into the extensible SDK configuration.
                     Usually, these are variables that are specific to the
                     machine on which the build system is running and thus
                     would be potentially problematic within the extensible SDK.
@@ -11002,19 +11002,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     A list of shared state tasks added to the extensible SDK.
-                    The default value is "" and adds the following tasks to
-                    the SDK:
+                    By default, the following tasks are added:
                     <literallayout class='monospaced'>
      do_populate_lic
      do_package_qa
      do_populate_sysroot
      do_deploy
                     </literallayout>
-                    If you are defining additional tasks that are needed in
+                    Despite the default value of "" for the
+                    <filename>SDK_RECRDEP_TASKS</filename> variable, the
+                    above four tasks are always added to the SDK.
+                    To specify tasks beyond these four, you need to use
+                    the <filename>SDK_RECRDEP_TASKS</filename> variable (e.g.
+                    you are defining additional tasks that are needed in
                     order to build
-                    <link linkend='var-SDK_TARGETS'><filename>SDK_TARGETS</filename></link>,
-                    use the <filename>SDK_RECRDEP_TASKS</filename> variable to
-                    specify them.
+                    <link linkend='var-SDK_TARGETS'><filename>SDK_TARGETS</filename></link>).
                 </para>
             </glossdef>
         </glossentry>
