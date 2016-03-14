@@ -103,6 +103,7 @@ yocto_bsp_create_usage = """
 
  usage: yocto-bsp create <bsp-name> <karch> [-o <DIRNAME> | --outdir <DIRNAME>]
             [-i <JSON PROPERTY FILE> | --infile <JSON PROPERTY_FILE>]
+            [-c | --codedump] [-s | --skip-git-check]
 
  This command creates a Yocto BSP based on the specified parameters.
  The new BSP will be a new Yocto BSP layer contained by default within
@@ -131,6 +132,7 @@ NAME
 SYNOPSIS
     yocto-bsp create <bsp-name> <karch> [-o <DIRNAME> | --outdir <DIRNAME>]
         [-i <JSON PROPERTY FILE> | --infile <JSON PROPERTY_FILE>]
+        [-c | --codedump] [-s | --skip-git-check]
 
 DESCRIPTION
     This command creates a Yocto BSP based on the specified
