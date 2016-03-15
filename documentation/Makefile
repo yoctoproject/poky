@@ -247,7 +247,8 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/simple-configuration.png figures/devtool-add-flow.png \
 	figures/devtool-modify-flow.png figures/devtool-upgrade-flow.png \
 	figures/compatible-layers.png figures/import-layer.png figures/new-project.png \
-	figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png
+	figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png \
+	figures/sdk-installed-extensible-sdk-directory.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
@@ -290,6 +291,7 @@ XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = sdk-manual.html sdk-style.css figures/sdk-title.png \
            figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png \
+	   figures/sdk-installed-extensible-sdk-directory.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
