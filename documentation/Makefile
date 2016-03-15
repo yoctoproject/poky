@@ -245,7 +245,8 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/build-workspace-directory.png figures/mega-title.png \
 	figures/toaster-title.png figures/hosted-service.png \
 	figures/simple-configuration.png figures/devtool-add-flow.png \
-	figures/devtool-modify-flow.png figures/devtool-upgrade-flow.png
+	figures/devtool-modify-flow.png figures/devtool-upgrade-flow.png \
+	figures/compatible-layers.png figures/import-layer.png figures/new-project.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
@@ -345,7 +346,8 @@ XSLTOPTS = --xinclude
 ALLPREQ = html tarball
 TARFILES = toaster-manual.html toaster-manual-style.css \
 	   figures/toaster-title.png figures/simple-configuration.png \
-	   figures/hosted-service.png
+	   figures/hosted-service.png \
+	   figures/compatible-layers.png figures/import-layer.png figures/new-project.png
 MANUALS = $(DOC)/$(DOC).html
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
