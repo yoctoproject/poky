@@ -540,39 +540,103 @@
     </para>
 </section>
 
-<section id='sdk-using-the-extensible-sdk-to-task-2'>
-    <title>Using the Extensible SDK to <replaceable>item-2</replaceable></title>
+<section id='sdk-installing-additional-items-into-the-extensible-sdk'>
+    <title>Installing Additional Items Into the Extensible SDK</title>
 
-    <para role='writernotes'>
-        Describe the specific task you are going to accomplish with the
-        extensible SDK.
-        Provide a diagram showing the rough flow of the task.
-        Provide specific steps using a real example that works through the
-        task.
+    <para>
+        The extensible SDK typically only comes with a small number of tools
+        and libraries out of the box.
+        If you have a minimal SDK, then it starts mostly empty and is
+        populated on-demand.
+        However, sometimes you will need to explicitly install extra items
+        into the SDK.
+        If you need these extra items, you can first search for the items
+        using the <filename>devtool search</filename> command.
+        For example, suppose you need to link to libGL but you are not sure
+        which recipe provides it.
+        You can use the following command to find out:
+        <literallayout class='monospaced'>
+     $ devtool search libGL
+     mesa                  A free implementation of the OpenGL API
+        </literallayout>
+        Once you know the recipe (i.e. <filename>mesa</filename> in this
+        example), you can install it:
+        <literallayout class='monospaced'>
+     $ devtool sdk-install mesa
+        </literallayout>
+        By default, the <filename>devtool sdk-install</filename> assumes the
+        item is available in pre-built form from your SDK provider.
+        If the item is not available and it is acceptable to build the item
+        from source, you can add the "-s" option as follows:
+        <literallayout class='monospaced'>
+     $ devtool sdk-install -s mesa
+        </literallayout>
+        It is important to remember that building the item from source takes
+        significantly longer than installing the pre-built artifact.
+        Also, if no recipe exists for the item you want to add to the SDK, you
+        must add it using the <filename>devtool add</filename> command.
     </para>
 </section>
 
-<section id='sdk-using-the-extensible-sdk-to-task-3'>
-    <title>Using the Extensible SDK to <replaceable>item-3</replaceable></title>
+<section id='sdk-updating-the-extensible-sdk'>
+     <title>Updating the Extensible SDK</title>
 
-    <para role='writernotes'>
-        Describe the specific task you are going to accomplish with the
-        extensible SDK.
-        Provide a diagram showing the rough flow of the task.
-        Provide specific steps using a real example that works through the
-        task.
+     <para>
+         If you are working with an extensible SDK that gets occasionally
+         updated (e.g. typically when that SDK has been provided to you by
+         another party), then you will need to manually pull down those
+         updates to your installed SDK.
+     </para>
+
+     <para>
+         To update your installed SDK, run the following:
+         <literallayout class='monospaced'>
+     $ devtool sdk-update
+         </literallayout>
+         The previous command assumes your SDK provider has set the default
+         update URL for you.
+         If that URL has not been set, you need to specify it yourself as
+         follows:
+         <literallayout class='monospaced'>
+     $ devtool sdk-update <replaceable>path_to_update_directory</replaceable>
+         </literallayout>
+         <note>
+             The URL needs to point specifically to a published SDK and not an
+             SDK installer that you would download and install.
+         </note>
     </para>
 </section>
 
-<section id='sdk-using-the-extensible-sdk-to-task-x'>
-    <title>Using the Extensible SDK to <replaceable>item-x</replaceable></title>
+<section id='sdk-creating-a-derivative-sdk-with-additional-components'>
+    <title>Creating a Derivative SDK With Additional Components</title>
 
-    <para role='writernotes'>
-        Describe the specific task you are going to accomplish with the
-        extensible SDK.
-        Provide a diagram showing the rough flow of the task.
-        Provide specific steps using a real example that works through the
-        task.
+    <para>
+        You might need to produce an SDK that contains your own custom
+        libraries for sending to a third party (e.g., if you are a vendor with
+        customers needing to build their own software for the target platform).
+        If that is the case, then you can produce a derivative SDK based on
+        the currently installed SDK fairly easily.
+        Use these steps:
+        <orderedlist>
+            <listitem><para>If necessary, install an extensible SDK that
+                you want to use as a base for your derivative SDK.
+                </para></listitem>
+            <listitem><para>Source the environment script for the SDK.
+                </para></listitem>
+            <listitem><para>Add the extra libraries or other components
+                you want by using the <filename>devtool add</filename>
+                command.
+                </para></listitem>
+            <listitem><para>Run the <filename>devtool build-sdk</filename>
+                command.
+                </para></listitem>
+        </orderedlist>
+        The above procedure takes the recipes added to the workspace and
+        constructs a new SDK installer containing those recipes and the
+        resulting binary artifacts.
+        The recipes go into their own separate layer in the constructed
+        derivative SDK, leaving the workspace clean and ready for you
+        to add your own recipes.
     </para>
 </section>
 
