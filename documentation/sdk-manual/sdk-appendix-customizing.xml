@@ -17,11 +17,11 @@
 
     <para>
         The extensible SDK primarily consists of a pre-configured copy of
-        the build system from which it was produced.
+        the OpenEmbedded build system from which it was produced.
         Thus, the SDK's configuration is derived using that build system.
-        However, filters exist that are applied such as the following that
-        are applied to <filename>local.conf</filename> and
-        <filename>auto.conf</filename> when present:
+        However, filters such as the following exist that the OpenEmbedded
+        build system applies to <filename>local.conf</filename> and
+        <filename>auto.conf</filename> when these files are present:
         <itemizedlist>
             <listitem><para>
                 Variables whose values start with "/" are excluded since the
@@ -44,8 +44,9 @@
                 Variables listed in
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_LOCAL_CONF_WHITELIST'><filename>SDK_LOCAL_CONF_WHITELIST</filename></ulink>
                 are included.
-                Including these variables overrides either of the above two
-                conditions.
+                Including a variable in the value of
+                <filename>SDK_LOCAL_CONF_WHITELIST</filename> overrides either
+                of the above two conditions.
                 The default value is blank.
                 </para></listitem>
             <listitem><para>
@@ -68,9 +69,9 @@
         when present, are appended to the end of
         <filename>conf/local.conf</filename> within the produced SDK, without
         any filtering.
-        Not filtering these contents is particularly useful if you want to
-        set a variable value just for the SDK and not the build system used to
-        create the SDK.
+        The <filename>sdk-extra.conf</filename> file is particularly useful
+        if you want to set a variable value just for the SDK and not the
+        OpenEmbedded build system used to create the SDK.
     </para>
 </section>
 
@@ -141,14 +142,14 @@
                 appear in
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-COREBASE'><filename>COREBASE</filename></ulink>
                 (other than layers that are enabled through
-                <filename>bblayers.conf</filename>), then must list these
+                <filename>bblayers.conf</filename>), then you must list these
                 files in
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-COREBASE_FILES'><filename>COREBASE_FILES</filename></ulink>
                 so that the files are copied into the SDK.
                 </para></listitem>
             <listitem><para>
-                If your build system setup uses a different environment setup
-                script other than
+                If your OpenEmbedded build system setup uses a different
+                environment setup script other than
                 <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
                 or
                 <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>,
@@ -270,15 +271,16 @@
                 <itemizedlist>
                     <listitem><para>
                         If the mirror value you are setting is appropriate to
-                        be set for both the build system that is actually
-                        building the SDK and the SDK itself (i.e. the mirror
-                        is accessible in both places or it will fail quickly
-                        on the build system side, and its contents will not
-                        interfere with the build), then you can set the
-                        variable in your <filename>local.conf</filename>
-                        or custom distro configuration file.
-                        You can "whitelist" the variable through the SDK by
-                        adding the following:
+                        be set for both the OpenEmbedded build system that is
+                        actually building the SDK and the SDK itself (i.e. the
+                        mirror is accessible in both places or it will fail
+                        quickly on the OpenEmbedded build system side, and its
+                        contents will not interfere with the build), then you
+                        can set the variable in your
+                        <filename>local.conf</filename> or custom distro
+                        configuration file.
+                        You can then "whitelist" the variable through
+                        to the SDK by adding the following:
                         <literallayout class='monospaced'>
      SDK_LOCAL_CONF_WHITELIST = "SSTATE_MIRRORS"
                         </literallayout>
@@ -324,8 +326,8 @@
         <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_EXT_TYPE'><filename>SDK_EXT_TYPE</filename></ulink>
         to "minimal" produces an SDK installer that is around 35 Mbytes in
         size, which downloads and installs quickly.
-        You need to realize, though, that the installer does not install any
-        libraries or tools out of the box.
+        You need to realize, though, that the minimal installer does not
+        install any libraries or tools out of the box.
         These must be installed either "on the fly" or through actions you
         perform using <filename>devtool</filename> or explicitly with the
         <filename>devtool sdk-install</filename> command.
