@@ -95,24 +95,53 @@
     <title>Using <filename>devtool</filename> in Your SDK Workflow</title>
 
     <para>
-        <filename>devtool</filename> helps you easily develop projects whose
-        build output must be part of an image built using the OpenEmbedded
-        build system.
+        The cornerstone of the extensible SDK is a command-line tool
+        called <filename>devtool</filename>.
+        This tool provides a number of features that help
+        you build, test and package software within the extensible SDK, and
+        optionally integrate it into an image built by the OpenEmbedded build
+        system.
     </para>
 
     <para>
-        These entry points exist that allow you to develop using
-        <filename>devtool</filename>:
+        The <filename>devtool</filename> command line is organized similarly
+        to
+        <ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink> in that it has a
+        number of sub-commands for each function.
+        You can run <filename>devtool --help</filename> to see all the
+        commands.
+    </para>
+
+    <para>
+        Two <filename>devtool</filename> subcommands that provide
+        entry-points into development are:
         <itemizedlist>
-            <listitem><para><emphasis><filename>devtool add</filename></emphasis>
+            <listitem><para><emphasis><filename>devtool add</filename></emphasis>:
+                Assists in adding new software to be built.
                 </para></listitem>
-            <listitem><para><emphasis><filename>devtool modify</filename></emphasis>
+            <listitem><para><emphasis><filename>devtool modify</filename></emphasis>:
+                Sets up an environment to enable you to modify the source of
+                an existing component.
                 </para></listitem>
         </itemizedlist>
+        As with the OpenEmbedded build system, "recipes" represent software
+        packages within <filename>devtool</filename>.
+        When you use <filename>devtool add</filename>, a recipe is
+        automatically created.
+        When you use <filename>devtool modify</filename>, the specified
+        existing recipe is used in order to determine where to get the source
+        code and how to patch it.
+        In both cases, an environment is set up so that when you build the
+        recipe a source tree that is under your control is used in order to
+        allow you to make changes to the source as desired.
+        By default, both new recipes and the source go into a "workspace"
+        directory under the SDK.
     </para>
 
     <para>
-        The remainder of this section presents these workflows.
+        The remainder of this section presents the
+        <filename>devtool add</filename> and
+        <filename>devtool modify</filename> workflows.
     </para>
 
     <section id='sdk-use-devtool-to-add-an-application'>
@@ -494,9 +523,9 @@
                     </para></listitem>
                 <listitem><para><emphasis>Deploy the Build Output</emphasis>:
                     When you use the <filename>devtool build</filename>
-                    command or <filename>bitbake</filename> to build out your
-                    recipe, you probably want to see if the resulting build
-                    output works as expected on target hardware.
+                    command to build out your recipe, you probably want to see
+                    if the resulting build output works as expected on target
+                    hardware.
                     <note>
                         This step assumes you have a previously built
                         image that is already either running in QEMU or
