@@ -383,6 +383,613 @@
     </para>
 </section>
 
+<section id='sdk-a-closer-look-at-devtool-add'>
+    <title>A Closer Look at <filename>devtool add</filename></title>
+
+    <para>
+        The <filename>devtool add</filename> command automatically creates a
+        recipe based on the source tree with which you provide it.
+        Currently, the command has support for the following:
+        <itemizedlist>
+            <listitem><para>
+                Autotools (<filename>autoconf</filename> and
+                <filename>automake</filename>)
+                </para></listitem>
+            <listitem><para>
+                <filename>CMake</filename>
+                </para></listitem>
+            <listitem><para>
+                <filename>Scons</filename>
+                </para></listitem>
+            <listitem><para>
+                <filename>qmake</filename>
+                </para></listitem>
+            <listitem><para>
+                Plain <filename>Makefile</filename>
+                </para></listitem>
+            <listitem><para>
+                Out-of-tree kernel module
+                </para></listitem>
+            <listitem><para>
+                Binary package (i.e. "-b" option)
+                </para></listitem>
+            <listitem><para>
+                <filename>Node.js</filename> module through
+                <filename>npm</filename>
+                </para></listitem>
+            <listitem><para>
+                Python modules that use <filename>setuptools</filename>
+                or <filename>distutils</filename>
+                </para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Apart from binary packages, the determination of how a source tree
+        should be treated is automatic based on the files present within
+        that source tree.
+        For example, if a <filename>CMakeLists.txt</filename> file is found,
+        then the source tree is assumed to be using
+        <filename>CMake</filename> and is treated accordingly.
+        <note>
+            In most cases, you need to edit the automatically generated
+            recipe in order to make it build properly.
+            Typically, you would go through several edit and build cycles
+            until you can build the recipe.
+            Once the recipe can be built, you could use possible further
+            iterations to test the recipe on the target device.
+        </note>
+    </para>
+
+    <para>
+        The remainder of this section covers specifics regarding how parts
+        of the recipe are generated.
+    </para>
+
+    <section id='sdk-name-and-version'>
+        <title>Name and Version</title>
+
+        <para>
+            If you do not specify a name and version on the command
+            line, <filename>devtool add</filename> attempts to determine
+            the name and version of the software being built from
+            various metadata within the source tree.
+            Furthermore, the command sets the name of the created recipe
+            file accordingly.
+            If the name or version cannot be determined, the
+            <filename>devtool add</filename> command prints an error and
+            you must re-run the command with both the name and version
+            or just the name or version specified.
+        </para>
+
+        <para>
+            Sometimes the name or version determined from the source tree
+            might be incorrect.
+            For such a case, you must run the following commands:
+            <literallayout class='monospaced'>
+     $ devtool reset -n <replaceable>recipename</replaceable>
+            </literallayout>
+            After running the <filename>devtool reset</filename> command,
+            you need to run <filename>devtool add</filename> again and
+            provide the name or the version.
+        </para>
+    </section>
+
+    <section id='sdk-dependency-detection-and-mapping'>
+        <title>Dependency Detection and Mapping</title>
+
+        <para>
+            The <filename>devtool add</filename> command attempts to
+            detect build-time dependencies and map them to other recipes
+            in the system.
+            During this mapping, the command fills in the names of those
+            recipes in the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
+            value within the recipe.
+            If a dependency cannot be mapped, then a comment is placed in
+            the recipe indicating such.
+            The inability to map a dependency might be caused because the
+            naming is not recognized or because the dependency simply is
+            not available.
+            For cases where the dependency is not available, you must use
+            the <filename>devtool add</filename> command to add an
+            additional recipe to satisfy the dependency and then come
+            back to the first recipe and add its name to
+            <filename>DEPENDS</filename>.
+        </para>
+
+        <para>
+            If you need to add runtime dependencies, you can do so by
+            adding the following to your recipe:
+            <literallayout class='monospaced'>
+     RDEPENDS_${PN} += "dependency1 dependency2 ..."
+            </literallayout>
+            <note>
+                The <filename>devtool add</filename> command often cannot
+                distinguish between mandatory and optional dependencies.
+                Consequently, some of the detected dependencies might
+                in fact be optional.
+                When in doubt, consult the documentation or the configure
+                script for the software the recipe is building for further
+                details.
+                In some cases, you might find you can substitute the
+                dependency for an option to disable the associated
+                functionality passed to the configure script.
+            </note>
+        </para>
+    </section>
+
+    <section id='sdk-license-detection'>
+        <title>License Detection</title>
+
+        <para>
+            The <filename>devtool add</filename> command attempts to
+            determine if the software you are adding is able to be
+            distributed under a common open-source license and sets the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE'><filename>LICENSE</filename></ulink>
+            value accordingly.
+            You should double-check this value against the documentation
+            or source files for the software you are building and update
+            that <filename>LICENSE</filename> value if necessary.
+        </para>
+
+        <para>
+            The <filename>devtool add</filename> command also sets the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM'><filename>LIC_FILES_CHKSUM</filename></ulink>
+            value to point to all files that appear to be license-related.
+            However, license statements often appear in comments at the top
+            of source files or within documentation.
+            Consequently, you might need to amend the
+            <filename>LIC_FILES_CHKSUM</filename> variable to point to one
+            or more of those comments if present.
+            Setting <filename>LIC_FILES_CHKSUM</filename> is particularly
+            important for third-party software.
+            The command attempts to ensure correct licensing should you
+            upgrade the recipe to a newer upstream version in future.
+            Any change in licensing is detected and you receive an error
+            prompting you to check the license text again.
+        </para>
+
+        <para>
+            If the <filename>devtool add</filename> command cannot
+            determine licensing information, the
+            <filename>LICENSE</filename> value is set to "CLOSED" and the
+            <filename>LIC_FILES_CHKSUM</filename> vaule remains unset.
+            This behavior allows you to continue with development but is
+            unlikely to be correct in all cases.
+            Consequently, you should check the documentation or source
+            files for the software you are building to determine the actual
+            license.
+        </para>
+    </section>
+
+    <section id='sdk-adding-makefile-only-software'>
+        <title>Adding Makefile-Only Software</title>
+
+        <para>
+            The use of <filename>make</filename> by itself is very common
+            in both proprietary and open source software.
+            Unfortunately, Makefiles are often not written with
+            cross-compilation in mind.
+            Thus, <filename>devtool add</filename> often cannot do very
+            much to ensure that these Makefiles build correctly.
+            It is very common, for example, to explicitly call
+            <filename>gcc</filename> instead of using the
+            <filename>CC</filename> variable.
+            Usually, in a cross-compilation environment,
+            <filename>gcc</filename> is the compiler for the build host
+            and the cross-compiler is named something similar to
+            <filename>arm-poky-linux-gnueabi-gcc</filename> and might
+            require some arguments (e.g. to point to the associated sysroot
+            for the target machine).
+        </para>
+
+        <para>
+            When writing a recipe for Makefile-only software, keep the
+            following in mind:
+            <itemizedlist>
+                <listitem><para>
+                    You probably need to patch the Makefile to use
+                    variables instead of hardcoding tools within the
+                    toolchain such as <filename>gcc</filename> and
+                    <filename>g++</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    The environment in which <filename>make</filename> runs
+                    is set up with various standard variables for
+                    compilation (e.g. <filename>CC</filename>,
+                    <filename>CXX</filename>, and so forth) in a similar
+                    manner to the environment set up by the SDK's
+                    environment setup script.
+                    One easy way to see these variables is to run the
+                    <filename>devtool build</filename> command on the
+                    recipe and then look in
+                    <filename>oe-logs/run.do_compile</filename>.
+                    Towards the top of this file you will see a list of
+                    environment variables that are being set.
+                    You can take advantage of these variables within the
+                    Makefile.
+                    </para></listitem>
+                <listitem><para>
+                    If the Makefile sets a default for a variable, that
+                    default overrides the value set in the environment,
+                    which is usually not desirable.
+                    In this situation, you can either patch the Makefile
+                    so it sets the default using the "?=" operator, or
+                    you can alternatively force the value on the
+                    <filename>make</filename> command line.
+                    To force the value on the command line, add the
+                    variable setting to
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OEMAKE'><filename>EXTRA_OEMAKE</filename></ulink>
+                    within the recipe as follows:
+                    <literallayout class='monospaced'>
+     EXTRA_OEMAKE += "'CC=${CC}' 'CXX=${CXX}'"
+                    </literallayout>
+                    In the above example, single quotes are used around the
+                    variable settings as the values are likely to contain
+                    spaces because required default options are passed to
+                    the compiler.
+                    </para></listitem>
+                <listitem><para>
+                    Hardcoding paths inside Makefiles is often problematic
+                    in a cross-compilation environment.
+                    This is particularly true because those hardcoded paths
+                    often point to locations on the build host and thus
+                    will either be read-only or will introduce
+                    contamination into the cross-compilation by virtue of
+                    being specific to the build host rather than the target.
+                    Patching the Makefile to use prefix variables or other
+                    path variables is usually the way to handle this.
+                    </para></listitem>
+                <listitem><para>
+                    Sometimes a Makefile runs target-specific commands such
+                    as <filename>ldconfig</filename>.
+                    For such cases, you might be able to simply apply
+                    patches that remove these commands from the Makefile.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='sdk-adding-native-tools'>
+        <title>Adding Native Tools</title>
+
+        <para>
+            Often, you need to build additional tools that run on the
+            build host system as opposed to the target.
+            You should indicate this using one of the following methods
+            when you run <filename>devtool add</filename>:
+            <itemizedlist>
+                <listitem><para>
+                    Specify the name of the recipe such that it ends
+                    with "-native".
+                    Specifying the name like this produces a recipe that
+                    only builds for the build host.
+                    </para></listitem>
+                <listitem><para>
+                    Specify the "&dash;&dash;also-native" option with the
+                    <filename>devtool add</filename> command.
+                    Specifying this option creates a recipe file that still
+                    builds for the target but also creates a variant with
+                    a "-native" suffix that builds for the build host.
+                    </para></listitem>
+            </itemizedlist>
+            <note>
+                If you need to add a tool that is shipped as part of a
+                source tree that builds code for the target, you can
+                typically accomplish this by building the native and target
+                parts separately rather than within the same compilation
+                process.
+                Realize though that with the "&dash;&dash;also-native" option, you
+                can add the tool using just one recipe file.
+            </note>
+        </para>
+    </section>
+
+    <section id='sdk-adding-node-js-modules'>
+        <title>Adding <filename>Node.js</filename> Modules</title>
+
+        <para>
+            You can use the <filename>devtool add</filename> command in the
+            following form to add <filename>Node.js</filename> modules:
+            <literallayout class='monospaced'>
+     $ devtool add "npm://registry.npmjs.org;name=forever;version=0.15.1"
+            </literallayout>
+            The name and version parameters are mandatory.
+            Lockdown and shrinkwrap files are generated and pointed to by
+            the recipe in order to freeze the version that is fetched for
+            the dependencies according to the first time.
+            This also saves checksums that are verified on future fetches.
+            Together, these behaviors ensure the reproducibility and
+            integrity of the build.
+            <note><title>Notes</title>
+                <itemizedlist>
+                    <listitem><para>
+                        You must use quotes around the URL.
+                        The <filename>devtool add</filename> does not require
+                        the quotes, but the shell considers ";" as a splitter
+                        between multiple commands.
+                        Thus, <filename>devtool add</filename> does not receive
+                        the other parts resulting in several "command not found"
+                        errors.
+                        </para></listitem>
+                    <listitem><para>
+                        In order to support adding
+                        <filename>Node.js</filename> modules, a
+                        <filename>nodejs</filename> recipe must be part of your
+                        SDK in order to provide <filename>Node.js</filename>
+                        itself.
+                        </para></listitem>
+                </itemizedlist>
+            </note>
+        </para>
+    </section>
+</section>
+
+<section id='sdk-working-with-recipes'>
+    <title>Working With Recipes</title>
+
+    <para>
+        When building a recipe with <filename>devtool build</filename> the
+        typical workflow is as follows:
+        <orderedlist>
+            <listitem><para>
+                Fetch the source
+                </para></listitem>
+            <listitem><para>
+                Unpack the source
+                </para></listitem>
+            <listitem><para>
+                Configure the source
+                </para></listitem>
+            <listitem><para>
+                Compiling the source
+                </para></listitem>
+            <listitem><para>
+                Install the build output
+                </para></listitem>
+            <listitem><para>
+                Package the installed output
+                </para></listitem>
+        </orderedlist>
+        For recipes in the workspace, fetching and unpacking is disabled
+        as the source tree has already been prepared and is persistent.
+        Each of these build steps is defined as a function, usually with a
+        "do_" prefix.
+        These functions are typically shell scripts but can instead be written
+        in Python.
+    </para>
+
+    <para>
+        If you look at the contents of a recipe, you will see that the
+        recipe does not include complete instructions for building the
+        software.
+        Instead, common functionality is encapsulated in classes inherited
+        with the <filename>inherit</filename> directive, leaving the recipe
+        to describe just the things that are specific to the software to be
+        built.
+        A <ulink url='ref-classes-base'><filename>base</filename></ulink>
+        class exists that is implicitly inherited by all recipes and provides
+        the functionality that most typical recipes need.
+    </para>
+
+    <para>
+        The remainder of this section presents information useful when
+        working with recipes.
+    </para>
+
+    <section id='sdk-finding-logs-and-work-files'>
+        <title>Finding Logs and Work Files</title>
+
+        <para>
+            When you are debugging a recipe that you previously created using
+            <filename>devtool add</filename> or whose source you are modifying
+            by using the <filename>devtool modify</filename> command, after
+            the first run of <filename>devtool build</filename>, you will
+            find some symbolic links created within the source tree:
+            <filename>oe-logs</filename>, which points to the directory in
+            which log files and run scripts for each build step are created
+            and <filename>oe-workdir</filename>, which points to the temporary
+            work area for the recipe.
+            You can use these links to get more information on what is
+            happening at each build step.
+        </para>
+
+        <para>
+            These locations under <filename>oe-workdir</filename> are
+            particularly useful:
+            <itemizedlist>
+                <listitem><para><filename>image/</filename>:
+                    Contains all of the files installed at the
+                    <ulink url='&YOCTO_DOCS_REF_URL;ref-tasks-install'><filename>do_install</filename></ulink>
+                    stage.
+                    Within a recipe, this directory is referred to by the
+                    expression
+                    <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>.
+                    </para></listitem>
+                <listitem><para><filename>sysroot-destdir/</filename>:
+                    Contains a subset of files installed within
+                    <filename>do_install</filename> that have been put into the
+                    shared sysroot.
+                    For more information, see the
+                    "<link linkend='sdk-sharing-files-between-recipes'>Sharing Files Between Recipes</link>"
+                    section.
+                    </para></listitem>
+                <listitem><para><filename>packages-split/</filename>:
+                    Contains subdirectories for each package produced by the
+                    recipe. (more on "Packaging" below)
+                    For more information, see the
+                    "<link linkend='sdk-packaging'>Packaging</link>" section.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='sdk-setting-configure-arguments'>
+        <title>Setting Configure Arguments</title>
+
+        <para>
+            If the software your recipe is building uses GNU autoconf,
+            then a fixed set of arguments is passed to it to enable
+            cross-compilation plus any extras specified by
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></ulink>
+            set within the recipe.
+            If you wish to pass additional options, add them to
+            <filename>EXTRA_OECONF</filename>.
+            Other supported build tools have similar variables
+            (e.g.
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OECMAKE'><filename>EXTRA_OECMAKE</filename></ulink>
+            for CMake,
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OESCONS'><filename>EXTRA_OESCONS</filename></ulink>
+            for <filename>Scons</filename>, and so forth).
+            If you need to pass anything on the <filename>make</filename>
+            command line, you can use <filename>EXTRA_OEMAKE</filename> to do
+            so.
+        </para>
+
+        <para>
+            You can use the <filename>devtool configure-help</filename> command
+            to help you set the arguments listed in the previous paragraph.
+            The command determines the exact options being passed, and shows
+            them to you along with any custom arguments specified through
+            <filename>EXTRA_OECONF</filename>.
+            If applicable, the command also shows you the output of the
+            configure script's "&dash;&dash;help" option as a reference.
+        </para>
+    </section>
+
+    <section id='sdk-sharing-files-between-recipes'>
+        <title>Sharing Files Between Recipes</title>
+
+        <para>
+            Recipes often need to use files provided by other recipes on
+            the build host.
+            For example, an application linking to a common library needs
+            access to the library itself and its associated headers.
+            The way this access is accomplished within the extensible SDK is
+            through the sysroot.
+            One sysroot exists per "machine" for which the SDK is being built.
+            In practical terms, this means a sysroot exists for the target
+            machine, and a sysroot exists for the build host.
+        </para>
+
+        <para>
+            Recipes should never write files directly into the sysroot.
+            Instead, files should be installed into standard locations
+            during the
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
+            task within the
+            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>
+            directory.
+            A subset of these files automatically go into the sysroot.
+            The reason for this limitation is that almost all files that go
+            into the sysroot are cataloged in manifests in order to ensure
+            they can be removed later when a a recipe is modified or removed.
+            Thus, the sysroot is able to remain free from stale files.
+        </para>
+    </section>
+
+    <section id='sdk-packaging'>
+        <title>Packaging</title>
+
+        <para>
+            Packaging is not always particularly relevant within the
+            extensible SDK.
+            However, if you examine build output gets into the final image on
+            the target device, it is important to understand packaging
+            because the contents of the image are expressed in terms of
+            packages ... not recipes.
+        </para>
+
+        <para>
+            During the
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-package'><filename>do_package</filename></ulink>
+            task, files installed during the
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
+            task are split into one main package, which is almost always named
+            the same as the recipe, and several other packages.
+            This separation is done because not all of those installed files
+            are always useful in every image.
+            For example, you probably do not need any of the documentation
+            installed in a production image.
+            Consequently, for each recipe the documentation files are separated
+            into a <filename>-doc</filename> package.
+            Recipes that package software that has optional modules or
+            plugins might do additional package splitting as well.
+        </para>
+
+        <para>
+            After building a recipe you can see where files have gone by
+            looking in the <filename>oe-workdir/packages-split</filename>
+            directory, which contains a subdirectory for each package.
+            Apart from some advanced cases, the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'><filename>PACKAGES</filename></ulink>
+            and
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'><filename>FILES</filename></ulink>
+            variables controls splitting.
+            The <filename>PACKAGES</filename> variable lists all of the
+            packages to be produced, while the <filename>FILES</filename>
+            variable specifies which files to include in each package,
+            using an override to specify the package.
+            For example, <filename>FILES_${PN}</filename> specifies the files
+            to go into the main package (i.e. the main package is named the
+            same as the recipe and
+            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>
+            evaluates to the recipe name).
+            The order of the <filename>PACKAGES</filename> value is significant.
+            For each installed file, the first package whose
+            <filename>FILES</filename> value matches the file is the package
+            into which the file goes.
+            Defaults exist for both the <filename>PACKAGES</filename> and
+            <filename>FILES</filename> variables.
+            Consequently, you might find you do not even need to set these
+            variables in your recipe unless the software the recipe is
+            building installs files into non-standard locations.
+        </para>
+    </section>
+
+    <section id='sdk-restoring-the-target-device-to-its-original-state'>
+        <title>Restoring the Target Device to its Original State</title>
+
+        <para>
+            If you use the <filename>devtool deploy-target</filename>
+            command to write a recipe's build output to the target, and
+            you are working on an existing component of the system, then you
+            might find yourself in a situation where you need to restore the
+            original files that existed prior to running the
+            <filename>devtool deploy-target</filename> command.
+            Because the <filename>devtool deploy-target</filename> command
+            backs up any files it overwrites, you can use the
+            <filename>devtool undeploy-target</filename> to restore those files
+            and remove any other files the recipe deployed.
+            Consider the following example:
+            <literallayout class='monospaced'>
+     $ devtool undeploy-target lighttpd root@192.168.7.2
+            </literallayout>
+            If you have deployed multiple applications, you can remove them
+            all at once thus restoring the target device back to its
+            original state:
+            <literallayout class='monospaced'>
+     $ devtool undeploy-target -a root@192.168.7.2
+            </literallayout>
+            Information about files deployed to the target as well as any
+            backed up files are stored on the target itself.
+            This storage of course requires some additional space
+            on the target machine.
+            <note>
+                The <filename>devtool deploy-target</filename> and
+                <filename>devtool undeploy-target</filename> command do not
+                currently interact with any package management system on the
+                target device (e.g. RPM or OPKG).
+                Consequently, you should not intermingle operations
+                <filename>devtool deploy-target</filename> and the package
+                manager operations on the target device.
+                Doing so could result in a conflicting set of files.
+            </note>
+        </para>
+    </section>
+</section>
+
 </appendix>
 <!--
 vim: expandtab tw=80 ts=4
