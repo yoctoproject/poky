@@ -5133,6 +5133,112 @@
                 Yocto kernel.
             </para>
         </section>
+
+        <section id='determining-hardware-and-non-hardware-features-for-the-kernel-configuration-audit-phase'>
+            <title>Determining Hardware and Non-Hardware Features for the Kernel Configuration Audit Phase</title>
+
+            <para>
+                This section describes part of the kernel configuration audit
+                phase that most developers can ignore.
+                During this part of the audit phase, the contents of the final
+                <filename>.config</filename> file are compared against the
+                fragments specified by the system.
+                These fragments can be system fragments, distro fragments,
+                or user specified configuration elements.
+                Regardless of their origin, the OpenEmbedded build system
+                warns the user if a specific option is not included in the
+                final kernel configuration.
+            </para>
+
+            <para>
+                In order to not overwhelm the user with configuration warnings,
+                by default the system only reports on missing "hardware"
+                options because a missing hardware option could mean a boot
+                failure or that important hardware is not available.
+            </para>
+
+            <para>
+                To determine whether or not a given option is "hardware" or
+                "non-hardware", the kernel Metadata contains files that
+                classify individual or groups of options as either hardware
+                or non-hardware.
+                To better show this, consider a situation where the
+                Yocto Project kernel cache contains the following files:
+                <literallayout class='monospaced'>
+     kernel-cache/features/drm-psb/hardware.cfg
+     kernel-cache/features/kgdb/hardware.cfg
+     kernel-cache/ktypes/base/hardware.cfg
+     kernel-cache/bsp/mti-malta32/hardware.cfg
+     kernel-cache/bsp/fsl-mpc8315e-rdb/hardware.cfg
+     kernel-cache/bsp/qemu-ppc32/hardware.cfg
+     kernel-cache/bsp/qemuarma9/hardware.cfg
+     kernel-cache/bsp/mti-malta64/hardware.cfg
+     kernel-cache/bsp/arm-versatile-926ejs/hardware.cfg
+     kernel-cache/bsp/common-pc/hardware.cfg
+     kernel-cache/bsp/common-pc-64/hardware.cfg
+     kernel-cache/features/rfkill/non-hardware.cfg
+     kernel-cache/ktypes/base/non-hardware.cfg
+     kernel-cache/features/aufs/non-hardware.kcf
+     kernel-cache/features/ocf/non-hardware.kcf
+     kernel-cache/ktypes/base/non-hardware.kcf
+     kernel-cache/ktypes/base/hardware.kcf
+     kernel-cache/bsp/qemu-ppc32/hardware.kcf
+                </literallayout>
+                The following list provides explanations for the various
+                files:
+                <itemizedlist>
+                    <listitem><para><filename>hardware.kcf</filename>:
+                        Specifies a list of kernel Kconfig files that contain
+                        hardware options only.
+                        </para></listitem>
+                    <listitem><para><filename>non-hardware.kcf</filename>:
+                        Specifies a list of kernel Kconfig files that contain
+                        non-hardware options only.
+                        </para></listitem>
+                    <listitem><para><filename>hardware.cfg</filename>:
+                        Specifies a list of kernel
+                        <filename>CONFIG_</filename> options that are hardware,
+                        regardless of whether or not they are within a Kconfig
+                        file specified by a hardware or non-hardware
+                        Kconfig file (i.e. <filename>hardware.kcf</filename> or
+                        <filename>non-hardware.kcf</filename>).
+                        </para></listitem>
+                    <listitem><para><filename>non-hardware.cfg</filename>:
+                        Specifies a list of kernel
+                        <filename>CONFIG_</filename> options that are
+                        not hardware, regardless of whether or not they are
+                        within a Kconfig file specified by a hardware or
+                        non-hardware Kconfig file (i.e.
+                        <filename>hardware.kcf</filename> or
+                        <filename>non-hardware.kcf</filename>).
+                        </para></listitem>
+                </itemizedlist>
+                Here is a specific example using the
+                <filename>kernel-cache/bsp/mti-malta32/hardware.cfg</filename>:
+                <literallayout class='monospaced'>
+     CONFIG_SERIAL_8250
+     CONFIG_SERIAL_8250_CONSOLE
+     CONFIG_SERIAL_8250_NR_UARTS
+     CONFIG_SERIAL_8250_PCI
+     CONFIG_SERIAL_CORE
+     CONFIG_SERIAL_CORE_CONSOLE
+     CONFIG_VGA_ARB
+                </literallayout>
+                The kernel configuration audit automatically detects these
+                files (hence the names must be exactly the ones discussed here),
+                and uses them as inputs when generating warnings about the
+                final <filename>.config</filename> file.
+            </para>
+
+            <para>
+                A user-specified kernel Metadata repository, or recipe space
+                feature, can use these same files to classify options that are
+                found within its <filename>.cfg</filename> files as hardware
+                or non-hardware, to prevent the OpenEmbedded build system from
+                producing an error or warning when an option is not in the
+                final <filename>.config</filename> file.
+            </para>
+        </section>
     </section>
 
     <section id="patching-the-kernel">
