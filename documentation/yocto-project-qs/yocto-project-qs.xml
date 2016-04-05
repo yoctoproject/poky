@@ -598,7 +598,7 @@
             </orderedlist>
         </para>
 
-        <para>
+        <para id='qs-minnowboard-example'>
             The following steps show how easy it is to set up to build an
             image for a new machine.
             These steps build an image for the MinnowBoard MAX, which is
@@ -621,16 +621,35 @@
                     Building an image for the MinnowBoard MAX requires the
                     <filename>meta-intel</filename> layer.
                     Use the <filename>git clone</filename> command to create
-                    a local copy of the repository:
+                    a local copy of the repository inside your
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>,
+                    which is <filename>poky</filename> in this example:
                     <literallayout class='monospaced'>
+     $ cd $HOME/poky
      $ git clone git://git.yoctoproject.org/meta-intel
      Cloning into 'meta-intel'...
-     remote: Counting objects: 10824, done.
-     remote: Compressing objects: 100% (3508/3508), done.
-     remote: Total 10824 (delta 6219), reused 10580 (delta 5975)
-     Receiving objects: 100% (10824/10824), 2.72 MiB | 482.00 KiB/s, done.
-     Resolving deltas: 100% (6219/6219), done.
+     remote: Counting objects: 11988, done.
+     remote: Compressing objects: 100% (3884/3884), done.
+     Receiving objects: 100% (11988/11988), 2.93 MiB | 2.51 MiB/s, done.
+     remote: Total 11988 (delta 6881), reused 11752 (delta 6645)
+     Resolving deltas: 100% (6881/6881), done.
      Checking connectivity... done.
+                    </literallayout>
+                    By default when you clone a Git repository, the
+                    "master" branch is checked out.
+                    Before you build your image that uses the
+                    <filename>meta-intel</filename> layer, you must be
+                    sure that both repositories
+                    (<filename>meta-intel</filename> and
+                    <filename>poky</filename>) are using the same releases.
+                    Consequently, you need to checkout out the
+                    "&DISTRO_NAME_NO_CAP;" release after cloning
+                    <filename>meta-intel</filename>:
+                    <literallayout class='monospaced'>
+     $ cd $HOME/poky/meta-intel
+     $ git checkout &DISTRO_NAME_NO_CAP;
+     Branch &DISTRO_NAME_NO_CAP; set up to track remote branch &DISTRO_NAME_NO_CAP; from origin.
+     Switched to a new branch '&DISTRO_NAME_NO_CAP;'
                     </literallayout>
                     </para></listitem>
                 <listitem><para><emphasis>Configure the Build:</emphasis>
@@ -650,7 +669,8 @@
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
                     variable.
                     <literallayout class='monospaced'>
-     $ bitbake-layers add-layer "$HOME/source/poky/meta-intel"
+     $ cd $HOME/poky/build
+     $ bitbake-layers add-layer "$HOME/poky/meta-intel"
      $ echo 'MACHINE = "intel-corei7-64"' >> conf/local.conf
                     </literallayout>
                     <note><title>Notes</title>
