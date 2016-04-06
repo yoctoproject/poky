@@ -200,7 +200,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/using-a-pre-built-image.png \
 	figures/poky-title.png figures/buildhistory.png \
         figures/buildhistory-web.png \
-	figures/adt-title.png figures/sdk-title.png figures/bsp-title.png \
+	figures/sdk-title.png figures/bsp-title.png \
 	figures/kernel-dev-title.png figures/kernel-architecture-overview.png \
 	figures/bsp-dev-flow.png \
         figures/dev-title.png \
@@ -270,18 +270,6 @@ TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/patching.png figures/configuration-compile-autoreconf.png \
 	figures/analysis-for-package-splitting.png figures/image-generation.png \
 	figures/sdk-generation.png figures/building-an-image.png
-MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
-FIGURES = figures
-STYLESHEET = $(DOC)/*.css
-endif
-
-
-ifeq ($(DOC),adt-manual)
-XSLTOPTS = --xinclude
-ALLPREQ = html eclipse tarball
-TARFILES = adt-manual.html adt-style.css figures/adt-title.png \
-           figures/using-a-pre-built-image.png \
-           eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
@@ -415,12 +403,11 @@ eclipse: eclipse-generate eclipse-resolve-links
 .PHONY : eclipse-generate eclipse-resolve-links
 
 eclipse-generate:
-ifeq ($(filter $(DOC), adt-manual sdk-manual bsp-guide dev-manual kernel-dev profile-manual ref-manual yocto-project-qs),)
+ifeq ($(filter $(DOC), sdk-manual bsp-guide dev-manual kernel-dev profile-manual ref-manual yocto-project-qs),)
 	@echo " "
 	@echo "ERROR: You can only create eclipse documentation"
 	@echo "       of the following documentation parts:"
 	@echo "       - sdk-manual"
-	@echo "       - adt-manual"
 	@echo "       - bsp-guide"
 	@echo "       - dev-manual"
 	@echo "       - kernel-dev"
