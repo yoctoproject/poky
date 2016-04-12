@@ -3495,14 +3495,7 @@
             </para>
 
             <para>
-                This section overviews the Multilib process only.
-                For more details on how to implement Multilib, see the
-                <ulink url='&YOCTO_WIKI_URL;/wiki/Multilib'>Multilib</ulink> wiki
-                page.
-            </para>
-
-            <para>
-                Aside from this wiki page, several examples exist in the
+                Several examples exist in the
                 <filename>meta-skeleton</filename> layer found in the
                <link linkend='source-directory'>Source Directory</link>:
                 <itemizedlist>
@@ -3603,8 +3596,39 @@
                 <title>Additional Implementation Details</title>
 
                 <para>
-                    Different packaging systems have different levels of native Multilib
-                    support.
+                    Generic implementation details as well as details that are
+                    specific to package management systems exist.
+                    Following are implementation details that exist regardless
+                    of the package management system:
+                    <itemizedlist>
+                        <listitem><para>The typical convention used for the
+                            class extension code as used by
+                            Multilib assumes that all package names specified
+                            in
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'><filename>PACKAGES</filename></ulink>
+                            that contain <filename>${PN}</filename> have
+                            <filename>${PN}</filename> at the start of the name.
+                            When that convention is not followed and
+                            <filename>${PN}</filename> appears at
+                            the middle or the end of a name, problems occur.
+                            </para></listitem>
+                        <listitem><para>The
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-TARGET_VENDOR'><filename>TARGET_VENDOR</filename></ulink>
+                            value under Multilib will be extended to
+                            "-<replaceable>vendor</replaceable>ml<replaceable>multilib</replaceable>"
+                            (e.g. "-pokymllib32" for a "lib32" Multilib with
+                            Poky).
+                            The reason for this slightly unwieldy contraction
+                            is that any "-" characters in the vendor
+                            string presently break Autoconf's
+                            <filename>config.sub</filename>, and
+                            other separators are problematic for different
+                            reasons.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+'
+                <para>
                     For the RPM Package Management System, the following implementation details
                     exist:
                     <itemizedlist>
