@@ -3460,14 +3460,23 @@
     <title><filename>uninative.bbclass</filename></title>
 
     <para>
-        Provides a means of reusing <filename>native/cross</filename> over
-        multiple distros.
-        <note>
-            Currently, the method used by the <filename>uninative</filename>
-            class is experimental.
-        </note>
-        For more information, see the commit message
-        <ulink url='http://cgit.openembedded.org/openembedded-core/commit/?id=e66c96ae9c7ba21ebd04a4807390f0031238a85a'>here</ulink>.
+        Attempts to isolate the build system from the host
+        distribution's C library in order to make re-use of native shared state
+        artifacts across different host distributions practical.
+        With this class enabled, a tarball containing a pre-built C library
+        is downloaded at the start of the build.
+        In the Poky reference distribution this is enabled by default
+        through
+        <filename>meta/conf/distro/include/yocto-uninative.inc</filename>.
+        Other distributions that do not derive from poky can also
+        "<filename>require conf/distro/include/yocto-uninative.inc</filename>"
+        to use this.
+        Alternatively if you prefer, you can build the uninative-tarball recipe
+        yourself, publish the resulting tarball (e.g. via HTTP) and set
+        <filename>UNINATIVE_URL</filename> and
+        <filename>UNINATIVE_CHECKSUM</filename> appropriately.
+        For an example, see the
+        <filename>meta/conf/distro/include/yocto-uninative.inc</filename>.
     </para>
 </section>
 
