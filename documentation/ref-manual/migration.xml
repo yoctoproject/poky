@@ -2447,8 +2447,8 @@
                     </literallayout>
                     </para></listitem>
                 <listitem><para>
-                    <filename>d.delVar('</filename><replaceable>varname</replaceable><filename>')</filename> and
-                    <filename>d.setVar('</filename><replaceable>varname</replaceable><filename>', None)</filename>
+                    <filename>d.delVar('</filename><replaceable>VARNAME</replaceable><filename>')</filename> and
+                    <filename>d.setVar('</filename><replaceable>VARNAME</replaceable><filename>', None)</filename>
                     result in the variable and all of its overrides being
                     cleared out.
                     Before the change, only the non-overridden values
@@ -2740,13 +2740,13 @@
 
         <para>
             Variable expressions, such as
-            <filename>${</filename><replaceable>varname</replaceable><filename>}</filename>
+            <filename>${</filename><replaceable>VARNAME</replaceable><filename>}</filename>
             no longer expand automatically within Python functions.
             Suppressing expansion was done to allow Python functions to
             construct shell scripts or other code for situations in which you
             do not want such expressions expanded.
             For any existing code that relies on these expansions, you need to
-            change the expansions to either expand the value of individual
+            change the expansions to expand the value of individual
             variables through <filename>d.getVar()</filename>.
             To alternatively expand more complex expressions,
             use <filename>d.expand()</filename>.
@@ -2880,7 +2880,7 @@
             to allow the default implementation from the
             <filename>autotools</filename> class to work such that
             <filename>autoreconf</filename> succeeds and produces a working
-            configure script), and to remove the
+            configure script, and to remove the
             overridden <filename>do_configure</filename> task such that the
             default implementation does get used.
         </para>
@@ -2910,7 +2910,8 @@
             <filename>do_rootfs</filename>, you should make edits so that
             those tasks are after the
             <link linkend='ref-tasks-image-complete'><filename>do_image_complete</filename></link>
-            task rather than before the task so that the your added tasks
+            task rather than after <filename>do_rootfs</filename>
+            so that the your added tasks
             run at the correct time.
         </para>
 
@@ -3128,7 +3129,7 @@
                     The separate <filename>poky-tiny</filename> distribution
                     now uses the musl C library instead of a heavily pared
                     down <filename>glibc</filename>.
-                    Using <filename>glibc</filename> results in a smaller
+                    Using musl results in a smaller
                     distribution and facilitates much greater maintainability
                     because musl is designed to have a small footprint.</para>
 
@@ -3205,6 +3206,9 @@
                     If your host distribution does not provide a sufficiently
                     recent version, you can install the buildtools, which
                     will provide it.
+                    See the
+                    "<link linkend='required-git-tar-and-python-versions'>Required Git, tar, and Python Versions</link>"
+                    section for more information on the buildtools tarball.
                     </para></listitem>
                 <listitem><para>
                     The buggy and incomplete support for the RPM version 4
@@ -3228,10 +3232,8 @@
                     or does not specify whether a keyboard is attached, then
                     the default is to assume a keyboard is attached rather
                     than assume no keyboard.
-                    <note>
-                        This change primarily affects the Sato UI.
-                    </note>
-                    </para></listitem>
+                    This change primarily affects the Sato UI.
+                   </para></listitem>
                 <listitem><para>
                     The <filename>.debug</filename> directory packaging is
                     now automatic.
@@ -3248,8 +3250,8 @@
                     This data has been replaced with
                     <filename>getrusage()</filename> data and corrected IO
                     statistics.
-                    You will probably need to update code that reads the
-                    <filename>buildstats</filename> data.
+                    You will probably need to update any custom code that reads
+                    the <filename>buildstats</filename> data.
                     </para></listitem>
                 <listitem><para>
                     The
@@ -3272,8 +3274,9 @@
                     <filename>meta-yocto-bsp</filename> layer.
                     Most modern x86 boards do not rely on this file and it only
                     adds kernel error messages during startup.
-                    If you do still need the file, you can simply add
-                    <filename>v86d</filename> to your image.
+                    If you do still need to support
+                    <filename>uvesafb</filename>, you can
+                    simply add <filename>v86d</filename> to your image.
                     </para></listitem>
             </itemizedlist>
         </para>
