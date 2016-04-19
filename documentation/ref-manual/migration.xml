@@ -3058,6 +3058,10 @@
             <ulink url='&YOCTO_DOCS_SDK_URL;#sdk-extensible'>extensible SDK</ulink>.
             For information on these SDKs and how to build and use them, see the
             <ulink url='&YOCTO_DOCS_SDK_URL;#sdk-intro'>Yocto Project Software Development Kit (SDK) Developer's Guide</ulink>.
+            <note>
+                The Yocto Project Eclipse IDE Plug-in is still supported and
+                is not affected by this change.
+            </note>
         </para>
     </section>
 
@@ -3278,6 +3282,18 @@
                     <filename>uvesafb</filename>, you can
                     simply add <filename>v86d</filename> to your image.
                     </para></listitem>
+                <listitem><para>
+                     Build sysroot paths are now removed from debug symbol
+                     files.
+                     Removing these paths means that remote GDB using an
+                     unstripped build system sysroot will no longer work
+                     (although this was never documented to work).
+                     The supported method to accomplish something similar is
+                     to set <filename>IMAGE_GEN_DEBUGFS</filename> to "1",
+                     which will generate a companion debug image
+                     containing unstripped binaries and associated debug
+                     sources alongside the image.
+                     </para></listitem>
             </itemizedlist>
         </para>
     </section>
