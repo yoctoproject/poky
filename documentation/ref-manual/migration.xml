@@ -3221,6 +3221,25 @@
                     remains.
                     </para></listitem>
                 <listitem><para>
+                    Previously, the following list of packages were removed
+                    if package-management was not in
+                    <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>,
+                    regardless of any dependencies:
+                    <literallayout class='monospaced'>
+     update-rc.d
+     base-passwd
+     shadow
+     update-alternatives
+     run-postinsts
+                    </literallayout>
+                    With the Yocto Project 2.1 release, these packages are only
+                    removed if "read-only-rootfs" is in
+                    <filename>IMAGE_FEATURES</filename>, since they might
+                    still be needed for a read-write image even in the absence
+                    of a package manager (e.g. if users need to be added,
+                    modified, or removed at runtime).
+                    </para></listitem>
+                <listitem><para>
                     The
                     <ulink url='&YOCTO_DOCS_SDK_URL;#sdk-devtool-use-devtool-modify-to-modify-the-source-of-an-existing-component'><filename>devtool modify</filename></ulink>
                     command now defaults to extracting the source since that
