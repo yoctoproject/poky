@@ -3726,6 +3726,230 @@
         </section>
     </section>
 
+    <section id='enabling-gobject-introspection-support'>
+        <title>Enabling GObject Introspection Support</title>
+
+        <para>
+            <ulink url='https://wiki.gnome.org/Projects/GObjectIntrospection'>GObject introspection</ulink>
+            is the standard mechanism for accessing GObject-based software
+            from runtime environments.
+            GObject is a feature of the GLib library that provides an object
+            framework for the GNOME desktop and related software.
+            GObject Introspection adds information to GObject that allows
+            objects created within it to be represented across different
+            programming languages.
+            If you want to construct GStreamer pipelines using Python, or
+            control UPnP infrastructure using Javascript and GUPnP,
+            GObject introspection is the only way to do it.
+        </para>
+
+        <para>
+            This section describes the Yocto Project support for generating
+            and packaging GObject introspection data.
+            GObject introspection data is a description of the
+            API provided by libraries built on top of GLib framework,
+            and, in particular, that framework's GObject mechanism.
+            GObject Introspection Repository (GIR) files go to
+            <filename>-dev</filename> packages,
+            <filename>typelib</filename> files go to main packages as they
+            are packaged together with libraries that are introspected.
+        </para>
+
+        <para>
+            The data is generated when building such a library, by linking
+            the library with a small executable binary that asks the library
+            to describe itself, and then executing the binary and
+            processing its output.
+        </para>
+
+        <para>
+            Generating this data in a cross-compilation environment
+            is difficult because the library is produced for the target
+            architecture, but its code needs to be executed on the build host.
+            This problem is solved with the OpenEmbedded build system by
+            running the code through QEMU, which allows precisely that.
+            Unfortunately, QEMU does not always work perfectly as mentioned
+            in the xxx section.
+        </para>
+
+        <section id='enabling-the-generation-of-introspection-data'>
+            <title>Enabling the Generation of Introspection Data</title>
+
+            <para>
+                Enabling the generation of introspection data (GIR files)
+                in your library package involves the following:
+                <orderedlist>
+                    <listitem><para>
+                        Inherit the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-gobject-introspection'><filename>gobject-introspection</filename></ulink>
+                        class.
+                        </para></listitem>
+                    <listitem><para>
+                        Make sure introspection is not disabled anywhere in
+                        the recipe or from anything the recipe includes.
+                        Also, make sure that "gobject-introspection-data" is
+                        not in
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES_BACKFILL_CONSIDERED'><filename>DISTRO_FEATURES_BACKFILL_CONSIDERED</filename></ulink>
+                        and that "qemu-usermode" is not in
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES_BACKFILL_CONSIDERED'><filename>MACHINE_FEATURES_BACKFILL_CONSIDERED</filename></ulink>.
+                        If either of these conditions exist, nothing will
+                        happen.
+                        </para></listitem>
+                    <listitem><para>
+                        Try to build the recipe.
+                        If you encounter build errors that look like
+                        something is unable to find
+                        <filename>.so</filename> libraries, check where these
+                        libraries are located in the source tree and add
+                        the following to the recipe:
+                        <literallayout class='monospaced'>
+     GIR_EXTRA_LIBS_PATH = "${B}/<replaceable>something</replaceable>/.libs"
+                        </literallayout>
+                        <note>
+                            See recipes in the <filename>oe-core</filename>
+                            repository that use that
+                            <filename>GIR_EXTRA_LIBS_PATH</filename> variable
+                            as an example.
+                        </note>
+                        </para></listitem>
+                    <listitem><para>
+                        Look for any other errors, which probably mean that
+                        introspection support in a package is not entirely
+                        standard, and thus breaks down in a cross-compilation
+                        environment.
+                        For such cases, custom-made fixes are needed.
+                        A good place to ask and receive help in these cases
+                        is the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#resources-mailinglist'>Yocto Project mailing lists</ulink>.
+                        </para></listitem>
+                </orderedlist>
+                <note>
+                    Using a library that no longer builds against the latest
+                    Yocto Project release and prints introspection related
+                    errors is a good candidate for the previous procedure.
+                </note>
+            </para>
+        </section>
+
+        <section id='disabling-the-generation-of-introspection-data'>
+            <title>Disabling the Generation of Introspection Data</title>
+
+            <para>
+                You might find that you do not want to generate
+                introspection data.
+                Or, perhaps QEMU does not work on your build host and
+                target architecture combination.
+                If so, you can use either of the following methods to
+                disable GIR file generations:
+                <itemizedlist>
+                    <listitem><para>
+                        Add the following to your distro configuration:
+                        <literallayout class='monospaced'>
+     DISTRO_FEATURES_BACKFILL_CONSIDERED = "gobject-introspection-data"
+                        </literallayout>
+                        Adding this statement disables generating
+                        introspection data using QEMU but will still enable
+                        building introspection tools and libraries
+                        (i.e. building them does not require the use of QEMU).
+                        </para></listitem>
+                    <listitem><para>
+                        Add the following to your machine configuration:
+                        <literallayout class='monospaced'>
+     MACHINE_FEATURES_BACKFILL_CONSIDERED = "qemu-usermode"
+                        </literallayout>
+                        Adding this statement disables the use of QEMU
+                        when building packages for your machine.
+                        Currently, this feature is used only by introspection
+                        recipes and has the same effect as the previously
+                        described option.
+                        <note>
+                            Future releases of the Yocto Project might have
+                            other features affected by this option.
+                        </note>
+                        </para></listitem>
+                </itemizedlist>
+                If you disable introspection data, you can still
+                obtain it through other means such as copying the data
+                from a suitable sysroot, or by generating it on the
+                target hardware.
+                The OpenEmbedded build system does not currently
+                provide specific support for these techniques.
+            </para>
+        </section>
+
+        <section id='testing-that-introspection-works-in-an-image'>
+            <title>Testing that Introspection Works in an Image</title>
+
+            <para>
+                Use the following procedure to test if generating
+                introspection data is working in an image:
+                <orderedlist>
+                    <listitem><para>
+                        Make sure that "gobject-introspection-data" is not in
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES_BACKFILL_CONSIDERED'><filename>DISTRO_FEATURES_BACKFILL_CONSIDERED</filename></ulink>
+                        and that "qemu-usermode" is not in
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES_BACKFILL_CONSIDERED'><filename>MACHINE_FEATURES_BACKFILL_CONSIDERED</filename></ulink>.
+                        </para></listitem>
+                    <listitem><para>
+                        Build <filename>core-image-sato</filename>.
+                        </para></listitem>
+                    <listitem><para>
+                        Launch a Terminal and then start Python in the
+                        terminal.
+                        </para></listitem>
+                    <listitem><para>
+                        Enter the following in the terminal:
+                        <literallayout class='monospaced'>
+     >>> from gi.repository import GLib
+     >>> GLib.get_host_name()
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        For something a little more advanced, enter the
+                        following:
+                        <literallayout class='monospaced'>
+     http://python-gtk-3-tutorial.readthedocs.org/en/latest/introduction.html
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+
+        <section id='known-issues'>
+            <title>Known Issues</title>
+
+            <para>
+                The following know issues exist for
+                GObject Introspection Support:
+                <itemizedlist>
+                    <listitem><para>
+                        <filename>qemu-ppc64</filename> immediately crashes.
+                        Consequently, you cannot build introspection data on
+                        that architecture.
+                        </para></listitem>
+                    <listitem><para>
+                        x32 is not supported by QEMU.
+                        Consequently, introspection data is disabled.
+                        </para></listitem>
+                    <listitem><para>
+                        musl causes transient GLib binaries to crash on
+                        assertion failures.
+                        Consequently, generating introspection data is
+                        disabled.
+                        </para></listitem>
+                    <listitem><para>
+                        Because QEMU is not able to run the binaries correctly,
+                        introspection is disabled for some specific packages
+                        under specific architectures (e.g.
+                        <filename>gcr</filename>,
+                        <filename>libsecret</filename>, and
+                        <filename>webkit</filename>).
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+    </section>
+
     <section id='dev-optionally-using-an-external-toolchain'>
         <title>Optionally Using an External Toolchain</title>
 
@@ -3802,10 +4026,10 @@
 	        it is based on is by definition incomplete.
             Its purpose is to allow the generation of customized images,
             and as such was designed to be completely extensible through a
-            plugin interface.
+            plug-in interface.
             See the
-            "<link linkend='openembedded-kickstart-plugins'>Plugins</link>"
-            section for information on these plugins.
+            "<link linkend='openembedded-kickstart-plugins'>Plug-ins</link>"
+            section for information on these plug-ins.
 	    </para>
 
         <para>
@@ -4367,21 +4591,21 @@
         </section>
 
         <section id='openembedded-kickstart-plugins'>
-            <title>Plugins</title>
+            <title>Plug-ins</title>
 
             <para>
-	            Plugins allow <filename>wic</filename> functionality to
+	            Plug-ins allow <filename>wic</filename> functionality to
 	            be extended and specialized by users.
                 This section documents the plugin interface, which is
-                currently restricted to source plugins.
+                currently restricted to source plug ins.
             </para>
 
             <para>
-	            Source plugins provide a mechanism to customize
+	            Source plug ins provide a mechanism to customize
 	            various aspects of the image generation process in
 	            <filename>wic</filename>, mainly the contents of
 	            partitions.
-	            The plugins provide a mechanism for mapping values
+	            The plug ins provide a mechanism for mapping values
 	            specified in <filename>.wks</filename> files using the
 	            <filename>--source</filename> keyword to a
                 particular plugin implementation that populates a
