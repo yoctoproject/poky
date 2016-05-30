@@ -1263,13 +1263,13 @@ def conditional_filename(filename):
             return None
         end = filename.find(CLOSE_TAG, opentag_start)
         if end == -1:
-            print "No close tag found for open tag in filename %s" % filename
+            print("No close tag found for open tag in filename %s" % filename)
             sys.exit(1)
 
         # we have a {{ tag i.e. code
         tag = filename[opentag_start + len(OPEN_TAG):end].strip()
         if not tag.lstrip().startswith(IF_TAG):
-            print "Only 'if' tags are allowed in file or directory names, filename: %s" % filename
+            print("Only 'if' tags are allowed in file or directory names, filename: %s" % filename)
             sys.exit(1)
 
         return CodeLine(tag)
@@ -1515,7 +1515,7 @@ def expand_targets(context, bsp_output_dir, expand_common=True):
 
     arches = os.listdir(arch_path)
     if arch not in arches or arch == "common":
-        print "Invalid karch, exiting\n"
+        print("Invalid karch, exiting\n")
         sys.exit(1)
 
     target = os.path.join(arch_path, arch)
@@ -1541,7 +1541,7 @@ def yocto_common_create(machine, target, scripts_path, layer_output_dir, codedum
     expand_common - boolean, use the contents of (for bsp layers) arch/common
     """
     if os.path.exists(layer_output_dir):
-        print "\nlayer output dir already exists, exiting. (%s)" % layer_output_dir
+        print("\nlayer output dir already exists, exiting. (%s)" % layer_output_dir)
         sys.exit(1)
 
     properties = None
@@ -1550,7 +1550,7 @@ def yocto_common_create(machine, target, scripts_path, layer_output_dir, codedum
         try:
             infile = open(properties_file, "r")
         except IOError:
-            print "Couldn't open properties file %s for reading, exiting" % properties_file
+            print("Couldn't open properties file %s for reading, exiting" % properties_file)
             sys.exit(1)
 
         properties = json.load(infile)
@@ -1597,8 +1597,8 @@ def yocto_layer_create(layer_name, scripts_path, layer_output_dir, codedump, pro
     """
     yocto_common_create(layer_name, "layer", scripts_path, layer_output_dir, codedump, properties_file, properties, False)
 
-    print "\nNew layer created in %s.\n" % (layer_output_dir)
-    print "Don't forget to add it to your BBLAYERS (for details see %s/README)." % (layer_output_dir)
+    print("\nNew layer created in %s.\n" % layer_output_dir)
+    print("Don't forget to add it to your BBLAYERS (for details see %s/README)." % layer_output_dir)
 
 
 def yocto_bsp_create(machine, arch, scripts_path, bsp_output_dir, codedump, properties_file, properties=None):
@@ -1616,7 +1616,7 @@ def yocto_bsp_create(machine, arch, scripts_path, bsp_output_dir, codedump, prop
     """
     yocto_common_create(machine, arch, scripts_path, bsp_output_dir, codedump, properties_file, properties)
 
-    print "\nNew %s BSP created in %s" % (arch, bsp_output_dir)
+    print("\nNew %s BSP created in %s" % arch, bsp_output_dir)
 
 
 def print_dict(items, indent = 0):
@@ -1624,13 +1624,13 @@ def print_dict(items, indent = 0):
     Print the values in a possibly nested dictionary.
     """
     for key, val in items.iteritems():
-        print "    "*indent + "\"%s\" :" % key,
+        print("    "*indent + "\"%s\" :" % key)
         if type(val) == dict:
-            print "{"
+            print("{")
             print_dict(val, indent + 1)
-            print "    "*indent + "}"
+            print("    "*indent + "}")
         else:
-            print "%s" % val
+            print("%s" % val)
 
 
 def get_properties(input_lines):
@@ -1681,7 +1681,7 @@ def yocto_layer_list_properties(arch, scripts_path, properties_file, expand_comm
         try:
             of = open(properties_file, "w")
         except IOError:
-            print "Couldn't open properties file %s for writing, exiting" % properties_file
+            print("Couldn't open properties file %s for writing, exiting" % properties_file)
             sys.exit(1)
 
         json.dump(properties, of, indent=1)
@@ -1755,10 +1755,10 @@ def print_values(type, values_list):
     """
     if type == "choicelist":
         for value in values_list:
-            print "[\"%s\", \"%s\"]" % (value[0], value[1])
+            print("[\"%s\", \"%s\"]" % (value[0], value[1]))
     elif type == "boolean":
         for value in values_list:
-            print "[\"%s\", \"%s\"]" % (value[0], value[1])
+            print("[\"%s\", \"%s\"]" % (value[0], value[1]))
 
 
 def yocto_layer_list_property_values(arch, property, scripts_path, properties_file, expand_common=True):
@@ -1789,7 +1789,7 @@ def yocto_layer_list_property_values(arch, property, scripts_path, properties_fi
 
     input_line = find_input_line(property, input_lines)
     if not input_line:
-        print "Couldn't find values for property %s" % property
+        print("Couldn't find values for property %s" % property)
         return
 
     values_list = []
@@ -1818,7 +1818,7 @@ def yocto_layer_list_property_values(arch, property, scripts_path, properties_fi
         try:
             of = open(properties_file, "w")
         except IOError:
-            print "Couldn't open properties file %s for writing, exiting" % properties_file
+            print("Couldn't open properties file %s for writing, exiting" % properties_file)
             sys.exit(1)
 
         json.dump(values_list, of)
@@ -1839,11 +1839,11 @@ def yocto_bsp_list(args, scripts_path, properties_file):
         lib_path = scripts_path + '/lib'
         bsp_path = lib_path + '/bsp'
         arch_path = bsp_path + '/substrate/target/arch'
-        print "Architectures available:"
+        print("Architectures available:")
         for arch in os.listdir(arch_path):
             if arch == "common" or arch == "layer":
                 continue
-            print "    %s" % arch
+            print("    %s" % arch)
         return True
     else:
         arch = args[0]
