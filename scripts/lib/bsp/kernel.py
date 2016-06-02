@@ -49,7 +49,7 @@ def find_bblayers():
 
     bitbake_env_cmd = "bitbake -e"
     bitbake_env_lines = subprocess.Popen(bitbake_env_cmd, shell=True,
-                                         stdout=subprocess.PIPE).stdout.read()
+                                         stdout=subprocess.PIPE).stdout.read().decode('utf-8')
 
     if not bitbake_env_lines:
         print("Couldn't get '%s' output, exiting." % bitbake_env_cmd)
@@ -734,7 +734,7 @@ def yocto_kernel_available_features_list(scripts_path, machine):
     feature_url = find_feature_url(giturl)
 
     feature_cmd = "wget -q -O - " + feature_url
-    tmp = subprocess.Popen(feature_cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
+    tmp = subprocess.Popen(feature_cmd, shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8')
 
     print("The current set of kernel features available to %s is:\n" % machine)
 
@@ -785,7 +785,7 @@ def get_feature_desc(git_url, feature):
     """
     feature_desc_url = find_feature_desc_url(git_url, feature)
     feature_desc_cmd = "wget -q -O - " + feature_desc_url
-    tmp = subprocess.Popen(feature_desc_cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
+    tmp = subprocess.Popen(feature_desc_cmd, shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8')
 
     return find_feature_desc(tmp.split("\n"))
 
@@ -1001,7 +1001,7 @@ def base_branches(context):
     print("Getting branches from remote repo %s..." % giturl)
 
     gitcmd = "git ls-remote %s *heads* 2>&1" % (giturl)
-    tmp = subprocess.Popen(gitcmd, shell=True, stdout=subprocess.PIPE).stdout.read()
+    tmp = subprocess.Popen(gitcmd, shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8')
 
     branches = []
 
@@ -1031,7 +1031,7 @@ def all_branches(context):
     print("Getting branches from remote repo %s..." % giturl)
 
     gitcmd = "git ls-remote %s *heads* 2>&1" % (giturl)
-    tmp = subprocess.Popen(gitcmd, shell=True, stdout=subprocess.PIPE).stdout.read()
+    tmp = subprocess.Popen(gitcmd, shell=True, stdout=subprocess.PIPE).stdout.read().decode('utf-8')
 
     branches = []
 
