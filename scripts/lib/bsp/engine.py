@@ -40,12 +40,11 @@ import json
 import subprocess
 import shutil
 
-class Line():
+class Line(metaclass=ABCMeta):
     """
     Generic (abstract) container representing a line that will appear
     in the BSP-generating program.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self, line):
         self.line = line
@@ -319,11 +318,10 @@ class BooleanInputLine(InputLine):
         return line
 
 
-class ListInputLine(InputLine):
+class ListInputLine(InputLine, metaclass=ABCMeta):
     """
     Base class for List-based Input lines. e.g. Choicelist, Checklist.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self, props, tag, lineno):
         InputLine.__init__(self, props, tag, lineno)
