@@ -1385,7 +1385,7 @@ def gen_supplied_property_vals(properties, program_lines):
     Generate user-specified entries for input values instead of
     generating input prompts.
     """
-    for name, val in properties.iteritems():
+    for name, val in properties.items():
         program_line = name + " = \"" + val + "\""
         program_lines.append(program_line)
 
@@ -1621,7 +1621,7 @@ def print_dict(items, indent = 0):
     """
     Print the values in a possibly nested dictionary.
     """
-    for key, val in items.iteritems():
+    for key, val in items.items():
         print("    "*indent + "\"%s\" :" % key)
         if type(val) == dict:
             print("{")
@@ -1654,7 +1654,7 @@ def get_properties(input_lines):
         props = line.props
         item = {}
         name = props["name"]
-        for key, val in props.items():
+        for key, val props.items():
             if not key == "name":
                 item[key] = val
         properties[name] = item
