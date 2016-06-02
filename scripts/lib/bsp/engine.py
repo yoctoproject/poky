@@ -1362,7 +1362,7 @@ def run_program_lines(linelist, codedump):
         of = open("bspgen.out", "w")
         of.write(buf)
         of.close()
-    exec buf
+    exec(buf)
 
 
 def gen_target(files, context = None):
