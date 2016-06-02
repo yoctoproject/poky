@@ -202,8 +202,8 @@ def yocto_kernel_config_rm(scripts_path, machine):
     config_items = read_config_items(scripts_path, machine)
 
     print("Specify the kernel config items to remove:")
-    input = raw_input(gen_choices_str(config_items))
-    rm_choices = input.split()
+    inp = input(gen_choices_str(config_items))
+    rm_choices = inp.split()
     rm_choices.sort()
 
     removed = []
@@ -359,8 +359,8 @@ def yocto_kernel_patch_rm(scripts_path, machine):
     patches = read_patch_items(scripts_path, machine)
 
     print("Specify the patches to remove:")
-    input = raw_input(gen_choices_str(patches))
-    rm_choices = input.split()
+    inp = input(gen_choices_str(patches))
+    rm_choices = inp.split()
     rm_choices.sort()
 
     removed = []
@@ -610,8 +610,8 @@ def yocto_kernel_feature_rm(scripts_path, machine):
     features = read_features(scripts_path, machine)
 
     print("Specify the features to remove:")
-    input = raw_input(gen_choices_str(features))
-    rm_choices = input.split()
+    inp = input(gen_choices_str(features))
+    rm_choices = inp.split()
     rm_choices.sort()
 
     removed = []

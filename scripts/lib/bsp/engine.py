@@ -464,9 +464,9 @@ class ListInputLine(InputLine):
         choices_str = self.gen_choices_str(choicepairs)
         choices_val_list = self.gen_choices_val_list(choicepairs)
         if checklist:
-            choiceval = default(find_choicevals(raw_input(msg + "\n" + choices_str), choices_val_list), default_choice)
+            choiceval = default(find_choicevals(input(msg + "\n" + choices_str), choices_val_list), default_choice)
         else:
-            choiceval = default(find_choiceval(raw_input(msg + "\n" + choices_str), choices_val_list), default_choice)
+            choiceval = default(find_choiceval(input(msg + "\n" + choices_str), choices_val_list), default_choice)
 
         return choiceval
 
@@ -540,12 +540,12 @@ def get_verified_git_repo(input_str, name):
     """
     msg = input_str.strip() + " "
 
-    giturl = default(raw_input(msg), name)
+    giturl = default(input(msg), name)
 
     while True:
         if verify_git_repo(giturl):
             return giturl
-        giturl = default(raw_input(msg), name)
+        giturl = default(input(msg), name)
 
 
 def get_verified_file(input_str, name, filename_can_be_null):
@@ -555,14 +555,14 @@ def get_verified_file(input_str, name, filename_can_be_null):
     """
     msg = input_str.strip() + " "
 
-    filename = default(raw_input(msg), name)
+    filename = default(input(msg), name)
 
     while True:
         if not filename and filename_can_be_null:
             return filename
         if os.path.isfile(filename):
             return filename
-        filename = default(raw_input(msg), name)
+        filename = default(input(msg), name)
 
 
 def replace_file(replace_this, with_this):
