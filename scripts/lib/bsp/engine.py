@@ -34,7 +34,7 @@
 import os
 import sys
 from abc import ABCMeta, abstractmethod
-from tags import *
+from .tags import *
 import shlex
 import json
 import subprocess

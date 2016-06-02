@@ -32,8 +32,7 @@ import shutil
 from tags import *
 import glob
 import subprocess
-from engine import create_context
-
+from .engine import create_context
 
 def find_bblayers():
     """
