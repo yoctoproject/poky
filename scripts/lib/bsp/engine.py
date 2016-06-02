@@ -49,7 +49,7 @@ class Line(metaclass=ABCMeta):
     def __init__(self, line):
         self.line = line
         self.generated_line = ""
-        self.prio = sys.maxint
+        self.prio = sys.maxsize
         self.discard = False
 
     @abstractmethod
@@ -154,7 +154,7 @@ class InputLine(Line):
         try:
             self.prio = int(props["prio"])
         except KeyError:
-            self.prio = sys.maxint
+            self.prio = sys.maxsize
 
     def gen(self, context = None):
         try:
@@ -1284,7 +1284,7 @@ class InputLineGroup(InputLine):
     def __init__(self, codeline):
         InputLine.__init__(self, {}, "", 0)
         self.group = []
-        self.prio = sys.maxint
+        self.prio = sys.maxsize
         self.group.append(codeline)
 
     def append(self, line):
