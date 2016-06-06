@@ -1654,7 +1654,7 @@ def get_properties(input_lines):
         props = line.props
         item = {}
         name = props["name"]
-        for key, val props.items():
+        for key, val in props.items():
             if not key == "name":
                 item[key] = val
         properties[name] = item
