@@ -7639,149 +7639,50 @@
                     Although other protocols are possible, a server using HTTP
                     typically serves packages.
                     If you want to use HTTP, then set up and configure a
-                    web server, such as Apache 2 or lighttpd, on the machine
-                    serving the packages.
+                    web server such as Apache 2, lighttpd, or
+                    SimpleHTTPServer on the machine serving the packages.
                 </para>
 
                 <para>
-                    As previously mentioned, the build machine can act as the
-                    package server.
-                    In the following sections that describe server machine
-                    setups, the build machine is assumed to also be the server.
+                    To keep things simple, this section describes how to set
+                    up a SimpleHTTPServer web server to share package feeds
+                    from the developer's machine.
+                    Although this server might not be the best for a production
+                    environment, the setup is simple and straight forward.
+                    Should you want to use a different server more suited for
+                    production (e.g. Apache 2, Lighttpd, or Nginx), take the
+                    appropriate steps to do so.
                 </para>
 
-                <section id='package-server-apache'>
-                    <title>Serving Packages via Apache 2</title>
-
-                    <para>
-                        This example assumes you are using the Apache 2
-                        server:
-                        <orderedlist>
-                            <listitem><para>
-                                Add the directory to your Apache
-                                configuration, which you can find at
-                                <filename>/etc/httpd/conf/httpd.conf</filename>.
-                                Use commands similar to the following on the
-                                development system.
-                                These example commands assume a top-level
-                                <link linkend='source-directory'>Source Directory</link>
-                                named <filename>poky</filename> in your home
-                                directory.
-                                The example also assumes an RPM package type.
-                                If you are using a different package type, such
-                                as IPK, use "ipk" in the pathnames:
-                                <literallayout class='monospaced'>
-     &lt;VirtualHost *:80&gt;
-       ...
-         Alias /rpm ~/poky/build/tmp/deploy/rpm
-         &lt;Directory "~/poky/build/tmp/deploy/rpm"&gt;
-           Options +Indexes
-         &lt;/Directory&gt;
-     &lt;/VirtualHost&gt;
-                                </literallayout>
-                                </para></listitem>
-                            <listitem><para>
-                                Reload the Apache configuration as described
-                                in this step.
-                                For all commands, be sure you have root
-                                privileges.
-                                </para>
-
-                                <para>
-                                If your development system is using Fedora or
-                                CentOS, use the following:
-                                <literallayout class='monospaced'>
-     # service httpd reload
-                                </literallayout>
-                                For Ubuntu and Debian, use the following:
-                                <literallayout class='monospaced'>
-     # /etc/init.d/apache2 reload
-                                </literallayout>
-                                For OpenSUSE, use the following:
-                                <literallayout class='monospaced'>
-     # /etc/init.d/apache2 reload
-                                </literallayout>
-                                </para></listitem>
-                            <listitem><para>
-                                If you are using Security-Enhanced Linux
-                                (SELinux), you need to label the files as
-                                being accessible through Apache.
-                                Use the following command from the development
-                                host.
-                                This example assumes RPM package types:
-                                <literallayout class='monospaced'>
-     # chcon -R -h -t httpd_sys_content_t tmp/deploy/rpm
-                                </literallayout>
-                                </para></listitem>
-                        </orderedlist>
-                    </para>
-                </section>
-
-                <section id='package-server-lighttpd'>
-                    <title>Serving Packages Through lighttpd</title>
-
-                    <para>
-                        If you are using lighttpd, all you need
-                        to do is to provide a link from your
-                        <filename>${TMPDIR}/deploy/<replaceable>packageformat</replaceable></filename>
-                        directory to lighttpd's document-root.
-                        You can determine the specifics of your lighttpd
-                        installation by looking through its configuration file,
-                        which is usually found at:
-                        <filename>/etc/lighttpd/lighttpd.conf</filename>.
-                        For example, if you are using IPK, lighttpd's
-                        document-root is set to
-                        <filename>/var/www/lighttpd</filename>, and you had
-                        packages for a target named "BOARD",
-                        then you might create a link from your build location
-                        to lighttpd's document-root as follows:
-                        <literallayout class='monospaced'>
-    # ln -s $(PWD)/tmp/deploy/ipk /var/www/lighttpd/BOARD-dir
-                        </literallayout>
-                    </para>
-
-                    <para>
-                        At this point, you need to start the lighttpd server.
-                        The method used to start the server varies by
-                        distribution.
-                        However, one basic method that starts it by hand is:
-                        <literallayout class='monospaced'>
-    # lighttpd -f /etc/lighttpd/lighttpd.conf
-                        </literallayout>
-                    </para>
-                </section>
-
-                <section id='package-server-python-simplehttpserver'>
-                    <title>Serving Packages Through Python SimpleHTTPServer</title>
-
-                    <para>
-                        It is possible to serve packages hosted by a build
-                        machine through an HTTP server created with a simple
-                        Python command.
-                    </para>
-
-                    <para>
-                        The first thing you do is to create a directory that
-                        contains the packages to host.
-                        Be sure you have root privileges and place the directory
-                        inside <filename>var/www/</filename>
-                        (e.g. <filename>/var/www/my_repo/</filename>).
-                        To ensure the directory contains the packages you want
-                        to serve, you need to create a symlink from the
-                        package feed area to the directory that hosts the
-                        packages you want to provide:
-                        <literallayout class='monospaced'>
+                <para>
+                    Use the following steps to set up the SimpleHTTPServer
+                    machine.
+                    These steps assume the build machine and the server are
+                    same machine:
+                    <orderedlist>
+                        <listitem><para><emphasis>Create a Directory that
+                            Contains the Packages to Host:</emphasis>
+                            Be sure you have root privileges and place the
+                            directory inside <filename>var/www/</filename>
+                            (e.g. <filename>/var/www/my_repo/</filename>).
+                            To ensure the directory contains the packages you
+                            want to serve, you need to create a symlink from
+                            the package feed area to the directory that hosts
+                            the packages you want to provide:
+                            <literallayout class='monospaced'>
      my_repo # ln -s ~{TMPDIR}/deploy/<replaceable>packageformat</replaceable> ./
-                        </literallayout>
-                        You can start the server by running the following
-                        command from the recently created directory:
-                        <literallayout class='monospaced'>
-     # python -m SimpleHTTPServer
-
-     Serving HTTP on 0.0.0 port 8000 ...
-                        </literallayout>
-                    </para>
-                </section>
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para><emphasis>Start the Server:</emphasis>
+                            You can start the server by running the following
+                            commands from the recently created directory:
+                            <literallayout class='monospaced'>
+     $ cd {TMPDIR}/deploy/\\packageformat\\
+     $ python -m SimpleHTTPServer
+                            </literallayout>
+                            </para></listitem>
+                    </orderedlist>
+                </para>
             </section>
 
             <section id='runtime-package-management-target'>
