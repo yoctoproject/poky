@@ -14319,17 +14319,20 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    For recipes inheriting the
+                    For recipes that use the
                     <link linkend='ref-classes-distrodata'><filename>distrodata</filename></link>
-                    class, the <filename>UPSTREAM_CHECK_GITTAGREGEX</filename>
-                    variable causes the OpenEmbedded build system to use Git
-                    tabs to determine which upstream release version to
-                    fetch when fetching source code from an upstream Git
-                    repository.
-                    You can use this regular expression to filter only
-                    relevant tags:
+                    class, this variable causes the OpenEmbedded build system
+                    to check for what the latest upstream version is by calling
+                    <filename>bitbake -c checkpkg</filename>.
+                    When source code is provided from Git repositories, the
+                    latest upstream version is determined by picking the latest
+                    tag from the list of all repository tags.
+                    You can use the <filename>UPSTREAM_CHECK_GITTAGREGEX</filename>
+                    variable to provide a regular expression to filter only the
+                    relevant tags should the default filter not work
+                    correctly.
                     <literallayout class='monospaced'>
-     UPSTREAM_CHECK_GITTAGREGEX-<replaceable>recipe</replaceable> = "git_tag_regex"
+     UPSTREAM_CHECK_GITTAGREGEX = "git_tag_regex"
                     </literallayout>
                 </para>
             </glossdef>
@@ -14337,19 +14340,19 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-UPSTREAM_CHECK_REGEX'><glossterm>UPSTREAM_CHECK_REGEX</glossterm>
             <info>
-               UPSTREAM_CHECK_REGEX[doc] = "The regular expression the package checking system uses to parse the page pointed to by UPSTREAM_CHECK_URI_pn."
+               UPSTREAM_CHECK_REGEX[doc] = "The regular expression the package checking system uses to parse the page pointed to by UPSTREAM_CHECK_URI."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    For recipes inheriting the
+                    For recipes that use the
                     <link linkend='ref-classes-distrodata'><filename>distrodata</filename></link>
                     class, the <filename>UPSTREAM_CHECK_REGEX</filename>
                     variable causes the package checking system to use the
                     regular expression to parse the page found using
                     <link linkend='var-UPSTREAM_CHECK_URI'><filename>UPSTREAM_CHECK_URI</filename></link>.
                     <literallayout class='monospaced'>
-     UPSTREAM_CHECK_REGEX-<replaceable>recipe</replaceable> = "package_regex"
+     UPSTREAM_CHECK_REGEX = "package_regex"
                     </literallayout>
                 </para>
             </glossdef>
@@ -14362,14 +14365,20 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    For recipes inheriting the
+                    For recipes that use the
                     <link linkend='ref-classes-distrodata'><filename>distrodata</filename></link>
-                    class, the <filename>UPSTREAM_CHECK_URI</filename>
-                    variable causes the package checking system to get the
-                    latest version of the package when source files are
-                    fetched from an upstream Git repository.
+                    class, this variable causes the OpenEmbedded build system
+                    to check for what the latest upstream version is by calling
+                    <filename>bitbake -c checkpkg</filename>.
+                    When the source code is provided from tarballs, the latest
+                    version is determined by fetching the directory listing
+                    where the tarball is and attempting to find a later tarball.
+                    When this approach does not work,
+                    you can use <filename>UPSTREAM_CHECK_URI</filename> to
+                    provide a different URI that contains the link to the
+                    latest tarball.
                     <literallayout class='monospaced'>
-     UPSTREAM_CHECK_URI-<replaceable>recipe</replaceable> = "recipe_url"
+     UPSTREAM_CHECK_URI = "recipe_url"
                     </literallayout>
                 </para>
             </glossdef>
