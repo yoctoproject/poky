@@ -200,7 +200,7 @@ class EditBoxInputLine(InputLine):
 
         msg += " [default: " + default_choice + "]"
 
-        line = name + " = default(raw_input(\"" + msg + " \"), " + name + ")"
+        line = name + " = default(input(\"" + msg + " \"), " + name + ")"
 
         return line
 
@@ -313,7 +313,7 @@ class BooleanInputLine(InputLine):
 
         msg += " [default: " + default_choice + "]"
 
-        line = name + " = boolean(raw_input(\"" + msg + " \"), " + name + ")"
+        line = name + " = boolean(input(\"" + msg + " \"), " + name + ")"
 
         return line
 
