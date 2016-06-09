@@ -29,7 +29,7 @@
 import sys
 import os
 import shutil
-from tags import *
+from .tags import *
 import glob
 import subprocess
 from .engine import create_context
