@@ -1614,7 +1614,7 @@ def yocto_bsp_create(machine, arch, scripts_path, bsp_output_dir, codedump, prop
     """
     yocto_common_create(machine, arch, scripts_path, bsp_output_dir, codedump, properties_file, properties)
 
-    print("\nNew %s BSP created in %s" % arch, bsp_output_dir)
+    print("\nNew %s BSP created in %s" % (arch, bsp_output_dir))
 
 
 def print_dict(items, indent = 0):
