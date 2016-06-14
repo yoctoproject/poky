@@ -9161,18 +9161,17 @@
                 in your <filename>local.conf</filename> file.
                 Be sure to provide the IP address you need:
                 <literallayout class='monospaced'>
-     TEST_EXPORT_ONLY = "1"
-     TEST_TARGET = "simpleremote"
+     INHERIT +="testexport"
      TEST_TARGET_IP = "192.168.7.2"
      TEST_SERVER_IP = "192.168.7.1"
                 </literallayout>
                 You can then export the tests with the following:
                 <literallayout class='monospaced'>
-     $ bitbake core-image-sato -c testimage
+     $ bitbake core-image-sato -c testexport
                 </literallayout>
                 Exporting the tests places them in the
                 <link linkend='build-directory'>Build Directory</link> in
-                <filename>tmp/testimage/core-image-sato</filename>, which
+                <filename>tmp/testexport/core-image-sato</filename>, which
                 is controlled by the
                 <filename>TEST_EXPORT_DIR</filename> variable.
             </para>
@@ -9180,37 +9179,9 @@
             <para>
                 You can now run the tests outside of the build environment:
                 <literallayout class='monospaced'>
-     $ cd tmp/testimage/core-image-sato
+     $ cd tmp/testexport/core-image-sato
      $ ./runexported.py testdata.json
                 </literallayout>
-                <note>
-                    This "export" feature does not deploy or boot the target
-                    image.
-                    Your target (be it a Qemu or hardware one)
-                    has to already be up and running when you call
-                    <filename>runexported.py</filename>
-                </note>
-            </para>
-
-            <para>
-                The exported data (i.e. <filename>testdata.json</filename>)
-                contains paths to the Build Directory.
-                Thus, the contents of the directory can be moved
-                to another machine as long as you update some paths in the
-                JSON.
-                Usually, you only care about the
-                <filename>${DEPLOY_DIR}/rpm</filename> directory
-                (assuming the RPM and Smart tests are enabled).
-                Consequently, running the tests on other machine
-                means that you have to move the contents and call
-                <filename>runexported.py</filename> with
-                "--deploy-dir <replaceable>path</replaceable>" as
-                follows:
-                <literallayout class='monospaced'>
-     ./runexported.py --deploy-dir /new/path/on/this/machine testdata.json
-                </literallayout>
-                <filename>runexported.py</filename> accepts other arguments
-                as well as described using <filename>--help</filename>.
             </para>
         </section>
 
@@ -9384,6 +9355,78 @@
                     <filename>oeRuntimeTest.tc.target.run(cmd)</filename>.
                 </para>
             </section>
+        </section>
+
+        <section id='installing-packages-in-the-dut-without-the-package-manager'>
+            <title>Installing Packages in the DUT Without the Package Manager</title>
+
+            <para>
+                When a test requires a package built by BitBake, it is possible
+                to install that package.
+                Installing the package does not require a package manager be
+                installed in the device under test (DUT).
+                It does, however, require an SSH connection and the target must
+                be using the <filename>sshcontrol</filename> class.
+                <note>
+                    This method uses <filename>scp</filename> to copy files
+                    from the host to the target, which causes permissions and
+                    special attributes to be lost.
+                </note>
+            </para>
+
+            <para>
+                A JSON file is used to define the packages needed by a test.
+                This file must be in the same path as the file used to define
+                the tests.
+                Furthermore, the filename must map directory to the test
+                module name with a <filename>.json</filename> extension.
+            </para>
+
+            <para>
+                The JSON file must include an object with the test name as
+                keys of an object or an array.
+                This object (or array of objects) uses the following data:
+                <itemizedlist>
+                    <listitem><para>"pkg" - A mandatory string that is the
+                        name of the package to be installed.
+                        </para></listitem>
+                    <listitem><para>"rm" - An optional boolean, which defaults
+                        to "false", that specifies to remove the package after
+                        the test.
+                        </para></listitem>
+                    <listitem><para>"extract" - An optional boolean, which
+                        defaults to "false", that specifies if the package must
+                        be extracted from the package format.
+                        When set to "true", the package is not automatically
+                        installed into the DUT.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Following is an example JSON file that handles test "foo"
+                installing package "bar" and test "foobar" installing
+                packages "foo" and "bar".
+                Once the test is complete, the packages are removed from the
+                DUT.
+                <literallayout class='monospaced'>
+     {
+         "": {
+             "pkg": "bar"
+         },
+         "foobar": [
+             {
+                 "pkg": "foo",
+                 "rm": true
+             },
+             {
+                 "pkg": "bar",
+                 "rm": true
+             }
+         ]
+     }
+                </literallayout>
+            </para>
         </section>
     </section>
 
