@@ -690,6 +690,123 @@
      addtask do_deploy_setscene
      do_deploy[dirs] = "${DEPLOYDIR} ${B}"
             </literallayout>
+            The following list explains the previous example:
+            <itemizedlist>
+                <listitem><para>
+                    Adding "do_deploy" to <filename>SSTATETASKS</filename>
+                    adds some required sstate-related processing, which is
+                    implemented in the
+                    <link linkend='ref-classes-sstate'><filename>sstate</filename></link>
+                    class, to before and after the
+                    <link linkend='ref-tasks-deploy'><filename>do_deploy</filename></link>
+                    task.
+                    </para></listitem>
+                <listitem><para>
+                    The
+                    <filename>do_deploy[sstate-inputsdirs] = "${DEPLOYDIR}"</filename>
+                    declares that <filename>do_deploy</filename> places its
+                    output in <filename>${DEPLOYDIR}</filename> when run
+                    normally (i.e. when not using the sstate cache).
+                    This output becomes the input to the shared state cache.
+                    </para></listitem>
+                <listitem><para>
+                    The
+                    <filename>do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}"</filename>
+                    line causes the contents of the shared state cache to be
+                    copied to <filename>${DEPLOY_DIR_IMAGE}</filename>.
+                    <note>
+                        If <filename>do_deploy</filename> is not already in
+                        the shared state cache or if its input checksum
+                        (signature) has changed from when the output was
+                        cached, the task will be run to populate the shared
+                        state cache, after which the contents of the shared
+                        state cache is copied to
+                        <filename>${DEPLOY_DIR_IMAGE}</filename>.
+                        If <filename>do_deploy</filename> is in the shared
+                        state cache and its signature indicates that the
+                        cached output is still valid (i.e. if no
+                        relevant task inputs have changed), then the contents
+                        of the shared state cache will be copied directly to
+                        <filename>${DEPLOY_DIR_IMAGE}</filename> by the
+                        <filename>do_deploy_setscene</filename> task instead,
+                        skipping the <filename>do_deploy</filename> task.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    The following task definition is glue logic needed to make
+                    the previous settings effective:
+                    <literallayout class='monospaced'>
+     python do_deploy_setscene () {
+         sstate_setscene(d)
+     }
+     addtask do_deploy_setscene
+                    </literallayout>
+                    <filename>sstate_setscene()</filename> takes the flags
+                    above as input and accelerates the
+                    <filename>do_deploy</filename> task through the
+                    shared state cache if possible.
+                    If the task was accelerated,
+                    <filename>sstate_setscene()</filename> returns True.
+                    Otherwise, it returns False, and the normal
+                    <filename>do_deploy</filename> task runs.
+                    For more information, see the
+                    "<ulink url='&YOCTO_DOCS_BB_URL;#setscene'>setscene</ulink>"
+                    section in the BitBake User Manual.
+                    </para></listitem>
+                <listitem><para>
+                    The
+                    <filename>do_deploy[dirs] = "${DEPLOYDIR} ${B}"</filename>
+                    line creates <filename>${DEPLOYDIR}</filename> and
+                    <filename>${B}</filename> before the
+                    <filename>do_deploy</filename> task runs.
+                    For more information, see the
+                    "<ulink url='&YOCTO_DOCS_BB_URL;#variable-flags'>Variable Flags</ulink>"
+                    section in the BitBake User Manual.
+                    <note>
+                        In cases where
+                        <filename>sstate-inputdirs</filename> and
+                        <filename>sstate-outputdirs</filename> would be the
+                        same, you can use
+                        <filename>sstate-plaindirs</filename>.
+                        For example, to preserve the
+                        <filename>${PKGD}</filename> and
+                        <filename>${PKGDEST}</filename> output from the
+                        <link linkend='ref-tasks-package'><filename>do_package</filename></link>
+                        task, use the following:
+                        <literallayout class='monospaced'>
+     do_package[sstate-plaindirs] = "${PKGD} ${PKGDEST}"
+                        </literallayout>
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                     <filename>sstate-inputdirs</filename> and
+                     <filename>sstate-outputdirs</filename> can also be used
+                     with multiple directories.
+                     For example, the following declares
+                     <filename>PKGDESTWORK</filename> and
+                     <filename>SHLIBWORK</filename> as shared state
+                     input directories, which populates the shared state
+                     cache, and <filename>PKGDATA_DIR</filename> and
+                     <filename>SHLIBSDIR</filename> as the corresponding
+                     shared state output directories:
+                     <literallayout class='monospaced'>
+     do_package[sstate-inputdirs] = "${PKGDESTWORK} ${SHLIBSWORKDIR}"
+     do_package[sstate-outputdirs] = "${PKGDATA_DIR} ${SHLIBSDIR}"
+                     </literallayout>
+                     </para></listitem>
+                 <listitem><para>
+                     These methods also include the ability to take a lockfile
+                     when manipulating shared state directory structures,
+                     for cases where file additions or removals are sensitive:
+                     <literallayout class='monospaced'>
+     do_package[sstate-lockfile] = "${PACKAGELOCK}"
+                     </literallayout>
+                     </para></listitem>
+            </itemizedlist>
+        </para>
+
+<!--
+        <para>
             In this example, we add some extra flags to the task, a name field ("deploy"), an
             input directory where the task sends data, and the output
             directory where the data from the task should eventually be copied.
@@ -713,6 +830,7 @@
             shared state directory structures since some cases are sensitive to file
             additions or removals.
         </para>
+-->
 
         <para>
             Behind the scenes, the shared state code works by looking in
