@@ -10126,14 +10126,20 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <filename>RDEPENDS</filename> since some automatic
                     handling occurs:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:  If
-                            a runtime package contains a shared library
-                            (<filename>.so</filename>), the build
-                            processes the library in order to determine other
-                            libraries to which it is dynamically linked.
-                            The build process adds these libraries to
-                            <filename>RDEPENDS</filename> when creating the runtime
-                            package.</para></listitem>
+                        <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:
+                            If a runtime package contains a compiled binary,
+                            the build processes the binary in order to
+                            determine any shared libraries
+                            (<filename>.so</filename> files) to which it is
+                            dynamically linked.
+                            The build process adds the packages containing
+                            these libraries to <filename>RDEPENDS</filename>
+                            when creating the runtime package.
+                            In addition, if the shared library is versioned,
+                            the dependency will have the version appended to it
+                            in order to force an upgrade to the appropriate
+                            version if needed.
+                            </para></listitem>
                         <listitem><para><emphasis><filename>pcdeps</filename></emphasis>:  If
                             the package ships a <filename>pkg-config</filename>
                             information file, the build process uses this file
