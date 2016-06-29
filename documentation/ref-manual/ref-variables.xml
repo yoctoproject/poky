@@ -9571,8 +9571,46 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    The revision of the recipe.
-                    The default value for this variable is "r0".
+                    The revision of the recipe. The default value for this
+                    variable is "r0".
+                    Subsequent revisions of the recipe conventionally have the
+                    values "r1", "r2", and so forth.
+                    When
+                    <link linkend='var-PV'><filename>PV</filename></link>
+                    increases, <filename>PR</filename> is conventionally reset
+                    to "r0".
+                    <note>
+                        The OpenEmbedded build system does not need the aid of
+                        <filename>PR</filename> to know when to rebuild a
+                        recipe.
+                        The build system uses
+                        <link linkend='var-STAMP'><filename>STAMP</filename></link>
+                        and the
+                        <link linkend='shared-state-cache'>shared state cache</link>
+                        mechanisms.
+                    </note>
+                    The <filename>PR</filename> variable primarily becomes
+                    significant when a package manager dynamically installs
+                    packages on an already built image.
+                    In this case, <filename>PR</filename>, which is the default
+                    value of
+                    <link linkend='var-PKGR'><filename>PKGR</filename></link>,
+                    helps the package manager distinguish which package is the
+                    most recent one in cases where many packages have the same
+                    <filename>PV</filename> (i.e. <filename>PKGV</filename>).
+                    Packages have the same <filename>PV</filename> usually
+                    when the package manager installs the same upstream version
+                    and some of the packages include packaging fixes.
+                    <note>
+                        <filename>PR</filename> does not need to be increased
+                        for changes that do not change the package contents or
+                        metadata.
+                    </note>
+                    Because, manually managing <filename>PR</filename> can be
+                    cumbersome and error-prone, an automated solution exists.
+                    See the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#working-with-a-pr-service'>Working With a PR Service</ulink>"
+                    section for more information.
                 </para>
             </glossdef>
         </glossentry>
