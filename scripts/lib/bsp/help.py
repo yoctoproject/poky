@@ -42,7 +42,7 @@ def display_help(subcommand, subcommands):
 
     help = subcommands.get(subcommand, subcommand_error)[2]
     pager = subprocess.Popen('less', stdin=subprocess.PIPE)
-    pager.communicate(help)
+    pager.communicate(bytes(help, 'UTF-8'))
 
     return True
 
