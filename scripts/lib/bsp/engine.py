@@ -1547,11 +1547,13 @@ def yocto_common_create(machine, target, scripts_path, layer_output_dir, codedum
     if properties_file:
         try:
             infile = open(properties_file, "r")
+            properties = json.load(infile)
         except IOError:
             print("Couldn't open properties file %s for reading, exiting" % properties_file)
             sys.exit(1)
-
-        properties = json.load(infile)
+        except ValueError:
+            print("Wrong format on properties file %s, exiting" % properties_file)
+            sys.exit(1)
 
     if properties_str and not properties:
         properties = json.loads(properties_str)
