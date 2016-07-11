@@ -1209,6 +1209,131 @@
                 which includes the environment setup script.
             </para>
         </section>
+
+        <section id='setscene-tasks-and-shared-state'>
+            <title>Setscene Tasks and Shared State</title>
+
+            <para>
+                The description of tasks so far assumes that BitBake needs to
+                build everything and there are no prebuilt objects available.
+                BitBake does support skipping tasks if prebuilt objects are
+                available.
+                These objects are usually made available in the form of a
+                shared state (sstate) cache.
+                <note>
+                    For information on variables affecting sstate, see the
+                    <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link>
+                    and
+                    <link linkend='var-SSTATE_MIRRORS'><filename>SSTATE_MIRRORS</filename></link>
+                    variables.
+                </note>
+            </para>
+
+            <para>
+                The idea of a setscene task (i.e
+                <filename>do_</filename><replaceable>taskname</replaceable><filename>_setscene</filename>)
+                is a version of the task where
+                instead of building something, BitBake can skip to the end
+                result and simply place a set of files into specific locations
+                as needed.
+                In some cases, it makes sense to have a setscene task variant
+                (e.g. generating package files in the
+                <filename>do_package_write_*</filename> task).
+                In other cases, it does not make sense, (e.g. a
+                <link linkend='ref-tasks-patch'><filename>do_patch</filename></link>
+                task or
+                <link linkend='ref-tasks-unpack'><filename>do_unpack</filename></link>
+                task) since the work involved would be equal to or greater than
+                the underlying task.
+            </para>
+
+            <para>
+                In the OpenEmbedded build system, the common tasks that have
+                setscene variants are <link linkend='ref-tasks-package'><filename>do_package</filename></link>,
+                <filename>do_package_write_*</filename>,
+                <link linkend='ref-tasks-deploy'><filename>do_deploy</filename></link>,
+                <link linkend='ref-tasks-packagedata'><filename>do_packagedata</filename></link>,
+                and
+                <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>.
+                Notice that these are most of the tasks whose output is an
+                end result.
+            </para>
+
+            <para>
+                The OpenEmbedded build system has knowledge of the relationship
+                between these tasks and other tasks that precede them.
+                For example, if BitBake runs
+                <filename>do_populate_sysroot_setscene</filename> for
+                something, there is little point in running any of the
+                <filename>do_fetch</filename>, <filename>do_unpack</filename>,
+                <filename>do_patch</filename>,
+                <filename>do_configure</filename>,
+                <filename>do_compile</filename>, and
+                <filename>do_install</filename> tasks.
+                However, if <filename>do_package</filename> needs to be run,
+                BitBake would need to run those other tasks.
+            </para>
+
+            <para>
+                It becomes more complicated if everything can come from an
+                sstate cache because some objects are simply not required at
+                all.
+                For example, you do not need a compiler or native tools, such
+                as quilt, if there is nothing to compile or patch.
+                If the <filename>do_package_write_*</filename> packages are
+                available from sstate, BitBake does not need the
+                <filename>do_package</filename> task data.
+            </para>
+
+            <para>
+                To handle all these complexities, BitBake runs in two phases.
+                The first is the "setscene" stage.
+                During this stage, BitBake first checks the sstate cache for
+                any targets it is planning to build.
+                BitBake does a fast check to see if the object exists rather
+                than a complete download.
+                If nothing exists, the second phase, which is the setscene
+                stage, completes and the main build proceeds.
+            </para>
+
+            <para>
+                If objects are found in the sstate cache, the OpenEmbedded
+                build system works backwards from the end targets specified
+                by the user.
+                For example, if an image is being built, the OpenEmbedded build
+                system first looks for the packages needed for that image and
+                the tools needed to construct an image.
+                If those are available, the compiler is not needed.
+                Thus, the compiler is not even downloaded.
+                If something was found to be unavailable, or the download or
+                setscene task fails, the OpenEmbedded build system then tries
+                to install dependencies, such as the compiler, from the cache.
+            </para>
+
+            <para>
+                The availability of objects in the sstate cache is handled by
+                the function specified by the
+                <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_HASHCHECK_FUNCTION'><filename>BB_HASHCHECK_FUNCTION</filename></ulink>
+                variable and returns a list of the objects that are available.
+                The function specified by the
+                <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_SETSCENE_DEPVALID'><filename>BB_SETSCENE_DEPVALID</filename></ulink>
+                variable is the function that determines whether a given
+                dependency needs to be followed, and whether for any given
+                relationship the function needs to be passed.
+                The function returns a True or False value.
+            </para>
+
+            <para>
+                Once the setscene process completes, the OpenEmbedded build
+                system has a list of tasks that it believes it can "accelerate"
+                and therefore does not need to run.
+                There is a final function call to the function specified by the
+                <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_SETSCENE_VERIFY_FUNCTION'><filename>BB_SETSCENE_VERIFY_FUNCTION</filename></ulink>
+                variable that is able to require the tasks to be run that
+                that the OpenEmbedded build system initially was going to
+                skip.
+            </para>
+        </section>
     </section>
 
     <section id='images-dev-environment'>
