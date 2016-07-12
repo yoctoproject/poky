@@ -399,16 +399,26 @@
                       <literallayout class='monospaced'>
    Alias /static /var/www/toaster/static_files
    &lt;Directory /var/www/toaster/static_files&gt;
-           Order allow,deny
-           Allow from all
-           Require all granted
+           &lt;IfModule mod_access_compat.c&gt;
+                   Order allow,deny
+                   Allow from all
+           &lt;/IfModule&gt;
+           &lt;IfModule !mod_access_compat.c&gt;
+                   Require all granted
+           &lt;/IfModule&gt;
    &lt;/Directory&gt;
 
-   WSGIDaemonProcess toaster_wsgi python-path=/var/www/toaster/poky/bitbake/lib/toaster:/var/www/toaster/venv/lib/python2.7/site-packages
+   &lt;Directory /var/www/toaster/poky/bitbake/lib/toaster/toastermain&gt;
+           &lt;Files "wsgi.py"&gt;
+              Require all granted
+           &lt;/Files&gt;
+   &lt;/Directory&gt;
+
+   WSGIDaemonProcess toaster_wsgi python-path=/var/www/toaster/poky/bitbake/lib/toaster:/var/www/toaster/.local/lib/python3.4/site-packages
 
    WSGIScriptAlias / "/var/www/toaster/poky/bitbake/lib/toaster/toastermain/wsgi.py"
    &lt;Location /&gt;
-       WSGIProcessGroup toastern_wsgi
+       WSGIProcessGroup toaster_wsgi
    &lt;/Location&gt;
                       </literallayout>
                       If you are using Ubuntu or Debian,
