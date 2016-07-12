@@ -440,21 +440,52 @@
                       </literallayout>
                       </para></listitem>
                   <listitem><para>
-                      Install the build runner service.
-                      This service needs to be running in order to dispatch
-                      builds.
-                      Use this command:
+                      Prepare the systemd service to run Toaster builds.
+                      Here is a sample configuration file for the service:
                       <literallayout class='monospaced'>
-   /var/www/toaster/poky/bitbake/lib/toaster/manage.py runbuilds
+   [Unit]
+   Description=Toaster runbuilds
+
+   [Service]
+   Type=forking
+   User=toaster
+   ExecStart=/usr/bin/screen -d -m -S runbuilds /var/www/toaster/poky/bitbake/lib/toaster/runbuilds-service.sh start
+   ExecStop=/usr/bin/screen -S runbuilds -X quit
+   WorkingDirectory=/var/www/toaster/poky
+
+   [Install]
+   WantedBy=multi-user.target
                       </literallayout>
-                      Here is an example:
+                      Prepare the <filename>runbuilds-service.sh</filename>
+                      script that you need to place in the
+                      <filename>/var/www/toaster/poky/bitbake/lib/toaster/</filename>
+                      directory by setting up executable permissions:
                       <literallayout class='monospaced'>
-   #!/bin/sh
-   # toaster run builds dispatcher
-   cd /var/www/toaster/
-   source ./venv/bin/activate
-   ./bitbake/lib/toaster/manage.py runbuilds
+   #!/bin/bash
+
+   #export http_proxy=http://proxy.host.com:8080
+   #export https_proxy=http://proxy.host.com:8080
+   #export GIT_PROXY_COMMAND=$HOME/bin/gitproxy
+
+   cd ~/poky/
+   source ./oe-init-build-env build
+   source ../bitbake/bin/toaster $1 noweb
+   [ "$1" == 'start' ] &amp;&amp; /bin/bash
                       </literallayout>
+                      </para></listitem>
+                  <listitem><para>
+                      Run the service:
+                      <literallayout class='monospaced'>
+   # service runbuilds start
+                      </literallayout>
+                      Since the service is running in a detached screen
+                      session, you can attach to it using this command:
+                      <literallayout class='monospaced'>
+   $ sudo su - toaster
+   $ screen -rS runbuilds
+                      </literallayout>
+                      You can detach from the service again using "Ctrl-a"
+                      followed by "d" key combination.
                       </para></listitem>
               </orderedlist>
               You can now open up a browser and start using Toaster.
