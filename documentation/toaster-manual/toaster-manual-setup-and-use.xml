@@ -31,7 +31,7 @@
             <filename>poky/build</filename>), start Toaster using this
             command:
             <literallayout class='monospaced'>
-     $ source ../bitbake/bin/toaster
+     $ source toaster start
             </literallayout>
             You can now run your builds from the command line, or with
             Toaster as explained in section
@@ -56,7 +56,23 @@
             set a different port.
             For example, the following command sets the port to "8400":
             <literallayout class='monospaced'>
-     $ source ../bitbake/bin/toaster webport=8400
+     $ source toaster start webport=8400
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='setting-a-different-address'>
+        <title>Setting a Different Address</title>
+
+        <para>
+            By default, Toaster binds to the loop back address
+            (i.e. localhost).
+            You can use the <filename>WEBPORT</filename> parameter to
+            set a different host.
+            For example, the following command sets the host and port
+            to "192.168.0.1:8400":
+            <literallayout class='monospaced'>
+     $ source toaster start webport=192.168.0.1:8400
             </literallayout>
         </para>
     </section>
@@ -326,7 +342,6 @@
                       default data, and gather the statically-served files:
                       <literallayout class='monospaced'>
    $ cd  /var/www/toaster/poky/
-   $ ./bitbake/lib/toaster/manage.py syncdb
    $ ./bitbake/lib/toaster/manage.py migrate
    $ TOASTER_DIR=`pwd` TOASTER_CONF=./meta-poky/conf/toasterconf.json ./bitbake/lib/toaster/manage.py checksettings
    $ ./bitbake/lib/toaster/manage.py collectstatic
@@ -336,8 +351,8 @@
                       <para>
                           For the above set of commands, after moving to the
                           <filename>poky</filename> directory,
-                          the <filename>syncdb</filename> and <filename>migrate</filename>
-                          commands ensure the database
+                          the <filename>migrate</filename>
+                          command ensures the database
                           schema has had changes propagated correctly (i.e.
                           migrations).
                       </para>
@@ -377,7 +392,8 @@
                           Finally, the <filename>collectstatic</filename> command
                           is a Django framework command that collects all the
                           statically served files into a designated directory to
-                          be served up by the Apache web server.
+                          be served up by the Apache web server as defined by
+                          <filename>STATIC_ROOT</filename>.
                       </para></listitem>
                   <listitem><para>
                       Add an Apache configuration file for Toaster to your Apache web
