@@ -2791,6 +2791,39 @@
                     task of recipe "b".
                     This means anything that recipe "b" puts into sysroot
                     is available when recipe "a" is configuring itself.
+                    <note>
+                        <title>Notes</title>
+                        <itemizedlist>
+                            <listitem><para>
+                                <filename>DEPENDS</filename> is a list of
+                                recipe names.
+                                Or, to be more precise, it is a list of
+                                <link linkend='var-PROVIDES'><filename>PROVIDES</filename></link>
+                                names, which usually match recipe names.
+                                Putting a package name such as "foo-dev" in
+                                <filename>DEPENDS</filename> does not make
+                                sense.
+                                Use "foo" instead, as this will put files
+                                from all the packages that make up "foo" -
+                                including those from "foo-dev" - into the
+                                sysroot.
+                                </para></listitem>
+                            <listitem><para>
+                                Counter intuitively,
+                                <filename>DEPENDS</filename> is often necessary
+                                even for recipes that install precompiled
+                                components.
+                                For example, if "libfoo" is a precompiled
+                                library that links against "libbar", then
+                                linking against "libfoo" requires both "libfoo"
+                                and "libbar" to be available in the sysroot.
+                                Without a <filename>DEPENDS</filename> from the
+                                recipe that installs "libfoo" to the recipe
+                                that installs "libbar", other recipes might
+                                fail to link against "libfoo".
+                                </para></listitem>
+                        </itemizedlist>
+                    </note>
                 </para>
 
                 <para>
