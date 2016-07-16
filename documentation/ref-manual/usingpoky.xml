@@ -356,21 +356,61 @@
     <section id='recipe-logging-mechanisms'>
         <title>Recipe Logging Mechanisms</title>
         <para>
-            Best practices exist while writing recipes that both log build progress and
-            act on build conditions such as warnings and errors.
-            Both Python and Bash language bindings exist for the logging mechanism:
+            Best practices exist while writing recipes that both log build
+            progress and act on build conditions such as warnings and errors.
+            For Python functions, the following logging functions exist.
+            All of these functions log to
+            <filename>${T}/log.do_</filename><replaceable>task</replaceable>,
+            and can also log to standard output (stdout) with the right
+            settings:
             <itemizedlist>
-                <listitem><para><emphasis>Python:</emphasis> For Python functions, BitBake
-                    supports several loglevels: <filename>bb.fatal</filename>,
-                    <filename>bb.error</filename>, <filename>bb.warn</filename>,
-                    <filename>bb.note</filename>, <filename>bb.plain</filename>,
-                    and <filename>bb.debug</filename>.</para></listitem>
-                <listitem><para><emphasis>Bash:</emphasis> For Bash functions, the same set
-                    of loglevels exist and are accessed with a similar syntax:
-                    <filename>bbfatal</filename>, <filename>bberror</filename>,
-                    <filename>bbwarn</filename>, <filename>bbnote</filename>,
-                    <filename>bbplain</filename>, and <filename>bbdebug</filename>.</para></listitem>
+                <listitem><para>
+                    <filename>bb.plain(</filename><replaceable>msg</replaceable><filename>)</filename>:
+                    Writes <replaceable>msg</replaceable> as is to the log while
+                    also logging to stdout.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>bb.note(</filename><replaceable>msg</replaceable><filename>)</filename>:
+                    Writes "NOTE: <replaceable>msg</replaceable>" to the log.
+                    Also logs to stdout if BitBake is called with "-v".
+                    </para></listitem>
+                <listitem><para>
+                    <filename>bb.debug(</filename><replaceable>level</replaceable><filename>,&nbsp;</filename><replaceable>msg</replaceable><filename>)</filename>:
+                    Writes "DEBUG: <replaceable>msg</replaceable>" to the log.
+                    Also logs to stdout if the log level is greater than or
+                    equal to <replaceable>level</replaceable>.
+                    See the
+                    "<ulink url='&YOCTO_DOCS_BB_URL;#usage-and-syntax'>-D</ulink>"
+                    option in the BitBake User Manual for more information.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>bb.warn(</filename><replaceable>msg</replaceable><filename>)</filename>:
+                    Writes "WARNING: <replaceable>msg</replaceable>" to the log
+                    while also logging to stdout.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>bb.error(</filename><replaceable>msg</replaceable><filename>)</filename>:
+                    Writes "ERROR: <replaceable>msg</replaceable>" to the log
+                    while also logging to stdout.
+                    <note>
+                        Calling this function does not cause the task to fail.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <filename>bb.fatal(</filename><replaceable>msg</replaceable><filename>)</filename>:
+                    This logging function is similar to
+                    <filename>bb.error(</filename><replaceable>msg</replaceable><filename>)</filename>
+                    but also causes the calling task to fail.
+                    </para></listitem>
             </itemizedlist>
+        </para>
+
+        <para>
+            The same logging functions are also available in shell functions,
+            under the names
+            <filename>bbplain</filename>, <filename>bbnote</filename>,
+            <filename>bbdebug</filename>, <filename>bbwarn</filename>,
+            <filename>bberror</filename>, and <filename>bbfatal</filename>.
         </para>
 
         <para>
