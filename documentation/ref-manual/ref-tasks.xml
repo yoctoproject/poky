@@ -241,11 +241,48 @@
         <title><filename>do_install</filename></title>
 
         <para>
-            Copies files from the compilation directory, which is defined by
-            the
-            <link linkend='var-B'><filename>B</filename></link> variable,
-            to a holding area defined by the
-            <link linkend='var-D'><filename>D</filename></link> variable.
+            Copies files that are to be packaged into the holding area
+            <filename>${</filename><link linkend='var-D'><filename>D</filename></link><filename>}</filename>.
+            This task runs with the current working directory set to
+            <filename>${</filename><link linkend='var-B'><filename>B</filename></link><filename>}</filename>,
+            which is the compilation directory.
+            <note>
+                <title>Caution</title>
+
+                <para>
+                    When installing files, be careful not to set the owner and
+                    group IDs of the installed files to unintended values.
+                    Some methods of copying files, notably when using the
+                    recursive <filename>cp</filename> command, can preserve the
+                    UID and/or GID of the original file, which is usually not
+                    what you want.
+                    The host-user-contaminated QA check checks for files
+                    that probably have the wrong ownership.
+                </para>
+
+                <para>
+                    Safe methods for installing files include the following:
+                    <itemizedlist>
+                        <listitem><para>
+                            The <filename>install</filename> utility.
+                            This utility is the preferred method.
+                            </para></listitem>
+                        <listitem><para>
+                            The <filename>cp</filename> command with the
+                            "--no-preserve=ownership" option.
+                            </para></listitem>
+                        <listitem><para>
+                            The <filename>tar</filename> command with the
+                            "--no-same-owner" option.
+                            See the <filename>bin_package.bbclass</filename>
+                            file in the <filename>meta/classes</filename>
+                            directory of the
+                            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+                            for an example.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </note>
         </para>
     </section>
 
