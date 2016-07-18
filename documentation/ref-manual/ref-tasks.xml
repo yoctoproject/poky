@@ -130,18 +130,55 @@
         <title><filename>do_deploy</filename></title>
 
         <para>
-            Writes output files that are to be deployed to the deploy
-            directory, which is defined by the
-            <link linkend='var-DEPLOYDIR'><filename>DEPLOYDIR</filename></link>
-            variable.
+            Writes output files that are to be deployed to
+            <filename>${</filename><link linkend='var-DEPLOY_DIR_IMAGE'><filename>DEPLOY_DIR_IMAGE</filename></link><filename>}</filename>.
+            The task runs with the current working directory set to
+            <filename>${</filename><link linkend='var-B'><filename>B</filename></link><filename>}</filename>.
         </para>
 
         <para>
-            The <filename>do_deploy</filename> task is a
-            shared state (sstate) task, which means that the task can
-            be accelerated through sstate use.
-            Realize also that if the task is re-executed, any previous output
-            is removed (i.e. "cleaned").
+            Recipes implementing this task should inherit the
+            <link linkend='ref-classes-deploy'><filename>deploy</filename></link>
+            class and should write the output to
+            <filename>${</filename><link linkend='var-DEPLOYDIR'><filename>DEPLOYDIR</filename></link><filename>}</filename>,
+            which is not to be confused with
+            <filename>${</filename><link linkend='var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></link><filename>}</filename>.
+            The <filename>deploy</filename> class sets up
+            <filename>do_deploy</filename> as a shared state (sstate) task that
+            can be accelerated through sstate use.
+            The sstate mechanism takes care of copying the output from
+            <filename>${DEPLOYDIR}</filename> to
+            <filename>${DEPLOY_DIR_IMAGE}</filename>.
+            <note>
+            <title>Caution</title>
+                Do not write the output directly to
+                <filename>${DEPLOY_DIR_IMAGE}</filename>, as this causes
+                the sstate mechanism to malfunction.
+            </note>
+        </para>
+
+        <para>
+            The <filename>do_deploy</filename> task is not added as a task by
+            default and needs to be added manually.
+            You can add this task using the following:
+            <literallayout class='monospaced'>
+     addtask deploy after do_compile
+            </literallayout>
+            If the <filename>do_deploy</filename> should run some time after
+            the <filename>do_compile</filename>, the
+            <filename>base.bbclass</filename> has the following to ensure that
+            all <filename>do_deploy</filename> tasks run by default.
+            See the
+            "<ulink url='&YOCTO_DOCS_BB_URL;#dependencies'>Dependencies</ulink>"
+            section in the BitBake User Manual for more information.
+            <literallayout class='monospaced'>
+     do_build[recrdeptask] += "do_deploy"
+            </literallayout>
+        </para>
+
+        <para>
+            If the <filename>do_deploy</filename> task re-executes, any
+            previous output is removed (i.e. "cleaned").
         </para>
     </section>
 
