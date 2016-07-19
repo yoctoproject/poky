@@ -158,22 +158,29 @@
         </para>
 
         <para>
-            The <filename>do_deploy</filename> task is not added as a task by
-            default and needs to be added manually.
-            You can add this task using the following:
+            The <filename>do_deploy</filename> task is not added as a task
+            by default and consequently needs to be added manually.
+            If you want the task to run after
+            <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>,
+            you can add it by doing the following:
             <literallayout class='monospaced'>
      addtask deploy after do_compile
             </literallayout>
-            If the <filename>do_deploy</filename> should run some time after
-            the <filename>do_compile</filename>, the
-            <filename>base.bbclass</filename> has the following to ensure that
-            all <filename>do_deploy</filename> tasks run by default.
-            See the
-            "<ulink url='&YOCTO_DOCS_BB_URL;#dependencies'>Dependencies</ulink>"
-            section in the BitBake User Manual for more information.
-            <literallayout class='monospaced'>
+            Adding <filename>do_deploy</filename> after other tasks works the
+            same way.
+            <note>
+                You do not need to add <filename>before do_build</filename>
+                to the <filename>addtask</filename> command (though it is
+                harmless), because the
+                <link linkend='ref-classes-base'><filename>base</filename></link>
+                class contains the following:
+                <literallayout class='monospaced'>
      do_build[recrdeptask] += "do_deploy"
-            </literallayout>
+                </literallayout>
+                See the
+                "<ulink url='&YOCTO_DOCS_BB_URL;#dependencies'>Dependencies</ulink>"
+                section in the BitBake User Manual for more information.
+            </note>
         </para>
 
         <para>
