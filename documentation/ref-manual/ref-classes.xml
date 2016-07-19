@@ -1606,6 +1606,17 @@
                 <link linkend='var-FILES'><filename>FILES</filename></link>
                 variable values that contain "//", which is invalid.
                 </para></listitem>
+            <listitem><para><emphasis><filename>host-user-contaminated:</filename></emphasis>
+                Checks that no package produced by the recipe contains any
+                files outside of <filename>/home</filename> with a user or
+                group ID that matches the user running BitBake.
+                A match usually indicates that the files are being installed
+                with an incorrect UID/GID, since target IDs are independent
+                from host IDs.
+                For additional information, see the section describing the
+                <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+                task.
+                </para></listitem>
             <listitem><para><emphasis><filename>incompatible-license:</filename></emphasis>
                 Report when packages are excluded from being created due to
                 being marked with a license that is in
@@ -1632,6 +1643,25 @@
                 These files can be deleted at the end of
                 <filename>do_install</filename> if the files are not
                 needed in any package.
+                </para></listitem>
+            <listitem><para><emphasis><filename>invalid-chars:</filename></emphasis>
+                Checks that the recipe metadata variables
+                <link linkend='var-DESCRIPTION'><filename>DESCRIPTION</filename></link>,
+                <link linkend='var-SUMMARY'><filename>SUMMARY</filename></link>,
+                <link linkend='var-LICENSE'><filename>LICENSE</filename></link>,
+                and
+                <link linkend='var-SECTION'><filename>SECTION</filename></link>
+                do not contain non-UTF-8 characters.
+                Some package managers do not support such characters.
+                </para></listitem>
+            <listitem><para><emphasis><filename>invalid-packageconfig:</filename></emphasis>
+                Checks that no undefined features are being added to
+                <link linkend='var-PACKAGECONFIG'><filename>PACKAGECONFIG</filename></link>.
+                For example, any name "foo" for which the following form
+                does not exist:
+                <literallayout class='monospaced'>
+     PACKAGECONFIG[foo] = "..."
+                </literallayout>
                 </para></listitem>
             <listitem><para><emphasis><filename>la:</filename></emphasis>
                 Checks <filename>.la</filename> files for any <filename>TMPDIR</filename>
