@@ -275,7 +275,7 @@
         </para>
 
         <para>
-            Because, dealing with the second case is more complex, focus will
+            Because dealing with the second case is more complex, focus will
             be on the first case.
             The
             <link linkend='ref-classes-insane'><filename>build-deps</filename></link>
@@ -290,18 +290,21 @@
             Another, more manual, way to check a recipe for missing build-time
             dependencies of the first type is to build with an empty staging
             sysroot.
-            An easy way to do this build is to simply remove
+            This method can also find missing build-time dependencies
+            that are not in the form of libraries, which the
+            <filename>build-deps</filename> QA check is unable to find.
+        </para>
+
+        <para>
+            An easy way to empty the staging sysroots is to simply remove
             <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>,
             which is usually
             <filename>${</filename><link linkend='var-BUILDDIR'><filename>BUILDDIR</filename></link><filename>}/tmp</filename>,
             as it includes the staging sysroots.
-        </para>
-
-        <para>
-            Another, faster method to remove the staging sysroot is to use the
-            <filename>scripts/wipe-sysroot</filename> script, which removes
-            just the staging sysroots and keeps everything else in
-            <filename>TMPDIR</filename>.
+            Another, faster method to empty the staging sysroots is to use the
+            <filename>scripts/wipe-sysroot</filename> script,
+            which removes just the staging sysroots and keeps everything else
+            in <filename>TMPDIR</filename>.
             <note>
                 The <filename>scripts/</filename> directory appears in
                 <filename>PATH</filename> after running the build environment
