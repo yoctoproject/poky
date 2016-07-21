@@ -12271,18 +12271,24 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-STAGING_DIR_HOST'><glossterm>STAGING_DIR_HOST</glossterm>
             <info>
-                STAGING_DIR_HOST[doc] = "Specifies the path to the primary sysroot directory for which the target is being built."
+                STAGING_DIR_HOST[doc] = "Specifies the path to the sysroot directory for the system that the component is built to run on."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Specifies the path to the primary sysroot directory for
-                    which the target is being built.
-                    Depending on the type of recipe and the build target, the
-                    recipe's value is as follows:
+                    Specifies the path to the sysroot directory for the system
+                    that the component is built to run on (the system that hosts
+                    the component).
+                    This sysroot is the one that the recipe's
+                    <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
+                    task copies files into.
+                    Depending on the type of recipe and the build target,
+                    <filename>STAGING_DIR_HOST</filename> can have the
+                    following values:
                     <itemizedlist>
                         <listitem><para>For recipes building for the target
-                           machine, the value is "${STAGING_DIR}/${MACHINE}".
+                           machine, the value is
+                           "${<link linkend='var-STAGING_DIR'>STAGING_DIR</link>}/${<link linkend='var-MACHINE'>MACHINE</link>}".
                            </para></listitem>
                         <listitem><para>For native recipes building
                            for the build host, the value is empty given the
@@ -12301,26 +12307,26 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-STAGING_DIR_NATIVE'><glossterm>STAGING_DIR_NATIVE</glossterm>
             <info>
-                STAGING_DIR_NATIVE[doc] = "Specifies the path to the sysroot directory for the build host."
+                STAGING_DIR_NATIVE[doc] = "Specifies the path to the sysroot directory used when building components that run on the build host itself."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Specifies the path to the sysroot directory for the
-                    build host.
+                    Specifies the path to the sysroot directory used when
+                    building components that run on the build host itself.
                 </para>
             </glossdef>
         </glossentry>
 
         <glossentry id='var-STAGING_DIR_TARGET'><glossterm>STAGING_DIR_TARGET</glossterm>
             <info>
-                STAGING_DIR_TARGET[doc] = "Specifies the path to the sysroot directory for the target for which the current recipe is being built."
+                STAGING_DIR_TARGET[doc] = "Specifies the path to the sysroot used for the "HOST" system."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Specifies the path to the sysroot directory for the
-                    target for which the current recipe is being built.
+                    Specifies the path to the sysroot used for the "HOST"
+                    system.
                     In most cases, this path is the
                     <link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>.
                 </para>
@@ -12334,8 +12340,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     referred to as the "TARGET".
                     Thus, the binaries run on the "HOST" system and
                     and generate binaries for the "TARGET" system.
-                    <filename>STAGING_DIR_TARGET</filename> points to the
-                    sysroot used for the "TARGET" system.
+                    The <filename>STAGING_DIR_HOST</filename> variable points
+                    to the sysroot used for the "HOST" system, while
+                    <filename>STAGING_DIR_TARGET</filename>
+                    points to the sysroot used for the "TARGET" system.
+                    For recipes where <filename>STAGING_DIR_TARGET</filename>
+                    makes no sense, it is set to match
+                    <filename>STAGING_DIR_HOST</filename>.
                 </para>
             </glossdef>
         </glossentry>
