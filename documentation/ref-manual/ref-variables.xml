@@ -8035,6 +8035,31 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-MULTIMACH_HOST_SYS'><glossterm>MULTIMACH_HOST_SYS</glossterm>
+            <info>
+                MULTIMACH_HOST_SYS[doc] = "Separates files for different machines such that you can build for multiple host machines using the same output directories."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Serves the same purpose as
+                    <link linkend='var-MULTIMACH_TARGET_SYS'><filename>MULTIMACH_TARGET_SYS</filename></link>,
+                    but for the "HOST" system, in situations that involve a
+                    "HOST" and a "TARGET" system.
+                    See the
+                    <link linkend='var-STAGING_DIR_TARGET'><filename>STAGING_DIR_TARGET</filename></link>
+                    variable for more information.
+                </para>
+
+                <para>
+                    The default value of this variable is:
+                    <literallayout class='monospaced'>
+     ${PACKAGE_ARCH}${HOST_VENDOR}-${HOST_OS}
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-MULTIMACH_TARGET_SYS'><glossterm>MULTIMACH_TARGET_SYS</glossterm>
             <info>
                 MULTIMACH_TARGET_SYS[doc] = "Separates files for different machines such that you can build for multiple target machines using the same output directories."
@@ -8042,10 +8067,33 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Separates files for different machines such that you can build
-                    for multiple target machines using the same output directories.
-                    See the <link linkend='var-STAMP'><filename>STAMP</filename></link> variable
-                    for an example.
+                    Uniquely identifies the type of the target system for
+                    which packages are being built.
+                    This variable allows output for different types of target
+                    systems to be put into different subdirectories of the same
+                    output directory.
+                </para>
+
+                <para>
+                    The default value of this variable is:
+                    <literallayout class='monospaced'>
+     ${PACKAGE_ARCH}${TARGET_VENDOR}-${TARGET_OS}
+                    </literallayout>
+                    Some classes (e.g.
+                    <link linkend='ref-classes-cross-canadian'><filename>cross-canadian</filename></link>)
+                    modify the <filename>MULTIMACH_TARGET_SYS</filename> value.
+                </para>
+
+                <para>
+                    See the
+                    <link linkend='var-STAMP'><filename>STAMP</filename></link>
+                    variable for an example.
+                    <link linkend='var-MULTIMACH_HOST_SYS'><filename>MULTIMACH_HOST_SYS</filename></link>
+                    is the corresponding variable for the host system in
+                    situations that involve a "HOST" and a "TARGET" system.
+                    See the
+                    <link linkend='var-STAGING_DIR_TARGET'><filename>STAGING_DIR_TARGET</filename></link>
+                    variable for more information.
                 </para>
             </glossdef>
         </glossentry>
@@ -12320,14 +12368,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-STAGING_DIR_TARGET'><glossterm>STAGING_DIR_TARGET</glossterm>
             <info>
-                STAGING_DIR_TARGET[doc] = "Specifies the path to the sysroot used for the "HOST" system."
+                STAGING_DIR_TARGET[doc] = "Specifies the path to the sysroot used for the system for which the component generates code."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Specifies the path to the sysroot used for the "HOST"
-                    system.
-                    In most cases, this path is the
+                    Specifies the path to the sysroot used for the system for
+                    which the component generates code.
+                    For components that do not generate code, which is the
+                    majority), <filename>STAGING_DIR_TARGET</filename> is set
+                    to match
                     <link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>.
                 </para>
 
@@ -12344,9 +12394,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     to the sysroot used for the "HOST" system, while
                     <filename>STAGING_DIR_TARGET</filename>
                     points to the sysroot used for the "TARGET" system.
-                    For recipes where <filename>STAGING_DIR_TARGET</filename>
-                    makes no sense, it is set to match
-                    <filename>STAGING_DIR_HOST</filename>.
                 </para>
             </glossdef>
         </glossentry>
