@@ -6148,20 +6148,31 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-INITRAMFS_IMAGE_BUNDLE'><glossterm>INITRAMFS_IMAGE_BUNDLE</glossterm>
             <info>
-                INITRAMFS_IMAGE_BUNDLE[doc] = "Controls whether or not the image recipe specified by INITRAMFS_IMAGE is run through an extra pass during kernel compilation in order to build a single binary that contains both the kernel image and the initial RAM disk (initramfs)."
+                INITRAMFS_IMAGE_BUNDLE[doc] = "Controls whether or not the image recipe specified by INITRAMFS_IMAGE is run through an extra pass (do_bundle_initramfs) during kernel compilation in order to build a single binary that contains both the kernel image and the initial RAM disk (initramfs)."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     Controls whether or not the image recipe specified by
                     <link linkend='var-INITRAMFS_IMAGE'><filename>INITRAMFS_IMAGE</filename></link>
-                    is run through an extra pass during kernel compilation
-                    in order to build a single binary that contains both the
-                    kernel image and the initial RAM disk (initramfs).
-                    Using an extra compilation pass ensures that when a kernel
-                    attempts to use an initramfs, it does not encounter
-                    circular dependencies should the initramfs include kernel
-                    modules.
+                    is run through an extra pass
+                    (<link linkend='ref-tasks-bundle_initramfs'><filename>do_bundle_initramfs</filename></link>)
+                    during kernel compilation in order to build a single binary
+                    that contains both the kernel image and the initial RAM disk
+                    (initramfs).
+                    This makes use of the
+                    <link linkend='var-CONFIG_INITRAMFS_SOURCE'><filename>CONFIG_INITRAMFS_SOURCE</filename></link>
+                    kernel feature.
+                    <note>
+                        Using an extra compilation pass to bundle the initramfs
+                        avoids a circular dependency between the kernel recipe and
+                        the initramfs recipe should the initramfs include kernel
+                        modules.
+                        Should that be the case, the initramfs recipe depends on
+                        the kernel for the kernel modules, and the kernel depends
+                        on the initramfs recipe since the initramfs is bundled
+                        inside the kernel image.
+                    </note>
                 </para>
 
                 <para>
@@ -6172,9 +6183,11 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    Setting the variable to "1" in a configuration file causes
-                    the OpenEmbedded build system to make the extra pass during
-                    kernel compilation:
+                    Setting the variable to "1" in a configuration file causes the
+                    OpenEmbedded build system to generate a kernel image with the
+                    initramfs specified in
+                    <link linkend='var-INITRAMFS_IMAGE'><filename>INITRAMFS_IMAGE</filename></link>
+                    bundled within:
                     <literallayout class='monospaced'>
      INITRAMFS_IMAGE_BUNDLE = "1"
                     </literallayout>
@@ -6182,7 +6195,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <link linkend='ref-classes-kernel'><filename>kernel</filename></link>
                     class sets this variable to a null string as follows:
                     <literallayout class='monospaced'>
-     INITRAMFS_IMAGE_BUNDLE = ""
+     INITRAMFS_IMAGE_BUNDLE ?= ""
                     </literallayout>
                     <note>
                         You must set the
