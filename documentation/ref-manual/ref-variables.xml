@@ -6078,47 +6078,54 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-INITRAMFS_IMAGE'><glossterm>INITRAMFS_IMAGE</glossterm>
             <info>
-                INITRAMFS_IMAGE[doc] = "Causes the OpenEmbedded build system to build an additional recipe as a dependency to your root filesystem recipe (e.g. core-image-sato)."
+                INITRAMFS_IMAGE[doc] = "Specifies the PROVIDES name of an image recipe that is used to build an initial RAM disk (initramfs) image."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Causes the OpenEmbedded build system to build an additional
-                    recipe as a dependency to your root filesystem recipe
-                    (e.g. <filename>core-image-sato</filename>).
-                    The additional recipe is used to create an initial RAM disk
-                    (initramfs) that might be needed during the initial boot of
-                    the target system to accomplish such things as loading
-                    kernel modules prior to mounting the root file system.
+                    Specifies the
+                    <link linkend='var-PROVIDES'><filename>PROVIDES</filename></link>
+                    name of an image recipe that is used to build an initial
+                    RAM disk (initramfs) image.
+                    An initramfs provides a temporary root filesystem used for
+                    early system initialization (e.g. loading of modules
+                    needed to locate and mount the "real" root filesystem).
+                    The specified recipe is added as a dependency of the root
+                    filesystem recipe (e.g.
+                    <filename>core-image-sato</filename>).
+                    See the <filename>core-image-sato-initramfs.bb</filename>
+                    recipe, which is created, for an example recipe.
+                    <note>
+                        The initramfs image recipe should set
+                        <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                        to
+                        <link linkend='var-INITRAMFS_FSTYPES'><filename>INITRAMFS_FSTYPES</filename></link>.
+                    </note>
                 </para>
 
                 <para>
-                    When you set the variable, specify the name of the
-                    initramfs you want created.
-                    The following example, which is set in the
-                    <filename>local.conf</filename> configuration file, causes
-                    a separate recipe to be created that results in an
-                    initramfs image named
-                    <filename>core-image-sato-initramfs.bb</filename> to be
-                    created:
-                    <literallayout class='monospaced'>
-     INITRAMFS_IMAGE = "core-image-minimal-initramfs"
-                    </literallayout>
-                    By default, the
+                    You can also find more information by referencing the
+                    <filename>meta/poky/conf/local.conf.sample.extended</filename>
+                    configuration file in the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>,
+                    the
+                    <link linkend='ref-classes-image'><filename>image</filename></link>
+                    class, and the
                     <link linkend='ref-classes-kernel'><filename>kernel</filename></link>
-                    class sets this variable to a null string as follows:
-                    <literallayout class='monospaced'>
-     INITRAMFS_IMAGE = ""
-                    </literallayout>
+                    class to see how to use the
+                    <filename>INITRAMFS_IMAGE</filename> variable.
                 </para>
 
                 <para>
-                    See the
-                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample.extended'><filename>local.conf.sample.extended</filename></ulink>
-                    file for additional information.
-                    You can also reference the
-                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/kernel.bbclass'><filename>kernel.bbclass</filename></ulink>
-                    file to see how the variable is used.
+                    If <filename>INITRAMFS_IMAGE</filename> is empty, which is
+                    the default, then no initramfs is built.
+                </para>
+
+                <para>
+                    Finally, for more information you can also see the
+                    <link linkend='var-INITRAMFS_IMAGE_BUNDLE'><filename>INITRAMFS_IMAGE_BUNDLE</filename></link>
+                    variable, which allows the generated image to be bundled
+                    inside the kernel image.
                 </para>
             </glossdef>
         </glossentry>
