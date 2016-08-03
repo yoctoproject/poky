@@ -4025,6 +4025,15 @@
                     "", you need to set the variable to specify any required
                     GNU options.
                 </para>
+
+                <para>
+                    <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></link>
+                    and
+                    <link linkend='var-PARALLEL_MAKEINST'><filename>PARALLEL_MAKEINST</filename></link>
+                    also make use of
+                    <filename>EXTRA_OEMAKE</filename> to pass the required
+                    flags.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -9259,6 +9268,14 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     where <replaceable>x</replaceable> represents the maximum
                     number of parallel threads <filename>make</filename> can
                     run.
+                    <note><title>Caution</title>
+                        In order for <filename>PARALLEL_MAKE</filename> to be
+                        effective, <filename>make</filename> must be called
+                        with
+                        <filename>${</filename><link linkend='var-EXTRA_OEMAKE'><filename>EXTRA_OEMAKE</filename></link><filename>}</filename>.
+                        An easy way to ensure this is to use the
+                        <filename>oe_runmake</filename> function.
+                    </note>
                 </para>
 
                 <para>
@@ -9305,16 +9322,24 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     task in order to specify parallel installation.
                     This variable defaults to the value of
                     <link linkend='var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></link>.
-                    <note>
-                        If the software being built experiences dependency
-                        issues during the
+                    <note><title>Notes and Cautions</title>
+                        <para>In order for <filename>PARALLEL_MAKEINST</filename>
+                        to be
+                        effective, <filename>make</filename> must be called
+                        with
+                        <filename>${</filename><link linkend='var-EXTRA_OEMAKE'><filename>EXTRA_OEMAKE</filename></link><filename>}</filename>.
+                        An easy way to ensure this is to use the
+                        <filename>oe_runmake</filename> function.</para>
+
+                        <para>If the software being built experiences
+                        dependency issues during the
                         <filename>do_install</filename> task that result in
                         race conditions, you can clear the
                         <filename>PARALLEL_MAKEINST</filename> variable within
                         the recipe as a workaround.
                         For information on addressing race conditions, see the
                         "<ulink url='&YOCTO_DOCS_DEV_URL;#debugging-parallel-make-races'>Debugging Parallel Make Races</ulink>"
-                        section in the Yocto Project Development Manual.
+                        section in the Yocto Project Development Manual.</para>
                     </note>
                 </para>
             </glossdef>
