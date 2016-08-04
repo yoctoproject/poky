@@ -11657,15 +11657,24 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-SERIAL_CONSOLES_CHECK'><glossterm>SERIAL_CONSOLES_CHECK</glossterm>
             <info>
-                SERIAL_CONSOLES_CHECK[doc] = "Similar to SERIAL_CONSOLES except the device is checked for existence before attempting to enable it. Supported only by SysVinit."
+                SERIAL_CONSOLES_CHECK[doc] = "Specifies serial consoles, which must be listed in SERIAL_CONSOLES, to check against /proc/console before enabling them using getty. Supported only by SysVinit."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Similar to
-                    <link linkend='var-SERIAL_CONSOLES'><filename>SERIAL_CONSOLES</filename></link>
-                    except the device is checked for existence before attempting
-                    to enable it.
+                    Specifies serial consoles, which must be listed in
+                    <link linkend='var-SERIAL_CONSOLES'><filename>SERIAL_CONSOLES</filename></link>,
+                    to check against <filename>/proc/console</filename>
+                    before enabling them using getty.
+                    This variable allows aliasing in the format:
+                    &lt;device&gt;:&lt;alias&gt;.
+                    If a device was listed as "sclp_line0"
+                    in <filename>/dev/</filename> and "ttyS0" was listed
+                    in <filename>/proc/console</filename>, you would do the
+                    following:
+                    <literallayout class='monospaced'>
+     SERIAL_CONSOLES_CHECK = "slcp_line0:ttyS0"
+                    </literallayout>
                     This variable is currently only supported with SysVinit
                     (i.e. not with systemd).
                 </para>
