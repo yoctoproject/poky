@@ -163,9 +163,8 @@
         <ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual'>BitBake User Manual</ulink>.
     </note>
 
-
-    <section id='usingpoky-debugging-taskfailures'>
-        <title>Task Failures</title>
+    <section id='usingpoky-debugging-viewing-logs-from-failed-tasks'>
+        <title>Viewing Logs from Failed Tasks</title>
 
         <para>The log file for shell tasks is available in
             <filename>${WORKDIR}/temp/log.do_<replaceable>taskname</replaceable>.pid</filename>.
@@ -180,6 +179,58 @@
 
         <para>
             Presently, the output from Python tasks is sent directly to the console.
+        </para>
+    </section>
+
+    <section id='usingpoky-debugging-viewing-variable-values'>
+        <title>Viewing Variable Values</title>
+        <para>
+            BitBake's <filename>-e</filename> option is used to display
+            variable values after parsing.
+            The following command displays the variable values after the
+            configuration files (i.e. <filename>local.conf</filename>,
+            <filename>bblayers.conf</filename>, and so forth) have been
+            parsed:
+            <literallayout class='monospaced'>
+     $ bitbake -e
+            </literallayout>
+            The following command displays variable values after a specific
+            recipe has been parsed.
+            The variables include those from the configuration as well:
+            <literallayout class='monospaced'>
+     $ bitbake -e recipename
+            </literallayout>
+            <note><para>
+                Each recipe has its own private set of variables (datastore).
+                Internally, after parsing the configuration, a copy of the
+                resulting datastore is made prior to parsing each recipe.
+                This copying implies that variables set in one recipe will
+                not be visible to other recipes.</para>
+
+                <para>Likewise, each task within a recipe gets a private
+                datastore based on the recipe datastore, which means that
+                variables set within one task will not be visible to
+                other tasks.</para>
+            </note>
+        </para>
+
+        <para>
+            In the output of <filename>bitbake -e</filename>, each variable is
+            preceded by a description of how the variable got its value,
+            including temporary values that were later overriden.
+            This description also includes variable flags (varflags) set on
+            the variable.
+            The output can be very helpful during debugging.
+        </para>
+
+        <para>
+            Variables that are exported to the environment are preceded by
+            <filename>export</filename> in the output of
+            <filename>bitbake -e</filename>.
+            See the following example:
+            <literallayout class='monospaced'>
+     export CC="i586-poky-linux-gcc -m32 -march=i586 --sysroot=/home/ulf/poky/build/tmp/sysroots/qemux86"
+            </literallayout>
         </para>
     </section>
 
@@ -319,7 +370,6 @@
 
     </section>
 
-
     <section id='usingpoky-debugging-dependencies'>
         <title>Dependency Graphs</title>
 
@@ -407,23 +457,6 @@
                 You can also specify fragments of the filename.
                 In this case, BitBake checks for a unique match.
             </note>
-        </para>
-    </section>
-
-    <section id='usingpoky-debugging-variables'>
-        <title>Variables</title>
-        <para>
-            You can use the <filename>-e</filename> BitBake option to
-            display the parsing environment for a configuration.
-            The following displays the general parsing environment:
-            <literallayout class='monospaced'>
-     $ bitbake -e
-            </literallayout>
-            This next example shows the parsing environment for a specific
-            recipe:
-            <literallayout class='monospaced'>
-     $ bitbake -e <replaceable>recipename</replaceable>
-            </literallayout>
         </para>
     </section>
 
