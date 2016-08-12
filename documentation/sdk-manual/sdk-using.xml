@@ -533,10 +533,10 @@
                     </para></listitem>
                 <listitem><para><emphasis>Test and debug the application</emphasis>:
                     Once your application is deployed, you need to test it.
-                    Within the Eclipse IDE, you can use the debugging environment along with the
-                    set of installed user-space tools to debug your application.
-                    Of course, the same user-space tools are available separately if you choose
-                    not to use the Eclipse IDE.</para></listitem>
+                    Within the Eclipse IDE, you can use the debugging
+                    environment along with supported performance enhancing
+                    <ulink url='http://www.eclipse.org/linuxtools/'>tools</ulink>.
+                    </para></listitem>
            </orderedlist>
         </para>
     </section>
@@ -565,9 +565,11 @@
             execution of your output into a QEMU emulation session as well as
             actual target hardware.
             You can also perform cross-debugging and profiling.
-            The environment also supports a suite of tools that allows you
-            to perform remote profiling, tracing, collection of power data,
-            collection of latency data, and collection of performance data.
+            The environment also supports performance enhancing
+            <ulink url='http://www.eclipse.org/linuxtools/'>tools</ulink> that
+            allow you to perform remote profiling, tracing, collection of
+            power data, collection of latency data, and collection of
+            performance data.
         </para>
 
         <para>
@@ -1317,144 +1319,18 @@
             </para>
         </section>
 
-        <section id='running-user-space-tools'>
-            <title>Running User-Space Tools</title>
+        <section id='running-performance-tools'>
+            <title>Running Performance Tools</title>
 
             <para>
                 As mentioned earlier in the manual, several tools exist that
                 enhance your development experience.
                 These tools are aids in developing and debugging applications
                 and images.
-                You can run these user-space tools from within the Eclipse
+                You can run these tools from within the Eclipse
                 IDE through the "YoctoProjectTools" menu.
-            </para>
-
-            <para>
-                Once you pick a tool, you need to configure it for the remote
-                target.
-                Every tool needs to have the connection configured.
-                You must select an existing TCF-based RSE connection to the
-                remote target.
-                If one does not exist, click "New" to create one.
-            </para>
-
-            <para>
-                Here are some specifics about the remote tools:
-                <itemizedlist>
-                    <listitem><para><emphasis><filename>Lttng2.0 trace import</filename>:</emphasis>
-                        Selecting this tool transfers the remote target's
-                        <filename>Lttng</filename> tracing data back to the
-                        local host machine and uses the Lttng Eclipse plug-in
-                        to graphically display the output.
-                        For information on how to use Lttng to trace an
-                        application,
-                        see <ulink url='http://lttng.org/documentation'></ulink>
-                        and the
-                        "<ulink url='&YOCTO_DOCS_PROF_URL;#lttng-linux-trace-toolkit-next-generation'>LTTng (Linux Trace Toolkit, next generation)</ulink>"
-                        section, which is in the Yocto Project Profiling and
-                        Tracing Manual.
-                        <note>Do not use
-                            <filename>Lttng-user space (legacy)</filename> tool.
-                            This tool no longer has any upstream support.</note>
-                        </para>
-                        <para>Before you use the
-                        <filename>Lttng2.0 trace import</filename> tool,
-                        you need to setup the Lttng Eclipse plug-in and create a
-                        Tracing project.
-                        Do the following:
-                        <orderedlist>
-                            <listitem><para>Select "Open Perspective" from the
-                                "Window" menu and then select "Other..." to
-                                bring up a menu of other perspectives.
-                                Choose "Tracing".
-                                </para></listitem>
-                            <listitem><para>Click "OK" to change the Eclipse
-                                perspective into the Tracing perspective.
-                                </para></listitem>
-                            <listitem><para>Create a new Tracing project by
-                                selecting "Project" from the "File -> New" menu.
-                                </para></listitem>
-                            <listitem><para>Choose "Tracing Project" from the
-                                "Tracing" menu and click "Next".
-                                </para></listitem>
-                            <listitem><para>Provide a name for your tracing
-                                project and click "Finish".
-                                </para></listitem>
-                            <listitem><para>Generate your tracing data on the
-                                remote target.</para></listitem>
-                            <listitem><para>Select "Lttng2.0 trace import"
-                                from the "Yocto Project Tools" menu to
-                                start the data import process.</para></listitem>
-                            <listitem><para>Specify your remote connection name.
-                                </para></listitem>
-                            <listitem><para>For the Ust directory path, specify
-                                the location of your remote tracing data.
-                                Make sure the location ends with
-                                <filename>ust</filename> (e.g.
-                                <filename>/usr/mysession/ust</filename>).
-                                </para></listitem>
-                            <listitem><para>Click "OK" to complete the import
-                                process.
-                                The data is now in the local tracing project
-                                you created.</para></listitem>
-                            <listitem><para>Right click on the data and then use
-                                the menu to Select "Generic CTF Trace" from the
-                                "Trace Type... -> Common Trace Format" menu to
-                                map the tracing type.</para></listitem>
-                            <listitem><para>Right click the mouse and select
-                                "Open" to bring up the Eclipse Lttng Trace
-                                Viewer so you view the tracing data.
-                                </para></listitem>
-                        </orderedlist></para></listitem>
-                    <listitem><para><emphasis><filename>PowerTOP</filename>:</emphasis>
-                        Selecting this tool runs PowerTOP on the remote target
-                        machine and displays the results in a new view called
-                        PowerTOP.</para>
-                        <para>The "Time to gather data(sec):" field is the time
-                        passed in seconds before data is gathered from the
-                        remote target for analysis.</para>
-                        <para>The "show pids in wakeups list:" field corresponds
-                        to the <filename>-p</filename> argument passed to
-                        <filename>PowerTOP</filename>.</para></listitem>
-                    <listitem><para><emphasis><filename>LatencyTOP and Perf</filename>:</emphasis>
-                        LatencyTOP identifies system latency, while
-                        Perf monitors the system's performance counter
-                        registers.
-                        Selecting either of these tools causes an RSE terminal
-                        view to appear from which you can run the tools.
-                        Both tools refresh the entire screen to display results
-                        while they run.
-                        For more information on setting up and using
-                        <filename>perf</filename>, see the
-                        "<ulink url='&YOCTO_DOCS_PROF_URL;#profile-manual-perf'>perf</ulink>"
-                        section in the Yocto Project Profiling and Tracing
-                        Manual.
-                        </para></listitem>
-                    <listitem><para><emphasis><filename>SystemTap</filename>:</emphasis>
-                        Systemtap is a tool that lets you create and reuse
-                        scripts to examine the activities of a live Linux
-                        system.
-                        You can easily extract, filter, and summarize data
-                        that helps you diagnose complex performance or
-                        functional problems.
-                        For more information on setting up and using
-                        <filename>SystemTap</filename>, see the
-                        <ulink url='https://sourceware.org/systemtap/documentation.html'>SystemTap Documentation</ulink>.
-                        </para></listitem>
-                    <listitem><para><emphasis><filename>yocto-bsp</filename>:</emphasis>
-                        The <filename>yocto-bsp</filename> tool lets you
-                        quickly set up a Board Support Package (BSP) layer.
-                        The tool requires a Metadata location, build location,
-                        BSP name, BSP output location, and a kernel
-                        architecture.
-                        For more information on the
-                        <filename>yocto-bsp</filename> tool outside of Eclipse,
-                        see the
-                        "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a new BSP Layer Using the yocto-bsp Script</ulink>"
-                        section in the Yocto Project Board Support Package
-                        (BSP) Developer's Guide.
-                        </para></listitem>
-                </itemizedlist>
+                For more information on these tools, see
+                <ulink url='http://www.eclipse.org/linuxtools/'>http://www.eclipse.org/linuxtools/</ulink>.
             </para>
         </section>
     </section>
