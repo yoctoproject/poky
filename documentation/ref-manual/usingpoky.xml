@@ -253,7 +253,8 @@
         <para>
             Sometimes it can be hard to see why BitBake wants to build other
             recipes before the one you have specified.
-            Dependency information can help you understand recipe build order.
+            Dependency information can help you understand why a recipe is
+            built.
         </para>
 
         <para>
@@ -293,32 +294,45 @@
         <para>
             The graphs are in
             <ulink url='https://en.wikipedia.org/wiki/DOT_%28graph_description_language%29'>DOT</ulink>
-            format and can be converted to images (e.g. using the "dot" tool
-            from
-            <ulink url='http://www.graphviz.org/'>Graphviz</ulink>.
-            <note>
-                <para>DOT files use a plain text format.
-                The graphs generated using the
-                <filename>bitbake -g</filename> command are often so large as
-                to be impossible to read without special pruning (e.g. with
-                Bitbake's <filename>-I</filename> option) and processing.
-                Despite the form and size of the files, the corresponding
-                <filename>.dot</filename> files can still be easy to read
-                and provide useful information.</para>
+            format and can be converted to images (e.g. using the
+            <filename>dot</filename> tool from
+            <ulink url='http://www.graphviz.org/'>Graphviz</ulink>).
+            <note><title>Notes</title>
+                <itemizedlist>
+                    <listitem><para>
+                        DOT files use a plain text format.
+                        The graphs generated using the
+                        <filename>bitbake -g</filename> command are often so
+                        large as to be difficult to read without special
+                        pruning (e.g. with Bitbake's
+                        <filename>-I</filename> option) and processing.
+                        Despite the form and size of the graphs, the
+                        corresponding <filename>.dot</filename> files can still
+                        be possible to read and provide useful information.
+                        </para>
 
-                <para>As an example, the
-                <filename>task-depends.dot</filename> file contains lines such
-                as the following:
-                <literallayout class='monospaced'>
+                        <para>As an example, the
+                        <filename>task-depends.dot</filename> file contains
+                        lines such as the following:
+                        <literallayout class='monospaced'>
      "libxslt.do_configure" -> "libxml2.do_populate_sysroot"
-                </literallayout>
-                The above example line reveals that the
-                <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>
-                task in <filename>libxslt</filename> depends on the
-                <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
-                task in <filename>libxml2</filename>, which is a normal
-                <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
-                dependency between the two recipes.</para>
+                        </literallayout>
+                        The above example line reveals that the
+                        <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>
+                        task in <filename>libxslt</filename> depends on the
+                        <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
+                        task in <filename>libxml2</filename>, which is a normal
+                        <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
+                        dependency between the two recipes.
+                        </para></listitem>
+                    <listitem><para>
+                        For an example of how <filename>.dot</filename> files
+                        can be processed, see the
+                        <filename>scripts/contrib/graph-tool</filename> Python
+                        script, which finds and displays paths between graph
+                        nodes.
+                        </para></listitem>
+                </itemizedlist>
             </note>
         </para>
 
