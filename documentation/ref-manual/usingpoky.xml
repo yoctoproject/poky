@@ -234,6 +234,93 @@
         </para>
     </section>
 
+    <section id='usingpoky-viewing-dependencies'>
+        <title>Viewing Dependencies</title>
+
+        <para>
+            Sometimes it can be hard to see why BitBake wants to build other
+            recipes before the one you have specified.
+            Dependency information can help you understand recipe build order.
+        </para>
+
+        <para>
+            To generate dependency information for a recipe, run the following
+            command:
+            <literallayout class='monospaced'>
+     $ bitbake -g <replaceable>recipename</replaceable>
+            </literallayout>
+            This command writes the following files in the current directory:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>pn-buildlist</filename>: A list of
+                    recipes/targets involved in building
+                    <replaceable>recipename</replaceable>.
+                    "Involved" here means that at least one task from the
+                     recipe needs to run when building
+                    <replaceable>recipename</replaceable> from scratch.
+                    Targets that are in
+                    <link linkend='var-ASSUME_PROVIDED'><filename>ASSUME_PROVIDED</filename></link>
+                    are not listed.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>pn-depends.dot</filename>: A graph showing
+                    dependencies between build-time targets (recipes).
+                    </para></listitem>
+                <listitem><para>
+                    <filename>package-depends.dot</filename>: A graph showing
+                    known dependencies between runtime targets.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>task-depends.dot</filename>: A graph showing
+                    dependencies between tasks.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            The graphs are in
+            <ulink url='https://en.wikipedia.org/wiki/DOT_%28graph_description_language%29'>DOT</ulink>
+            format and can be converted to images (e.g. using the "dot" tool
+            from
+            <ulink url='http://www.graphviz.org/'>Graphviz</ulink>.
+            <note>
+                <para>DOT files use a plain text format.
+                The graphs generated using the
+                <filename>bitbake -g</filename> command are often so large as
+                to be impossible to read without special pruning (e.g. with
+                Bitbake's <filename>-I</filename> option) and processing.
+                Despite the form and size of the files, the corresponding
+                <filename>.dot</filename> files can still be easy to read
+                and provide useful information.</para>
+
+                <para>As an example, the
+                <filename>task-depends.dot</filename> file contains lines such
+                as the following:
+                <literallayout class='monospaced'>
+     "libxslt.do_configure" -> "libxml2.do_populate_sysroot"
+                </literallayout>
+                The above example line reveals that the
+                <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>
+                task in <filename>libxslt</filename> depends on the
+                <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
+                task in <filename>libxml2</filename>, which is a normal
+                <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
+                dependency between the two recipes.</para>
+            </note>
+        </para>
+
+        <para>
+            You can use a different method to view dependency information
+            by using the following command:
+            <literallayout class='monospaced'>
+     $ bitbake -g -u depexp <replaceable>recipename</replaceable>
+            </literallayout>
+            This command displays a GUI window from which you can view
+            build-time and runtime dependencies for the recipes involved in
+            building <replaceable>recipename</replaceable>.
+        </para>
+    </section>
+
     <section id='usingpoky-debugging-taskrunning'>
         <title>Running Specific Tasks</title>
 
@@ -368,26 +455,6 @@
             </note>
         </para>
 
-    </section>
-
-    <section id='usingpoky-debugging-dependencies'>
-        <title>Dependency Graphs</title>
-
-        <para>
-            Sometimes it can be hard to see why BitBake wants to build
-            other packages before building a given package you have specified.
-            The <filename>bitbake -g <replaceable>targetname</replaceable></filename> command
-            creates the <filename>pn-buildlist</filename>,
-            <filename>pn-depends.dot</filename>,
-            <filename>package-depends.dot</filename>, and
-            <filename>task-depends.dot</filename> files in the current
-            directory.
-            These files show what will be built and the package and task
-            dependencies, which are useful for debugging problems.
-            You can use the
-            <filename>bitbake -g -u depexp <replaceable>targetname</replaceable></filename>
-            command to display the results in a more human-readable form.
-        </para>
     </section>
 
     <section id='usingpoky-debugging-bitbake'>
