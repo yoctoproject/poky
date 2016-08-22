@@ -901,56 +901,15 @@
             <title>Debugging</title>
 
             <para>
-                When things go wrong, debugging needs to be straightforward.
-                Because of this, the Yocto Project includes strong debugging
-                tools:
-                <itemizedlist>
-                    <listitem><para>Whenever a shared state package is written
-                        out into the
-                        <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link>,
-                        a corresponding <filename>.siginfo</filename> file is
-                        also written.
-                        This file contains a pickled Python database of all
-                        the Metadata that went into creating the hash for a
-                        given shared state package.
-                        Whenever a stamp is written into the stamp directory
-                        <link linkend='var-STAMP'><filename>STAMP</filename></link>,
-                        a corresponding <filename>.sigdata</filename> file
-                        is created that contains the same hash data that
-                        represented the executed task.
-                        </para></listitem>
-                    <listitem><para>You can use BitBake to dump out the
-                        signature construction information without executing
-                        tasks by using either of the following BitBake
-                        command-line options:
-                        <literallayout class='monospaced'>
-     &dash;&dash;dump-signatures=<replaceable>SIGNATURE_HANDLER</replaceable>
-     -S <replaceable>SIGNATURE_HANDLER</replaceable>
-                        </literallayout>
-                        <note>
-                            Two common values for
-                            <replaceable>SIGNATURE_HANDLER</replaceable> are
-                            "none" and "printdiff" to only dump the signature
-                            or to compare the dumped signature with the
-                            cached one, respectively.
-                        </note>
-                        Using BitBake with either of these options causes
-                        BitBake to dump out <filename>.sigdata</filename> files
-                        in the stamp directory for every task it would have
-                        executed instead of building the specified target
-                        package.
-                        </para></listitem>
-                    <listitem><para>There is a
-                        <filename>bitbake-diffsigs</filename> command that
-                        can process <filename>.sigdata</filename> and
-                        <filename>.siginfo</filename> files.
-                        If you specify one of these files, BitBake dumps out
-                        the dependency information in the file.
-                        If you specify two files, BitBake compares the two
-                        files and dumps out the differences between the two.
-                        This more easily helps answer the question of "What
-                        changed between X and Y?"</para></listitem>
-                </itemizedlist>
+                Seeing what metadata went into creating the input signature
+                of a shared state (sstate) task can be a useful debugging aid.
+                This information is available in signature information
+                (<filename>siginfo</filename>) files in
+                <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link>.
+                For information on how to view and interpret information in
+                <filename>siginfo</filename> files, see the
+                "<link linkend='usingpoky-viewing-task-variable-dependencies'>Viewing Task Variable Dependencies</link>"
+                section.
             </para>
         </section>
 
