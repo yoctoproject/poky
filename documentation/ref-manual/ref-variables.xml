@@ -8420,18 +8420,60 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-OVERRIDES'><glossterm>OVERRIDES</glossterm>
             <info>
-                OVERRIDES[doc] = "BitBake uses OVERRIDES to control what variables are overridden after BitBake parses recipes and configuration files."
+                OVERRIDES[doc] = "A colon-separated list of overrides that currently apply."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    BitBake uses <filename>OVERRIDES</filename> to control
-                    what variables are overridden after BitBake parses
-                    recipes and configuration files.
-                    You can find more information on how overrides are handled
-                    in the
+                    A colon-separated list of overrides that currently apply.
+                    Overrides are a BitBake mechanism that allows variables to
+                    be selectively overridden at the end of parsing.
+                    The set of overrides in <filename>OVERRIDES</filename>
+                    represents the "state" during building, which includes
+                    the current recipe being built, the machine for which
+                    is being built, and so forth.
+                </para>
+
+                <para>
+                    As an example, if the string "an-override" appears as an
+                    element in the colon-separated list in
+                    <filename>OVERRIDES</filename>, then the following
+                    assignment will override <filename>FOO</filename> with the
+                    value "overridden" at the end of parsing:
+                    <literallayout class='monospaced'>
+     FOO_an-override = "overridden"
+                    </literallayout>
+                    See the
                     "<ulink url='&YOCTO_DOCS_BB_URL;#conditional-syntax-overrides'>Conditional Syntax (Overrides)</ulink>"
-                    section of the BitBake User Manual.
+                    section in the BitBake User Manual for more information on
+                    the overrides mechanism.
+                </para>
+
+                <para>
+                    The default value of <filename>OVERRIDES</filename>
+                    includes the values of the
+                    <link linkend='var-CLASSOVERRIDE'><filename>CLASSOVERRIDE</filename></link>,
+                    <link linkend='var-MACHINEOVERRIDES'><filename>MACHINEOVERRIDES</filename></link>,
+                    and
+                    <link linkend='var-DISTROOVERRIDES'><filename>DISTROOVERRIDES</filename></link>
+                    variables.
+                    Another important override included by default is
+                    <filename>pn-${PN}</filename>.
+                    This override allows variables to be set for a single
+                    recipe within configuration (<filename>.conf</filename>)
+                    files.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     FOO_pn-myrecipe = "myrecipe-specific value"
+                    </literallayout>
+                    <note><title>Tip</title>
+                        An easy way to see what overrides apply is to search for
+                        <filename>OVERRIDES</filename> in the output of the
+                        <filename>bitbake -e</filename> command.
+                        See the
+                        "<link linkend='usingpoky-debugging-viewing-variable-values'>Viewing Variable Values</link>"
+                        section for more information.
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
@@ -9830,6 +9872,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <literallayout class='monospaced'>
      PREFERRED_VERSION_linux-yocto_forcevariable = "3.4%"
                     </literallayout>
+                    <note>
+                        The <filename>_forcevariable</filename> override is
+                        not handled specially.
+                        This override only works because the default value of
+                        <link linkend='var-OVERRIDES'><filename>OVERRIDES</filename></link>
+                        includes "forcevariable".
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
