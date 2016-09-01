@@ -7931,6 +7931,39 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <link linkend='var-BPN'><filename>BPN</filename></link> variable).
                     <filename>MLPREFIX</filename> gets set when a prefix has been
                     added to <filename>PN</filename>.
+                    <note>
+                        The "ML" in <filename>MLPREFIX</filename> stands for
+                        "MultiLib".
+                        This representation is historical and comes from
+                        a time when <filename>nativesdk</filename> was a suffix
+                        rather than a prefix on the recipe name.
+                        When <filename>nativesdk</filename> was turned into a
+                        prefix, it made sense to set
+                        <filename>MLPREFIX</filename> for it as well.
+                    </note>
+                </para>
+
+                <para>
+                    To help understand when <filename>MLPREFIX</filename>
+                    might be needed, consider when
+                    <link linkend='var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></link>
+                    is used to provide a <filename>nativesdk</filename> version
+                    of a recipe in addition to the target version.
+                    If that recipe declares build-time dependencies on tasks in
+                    other recipes by using
+                    <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>,
+                    then a dependency on "foo" will automatically get rewritten
+                    to a dependency on "nativesdk-foo".
+                    However, dependencies like the following will not get
+                    rewritten automatically:
+                    <literallayout class='monospaced'>
+     do_foo[depends] += "<replaceable>recipe</replaceable>:do_foo"
+                    </literallayout>
+                    If you want such a dependency to also get transformed,
+                    you can do the following:
+                    <literallayout class='monospaced'>
+     do_foo[depends] += "${MLPREFIX}<replaceable>recipe</replaceable>:do_foo"
+                    </literallayout>
                 </para>
             </glossdef>
         </glossentry>
