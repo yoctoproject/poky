@@ -7808,36 +7808,41 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-MACHINEOVERRIDES'><glossterm>MACHINEOVERRIDES</glossterm>
             <info>
-                MACHINEOVERRIDES[doc] = "Lists overrides specific to the current machine. By default, this list includes the value of MACHINE."
+                MACHINEOVERRIDES[doc] = "A colon-separated list of overrides that apply to the current machine."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Lists overrides specific to the current machine.
-                    By default, this list includes the value
-                    of <filename><link linkend='var-MACHINE'>MACHINE</link></filename>.
-                    You can extend the list to apply variable overrides for
-                    classes of machines.
-                    For example, all QEMU emulated machines (e.g. qemuarm,
-                    qemux86, and so forth) include a common file named
-                    <filename>meta/conf/machine/include/qemu.inc</filename>
-                    that prepends <filename>MACHINEOVERRIDES</filename> with
-                    the following variable override:
-                    <literallayout class='monospaced'>
-    MACHINEOVERRIDES =. "qemuall:"
-                    </literallayout>
+                    A colon-separated list of overrides that apply to the
+                    current machine.
+                    By default, this list includes the value of
+                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link>.
                 </para>
 
                 <para>
-                    Applying an override like <filename>qemuall</filename>
-                    affects all QEMU emulated machines elsewhere.
-                    Here is an example from the
-                    <filename>connman-conf</filename> recipe:
+                    You can extend <filename>MACHINEOVERRIDES</filename>
+                    to add extra overrides that should apply to a machine.
+                    For example, all machines emulated in QEMU (e.g.
+                    <filename>qemuarm</filename>, <filename>qemux86</filename>,
+                    and so forth) include a file named
+                    <filename>meta/conf/machine/include/qemu.inc</filename>
+                    that prepends the following override to
+                    <filename>MACHINEOVERRIDES</filename>:
                     <literallayout class='monospaced'>
-    SRC_URI_append_qemuall = "file://wired.config \
-                              file://wired-setup \
-                             "
+     MACHINEOVERRIDES =. "qemuall:"
                     </literallayout>
+                    This override allows variables to be overriden for all
+                    machines emulated in QEMU, like in the following example
+                    from the <filename>connman-conf</filename> recipe:
+                    <literallayout class='monospaced'>
+     SRC_URI_append_qemuall = "file://wired.config \
+                               file://wired-setup \
+                              "
+                    </literallayout>
+                    The underlying mechanism behind
+                    <filename>MACHINEOVERRIDES</filename> is simply that it is
+                    included in the default value of
+                    <link linkend='var-OVERRIDES'><filename>OVERRIDES</filename></link>.
                 </para>
             </glossdef>
         </glossentry>
