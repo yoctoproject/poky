@@ -1210,6 +1210,67 @@
             </para>
         </section>
 
+        <section id='stamp-files-and-the-rerunning-of-tasks'>
+            <title>Stamp Files and the Rerunning of Tasks</title>
+
+            <para>
+                For each task that completes successfully, BitBake writes a
+                stamp file into the
+                <link linkend='var-STAMPS_DIR'><filename>STAMPS_DIR</filename></link>
+                directory.
+                The beginning of the stamp file's filename is determined by the
+                <link linkend='var-STAMP'><filename>STAMP</filename></link>
+                variable, and the end of the name consists of the task's name
+                and current
+                <ulink url='&YOCTO_DOCS_BB_URL;#checksums'>input checksum</ulink>.
+                <note>
+                    This naming scheme assumes that
+                    <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_SIGNATURE_HANDLER'><filename>BB_SIGNATURE_HANDLER</filename></ulink>
+                    is "OEBasicHash", which is almost always the case in
+                    current OpenEmbedded.
+                </note>
+                To determine if a task needs to be rerun, BitBake checks if a
+                stamp file with a matching input checksum exists for the task.
+                If such a stamp file exists, the task's output is assumed to
+                exist and still be valid.
+                If the file does not exist, the task is rerun.
+                <note>
+                    <para>The stamp mechanism is more general than the shared
+                    state (sstate) cache mechanism described in the
+                    "<link linkend='setscene-tasks-and-shared-state'>Setscene Tasks and Shared State</link>"
+                    section.
+                    BitBake avoids rerunning any task that has a valid
+                    stamp file, not just tasks that can be accelerated through
+                    the sstate cache.</para>
+                    <para>However, you should realize that stamp files only
+                    serve as a marker that some work has been done and these
+                    files do not record task output.
+                    The actual task output would usually be somewhere in
+                    <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
+                    (e.g. in some recipe's
+                    <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>.)
+                    What the sstate cache mechanism adds is a way to cache task
+                    output that can then be shared between build machines.
+                    </para>
+                </note>
+                Since <filename>STAMPS_DIR</filename> is usually a subdirectory
+                of <filename>TMPDIR</filename>, removing
+                <filename>TMPDIR</filename> will also remove
+                <filename>STAMPS_DIR</filename>, which means tasks will
+                properly be rerun to repopulate <filename>TMPDIR</filename>.
+            </para>
+
+            <para>
+                If you want some task to always be considered "out of date",
+                you can mark it with the
+                <ulink url='&YOCTO_DOCS_BB_URL;#variable-flags'><filename>nostamp</filename></ulink>
+                varflag.
+                If some other task depends on such a task, then that task will
+                also always be considered out of date, which might not be what
+                you want.
+            </para>
+        </section>
+
         <section id='setscene-tasks-and-shared-state'>
             <title>Setscene Tasks and Shared State</title>
 
