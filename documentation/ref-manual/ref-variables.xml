@@ -1992,22 +1992,35 @@
                     An internal variable specifying the special class override
                     that should currently apply (e.g. "class-target",
                     "class-native", and so forth).
-                    The classes that use this variable set it to
-                    appropriate values.
+                    The classes that use this variable (e.g.
+                    <link linkend='ref-classes-native'><filename>native</filename></link>,
+                    <link linkend='ref-classes-nativesdk'><filename>nativesdk</filename></link>,
+                    and so forth) set the variable to appropriate values.
+                    <note>
+                        <filename>CLASSOVERRIDE</filename> gets its default
+                        "class-target" value from the
+                        <filename>bitbake.conf</filename> file.
+                    </note>
                 </para>
 
                 <para>
-                    You do not normally directly interact with this variable.
-                    The value for the <filename>CLASSOVERRIDE</filename>
-                    variable goes into
-                    <link linkend='var-OVERRIDES'><filename>OVERRIDES</filename></link>
-                    and then can be used as an override.
+                    As an example, the following override allows you to install
+                    extra files, but only when building for the target:
+                    <literallayout class='monospaced'>
+     do_install_append_class-target() {
+         install my-extra-file ${D}${sysconfdir}
+     }
+                    </literallayout>
                     Here is an example where "python-native" is added to
-                    <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
-                    only when building for the <filename>-native</filename> case:
+                    <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>,
+                    but only when building for the build host:
                     <literallayout class='monospaced'>
      DEPENDS_append_class-native = " python-native"
                     </literallayout>
+                    The underlying mechanism behind
+                    <filename>CLASSOVERRIDE</filename> is simply that it is
+                    included in the default value of
+                    <link linkend='var-OVERRIDES'><filename>OVERRIDES</filename></link>.
                 </para>
             </glossdef>
         </glossentry>
