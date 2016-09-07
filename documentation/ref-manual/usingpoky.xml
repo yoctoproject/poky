@@ -248,6 +248,84 @@
         </para>
     </section>
 
+    <section id='viewing-package-information-with-oe-pkgdata-util'>
+        <title>Viewing Package Information with <filename>oe-pkgdata-util</filename></title>
+
+        <para>
+            You can use the <filename>oe-pkgdata-util</filename> command-line
+            utility to query
+            <link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>
+            and display various package-related information.
+            When you use the utility, you must use it to view information
+            on packages that have already been built.
+        </para>
+
+        <para>
+            Following are a few of the available
+            <filename>oe-pkgdata-util</filename> subcommands.
+            <note>
+                You can use the standard * and ? globbing wildcards as part of
+                package names and paths.
+            </note>
+            <itemizedlist>
+                <listitem><para>
+                    <filename>oe-pkgdata-util list-pkgs [</filename><replaceable>pattern</replaceable><filename>]</filename>:
+                    Lists all packages that have been built, optionally
+                    limiting the match to packages that match
+                    <replaceable>pattern</replaceable>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>oe-pkgdata-util list-pkg-files&nbsp;</filename><replaceable>package</replaceable><filename>&nbsp;...</filename>:
+                    Lists the files and directories contained in the given
+                    packages.
+                    <note>
+                        <para>
+                        A different way to view the contents of a package is
+                        to look at the
+                        <filename>${</filename><link linkend='var-WORKDIR'><filename>WORKDIR</filename></link><filename>}/packages-split</filename>
+                        directory of the recipe that generates the
+                        package.
+                        This directory is created by the
+                        <link linkend='ref-tasks-package'><filename>do_package</filename></link>
+                        task and has one subdirectory for each package the
+                        recipe generates, which contains the files stored in
+                        that package.</para>
+                        <para>
+                        If you want to inspect the
+                        <filename>${WORKDIR}/packages-split directory</filename>,
+                        make sure that you are not running with
+                        <link linkend='ref-classes-rm-work'><filename>rm_work</filename></link>
+                        enabled when building the recipe.</para>
+                        </note>
+                    </para></listitem>
+                <listitem><para>
+                    <filename>oe-pkgdata-util find-path&nbsp;</filename><replaceable>path</replaceable><filename>&nbsp;...</filename>:
+                    Lists the names of the packages that contain the given
+                    paths.
+                    For example, the following might return
+                    <filename>make-doc: /usr/share/man/man1/make.1</filename>:
+                    <literallayout class='monospaced'>
+     $ oe-pkgdata-util find-path /usr/share/man/man1/make.1
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <filename>oe-pkgdata-util lookup-recipe&nbsp;</filename><replaceable>package</replaceable><filename>&nbsp;...</filename>:
+                    Lists the name of the recipe that produces the given
+                    packages.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            For more information on the <filename>oe-pkgdata-util</filename>
+            command, use the help facility:
+            <literallayout class='monospaced'>
+     $ oe-pkgdata-util &dash;&dash;help
+     $ oe-pkgdata-util <replaceable>subcommand</replaceable> --help
+            </literallayout>
+        </para>
+    </section>
+
     <section id='usingpoky-viewing-dependencies-between-recipes-and-tasks'>
         <title>Viewing Dependencies Between Recipes and Tasks</title>
 
