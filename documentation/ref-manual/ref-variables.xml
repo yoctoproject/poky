@@ -9199,6 +9199,50 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-PACKAGECONFIG_CONFARGS'><glossterm>PACKAGECONFIG_CONFARGS</glossterm>
+            <info>
+                PACKAGECONFIG_CONFARGS[doc] = "A space-separated list of configuration options generated from PACKAGECONFIG."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    A space-separated list of configuration options generated
+                    from the
+                    <link linkend='var-PACKAGECONFIG'><filename>PACKAGECONFIG</filename></link>
+                    setting.
+                    This list of options helps other classes and
+                    recipes take advantage of the
+                    <filename>PACKAGECONFIG</filename> mechanism without
+                    having to include options from
+                    <link linkend='var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></link>.
+                </para>
+
+                <para>
+                    To illustrate how to use
+                    <filename>PACKAGECONFIG_CONFARGS</filename>, consider the
+                    following example:
+                    <literallayout class='monospaced'>
+     PACKAGECONFIG_CONFARGS = " \
+          -prefix ${prefix} \
+          -sysroot ${STAGING_DIR_NATIVE} \
+          -no-gcc-sysroot
+          "
+                    </literallayout>
+                    In the previous example,
+                    <filename>PACKAGECONFIG_CONFARGS</filename> is set with
+                    three configuration options that can be passed using the
+                    <filename>PACKAGECONFIG</filename> mechanism, thus
+                    avoiding having to use <filename>EXTRA_OECONF</filename>.
+                </para>
+
+                <para>
+                    For additional information, see the
+                    <link linkend='var-PACKAGECONFIG'><filename>PACKAGECONFIG</filename></link>
+                    variable.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-PACKAGEGROUP_DISABLE_COMPLEMENTARY'><glossterm>PACKAGEGROUP_DISABLE_COMPLEMENTARY</glossterm>
             <info>
                 PACKAGEGROUP_DISABLE_COMPLEMENTARY[doc] = "Prevents automatic creation of the normal complementary packages such as -dev and -dbg in a packagegroup recipe."
