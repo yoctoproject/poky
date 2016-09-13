@@ -979,6 +979,113 @@
     </section>
 </section>
 
+<section id='automatically-added-runtime-dependencies'>
+    <title>Automatically Added Runtime Dependencies</title>
+
+    <para>
+        The OpenEmbedded build system automatically adds common types of
+        runtime dependencies between packages, which means you do not need to
+        explicitly declare the packages using
+        <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>.
+        Two automatic mechanisms exist (<filename>shlibdeps</filename> and
+        <filename>pcdeps</filename>) that handle shared libraries and
+        package configuration (pkg-config) modules, respectively.
+        For other types of runtime dependencies, you must manually declare
+        the dependencies.
+        <itemizedlist>
+            <listitem><para>
+                <filename>shlibdeps</filename>:
+                During the
+                <link linkend='ref-tasks-package'><filename>do_package</filename></link>
+                task of each recipe, all shared libraries installed by the
+                recipe are located.
+                For each shared library, the package that contains the shared
+                library is registered as providing the shared library.
+                More specifically, the package is registered as providing the
+                <ulink url='https://en.wikipedia.org/wiki/Soname'>soname</ulink>
+                of the library.
+                The resulting shared-library-to-package mapping
+                is saved globally in
+                <link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>
+                by the
+                <link linkend='ref-tasks-packagedata'><filename>do_packagedata</filename></link>
+                task.</para>
+
+                <para>Simultaneously, all executables and shared libraries
+                installed by the recipe are inspected to see what shared
+                libraries they link against.
+                For each shared library dependency that is found,
+                <filename>PKGDATA_DIR</filename> is queried to
+                see if some package (likely from a different recipe) contains
+                the shared library.
+                If such a package is found, a runtime dependency is added from
+                the package that depends on the shared library to the package
+                that contains the library.</para>
+
+                <para>If the library being linked against is versioned
+                (i.e. includes a version number), then the automatically added
+                runtime dependency will specify at least that version, as if
+                "<replaceable>package</replaceable> (>= <replaceable>version</replaceable>)"
+                had been added to
+                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>.
+                This dependency forces an upgrade of the package that provides
+                the shared library when installing the package that depends on
+                the library, if needed.</para>
+
+                <para>If you want to avoid a package being registered as
+                providing a particular shared library (e.g. because the library
+                is for internal use only), then add the library to
+                <link linkend='var-PRIVATE_LIBS'><filename>PRIVATE_LIBS</filename></link>
+                inside the package's recipe.
+                </para></listitem>
+            <listitem><para>
+                <filename>pcdeps</filename>:
+                During the
+                <link linkend='ref-tasks-package'><filename>do_package</filename></link>
+                task of each recipe, all pkg-config modules
+                (<filename>*.pc</filename> files) installed by the recipe are
+                located.
+                For each module, the package that contains the module is
+                registered as providing the module.
+                The resulting module-to-package mapping is saved globally in
+                <link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>
+                by the
+                <link linkend='ref-tasks-packagedata'><filename>do_packagedata</filename></link>
+                task.</para>
+
+                <para>Simultaneously, all pkg-config modules installed by the
+                recipe are inspected to see what other modules on which the
+                pkg-config modules depend.
+                A module is seen as depending on another module if it contains
+                a "Requires:" line that specifies the other module.
+                For each module dependency,
+                <filename>PKGDATA_DIR</filename> is queried to see if some
+                package contains the module.
+                If such a package is found, a runtime dependency is added from
+                the package that depends on the module to the package that
+                contains the module.
+                <note>
+                    The <filename>pcdeps</filename> mechanism most often infers
+                    dependencies between <filename>-dev</filename> packages.
+                </note>
+                </para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        The <filename>do_package</filename> task depends on the
+        <link linkend='ref-tasks-packagedata'><filename>do_packagedata</filename></link>
+        task of each recipe in
+        <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
+        through use of a
+        <ulink url='&YOCTO_DOCS_BB_URL;#variable-flags'><filename>[vardeps]</filename></ulink>
+        declaration, which guarantees that the required
+        shared-library/module-to-package mapping information will be available
+        when needed as long as <filename>DEPENDS</filename> has been
+        correctly set.
+    </para>
+</section>
+
 <section id='fakeroot-and-pseudo'>
     <title>Fakeroot and Pseudo</title>
 

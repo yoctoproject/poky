@@ -2833,9 +2833,9 @@
                                 add any runtime dependencies between the
                                 packages produced by the two recipes.
                                 However, as explained in the
-                                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
-                                glossary entry, runtime dependencies will often
-                                be added automatically, meaning
+                                "<link linkend='automatically-added-runtime-dependencies'>Automatically Added Runtime Dependencies</link>"
+                                section, runtime dependencies will often be
+                                added automatically, meaning
                                 <filename>DEPENDS</filename> alone is
                                 sufficient for most recipes.
                                 </para></listitem>
@@ -9651,14 +9651,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <link linkend='ref-tasks-packagedata'><filename>do_packagedata</filename></link>
                     task packages data for each recipe and installs it into
                     this temporary, shared area.
-                    This directory defaults to the following:
+                    This directory defaults to the following, which you should
+                    not change:
                     <literallayout class='monospaced'>
      ${STAGING_DIR_HOST}/pkgdata
                     </literallayout>
-                </para>
-
-                <para>
-                    Do not change this default.
+                    For examples of how this data is used, see the
+                    "<link linkend='automatically-added-runtime-dependencies'>Automatically Added Runtime Dependencies</link>"
+                    section and the
+                    "<link linkend='viewing-package-information-with-oe-pkgdata-util'>Viewing Package Information with <filename>oe-pkgdata-util</filename></link>"
+                    section.
                 </para>
             </glossdef>
         </glossentry>
@@ -10133,6 +10135,12 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                      libplds4.so"
                     </literallayout>
                 </para>
+
+                <para>
+                    For more information, see the
+                    "<link linkend='automatically-added-runtime-dependencies'>Automatically Added Runtime Dependencies</link>"
+                    section.
+                </para>
             </glossdef>
         </glossentry>
 
@@ -10427,40 +10435,60 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-RDEPENDS'><glossterm>RDEPENDS</glossterm>
             <info>
-                RDEPENDS[doc] = "Lists a package's runtime dependencies (i.e. other packages) that must be installed for the package to be built. They must be the names of other packages as listed in the PACKAGES variable, not recipe names (PN)."
+                RDEPENDS[doc] = "Lists runtime dependencies of a package."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Lists a package's runtime dependencies (i.e. other packages)
-                    that must be installed in order for the built package to run
-                    correctly.
-                    If a package in this list cannot be found during the build,
-                    you will get a build error.
+                    Lists runtime dependencies of a package.
+                    These dependencies are other packages that must be
+                    installed in order for the package to function correctly.
+                    As an example, the following assignment declares that the
+                    package <filename>foo</filename> needs the packages
+                    <filename>bar</filename> and <filename>baz</filename> to
+                    be installed:
+                    <literallayout class='monospaced'>
+     RDEPENDS_foo = "bar baz"
+                    </literallayout>
+                    The most common types of package runtime dependencies are
+                    automatically detected and added.
+                    Therefore, most recipes do not need to set
+                    <filename>RDEPENDS</filename>.
+                    For more information, see the
+                    "<link linkend='automatically-added-runtime-dependencies'>Automatically Added Runtime Dependencies</link>"
+                    section.
                 </para>
 
                 <para>
-                    When you use the <filename>RDEPENDS</filename> variable
-                    in a recipe, you are essentially stating that the recipe's
+                    The practical effect of the above
+                    <filename>RDEPENDS</filename> assignment is that
+                    <filename>bar</filename> and <filename>baz</filename>
+                    will be declared as dependencies inside the package
+                    <filename>foo</filename> when it is written out by one of
+                    the
+                    <link linkend='ref-tasks-package_write_deb'><filename>do_package_write_*</filename></link>
+                    tasks.
+                    Exactly how this is done depends on the package format used
+                    as described in the
+                    <link linkend='var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></link>
+                    variable.
+                    When the corresponding package manager installs the
+                    package, it will know to also install the packages on
+                    which it depends.
+                </para>
+
+                <para>
+                    To ensure that the packages <filename>bar</filename> and
+                    <filename>baz</filename> get built, the previous
+                    <filename>RDEPENDS</filename> assignment also causes a task
+                    dependency to be added.
+                    This dependency is from the recipe's
                     <link linkend='ref-tasks-build'><filename>do_build</filename></link>
-                    task depends on the existence of a specific package.
-                    Consider this simple example for two recipes named "a" and
-                    "b" that produce similarly named IPK packages.
-                    In this example, the <filename>RDEPENDS</filename>
-                    statement appears in the "a" recipe:
-                    <literallayout class='monospaced'>
-     RDEPENDS_${PN} = "b"
-                    </literallayout>
-                    Here, the dependency is such that the
-                    <filename>do_build</filename> task for recipe "a" depends
-                    on the
-                    <link linkend='ref-tasks-package_write_ipk'><filename>do_package_write_ipk</filename></link>
-                    task of recipe "b".
-                    This means the package file for "b" must be available when
-                    the output for recipe "a" has been completely built.
-                    More importantly, package "a" will be marked as depending
-                    on package "b" in a manner that is understood by the
-                    package manager.
+                    (not to be confused with the
+                    <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>)
+                    task to the to the <filename>do_package_write_*</filename>
+                    task of the recipes that build <filename>bar</filename> and
+                    <filename>baz</filename>.
                 </para>
 
                 <para>
@@ -10480,7 +10508,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     Because the <filename>RDEPENDS</filename> variable applies
                     to packages being built, you should always use the variable
-                    in a form with an attached package name.
+                    in a form with an attached package name (remember that a
+                    single recipe can build multiple packages).
                     For example, suppose you are building a development package
                     that depends on the <filename>perl</filename> package.
                     In this case, you would use the following
@@ -10508,41 +10537,18 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    The package name you attach to the
-                    <filename>RDEPENDS</filename> variable must appear
-                    as it would in the <filename>PACKAGES</filename>
-                    namespace before any renaming of the output package by
-                    classes like
-                    <link linkend='ref-classes-debian'><filename>debian</filename></link>.
-                </para>
-
-                <para>
-                    In many cases you do not need to explicitly add
-                    runtime dependencies using
-                    <filename>RDEPENDS</filename> since some automatic
-                    handling occurs:
-                    <itemizedlist>
-                        <listitem><para><emphasis><filename>shlibdeps</filename></emphasis>:
-                            If a runtime package contains a compiled binary,
-                            the build processes the binary in order to
-                            determine any shared libraries
-                            (<filename>.so</filename> files) to which it is
-                            dynamically linked.
-                            The build process adds the packages containing
-                            these libraries to <filename>RDEPENDS</filename>
-                            when creating the runtime package.
-                            In addition, if the shared library is versioned,
-                            the dependency will have the version appended to it
-                            in order to force an upgrade to the appropriate
-                            version if needed.
-                            </para></listitem>
-                        <listitem><para><emphasis><filename>pcdeps</filename></emphasis>:  If
-                            the package ships a <filename>pkg-config</filename>
-                            information file, the build process uses this file
-                            to add items to the <filename>RDEPENDS</filename>
-                            variable to create the runtime packages.
-                            </para></listitem>
-                    </itemizedlist>
+                    The package names you use with
+                    <filename>RDEPENDS</filename> must appear as they would in
+                    the <filename>PACKAGES</filename> variable.
+                    The
+                    <link linkend='var-PKG'><filename>PKG</filename></link>
+                    variable allows a different name to be used for
+                    the final package (e.g. the
+                    <link linkend='ref-classes-debian'><filename>debian</filename></link>
+                    class uses this to rename packages), but this final package
+                    name cannot be used with <filename>RDEPENDS</filename>,
+                    which makes sense as <filename>RDEPENDS</filename> is meant
+                    to be independent of the package format used.
                 </para>
 
                 <para>
