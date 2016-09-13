@@ -9999,6 +9999,31 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
      PREFERRED_VERSION_python = "3.4.0"
      PREFERRED_VERSION_linux-yocto = "3.19%"
                     </literallayout>
+                    <note>
+                        The specified version is matched against
+                        <link linkend='var-PV'><filename>PV</filename></link>,
+                        which does not necessarily match the version part of
+                        the recipe's filename.
+                        For example, consider two recipes
+                        <filename>foo_1.2.bb</filename> and
+                        <filename>foo_git.bb</filename> where
+                        <filename>foo_git.bb</filename> contains the following
+                        assignment:
+                        <literallayout class='monospaced'>
+     PV = "1.1+git${SRCPV}"
+                        </literallayout>
+                        In this case, the correct way to select
+                        <filename>foo_git.bb</filename> is by using an
+                        assignment such as the following:
+                        <literallayout class='monospaced'>
+     PREFERRED_VERSION_foo = "1.1+git%"
+                        </literallayout>
+                        Compare that previous example against the following
+                        incorrect example, which does not work:
+                        <literallayout class='monospaced'>
+     PREFERRED_VERSION_foo = "git"
+                        </literallayout>
+                    </note>
                     Sometimes the <filename>PREFERRED_VERSION</filename>
                     variable can be set by configuration files in a way that
                     is hard to change.
