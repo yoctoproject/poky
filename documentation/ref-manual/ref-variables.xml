@@ -9691,32 +9691,29 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PKGDESTWORK'><glossterm>PKGDESTWORK</glossterm>
             <info>
-                PKGDESTWORK[doc] = "Points to a temporary work area used by the do_package task to write output from the do_packagedata task."
+                PKGDESTWORK[doc] = "Points to a temporary work area where the do_package task saves package metadata."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Points to a temporary work area used by the
+                    Points to a temporary work area where the
                     <link linkend='ref-tasks-package'><filename>do_package</filename></link>
-                    task to write output from the
-                    <link linkend='ref-tasks-packagedata'><filename>do_packagedata</filename></link>
-                    task.
+                    task saves package metadata.
                     The <filename>PKGDESTWORK</filename> location defaults to
                     the following:
                     <literallayout class='monospaced'>
      ${WORKDIR}/pkgdata
                     </literallayout>
-                </para>
-
-                <para>
-                    The <filename>do_packagedata</filename> task then packages
-                    the data in the temporary work area and installs it into a
-                    shared directory pointed to by
-                    <link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>.
-                </para>
-
-                <para>
                     Do not change this default.
+                </para>
+
+                <para>
+                    The
+                    <link linkend='ref-tasks-packagedata'><filename>do_packagedata</filename></link>
+                    task copies the package metadata from
+                    <filename>PKGDESTWORK</filename> to
+                    <link linkend='var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></link>
+                    to make it available globally.
                 </para>
             </glossdef>
         </glossentry>
