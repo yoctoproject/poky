@@ -649,13 +649,13 @@
         </para>
 
         <section id='use-devtool-to-integrate-new-code'>
-            <title>Use <filename>devtool add</filename> to Integrate New Code</title>
+            <title>Use <filename>devtool add</filename> to Add an Application</title>
 
             <para>
                 The <filename>devtool add</filename> command generates
                 a new recipe based on existing source code.
                 This command takes advantage of the
-                <link linkend='devtool-the-workspace-layer-structure'>workspace</link>
+                <ulink url='&YOCTO_DOCS_DEV_URL;#devtool-the-workspace-layer-structure'>workspace</ulink>
                 layer that many <filename>devtool</filename> commands
                 use.
                 The command is flexible enough to allow you to extract source
@@ -721,7 +721,8 @@
                                 and needs to be extracted to some
                                 local area - this time outside of the default
                                 workspace.
-                                As always, if required <filename>devtool</filename> creates
+                                If required, <filename>devtool</filename>
+                                always creates
                                 a Git repository locally during the extraction.
                                 Furthermore, the first positional argument
                                 <replaceable>srctree</replaceable> in this case
@@ -788,10 +789,6 @@
                         <para>If you need to take the build output and eventually
                         move it to the target hardware, you would use
                         <filename>devtool build</filename>:
-                        <note>
-                            You could use <filename>bitbake</filename> to build
-                            the recipe as well.
-                        </note>
                         <literallayout class='monospaced'>
      $ devtool build <replaceable>recipe</replaceable>
                         </literallayout></para>
@@ -831,49 +828,44 @@
                         However, <filename>devtool</filename> does not provide a
                         specific command that allows you to do this.
                         </para></listitem>
-                    <listitem><para><emphasis>Optionally Update the Recipe With Patch Files</emphasis>:
-                        Once you are satisfied with the recipe, if you have made
-                        any changes to the source tree that you want to have
-                        applied by the recipe, you need to generate patches
-                        from those changes.
-                        You do this before moving the recipe
-                        to its final layer and cleaning up the workspace area
-                        <filename>devtool</filename> uses.
-                        This optional step is especially relevant if you are
-                        using or adding third-party software.</para>
-                        <para>To convert commits created using Git to patch files,
-                        use the <filename>devtool update-recipe</filename> command.
+                    <listitem><para>
+                        <emphasis>Finish Your Work With the Recipe</emphasis>:
+                        The <filename>devtool finish</filename> command creates
+                        any patches corresponding to commits in the local
+                        Git repository, moves the new recipe to a more permanent
+                        layer, and then resets the recipe so that the recipe is
+                        built normally rather than from the workspace.
+                        <literallayout class='monospaced'>
+     $ devtool finish <replaceable>recipe layer</replaceable>
+                        </literallayout>
                         <note>
                             Any changes you want to turn into patches must be
                             committed to the Git repository in the source tree.
+                        </note></para>
+
+                        <para>As mentioned, the <filename>devtool finish</filename>
+                        command moves the final recipe to its permanent layer.
+                        </para>
+
+                        <para>As a final process of the
+                        <filename>devtool finish</filename> command, the state
+                        of the standard layers and the upstream source is
+                        restored so that you can build the recipe from those
+                        areas rather than the workspace.
+                        <note>
+                            You can use the <filename>devtool reset</filename>
+                            command to put things back should you decide you
+                            do not want to proceed with your work.
+                            If you do use this command, realize that the source
+                            tree is preserved.
                         </note>
-                        <literallayout class='monospaced'>
-     $ devtool update-recipe <replaceable>recipe</replaceable>
-                        </literallayout>
-                        </para></listitem>
-                    <listitem><para><emphasis>Move the Recipe to its Permanent Layer</emphasis>:
-                        Before cleaning up the workspace, you need to move the
-                        final recipe to its permanent layer.
-                        You must do this before using the
-                        <filename>devtool reset</filename> command if you want to
-                        retain the recipe.
-                        </para></listitem>
-                    <listitem><para><emphasis>Reset the Recipe</emphasis>:
-                        As a final step, you can restore the state such that
-                        standard layers and the upstream source is used to build
-                        the recipe rather than data in the workspace.
-                        To reset the recipe, use the <filename>devtool reset</filename>
-                        command:
-                        <literallayout class='monospaced'>
-     $ devtool reset <replaceable>recipe</replaceable>
-                        </literallayout>
                         </para></listitem>
                 </orderedlist>
             </para>
         </section>
 
         <section id='devtool-use-devtool-modify-to-enable-work-on-code-associated-with-an-existing-recipe'>
-            <title>Use <filename>devtool modify</filename> to Enable Work on Code Associated with an Existing Recipe</title>
+            <title>Use <filename>devtool modify</filename> to Modify the Source of an Existing Component</title>
 
             <para>
                 The <filename>devtool modify</filename> command prepares the
@@ -1028,17 +1020,12 @@
                     <listitem><para><emphasis>Build the Recipe</emphasis>:
                         Once you have updated the source files, you can build
                         the recipe.
-                        You can either use <filename>devtool build</filename> or
-                        <filename>bitbake</filename>.
-                        Either method produces build output that is stored
-                        in
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>.
                         </para></listitem>
                     <listitem><para><emphasis>Deploy the Build Output</emphasis>:
                         When you use the <filename>devtool build</filename>
-                        command or <filename>bitbake</filename> to build out your
-                        recipe, you probably want to see if the resulting build
-                        output works as expected on target hardware.
+                        command to build out your recipe, you probably want to see
+                        if the resulting build output works as expected on target
+                        hardware.
                         <note>
                             This step assumes you have a previously built
                             image that is already either running in QEMU or
@@ -1062,41 +1049,42 @@
                         However, <filename>devtool</filename> does not provide a
                         specific command that allows you to do this.
                         </para></listitem>
-                    <listitem><para><emphasis>Optionally Create Patch Files for Your Changes</emphasis>:
-                        After you have debugged your changes, you can
-                        use <filename>devtool update-recipe</filename> to
-                        generate patch files for all the commits you have
-                        made.
-                        <note>
-                            Patch files are generated only for changes
-                            you have committed.
-                        </note>
+                    <listitem><para>
+                        <emphasis>Finish Your Work With the Recipe</emphasis>:
+                        The <filename>devtool finish</filename> command creates
+                        any patches corresponding to commits in the local
+                        Git repository, updates the recipe to point to them
+                        (or creates a <filename>.bbappend</filename> file to do
+                        so, depending on the specified destination layer), and
+                        then resets the recipe so that the recipe is built normally
+                        rather than from the workspace.
                         <literallayout class='monospaced'>
-     $ devtool update-recipe <replaceable>recipe</replaceable>
+     $ devtool finish <replaceable>recipe layer</replaceable>
                         </literallayout>
-                        By default, the
-                        <filename>devtool update-recipe</filename> command
-                        creates the patch files in a folder named the same
-                        as the recipe beneath the folder in which the recipe
-                        resides, and updates the recipe's
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                        statement to point to the generated patch files.
                         <note>
-                            You can use the
-                            "--append <replaceable>LAYERDIR</replaceable>"
-                            option to cause the command to create append files
-                            in a specific layer rather than the default
-                            recipe layer.
+                            Any changes you want to turn into patches must be
+                            committed to the Git repository in the source tree.
+                        </note></para>
+
+                        <para>Because there is no need to move the recipe,
+                        <filename>devtool finish</filename> either updates the
+                        original recipe in the original layer or the command
+                        creates a <filename>.bbappend</filename> in a different
+                        layer as provided by <replaceable>layer</replaceable>.
+                        </para>
+
+                        <para>As a final process of the
+                        <filename>devtool finish</filename> command, the state
+                        of the standard layers and the upstream source is
+                        restored so that you can build the recipe from those
+                        areas rather than the workspace.
+                        <note>
+                            You can use the <filename>devtool reset</filename>
+                            command to put things back should you decide you
+                            do not want to proceed with your work.
+                            If you do use this command, realize that the source
+                            tree is preserved.
                         </note>
-                        </para></listitem>
-                    <listitem><para><emphasis>Restore the Workspace</emphasis>:
-                        The <filename>devtool reset</filename> restores the
-                        state so that standard layers and upstream sources are
-                        used to build the recipe rather than what is in the
-                        workspace.
-                        <literallayout class='monospaced'>
-     $ devtool reset <replaceable>recipe</replaceable>
-                        </literallayout>
                         </para></listitem>
                 </orderedlist>
             </para>
@@ -1297,7 +1285,7 @@
 
      OpenEmbedded development tool
 
-     optional arguments:
+     options:
        --basepath BASEPATH  Base directory of SDK / build directory
        --bbpath BBPATH      Explicitly specify the BBPATH, rather than getting it
                             from the metadata
@@ -1315,11 +1303,12 @@
          status               Show workspace status
          search               Search available recipes
        Working on a recipe in the workspace:
-         build                Build a recipe
          edit-recipe          Edit a recipe file in your workspace
          configure-help       Get help on configure script options
+         build                Build a recipe
          update-recipe        Apply changes from external source tree to recipe
          reset                Remove a recipe from your workspace
+         finish               Finish working on a recipe in your workspace
        Testing changes on target:
          deploy-target        Deploy recipe output files to live target machine
          undeploy-target      Undeploy recipe output files in live target machine
@@ -1339,14 +1328,14 @@
                 <literallayout class='monospaced'>
      $ devtool add --help
      usage: devtool add [-h] [--same-dir | --no-same-dir] [--fetch URI]
-                        [--version VERSION] [--no-git] [--binary] [--also-native]
-                        [--src-subdir SUBDIR]
+                        [--version VERSION] [--no-git] [--autorev] [--binary]
+                        [--also-native] [--src-subdir SUBDIR]
                         [recipename] [srctree] [fetchuri]
 
      Adds a new recipe to the workspace to build a specified source tree. Can
      optionally fetch a remote URI and unpack it to create the source tree.
 
-     positional arguments:
+     arguments:
        recipename            Name for new recipe to add (just name - no version,
                              path or extension). If not specified, will attempt to
                              auto-detect it.
@@ -1357,7 +1346,7 @@
        fetchuri              Fetch the specified URI and extract it to create the
                              source tree
 
-     optional arguments:
+     options:
        -h, --help            show this help message and exit
        --same-dir, -s        Build in same directory as source
        --no-same-dir         Force build in a separate build directory
@@ -1368,6 +1357,8 @@
                              Version to use within recipe (PV)
        --no-git, -g          If fetching source, do not set up source tree as a git
                              repository
+       --autorev, -a         When fetching from a git repository, set SRCREV in the
+                             recipe to a floating revision instead of fixed
        --binary, -b          Treat the source tree as something that should be
                              installed verbatim (no compilation, same directory
                              structure). Useful with binary packages e.g. RPMs.
