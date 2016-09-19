@@ -12,25 +12,24 @@
         Welcome to the Yocto Project Software Development Kit (SDK)
         Developer's Guide.
         This manual provides information that explains how to use both the
-        standard Yocto Project SDK and an extensible SDK to develop
-        applications and images using the Yocto Project.
+        Yocto Project extensible and standard SDKs to develop
+        applications and images.
         Additionally, the manual also provides information on how to use
         the popular <trademark class='trade'>Eclipse</trademark> IDE as part
         of your application development workflow within the SDK environment.
+        <note>
+            Prior to the 2.0 Release of the Yocto Project, application
+            development was primarily accomplished through the use of the
+            Application Development Toolkit (ADT) and the availability
+            of stand-alone cross-development toolchains and other tools.
+            With the 2.1 Release of the Yocto Project, application development
+            has transitioned to within a tool-rich extensible SDK and the more
+            traditional standard SDK.
+        </note>
     </para>
 
     <para>
-        Prior to the 2.0 Release of the Yocto Project, application
-        development was primarily accomplished through the use of the
-        Application Development Toolkit (ADT) and the availability
-        of stand-alone cross-development toolchains and other tools.
-        With the 2.1 Release of the Yocto Project, application development
-        has transitioned to within a more traditional SDK and extensible
-        SDK.
-    </para>
-
-    <para>
-        A standard SDK consists of the following:
+        All SDKs consist of the following:
         <itemizedlist>
             <listitem><para><emphasis>Cross-Development Toolchain</emphasis>:
                 This toolchain contains a compiler, debugger, and various
@@ -46,19 +45,19 @@
                 preparing for SDK use.
                 </para></listitem>
         </itemizedlist>
-        You can use the standard SDK to independently develop and test code
-        that is destined to run on some target machine.
     </para>
 
     <para>
-        An extensible SDK consists of everything that the standard SDK has plus
-        tools that allow you to easily add new applications and libraries to
-        an image, modify the source of an existing component, test changes on
-        the target hardware, and easily integrate an application into the
+        Additionally an extensible SDK has tools that allow you to easily add
+        new applications and libraries to an image, modify the source of an
+        existing component, test changes on the target hardware, and easily
+        integrate an application into the
         <ulink url='&YOCTO_DOCS_DEV_URL;#build-system-term'>OpenEmbedded build system</ulink>.
     </para>
 
     <para>
+        You can use an SDK to independently develop and test code
+        that is destined to run on some target machine.
         SDKs are completely self-contained.
         The binaries are linked against their own copy of
         <filename>libc</filename>, which results in no dependencies
@@ -73,7 +72,7 @@
 
     <para>
         Another feature for the SDKs is that only one set of cross-compiler
-        toolchain binaries are produced per architecture.
+        toolchain binaries are produced for any given architecture.
         This feature takes advantage of the fact that the target hardware can
         be passed to <filename>gcc</filename> as a set of compiler options.
         Those options are set up by the environment script and contained in
@@ -98,6 +97,8 @@
                 configuration and extensions,
                 which allows you to cross-develop on the host machine for the
                 target hardware.
+                Additionally, the extensible SDK contains the
+                <filename>devtool</filename> functionality.
                 </para></listitem>
             <listitem><para>The Quick EMUlator (QEMU), which lets you simulate
                 target hardware.
@@ -122,6 +123,85 @@
         </itemizedlist>
     </para>
 
+    <para>
+        In summary, the extensible and standard SDK share many features.
+        However, the extensible SDK has powerful development tools to help you
+        more quickly develop applications.
+        Following is a table that summarizes the primary differences between
+        the standard and extensible SDK types when considering which to
+        build:
+        <informaltable frame='none'>
+            <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+                <colspec colname='c1' colwidth='1*'/>
+                <colspec colname='c2' colwidth='1*'/>
+                <colspec colname='c3' colwidth='1*'/>
+                <thead>
+                    <row>
+                        <entry align="left"><emphasis>Feature</emphasis></entry>
+                        <entry align="left"><emphasis>Standard SDK</emphasis></entry>
+                        <entry align="left"><emphasis>Extensible SDK</emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">Toolchain</entry>
+                        <entry align="left">Yes</entry>
+                        <entry align="left">Yes*</entry>
+                    </row>
+                    <row>
+                        <entry align="left">Debugger</entry>
+                        <entry align="left">Yes</entry>
+                        <entry align="left">Yes*</entry>
+                    </row>
+                    <row>
+                        <entry align="left">Size</entry>
+                        <entry align="left">100+ MBytes</entry>
+                        <entry align="left">1+ GBytes (or 300+ MBytes for minimal w/toolchain)</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><filename>devtool</filename></entry>
+                        <entry align="left">No</entry>
+                        <entry align="left">Yes</entry>
+                    </row>
+                    <row>
+                        <entry align="left">Build Images</entry>
+                        <entry align="left">No</entry>
+                        <entry align="left">Yes</entry>
+                    </row>
+                    <row>
+                        <entry align="left">Updateable</entry>
+                        <entry align="left">No</entry>
+                        <entry align="left">Yes</entry>
+                    </row>
+                    <row>
+                        <entry align="left">Managed Sysroot**</entry>
+                        <entry align="left">No</entry>
+                        <entry align="left">Yes</entry>
+                    </row>
+                    <row>
+                        <entry align="left">Installed Packages</entry>
+                        <entry align="left">No***</entry>
+                        <entry align="left">Yes****</entry>
+                    </row>
+                    <row>
+                        <entry align="left">Construction</entry>
+                        <entry align="left">Packages</entry>
+                        <entry align="left">Shared State</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <literallayout class='monospaced'>
+     * Extensible SDK will contain the toolchain and debugger if <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_EXT_TYPE'><filename>SDK_EXT_TYPE</filename></ulink> is "full" or <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_INCLUDE_TOOLCHAIN'><filename>SDK_INCLUDE_TOOLCHAIN</filename></ulink> is "1", which is the default.
+
+     ** Sysroot is managed through use of <filename>devtool</filename>.  Thus, it is less likely that you will corrupt your SDK sysroot when you try to add additional libraries.
+
+     *** Runtime package management can be added to the standard SDK but it is not supported by default.
+
+     **** You must build and make the shared state available to extensible SDK users for "packages" you want to enable users to install.
+        </literallayout>
+    </para>
+
     <section id='the-cross-development-toolchain'>
         <title>The Cross-Development Toolchain</title>
 
@@ -131,6 +211,8 @@
             consists of a cross-compiler, cross-linker, and cross-debugger
             that are used to develop user-space applications for targeted
             hardware.
+            Additionally, for an extensible SDK, the toolchain also has
+            built-in <filename>devtool</filename> functionality.
             This toolchain is created by running a toolchain installer script
             or through a
             <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>
@@ -258,7 +340,7 @@
                 For information on how to install the SDK, see the
                 "<link linkend='sdk-installing-the-sdk'>Installing the SDK</link>"
                 section.</para></listitem>
-            <listitem><para><emphasis>Download the Target Image:</emphasis>
+            <listitem><para><emphasis>Download or Build the Target Image:</emphasis>
                 The Yocto Project supports several target architectures
                 and has many pre-built kernel images and root filesystem
                 images.</para>
