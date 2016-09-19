@@ -1217,43 +1217,42 @@
                         However, <filename>devtool</filename> does not provide a
                         specific command that allows you to do this.
                         </para></listitem>
-                    <listitem><para><emphasis>Optionally Create Patch Files for Your Changes</emphasis>:
-                        After you have debugged your changes, you can
-                        use <filename>devtool update-recipe</filename> to
-                        generate patch files for all the commits you have
-                        made.
+                    <listitem><para>
+                        <emphasis>Finish Your Work With the Recipe</emphasis>:
+                        The <filename>devtool finish</filename> command creates
+                        any patches corresponding to commits in the local
+                        Git repository, updates the recipe to point to them
+                        (or creates a <filename>.bbappend</filename> file to do
+                        so, depending on the specified destination layer), and
+                        then resets the recipe so that the recipe is built normally
+                        rather than from the workspace.
+                        <literallayout class='monospaced'>
+     $ devtool finish <replaceable>recipe layer</replaceable>
+                        </literallayout>
                         <note>
-                            Patch files are generated only for changes
-                            you have committed.
+                            Any changes you want to turn into patches must be
+                            committed to the Git repository in the source tree.
+                        </note></para>
+
+                        <para>Because there is no need to move the recipe,
+                        <filename>devtool finish</filename> either updates the
+                        original recipe in the original layer or the command
+                        creates a <filename>.bbappend</filename> in a different
+                        layer as provided by <replaceable>layer</replaceable>.
+                        </para>
+
+                        <para>As a final process of the
+                        <filename>devtool finish</filename> command, the state
+                        of the standard layers and the upstream source is
+                        restored so that you can build the recipe from those
+                        areas rather than the workspace.
+                        <note>
+                            You can use the <filename>devtool reset</filename>
+                            command to put things back should you decide you
+                            do not want to proceed with your work.
+                            If you do use this command, realize that the source
+                            tree is preserved.
                         </note>
-                        <literallayout class='monospaced'>
-     $ devtool update-recipe <replaceable>recipe</replaceable>
-                        </literallayout>
-                        By default, the
-                        <filename>devtool update-recipe</filename> command
-                        creates the patch files in a folder named the same
-                        as the recipe beneath the folder in which the recipe
-                        resides, and updates the recipe's
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                        statement to point to the generated patch files.
-                        </para></listitem>
-                    <listitem><para><emphasis>Move the Recipe to its Permanent Layer</emphasis>:
-                        Before cleaning up the workspace, you need to move the
-                        final recipe to its permanent layer.
-                        You can either overwrite the original recipe or you can
-                        overlay the upgraded recipe into a separate layer.
-                        You must do this before using the
-                        <filename>devtool reset</filename> command if you want to
-                        retain the upgraded recipe.
-                        </para></listitem>
-                    <listitem><para><emphasis>Restore the Workspace</emphasis>:
-                        The <filename>devtool reset</filename> restores the
-                        state so that standard layers and upstream sources are
-                        used to build the recipe rather than what is in the
-                        workspace.
-                        <literallayout class='monospaced'>
-     $ devtool reset <replaceable>recipe</replaceable>
-                        </literallayout>
                         </para></listitem>
                 </orderedlist>
             </para>
