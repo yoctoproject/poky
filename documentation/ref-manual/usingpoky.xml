@@ -929,18 +929,92 @@
         <para>
             Here are some other tips that you might find useful:
             <itemizedlist>
-                <listitem><para>When adding new packages, it is worth watching for
-                    undesirable items making their way into compiler command lines.
-                    For example, you do not want references to local system files like
-                    <filename>/usr/lib/</filename> or <filename>/usr/include/</filename>.
+                <listitem><para>
+                    When adding new packages, it is worth watching for
+                    undesirable items making their way into compiler command
+                    lines.
+                    For example, you do not want references to local system
+                    files like
+                    <filename>/usr/lib/</filename> or
+                    <filename>/usr/include/</filename>.
                     </para></listitem>
-                <listitem><para>If you want to remove the <filename>psplash</filename>
+                <listitem><para>
+                    If you want to remove the <filename>psplash</filename>
                     boot splashscreen,
-                    add <filename>psplash=false</filename> to  the kernel command line.
+                    add <filename>psplash=false</filename> to  the kernel
+                    command line.
                     Doing so prevents <filename>psplash</filename> from loading
                     and thus allows you to see the console.
                     It is also possible to switch out of the splashscreen by
-                    switching the virtual console (e.g. Fn+Left or Fn+Right on a Zaurus).
+                    switching the virtual console (e.g. Fn+Left or Fn+Right
+                    on a Zaurus).
+                    </para></listitem>
+                <listitem><para>
+                    Removing
+                    <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>
+                    (usually <filename>tmp/</filename>, within the
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#build-directory'>Build Directory</ulink>)
+                    can often fix temporary build issues.
+                    Removing <filename>TMPDIR</filename> is usually a
+                    relatively cheap operation, because task output will be
+                    cached in
+                    <link linkend='var-SSTATE_DIR'><filename>SSTATE_DIR</filename></link>
+                    (usually <filename>sstate-cache/</filename>, which is
+                    also in the Build Directory).
+                    <note>
+                        Removing <filename>TMPDIR</filename> might be a
+                        workaround rather than a fix.
+                        Consequently, trying to determine the underlying cause
+                        of an issue before removing the directory is a good
+                        ideal.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    Understanding how a feature is used in practice within
+                    existing recipes can be very helpful.
+                    It is recommended that you configure some method that
+                    allows you to quickly search through files.</para>
+
+                    <para>Using GNU Grep, you can use the following shell
+                    function to recursively search through common
+                    recipe-related files, skipping binary files,
+                    <filename>.git</filename> directories, and the
+                    Build Directory (assuming its name starts with
+                    "build"):
+                    <literallayout class='monospaced'>
+     g() {
+         grep -Ir \
+              --exclude-dir=.git \
+              --exclude-dir='build*' \
+              --include='*.bb*' \
+              --include='*.inc*' \
+              --include='*.conf*' \
+              --include='*.py*' \
+              "$@"
+     }
+                    </literallayout>
+                    Following are some usage examples:
+                    <literallayout class='monospaced'>
+     $ g FOO    # Search recursively for "FOO"
+     $ g -i foo # Search recursively for "foo", ignoring case
+     $ g -w FOO # Search recursively for "FOO" as a word, ignoring e.g. "FOOBAR"
+                    </literallayout>
+                    If figuring out how some feature works requires a lot of
+                    searching, it might indicate that the documentation should
+                    be extended or improved.
+                    In such cases, consider filing a documentation bug using
+                    the Yocto Project implementation of
+                    <ulink url='https://bugzilla.yoctoproject.org/'>Bugzilla</ulink>.
+                    For general information on how to submit a bug against
+                    the Yocto Project, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#tracking-bugs'>Tracking Bugs</ulink>"
+                    section in the Yocto Project Development Manual.
+                    <note>
+                        The manuals might not be the right place to document
+                        variables that are purely internal and have a limited
+                        scope (e.g. internal variables used to implement a
+                        single <filename>.bbclass</filename> file).
+                    </note>
                     </para></listitem>
             </itemizedlist>
         </para>
