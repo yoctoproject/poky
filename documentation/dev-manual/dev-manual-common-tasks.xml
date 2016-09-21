@@ -1254,20 +1254,51 @@
 
             <para>
                 You can always write a recipe from scratch.
-                However, two choices exist that can help you quickly get a
+                However, three choices exist that can help you quickly get a
                 start on a new recipe:
                 <itemizedlist>
-                    <listitem><para><emphasis><filename>recipetool</filename>:</emphasis>
+                    <listitem><para>
+                        <emphasis><filename>devtool add</filename>:</emphasis>
+                        A command that assists in creating a recipe and
+                        an environment condusive to development.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis><filename>recipetool</filename>:</emphasis>
                         A tool provided by the Yocto Project that automates
                         creation of a base recipe based on the source
                         files.
                         </para></listitem>
-                    <listitem><para><emphasis>Existing Recipes:</emphasis>
+                    <listitem><para>
+                        <emphasis>Existing Recipes:</emphasis>
                         Location and modification of an existing recipe that is
                         similar in function to the recipe you need.
                         </para></listitem>
                 </itemizedlist>
             </para>
+
+            <section id='new-recipe-creating-the-base-recipe-using-devtool'>
+                <title>Creating the Base Recipe Using <filename>devtool add</filename></title>
+
+                <para>
+                    The <filename>devtool add</filename> command uses the same
+                    logic for auto-creating the recipe as
+                    <filename>recipetool create</filename>, which is listed
+                    below.
+                    Additionally, however, <filename>devtool add</filename>
+                    sets up an environment that makes it easy for you to
+                    patch the source and to make changes to the recipe as
+                    is often necessary when adding a recipe to build a new
+                    piece of software to be included in a build.
+                </para>
+
+                <para>
+                    You can find a complete description of the
+                    <filename>devtool add</filename> command in the
+                    "<ulink url='&YOCTO_DOCS_SDK_URL;#sdk-use-devtool-to-add-an-application'>Use <filename>devtool add</filename> to Add an Application</ulink>"
+                    section in the Yocto Project Software Development Kit (SDK)
+                    Developer's Guide.
+                </para>
+            </section>
 
             <section id='new-recipe-creating-the-base-recipe-using-recipetool'>
                 <title>Creating the Base Recipe Using <filename>recipetool</filename></title>
@@ -1566,12 +1597,29 @@
                             or tabs after the slash character.
                         </note>
                         </para></listitem>
-                    <listitem><para><emphasis>Using Variables: <filename>${...}</filename></emphasis> -
+                    <listitem><para>
+                        <emphasis>Using Variables: <filename>${...}</filename></emphasis> -
                         Use the <filename>${<replaceable>VARNAME</replaceable>}</filename> syntax to
                         access the contents of a variable:
                         <literallayout class='monospaced'>
      SRC_URI = "${SOURCEFORGE_MIRROR}/libpng/zlib-${PV}.tar.gz"
                         </literallayout>
+                        <note>
+                            It is important to understand that the value of a
+                            variable expressed in this form does not get
+                            substituted automatically.
+                            The expansion of these expressions happens
+                            on-demand later (e.g. usually when a function that
+                            makes reference to the variable executes).
+                            This behavior ensures that the values are most
+                            appropriate for the context in which they are
+                            finally used.
+                            On the rare occasion that you do need the variable
+                            expression to be expanded immediately, you can use
+                            the <filename>:=</filename> operator instead of
+                            <filename>=</filename> when you make the
+                            assignment, but this is not generally needed.
+                        </note>
                         </para></listitem>
                     <listitem><para><emphasis>Quote All Assignments: <filename>"<replaceable>value</replaceable>"</filename></emphasis> -
                         Use double quotes around the value in all variable
@@ -1779,11 +1827,12 @@
             </para>
 
             <para>
-                The per-recipe temporary work directory is constructed as follows and
-                depends on several factors:
+                The path to the per-recipe temporary work directory depends
+                on the context in which it is being built.
+                The quickest way to find this path is to have BitBake return it
+                by running the following:
                 <literallayout class='monospaced'>
-     BASE_WORKDIR ?= "${TMPDIR}/work"
-     WORKDIR = "${BASE_WORKDIR}/${MULTIMACH_TARGET_SYS}/${PN}/${EXTENDPE}${PV}-${PR}"
+     $ bitbake -e recipename | grep ^WORKDIR=
                 </literallayout>
                 As an example, assume a Source Directory top-level folder named
                 <filename>poky</filename>, a default Build Directory at
@@ -1816,28 +1865,6 @@
                 You can find more information about the build process in the
                 "<ulink url='&YOCTO_DOCS_REF_URL;#closer-look'>A Closer Look at the Yocto Project Development Environment</ulink>"
                 chapter of the Yocto Project Reference Manual.
-            </para>
-
-            <para>
-                You can also reference the following variables in the
-                Yocto Project Reference Manual's glossary for more information:
-                <itemizedlist>
-                    <listitem><ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>:
-                        The top-level build output directory</listitem>
-                    <listitem><ulink url='&YOCTO_DOCS_REF_URL;#var-MULTIMACH_TARGET_SYS'><filename>MULTIMACH_TARGET_SYS</filename></ulink>:
-                        The target system identifier</listitem>
-                    <listitem><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink>:
-                        The recipe name</listitem>
-                    <listitem><ulink url='&YOCTO_DOCS_REF_URL;#var-EXTENDPE'><filename>EXTENDPE</filename></ulink>:
-                        The epoch - (if
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PE'><filename>PE</filename></ulink>
-                        is not specified, which is usually the case for most
-                        recipes, then <filename>EXTENDPE</filename> is blank)</listitem>
-                    <listitem><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>:
-                        The recipe version</listitem>
-                    <listitem><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>:
-                        The recipe revision</listitem>
-                </itemizedlist>
             </para>
         </section>
 
@@ -2251,7 +2278,7 @@
                 configure script with some options, or by modifying a build
                 configuration file.
                 <note>
-                    As of Yocto Project Release 7.1, some of the core recipes
+                    As of Yocto Project Release 1.7, some of the core recipes
                     that package binary configuration scripts now disable the
                     scripts due to the scripts previously requiring error-prone
                     path substitution.
