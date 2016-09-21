@@ -25,10 +25,12 @@
     </para>
 
     <para>
-        You can use an extensible SDK to work on Makefile, Autotools, and
+        In addition to the functionality available through
+        <filename>devtool</filename>, you can alternatively make use of
+        the toolchain directly to work on Makefile, Autotools, and
         Eclipse-based projects.
         See the
-        "<link linkend='sdk-working-projects'>Working with Different Types of Projects</link>"
+        "<link linkend='sdk-working-projects'>Using the SDK Toolchain Directly</link>"
         chapter for more information.
     </para>
 
@@ -102,7 +104,7 @@
 
                     &DISTRO;, &DISTRO;+snapshot
             </literallayout>
-            For example, the following toolchain installer is for a 64-bit
+            For example, the following SDK installer is for a 64-bit
             development host system and a i586-tuned target architecture
             based off the SDK for <filename>core-image-sato</filename> and
             using the current &DISTRO; snapshot:
@@ -111,7 +113,7 @@
             </literallayout>
             <note>
                 As an alternative to downloading an SDK, you can build the
-                toolchain installer.
+                SDK installer.
                 For information on building the installer, see the
                 "<link linkend='sdk-building-an-sdk-installer'>Building an SDK Installer</link>"
                 section.
@@ -138,7 +140,7 @@
             The following command shows how to run the installer given a
             toolchain tarball for a 64-bit x86 development host system and
             a 64-bit x86 target architecture.
-            The example assumes the toolchain installer is located in
+            The example assumes the SDK installer is located in
             <filename>~/Downloads/</filename>.
             <note>
                 If you do not have write permissions for the directory
@@ -231,35 +233,40 @@
             called <filename>devtool</filename>.
             This tool provides a number of features that help
             you build, test and package software within the extensible SDK, and
-            optionally integrate it into an image built by the OpenEmbedded build
-            system.
+            optionally integrate it into an image built by the OpenEmbedded
+            build system.
         </para>
 
         <para>
-            The <filename>devtool</filename> command line is organized similarly
-            to
+            The <filename>devtool</filename> command line is organized
+            similarly to
             <ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink> in that it has a
             number of sub-commands for each function.
             You can run <filename>devtool --help</filename> to see all the
             commands.
-            <note>
-                See the
-                "<ulink url='&YOCTO_DOCS_REF_URL;#ref-devtool-reference'><filename>devtool</filename>&nbsp;Quick Reference</ulink>"
-                in the Yocto Project Reference Manual for more a
-                <filename>devtool</filename> reference.
-            </note>
+            See the
+            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-devtool-reference'><filename>devtool</filename>&nbsp;Quick Reference</ulink>"
+            in the Yocto Project Reference Manual for a
+            <filename>devtool</filename> quick reference.
         </para>
 
         <para>
-            Two <filename>devtool</filename> subcommands that provide
+            Three <filename>devtool</filename> subcommands that provide
             entry-points into development are:
             <itemizedlist>
-                <listitem><para><emphasis><filename>devtool add</filename></emphasis>:
+                <listitem><para>
+                    <emphasis><filename>devtool add</filename></emphasis>:
                     Assists in adding new software to be built.
                     </para></listitem>
-                <listitem><para><emphasis><filename>devtool modify</filename></emphasis>:
+                <listitem><para>
+                    <emphasis><filename>devtool modify</filename></emphasis>:
                     Sets up an environment to enable you to modify the source of
                     an existing component.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>devtool upgrade</filename></emphasis>:
+                    Updates an existing recipe so that you can build it for
+                    an updated set of source files.
                     </para></listitem>
             </itemizedlist>
             As with the OpenEmbedded build system, "recipes" represent software
@@ -853,11 +860,13 @@
                         <emphasis>Finish Your Work With the Recipe</emphasis>:
                         The <filename>devtool finish</filename> command creates
                         any patches corresponding to commits in the local
-                        Git repository, updates the recipe to point to them
-                        (or creates a <filename>.bbappend</filename> file to do
-                        so, depending on the specified destination layer), and
-                        then resets the recipe so that the recipe is built normally
-                        rather than from the workspace.
+                        Git repository, moves the new recipe to a more permanent
+                        layer, and then resets the recipe so that the recipe is
+                        built normally rather than from the workspace.
+                        If you specify a destination layer that is the same as
+                        the original source, then the old version of the
+                        recipe and associated files will be removed prior to
+                        adding the new version.
                         <literallayout class='monospaced'>
      $ devtool finish <replaceable>recipe layer</replaceable>
                         </literallayout>
