@@ -246,6 +246,38 @@
      export CC="i586-poky-linux-gcc -m32 -march=i586 --sysroot=/home/ulf/poky/build/tmp/sysroots/qemux86"
             </literallayout>
         </para>
+
+        <para>
+            In addition to variable values, the output of the
+            <filename>bitbake -e</filename> and
+            <filename>bitbake -e</filename>&nbsp;<replaceable>recipe</replaceable>
+            commands includes the following information:
+            <itemizedlist>
+                <listitem><para>
+                    The output starts with a tree listing all configuration
+                    files and classes included globally, recursively listing
+                    the files they include or inherit in turn.
+                    Much of the behavior of the OpenEmbedded build system
+                    (including the behavior of the
+                    <link linkend='normal-recipe-build-tasks'>normal recipe build tasks</link>)
+                    is implemented in the
+                    <link linkend='ref-classes-base'><filename>base</filename></link>
+                    class and the classes it inherits, rather than being built
+                    into BitBake itself.
+                    </para></listitem>
+                <listitem><para>
+                    After the variable values, all functions appear in the
+                    output.
+                    For shell functions, variables referenced within the
+                    function body are expanded.
+                    If a function has been modified using overrides or
+                    using override-style operators like
+                    <filename>_append</filename> and
+                    <filename>_prepend</filename>, then the final assembled
+                    function body appears in the output.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
     </section>
 
     <section id='viewing-package-information-with-oe-pkgdata-util'>
