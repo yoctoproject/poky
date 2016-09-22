@@ -9870,6 +9870,49 @@
         </section>
     </section>
 
+    <section id='debugging-with-the-gnu-project-debugger-gdb-on-the-target'>
+        <title>Debugging with the GNU Project Debugger (GDB) on the Target</title>
+
+        <para>
+            The previous section addressed using GDB remotely for debugging
+            purposes.
+            This section describes what you need to do in order to support
+            using GDB to debug on the target hardware.
+        </para>
+
+        <para>
+            To support this kind of debugging, you need do the following:
+            <itemizedlist>
+                <listitem><para>
+                    Ensure that GDB is on the target.
+                    You can do this by adding "gdb" to
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>:
+                    <literallayout class='monospaced'>
+     IMAGE_INSTALL_append = " gdb"
+                    </literallayout>
+                    Alternatively, you can add "tools-debug" to
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>:
+                    <literallayout class='monospaced'>
+     IMAGE_FEATURES = tools-debug
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    Ensure that debug symbols are present.
+                    You can make sure these symbols are present by installing
+                    <filename>-dbg</filename>:
+                    <literallayout class='monospaced'>
+     IMAGE_INSTALL_append = " <replaceable>packagename</replaceable>-dbg"
+                    </literallayout>
+                    Alternatively, you can do the following to include all the
+                    debug symbols:
+                    <literallayout class='monospaced'>
+     IMAGE_FEATURES = dbg-pkgs
+                    </literallayout>
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
     <section id='debugging-parallel-make-races'>
         <title>Debugging Parallel Make Races</title>
 
