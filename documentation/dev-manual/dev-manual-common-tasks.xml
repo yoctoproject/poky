@@ -2267,6 +2267,83 @@
 
         </section>
 
+        <section id='new-dependencies'>
+            <title>Dependencies</title>
+
+            <para>
+                Most software packages have a short list of other packages
+                that they require, which are called dependencies.
+                These dependencies fall into two main categories: build-time
+                dependencies, which are required when the software is built;
+                and runtime dependencies, which are required to be installed
+                on the target in order for the software to run.
+            </para>
+
+            <para>
+                Within a recipe, you specify build-time dependencies using the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
+                variable.
+                Although nuances exist, items specified in
+                <filename>DEPENDS</filename> should be names of other recipes.
+                It is important that you specify all build-time dependencies
+                explicitly.
+                If you do not, due to the parallel nature of BitBake's
+                execution, you can end up with a race condition where the
+                dependency is present for one task of a recipe (e.g.
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-configure'><filename>do_configure</filename></ulink>)
+                and then gone when the next task runs (e.g.
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-compile'><filename>do_compile</filename></ulink>).
+            </para>
+
+            <para>
+                Another consideration is that configure scripts might
+                automatically check for optional dependencies and enable
+                corresponding functionality if those dependencies are found.
+                This behavior means that to ensure deterministic results and
+                thus avoid more race conditions, you need to either explicitly
+                specify these dependencies as well, or tell the configure
+                script explicitly to disable the functionality.
+                If you wish to make a recipe that is more generally useful
+                (e.g. publish the recipe in a layer for others to use),
+                instead of hard-disabling the functionality, you can use the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGECONFIG'><filename>PACKAGECONFIG</filename></ulink>
+                variable to allow functionality and the corresponding
+                dependencies to be enabled and disabled easily by other
+                users of the recipe.
+            </para>
+
+            <para>
+                Similar to build-time dependencies, you specify runtime
+                dependencies through a variable -
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>,
+                which is package-specific.
+                All variables that are package-specific need to have the name
+                of the package added to the end as an override.
+                Since the main package for a recipe has the same name as the
+                recipe, and the recipe's name can be found through the
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>
+                variable, then you specify the dependencies for the main
+                package by setting <filename>RDEPENDS_${PN}</filename>.
+                If the package were named <filename>${PN}-tools</filename>,
+                then you would set <filename>RDEPENDS_${PN}-tools</filename>,
+                and so forth.
+            </para>
+
+            <para>
+                Some runtime dependencies will be set automatically at
+                packaging time.
+                These dependencies include any shared library dependencies
+                (i.e. if a package "example" contains "libexample" and
+                another package "mypackage" contains a binary that links to
+                "libexample" then the OpenEmbedded build system will
+                automatically add a runtime dependency to "mypackage" on
+                "example").
+                See the
+                "<ulink url='&YOCTO_DOCS_REF_URL;#automatically-added-runtime-dependencies'>Automatically Added Runtime Dependencies</ulink>"
+                in the Yocto Project Reference Manual for further details.
+            </para>
+        </section>
+
         <section id='new-recipe-configuring-the-recipe'>
             <title>Configuring the Recipe</title>
 
