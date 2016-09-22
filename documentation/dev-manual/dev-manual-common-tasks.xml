@@ -2875,6 +2875,56 @@
             </para>
         </section>
 
+        <section id='new-sharing-files-between-recipes'>
+            <title>Sharing Files Between Recipes</title>
+
+            <para>
+                Recipes often need to use files provided by other recipes on
+                the build host.
+                For example, an application linking to a common library needs
+                access to the library itself and its associated headers.
+                The way this access is accomplished is by populating sysroot
+                with files.
+                One sysroot exists per "machine" for which the image is
+                being built.
+                In practical terms, this means a sysroot exists for the target
+                machine, and a sysroot exists for the build host.
+                <note>
+                    You could find the term "staging" used within the Yocto
+                    project regarding files populating sysroot.
+                    The term "staging" was used for previous releases of
+                    the Yocto Project.
+                </note>
+            </para>
+
+            <para>
+                Recipes should never populate the sysroot directly (i.e. write
+                files into sysroot).
+                Instead, files should be installed into standard locations
+                during the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
+                task within the
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>
+                directory.
+                A subset of these files automatically populates the sysroot.
+                The reason for this limitation is that almost all files that
+                populate the sysroot are cataloged in manifests in order to
+                ensure the files can be removed later when a recipe is either
+                modified or removed.
+                Thus, the sysroot is able to remain free from stale files.
+            </para>
+
+            <para>
+                For information on variables you can use to help control how
+                files sysroot is populated, see the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS'><filename>SYSROOT_DIRS</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS_NATIVE'><filename>SYSROOT_DIRS_NATIVE</filename></ulink>,
+                and
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS_BLACKLIST'><filename>SYSROOT_DIRS_BLACKLIST</filename></ulink>
+                variables.
+            </para>
+        </section>
+
         <section id='properly-versioning-pre-release-recipes'>
             <title>Properly Versioning Pre-Release Recipes</title>
 
