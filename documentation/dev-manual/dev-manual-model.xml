@@ -1593,4 +1593,143 @@
     </note>
 </section>
 
+<section id="platdev-appdev-devpyshell">
+    <title>Using a Development Python Shell</title>
+
+    <para>
+        Similar to working within a development shell as described in
+        the previous section, you can also spawn and work within an
+        interactive Python development shell.
+        When debugging certain commands or even when just editing packages,
+        <filename>devpyshell</filename> can be a useful tool.
+        When you invoke <filename>devpyshell</filename>, all tasks up to and
+        including
+        <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-patch'><filename>do_patch</filename></ulink>
+        are run for the specified target.
+        Then, a new terminal is opened and you are placed in
+        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>,
+        the source directory.
+        In the new terminal, all the OpenEmbedded build-related environment variables are
+        still defined so you can use commands such as <filename>configure</filename> and
+        <filename>make</filename>.
+        Additionally, key Python objects and code are available in the same
+        way they are to BitBake tasks, in particular, the data store 'd'.
+        So, commands such as the following are useful when exploring the data
+        store and running functions:
+        <literallayout class='monospaced'>
+     pydevshell> d.getVar("STAGING_DIR", True)
+     '/media/build1/poky/build/tmp/sysroots'
+     pydevshell> d.getVar("STAGING_DIR", False)
+     '${TMPDIR}/sysroots'
+     pydevshell> d.setVar("FOO", "bar")
+     pydevshell> d.getVar("FOO", True)
+     'bar'
+     pydevshell> d.delVar("FOO")
+     pydevshell> d.getVar("FOO", True)
+     pydevshell> bb.build.exec_func("do_unpack", d)
+     pydevshell>
+        </literallayout>
+        The commands execute just as if the OpenEmbedded build system were executing them.
+        Consequently, working this way can be helpful when debugging a build or preparing
+        software to be used with the OpenEmbedded build system.
+    </para>
+
+    <para>
+        Following is an example that uses <filename>devpyshell</filename> on a target named
+        <filename>matchbox-desktop</filename>:
+        <literallayout class='monospaced'>
+     $ bitbake matchbox-desktop -c devpyshell
+        </literallayout>
+    </para>
+
+    <para>
+        This command spawns a terminal and places you in an interactive
+        Python interpreter within the OpenEmbedded build environment.
+        The <ulink url='&YOCTO_DOCS_REF_URL;#var-OE_TERMINAL'><filename>OE_TERMINAL</filename></ulink>
+        variable controls what type of shell is opened.
+    </para>
+
+    <para>
+        For spawned terminals, the following occurs:
+        <itemizedlist>
+            <listitem><para>The <filename>PATH</filename> variable includes the
+                cross-toolchain.</para></listitem>
+            <listitem><para>The <filename>pkgconfig</filename> variables find the correct
+                <filename>.pc</filename> files.</para></listitem>
+                <listitem><para>The <filename>configure</filename> command finds the
+                Yocto Project site files as well as any other necessary files.</para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Within this environment, you can run configure or compile
+        commands as if they were being run by
+        the OpenEmbedded build system itself.
+        As noted earlier, the working directory also automatically changes to the
+        Source Directory (<ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>).
+    </para>
+
+    <para>
+        To manually run a specific task using <filename>devpyshell</filename>,
+        run the corresponding <filename>run.*</filename> script in
+        the
+        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}/temp</filename>
+        directory (e.g.,
+        <filename>run.do_configure.</filename><replaceable>pid</replaceable>).
+        If a task's script does not exist, which would be the case if the task was
+        skipped by way of the sstate cache, you can create the task by first running
+        it outside of the <filename>devshell</filename>:
+        <literallayout class='monospaced'>
+     $ bitbake -c <replaceable>task</replaceable>
+        </literallayout>
+        <note><title>Notes</title>
+            <itemizedlist>
+                <listitem><para>Execution of a task's <filename>run.*</filename>
+                    script and BitBake's execution of a task are identical.
+                    In other words, running the script re-runs the task
+                    just as it would be run using the
+                    <filename>bitbake -c</filename> command.
+                    </para></listitem>
+                <listitem><para>Any <filename>run.*</filename> file that does not
+                    have a <filename>.pid</filename> extension is a
+                    symbolic link (symlink) to the most recent version of that
+                    file.
+                    </para></listitem>
+            </itemizedlist>
+        </note>
+    </para>
+
+    <para>
+        Remember, that the <filename>devpyshell</filename> is a mechanism that allows
+        you to get into the BitBake task execution environment
+        through an interactive Python interpreter.
+        And as such, all commands must be called just as BitBake would call them.
+        That means you need to provide the appropriate options for
+        cross-compilation and so forth as applicable.
+    </para>
+
+    <para>
+        When you are finished using <filename>devpyshell</filename>, exit the shell
+        or close the terminal window.
+    </para>
+
+    <note><title>Notes</title>
+        <itemizedlist>
+            <listitem><para>
+                It is worth remembering that when using <filename>devpyshell</filename>
+                you need to use the full compiler name such as <filename>arm-poky-linux-gnueabi-gcc</filename>
+                instead of just using <filename>gcc</filename>.
+                The same applies to other applications such as <filename>binutils</filename>,
+                <filename>libtool</filename> and so forth.
+                BitBake sets up environment variables such as <filename>CC</filename>
+                to assist applications, such as <filename>make</filename> to find the correct tools.
+                </para></listitem>
+            <listitem><para>
+                It is also worth noting that <filename>devpyshell</filename> still works over
+                X11 forwarding and similar situations.
+                </para></listitem>
+        </itemizedlist>
+    </note>
+</section>
+
 </chapter>
