@@ -9875,7 +9875,10 @@
 
         <para>
             The previous section addressed using GDB remotely for debugging
-            purposes.
+            purposes, which is the most usual case due to the inherent
+            hardware limitations on many embedded devices.
+            However, debugging in the target hardware itself is also possible
+            with the most powerful devices.
             This section describes what you need to do in order to support
             using GDB to debug on the target hardware.
         </para>
@@ -9910,6 +9913,22 @@
                     </literallayout>
                     </para></listitem>
             </itemizedlist>
+            <note>
+                To improve the debug information accuracy, you can reduce the
+                level of optimization used by the compiler.
+                For example, when adding the following line to your
+                <filename>local.conf</filename> file, you will reduce
+                optimization from
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FULL_OPTIMIZATION'><filename>FULL_OPTIMIZATION</filename></ulink>
+                of "-O2" to
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEBUG_OPTIMIZATION'><filename>DEBUG_OPTIMIZATION</filename></ulink>
+                of "-O -fno-omit-frame-pointer":
+                <literallayout class='monospaced'>
+     DEBUG_BUILD = "1"
+                </literallayout>
+                Consider that this will reduce the application's performance
+                and is recommended only for debugging purposes.
+            </note>
         </para>
     </section>
 
