@@ -10591,12 +10591,31 @@
                 tarballs for licenses that require the release of
                 source.
                 Let us assume you are only concerned with GPL code as
-                identified with the following:
+                identified by running the following script:
                 <literallayout class='monospaced'>
-     $ cd poky/build/tmp/deploy/sources
-     $ mkdir ~/gpl_source_release
-     $ for dir in */*GPL*; do cp -r $dir ~/gpl_source_release; done
-                </literallayout>
+     # Script to archive a subset of packages matching specific license(s)
+     # Source and license files are copied into sub folders of package folder
+     # Must be run from build folder
+     #!/bin/bash
+     src_release_dir="source-release"
+     mkdir -p $src_release_dir
+     for a in tmp/deploy/sources/*; do
+        for d in $a/*; do
+           # Get package name from path
+           p=`basename $d`
+           p=${p%-*}
+           p=${p%-*}
+           # Only archive GPL packages (update *GPL* regex for your license check)
+           numfiles=`ls tmp/deploy/licenses/$p/*GPL* 2> /dev/null | wc -l`
+           if [ $numfiles -gt 1 ]; then
+              echo Archiving $p
+              mkdir -p $src_release_dir/$p/source
+              cp $d/* $src_release_dir/$p/source 2> /dev/null
+              mkdir -p $src_release_dir/$p/license
+              cp tmp/deploy/licenses/$p/* source-release/$p/license 2> /dev/null
+           fi
+        done
+     done                </literallayout>
                 At this point, you could create a tarball from the
                 <filename>gpl_source_release</filename> directory and
                 provide that to the end user.
