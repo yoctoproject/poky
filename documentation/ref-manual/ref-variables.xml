@@ -12696,9 +12696,13 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Specifies the path to the sysroot directory for the system
                     that the component is built to run on (the system that hosts
                     the component).
-                    This sysroot is the one that the recipe's
+                    For most recipes, this sysroot is the one that the recipe's
                     <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
                     task copies files into.
+                    Exceptions include <filename>-native</filename> recipes,
+                    where the <filename>do_populate_sysroot</filename> task
+                    instead uses
+                    <link linkend='var-STAGING_DIR_NATIVE'><filename>STAGING_DIR_NATIVE</filename></link>.
                     Depending on the type of recipe and the build target,
                     <filename>STAGING_DIR_HOST</filename> can have the
                     following values:
@@ -12718,6 +12722,33 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                            "${STAGING_DIR}/${<link linkend='var-MULTIMACH_HOST_SYS'>MULTIMACH_HOST_SYS</link>}".
                            </para></listitem>
                     </itemizedlist>
+                    <note><para>
+                        <filename>-native</filename> recipes are not installed
+                        into host paths like such as <filename>/usr</filename>.
+                        Rather, these recipes are installed into
+                        <filename>STAGING_DIR_NATIVE</filename>.
+                        When compiling <filename>-native</filename> recipes,
+                        standard build environment variables such as
+                        <link linkend='var-CPPFLAGS'><filename>CPPFLAGS</filename></link>
+                        and
+                        <link linkend='var-CFLAGS'><filename>CFLAGS</filename></link>
+                        are set up so that both host paths and
+                        <filename>STAGING_DIR_NATIVE</filename> are searched
+                        for libraries and headers using, for example,
+                        GCC's <filename>-isystem</filename> option.</para>
+
+                        <para>This emphasizes that the
+                        <filename>STAGING_DIR*</filename> variables should be
+                        viewed as input variables by tasks such as
+                        <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>,
+                        <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>,
+                        and
+                        <link linkend='ref-tasks-install'><filename>do_install</filename></link>.
+                        Having the real system root correspond to
+                        <filename>STAGING_DIR_HOST</filename> makes conceptual
+                        sense for <filename>-native</filename> recipes, as
+                        they make use of host headers and libraries.</para>
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
