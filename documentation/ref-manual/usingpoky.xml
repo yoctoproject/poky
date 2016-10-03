@@ -606,15 +606,39 @@
         </para>
 
         <para>
-            If you wish to rerun a task, use the <filename>-f</filename> force
-            option.
-            For example, the following sequence forces recompilation after
-            changing files in the work directory.
+            The <filename>-c</filename> option respects task dependencies,
+            which means that all other tasks (including tasks from other
+            recipes) that the specified task depends on will be run before the
+            task.
+            Even when you manually specify a task to run with
+            <filename>-c</filename>, BitBake will only run the task if it
+            considers it "out of date".
+            See the
+            "<link linkend='stamp-files-and-the-rerunning-of-tasks'>Stamp Files and the Rerunning of Tasks</link>"
+            section for how BitBake determines whether a task is "out of date".
+        </para>
+
+        <para>
+            If you want to force an up-to-date task to be rerun (e.g.
+            because you made manual modifications to the recipe's
+            <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>
+            that you want to try out), then you can use the
+            <filename>-f</filename> option.
+            <note>
+                The reason <filename>-f</filename> is never required when
+                running the
+                <link linkend='ref-tasks-devshell'><filename>do_devshell</filename></link>
+                task is because the
+                <filename>[</filename><ulink url='&YOCTO_DOCS_BB_URL;#variable-flags'><filename>nostamp</filename></ulink><filename>]</filename>
+                variable flag is already set for the task.
+            </note>
+            The following example shows one way you can use the
+            <filename>-f</filename> option:
             <literallayout class='monospaced'>
      $ bitbake matchbox-desktop
                .
                .
-        <replaceable>make some changes to the source code in the work directory</replaceable>
+     make some changes to the source code in the work directory
                .
                .
      $ bitbake matchbox-desktop -c compile -f
@@ -630,6 +654,50 @@
             BitBake recognizes that the <filename>do_compile</filename>
             task was rerun and therefore understands that the other tasks
             also need to be run again.
+        </para>
+
+        <para>
+            Another, shorter way to rerun a task and all
+            <link linkend='normal-recipe-build-tasks'>normal recipe build tasks</link>
+            that depend on it is to use the <filename>-C</filename>
+            option.
+            <note>
+                This option is upper-cased and is separate from the
+                <filename>-c</filename> option, which is lower-cased.
+            </note>
+            Using this option invalidates the given task and then runs the
+            <link linkend='ref-tasks-build'><filename>do_build</filename></link>
+            task, which is the default task if no task is given, and the
+            tasks on which it depends.
+            You could replace the final two commands in the previous example
+            with the following single command:
+            <literallayout class='monospaced'>
+     $ bitbake matchbox-desktop -C compile
+            </literallayout>
+            Internally, the <filename>-f</filename> and
+            <filename>-C</filename> options work by tainting (modifying) the
+            input checksum of the specified task.
+            This tainting indirectly causes the task and its
+            dependent tasks to be rerun through the normal task dependency
+            mechanisms.
+            <note>
+                BitBake explicitly keeps track of which tasks have been
+                tainted in this fashion, and will print warnings such as the
+                following for builds involving such tasks:
+                <literallayout class='monospaced'>
+     WARNING: /home/ulf/poky/meta/recipes-sato/matchbox-desktop/matchbox-desktop_2.1.bb.do_compile is tainted from a forced run
+                </literallayout>
+                The purpose of the warning is to let you know that the work
+                directory and build output might not be in the clean state they
+                would be in for a "normal" build, depending on what actions
+                you took.
+                To get rid of such warnings, you can remove the work directory
+                and rebuild the recipe, as follows:
+                <literallayout class='monospaced'>
+     $ bitbake matchbox-desktop -c clean
+     $ bitbake matchbox-desktop
+                </literallayout>
+            </note>
         </para>
 
         <para>
