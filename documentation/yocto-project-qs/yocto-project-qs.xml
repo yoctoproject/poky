@@ -689,21 +689,37 @@
                     </para>
                     </note>
                     </para></listitem>
-                <listitem><para><emphasis>Build a Minimal Image for MinnowBoard MAX:</emphasis>
-                    Use the following command to build the minimal image for
+                <listitem><para><emphasis>Build an Image for MinnowBoard MAX:</emphasis>
+                    The type of image you build depends on your goals.
+                    For example, the previous build created a
+                    <filename>core-image-sato</filename> image, which is an
+                    image with Sato support.
+                    It is possible to build many image types for the
                     MinnowBoard MAX.
-                    Because configuration changes are minimal to set up for
-                    this second build, the OpenEmbedded build system can
+                    Some possibilities are <filename>core-image-base</filename>,
+                    which is a console-only image.
+                    Another choice could be a
+                    <filename>core-image-full-cmdline</filename>, which is
+                    another console-only image but has more full-features
+                    Linux system functionality installed.
+                    For types of images you can build using the Yocto
+                    Project, see the
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
+                    chapter in the Yocto Project Reference Manual.</para>
+                    <para>Because configuration changes are minimal to set up
+                    for this second build, the OpenEmbedded build system can
                     re-use files from previous builds as much as possible.
                     Re-using files means this second build will be much faster
                     than an initial build.
+                    For this example, the <filename>core-image-base</filename>
+                    image is built:
                     <literallayout class='monospaced'>
      $ bitbake core-image-minimal
                     </literallayout>
-                    Once the build completes, the resulting basic console image
+                    Once the build completes, the resulting console-only image
                     is located in the Build Directory here:
                     <literallayout class='monospaced'>
-     tmp/deploy/images/intel-corei7-64/core-image-minimal-intel-corei7-64.hddimg
+     tmp/deploy/images/intel-corei7-64/core-image-base-intel-corei7-64.hddimg
                     </literallayout>
                     </para></listitem>
                 <listitem><para><emphasis>Write the Image:</emphasis>
@@ -714,7 +730,7 @@
                     <filename>scripts/contrib/mkefidisk.sh</filename>:
                     <literallayout class='monospaced'>
      $ sudo $HOME/source/poky/scripts/contrib/mkefidisk.sh <replaceable>HOST_DEVICE</replaceable> \
-        tmp/deploy/images/intel-corei7-64/core-image-minimal-intel-corei7-64.hddimg <replaceable>TARGET_DEVICE</replaceable>
+        tmp/deploy/images/intel-corei7-64/core-image-base-intel-corei7-64.hddimg <replaceable>TARGET_DEVICE</replaceable>
                     </literallayout>
                     In the previous command,
                     <replaceable>HOST_DEVICE</replaceable> is the device node
