@@ -12708,13 +12708,46 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     following values:
                     <itemizedlist>
                         <listitem><para>For recipes building for the target
-                           machine, the value is
-                           "${<link linkend='var-STAGING_DIR'>STAGING_DIR</link>}/${<link linkend='var-MACHINE'>MACHINE</link>}".
-                           </para></listitem>
+                            machine, the value is
+                            "${<link linkend='var-STAGING_DIR'>STAGING_DIR</link>}/${<link linkend='var-MACHINE'>MACHINE</link>}".
+                            </para></listitem>
                         <listitem><para>For native recipes building
-                           for the build host, the value is empty given the
-                           assumption that when building for the build host,
-                           the build host's own directories should be used.
+                            for the build host, the value is empty given the
+                            assumption that when building for the build host,
+                            the build host's own directories should be used.
+                            <note><para>
+                                <filename>-native</filename> recipes are not
+                                installed into host paths like such as
+                                <filename>/usr</filename>.
+                                Rather, these recipes are installed into
+                                <filename>STAGING_DIR_NATIVE</filename>.
+                                When compiling <filename>-native</filename>
+                                recipes, standard build environment variables
+                                such as
+                                <link linkend='var-CPPFLAGS'><filename>CPPFLAGS</filename></link>
+                                and
+                                <link linkend='var-CFLAGS'><filename>CFLAGS</filename></link>
+                                are set up so that both host paths and
+                                <filename>STAGING_DIR_NATIVE</filename> are
+                                searched for libraries and headers using, for
+                                example, GCC's <filename>-isystem</filename>
+                                option.</para>
+
+                                <para>This emphasizes that the
+                                <filename>STAGING_DIR*</filename> variables
+                                should be viewed as input variables by tasks
+                                such as
+                                <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>,
+                                <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>,
+                                and
+                                <link linkend='ref-tasks-install'><filename>do_install</filename></link>.
+                                Having the real system root correspond to
+                                <filename>STAGING_DIR_HOST</filename> makes
+                                conceptual sense for
+                                <filename>-native</filename> recipes, as
+                                they make use of host headers and libraries.
+                                </para>
+                                </note>
                            </para></listitem>
                         <listitem><para>For native SDK
                            recipes that build for the SDK
@@ -12722,33 +12755,6 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                            "${STAGING_DIR}/${<link linkend='var-MULTIMACH_HOST_SYS'>MULTIMACH_HOST_SYS</link>}".
                            </para></listitem>
                     </itemizedlist>
-                    <note><para>
-                        <filename>-native</filename> recipes are not installed
-                        into host paths like such as <filename>/usr</filename>.
-                        Rather, these recipes are installed into
-                        <filename>STAGING_DIR_NATIVE</filename>.
-                        When compiling <filename>-native</filename> recipes,
-                        standard build environment variables such as
-                        <link linkend='var-CPPFLAGS'><filename>CPPFLAGS</filename></link>
-                        and
-                        <link linkend='var-CFLAGS'><filename>CFLAGS</filename></link>
-                        are set up so that both host paths and
-                        <filename>STAGING_DIR_NATIVE</filename> are searched
-                        for libraries and headers using, for example,
-                        GCC's <filename>-isystem</filename> option.</para>
-
-                        <para>This emphasizes that the
-                        <filename>STAGING_DIR*</filename> variables should be
-                        viewed as input variables by tasks such as
-                        <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>,
-                        <link linkend='ref-tasks-compile'><filename>do_compile</filename></link>,
-                        and
-                        <link linkend='ref-tasks-install'><filename>do_install</filename></link>.
-                        Having the real system root correspond to
-                        <filename>STAGING_DIR_HOST</filename> makes conceptual
-                        sense for <filename>-native</filename> recipes, as
-                        they make use of host headers and libraries.</para>
-                    </note>
                 </para>
             </glossdef>
         </glossentry>
