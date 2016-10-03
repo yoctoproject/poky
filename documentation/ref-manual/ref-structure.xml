@@ -660,9 +660,21 @@
         <title><filename>build/tmp/cache/</filename></title>
 
         <para>
-            When BitBake parses the metadata, it creates a cache file of the result that can
-            be used when subsequently running commands.
-            BitBake stores these results here on a per-machine basis.
+            When BitBake parses the metadata (recipes and configuration files),
+            it caches the results in <filename>build/tmp/cache/</filename>
+            to speed up future builds.
+            The results are stored on a per-machine basis.
+        </para>
+
+        <para>
+            During subsequent builds, BitBake checks each recipe (together
+            with, for example, any files included or appended to it) to see
+            if they have been modified.
+            Changes can be detected, for example, through file modification
+            time (mtime) changes and hashing of file contents.
+            If no changes to the file are detected, then the parsed result
+            stored in the cache is reused.
+            If the file has changed, it is reparsed.
         </para>
     </section>
 
