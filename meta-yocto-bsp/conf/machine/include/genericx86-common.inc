@@ -21,5 +21,5 @@ GLIBC_ADDONS = "nptl"
 EXTRA_OECONF_append_pn-matchbox-panel-2 = " --with-battery=acpi"
 
 IMAGE_FSTYPES += "wic"
-WKS_FILE = "directdisk.wks"
-do_image_wic[depends] += "mtools-native:do_populate_sysroot dosfstools-native:do_populate_sysroot syslinux-native:do_populate_sysroot syslinux:do_build"
+WKS_FILE ?= "mkefidisk.wks"
+do_image_wic[depends] += "gptfdisk-native:do_populate_sysroot"
