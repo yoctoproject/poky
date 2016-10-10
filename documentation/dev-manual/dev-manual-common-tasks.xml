@@ -3342,28 +3342,76 @@
                     If you can't use the <filename>bin_package</filename>
                     class, you need to be sure you are doing the following:
                     <itemizedlist>
-                        <listitem><para>Create a recipe where the
+                        <listitem><para>
+                            Create a recipe where the
+                            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-configure'><filename>do_configure</filename></ulink>
+                            and
+                            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-compile'><filename>do_compile</filename></ulink>
+                            tasks do nothing:
+                            It is usually sufficient to just not define these
+                            tasks in the recipe, because the default
+                            implementations do nothing unless a Makefile is
+                            found in
+                            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink><filename>}</filename>.
+                            </para>
+
+                            <para>If
+                            <filename>${S}</filename> might contain a Makefile,
+                            or if you inherit some class that replaces
                             <filename>do_configure</filename> and
-                            <filename>do_compile</filename> tasks do nothing:
+                            <filename>do_compile</filename> with custom
+                            versions, then you can use the
+                            <filename>[</filename><ulink url='&YOCTO_DOCS_BB_URL;#variable-flags'><filename>noexec</filename></ulink><filename>]</filename>
+                            flag to turn the tasks into no-ops, as follows:
                             <literallayout class='monospaced'>
      do_configure[noexec] = "1"
      do_compile[noexec] = "1"
                             </literallayout>
-                            Alternatively, you can make these tasks an empty
-                            function.
+                            Unlike
+                            <ulink url='&YOCTO_DOCS_BB_URL;#deleting-a-task'><filename>deleting the tasks</filename></ulink>,
+                            using the flag preserves the dependency chain from
+                            the
+                            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-fetch'><filename>do_fetch</filename></ulink>,                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-unpack'><filename>do_unpack</filename></ulink>,
+                            and
+                            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-patch'><filename>do_patch</filename></ulink>
+                            tasks to the
+                            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
+                            task.
                             </para></listitem>
                         <listitem><para>Make sure your
                             <filename>do_install</filename> task installs the
                             binaries appropriately.
                             </para></listitem>
                         <listitem><para>Ensure that you set up
-                            <filename>FILES</filename> (usually
-                            <filename>FILES_${PN}</filename>) to point to the
-                            files you have installed, which of course depends
-                            on where you have installed them and whether
-                            those files are in different locations than the
-                            defaults.
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-FILES'><filename>FILES</filename></ulink>
+                            (usually
+                            <filename>FILES_${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>)
+                            to point to the files you have installed, which of
+                            course depends on where you have installed them
+                            and whether those files are in different locations
+                            than the defaults.
                             </para></listitem>
+                        <listitem><para>
+                            Using
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
+                            is a good idea even for components distributed in
+                            binary form, and is often necessary for shared
+                            libraries.
+                            For a shared library, listing the library
+                            dependencies in
+                            <filename>DEPENDS</filename> makes sure that the
+                            libraries are available in the staging sysroot when
+                            other recipes link against the library, which might
+                            be necessary for successful linking.</para>
+
+                            <para>Using <filename>DEPENDS</filename> also
+                            allows runtime dependencies between packages to be
+                            added automatically.
+                            See the
+                            "<ulink url='&YOCTO_DOCS_REF_URL;#automatically-added-runtime-dependencies'>Automatically Added Runtime Dependencies</ulink>"
+                            section in the Yocto Project Reference Manual for
+                            more information.
+                            </para></listitem>.
                     </itemizedlist>
                 </para>
             </section>
