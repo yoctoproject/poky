@@ -9736,15 +9736,6 @@
             as all the heavy debugging is done by the host GDB.
             Offloading these processes gives the Gdbserver running on the target a chance to remain
             small and fast.
-            <note>
-                By default, source files are part of the
-                <filename>*-dbg</filename> packages in order to enable GDB
-                to show source lines in its output.
-                You can save further space on the target by setting the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_DEBUG_SPLIT_STYLE'><filename>PACKAGE_DEBUG_SPLIT_STYLE</filename></ulink>
-                variable to "debug-without-src" so that these packages do not
-                include the source files.
-            </note>
         </para>
 
         <para>
@@ -9768,10 +9759,200 @@
         </para>
 
         <para>
-            The remainder of this section describes the steps you need to take
-            to debug using the GNU project debugger.
-        </para>
+            The following steps show you how to debug using the GNU project
+            debugger.
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Configure your build system to construct the
+                    companion debug filesystem:</emphasis></para>
 
+                    <para>In your <filename>local.conf</filename> file, set
+                    the following:
+                    <literallayout class='monospaced'>
+     IMAGE_GEN_DEBUGFS = "1"
+     IMAGE_FSTYPES_DEBUGFS = "tar.bz2"
+                    </literallayout>
+                    These options cause the OpenEmbedded build system
+                    to generate a special companion filesystem fragment,
+                    which contains the matching source and debug symbols to
+                    your deployable filesystem.
+                    The build system does this by looking at what is in the
+                    deployed filesystem, and pulling the corresponding
+                    <filename>-dbg</filename> packages.</para>
+
+                    <para>The companion debug filesystem is not a complete
+                    filesystem, but only contains the debug fragments.
+                    This filesystem must be combined with the full filesystem
+                    for debugging.
+                    Subsequent steps in this procedure show how to combine
+                    the partial filesystem with the full filesystem.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Configure the system to include Gdbserver in
+                    the target filesystem:</emphasis></para>
+
+                    <para>Make the following addition in either your
+                    <filename>local.conf</filename> file or in an image
+                    recipe:
+                    <literallayout class='monospaced'>
+     IMAGE_INSTALL_append = “ gdbserver"
+                    </literallayout>
+                    The change makes sure the <filename>gdbserver</filename>
+                    package is included.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Build the environment:</emphasis></para>
+
+                    <para>Use the following command to construct the image and
+                    the companion Debug Filesystem:
+                    <literallayout class='monospaced'>
+     $ bitbake <replaceable>image</replaceable>
+                    </literallayout>
+                    Build the cross GDB component and make it available
+                    for debugging.
+                    Build the SDK that matches the image.
+                    Building the SDK is best for a production build
+                    that can be used later for debugging, especially
+                    during long term maintenance:
+                    <literallayout class='monospaced'>
+     $ bitbake -c populate_sdk <replaceable>image</replaceable>
+                    </literallayout></para>
+
+                    <para>Alternatively, you can build the minimal
+                    toolchain components that match the target.
+                    Doing so creates a smaller than typical SDK and only
+                    contains a minimal set of components with which to
+                    build simple test applications, as well as run the
+                    debugger:
+                    <literallayout class='monospaced'>
+     $ bitbake meta-toolchain
+                    </literallayout></para>
+
+                    <para>A final method is to build Gdb itself within
+                    the build system:
+                    <literallayout class='monospaced'>
+     $ bitbake gdb-cross-<replaceable>architecture</replaceable>
+                    </literallayout>
+                    Doing so produces a temporary copy of
+                    <filename>cross-gdb</filename> you can use for
+                    debugging during development.
+                    While this is the quickest approach, the two previous
+                    methods in this step are better when considering
+                    long-term maintenance strategies.
+                    <note>
+                        If you run
+                        <filename>bitbake gdb-cross</filename>, the
+                        OpenEmbedded build system suggests the actual
+                        image (e.g. <filename>gdb-cross-i586</filename>).
+                        The suggestion is usually the actual name you want
+                        to use.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Set up the</emphasis>&nbsp;<filename>debugfs</filename></para>
+
+                    <para>Run the following commands to set up the
+                    <filename>debugfs</filename>:
+                    <literallayout class='monospaced'>
+     $ mkdir debugfs
+     $ cd debugfs
+     $ tar xvfj <replaceable>build-dir</replaceable>/tmp-glibc/deploy/images/<replaceable>machine</replaceable>/<replaceable>image</replaceable>.rootfs.tar.bz2
+     $ tar xvfj <replaceable>build-dir</replaceable>/tmp-glibc/deploy/images/<replaceable>machine</replaceable>/<replaceable>image</replaceable>-dbg.rootfs.tar.bz2
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Set up GDB</emphasis></para>
+
+                    <para>Install the SDK (if you built one) and then
+                    source the correct environment file.
+                    Sourcing the environment file puts the SDK in your
+                    <filename>PATH</filename> environment variable.</para>
+
+                    <para>If you are using the build system, Gdb is
+                    located in
+                    <replaceable>build-dir</replaceable>/tmp/sysroots/<replaceable>host</replaceable>/usr/bin/<replaceable>architecture</replaceable>/<replaceable>architecture</replaceable>-gdb
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Boot the target:</emphasis></para>
+
+                    <para>For information on how to run QEMU, see the
+                    <ulink url='http://wiki.qemu.org/Documentation/GettingStartedDevelopers'>QEMU Documentation</ulink>.
+                    <note>
+                        Be sure to verify that your host can access the
+                        target via TCP.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Debug a program:</emphasis></para>
+
+                    <para>Debugging a program involves running Gdbserver
+                    on the target and then running Gdb on the host.
+                    The example in this step debugs
+                    <filename>gzip</filename>:
+                    <literallayout class='monospaced'>
+     root@qemux86:~# gdbserver localhost:1234 /bin/gzip —help
+                    </literallayout>
+                    For additional Gdbserver options, see the
+                    <ulink url='https://www.gnu.org/software/gdb/documentation/'>Gdb Server Documentation</ulink>.
+                    </para>
+
+                    <para>After running Gdbserver on the target, you need
+                    to run Gdb on the host and configure it and connect to
+                    the target.
+                    Use these commands:
+                    <literallayout class='monospaced'>
+     $ cd <replaceable>directory-holding-the-debugfs-directory</replaceable>
+     $ <replaceable>arch</replaceable>-gdb
+
+     (gdb) set sysroot debugfs
+     (gdb) set substitute-path /usr/src/debug debugfs/usr/src/debug
+     (gdb) target remote <replaceable>IP-of-target</replaceable>:1234
+                    </literallayout>
+                    At this point, everything should automatically load
+                    (i.e. matching binaries, symbols and headers).
+                    <note>
+                        The Gdb <filename>set</filename> commands in the
+                        previous example can be placed into the users
+                        <filename>~/.gdbinit</filename> file.
+                        Upon starting, Gdb automatically runs whatever
+                        commands are in that file.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Deploying without a full image
+                    rebuild:</emphasis></para>
+
+                    <para>In many cases, during development you want a
+                    quick method to deploy a new binary to the target and
+                    debug it, without waiting for a full image build.
+                    </para>
+
+                    <para>One approach to solving this situation is to
+                    just build the component you want to debug.
+                    Once you have built the component, copy the
+                    executable directly to both the target and the
+                    host <filename>debugfs</filename>.</para>
+
+                    <para>If the binary is processed through the debug
+                    splitting in OpenEmbedded, you should also
+                    copy the debug items (i.e. <filename>.debug</filename>
+                    contents and corresponding
+                    <filename>/usr/src/debug</filename> files)
+                    from the work directory.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     $ bitbake bash
+     $ bitbake -c devshell bash
+     $ cd ..
+     $ scp packages-split/bash/bin/bash <replaceable>target</replaceable>:/bin/bash
+     $ cp -a packages-split/bash-dbg/* <replaceable>path</replaceable>/debugfs
+                    </literallayout>
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+
+<!--
         <section id='platdev-gdb-remotedebug-setup'>
             <title>Set Up the Cross-Development Debugging Environment</title>
 
@@ -9945,6 +10126,7 @@
             </para>
         </section>
     </section>
+-->
 
     <section id='debugging-with-the-gnu-project-debugger-gdb-on-the-target'>
         <title>Debugging with the GNU Project Debugger (GDB) on the Target</title>
@@ -10289,265 +10471,6 @@
             </para>
         </section>
     </section>
-
-<!--
-    <section id="platdev-oprofile">
-        <title>Profiling with OProfile</title>
-
-        <para>
-            <ulink url="http://oprofile.sourceforge.net/">OProfile</ulink> is a
-            statistical profiler well suited for finding performance
-            bottlenecks in both user-space software and in the kernel.
-            This profiler provides answers to questions like "Which functions does my application spend
-            the most time in when doing X?"
-            Because the OpenEmbedded build system is well integrated with OProfile, it makes profiling
-            applications on target hardware straight forward.
-            <note>
-                For more information on how to set up and run OProfile, see the
-                "<ulink url='&YOCTO_DOCS_PROF_URL;#profile-manual-oprofile'>oprofile</ulink>"
-                section in the Yocto Project Profiling and Tracing Manual.
-            </note>
-        </para>
-
-        <para>
-            To use OProfile, you need an image that has OProfile installed.
-            The easiest way to do this is with "tools-profile" in the
-            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'>IMAGE_FEATURES</ulink></filename> variable.
-            You also need debugging symbols to be available on the system where the analysis
-            takes place.
-            You can gain access to the symbols by using "dbg-pkgs" in the
-            <filename>IMAGE_FEATURES</filename> variable or by
-            installing the appropriate debug (<filename>-dbg</filename>)
-            packages.
-        </para>
-
-        <para>
-            For successful call graph analysis, the binaries must preserve the frame
-            pointer register and should also be compiled with the
-            <filename>-fno-omit-framepointer</filename> flag.
-            You can achieve this by setting the
-            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SELECTED_OPTIMIZATION'>SELECTED_OPTIMIZATION</ulink></filename>
-            variable with the following options:
-            <literallayout class='monospaced'>
-     -fexpensive-optimizations
-     -fno-omit-framepointer
-     -frename-registers
-     -O2
-            </literallayout>
-            You can also achieve it by setting the
-            <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DEBUG_BUILD'>DEBUG_BUILD</ulink></filename>
-            variable to "1" in the <filename>local.conf</filename> configuration file.
-            If you use the <filename>DEBUG_BUILD</filename> variable,
-            you also add extra debugging information that can make the debug
-            packages large.
-        </para>
-
-        <section id="platdev-oprofile-target">
-            <title>Profiling on the Target</title>
-
-            <para>
-                Using OProfile, you can perform all the profiling work on the target device.
-                A simple OProfile session might look like the following:
-            </para>
-
-            <para>
-                <literallayout class='monospaced'>
-     # opcontrol &dash;&dash;reset
-     # opcontrol &dash;&dash;start &dash;&dash;separate=lib &dash;&dash;no-vmlinux -c 5
-              .
-              .
-        [do whatever is being profiled]
-              .
-              .
-     # opcontrol &dash;&dash;stop
-     $ opreport -cl
-                </literallayout>
-            </para>
-
-            <para>
-                In this example, the <filename>reset</filename> command clears any previously profiled data.
-                The next command starts OProfile.
-                The options used when starting the profiler separate dynamic library data
-                within applications, disable kernel profiling, and enable callgraphing up to
-                five levels deep.
-                <note>
-                    To profile the kernel, you would specify the
-                    <filename>&dash;&dash;vmlinux=/path/to/vmlinux</filename> option.
-                    The <filename>vmlinux</filename> file is usually in the source directory in the
-                    <filename>/boot/</filename> directory and must match the running kernel.
-                </note>
-            </para>
-
-            <para>
-                After you perform your profiling tasks, the next command stops the profiler.
-                After that, you can view results with the <filename>opreport</filename> command with options
-                to see the separate library symbols and callgraph information.
-            </para>
-
-            <para>
-                Callgraphing logs information about time spent in functions and about a function's
-                calling function (parent) and called functions (children).
-                The higher the callgraphing depth, the more accurate the results.
-                However, higher depths also increase the logging overhead.
-                Consequently, you should take care when setting the callgraphing depth.
-                <note>
-                    On ARM, binaries need to have the frame pointer enabled for callgraphing to work.
-                    To accomplish this use the <filename>-fno-omit-framepointer</filename> option
-                    with <filename>gcc</filename>.
-                </note>
-            </para>
-
-            <para>
-                For more information on using OProfile, see the OProfile
-                online documentation at
-                <ulink url="http://oprofile.sourceforge.net/docs/"/>.
-            </para>
-        </section>
-
-        <section id="platdev-oprofile-oprofileui">
-            <title>Using OProfileUI</title>
-
-            <para>
-                A graphical user interface for OProfile is also available.
-                You can download and build this interface from the Yocto Project at
-                <ulink url="&YOCTO_GIT_URL;/cgit.cgi/oprofileui/"></ulink>.
-                If the "tools-profile" image feature is selected, all necessary binaries
-                are installed onto the target device for OProfileUI interaction.
-                For a list of image features that ship with the Yocto Project,
-                see the
-                "<ulink url='&YOCTO_DOCS_REF_URL;#ref-features-image'>Image Features</ulink>"
-                section in the Yocto Project Reference Manual.
-            </para>
-
-            <para>
-                Even though the source directory usually includes all needed patches on the target device, you
-                might find you need other OProfile patches for recent OProfileUI features.
-                If so, see the <ulink url='&YOCTO_GIT_URL;/cgit.cgi/oprofileui/tree/README'>
-                OProfileUI README</ulink> for the most recent information.
-            </para>
-
-            <section id="platdev-oprofile-oprofileui-online">
-                <title>Online Mode</title>
-
-                <para>
-                    Using OProfile in online mode assumes a working network connection with the target
-                    hardware.
-                    With this connection, you just need to run "oprofile-server" on the device.
-                    By default, OProfile listens on port 4224.
-                    <note>
-                        You can change the port using the <filename>&dash;&dash;port</filename> command-line
-                        option.
-                    </note>
-                </para>
-
-                <para>
-                    The client program is called <filename>oprofile-viewer</filename> and its UI is relatively
-                    straight forward.
-                    You access key functionality through the buttons on the toolbar, which
-                    are duplicated in the menus.
-                    Here are the buttons:
-                    <itemizedlist>
-                        <listitem><para><emphasis>Connect:</emphasis> Connects to the remote host.
-                            You can also supply the IP address or hostname.</para></listitem>
-                        <listitem><para><emphasis>Disconnect:</emphasis> Disconnects from the target.
-                            </para></listitem>
-                        <listitem><para><emphasis>Start:</emphasis> Starts profiling on the device.
-                            </para></listitem>
-                        <listitem><para><emphasis>Stop:</emphasis> Stops profiling on the device and
-                            downloads the data to the local host.
-                            Stopping the profiler generates the profile and displays it in the viewer.
-                            </para></listitem>
-                        <listitem><para><emphasis>Download:</emphasis> Downloads the data from the
-                            target and generates the profile, which appears in the viewer.</para></listitem>
-                        <listitem><para><emphasis>Reset:</emphasis> Resets the sample data on the device.
-                            Resetting the data removes sample information collected from previous
-                            sampling runs.
-                            Be sure you reset the data if you do not want to include old sample information.
-                            </para></listitem>
-                        <listitem><para><emphasis>Save:</emphasis> Saves the data downloaded from the
-                            target to another directory for later examination.</para></listitem>
-                        <listitem><para><emphasis>Open:</emphasis> Loads previously saved data.
-                            </para></listitem>
-                    </itemizedlist>
-                </para>
-
-                <para>
-                    The client downloads the complete profile archive from
-                    the target to the host for processing.
-                    This archive is a directory that contains the sample data, the object files,
-                    and the debug information for the object files.
-                    The archive is then converted using the <filename>oparchconv</filename> script, which is
-                    included in this distribution.
-                    The script uses <filename>opimport</filename> to convert the archive from
-                    the target to something that can be processed on the host.
-                </para>
-
-                <para>
-                    Downloaded archives reside in the
-                    <link linkend='build-directory'>Build Directory</link> in
-                    <filename>tmp</filename> and are cleared up when they are no longer in use.
-                </para>
-
-                <para>
-                    If you wish to perform kernel profiling, you need to be sure
-                    a <filename>vmlinux</filename> file that matches the running kernel is available.
-                    In the source directory, that file is usually located in
-                    <filename>/boot/vmlinux-<replaceable>kernelversion</replaceable></filename>, where
-                    <filename><replaceable>kernelversion</replaceable></filename> is the version of the kernel.
-                    The OpenEmbedded build system generates separate <filename>vmlinux</filename>
-                    packages for each kernel it builds.
-                    Thus, it should just be a question of making sure a matching package is
-                    installed (e.g. <filename>opkg install kernel-vmlinux</filename>).
-                    The files are automatically installed into development and profiling images
-                    alongside OProfile.
-                    A configuration option exists within the OProfileUI settings page that you can use to
-                    enter the location of the <filename>vmlinux</filename> file.
-                </para>
-
-                <para>
-                    Waiting for debug symbols to transfer from the device can be slow, and it
-                    is not always necessary to actually have them on the device for OProfile use.
-                    All that is needed is a copy of the filesystem with the debug symbols present
-                    on the viewer system.
-                    The "<link linkend='platdev-gdb-remotedebug-launch-gdb'>Launch GDB on the Host Computer</link>"
-                    section covers how to create such a directory within
-                    the source directory and how to use the OProfileUI Settings
-                    Dialog to specify the location.
-                    If you specify the directory, it will be used when the file checksums
-                    match those on the system you are profiling.
-                </para>
-            </section>
-
-            <section id="platdev-oprofile-oprofileui-offline">
-                <title>Offline Mode</title>
-
-                <para>
-                    If network access to the target is unavailable, you can generate
-                    an archive for processing in <filename>oprofile-viewer</filename> as follows:
-                    <literallayout class='monospaced'>
-     # opcontrol &dash;&dash;reset
-     # opcontrol &dash;&dash;start &dash;&dash;separate=lib &dash;&dash;no-vmlinux -c 5
-            .
-            .
-     [do whatever is being profiled]
-            .
-            .
-     # opcontrol &dash;&dash;stop
-     # oparchive -o my_archive
-                    </literallayout>
-                </para>
-
-                <para>
-                    In the above example, <filename>my_archive</filename> is the name of the
-                    archive directory where you would like the profile archive to be kept.
-                    After the directory is created, you can copy it to another host and load it
-                    using <filename>oprofile-viewer</filename> open functionality.
-                    If necessary, the archive is converted.
-                </para>
-            </section>
-        </section>
-    </section>
--->
 
     <section id='maintaining-open-source-license-compliance-during-your-products-lifecycle'>
         <title>Maintaining Open Source License Compliance During Your Product's Lifecycle</title>
