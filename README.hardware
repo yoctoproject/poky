@@ -160,59 +160,17 @@ this, issue the following commands from the u-boot prompt:
 To further tailor these instructions for your board, please refer to the
 documentation at http://www.beagleboard.org/bone and http://www.beagleboard.org/black
 
-From a Linux system with access to the image files perform the following steps
-as root, replacing mmcblk0* with the SD card device on your machine (such as sdc
-if used via a usb card reader):
+From a Linux system with access to the image files perform the following steps:
 
-  1. Partition and format an SD card:
-     # fdisk -lu /dev/mmcblk0
+  1. Build an image. For example:
 
-     Disk /dev/mmcblk0: 3951 MB, 3951034368 bytes
-     255 heads, 63 sectors/track, 480 cylinders, total 7716864 sectors
-     Units = sectors of 1 * 512 = 512 bytes
+     $ bitbake core-image-minimal
 
-             Device Boot      Start         End      Blocks  Id System
-     /dev/mmcblk0p1   *          63      144584       72261   c Win95 FAT32 (LBA)
-     /dev/mmcblk0p2          144585      465884      160650  83 Linux
+  2. Use the "dd" utility to write the image to the SD card. For example:
 
-     # mkfs.vfat -F 16 -n "boot" /dev/mmcblk0p1
-     # mke2fs -j -L "root" /dev/mmcblk0p2
+     # dd core-image-minimal-beaglebone.wic of=/dev/sdb
 
-  The following assumes the SD card partitions 1 and 2 are mounted at
-  /media/boot and /media/root respectively. Removing the card and reinserting
-  it will do just that on most modern Linux desktop environments.
-
-  The files referenced below are made available after the build in
-  build/tmp/deploy/images.
-
-  2. Install the boot loaders
-     # cp MLO-beaglebone /media/boot/MLO
-     # cp u-boot-beaglebone.img /media/boot/u-boot.img
-
-  3. Install the root filesystem
-     # tar x -C /media/root -f core-image-$IMAGE_TYPE-beaglebone.tar.bz2
-
-  4. If using core-image-base or core-image-sato images, the SD card is ready
-     and rootfs already contains the kernel, modules and device tree (DTB)
-     files necessary to be booted with U-boot's default configuration, so
-     skip directly to step 8.
-     For core-image-minimal, proceed through next steps.
-
-  5. If using core-image-minimal rootfs, install the modules
-     # tar x -C /media/root -f modules-beaglebone.tgz
-
-  6. If using core-image-minimal rootfs, install the kernel zImage into /boot
-     directory of rootfs
-     # cp zImage-beaglebone.bin /media/root/boot/zImage
-
-  7. If using core-image-minimal rootfs, also install device tree (DTB) files
-     into /boot directory of rootfs
-     # cp zImage-am335x-bone.dtb /media/root/boot/am335x-bone.dtb
-     # cp zImage-am335x-boneblack.dtb /media/root/boot/am335x-boneblack.dtb
-
-  8. Unmount the SD partitions, insert the SD card into the Beaglebone, and
-     boot the Beaglebone
-
+  3. Insert the SD card into the Beaglebone and boot the board.
 
 Freescale MPC8315E-RDB (mpc8315e-rdb)
 =====================================
