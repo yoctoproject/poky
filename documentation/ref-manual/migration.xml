@@ -3333,6 +3333,433 @@
     </section>
 </section>
 
+<section id='moving-to-the-yocto-project-2.2-release'>
+    <title>Moving to the Yocto Project 2.2 Release</title>
+
+    <para>
+        This section provides migration information for moving to the
+        Yocto Project 2.2 Release from the prior release.
+    </para>
+
+    <section id='migration-2.2-minimum-kernel-version'>
+        <para>
+            The minimum kernel version is now 3.2.0, due to the upgrade
+            to <filename>glibc 2.24</filename>.
+            Specifically, for AArch64-based targets the version is
+            3.14.
+            For Nios II-based targets, the minimum kernel version is 3.19.
+            <note>
+                For x86 and x86_64, you can reset
+                <link linkend='var-OLDEST_KERNEL'><filename>OLDEST_KERNEL</filename></link>
+                to anything down to 2.6.32 if desired.
+            </note>
+        </para>
+    </section>
+
+    <section id='migration-2.2-staging-directories-in-sysroot-simplified'>
+        <title>Staging Directories in Sysroot Has Been Simplified</title>
+
+        <para>
+            The way directories are staged in sysroot has been simplified and
+            introduces the new
+            <link linkend='var-SYSROOT_DIRS'><filename>SYSROOT_DIRS</filename></link>,
+            <link linkend='var-SYSROOT_DIRS_NATIVE'><filename>SYSROOT_DIRS_NATIVE</filename></link>,
+            and
+            <link linkend='var-SYSROOT_DIRS_BLACKLIST'><filename>SYSROOT_DIRS_BLACKLIST</filename></link>.
+            See the
+            <ulink url='http://lists.openembedded.org/pipermail/openembedded-core/2016-May/121365.html'>v2 patch series on the OE-Core Mailing List</ulink>
+            for additional information.
+        </para>
+    </section>
+
+    <section id='migration-2.2-removal-of-old-images-from-tmp-deploy-now-enabled'>
+        <title>Removal of Old Images and Other Files in <filename>tmp/deploy</filename> Now Enabled</title>
+
+        <para>
+            Removal of old images and other files in
+            <filename>tmp/deploy/</filename> is now enabled by default due
+            to a new staging method used for those files.
+            As a result of this change, the
+            <link linkend='var-RM_OLD_IMAGE'><filename>RM_OLD_IMAGE</filename></link>
+            variable is now redundant.
+        </para>
+    </section>
+
+    <section id='migration-2.2-bitbake-now-requires-python-3.4'>
+        <title>BitBake Now Requires Python 3.4+</title>
+
+        <para>
+            BitBake requires Python 3.4 or greater.
+        </para>
+    </section>
+
+    <section id='migration-2.2-metadata-now-must-use-python-3-syntax'>
+        <title>Metadata Must Now Use Python 3 Syntax</title>
+
+        <para>
+            The metadata is now required to use Python 3 syntax.
+            For help preparing metadata, see any of the many Python 3 porting
+            guides available.
+            Alternatively, you can reference the conversion commits for Bitbake
+            and you can use OE-Core as a guide for changes.
+            Following are particular areas of interest:
+            <literallayout class='monospaced'>
+     * subprocess command-line pipes needing locale decoding
+     * the syntax for octal values changed
+     * the <filename>iter*()</filename> functions changed name
+     * iterators now return views
+     * not lists
+     * changed names for Python modules
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='migration-2.2-target-python-recipes-switched-to-python-3'>
+        <title>Target Python Recipes Switched to Python 3</title>
+
+        <para>
+            Most target Python recipes have now been switched to Python 3.
+            Unfortunately, systems using RPM as a package manager and
+            providing online package-manager support through SMART still
+            require Python 2.
+        </para>
+    </section>
+
+    <section id='migration-2.2-uclibc-replaced-by-musl'>
+        <title>uClibc Replaced by musl</title>
+
+        <para>
+            Uclibc has been removed in favor of musl.
+        </para>
+    </section>
+
+    <section id='migration-2.2-B-no-longer-default-working-directory-for-tasks'>
+        <title><filename>${B}</filename> No Longer Default Working Directory for Tasks</title>
+
+        <para>
+            <filename>${</filename><link linkend='var-B'><filename>B</filename></link><filename>}</filename>
+            is no longer the default working directory for tasks.
+            Consequently, any custom tasks you define now need to either
+            have the
+            <filename>[</filename><ulink url='&YOCTO_DOCS_BB_URL;#variable-flags'><filename>dirs</filename></ulink><filename>]</filename> flag set, or the task needs to change into the
+            appropriate working directory manually (e.g using
+            <filename>cd</filename> for a shell task).
+            <note>
+                The preferred method is to use the
+                <filename>[dirs]</filename> flag.
+            </note>
+        </para>
+    </section>
+
+    <section id='migration-2.2-utf-8-locale-required-on-build-host'>
+        <title>UTF-8 Locale Required on Build Host</title>
+
+        <para>
+            A UTF-8 locale is required on the build host due to Python 3.
+            Since C.UTF-8 is not a standard, the default is en_US.UTF-8.
+        </para>
+    </section>
+
+    <section id='migration-2.2-runqemu-ported-to-python'>
+        <title><filename>runqemu</filename> Ported to Python</title>
+
+        <para>
+            <filename>runqemu</filename> has been ported to Python and has
+            changed behavior in some cases.
+        </para>
+    </section>
+
+    <section id='migration-2.2-bitbake-changes'>
+        <title>BitBake Changes</title>
+
+        <para>
+            The following changes took place for BitBake:
+            <itemizedlist>
+                <listitem><para>
+                    The "goggle" UI and standalone image-writer tool have
+                    been removed as they both require GTK+ 2.0 and
+                    were not being maintained.
+                    </para></listitem>
+                <listitem><para>
+                    The Perforce fetcher now supports
+                    <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
+                    for specifying the source revision to use, be it
+                    <filename>${</filename><link linkend='var-AUTOREV'><filename>AUTOREV</filename></link><filename>}</filename>,
+                    changelist number, p4date, or label, in preference to
+                    separate
+                    <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
+                    parameters to specify these.
+                    This change is more in-line with how the other fetchers
+                    work for source control systems.
+                    Recipes that fetch from Perforce will need to be updated
+                    to use <filename>SRCREV</filename> in place of specifying
+                    the source revision within
+                    <filename>SRC_URI</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    Some of BitBake's internal code structures for storing the
+                    recipe cache needed to be changed to support the new
+                    multi-configuration functionality.
+                    These changes will affect external tools that use BitBake's
+                    tinfoil module.
+                    For information on these changes, see the changes made to
+                    the scripts supplied with OpenEmbedded-Core: 1 2.
+                    </para></listitem>
+                <listitem><para>
+                    The task management code has been rewritten to avoid using
+                    ID indirection in order to improve performance.
+                    This change is unlikely to cause any problems for most
+                    users.
+                    However, the setscene verification function as pointed to
+                    by <filename>BB_SETSCENE_VERIFY_FUNCTION</filename>
+                    needed to change signature.
+                    Consequently, a new variable named
+                    <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_SETSCENE_VERIFY_FUNCTION2'><filename>BB_SETSCENE_VERIFY_FUNCTION2</filename></ulink>
+                    has been added allowing multiple versions of BitBake
+                    to work with suitably written metadata, which includes
+                    OpenEmbedded-Core and Poky.
+                    Anyone with custom BitBake task scheduler code might also
+                    need to update the code to handle the new structure.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.2-swabber-has-been-removed'>
+        <title>Swabber has Been Removed</title>
+
+        <para>
+            Swabber, a tool that was intended to detect host contamination in
+            the build process, has been removed, as it has been unmaintained
+            and unused for some time and was never particularly effective.
+            The OpenEmbedded build system has since incorporated a number of
+            mechanisms including enhanced QA checks that mean that there is
+            less of a need for such a tool.
+        </para>
+    </section>
+
+    <section id='migration-2.2-removed-recipes'>
+        <title>Removed Recipes</title>
+
+        <para>
+            The following recipes have been removed:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>augeas</filename>:
+                    No longer needed and has been moved to
+                    <filename>meta-oe</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>directfb</filename>:
+                    Unmaintained and has been moved to
+                    <filename>meta-oe</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>gcc</filename>:
+                    Removed 4.9 version.
+                    Versions 5.4 and 6.2 are still present.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>gnome-doc-utils</filename>:
+                    No longer needed.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>gtk-doc-stub</filename>:
+                    Replaced by <filename>gtk-doc</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>gtk-engines</filename>:
+                    No longer needed and has been moved to
+                    <filename>meta-gnome</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>gtk-sato-engine</filename>:
+                    Became obsolete.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>libglade</filename>:
+                    No longer needed and has been moved to
+                    <filename>meta-oe</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>libmad</filename>:
+                    Unmaintained and functionally replaced by
+                    <filename>libmpg123</filename>.
+                    <filename>libmad</filename> has been moved to
+                    <filename>meta-oe</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>libowl</filename>:
+                    Became obsolete.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>libxsettings-client</filename>:
+                    No longer needed.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>oh-puzzles</filename>:
+                    Functionally replaced by
+                    <filename>puzzles</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>oprofileui</filename>:
+                    Became obsolete.
+                    OProfile has been largely supplanted by perf.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>packagegroup-core-directfb.bb</filename>:
+                    Removed.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>core-image-directfb.bb</filename>:
+                    Removed.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>pointercal</filename>:
+                    No longer needed and has been moved to
+                    <filename>meta-oe</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>python-imaging</filename>:
+                    No longer needed and moved to
+                    <filename>meta-python</filename>
+                    </para></listitem>
+                <listitem><para>
+                    <filename>python-pyrex</filename>:
+                    No longer needed and moved to
+                    <filename>meta-python</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>sato-icon-theme</filename>:
+                    Became obsolete.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>swabber-native</filename>:
+                    Swabber has been removed.
+                    See the
+                    <link linkend='migration-2.2-swabber-has-been-removed'>entry on Swabber</link>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>tslib</filename>:
+                    No longer needed and has been moved to
+                    <filename>meta-oe</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>uclibc</filename>:
+                    Removed in favor of musl.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>xtscal</filename>:
+                    No longer needed and moved to
+                    <filename>meta-oe</filename>
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.2-removed-classes'>
+        <title>Removed Classes</title>
+
+        <para>
+            The following classes have been removed:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>distutils-native-base</filename>:
+                    No longer needed.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>distutils3-native-base</filename>:
+                    No longer needed.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>sdl</filename>:
+                    Only set
+                    <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
+                    and
+                    <link linkend='var-SECTION'><filename>SECTION</filename></link>,
+                    which are better set within the recipe instead.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>sip</filename>:
+                    Mostly unused.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>swabber</filename>:
+                    See the
+                    <link linkend='migration-2.2-swabber-has-been-removed'>entry on Swabber</link>.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.2-minor-packaging-changes'>
+        <title>Minor Packaging Changes</title>
+
+        <para>
+            The following minor packaging changes have occurred:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>grub</filename>:
+                    Split <filename>grub-editenv</filename> into its own
+                    package.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>systemd</filename>:
+                    Split container and vm related units into a new package,
+                    systemd-container.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>util-linux</filename>:
+                    Make <filename>prlimit</filename> a separate package.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.2-miscellaneous-changes'>
+        <title>Miscellaneous Changes</title>
+
+        <para>
+            The following miscellaneous changes have occurred:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>buildtools-tarball</filename>:
+                    Replaced <filename>nativesdk-python</filename>
+                    with <filename>nativesdk-python3</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>package_regex.inc</filename>:
+                    Removed deprecated file.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>recipetool</filename>:
+                    Set a fixed
+                    <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
+                    by default when fetching from Git.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>devtool</filename>:
+                    Set a fixed
+                    <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
+                    by default when fetching from Git.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>distcc</filename>:
+                    GTK+ UI is now disabled by default.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>packagegroup-core-tools-testapps</filename>:
+                    Removed Piglit.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>image.bbclass</filename>:
+                    Renamed COMPRESS(ION) to CONVERSION.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
+
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
