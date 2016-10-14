@@ -3345,7 +3345,8 @@
         <title>Minimum Kernel Version</title>
 
         <para>
-            The minimum kernel version is now 3.2.0, due to the upgrade
+            The minimum kernel version for the target system and for SDK
+            is now 3.2.0, due to the upgrade
             to <filename>glibc 2.24</filename>.
             Specifically, for AArch64-based targets the version is
             3.14.
@@ -3387,51 +3388,81 @@
         </para>
     </section>
 
-    <section id='migration-2.2-bitbake-now-requires-python-3.4'>
-        <title>BitBake Now Requires Python 3.4+</title>
+    <section id='migration-2.2-python-changes'>
+        <title>Python Changes</title>
 
         <para>
-            BitBake requires Python 3.4 or greater.
+            The following changes for Python occurred:
+            <note>
+                Python 2 and recipes that use it can still be built for the
+                target as with previous versions.
+            </note>
         </para>
-    </section>
 
-    <section id='migration-2.2-metadata-now-must-use-python-3-syntax'>
-        <title>Metadata Must Now Use Python 3 Syntax</title>
+        <section id='migration-2.2-bitbake-now-requires-python-3.4'>
+            <title>BitBake Now Requires Python 3.4+</title>
 
-        <para>
-            The metadata is now required to use Python 3 syntax.
-            For help preparing metadata, see any of the many Python 3 porting
-            guides available.
-            Alternatively, you can reference the conversion commits for Bitbake
-            and you can use OE-Core as a guide for changes.
-            Following are particular areas of interest:
-            <literallayout class='monospaced'>
+            <para>
+                BitBake requires Python 3.4 or greater.
+            </para>
+        </section>
+
+        <section id='migration-2.2-utf-8-locale-required-on-build-host'>
+            <title>UTF-8 Locale Required on Build Host</title>
+
+            <para>
+                A UTF-8 locale is required on the build host due to Python 3.
+                Since C.UTF-8 is not a standard, the default is en_US.UTF-8.
+            </para>
+        </section>
+
+        <section id='migration-2.2-metadata-now-must-use-python-3-syntax'>
+            <title>Metadata Must Now Use Python 3 Syntax</title>
+
+            <para>
+                The metadata is now required to use Python 3 syntax.
+                For help preparing metadata, see any of the many Python 3 porting
+                guides available.
+                Alternatively, you can reference the conversion commits for Bitbake
+                and you can use OE-Core as a guide for changes.
+                Following are particular areas of interest:
+                <literallayout class='monospaced'>
      * subprocess command-line pipes needing locale decoding
      * the syntax for octal values changed
      * the <filename>iter*()</filename> functions changed name
-     * iterators now return views
-     * not lists
+     * iterators now return views, not lists
      * changed names for Python modules
-            </literallayout>
-        </para>
-    </section>
+                </literallayout>
+            </para>
+        </section>
 
-    <section id='migration-2.2-target-python-recipes-switched-to-python-3'>
-        <title>Target Python Recipes Switched to Python 3</title>
+        <section id='migration-2.2-target-python-recipes-switched-to-python-3'>
+            <title>Target Python Recipes Switched to Python 3</title>
 
-        <para>
-            Most target Python recipes have now been switched to Python 3.
-            Unfortunately, systems using RPM as a package manager and
-            providing online package-manager support through SMART still
-            require Python 2.
-        </para>
+            <para>
+                Most target Python recipes have now been switched to Python 3.
+                Unfortunately, systems using RPM as a package manager and
+                providing online package-manager support through SMART still
+                require Python 2.
+            </para>
+        </section>
+
+        <section id='migration-2.2-buildtools-tarball-includes-python-3'>
+            <title><filename>buildtools-tarball</filename> Includes Python 3</title>
+
+            <para>
+                <filename>buildtools-tarball</filename> now includes Python 3.
+            </para>
+        </section>
     </section>
 
     <section id='migration-2.2-uclibc-replaced-by-musl'>
         <title>uClibc Replaced by musl</title>
 
         <para>
-            Uclibc has been removed in favor of musl.
+            uClibc has been removed in favor of musl.
+            Musl has matured, is better maintained, and is compatible with a
+            wider range of applications as compared to uClibc.
         </para>
     </section>
 
@@ -3453,21 +3484,34 @@
         </para>
     </section>
 
-    <section id='migration-2.2-utf-8-locale-required-on-build-host'>
-        <title>UTF-8 Locale Required on Build Host</title>
-
-        <para>
-            A UTF-8 locale is required on the build host due to Python 3.
-            Since C.UTF-8 is not a standard, the default is en_US.UTF-8.
-        </para>
-    </section>
-
     <section id='migration-2.2-runqemu-ported-to-python'>
         <title><filename>runqemu</filename> Ported to Python</title>
 
         <para>
             <filename>runqemu</filename> has been ported to Python and has
             changed behavior in some cases.
+        </para>
+    </section>
+
+    <section id='migration-2.2-default-linker-hash-style-changed'>
+        <title>Default Linker Hash Style Changed</title>
+
+        <para>
+            The default linker hash style for <filename>gcc-cross</filename>
+            is now "sysv" in order to catch recipes that are building software
+            without using the OpenEmbedded
+            <link linkend='var-LDFLAGS'><filename>LDFLAGS</filename></link>.
+            This change could result in seeing some "No GNU_HASH in the elf
+            binary" QA issues when building such recipes.
+            You need to fix these recipes so that they use the expected
+            <filename>LDFLAGS</filename>.
+            Depending on how the software is built, the build system might
+            need to be patched.
+            However, sometimes making this fix is as simple as adding the
+            following to the recipe:
+            <literallayout class='monospaced'>
+     TARGET_CC_ARCH += "${LDFLAGS}"
+            </literallayout>
         </para>
     </section>
 
@@ -3499,8 +3543,8 @@
                     <filename>SRC_URI</filename>.
                     </para></listitem>
                 <listitem><para>
-                    Some of BitBake's internal code structures for storing the
-                    recipe cache needed to be changed to support the new
+                    Some of BitBake's internal code structures for accessing
+                    the recipe cache needed to be changed to support the new
                     multi-configuration functionality.
                     These changes will affect external tools that use BitBake's
                     tinfoil module.
@@ -3715,7 +3759,8 @@
                     </para></listitem>
                 <listitem><para>
                     <filename>util-linux</filename>:
-                    Make <filename>prlimit</filename> a separate package.
+                    Moved <filename>prlimit</filename> to a separate
+                    <filename>util-linux-prlimit</filename> package.
                     </para></listitem>
             </itemizedlist>
         </para>
@@ -3728,25 +3773,21 @@
             The following miscellaneous changes have occurred:
             <itemizedlist>
                 <listitem><para>
-                    <filename>buildtools-tarball</filename>:
-                    Replaced <filename>nativesdk-python</filename>
-                    with <filename>nativesdk-python3</filename>.
-                    </para></listitem>
-                <listitem><para>
                     <filename>package_regex.inc</filename>:
-                    Removed deprecated file.
+                    Removed because the definitions
+                    <filename>package_regex.inc</filename> previously contained
+                    have been moved to their respective recipes.
                     </para></listitem>
                 <listitem><para>
-                    <filename>recipetool</filename>:
-                    Set a fixed
+                    Both <filename>devtool add</filename> and
+                    <filename>recipetool create</filename> now use a fixed
                     <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
-                    by default when fetching from Git.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>devtool</filename>:
-                    Set a fixed
-                    <link linkend='var-SRCREV'><filename>SRCREV</filename></link>
-                    by default when fetching from Git.
+                    by default when fetching from a Git repository.
+                    You can override this in either case to use
+                    <filename>${</filename><link linkend='var-AUTOREV'><filename>AUTOREV</filename></link><filename>}</filename>
+                    instead by using the <filename>-a</filename> or
+                    <filename>&dash;&dash;autorev</filename> command-line
+                    option
                     </para></listitem>
                 <listitem><para>
                     <filename>distcc</filename>:
@@ -3759,6 +3800,29 @@
                 <listitem><para>
                     <filename>image.bbclass</filename>:
                     Renamed COMPRESS(ION) to CONVERSION.
+                    This change means that
+                    <filename>COMPRESSIONTYPES</filename>,
+                    <filename>COMPRESS_DEPENDS</filename> and
+                    <filename>COMPRESS_CMD</filename> are deprecated in favor
+                    of <filename>CONVERSIONTYPES</filename>,
+                    <filename>CONVERSION_DEPENDS</filename> and
+                    <filename>CONVERSION_CMD</filename>.
+                    The <filename>COMPRESS*</filename> variable names will
+                    still work in the 2.2 release but metadata that does not
+                    need to be backwards-compatible should be changed to
+                    use the new names as the <filename>COMPRESS*</filename>
+                    ones will be removed in a future release.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>gtk-doc</filename>:
+                    A full version of <filename>gtk-doc</filename> is now
+                    made available.
+                    However, some old software might not be capable of using
+                    the current version of <filename>gtk-doc</filename>
+                    to build documentation.
+                    You need to change recipes that build such software so that
+                    they explicitly disable building documentation with
+                    <filename>gtk-doc</filename>.
                     </para></listitem>
             </itemizedlist>
         </para>
