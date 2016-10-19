@@ -3493,16 +3493,21 @@
 
         <para>
             The new <filename>runqemu</filename> is a Python script.
-            The script requires a configuration file in the following
-            form in order to boot the BSP:
+            Machine knowledge is no longer hardcoded into
+            <filename>runqemu</filename>.
+            You can choose to use the <filename>qemuboot</filename>
+            configuration file to define the BSP's own arguments and to make
+            it bootable with <filename>runqemu</filename>.
+            If you use a configuration file, use the following form:
             <literallayout class='monospaced'>
      <replaceable>image-name</replaceable>-<replaceable>machine</replaceable>.qemuboot.conf
             </literallayout>
-            Machine knowledge is no longer hardcoded into
-            <filename>runqemu</filename>.
-            You can use the <filename>qemuboot</filename> configuration file
-            to define the BSP's own arguments and to make it bootable
-            with <filename>runqemu</filename>.
+            The configuration file enables fine-grained tuning of options
+            passed to QEMU without the <filename>runqemu</filename> script
+            hard-coding any knowledge about different machines.
+            Using a configuration file is particularly convenient when trying
+            to use QEMU with machines other than the
+            <filename>qemu*</filename> machines in OE-Core.
             <note>
                 Previous usage patterns are continued to be supported.
             </note>
@@ -3513,6 +3518,34 @@
             QEMU boot arguments can be set in BSP's configuration file and
             the <filename>qemuboot</filename> class will save them to
             <filename>qemuboot.conf</filename>.
+        </para>
+
+
+        <para>
+            If you want to use <filename>runqemu</filename> without a
+            configuration file, use the following command form:
+            <literallayout class='monospaced'>
+     $ runqemu <replaceable>machine</replaceable> <replaceable>rootfs</replaceable> <replaceable>kernel</replaceable> [<replaceable>options</replaceable>]
+            </literallayout>
+            Supported <replaceable>machines</replaceable> are as follows:
+            <literallayout class='monospaced'>
+     qemuarm
+     qemuarm64
+     qemux86
+     qemux86-64
+     qemuppc
+     qemumips
+     qemumips64
+     qemumipsel
+     qemumips64el
+            </literallayout>
+            Consider the following example, which uses the
+            <filename>qemux86-64</filename> machine,
+            provides a root filesystem, provides an image, and uses
+            the <filename>nographic</filename> option:
+            <literallayout class='monospaced'>
+$ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.ext4 tmp/deploy/images/qemux86-64/bzImage nographic
+            </literallayout>
         </para>
 
         <para>
