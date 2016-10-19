@@ -3621,6 +3621,106 @@
         </section>
     </section>
 
+    <section id='platdev-building-targets-with-multiple-configurations'>
+        <title>Building Targets with Multiple Configurations</title>
+
+        <para>
+            Bitbake also has functionality that allows you to build
+            multiple targets at the same time, where each target uses
+            a different configuration.
+        </para>
+
+        <para>
+            In order to accomplish this, you setup each of the configurations
+            you need to use in parallel by placing the configuration files in
+            your current build directory alongside the usual
+            <filename>local.conf</filename> file.
+        </para>
+
+        <para>
+            Follow these guidelines to create an environment that supports
+            multiple configurations:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis>Create Configuration Files</emphasis>:
+                    You need to create a single configuration file for each
+                    configuration for which you want to add support.
+                    These files would contain lines such as the following:
+                    <literallayout class='monospaced'>
+     MACHINE = "A"
+                    </literallayout>
+                    The files would contain any other variables that can
+                    be set and built in the same directory.
+                    <note>
+                        You can change the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>
+                        to not conflict.
+                    </note></para>
+
+                    <para>
+                    Furthermore, the configuration file must be located in the
+                    current build directory in a directory named
+                    <filename>multiconfig</filename> under the build's
+                    <filename>conf</filename> directory where
+                    <filename>local.conf</filename> resides.
+                    The reason for this restriction is because the
+                    <filename>BBPATH</filename> variable is not constructed
+                    until the layers are parsed.
+                    Consequently, using the configuration file as a
+                    pre-configuration file is not possible unless it is
+                    located in the current working directory.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Add the BitBake Multi-Config Variable to you Local Configuration File</emphasis>:
+                    Use the
+                    <filename>BBMULTICONFIG</filename>
+                    variable in your <filename>conf/local.conf</filename>
+                    configuration file to specify each separate configuration.
+                    For example, the following line tells BitBake it should load
+                    <filename>conf/multiconfig/configA.conf</filename>,
+                    <filename>conf/multiconfig/configB.conf</filename>, and
+                    <filename>conf/multiconfig/configC.conf</filename>.
+                    <literallayout class='monospaced'>
+     BBMULTICONFIG = "configA configB configC"
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Launch BitBake</emphasis>:
+                    Use the following BitBake command form to launch the
+                    build:
+                    <literallayout class='monospaced'>
+     $ bitbake [multiconfig:<replaceable>multiconfigname</replaceable>:]<replaceable>target</replaceable> [[[multiconfig:<replaceable>multiconfigname</replaceable>:]<replaceable>target</replaceable>] ... ]
+                    </literallayout>
+                    Following is an example that supports building a minimal
+                    image for configuration A alongside a standard
+                    <filename>core-image-sato</filename>, which takes its
+                    configuration from <filename>local.conf</filename>:
+                    <literallayout class='monospaced'>
+     $ bitbake multiconfig:configA:core-image-minimal core-image-sato
+                    </literallayout>
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Support for multiple configurations in this current release of
+            the Yocto Project (&DISTRO_NAME; &DISTRO;) has some known issues:
+            <itemizedlist>
+                <listitem><para>
+                    No inter-multi-configuration dependencies exist.
+                    </para></listitem>
+                <listitem><para>
+                    Shared State (sstate) optimizations do not exist.
+                    Consequently, if the build uses the same object twice
+                    in, for example, two different
+                    <filename>TMPDIR</filename> directories, the build
+                    will either load from an existing sstate cache at the
+                    start or build the object twice.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
     <section id="platdev-working-with-libraries">
         <title>Working With Libraries</title>
 
