@@ -722,23 +722,18 @@
                     </literallayout>
                     </para></listitem>
                 <listitem><para><emphasis>Write the Image:</emphasis>
-                    You can write the image to a USB key, SATA drive, or SD
-                    card by using the <filename>mkefidisk.sh</filename> script,
-                    which is included in the <filename>poky</filename>
-                    repository at
-                    <filename>scripts/contrib/mkefidisk.sh</filename>:
+                    You can write the image just built to a bootable media
+                    (e.g. a USB key, SATA drive, SD card, etc.) using the
+                    <filename>dd</filename> utility:
                     <literallayout class='monospaced'>
-     $ sudo $HOME/source/poky/scripts/contrib/mkefidisk.sh <replaceable>HOST_DEVICE</replaceable> \
-        tmp/deploy/images/intel-corei7-64/core-image-base-intel-corei7-64.hddimg <replaceable>TARGET_DEVICE</replaceable>
+     $ sudo dd if=tmp/deploy/images/intel-corei7-64/core-image-minimal-intel-corei7-64.wic of=TARGET_DEVICE
                     </literallayout>
-                    In the previous command,
-                    <replaceable>HOST_DEVICE</replaceable> is the device node
-                    on the build host (e.g. <filename>/dev/sdc</filename> or
-                    <filename>/dev/mmcblk0</filename>).
-                    <replaceable>TARGET_DEVICE</replaceable> is the name of the
-                    device as the MinnowBoard MAX sees it (e.g.
-                    <filename>/dev/sda</filename> or
-                    <filename>/dev/mmcblk0</filename>).
+                    In the previous command, the
+                    <filename>TARGET_DEVICE</filename> is the device node in
+                    the host machine (e.g. <filename>/dev/sdc</filename>, which
+                    is most likely a USB stick, or
+                    <filename>/dev/mmcblk0</filename>, which is most likely an
+                    SD card.
                     </para></listitem>
                 <listitem><para><emphasis>Boot the Hardware:</emphasis>
                     With the boot device provisioned, you can insert the
