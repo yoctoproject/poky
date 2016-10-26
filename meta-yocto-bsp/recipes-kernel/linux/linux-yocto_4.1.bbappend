@@ -9,9 +9,9 @@ KMACHINE_genericx86-64 ?= "common-pc-64"
 
 SRCREV_machine_genericx86    ?= "f4d0900b2851e829e990e0f64b09ed3b8e355fae"
 SRCREV_machine_genericx86-64 ?= "f4d0900b2851e829e990e0f64b09ed3b8e355fae"
-SRCREV_machine_edgerouter ?= "a38cb202738a2b055ac216b3699cc9377edea45a"
-SRCREV_machine_beaglebone ?= "3e064525c427e128d08ea599ea3247e2963b54a5"
-SRCREV_machine_mpc8315e-rdb ?= "a38cb202738a2b055ac216b3699cc9377edea45a"
+SRCREV_machine_edgerouter ?= "f4d0900b2851e829e990e0f64b09ed3b8e355fae"
+SRCREV_machine_beaglebone ?= "12532e753b50997690923e03edb3ac3368817a26"
+SRCREV_machine_mpc8315e-rdb ?= "f4d0900b2851e829e990e0f64b09ed3b8e355fae"
 
 COMPATIBLE_MACHINE_genericx86 = "genericx86"
 COMPATIBLE_MACHINE_genericx86-64 = "genericx86-64"
