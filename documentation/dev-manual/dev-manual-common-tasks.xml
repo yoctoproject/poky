@@ -9520,26 +9520,46 @@
 
             <para>
                 If your image is already built, make sure the following are set
-                in your <filename>local.conf</filename> file.
-                Be sure to provide the IP address you need:
+                in your <filename>local.conf</filename> file:
                 <literallayout class='monospaced'>
      INHERIT +="testexport"
-     TEST_TARGET_IP = "192.168.7.2"
-     TEST_SERVER_IP = "192.168.7.1"
+     TEST_TARGET_IP = "<replaceable>IP-address-for-the-test-target</replaceable>"
+     TEST_SERVER_IP = "<replaceable>IP-address-for-the-test-server</replaceable>"
                 </literallayout>
-                You can then export the tests with the following:
+                You can then export the tests with the following BitBake
+                command form:
                 <literallayout class='monospaced'>
-     $ bitbake core-image-sato -c testexport
+     $ bitbake <replaceable>image</replaceable> -c testexport
                 </literallayout>
                 Exporting the tests places them in the
                 <link linkend='build-directory'>Build Directory</link> in
-                <filename>tmp/testexport/core-image-sato</filename>, which
-                is controlled by the
+                <filename>tmp/testexport/</filename><replaceable>image</replaceable>,
+                which is controlled by the
                 <filename>TEST_EXPORT_DIR</filename> variable.
             </para>
 
             <para>
                 You can now run the tests outside of the build environment:
+                <literallayout class='monospaced'>
+     $ cd tmp/testexport/<replaceable>image</replaceable>
+     $ ./runexported.py testdata.json
+                </literallayout>
+            </para>
+
+            <para>
+                Here is a complete example that shows IP addresses and uses
+                the <filename>core-image-sato</filename> image:
+                <literallayout class='monospaced'>
+     INHERIT +="testexport"
+     TEST_TARGET_IP = "192.168.7.2"
+     TEST_SERVER_IP = "192.168.7.1"
+                </literallayout>
+                Use BitBake to export the tests:
+                <literallayout class='monospaced'>
+     $ bitbake core-image-sato -c testexport
+                </literallayout>
+                Run the tests outside of the build environment using the
+                following:
                 <literallayout class='monospaced'>
      $ cd tmp/testexport/core-image-sato
      $ ./runexported.py testdata.json
