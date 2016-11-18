@@ -2891,9 +2891,9 @@
                 machine, and a sysroot exists for the build host.
                 <note>
                     You could find the term "staging" used within the Yocto
-                    project regarding files populating sysroot.
-                    The term "staging" was used for previous releases of
-                    the Yocto Project.
+                    project regarding files populating sysroot (e.g. the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_DIR'><filename>STAGING_DIR</filename></ulink>
+                    variable).
                 </note>
             </para>
 
@@ -2906,12 +2906,28 @@
                 task within the
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>
                 directory.
-                A subset of these files automatically populates the sysroot.
+            </para>
+
+            <para>
+                A subset of these files, as defined by the
+                the <ulink url='&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS'><filename>SYSROOT_DIRS</filename></ulink>
+                variable, automatically populates the sysroot.
                 The reason for this limitation is that almost all files that
                 populate the sysroot are cataloged in manifests in order to
                 ensure the files can be removed later when a recipe is either
                 modified or removed.
                 Thus, the sysroot is able to remain free from stale files.
+            </para>
+
+            <para>
+                It is possible to modify the list of directories that populate
+                the sysroot.
+                The following example shows how you could add the
+                <filename>/opt</filename> directory to the list of
+                directories:
+                <literallayout class='monospaced'>
+     SYSROOT_DIRS += "/opt"
+                </literallayout>
             </para>
 
             <para>
