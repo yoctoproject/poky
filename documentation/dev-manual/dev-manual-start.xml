@@ -328,29 +328,39 @@
     </para>
 </section>
 
-<section id='flashing-images-using-bmap-tool'>
-    <title>Flashing Images Using <filename>bmap-tool</filename></title>
+<section id='flashing-images-using-bmaptool'>
+    <title>Flashing Images Using <filename>bmaptool</filename></title>
 
     <para>
         An easy way to flash an image to a bootable device is to use
-        <filename>bmap-tool</filename>, which is integrated into the
+        <filename>bmaptool</filename>, which is integrated into the
         OpenEmbedded build system.
     </para>
 
     <para>
         Following, is an example that shows how to flash a Wic image.
         <note>
-            You can use <filename>bmap-tool</filename> to flash any
+            You can use <filename>bmaptool</filename> to flash any
             type of image.
         </note>
         Use these steps to flash an image using
-        <filename>bmap-tool</filename>:
+        <filename>bmaptool</filename>:
+        <note>
+            Unless you are able to install the
+            <filename>bmap-tools</filename> package as mentioned in the note
+            in the second bullet of step 3 further down, you will need to build
+            <filename>bmaptool</filename> before using it.
+            Build the tool using the following command:
+            <literallayout class='monospaced'>
+     $ bitbake bmap-tools-native
+            </literallayout>
+        </note>
         <orderedlist>
             <listitem><para>
                 Add the following to your <filename>local.conf</filename>
                 file:
                 <literallayout class='monospaced'>
-     IMAGE_FSTYPES += "WIC WIC.BMAP"
+     IMAGE_FSTYPES += "wic wic.bmap"
                 </literallayout>
                 </para></listitem>
             <listitem><para>
@@ -361,33 +371,35 @@
                 </literallayout>
                 </para></listitem>
             <listitem><para>
-                Flash the image to the media by using the
-                <filename>bmap-tool</filename> depending on your particular
+                Flash the image to the media by using
+                <filename>bmaptool</filename> depending on your particular
                 setup:
                 <itemizedlist>
                     <listitem><para>
-                        If you have write access, use this command form:
+                        If you have write access to the media,
+                        use this command form:
                         <literallayout class='monospaced'>
-     $ oe-run-native bmap-tool copy ./tmp/deploy/images/qemux86-64/core-image-minimal-<replaceable>machine</replaceable>.wic /dev/sd<replaceable>X</replaceable>
+     $ oe-run-native bmaptool copy ./tmp/deploy/images/qemux86-64/core-image-minimal-<replaceable>machine</replaceable>.wic /dev/sd<replaceable>X</replaceable>
                         </literallayout>
                         </para></listitem>
                     <listitem><para>
-                        If you do not have write access, use the following
+                        If you do not have write access to
+                        the media, use the following
                         commands:
                         <literallayout class='monospaced'>
      $ sudo bash
      $ PATH=tmp/sysroots/x86_64-linux/usr/bin/ bmaptool copy ./tmp/deploy/images/qemux86-64/core-image-minimal-<replaceable>machine</replaceable>.wic /dev/sd<replaceable>X</replaceable>
                         </literallayout>
                         <note>
-                            If you are using Ubuntu 16.10 or Debian,
-                            you can install
-                            <filename>bmaptool</filename> using the
+                            If you are using Ubuntu or Debian distributions,
+                            you can install the
+                            <filename>bmap-tools</filename> package using the
                             following command and then use the tool
                             without specifying
                             <filename>PATH</filename> even from the
                             root account:
                             <literallayout class='monospaced'>
-     $ sudo apt-get install bmap-tool
+     $ sudo apt-get install bmap-tools
                             </literallayout>
                         </note>
                         </para></listitem>
@@ -397,26 +409,11 @@
     </para>
 
     <para>
-        For help on the <filename>bmaptool</filename> command, use
-        <filename>bmaptool --help</filename>:
+        For help on the <filename>bmaptool</filename> command, use either of
+        the following commands:
         <literallayout class='monospaced'>
      $ bmaptool --help
-     usage: bmaptool [-h] [--version] [-q] [-d] {create,copy} ...
-
-     Create block map (bmap) and copy files using bmap. The documentation can be
-     found here: source.tizen.org/documentation/reference/bmaptool
-
-     optional arguments:
-       -h, --help     show this help message and exit
-       --version      show program's version number and exit
-       -q, --quiet    be quiet
-       -d, --debug    print debugging information
-
-     subcommands:
-       {create,copy}
-         create       generate bmap for an image file (which should be a sparse
-                      file)
-         copy         write an image to a block device using bmap
+     $ oe-run-native bmaptool --help
         </literallayout>
     </para>
 </section>

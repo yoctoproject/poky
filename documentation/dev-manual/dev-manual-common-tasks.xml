@@ -4824,36 +4824,23 @@
 
                     <para>
                         Continuing with the example, you can now write the
-                        image to a USB stick, or whatever media for which
-                        you built your image, and boot the resulting media.
-                    </para>
-
-                    <para>
-                        The following example uses <filename>dd</filename>
-                        to write the image to a USB stick:
+                        image to a USB stick, or whatever media for which you
+                        built your image, and boot the resulting media.
+                        You can write the image by using
+                        <filename>bmaptool</filename> or
+                        <filename>dd</filename>:
                         <literallayout class='monospaced'>
-     $ sudo dd if=/var/tmp/wic/build/mkefidisk-201310230946-sda.direct of=/dev/sdb
-     [sudo] password for trz:
-     182274+0 records in
-     182274+0 records out
-     93324288 bytes (93 MB) copied, 14.4777 s, 6.4 MB/s
-     [trz at empanada ~]$ sudo eject /dev/sdb
+     $ oe-run-native bmaptool copy /var/tmp/wic/build/mkefidisk-201310230946-sda.direct /dev/sd<replaceable>X</replaceable>
                         </literallayout>
-                    </para>
-
-                    <para>
-                        This next example uses the
-                        <filename>bmap-tool</filename>.
-                        For this example, it is assumed you have write
-                        access:
+                        or
                         <literallayout class='monospaced'>
-     $ oe-run-native bmap-tool copy /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/mkefidisk.wks /dev/sdb
+     $ sudo dd if=/var/tmp/wic/build/mkefidisk-201310230946-sda.direct of=/dev/sd<replaceable>X</replaceable>
                         </literallayout>
                         <note>
                             For more information on how to use the
-                            <filename>bmap-tool</filename> to flash a device
+                            <filename>bmaptool</filename> to flash a device
                             with an image, see the
-                            "<link linkend='flashing-images-using-bmap-tool'>Flashing Images Using <filename>bmap-tool</filename></link>"
+                            "<link linkend='flashing-images-using-bmaptool'>Flashing Images Using <filename>bmaptool</filename></link>"
                             section.
                         </note>
                     </para>
