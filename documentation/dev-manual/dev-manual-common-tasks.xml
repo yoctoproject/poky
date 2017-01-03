@@ -4823,10 +4823,14 @@
                     </para>
 
                     <para>
-                        Continuing with the example, you can now directly
-                        <filename>dd</filename> the image to a USB stick, or
-                        whatever media for which you built your image,
-                        and boot the resulting media:
+                        Continuing with the example, you can now write the
+                        image to a USB stick, or whatever media for which
+                        you built your image, and boot the resulting media.
+                    </para>
+
+                    <para>
+                        The following example uses <filename>dd</filename>
+                        to write the image to a USB stick:
                         <literallayout class='monospaced'>
      $ sudo dd if=/var/tmp/wic/build/mkefidisk-201310230946-sda.direct of=/dev/sdb
      [sudo] password for trz:
@@ -4835,6 +4839,23 @@
      93324288 bytes (93 MB) copied, 14.4777 s, 6.4 MB/s
      [trz at empanada ~]$ sudo eject /dev/sdb
                         </literallayout>
+                    </para>
+
+                    <para>
+                        This next example uses the
+                        <filename>bmap-tool</filename>.
+                        For this example, it is assumed you have write
+                        access:
+                        <literallayout class='monospaced'>
+     $ oe-run-native bmap-tool copy /home/trz/yocto/yocto-image/scripts/lib/image/canned-wks/mkefidisk.wks /dev/sdb
+                        </literallayout>
+                        <note>
+                            For more information on how to use the
+                            <filename>bmap-tool</filename> to flash a device
+                            with an image, see the
+                            "<link linkend='flashing-images-using-bmap-tool'>Flashing Images Using <filename>bmap-tool</filename></link>"
+                            section.
+                        </note>
                     </para>
                 </section>
 
