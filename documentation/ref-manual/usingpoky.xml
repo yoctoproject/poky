@@ -69,6 +69,39 @@
             <literallayout class='monospaced'>
      $ bitbake <replaceable>target</replaceable>
             </literallayout>
+            <note>
+                <para>
+                    If you experience a build error due to resources
+                    temporarily being unavailable and it appears you
+                    should not be having this issue, it might be due
+                    to the combination of a 4.3+ Linux kernel and
+                    <filename>systemd</filename> version 228+
+                    (i.e. see this
+                    <ulink url='http://unix.stackexchange.com/questions/253903/creating-threads-fails-with-resource-temporarily-unavailable-with-4-3-kernel'>link</ulink>
+                    for information).
+                </para>
+
+                <para>
+                    To work around this issue, you can try either
+                    of the following:
+                    <itemizedlist>
+                        <listitem><para>
+                            Try the build again.
+                            </para></listitem>
+                        <listitem><para>
+                            Modify the "DefaultTasksMax"
+                            <filename>systemd</filename> parameter
+                            by uncommenting it and setting it to
+                            "infinity".
+                            You can find this parameter in the
+                            <filename>system.conf</filename> file
+                            located in
+                            <filename>/etc/systemd</filename>
+                            on most systems.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </note>
         </para>
 
         <para>
