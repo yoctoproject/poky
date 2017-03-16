@@ -8372,6 +8372,127 @@
             </section>
         </section>
 
+        <section id='generating-and-using-signed-packages'>
+            <title>Generating and Using Signed Packages</title>
+            <para>
+                In order to add security to RPM packages used during a build,
+                you can take steps to securely sign them.
+                Once a signature is verified, the OpenEmbedded build system
+                can use the package in the build.
+                If security fails for a signed package, the build system
+                aborts the build.
+            </para>
+
+            <para>
+                This section describes how to sign RPM packages during a build
+                and how to use signed package feeds (repositories) when
+                doing a build.
+            </para>
+
+            <section id='signing-rpm-packages'>
+                <title>Signing RPM Packages</title>
+
+                <para>
+                    To enable signing RPM packages, you must set up the
+                    following configurations in either your
+                    <filename>local.config</filename> or
+                    <filename>distro.config</filename> file:
+                    <literallayout class='monospaced'>
+     # Inherit sign_rpm.bbclass to enable signing functionality
+     INHERIT += " sign_rpm"
+     # Define the GPG key that will be used for signing.
+     RPM_GPG_NAME = "<replaceable>key_name</replaceable>"
+     # Provide passphrase for the key
+     RPM_GPG_PASSPHRASE = "<replaceable>passphrase</replaceable>"
+                    </literallayout>
+                    <note>
+                        Be sure to supply appropriate values for both
+                        <replaceable>key_name</replaceable> and
+                        <replaceable>passphrase</replaceable>
+                    </note>
+                    Aside from the
+                    <filename>RPM_GPG_NAME</filename> and
+                    <filename>RPM_GPG_PASSPHRASE</filename> variables in the
+                    previous example, two optional variables related to signing
+                    exist:
+                    <itemizedlist>
+                        <listitem><para>
+                            <emphasis><filename>GPG_BIN</filename>:</emphasis>
+                            Specifies a <filename>gpg</filename> binary/wrapper
+                            that is executed when the package is signed.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis><filename>GPG_PATH</filename>:</emphasis>
+                            Specifies the <filename>gpg</filename> home
+                            directory used when the package is signed.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
+
+            <section id='processing-package-feeds'>
+                <title>Processing Package Feeds</title>
+
+                <para>
+                    In addition to being able to sign RPM packages, you can
+                    also enable the OpenEmbedded build system to be able to
+                    handle previously signed package feeds for both RPM and IPK
+                    packages.
+                    <note>
+                        The OpenEmbedded build system does not currently
+                        support signed DPKG package feeds.
+                    </note>
+                    The steps you need to take to enable signed package feed
+                    use are similar to the steps used to sign RPM packages.
+                    You must define the following in your
+                    <filename>local.config</filename> or
+                    <filename>distro.config</filename> file:
+                    <literallayout class='monospaced'>
+     INHERIT += "sign_package_feed"
+     PACKAGE_FEED_GPG_NAME = "<replaceable>key_name</replaceable>"
+     PACKAGE_FEED_GPG_PASSPHRASE_FILE = "<replaceable>path_to_file_containing_passphrase</replaceable>"
+                    </literallayout>
+                    For signed package feeds, the passphrase must exist in a
+                    separate file, which is pointed to by the
+                    <filename>PACKAGE_FEED_GPG_PASSPHRASE_FILE</filename>
+                    variable.
+                    Regarding security, keeping a plain text passphrase out of
+                    the configuration is more secure.
+                </para>
+
+                <para>
+                    Aside from the
+                    <filename>PACKAGE_FEED_GPG_NAME</filename> and
+                    <filename>PACKAGE_FEED_GPG_PASSPHRASE_FILE</filename>
+                    variables, three optional variables related to signed
+                    package feeds exist:
+                    <itemizedlist>
+                        <listitem><para>
+                            <emphasis><filename>GPG_BIN</filename>:</emphasis>
+                            Specifies a <filename>gpg</filename> binary/wrapper
+                            that is executed when the package is signed.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis><filename>GPG_PATH</filename>:</emphasis>
+                            Specifies the <filename>gpg</filename> home
+                            directory used when the package is signed.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis><filename>PACKAGE_FEED_GPG_SIGNATURE_TYPE</filename>:</emphasis>
+                            Specifies the type of <filename>gpg</filename>
+                            signature.
+                            This variable applies only to RPM and IPK package
+                            feeds.
+                            Allowable values for the
+                            <filename>PACKAGE_FEED_GPG_SIGNATURE_TYPE</filename>
+                            are "ASC", which is the default and specifies ascii
+                            armored, and "BIN", which specifies binary.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
+        </section>
+
         <section id='testing-packages-with-ptest'>
             <title>Testing Packages With ptest</title>
 
