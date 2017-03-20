@@ -15745,6 +15745,50 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-WKS_FILE_DEPENDS'><glossterm>WKS_FILE_DEPENDS</glossterm>
+            <info>
+               WKS_FILE_DEPENDS[doc] = "Lists a recipe's build-time dependencies specific to Wic."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+                    When placed in the recipe that builds your image, this
+                    variable lists build-time dependencies.
+                    The <filename>WKS_FILE_DEPENDS</filename> variable is only
+                    applicable when Wic images are active (i.e. when
+                    <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                    contains entries related to Wic).
+                    If your recipe does not create Wic images, the variable
+                    has no effect.
+                </para>
+
+                <para>
+                    The <filename>WKS_FILE_DEPENDS</filename> variable is
+                    similar to the
+                    <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
+                    variable.
+                    When you use the variable in your recipe that builds the
+                    Wic image, dependencies you list in the
+                    <filename>WIC_FILE_DEPENDS</filename> variable are added to
+                    the <filename>DEPENDS</filename> variable.
+                </para>
+
+                <para>
+                    With the <filename>WKS_FILE_DEPENDS</filename> variable,
+                    you have the possibility to specify a list of additional
+                    dependencies (e.g. native tools, bootloaders, and so forth),
+                    that are required to build Wic images.
+                    Following is an example:
+                    <literallayout class='monospaced'>
+     WKS_FILE_DEPENDS = "<replaceable>some-native-tool</replaceable>"
+                    </literallayout>
+                    In the previous example,
+                    <replaceable>some-native-tool</replaceable> would be
+                    replaced with an actual native tool on which the build
+                    would depend.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-WKS_FILE'><glossterm>WKS_FILE</glossterm>
             <info>
                WKS_FILE[doc] = "Specifies the name of the wic kickstart file."
