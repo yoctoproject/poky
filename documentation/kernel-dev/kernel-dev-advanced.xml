@@ -170,175 +170,6 @@
     </para>
 </section>
 
-<section id='kernel-metadata-location'>
-    <title>Kernel Metadata Location</title>
-
-    <para>
-        Kernel Metadata always exists outside of the kernel tree either
-        defined in a kernel recipe (recipe-space) or outside of the recipe.
-        Where you choose to define the Metadata depends on what you want
-        to do and how you intend to work.
-        Regardless of where you define the kernel Metadata, the syntax used
-        applies equally.
-    </para>
-
-    <para>
-        If you are unfamiliar with the Linux kernel and only wish
-        to apply a configuration and possibly a couple of patches provided to
-        you by others, the recipe-space method is recommended.
-        This method is also a good approach if you are working with Linux kernel
-        sources you do not control or if you just do not want to maintain a
-        Linux kernel Git repository on your own.
-        For partial information on how you can define kernel Metadata in
-        the recipe-space, see the
-        "<link linkend='modifying-an-existing-recipe'>Modifying an Existing Recipe</link>"
-        section.
-    </para>
-
-    <para>
-        Conversely, if you are actively developing a kernel and are already
-        maintaining a Linux kernel Git repository of your own, you might find
-        it more convenient to work with kernel Metadata kept outside the
-        recipe-space.
-        Working with Metadata in this area can make iterative development of
-        the Linux kernel more efficient outside of the BitBake environment.
-    </para>
-
-    <section id='recipe-space-metadata'>
-        <title>Recipe-Space Metadata</title>
-
-        <para>
-            When stored in recipe-space, the kernel Metadata files reside in a
-            directory hierarchy below
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>.
-            For a linux-yocto recipe or for a Linux kernel recipe derived
-            by copying and modifying
-            <filename>oe-core/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb</filename>
-            to a recipe in your layer, <filename>FILESEXTRAPATHS</filename>
-            is typically set to
-            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-THISDIR'><filename>THISDIR</filename></ulink><filename>}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>.
-            See the "<link linkend='modifying-an-existing-recipe'>Modifying an Existing Recipe</link>"
-            section for more information.
-        </para>
-
-        <para>
-            Here is an example that shows a trivial tree of kernel Metadata
-            stored in recipe-space within a BSP layer:
-            <literallayout class='monospaced'>
-     meta-<replaceable>my_bsp_layer</replaceable>/
-     `-- recipes-kernel
-         `-- linux
-             `-- linux-yocto
-                 |-- bsp-standard.scc
-                 |-- bsp.cfg
-                 `-- standard.cfg
-            </literallayout>
-        </para>
-
-        <para>
-            When the Metadata is stored in recipe-space, you must take
-            steps to ensure BitBake has the necessary information to decide
-            what files to fetch and when they need to be fetched again.
-            It is only necessary to specify the <filename>.scc</filename>
-            files on the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
-            BitBake parses them and fetches any files referenced in the
-            <filename>.scc</filename> files by the <filename>include</filename>,
-            <filename>patch</filename>, or <filename>kconf</filename> commands.
-            Because of this, it is necessary to bump the recipe
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
-            value when changing the content of files not explicitly listed
-            in the <filename>SRC_URI</filename>.
-        </para>
-    </section>
-
-    <section id='metadata-outside-the-recipe-space'>
-        <title>Metadata Outside the Recipe-Space</title>
-
-        <para>
-            When stored outside of the recipe-space, the kernel Metadata
-            files reside in a separate repository.
-            The OpenEmbedded build system adds the Metadata to the build as
-            a "ktype=meta" repository through the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-            variable.
-            As an example, consider the following <filename>SRC_URI</filename>
-            statement from the <filename>linux-yocto_4.4.bb</filename>
-            kernel recipe:
-            <literallayout class='monospaced'>
-     SRC_URI = "git://git.yoctoproject.org/linux-yocto-4.4.git;name=machine;branch=${KBRANCH}; \
-                git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=yocto-4.4;destsuffix=${KMETA}"
-            </literallayout>
-            <filename>${KMETA}</filename>, in this context, is simply used to
-            name the directory into which the Git fetcher places the Metadata.
-            This behavior is no different than any multi-repository
-            <filename>SRC_URI</filename> statement used in a recipe.
-        </para>
-
-        <para>
-            You can keep kernel Metadata in a "kernel-cache", which is a
-            directory containing configuration fragments.
-            As with any Metadata kept outside the recipe-space, you simply
-            need to use the <filename>SRC_URI</filename> statement with the
-            "type=kmeta" attribute.
-            Doing so makes the kernel Metadata available during the
-            configuration phase.
-        </para>
-
-<!--
-
-
-        <para>
-            Following is an example that shows how a trivial tree of Metadata
-            is stored in a custom Linux kernel Git repository:
-            <literallayout class='monospaced'>
-     meta/
-     `&dash;&dash; cfg
-         `&dash;&dash; kernel-cache
-             |&dash;&dash; bsp-standard.scc
-             |&dash;&dash; bsp.cfg
-             `&dash;&dash; standard.cfg
-            </literallayout>
-        </para>
-
-        <para>
-            To use a branch different from where the sources reside,
-            specify the branch in the <filename>KMETA</filename> variable
-            in your Linux kernel recipe.
-            Here is an example:
-            <literallayout class='monospaced'>
-     KMETA = "meta"
-            </literallayout>
-            To use the same branch as the sources, set
-            <filename>KMETA</filename> to an empty string:
-            <literallayout class='monospaced'>
-     KMETA = ""
-            </literallayout>
-            If you are working with your own sources and want to create an
-            orphan <filename>meta</filename> branch, use these commands
-            from within your Linux kernel Git repository:
-            <literallayout class='monospaced'>
-     $ git checkout &dash;&dash;orphan meta
-     $ git rm -rf .
-     $ git commit &dash;&dash;allow-empty -m "Create orphan meta branch"
-            </literallayout>
-        </para>
--->
-
-        <para>
-            If you modify the Metadata, you must not forget to update the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
-            statements in the kernel's recipe.
-            In particular, you need to update the
-            <filename>SRCREV_meta</filename> variable to match the commit in
-            the <filename>KMETA</filename> branch you wish to use.
-            Changing the data in these branches and not updating the
-            <filename>SRCREV</filename> statements to match will cause the
-            build to fetch an older commit.
-        </para>
-    </section>
-</section>
-
 <section id='kernel-metadata-syntax'>
     <title>Kernel Metadata Syntax</title>
 
@@ -880,6 +711,175 @@
             and <filename>KARCH</filename>.
             Of these variables, only the <filename>KTYPE</filename> has changed.
             It is now set to "tiny".
+        </para>
+    </section>
+</section>
+
+<section id='kernel-metadata-location'>
+    <title>Kernel Metadata Location</title>
+
+    <para>
+        Kernel Metadata always exists outside of the kernel tree either
+        defined in a kernel recipe (recipe-space) or outside of the recipe.
+        Where you choose to define the Metadata depends on what you want
+        to do and how you intend to work.
+        Regardless of where you define the kernel Metadata, the syntax used
+        applies equally.
+    </para>
+
+    <para>
+        If you are unfamiliar with the Linux kernel and only wish
+        to apply a configuration and possibly a couple of patches provided to
+        you by others, the recipe-space method is recommended.
+        This method is also a good approach if you are working with Linux kernel
+        sources you do not control or if you just do not want to maintain a
+        Linux kernel Git repository on your own.
+        For partial information on how you can define kernel Metadata in
+        the recipe-space, see the
+        "<link linkend='modifying-an-existing-recipe'>Modifying an Existing Recipe</link>"
+        section.
+    </para>
+
+    <para>
+        Conversely, if you are actively developing a kernel and are already
+        maintaining a Linux kernel Git repository of your own, you might find
+        it more convenient to work with kernel Metadata kept outside the
+        recipe-space.
+        Working with Metadata in this area can make iterative development of
+        the Linux kernel more efficient outside of the BitBake environment.
+    </para>
+
+    <section id='recipe-space-metadata'>
+        <title>Recipe-Space Metadata</title>
+
+        <para>
+            When stored in recipe-space, the kernel Metadata files reside in a
+            directory hierarchy below
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>.
+            For a linux-yocto recipe or for a Linux kernel recipe derived
+            by copying and modifying
+            <filename>oe-core/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb</filename>
+            to a recipe in your layer, <filename>FILESEXTRAPATHS</filename>
+            is typically set to
+            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-THISDIR'><filename>THISDIR</filename></ulink><filename>}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>.
+            See the "<link linkend='modifying-an-existing-recipe'>Modifying an Existing Recipe</link>"
+            section for more information.
+        </para>
+
+        <para>
+            Here is an example that shows a trivial tree of kernel Metadata
+            stored in recipe-space within a BSP layer:
+            <literallayout class='monospaced'>
+     meta-<replaceable>my_bsp_layer</replaceable>/
+     `-- recipes-kernel
+         `-- linux
+             `-- linux-yocto
+                 |-- bsp-standard.scc
+                 |-- bsp.cfg
+                 `-- standard.cfg
+            </literallayout>
+        </para>
+
+        <para>
+            When the Metadata is stored in recipe-space, you must take
+            steps to ensure BitBake has the necessary information to decide
+            what files to fetch and when they need to be fetched again.
+            It is only necessary to specify the <filename>.scc</filename>
+            files on the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
+            BitBake parses them and fetches any files referenced in the
+            <filename>.scc</filename> files by the <filename>include</filename>,
+            <filename>patch</filename>, or <filename>kconf</filename> commands.
+            Because of this, it is necessary to bump the recipe
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
+            value when changing the content of files not explicitly listed
+            in the <filename>SRC_URI</filename>.
+        </para>
+    </section>
+
+    <section id='metadata-outside-the-recipe-space'>
+        <title>Metadata Outside the Recipe-Space</title>
+
+        <para>
+            When stored outside of the recipe-space, the kernel Metadata
+            files reside in a separate repository.
+            The OpenEmbedded build system adds the Metadata to the build as
+            a "ktype=meta" repository through the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+            variable.
+            As an example, consider the following <filename>SRC_URI</filename>
+            statement from the <filename>linux-yocto_4.4.bb</filename>
+            kernel recipe:
+            <literallayout class='monospaced'>
+     SRC_URI = "git://git.yoctoproject.org/linux-yocto-4.4.git;name=machine;branch=${KBRANCH}; \
+                git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=yocto-4.4;destsuffix=${KMETA}"
+            </literallayout>
+            <filename>${KMETA}</filename>, in this context, is simply used to
+            name the directory into which the Git fetcher places the Metadata.
+            This behavior is no different than any multi-repository
+            <filename>SRC_URI</filename> statement used in a recipe.
+        </para>
+
+        <para>
+            You can keep kernel Metadata in a "kernel-cache", which is a
+            directory containing configuration fragments.
+            As with any Metadata kept outside the recipe-space, you simply
+            need to use the <filename>SRC_URI</filename> statement with the
+            "type=kmeta" attribute.
+            Doing so makes the kernel Metadata available during the
+            configuration phase.
+        </para>
+
+<!--
+
+
+        <para>
+            Following is an example that shows how a trivial tree of Metadata
+            is stored in a custom Linux kernel Git repository:
+            <literallayout class='monospaced'>
+     meta/
+     `&dash;&dash; cfg
+         `&dash;&dash; kernel-cache
+             |&dash;&dash; bsp-standard.scc
+             |&dash;&dash; bsp.cfg
+             `&dash;&dash; standard.cfg
+            </literallayout>
+        </para>
+
+        <para>
+            To use a branch different from where the sources reside,
+            specify the branch in the <filename>KMETA</filename> variable
+            in your Linux kernel recipe.
+            Here is an example:
+            <literallayout class='monospaced'>
+     KMETA = "meta"
+            </literallayout>
+            To use the same branch as the sources, set
+            <filename>KMETA</filename> to an empty string:
+            <literallayout class='monospaced'>
+     KMETA = ""
+            </literallayout>
+            If you are working with your own sources and want to create an
+            orphan <filename>meta</filename> branch, use these commands
+            from within your Linux kernel Git repository:
+            <literallayout class='monospaced'>
+     $ git checkout &dash;&dash;orphan meta
+     $ git rm -rf .
+     $ git commit &dash;&dash;allow-empty -m "Create orphan meta branch"
+            </literallayout>
+        </para>
+-->
+
+        <para>
+            If you modify the Metadata, you must not forget to update the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
+            statements in the kernel's recipe.
+            In particular, you need to update the
+            <filename>SRCREV_meta</filename> variable to match the commit in
+            the <filename>KMETA</filename> branch you wish to use.
+            Changing the data in these branches and not updating the
+            <filename>SRCREV</filename> statements to match will cause the
+            build to fetch an older commit.
         </para>
     </section>
 </section>
