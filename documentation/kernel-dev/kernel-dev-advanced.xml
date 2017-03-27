@@ -524,170 +524,219 @@
         <title>BSP Descriptions</title>
 
         <para>
-            BSP descriptions combine kernel types with hardware-specific
-            features.
-            The hardware-specific portion is typically defined
-            independently, and then aggregated with each supported kernel
-            type.
-            Consider this simple BSP description that supports the
-            <replaceable>mybsp</replaceable> machine:
-            <literallayout class='monospaced'>
-     <replaceable>mybsp</replaceable>.scc:
-        define KMACHINE <replaceable>mybsp</replaceable>
-        define KTYPE standard
-        define KARCH i386
-
-        kconf <replaceable>mybsp</replaceable>.cfg
-            </literallayout>
-            Every BSP description should define the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>,
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-KTYPE'><filename>KTYPE</filename></ulink>,
-            and <ulink url='&YOCTO_DOCS_REF_URL;#var-KARCH'><filename>KARCH</filename></ulink>
-            variables.
-            These variables allow the OpenEmbedded build system to identify
-            the description as meeting the criteria set by the recipe being
-            built.
-            This simple example supports the "mybsp" machine for the "standard"
-            kernel and the "i386" architecture.
-        </para>
-
-        <para>
-            Be aware that a hard link between the
-            <filename>KTYPE</filename> variable and a kernel type
-            description file does not exist.
-            Thus, if you do not have kernel types defined in your kernel
-            Metadata, you only need to ensure that the kernel recipe's
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE'><filename>LINUX_KERNEL_TYPE</filename></ulink>
-            variable and the <filename>KTYPE</filename> variable in the
-            BSP description file match.
+            BSP descriptions (i.e. <filename>*.scc</filename> files)
+            combine kernel types with hardware-specific features.
+            The hardware-specific Metadata is typically defined
+            independently in the BSP layer, and then aggregated with each
+            supported kernel type.
             <note>
-                Future versions of the tooling make the specification of
-                <filename>KTYPE</filename> in the BSP optional.
+                For BSPs supported by the Yocto Project, the BSP description
+                files are located in the <filename>bsp</filename> directory
+                of the <filename>yocto-kernel-cache</filename> repository
+                organized under the "Yocto Linux Kernel" heading in the
+                <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>Yocto Project Source Repositories</ulink>.
             </note>
         </para>
 
         <para>
-            If you did want to separate your kernel policy from your
-            hardware configuration, you could do so by specifying a kernel
-            type, such as "standard" and including that description file
-            in the BSP description file.
-            See the "<link linkend='kernel-types'>Kernel Types</link>" section
-            for more information.
+            This section provides a BSP description structural overview along
+            with aggregation concepts as well as a detailed example using
+            a BSP supported by the Yocto Project (i.e. Minnow Board).
         </para>
 
-        <para>
-            You might also have multiple hardware configurations that you
-            aggregate into a single hardware description file that you
-            could include in the BSP description file, rather than referencing
-            a single <filename>.cfg</filename> file.
-            Consider the following:
-            <literallayout class='monospaced'>
-     <replaceable>mybsp</replaceable>.scc:
-        define KMACHINE mybsp
-        define KTYPE standard
-        define KARCH i386
+        <section id='bsp-description-file-overview'>
+            <title>Overview</title>
 
-        include standard.scc
-        include <replaceable>mybsp</replaceable>-hw.scc
-            </literallayout>
-        </para>
+            <para>
+                For simplicity, consider the following top-level BSP
+                description file.
+                Top-level BSP descriptions files employ both a structure
+                and naming convention for consistency.
+                The naming convention for the file is as follows:
+                <literallayout class='monospaced'>
+     <replaceable>bsp_name</replaceable>-<replaceable>kernel_type</replaceable>.scc
+                </literallayout>
+                Here are some example top-level BSP filenames for the
+                Minnow Board BSP, which is supported by the Yocto Project:
+                <literallayout class='monospaced'>
+     minnow-standard.scc
+     minnow-preempt-rt.scc
+     minnow-tiny.scc
+                </literallayout>
+                Each file uses the BSP name followed by the kernel type.
+            </para>
 
-        <para>
-            In the above example, <filename>standard.scc</filename>
-            aggregates all the configuration fragments, patches, and
-            features that make up your standard kernel policy whereas
-            <replaceable>mybsp</replaceable><filename>-hw.scc</filename>
-            aggregates all those necessary
-            to support the hardware available on the
-            <replaceable>mybsp</replaceable> machine.
-            For information on how to break a complete
-            <filename>.config</filename> file into the various
-            configuration fragments, see the
-            "<link linkend='generating-configuration-files'>Generating Configuration Files</link>"
-            section.
-        </para>
+            <para>
+                is simple BSP description file whose name has the
+                form
+                <replaceable>mybsp</replaceable><filename>-standard</filename>
+                and supports the <replaceable>mybsp</replaceable> machine using
+                a standard kernel:
+                <literallayout class='monospaced'>
+     define KMACHINE <replaceable>mybsp</replaceable>
+     define KTYPE standard
+     define KARCH i386
 
-        <para>
-            Many real-world examples are more complex.
-            Like any other <filename>.scc</filename> file, BSP
-            descriptions can aggregate features.
-            Consider the Minnow BSP definition from the
-            <filename>linux-yocto-3.19</filename>
-            Git repository:
-            <literallayout class='monospaced'>
+     include ktypes/standard
+
+     include <replaceable>mybsp</replaceable>.scc
+
+     kconf hardware <replaceable>mybsp</replaceable>-<replaceable>extra</replaceable>.cfg
+                </literallayout>
+                Every top-level BSP description file should define the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KTYPE'><filename>KTYPE</filename></ulink>,
+                and <ulink url='&YOCTO_DOCS_REF_URL;#var-KARCH'><filename>KARCH</filename></ulink>
+                variables.
+                These variables allow the OpenEmbedded build system to identify
+                the description as meeting the criteria set by the recipe being
+                built.
+                This simple example supports the "mybsp" machine for the "standard"
+                kernel and the "i386" architecture.
+            </para>
+
+            <para>
+                Be aware that a hard link between the
+                <filename>KTYPE</filename> variable and a kernel type description
+                file does not exist.
+                Thus, if you do not have kernel types defined in your kernel
+                Metadata, you only need to ensure that the kernel recipe's
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE'><filename>LINUX_KERNEL_TYPE</filename></ulink>
+                variable and the <filename>KTYPE</filename> variable in the
+                BSP description file match.
+                <note>
+                    Future versions of the tooling make the specification of
+                    <filename>KTYPE</filename> in the BSP optional.
+                </note>
+            </para>
+
+            <para>
+                To separate your kernel policy from your hardware configuration,
+                you include a kernel type (<filename>ktype</filename>), such as
+                "standard".
+                In the previous example, this is done using the following:
+                <literallayout class='monospaced'>
+     include ktypes/standard
+                </literallayout>
+                In the previous example, <filename>ktypes/standard.scc</filename>
+                aggregates all the configuration fragments, patches, and
+                features that make up your standard kernel policy.
+                See the "<link linkend='kernel-types'>Kernel Types</link>" section
+                for more information.
+            </para>
+
+            <para>
+                To aggregate common configurations and features specific to the
+                kernel for <replaceable>mybsp</replaceable>, use the following:
+                <literallayout class='monospaced'>
+     include <replaceable>mybsp</replaceable>.scc
+                </literallayout>
+                For information on how to break a complete
+                <filename>.config</filename> file into the various
+                configuration fragments, see the
+                "<link linkend='generating-configuration-files'>Generating Configuration Files</link>"
+                section.
+            </para>
+
+            <para>
+                Finally, if you have any configurations specific to the
+                hardware that are not in a <filename>*.scc</filename> file,
+                you can include them as follows:
+                <literallayout class='monospaced'>
+     kconf hardware <replaceable>mybsp</replaceable>-<replaceable>extra</replaceable>.cfg
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='bsp-description-file-example-minnow'>
+            <title>Example</title>
+
+            <para>
+                Many real-world examples are more complex.
+                Like any other <filename>.scc</filename> file, BSP
+                descriptions can aggregate features.
+                Consider the Minnow BSP definition from the
+                <filename>linux-yocto-4.4</filename> in the
+                Yocto Project
+                <ulink url='&YOCTO_DOCS_DEV_URL;#source-repositories'>Source Repositories</ulink>
+                (i.e.
+                <filename>yocto-kernel-cache/bsp/minnow</filename>):
+                <literallayout class='monospaced'>
      minnow.scc:
-        include cfg/x86.scc
-        include features/eg20t/eg20t.scc
-        include cfg/dmaengine.scc
-        include features/power/intel.scc
-        include cfg/efi.scc
-        include features/usb/ehci-hcd.scc
-        include features/usb/ohci-hcd.scc
-        include features/usb/usb-gadgets.scc
-        include features/usb/touchscreen-composite.scc
-        include cfg/timer/hpet.scc
-        include cfg/timer/rtc.scc
-        include features/leds/leds.scc
-        include features/spi/spidev.scc
-        include features/i2c/i2cdev.scc
+         include cfg/x86.scc
+         include features/eg20t/eg20t.scc
+         include cfg/dmaengine.scc
+         include features/power/intel.scc
+         include cfg/efi.scc
+         include features/usb/ehci-hcd.scc
+         include features/usb/ohci-hcd.scc
+         include features/usb/usb-gadgets.scc
+         include features/usb/touchscreen-composite.scc
+         include cfg/timer/hpet.scc
+         include features/leds/leds.scc
+         include features/spi/spidev.scc
+         include features/i2c/i2cdev.scc
+         include features/mei/mei-txe.scc
 
-        # Earlyprintk and port debug requires 8250
-        kconf hardware cfg/8250.cfg
+         # Earlyprintk and port debug requires 8250
+         kconf hardware cfg/8250.cfg
 
-        kconf hardware minnow.cfg
-        kconf hardware minnow-dev.cfg
-            </literallayout>
-        </para>
+         kconf hardware minnow.cfg
+         kconf hardware minnow-dev.cfg
+                </literallayout>
+            </para>
 
-        <para>
-            The <filename>minnow.scc</filename> description file includes
-            a hardware configuration fragment
-            (<filename>minnow.cfg</filename>) specific to the Minnow
-            BSP as well as several more general configuration
-            fragments and features enabling hardware found on the
-            machine.
-            This description file is then included in each of the three
-            "minnow" description files for the supported kernel types
-            (i.e. "standard", "preempt-rt", and "tiny").
-            Consider the "minnow" description for the "standard" kernel
-            type:
-            <literallayout class='monospaced'>
+            <para>
+                The <filename>minnow.scc</filename> description file includes
+                a hardware configuration fragment
+                (<filename>minnow.cfg</filename>) specific to the Minnow
+                BSP as well as several more general configuration
+                fragments and features enabling hardware found on the
+                machine.
+                This <filename>minnow.scc</filename> description file is then
+                included in each of the three
+                "minnow" description files for the supported kernel types
+                (i.e. "standard", "preempt-rt", and "tiny").
+                Consider the "minnow" description for the "standard" kernel
+                type:
+                <literallayout class='monospaced'>
      minnow-standard.scc:
-        define KMACHINE minnow
-        define KTYPE standard
-        define KARCH i386
+         define KMACHINE minnow
+         define KTYPE standard
+         define KARCH i386
 
-        include ktypes/standard
+         include ktypes/standard
 
-        include minnow.scc
+         include minnow.scc
 
-        # Extra minnow configs above the minimal defined in minnow.scc
-        include cfg/efi-ext.scc
-        include features/media/media-all.scc
-        include features/sound/snd_hda_intel.scc
+         # Extra minnow configs above the minimal defined in minnow.scc
+         include cfg/efi-ext.scc
+         include features/media/media-all.scc
+         include features/sound/snd_hda_intel.scc
 
-        # The following should really be in standard.scc
-        # USB live-image support
-        include cfg/usb-mass-storage.scc
-        include cfg/boot-live.scc
+         # The following should really be in standard.scc
+         # USB live-image support
+         include cfg/usb-mass-storage.scc
+         include cfg/boot-live.scc
 
-        # Basic profiling
-        include features/latencytop/latencytop.scc
-        include features/profiling/profiling.scc
+         # Basic profiling
+         include features/latencytop/latencytop.scc
+         include features/profiling/profiling.scc
 
-        # Requested drivers that don't have an existing scc
-        kconf hardware minnow-drivers-extra.cfg
-            </literallayout>
-            The <filename>include</filename> command midway through the file
-            includes the <filename>minnow.scc</filename> description that
-            defines all hardware enablements for the BSP that is common to all
-            kernel types.
-            Using this command significantly reduces duplication.
-        </para>
+         # Requested drivers that don't have an existing scc
+         kconf hardware minnow-drivers-extra.cfg
+                </literallayout>
+                The <filename>include</filename> command midway through the file
+                includes the <filename>minnow.scc</filename> description that
+                defines all enabled hardware for the BSP that is common to
+                all kernel types.
+                Using this command significantly reduces duplication.
+            </para>
 
-        <para>
-            Now consider the "minnow" description for the "tiny" kernel type:
-            <literallayout class='monospaced'>
+            <para>
+                Now consider the "minnow" description for the "tiny" kernel
+                type:
+                <literallayout class='monospaced'>
      minnow-tiny.scc:
         define KMACHINE minnow
         define KTYPE tiny
@@ -696,22 +745,24 @@
         include ktypes/tiny
 
         include minnow.scc
-            </literallayout>
-            As you might expect, the "tiny" description includes quite a
-            bit less.
-            In fact, it includes only the minimal policy defined by the
-            "tiny" kernel type and the hardware-specific configuration required
-            for booting the machine along with the most basic functionality of
-            the system as defined in the base "minnow" description file.
-        </para>
+                </literallayout>
+                As you might expect, the "tiny" description includes quite a
+                bit less.
+                In fact, it includes only the minimal policy defined by the
+                "tiny" kernel type and the hardware-specific configuration
+                required for booting the machine along with the most basic
+                functionality of the system as defined in the base "minnow"
+                description file.
+            </para>
 
-        <para>
-            Notice again the three critical variables:
-            <filename>KMACHINE</filename>, <filename>KTYPE</filename>,
-            and <filename>KARCH</filename>.
-            Of these variables, only the <filename>KTYPE</filename> has changed.
-            It is now set to "tiny".
-        </para>
+            <para>
+                Notice again the three critical variables:
+                <filename>KMACHINE</filename>, <filename>KTYPE</filename>,
+                and <filename>KARCH</filename>.
+                Of these variables, only the <filename>KTYPE</filename> has changed.
+                It is now set to "tiny".
+            </para>
+        </section>
     </section>
 </section>
 
@@ -795,6 +846,18 @@
             value when changing the content of files not explicitly listed
             in the <filename>SRC_URI</filename>.
         </para>
+
+        <para>
+            If the kernel Metadata is in a layer, you cannot simply list the
+            <filename>*.scc</filename> in the <filename>SRC_URI</filename>
+            statement.
+            You need to use the following form from your kernel append file:
+            <literallayout class='monospaced'>
+     SRC_URI_append_<replaceable>myplatform</replaceable> = " \
+        file://<replaceable>myplatform</replaceable>;type=kmeta;destsuffix=<replaceable>myplatform</replaceable> \
+        "
+            </literallayout>
+        </para>
     </section>
 
     <section id='metadata-outside-the-recipe-space'>
@@ -817,7 +880,8 @@
             <filename>${KMETA}</filename>, in this context, is simply used to
             name the directory into which the Git fetcher places the Metadata.
             This behavior is no different than any multi-repository
-            <filename>SRC_URI</filename> statement used in a recipe.
+            <filename>SRC_URI</filename> statement used in a recipe (e.g.
+            see the previous section).
         </para>
 
         <para>
