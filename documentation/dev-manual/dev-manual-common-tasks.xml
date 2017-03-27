@@ -8244,13 +8244,14 @@
                     <title>Using RPM</title>
 
                     <para>
-                        The <filename>smart</filename> application performs
+                        The <filename>dnf</filename> application performs
                         runtime package management of RPM packages.
                         You must perform an initial setup for
-                        <filename>smart</filename> on the target machine
+                        <filename>dnf</filename> on the target machine
                         if the
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_ARCHS'><filename>PACKAGE_FEED_ARCHS</filename></ulink>,
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_BASE_PATHS'><filename>PACKAGE_FEED_BASE_PATHS</filename></ulink>, and
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_BASE_PATHS'><filename>PACKAGE_FEED_BASE_PATHS</filename></ulink>,
+                        and
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_URIS'><filename>PACKAGE_FEED_URIS</filename></ulink>
                         variables have not been set or the target image was
                         built before the variables were set.
@@ -8262,21 +8263,26 @@
                         <filename>all</filename>, <filename>i586</filename>,
                         and <filename>qemux86</filename> from a server named
                         <filename>my.server</filename>.
-                        You must inform <filename>smart</filename> of the
-                        availability of these databases by issuing the
-                        following commands on the target:
+                        You must inform <filename>dnf</filename> of the
+                        availability of these databases by creating a
+                        <filename>/etc/yum.repos.d/oe-packages.repo</filename>
+                        file with the following content:
                         <literallayout class='monospaced'>
-     # smart channel --add i585 type=rpm-md baseurl=http://my.server/rpm/i586
-     # smart channel --add qemux86 type=rpm-md baseurl=http://my.server/rpm/qemux86
-     # smart channel --add all type=rpm-md baseurl=http://my.server/rpm/all
+     [oe-packages]
+     baseurl="http://my.server/rpm/i586 http://my.server/rpm/qemux86 http://my.server/rpm/all"
                         </literallayout>
                         From the target machine, fetch the repository:
                         <literallayout class='monospaced'>
-     # smart update
+     # dnf makecache
                         </literallayout>
-                        After everything is set up, <filename>smart</filename>
+                        After everything is set up, <filename>dnf</filename>
                         is able to find, install, and upgrade packages from
                         the specified repository.
+                        <note>
+                            See the
+                            <ulink url='http://dnf.readthedocs.io/en/latest/'>Dnf documentation</ulink>
+                            for additional information.
+                        </note>
                     </para>
                 </section>
 
@@ -8446,11 +8452,11 @@
                 <para>
                     In addition to being able to sign RPM packages, you can
                     also enable the OpenEmbedded build system to be able to
-                    handle previously signed package feeds for both RPM and IPK
+                    handle previously signed package feeds for IPK
                     packages.
                     <note>
                         The OpenEmbedded build system does not currently
-                        support signed DPKG package feeds.
+                        support signed DPKG or RPM package feeds.
                     </note>
                     The steps you need to take to enable signed package feed
                     use are similar to the steps used to sign RPM packages.
@@ -9321,12 +9327,13 @@
                         <listitem><para><emphasis>Be sure your host's firewall
                             accepts incoming connections from
                             192.168.7.0/24:</emphasis>
-                            Some of the tests (in particular smart tests) start an
-                            HTTP server on a random high number port, which is
-                            used to serve files to the target.
+                            Some of the tests (in particular dnf tests) start
+                            an HTTP server on a random high number port,
+                            which is used to serve files to the target.
                             The smart module serves
-                            <filename>${DEPLOY_DIR}/rpm</filename> so it can run
-                            smart channel commands. That means your host's firewall
+                            <filename>${WORKDIR}/oe-rootfs-repo</filename>
+                            so it can run dnf channel commands.
+                            That means your host's firewall
                             must accept incoming connections from 192.168.7.0/24,
                             which is the default IP range used for tap devices
                             by <filename>runqemu</filename>.</para></listitem>
@@ -9826,7 +9833,7 @@
                     <listitem><para>The default tests for the image are defined
                         as:
                         <literallayout class='monospaced'>
-     DEFAULT_TEST_SUITES_pn-<replaceable>image</replaceable> = "ping ssh df connman syslog xorg scp vnc date rpm smart dmesg"
+     DEFAULT_TEST_SUITES_pn-<replaceable>image</replaceable> = "ping ssh df connman syslog xorg scp vnc date rpm dnf dmesg"
                         </literallayout></para></listitem>
                     <listitem><para>Add your own test to the list of the
                         by using the following:
@@ -10024,7 +10031,7 @@
                                             </para></listitem>
                                         <listitem><para><emphasis><filename>server_ip</filename>:</emphasis>
                                             The host's IP address, which is
-                                            usually used by the "smart" test
+                                            usually used by the "dnf" test
                                             suite.
                                             </para></listitem>
                                         <listitem><para><emphasis><filename>run(cmd, timeout=None)</filename>:</emphasis>
