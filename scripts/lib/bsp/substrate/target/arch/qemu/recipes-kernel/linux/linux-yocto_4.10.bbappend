@@ -59,3 +59,5 @@ SRC_URI += "file://{{=machine}}-standard.scc \
 SRCREV_machine_pn-linux-yocto_{{=machine}} ?= "${AUTOREV}"
 SRCREV_meta_pn-linux-yocto_{{=machine}} ?= "${AUTOREV}"
 #LINUX_VERSION = "4.10"
+#Remove the following line once AUTOREV is locked to a certain SRCREV
+KERNEL_VERSION_SANITY_SKIP = "1"
