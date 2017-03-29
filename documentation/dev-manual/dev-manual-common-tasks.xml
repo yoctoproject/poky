@@ -237,7 +237,18 @@
                         <note>In order to be compliant with the Yocto Project,
                             a layer must contain a
                             <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-filelayout-readme'>README file.</ulink>
-                            </note></para></listitem>
+                        </note>
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Optionally Test for Compatibility:</emphasis>
+                        If you want permission to use the Yocto Project
+                        Compatibility logo with your layer or application that
+                        uses your layer, perform the steps to apply for
+                        compatibility.
+                        See the
+                        "<link linkend='making-sure-your-layer-is-compatible-with-yocto-project'>Making Sure Your Layer is Compatible With Yocto Project</link>"
+                        section for more information.
+                        </para></listitem>
                 </orderedlist>
             </para>
         </section>
@@ -412,6 +423,14 @@
                 <para>
                     We also recommend the following:
                     <itemizedlist>
+                        <listitem><para>If you want permission to use the
+                            Yocto Project Compatibility logo with your layer
+                            or application that uses your layer, perform the
+                            steps to apply for compatibility.
+                            See the
+                            "<link linkend='making-sure-your-layer-is-compatible-with-yocto-project'>Making Sure Your Layer is Compatible With Yocto Project</link>"
+                            section for more information.
+                            </para></listitem>
                         <listitem><para>Store custom layers in a Git repository
                             that uses the
                             <filename>meta-<replaceable>layer_name</replaceable></filename> format.
@@ -424,6 +443,204 @@
                      Following these recommendations keeps your Source Directory and
                      its configuration entirely inside the Yocto Project's core
                      base.
+                </para>
+            </section>
+        </section>
+
+        <section id='making-sure-your-layer-is-compatible-with-yocto-project'>
+            <title>Making Sure Your Layer is Compatible With Yocto Project</title>
+
+            <para>
+                When you create a layer used with the Yocto Project, it is
+                advantageous to make sure that the layer interacts well with
+                existing Yocto Project layers (i.e. the layer is compatible
+                with the Yocto Project).
+                Ensuring compatibility makes the layer easy to be consumed
+                by others in the Yocto Project community and allows you
+                permission to use the Yocto Project Compatibility logo.
+            </para>
+
+            <para>
+                Version 1.0 of the Yocto Project Compatibility Program has
+                been in existence for a number of releases.
+                This version of the program consists of the layer application
+                process that requests permission to use the Yocto Project
+                Compatibility logo for your layer and application.
+                You can find version 1.0 of the form at
+                <ulink url='https://www.yoctoproject.org/webform/yocto-project-compatible-registration'></ulink>.
+                To be granted permission to use the logo, you need to be able
+                to answer "Yes" to the questions or have an acceptable
+                explanation for any questions answered "No".
+            </para>
+
+            <para>
+                A second version (2.0) of the Yocto Project Compatibility
+                Program is currently under development.
+                Included as part of version 2.0 (and currently available) is
+                the <filename>yocto-compat-layer.py</filename> script.
+                When run against a layer, this script tests the layer against
+                tighter constraints based on experiences of how layers have
+                worked in the real world and where pitfalls have been found.
+            </para>
+
+            <para>
+                Part of the 2.0 version of the program that is not currently
+                available but is in development is an updated compatibility
+                application form.
+                This updated form, among other questions, specifically
+                asks if your layer has passed the test using the
+                <filename>yocto-compat-layer.py</filename> script.
+                <note><title>Tip</title>
+                    Even though the updated application form is currently
+                    unavailable for version 2.0 of the Yocto Project
+                    Compatibility Program, the
+                    <filename>yocto-compat-layer.py</filename> script is
+                    available in OE-Core.
+                    You can use the script to assess the status of your
+                    layers in advance of the 2.0 release of the program.
+                </note>
+            </para>
+
+            <para>
+                The remainder of this section presents information on the
+                version 1.0 registration form and on the
+                <filename>yocto-compat-layer.py</filename> script.
+            </para>
+
+            <section id='yocto-project-compatibility-program-application'>
+                <title>Yocto Project Compatibility Program Application</title>
+
+                <para>
+                    Use the 1.0 version of the form to apply for your
+                    layer's compatibility approval.
+                    Upon successful application, you can use the Yocto
+                    Project Compatibility logo with your layer and the
+                    application that uses your layer.
+                </para>
+
+                <para>
+                    To access the form, use this link:
+                    <ulink url='https://www.yoctoproject.org/webform/yocto-project-compatible-registration'></ulink>.
+                    Follow the instructions on the form to complete your
+                    application.
+                </para>
+
+                <para>
+                    The application consists of the following sections:
+                    <itemizedlist>
+                        <listitem><para>
+                            <emphasis>Contact Information:</emphasis>
+                            Provide your contact information as the fields
+                            require.
+                            Along with your information, provide the
+                            released versions of the Yocto Project for which
+                            your layer is compatible.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Acceptance Criteria:</emphasis>
+                            Provide "Yes" or "No" answers for each of the
+                            items in the checklist.
+                            Space exists at the bottom of the form for any
+                            explanations for items for which you answered "No".
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Recommendations:</emphasis>
+                            Provide answers for the questions regarding Linux
+                            kernel use and build success.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
+
+            <section id='yocto-compat-layer-py-script'>
+                <title><filename>yocto-compat-layer.py</filename> Script</title>
+
+                <para>
+                    The <filename>yocto-compat-layer.py</filename> script,
+                    which is currently available, provides you a way to
+                    assess how compatible your layer is with the Yocto
+                    Project.
+                    You should run this script prior to using the form to
+                    apply for compatibility as described in the previous
+                    section.
+                    <note>
+                        Because the script is part of the 2.0 release of the
+                        Yocto Project Compatibility Program, you are not
+                        required to successfully run your layer against it
+                        in order to be granted compatibility status.
+                        However, it is a good idea as it promotes
+                        well-behaved layers and gives you an idea of where your
+                        layer stands regarding compatibility.
+                    </note>
+                </para>
+
+                <para>
+                    The script divides tests into three areas: COMMON, BSD,
+                    and DISTRO.
+                    For example, given a distribution layer (DISTRO), the
+                    layer must pass both the COMMON and DISTRO related tests.
+                    Furthermore, if your layer is a BSP layer, the layer must
+                    pass the COMMON and BSP set of tests.
+                </para>
+
+                <para>
+                    To execute the script, enter the following commands from
+                    your build directory:
+                    <literallayout class='monospaced'>
+     $ source oe-init-build-env
+     $ yocto-compat-layer.py <replaceable>your_layer_directory</replaceable>
+                    </literallayout>
+                    Be sure to provide the actual directory for your layer
+                    as part of the command.
+                </para>
+
+                <para>
+                    Entering the command causes the script to determine the
+                    type of layer and then to execute a set of specific
+                    tests against the layer.
+                    The following list overviews the test:
+                    <itemizedlist>
+                        <listitem><para>
+                            <filename>common.test_readme</filename>:
+                            Tests if a <filename>README</filename> file
+                            exists in the layer and the file is not empty.
+                            </para></listitem>
+                        <listitem><para>
+                            <filename>common.test_parse</filename>:
+                            Tests to make sure that BitBake can parse the
+                            files without error (i.e.
+                            <filename>bitbake -p</filename>).
+                            </para></listitem>
+                        <listitem><para>
+                            <filename>common.test_show_environment</filename>:
+                            Tests that the global or per-recipe environment
+                            is in order without errors (i.e.
+                            <filename>bitbake -e</filename>).
+                            </para></listitem>
+                        <listitem><para>
+                            <filename>common.test_signatures</filename>:
+                            Tests to be sure that BSP and DISTRO layers do not
+                            come with recipes that change signatures.
+                            </para></listitem>
+                        <listitem><para>
+                            <filename>bsp.test_bsp_defines_machines</filename>:
+                            Tests if a BSP layer has machine configurations.
+                            </para></listitem>
+                        <listitem><para>
+                            <filename>bsp.test_bsp_no_set_machine</filename>:
+                            Tests to ensure a BSP layer does not set the
+                            machine when the layer is added.
+                            </para></listitem>
+                        <listitem><para>
+                            <filename>distro.test_distro_defines_distros</filename>:
+                            Tests if a DISTRO layer has distro configurations.
+                            </para></listitem>
+                        <listitem><para>
+                            <filename>distro.test_distro_no_set_distro</filename>:
+                            Tests to ensure a DISTRO layer does not set the
+                            distribution when the layer is added.
+                            </para></listitem>
+                    </itemizedlist>
                 </para>
             </section>
         </section>
