@@ -3207,21 +3207,21 @@
                 a package on the target or during image creation when a
                 package is included in an image.
                 To add a post-installation script to a package, add a
-                <filename>pkg_postinst_PACKAGENAME()</filename> function to
+                <filename>pkg_postinst_</filename><replaceable>PACKAGENAME</replaceable><filename>()</filename> function to
                 the recipe file (<filename>.bb</filename>) and replace
-                <filename>PACKAGENAME</filename> with the name of the package
+                <replaceable>PACKAGENAME</replaceable> with the name of the package
                 you want to attach to the <filename>postinst</filename>
                 script.
                 To apply the post-installation script to the main package
                 for the recipe, which is usually what is required, specify
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>
-                in place of <filename>PACKAGENAME</filename>.
+                in place of <replaceable>PACKAGENAME</replaceable>.
             </para>
 
             <para>
                 A post-installation function has the following structure:
                 <literallayout class='monospaced'>
-     pkg_postinst_PACKAGENAME() {
+     pkg_postinst_<replaceable>PACKAGENAME</replaceable>() {
      # Commands to carry out
      }
                 </literallayout>
@@ -3250,7 +3250,7 @@
                 To delay script execution until boot time, use the following
                 structure in the post-installation script:
                 <literallayout class='monospaced'>
-     pkg_postinst_PACKAGENAME() {
+     pkg_postinst_<replaceable>PACKAGENAME</replaceable>() {
      if [ x"$D" = "x" ]; then
           # Actions to carry out on the device go here
      else
@@ -3266,6 +3266,20 @@
                 points to the directory containing the image when
                 the root filesystem is created at build time but is unset
                 when executed on the first boot.
+            </para>
+
+            <para>
+                If you have recipes that use <filename>pkg_postinst</filename>
+                scripts and they require the use of non-standard native
+                tools that have dependencies during rootfs construction, you
+                need to use the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_WRITE_DEPS'><filename>PACKAGE_WRITE_DEPS</filename></ulink>
+                variable in your recipe to list these tools.
+                If you do not use this variable, the tools might be missing and
+                execution of the post-installation script is deferred until
+                first boot.
+                Deferring the script to first boot is undesirable and for
+                read-only rootfs impossible.
             </para>
 
             <note>
