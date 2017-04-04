@@ -2691,6 +2691,93 @@
             </para>
         </section>
 
+        <section id='new-recipe-using-headers-to-interface-with-devices'>
+            <title>Using Headers to Interface with Devices</title>
+
+            <para>
+                If your recipe builds an application that needs to
+                communicate with some device or needs an API into a custom
+                kernel, you will need to provide appropriate header files.
+                Under no circumstances should you ever modify the existing
+                <filename>meta/recipes-kernel/linux-libc-headers/linux-libc-headers.inc</filename>
+                file.
+                These headers are used to build <filename>libc</filename> and
+                must not be compromised with custom or machine-specific
+                header information.
+                If you customize <filename>libc</filename> through modified
+                headers all other applications that use
+                <filename>libc</filename> thus become affected.
+                <note><title>Warning</title>
+                    Never copy and customize the <filename>libc</filename>
+                    header file (i.e.
+                    <filename>meta/recipes-kernel/linux-libc-headers/linux-libc-headers.inc</filename>).
+                </note>
+                The correct way to interface to a device or custom kernel is
+                to use a separate package that provides the additional headers
+                for the driver or other unique interfaces.
+                When doing so, your application also becomes responsible for
+                creating a dependency on that specific provider.
+            </para>
+
+            <para>
+                Consider the following:
+                <itemizedlist>
+                    <listitem><para>
+                        Never modify
+                        <filename>linux-libc-headers.inc</filename>.
+                        Consider that file to be part of the
+                        <filename>libc</filename> system, and not something
+                        you use to access the kernel directly.
+                        You should access <filename>libc</filename> through
+                        specific <filename>libc</filename> calls.
+                        </para></listitem>
+                    <listitem><para>
+                        Applications that must talk directly to devices
+                        should either provide necessary headers themselves,
+                        or establish a dependency on a special headers package
+                        that is specific to that driver.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                For example, suppose you want to modify an existing header
+                that adds I/O control or network support.
+                If the modifications are used by a small number programs,
+                providing a unique version of a header is easy and has little
+                impact.
+                When doing so, bear in mind the guidelines in the previous
+                list.
+                <note>
+                    If for some reason your changes need to modify the behavior
+                    of the <filename>libc</filename>, and subsequently all
+                    other applications on the system, use a
+                    <filename>.bbappend</filename> to modify the
+                    <filename>linux-kernel-headers.inc</filename> file.
+                    However, take care to not make the changes
+                    machine specific.
+                </note>
+            </para>
+
+            <para>
+                Consider a case where your kernel is older and you need
+                an older <filename>libc</filename> ABI.
+                The headers installed by your recipe should still be a
+                standard mainline kernel, not your own custom one.
+            </para>
+
+            <para>
+                When you use custom kernel headers you need to get them from
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_KERNEL_DIR'><filename>STAGING_KERNEL_DIR</filename></ulink>,
+                which is the directory with kernel headers that are
+                required to build out-of-tree modules.
+                Your recipe will also need the following:
+                <literallayout class='monospaced'>
+     do_configure[depends] += "virtual/kernel:do_shared_workdir"
+                </literallayout>
+            </para>
+        </section>
+
         <section id='new-recipe-compilation'>
             <title>Compilation</title>
 
