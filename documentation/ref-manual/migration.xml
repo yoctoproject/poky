@@ -3955,6 +3955,218 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
     </section>
 </section>
 
+<section id='moving-to-the-yocto-project-2.3-release'>
+    <title>Moving to the Yocto Project 2.3 Release</title>
+
+    <para>
+        This section provides migration information for moving to the
+        Yocto Project 2.3 Release from the prior release.
+    </para>
+
+    <section id='migration-2.3-sysroots'>
+        <title>Sysroots</title>
+
+        <para>
+            The Open-Embedded build system now uses one sysroot per
+            recipe to resolve long-standing issues with configuration
+            script auto-detection of undeclared dependencies.
+            Consequently, you must explicitely declare all build-time
+            dependencies for your recipe.
+            If you do not declare these dependencies, they are not
+            populated into the sysroot for the recipe.
+        </para>
+    </section>
+
+    <section id='migration-2.3-path-variable'>
+        <title><filename>PATH</filename> Variable</title>
+
+        <para>
+            The environment variable <filename>PATH</filename> is now
+            sanitized such that symbolic links linking only the binaries
+            from the host mentioned in the
+            <filename>HOSTTOOLS</filename> and
+            <filename>HOSTTOOLS_NONFATAL</filename> variables into
+            their own directory are added to <filename>PATH</filename>.
+            Consequently, any native binaries that you need to call should
+            either be in one of these two variables at the configuration
+            level.
+        </para>
+
+        <para>
+            Alternatively, you can use a native recipe (i.e.
+            <filename>-native</filename>) that includes the recipe's
+            <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
+            value.
+        </para>
+    </section>
+
+    <section id='migration-2.3-functions'>
+        <title>Changes to Functions</title>
+
+        <para>
+            The previously deprecated
+            <filename>bb.data.getVar()</filename>,
+            <filename>bb.data.setVar()</filename>, and
+            related functions have been removed in favor of
+            <filename>d.getVar()</filename>,
+            <filename>d.setVar()</filename>, and so forth.
+        </para>
+
+        <para>
+            You need to fix any references to these old functions.
+        </para>
+    </section>
+
+    <section id='migration-2.3-dependency-tree-information'>
+        <title>Dependency Tree Information</title>
+
+        <para>
+            The <filename>package-depends.dot</filename> and
+            <filename>pn-depends.dot</filename> files as previously generated
+            using the <filename>bitbake -g</filename> command have been
+            removed.
+            A <filename>recipe-depends.dot</filename> file
+            is now generated as a collapsed version of
+            <filename>task-depends.dot</filename> instead.
+        </para>
+
+        <para>
+            The reason for this change is because
+            <filename>package-depends.dot</filename> and
+            <filename>pn-depends.dot</filename> largely date back to a time
+            before task-based execution and do not take into account
+            task-level dependencies between recipes, which could be
+            misleading.
+        </para>
+    </section>
+
+    <section id='migration-2.3-bitbake-changes'>
+        <title>BitBake Changes</title>
+
+        <para>
+            The following changes took place for BitBake:
+            <itemizedlist>
+                <listitem><para>
+                    BitBake's graphical dependency explorer UI
+                    <filename>depexp</filename> was replaced by
+                    <filename>taskexp</filename>.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.3-absolute-symlinks'>
+        <title>Absolute Symbolic Links</title>
+
+        <para>
+            Absolute symbolic links (symlinks) within staged files are no
+            longer permitted and now trigger an error.
+        </para>
+    </section>
+
+    <section id='migration-2.3-gplv2-and-gplv3-moves'>
+        <title>GPLv2 Versions of GPLv3 Recipes Moved</title>
+
+        <para>
+            Older GPLv2 versions of GPLv3 recipes have moved to a
+            separate <filename>meta-gplv2</filename> layer.
+        </para>
+    </section>
+
+    <section id='migration-2.3-package-management-changes'>
+        <title>Package Management Changes</title>
+
+        <para>
+            The following package management changes took place:
+            <itemizedlist>
+                <listitem><para>
+                    Smart package manager is replaced by Dnf package manager.
+                    Smart has become unmaintained upstream, is not ported
+                    to Python 3.x.
+                    Consequently, Smart needed to be replaced.
+                    Dnf is the only feasible candidate.</para>
+                    <para>The change in functionality is that the on-target
+                    runtime package management from remote package feeds is
+                    now done with a different tool that has a
+                    different set of command-line options.
+                    If you have scripts that call the
+                    tool directly, or use its API, they need to be fixed.</para>
+                    <para>For more information, see the
+                    <ulink url='http://dnf.readthedocs.io/en/latest/'>Dnf Documentation</ulink>.
+                    </para></listitem>
+                <listitem><para>
+                    Rpm 5.x is replaced with Rpm 4.x.
+                    This is done for two major reasons:
+                    <itemizedlist>
+                        <listitem><para>
+                            Dnf is API-incompatible with Rpm 5.x and porting
+                            it and maintaining the port is non-trivial.
+                            </para></listitem>
+                        <listitem><para>
+                            Rpm 5.x itself is more or less unmaintained both
+                            in the upstream and in Yocto Project.
+                            Community support does not exist around it and
+                            the Yocto Project is the sole remaining user.
+                            </para></listitem>
+                    </itemizedlist>
+                    </para></listitem>
+                <listitem><para>
+                    Berkeley db 6.x is removed and Berkeley db 5.x becomes
+                    the default:
+                    <itemizedlist>
+                        <listitem><para>
+                            Version 6.x of Berkeley DB has been rejected
+                            by the open source community due to its hostile
+                            AGPLv3 license.
+                            Both Fedora and Debian are sticking
+                            with db 5.x.
+                            By extension,all the open source projects are still
+                            developed and tested with db 5.x
+                            </para></listitem>
+                        <listitem><para>
+                            In OE-core, the only thing that was requiring
+                            db 6.x was Rpm 5.x.
+                            Thus, no reason exists to continue carrying db 6.x
+                            in OE-core.
+                            </para></listitem>
+                    </itemizedlist>
+                    </para></listitem>
+                <listitem><para>
+                    <filename>createrepo</filename> is replaced with
+                    <filename>createrepo_c</filename>.</para>
+                    <para><filename>createrepo_c</filename> is the current
+                    incarnation of the tool that generates remote repository
+                    metadata.
+                    It is written in C as compared to
+                    <filename>createrepo</filename>, which is written in
+                    Python.
+                    <filename>createrepo_c</filename> is faster and is
+                    maintained.
+                    </para></listitem>
+                <listitem><para>
+                    Architecture-independent RPM packages are "noarch"
+                    instead of "all".</para>
+                    <para>This change was made because too many places in
+                    dnf/rpm4 stack already make that assumption.
+                    Only the filenames and the architecture tag has changed.
+                    Nothing else has changed in OE-core system, particularly
+                    in the
+                    <link linkend='ref-classes-allarch'><filename>allarch.bbclass</filename></link>
+                    class.
+                    </para></listitem>
+                <listitem><para>
+                    Signing of remote package feeds using
+                    <filename>PACKAGE_FEED_SIGN</filename> is not supported.
+                    <note>
+                        See the defect
+                        <ulink url='https://bugzilla.yoctoproject.org/show_bug.cgi?id=11209'>11209</ulink>
+                        for more information on a solution.
+                    </note>
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
