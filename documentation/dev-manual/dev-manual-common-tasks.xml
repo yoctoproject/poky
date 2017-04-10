@@ -7792,6 +7792,9 @@
                     <link linkend='excluding-packages-from-an-image'>Excluding packages from an image</link>
                     </para></listitem>
                 <listitem><para>
+                    <link linkend='incrementing-a-package-version-number'>Incrementing a package version number</link>
+                    </para></listitem>
+                <listitem><para>
                     <link linkend='incrementing-a-package-revision-number'>Incrementing a package revision number</link>
                     </para></listitem>
                 <listitem><para>
@@ -7850,8 +7853,8 @@
             </para>
         </section>
 
-        <section id='incrementing-a-package-revision-number'>
-            <title>Incrementing a Package Revision Number</title>
+        <section id='incrementing-a-package-version-number'>
+            <title>Incrementing a Package Version Number</title>
 
             <para>
                 If a committed change results in changing the package output,
@@ -7861,9 +7864,11 @@
                 Increasing <filename>PR</filename> occurs one of two ways:
                 <itemizedlist>
                     <listitem><para>Automatically using a Package Revision
-                        Service (PR Service).</para></listitem>
+                        Service (PR Service).
+                        </para></listitem>
                     <listitem><para>Manually incrementing the
-                        <filename>PR</filename> variable.</para></listitem>
+                        <filename>PR</filename> variable.
+                        </para></listitem>
                 </itemizedlist>
             </para>
 
@@ -7873,9 +7878,13 @@
                 with existing package manager applications such as
                 RPM, APT, and OPKG, using an automated system is much
                 preferred over a manual system.
-                In either system, the main requirement is that version
+                In either system, the main requirement is that package version
                 numbering increases in a linear fashion and that a number of
                 version components exist that support that linear progression.
+                For information on how to ensure package revisioning remains
+                linear, see the
+                "<link linkend='incrementing-a-package-revision-number'>Incrementing a Package Revision Number</link>"
+                section.
             </para>
 
             <para>
@@ -8082,6 +8091,88 @@
                     "increasing" a version means.
                 </para>
             </section>
+        </section>
+
+        <section id='incrementing-a-package-revision-number'>
+            <title>Incrementing a Package Revision Number</title>
+
+            <para>
+                When fetching a repository, BitBake uses the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
+                variable to determine the specific revision from which to
+                build.
+                You set the <filename>SRCREV</filename> variable to
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-AUTOREV'><filename>AUTOREV</filename></ulink>
+                to cause the OpenEmbedded build system to automatically use the
+                latest revision of the package:
+                    <literallayout class='monospaced'>
+     SRCREV = "${AUTOREV}"
+                    </literallayout>
+            </para>
+
+            <para>
+                Furthermore, the <filename>SRCPV</filename> variable returns
+                the version string of the current package.
+                This string is used to help define the value of
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>.
+                If your recipe needs to define the package version (i.e.
+                <filename>PV</filename>),
+                they do this with the help of <filename>SRCPV</filename>.
+                Here is an example:
+                <literallayout class='monospaced'>
+     PV = "1.0+git${SRCPV}"
+                </literallayout>
+                You can use <filename>SRCPV</filename>, as shown in the
+                previous example, to automatically update the package version
+                whenever the revision of the package changes.
+                The OpenEmbedded build system substitutes
+                <filename>SRCPV</filename> with the following:
+                <literallayout class='monospaced'>
+     AUTOINC+<replaceable>source_revision</replaceable>
+                </literallayout>
+                The build system replaces the <filename>AUTOINC</filename> with
+                a number.
+                The number used depends on the state of the PR Service:
+                <itemizedlist>
+                    <listitem><para>
+                        If PR Service is enabled, the build system increments
+                        the number, which is similar to the behavior of
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>.
+                        This behavior results in linearly increasing package
+                        versions, which is desirable.
+                        Here is an example:
+                        <literallayout class='monospaced'>
+     hello-world-git_0.0+git0+b6558dd387-r0.0_armv7a-neon.ipk
+     hello-world-git_0.0+git1+dd2f5c3565-r0.0_armv7a-neon.ipk
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        If PR Service is not enabled, the build system
+                        replaces the <filename>AUTOINC</filename>
+                        placeholder with zero (i.e. "0").
+                        This results in changing the package version since
+                        the source revision is included.
+                        However, package versions are not increased linearly.
+                        Here is an example:
+                        <literallayout class='monospaced'>
+     hello-world-git_0.0+git0+b6558dd387-r0.0_armv7a-neon.ipk
+     hello-world-git_0.0+git0+dd2f5c3565-r0.0_armv7a-neon.ipk
+                        </literallayout>
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                In summary, the OpenEmbedded build system does not track the
+                history of package versions for this purpose.
+                <filename>AUTOINC</filename>, in this case, is comparable to
+                <filename>PR</filename>.
+                If PR server is not enabled, <filename>AUTOINC</filename>
+                in the package version is simply replaced by "0".
+                If PR server is enabled, the build system keeps track of the
+                package versions and bumps the number when the package
+                revision changes.
+            </para>
         </section>
 
         <section id='handling-optional-module-packaging'>
