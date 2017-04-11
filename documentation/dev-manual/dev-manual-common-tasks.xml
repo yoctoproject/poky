@@ -7792,10 +7792,7 @@
                     <link linkend='excluding-packages-from-an-image'>Excluding packages from an image</link>
                     </para></listitem>
                 <listitem><para>
-                    <link linkend='incrementing-a-package-version-number'>Incrementing a package version number</link>
-                    </para></listitem>
-                <listitem><para>
-                    <link linkend='incrementing-a-package-revision-number'>Incrementing a package revision number</link>
+                    <link linkend='incrementing-a-binary-package-version'>Incrementing a binary package version</link>
                     </para></listitem>
                 <listitem><para>
                     <link linkend='handling-optional-module-packaging'>Handling optional module packaging</link>
@@ -7853,43 +7850,102 @@
             </para>
         </section>
 
-        <section id='incrementing-a-package-version-number'>
-            <title>Incrementing a Package Version Number</title>
+        <section id='incrementing-a-binary-package-version'>
+            <title>Incrementing a Package Version</title>
 
             <para>
-                If a committed change results in changing the package output,
-                then the value of the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
-                variable needs to be increased (or "bumped").
-                Increasing <filename>PR</filename> occurs one of two ways:
+                The scheme the OpenEmbedded build system uses for binary
+                package versioning is a bit involved.
+                This section provides some background on how binary package
+                versioning is accomplished and presents some of the services,
+                variables, and terminology involved.
+            </para>
+
+            <para>
+                In order to understand binary package versioning, you need
+                to consider the following:
                 <itemizedlist>
-                    <listitem><para>Automatically using a Package Revision
-                        Service (PR Service).
+                    <listitem><para>
+                        Binary Package:  The binary package that is eventually
+                        built and installed into an image.
                         </para></listitem>
-                    <listitem><para>Manually incrementing the
-                        <filename>PR</filename> variable.
+                    <listitem><para>
+                        Binary Package Version:  The binary package version
+                        is composed of two components - a version and a
+                        revision.
+                        <note>
+                            Technically, the "epoch" (i.e.
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PE'><filename>PE</filename></ulink>)
+                            is involved but this discussion for the most part
+                            ignores <filename>PE</filename>.
+                        </note>
+                        The version and revision are taken from the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>
+                        and
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
+                        variables, respectively.
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>PV</filename>:  The recipe version, which is
+                        not to be confused with the binary package version.
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>PR</filename>:  The recipe revision.
+                        </para></listitem>
+                    <listitem><para>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCPV'><filename>SRCPV</filename></ulink>:
+                        The Version string of the binary package.
+                        The OpenEmbedded build system uses this string
+                        to help define the value of <filename>PV</filename>.
+                        </para></listitem>
+                    <listitem><para>
+                        <ulink url='https://wiki.yoctoproject.org/wiki/PR_Service'>PR Service</ulink>:
+                        A network-based service that helps automate keeping
+                        package feeds compatible with existing package
+                        manager applications such as RPM, APT, and OPKG.
                         </para></listitem>
                 </itemizedlist>
             </para>
 
             <para>
-                Given that one of the challenges any build system and its
-                users face is how to maintain a package feed that is compatible
-                with existing package manager applications such as
-                RPM, APT, and OPKG, using an automated system is much
-                preferred over a manual system.
-                In either system, the main requirement is that package version
-                numbering increases in a linear fashion and that a number of
-                version components exist that support that linear progression.
+                Whenever the binary package output changes, the binary package
+                version must change.
+                Changing the binary package version is accomplished by changing
+                or "bumping" the <filename>PR</filename> and/or
+                <filename>PV</filename> values.
+                Increasing these values occurs one of two ways:
+                <itemizedlist>
+                    <listitem><para>Automatically using a Package Revision
+                        Service (PR Service).
+                        </para></listitem>
+                    <listitem><para>Manually incrementing the
+                        <filename>PR</filename> and/or
+                        <filename>PV</filename> variables.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+
+            <para>
+                Given a primary challenge of any build system and its users
+                is how to maintain a package feed that is compatible with
+                existing package manager applications such as RPM, APT, and
+                OPKG, using an automated system is much preferred over a
+                manual system.
+                In either system, the main requirement is that binary package
+                version numbering increases in a linear fashion and that a
+                number of version components exist that support that linear
+                progression.
                 For information on how to ensure package revisioning remains
                 linear, see the
-                "<link linkend='incrementing-a-package-revision-number'>Incrementing a Package Revision Number</link>"
+                "<link linkend='incrementing-a-binary-package-revision-number'>Incrementing a Binary Package Revision Number</link>"
                 section.
             </para>
 
             <para>
-                The following two sections provide information on the PR Service
-                and on manual <filename>PR</filename> bumping.
+                The following three sections provide related information on the
+                PR Service, the manual method for "bumping"
+                <filename>PR</filename> and/or <filename>PV</filename>, and
+                on how to ensure binary package revisioning remains linear.
             </para>
 
             <section id='working-with-a-pr-service'>
@@ -7930,9 +7986,10 @@
                     All the inputs into a given task are represented by a
                     signature, which can trigger a rebuild when different.
                     Thus, the build system itself does not rely on the
-                    <filename>PR</filename> numbers to trigger a rebuild.
+                    <filename>PR</filename>, <filename>PV</filename>, and
+                    <filename>PE</filename> numbers to trigger a rebuild.
                     The signatures, however, can be used to generate
-                    <filename>PR</filename> values.
+                    these values.
                 </para>
 
                 <para>
@@ -7977,7 +8034,7 @@
                     </literallayout>
                     Once the service is started, packages will automatically
                     get increasing <filename>PR</filename> values and
-                    BitBake will take care of starting and stopping the server.
+                    BitBake takes care of starting and stopping the server.
                 </para>
 
                 <para>
@@ -7998,8 +8055,8 @@
 
                 <para>
                     It is also recommended you use build history, which adds
-                    some sanity checks to package versions, in conjunction with
-                    the server that is running the PR Service.
+                    some sanity checks to binary package versions, in
+                    conjunction with the server that is running the PR Service.
                     To enable build history, add the following to each building
                     system's <filename>local.conf</filename> file:
                     <literallayout class='monospaced'>
@@ -8013,18 +8070,23 @@
                 </para>
 
                 <note>
-                    <para>The OpenEmbedded build system does not maintain
-                    <filename>PR</filename> information as part of the
-                    shared state (sstate) packages.
-                    If you maintain an sstate feed, its expected that either
-                    all your building systems that contribute to the sstate
-                    feed use a shared PR Service, or you do not run a PR
-                    Service on any of your building systems.
-                    Having some systems use a PR Service while others do
-                    not leads to obvious problems.</para>
-                    <para>For more information on shared state, see the
-                    "<ulink url='&YOCTO_DOCS_REF_URL;#shared-state-cache'>Shared State Cache</ulink>"
-                    section in the Yocto Project Reference Manual.</para>
+                    <para>
+                        The OpenEmbedded build system does not maintain
+                        <filename>PR</filename> information as part of the
+                        shared state (sstate) packages.
+                        If you maintain an sstate feed, its expected that either
+                        all your building systems that contribute to the sstate
+                         feed use a shared PR Service, or you do not run a PR
+                        Service on any of your building systems.
+                        Having some systems use a PR Service while others do
+                        not leads to obvious problems.
+                    </para>
+
+                    <para>
+                        For more information on shared state, see the
+                        "<ulink url='&YOCTO_DOCS_REF_URL;#shared-state-cache'>Shared State Cache</ulink>"
+                        section in the Yocto Project Reference Manual.
+                    </para>
                 </note>
             </section>
 
@@ -8033,7 +8095,7 @@
 
                 <para>
                     The alternative to setting up a PR Service is to manually
-                    bump the
+                    "bump" the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
                     variable.
                 </para>
@@ -8067,7 +8129,7 @@
                 </para>
 
                 <para>
-                    When upgrading the version of a package, assuming the
+                    When upgrading the version of a binary package, assuming the
                     <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'>PV</ulink></filename>
                     changes, the <filename>PR</filename> variable should be
                     reset to "r0" (or "${INC_PR}.0" if you are using
@@ -8075,7 +8137,7 @@
                 </para>
 
                 <para>
-                    Usually, version increases occur only to packages.
+                    Usually, version increases occur only to binary packages.
                     However, if for some reason <filename>PV</filename> changes
                     but does not increase, you can increase the
                     <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PE'>PE</ulink></filename>
@@ -8084,95 +8146,89 @@
                 </para>
 
                 <para>
-                    Version numbering strives to follow the
+                    Binary package version numbering strives to follow the
                     <ulink url='http://www.debian.org/doc/debian-policy/ch-controlfields.html'>
                     Debian Version Field Policy Guidelines</ulink>.
                     These guidelines define how versions are compared and what
                     "increasing" a version means.
                 </para>
             </section>
-        </section>
 
-        <section id='incrementing-a-package-revision-number'>
-            <title>Incrementing a Package Revision Number</title>
+            <section id='incrementing-a-binary-package-revision-number'>
+                <title>Incrementing a Binary Package Revision Number</title>
 
-            <para>
-                When fetching a repository, BitBake uses the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
-                variable to determine the specific revision from which to
-                build.
-                You set the <filename>SRCREV</filename> variable to
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-AUTOREV'><filename>AUTOREV</filename></ulink>
-                to cause the OpenEmbedded build system to automatically use the
-                latest revision of the package:
+                <para>
+                    When fetching a repository, BitBake uses the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
+                    variable to determine the specific revision from which to
+                    build.
+                    You set the <filename>SRCREV</filename> variable to
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-AUTOREV'><filename>AUTOREV</filename></ulink>
+                    to cause the OpenEmbedded build system to automatically use the
+                    latest revision of the package:
                     <literallayout class='monospaced'>
      SRCREV = "${AUTOREV}"
                     </literallayout>
-            </para>
+                </para>
 
-            <para>
-                Furthermore, the <filename>SRCPV</filename> variable returns
-                the version string of the current package.
-                This string is used to help define the value of
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>.
-                If your recipe needs to define the package version (i.e.
-                <filename>PV</filename>),
-                they do this with the help of <filename>SRCPV</filename>.
-                Here is an example:
-                <literallayout class='monospaced'>
+                <para>
+                    Furthermore, you need to reference <filename>SRCPV</filename>
+                    in <filename>PV</filename> in order to automatically update
+                    the binary package version whenever the revision of the
+                    source code changes.
+                    Here is an example:
+                    <literallayout class='monospaced'>
      PV = "1.0+git${SRCPV}"
-                </literallayout>
-                You can use <filename>SRCPV</filename>, as shown in the
-                previous example, to automatically update the package version
-                whenever the revision of the package changes.
-                The OpenEmbedded build system substitutes
-                <filename>SRCPV</filename> with the following:
-                <literallayout class='monospaced'>
-     AUTOINC+<replaceable>source_revision</replaceable>
-                </literallayout>
-                The build system replaces the <filename>AUTOINC</filename> with
-                a number.
-                The number used depends on the state of the PR Service:
-                <itemizedlist>
-                    <listitem><para>
-                        If PR Service is enabled, the build system increments
-                        the number, which is similar to the behavior of
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>.
-                        This behavior results in linearly increasing package
-                        versions, which is desirable.
-                        Here is an example:
-                        <literallayout class='monospaced'>
+                    </literallayout>
+                    The OpenEmbedded build system substitutes
+                    <filename>SRCPV</filename> with the following:
+                    <literallayout class='monospaced'>
+     AUTOINC+<replaceable>source_code_revision</replaceable>
+                    </literallayout>
+                    The build system replaces the <filename>AUTOINC</filename> with
+                    a number.
+                    The number used depends on the state of the PR Service:
+                    <itemizedlist>
+                        <listitem><para>
+                            If PR Service is enabled, the build system increments
+                            the number, which is similar to the behavior of
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>.
+                            This behavior results in linearly increasing package
+                            versions, which is desirable.
+                            Here is an example:
+                            <literallayout class='monospaced'>
      hello-world-git_0.0+git0+b6558dd387-r0.0_armv7a-neon.ipk
      hello-world-git_0.0+git1+dd2f5c3565-r0.0_armv7a-neon.ipk
-                        </literallayout>
-                        </para></listitem>
-                    <listitem><para>
-                        If PR Service is not enabled, the build system
-                        replaces the <filename>AUTOINC</filename>
-                        placeholder with zero (i.e. "0").
-                        This results in changing the package version since
-                        the source revision is included.
-                        However, package versions are not increased linearly.
-                        Here is an example:
-                        <literallayout class='monospaced'>
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para>
+                            If PR Service is not enabled, the build system
+                            replaces the <filename>AUTOINC</filename>
+                            placeholder with zero (i.e. "0").
+                            This results in changing the package version since
+                            the source revision is included.
+                            However, package versions are not increased linearly.
+                            Here is an example:
+                            <literallayout class='monospaced'>
      hello-world-git_0.0+git0+b6558dd387-r0.0_armv7a-neon.ipk
      hello-world-git_0.0+git0+dd2f5c3565-r0.0_armv7a-neon.ipk
-                        </literallayout>
-                        </para></listitem>
-                </itemizedlist>
-            </para>
+                            </literallayout>
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
 
-            <para>
-                In summary, the OpenEmbedded build system does not track the
-                history of package versions for this purpose.
-                <filename>AUTOINC</filename>, in this case, is comparable to
-                <filename>PR</filename>.
-                If PR server is not enabled, <filename>AUTOINC</filename>
-                in the package version is simply replaced by "0".
-                If PR server is enabled, the build system keeps track of the
-                package versions and bumps the number when the package
-                revision changes.
-            </para>
+                <para>
+                    In summary, the OpenEmbedded build system does not track the
+                    history of binary package versions for this purpose.
+                    <filename>AUTOINC</filename>, in this case, is comparable to
+                    <filename>PR</filename>.
+                    If PR server is not enabled, <filename>AUTOINC</filename>
+                    in the package version is simply replaced by "0".
+                    If PR server is enabled, the build system keeps track of the
+                    package versions and bumps the number when the package
+                    revision changes.
+                </para>
+            </section>
         </section>
 
         <section id='handling-optional-module-packaging'>
