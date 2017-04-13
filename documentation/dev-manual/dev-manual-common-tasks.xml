@@ -3193,10 +3193,11 @@
                 access to the library itself and its associated headers.
                 The way this access is accomplished is by populating sysroot
                 with files.
-                One sysroot exists per "machine" for which the image is
-                being built.
-                In practical terms, this means a sysroot exists for the target
-                machine, and a sysroot exists for the build host.
+                Each recipe has two sysroots in its work directory, one for
+                target files
+                (<filename>recipe-sysroot</filename>) and one for files that
+                are native to the build host
+                (<filename>recipe-sysroot-native</filename>).
                 <note>
                     You could find the term "staging" used within the Yocto
                     project regarding files populating sysroot (e.g. the
@@ -3214,12 +3215,6 @@
                 task within the
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>
                 directory.
-            </para>
-
-            <para>
-                A subset of these files, as defined by the
-                the <ulink url='&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS'><filename>SYSROOT_DIRS</filename></ulink>
-                variable, automatically populates the sysroot.
                 The reason for this limitation is that almost all files that
                 populate the sysroot are cataloged in manifests in order to
                 ensure the files can be removed later when a recipe is either
@@ -3228,6 +3223,13 @@
             </para>
 
             <para>
+                A subset of the files installed by the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
+                task are used by the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></ulink>
+                task as defined by the the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS'><filename>SYSROOT_DIRS</filename></ulink>
+                variable to automatically populate the sysroot.
                 It is possible to modify the list of directories that populate
                 the sysroot.
                 The following example shows how you could add the
@@ -3239,13 +3241,11 @@
             </para>
 
             <para>
-                For information on variables you can use to help control how
-                files sysroot is populated, see the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS'><filename>SYSROOT_DIRS</filename></ulink>,
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS_NATIVE'><filename>SYSROOT_DIRS_NATIVE</filename></ulink>,
-                and
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS_BLACKLIST'><filename>SYSROOT_DIRS_BLACKLIST</filename></ulink>
-                variables.
+                for a more complete description of the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></ulink>
+                task and its associated functions, see the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-staging'><filename>staging</filename></ulink>
+                class.
             </para>
         </section>
 

@@ -3190,13 +3190,144 @@
     <title><filename>staging.bbclass</filename></title>
 
     <para>
-        The <filename>staging</filename> class provides the
-        <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
-        task, which stages files into the sysroot to make them available to
-        other recipes at build time.
-        The class is enabled by default because it is inherited by the
-        <link linkend='ref-classes-base'><filename>base</filename></link>
-        class.
+        The <filename>staging</filename> class installs files into individual
+        recipe work directories for sysroots.
+        The class contains the following key tasks:
+        <itemizedlist>
+            <listitem><para>
+                The
+                <link linkend='ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></link>
+                task, which is responsible for handing the files that end up
+                in the recipe sysroots.
+                </para></listitem>
+            <listitem><para>
+                The
+                <link linkend='ref-tasks-prepare_recipe_sysroot'><filename>do_prepare_recipe_sysroot</filename></link>
+                task (a "partner" task to the
+                <filename>populate_sysroot</filename> task), which installs
+                the files into the individual recipe work directories (i.e.
+                <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>).
+                </para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        The code in the <filename>staging</filename> class is complex and
+        basically works in two stages:
+        <itemizedlist>
+            <listitem><para>
+                <emphasis>Stage One:</emphasis>
+                The first stage addresses recipes that have files they want
+                to share with other recipes that have dependencies on the
+                originating recipe.
+                Normally these dependencies are installed through the
+                <link linkend='ref-tasks-install'><filename>do_install</filename></link>
+                task into
+                <filename>${</filename><link linkend='var-D'><filename>D</filename></link><filename>}</filename>.
+                The <filename>do_populate_sysroot</filename> task copies
+                a subset of these files into
+                <filename>${SYSROOT_DESTDIR}</filename>.
+                This subset of files is controlled by the
+                <link linkend='var-SYSROOT_DIRS'><filename>SYSROOT_DIRS</filename></link>,
+                <link linkend='var-SYSROOT_DIRS_NATIVE'><filename>SYSROOT_DIRS_NATIVE</filename></link>,
+                and
+                <link linkend='var-SYSROOT_DIRS_BLACKLIST'><filename>SYSROOT_DIRS_BLACKLIST</filename></link>
+                variables.
+                <note>
+                    Additionally, a recipe can customize the files further by
+                declaring a processing function in the
+                    <link linkend='var-SYSROOT_PREPROCESS_FUNCS'><filename>SYSROOT_PREPROCESS_FUNCS</filename></link>
+                    variable.
+                </note>
+                </para>
+
+                <para>
+                A shared state (sstate) object is built from these files
+                and the files are placed into a subdirectory of
+                <filename>tmp/sysroot-components/</filename>.
+                The files are scanned for hardcoded paths to the original
+                installation location.
+                If the location is found in text files, the hardcoded
+                locations are replaced by tokens and a list of the files
+                needing such replacements is created.
+                These adjustments are referred to as "FIXMEs".
+                The list of files that are scanned for paths is controlled by
+                the
+                <link linkend='var-SSTATE_SCAN_FILES'><filename>SSTATE_SCAN_FILES</filename></link>
+                variable.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Stage Two:</emphasis>
+                The second stage addresses recipes that want to use something
+                from another recipe and declare a dependency on that recipe
+                through the
+                <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
+                variable.
+                The recipe will have a
+                <link linkend='ref-tasks-prepare_recipe_sysroot'><filename>do_prepare_recipe_sysroot</filename></link>
+                task and when
+                this task executes, it creates the
+                <filename>recipe-sysroot</filename> and
+                <filename>recipe-sysroot-native</filename> in the recipe
+                work directory (i.e.
+                <link linkend='var-WORKDIR'><filename>WORKDIR</filename></link>.
+                The OpenEmbedded build system creates hard links to copies of the
+                relevant files from <filename>sysroot-components</filename>
+                into the recipe work directory.
+                <note>
+                    If hard links are not possible, the build system uses
+                    actual copies.
+                </note>
+                The build system then addresses any "FIXMEs" to paths as
+                defined from the list created in the first stage.
+                </para>
+
+                <para>
+                Finally, any files in <filename>${bindir}</filename>
+                within the sysroot that have the prefix
+                "<filename>postinst-</filename>" are executed.
+                <note>
+                    Although these files are not recommended for general use,
+                    the files do allow some issues such as user creation
+                    and module indexes to be addressed.
+                </note>
+                </para>
+
+                <para>
+                Because recipes can have other dependencies outside of
+                <filename>DEPENDS</filename> (e.g.
+                <filename>do_unpack[depends] += "tar-native:do_populate_sysroot"</filename>),
+                the sysroot creation function
+                <filename>extend_recipe_sysroot</filename> is also added as
+                a pre-function for those tasks whose dependencies are not
+                through <filename>DEPENDS</filename> but operate similarly.
+                </para>
+
+                <para>
+                When installing dependencies into the sysroot, the code
+                traverses the dependency graph and processes dependencies
+                in exactly the same way as the dependencies would or would not
+                be when installed from sstate.
+                This processing means, for example, a native tool would have
+                its native dependencies added but a target library would not
+                have its dependencies traversed or installed.
+                The same sstate dependency code is used so that
+                builds should be identical regardless of whether sstate
+                was used or not.
+                For a closer look, see the
+                <filename>setscene_depvalid()</filename> function in the
+                <link linkend='ref-classes-sstate'><filename>sstate</filename></link>
+                class.
+                </para>
+
+                <para>
+                The build system is careful to maintain manifests of the files
+                it installs so that any given dependency can be installed as
+                needed.
+                The sstate hash of the installed item is also stored so that
+                if it changes, the build system can reinstall it.
+                </para></listitem>
+        </itemizedlist>
     </para>
 </section>
 
