@@ -7854,8 +7854,6 @@
             <title>Incrementing a Package Version</title>
 
             <para>
-                The scheme the OpenEmbedded build system uses for binary
-                package versioning is a bit involved.
                 This section provides some background on how binary package
                 versioning is accomplished and presents some of the services,
                 variables, and terminology involved.
@@ -7874,7 +7872,7 @@
                         is composed of two components - a version and a
                         revision.
                         <note>
-                            Technically, the "epoch" (i.e.
+                            Technically, a third component, the "epoch" (i.e.
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-PE'><filename>PE</filename></ulink>)
                             is involved but this discussion for the most part
                             ignores <filename>PE</filename>.
@@ -7886,17 +7884,21 @@
                         variables, respectively.
                         </para></listitem>
                     <listitem><para>
-                        <filename>PV</filename>:  The recipe version, which is
-                        not to be confused with the binary package version.
+                        <filename>PV</filename>:  The recipe version.
+                        <filename>PV</filename> represents the version of the
+                        software being packaged.
+                        Do not confuse <filename>PV</filename> with the
+                        binary package version.
                         </para></listitem>
                     <listitem><para>
                         <filename>PR</filename>:  The recipe revision.
                         </para></listitem>
                     <listitem><para>
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCPV'><filename>SRCPV</filename></ulink>:
-                        The Version string of the binary package.
                         The OpenEmbedded build system uses this string
-                        to help define the value of <filename>PV</filename>.
+                        to help define the value of <filename>PV</filename>
+                        when the source code revision needs to be included
+                        in it.
                         </para></listitem>
                     <listitem><para>
                         <ulink url='https://wiki.yoctoproject.org/wiki/PR_Service'>PR Service</ulink>:
@@ -7908,7 +7910,7 @@
             </para>
 
             <para>
-                Whenever the binary package output changes, the binary package
+                Whenever the binary package content changes, the binary package
                 version must change.
                 Changing the binary package version is accomplished by changing
                 or "bumping" the <filename>PR</filename> and/or
@@ -7937,7 +7939,7 @@
                 progression.
                 For information on how to ensure package revisioning remains
                 linear, see the
-                "<link linkend='incrementing-a-binary-package-revision-number'>Incrementing a Binary Package Revision Number</link>"
+                "<link linkend='automatically-incrementing-a-binary-package-revision-number'>Automatically Incrementing a Binary Package Revision Number</link>"
                 section.
             </para>
 
@@ -8154,18 +8156,18 @@
                 </para>
             </section>
 
-            <section id='incrementing-a-binary-package-revision-number'>
-                <title>Incrementing a Binary Package Revision Number</title>
+            <section id='automatically-incrementing-a-binary-package-revision-number'>
+                <title>Automatically Incrementing a Package Version Number</title>
 
                 <para>
                     When fetching a repository, BitBake uses the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
-                    variable to determine the specific revision from which to
-                    build.
+                    variable to determine the specific source code revision
+                    from which to build.
                     You set the <filename>SRCREV</filename> variable to
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-AUTOREV'><filename>AUTOREV</filename></ulink>
                     to cause the OpenEmbedded build system to automatically use the
-                    latest revision of the package:
+                    latest revision of the software:
                     <literallayout class='monospaced'>
      SRCREV = "${AUTOREV}"
                     </literallayout>
@@ -8174,8 +8176,8 @@
                 <para>
                     Furthermore, you need to reference <filename>SRCPV</filename>
                     in <filename>PV</filename> in order to automatically update
-                    the binary package version whenever the revision of the
-                    source code changes.
+                    the version whenever the revision of the source code
+                    changes.
                     Here is an example:
                     <literallayout class='monospaced'>
      PV = "1.0+git${SRCPV}"
