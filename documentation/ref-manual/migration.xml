@@ -3963,15 +3963,23 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
         Yocto Project 2.3 Release from the prior release.
     </para>
 
-    <section id='migration-2.3-sysroots'>
-        <title>Sysroots</title>
+    <section id='migration-2.3-recipe-specific-sysroots'>
+        <title>Recipe-specific Sysroots</title>
 
         <para>
             The Open-Embedded build system now uses one sysroot per
             recipe to resolve long-standing issues with configuration
             script auto-detection of undeclared dependencies.
-            Consequently, you must explicitly declare all build-time
-            dependencies for your recipe.
+            Consequently, you might find that some of your previously
+            written custom recipes are missing declared dependencies,
+            particularly those dependencies that are incidentally built
+            earlier in a typical build process and thus are already likely
+            to be present in the shared sysroot in a previous release.
+        </para>
+
+        <para>
+            Because of this new feature, you must explicitly declare all
+            build-time dependencies for your recipe.
             If you do not declare these dependencies, they are not
             populated into the sysroot for the recipe.
         </para>
@@ -3987,11 +3995,14 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
         <title><filename>PATH</filename> Variable</title>
 
         <para>
-            The environment variable <filename>PATH</filename> is now
-            sanitized such that symbolic links linking only the binaries
-            from the host mentioned in the
-            <filename>HOSTTOOLS</filename> and
-            <filename>HOSTTOOLS_NONFATAL</filename> variables into
+            Within the environment used to run build tasks, the environment
+            variable <filename>PATH</filename> is now sanitized such that
+            symbolic links linking only the binaries from the host mentioned
+            in the
+            <link linkend='var-HOSTTOOLS'><filename>HOSTTOOLS</filename></link>
+            and
+            <link linkend='var-HOSTTOOLS_NONFATAL'><filename>HOSTTOOLS_NONFATAL</filename></link>
+            variables into
             their own directory are added to <filename>PATH</filename>.
             Consequently, any native binaries that you need to call should
             either be in one of these two variables at the configuration
@@ -3999,10 +4010,17 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
         </para>
 
         <para>
-            Alternatively, you can use a native recipe (i.e.
-            <filename>-native</filename>) that includes the recipe's
+            Alternatively, you can add a native recipe (i.e.
+            <filename>-native</filename>) that provides the
+            binary to the recipe's
             <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>
             value.
+            <note>
+                <filename>PATH</filename> is not sanitized in the same way
+                within <filename>devshell</filename>.
+                If it were, you would have difficulty running host tools for
+                development and debugging within the shell.
+            </note>
         </para>
     </section>
 
@@ -4023,29 +4041,6 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
         </para>
     </section>
 
-    <section id='migration-2.3-dependency-tree-information'>
-        <title>Dependency Tree Information</title>
-
-        <para>
-            The <filename>package-depends.dot</filename> and
-            <filename>pn-depends.dot</filename> files as previously generated
-            using the <filename>bitbake -g</filename> command have been
-            removed.
-            A <filename>recipe-depends.dot</filename> file
-            is now generated as a collapsed version of
-            <filename>task-depends.dot</filename> instead.
-        </para>
-
-        <para>
-            The reason for this change is because
-            <filename>package-depends.dot</filename> and
-            <filename>pn-depends.dot</filename> largely date back to a time
-            before task-based execution and do not take into account
-            task-level dependencies between recipes, which could be
-            misleading.
-        </para>
-    </section>
-
     <section id='migration-2.3-bitbake-changes'>
         <title>BitBake Changes</title>
 
@@ -4053,9 +4048,37 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
             The following changes took place for BitBake:
             <itemizedlist>
                 <listitem><para>
+                    <emphasis>BitBake's Graphical Dependency Explorer UI Replaced:</emphasis>
                     BitBake's graphical dependency explorer UI
                     <filename>depexp</filename> was replaced by
-                    <filename>taskexp</filename>.
+                    <filename>taskexp</filename> ("Task Explorer"), which
+                    provides a graphical way of exploring the
+                    <filename>task-depends.dot</filename> file.
+                    The data presented by Task Explorer is much more
+                    accurate than the data that is presented by
+                    <filename>depexp</filename>.
+                    Being able to visualize the data is an often requested
+                    feature as standard <filename>*.dot</filename> file
+                    viewers cannot usual cope with the size of
+                    the <filename>task-depends.dot</filename> file.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Dependency Tree Information Removals:</emphasis>
+                    The <filename>package-depends.dot</filename> and
+                    <filename>pn-depends.dot</filename> files as previously
+                    generated using the <filename>bitbake -g</filename> command
+                    have been removed.
+                    A <filename>recipe-depends.dot</filename> file
+                    is now generated as a collapsed version of
+                    <filename>task-depends.dot</filename> instead.
+                    </para>
+
+                    <para>The reason for this change is because
+                    <filename>package-depends.dot</filename> and
+                    <filename>pn-depends.dot</filename> largely date back
+                    to a time before task-based execution and do not take
+                    into account task-level dependencies between recipes,
+                    which could be misleading.
                     </para></listitem>
             </itemizedlist>
         </para>
@@ -4067,6 +4090,17 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
         <para>
             Absolute symbolic links (symlinks) within staged files are no
             longer permitted and now trigger an error.
+            Any explicit creation of symlinks can use the
+            <filename>lnr</filename> script, which is a replacement for
+            <filename>ln -r</filename>.
+        </para>
+
+        <para>
+            If the build scripts in the software that the recipe is building
+            are creating a number of absolute symlinks that need to be
+            corrected, you can inherit
+            <filename>relative_symlinks</filename> within the recipe to turn
+            those absolute symlinks into relative symlinks.
         </para>
     </section>
 
@@ -4076,6 +4110,39 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
         <para>
             Older GPLv2 versions of GPLv3 recipes have moved to a
             separate <filename>meta-gplv2</filename> layer.
+        </para>
+
+        <para>
+            If you use
+            <link linkend='var-INCOMPATIBLE_LICENSE'><filename>INCOMPATIBLE_LICENSE</filename></link>
+            to exclude GPLv3 or set
+            <link linkend='var-PREFERRED_VERSION'><filename>PREFERRED_VERSION</filename></link>
+            to select recipes that use GPLv3, then you must add the
+            <filename>meta-gplv2</filename> layer to your configuration.
+            <note>
+                You can find <filename>meta-gplv2</filename> layer in the
+                OpenEmbedded layer index at
+                <ulink url='https://layers.openembedded.org/layerindex/branch/master/layer/meta-gplv2/'></ulink>.
+            </note>
+        </para>
+
+        <para>
+            These relocated GPLv3 recipes do not receive the same level of
+            maintenance as other core recipes.
+            The recipes do not get security fixes and upstream no longer
+            maintains them.
+            In fact, the upstream community is actively hostile towards people
+            that use the old versions of the recipes.
+            Moving these recipes into a separate layer both makes the different
+            needs of the recipes clearer and clearly identifies the number of
+            these recipes.
+            <note>
+                The long-term solution might be to move to BSD-licensed
+                replacements of the GPLv3 components for those that need to
+                exclude GPLv3-licensed components from the target system.
+                This solution will be investigated for future Yocto
+                Project releases.
+            </note>
         </para>
     </section>
 
@@ -4109,30 +4176,30 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
                             it and maintaining the port is non-trivial.
                             </para></listitem>
                         <listitem><para>
-                            Rpm 5.x itself is more or less unmaintained both
-                            in the upstream and in Yocto Project.
-                            Community support does not exist around it and
-                            the Yocto Project is the sole remaining user.
+                            Rpm 5.x itself has limited maintenance upstream,
+                            and the Yocto Project is one of the very few
+                            remaining users.
                             </para></listitem>
                     </itemizedlist>
                     </para></listitem>
                 <listitem><para>
-                    Berkeley db 6.x is removed and Berkeley db 5.x becomes
+                    Berkeley DB 6.x is removed and Berkeley DB 5.x becomes
                     the default:
                     <itemizedlist>
                         <listitem><para>
-                            Version 6.x of Berkeley DB has been rejected
-                            by the open source community due to its hostile
+                            Version 6.x of Berkeley DB has largely been
+                            rejected by the open source community due to its
                             AGPLv3 license.
-                            Both Fedora and Debian are sticking
-                            with db 5.x.
+                            As a result, most mainstream open source projects
+                            that require DB are still developed and tested with
+                            DB 5.x.
                             By extension,all the open source projects are still
-                            developed and tested with db 5.x
+                            developed and tested with DB 5.x
                             </para></listitem>
                         <listitem><para>
                             In OE-core, the only thing that was requiring
-                            db 6.x was Rpm 5.x.
-                            Thus, no reason exists to continue carrying db 6.x
+                            DB 6.x was Rpm 5.x.
+                            Thus, no reason exists to continue carrying DB 6.x
                             in OE-core.
                             </para></listitem>
                     </itemizedlist>
@@ -4162,11 +4229,15 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
                     </para></listitem>
                 <listitem><para>
                     Signing of remote package feeds using
-                    <filename>PACKAGE_FEED_SIGN</filename> is not supported.
+                    <filename>PACKAGE_FEED_SIGN</filename>
+                    is not currently supported.
+                    This issue will be fully addressed in a future
+                    Yocto Project release.
                     <note>
                         See the defect
                         <ulink url='https://bugzilla.yoctoproject.org/show_bug.cgi?id=11209'>11209</ulink>
-                        for more information on a solution.
+                        for more information on a solution to package feed
+                        signing with RPM in the Yocto Project 2.3 release.
                     </note>
                     </para></listitem>
             </itemizedlist>
