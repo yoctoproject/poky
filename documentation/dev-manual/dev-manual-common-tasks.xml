@@ -10665,16 +10665,16 @@
         </para>
 
         <para>
-            To help get past the previously mentioned constraints, you can use Gdbserver.
-            Gdbserver runs on the remote target and does not load any debugging information
-            from the debugged process.
+            To help get past the previously mentioned constraints, you can use
+            gdbserver, which runs on the remote target and does not load any
+            debugging information from the debugged process.
             Instead, a GDB instance processes the debugging information that is run on a
             remote computer - the host GDB.
-            The host GDB then sends control commands to Gdbserver to make it stop or start the debugged
+            The host GDB then sends control commands to gdbserver to make it stop or start the debugged
             program, as well as read or write memory regions of that debugged program.
             All the debugging information loaded and processed as well
             as all the heavy debugging is done by the host GDB.
-            Offloading these processes gives the Gdbserver running on the target a chance to remain
+            Offloading these processes gives the gdbserver running on the target a chance to remain
             small and fast.
         </para>
 
@@ -10685,7 +10685,7 @@
             with their debugging information and also be sure the target is compiled with no optimizations.
             The host GDB must also have local access to all the libraries used by the
             debugged program.
-            Because Gdbserver does not need any local debugging information, the binaries on
+            Because gdbserver does not need any local debugging information, the binaries on
             the remote target can remain stripped.
             However, the binaries must also be compiled without optimization
             so they match the host's binaries.
@@ -10728,7 +10728,7 @@
                     the partial filesystem with the full filesystem.
                     </para></listitem>
                 <listitem><para>
-                    <emphasis>Configure the system to include Gdbserver in
+                    <emphasis>Configure the system to include gdbserver in
                     the target filesystem:</emphasis></para>
 
                     <para>Make the following addition in either your
@@ -10825,18 +10825,18 @@
                 <listitem><para>
                     <emphasis>Debug a program:</emphasis></para>
 
-                    <para>Debugging a program involves running Gdbserver
+                    <para>Debugging a program involves running gdbserver
                     on the target and then running Gdb on the host.
                     The example in this step debugs
                     <filename>gzip</filename>:
                     <literallayout class='monospaced'>
      root@qemux86:~# gdbserver localhost:1234 /bin/gzip —help
                     </literallayout>
-                    For additional Gdbserver options, see the
-                    <ulink url='https://www.gnu.org/software/gdb/documentation/'>Gdb Server Documentation</ulink>.
+                    For additional gdbserver options, see the
+                    <ulink url='https://www.gnu.org/software/gdb/documentation/'>GDB Server Documentation</ulink>.
                     </para>
 
-                    <para>After running Gdbserver on the target, you need
+                    <para>After running gdbserver on the target, you need
                     to run Gdb on the host and configure it and connect to
                     the target.
                     Use these commands:
@@ -10906,10 +10906,10 @@
         </section>
 
         <section id="platdev-gdb-remotedebug-launch-gdbserver">
-            <title>Launch Gdbserver on the Target</title>
+            <title>Launch gdbserver on the Target</title>
 
             <para>
-                Make sure Gdbserver is installed on the target.
+                Make sure gdbserver is installed on the target.
                 If it is not, install the package
                 <filename>gdbserver</filename>, which needs the
                 <filename>libthread-db1</filename> package.
@@ -10917,15 +10917,15 @@
 
             <para>
                 Here is an example, that when entered from the host,
-                connects to the target and launches Gdbserver in order to
+                connects to the target and launches gdbserver in order to
                 "debug" a binary named <filename>helloworld</filename>:
                 <literallayout class='monospaced'>
      $ gdbserver localhost:2345 /usr/bin/helloworld
                 </literallayout>
-                Gdbserver should now be listening on port 2345 for debugging
+                gdbserver should now be listening on port 2345 for debugging
                 commands coming from a remote GDB process that is running on
                 the host computer.
-                Communication between Gdbserver and the host GDB are done
+                Communication between gdbserver and the host GDB are done
                 using TCP.
                 To use other communication protocols, please refer to the
                 <ulink url='http://www.gnu.org/software/gdb/'>Gdbserver documentation</ulink>.
