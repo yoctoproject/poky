@@ -736,65 +736,6 @@
         </para>
     </section>
 
-    <section id='checking-for-missing-build-time-dependencies'>
-        <title>Checking for Missing Build-Time Dependencies</title>
-
-        <para>
-            A recipe might build successfully even though some of its
-            build-time dependencies are missing from
-            <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>.
-            Following are the two most common ways in which that can happen:
-            <itemizedlist>
-                <listitem><para>
-                    The build-time dependency just happens to already exist in
-                    the staging sysroot
-                    (<link linkend='var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></link>)
-                    by the time the recipe is built.
-                    This situation occurs when the build-time dependency is
-                    built earlier during recipe processing.
-                    </para></listitem>
-                <listitem><para>
-                    The component built by the recipe conditionally enables
-                    functionality depending on whether it can find the
-                    build-time dependency in the staging sysroot.
-                    If the build-time dependency is missing, the corresponding
-                    functionality is disabled.
-                    This condition is known as a "floating dependency".
-                    </para></listitem>
-            </itemizedlist>
-        </para>
-
-        <para>
-            Because dealing with the second case is more complex, focus will
-            be on the first case.
-            The
-            <link linkend='ref-classes-insane'><filename>build-deps</filename></link>
-            QA check checks that every library the component linked against is
-            declared as a build-time dependency.
-            If that is not the case, then the first situation described in the
-            previous list exists, and <filename>build-deps</filename> reports
-            a missing build-time dependency.
-        </para>
-
-        <para>
-            Another, more manual, way to check a recipe for missing build-time
-            dependencies of the first type is to build with an empty staging
-            sysroot.
-            This method can also find missing build-time dependencies
-            that are not in the form of libraries, which the
-            <filename>build-deps</filename> QA check is unable to find.
-        </para>
-
-        <para>
-            An easy way to empty the staging sysroots is to simply remove
-            <link linkend='var-TMPDIR'><filename>TMPDIR</filename></link>,
-            which is usually
-            <filename>${</filename><link linkend='var-BUILDDIR'><filename>BUILDDIR</filename></link><filename>}/tmp</filename>,
-            as it includes the staging sysroots.
-        </para>
-
-    </section>
-
     <section id='usingpoky-debugging-bitbake'>
         <title>General BitBake Problems</title>
 
