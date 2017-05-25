@@ -7441,21 +7441,30 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-LAYERDEPENDS'><glossterm>LAYERDEPENDS</glossterm>
             <info>
-                LAYERDEPENDS[doc] = "Lists the layers, separated by spaces, upon which this recipe depends. This variable is used in the conf/layer.conf file and must be suffixed with the name of the specific layer."
+                LAYERDEPENDS[doc] = "Lists the layers, separated by spaces, on which this recipe depends. This variable is used in the conf/layer.conf file and must be suffixed with the name of the specific layer."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Lists the layers that this recipe depends upon, separated by spaces.
-                    Optionally, you can specify a specific layer version for a dependency
-                    by adding it to the end of the layer name with a colon, (e.g. "anotherlayer:3"
-                    to be compared against
-                    <link linkend='var-LAYERVERSION'><filename>LAYERVERSION</filename></link><filename>_anotherlayer</filename>
-                    in this case).
-                    An error will be produced if any dependency is missing or
-                    the version numbers do not match exactly (if specified).
-                    This variable is used in the <filename>conf/layer.conf</filename> file
-                    and must be suffixed with the name of the specific layer (e.g.
+                    Lists the layers, separated by spaces, on which this
+                    recipe depends.
+                    Optionally, you can specify a specific layer version for a
+                    dependency by adding it to the end of the layer name.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     LAYERDEPENDS_mylayer = "anotherlayer (=3)"
+                    </literallayout>
+                    In this previous example, version 3 of "anotherlayer"
+                    is compared against
+                    <link linkend='var-LAYERVERSION'><filename>LAYERVERSION</filename></link><filename>_anotherlayer</filename>.
+                </para>
+
+                <para>
+                    An error is produced if any dependency is missing or
+                    the version numbers (if specified) do not match exactly.
+                    This variable is used in the
+                    <filename>conf/layer.conf</filename> file and must be
+                    suffixed with the name of the specific layer (e.g.
                     <filename>LAYERDEPENDS_mylayer</filename>).
                 </para>
             </glossdef>
