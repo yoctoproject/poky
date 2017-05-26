@@ -1,14 +1,10 @@
-from oeqa.selftest.base import oeSelfTest
-from oeqa.utils.commands import runCmd, bitbake, get_bb_var, runqemu
-from oeqa.utils.decorators import testcase
-import re
 import os
-import sys
-import logging
 
+from oeqa.selftest.case import OESelftestTestCase
+from oeqa.core.decorator.oeid import OETestID
+from oeqa.utils.commands import runCmd, bitbake, get_bb_var, runqemu
 
-class Systemdboot(oeSelfTest):
-
+class Systemdboot(OESelftestTestCase):
     def _common_setup(self):
         """
         Common setup for test cases: 1445, XXXX
@@ -28,7 +24,7 @@ class Systemdboot(oeSelfTest):
         bitbake('mtools-native core-image-minimal')
 
 
-    @testcase(1445)
+    @OETestID(1445)
     def test_efi_systemdboot_images_can_be_built(self):
         """
         Summary:     Check if systemd-boot images can be built correctly
