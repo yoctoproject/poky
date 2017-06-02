@@ -9653,7 +9653,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-PACKAGECONFIG_CONFARGS'><glossterm>PACKAGECONFIG_CONFARGS</glossterm>
             <info>
-                PACKAGECONFIG_CONFARGS[doc] = "A space-separated list of configuration options generated from PACKAGECONFIG."
+                PACKAGECONFIG_CONFARGS[doc] = "A space-separated list of configuration options generated from the PACKAGECONFIG setting."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
@@ -9662,11 +9662,25 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     from the
                     <link linkend='var-PACKAGECONFIG'><filename>PACKAGECONFIG</filename></link>
                     setting.
-                    This list of options helps other classes and
-                    recipes take advantage of the
-                    <filename>PACKAGECONFIG</filename> mechanism without
-                    having to include options from
-                    <link linkend='var-EXTRA_OECONF'><filename>EXTRA_OECONF</filename></link>.
+                </para>
+
+                <para>
+                    Classes such as
+                    <link linkend='ref-classes-autotools'><filename>autotools</filename></link>
+                    and
+                    <link linkend='ref-classes-cmake'><filename>cmake</filename></link>
+                    use <filename>PACKAGECONFIG_CONFARGS</filename> to pass
+                    <link linkend='var-PACKAGECONFIG'><filename>PACKAGECONFIG</filename></link>
+                    options to tasks such as
+                    <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>
+                    and
+                    <link linkend='ref-tasks-cmake'><filename>do_cmake</filename></link>,
+                    respectively.
+                    If you are using
+                    <filename>PACKAGECONFIG</filename> but not a class that
+                    handles the <filename>do_configure</filename> task, then
+                    you need to use
+                    <filename>PACKAGECONFIG_CONFARGS</filename> appropriately.
                 </para>
 
                 <para>
