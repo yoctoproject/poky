@@ -255,21 +255,16 @@ Reset the board
 
     and flash it to NOR flash as described above.
 
- 6. Set fdtaddr and loadaddr. This is not necessary if you set them before.
-
- => setenv fdtaddr a00000
- => setenv loadaddr 1000000
-
- 7. Load the kernel and dtb from first partition of the USB disk:
+ 6. Load the kernel and dtb from the first partition of the USB disk:
 
  => usb start
- => ext2load usb 0:1 $loadaddr uImage
- => ext2load usb 0:1 $fdtaddr dtb
+ => ext2load usb 0:1 1000000 uImage
+ => ext2load usb 0:1 2000000 dtb
 
- 8. Set bootargs and boot up the device
+ 7. Set bootargs and boot up the device
 
  => setenv bootargs root=/dev/sdb2 rw rootwait console=ttyS0,115200
- => bootm $loadaddr - $fdtaddr
+ => bootm 1000000 - 2000000
 
 
 --- Booting from NFS root ---
