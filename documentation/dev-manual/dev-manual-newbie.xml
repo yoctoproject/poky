@@ -1722,8 +1722,8 @@
         </para>
 
         <para>
-            Depending on the components changed, you need to submit the email to a specific
-            mailing list.
+            Depending on the components changed, you need to submit the email
+            to a specific mailing list.
             For some guidance on which mailing list to use, see the list in the
             "<link linkend='how-to-submit-a-change'>How to Submit a Change</link>"
             section.
@@ -1735,24 +1735,34 @@
         <para>
             Here is the general procedure on how to submit a patch through email without using the
             scripts:
-            <itemizedlist>
-                <listitem><para>Make your changes in your local Git repository.</para></listitem>
-                <listitem><para>Stage your changes by using the <filename>git add</filename>
-                    command on each file you changed.</para></listitem>
-                <listitem><para>Commit the change by using the
+            <orderedlist>
+                <listitem><para>
+                    Make your changes in your local Git repository.
+                    </para></listitem>
+                <listitem><para>
+                    Stage your changes by using the
+                    <filename>git add</filename> command on each file you
+                    changed.
+                    </para></listitem>
+                <listitem><para>
+                    Commit the change by using the
                     <filename>git commit --signoff</filename> command.
-                    Using the <filename>--signoff</filename> option identifies you as the person
-                    making the change and also satisfies the Developer's Certificate of
-                    Origin (DCO) shown earlier.</para>
-                    <para>When you form a commit, you must follow certain standards established by the
-                    Yocto Project development team.
+                    Using the <filename>--signoff</filename> option identifies
+                    you as the person making the change and also satisfies
+                    the Developer's Certificate of Origin (DCO) shown earlier.
+                    </para>
+                    <para>When you form a commit, you must follow certain
+                    standards established by the Yocto Project development
+                    team.
                     See the earlier section
                     "<link linkend='how-to-submit-a-change'>How to Submit a Change</link>"
-                    for Yocto Project commit message standards.</para></listitem>
+                    for Yocto Project commit message standards.
+                    </para></listitem>
                 <listitem><para>Format the commit into an email message.
-                    To format commits, use the <filename>git format-patch</filename> command.
-                    When you provide the command, you must include a revision list or a number of patches
-                    as part of the command.
+                    To format commits, use the
+                    <filename>git format-patch</filename> command.
+                    When you provide the command, you must include a revision
+                    list or a number of patches as part of the command.
                     For example, either of these two commands takes your most
                     recent single commit and formats it as an email message in
                     the current directory:
@@ -1763,50 +1773,69 @@
                     <literallayout class='monospaced'>
      $ git format-patch HEAD~
                     </literallayout></para>
-                    <para>After the command is run, the current directory contains a
-                    numbered <filename>.patch</filename> file for the commit.</para>
-                    <para>If you provide several commits as part of the command,
-                    the <filename>git format-patch</filename> command produces a
-                    series of numbered files in the current directory – one for each commit.
+                    <para>After the command is run, the current directory
+                    contains a numbered <filename>.patch</filename> file for
+                    the commit.</para>
+                    <para>If you provide several commits as part of the
+                    command, the <filename>git format-patch</filename> command
+                    produces a series of numbered files in the current
+                    directory – one for each commit.
                     If you have more than one patch, you should also use the
-                    <filename>--cover</filename> option with the command, which generates a
-                    cover letter as the first "patch" in the series.
-                    You can then edit the cover letter to provide a description for
-                    the series of patches.
-                    For information on the <filename>git format-patch</filename> command,
-                    see <filename>GIT_FORMAT_PATCH(1)</filename> displayed using the
-                    <filename>man git-format-patch</filename> command.</para>
-                    <note>If you are or will be a frequent contributor to the Yocto Project
-                    or to OpenEmbedded, you might consider requesting a contrib area and the
-                    necessary associated rights.</note></listitem>
-                <listitem><para>Import the files into your mail client by using the
+                    <filename>--cover</filename> option with the command,
+                    which generates a cover letter as the first "patch" in
+                    the series.
+                    You can then edit the cover letter to provide a
+                    description for the series of patches.
+                    For information on the
+                    <filename>git format-patch</filename> command,
+                    see <filename>GIT_FORMAT_PATCH(1)</filename> displayed
+                    using the <filename>man git-format-patch</filename>
+                    command.
+                    <note>
+                        If you are or will be a frequent contributor to the
+                        Yocto Project or to OpenEmbedded, you might consider
+                        requesting a contrib area and the necessary associated
+                        rights.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    Import the files into your mail client by using the
                     <filename>git send-email</filename> command.
-                    <note>In order to use <filename>git send-email</filename>, you must have the
-                    the proper Git packages installed.
-                    For Ubuntu, Debian, and Fedora the package is <filename>git-email</filename>.</note></para>
-                    <para>The <filename>git send-email</filename> command sends email by using a local
-                    or remote Mail Transport Agent (MTA) such as
-                    <filename>msmtp</filename>, <filename>sendmail</filename>, or through a direct
-                    <filename>smtp</filename> configuration in your Git <filename>config</filename>
-                    file.
-                    If you are submitting patches through email only, it is very important
-                    that you submit them without any whitespace or HTML formatting that
-                    either you or your mailer introduces.
-                    The maintainer that receives your patches needs to be able to save and
-                    apply them directly from your emails.
-                    A good way to verify that what you are sending will be applicable by the
-                    maintainer is to do a dry run and send them to yourself and then
-                    save and apply them as the maintainer would.</para>
-                    <para>The <filename>git send-email</filename> command is the preferred method
-                    for sending your patches since there is no risk of compromising whitespace
-                    in the body of the message, which can occur when you use your own mail client.
+                    <note>
+                        In order to use <filename>git send-email</filename>,
+                        you must have the proper Git packages installed.
+                        For Ubuntu, Debian, and Fedora the package is
+                        <filename>git-email</filename>.
+                    </note></para>
+                    <para>The <filename>git send-email</filename> command
+                    sends email by using a local or remote Mail Transport Agent
+                    (MTA) such as <filename>msmtp</filename>,
+                    <filename>sendmail</filename>, or through a direct
+                    <filename>smtp</filename> configuration in your Git
+                    <filename>config</filename> file.
+                    If you are submitting patches through email only, it is
+                    very important that you submit them without any whitespace
+                    or HTML formatting that either you or your mailer
+                    introduces.
+                    The maintainer that receives your patches needs to be able
+                    to save and apply them directly from your emails.
+                    A good way to verify that what you are sending will be
+                    applicable by the maintainer is to do a dry run and send
+                    them to yourself and then save and apply them as the
+                    maintainer would.</para>
+                    <para>The <filename>git send-email</filename> command is
+                    the preferred method for sending your patches since there
+                    is no risk of compromising whitespace in the body of the
+                    message, which can occur when you use your own mail client.
                     The command also has several options that let you
-                    specify recipients and perform further editing of the email message.
-                    For information on how to use the <filename>git send-email</filename> command,
+                    specify recipients and perform further editing of the
+                    email message.
+                    For information on how to use the
+                    <filename>git send-email</filename> command,
                     see <filename>GIT-SEND-EMAIL(1)</filename> displayed using
                     the <filename>man git-send-email</filename> command.
                     </para></listitem>
-            </itemizedlist>
+            </orderedlist>
         </para>
     </section>
 </section>
