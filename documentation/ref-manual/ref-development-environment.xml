@@ -65,6 +65,197 @@
     </para>
 </section>
 
+<section id='workflows'>
+    <title>Workflows</title>
+
+    <para>
+        This section provides workflow concepts using the Yocto Project and
+        Git.
+        In particular, the information covers basic practices that describe
+        roles and actions in a collaborative development environment.
+        <note>
+            If you are familiar with this type of development environment, you
+            might not want to read this section.
+        </note>
+    </para>
+
+    <para>
+        The Yocto Project files are maintained using Git in "master"
+        branches whose Git histories track every change and whose structures
+        provides branches for all diverging functionality.
+        Although there is no need to use Git, many open source projects do so.
+    <para>
+
+    </para>
+        For the Yocto Project, a key individual called the "maintainer" is
+        responsible for the "master" branch of a given Git repository.
+        The "master" branch is the “upstream” repository from which final or
+        most recent builds of the project occur.
+        The maintainer is responsible for accepting changes from other
+        developers and for organizing the underlying branch structure to
+        reflect release strategies and so forth.
+        <note>For information on finding out who is responsible for (maintains)
+            a particular area of code, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change'>How to Submit a Change</ulink>"
+            section of the Yocto Project Development Manual.
+        </note>
+    </para>
+
+    <para>
+        The Yocto Project <filename>poky</filename> Git repository also has an
+        upstream contribution Git repository named
+        <filename>poky-contrib</filename>.
+        You can see all the branches in this repository using the web interface
+        of the
+        <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink> organized
+        within the "Poky Support" area.
+        These branches temporarily hold changes to the project that have been
+        submitted or committed by the Yocto Project development team and by
+        community members who contribute to the project.
+        The maintainer determines if the changes are qualified to be moved
+        from the "contrib" branches into the "master" branch of the Git
+        repository.
+    </para>
+
+    <para>
+        Developers (including contributing community members) create and
+        maintain cloned repositories of the upstream "master" branch.
+        The cloned repositories are local to their development platforms and
+        are used to develop changes.
+        When a developer is satisfied with a particular feature or change,
+        they "push" the changes to the appropriate "contrib" repository.
+    </para>
+
+    <para>
+        Developers are responsible for keeping their local repository
+        up-to-date with "master".
+        They are also responsible for straightening out any conflicts that
+        might arise within files that are being worked on simultaneously by
+        more than one person.
+        All this work is done locally on the developer’s machine before
+        anything is pushed to a "contrib" area and examined at the maintainer’s
+        level.
+    </para>
+
+    <para>
+        A somewhat formal method exists by which developers commit changes
+        and push them into the "contrib" area and subsequently request that
+        the maintainer include them into "master".
+        This process is called “submitting a patch” or "submitting a change."
+        For information on submitting patches and changes, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change'>How to Submit a Change</ulink>"
+        section in the Yocto Project Development Manual.
+    </para>
+
+    <para>
+        To summarize the development workflow:  a single point of entry
+        exists for changes into the project’s "master" branch of the
+        Git repository, which is controlled by the project’s maintainer.
+        And, a set of developers exist who independently develop, test, and
+        submit changes to "contrib" areas for the maintainer to examine.
+        The maintainer then chooses which changes are going to become a
+        permanent part of the project.
+    </para>
+
+    <para>
+        <imagedata fileref="figures/git-workflow.png" width="6in" depth="3in" align="left" scalefit="1" />
+    </para>
+
+    <para>
+        While each development environment is unique, there are some best
+        practices or methods that help development run smoothly.
+        The following list describes some of these practices.
+        For more information about Git workflows, see the workflow topics in
+        the
+        <ulink url='http://book.git-scm.com'>Git Community Book</ulink>.
+        <itemizedlist>
+            <listitem><para>
+                <emphasis>Make Small Changes:</emphasis>
+                It is best to keep the changes you commit small as compared to
+                bundling many disparate changes into a single commit.
+                This practice not only keeps things manageable but also allows
+                the maintainer to more easily include or refuse changes.</para>
+
+                <para>It is also good practice to leave the repository in a
+                state that allows you to still successfully build your project.
+                In other words, do not commit half of a feature,
+                then add the other half as a separate, later commit.
+                Each commit should take you from one buildable project state
+                to another buildable state.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Use Branches Liberally:</emphasis>
+                It is very easy to create, use, and delete local branches in
+                your working Git repository.
+                You can name these branches anything you like.
+                It is helpful to give them names associated with the particular
+                feature or change on which you are working.
+                Once you are done with a feature or change and have merged it
+                into your local master branch, simply discard the temporary
+                branch.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Merge Changes:</emphasis>
+                The <filename>git merge</filename> command allows you to take
+                the changes from one branch and fold them into another branch.
+                This process is especially helpful when more than a single
+                developer might be working on different parts of the same
+                feature.
+                Merging changes also automatically identifies any collisions
+                or "conflicts" that might happen as a result of the same lines
+                of code being altered by two different developers.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Manage Branches:</emphasis>
+                Because branches are easy to use, you should use a system
+                where branches indicate varying levels of code readiness.
+                For example, you can have a "work" branch to develop in, a
+                "test" branch where the code or change is tested, a "stage"
+                branch where changes are ready to be committed, and so forth.
+                As your project develops, you can merge code across the
+                branches to reflect ever-increasing stable states of the
+                development.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Use Push and Pull:</emphasis>
+                The push-pull workflow is based on the concept of developers
+                "pushing" local commits to a remote repository, which is
+                usually a contribution repository.
+                This workflow is also based on developers "pulling" known
+                states of the project down into their local development
+                repositories.
+                The workflow easily allows you to pull changes submitted by
+                other developers from the upstream repository into your
+                work area ensuring that you have the most recent software
+                on which to develop.
+                The Yocto Project has two scripts named
+                <filename>create-pull-request</filename> and
+                <filename>send-pull-request</filename> that ship with the
+                release to facilitate this workflow.
+                You can find these scripts in the <filename>scripts</filename>
+                folder of the
+                <link linkend='source-directory'>Source Directory</link>.
+                For information on how to use these scripts, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#pushing-a-change-upstream'>Using Scripts to Push a Change Upstream and Request a Pull</ulink>"
+                section in the Yocto Project Development Manual.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Patch Workflow:</emphasis>
+                This workflow allows you to notify the maintainer through an
+                email that you have a change (or patch) you would like
+                considered for the "master" branch of the Git repository.
+                To send this type of change, you format the patch and then
+                send the email using the Git commands
+                <filename>git format-patch</filename> and
+                <filename>git send-email</filename>.
+                For information on how to use these scripts, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change'>How to Submit a Change</ulink>"
+                section in the Yocto Project Development Manual.
+                </para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+
 <section id='yocto-project-repositories'>
     <title>Yocto Project Source Repositories</title>
 

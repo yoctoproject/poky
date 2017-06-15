@@ -129,7 +129,7 @@ TARFILES = dev-style.css dev-manual.html \
         else
 TARFILES = dev-style.css dev-manual.html \
            figures/bsp-dev-flow.png \
-           figures/dev-title.png figures/git-workflow.png \
+           figures/dev-title.png \
            figures/kernel-dev-flow.png \
            figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
            figures/recipe-workflow.png \
@@ -271,7 +271,7 @@ TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/analysis-for-package-splitting.png figures/image-generation.png \
 	figures/sdk-generation.png figures/building-an-image.png \
 	figures/build-workspace-directory.png figures/source-repos.png \
-	figures/index-downloads.png figures/yp-download.png
+	figures/index-downloads.png figures/yp-download.png figures/git-workflow.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
