@@ -256,6 +256,360 @@
     </para>
 </section>
 
+<section id='git'>
+    <title>Git</title>
+
+    <para>
+        The Yocto Project makes extensive use of Git, which is a
+        free, open source distributed version control system.
+        Git supports distributed development, non-linear development,
+        and can handle large projects.
+        It is best that you have some fundamental understanding
+        of how Git tracks projects and how to work with Git if
+        you are going to use the Yocto Project for development.
+        This section provides a quick overview of how Git works and
+        provides you with a summary of some essential Git commands.
+    </para>
+
+    <para>
+        For more information on Git, see
+        <ulink url='http://git-scm.com/documentation'></ulink>.
+        If you need to download Git, it is recommended that you add Git
+        to your system through your distribution's "software store"
+        (e.g. for Ubuntu, use the Ubuntu Software feature).
+        For the Git download page, see
+        <ulink url='http://git-scm.com/download'></ulink>.
+    </para>
+
+    <section id='repositories-tags-and-branches'>
+        <title>Repositories, Tags, and Branches</title>
+
+        <para>
+            As mentioned briefly in the previous section and also in the
+            "<link linkend='workflows'>Workflows</link>" section,
+            the Yocto Project maintains source repositories at
+            <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.
+            If you look at this web-interface of the repositories, each item
+            is a separate Git repository.
+        </para>
+
+        <para>
+            Git repositories use branching techniques that track content
+            change (not files) within a project (e.g. a new feature or updated
+            documentation).
+            Creating a tree-like structure based on project divergence allows
+            for excellent historical information over the life of a project.
+            This methodology also allows for an environment from which you can
+            do lots of local experimentation on projects as you develop
+            changes or new features.
+        </para>
+
+        <para>
+            A Git repository represents all development efforts for a given
+            project.
+            For example, the Git repository <filename>poky</filename> contains
+            all changes and developments for Poky over the course of its
+            entire life.
+            That means that all changes that make up all releases are captured.
+            The repository maintains a complete history of changes.
+        </para>
+
+        <para>
+            You can create a local copy of any repository by "cloning" it
+            with the <filename>git clone</filename> command.
+            When you clone a Git repository, you end up with an identical
+            copy of the repository on your development system.
+            Once you have a local copy of a repository, you can take steps to
+            develop locally.
+            For examples on how to clone Git repositories, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#getting-setup'>Getting Set Up</ulink>"
+            section in the Yocto Project Development Manual.
+        </para>
+
+        <para>
+            It is important to understand that Git tracks content change and
+            not files.
+            Git uses "branches" to organize different development efforts.
+            For example, the <filename>poky</filename> repository has
+            several branches that include the current "&DISTRO_NAME_NO_CAP;"
+            branch, the "master" branch, and many branches for past
+            Yocto Project releases.
+            You can see all the branches by going to
+            <ulink url='&YOCTO_GIT_URL;/cgit.cgi/poky/'></ulink> and
+            clicking on the
+            <filename><ulink url='&YOCTO_GIT_URL;/cgit.cgi/poky/refs/heads'>[...]</ulink></filename>
+            link beneath the "Branch" heading.
+        </para>
+
+        <para>
+            Each of these branches represents a specific area of development.
+            The "master" branch represents the current or most recent
+            development.
+            All other branches represent offshoots of the "master" branch.
+        </para>
+
+        <para>
+            When you create a local copy of a Git repository, the copy has
+            the same set of branches as the original.
+            This means you can use Git to create a local working area
+            (also called a branch) that tracks a specific development branch
+            from the upstream source Git repository.
+            in other words, you can define your local Git environment to
+            work on any development branch in the repository.
+            To help illustrate, consider the following example Git commands:
+            <literallayout class='monospaced'>
+     $ cd ~
+     $ git clone git://git.yoctoproject.org/poky
+     $ cd poky
+     $ git checkout -b &DISTRO_NAME_NO_CAP; origin/&DISTRO_NAME_NO_CAP;
+            </literallayout>
+            In the previous example after moving to the home directory, the
+            <filename>git clone</filename> command creates a
+            local copy of the upstream <filename>poky</filename> Git repository.
+            By default, Git checks out the "master" branch for your work.
+            After changing the working directory to the new local repository
+            (i.e. <filename>poky</filename>), the
+            <filename>git checkout</filename> command creates
+            and checks out a local branch named "&DISTRO_NAME_NO_CAP;", which
+            tracks the upstream "origin/&DISTRO_NAME_NO_CAP;" branch.
+            Changes you make while in this branch would ultimately affect
+            the upstream "&DISTRO_NAME_NO_CAP;" branch of the
+            <filename>poky</filename> repository.
+        </para>
+
+        <para>
+            It is important to understand that when you create and checkout a
+            local working branch based on a branch name,
+            your local environment matches the "tip" of that particular
+            development branch at the time you created your local branch,
+            which could be different from the files in the "master" branch
+            of the upstream repository.
+            In other words, creating and checking out a local branch based on
+            the "&DISTRO_NAME_NO_CAP;" branch name is not the same as
+            cloning and checking out the "master" branch if the repository.
+            Keep reading to see how you create a local snapshot of a Yocto
+            Project Release.
+        </para>
+
+        <para>
+            Git uses "tags" to mark specific changes in a repository.
+            Typically, a tag is used to mark a special point such as the final
+            change before a project is released.
+            You can see the tags used with the <filename>poky</filename> Git
+            repository by going to
+            <ulink url='&YOCTO_GIT_URL;/cgit.cgi/poky/'></ulink> and
+            clicking on the
+            <filename><ulink url='&YOCTO_GIT_URL;/cgit.cgi/poky/refs/tags'>[...]</ulink></filename>
+            link beneath the "Tag" heading.
+        </para>
+
+        <para>
+            Some key tags for the <filename>poky</filename> are
+            <filename>jethro-14.0.3</filename>,
+            <filename>morty-16.0.1</filename>,
+            <filename>pyro-17.0.0</filename>, and
+            <filename>&DISTRO_NAME_NO_CAP;-&POKYVERSION;</filename>.
+            These tags represent Yocto Project releases.
+        </para>
+
+        <para>
+            When you create a local copy of the Git repository, you also
+            have access to all the tags in the upstream repository.
+            Similar to branches, you can create and checkout a local working
+            Git branch based on a tag name.
+            When you do this, you get a snapshot of the Git repository that
+            reflects the state of the files when the change was made associated
+            with that tag.
+            The most common use is to checkout a working branch that matches
+            a specific Yocto Project release.
+            Here is an example:
+            <literallayout class='monospaced'>
+     $ cd ~
+     $ git clone git://git.yoctoproject.org/poky
+     $ cd poky
+     $ git fetch --all --tags --prune
+     $ git checkout tags/pyro-17.0.0 -b my-pyro-17.0.0
+            </literallayout>
+            In this example, the name of the top-level directory of your
+            local Yocto Project repository is <filename>poky</filename>.
+            After moving to the <filename>poky</filename> directory, the
+            <filename>git fetch</filename> command makes all the upstream
+            tags available locally in your repository.
+            Finally, the <filename>git checkout</filename> command
+            creates and checks out a branch named "my-pyro-17.0.0" that is
+            based on the specific change upstream in the repository
+            associated with the "pyro-17.0.0" tag.
+            The files in your repository now exactly match that particular
+            Yocto Project release as it is tagged in the upstream Git
+            repository.
+            It is important to understand that when you create and
+            checkout a local working branch based on a tag, your environment
+            matches a specific point in time and not the entire development
+            branch (i.e. the "tip" of the branch).
+        </para>
+    </section>
+
+    <section id='basic-commands'>
+        <title>Basic Commands</title>
+
+        <para>
+            Git has an extensive set of commands that lets you manage changes
+            and perform collaboration over the life of a project.
+            Conveniently though, you can manage with a small set of basic
+            operations and workflows once you understand the basic
+            philosophy behind Git.
+            You do not have to be an expert in Git to be functional.
+            A good place to look for instruction on a minimal set of Git
+            commands is
+            <ulink url='http://git-scm.com/documentation'>here</ulink>.
+        </para>
+
+        <para>
+            If you do not know much about Git, you should educate
+            yourself by visiting the links previously mentioned.
+        </para>
+
+        <para>
+            The following list of Git commands briefly describes some basic
+            Git operations as a way to get started.
+            As with any set of commands, this list (in most cases) simply shows
+            the base command and omits the many arguments they support.
+            See the Git documentation for complete descriptions and strategies
+            on how to use these commands:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis><filename>git init</filename>:</emphasis>
+                    Initializes an empty Git repository.
+                    You cannot use Git commands unless you have a
+                    <filename>.git</filename> repository.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git clone</filename>:</emphasis>
+                    Creates a local clone of a Git repository that is on
+                    equal footing with a fellow developer’s Git repository
+                    or an upstream repository.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git add</filename>:</emphasis>
+                    Locally stages updated file contents to the index that
+                    Git uses to track changes.
+                    You must stage all files that have changed before you
+                    can commit them.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git commit</filename>:</emphasis>
+                    Creates a local "commit" that documents the changes you
+                    made.
+                    Only changes that have been staged can be committed.
+                    Commits are used for historical purposes, for determining
+                    if a maintainer of a project will allow the change,
+                    and for ultimately pushing the change from your local
+                    Git repository into the project’s upstream repository.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git status</filename>:</emphasis>
+                    Reports any modified files that possibly need to be
+                    staged and gives you a status of where you stand regarding
+                    local commits as compared to the upstream repository.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git checkout</filename> <replaceable>branch-name</replaceable>:</emphasis>
+                    Changes your working branch.
+                    This command is analogous to "cd".
+                    </para></listitem>
+                <listitem><para><emphasis><filename>git checkout –b</filename> <replaceable>working-branch</replaceable>:</emphasis>
+                    Creates and checks out a working branch on your local
+                    machine that you can use to isolate your work.
+                    It is a good idea to use local branches when adding
+                    specific features or changes.
+                    Using isolated branches facilitates easy removal of
+                    changes if they do not work out.
+                    </para></listitem>
+                <listitem><para><emphasis><filename>git branch</filename>:</emphasis>
+                    Displays the existing local branches associated with your
+                    local repository.
+                    The branch that you have currently checked out is noted
+                    with an asterisk character.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git branch -D</filename> <replaceable>branch-name</replaceable>:</emphasis>
+                    Deletes an existing local branch.
+                    You need to be in a local branch other than the one you
+                    are deleting in order to delete
+                    <replaceable>branch-name</replaceable>.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git pull</filename>:</emphasis>
+                    Retrieves information from an upstream Git repository
+                    and places it in your local Git repository.
+                    You use this command to make sure you are synchronized with
+                    the repository from which you are basing changes
+                    (.e.g. the "master" branch).
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git push</filename>:</emphasis>
+                    Sends all your committed local changes to the upstream Git
+                    repository that your local repository is tracking
+                    (e.g. a contribution repository).
+                    The maintainer of the project draws from these repositories
+                    to merge changes (commits) into the appropriate branch
+                    of project's upstream repository.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git merge</filename>:</emphasis>
+                    Combines or adds changes from one
+                    local branch of your repository with another branch.
+                    When you create a local Git repository, the default branch
+                    is named "master".
+                    A typical workflow is to create a temporary branch that is
+                    based off "master" that you would use for isolated work.
+                    You would make your changes in that isolated branch,
+                    stage and commit them locally, switch to the "master"
+                    branch, and then use the <filename>git merge</filename>
+                    command to apply the changes from your isolated branch
+                    into the currently checked out branch (e.g. "master").
+                    After the merge is complete and if you are done with
+                    working in that isolated branch, you can safely delete
+                    the isolated branch.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git cherry-pick</filename>:</emphasis>
+                    Choose and apply specific commits from one branch
+                    into another branch.
+                    There are times when you might not be able to merge
+                    all the changes in one branch with
+                    another but need to pick out certain ones.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>gitk</filename>:</emphasis>
+                    Provides a GUI view of the branches and changes in your
+                    local Git repository.
+                    This command is a good way to graphically see where things
+                    have diverged in your local repository.
+                    <note>
+                        You need to install the <filename>gitk</filename>
+                        package on your development system to use this
+                        command.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git log</filename>:</emphasis>
+                    Reports a history of your commits to the repository.
+                    This report lists all commits regardless of whether you
+                    have pushed them upstream or not.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>git diff</filename>:</emphasis>
+                    Displays line-by-line differences between a local
+                    working file and the same file as understood by Git.
+                    This command is useful to see what you have changed
+                    in any given file.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
+
 <section id='yocto-project-repositories'>
     <title>Yocto Project Source Repositories</title>
 
@@ -290,7 +644,7 @@
                     <link linkend='source-directory'>Source Directory</link>
                     and the files for supported BSPs
                     (e.g., <filename>meta-intel</filename>) is to use
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#git'>Git</ulink> to create a local copy of
+                    <link linkend='git'>Git</link> to create a local copy of
                     the upstream repositories.
                     </para></listitem>
                 <listitem><para>
