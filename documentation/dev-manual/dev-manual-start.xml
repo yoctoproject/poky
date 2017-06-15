@@ -286,6 +286,210 @@
     </para>
 </section>
 
+<section id='working-with-git-repositories'>
+    <title>Working With Git Repositories</title>
+
+    <para>
+        This section contains procedures for establishing Git repositories
+        local to your development system.
+        You use these local repositories to work on projects.
+        <note>
+            For concepts and introductory information about Git as it is used
+            in the Yocto Project, see the
+            "<ulink url='&YOCTO_DOCS_REF_URL;#git'>Git</ulink>"
+            section in the Yocto Project Reference Manual.
+        </note>
+    </para>
+
+    <section id='cloning-the-poky-repository'>
+        <title>Cloning the <filename>poky</filename> Repository</title>
+
+        <para>
+            Follow these steps to create a local version of the
+            upstream
+            <ulink url='&YOCTO_DOCS_REF_URL;#poky'><filename>poky</filename></ulink>
+            Git repository.
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Set Your Directory:</emphasis>
+                    Be in the directory where you want to create your local
+                    copy of poky.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Clone the Repository:</emphasis>
+                    The following command clones the repository and uses
+                    the default name "poky" for your local repository:
+                    <literallayout class='monospaced'>
+     $ git clone git://git.yoctoproject.org/poky
+     Cloning into 'poky'...
+     remote: Counting objects: 367178, done.
+     remote: Compressing objects: 100% (88161/88161), done.
+     remote: Total 367178 (delta 272761), reused 366942 (delta 272525)
+     Receiving objects: 100% (367178/367178), 133.26 MiB | 6.40 MiB/s, done.
+     Resolving deltas: 100% (272761/272761), done.
+     Checking connectivity... done.
+                    </literallayout>
+                    Once the repository is created, you can change to that
+                    directory and check its status and list its branches:
+                    <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ git status
+     On branch master
+     Your branch is up-to-date with 'origin/master'.
+     nothing to commit, working directory clean
+     $ git branch
+     * master
+                    </literallayout>
+                    Your local repository of poky is identical to the
+                    upstream poky repository at the time from which it was
+                    cloned.
+                    By default, Git creates the "master" branch and checks
+                    it out.
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+
+    <section id='checking-out-by-branch-in-poky'>
+        <title>Checking Out by Branch in Poky</title>
+
+        <para>
+            When you clone the upstream poky repository, you have access to
+            all its development branches.
+            Each development branch in a repository is unique as it forks
+            off the repositories "master" branch.
+            To see and use the files of any branch locally, you need to
+            know the branch name and then checkout the branch.
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Switch to the Poky Directory:</emphasis>
+                    If you have a local poky Git repository, switch to that
+                    directory.
+                    If you do not have the local copy of poky, see the
+                    "<link linkend='cloning-the-poky-repository'>Cloning the <filename>poky</filename> Repository</link>"
+                    section.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Determine Existing Branch Names:</emphasis>
+                    <literallayout class='monospaced'>
+     $ git branch -a
+     * master
+       remotes/origin/1.1_M1
+       remotes/origin/1.1_M2
+       remotes/origin/1.1_M3
+       remotes/origin/1.1_M4
+       remotes/origin/1.2_M1
+       remotes/origin/1.2_M2
+       remotes/origin/1.2_M3
+           .
+           .
+           .
+       remotes/origin/master-next
+       remotes/origin/master-next2
+       remotes/origin/morty
+       remotes/origin/pinky
+       remotes/origin/purple
+       remotes/origin/pyro
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Checkout the Branch:</emphasis>
+                    Checkout the branch in which you want to work.
+                    For example, to access the files for the Yocto Project
+                    2.3 Release (Pyro), use the following command:
+                    <literallayout class='monospaced'>
+     $ git checkout -b origin/pyro
+     Switched to a new branch 'origin/pyro'
+                    </literallayout>
+                    The previous command checks out the "pyro" branch and
+                    reports that the branch is tracking the upstream
+                    "origin/pyro" branch.</para>
+
+                    <para>The following command displays the branches
+                    that are now part of your local poky repository.
+                    The asterisk character indicates the branch that is
+                    currently checked out for work:
+                    <literallayout class='monospaced'>
+     $ git branch
+       master
+     * origin/pyro
+                    </literallayout>
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+
+    <section id='checkout-out-by-tag-in-poky'>
+        <title>Checking Out by Tag in Poky</title>
+
+        <para>
+            Similar to branches, the upstream repository has tags used
+            to mark significant commits such as a completed release or
+            stage of a release.
+            You might want to set up a local branch based on one of those
+            points in the repository.
+            The process is similar to checking out by branch name except you
+            use tag names.
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Switch to the Poky Directory:</emphasis>
+                    If you have a local poky Git repository, switch to that
+                    directory.
+                    If you do not have the local copy of poky, see the
+                    "<link linkend='cloning-the-poky-repository'>Cloning the <filename>poky</filename> Repository</link>"
+                    section.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Fetch the Tag Names:</emphasis>
+                    To checkout the branch based on a tag name, you need to
+                    fetch the upstream tags into your local repository:
+                    <literallayout class='monospaced'>
+     $ git fetch --tags
+     $
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>List the Tag Names:</emphasis>
+                    You can list the tag names now:
+                    <literallayout class='monospaced'>
+     $ git tag
+     1.1_M1.final
+     1.1_M1.rc1
+     1.1_M1.rc2
+     1.1_M2.final
+     1.1_M2.rc1
+        .
+        .
+        .
+     yocto-2.2
+     yocto-2.2.1
+     yocto-2.3
+     yocto_1.5_M5.rc8
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Checkout the Branch:</emphasis>
+                    <literallayout class='monospaced'>
+     $ git checkout tags/2.2_M2 -b my_yocto_2.2_M2
+     Switched to a new branch 'my_yocto_2.2_M2'
+     $ git branch
+       master
+     * my_yocto_2.2_M2
+                    </literallayout>
+                    The previous command creates and checks out a local
+                    branch named "my_yocto_2.2_M2", which is based on
+                    the commit in the upstream poky repository that has
+                    the same tag.
+                    The files you have available locally when you are
+                    checked out to that branch are a snapshot of the
+                    "morty" development branch at the point where
+                    milestone two was reached.
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+</section>
+
 <section id='building-images'>
     <title>Building Images</title>
 
