@@ -444,189 +444,180 @@
 
     <para>
         Contributions to the Yocto Project and OpenEmbedded are very welcome.
-        Because the system is extremely configurable and flexible, we recognize that developers
-        will want to extend, configure or optimize it for their specific uses.
-        You should send patches to the appropriate mailing list so that they
-        can be reviewed and merged by the appropriate maintainer.
+        Because the system is extremely configurable and flexible, we recognize
+        that developers will want to extend, configure or optimize it for
+        their specific uses.
     </para>
 
-    <section id='submit-change-overview'>
-        <title>Overview</title>
+    <para>
+        The Yocto Project uses a mailing list and a patch-based workflow
+        that is similar to the Linux kernel but contains important
+        differences.
+        In general, a mailing list exists through which you can submit
+        patches.
+        You should send patches to the appropriate mailing list so that they
+        can be reviewed and merged by the appropriate maintainer.
+        The specific mailing list you need to use depends on the
+        location of the code you are changing.
+        Each component (e.g. layer) should have a
+        <filename>README</filename> file that indicates where to send
+        the changes and which process to follow.
+    </para>
 
-        <para>
-            The Yocto Project uses a mailing list and patch-based workflow
-            that is similar to the Linux kernel but contains important
-            differences.
-            In general, a mailing list exists through which you can submit
-            patches.
-            The specific mailing list you need to use depends on the
-            location of the code you are changing.
-            Each component (e.g. layer) should have a
-            <filename>README</filename> file that indicates where to send
-            the changes and which process to follow.
-        </para>
+    <para>
+        You can send the patch to the mailing list using whichever approach
+        you feel comfortable with to generate the patch.
+        Once sent, the patch is usually reviewed by the community at large.
+        If somebody has concerns with the patch, they will usually voice
+        their concern over the mailing list.
+        If a patch does not receive any negative reviews, the maintainer of
+        the affected layer typically takes the patch, tests it, and then
+        based on successful testing, merges the patch.
+    </para>
 
-        <para>
-            You can send the patch to the mailing list using whichever approach
-            you feel comfortable with to generate the patch.
-            Once sent, the patch is usually reviewed by the community at large.
-            If somebody has concerns with the patch, they will usually voice
-            their concern over the mailing list.
-            If a patch does not receive any negative reviews, the maintainer of
-            the affected layer typically takes the patch, tests it, and then
-            based on successful testing, merges the patch.
-        </para>
+    <para id='figuring-out-the-mailing-list-to-use'>
+        The "poky" repository, which is the Yocto Project's reference build
+        environment, is a hybrid repository that contains several
+        individual pieces (e.g. BitBake, OpenEmbedded-Core, meta-yocto,
+        documentation, and so forth) built using the combo-layer tool.
+        The upstream location used for submitting changes varies by
+        component:
+        <itemizedlist>
+            <listitem><para>
+                <emphasis>Core Metadata:</emphasis>
+                Send your patch to the
+                <ulink url='http://lists.openembedded.org/mailman/listinfo/openembedded-core'>openembedded-core</ulink>
+                mailing list.  For example, a change to anything under
+                the <filename>meta</filename> or
+                <filename>scripts</filename> directories should be sent
+                to this mailing list.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>BitBake:</emphasis>
+                For changes to BitBake (i.e. anything under the
+                <filename>bitbake</filename> directory), send your patch
+                to the
+                <ulink url='http://lists.openembedded.org/mailman/listinfo/bitbake-devel'>bitbake-devel</ulink>
+                mailing list.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>"meta-yocto-bsp" and "meta-poky" trees:</emphasis>
+                These trees are
+                part of the "meta-yocto" repository in the Yocto Project
+                source repositories.
+                Use the
+                <ulink url='https://lists.yoctoproject.org/listinfo/poky'>poky</ulink>
+                mailing list.
+                </para></listitem>
+        </itemizedlist>
+    </para>
 
-        <para>
-            Specific to OpenEmbedded-Core, two commonly used testing trees
-            exist:
-            <itemizedlist>
-                <listitem><para>
-                    <emphasis>"ross/mut" branch:</emphasis>
-                    The "mut" (master-under-test) tree
-                    exists in the <filename>poky-contrib</filename> repository
-                    in the
-                    <ulink url='&YOCTO_GIT_URL;'>Yocto Project source repositories</ulink>.
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>"master-next" branch:</emphasis>
-                    This branch is part of the main
-                    "poky" repository in the Yocto Project source repositories.
-                    </para></listitem>
-            </itemizedlist>
-            Maintainers use these branches to test submissions prior to merging
-            patches.
-            Thus, you can get an idea of the status of a patch based on
-            whether the patch has been merged into one of these branches.
-        </para>
+    <para>
+        For changes to other layers hosted in the Yocto Project source
+        repositories (i.e. <filename>yoctoproject.org</filename>), tools,
+        and the Yocto Project documentation, use the
+        <ulink url='https://lists.yoctoproject.org/listinfo/yocto'>Yocto Project</ulink>
+        general mailing list.
+        <note>
+            Sometimes a layer's documentation specifies to use a
+            particular mailing list.
+            If so, use that list.
+        </note>
+        For additional recipes that do not fit into the core Metadata, you
+        should determine which layer the recipe should go into and submit
+        the change in the manner recommended by the documentation (e.g.
+        the <filename>README</filename> file) supplied with the layer.
+        If in doubt, please ask on the Yocto general mailing list or on
+        the openembedded-devel mailing list.
+    </para>
 
-        <para>
-            This system is imperfect and patches can sometimes get lost in the
+    <para>
+        You can also push a change upstream and request a maintainer to
+        pull the change into the component's upstream repository.
+        You do this by pushing to a contribution repository that is upstream.
+        See the
+        "<ulink url='&YOCTO_DOCS_REF_URL;#workflows'>Workflows</ulink>"
+        section in the Yocto Project Reference Manual for additional
+        concepts on working in the Yocto Project development environment.
+    </para>
+
+    <para>
+        Two commonly used testing repositories exist for
+        OpenEmbedded-Core:
+        <itemizedlist>
+            <listitem><para>
+                <emphasis>"ross/mut" branch:</emphasis>
+                The "mut" (master-under-test) tree
+                exists in the <filename>poky-contrib</filename> repository
+                in the
+                <ulink url='&YOCTO_GIT_URL;'>Yocto Project source repositories</ulink>.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>"master-next" branch:</emphasis>
+                This branch is part of the main
+                "poky" repository in the Yocto Project source repositories.
+                </para></listitem>
+        </itemizedlist>
+        Maintainers use these branches to test submissions prior to merging
+        patches.
+        Thus, you can get an idea of the status of a patch based on
+        whether the patch has been merged into one of these branches.
+        <note>
+            This system is imperfect and changes can sometimes get lost in the
             flow.
-            Asking about the status of a patch is reasonable if the patch
-            has been idle for a while with no feedback.
+            Asking about the status of a patch or change is reasonable if the
+            change has been idle for a while with no feedback.
             The Yocto Project does have plans to use
             <ulink url='https://en.wikipedia.org/wiki/Patchwork_(software)'>Patchwork</ulink>
             to track the status of patches and also to automatically preview
             patches.
-        </para>
+        </note>
+    </para>
+
+    <para>
+        The following sections provide procedures for submitting a change.
+    </para>
+
+    <section id='pushing-a-change-upstream'>
+        <title>Using Scripts to Push a Change Upstream and Request a Pull</title>
 
         <para>
-            The following sections provide general instructions for both
-            pushing changes upstream and for submitting changes as patches.
-        </para>
-    </section>
-
-    <section id='submit-change-submissions-to-poky'>
-        <title>Submissions to Poky</title>
-
-        <para>
-            The "poky" repository, which is the Yocto Project's reference build
-            environment, is a hybrid repository that contains several
-            individual pieces (e.g. BitBake, OpenEmbedded-Core, meta-yocto,
-            documentation, and so forth) built using the combo-layer tool.
-            The upstream location used for submitting changes varies by
-            component:
-            <itemizedlist>
-                <listitem><para>
-                    <emphasis>Core Metadata:</emphasis>
-                    Send your patch to the
-                    <ulink url='http://lists.openembedded.org/mailman/listinfo/openembedded-core'>openembedded-core</ulink>
-                    mailing list.  For example, a change to anything under
-                    the <filename>meta</filename> or
-                    <filename>scripts</filename> directories should be sent
-                    to this mailing list.
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>BitBake:</emphasis>
-                    For changes to BitBake (i.e. anything under the
-                    <filename>bitbake</filename> directory), send your patch
-                    to the
-                    <ulink url='http://lists.openembedded.org/mailman/listinfo/bitbake-devel'>bitbake-devel</ulink>
-                    mailing list.
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>"meta-yocto-bsp" and "meta-poky" trees:</emphasis>
-                    These trees are
-                    part of the "meta-yocto" repository in the Yocto Project
-                    source repositories.
-                    Use the
-                    <ulink url='https://lists.yoctoproject.org/listinfo/poky'>poky</ulink>
-                    mailing list.
-                    </para></listitem>
-            </itemizedlist>
-        </para>
-    </section>
-
-    <section id='submit-change-submissions-to-other-layers'>
-        <title>Submissions to Other Layers</title>
-
-        <para>
-            For changes to other layers hosted in the Yocto Project source
-            repositories (i.e. <filename>yoctoproject.org</filename>), tools,
-            and the Yocto Project documentation, use the
-            <ulink url='https://lists.yoctoproject.org/listinfo/yocto'>Yocto Project</ulink>
-            general mailing list.
+            Follow this procedure to push a change to an upstream "contrib"
+            Git repository:
             <note>
-                Sometimes a layer's documentation specifies to use a
-                particular mailing list.
-                If so, use that list.
+                You can find general Git information on how to push a change
+                upstream in the
+                <ulink url='http://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows'>Git Community Book</ulink>.
             </note>
-            For additional recipes that do not fit into the core Metadata, you
-            should determine which layer the recipe should go into and submit
-            the change in the manner recommended by the documentation (e.g.
-            the <filename>README</filename> file) supplied with the layer.
-            If in doubt, please ask on the Yocto general mailing list or on
-            the openembedded-devel mailing list.
-        </para>
-    </section>
-
-    <section id='submit-change-patch-submission-details'>
-        <title>Patch Submission Details</title>
-
-        <para>
-            When submitting any change, you can check who you should be
-            notifying.
-            Use either of these methods to find out:
-            <itemizedlist>
+            <orderedlist>
                 <listitem><para>
-                    <emphasis>Maintenance File:</emphasis>
-                    Examine the <filename>maintainers.inc</filename> file, which is
-                    located in the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
-                    at <filename>meta-poky/conf/distro/include</filename>, to
-                    see who is responsible for code.
+                    <emphasis>Make Your Changes Locally:</emphasis>
+                    Make your changes in your local Git repository.
+                    You should make small, controlled, isolated changes.
+                    Keeping changes small and isolated aids review,
+                    makes merging/rebasing easier and keeps the change
+                    history clean should anyone need to refer to it in
+                    future.
                     </para></listitem>
                 <listitem><para>
-                    <emphasis>Search by File:</emphasis>
-                    Using <ulink url='&YOCTO_DOCS_REF_URL;#git'>Git</ulink>, you can enter the
-                    following command to bring up a short list of all commits
-                    against a specific file:
-                    <literallayout class='monospaced'>
-     git shortlog -- <replaceable>filename</replaceable>
-                    </literallayout>
-                    Just provide the name of the file for which you are interested.
-                    The information returned is not ordered by history but does
-                    include a list of everyone who has committed grouped by
-                    name.
-                    From the list, you can see who is responsible for the bulk of
-                    the changes against the file.
+                    <emphasis>Stage Your Changes:</emphasis>
+                    Stage your changes by using the <filename>git add</filename>
+                    command on each file you changed.
                     </para></listitem>
-            </itemizedlist>
-        </para>
-
-        <para>
-            For a list of the Yocto Project and related mailing lists, see the
-            "<ulink url='&YOCTO_DOCS_REF_URL;#resources-mailinglist'>Mailing lists</ulink>"
-            section in the Yocto Project Reference Manual.
-        </para>
-
-        <para>
-            When you send a patch, be sure to include a "Signed-off-by:"
-            line in the same style as required by the Linux kernel.
-            Adding this line signifies that you, the submitter, have agreed
-            to the Developer's Certificate of Origin 1.1 as follows:
-            <literallayout class='monospaced'>
+                <listitem><para id='making-sure-you-have-correct-commit-information'>
+                    <emphasis>Commit Your Changes:</emphasis>
+                    Commit the change by using the
+                    <filename>git commit</filename> command.
+                    Make sure your commit information follows standards by
+                    following these accepted conventions:
+                    <itemizedlist>
+                        <listitem><para>
+                            Be sure to include a "Signed-off-by:" line in the
+                            same style as required by the Linux kernel.
+                            Adding this line signifies that you, the submitter,
+                            have agreed to the Developer's Certificate of
+                            Origin 1.1 as follows:
+                            <literallayout class='monospaced'>
      Developer's Certificate of Origin 1.1
 
      By making a contribution to this project, I certify that:
@@ -652,121 +643,133 @@
          personal information I submit with it, including my sign-off) is
          maintained indefinitely and may be redistributed consistent with
          this project or the open source license(s) involved.
-            </literallayout>
-        </para>
-
-        <para>
-            In a collaborative environment, it is necessary to have some sort
-            of standard or method through which you submit changes.
-            Otherwise, things could get quite chaotic.
-            One general practice to follow is to make small, controlled changes.
-            Keeping changes small and isolated aids review, makes
-            merging/rebasing easier and keeps the change history clean should
-            anyone need to refer to it in future.
-        </para>
-
-        <para>
-            When you make a commit, you must follow certain standards
-            established by the OpenEmbedded and Yocto Project development teams.
-            For each commit, you must provide a single-line summary of the
-            change and you should almost always provide a more detailed
-            description of what you did (i.e. the body of the commit message).
-            The only exceptions for not providing a detailed description would
-            be if your change is a simple, self-explanatory change that needs
-            no further description beyond the summary.
-            Here are the guidelines for composing a commit message:
-            <itemizedlist>
-                <listitem><para>
-                    Provide a single-line, short summary of the change.
-                    This summary is typically viewable in the "shortlist" of
-                    changes.
-                    Thus, providing something short and descriptive that
-                    gives the reader a summary of the change is useful when
-                    viewing a list of many commits.
-                    You should prefix this short description with the recipe
-                    name (if changing a recipe), or else with the short form
-                    path to the file being changed.
-                    </para></listitem>
-                <listitem><para>
-                    For the body of the commit message, provide detailed
-                    information that describes what you changed, why you made
-                    the change, and the approach you used.
-                    It might also be helpful if you mention how you tested
-                    the change.
-                    Provide as much detail as you can in the body of the
-                    commit message.
-                    </para></listitem>
-                <listitem><para>
-                    If the change addresses a specific bug or issue that is
-                    associated with a bug-tracking ID, include a reference
-                    to that ID in your detailed description.
-                    For example, the Yocto Project uses a specific convention
-                    for bug references - any commit that addresses a specific
-                    bug should use the following form for the detailed
-                    description.
-                    Be sure to use the actual bug-tracking ID from
-                    Bugzilla for
-                    <replaceable>bug-id</replaceable>:
-                    <literallayout class='monospaced'>
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para>
+                            Provide a single-line summary of the change.
+                            and,
+                            if more explanation is needed, provide more
+                            detail in the body of the commit.
+                            This summary is typically viewable in the
+                            "shortlist" of changes.
+                            Thus, providing something short and descriptive
+                            that gives the reader a summary of the change is
+                            useful when viewing a list of many commits.
+                            You should prefix this short description with the
+                            recipe name (if changing a recipe), or else with
+                            the short form path to the file being changed.
+                            </para></listitem>
+                        <listitem><para>
+                            For the body of the commit message, provide
+                            detailed information that describes what you
+                            changed, why you made the change, and the approach
+                            you used.
+                            It might also be helpful if you mention how you
+                            tested the change.
+                            Provide as much detail as you can in the body of
+                            the commit message.
+                            <note>
+                                You do not need to provide a more detailed
+                                explanation of a change if the change is
+                                minor to the point of the single line
+                                summary providing all the information.
+                            </note>
+                            </para></listitem>
+                        <listitem><para>
+                            If the change addresses a specific bug or issue
+                            that is associated with a bug-tracking ID,
+                            include a reference to that ID in your detailed
+                            description.
+                            For example, the Yocto Project uses a specific
+                            convention for bug references - any commit that
+                            addresses a specific bug should use the following
+                            form for the detailed description.
+                            Be sure to use the actual bug-tracking ID from
+                            Bugzilla for
+                            <replaceable>bug-id</replaceable>:
+                            <literallayout class='monospaced'>
      Fixes [YOCTO #<replaceable>bug-id</replaceable>]
 
      <replaceable>detailed description of change</replaceable>
-                    </literallayout>
-                    </para></listitem>
-            </itemizedlist>
-        </para>
-
-        <para>
-            You can find more guidance on creating well-formed commit messages
-            at this OpenEmbedded wiki page:
-            <ulink url='&OE_HOME_URL;/wiki/Commit_Patch_Message_Guidelines'></ulink>.
-        </para>
-    </section>
-
-    <section id='pushing-a-change-upstream'>
-        <title>Using Scripts to Push a Change Upstream and Request a Pull</title>
-
-        <para>
-            The basic flow for pushing a change to an upstream "contrib" Git repository is as follows:
-            <itemizedlist>
-                <listitem><para>Make your changes in your local Git repository.</para></listitem>
-                <listitem><para>Stage your changes by using the <filename>git add</filename>
-                    command on each file you changed.</para></listitem>
-                <listitem><para>
-                    Commit the change by using the
-                    <filename>git commit</filename> command.
-                    Be sure to provide a commit message that follows the
-                    project’s commit message standards as described earlier.
+                            </literallayout>
+                            </para></listitem>
+                    </itemizedlist>
                     </para></listitem>
                 <listitem><para>
+                    <emphasis>Push Your Commits to a "Contrib" Upstream:</emphasis>
                     Push the change to the upstream "contrib" repository by
                     using the <filename>git push</filename> command.
                     </para></listitem>
-                <listitem><para>Notify the maintainer that you have pushed a change by making a pull
-                    request.
-                    The Yocto Project provides two scripts that conveniently let you generate and send
-                    pull requests to the Yocto Project.
-                    These scripts are <filename>create-pull-request</filename> and
-                    <filename>send-pull-request</filename>.
-                    You can find these scripts in the <filename>scripts</filename> directory
-                    within the <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.</para>
-                    <para>Using these scripts correctly formats the requests without introducing any
-                    whitespace or HTML formatting.
-                    The maintainer that receives your patches needs to be able to save and apply them
-                    directly from your emails.
-                    Using these scripts is the preferred method for sending patches.</para>
+                <listitem><para id='push-determine-who-to-notify'>
+                    <emphasis>Determine Who to Notify:</emphasis>
+                    Determine the maintainer that you need to notify for
+                    the change.</para>
+
+                    <para>Before submitting any change, you need to be sure
+                    who the maintainer is that you need to notify.
+                    Use either of these methods to find out:
+                    <itemizedlist>
+                        <listitem><para>
+                            <emphasis>Maintenance File:</emphasis>
+                            Examine the <filename>maintainers.inc</filename>
+                            file, which is located in the
+                            <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+                            at
+                            <filename>meta-poky/conf/distro/include</filename>,
+                            to see who is responsible for code.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Search by File:</emphasis>
+                            Using <ulink url='&YOCTO_DOCS_REF_URL;#git'>Git</ulink>,
+                            you can enter the following command to bring up a
+                            short list of all commits against a specific file:
+                            <literallayout class='monospaced'>
+     git shortlog -- <replaceable>filename</replaceable>
+                            </literallayout>
+                            Just provide the name of the file for which you
+                            are interested.
+                            The information returned is not ordered by history
+                            but does include a list of everyone who has
+                            committed grouped by name.
+                            From the list, you can see who is responsible for
+                            the bulk of the changes against the file.
+                            </para></listitem>
+                    </itemizedlist>
+                    For a list of the Yocto Project and related mailing lists,
+                    see the
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#resources-mailinglist'>Mailing lists</ulink>"
+                    section in the Yocto Project Reference Manual.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Make a Pull Request:</emphasis>
+                    Notify the maintainer that you have pushed a change by
+                    making a pull request.</para>
+
+                    <para>The Yocto Project provides two scripts that
+                    conveniently let you generate and send pull requests to the
+                    Yocto Project.
+                    These scripts are <filename>create-pull-request</filename>
+                    and <filename>send-pull-request</filename>.
+                    You can find these scripts in the
+                    <filename>scripts</filename> directory within the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
+                    </para>
+
+                    <para>Using these scripts correctly formats the requests
+                    without introducing any whitespace or HTML formatting.
+                    The maintainer that receives your patches needs to be
+                    able to save and apply them directly from your emails.
+                    Using these scripts is the preferred method for sending
+                    patches.</para>
+
                     <para>For help on using these scripts, simply provide the
                     <filename>-h</filename> argument as follows:
                     <literallayout class='monospaced'>
      $ poky/scripts/create-pull-request -h
      $ poky/scripts/send-pull-request -h
-                    </literallayout></para></listitem>
-            </itemizedlist>
-        </para>
-
-        <para>
-            You can find general Git information on how to push a change upstream in the
-            <ulink url='http://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows'>Git Community Book</ulink>.
+                    </literallayout>
+                    </para></listitem>
+            </orderedlist>
         </para>
     </section>
 
@@ -774,49 +777,63 @@
         <title>Using Email to Submit a Patch</title>
 
         <para>
-            You can submit patches without using the <filename>create-pull-request</filename> and
-            <filename>send-pull-request</filename> scripts described in the previous section.
+            You can submit patches without using the
+            <filename>create-pull-request</filename> and
+            <filename>send-pull-request</filename> scripts described in the
+            previous section.
             However, keep in mind, the preferred method is to use the scripts.
         </para>
 
         <para>
             Depending on the components changed, you need to submit the email
             to a specific mailing list.
-            For some guidance on which mailing list to use, see the list in the
-            "<link linkend='how-to-submit-a-change'>How to Submit a Change</link>"
-            section.
-            For a description of the available mailing lists, see the
+            For some guidance on which mailing list to use, see the
+            <link linkend='figuring-out-the-mailing-list-to-use'>beginning</link>
+            of this section.
+            For a description of all the available mailing lists, see the
             "<ulink url='&YOCTO_DOCS_REF_URL;#resources-mailinglist'>Mailing Lists</ulink>"
             section in the Yocto Project Reference Manual.
         </para>
 
         <para>
-            Here is the general procedure on how to submit a patch through email without using the
-            scripts:
+            Here is the general procedure on how to submit a patch through
+            email without using the scripts:
             <orderedlist>
                 <listitem><para>
+                    <emphasis>Make Your Changes Locally:</emphasis>
                     Make your changes in your local Git repository.
+                    You should make small, controlled, isolated changes.
+                    Keeping changes small and isolated aids review,
+                    makes merging/rebasing easier and keeps the change
+                    history clean should anyone need to refer to it in
+                    future.
                     </para></listitem>
                 <listitem><para>
-                    Stage your changes by using the
-                    <filename>git add</filename> command on each file you
-                    changed.
+                    <emphasis>Stage Your Changes:</emphasis>
+                    Stage your changes by using the <filename>git add</filename>
+                    command on each file you changed.
                     </para></listitem>
                 <listitem><para>
+                    <emphasis>Commit Your Changes:</emphasis>
                     Commit the change by using the
                     <filename>git commit --signoff</filename> command.
                     Using the <filename>--signoff</filename> option identifies
                     you as the person making the change and also satisfies
                     the Developer's Certificate of Origin (DCO) shown earlier.
                     </para>
+
                     <para>When you form a commit, you must follow certain
                     standards established by the Yocto Project development
                     team.
-                    See the earlier section
-                    "<link linkend='how-to-submit-a-change'>How to Submit a Change</link>"
-                    for Yocto Project commit message standards.
+                    See
+                    <link linkend='making-sure-you-have-correct-commit-information'>Step 3</link>
+                    in the previous section for information on how to
+                    provide commit information that meets Yocto Project
+                    commit message standards.
                     </para></listitem>
-                <listitem><para>Format the commit into an email message.
+                <listitem><para>
+                    <emphasis>Format the Commit:</emphasis>
+                    Format the commit into an email message.
                     To format commits, use the
                     <filename>git format-patch</filename> command.
                     When you provide the command, you must include a revision
@@ -831,9 +848,11 @@
                     <literallayout class='monospaced'>
      $ git format-patch HEAD~
                     </literallayout></para>
+
                     <para>After the command is run, the current directory
                     contains a numbered <filename>.patch</filename> file for
                     the commit.</para>
+
                     <para>If you provide several commits as part of the
                     command, the <filename>git format-patch</filename> command
                     produces a series of numbered files in the current
@@ -857,6 +876,7 @@
                     </note>
                     </para></listitem>
                 <listitem><para>
+                    <emphasis>Import the Files Into Your Mail Client:</emphasis>
                     Import the files into your mail client by using the
                     <filename>git send-email</filename> command.
                     <note>
@@ -866,6 +886,7 @@
                         For Ubuntu, Debian, and Fedora the package is
                         <filename>git-email</filename>.
                     </note></para>
+
                     <para>The <filename>git send-email</filename> command
                     sends email by using a local or remote Mail Transport Agent
                     (MTA) such as <filename>msmtp</filename>,
@@ -882,6 +903,7 @@
                     applicable by the maintainer is to do a dry run and send
                     them to yourself and then save and apply them as the
                     maintainer would.</para>
+
                     <para>The <filename>git send-email</filename> command is
                     the preferred method for sending your patches since there
                     is no risk of compromising whitespace in the body of the
