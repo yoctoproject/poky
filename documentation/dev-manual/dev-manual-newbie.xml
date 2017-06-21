@@ -710,17 +710,33 @@
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Push Your Commits to a "Contrib" Upstream:</emphasis>
-                    Push the change to the upstream "contrib" repository by
-                    using the <filename>git push</filename> command.
+                    If you have arranged for permissions to push to an
+                    upstream contrib repository, push the change to that
+                    repository:
+                    <literallayout class='monospaced'>
+     $ git push <replaceable>upstream_remote_repo</replaceable> <replaceable>local_branch_name</replaceable>
+                    </literallayout>
+                    For example, suppose you have permissions to push into the
+                    upstream <filename>meta-intel-contrib</filename>
+                    repository and you are working in a local branch named
+                    <replaceable>your_name</replaceable><filename>/README</filename>.
+                    The following command pushes your local commits to the
+                    <filename>meta-intel-contrib</filename> upstream
+                    repository and puts the commit in a branch named
+                    <replaceable>your_name</replaceable><filename>/README</filename>:
+                    <literallayout class='monospaced'>
+     $ git push meta-intel-contrib <replaceable>your_name</replaceable>/README
+                    </literallayout>
                     </para></listitem>
                 <listitem><para id='push-determine-who-to-notify'>
                     <emphasis>Determine Who to Notify:</emphasis>
-                    Determine the maintainer that you need to notify for
-                    the change.</para>
+                    Determine the maintainer or the mailing list
+                    that you need to notify for the change.</para>
 
                     <para>Before submitting any change, you need to be sure
-                    who the maintainer is that you need to notify.
-                    Use either of these methods to find out:
+                    who the maintainer is or what mailing list that you need
+                    to notify.
+                    Use either these methods to find out:
                     <itemizedlist>
                         <listitem><para>
                             <emphasis>Maintenance File:</emphasis>
@@ -747,16 +763,19 @@
                             From the list, you can see who is responsible for
                             the bulk of the changes against the file.
                             </para></listitem>
+                        <listitem><para>
+                            <emphasis>Examine the List of Mailing Lists:</emphasis>
+                            For a list of the Yocto Project and related mailing
+                            lists, see the
+                            "<ulink url='&YOCTO_DOCS_REF_URL;#resources-mailinglist'>Mailing lists</ulink>"
+                            section in the Yocto Project Reference Manual.
+                            </para></listitem>
                     </itemizedlist>
-                    For a list of the Yocto Project and related mailing lists,
-                    see the
-                    "<ulink url='&YOCTO_DOCS_REF_URL;#resources-mailinglist'>Mailing lists</ulink>"
-                    section in the Yocto Project Reference Manual.
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Make a Pull Request:</emphasis>
-                    Notify the maintainer that you have pushed a change by
-                    making a pull request.</para>
+                    Notify the maintainer or the mailing list that you have
+                    pushed a change by making a pull request.</para>
 
                     <para>The Yocto Project provides two scripts that
                     conveniently let you generate and send pull requests to the
@@ -765,22 +784,53 @@
                     and <filename>send-pull-request</filename>.
                     You can find these scripts in the
                     <filename>scripts</filename> directory within the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
+                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+                    (e.g. <filename>~/poky/scripts</filename>).
                     </para>
 
                     <para>Using these scripts correctly formats the requests
                     without introducing any whitespace or HTML formatting.
-                    The maintainer that receives your patches needs to be
-                    able to save and apply them directly from your emails.
+                    The maintainer that receives your patches either directly
+                    or through the mailing list needs to be able to save and
+                    apply them directly from your emails.
                     Using these scripts is the preferred method for sending
                     patches.</para>
 
-                    <para>For help on using these scripts, simply provide the
-                    <filename>-h</filename> argument as follows:
+                    <para>First, create the pull request.
+                    For example, the following command runs the script,
+                    specifies the upstream repository in the contrib directory
+                    into which you pushed the change, and provides a subject
+                    line in the created patch files:
                     <literallayout class='monospaced'>
+     $ ~/poky/scripts/create-pull-request -u meta-intel-contrib -s "Updated Manual Section Reference in README"
+                    </literallayout>
+                    Running this script forms
+                    <filename>*.patch</filename> files in a folder named
+                    <filename>pull-</filename><replaceable>PID</replaceable>
+                    in the current directory.
+                    One of the patch files is a cover letter.</para>
+
+                    <para>Before running the
+                    <filename>send-pull-request</filename> script, you must
+                    edit the cover letter patch to insert information about
+                    your change.
+                    After editing the cover letter, send the pull request.
+                    For example, the following command runs the script and
+                    specifies the patch directory and email address.
+                    In this example, the email address is a mailing list:
+                    <literallayout class='monospaced'>
+     $ ~/poky/scripts/send-pull-request -p ~/meta-intel/pull-10565 -t meta-intel@yoctoproject.org
+                    </literallayout>
+                    You need to follow the prompts as the script is
+                    interactive.
+                    <note>
+                        For help on using these scripts, simply provide the
+                        <filename>-h</filename> argument as follows:
+                        <literallayout class='monospaced'>
      $ poky/scripts/create-pull-request -h
      $ poky/scripts/send-pull-request -h
-                    </literallayout>
+                        </literallayout>
+                    </note>
                     </para></listitem>
             </orderedlist>
         </para>
@@ -918,9 +968,10 @@
                     maintainer would.</para>
 
                     <para>The <filename>git send-email</filename> command is
-                    the preferred method for sending your patches since there
-                    is no risk of compromising whitespace in the body of the
-                    message, which can occur when you use your own mail client.
+                    the preferred method for sending your patches using
+                    email since there is no risk of compromising whitespace
+                    in the body of the message, which can occur when you use
+                    your own mail client.
                     The command also has several options that let you
                     specify recipients and perform further editing of the
                     email message.
