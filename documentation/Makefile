@@ -88,6 +88,7 @@ ifeq ($(DOC),bsp-guide)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = bsp-style.css bsp-guide.html figures/bsp-title.png \
+           figures/bsp-dev-flow.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
@@ -128,7 +129,6 @@ TARFILES = dev-style.css dev-manual.html \
            figures/wip.png
         else
 TARFILES = dev-style.css dev-manual.html \
-           figures/bsp-dev-flow.png \
            figures/dev-title.png \
            figures/kernel-dev-flow.png \
            figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
