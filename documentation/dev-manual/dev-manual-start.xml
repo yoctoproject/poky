@@ -14,236 +14,354 @@
     <ulink url='&YOCTO_DOCS_QS_URL;'>Yocto Project Quick Start</ulink>.
 </para>
 
-<section id='getting-setup'>
-    <title>Getting Set Up</title>
+<section id='setting-up-the-development-host-to-use-the-yocto-project'>
+    <title>Setting Up the Development Host to Use the Yocto Project</title>
 
     <para>
-        Here is what you need to use the Yocto Project:
-        <itemizedlist>
-            <listitem><para><emphasis>Host System:</emphasis>  You should have a reasonably current
-                Linux-based host system.
-                You will have the best results with a recent release of Fedora,
-                openSUSE, Debian, Ubuntu, or CentOS as these releases are frequently tested against the Yocto Project
-                and officially supported.
-                For a list of the distributions under validation and their status, see the
-                "<ulink url='&YOCTO_DOCS_REF_URL;#detailed-supported-distros'>Supported Linux Distributions</ulink>" section
-                in the Yocto Project Reference Manual and the wiki page at
-                <ulink url='&YOCTO_WIKI_URL;/wiki/Distribution_Support'>Distribution Support</ulink>.</para>
-                <para>
-                You should also have about 50 Gbytes of free disk space for building images.
-                </para></listitem>
-            <listitem><para><emphasis>Packages:</emphasis>  The OpenEmbedded build system
-                requires that certain packages exist on your development system (e.g. Python 2.7).
-                See "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Build Host Packages</ulink>"
-                section in the Yocto Project Quick Start and the
-                "<ulink url='&YOCTO_DOCS_REF_URL;#required-packages-for-the-host-development-system'>Required Packages for the Host Development System</ulink>"
-                section in the Yocto Project Reference Manual for the exact
-                package requirements and the installation commands to install
-                them for the supported distributions.
-                </para></listitem>
-            <listitem id='local-yp-release'><para><emphasis>Yocto Project Release:</emphasis>
-                You need a release of the Yocto Project locally installed on
-                your development system.
-                The documentation refers to this set of locally installed files
-                as the <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
-                You create your Source Directory by using
-                <ulink url='&YOCTO_DOCS_REF_URL;#git'>Git</ulink> to clone a local copy
-                of the upstream <filename>poky</filename> repository,
-                or by downloading and unpacking a tarball of an official
-                Yocto Project release.
-                The preferred method is to create a clone of the repository.
-                </para>
-                <para>Working from a copy of the upstream repository allows you
-                to contribute back into the Yocto Project or simply work with
-                the latest software on a development branch.
-                Because Git maintains and creates an upstream repository with
-                a complete history of changes and you are working with a local
-                clone of that repository, you have access to all the Yocto
-                Project development branches and tag names used in the upstream
-                repository.</para>
-                <note>You can view the Yocto Project Source Repositories at
-                    <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>
-                </note>
-                <para>The following transcript shows how to clone the
-                <filename>poky</filename> Git repository into the current
-                working directory.
-                The command creates the local repository in a directory
-                named <filename>poky</filename>.
-                For information on Git used within the Yocto Project, see
-                the "<ulink url='&YOCTO_DOCS_REF_URL;#git'>Git</ulink>" section.
-                <literallayout class='monospaced'>
-     $ git clone git://git.yoctoproject.org/poky
-     Cloning into 'poky'...
-     remote: Counting objects: 226790, done.
-     remote: Compressing objects: 100% (57465/57465), done.
-     remote: Total 226790 (delta 165212), reused 225887 (delta 164327)
-     Receiving objects: 100% (226790/226790), 100.98 MiB | 263 KiB/s, done.
-     Resolving deltas: 100% (165212/165212), done.
-                </literallayout></para>
-                <para>For another example of how to set up your own local Git
-                repositories, see this
-                <ulink url='&YOCTO_WIKI_URL;/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>
-                wiki page</ulink>, which describes how to create local
-                Git repositories for both
-                <filename>poky</filename> and <filename>meta-intel</filename>.
-                </para>
-                <para>
-                You can also get the Yocto Project Files by downloading
-                Yocto Project releases from the
-                <ulink url="&YOCTO_HOME_URL;">Yocto Project website</ulink>.
-                From the website, you just click "Downloads" in the navigation
-                pane to the left to display all Yocto Project downloads.
-                Current and archived releases are available for download.
-                Nightly and developmental builds are also maintained at
-                <ulink url="&YOCTO_AB_NIGHTLY_URL;"></ulink>.
-                One final site you can visit for information on Yocto Project
-                releases is the
-                <ulink url='&YOCTO_WIKI_URL;/wiki/Releases'>Releases</ulink>
-                wiki.
-                </para></listitem>
-            <listitem id='local-kernel-files'><para><emphasis>Yocto Project Kernel:</emphasis>
-                If you are going to be making modifications to a supported Yocto Project kernel, you
-                need to establish local copies of the source.
-                You can find Git repositories of supported Yocto Project kernels organized under
-                "Yocto Linux Kernel" in the Yocto Project Source Repositories at
-                <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.</para>
-                <para>This setup can involve creating a bare clone of the Yocto Project kernel and then
-                copying that cloned repository.
-                You can create the bare clone and the copy of the bare clone anywhere you like.
-                For simplicity, it is recommended that you create these structures outside of the
-                Source Directory, which is usually named <filename>poky</filename>.</para>
-                <para>As an example, the following transcript shows how to create the bare clone
-                of the <filename>linux-yocto-3.19</filename> kernel and then create a copy of
-                that clone.
-                <note>When you have a local Yocto Project kernel Git repository, you can
-                reference that repository rather than the upstream Git repository as
-                part of the <filename>clone</filename> command.
-                Doing so can speed up the process.</note></para>
-                <para>In the following example, the bare clone is named
-                <filename>linux-yocto-3.19.git</filename>, while the
-                copy is named <filename>my-linux-yocto-3.19-work</filename>:
-                <literallayout class='monospaced'>
-     $ git clone --bare git://git.yoctoproject.org/linux-yocto-3.19 linux-yocto-3.19.git
-     Cloning into bare repository 'linux-yocto-3.19.git'...
-     remote: Counting objects: 3983256, done.
-     remote: Compressing objects: 100% (605006/605006), done.
-     remote: Total 3983256 (delta 3352832), reused 3974503 (delta 3344079)
-     Receiving objects: 100% (3983256/3983256), 843.66 MiB | 1.07 MiB/s, done.
-     Resolving deltas: 100% (3352832/3352832), done.
+        This section provides procedures to set up your development host to
+        use the Yocto Project.
+        For a Linux system to use the Yocto Project, you need to be sure
+        you are running a supported Linux distribution and have the proper
+        host packages installed.
+        If you are using
+        <ulink url='https://git.yoctoproject.org/cgit/cgit.cgi/crops/about/'>CROPS</ulink>
+        that leverages
+        <ulink url='https://www.docker.com/'>Docker Containers</ulink>,
+        host setup differs from that of a native Linux machine.
+    </para>
+
+    <section id='setting-up-a-native-linux-host'>
+        <title>Setting Up a Native Linux Host</title>
+
+        <para role='writernotes'>
+            Need text - Following is some basics for a Linux host system.
+            This information needs to be worked in.
+        </para>
+
+        <para>
+            Setup consists of making sure you have a supported operating system,
+            installing host packages, and Here is what you need to use the Yocto Project:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis>Host System:</emphasis>
+                    You should have a reasonably current Linux-based host
+                    system.
+                    You will have the best results with a recent release of
+                    Fedora, openSUSE, Debian, Ubuntu, or CentOS as these
+                    releases are frequently tested against the Yocto Project
+                    and officially supported.
+                    For a list of the distributions under validation and their
+                    status, see the
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#detailed-supported-distros'>Supported Linux Distributions</ulink>" section
+                    in the Yocto Project Reference Manual and the wiki page at
+                    <ulink url='&YOCTO_WIKI_URL;/wiki/Distribution_Support'>Distribution Support</ulink>.</para>
+                    <para>
+                    You should also have about 50 Gbytes of free disk space
+                    for building images.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Packages:</emphasis>
+                    The OpenEmbedded build system requires that certain
+                    packages exist on your development system
+                    (e.g. Python 2.7).
+                    See the
+                    "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>Build Host Packages</ulink>"
+                    section in the Yocto Project Quick Start and the
+                    "<ulink url='&YOCTO_DOCS_REF_URL;#required-packages-for-the-host-development-system'>Required Packages for the Host Development System</ulink>"
+                    section in the Yocto Project Reference Manual for the
+                    exact package requirements and the installation commands
+                    to install them for the supported distributions.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='setting-up-to-use-crops'>
+        <title>Setting Up to Use CROPS</title>
+
+        <para role='writernotes'>
+            Need text.
+            With CROPS, not sure what the basic package requirements are.
+            Need to find this out.
+        </para>
+    </section>
+
+    <section id='setting-up-bsp-layers'>
+        <title>Setting Up BSP Layers</title>
+
+        <para>
+            This section describes how to set up a layer for a Board Support
+            Package (BSP).
+            For structural information on BSPs, see the
+            <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-guide'>Yocto Project Board Support Package (BSP) Developer's Guide</ulink>.
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Determine the BSP Layer You Want:</emphasis>
+                    The Yocto Project supports many BSPs, which are maintained in
+                    their own layers or in layers designed to contain several
+                    BSPs.
+                    To get an idea of machine support through BSP layers, you can
+                    look at the
+                    <ulink url='&YOCTO_RELEASE_DL_URL;/machines'>index of machines</ulink>
+                    for the release.
+                    <note>
+                        The Yocto Project uses the following BSP layer naming
+                        scheme:
+                        <literallayout class='monospaced'>
+     meta-<replaceable>bsp_name</replaceable>
+                        </literallayout>
+                        where <replaceable>bsp_name</replaceable> is the recognized
+                        BSP name.
+                        Here is an example:
+                        <literallayout class='monospaced'>
+     meta-raspberrypi
+                        </literallayout>
+                        See the
+                        "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
+                        section in the Yocto Project Board Support Package (BSP)
+                        Developer's Guide for more information on BSP Layers.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Optionally Set Up the <filename>meta-intel</filename> BSP Layer:</emphasis>
+                    If your hardware is based on current Intel CPUs and devices,
+                    you can leverage this BSP layer.
+                    For details on the <filename>meta-intel</filename> BSP layer,
+                    see the layer's
+                    <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/meta-intel/tree/README'><filename>README</filename></ulink>
+                    file.
+                    <orderedlist>
+                        <listitem><para>
+                            <emphasis>Navigate to Your Source Directory:</emphasis>
+                            Typically, you set up the
+                            <filename>meta-intel</filename> Git repository
+                            inside the
+                            <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+                            (e.g. <filename>poky</filename>).
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Clone the Layer:</emphasis>
+                            <literallayout class='monospaced'>
+     $ git clone git://git.yoctoproject.org/meta-intel.git
+     Cloning into 'meta-intel'...
+     remote: Counting objects: 14224, done.
+     remote: Compressing objects: 100% (4591/4591), done.
+     remote: Total 14224 (delta 8245), reused 13985 (delta 8006)
+     Receiving objects: 100% (14224/14224), 4.29 MiB | 2.90 MiB/s, done.
+     Resolving deltas: 100% (8245/8245), done.
      Checking connectivity... done.
-                </literallayout></para>
-                <para>Now create a clone of the bare clone just created:
-                <literallayout class='monospaced'>
-     $ git clone linux-yocto-3.19.git my-linux-yocto-3.19-work
-     Cloning into 'my-linux-yocto-3.19-work'...
-     done.
-     Checking out files: 100% (48440/48440), done.
-                </literallayout></para></listitem>
-            <listitem id='meta-yocto-kernel-extras-repo'><para><emphasis>
-                The <filename>meta-yocto-kernel-extras</filename> Git Repository</emphasis>:
-                The <filename>meta-yocto-kernel-extras</filename> Git repository contains Metadata needed
-                only if you are modifying and building the kernel image.
-                In particular, it contains the kernel BitBake append (<filename>.bbappend</filename>)
-                files that you
-                edit to point to your locally modified kernel source files and to build the kernel
-                image.
-                Pointing to these local files is much more efficient than requiring a download of the
-                kernel's source files from upstream each time you make changes to the kernel.</para>
-                <para>You can find the <filename>meta-yocto-kernel-extras</filename> Git Repository in the
-                "Yocto Metadata Layers" area of the Yocto Project Source Repositories at
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Check Out the Proper Branch:</emphasis>
+                            The branch you check out for
+                            <filename>meta-intel</filename> must match the same
+                            branch you are using for the Yocto Project release
+                            (e.g. &DISTRO_NAME_NO_CAP;):
+                            <literallayout class='monospaced'>
+     $ git checkout <replaceable>branch_name</replaceable>
+                            </literallayout>
+                            For an example on how to discover branch names and
+                            checkout on a branch, see the
+                            "<link linkend='checking-out-by-branch-in-poky'>Checking Out By Branch in Poky</link>"
+                            section.
+                            </para></listitem>
+                    </orderedlist>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Optionally Set Up an Alternative BSP Layer:</emphasis>
+                    If your hardware can be more closely leveraged to an
+                    existing BSP not within the <filename>meta-intel</filename>
+                    BSP layer, you can clone that BSP layer.</para>
+
+                    <para>The process is identical to the process used for the
+                    <filename>meta-intel</filename> layer except for the layer's
+                    name.
+                    For example, if you determine that your hardware most
+                    closely matches the <filename>meta-minnow</filename>,
+                    clone that layer:
+                    <literallayout class='monospaced'>
+     $ git clone git://git.yoctoproject.org/meta-minnow
+     Cloning into 'meta-minnow'...
+     remote: Counting objects: 456, done.
+     remote: Compressing objects: 100% (283/283), done.
+     remote: Total 456 (delta 163), reused 384 (delta 91)
+     Receiving objects: 100% (456/456), 96.74 KiB | 0 bytes/s, done.
+     Resolving deltas: 100% (163/163), done.
+     Checking connectivity... done.
+                    </literallayout>
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+
+    <section id='local-kernel-files'>
+        <title>Setting Up to Work on a Kernel</title>
+
+        <para>
+            Kernel development is best accomplished using the
+            <filename>devtool</filename> tool and not through traditional
+            kernel workflow methods.
+            This section provides procedures for both.
+        </para>
+
+        <section id='getting-ready-to-develop-using-devtool'>
+            <title>Getting Ready to Develop using <filename>devtool</filename></title>
+
+            <para role='writernotes'>
+                Need the updated wiki stuff here
+            </para>
+        </section>
+
+        <section id='getting-ready-for-traditional-kernel-development'>
+            <title>Getting Ready for Traditional Kernel Development</title>
+
+            <para>
+                For traditional kernel development using the Yocto
+                Project, you need to establish local copies of the
+                kernel source.
+                You can find Git repositories of supported Yocto Project
+                kernels organized under "Yocto Linux Kernel" in the Yocto
+                Project Source Repositories at
                 <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.
-                It is good practice to create this Git repository inside the Source Directory.</para>
-                <para>Following is an example that creates the <filename>meta-yocto-kernel-extras</filename> Git
-                repository inside the Source Directory, which is named <filename>poky</filename>
-                in this case:
-                <literallayout class='monospaced'>
+            </para>
+
+            <para>
+                This setup can involve creating a bare clone of the
+                Yocto Project kernel and then copying that cloned
+                repository.
+                You can create the bare clone and the copy of the bare
+                clone anywhere you like.
+                For simplicity, it is recommended that you create these
+                structures outside of the
+                <ulink url='&YOCTO_DOCS_REF_URL;source-directory'>Source Directory</ulink>,
+                which is usually named <filename>poky</filename>.
+            </para>
+
+            <para>
+                The following steps show how to create a bare clone of the
+                <filename>linux-yocto-4.4</filename> kernel and then
+                create a copy of that clone:
+                <note>
+                    When you have a local Yocto Project kernel Git
+                    repository, you can reference that repository rather than
+                    the upstream Git repository as part of the
+                    <filename>clone</filename> command.
+                    Doing so can speed up the process.
+                </note>
+                <orderedlist>
+                    <listitem><para>
+                        <emphasis>Create the Bare Clone:</emphasis>
+                        In the following example, the bare clone is named
+                        <filename>linux-yocto-4.4.git</filename>:
+                        <literallayout class='monospaced'>
+     $ git clone &dash;&dash;bare git://git.yoctoproject.org/linux-yocto-4.4 linux-yocto-4.4.git
+     Cloning into bare repository 'linux-yocto-4.4.git'...
+     remote: Counting objects: 4543903, done.
+     remote: Compressing objects: 100% (695618/695618), done.
+     remote: Total 4543903 (delta 3818435), reused 4541724 (delta 3816256)
+     Receiving objects: 100% (4543903/4543903), 801.08 MiB | 6.55 MiB/s, done.
+     Resolving deltas: 100% (3818435/3818435), done.
+     Checking connectivity... done.
+                         </literallayout>
+                         </para></listitem>
+                    <listitem><para>
+                        <emphasis>Create the Copy of the Bare Clone:</emphasis>
+                        In the following command, the copy of the bare clone
+                        is named <filename>my-linux-yocto-4.4-work</filename>:
+                        <literallayout class='monospaced'>
+     $ git clone linux-yocto-4.4.git my-linux-yocto-4.4-work
+     Cloning into 'my-linux-yocto-4.4-work'...
+     done.
+     Checking out files: 100% (52221/52221), done.
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Cloning the <filename>meta-yocto-kernel-extras</filename> Repository:</emphasis>
+                        The <filename>meta-yocto-kernel-extras</filename> Git
+                        repository contains Metadata needed only if you are
+                        modifying and building the kernel image.
+                        In particular, it contains the kernel BitBake append
+                        (<filename>.bbappend</filename>) files that you edit to
+                        point to your locally modified kernel source files and to
+                        build the kernel image.
+                        Pointing to these local files is much more efficient than
+                        requiring a download of the kernel's source files from
+                        upstream each time you make changes to the kernel.</para>
+
+                        <para>You can find the
+                        <filename>meta-yocto-kernel-extras</filename> Git
+                        Repository in the "Yocto Metadata Layers" area of the
+                        Yocto Project Source Repositories at
+                        <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.
+                        It is good practice to create this Git repository
+                        inside the Source Directory.</para>
+
+                        <para>Following is an example that creates the
+                        <filename>meta-yocto-kernel-extras</filename> Git
+                        repository inside the Source Directory, which is named
+                        <filename>poky</filename>, in this case:
+                        <literallayout class='monospaced'>
      $ cd ~/poky
      $ git clone git://git.yoctoproject.org/meta-yocto-kernel-extras meta-yocto-kernel-extras
      Cloning into 'meta-yocto-kernel-extras'...
      remote: Counting objects: 727, done.
      remote: Compressing objects: 100% (452/452), done.
      remote: Total 727 (delta 260), reused 719 (delta 252)
-     Receiving objects: 100% (727/727), 536.36 KiB | 240 KiB/s, done.
+     Receiving objects: 100% (727/727), 536.36 KiB | 0 bytes/s, done.
      Resolving deltas: 100% (260/260), done.
-               </literallayout></para></listitem>
-           <listitem><para id='supported-board-support-packages-(bsps)'><emphasis>Supported Board Support Packages (BSPs):</emphasis>
-                The Yocto Project supports many BSPs, which are maintained in
-                their own layers or in layers designed to contain several
-                BSPs.
-                To get an idea of machine support through BSP layers, you can
-                look at the
-                <ulink url='&YOCTO_RELEASE_DL_URL;/machines'>index of machines</ulink>
-                for the release.</para>
-
-                <para>The Yocto Project uses the following BSP layer naming
-                scheme:
-                <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>
-                </literallayout>
-                where <replaceable>bsp_name</replaceable> is the recognized
-                BSP name.
-                Here is an example:
-                <literallayout class='monospaced'>
-     meta-raspberrypi
-                </literallayout>
-                See the
-                "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
-                section in the Yocto Project Board Support Package (BSP)
-                Developer's Guide for more information on BSP Layers.</para>
-
-                <para>A useful Git repository released with the Yocto
-                Project is <filename>meta-intel</filename>, which is a
-                parent layer that contains many supported
-                <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>.
-                You can locate the <filename>meta-intel</filename> Git
-                repository in the "Yocto Metadata Layers" area of the Yocto
-                Project Source Repositories at
-                <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.</para>
-
-                <para>Using
-                <ulink url='&YOCTO_DOCS_REF_URL;#git'>Git</ulink> to create a local clone of the
-                upstream repository can be helpful if you are working with
-                BSPs.
-                Typically, you set up the <filename>meta-intel</filename>
-                Git repository inside the Source Directory.
-                For example, the following transcript shows the steps to clone
-                <filename>meta-intel</filename>.
-                <note>
-                    Be sure to work in the <filename>meta-intel</filename>
-                    branch that matches your
-                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
-                    (i.e. <filename>poky</filename>) branch.
-                    For example, if you have checked out the "master" branch
-                    of <filename>poky</filename> and you are going to use
-                    <filename>meta-intel</filename>, be sure to checkout the
-                    "master" branch of <filename>meta-intel</filename>.
-                </note>
-                <literallayout class='monospaced'>
-     $ cd ~/poky
-     $ git clone git://git.yoctoproject.org/meta-intel.git
-     Cloning into 'meta-intel'...
-     remote: Counting objects: 11917, done.
-     remote: Compressing objects: 100% (3842/3842), done.
-     remote: Total 11917 (delta 6840), reused 11699 (delta 6622)
-     Receiving objects: 100% (11917/11917), 2.92 MiB | 2.88 MiB/s, done.
-     Resolving deltas: 100% (6840/6840), done.
      Checking connectivity... done.
-                </literallayout></para>
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+    </section>
 
-                <para>The same
-                <ulink url='&YOCTO_WIKI_URL;/wiki/Transcript:_from_git_checkout_to_meta-intel_BSP'>wiki page</ulink>
-                referenced earlier covers how to set up the
-                <filename>meta-intel</filename> Git repository.
-                </para></listitem>
-            <listitem><para><emphasis>Eclipse Yocto Plug-in:</emphasis>  If you are developing
-                applications using the Eclipse Integrated Development Environment (IDE),
-                you will need this plug-in.
-                See the
-                "<ulink url='&YOCTO_DOCS_SDK_URL;#sdk-appendix-latest-yp-eclipse-plug-in'>Using Eclipse</ulink>"
-                section in the Yocto Project Software Development Kit (SDK)
-                Developer's Guide for more information.</para></listitem>
-        </itemizedlist>
-    </para>
+    <section id='setting-up-to-use-eclipse'>
+        <title>Setting Up to Use Eclipse</title>
+
+        <para>
+            This section presents the steps needed to set up your host if you
+            are going to be using the popular
+            <trademark class='trade'>Eclipse</trademark> IDE.
+            The steps in this procedure are links to sections in the
+            Yocto Project Software Development Kit (SDK) Developer's Guide
+            that provide detailed procedures given the Neon version of
+            Eclipse.
+            For procedures on the entire development process using
+            Eclipse, see the
+            "<ulink url='&YOCTO_DOCS_SDK_URL;#sdk-developing-applications-using-eclipse'>Developing Applications Using Eclipse</ulink>"
+            section in the Yocto Project Software Development Kit (SDK)
+            Developer's Guide.
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Install Eclipse:</emphasis>
+                    See the
+                    "<ulink url='&YOCTO_DOCS_SDK_URL;#neon-installing-eclipse-ide'>Installing the Neon Eclipse IDE</ulink>"
+                    section.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Configure Eclipse:</emphasis>
+                    See the
+                    "<ulink url='&YOCTO_DOCS_SDK_URL;#neon-configuring-the-mars-eclipse-ide'>Configuring the Neon Eclipse IDE</ulink>"
+                    section.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Configure Eclipse:</emphasis>
+                    See the
+                    "<ulink url='&YOCTO_DOCS_SDK_URL;#neon-installing-the-eclipse-yocto-plug-in'>Installing or Accessing the Neon Eclipse Yocto Plug-in</ulink>"
+                    section.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Configure Eclipse:</emphasis>
+                    See the
+                    "<ulink url='&YOCTO_DOCS_SDK_URL;#neon-configuring-the-eclipse-yocto-plug-in'>Configuring the Neon Eclipse Yocto Plug-in</ulink>"
+                    section.
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
 </section>
 
 <section id='working-with-yocto-project-source-files'>
@@ -398,6 +516,32 @@
 
     <section id='cloning-the-poky-repository'>
         <title>Cloning the <filename>poky</filename> Repository</title>
+
+        <para>
+            To use the Yocto Project, you need a release of the Yocto Project
+            locally installed on your development system.
+            The locally installed set of files is referred to as the
+            <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+            in the Yocto Project documentation.
+        </para>
+
+        <para>
+            You create your Source Directory by using
+            <ulink url='&YOCTO_DOCS_REF_URL;#git'>Git</ulink> to clone a local
+            copy of the upstream <filename>poky</filename> repository.
+            <note><title>Tip</title>
+                The preferred method of getting the Yocto Project Source
+                Directory set up is to clone the repository.
+            </note>
+            Working from a copy of the upstream repository allows you
+            to contribute back into the Yocto Project or simply work with
+            the latest software on a development branch.
+            Because Git maintains and creates an upstream repository with
+            a complete history of changes and you are working with a local
+            clone of that repository, you have access to all the Yocto
+            Project development branches and tag names used in the upstream
+            repository.
+        </para>
 
         <para>
             Follow these steps to create a local version of the
