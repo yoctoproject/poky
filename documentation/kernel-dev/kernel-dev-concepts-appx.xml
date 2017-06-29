@@ -380,6 +380,93 @@
             cloning and building the kernel.
         </para>
     </section>
+
+    <section id='kernel-build-file-hierarchy'>
+        <title>Kernel Build File Hierarchy</title>
+
+        <para>
+            Upstream storage of all the available kernel source code is
+            one thing, while representing and using the code on your host
+            development system is another.
+            Conceptually, you can think of the kernel source repositories
+            as all the source files necessary for all the supported
+            Yocto Linux kernels.
+            As a developer, you are just interested in the source files
+            for the kernel on which you are working.
+            And, furthermore, you need them available on your host system.
+        </para>
+
+        <para>
+            Kernel source code is available on your host system several
+            different ways:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis>Files Accessed While using <filename>devtool</filename>:</emphasis>
+                    <filename>devtool</filename>, which is available with the
+                    Yocto Project, is the preferred method by which to
+                    modify the kernel.
+                    See the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#kernel-modification-workflow'>Kernel Modification Workflow</ulink>"
+                    section in the Yocto Project Development Manual for
+                    information.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Cloned Repository:</emphasis>
+                    If you are working in the kernel all the time, you probably
+                    would want to set up your own local Git repository of the
+                    Yocto Linux kernel tree.
+                    For information on how to clone a Yocto Linux kernel
+                    Git repository, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#local-kernel-files'>Setting Up to Work On a Kernel</ulink>"
+                    section in the Yocto Project Development Manual.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Temporary Source Files from a Build:</emphasis>
+                    If you just need to make some patches to the kernel using
+                    a traditional BitBake workflow (i.e. not using the
+                    <filename>devtool</filename>), you can access temporary
+                    kernel source files that were extracted and used during
+                    a kernel build.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            The temporary kernel source files resulting from a build using
+            BitBake have a particular hierarchy.
+            When you build the kernel on your development system, all files
+            needed for the build are taken from the source repositories
+            pointed to by the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+            variable and gathered in a temporary work area where they are
+            subsequently used to create the unique kernel.
+            Thus, in a sense, the process constructs a local source tree
+            specific to your kernel from which to generate the new kernel
+            image.
+        </para>
+
+        <para>
+            The following figure shows the temporary file structure
+            created on your host system when you build the kernel using
+            Bitbake.
+            This
+            <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
+            contains all the source files used during the build.
+            <imagedata fileref="figures/kernel-overview-2-generic.png"
+                width="6in" depth="5in" align="center" scale="100" />
+        </para>
+
+        <para>
+            Again, for additional information on the Yocto Project kernel's
+            architecture and its branching strategy, see the
+            "<link linkend='yocto-linux-kernel-architecture-and-branching-strategies'>Yocto Linux Kernel Architecture and Branching Strategies</link>"
+            section.
+            You can also reference the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#patching-the-kernel'>Patching the Kernel</ulink>"
+            section in the Yocto Project Development Manual for a detailed
+            example that modifies the kernel.
+        </para>
+    </section>
 </appendix>
 <!--
 vim: expandtab tw=80 ts=4

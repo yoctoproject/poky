@@ -82,71 +82,6 @@
             <ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;'>Yocto Project Linux Kernel Development Manual</ulink>.
         </para>
 
-        <section id='kernel-overview'>
-            <title>Kernel Overview</title>
-
-            <para>
-                Upstream storage of all the available kernel source code is
-                one thing, while representing and using the code on your host
-                development system is another.
-                Conceptually, you can think of the kernel source repositories
-                as all the source files necessary for all the supported
-                Yocto Linux kernels.
-                As a developer, you are just interested in the source files
-                for the kernel on which you are working.
-                And, furthermore, you need them available on your host system.
-            </para>
-
-            <para>
-                Kernel source code is available on your host system a couple
-                of different ways.
-                If you are working in the kernel all the time, you probably
-                would want to set up your own local Git repository of the
-                Yocto Linux kernel tree.
-                If you just need to make some patches to the kernel, you can
-                access temporary kernel source files that were extracted and
-                used during a build.
-                We will just talk about working with the temporary source code.
-                For more information on how to get kernel source code onto your
-                host system, see the
-                "<link linkend='local-kernel-files'>Setting Up to Work On a Kernel</link>"
-                section.
-            </para>
-
-            <para>
-                What happens during the build?
-                When you build the kernel on your development system, all files needed for the build
-                are taken from the source repositories pointed to by the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink> variable
-                and gathered in a temporary work area
-                where they are subsequently used to create the unique kernel.
-                Thus, in a sense, the process constructs a local source tree specific to your
-                kernel to generate the new kernel image - a source generator if you will.
-            </para>
-
-            <para>
-                The following figure shows the temporary file structure
-                created on your host system when the build occurs.
-                This
-                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
-                contains all the source files used during the build.
-            </para>
-
-            <para>
-                <imagedata fileref="figures/kernel-overview-2-generic.png"
-                    width="6in" depth="5in" align="center" scale="100" />
-            </para>
-
-            <para>
-                Again, for additional information on the Yocto Project kernel's
-                architecture and its branching strategy, see the
-                <ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;'>Yocto Project Linux Kernel Development Manual</ulink>.
-                You can also reference the
-                "<link linkend='patching-the-kernel'>Patching the Kernel</link>"
-                section for a detailed example that modifies the kernel.
-            </para>
-        </section>
-
         <section id='kernel-modification-workflow'>
             <title>Kernel Modification Workflow</title>
 
@@ -219,9 +154,9 @@
                             Try to resist the temptation to directly edit an
                             existing <filename>.config</filename> file, which is
                             found in the Build Directory among the source code
-                            used for the build (e.g. see the bottom
-                            illustration in the
-                            "<link linkend='kernel-overview'>Kernel Overview</link>"
+                            used for the build (e.g. see the workflow illustration
+                            in the
+                            "<link linkend='kernel-modification-workflow'>Kernel Modification Workflow</link>"
                             section).
                             Doing so, can produce unexpected results when the
                             OpenEmbedded build system regenerates the configuration

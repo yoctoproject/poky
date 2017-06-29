@@ -131,7 +131,6 @@ TARFILES = dev-style.css dev-manual.html \
 TARFILES = dev-style.css dev-manual.html \
            figures/dev-title.png \
            figures/kernel-dev-flow.png \
-           figures/kernel-overview-2-generic.png \
            figures/recipe-workflow.png \
            figures/devtool-add-flow.png figures/devtool-modify-flow.png \
            figures/devtool-upgrade-flow.png \
@@ -330,7 +329,7 @@ ifeq ($(DOC),kernel-dev)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = kernel-dev.html kernel-dev-style.css \
-           figures/kernel-dev-title.png \
+           figures/kernel-dev-title.png figures/kernel-overview-2-generic \
            figures/kernel-architecture-overview.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
