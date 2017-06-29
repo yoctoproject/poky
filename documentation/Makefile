@@ -131,7 +131,7 @@ TARFILES = dev-style.css dev-manual.html \
 TARFILES = dev-style.css dev-manual.html \
            figures/dev-title.png \
            figures/kernel-dev-flow.png \
-           figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
+           figures/kernel-overview-2-generic.png \
            figures/recipe-workflow.png \
            figures/devtool-add-flow.png figures/devtool-modify-flow.png \
            figures/devtool-upgrade-flow.png \
@@ -205,7 +205,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
         figures/dev-title.png \
 	figures/git-workflow.png figures/index-downloads.png \
         figures/kernel-dev-flow.png \
-	figures/kernel-overview-1.png figures/kernel-overview-2-generic.png \
+	figures/kernel-overview-2-generic.png \
 	figures/source-repos.png figures/yp-download.png \
         figures/profile-title.png figures/kernelshark-all.png \
         figures/kernelshark-choose-events.png \
