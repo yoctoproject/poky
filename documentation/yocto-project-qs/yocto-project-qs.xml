@@ -403,7 +403,8 @@
             <para>
                 Here is an example from an Ubuntu build host that clones the
                 <filename>poky</filename> repository and then checks out the
-                latest Yocto Project Release (i.e. &DISTRO;):
+                latest Yocto Project Release by tag
+                (i.e. <filename>&DISTRO_REL_TAG;</filename>):
                 <literallayout class='monospaced'>
      $ git clone git://git.yoctoproject.org/poky
      Cloning into 'poky'...
@@ -413,17 +414,32 @@
      Receiving objects: 100% (361782/361782), 131.94 MiB | 6.88 MiB/s, done.
      Resolving deltas: 100% (268619/268619), done.
      Checking connectivity... done.
-     $ git checkout &DISTRO_NAME_NO_CAP;
+     $ git checkout tags/&DISTRO_REL_TAG; -b poky_&DISTRO;
                 </literallayout>
-                You can also get the Yocto Project Files by downloading
-                Yocto Project releases from the
-                <ulink url="&YOCTO_HOME_URL;">Yocto Project website</ulink>.
             </para>
 
             <para>
-                For more information on getting set up with the Yocto Project
-                release, see the
-                "<link linkend='cloning-the-poky-repository'>Cloning the <filename>poky</filename> Repository</link>"
+                The previous Git <filename>checkout</filename> command
+                creates a local branch named
+                <filename>poky_&DISTRO;</filename>.
+                The files available to you in that branch exactly match the
+                repository's files in the
+                <filename>&DISTRO_NAME_NO_CAP;</filename>
+                development branch at the time of the Yocto Project &DISTRO;
+                release.
+                <note>
+                    Rather than checking out the entire development branch
+                    of a release (i.e. the tip), which could be continuously
+                    changing while you are doing your development, you would
+                    check out a branch based on a release tag.  Doing so
+                    provides you with an unchanging, stable set of files.
+                </note>
+            </para>
+
+            <para>
+                For more options and information about accessing Yocto
+                Project related repositories, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#working-with-yocto-project-source-files'>Working With Yocto Project Source Files</ulink>"
                 section in the Yocto Project Development Manual.
             </para>
         </section>
@@ -737,15 +753,27 @@
                         sure that both repositories
                         (<filename>meta-intel</filename> and
                         <filename>poky</filename>) are using the same releases.
-                        Consequently, you need to checkout out the
-                        "<filename>&DISTRO_NAME_NO_CAP;</filename>" release after
-                        cloning <filename>meta-intel</filename>:
+                        Because you used the <filename>&DISTRO_REL_TAG;</filename>
+                        tag when you checked out the <filename>poky</filename>
+                        repository by tag, you should use a
+                        <filename>meta-intel</filename>
+                        tag that corresponds with the release you used for
+                        <filename>poky</filename>. Consequently, you need to
+                        checkout out the
+                        "<filename>&METAINTELVERSION;-tbd-&YOCTO_DOC_VERSION;</filename>"
+                        branch after cloning <filename>meta-intel</filename>:
                         <literallayout class='monospaced'>
      $ cd $HOME/poky/meta-intel
-     $ git checkout &DISTRO_NAME_NO_CAP;
-     Branch &DISTRO_NAME_NO_CAP; set up to track remote branch &DISTRO_NAME_NO_CAP; from origin.
-     Switched to a new branch '&DISTRO_NAME_NO_CAP;'
+     $ git checkout tags/&METAINTELVERSION;-tbd-&YOCTO_DOC_VERSION; -b meta-intel-&DISTRO_NAME_NO_CAP;-&YOCTO_DOC_VERSION;
+     Switched to a new branch 'meta-intel-&DISTRO_NAME_NO_CAP;-&YOCTO_DOC_VERSION;'
                         </literallayout>
+                        The previous Git <filename>checkout</filename> command
+                        creates a local branch named
+                        <filename>meta-intel-&DISTRO_NAME_NO_CAP;-&YOCTO_DOC_VERSION;</filename>.
+                        You have the option to name your local branch whatever
+                        you want by providing any name you like for
+                        "meta-intel-&DISTRO_NAME_NO_CAP;-&YOCTO_DOC_VERSION;"
+                        in the above example.
                         </para></listitem>
                     <listitem><para><emphasis>Configure the Build:</emphasis>
                         To configure the build, you edit the
