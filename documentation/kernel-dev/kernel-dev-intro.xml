@@ -5,105 +5,234 @@
 <chapter id='kernel-dev-intro'>
 <title>Introduction</title>
 
-<!--
-<para>
-    <emphasis>AR - Darren Hart:</emphasis>  See if the concepts in these
-    three bullets are adequately covered in somewhere in this manual:
-    <itemizedlist>
-        <listitem><para>Do we convey that our kernel Git repositories
-            have a clear and continuous history, similar to the way the
-            kernel Git repositories for <filename>kernel.org</filename>
-            do.
-            </para></listitem>
-        <listitem><para>Does the manual note that Yocto Project delivers
-            a key set of supported kernel types, where
-            each type is tailored to meet a specific use (e.g. networking,
-            consumer, devices, and so forth).</para></listitem>
-        <listitem><para>Do we convey that the Yocto Project uses a
-            Git branching strategy that, from a
-            developer's point of view, results in a linear path from the
-            baseline kernel.org, through a select group of features and
-            ends with their BSP-specific commits.</para></listitem>
-    </itemizedlist>
-</para>
--->
+<section id='kernel-dev-overview'>
+    <title>Overview</title>
 
-    <section id='kernel-dev-overview'>
-        <title>Overview</title>
+    <para>
+        Regardless of how you intend to make use of the Yocto Project,
+        chances are you will work with the Linux kernel.
+        This manual introduces the kernel development process and
+        provides background information on the Yocto Linux kernel
+        <ulink url='&YOCTO_DOCS_REF_URL;#metadata'>Metadata</ulink>,
+        describes common tasks you can perform using the kernel tools,
+        and shows you how to use the kernel Metadata needed to work with
+        the kernel inside the Yocto Project.
+   </para>
 
-        <para>
-            Regardless of how you intend to make use of the Yocto Project,
-            chances are you will work with the Linux kernel.
-            This manual provides background information on the Yocto Linux kernel
-            <ulink url='&YOCTO_DOCS_REF_URL;#metadata'>Metadata</ulink>,
-            describes common tasks you can perform using the kernel tools,
-            and shows you how to use the kernel Metadata needed to work with
-            the kernel inside the Yocto Project.
-       </para>
+   <para>
+        Each Yocto Project release has a set of Yocto Linux kernel recipes,
+        whose Git repositories you can view in the Yocto
+        <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink> under
+        the "Yocto Linux Kernel" heading.
+        New recipes for the release track the latest Linux kernel
+        upstream developments from
+        <ulink url='http://www.kernel.org'></ulink> and introduce
+        newly-supported platforms.
+        Previous recipes in the release are refreshed and supported for at
+        least one additional Yocto Project release.
+        As they align, these previous releases are updated to include the
+        latest from the
+        <ulink url='&YOCTO_HOME_URL;/organization/long-term-support-initiative-ltsi'>Long Term Support Initiative</ulink>
+        (LTSI) project.
+        Also included is a Yocto Linux kernel development recipe
+        (<filename>linux-yocto-dev.bb</filename>) should you want to work
+        with the very latest in upstream Yocto Linux kernel development and
+        kernel Metadata development.
+        <note>
+            For more on Yocto Linux kernels, see the
+            "<link linkend='kernel-big-picture'>Yocto Project Kernel Development and Maintenance</link>
+            section.
+        </note>
+    </para>
 
-       <para>
-            Each Yocto Project release has a set of linux-yocto recipes, whose
-            Git repositories you can view in the Yocto
-            <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink> under
-            the "Yocto Linux Kernel" heading.
-            New recipes for the release track the latest upstream developments
-            and introduce newly-supported platforms.
-            Previous recipes in the release are refreshed and supported for at
-            least one additional release.
-            As they align, these previous releases are updated to include the
-            latest from the
-            <ulink url='&YOCTO_HOME_URL;/organization/long-term-support-initiative-ltsi'>Long Term Support Initiative</ulink>
-            (LTSI) project.
-            Also included is a linux-yocto development recipe
-            (<filename>linux-yocto-dev.bb</filename>) should you want to work
-            with the very latest in upstream Linux kernel development and
-            kernel Metadata development.
-        </para>
+    <para>
+        The Yocto Project also provides a powerful set of kernel
+        tools for managing Yocto Linux kernel sources and configuration data.
+        You can use these tools to make a single configuration change,
+        apply multiple patches, or work with your own kernel sources.
+    </para>
 
-        <para>
-            The Yocto Project also provides a powerful set of kernel
-            tools for managing Linux kernel sources and configuration data.
-            You can use these tools to make a single configuration change,
-            apply multiple patches, or work with your own kernel sources.
-        </para>
+    <para>
+        In particular, the kernel tools allow you to generate configuration
+        fragments that specify only what you must, and nothing more.
+        Configuration fragments only need to contain the highest level
+        visible <filename>CONFIG</filename> options as presented by the
+        Yocto Linux kernel <filename>menuconfig</filename> system.
+        Contrast this against a complete Yocto Linux kernel
+        <filename>.config</filename> file, which includes all the automatically
+        selected <filename>CONFIG</filename> options.
+        This efficiency reduces your maintenance effort and allows you
+        to further separate your configuration in ways that make sense for
+        your project.
+        A common split separates policy and hardware.
+        For example, all your kernels might support the
+        <filename>proc</filename> and <filename>sys</filename> filesystems,
+        but only specific boards require sound, USB, or specific drivers.
+        Specifying these configurations individually allows you to aggregate
+        them together as needed, but maintains them in only one place.
+        Similar logic applies to separating source changes.
+    </para>
 
-        <para>
-            In particular, the kernel tools allow you to generate configuration
-            fragments that specify only what you must, and nothing more.
-            Configuration fragments only need to contain the highest level
-            visible <filename>CONFIG</filename> options as presented by the Linux
-            kernel <filename>menuconfig</filename> system.
-            Contrast this against a complete Linux kernel
-            <filename>.config</filename>, which includes all the automatically
-            selected <filename>CONFIG</filename> options.
-            This efficiency reduces your maintenance effort and allows you
-            to further separate your configuration in ways that make sense for
-            your project.
-            A common split separates policy and hardware.
-            For example, all your kernels might support
-            the <filename>proc</filename> and <filename>sys</filename> filesystems,
-            but only specific boards require sound, USB, or specific drivers.
-            Specifying these configurations individually allows you to aggregate
-            them together as needed, but maintains them in only one place.
-            Similar logic applies to separating source changes.
-        </para>
+    <para>
+        If you do not maintain your own kernel sources and need to make
+        only minimal changes to the sources, the released recipes provide a
+        vetted base upon which to layer your changes.
+        Doing so allows you to benefit from the continual kernel
+        integration and testing performed during development of the
+        Yocto Project.
+    </para>
 
-        <para>
-            If you do not maintain your own kernel sources and need to make
-            only minimal changes to the sources, the released recipes provide a
-            vetted base upon which to layer your changes.
-            Doing so allows you to benefit from the continual kernel
-            integration and testing performed during development of the
-            Yocto Project.
-        </para>
+    <para>
+        If, instead, you have a very specific Linux kernel source tree
+        and are unable to align with one of the official Yocto Linux kernel
+        recipes, an alternative exists by which you can use the Yocto
+        Project Linux kernel tools with your own kernel sources.
+    </para>
+</section>
 
-        <para>
-            If, instead, you have a very specific Linux kernel source tree
-            and are unable to align with one of the official linux-yocto
-            recipes, an alternative exists by which you can use the Yocto
-            Project Linux kernel tools with your own kernel sources.
-        </para>
-    </section>
+<section id='kernel-modification-workflow'>
+    <title>Kernel Modification Workflow</title>
+
+    <para>
+        Kernel modification involves changing the Yocto Project kernel,
+        which could involve changing configuration options as well as adding
+        new kernel recipes.
+        Configuration changes can be added in the form of configuration
+        fragments, while recipe modification comes through the kernel's
+        <filename>recipes-kernel</filename> area in a kernel layer you create.
+    </para>
+
+    <para>
+        This section presents a high-level overview of the Yocto Project
+        kernel modification workflow.
+        You can find additional information here:
+        <itemizedlist>
+            <listitem><para>
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#patching-the-kernel'>Patching the Kernel</ulink>"
+                in the Yocto Project Development Manual.
+                </para></listitem>
+            <listitem><para>
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#configuring-the-kernel'>Configuring the Kernel</ulink>"
+                in the Yocto Project Development Manual.
+                </para></listitem>
+        </itemizedlist>
+        This illustration and the following list summarizes the kernel
+        modification general workflow.
+        <imagedata fileref="figures/kernel-dev-flow.png"
+            width="6in" depth="5in" align="center" scalefit="1" />
+    </para>
+
+    <para>
+        <orderedlist>
+            <listitem><para>
+                <emphasis>Set up Your Host Development System to Support
+                Development Using the Yocto Project</emphasis>:
+                See
+                "<ulink url='&YOCTO_DOCS_QS_URL;#the-linux-distro'>The Linux Distribution</ulink>"
+                and
+                "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Build Host Packages</ulink>"
+                sections both in the Yocto Project Quick Start for
+                requirements.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Clone the <filename>poky</filename> Repository</emphasis>:
+                Having the
+                <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+                on your system gives you access to the build process and tools
+                you need.
+                For information on how to get these files, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#cloning-the-poky-repository'>Cloning the <filename>poky</filename> Repository</ulink>"
+                section in the Yocto Project Development Manual.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Establish the Temporary Kernel Source Files</emphasis>:
+                Temporary kernel source files are kept in the
+                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
+                created by the OpenEmbedded build system when you run BitBake.
+                If you have never built the kernel in which you are
+                interested, you need to run an initial build to
+                establish local kernel source files.</para>
+
+                <para>If you are building an image for the first time, you
+                need to get the build environment ready by sourcing an
+                environment setup script
+                (i.e. <filename>oe-init-build-env</filename> or
+                <filename>oe-init-build-env-memres</filename>).
+                You also need to be sure two key configuration files
+                (<filename>local.conf</filename> and
+                <filename>bblayers.conf</filename>) are configured
+                appropriately.</para>
+
+                <para>The entire process for building an image is overviewed
+                in the
+                "<ulink url='&YOCTO_DOCS_QS_URL;#qs-building-images'>Building Images</ulink>"
+                section of the Yocto Project Quick Start.
+                You might want to reference this information.
+                You can find more information on BitBake in the
+                <ulink url='&YOCTO_DOCS_BB_URL;'>BitBake User Manual</ulink>.
+                </para>
+
+                <para>The build process supports several types of images to
+                satisfy different needs.
+                See the "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
+                chapter in the Yocto Project Reference Manual for information
+                on supported images.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Make Changes to the Kernel Source Code if
+                applicable</emphasis>:
+                Modifying the kernel does not always mean directly
+                changing source files.
+                However, if you have to do this, you make the changes to the
+                files in the Build Directory.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Make Kernel Configuration Changes if
+                Applicable</emphasis>:
+                If your situation calls for changing the kernel's
+                configuration, you can use
+                <link linkend='generating-configuration-files'><filename>menuconfig</filename></link>,
+                which allows you to interactively develop and test the
+                configuration changes you are making to the kernel.
+                Saving changes you make with <filename>menuconfig</filename>
+                updates the kernel's <filename>.config</filename> file.
+                <note><title>Warning</title>
+                    Try to resist the temptation to directly edit an
+                    existing <filename>.config</filename> file, which is
+                    found in the Build Directory among the source code
+                    used for the build (e.g. see the workflow illustration
+                    in the
+                    "<link linkend='kernel-modification-workflow'>Kernel Modification Workflow</link>"
+                    section).
+                    Doing so, can produce unexpected results when the
+                    OpenEmbedded build system regenerates the configuration
+                    file.
+                </note>
+                Once you are satisfied with the configuration
+                changes made using <filename>menuconfig</filename>
+                and you have saved them, you can directly compare the
+                resulting <filename>.config</filename> file against an
+                existing original and gather those changes into a
+                <ulink url='&YOCTO_DOCS_DEV_URL;#creating-config-fragments'>configuration fragment file</ulink>
+                to be referenced from within the kernel's
+                <filename>.bbappend</filename> file.</para>
+
+                <para>Additionally, if you are working in a BSP layer
+                and need to modify the BSP's kernel's configuration,
+                you can use the
+                <ulink url='&YOCTO_DOCS_BSP_URL;#managing-kernel-patches-and-config-items-with-yocto-kernel'><filename>yocto-kernel</filename></ulink>
+                script as well as <filename>menuconfig</filename>.
+                The <filename>yocto-kernel</filename> script lets
+                you interactively set up kernel configurations.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Rebuild the Kernel Image With Your Changes</emphasis>:
+                Rebuilding the kernel image applies your changes.
+                </para></listitem>
+        </orderedlist>
+    </para>
+</section>
+
 
     <section id='kernel-dev-other-resources'>
         <title>Other Resources</title>
@@ -126,8 +255,9 @@
                     </para></listitem>
                 <listitem><para>The "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>" section
                     in the Yocto Project Development Manual</para></listitem>
-                <listitem><para>The "<ulink url='&YOCTO_DOCS_DEV_URL;#modifying-the-kernel'>Modifying the Kernel</ulink>" section
-                    in the Yocto Project Development Manual.</para></listitem>
+                <listitem><para>The "<link linkend='kernel-modification-workflow'>Kernel Modification Workflow</link>"
+                    section.
+                    </para></listitem>
             </itemizedlist>
         </para>
 
