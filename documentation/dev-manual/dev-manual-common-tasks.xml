@@ -4068,6 +4068,140 @@
         </para>
     </section>
 
+    <section id="using-a-quilt-workflow">
+        <title>Using Quilt in Your Workflow</title>
+
+        <para>
+            <ulink url='http://savannah.nongnu.org/projects/quilt'>Quilt</ulink>
+            is a powerful tool that allows you to capture source code changes
+            without having a clean source tree.
+            This section outlines the typical workflow you can use to modify
+            source code, test changes, and then preserve the changes in the
+            form of a patch all using Quilt.
+            <note><title>Tip</title>
+                With regard to preserving changes to source files, if you
+                clean a recipe or have <filename>rm_work</filename> enabled,
+                the workflow described in the
+                "<link linkend='using-devtool-in-your-workflow'>Using <filename>devtool</filename> in Your Workflow</link>"
+                section is a safer development flow than the flow that
+                uses Quilt.
+            </note>
+        </para>
+
+        <para>
+            Follow these general steps:
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Find the Source Code:</emphasis>
+                    Temporary source code used by the OpenEmbedded build system
+                    is kept in the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
+                    See the
+                    "<link linkend='finding-the-temporary-source-code'>Finding Temporary Source Code</link>"
+                    section to learn how to locate the directory that has the
+                    temporary source code for a particular package.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Change Your Working Directory:</emphasis>
+                    You need to be in the directory that has the temporary
+                    source code.
+                    That directory is defined by the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
+                    variable.</para></listitem>
+                <listitem><para>
+                    <emphasis>Create a New Patch:</emphasis>
+                    Before modifying source code, you need to create a new
+                    patch.
+                    To create a new patch file, use
+                    <filename>quilt new</filename> as below:
+                    <literallayout class='monospaced'>
+     $ quilt new my_changes.patch
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Notify Quilt and Add Files:</emphasis>
+                    After creating the patch, you need to notify Quilt about
+                    the files you plan to edit.
+                    You notify Quilt by adding the files to the patch you
+                    just created:
+                    <literallayout class='monospaced'>
+     $ quilt add file1.c file2.c file3.c
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Edit the Files:</emphasis>
+                    Make your changes in the source code to the files you added
+                    to the patch.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Test Your Changes:</emphasis>
+                    Once you have modified the source code, the easiest way to
+                    test your changes is by calling the
+                    <filename>do_compile</filename> task as shown in the
+                    following example:
+                    <literallayout class='monospaced'>
+     $ bitbake -c compile -f <replaceable>package</replaceable>
+                    </literallayout>
+                    The <filename>-f</filename> or <filename>--force</filename>
+                    option forces the specified task to execute.
+                    If you find problems with your code, you can just keep
+                    editing and re-testing iteratively until things work
+                    as expected.
+                    <note>
+                        All the modifications you make to the temporary
+                        source code disappear once you run the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-clean'><filename>do_clean</filename></ulink>
+                        or
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleanall'><filename>do_cleanall</filename></ulink>
+                        tasks using BitBake (i.e.
+                        <filename>bitbake -c clean <replaceable>package</replaceable></filename>
+                        and
+                        <filename>bitbake -c cleanall <replaceable>package</replaceable></filename>).
+                        Modifications will also disappear if you use the
+                        <filename>rm_work</filename> feature as described
+                        in the
+                        "<ulink url='&YOCTO_DOCS_QS_URL;#qs-building-images'>Building Images</ulink>"
+                        section of the Yocto Project Quick Start.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Generate the Patch:</emphasis>
+                    Once your changes work as expected, you need to use Quilt
+                    to generate the final patch that contains all your
+                    modifications.
+                    <literallayout class='monospaced'>
+     $ quilt refresh
+                    </literallayout>
+                    At this point, the <filename>my_changes.patch</filename>
+                    file has all your edits made to the
+                    <filename>file1.c</filename>, <filename>file2.c</filename>,
+                    and <filename>file3.c</filename> files.</para>
+
+                    <para>You can find the resulting patch file in the
+                    <filename>patches/</filename> subdirectory of the source
+                    (<filename>S</filename>) directory.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Copy the Patch File:</emphasis>
+                    For simplicity, copy the patch file into a directory
+                    named <filename>files</filename>, which you can create
+                    in the same directory that holds the recipe
+                    (<filename>.bb</filename>) file or the append
+                    (<filename>.bbappend</filename>) file.
+                    Placing the patch here guarantees that the OpenEmbedded
+                    build system will find the patch.
+                    Next, add the patch into the
+                    <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'>SRC_URI</ulink></filename>
+                    of the recipe.
+                    Here is an example:
+                    <literallayout class='monospaced'>
+     SRC_URI += "file://my_changes.patch"
+                    </literallayout>
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+
     <section id='platdev-building-targets-with-multiple-configurations'>
         <title>Building Targets with Multiple Configurations</title>
 
