@@ -131,8 +131,6 @@ TARFILES = dev-style.css dev-manual.html \
 TARFILES = dev-style.css dev-manual.html \
            figures/dev-title.png \
            figures/recipe-workflow.png \
-           figures/devtool-add-flow.png figures/devtool-modify-flow.png \
-           figures/devtool-upgrade-flow.png \
            eclipse
 	endif
 
@@ -241,8 +239,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/sdk-generation.png figures/recipe-workflow.png \
 	figures/build-workspace-directory.png figures/mega-title.png \
 	figures/toaster-title.png figures/hosted-service.png \
-	figures/simple-configuration.png figures/devtool-add-flow.png \
-	figures/devtool-modify-flow.png figures/devtool-upgrade-flow.png \
+	figures/simple-configuration.png \
 	figures/compatible-layers.png figures/import-layer.png figures/new-project.png \
 	figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png \
 	figures/sdk-devtool-add-flow.png figures/sdk-installed-extensible-sdk-directory.png \
