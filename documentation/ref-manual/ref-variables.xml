@@ -6479,24 +6479,30 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <link linkend='var-PROVIDES'><filename>PROVIDES</filename></link>
                     name of an image recipe that is used to build an initial
                     RAM filesystem (initramfs) image.
-                    An initramfs provides a temporary root filesystem used for
-                    early system initialization (e.g. loading of modules
-                    needed to locate and mount the "real" root filesystem).
-                    The specified recipe is added as a dependency of the root
-                    filesystem recipe (e.g.
-                    <filename>core-image-sato</filename>).
-                    See the <filename>meta/recipes-core/images/core-image-minimal-initramfs.bb</filename>
-                    recipe in the
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
-                    for an example initramfs recipe.
-                    To select this recipe to provide the initramfs,
-                    set <filename>INITRAMFS_IMAGE</filename> to
-                    "core-image-minimal-initramfs".
+                    In other words, the <filename>INITRAMFS_IMAGE</filename>
+                    variable causes an additional recipe to be built as
+                    a dependency to whatever root filesystem recipe you
+                    might be using (e.g. <filename>core-image-sato</filename>).
+                    The initramfs image recipe you provide should set
+                    <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                    to
+                    <link linkend='var-INITRAMFS_FSTYPES'><filename>INITRAMFS_FSTYPES</filename></link>.
+                </para>
+
+                <para>
+                    An initramfs image provides a temporary root filesystem
+                    used for early system initialization (e.g. loading of
+                    modules needed to locate and mount the "real" root
+                    filesystem).
                     <note>
-                        The initramfs image recipe should set
-                        <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
-                        to
-                        <link linkend='var-INITRAMFS_FSTYPES'><filename>INITRAMFS_FSTYPES</filename></link>.
+                        See the <filename>meta/recipes-core/images/core-image-minimal-initramfs.bb</filename>
+                        recipe in the
+                        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
+                        for an example initramfs recipe.
+                        To select this sample recipe as the one bulit
+                        to provide the initramfs image,
+                        set <filename>INITRAMFS_IMAGE</filename> to
+                        "core-image-minimal-initramfs".
                     </note>
                 </para>
 
@@ -6515,7 +6521,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
                 <para>
                     If <filename>INITRAMFS_IMAGE</filename> is empty, which is
-                    the default, then no initramfs is built.
+                    the default, then no initramfs image is built.
                 </para>
 
                 <para>
@@ -6523,8 +6529,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <link linkend='var-INITRAMFS_IMAGE_BUNDLE'><filename>INITRAMFS_IMAGE_BUNDLE</filename></link>
                     variable, which allows the generated image to be bundled
                     inside the kernel image.
-                    Additionally, for information on creating an initramfs, see
-                    the
+                    Additionally, for information on creating an initramfs
+                    image, see the
                     "<ulink url='&YOCTO_DOCS_DEV_URL;#building-an-initramfs-image'>Building an Initial RAM Filesystem (initramfs) Image</ulink>"
                     section in the Yocto Project Development Manual.
                 </para>
