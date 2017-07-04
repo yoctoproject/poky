@@ -130,7 +130,7 @@ TARFILES = dev-style.css dev-manual.html \
         else
 TARFILES = dev-style.css dev-manual.html \
            figures/dev-title.png \
-           figures/recipe-workflow.png \
+           figures/recipe-workflow.png figures/bitbake-build-flow.png \
            eclipse
 	endif
 
@@ -244,7 +244,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png \
 	figures/sdk-devtool-add-flow.png figures/sdk-installed-extensible-sdk-directory.png \
 	figures/sdk-devtool-modify-flow.png figures/sdk-eclipse-dev-flow.png \
-	figures/sdk-devtool-upgrade-flow.png
+	figures/sdk-devtool-upgrade-flow.png figures/bitbake-build-flow.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
