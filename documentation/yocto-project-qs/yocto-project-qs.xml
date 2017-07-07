@@ -80,17 +80,33 @@
             basic understanding of what the Yocto Project is and how to use
             some of its core components.
             You will also have worked through steps to produce two images:
-            one that is suitable for emulation and one that boots on actual
-            hardware.
+            one that runs on the emulator (QEMU) and one that boots on actual
+            hardware (i.e. MinnowBoard Turbot).
             The examples highlight the ease with which you can use the
             Yocto Project to create images for multiple types of hardware.
+        </para>
+
+        <para>
+            The following list directs you to key sections of this
+            quick start:
+            <itemizedlist>
+                <listitem><para>
+                    <ulink url='http://www.yoctoproject.org/docs/2.4/yocto-project-qs/yocto-project-qs.html#yp-resources'>Setting Up to Use the Yocto Project</ulink>
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='http://www.yoctoproject.org/docs/2.4/yocto-project-qs/yocto-project-qs.html#building-an-image-for-emulation'>Building an Image for Emulation</ulink>
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='http://www.yoctoproject.org/docs/2.4/yocto-project-qs/yocto-project-qs.html#building-an-image-for-hardware'>Building an Image for Hardware</ulink>
+                    </para></listitem>
+            </itemizedlist>
             <note>
                 If you do not have a system that runs Linux and you want to give
                 the Yocto Project a test run, you might consider using the Yocto
                 Project Build Appliance.
-                The Build Appliance allows you to build and boot a custom embedded
-                Linux image with the Yocto Project using a non-Linux development
-                system.
+                The Build Appliance allows you to build and boot a custom
+                embedded Linux image with the Yocto Project using a non-Linux
+                development system.
                 See the
                 <ulink url='https://www.yoctoproject.org/tools-resources/projects/build-appliance'>Yocto Project Build Appliance</ulink>
                 for more information.
@@ -473,7 +489,7 @@
                     create a second image that you can load onto bootable
                     media and actually boot target hardware.
                     This example uses the MinnowBoard
-                    MAX-compatible boards.
+                    Turbot-compatible boards.
                     </para></listitem>
             </itemizedlist>
             <note>
@@ -712,13 +728,13 @@
             <para id='qs-minnowboard-example'>
                 The following steps show how easy it is to set up to build an
                 image for a new machine.
-                These steps build an image for the MinnowBoard MAX, which is
+                These steps build an image for the MinnowBoard Turbot, which is
                 supported by the Yocto Project and the
                 <filename>meta-intel</filename> <filename>intel-corei7-64</filename>
                 and <filename>intel-core2-32</filename> Board Support Packages
                 (BSPs).
                 <note>
-                    The MinnowBoard MAX ships with 64-bit firmware.
+                    The MinnowBoard Turbot ships with 64-bit firmware.
                     If you want to use the board in 32-bit mode, you must
                     download the
                     <ulink url='http://firmware.intel.com/projects/minnowboard-max'>32-bit firmware</ulink>.
@@ -729,7 +745,8 @@
                 <orderedlist>
                     <listitem><para><emphasis>Create a Local Copy of the
                         <filename>meta-intel</filename> Repository:</emphasis>
-                        Building an image for the MinnowBoard MAX requires the
+                        Building an image for the MinnowBoard Turbot requires
+                        the
                         <filename>meta-intel</filename> layer.
                         Use the <filename>git clone</filename> command to create
                         a local copy of the repository inside your
@@ -758,13 +775,13 @@
                         repository by tag, you should use a
                         <filename>meta-intel</filename>
                         tag that corresponds with the release you used for
-                        <filename>poky</filename>. Consequently, you need to
-                        checkout out the
-                        "<filename>&METAINTELVERSION;-tbd-&YOCTO_DOC_VERSION;</filename>"
+                        <filename>poky</filename>.
+                        Consequently, you need to checkout out the
+                        "<filename>&METAINTELVERSION;-&DISTRO_NAME_NO_CAP;-&YOCTO_DOC_VERSION;</filename>"
                         branch after cloning <filename>meta-intel</filename>:
                         <literallayout class='monospaced'>
      $ cd $HOME/poky/meta-intel
-     $ git checkout tags/&METAINTELVERSION;-tbd-&YOCTO_DOC_VERSION; -b meta-intel-&DISTRO_NAME_NO_CAP;-&YOCTO_DOC_VERSION;
+     $ git checkout tags/&METAINTELVERSION;-&DISTRO_NAME_NO_CAP;-&YOCTO_DOC_VERSION; -b meta-intel-&DISTRO_NAME_NO_CAP;-&YOCTO_DOC_VERSION;
      Switched to a new branch 'meta-intel-&DISTRO_NAME_NO_CAP;-&YOCTO_DOC_VERSION;'
                         </literallayout>
                         The previous Git <filename>checkout</filename> command
@@ -812,13 +829,15 @@
                         </para>
                         </note>
                         </para></listitem>
-                    <listitem><para><emphasis>Build an Image for MinnowBoard MAX:</emphasis>
+                    <listitem><para>
+                        <emphasis>Build an Image for MinnowBoard
+                        Turbot:</emphasis>
                         The type of image you build depends on your goals.
                         For example, the previous build created a
                         <filename>core-image-sato</filename> image, which is an
                         image with Sato support.
                         It is possible to build many image types for the
-                        MinnowBoard MAX.
+                        MinnowBoard Turbot.
                         Some possibilities are <filename>core-image-base</filename>,
                         which is a console-only image.
                         Another choice could be a
@@ -894,7 +913,7 @@
                         </para></listitem>
                     <listitem><para><emphasis>Boot the Hardware:</emphasis>
                         With the boot device provisioned, you can insert the
-                        media into the MinnowBoard MAX and boot the hardware.
+                        media into the MinnowBoard Turbot and boot the hardware.
                         The board should automatically detect the media and boot to
                         the bootloader and subsequently the operating system.
                         </para>
