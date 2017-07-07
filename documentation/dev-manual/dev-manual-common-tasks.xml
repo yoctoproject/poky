@@ -6229,73 +6229,138 @@
         <title>Building an Initial RAM Filesystem (initramfs) Image</title>
 
         <para>
-            initramfs is the successor of Initial RAM Disk (initrd).
-            It is a "copy in and out" (cpio) archive of the initial file system
-            that gets loaded into memory during the Linux startup process.
-            Because Linux uses the contents of the archive during
-            initialization, the initramfs needs to contain all of the device
-            drivers and tools needed to mount the final root filesystem.
-        </para>
-
-        <para>
-            To build an initramfs image and bundle it into the kernel, set the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-INITRAMFS_IMAGE_BUNDLE'><filename>INITRAMFS_IMAGE_BUNDLE</filename></ulink>
-            variable in your <filename>local.conf</filename> file, and set the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-INITRAMFS_IMAGE'><filename>INITRAMFS_IMAGE</filename></ulink>
-            variable in your <filename>machine.conf</filename> file:
-            <literallayout class='monospaced'>
-     INITRAMFS_IMAGE_BUNDLE = "1"
-     INITRAMFS_IMAGE = "<replaceable>image_recipe_name</replaceable>"
-            </literallayout>
-            Setting the <filename>INITRAMFS_IMAGE_BUNDLE</filename>
-            flag causes the initramfs created by the recipe and defined by
-            <filename>INITRAMFS_IMAGE</filename> to be unpacked into the
-            <filename>${B}/usr/</filename> directory.
-            The unpacked initramfs is then passed to the kernel's
-            <filename>Makefile</filename> using the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-CONFIG_INITRAMFS_SOURCE'><filename>CONFIG_INITRAMFS_SOURCE</filename></ulink>
-            variable, allowing initramfs to be built in to the kernel
-            normally.
+            An initial RAM filesystem (initramfs) image provides a temporary
+            root filesystem used for early system initialization (e.g.
+            loading of modules needed to locate and mount the "real" root
+            filesystem).
             <note>
-                The preferred method is to use the
-                <filename>INITRAMFS_IMAGE</filename> variable rather than the
-                <filename>INITRAMFS_TASK</filename> variable.
-                Setting <filename>INITRAMFS_TASK</filename> is supported for
-                backward compatibility.
-                However, use of this variable has circular dependency
-                problems.
-                See the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-INITRAMFS_IMAGE_BUNDLE'><filename>INITRAMFS_IMAGE_BUNDLE</filename></ulink>
-                variable for additional information on these dependency
-                problems.
+                The initramfs image is the successor of initial RAM disk
+                (initrd).
+                It is a "copy in and out" (cpio) archive of the initial
+                filesystem that gets loaded into memory during the Linux
+                startup process.
+                Because Linux uses the contents of the archive during
+                initialization, the initramfs image needs to contain all of the
+                device drivers and tools needed to mount the final root
+                filesystem.
             </note>
         </para>
 
         <para>
-            The recipe that <filename>INITRAMFS_IMAGE</filename>
-            points to must produce a <filename>.cpio.gz</filename>,
-            <filename>.cpio.tar</filename>, <filename>.cpio.lz4</filename>,
-            <filename>.cpio.lzma</filename>, or
-            <filename>.cpio.xz</filename> file.
-            You can ensure you produce one of these <filename>.cpio.*</filename>
-            files by setting the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-INITRAMFS_FSTYPES'><filename>INITRAMFS_FSTYPES</filename></ulink>
-            variable in your configuration file to one or more of the above
-            file types.
-            <note>
-                If you add items to the initramfs image by way of its recipe,
-                you should use
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_INSTALL'><filename>PACKAGE_INSTALL</filename></ulink>
-                rather than
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>.
-                <filename>PACKAGE_INSTALL</filename> gives more direct control
-                of what is added to the image as compared to the defaults you
-                might not necessarily want that are set by the
-                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-image'><filename>image</filename></ulink>
-                or
-                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-core-image'><filename>core-image</filename></ulink>
-                classes.
-            </note>
+            Follow these steps to create an initramfs image:
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Create the initramfs Image Recipe:</emphasis>
+                    You can reference the
+                    <filename>core-image-minimal-initramfs.bb</filename>
+                    recipe found in the <filename>meta/recipes-core</filename>
+                    directory of the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+                    as an example from which to work.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Decide if You Need to Bundle the initramfs Image
+                    Into the Kernel Image:</emphasis>
+                    If you want the initramfs image that is built to be
+                    bundled in with the kernel image, set the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-INITRAMFS_IMAGE_BUNDLE'><filename>INITRAMFS_IMAGE_BUNDLE</filename></ulink>
+                    variable to "1" in your <filename>local.conf</filename>
+                    configuration file and set the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-INITRAMFS_IMAGE'><filename>INITRAMFS_IMAGE</filename></ulink>
+                    variable in the recipe that builds the kernel image.
+                    <note><title>Tip</title>
+                        It is recommended that you do bundle the initramfs
+                        image with the kernel image to avoid circular
+                        dependencies between the kernel recipe and the
+                        initramfs recipe should the initramfs image
+                        include kernel modules.
+                    </note>
+                    Setting the <filename>INITRAMFS_IMAGE_BUNDLE</filename>
+                    flag causes the initramfs image to be unpacked
+                    into the <filename>${B}/usr/</filename> directory.
+                    The unpacked initramfs image is then passed to the kernel's
+                    <filename>Makefile</filename> using the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-CONFIG_INITRAMFS_SOURCE'><filename>CONFIG_INITRAMFS_SOURCE</filename></ulink>
+                    variable, allowing the initramfs image to be built into
+                    the kernel normally.
+                    <note>
+                        If you choose to not bundle the initramfs image with
+                        the kernel image, you are essentially using an
+                        <ulink url='https://en.wikipedia.org/wiki/Initrd'>Initial RAM Disk (initrd)</ulink>.
+                        Creating an initrd is handled primarily through the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-INITRD_IMAGE'><filename>INITRD_IMAGE</filename></ulink>,
+                        <filename>INITRD_LIVE</filename>, and
+                        <filename>INITRD_IMAGE_LIVE</filename> variables.
+                        For more information, see the
+                        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/image-live.bbclass'><filename>image-live.bbclass</filename></ulink>
+                        file.
+                    </note>
+                    </para></listitem>
+<!--
+Some notes from Cal:
+
+    A non-bundled initramfs is essentially an initrd, which I am discovering
+    to be rather confusingly supported in OE at the moment.
+
+    Its primarily handled through INITRD_IMAGE(_LIVE/_VM) and INITRD(_LIVE/_VM)
+    variables. INITRD_IMAGE* is the primary image target, which gets added to
+    INITRD*, which is a list of cpio filesystems. You can add more cpio
+    filesystems to the INITRD variable to add more to the initrd. For
+    instance, meta-intel adds intel-microcode via the following:
+
+        INITRD_LIVE_prepend = "${@bb.utils.contains('MACHINE_FEATURES', 'intel-ucode', '${DEPLOY_DIR_IMAGE}/microcode.cpio ', '', d)}"
+
+    If 'intel-ucode' is in MACHINE_FEATURES, this resolves to:
+
+        INITRD_LIVE_prepend = "${DEPLOY_DIR_IMAGE}/microcode.cpio "
+
+    Unfortunately you need the full path, and its up to you to sort out
+    dependencies as well. For instance, we have the following:
+
+        MACHINE_ESSENTIAL_EXTRA_RDEPENDS_append = "${@bb.utils.contains('MACHINE_FEATURES', 'intel-ucode', ' intel-microcode', '', d)}"
+
+    which resolves to:
+
+        MACHINE_ESSENTIAL_EXTRA_RDEPENDS_append = "intel-microcode"
+
+    However, the above is only true with the "live" IMAGE_FSTYPE. Wic is
+    another beast entirely, with current wic kickstart files not supporting
+    initrds, and only partial support in the source plugins. That being said,
+    I know the generic bootfs work Ed is working on will help immensely in this
+    aspect. He or Saul can provide more details here.
+
+    Anyhow, its rather fractured and confusing and could probably use a
+    rework honestly. I don't know how feasible it is to document all the
+    details and corner cases of this area.
+-->
+                <listitem><para>
+                    <emphasis>Optionally Add Items to the initramfs Image
+                    Through the initramfs Image Recipe:</emphasis>
+                    If you add items to the initramfs image by way of its
+                    recipe, you should use
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_INSTALL'><filename>PACKAGE_INSTALL</filename></ulink>
+                    rather than
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>.
+                    <filename>PACKAGE_INSTALL</filename> gives more direct
+                    control of what is added to the image as compared to
+                    the defaults you might not necessarily want that are
+                    set by the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-image'><filename>image</filename></ulink>
+                    or
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-core-image'><filename>core-image</filename></ulink>
+                    classes.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Build the Kernel Image and the initramfs
+                    Image:</emphasis>
+                    Build your kernel image using BitBake.
+                    Because the initramfs image recipe is a dependency of the
+                    kernel image, the initramfs image is built as well and
+                    bundled with the kernel image if you used the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-INITRAMFS_IMAGE_BUNDLE'><filename>INITRAMFS_IMAGE_BUNDLE</filename></ulink>
+                    variable described earlier.
+                    </para></listitem>
+            </orderedlist>
         </para>
     </section>
 
