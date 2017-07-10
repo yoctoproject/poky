@@ -91,65 +91,94 @@
 
     <para>
         As an alternative to locating and downloading a SDK installer,
-        you can build the SDK installer assuming you have first sourced
-        the environment setup script.
-        See the
-        "<ulink url='&YOCTO_DOCS_QS_URL;#qs-building-images'>Building Images</ulink>"
-        section in the Yocto Project Quick Start for steps that show you
-        how to set up the Yocto Project environment.
-        In particular, you need to be sure the
-        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
-        variable matches the architecture for which you are building and that
-        the
-        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKMACHINE'><filename>SDKMACHINE</filename></ulink>
-        variable is correctly set if you are building a toolchain designed to
-        run on an architecture that differs from your current development host
-        machine (i.e. the build machine).
-    </para>
-
-    <para>
-        To build the SDK installer for a standard SDK and populate
-        the SDK image, use the following command:
-        <literallayout class='monospaced'>
+        you can build the SDK installer.
+        Follow these steps:
+        <orderedlist>
+            <listitem><para>
+                <emphasis>Set Up the Build Environment:</emphasis>
+                Be sure you are set up to use BitBake in a shell.
+                See the
+                "<ulink url='&YOCTO_DOCS_QS_URL;#qs-building-images'>Building Images</ulink>"
+                section in the Yocto Project Quick Start for steps that
+                show you how to set up the Yocto Project environment.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Make Sure You Are Building an Installer for the Correct Machine:</emphasis>
+                Check to be sure that your
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                variable in the <filename>local.conf</filename> file in your
+                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
+                matches the architecture for which you are building.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Make Sure Your SDK Machine is Correctly Set:</emphasis>
+                If you are building a toolchain designed to run on an
+                architecture that differs from your current development host
+                machine (i.e. the build machine), be sure that the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKMACHINE'><filename>SDKMACHINE</filename></ulink>
+                variable in the <filename>local.conf</filename> file in your
+                Build Directory is correctly set.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Build the SDK Installer:</emphasis>
+                To build the SDK installer for a standard SDK and populate
+                the SDK image, use the following command form.
+                Be sure to replace <replaceable>image</replaceable> with
+                an image (e.g. "core-image-sato"):
+                <literallayout class='monospaced'>
      $ bitbake <replaceable>image</replaceable> -c populate_sdk
-        </literallayout>
-        You can do the same for the extensible SDK using this command:
-        <literallayout class='monospaced'>
+                </literallayout>
+                You can do the same for the extensible SDK using this command
+                form:
+                <literallayout class='monospaced'>
      $ bitbake <replaceable>image</replaceable> -c populate_sdk_ext
-        </literallayout>
-        These commands result in a SDK installer that contains the sysroot
-        that matches your target root filesystem.
-    </para>
+                </literallayout>
+                These commands result in a SDK installer that contains the
+                sysroot that matches your target root filesystem.</para>
 
-    <para>
-        When the <filename>bitbake</filename> command completes, the SDK
-        installer will be in
-        <filename>tmp/deploy/sdk</filename> in the Build Directory.
-        <note><title>Notes</title>
-            <itemizedlist>
-                <listitem><para>
-                    By default, this toolchain does not build static binaries.
-                    If you want to use the toolchain to build these types of
-                    libraries, you need to be sure your SDK has the
-                    appropriate static development libraries.
-                    Use the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_TARGET_TASK'><filename>TOOLCHAIN_TARGET_TASK</filename></ulink>
-                    variable inside your <filename>local.conf</filename> file
-                    to install the appropriate library packages in the SDK.
-                    Following is an example using <filename>libc</filename>
-                    static development libraries:
-                    <literallayout class='monospaced'>
+                <para>When the <filename>bitbake</filename> command completes,
+                the SDK installer will be in
+                <filename>tmp/deploy/sdk</filename> in the Build Directory.
+                <note><title>Notes</title>
+                    <itemizedlist>
+                        <listitem><para>
+                            By default, this toolchain does not build static
+                            binaries.
+                            If you want to use the toolchain to build these
+                            types of libraries, you need to be sure your SDK
+                            has the appropriate static development libraries.
+                            Use the
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_TARGET_TASK'><filename>TOOLCHAIN_TARGET_TASK</filename></ulink>
+                            variable inside your <filename>local.conf</filename>
+                            file to install the appropriate library packages
+                            in the SDK.
+                            Following is an example using
+                            <filename>libc</filename> static development
+                            libraries:
+                            <literallayout class='monospaced'>
      TOOLCHAIN_TARGET_TASK_append = " libc-staticdev"
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para>
-                    For additional information on building the installer,
-                    see the
-                    <ulink url='https://wiki.yoctoproject.org/wiki/TipsAndTricks/RunningEclipseAgainstBuiltImage'>Cookbook guide to Making an Eclipse Debug Capable Image</ulink>
-                    wiki page.
-                    </para></listitem>
-            </itemizedlist>
-        </note>
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para>
+                            For additional information on building the
+                            installer, see the
+                            <ulink url='https://wiki.yoctoproject.org/wiki/TipsAndTricks/RunningEclipseAgainstBuiltImage'>Cookbook guide to Making an Eclipse Debug Capable Image</ulink>
+                            wiki page.
+                            </para></listitem>
+                    </itemizedlist>
+                </note>
+            </para></listitem>
+            <listitem><para>
+                <emphasis>Run the Installer:</emphasis>
+                You can now run the SDK installer from
+                <filename>tmp/deploy/sdk</filename> in the Build Directory.
+                Following is an example:
+                <literallayout class='monospaced'>
+     $ cd ~/poky/build/tmp/deploy/sdk
+     ./poky-glibc-x86_64-core-image-sato-core2-64-toolchain-ext-&DISTRO;.sh
+                </literallayout>
+                </para></listitem>
+        </orderedlist>
     </para>
 </section>
 
