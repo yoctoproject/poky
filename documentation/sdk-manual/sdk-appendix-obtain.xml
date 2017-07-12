@@ -81,6 +81,13 @@
                 <literallayout class='monospaced'>
      $ ~/Downloads/poky-glibc-x86_64-core-image-sato-core2-64-toolchain-ext-&DISTRO;.sh
                 </literallayout>
+                During execution of the script, you choose the root location
+                for the toolchain.
+                See the
+                "<link linkend='sdk-installed-standard-sdk-directory-structure'>Installed Standard SDK Directory Structure</link>"
+                section and the
+                "<link linkend='sdk-installed-extensible-sdk-directory-structure'>Installed Extensible SDK Directory Structure</link>"
+                section for more information.
                 </para></listitem>
         </orderedlist>
     </para>
@@ -175,8 +182,15 @@
                 Following is an example:
                 <literallayout class='monospaced'>
      $ cd ~/poky/build/tmp/deploy/sdk
-     ./poky-glibc-x86_64-core-image-sato-core2-64-toolchain-ext-&DISTRO;.sh
+     $ ./poky-glibc-x86_64-core-image-sato-core2-64-toolchain-ext-&DISTRO;.sh
                 </literallayout>
+                During execution of the script, you choose the root location
+                for the toolchain.
+                See the
+                "<link linkend='sdk-installed-standard-sdk-directory-structure'>Installed Standard SDK Directory Structure</link>"
+                section and the
+                "<link linkend='sdk-installed-extensible-sdk-directory-structure'>Installed Extensible SDK Directory Structure</link>"
+                section for more information.
                 </para></listitem>
         </orderedlist>
     </para>
@@ -189,55 +203,106 @@
         After installing the toolchain, for some use cases you
         might need to separately extract a root filesystem:
         <itemizedlist>
-            <listitem><para>You want to boot the image using NFS.
+            <listitem><para>
+                You want to boot the image using NFS.
                 </para></listitem>
-            <listitem><para>You want to use the root filesystem as the
+            <listitem><para>
+                You want to use the root filesystem as the
                 target sysroot.
                 For example, the Eclipse IDE environment with the Eclipse
                 Yocto Plug-in installed allows you to use QEMU to boot
-                under NFS.</para></listitem>
-            <listitem><para>You want to develop your target application
+                under NFS.
+                </para></listitem>
+            <listitem><para>
+                You want to develop your target application
                 using the root filesystem as the target sysroot.
                 </para></listitem>
         </itemizedlist>
     </para>
 
     <para>
-        To extract the root filesystem, first <filename>source</filename>
-        the cross-development environment setup script to establish
-        necessary environment variables.
-        If you built the toolchain in the Build Directory, you will find
-        the toolchain environment script in the
-        <filename>tmp</filename> directory.
-        If you installed the toolchain by hand, the environment setup
-        script is located in <filename>/opt/poky/&DISTRO;</filename>.
-    </para>
+        Follow these steps to extract the root filesystem:
+        <orderedlist>
+            <listitem><para>
+                <emphasis>Locate and Download the Tarball for the Pre-Built
+                Root Filesystem Image File:</emphasis>
+                You need to find and download the root filesystem image
+                file that is appropriate for your target system.
+                These files are kept in the
+                <ulink url='&YOCTO_DL_URL;/releases/yocto/yocto-&DISTRO;/machines/'>Index of Releases</ulink>
+                in the "machines" directory.</para>
 
-    <para>
-        After sourcing the environment script, use the
-        <filename>runqemu-extract-sdk</filename> command and provide the
-        filesystem image.
-    </para>
+                <para>The "machines" directory contains tarballs
+                (<filename>*.tar.bz2</filename>) for supported machines.
+                The directory also contains flattened root filesystem
+                image files (<filename>*.ext4</filename>), which you can use
+                with QEMU directly.</para>
 
-    <para>
-        Following is an example.
-        The second command sets up the environment.
-        In this case, the setup script is located in the
-        <filename>/opt/poky/&DISTRO;</filename> directory.
-        The third command extracts the root filesystem from a previously
-        built filesystem that is located in the
-        <filename>~/Downloads</filename> directory.
-        Furthermore, this command extracts the root filesystem into the
-        <filename>qemux86-sato</filename> directory:
-        <literallayout class='monospaced'>
-     $ cd ~
-     $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
-     $ runqemu-extract-sdk \
-        ~/Downloads/core-image-sato-sdk-qemux86-2011091411831.rootfs.tar.bz2 \
-        $HOME/qemux86-sato
-        </literallayout>
-        You could now point to the target sysroot at
-        <filename>qemux86-sato</filename>.
+                <para>The pre-built root filesystem image files
+                follow these naming conventions:
+                <literallayout class='monospaced'>
+     core-image-<replaceable>profile</replaceable>-<replaceable>arch</replaceable>.tar.bz2
+
+     Where:
+         <replaceable>profile</replaceable> is the filesystem image's profile:
+                   lsb, lsb-dev, lsb-sdk, lsb-qt3, minimal, minimal-dev, sato,
+                   sato-dev, sato-sdk, minimal-initramfs, or sdk-ptest. For
+                   information on these types of image profiles, see the
+                   "Images" chapter in the Yocto Project Reference Manual.
+
+         <replaceable>arch</replaceable> is a string representing the target architecture:
+                beaglebone, edgerouter, genericx86, genericx86-64, mpc8315e-rdb,
+                qemuarm, qemuarm64, qemumips, qemumips64, qemuppc, qemux86, or
+                qemux86-64.
+
+                </literallayout>
+                The root filesystems provided by the Yocto Project are based
+                off of the <filename>core-image-sato</filename> and
+                <filename>core-image-minimal</filename> images.
+                </para>
+
+                <para>For example, if your target hardware system is a
+                BeagleBone board and your image is a
+                <filename>core-image-minimal</filename> image, you need
+                to download the following root filesystem image file:
+                <literallayout class='monospaced'>
+     core-image-minimal-beaglebone.tar.bz2
+                </literallayout>
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Initialize the Cross-Development Environment:</emphasis>
+                You must <filename>source</filename>
+                the cross-development environment setup script to establish
+                necessary environment variables.</para>
+
+                <para>This script is located in the top-level directory in
+                which you installed the toolchain (e.g.
+                <filename>poky_sdk</filename>).</para>
+
+                <para>Following is an example for the Core2 64-bit
+                architecture:
+                <literallayout class='monospaced'>
+     $ source ~/poky_sdk/environment-setup-core2-64-poky-linux
+                </literallayout>
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Extract the Root Filesystem:</emphasis>
+                Use the <filename>runqemu-extract-sdk</filename> command
+                and provide the root filesystem image.</para>
+
+                <para>Following is an example command that extracts the root
+                filesystem from a previously built root filesystem image that
+                was downloaded from the
+                <ulink url='&YOCTO_DOCS_REF_URL;#index-downloads'>Index of Releases</ulink>.
+                This command extracts the root filesystem into the
+                <filename>core2-64-sato</filename> directory:
+                <literallayout class='monospaced'>
+     $ runqemu-extract-sdk ~/Downloads/core-image-sato-core2-64.tar.bz2 ~/core2-64-sato
+                </literallayout>
+                You could now point to the target sysroot at
+                <filename>core2-64-sato</filename>.
+                </para></listitem>
+        </orderedlist>
     </para>
 </section>
 
