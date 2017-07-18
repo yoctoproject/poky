@@ -1111,6 +1111,84 @@
         </para>
     </section>
 
+    <section id='qemu-performance'>
+        <title>QEMU Performance</title>
+
+        <para>
+            Using QEMU to emulate your hardware can result in speed issues
+            depending on the target and host architecture mix.
+            For example, using the <filename>qemux86</filename> image in the
+            emulator on an Intel-based 32-bit (x86) host machine is fast
+            because the target and host architectures match.
+            On the other hand, using the <filename>qemuarm</filename> image
+            on the same Intel-based host can be slower.
+            But, you still achieve faithful emulation of ARM-specific issues.
+        </para>
+
+        <para>
+            To speed things up, the QEMU images support using
+            <filename>distcc</filename> to call a cross-compiler outside the
+            emulated system.
+            If you used <filename>runqemu</filename> to start QEMU, and the
+            <filename>distccd</filename> application is present on the host
+            system, any BitBake cross-compiling toolchain available from the
+            build system is automatically used from within QEMU simply by
+            calling <filename>distcc</filename>.
+            You can accomplish this by defining the cross-compiler variable
+            (e.g. <filename>export CC="distcc"</filename>).
+            Alternatively, if you are using a suitable SDK image or the
+            appropriate stand-alone toolchain is present, the toolchain is
+            also automatically used.
+        </para>
+
+        <note>
+            Several mechanisms exist that let you connect to the system
+            running on the QEMU emulator:
+            <itemizedlist>
+                <listitem><para>
+                    QEMU provides a framebuffer interface that makes standard
+                    consoles available.
+                    </para></listitem>
+                <listitem><para>
+                    Generally, headless embedded devices have a serial port.
+                    If so, you can configure the operating system of the
+                    running image to use that port to run a console.
+                    The connection uses standard IP networking.
+                    </para></listitem>
+                <listitem><para>
+                    SSH servers exist in some QEMU images.
+                    The <filename>core-image-sato</filename> QEMU image has a
+                    Dropbear secure shell (SSH) server that runs with the root
+                    password disabled.
+                    The <filename>core-image-full-cmdline</filename> and
+                    <filename>core-image-lsb</filename> QEMU images
+                    have OpenSSH instead of Dropbear.
+                    Including these SSH servers allow you to use standard
+                    <filename>ssh</filename> and <filename>scp</filename>
+                    commands.
+                    The <filename>core-image-minimal</filename> QEMU image,
+                    however, contains no SSH server.
+                    </para></listitem>
+                <listitem><para>
+                    You can use a provided, user-space NFS server to boot
+                    the QEMU session using a local copy of the root
+                    filesystem on the host.
+                    In order to make this connection, you must extract a
+                    root filesystem tarball by using the
+                    <filename>runqemu-extract-sdk</filename> command.
+                    After running the command, you must then point the
+                    <filename>runqemu</filename>
+                    script to the extracted directory instead of a root
+                    filesystem image file.
+                    See the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#qemu-running-under-a-network-file-system-nfs-server'>Running Under a Network File System (NFS) Server</ulink>"
+                    section in the Yocto Project Development Manual for more
+                    information.
+                    </para></listitem>
+            </itemizedlist>
+        </note>
+    </section>
+
     <section id='qemu-command-line-syntax'>
         <title>QEMU Command-Line Syntax</title>
 
