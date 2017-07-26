@@ -143,7 +143,7 @@ endif
 ifeq ($(DOC),yocto-project-qs)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
-TARFILES = yocto-project-qs.html qs-style.css figures/yocto-environment.png \
+TARFILES = yocto-project-qs.html qs-style.css \
            figures/yocto-project-transp.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
@@ -191,7 +191,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/wip.png
         else
 TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
-        figures/building-an-image.png  \
+        figures/building-an-image.png figures/YP-flow-diagram.png \
 	figures/using-a-pre-built-image.png \
 	figures/poky-title.png figures/buildhistory.png \
         figures/buildhistory-web.png \
@@ -256,7 +256,7 @@ endif
 ifeq ($(DOC),ref-manual)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
-TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
+TARFILES = ref-manual.html ref-style.css figures/poky-title.png figures/YP-flow-diagram.png \
 	figures/buildhistory.png figures/buildhistory-web.png eclipse \
         figures/cross-development-toolchains.png figures/layer-input.png \
 	figures/package-feeds.png figures/source-input.png \
