@@ -685,51 +685,52 @@
         </section>
 
         <section id='using-bbappend-files'>
-            <title>Using .bbappend Files</title>
+            <title>Using .bbappend Files in Your Layer</title>
 
             <para>
-                Recipes used to append Metadata to other recipes are called
-                BitBake append files.
-                BitBake append files use the <filename>.bbappend</filename> file
-                type suffix, while the corresponding recipes to which Metadata
-                is being appended use the <filename>.bb</filename> file type
-                suffix.
+                A recipe that appends Metadata to another recipe is called a
+                BitBake append file.
+                A BitBake append file uses the <filename>.bbappend</filename>
+                file type suffix, while the corresponding recipe to which
+                Metadata is being appended uses the <filename>.bb</filename>
+                file type suffix.
             </para>
 
             <para>
-                A <filename>.bbappend</filename> file allows your layer to make
-                additions or changes to the content of another layer's recipe
-                without having to copy the other recipe into your layer.
+                You can use a <filename>.bbappend</filename> file in your
+                layer to make additions or changes to the content of another
+                layer's recipe without having to copy the other layer's
+                recipe into your layer.
                 Your <filename>.bbappend</filename> file resides in your layer,
                 while the main <filename>.bb</filename> recipe file to
                 which you are appending Metadata resides in a different layer.
             </para>
 
             <para>
-                Append files must have the same root names as their corresponding
-                recipes.
+                Being able to append information to an existing recipe not only
+                avoids duplication, but also automatically applies recipe
+                changes from a different layer into your layer.
+                If you were copying recipes, you would have to manually merge
+                changes as they occur.
+            </para>
+
+            <para>
+                When you create an append file, you must use the same root
+                name as the corresponding recipe file.
                 For example, the append file
                 <filename>someapp_&DISTRO;.bbappend</filename> must apply to
                 <filename>someapp_&DISTRO;.bb</filename>.
-                This means the original recipe and append file names are version
-                number-specific.
+                This means the original recipe and append file names are
+                version number-specific.
                 If the corresponding recipe is renamed to update to a newer
-                version, the corresponding <filename>.bbappend</filename> file must
-                be renamed (and possibly updated) as well.
+                version, you must also rename and possibly update
+                the corresponding <filename>.bbappend</filename> as well.
                 During the build process, BitBake displays an error on starting
                 if it detects a <filename>.bbappend</filename> file that does
                 not have a corresponding recipe with a matching name.
                 See the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_DANGLINGAPPENDS_WARNONLY'><filename>BB_DANGLINGAPPENDS_WARNONLY</filename></ulink>
                 variable for information on how to handle this error.
-            </para>
-
-            <para>
-                Being able to append information to an existing recipe not only
-                avoids duplication, but also automatically applies recipe
-                changes in a different layer to your layer.
-                If you were copying recipes, you would have to manually merge
-                changes as they occur.
             </para>
 
             <para>
@@ -744,8 +745,7 @@
      SUMMARY = "Device formfactor information"
      SECTION = "base"
      LICENSE = "MIT"
-     LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690 \
-                    file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
+     LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
      PR = "r45"
 
      SRC_URI = "file://config file://machconfig"
@@ -761,8 +761,7 @@
 	     if [ -s "${S}/machconfig" ]; then
 	             install -m 0644 ${S}/machconfig ${D}${sysconfdir}/formfactor/
 	     fi
-     }
-                </literallayout>
+     }                </literallayout>
                 In the main recipe, note the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
                 variable, which tells the OpenEmbedded build system where to
@@ -774,7 +773,8 @@
                 <filename>formfactor_0.0.bbappend</filename> and is from the
                 Raspberry Pi BSP Layer named
                 <filename>meta-raspberrypi</filename>.
-                The file is in <filename>recipes-bsp/formfactor</filename>:
+                The file is in the layer at
+                <filename>recipes-bsp/formfactor</filename>:
                 <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
                 </literallayout>
@@ -794,12 +794,13 @@
             </para>
 
             <para>
-                The statement in this example extends the directories to include
+                The statement in this example extends the directories to
+                include
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-THISDIR'><filename>THISDIR</filename></ulink><filename>}/${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>,
                 which resolves to a directory named
                 <filename>formfactor</filename> in the same directory
                 in which the append file resides (i.e.
-                <filename>meta-raspberrypi/recipes-bsp/formfactor/formfactor</filename>.
+                <filename>meta-raspberrypi/recipes-bsp/formfactor</filename>.
                 This implies that you must have the supporting directory
                 structure set up that will contain any files or patches you
                 will be including from the layer.
@@ -807,8 +808,8 @@
 
             <para>
                 Using the immediate expansion assignment operator
-                <filename>:=</filename> is important because of the reference to
-                <filename>THISDIR</filename>.
+                <filename>:=</filename> is important because of the reference
+                to <filename>THISDIR</filename>.
                 The trailing colon character is important as it ensures that
                 items in the list remain colon-separated.
                 <note>
@@ -6571,7 +6572,7 @@
                         and <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
                         statements enable the OpenEmbedded build system to find the patch file.
                         For more information on using append files, see the
-                        "<link linkend='using-bbappend-files'>Using .bbappend Files</link>"
+                        "<link linkend='using-bbappend-files'>Using .bbappend Files in Your Layer</link>"
                         section.
                         </para></listitem>
                     <listitem><para><emphasis>Put the patch file in your layer</emphasis>:
@@ -7050,7 +7051,7 @@
                         <listitem><para>Add a <filename>psplash</filename>
                             append file for a branded splash screen.
                             For information on append files, see the
-                            "<link linkend='using-bbappend-files'>Using .bbappend Files</link>"
+                            "<link linkend='using-bbappend-files'>Using .bbappend Files in Your Layer</link>"
                             section.</para></listitem>
                         <listitem><para>Add any other append files to make
                             custom changes that are specific to individual
