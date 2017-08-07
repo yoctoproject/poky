@@ -255,197 +255,182 @@
         </section>
 
         <section id='best-practices-to-follow-when-creating-layers'>
-            <title>Best Practices to Follow When Creating Layers</title>
+            <title>Following Best Practices When Creating Layers</title>
 
             <para>
                 To create layers that are easier to maintain and that will
                 not impact builds for other machines, you should consider the
-                information in the following sections.
-            </para>
-
-            <section id='avoid-overlaying-entire-recipes'>
-                <title>Avoid "Overlaying" Entire Recipes</title>
-
-                <para>
-                    Avoid "overlaying" entire recipes from other layers in your
-                    configuration.
-                    In other words, do not copy an entire recipe into your
-                    layer and then modify it.
-                    Rather, use an append file (<filename>.bbappend</filename>)
-                    to override
-                    only those parts of the original recipe you need to modify.
-                </para>
-            </section>
-
-            <section id='avoid-duplicating-include-files'>
-                <title>Avoid Duplicating Include Files</title>
-
-                <para>
-                    Avoid duplicating include files.
-                    Use append files (<filename>.bbappend</filename>)
-                    for each recipe
-                    that uses an include file.
-                    Or, if you are introducing a new recipe that requires
-                    the included file, use the path relative to the original
-                    layer directory to refer to the file.
-                    For example, use
-                    <filename>require recipes-core/</filename><replaceable>package</replaceable><filename>/</filename><replaceable>file</replaceable><filename>.inc</filename>
-                    instead of <filename>require </filename><replaceable>file</replaceable><filename>.inc</filename>.
-                    If you're finding you have to overlay the include file,
-                    it could indicate a deficiency in the include file in
-                    the layer to which it originally belongs.
-                    If this is the case, you should try to address that
-                    deficiency instead of overlaying the include file.
-                    For example, you could address this by getting the
-                    maintainer of the include file to add a variable or
-                    variables to make it easy to override the parts needing
-                    to be overridden.
-                </para>
-            </section>
-
-            <section id='structure-your-layers'>
-                <title>Structure Your Layers</title>
-
-                <para>
-                    Proper use of overrides within append files and placement
-                    of machine-specific files within your layer can ensure that
-                    a build is not using the wrong Metadata and negatively
-                    impacting a build for a different machine.
-                    Following are some examples:
-                    <itemizedlist>
-                        <listitem><para><emphasis>Modifying Variables to Support
-                            a Different Machine:</emphasis>
-                            Suppose you have a layer named
-                            <filename>meta-one</filename> that adds support
-                            for building machine "one".
-                            To do so, you use an append file named
-                            <filename>base-files.bbappend</filename> and
-                            create a dependency on "foo" by altering the
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
-                            variable:
-                            <literallayout class='monospaced'>
+                information in the following list:
+                <itemizedlist>
+                    <listitem><para>
+                        <emphasis>Avoid "Overlaying" Entire Recipes from Other Layers in Your Configuration:</emphasis>
+                        In other words, do not copy an entire recipe into your
+                        layer and then modify it.
+                        Rather, use an append file
+                        (<filename>.bbappend</filename>) to override only those
+                        parts of the original recipe you need to modify.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Avoid Duplicating Include Files:</emphasis>
+                        Use append files (<filename>.bbappend</filename>)
+                        for each recipe that uses an include file.
+                        Or, if you are introducing a new recipe that requires
+                        the included file, use the path relative to the
+                        original layer directory to refer to the file.
+                        For example, use
+                        <filename>require recipes-core/</filename><replaceable>package</replaceable><filename>/</filename><replaceable>file</replaceable><filename>.inc</filename>
+                        instead of
+                        <filename>require </filename><replaceable>file</replaceable><filename>.inc</filename>.
+                        If you're finding you have to overlay the include file,
+                        it could indicate a deficiency in the include file in
+                        the layer to which it originally belongs.
+                        If this is the case, you should try to address that
+                        deficiency instead of overlaying the include file.
+                        For example, you could address this by getting the
+                        maintainer of the include file to add a variable or
+                        variables to make it easy to override the parts needing
+                        to be overridden.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Structure Your Layers:</emphasis>
+                        Proper use of overrides within append files and
+                        placement of machine-specific files within your layer
+                        can ensure that a build is not using the wrong Metadata
+                        and negatively impacting a build for a different
+                        machine.
+                        Following are some examples:
+                        <itemizedlist>
+                            <listitem><para>
+                                <emphasis>Modify Variables to Support a
+                                Different Machine:</emphasis>
+                                Suppose you have a layer named
+                                <filename>meta-one</filename> that adds support
+                                for building machine "one".
+                                To do so, you use an append file named
+                                <filename>base-files.bbappend</filename> and
+                                create a dependency on "foo" by altering the
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
+                                variable:
+                                <literallayout class='monospaced'>
      DEPENDS = "foo"
-                            </literallayout>
-                            The dependency is created during any build that
-                            includes the layer
-                            <filename>meta-one</filename>.
-                            However, you might not want this dependency
-                            for all machines.
-                            For example, suppose you are building for
-                            machine "two" but your
-                            <filename>bblayers.conf</filename> file has the
-                            <filename>meta-one</filename> layer included.
-                            During the build, the
-                            <filename>base-files</filename> for machine
-                            "two" will also have the dependency on
-                            <filename>foo</filename>.</para>
-                            <para>To make sure your changes apply only when
-                            building machine "one", use a machine override
-                            with the <filename>DEPENDS</filename> statement:
-                            <literallayout class='monospaced'>
+                                </literallayout>
+                                The dependency is created during any build that
+                                includes the layer
+                                <filename>meta-one</filename>.
+                                However, you might not want this dependency
+                                for all machines.
+                                For example, suppose you are building for
+                                machine "two" but your
+                                <filename>bblayers.conf</filename> file has the
+                                <filename>meta-one</filename> layer included.
+                                During the build, the
+                                <filename>base-files</filename> for machine
+                                "two" will also have the dependency on
+                                <filename>foo</filename>.</para>
+                                <para>To make sure your changes apply only when
+                                building machine "one", use a machine override
+                                with the <filename>DEPENDS</filename> statement:
+                                <literallayout class='monospaced'>
      DEPENDS_one = "foo"
-                            </literallayout>
-                            You should follow the same strategy when using
-                            <filename>_append</filename> and
-                            <filename>_prepend</filename> operations:
-                            <literallayout class='monospaced'>
+                                </literallayout>
+                                You should follow the same strategy when using
+                                <filename>_append</filename> and
+                                <filename>_prepend</filename> operations:
+                                <literallayout class='monospaced'>
      DEPENDS_append_one = " foo"
      DEPENDS_prepend_one = "foo "
-                            </literallayout>
-                            As an actual example, here's a line from the recipe
-                            for gnutls, which adds dependencies on
-                            "argp-standalone" when building with the musl C
-                            library:
-                            <literallayout class='monospaced'>
+                                </literallayout>
+                                As an actual example, here's a line from the recipe
+                                for gnutls, which adds dependencies on
+                                "argp-standalone" when building with the musl C
+                                library:
+                                <literallayout class='monospaced'>
      DEPENDS_append_libc-musl = " argp-standalone"
-                            </literallayout>
-                            <note>
-                                Avoiding "+=" and "=+" and using
-                                machine-specific
-                                <filename>_append</filename>
-                                and <filename>_prepend</filename> operations
-                                is recommended as well.
-                            </note></para></listitem>
-                        <listitem><para><emphasis>Place Machine-Specific Files
-                            in Machine-Specific Locations:</emphasis>
-                            When you have a base recipe, such as
-                            <filename>base-files.bb</filename>, that
-                            contains a
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                            statement to a file, you can use an append file
-                            to cause the build to use your own version of
-                            the file.
-                            For example, an append file in your layer at
-                            <filename>meta-one/recipes-core/base-files/base-files.bbappend</filename>
-                            could extend
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
-                            using
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
-                            as follows:
-                            <literallayout class='monospaced'>
+                                </literallayout>
+                                <note>
+                                    Avoiding "+=" and "=+" and using
+                                    machine-specific
+                                    <filename>_append</filename>
+                                    and <filename>_prepend</filename> operations
+                                    is recommended as well.
+                                </note>
+                                </para></listitem>
+                            <listitem><para>
+                                <emphasis>Place Machine-Specific Files in
+                                Machine-Specific Locations:</emphasis>
+                                When you have a base recipe, such as
+                                <filename>base-files.bb</filename>, that
+                                contains a
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                                statement to a file, you can use an append file
+                                to cause the build to use your own version of
+                                the file.
+                                For example, an append file in your layer at
+                                <filename>meta-one/recipes-core/base-files/base-files.bbappend</filename>
+                                could extend
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
+                                using
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+                                as follows:
+                                <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
-                            </literallayout>
-                            The build for machine "one" will pick up your
-                            machine-specific file as long as you have the
-                            file in
-                            <filename>meta-one/recipes-core/base-files/base-files/</filename>.
-                            However, if you are building for a different
-                            machine and the
-                            <filename>bblayers.conf</filename> file includes
-                            the <filename>meta-one</filename> layer and
-                            the location of your machine-specific file is
-                            the first location where that file is found
-                            according to <filename>FILESPATH</filename>,
-                            builds for all machines will also use that
-                            machine-specific file.</para>
-                            <para>You can make sure that a machine-specific
-                            file is used for a particular machine by putting
-                            the file in a subdirectory specific to the
-                            machine.
-                            For example, rather than placing the file in
-                            <filename>meta-one/recipes-core/base-files/base-files/</filename>
-                            as shown above, put it in
-                            <filename>meta-one/recipes-core/base-files/base-files/one/</filename>.
-                            Not only does this make sure the file is used
-                            only when building for machine "one", but the
-                            build process locates the file more quickly.</para>
-                            <para>In summary, you need to place all files
-                            referenced from <filename>SRC_URI</filename>
-                            in a machine-specific subdirectory within the
-                            layer in order to restrict those files to
-                            machine-specific builds.</para></listitem>
-                    </itemizedlist>
-                </para>
-            </section>
-
-            <section id='other-recommendations'>
-                <title>Other Recommendations</title>
-
-                <para>
-                    We also recommend the following:
-                    <itemizedlist>
-                        <listitem><para>If you want permission to use the
-                            Yocto Project Compatibility logo with your layer
-                            or application that uses your layer, perform the
-                            steps to apply for compatibility.
-                            See the
-                            "<link linkend='making-sure-your-layer-is-compatible-with-yocto-project'>Making Sure Your Layer is Compatible With Yocto Project</link>"
-                            section for more information.
-                            </para></listitem>
-                        <listitem><para>Store custom layers in a Git repository
-                            that uses the
-                            <filename>meta-<replaceable>layer_name</replaceable></filename> format.
-                            </para></listitem>
-                        <listitem><para>Clone the repository alongside other
-                            <filename>meta</filename> directories in the
-                            <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
-                            </para></listitem>
-                     </itemizedlist>
-                     Following these recommendations keeps your Source Directory and
-                     its configuration entirely inside the Yocto Project's core
-                     base.
-                </para>
-            </section>
+                                </literallayout>
+                                The build for machine "one" will pick up your
+                                machine-specific file as long as you have the
+                                file in
+                                <filename>meta-one/recipes-core/base-files/base-files/</filename>.
+                                However, if you are building for a different
+                                machine and the
+                                <filename>bblayers.conf</filename> file includes
+                                the <filename>meta-one</filename> layer and
+                                the location of your machine-specific file is
+                                the first location where that file is found
+                                according to <filename>FILESPATH</filename>,
+                                builds for all machines will also use that
+                                machine-specific file.</para>
+                                <para>You can make sure that a machine-specific
+                                file is used for a particular machine by putting
+                                the file in a subdirectory specific to the
+                                machine.
+                                For example, rather than placing the file in
+                                <filename>meta-one/recipes-core/base-files/base-files/</filename>
+                                as shown above, put it in
+                                <filename>meta-one/recipes-core/base-files/base-files/one/</filename>.
+                                Not only does this make sure the file is used
+                                only when building for machine "one", but the
+                                build process locates the file more quickly.</para>
+                                <para>In summary, you need to place all files
+                                referenced from <filename>SRC_URI</filename>
+                                in a machine-specific subdirectory within the
+                                layer in order to restrict those files to
+                                machine-specific builds.
+                                </para></listitem>
+                        </itemizedlist>
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Perform Steps to Apply for Yocto Project Compatibility:</emphasis>
+                        If you want permission to use the
+                        Yocto Project Compatibility logo with your layer
+                        or application that uses your layer, perform the
+                        steps to apply for compatibility.
+                        See the
+                        "<link linkend='making-sure-your-layer-is-compatible-with-yocto-project'>Making Sure Your Layer is Compatible With Yocto Project</link>"
+                        section for more information.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Follow the Layer Naming Convention:</emphasis>
+                        Store custom layers in a Git repository that use the
+                        <filename>meta-<replaceable>layer_name</replaceable></filename>
+                        format.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Group Your Layers Locally:</emphasis>
+                        Clone your repository alongside other cloned
+                        <filename>meta</filename> directories from the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
         </section>
 
         <section id='making-sure-your-layer-is-compatible-with-yocto-project'>
@@ -7617,7 +7602,7 @@ Some notes from Cal:
                             on how to add recipes to your layer, see the
                             "<link linkend='creating-your-own-layer'>Creating Your Own Layer</link>"
                             and
-                            "<link linkend='best-practices-to-follow-when-creating-layers'>Best Practices to Follow When Creating Layers</link>"
+                            "<link linkend='best-practices-to-follow-when-creating-layers'>Following Best Practices When Creating Layers</link>"
                             sections.</para></listitem>
                         <listitem><para>Add any image recipes that are specific
                             to your distribution.</para></listitem>
