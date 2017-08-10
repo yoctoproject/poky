@@ -13,10 +13,12 @@
     help you understand how work is accomplished in an open source environment,
     which is very different as compared to work accomplished in a closed,
     proprietary environment.
-    This chapter specifically addresses open source philosophy, using the
-    Yocto Project in a team environment, source repositories, Yocto Project
-    terms, licensing, the open source distributed version control system Git,
-    workflows, bug tracking, and how to submit changes.
+</para>
+
+<para>
+    Specifically, this chapter addresses open source philosophy, workflows,
+    Git, source repositories, licensing, recipe syntax, and development
+    syntax.
 </para>
 
 <section id='open-source-philosophy'>
@@ -816,6 +818,303 @@
         the Yocto Project, see the
         "<ulink url='&YOCTO_DOCS_DEV_URL;#maintaining-open-source-license-compliance-during-your-products-lifecycle'>Maintaining Open Source License Compliance During Your Product's Lifecycle</ulink>"
         section.
+    </para>
+</section>
+
+<section id='recipe-syntax'>
+    <title>Recipe Syntax</title>
+
+    <para>
+        Understanding recipe file syntax is important for
+        writing recipes.
+        The following list overviews the basic items that make up a
+        BitBake recipe file.
+        For more complete BitBake syntax descriptions, see the
+        "<ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual-metadata'>Syntax and Operators</ulink>"
+        chapter of the BitBake User Manual.
+        <itemizedlist>
+            <listitem><para><emphasis>Variable Assignments and Manipulations:</emphasis>
+                Variable assignments allow a value to be assigned to a
+                variable.
+                The assignment can be static text or might include
+                the contents of other variables.
+                In addition to the assignment, appending and prepending
+                operations are also supported.</para>
+                <para>The following example shows some of the ways
+                you can use variables in recipes:
+                <literallayout class='monospaced'>
+     S = "${WORKDIR}/postfix-${PV}"
+     CFLAGS += "-DNO_ASM"
+     SRC_URI_append = " file://fixup.patch"
+                </literallayout>
+                </para></listitem>
+            <listitem><para><emphasis>Functions:</emphasis>
+                Functions provide a series of actions to be performed.
+                You usually use functions to override the default
+                implementation of a task function or to complement
+                a default function (i.e. append or prepend to an
+                existing function).
+                Standard functions use <filename>sh</filename> shell
+                syntax, although access to OpenEmbedded variables and
+                internal methods are also available.</para>
+                <para>The following is an example function from the
+                <filename>sed</filename> recipe:
+                <literallayout class='monospaced'>
+     do_install () {
+         autotools_do_install
+         install -d ${D}${base_bindir}
+         mv ${D}${bindir}/sed ${D}${base_bindir}/sed
+         rmdir ${D}${bindir}/
+     }
+                </literallayout>
+                It is also possible to implement new functions that
+                are called between existing tasks as long as the
+                new functions are not replacing or complementing the
+                default functions.
+                You can implement functions in Python
+                instead of shell.
+                Both of these options are not seen in the majority of
+                recipes.</para></listitem>
+            <listitem><para><emphasis>Keywords:</emphasis>
+                BitBake recipes use only a few keywords.
+                You use keywords to include common
+                functions (<filename>inherit</filename>), load parts
+                of a recipe from other files
+                (<filename>include</filename> and
+                <filename>require</filename>) and export variables
+                to the environment (<filename>export</filename>).</para>
+                <para>The following example shows the use of some of
+                these keywords:
+                <literallayout class='monospaced'>
+     export POSTCONF = "${STAGING_BINDIR}/postconf"
+     inherit autoconf
+     require otherfile.inc
+                </literallayout>
+                </para></listitem>
+            <listitem><para><emphasis>Comments:</emphasis>
+                Any lines that begin with the hash character
+                (<filename>#</filename>) are treated as comment lines
+                and are ignored:
+                <literallayout class='monospaced'>
+     # This is a comment
+                </literallayout>
+                </para></listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        This next list summarizes the most important and most commonly
+        used parts of the recipe syntax.
+        For more information on these parts of the syntax, you can
+        reference the
+        <ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual-metadata'>Syntax and Operators</ulink>
+        chapter in the BitBake User Manual.
+        <itemizedlist>
+            <listitem><para><emphasis>Line Continuation: <filename>\</filename></emphasis> -
+                Use the backward slash (<filename>\</filename>)
+                character to split a statement over multiple lines.
+                Place the slash character at the end of the line that
+                is to be continued on the next line:
+                <literallayout class='monospaced'>
+     VAR = "A really long \
+            line"
+                </literallayout>
+                <note>
+                    You cannot have any characters including spaces
+                    or tabs after the slash character.
+                </note>
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Using Variables: <filename>${...}</filename></emphasis> -
+                Use the <filename>${<replaceable>VARNAME</replaceable>}</filename> syntax to
+                access the contents of a variable:
+                <literallayout class='monospaced'>
+     SRC_URI = "${SOURCEFORGE_MIRROR}/libpng/zlib-${PV}.tar.gz"
+                </literallayout>
+                <note>
+                    It is important to understand that the value of a
+                    variable expressed in this form does not get
+                    substituted automatically.
+                    The expansion of these expressions happens
+                    on-demand later (e.g. usually when a function that
+                    makes reference to the variable executes).
+                    This behavior ensures that the values are most
+                    appropriate for the context in which they are
+                    finally used.
+                    On the rare occasion that you do need the variable
+                    expression to be expanded immediately, you can use
+                    the <filename>:=</filename> operator instead of
+                    <filename>=</filename> when you make the
+                    assignment, but this is not generally needed.
+                </note>
+                </para></listitem>
+            <listitem><para><emphasis>Quote All Assignments: <filename>"<replaceable>value</replaceable>"</filename></emphasis> -
+                Use double quotes around the value in all variable
+                assignments.
+                <literallayout class='monospaced'>
+     VAR1 = "${OTHERVAR}"
+     VAR2 = "The version is ${PV}"
+                </literallayout>
+                </para></listitem>
+            <listitem><para><emphasis>Conditional Assignment: <filename>?=</filename></emphasis> -
+                Conditional assignment is used to assign a value to
+                a variable, but only when the variable is currently
+                unset.
+                Use the question mark followed by the equal sign
+                (<filename>?=</filename>) to make a "soft" assignment
+                used for conditional assignment.
+                Typically, "soft" assignments are used in the
+                <filename>local.conf</filename> file for variables
+                that are allowed to come through from the external
+                environment.
+                </para>
+                <para>Here is an example where
+                <filename>VAR1</filename> is set to "New value" if
+                it is currently empty.
+                However, if <filename>VAR1</filename> has already been
+                set, it remains unchanged:
+                <literallayout class='monospaced'>
+     VAR1 ?= "New value"
+                </literallayout>
+                In this next example, <filename>VAR1</filename>
+                is left with the value "Original value":
+                <literallayout class='monospaced'>
+     VAR1 = "Original value"
+     VAR1 ?= "New value"
+                </literallayout>
+                </para></listitem>
+            <listitem><para><emphasis>Appending: <filename>+=</filename></emphasis> -
+                Use the plus character followed by the equals sign
+                (<filename>+=</filename>) to append values to existing
+                variables.
+                <note>
+                    This operator adds a space between the existing
+                    content of the variable and the new content.
+                </note></para>
+                <para>Here is an example:
+                <literallayout class='monospaced'>
+     SRC_URI += "file://fix-makefile.patch"
+                </literallayout>
+                </para></listitem>
+            <listitem><para><emphasis>Prepending: <filename>=+</filename></emphasis> -
+                Use the equals sign followed by the plus character
+                (<filename>=+</filename>) to prepend values to existing
+                variables.
+                <note>
+                    This operator adds a space between the new content
+                    and the existing content of the variable.
+                </note></para>
+                <para>Here is an example:
+                <literallayout class='monospaced'>
+     VAR =+ "Starts"
+                </literallayout>
+                </para></listitem>
+            <listitem><para><emphasis>Appending: <filename>_append</filename></emphasis> -
+                Use the <filename>_append</filename> operator to
+                append values to existing variables.
+                This operator does not add any additional space.
+                Also, the operator is applied after all the
+                <filename>+=</filename>, and
+                <filename>=+</filename> operators have been applied and
+                after all <filename>=</filename> assignments have
+                occurred.
+                </para>
+                <para>The following example shows the space being
+                explicitly added to the start to ensure the appended
+                value is not merged with the existing value:
+                <literallayout class='monospaced'>
+     SRC_URI_append = " file://fix-makefile.patch"
+                </literallayout>
+                You can also use the <filename>_append</filename>
+                operator with overrides, which results in the actions
+                only being performed for the specified target or
+                machine:
+                <literallayout class='monospaced'>
+     SRC_URI_append_sh4 = " file://fix-makefile.patch"
+                </literallayout>
+                </para></listitem>
+            <listitem><para><emphasis>Prepending: <filename>_prepend</filename></emphasis> -
+                Use the <filename>_prepend</filename> operator to
+                prepend values to existing variables.
+                This operator does not add any additional space.
+                Also, the operator is applied after all the
+                <filename>+=</filename>, and
+                <filename>=+</filename> operators have been applied and
+                after all <filename>=</filename> assignments have
+                occurred.
+                </para>
+                <para>The following example shows the space being
+                explicitly added to the end to ensure the prepended
+                value is not merged with the existing value:
+                <literallayout class='monospaced'>
+     CFLAGS_prepend = "-I${S}/myincludes "
+                </literallayout>
+                You can also use the <filename>_prepend</filename>
+                operator with overrides, which results in the actions
+                only being performed for the specified target or
+                machine:
+                <literallayout class='monospaced'>
+     CFLAGS_prepend_sh4 = "-I${S}/myincludes "
+                </literallayout>
+                </para></listitem>
+            <listitem><para><emphasis>Overrides:</emphasis> -
+                You can use overrides to set a value conditionally,
+                typically based on how the recipe is being built.
+                For example, to set the
+                <link linkend='var-KBRANCH'><filename>KBRANCH</filename></link>
+                variable's value to "standard/base" for any target
+                <link linkend='var-MACHINE'><filename>MACHINE</filename></link>,
+                except for qemuarm where it should be set to
+                "standard/arm-versatile-926ejs", you would do the
+                following:
+                <literallayout class='monospaced'>
+     KBRANCH = "standard/base"
+     KBRANCH_qemuarm  = "standard/arm-versatile-926ejs"
+                </literallayout>
+                Overrides are also used to separate alternate values
+                of a variable in other situations.
+                For example, when setting variables such as
+                <link linkend='var-FILES'><filename>FILES</filename></link>
+                and
+                <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
+                that are specific to individual packages produced by
+                a recipe, you should always use an override that
+                specifies the name of the package.
+                </para></listitem>
+            <listitem><para><emphasis>Indentation:</emphasis>
+                Use spaces for indentation rather than than tabs.
+                For shell functions, both currently work.
+                However, it is a policy decision of the Yocto Project
+                to use tabs in shell functions.
+                Realize that some layers have a policy to use spaces
+                for all indentation.
+                </para></listitem>
+            <listitem><para><emphasis>Using Python for Complex Operations: <filename>${@<replaceable>python_code</replaceable>}</filename></emphasis> -
+                For more advanced processing, it is possible to use
+                Python code during variable assignments (e.g.
+                search and replacement on a variable).</para>
+                <para>You indicate Python code using the
+                <filename>${@<replaceable>python_code</replaceable>}</filename>
+                syntax for the variable assignment:
+                <literallayout class='monospaced'>
+     SRC_URI = "ftp://ftp.info-zip.org/pub/infozip/src/zip${@d.getVar('PV',1).replace('.', '')}.tgz
+                </literallayout>
+                </para></listitem>
+            <listitem><para><emphasis>Shell Function Syntax:</emphasis>
+                Write shell functions as if you were writing a shell
+                script when you describe a list of actions to take.
+                You should ensure that your script works with a generic
+                <filename>sh</filename> and that it does not require
+                any <filename>bash</filename> or other shell-specific
+                functionality.
+                The same considerations apply to various system
+                utilities (e.g. <filename>sed</filename>,
+                <filename>grep</filename>, <filename>awk</filename>,
+                and so forth) that you might wish to use.
+                If in doubt, you should check with multiple
+                implementations - including those from BusyBox.
+                </para></listitem>
+        </itemizedlist>
     </para>
 </section>
 
