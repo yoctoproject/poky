@@ -45,7 +45,9 @@
                 </para></listitem>
             <listitem><para>
                 <emphasis>Kernel Development:</emphasis>
-                Need some kernel links.
+                See the
+                "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#preparing-the-build-host-to-work-on-the-kernel'>Preparing the Build Host to Work on the Kernel</ulink>"
+                section in the Yocto Project Linux Kernel Development Manual.
                 </para></listitem>
             <listitem><para>
                 <emphasis>Eclipse Development:</emphasis>
@@ -230,129 +232,6 @@
             "<ulink url='&YOCTO_DOCS_TOAST_URL;#toaster-manual-setup-and-use'>Setting Up and Using Toaster</ulink>"
             section in the Toaster User Manual.
         </para>
-    </section>
-
-    <section id='local-kernel-files'>
-        <title>Setting Up to Work on a Kernel</title>
-
-        <para>
-            Kernel development is best accomplished using
-            <ulink url='&YOCTO_DOCS_SDK_URL;#using-devtool-in-your-sdk-workflow'><filename>devtool</filename></ulink>
-            and not through traditional kernel workflow methods.
-            This section provides procedures to set up for both.
-        </para>
-
-        <section id='getting-ready-to-develop-using-devtool'>
-            <title>Getting Ready to Develop using <filename>devtool</filename></title>
-
-            <para role='writernotes'>
-                Need the updated wiki stuff here
-            </para>
-        </section>
-
-        <section id='getting-ready-for-traditional-kernel-development'>
-            <title>Getting Ready for Traditional Kernel Development</title>
-
-            <para>
-                For traditional kernel development using the Yocto
-                Project, you need to establish local copies of the
-                kernel source.
-                You can find Git repositories of supported Yocto Project
-                kernels organized under "Yocto Linux Kernel" in the Yocto
-                Project Source Repositories at
-                <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.
-            </para>
-
-            <para>
-                This setup can involve creating a bare clone of the
-                Yocto Project kernel and then copying that cloned
-                repository.
-                You can create the bare clone and the copy of the bare
-                clone anywhere you like.
-                For simplicity, it is recommended that you create these
-                structures outside of the
-                <ulink url='&YOCTO_DOCS_REF_URL;source-directory'>Source Directory</ulink>,
-                which is usually named <filename>poky</filename>.
-            </para>
-
-            <para>
-                The following steps show how to create a bare clone of the
-                <filename>linux-yocto-4.4</filename> kernel and then
-                create a copy of that clone:
-                <note>
-                    When you have a local Yocto Project kernel Git
-                    repository, you can reference that repository rather than
-                    the upstream Git repository as part of the
-                    <filename>clone</filename> command.
-                    Doing so can speed up the process.
-                </note>
-                <orderedlist>
-                    <listitem><para>
-                        <emphasis>Create the Bare Clone:</emphasis>
-                        In the following example, the bare clone is named
-                        <filename>linux-yocto-4.4.git</filename>:
-                        <literallayout class='monospaced'>
-     $ git clone &dash;&dash;bare git://git.yoctoproject.org/linux-yocto-4.4 linux-yocto-4.4.git
-     Cloning into bare repository 'linux-yocto-4.4.git'...
-     remote: Counting objects: 4543903, done.
-     remote: Compressing objects: 100% (695618/695618), done.
-     remote: Total 4543903 (delta 3818435), reused 4541724 (delta 3816256)
-     Receiving objects: 100% (4543903/4543903), 801.08 MiB | 6.55 MiB/s, done.
-     Resolving deltas: 100% (3818435/3818435), done.
-     Checking connectivity... done.
-                         </literallayout>
-                         </para></listitem>
-                    <listitem><para>
-                        <emphasis>Create the Copy of the Bare Clone:</emphasis>
-                        In the following command, the copy of the bare clone
-                        is named <filename>my-linux-yocto-4.4-work</filename>:
-                        <literallayout class='monospaced'>
-     $ git clone linux-yocto-4.4.git my-linux-yocto-4.4-work
-     Cloning into 'my-linux-yocto-4.4-work'...
-     done.
-     Checking out files: 100% (52221/52221), done.
-                        </literallayout>
-                        </para></listitem>
-                    <listitem><para>
-                        <emphasis>Cloning the <filename>meta-yocto-kernel-extras</filename> Repository:</emphasis>
-                        The <filename>meta-yocto-kernel-extras</filename> Git
-                        repository contains Metadata needed only if you are
-                        modifying and building the kernel image.
-                        In particular, it contains the kernel BitBake append
-                        (<filename>.bbappend</filename>) files that you edit to
-                        point to your locally modified kernel source files and to
-                        build the kernel image.
-                        Pointing to these local files is much more efficient than
-                        requiring a download of the kernel's source files from
-                        upstream each time you make changes to the kernel.</para>
-
-                        <para>You can find the
-                        <filename>meta-yocto-kernel-extras</filename> Git
-                        Repository in the "Yocto Metadata Layers" area of the
-                        Yocto Project Source Repositories at
-                        <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.
-                        It is good practice to create this Git repository
-                        inside the Source Directory.</para>
-
-                        <para>Following is an example that creates the
-                        <filename>meta-yocto-kernel-extras</filename> Git
-                        repository inside the Source Directory, which is named
-                        <filename>poky</filename>, in this case:
-                        <literallayout class='monospaced'>
-     $ cd ~/poky
-     $ git clone git://git.yoctoproject.org/meta-yocto-kernel-extras meta-yocto-kernel-extras
-     Cloning into 'meta-yocto-kernel-extras'...
-     remote: Counting objects: 727, done.
-     remote: Compressing objects: 100% (452/452), done.
-     remote: Total 727 (delta 260), reused 719 (delta 252)
-     Receiving objects: 100% (727/727), 536.36 KiB | 0 bytes/s, done.
-     Resolving deltas: 100% (260/260), done.
-     Checking connectivity... done.
-                        </literallayout>
-                        </para></listitem>
-                </orderedlist>
-            </para>
-        </section>
     </section>
 </section>
 
