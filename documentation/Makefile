@@ -325,7 +325,7 @@ ifeq ($(DOC),kernel-dev)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = kernel-dev.html kernel-dev-style.css \
-           figures/kernel-dev-title.png figures/kernel-overview-2-generic \
+           figures/kernel-dev-title.png figures/kernel-overview-2-generic.png \
            figures/kernel-architecture-overview.png figures/kernel-dev-flow.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
