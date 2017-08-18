@@ -12955,17 +12955,23 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     Controls the list of files the OpenEmbedded build system
-                    scans for hardcoded installation paths.
+                    scans for hardcoded installation paths. The variable uses a
+                    space-separated list of filenames (not paths) with standard
+                    wildcard characters allowed.
                 </para>
 
                 <para>
                     During a build, the OpenEmbedded build system creates a
                     shared state (sstate) object during the first stage of
-                    preparing the sysroots.
-                    During the build, the object is scanned for hardcoded paths
-                    for original installation locations.
+                    preparing the sysroots. That object is scanned for
+                    hardcoded paths for original installation locations.
                     The list of files that are scanned for paths is controlled
                     by the <filename>SSTATE_SCAN_FILES</filename> variable.
+                    Typically, recipes add files they want to be scanned to the
+                    value of <filename>SSTATE_SCAN_FILES</filename> rather than
+                    the variable being comprehensively set. The
+                    <link linkend='ref-classes-sstate'><filename>sstate</filename></link>
+                    class specifies the default list of files.
                 </para>
 
                 <para>
