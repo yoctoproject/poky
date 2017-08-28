@@ -120,52 +120,192 @@
     <section id='getting-ready-to-develop-using-devtool'>
         <title>Getting Ready to Develop using <filename>devtool</filename></title>
 
-        <para role='writernotes'>
-            Sections as follows:
+        <para>
+            Follow these steps to prepare to update the kernel image using
+            <filename>devtool</filename>.
+            Completing this procedure leaves you with a clean kernel image
+            and ready to make modifications as described in the
+            "<link linkend='using-devtool-to-patch-the-kernel'>Using <filename>devtool</filename> to Patch the Kernel</link>"
+            section:
             <orderedlist>
-                <listitem><para role='writernotes'>
-                    Source the oe-init-build-env script.
-                    At this point, we assume the build host is set up and
-                    <filename>poky</filename> repository has been cloned.
+                <listitem><para>
+                    <emphasis>Initialize the BitBake Environment:</emphasis>
+                    Before building an extensible SDK, you need to
+                    initialize the BitBake build environment by sourcing a
+                    build environment script
+                    (i.e. <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>oe-init-build-env</filename></ulink>
+                    or
+                    <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>):
+                    <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ source oe-init-build-env
+                    </literallayout>
+                    <note>
+                        The previous commands assume the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#source-repositories'>Source Repositories</ulink>
+                        (i.e. <filename>poky</filename>) have been cloned
+                        using Git and the local repository is named
+                        "poky".
+                    </note>
                     </para></listitem>
-                <listitem><para role='writernotes'>
-                    Be sure your <filename>local.conf</filename> file has
-                    the correct
+                <listitem><para>
+                    <emphasis>Prepare Your <filename>local.conf</filename> File:</emphasis>
+                    By default, the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
-                    variable set for the target hardware on which your
-                    kernel image runs.
-                    Also have the
+                    variable is set to "qemux86", which is fine if you are
+                    building for the QEMU emulator in 32-bit mode.
+                    However, if you are not, you need to set the
+                    <filename>MACHINE</filename> variable appropriately in
+                    your <filename>local.conf</filename> file found in the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
+                    (i.e. <filename>~/poky/build</filename> in this example).
+                    </para>
+
+                    <para>Also, since you are preparing to work on the kernel
+                    image, you need to set the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS'><filename>MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS</filename></ulink>
-                    variable set equal to "kernel-modules".
+                    variable to include kernel modules.</para>
+
+                    <para>This example uses the default "qemux86" for the
+                    <filename>MACHINE</filename> variable but needs to
+                    add the "kernel-modules":
+                    <literallayout class='monospaced'>
+     MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS += "kernel-modules"
+                    </literallayout>
                     </para></listitem>
-                <listitem><para role='writernotes'>
-                    Create a layer for later that will contain your patches
-                    (if any) to the kernel.
+                <listitem><para>
+                    <emphasis>Create a Layer for Patches:</emphasis>
+                    You need to create a layer to hold patches created
+                    for the kernel image.
+                    You can use the <filename>yocto-layer</filename> command
+                    as follows:
+                    <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ yocto-layer create my-kernel -o ../meta-my-kernel
+      Please enter the layer priority you'd like to use for the layer: [default: 6]
+      Would you like to have an example recipe created? (y/n) [default: n]
+      Would you like to have an example bbappend file created? (y/n) [default: n]
+
+      New layer created in ../meta-my-kernel.
+
+      Don't forget to add it to your BBLAYERS (for details see ../meta-my-kernel/README).
+                    </literallayout>
                     </para></listitem>
-                <listitem><para role='writernotes'>
-                    Build the extensible SDK.
+                <listitem><para>
+                    <emphasis>Inform the BitBake Build Environment About Your Layer:</emphasis>
+                    As directed when you created your layer, you need to add
+                    the layer to the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'><filename>BBLAYERS</filename></ulink>
+                    variable in the <filename>bblayers.conf</filename> file
+                    as follows:
+                    <literallayout class='monospaced'>
+     $ cd ~/poky/build
+     $ bitbake-layers add-layer ../../meta-my-kernel
+                    </literallayout>
                     </para></listitem>
-                <listitem><para role='writernotes'>
-                    Install the extensible SDK.
+                <listitem><para>
+                    <emphasis>Build the Extensible SDK:</emphasis>
+                    Use BitBake to build the extensible SDK specifically for
+                    the Minnowboard:
+                    <literallayout class='monospaced'>
+     $ bitbake core-image-minimal -c populate_sdk_ext
+                    </literallayout>
+                    Once the build finishes, you can find the SDK installer
+                    file (i.e. <filename>*.sh</filename> file) in the
+                    following directory:
+                    <literallayout class='monospaced'>
+     ~/poky/build/tmp/deploy/sdk
+                    </literallayout>
+                    For this example, the installer file is named
+                    <filename>poky-glibc-x86_64-core-image-minimal-i586-toolchain-ext-&DISTRO;.sh</filename>
                     </para></listitem>
-                <listitem><para role='writernotes'>
-                    Set up the terminal so that you can work with the
-                    extensible SDK.
-                    This terminal is known as the "eSDK Terminal" unlike the
-                    terminal that is set up to run BitBake, which is known
-                    as the "BitBake Terminal".
+                <listitem><para>
+                    <emphasis>Install the Extensible SDK:</emphasis>
+                    Use the following command to install the SDK.
+                    For this example, install the SDK in the default
+                    <filename>~/poky_sdk</filename> directory:
+                    <literallayout class='monospaced'>
+     $ cd ~/poky/build/tmp/deploy/sdk
+     $ ./poky-glibc-x86_64-core-image-minimal-i586-toolchain-ext-&DISTRO;.sh
+     Poky (Yocto Project Reference Distro) Extensible SDK installer version &DISTRO;
+     ============================================================================
+     Enter target directory for SDK (default: ~/poky_sdk):
+     You are about to install the SDK to "/home/scottrif/poky_sdk". Proceed[Y/n]? Y
+     Extracting SDK......................................done
+     Setting it up...
+     Extracting buildtools...
+     Preparing build system...
+     Parsing recipes: 100% |#################################################################| Time: 0:00:52
+     Initializing tasks: 100% |############## ###############################################| Time: 0:00:04
+     Checking sstate mirror object availability: 100% |######################################| Time: 0:00:00
+     Parsing recipes: 100% |#################################################################| Time: 0:00:33
+     Initializing tasks: 100% |##############################################################| Time: 0:00:00
+     done
+     SDK has been successfully set up and is ready to be used.
+     Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
+      $ . /home/scottrif/poky_sdk/environment-setup-i586-poky-linux
+                    </literallayout>
                     </para></listitem>
-                <listitem><para role='writernotes'>
-                    Build the initial image using the extensible SDK.
+                <listitem><para id='setting-up-the-esdk-terminal'>
+                    <emphasis>Set Up a New Terminal to Work With the Extensible SDK:</emphasis>
+                    You must set up a new terminal to work with the SDK.
+                    You cannot use the same BitBake shell used to build the
+                    installer.</para>
+
+                    <para>After opening a new shell, run the SDK environment
+                    setup script as directed by the output from installing
+                    the SDK:
+                    <literallayout class='monospaced'>
+     $ source ~/poky_sdk/environment-setup-i586-poky-linux
+     "SDK environment now set up; additionally you may now run devtool to perform development tasks.
+     Run devtool --help for further details.
+                    </literallayout>
+                    <note>
+                        If you get a warning about attempting to use the
+                        extensible SDK in an environment set up to run
+                        BitBake, you did not use a new shell.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Build the Clean Image:</emphasis>
+                    The final step in preparing to work on the kernel is to
+                    build an initial image using <filename>devtool</filename>
+                    in the new terminal you just set up and initialized for
+                    SDK work:
+                    <literallayout class='monospaced'>
+     $ devtool build-image
+     Parsing recipes: 100% |##########################################| Time: 0:00:05
+     Parsing of 830 .bb files complete (0 cached, 830 parsed). 1299 targets, 47 skipped, 0 masked, 0 errors.
+     WARNING: No packages to add, building image core-image-minimal unmodified
+     Loading cache: 100% |############################################| Time: 0:00:00
+     Loaded 1299 entries from dependency cache.
+     NOTE: Resolving any missing task queue dependencies
+     Initializing tasks: 100% |#######################################| Time: 0:00:07
+     Checking sstate mirror object availability: 100% |###############| Time: 0:00:00
+     NOTE: Executing SetScene Tasks
+     NOTE: Executing RunQueue Tasks
+     NOTE: Tasks Summary: Attempted 2866 tasks of which 2604 didn't need to be rerun and all succeeded.
+     NOTE: Successfully built core-image-minimal. You can find output files in /home/scottrif/poky_sdk/tmp/deploy/images/qemux86
+                    </literallayout>
+                    If you were building for actual hardware and not for
+                    emulation, you could flash the image to a USB stick
+                    on <filename>/dev/sdd</filename> and boot your device.
+                    Use a command similar to the following command to flash
+                    the image:
+                    <literallayout class='monospaced'>
+     $ sudo dd if=tmp/deploy/images/<replaceable>architecture</replaceable>/core-image-minimal-<replaceable>architecture</replaceable>.wic of=/dev/sdd bs=1MB
+     $ sync
+                    </literallayout>
                     </para></listitem>
             </orderedlist>
         </para>
 
-        <para role='writernotes'>
-            At this point, the user has enough stuff set up to work on the
-            kernel.
-            I will put a section in the "Common Tasks" area of this manual
-            that finished out how to make a modification to the kernel.
+        <para>
+            At this point you have set up to start making modifications to the
+            kernel by using the extensible SDK.
+            For a continued example, see the
+            "<link linkend='using-devtool-to-patch-the-kernel'>Using <filename>devtool</filename> to Patch the Kernel</link>"
+            section.
         </para>
     </section>
 
