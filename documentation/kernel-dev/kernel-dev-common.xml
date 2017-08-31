@@ -511,11 +511,6 @@
     <section id="using-devtool-to-patch-the-kernel">
         <title>Using <filename>devtool</filename> to Patch the Kernel</title>
 
-        <para role='writernotes'>
-            This procedure currently does not work.
-            It is WIP.
-        </para>
-
         <para>
             The steps in this procedure show you how you can patch the
             kernel using the extensible SDK and <filename>devtool</filename>.
@@ -582,42 +577,6 @@
                 to check out the code:
                 <literallayout class='monospaced'>
      $ devtool modify linux-yocto
-     Loading cache: 100% |#######################################################################| Time: 0:00:00
-     Loaded 1300 entries from dependency cache.
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-
-     Summary: There was 1 WARNING message shown.
-     Loading cache: 100% |########################################################################| Time: 0:00:00
-     Loaded 1300 entries from dependency cache.
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-
-     Summary: There was 1 WARNING message shown.
-     NOTE: Executing RunQueue Tasks
-     NOTE: Executing do_fetch...
-     NOTE: Executing do_unpack...
-     NOTE: Tasks Summary: Attempted 2 tasks of which 0 didn't need to be rerun and all succeeded.
-     NOTE: Executing RunQueue Tasks
-     NOTE: Executing do_kernel_checkout...
-     NOTE: Tasks Summary: Attempted 3 tasks of which 2 didn't need to be rerun and all succeeded.
-     NOTE: Patching...
-     NOTE: Executing RunQueue Tasks
-     NOTE: Executing do_validate_branches...
-     NOTE: Executing do_kernel_metadata...
-     NOTE: Executing do_patch...
-     NOTE: Tasks Summary: Attempted 6 tasks of which 3 didn't need to be rerun and all succeeded.
-     NOTE: Generating kernel config
-     NOTE: Executing RunQueue Tasks
-     NOTE: Executing do_kernel_configme...
-     NOTE: Executing do_prepare_recipe_sysroot...
-     NOTE: Executing do_configure...
-     NOTE: Tasks Summary: Attempted 9 tasks of which 6 didn't need to be rerun and all succeeded.
-     NOTE: Copying kernel config to srctree
-     NOTE: Source tree extracted to /home/scottrif/poky_sdk/workspace/sources/linux-yocto
-     NOTE: Recipe linux-yocto now set up to build from /home/scottrif/poky_sdk/workspace/sources/linux-yocto
                 </literallayout>
                 <note>
                     During the checkout operation, a bug exists that could
@@ -678,19 +637,6 @@
                 <filename>devtool</filename>:
                 <literallayout class='monospaced'>
      $ devtool build linux-yocto
-     Parsing recipes: 100% |####################################################################################| Time: 0:00:31
-     Parsing of 831 .bb files complete (0 cached, 831 parsed). 1300 targets, 48 skipped, 0 masked, 0 errors.
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-     NOTE: There are 1 recipes to be removed from sysroot qemux86, removing...
-     NOTE: Resolving any missing task queue dependencies
-     Initialising tasks: 100% |#################################################################################| Time: 0:00:00
-     Checking sstate mirror object availability: 100% |#########################################################| Time: 0:00:00
-     NOTE: Executing SetScene Tasks
-     NOTE: Executing RunQueue Tasks
-     linux-yocto-4.10.17+git999-r0 do_compile: NOTE: linux-yocto: compiling from external source tree /home/scottrif/poky_sdk/workspace/sources/linux-yocto
-     NOTE: Tasks Summary: Attempted 471 tasks of which 454 didn't need to be rerun and all succeeded.
-
-     Summary: There was 1 WARNING message shown.
                 </literallayout>
                 </para></listitem>
 <!--
@@ -799,31 +745,6 @@ NOTE: This stuff is how it would have been if a *.wic file was created
                 <literallayout class='monospaced'>
      $ cd ~
      $ devtool build-image core-image-minimal
-     Loading cache: 100% |###########################################################################| Time: 0:00:00
-     Loaded 1299 entries from dependency cache.
-     Parsing recipes: 100% |#########################################################################| Time: 0:00:00
-     Parsing of 831 .bb files complete (830 cached, 1 parsed). 1300 targets, 48 skipped, 0 masked, 0 errors.
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-
-     Summary: There was 1 WARNING message shown.
-     WARNING: Skipping recipe linux-yocto as it doesn't produce a package with the same name
-     WARNING: No recipes in workspace, building image core-image-minimal unmodified
-     Loading cache: 100% |###########################################################################| Time: 0:00:00
-     Loaded 1299 entries from dependency cache.
-     Parsing recipes: 100% |#########################################################################| Time: 0:00:00
-     Parsing of 831 .bb files complete (830 cached, 1 parsed). 1300 targets, 48 skipped, 0 masked, 0 errors.
-     WARNING: No bb files matched BBFILE_PATTERN_my-kernel '^/home/scottrif/poky_sdk/layers/meta-my-kernel/'
-     NOTE: Resolving any missing task queue dependencies
-     Initialising tasks: 100% |######################################################################| Time: 0:00:06
-     Checking sstate mirror object availability: 100% |##############################################| Time: 0:00:00
-     NOTE: Executing SetScene Tasks
-     NOTE: Executing RunQueue Tasks
-     NOTE: Tasks Summary: Attempted 2393 tasks of which 2375 didn't need to be rerun and all succeeded.
-
-     Summary: There was 1 WARNING message shown.
-     NOTE: Successfully built core-image-minimal. You can find output files in /home/scottrif/poky_sdk/tmp/deploy/images/qemux86
                 </literallayout>
                 </para></listitem>
             <listitem><para>
@@ -1192,7 +1113,7 @@ NOTE: This stuff is how it would have been if a *.wic file was created
                 are very time consuming.
             </para>
 
-            <para role='writernotes'>
+            <para>
                 Once you are satisfied with your source code modifications,
                 you can make them permanent by generating patches and
                 applying them to the
@@ -1201,7 +1122,7 @@ NOTE: This stuff is how it would have been if a *.wic file was created
                 "<link linkend='applying-patches'>Applying Patches</link>"
                 section.
                 If you are not familiar with generating patches, refer to the
-                "I need a linked section here for the patch stuff"
+                "<link linkend='using-devtool-to-patch-the-kernel'>Using <filename>devtool</filename> to Patch the Kernel</link>"
                 section.
             </para>
         </section>
