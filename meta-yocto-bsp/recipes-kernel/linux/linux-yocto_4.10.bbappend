@@ -9,9 +9,9 @@ KBRANCH_mpc8315e-rdb = "standard/fsl-mpc8315e-rdb"
 
 SRCREV_machine_genericx86    ?= "6648a34e00c55a0634b39e661dd6ba14dd106473"
 SRCREV_machine_genericx86-64 ?= "6648a34e00c55a0634b39e661dd6ba14dd106473"
-SRCREV_machine_edgerouter ?= "6648a34e00c55a0634b39e661dd6ba14dd106473"
-SRCREV_machine_beaglebone ?= "6648a34e00c55a0634b39e661dd6ba14dd106473"
-SRCREV_machine_mpc8315e-rdb ?= "5ae8cb247756593767d1bb3828bbb9f2a9b72341"
+SRCREV_machine_edgerouter ?= "f4ba3db6e599ed41d1c676f9086ad8b97fd55046"
+SRCREV_machine_beaglebone ?= "f4ba3db6e599ed41d1c676f9086ad8b97fd55046"
+SRCREV_machine_mpc8315e-rdb ?= "e6f168eef50f35513249d120db188453768017ec"
 
 COMPATIBLE_MACHINE_genericx86 = "genericx86"
 COMPATIBLE_MACHINE_genericx86-64 = "genericx86-64"
