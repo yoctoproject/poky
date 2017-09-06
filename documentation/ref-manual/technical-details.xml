@@ -146,6 +146,63 @@
         </para>
     </section>
 
+    <section id='metadata-virtual-providers'>
+        <title>Metadata (Virtual Providers)</title>
+
+        <para>
+            Prior to the build, if you know that several different recipes
+            provide the same functionality, you can use a virtual provider
+            (i.e. <filename>virtual/*</filename>) as a placeholder for the
+            actual provider.
+            The actual provider would be determined at build
+            time.
+            In this case, you should add <filename>virtual/*</filename>
+            to <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>,
+            rather than listing the specified provider.
+            You would select the actual provider by setting the
+            <link linkend='var-PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER</filename></link>
+            variable (i.e. <filename>PREFERRED_PROVIDER_virtual/*</filename>)
+            in the build's configuration file (e.g.
+            <filename>poky/build/conf/local.conf</filename>).
+            <note>
+                Any recipe that PROVIDES a <filename>virtual/*</filename> item
+                that is ultimately not selected through
+                <filename>PREFERRED_PROVIDER</filename> does not get built.
+                Preventing these recipes from building is usually the desired
+                behavior since this mechanism's purpose is to select between
+                mutually exclusive alternative providers.
+            </note>
+        </para>
+
+        <para>
+            The following lists specific examples of virtual providers:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>virtual/mesa</filename>:
+                    Provides <filename>gbm.pc</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>virtual/egl</filename>:
+                    Provides <filename>egl.pc</filename> and possibly
+                    <filename>wayland-egl.pc</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>virtual/libgl</filename>:
+                    Provides <filename>gl.pc</filename> (i.e. libGL).
+                    </para></listitem>
+                <listitem><para>
+                    <filename>virtual/libgles1</filename>:
+                    Provides <filename>glesv1_cm.pc</filename>
+                    (i.e. libGLESv1_CM).
+                    </para></listitem>
+                <listitem><para>
+                    <filename>virtual/libgles2</filename>:
+                    Provides <filename>glesv2.pc</filename> (i.e. libGLESv2).
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
     <section id='usingpoky-components-classes'>
         <title>Classes</title>
 
