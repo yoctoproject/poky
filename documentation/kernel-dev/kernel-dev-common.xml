@@ -362,25 +362,26 @@
                         </para>
 
                         <para>
-                        The following command shows how to create a local copy
-                        of the <filename>linux-yocto-4.9</filename> kernel:
+                        The following commands show how to create a local copy
+                        of the <filename>linux-yocto-4.12</filename> kernel:
                         <literallayout class='monospaced'>
-     $ git clone git://git.yoctoproject.org/linux-yocto-4.9 linux-yocto-4.9.git
-     Cloning into 'linux-yocto-4.9.git'...
-     remote: Counting objects: 5094108, done.
-     remote: Compressing objects: 100% (765113/765113), done.
-     remote: Total 5094108 (delta 4294009), reused 5088388 (delta 4288312)
-     Receiving objects: 100% (5094108/5094108), 1.02 GiB | 7.82 MiB/s, done.
-     Resolving deltas: 100% (4294009/4294009), done.
+     $ cd ~
+     $ git clone git://git.yoctoproject.org/linux-yocto-4.12 linux-yocto-4.12
+     Cloning into 'linux-yocto-4.12'...
+     remote: Counting objects: 6097195, done.
+     remote: Compressing objects: 100% (901026/901026), done.
+     remote: Total 6097195 (delta 5152604), reused 6096847 (delta 5152256)
+     Receiving objects: 100% (6097195/6097195), 1.24 GiB | 7.81 MiB/s, done.
+     Resolving deltas: 100% (5152604/5152604), done.
      Checking connectivity... done.
-     Checking out files: 100% (56233/56233), done.
+     Checking out files: 100% (59846/59846), done.
                         </literallayout>
                         </para></listitem>
                 </orderedlist>
             </para>
 
             <para>
-                At this point you have set up to start making modifications to
+                At this point, you are ready to start making modifications to
                 the kernel using traditional kernel development steps.
                 For a continued example, see the
                 "<link linkend='using-traditional-kernel-development-to-patch-the-kernel'>Using Traditional Kernel Development to Patch the Kernel</link>"
@@ -1010,97 +1011,6 @@
      $ devtool build linux-yocto
                 </literallayout>
                 </para></listitem>
-<!--
-            <listitem><para>
-
-NOTE: This stuff is how it would have been if a *.wic file was created
-      when the image was built earlier.  That is the method used by the
-      example in the wiki (https://wiki.yoctoproject.org/wiki/TipsAndTricks/KernelDevelopmentWithEsdk).
-      I am leaving it here for now.
-
-                <emphasis>Create the Image With the New Kernel:</emphasis>
-                Normally, you would create a new image using the
-                <filename>devtool build-image</filename> command.
-                However, this method can take some time and alters the
-                kernel source folder.
-                A faster option is to use
-                <ulink url='https://linux.die.net/man/8/kpartx'><filename>kpartx</filename></ulink>
-                to splice the new kernel into the image you have already built.
-                <note>
-                    You might have to install <filename>kpartx</filename>
-                    onto your build host.
-                </note>
-                Follow these steps to create the image with the new kernel:
-                <orderedlist>
-                    <listitem><para>
-                        <emphasis>Make a Copy of Your Wic File:</emphasis>
-                        Create a copy of your Wic from into the
-                        <filename>/tmp</filename> directory:
-                        <literallayout class='monospaced'>
-     $ cp tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic /tmp
-                        </literallayout>
-                        </para></listitem>
-                    <listitem><para>
-                        <emphasis>Create Loopback Devices for Partitions:</emphasis>
-                        Next, create loopback devices for each partition in
-                        the Wic file.
-                        <note>
-                            The first unused loopback device is automatically
-                            allocated.
-                        </note>
-                        In this example, the command's output uses a variable
-                        "<replaceable>X</replaceable>" to indicate the loopback
-                        device.
-                        The actual output you get when you run the command lists
-                        the actual loopback devices (e.g. "loop0p1", "loop0p2",
-                        and "loop0p3"):
-                        <literallayout class='monospaced'>
-     $ sudo kpartx -v -a /tmp/core-image-minimal-qemux86.wic
-     add map loop<replaceable>X</replaceable>p1 (253:6): 0 47446 linear /dev/loopX 2048
-     add map loop<replaceable>X</replaceable>p2 (253:7): 0 119356 linear /dev/loopX 51200
-     add map loop<replaceable>X</replaceable>p3 (253:8): 0 90112 linear /dev/loopX 170556
-                        </literallayout>
-                        </para></listitem>
-                    <listitem><para>
-                        <emphasis>Mount the First Device:</emphasis>
-                        The kernel is in the first device, so mount
-                        <filename>/dev/mapper/loop</filename><replaceable>X</replaceable><filename>p1</filename>:
-                        <note>
-                            Be sure to replace the "<replaceable>X</replaceable>"
-                            in "loop<replaceable>X</replaceable>p1" with the
-                            automatically allocated loopback device
-                            (e.g loop0p1).
-                        </note>
-                        <literallayout class='monospaced'>
-     $ sudo mkdir /mnt/wic-p1
-     $ sudo mount /dev/mapper/loop<replaceable>X</replaceable>p1 /mnt/wic-p1
-                        </literallayout>
-                        </para></listitem>
-                    <listitem><para>
-                        <emphasis>Copy Over the New Kernel:</emphasis>
-                        Now copy over new kernel using the following:
-                        <literallayout class='monospaced'>
-     $ sudo cp workspace/sources/linux-yocto/arch/x86/boot/bzImage /mnt/wic-p1
-                        </literallayout>
-                        </para></listitem>
-                    <listitem><para>
-                        Finally, unmount the device and use
-                        <filename>kpartx</filename> to delete the partition
-                        mappings:
-                        <note>
-                            Replace the "<replaceable>X</replaceable>" in
-                            "loop<replaceable>X</replaceable>" with the
-                            automatically allocated loopback device from
-                            earlier (e.g "loop0").
-                        </note>
-                        <literallayout class='monospaced'>
-     $ sudo umount /mnt/wic-p1
-     $ sudo kpartx -d /dev/loop<replaceable>X</replaceable>
-                        </literallayout>
-                        </para></listitem>
-                </orderedlist>
-                </para></listitem>
--->
             <listitem><para>
                 <emphasis>Create the Image With the New Kernel:</emphasis>
                 Use the <filename>devtool build-image</filename> command
@@ -1260,9 +1170,9 @@ NOTE: This stuff is how it would have been if a *.wic file was created
                     "<link linkend='getting-ready-for-traditional-kernel-development'>Getting Ready for Traditional Kernel Development</link>"
                     section, use the following commands to check out the
                     <filename>standard/base</filename> branch of the
-                    Linux Yocto 4.9 kernel:
+                    Linux Yocto 4.12 kernel:
                     <literallayout class='monospaced'>
-     $ cd ~/linux-yocto-4.9
+     $ cd ~/linux-yocto-4.12
      $ git checkout -b standard/base origin/standard/base
                     </literallayout>
                     </para></listitem>
@@ -1278,7 +1188,7 @@ NOTE: This stuff is how it would have been if a *.wic file was created
                             Change to where the kernel source code is before making
                             your edits to the <filename>calibrate.c</filename> file:
                             <literallayout class='monospaced'>
-     $ cd ~/linux-yocto-4.9/init
+     $ cd ~/linux-yocto-4.12/init
                             </literallayout>
                             </para></listitem>
                         <listitem><para>
@@ -1326,12 +1236,13 @@ NOTE: This stuff is how it would have been if a *.wic file was created
                     <filename>local.conf</filename>:
                     <literallayout class='monospaced'>
      $ cd ~/poky/build/conf
-     <replaceable>Add the following:</replaceable>
-
-         SRC_URI_pn-linux-yocto = "git:///$HOME/linux-yocto-4.9;protocol=file;name=machine;branch=standard/base; \
-                          git:///home/scottrif/yocto-kernel-cache;protocol=file;type=kmeta;name=meta;branch=yocto-4.9;destsuffix=${KMETA}"
-SRCREV_meta_qemux86 = "${AUTOREV}"
-SRCREV_machine_qemux86 = "${AUTOREV}"
+                    </literallayout>
+                    Add the following to the <filename>local.conf</filename>:
+                    <literallayout class='monospaced'>
+     SRC_URI_pn-linux-yocto = "git:///$HOME/linux-yocto-4.12;protocol=file;name=machine;branch=standard/base; \
+                               git:///home/scottrif/yocto-kernel-cache;protocol=file;type=kmeta;name=meta;branch=yocto-4.12;destsuffix=${KMETA}"
+     SRCREV_meta_qemux86 = "${AUTOREV}"
+     SRCREV_machine_qemux86 = "${AUTOREV}"
                     </literallayout>
                     You must be sure to specify the correct branch and machine
                     types.
