@@ -37,7 +37,8 @@
             Source Directory.
             <note>
                 Be sure you check out the appropriate development branch or
-                by tag to get the version of Yocto Project you want.
+                you create your local branch by checking out a specific tag
+                to get the desired version of Yocto Project.
                 See the
                 "<ulink url='&YOCTO_DOCS_DEV_URL;#checking-out-by-branch-in-poky'>Checking Out by Branch in Poky</ulink>"
                 and
@@ -120,14 +121,14 @@
                         as follows:
                         <literallayout class='monospaced'>
      $ cd ~/poky
-     $ yocto-layer create my-kernel -o ../meta-my-kernel
+     $ yocto-layer create mylayer -o ../meta-mylayer
       Please enter the layer priority you'd like to use for the layer: [default: 6]
       Would you like to have an example recipe created? (y/n) [default: n]
       Would you like to have an example bbappend file created? (y/n) [default: n]
 
-      New layer created in ../meta-my-kernel.
+      New layer created in ../meta-mylayer.
 
-      Don't forget to add it to your BBLAYERS (for details see ../meta-my-kernel/README).
+      Don't forget to add it to your BBLAYERS (for details see ../meta-mylayer/README).
                         </literallayout>
                         </para></listitem>
                     <listitem><para>
@@ -140,7 +141,7 @@
                         as follows:
                         <literallayout class='monospaced'>
      $ cd ~/poky/build
-     $ bitbake-layers add-layer ../../meta-my-kernel
+     $ bitbake-layers add-layer ../../meta-mylayer
                         </literallayout>
                         </para></listitem>
                     <listitem><para>
@@ -274,9 +275,15 @@
                         build environment script
                         (i.e. <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>oe-init-build-env</filename></ulink>
                         or
-                        <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>):
+                        <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>).
+                        Also, for this example, be sure that the local branch
+                        you have checked out for <filename>poky</filename> is
+                        the Yocto Project &DISTRO_NAME; branch:
                         <literallayout class='monospaced'>
      $ cd ~/poky
+     $ git branch
+     master
+     * &DISTRO_NAME;
      $ source oe-init-build-env
                         </literallayout>
                         <note>
@@ -322,14 +329,14 @@
                         as follows:
                         <literallayout class='monospaced'>
      $ cd ~/poky
-     $ yocto-layer create my-kernel -o ../meta-my-kernel
+     $ yocto-layer create mylayer -o ../meta-mylayer
       Please enter the layer priority you'd like to use for the layer: [default: 6]
       Would you like to have an example recipe created? (y/n) [default: n]
       Would you like to have an example bbappend file created? (y/n) [default: n]
 
-      New layer created in ../meta-my-kernel.
+      New layer created in ../meta-mylayer.
 
-      Don't forget to add it to your BBLAYERS (for details see ../meta-my-kernel/README).
+      Don't forget to add it to your BBLAYERS (for details see ../meta-mylayer/README).
                         </literallayout>
                         </para></listitem>
                     <listitem><para>
@@ -342,7 +349,7 @@
                         as follows:
                         <literallayout class='monospaced'>
      $ cd ~/poky/build
-     $ bitbake-layers add-layer ../../meta-my-kernel
+     $ bitbake-layers add-layer ../../meta-mylayer
                         </literallayout>
                         </para></listitem>
                     <listitem><para>
@@ -359,14 +366,25 @@
                         copy of the kernel Git repository outside of the
                         <ulink url='&YOCTO_DOCS_REF_URL;source-directory'>Source Directory</ulink>,
                         which is usually named <filename>poky</filename>.
+                        Also, be sure you are in the
+                        <filename>standard/base</filename> branch.
                         </para>
 
                         <para>
                         The following commands show how to create a local copy
-                        of the <filename>linux-yocto-4.12</filename> kernel:
+                        of the <filename>linux-yocto-4.12</filename> kernel and
+                        be in the <filename>standard/base</filename> branch.
+                        <note>
+                            The <filename>linux-yocto-4.12</filename> kernel
+                            can be used with the Yocto Project 2.4 release
+                            and forward.
+                            You cannot use the
+                            <filename>linux-yocto-4.12</filename> kernel with
+                            releases prior to Yocto Project 2.4:
+                        </note>
                         <literallayout class='monospaced'>
      $ cd ~
-     $ git clone git://git.yoctoproject.org/linux-yocto-4.12 linux-yocto-4.12
+     $ git clone git://git.yoctoproject.org/linux-yocto-4.12 --branch standard/base
      Cloning into 'linux-yocto-4.12'...
      remote: Counting objects: 6097195, done.
      remote: Compressing objects: 100% (901026/901026), done.
@@ -375,6 +393,33 @@
      Resolving deltas: 100% (5152604/5152604), done.
      Checking connectivity... done.
      Checking out files: 100% (59846/59846), done.
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Create a Local Copy of the Kernel Cache Git
+                        Repository:</emphasis>
+                        For simplicity, it is recommended that you create your
+                        copy of the kernel cache Git repository outside of the
+                        <ulink url='&YOCTO_DOCS_REF_URL;source-directory'>Source Directory</ulink>,
+                        which is usually named <filename>poky</filename>.
+                        Also, for this example, be sure you are in the
+                        <filename>yocto-4.12</filename> branch.
+                        </para>
+
+                        <para>
+                        The following commands show how to create a local copy
+                        of the <filename>yocto-kernel-cache</filename> and
+                        be in the <filename>yocto-4.12</filename> branch:
+                        <literallayout class='monospaced'>
+     $ cd ~
+     $ git clone git://git.yoctoproject.org/yocto-kernel-cache --branch yocto-4.12
+     Cloning into 'yocto-kernel-cache'...
+     remote: Counting objects: 22639, done.
+     remote: Compressing objects: 100% (9761/9761), done.
+     remote: Total 22639 (delta 12400), reused 22586 (delta 12347)
+     Receiving objects: 100% (22639/22639), 22.34 MiB | 6.27 MiB/s, done.
+     Resolving deltas: 100% (12400/12400), done.
+     Checking connectivity... done.
                         </literallayout>
                         </para></listitem>
                 </orderedlist>
@@ -1076,18 +1121,18 @@
                 command in the terminal used to work with the extensible
                 SDK.
                 This example uses the previously established layer named
-                <filename>meta-my-kernel</filename>.
+                <filename>meta-mylayer</filename>.
                 <note>
                     See Step 3 of the
                     "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop using devtool</link>"
                     section for information on setting up this layer.
                 </note>
                 <literallayout class='monospaced'>
-     $ devtool finish linux-yocto /path/to/meta-my-kernel
+     $ devtool finish linux-yocto /path/to/meta-mylayer
                 </literallayout>
                 Once the command finishes, the patches and the
                 <filename>.bbappend</filename> file are located in the
-                <filename>~/meta-my-kernel/recipes-kernel/linux</filename>
+                <filename>~/meta-mylayer/recipes-kernel/linux</filename>
                 directory.
                 </para></listitem>
             <listitem><para>
@@ -1162,24 +1207,13 @@
             section.
             <orderedlist>
                 <listitem><para>
-                    <emphasis>Know What Branch is Checked Out In Your Local
-                    Kernel Git Repository:</emphasis>
+                    <emphasis>Edit the Source Files</emphasis>
                     Prior to this step, you should have used Git to create a
                     local copy of the repository for your kernel.
                     Assuming you created the repository as directed in the
                     "<link linkend='getting-ready-for-traditional-kernel-development'>Getting Ready for Traditional Kernel Development</link>"
-                    section, use the following commands to check out the
-                    <filename>standard/base</filename> branch of the
-                    Linux Yocto 4.12 kernel:
-                    <literallayout class='monospaced'>
-     $ cd ~/linux-yocto-4.12
-     $ git checkout -b standard/base origin/standard/base
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>Edit the Source Files</emphasis>
-                    Follow these steps to make some simple changes to the source
-                    files:
+                    section, use the following commands to edit the
+                    <filename>calibrate.c</filename> file:
                     <orderedlist>
                         <listitem><para>
                             <emphasis>Change the working directory</emphasis>:
@@ -1228,27 +1262,38 @@
                     Build System will not pick up the changes.
                     </para></listitem>
                 <listitem><para>
-                    <emphasis>Update Your <filename>local.conf</filename> File to Point to Your Source Files:</emphasis>
+                    <emphasis>Update Your <filename>local.conf</filename> File
+                    to Point to Your Source Files:</emphasis>
                     In addition to your <filename>local.conf</filename> file
-                    specifying to use "kernel-modules" and the "qemux86" machine,
-                    it must also point to the updated kernel source files.
-                    Add the following commands to your
+                    specifying to use "kernel-modules" and the "qemux86"
+                    machine, it must also point to the updated kernel source
+                    files.
+                    Add
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                    and
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
+                    statements similar to the following to your
                     <filename>local.conf</filename>:
                     <literallayout class='monospaced'>
      $ cd ~/poky/build/conf
                     </literallayout>
                     Add the following to the <filename>local.conf</filename>:
                     <literallayout class='monospaced'>
-     SRC_URI_pn-linux-yocto = "git:///$HOME/linux-yocto-4.12;protocol=file;name=machine;branch=standard/base; \
-                               git:///home/scottrif/yocto-kernel-cache;protocol=file;type=kmeta;name=meta;branch=yocto-4.12;destsuffix=${KMETA}"
+     SRC_URI_pn-linux-yocto = "git:///<replaceable>path-to</replaceable>/linux-yocto-4.12;protocol=file;name=machine;branch=standard/base; \
+                               git:///<replaceable>path-to</replaceable>/yocto-kernel-cache;protocol=file;type=kmeta;name=meta;branch=yocto-4.12;destsuffix=${KMETA}"
      SRCREV_meta_qemux86 = "${AUTOREV}"
      SRCREV_machine_qemux86 = "${AUTOREV}"
                     </literallayout>
-                    You must be sure to specify the correct branch and machine
-                    types.
-                    For this example, the branch is
-                    <filename>standard/base</filename> and the machine is
-                    "qemux86".
+                    <note>
+                        Be sure to replace
+                        <replaceable>path-to</replaceable> with the pathname
+                        to your local Git repositories.
+                        Also, you must be sure to specify the correct branch
+                        and machine types.
+                        For this example, the branch is
+                        <filename>standard/base</filename> and the machine is
+                        "qemux86".
+                    </note>
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Build the Image:</emphasis>
@@ -1268,6 +1313,7 @@
                     When prompted to login to the QEMU console, use "root"
                     with no password:
                     <literallayout class='monospaced'>
+     $ cd ~/poky/build
      $ runqemu qemux86
                     </literallayout>
                     </para></listitem>
@@ -1283,6 +1329,29 @@
                     <filename>printk</filename> statements
                     as part of the output when you scroll down the
                     console window.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Generate the Patch File:</emphasis>
+                    Once you are sure that your patch works correctly, you
+                    can generate a <filename>*.patch</filename> file in the
+                    kernel source repository:
+                    <literallayout class='monospaced'>
+     $ cd ~/linux-yocto-4.12/init
+     $ git format-patch -1
+     0001-calibrate.c-Added-some-printk-statements.patch
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Prepare Your Layer for Subsequent Builds:</emphasis>
+                    In order for subsequent builds to pick up patches, the
+                    patches need to be stored in a layer.
+                    This example created the layer
+                    <filename>meta-mylayer</filename> earlier but left it
+                    pretty much empty.
+                    To get it ready for subsequent builds that automatically
+                    apply patches, follow the steps in the
+                    "<link linkend='creating-and-preparing-a-layer'>Creating and Preparing a Layer</link>"
+                    section.
                     </para></listitem>
             </orderedlist>
         </para>
