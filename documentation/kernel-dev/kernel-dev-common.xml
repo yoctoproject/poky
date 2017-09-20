@@ -284,12 +284,14 @@
                         Before you can do anything using BitBake, you need to
                         initialize the BitBake build environment by sourcing a
                         build environment script
-                        (i.e. <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>oe-init-build-env</filename></ulink>
-                        or
-                        <ulink url='&YOCTO_DOCS_REF_URL;#structure-memres-core-script'><filename>oe-init-build-env-memres</filename></ulink>).
+                        (i.e. <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>oe-init-build-env</filename></ulink>).
                         Also, for this example, be sure that the local branch
                         you have checked out for <filename>poky</filename> is
-                        the Yocto Project &DISTRO_NAME; branch:
+                        the Yocto Project &DISTRO_NAME; branch.
+                        If you need to checkout out the &DISTRO_NAME; branch,
+                        see the
+                        "<ulink url='&YOCTO_DOCS_DEV_URL;#checking-out-by-branch-in-poky'>Checking out by Branch in Poky</ulink>"
+                        section in the Yocto Project Development Manual.
                         <literallayout class='monospaced'>
      $ cd ~/poky
      $ git branch
@@ -534,7 +536,7 @@
                     <filename>meta-mylayer/recipes-kernel/linux</filename>
                     directory and create the kernel's append file.
                     This example uses the
-                    <filename>linux-yocto_4.12</filename> kernel.
+                    <filename>linux-yocto-4.12</filename> kernel.
                     Thus, the name of the append file is
                     <filename>linux-yocto_4.12.bbappend</filename>:
                     <literallayout class='monospaced'>
@@ -1240,12 +1242,6 @@
                 "<link linkend='getting-ready-for-traditional-kernel-development'>Getting Ready for Traditional Kernel Development</link>"
                 Section.
             </note>
-        </para>
-
-        <para>
-            Also, for more information on patching the kernel, see the
-            "<link linkend='applying-patches'>Applying Patches</link>"
-            section.
             <orderedlist>
                 <listitem><para>
                     <emphasis>Edit the Source Files</emphasis>
@@ -1338,10 +1334,10 @@
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Build the Image:</emphasis>
-                    With the source modified, staged, and committed, and
-                    the <filename>local.conf</filename> file pointing to
-                    the kernel files, you can now use BitBake to build the
-                    image:
+                    With the source modified, your changes staged and
+                    committed, and the <filename>local.conf</filename> file
+                    pointing to the kernel files, you can now use BitBake to
+                    build the image:
                     <literallayout class='monospaced'>
      $ cd ~/poky/build
      $ bitbake core-image-minimal
@@ -1383,47 +1379,61 @@
                     </literallayout>
                     </para></listitem>
                 <listitem><para>
-                    <emphasis>Make Changes to Use Patch Files During Subsequent Builds:</emphasis>
+                    <emphasis>Move the Patch File to Your Layer:</emphasis>
                     In order for subsequent builds to pick up patches, you
-                    need to make some changes in your layer.
-                    This example created the layer
-                    <filename>meta-mylayer</filename> earlier with basically
-                    just a <filename>bblayers.conf</filename> file.
-                    To get it ready for subsequent builds that automatically
-                    apply patches, you need to create an kernel recipe append
-                    file.</para>
-
-                    <para>Move to the <filename>meta-mylayer</filename>
-                    directory and create some extra structure in your layer:
+                    need to move the patch file you created in the previous
+                    step to your layer <filename>meta-mylayer</filename>.
+                    For this example, the layer created earlier is located
+                    in your home directory as <filename>meta-mylayer</filename>.
+                    When the layer was created using the
+                    <filename>yocto-create</filename> script, no additional
+                    hierarchy was created to support patches.
+                    Before moving the patch file, you need to add additional
+                    structure to your layer using the following commands:
                     <literallayout class='monospaced'>
-     $ cd ~/poky/meta-mylayer
+     $ cd ~/meta-mylayer
      $ mkdir recipes-kernel
      $ mkdir recipes-kernel/linux
      $ mkdir recipes-kernel/linux/linux-yocto
-                    </literallayout></para>
-
-                    <para>In the
-                    <filename>recipes-kernel/linux/linux-yocto</filename>
-                    directory, create an append file named
-                    <filename>linux-yocto_4.12.bbappend</filename> with the
-                    following contents:
+                    </literallayout>
+                    Once you have created this hierarchy in your layer, you can
+                    move the patch file using the following command:
+                    <literallayout class='monospaced'>
+     $ mv ~/linux-yocto-4.12/init/0001-calibrate.c-Added-some-printk-statements.patch ~/meta-mylayer/recipes-kernel/linux/linux-yocto
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Create the Append File:</emphasis>
+                    Finally, you need to create the
+                    <filename>linux-yocto_4.12.bbappend</filename> file and
+                    insert statements that allow the OpenEmbedded build
+                    system to find the patch.
+                    The append file needs to be in your layer's
+                    <filename>recipes-kernel/linux</filename>
+                    directory and it must be named
+                    <filename>linux-yocto_4.12.bbappend</filename> and have
+                    the following contents:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-     SRC_URI += "file://0001-calibrate.c-Added-some-printk-statements.patch"
+     SRC_URI_append = " file://0001-calibrate.c-Added-some-printk-statements.patch"
                     </literallayout>
                     The
                     <ulink url='&YOCTO_DOCS_REF_URL;var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
                     and
                     <ulink url='&YOCTO_DOCS_REF_URL;var-SRC_URI'><filename>SRC_URI</filename></ulink>
                     statements enable the OpenEmbedded build system to find
-                    the patch file.
-                    For more information on using append files, see the
-                    "<ulink url='&YOCTO_DOCS_DEV_URL;#using-bbappend-files'>Using .bbappend Files in Your Layer"</ulink>"
-                    section in the Yocto Project Development Manual.</para>
+                    the patch file.</para>
 
-                    <para>Move the patch file you created in the earlier step
-                    to the TBD
+                    <para>For more information on append files and patches,
+                    see the
+                    "<link linkend='creating-the-append-file'>Creating the Append File</link>"
+                    and
+                    "<link linkend='applying-patches'>Applying Patches</link>"
+                    sections.
+                    You can also see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#using-bbappend-files'>Using .bbappend Files in Your Layer"</ulink>"
+                    section in the Yocto Project Development Manual.
                     </para></listitem>
             </orderedlist>
         </para>
