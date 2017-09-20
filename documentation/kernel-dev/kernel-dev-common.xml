@@ -468,7 +468,8 @@
             <ulink url='&YOCTO_DOCS_REF_URL;#bitbake-term'>BitBake</ulink>
             append files (<filename>.bbappend</filename>) and provides a
             convenient mechanism to create your own recipe files
-            (<filename>.bb</filename>).
+            (<filename>.bb</filename>) as well as store and use kernel
+            patch files.
             For background information on working with layers, see the
             "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
             section in the Yocto Project Development Manual.
@@ -485,8 +486,9 @@
         </para>
 
         <para>
-            Following is a detailed example showing how to create a layer
-            without the aid of tools for building the kernel:
+            To better understand the layer you create for kernel development,
+            the following section describes how to create a layer
+            without the aid of tools:
             <orderedlist>
                 <listitem><para>
                     <emphasis>Create additional structure</emphasis>:
@@ -498,9 +500,10 @@
      $ mkdir recipes-kernel/linux
      $ mkdir recipes-kernel/linux/linux-yocto
                     </literallayout>
-                    The <filename>conf</filename> directory holds your configuration files, while the
-                    <filename>recipes-kernel</filename> directory holds your append file and
-                    your patch file.
+                    The <filename>conf</filename> directory holds your
+                    configuration files, while the
+                    <filename>recipes-kernel</filename> directory holds your
+                    append file and eventual patch files.
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Create the layer configuration file</emphasis>:
@@ -519,29 +522,35 @@
      BBFILE_PATTERN_mylayer = "^${LAYERDIR}/"
      BBFILE_PRIORITY_mylayer = "5"
                     </literallayout>
-                    Notice <filename>mylayer</filename> as part of the last three
-                    statements.</para></listitem>
+                    Notice <filename>mylayer</filename> as part of the last
+                    three statements.
+                    </para></listitem>
                 <listitem><para>
                     <emphasis>Create the kernel recipe append file</emphasis>:
-                    Move to the <filename>meta-mylayer/recipes-kernel/linux</filename> directory and create
-                    the <filename>linux-yocto_3.4.bbappend</filename> file as follows:
+                    Move to the
+                    <filename>meta-mylayer/recipes-kernel/linux</filename>
+                    directory and create the kernel's append file.
+                    This example uses the
+                    <filename>linux-yocto_4.12</filename> kernel.
+                    Thus, the name of the append file is
+                    <filename>linux-yocto_4.12.bbappend</filename>:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-     SRC_URI += "file://0001-calibrate-Add-printk-example.patch"
+     SRC_URI += "file://<replaceable>patch-file-one</replaceable>"
+     SRC_URI += "file://<replaceable>patch-file-two</replaceable>"
+     SRC_URI += "file://<replaceable>patch-file-three</replaceable>"
                     </literallayout>
-                    The <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
-                    and <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                    statements enable the OpenEmbedded build system to find the patch file.
+                    The
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+                    and
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                    statements enable the OpenEmbedded build system to find
+                    patch files.
                     For more information on using append files, see the
                     "<ulink url='&YOCTO_DOCS_DEV_URL;#using-bbappend-files'>Using .bbappend Files in Your Layer</ulink>"
                     section in the Yocto Project Development Manual.
                     </para></listitem>
-                <listitem><para>
-                    <emphasis>Put the patch file in your layer</emphasis>:
-                    Move the <filename>0001-calibrate-Add-printk-example.patch</filename> file to
-                    the <filename>meta-mylayer/recipes-kernel/linux/linux-yocto</filename>
-                    directory.</para></listitem>
             </orderedlist>
         </para>
     </section>
@@ -1371,16 +1380,47 @@
                     </literallayout>
                     </para></listitem>
                 <listitem><para>
-                    <emphasis>Prepare Your Layer for Subsequent Builds:</emphasis>
-                    In order for subsequent builds to pick up patches, the
-                    patches need to be stored in a layer.
+                    <emphasis>Make Changes to Use Patch Files During Subsequent Builds:</emphasis>
+                    In order for subsequent builds to pick up patches, you
+                    need to make some changes in your layer.
                     This example created the layer
-                    <filename>meta-mylayer</filename> earlier but left it
-                    pretty much empty.
+                    <filename>meta-mylayer</filename> earlier with basically
+                    just a <filename>bblayers.conf</filename> file.
                     To get it ready for subsequent builds that automatically
-                    apply patches, follow the steps in the
-                    "<link linkend='creating-and-preparing-a-layer'>Creating and Preparing a Layer</link>"
-                    section.
+                    apply patches, you need to create an kernel recipe append
+                    file.</para>
+
+                    <para>Move to the <filename>meta-mylayer</filename>
+                    directory and create some extra structure in your layer:
+                    <literallayout class='monospaced'>
+     $ cd ~/poky/meta-mylayer
+     $ mkdir recipes-kernel
+     $ mkdir recipes-kernel/linux
+     $ mkdir recipes-kernel/linux/linux-yocto
+                    </literallayout></para>
+
+                    <para>In the
+                    <filename>recipes-kernel/linux/linux-yocto</filename>
+                    directory, create an append file named
+                    <filename>linux-yocto_4.12.bbappend</filename> with the
+                    following contents:
+                    <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
+     SRC_URI += "file://0001-calibrate.c-Added-some-printk-statements.patch"
+                    </literallayout>
+                    The
+                    <ulink url='&YOCTO_DOCS_REF_URL;var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+                    and
+                    <ulink url='&YOCTO_DOCS_REF_URL;var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                    statements enable the OpenEmbedded build system to find
+                    the patch file.
+                    For more information on using append files, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#using-bbappend-files'>Using .bbappend Files in Your Layer"</ulink>"
+                    section in the Yocto Project Development Manual.</para>
+
+                    <para>Move the patch file you created in the earlier step
+                    to the TBD
                     </para></listitem>
             </orderedlist>
         </para>
