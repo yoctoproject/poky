@@ -70,7 +70,7 @@
                     <listitem><para>
                         <emphasis>Initialize the BitBake Environment:</emphasis>
                         Before building an extensible SDK, you need to
-                        initialize the BitBake build environment by sourcing a
+                        initialize the BitBake build environment by sourcing the
                         build environment script
                         (i.e. <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>oe-init-build-env</filename></ulink>):
                         <literallayout class='monospaced'>
@@ -155,8 +155,8 @@
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Build the Extensible SDK:</emphasis>
-                        Use BitBake to build the extensible SDK specifically for
-                        the Minnowboard:
+                        Use BitBake to build the extensible SDK specifically
+                        for use with images to be run using QEMU:
                         <literallayout class='monospaced'>
      $ cd ~/poky/build
      $ bitbake core-image-minimal -c populate_sdk_ext
@@ -280,7 +280,7 @@
                     <listitem><para>
                         <emphasis>Initialize the BitBake Environment:</emphasis>
                         Before you can do anything using BitBake, you need to
-                        initialize the BitBake build environment by sourcing a
+                        initialize the BitBake build environment by sourcing the
                         build environment script
                         (i.e. <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>oe-init-build-env</filename></ulink>).
                         Also, for this example, be sure that the local branch
@@ -1009,66 +1009,58 @@
                 "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop using <filename>devtool</filename></link>"
                 Section.
             </note>
-        </para>
-
-        <para>
-            Also, for more information on patching the kernel, see the
-            "<link linkend='applying-patches'>Applying Patches</link>"
-            section.
-        </para>
-
-        <orderedlist>
-            <listitem><para>
-                <emphasis>Check Out the Kernel Source Files:</emphasis>
-                First you must use <filename>devtool</filename> to checkout
-                the kernel source code in its workspace.
-                Be sure you are in the terminal set up to do work
-                with the extensible SDK.
-                <note>
-                    See this
-                    <link linkend='setting-up-the-esdk-terminal'>step</link>
-                    in the
-                    "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop Using <filename>devtool</filename></link>"
-                    section for more information.
-                </note>
-                Use the following <filename>devtool</filename> command
-                to check out the code:
-                <literallayout class='monospaced'>
-     $ devtool modify linux-yocto
-                </literallayout>
-                <note>
-                    During the checkout operation, a bug exists that could
-                    cause errors such as the following to appear:
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Check Out the Kernel Source Files:</emphasis>
+                    First you must use <filename>devtool</filename> to checkout
+                    the kernel source code in its workspace.
+                    Be sure you are in the terminal set up to do work
+                    with the extensible SDK.
+                    <note>
+                        See this
+                        <link linkend='setting-up-the-esdk-terminal'>step</link>
+                        in the
+                        "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop Using <filename>devtool</filename></link>"
+                        section for more information.
+                    </note>
+                    Use the following <filename>devtool</filename> command
+                    to check out the code:
                     <literallayout class='monospaced'>
+     $ devtool modify linux-yocto
+                    </literallayout>
+                    <note>
+                        During the checkout operation, a bug exists that could
+                        cause errors such as the following to appear:
+                        <literallayout class='monospaced'>
      ERROR: Taskhash mismatch 2c793438c2d9f8c3681fd5f7bc819efa versus
             be3a89ce7c47178880ba7bf6293d7404 for
             /path/to/esdk/layers/poky/meta/recipes-kernel/linux/linux-yocto_4.10.bb.do_unpack
-                    </literallayout>
-                    You can safely ignore these messages.
-                    The source code is correctly checked out.
-                </note>
-                </para></listitem>
-            <listitem><para>
-                <emphasis>Edit the Source Files</emphasis>
-                Follow these steps to make some simple changes to the source
-                files:
-                <orderedlist>
-                    <listitem><para>
-                        <emphasis>Change the working directory</emphasis>:
-                        In the previous step, the output noted where you can find
-                        the source files (e.g.
-                        <filename>~/poky_sdk/workspace/sources/linux-yocto</filename>).
-                        Change to where the kernel source code is before making
-                        your edits to the <filename>calibrate.c</filename> file:
-                        <literallayout class='monospaced'>
-     $ cd ~/poky_sdk/workspace/sources/linux-yocto
                         </literallayout>
-                        </para></listitem>
-                    <listitem><para>
-                        <emphasis>Edit the source file</emphasis>:
-                        Edit the <filename>init/calibrate.c</filename> file to have
-                        the following changes:
-                        <literallayout class='monospaced'>
+                        You can safely ignore these messages.
+                        The source code is correctly checked out.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Edit the Source Files</emphasis>
+                    Follow these steps to make some simple changes to the source
+                    files:
+                    <orderedlist>
+                        <listitem><para>
+                            <emphasis>Change the working directory</emphasis>:
+                            In the previous step, the output noted where you can find
+                            the source files (e.g.
+                            <filename>~/poky_sdk/workspace/sources/linux-yocto</filename>).
+                            Change to where the kernel source code is before making
+                            your edits to the <filename>calibrate.c</filename> file:
+                            <literallayout class='monospaced'>
+     $ cd ~/poky_sdk/workspace/sources/linux-yocto
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Edit the source file</emphasis>:
+                            Edit the <filename>init/calibrate.c</filename> file to have
+                            the following changes:
+                            <literallayout class='monospaced'>
      void calibrate_delay(void)
      {
          unsigned long lpj;
@@ -1085,110 +1077,111 @@
                .
                .
                .
-                        </literallayout>
-                        </para></listitem>
-                </orderedlist>
-                </para></listitem>
-            <listitem><para>
-                <emphasis>Build the Updated Kernel Source:</emphasis>
-                To build the updated kernel source, use
-                <filename>devtool</filename>:
-                <literallayout class='monospaced'>
+                            </literallayout>
+                            </para></listitem>
+                    </orderedlist>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Build the Updated Kernel Source:</emphasis>
+                    To build the updated kernel source, use
+                    <filename>devtool</filename>:
+                    <literallayout class='monospaced'>
      $ devtool build linux-yocto
-                </literallayout>
-                </para></listitem>
-            <listitem><para>
-                <emphasis>Create the Image With the New Kernel:</emphasis>
-                Use the <filename>devtool build-image</filename> command
-                to create a new image that has the new kernel.
-                <note>
-                    If the image you originally created resulted in a Wic
-                    file, you can use an alternate method to create the new
-                    image with the updated kernel.
-                    For an example, see the steps in the
-                    <ulink url='https://wiki.yoctoproject.org/wiki/TipsAndTricks/KernelDevelopmentWithEsdk'>TipsAndTricks/KernelDevelopmentWithEsdk</ulink>
-                    Wiki Page.
-                </note>
-                <literallayout class='monospaced'>
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Create the Image With the New Kernel:</emphasis>
+                    Use the <filename>devtool build-image</filename> command
+                    to create a new image that has the new kernel.
+                    <note>
+                        If the image you originally created resulted in a Wic
+                        file, you can use an alternate method to create the new
+                        image with the updated kernel.
+                        For an example, see the steps in the
+                        <ulink url='https://wiki.yoctoproject.org/wiki/TipsAndTricks/KernelDevelopmentWithEsdk'>TipsAndTricks/KernelDevelopmentWithEsdk</ulink>
+                        Wiki Page.
+                    </note>
+                    <literallayout class='monospaced'>
      $ cd ~
      $ devtool build-image core-image-minimal
-                </literallayout>
-                </para></listitem>
-            <listitem><para>
-                <emphasis>Test the New Image:</emphasis>
-                For this example, you can run the new image using QEMU
-                to verify your changes:
-                <orderedlist>
-                    <listitem><para>
-                        <emphasis>Boot the image</emphasis>:
-                        Boot the modified image in the QEMU emulator
-                        using this command:
-                        <literallayout class='monospaced'>
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Test the New Image:</emphasis>
+                    For this example, you can run the new image using QEMU
+                    to verify your changes:
+                    <orderedlist>
+                        <listitem><para>
+                            <emphasis>Boot the image</emphasis>:
+                            Boot the modified image in the QEMU emulator
+                            using this command:
+                            <literallayout class='monospaced'>
      $ runqemu qemux86
-                        </literallayout>
-                        </para></listitem>
-                    <listitem><para>
-                        <emphasis>Verify the changes</emphasis>:
-                        Log into the machine using <filename>root</filename>
-                        with no password and then use the following shell
-                        command to scroll through the console's boot output.
-                        <literallayout class='monospaced'>
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Verify the changes</emphasis>:
+                            Log into the machine using <filename>root</filename>
+                            with no password and then use the following shell
+                            command to scroll through the console's boot output.
+                            <literallayout class='monospaced'>
      # dmesg | less
-                        </literallayout>
-                        You should see the results of your
-                        <filename>printk</filename> statements
-                        as part of the output when you scroll down the
-                        console window.
-                        </para></listitem>
-                </orderedlist>
-                </para></listitem>
-            <listitem><para>
-                <emphasis>Stage and commit your changes</emphasis>:
-                Within your eSDK terminal, change your working directory to
-                where you modified the <filename>calibrate.c</filename>
-                file and use these Git commands to stage and commit your
-                changes:
-                <literallayout class='monospaced'>
+                            </literallayout>
+                            You should see the results of your
+                            <filename>printk</filename> statements
+                            as part of the output when you scroll down the
+                            console window.
+                            </para></listitem>
+                    </orderedlist>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Stage and commit your changes</emphasis>:
+                    Within your eSDK terminal, change your working directory to
+                    where you modified the <filename>calibrate.c</filename>
+                    file and use these Git commands to stage and commit your
+                    changes:
+                    <literallayout class='monospaced'>
      $ cd ~/poky_sdk/workspace/sources/linux-yocto
      $ git status
      $ git add init/calibrate.c
      $ git commit -m "calibrate: Add printk example"
-                </literallayout>
-                </para></listitem>
-            <listitem><para>
-                <emphasis>Export the Patches and Create a <filename>.bbappend</filename>:</emphasis>
-                To export your commits as patches and create a
-                <filename>.bbappend</filename> file, use the following
-                command in the terminal used to work with the extensible
-                SDK.
-                This example uses the previously established layer named
-                <filename>meta-mylayer</filename>.
-                <note>
-                    See Step 3 of the
-                    "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop using devtool</link>"
-                    section for information on setting up this layer.
-                </note>
-                <literallayout class='monospaced'>
-     $ devtool finish linux-yocto /path/to/meta-mylayer
-                </literallayout>
-                Once the command finishes, the patches and the
-                <filename>.bbappend</filename> file are located in the
-                <filename>~/meta-mylayer/recipes-kernel/linux</filename>
-                directory.
-                </para></listitem>
-            <listitem><para>
-                <emphasis>Build the Image With Your Modified Kernel:</emphasis>
-                You can now build an image that includes your kernel
-                patches.
-                Execute the following command from your
-                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
-                in the terminal set up to run BitBake:
-                <literallayout class='monospaced'>
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Export the Patches and Create an Append File:</emphasis>
+                    To export your commits as patches and create a
+                    <filename>.bbappend</filename> file, use the following
+                    command in the terminal used to work with the extensible
+                    SDK.
+                    This example uses the previously established layer named
+                    <filename>meta-mylayer</filename>.
+                    <note>
+                        See Step 3 of the
+                        "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop using devtool</link>"
+                        section for information on setting up this layer.
+                    </note>
+                    <literallayout class='monospaced'>
+     $ devtool finish linux-yocto ~/meta-mylayer
+                    </literallayout>
+                    Once the command finishes, the patches and the
+                    <filename>.bbappend</filename> file are located in the
+                    <filename>~/meta-mylayer/recipes-kernel/linux</filename>
+                    directory.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Build the Image With Your Modified Kernel:</emphasis>
+                    You can now build an image that includes your kernel
+                    patches.
+                    Execute the following command from your
+                    <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
+                    in the terminal set up to run BitBake:
+                    <literallayout class='monospaced'>
      $ cd ~/poky/build
      $ bitbake core-image-minimal
-                </literallayout>
-                </para></listitem>
-        </orderedlist>
+                    </literallayout>
+                    </para></listitem>
+            </orderedlist>
+        </para>
     </section>
 
     <section id="using-traditional-kernel-development-to-patch-the-kernel">
@@ -1441,8 +1434,8 @@
                         following sequence of commands:
                         <literallayout class='monospaced'>
      $ cd ~/poky/build
-     $ cd bitbake -c cleanall yocto-linux
-     $ cd bitbake core-image-minimal -c cleanall
+     $ bitbake -c cleanall yocto-linux
+     $ bitbake core-image-minimal -c cleanall
      $ bitbake core-image-minimal
      $ runqemu qemux86
                         </literallayout>
