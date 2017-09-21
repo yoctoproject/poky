@@ -54,10 +54,8 @@
             When you run the <filename>bitbake</filename> command, the
             main BitBake executable, which resides in the
             <filename>bitbake/bin/</filename> directory, starts.
-            Sourcing an environment setup script (e.g.
-            <link linkend="structure-core-script"><filename>&OE_INIT_FILE;</filename></link>
-            or
-            <link linkend="structure-memres-core-script"><filename>oe-init-build-env-memres</filename></link>)
+            Sourcing the environment setup script (i.e.
+            <link linkend="structure-core-script"><filename>&OE_INIT_FILE;</filename></link>)
             places the <filename>scripts</filename> and
             <filename>bitbake/bin</filename> directories (in that order) into
             the shell's <filename>PATH</filename> environment variable.
@@ -81,9 +79,7 @@
             is created initially when you <filename>source</filename>
             the OpenEmbedded build environment setup script
             (i.e.
-            <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
-            or
-            <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>).
+            <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>).
         </para>
 
         <para>
@@ -94,10 +90,8 @@
             the setup script.
             For information on separating output from your local
             Source Directory files, see the
-            "<link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
-            and
-            "<link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>"
-            sections.
+            "<link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>"
+            section.
         </para>
     </section>
 
@@ -177,9 +171,7 @@
             This directory contains various integration scripts that implement
             extra functionality in the Yocto Project environment (e.g. QEMU scripts).
             The <link linkend="structure-core-script"><filename>&OE_INIT_FILE;</filename></link>
-            and
-            <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>
-            scripts append this directory to the shell's
+            script appends this directory to the shell's
             <filename>PATH</filename> environment variable.
         </para>
 
@@ -194,14 +186,7 @@
         <title><filename>&OE_INIT_FILE;</filename></title>
 
         <para>
-            This script is one of two scripts that set up the OpenEmbedded build
-            environment.
-            For information on the other script, see the
-            "<link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>"
-            section.
-        </para>
-
-        <para>
+            This script sets up the OpenEmbedded build environment.
             Running this script with the <filename>source</filename> command in
             a shell makes changes to <filename>PATH</filename> and sets other
             core BitBake variables based on the current working directory.
@@ -280,157 +265,6 @@
         </para>
     </section>
 
-    <section id='structure-memres-core-script'>
-        <title><filename>oe-init-build-env-memres</filename></title>
-
-        <para>
-            This script is one of two scripts that set up the OpenEmbedded
-            build environment.
-            Aside from setting up the environment, this script starts a
-            memory-resident BitBake server.
-            For information on the other setup script, see the
-            "<link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>"
-            section.
-        </para>
-
-        <para>
-            Memory-resident BitBake resides in memory until you specifically
-            remove it using the following BitBake command:
-            <literallayout class='monospaced'>
-     $ bitbake -m
-            </literallayout>
-        </para>
-
-        <para>
-            Running this script with the <filename>source</filename> command in
-            a shell makes changes to <filename>PATH</filename> and sets other
-            core BitBake variables based on the current working directory.
-            One of these variables is the
-            <link linkend='var-BBSERVER'><filename>BBSERVER</filename></link>
-            variable, which allows the OpenEmbedded build system to locate
-            the server that is running BitBake.
-        </para>
-
-        <para>
-            You need to run an environment setup script before using BitBake
-            commands.
-            Following is the script syntax:
-            <literallayout class='monospaced'>
-     $ source oe-init-build-env-memres <replaceable>port_number</replaceable> <replaceable>build_dir</replaceable>
-            </literallayout>
-            Following are some considerations when sourcing this script:
-            <itemizedlist>
-                <listitem><para>
-                    The script uses other scripts within the
-                    <filename>scripts</filename> directory to do the bulk of
-                    the work.
-                    </para></listitem>
-                <listitem><para>
-                    If you do not provide a port number with the script, the
-                    BitBake server starts at a randomly selected port.
-                    </para></listitem>
-                <listitem><para>
-                    The script's parameters are positionally dependent.
-                    Consequently, you cannot run the script and provide a
-                    <link linkend='build-directory'>Build Directory</link>
-                    name without also providing a port number.
-                    In other words, the following syntax is illegal:
-                    <literallayout class='monospaced'>
-     $ source oe-initbuild-env-memres <replaceable>build_dir</replaceable>
-                    </literallayout>
-                    <note>
-                        The previous restriction might be resolved in the
-                        future.
-                        See
-                        <ulink url='https://bugzilla.yoctoproject.org/show_bug.cgi?id=7555'>Bug 7555</ulink>
-                        for more information.
-                    </note>
-                    </para></listitem>
-            </itemizedlist>
-        </para>
-
-        <para>
-            When you run this script, your Yocto Project environment is set
-            up, a Build Directory is created, your working directory becomes
-            the Build Directory, and you are presented with a list of common
-            BitBake targets.
-            Here is an example:
-            <literallayout class='monospaced'>
-     $ source oe-init-build-env-memres
-     No port specified, using dynamically selected port
-
-     ### Shell environment set up for builds. ###
-
-     You can now run 'bitbake &lt;target&gt;'
-
-     Common targets are:
-         core-image-minimal
-         core-image-sato
-         meta-toolchain
-         meta-ide-support
-
-     You can also run generated qemu images with a command like 'runqemu qemux86'
-     Bitbake server address: 127.0.0.1, server port: 53995
-     Bitbake server started on demand as needed, use bitbake -m to shut it down
-            </literallayout>
-            The script gets its default list of common targets from the
-            <filename>conf-notes.txt</filename> file, which is found in the
-            <filename>meta-poky</filename> directory within the
-            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
-            Should you have custom distributions, it is very easy to modify
-            this configuration file to include your targets for your
-            distribution.
-            See the
-            "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-custom-template-configuration-directory'>Creating a Custom Template Configuration Directory</ulink>"
-            section in the Yocto Project Development Manual for more
-            information.
-        </para>
-
-        <para>
-            By default, running this script without a
-            <link linkend='build-directory'>Build Directory</link>
-            argument creates a build directory named
-            <filename>build</filename>.
-            If you provide a Build Directory argument and port number when you
-            <filename>source</filename> the script, the Build Directory is
-            created using that name.
-            For example, the following command starts the BitBake server using
-            port 53995 and creates a Build Directory named
-            <filename>mybuilds</filename> that is outside of the
-            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>:
-            <literallayout class='monospaced'>
-     $ source oe-init-build-env-memres 53995 ~/mybuilds
-            </literallayout>
-            The <filename>oe-init-build-env-memres</filename> script starts a
-            memory resident BitBake server.
-            This BitBake instance uses the
-            <filename>bitbake-cookerdaemon.log</filename> file, which is
-            located in the Build Directory.
-        </para>
-
-        <para>
-            The OpenEmbedded build system uses the template configuration
-            files, which are found by default in the
-            <filename>meta-poky/conf</filename> directory in the
-            <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
-            See the
-            "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-custom-template-configuration-directory'>Creating a Custom Template Configuration Directory</ulink>"
-            section in the Yocto Project Development Manual for more
-            information.
-            <note>
-                The OpenEmbedded build system does not support file or
-                directory names that contain spaces.
-                If you attempt to run the
-                <filename>oe-init-build-env-memres</filename> script
-                from a Source Directory that contains spaces in either the
-                filenames or directory names, the script returns an error
-                indicating no such file or directory.
-                Be sure to use a Source Directory free of names containing
-                spaces.
-            </note>
-        </para>
-    </section>
-
     <section id='structure-basic-top-level'>
         <title><filename>LICENSE, README, and README.hardware</filename></title>
 
@@ -446,10 +280,8 @@
     <para>
         The OpenEmbedded build system creates the
         <link linkend='build-directory'>Build Directory</link>
-        when you run one of the build environment setup scripts (i.e.
-        <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
-        or
-        <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>).
+        when you run the build environment setup scripts (i.e.
+        <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>).
     </para>
 
     <para>
@@ -507,9 +339,7 @@
             <filename>local.conf.sample</filename> when
             you <filename>source</filename> the top-level build environment
             setup script (i.e.
-            <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
-            or
-            <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>).
+            <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>).
         </para>
 
         <para>
@@ -561,9 +391,7 @@
             <filename>bblayers.conf.sample</filename> when
             you <filename>source</filename> the top-level build environment
             setup script (i.e.
-            <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
-            or
-            <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>).
+            <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>).
         </para>
 
         <para>

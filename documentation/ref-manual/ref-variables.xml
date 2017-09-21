@@ -1299,29 +1299,29 @@
 
         <glossentry id='var-BBSERVER'><glossterm>BBSERVER</glossterm>
             <info>
-                BBSERVER[doc] = "Points to the server that runs memory-resident BitBake."
+                BBSERVER[doc] = "Points to the BitBake remote server."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Points to the server that runs memory-resident BitBake.
-                    This variable is set by the
-                    <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>
-                    setup script and should not be hand-edited.
-                    The variable is only used when you employ memory-resident
-                    BitBake.
-                    The setup script exports the value as follows:
+                    If defined in the BitBake environment,
+                    <filename>BBSERVER</filename> points to the BitBake
+                    remote server.
+                </para>
+
+                <para>
+                    Use the following format to export the variable to the
+                    BitBake environment:
                     <literallayout class='monospaced'>
-     export BBSERVER=localhost:$port
+     export BBSERVER=localhost:$port"
                     </literallayout>
                 </para>
 
                 <para>
-                    For more information on how the
-                    <filename>BBSERVER</filename> is used, see the
-                    <filename>oe-init-build-env-memres</filename> script, which
-                    is located in the
-                    <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
+                    By default, <filename>BBSERVER</filename> also appears in
+                    <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_HASHBASE_WHITELIST'><filename>BB_HASHBASE_WHITELIST</filename></ulink>.
+                    Consequently, <filename>BBSERVER</filename> is excluded
+                    from checksum and dependency data.
                 </para>
             </glossdef>
         </glossentry>
@@ -1736,11 +1736,9 @@
                     <link linkend='build-directory'>Build Directory</link>.
                     You can define this directory indirectly through the
                     <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
-                    and
-                    <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>
-                    scripts by passing in a Build Directory path when you run
-                    the scripts.
-                    If you run the scripts and do not provide a Build Directory
+                    script by passing in a Build Directory path when you run
+                    the script.
+                    If you run the script and do not provide a Build Directory
                     path, the <filename>BUILDDIR</filename> defaults to
                     <filename>build</filename> in the current directory.
                 </para>
@@ -6626,7 +6624,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                         recipe in the
                         <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>
                         for an example initramfs recipe.
-                        To select this sample recipe as the one bulit
+                        To select this sample recipe as the one built
                         to provide the initramfs image,
                         set <filename>INITRAMFS_IMAGE</filename> to
                         "core-image-minimal-initramfs".
@@ -9026,19 +9024,17 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
                     The directory from which the top-level build environment
                     setup script is sourced.
-                    The Yocto Project makes two top-level build environment
-                    setup scripts available:
-                    <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
-                    and
-                    <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>.
-                    When you run one of these scripts, the
+                    The Yocto Project provides a top-level build environment
+                    setup script:
+                    <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>.
+                    When you run this script, the
                     <filename>OEROOT</filename> variable resolves to the
                     directory that contains the script.
                 </para>
 
                 <para>
                     For additional information on how this variable is used,
-                    see the initialization scripts.
+                    see the initialization script.
                 </para>
             </glossdef>
         </glossentry>
@@ -15089,10 +15085,8 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     The top-level
                     <link linkend='build-directory'>Build Directory</link>.
                     BitBake automatically sets this variable when you
-                    initialize your build environment using either
-                    <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>
-                    or
-                    <link linkend='structure-memres-core-script'><filename>oe-init-build-env-memres</filename></link>.
+                    initialize your build environment using
+                    <link linkend='structure-core-script'><filename>&OE_INIT_FILE;</filename></link>.
                 </para>
             </glossdef>
         </glossentry>
