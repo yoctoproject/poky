@@ -7043,20 +7043,23 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     Typically, when using a <filename>defconfig</filename> to
                     configure a kernel during a build, you place the
                     file in your layer in the same manner as you would
-                    patch files and configuration fragment files (i.e.
+                    place patch files and configuration fragment files (i.e.
                     "out-of-tree").
                     However, if you want to use a <filename>defconfig</filename>
                     file that is part of the kernel tree (i.e. "in-tree"),
                     you can use the
-                    <filename>KBUILD_DEFCONFIG</filename> variable to point
-                    to the <filename>defconfig</filename> file.
+                    <filename>KBUILD_DEFCONFIG</filename> variable and append
+                    the
+                    <link linkend='var-KMACHINE'><filename>KMACHINE</filename></link>
+                    variable to point to the <filename>defconfig</filename>
+                    file.
                 </para>
 
                 <para>
                     To use the variable, set it in the append file for your
                     kernel recipe using the following form:
                     <literallayout class='monospaced'>
-     KBUILD_DEFCONFIG_<link linkend='var-KMACHINE'>KMACHINE</link> ?= <replaceable>defconfig_file</replaceable>
+     KBUILD_DEFCONFIG_<replaceable>KMACHINE</replaceable> ?= <replaceable>defconfig_file</replaceable>
                     </literallayout>
                     Here is an example from a "raspberrypi2"
                     <filename>KMACHINE</filename> build that uses a
