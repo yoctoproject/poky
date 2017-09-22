@@ -900,8 +900,8 @@
             <para>
                 For a detailed example showing how to configure the kernel,
                 see the
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#configuring-the-kernel'>Configuring the Kernel</ulink>"
-                section in the Yocto Project Development Manual.
+                "<link linkend='configuring-the-kernel'>Configuring the Kernel</link>"
+                section.
             </para>
         </section>
 
@@ -1445,6 +1445,522 @@
         </para>
     </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id='configuring-the-kernel'>
+        <title>Configuring the Kernel</title>
+
+        <para>
+            Configuring the Yocto Project kernel consists of making sure the
+            <filename>.config</filename> file has all the right information
+            in it for the image you are building.
+            You can use the <filename>menuconfig</filename> tool and
+            configuration fragments to make sure your
+            <filename>.config</filename> file is just how you need it.
+            You can also save known configurations in a
+            <filename>defconfig</filename> file that the build system can use
+            for kernel configuration.
+        </para>
+
+        <para>
+            This section describes how to use <filename>menuconfig</filename>,
+            create and use configuration fragments, and how to interactively
+            modify your <filename>.config</filename> file to create the
+            leanest kernel configuration file possible.
+        </para>
+
+        <para>
+            For more information on kernel configuration, see the
+            "<link linkend='changing-the-configuration'>Changing the Configuration</link>"
+            section.
+        </para>
+
+        <section id='using-menuconfig'>
+            <title>Using&nbsp;&nbsp;<filename>menuconfig</filename></title>
+
+            <para>
+                The easiest way to define kernel configurations is to set them through the
+                <filename>menuconfig</filename> tool.
+                This tool provides an interactive method with which
+                to set kernel configurations.
+                For general information on <filename>menuconfig</filename>, see
+                <ulink url='http://en.wikipedia.org/wiki/Menuconfig'></ulink>.
+            </para>
+
+            <para>
+                To use the <filename>menuconfig</filename> tool in the Yocto Project development
+                environment, you must launch it using BitBake.
+                Thus, the environment must be set up using the
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
+                script found in the
+                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
+                You must also be sure of the state of your build in the
+                <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
+                The following commands run <filename>menuconfig</filename>
+                assuming the Source Directory's top-level folder is
+                <filename>~/poky</filename>:
+                <literallayout class='monospaced'>
+     $ cd poky
+     $ source oe-init-build-env
+     $ bitbake linux-yocto -c kernel_configme -f
+     $ bitbake linux-yocto -c menuconfig
+                </literallayout>
+                Once <filename>menuconfig</filename> comes up, its standard
+                interface allows you to interactively examine and configure
+                all the kernel configuration parameters.
+                After making your changes, simply exit the tool and save your
+                changes to create an updated version of the
+                <filename>.config</filename> configuration file.
+            </para>
+
+            <para>
+                Consider an example that configures the <filename>linux-yocto-3.14</filename>
+                kernel.
+                The OpenEmbedded build system recognizes this kernel as
+                <filename>linux-yocto</filename>.
+                Thus, the following commands from the shell in which you previously sourced the
+                environment initialization script cleans the shared state cache and the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink>
+                directory and then runs <filename>menuconfig</filename>:
+                <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c menuconfig
+                </literallayout>
+            </para>
+
+            <para>
+                Once <filename>menuconfig</filename> launches, use the interface
+                to navigate through the selections to find the configuration settings in
+                which you are interested.
+                For example, consider the <filename>CONFIG_SMP</filename> configuration setting.
+                You can find it at <filename>Processor Type and Features</filename> under
+                the configuration selection <filename>Symmetric Multi-processing Support</filename>.
+                After highlighting the selection, use the arrow keys to select or deselect
+                the setting.
+                When you are finished with all your selections, exit out and save them.
+            </para>
+
+            <para>
+                Saving the selections updates the <filename>.config</filename> configuration file.
+                This is the file that the OpenEmbedded build system uses to configure the
+                kernel during the build.
+                You can find and examine this file in the Build Directory in
+                <filename>tmp/work/</filename>.
+                The actual <filename>.config</filename> is located in the area where the
+                specific kernel is built.
+                For example, if you were building a Linux Yocto kernel based on the
+                Linux 3.14 kernel and you were building a QEMU image targeted for
+                <filename>x86</filename> architecture, the
+                <filename>.config</filename> file would be located here:
+                <literallayout class='monospaced'>
+     poky/build/tmp/work/qemux86-poky-linux/linux-yocto-3.14.11+git1+84f...
+        ...656ed30-r1/linux-qemux86-standard-build
+                </literallayout>
+                <note>
+                    The previous example directory is artificially split and many of the characters
+                    in the actual filename are omitted in order to make it more readable.
+                    Also, depending on the kernel you are using, the exact pathname
+                    for <filename>linux-yocto-3.14...</filename> might differ.
+                </note>
+            </para>
+
+            <para>
+                Within the <filename>.config</filename> file, you can see the kernel settings.
+                For example, the following entry shows that symmetric multi-processor support
+                is not set:
+                <literallayout class='monospaced'>
+     # CONFIG_SMP is not set
+                </literallayout>
+            </para>
+
+            <para>
+                A good method to isolate changed configurations is to use a combination of the
+                <filename>menuconfig</filename> tool and simple shell commands.
+                Before changing configurations with <filename>menuconfig</filename>, copy the
+                existing <filename>.config</filename> and rename it to something else,
+                use <filename>menuconfig</filename> to make
+                as many changes as you want and save them, then compare the renamed configuration
+                file against the newly created file.
+                You can use the resulting differences as your base to create configuration fragments
+                to permanently save in your kernel layer.
+                <note>
+                    Be sure to make a copy of the <filename>.config</filename> and don't just
+                    rename it.
+                    The build system needs an existing <filename>.config</filename>
+                    from which to work.
+                </note>
+            </para>
+        </section>
+
+        <section id='creating-a-defconfig-file'>
+            <title>Creating a&nbsp;&nbsp;<filename>defconfig</filename> File</title>
+
+            <para>
+                A <filename>defconfig</filename> file is simply a
+                <filename>.config</filename> renamed to "defconfig".
+                You can use a <filename>defconfig</filename> file
+                to retain a known set of kernel configurations from which the
+                OpenEmbedded build system can draw to create the final
+                <filename>.config</filename> file.
+                <note>
+                    Out-of-the-box, the Yocto Project never ships a
+                    <filename>defconfig</filename> or
+                    <filename>.config</filename> file.
+                    The OpenEmbedded build system creates the final
+                    <filename>.config</filename> file used to configure the
+                    kernel.
+                </note>
+            </para>
+
+            <para>
+                To create a <filename>defconfig</filename>, start with a
+                complete, working Linux kernel <filename>.config</filename>
+                file.
+                Copy that file to the appropriate
+                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>
+                directory in your layer's
+                <filename>recipes-kernel/linux</filename> directory, and rename
+                the copied file to "defconfig".
+                Then, add the following lines to the linux-yocto
+                <filename>.bbappend</filename> file in your layer:
+                <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+     SRC_URI += "file://defconfig"
+                </literallayout>
+                The
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                tells the build system how to search for the file, while the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+                extends the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESPATH'><filename>FILESPATH</filename></ulink>
+                variable (search directories) to include the
+                <filename>${PN}</filename> directory you created to hold the
+                configuration changes.
+                <note>
+                    The build system applies the configurations from the
+                    <filename>defconfig</filename> file before applying any
+                    subsequent configuration fragments.
+                    The final kernel configuration is a combination of the
+                    configurations in the <filename>defconfig</filename>
+                    file and any configuration fragments you provide.
+                    You need to realize that if you have any configuration
+                    fragments, the build system applies these on top of and
+                    after applying the existing defconfig file configurations.
+                </note>
+                For more information on configuring the kernel, see the
+                "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#changing-the-configuration'>Changing the Configuration</ulink>"
+                and
+                "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#generating-configuration-files'>Generating Configuration Files</ulink>"
+                sections, both in the Yocto Project Linux Kernel Development
+                Manual.
+            </para>
+        </section>
+
+        <section id='creating-config-fragments'>
+            <title>Creating Configuration Fragments</title>
+
+            <para>
+                Configuration fragments are simply kernel options that appear in a file
+                placed where the OpenEmbedded build system can find and apply them.
+                Syntactically, the configuration statement is identical to what would appear
+                in the <filename>.config</filename> file, which is in the
+                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>:
+                <literallayout class='monospaced'>
+     tmp/work/<replaceable>arch</replaceable>-poky-linux/linux-yocto-<replaceable>release_specific_string</replaceable>/linux-<replaceable>arch</replaceable>-<replaceable>build_type</replaceable>
+                </literallayout>
+            </para>
+
+            <para>
+                It is simple to create a configuration fragment.
+                For example, issuing the following from the shell creates a configuration fragment
+                file named <filename>my_smp.cfg</filename> that enables multi-processor support
+                within the kernel:
+                <literallayout class='monospaced'>
+     $ echo "CONFIG_SMP=y" >> my_smp.cfg
+                </literallayout>
+                <note>
+                    All configuration fragment files must use the
+                    <filename>.cfg</filename> extension in order for the
+                    OpenEmbedded build system to recognize them as a
+                    configuration fragment.
+                </note>
+            </para>
+
+            <para>
+                Where do you put your configuration fragment files?
+                You can place these files in the same area pointed to by
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>.
+                The OpenEmbedded build system picks up the configuration and
+                adds it to the kernel's configuration.
+                For example, suppose you had a set of configuration options
+                in a file called <filename>myconfig.cfg</filename>.
+                If you put that file inside a directory named
+                <filename>linux-yocto</filename> that resides in the same
+                directory as the kernel's append file and then add a
+                <filename>SRC_URI</filename> statement such as the following
+                to the kernel's append file, those configuration options
+                will be picked up and applied when the kernel is built.
+                <literallayout class='monospaced'>
+     SRC_URI += "file://myconfig.cfg"
+                </literallayout>
+            </para>
+
+            <para>
+                As mentioned earlier, you can group related configurations into multiple files and
+                name them all in the <filename>SRC_URI</filename> statement as well.
+                For example, you could group separate configurations specifically for Ethernet and graphics
+                into their own files and add those by using a <filename>SRC_URI</filename> statement like the
+                following in your append file:
+                <literallayout class='monospaced'>
+     SRC_URI += "file://myconfig.cfg \
+            file://eth.cfg \
+            file://gfx.cfg"
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='fine-tuning-the-kernel-configuration-file'>
+            <title>Fine-Tuning the Kernel Configuration File</title>
+
+            <para>
+                You can make sure the <filename>.config</filename> file is as lean or efficient as
+                possible by reading the output of the kernel configuration fragment audit,
+                noting any issues, making changes to correct the issues, and then repeating.
+            </para>
+
+            <para>
+                As part of the kernel build process, the
+                <filename>do_kernel_configcheck</filename> task runs.
+                This task validates the kernel configuration by checking the final
+                <filename>.config</filename> file against the input files.
+                During the check, the task produces warning messages for the following
+                issues:
+                <itemizedlist>
+                    <listitem><para>Requested options that did not make the final
+                        <filename>.config</filename> file.</para></listitem>
+                    <listitem><para>Configuration items that appear twice in the same
+                        configuration fragment.</para></listitem>
+                    <listitem><para>Configuration items tagged as "required" that were overridden.
+                        </para></listitem>
+                    <listitem><para>A board overrides a non-board specific option.</para></listitem>
+                    <listitem><para>Listed options not valid for the kernel being processed.
+                        In other words, the option does not appear anywhere.</para></listitem>
+                </itemizedlist>
+                <note>
+                    The <filename>do_kernel_configcheck</filename> task can
+                    also optionally report if an option is overridden during
+                    processing.
+                </note>
+            </para>
+
+            <para>
+                For each output warning, a message points to the file
+                that contains a list of the options and a pointer to the
+                configuration fragment that defines them.
+                Collectively, the files are the key to streamlining the
+                configuration.
+            </para>
+
+            <para>
+                To streamline the configuration, do the following:
+                <orderedlist>
+                    <listitem><para>Start with a full configuration that you
+                        know works - it builds and boots successfully.
+                        This configuration file will be your baseline.
+                        </para></listitem>
+                    <listitem><para>Separately run the
+                        <filename>do_kernel_configme</filename> and
+                        <filename>do_kernel_configcheck</filename> tasks.
+                        </para></listitem>
+                    <listitem><para>Take the resulting list of files from the
+                        <filename>do_kernel_configcheck</filename> task
+                        warnings and do the following:
+                        <itemizedlist>
+                            <listitem><para>
+                                Drop values that are redefined in the fragment
+                                but do not change the final
+                                <filename>.config</filename> file.
+                                </para></listitem>
+                            <listitem><para>
+                                Analyze and potentially drop values from the
+                                <filename>.config</filename> file that override
+                                required configurations.
+                                </para></listitem>
+                            <listitem><para>
+                                Analyze and potentially remove non-board
+                                specific options.
+                                </para></listitem>
+                            <listitem><para>
+                                Remove repeated and invalid options.
+                                </para></listitem>
+                        </itemizedlist></para></listitem>
+                    <listitem><para>
+                        After you have worked through the output of the kernel
+                        configuration audit, you can re-run the
+                        <filename>do_kernel_configme</filename> and
+                        <filename>do_kernel_configcheck</filename> tasks to
+                        see the results of your changes.
+                        If you have more issues, you can deal with them as
+                        described in the previous step.
+                        </para></listitem>
+                </orderedlist>
+            </para>
+
+            <para>
+                Iteratively working through steps two through four eventually yields
+                a minimal, streamlined configuration file.
+                Once you have the best <filename>.config</filename>, you can build the Linux
+                Yocto kernel.
+            </para>
+        </section>
+
+        <section id='determining-hardware-and-non-hardware-features-for-the-kernel-configuration-audit-phase'>
+            <title>Determining Hardware and Non-Hardware Features for the Kernel Configuration Audit Phase</title>
+
+            <para>
+                This section describes part of the kernel configuration audit
+                phase that most developers can ignore.
+                During this part of the audit phase, the contents of the final
+                <filename>.config</filename> file are compared against the
+                fragments specified by the system.
+                These fragments can be system fragments, distro fragments,
+                or user specified configuration elements.
+                Regardless of their origin, the OpenEmbedded build system
+                warns the user if a specific option is not included in the
+                final kernel configuration.
+            </para>
+
+            <para>
+                In order to not overwhelm the user with configuration warnings,
+                by default the system only reports on missing "hardware"
+                options because a missing hardware option could mean a boot
+                failure or that important hardware is not available.
+            </para>
+
+            <para>
+                To determine whether or not a given option is "hardware" or
+                "non-hardware", the kernel Metadata contains files that
+                classify individual or groups of options as either hardware
+                or non-hardware.
+                To better show this, consider a situation where the
+                Yocto Project kernel cache contains the following files:
+                <literallayout class='monospaced'>
+     kernel-cache/features/drm-psb/hardware.cfg
+     kernel-cache/features/kgdb/hardware.cfg
+     kernel-cache/ktypes/base/hardware.cfg
+     kernel-cache/bsp/mti-malta32/hardware.cfg
+     kernel-cache/bsp/fsl-mpc8315e-rdb/hardware.cfg
+     kernel-cache/bsp/qemu-ppc32/hardware.cfg
+     kernel-cache/bsp/qemuarma9/hardware.cfg
+     kernel-cache/bsp/mti-malta64/hardware.cfg
+     kernel-cache/bsp/arm-versatile-926ejs/hardware.cfg
+     kernel-cache/bsp/common-pc/hardware.cfg
+     kernel-cache/bsp/common-pc-64/hardware.cfg
+     kernel-cache/features/rfkill/non-hardware.cfg
+     kernel-cache/ktypes/base/non-hardware.cfg
+     kernel-cache/features/aufs/non-hardware.kcf
+     kernel-cache/features/ocf/non-hardware.kcf
+     kernel-cache/ktypes/base/non-hardware.kcf
+     kernel-cache/ktypes/base/hardware.kcf
+     kernel-cache/bsp/qemu-ppc32/hardware.kcf
+                </literallayout>
+                The following list provides explanations for the various
+                files:
+                <itemizedlist>
+                    <listitem><para><filename>hardware.kcf</filename>:
+                        Specifies a list of kernel Kconfig files that contain
+                        hardware options only.
+                        </para></listitem>
+                    <listitem><para><filename>non-hardware.kcf</filename>:
+                        Specifies a list of kernel Kconfig files that contain
+                        non-hardware options only.
+                        </para></listitem>
+                    <listitem><para><filename>hardware.cfg</filename>:
+                        Specifies a list of kernel
+                        <filename>CONFIG_</filename> options that are hardware,
+                        regardless of whether or not they are within a Kconfig
+                        file specified by a hardware or non-hardware
+                        Kconfig file (i.e. <filename>hardware.kcf</filename> or
+                        <filename>non-hardware.kcf</filename>).
+                        </para></listitem>
+                    <listitem><para><filename>non-hardware.cfg</filename>:
+                        Specifies a list of kernel
+                        <filename>CONFIG_</filename> options that are
+                        not hardware, regardless of whether or not they are
+                        within a Kconfig file specified by a hardware or
+                        non-hardware Kconfig file (i.e.
+                        <filename>hardware.kcf</filename> or
+                        <filename>non-hardware.kcf</filename>).
+                        </para></listitem>
+                </itemizedlist>
+                Here is a specific example using the
+                <filename>kernel-cache/bsp/mti-malta32/hardware.cfg</filename>:
+                <literallayout class='monospaced'>
+     CONFIG_SERIAL_8250
+     CONFIG_SERIAL_8250_CONSOLE
+     CONFIG_SERIAL_8250_NR_UARTS
+     CONFIG_SERIAL_8250_PCI
+     CONFIG_SERIAL_CORE
+     CONFIG_SERIAL_CORE_CONSOLE
+     CONFIG_VGA_ARB
+                </literallayout>
+                The kernel configuration audit automatically detects these
+                files (hence the names must be exactly the ones discussed here),
+                and uses them as inputs when generating warnings about the
+                final <filename>.config</filename> file.
+            </para>
+
+            <para>
+                A user-specified kernel Metadata repository, or recipe space
+                feature, can use these same files to classify options that are
+                found within its <filename>.cfg</filename> files as hardware
+                or non-hardware, to prevent the OpenEmbedded build system from
+                producing an error or warning when an option is not in the
+                final <filename>.config</filename> file.
+            </para>
+        </section>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <section id='using-an-iterative-development-process'>
         <title>Using an Iterative Development Process</title>
 
@@ -1538,8 +2054,8 @@
                 "<link linkend='changing-the-configuration'>Changing the Configuration</link>" section.
                 For more information on the <filename>.config</filename> file,
                 see the
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#using-menuconfig'>Using <filename>menuconfig</filename></ulink>"
-                section in the Yocto Project Development Manual.
+                "<link linkend='using-menuconfig'>Using <filename>menuconfig</filename></link>"
+                section.
                 <note>
                     You can determine what a variable expands to by looking
                     at the output of the <filename>bitbake -e</filename>
@@ -1650,8 +2166,8 @@
             <para>
                 For more information on how to use the
                 <filename>menuconfig</filename> tool, see the
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#using-menuconfig'>Using <filename>menuconfig</filename></ulink>"
-                section in the Yocto Project Development Manual.
+                "<link linkend='using-menuconfig'>Using <filename>menuconfig</filename></link>"
+                section.
             </para>
         </section>
 
