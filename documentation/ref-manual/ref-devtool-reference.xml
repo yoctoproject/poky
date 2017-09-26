@@ -208,9 +208,9 @@
             The following example creates and adds a new recipe named
             <filename>jackson</filename> to a workspace layer the tool creates.
             The source code built by the recipes resides in
-            <filename>/home/scottrif/sources/jackson</filename>:
+            <filename>/home/<replaceable>user</replaceable>/sources/jackson</filename>:
             <literallayout class='monospaced'>
-     $ devtool add jackson /home/scottrif/sources/jackson
+     $ devtool add jackson /home/<replaceable>user</replaceable>/sources/jackson
             </literallayout>
         </para>
 
@@ -228,18 +228,52 @@
             append files, and source files into the existing workspace layer.
             The <filename>.bbappend</filename> file is created to point
             to the external source tree.
+            <note>
+                If your recipe has runtime dependencies defined, you must be sure
+                that these packages exist on the target hardware before attempting
+                to run your application.
+                If dependent packages (e.g. libraries) do not exist on the target,
+                your application, when run, will fail to find those functions.
+                For more information, see the
+                "<link linkend='devtool-deploying-your-software-on-the-target-machine'>Deploying Your Software on the Target Machine</link>"
+                section.
+            </note>
         </para>
 
-        <note>
-            If your recipe has runtime dependencies defined, you must be sure
-            that these packages exist on the target hardware before attempting
-            to run your application.
-            If dependent packages (e.g. libraries) do not exist on the target,
-            your application, when run, will fail to find those functions.
-            For more information, see the
-            "<link linkend='devtool-deploying-your-software-on-the-target-machine'>Deploying Your Software on the Target Machine</link>"
-            section.
-        </note>
+        <para>
+            By default, <filename>devtool add</filename> uses the latest
+            revision (i.e. master) when unpacking files from a remote URI.
+            In some cases, you might want to specify a source revision by
+            branch, tag, or commit hash. You can specify these options when
+            using the <filename>devtool add</filename> command:
+            <itemizedlist>
+                <listitem><para>
+                    To specify a source branch, use the
+                    <filename>--srcbranch</filename> option:
+                    <literallayout class='monospaced'>
+     $ devtool add --srcbranch &DISTRO_NAME_NO_CAP; jackson /home/<replaceable>user</replaceable>/sources/jackson
+                    </literallayout>
+                    In the previous example, you are checking out the
+                    &DISTRO_NAME_NO_CAP; branch.
+                    </para></listitem>
+                <listitem><para>
+                    To specify a specific tag or commit hash, use the
+                    <filename>--srcrev</filename> option:
+                    <literallayout class='monospaced'>
+     $ devtool add --srcrev &DISTRO_REL_TAG; jackson /home/<replaceable>user</replaceable>/sources/jackson
+     $ devtool add --srcrev <replaceable>some_commit_hash</replaceable> /home/<replaceable>user</replaceable>/sources/jackson
+                    </literallayout>
+                    The previous examples check out the &DISTRO_REL_TAG; tag
+                    and the commit associated with the
+                    <replaceable>some_commit_hash</replaceable> hash.
+                    </para></listitem>
+            </itemizedlist>
+            <note>
+                If you prefer to use the latest revision every time the recipe is
+                built, use the options <filename>--autorev</filename>
+                or <filename>-a</filename>.
+            </note>
+        </para>
     </section>
 
     <section id='devtool-extracting-the-source-for-an-existing-recipe'>
