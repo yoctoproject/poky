@@ -1848,6 +1848,55 @@
         </section>
     </section>
 
+    <section id='working-with-a-dirty-kernel-version-string'>
+        <title>Working with a "Dirty" Kernel Version String</title>
+
+        <para>
+            If you build a kernel image and the version string has a
+            "+" or a "-dirty" at the end, uncommitted modifications exist
+            in the kernel's source directory.
+            Follow these steps to clean up the version string:
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Discover the Uncommitted Changes:</emphasis>
+                    Go to the kernel's locally cloned Git repository
+                    (source directory) and use the following Git command
+                    to list the files that have been changed, added, or
+                    removed:
+                    <literallayout class='monospaced'>
+     $ git status
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Commit the Changes:</emphasis>
+                    You should commit those changes to the kernel source
+                    tree regardless of whether or not you will save,
+                    export, or use the changes:
+                    <literallayout class='monospaced'>
+     $ git add
+     $ git commit -s -a -m "getting rid of -dirty"
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Rebuild the Kernel Image:</emphasis>
+                    Once you commit the changes, rebuild the kernel.</para>
+
+                    <para>Depending on your particular kernel development
+                    workflow, the commands you use to rebuild the
+                    kernel might differ.
+                    For information on building the kernel image when
+                    using <filename>devtool</filename>, see the
+                    "<link linkend='using-devtool-to-patch-the-kernel'>Using <filename>devtool</filename> to Patch the Kernel</link>"
+                    section.
+                    For information on building the kernel image when
+                    using Bitbake, see the
+                    "<link linkend='using-traditional-kernel-development-to-patch-the-kernel'>Using Traditional Kernel Development to Patch the Kernel</link>"
+                    section.
+                    </para></listitem>
+            </orderedlist>
+        </para>
+    </section>
+
     <section id='using-an-iterative-development-process'>
         <title>Using an Iterative Development Process</title>
 
@@ -1867,51 +1916,6 @@
             of your Linux kernel recipe for the term
             "linux-yocto".
         </para>
-
-        <section id='tip-dirty-string'>
-            <title>"-dirty" String</title>
-
-<!--
-            <para>
-                <emphasis>AR - Darren Hart:</emphasis>  This section
-                originated from the old Yocto Project Kernel Architecture
-                and Use Manual.
-                It was decided we need to put it in this section here.
-                Darren needs to figure out where we want it and what part
-                of it we want (all, revision???)
-            </para>
--->
-
-            <para>
-                If kernel images are being built with "-dirty" on the
-                end of the version string, this simply means that
-                modifications in the source directory have not been committed.
-                <literallayout class='monospaced'>
-     $ git status
-                </literallayout>
-            </para>
-
-            <para>
-                You can use the above Git command to report modified,
-                removed, or added files.
-                You should commit those changes to the tree regardless of
-                whether they will be saved, exported, or used.
-                Once you commit the changes, you need to rebuild the kernel.
-            </para>
-
-            <para>
-                To force a pickup and commit of all such pending changes,
-                enter the following:
-                <literallayout class='monospaced'>
-     $ git add .
-     $ git commit -s -a -m "getting rid of -dirty"
-                </literallayout>
-            </para>
-
-            <para>
-                Next, rebuild the kernel.
-            </para>
-        </section>
 
         <section id='generating-configuration-files'>
             <title>Generating Configuration Files</title>
