@@ -1748,6 +1748,111 @@
             </para>
         </section>
 
+        <section id='validating-configuration'>
+            <title>Validating Configuration</title>
+
+            <para>
+                You can use the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-kernel_configcheck'><filename>do_kernel_configcheck</filename></ulink>
+                task to provide configuration validation:
+                <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c kernel_configcheck -f
+                </literallayout>
+                Running this task produces warnings for when a
+                requested configuration does not appear in the final
+                <filename>.config</filename> file or when you override a
+                policy configuration in a hardware configuration fragment.
+            </para>
+
+            <para>
+                In order to run this task, you must have an existing
+                <filename>.config</filename> file.
+                See the
+                "<link linkend='using-menuconfig'>Using <filename>menuconfig</filename></link>"
+                section for information on how to create a configuration file.
+            </para>
+
+            <para>
+                Following is sample output from the
+                <filename>do_kernel_configcheck</filename> task:
+                <literallayout class='monospaced'>
+     Loading cache: 100% |########################################################| Time: 0:00:00
+     Loaded 1275 entries from dependency cache.
+     NOTE: Resolving any missing task queue dependencies
+
+     Build Configuration:
+         .
+         .
+         .
+
+     NOTE: Executing SetScene Tasks
+     NOTE: Executing RunQueue Tasks
+     WARNING: linux-yocto-4.12.12+gitAUTOINC+eda4d18ce4_16de014967-r0 do_kernel_configcheck:
+         [kernel config]: specified values did not make it into the kernel's final configuration:
+
+     ---------- CONFIG_X86_TSC -----------------
+     Config: CONFIG_X86_TSC
+     From: /home/scottrif/poky/build/tmp/work-shared/qemux86/kernel-source/.kernel-meta/configs/standard/bsp/common-pc/common-pc-cpu.cfg
+     Requested value:  CONFIG_X86_TSC=y
+     Actual value:
+
+
+     ---------- CONFIG_X86_BIGSMP -----------------
+     Config: CONFIG_X86_BIGSMP
+     From: /home/scottrif/poky/build/tmp/work-shared/qemux86/kernel-source/.kernel-meta/configs/standard/cfg/smp.cfg
+           /home/scottrif/poky/build/tmp/work-shared/qemux86/kernel-source/.kernel-meta/configs/standard/defconfig
+     Requested value:  # CONFIG_X86_BIGSMP is not set
+     Actual value:
+
+
+     ---------- CONFIG_NR_CPUS -----------------
+     Config: CONFIG_NR_CPUS
+     From: /home/scottrif/poky/build/tmp/work-shared/qemux86/kernel-source/.kernel-meta/configs/standard/cfg/smp.cfg
+           /home/scottrif/poky/build/tmp/work-shared/qemux86/kernel-source/.kernel-meta/configs/standard/bsp/common-pc/common-pc.cfg
+           /home/scottrif/poky/build/tmp/work-shared/qemux86/kernel-source/.kernel-meta/configs/standard/defconfig
+     Requested value:  CONFIG_NR_CPUS=8
+     Actual value:     CONFIG_NR_CPUS=1
+
+
+     ---------- CONFIG_SCHED_SMT -----------------
+     Config: CONFIG_SCHED_SMT
+     From: /home/scottrif/poky/build/tmp/work-shared/qemux86/kernel-source/.kernel-meta/configs/standard/cfg/smp.cfg
+           /home/scottrif/poky/build/tmp/work-shared/qemux86/kernel-source/.kernel-meta/configs/standard/defconfig
+     Requested value:  CONFIG_SCHED_SMT=y
+     Actual value:
+
+
+
+     NOTE: Tasks Summary: Attempted 288 tasks of which 285 didn't need to be rerun and all succeeded.
+
+     Summary: There were 3 WARNING messages shown.
+                </literallayout>
+                <note>
+                    The previous output example has artificial line breaks
+                    to make it more readable.
+                </note>
+            </para>
+
+            <para>
+                The output describes the various problems that you can
+                encounter along with where to find the offending configuration
+                items.
+                You can use the information in the logs to adjust your
+                configuration files and then repeat the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-kernel_configme'><filename>do_kernel_configme</filename></ulink>
+                and
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-kernel_configcheck'><filename>do_kernel_configcheck</filename></ulink>
+                tasks until they produce no warnings.
+            </para>
+
+            <para>
+                For more information on how to use the
+                <filename>menuconfig</filename> tool, see the
+                "<link linkend='using-menuconfig'>Using <filename>menuconfig</filename></link>"
+                section.
+            </para>
+        </section>
+
         <section id='fine-tuning-the-kernel-configuration-file'>
             <title>Fine-Tuning the Kernel Configuration File</title>
 
@@ -2033,55 +2138,6 @@
                     See the "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
                     section for more information.
                 </note>
-            </para>
-
-            <para>
-                The kernel tools also provide configuration validation.
-                You can use these tools to produce warnings for when a
-                requested configuration does not appear in the final
-                <filename>.config</filename> file or when you override a
-                policy configuration in a hardware configuration fragment.
-                Here is an example with some sample output of the command
-                that runs these tools:
-                <literallayout class='monospaced'>
-     $ bitbake linux-yocto -c kernel_configcheck -f
-
-     ...
-
-     NOTE: validating kernel configuration
-     This BSP sets 3 invalid/obsolete kernel options.
-     These config options are not offered anywhere within this kernel.
-     The full list can be found in your kernel src dir at:
-     meta/cfg/standard/mybsp/invalid.cfg
-
-     This BSP sets 21 kernel options that are possibly non-hardware related.
-     The full list can be found in your kernel src dir at:
-     meta/cfg/standard/mybsp/specified_non_hdw.cfg
-
-     WARNING: There were 2 hardware options requested that do not
-              have a corresponding value present in the final ".config" file.
-              This probably means you are not getting the config you wanted.
-              The full list can be found in your kernel src dir at:
-              meta/cfg/standard/mybsp/mismatch.cfg
-                </literallayout>
-            </para>
-
-            <para>
-                The output describes the various problems that you can
-                encounter along with where to find the offending configuration
-                items.
-                You can use the information in the logs to adjust your
-                configuration files and then repeat the
-                <filename>kernel_configme</filename> and
-                <filename>kernel_configcheck</filename> commands until
-                they produce no warnings.
-            </para>
-
-            <para>
-                For more information on how to use the
-                <filename>menuconfig</filename> tool, see the
-                "<link linkend='using-menuconfig'>Using <filename>menuconfig</filename></link>"
-                section.
             </para>
         </section>
 
