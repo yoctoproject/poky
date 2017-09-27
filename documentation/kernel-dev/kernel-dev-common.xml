@@ -1479,8 +1479,8 @@
             <title>Using&nbsp;&nbsp;<filename>menuconfig</filename></title>
 
             <para>
-                The easiest way to define kernel configurations is to set them through the
-                <filename>menuconfig</filename> tool.
+                The easiest way to define kernel configurations is to set
+                them through the <filename>menuconfig</filename> tool.
                 This tool provides an interactive method with which
                 to set kernel configurations.
                 For general information on <filename>menuconfig</filename>, see
@@ -1495,8 +1495,8 @@
                 <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
                 script found in the
                 <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
-                You must also be sure of the state of your build's configuration
-                in the
+                You must also be sure of the state of your build's
+                configuration in the
                 <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
                 The following commands initialize the BitBake environment,
                 run the
@@ -1516,6 +1516,17 @@
                 After making your changes, simply exit the tool and save your
                 changes to create an updated version of the
                 <filename>.config</filename> configuration file.
+                <note>
+                    You can use the entire <filename>.config</filename> file
+                    as the <filename>defconfig</filename> file.
+                    For information on <filename>defconfig</filename> files,
+                    see the
+                    "<link linkend='changing-the-configuration'>Changing the Configuration</link>",
+                    "<link linkend='using-an-in-tree-defconfig-file'>Using an In-Tree <filename>defconfig</filename> File</link>,
+                    and
+                    "<link linkend='creating-a-defconfig-file'>Creating a <filename>defconfig</filename> File</link>"
+                    sections.
+                </note>
             </para>
 
             <para>
@@ -1655,10 +1666,8 @@
                     after applying the existing defconfig file configurations.
                 </note>
                 For more information on configuring the kernel, see the
-                "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#changing-the-configuration'>Changing the Configuration</ulink>"
-                and
-                "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#generating-configuration-files'>Generating Configuration Files</ulink>"
-                sections.
+                "<link link='changing-the-configuration'>Changing the Configuration</link>"
+                section.
             </para>
         </section>
 
@@ -1695,6 +1704,7 @@
 
             <para>
                 It is simple to create a configuration fragment.
+                One method is to use shell commands.
                 For example, issuing the following from the shell creates a
                 configuration fragment file named
                 <filename>my_smp.cfg</filename> that enables multi-processor
@@ -1707,6 +1717,66 @@
                     <filename>.cfg</filename> extension in order for the
                     OpenEmbedded build system to recognize them as a
                     configuration fragment.
+                </note>
+            </para>
+
+            <para>
+                Another method is to create a configuration fragment using the
+                differences between two configuration files: one previously
+                created and saved, and one freshly created using the
+                <filename>menuconfig</filename> tool.
+            </para>
+
+            <para>
+                To create a configuration fragment using this method, follow
+                these steps:
+                <orderedlist>
+                    <listitem><para>
+                        <emphasis>Complete a Build Through Kernel Configuration:</emphasis>
+                        Complete a build at least through the kernel
+                        configuration task as follows:
+                        <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c kernel_configme -f
+                        </literallayout>
+                        This step ensures that you create a
+                        <filename>.config</filename> file from a known state.
+                        Because situations exist where your build state might
+                        become unknown, it is best to run this task prior
+                        to starting <filename>menuconfig</filename>.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Launch <filename>menuconfig</filename>:</emphasis>
+                        Run the <filename>menuconfig</filename> command:
+                        <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c menuconfig
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Create the Configuration Fragment:</emphasis>
+                        Run the <filename>diffconfig</filename>
+                        command to prepare a configuration fragment.
+                        The resulting file <filename>fragment.cfg</filename>
+                        is placed in the
+                        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename> directory:
+                        <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c diffconfig
+                        </literallayout>
+                        </para></listitem>
+                </orderedlist>
+            </para>
+
+            <para>
+                The <filename>diffconfig</filename> command creates a file
+                that is a list of Linux kernel <filename>CONFIG_</filename>
+                assignments.
+                See the "<link linkend='changing-the-configuration'>Changing the Configuration</link>"
+                section for additional information on how to use the output
+                as a configuration fragment.
+                <note>
+                    You can also use this method to create configuration
+                    fragments for a BSP.
+                    See the "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
+                    section for more information.
                 </note>
             </para>
 
@@ -1976,6 +2046,24 @@
         </section>
     </section>
 
+    <section id='expanding-variables'>
+        <title>Expanding Variables</title>
+
+        <para>
+            Sometimes it is helpful to determine what a variable expands
+            to during a build.
+            You can do examine the values of variables by examining the
+            output of the <filename>bitbake -e</filename> command.
+            The output is long and is more easily managed in a text file,
+            which allows for easy searches:
+            <literallayout class='monospaced'>
+     $ bitbake -e virtual/kernel > <replaceable>some_text_file</replaceable>
+            </literallayout>
+            Within the text file, you can see exactly how each variable is
+            expanded and used by the OpenEmbedded build system.
+        </para>
+    </section>
+
     <section id='working-with-a-dirty-kernel-version-string'>
         <title>Working with a "Dirty" Kernel Version String</title>
 
@@ -2044,102 +2132,6 @@
             of your Linux kernel recipe for the term
             "linux-yocto".
         </para>
-
-        <section id='generating-configuration-files'>
-            <title>Generating Configuration Files</title>
-
-            <para>
-                You can manipulate the <filename>.config</filename> file
-                used to build a linux-yocto recipe with the
-                <filename>menuconfig</filename> command as follows:
-                <literallayout class='monospaced'>
-     $ bitbake linux-yocto -c menuconfig
-                </literallayout>
-                This command starts the Linux kernel configuration tool,
-                which allows you to prepare a new
-                <filename>.config</filename> file for the build.
-                When you exit the tool, be sure to save your changes
-                at the prompt.
-            </para>
-
-            <para>
-                The resulting <filename>.config</filename> file is
-                located in the build directory,
-                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink><filename>}</filename>,
-                which expands to
-                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename><filename>/linux-</filename><filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink><filename>}-${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE'><filename>LINUX_KERNEL_TYPE</filename></ulink><filename>}-build</filename>.
-                You can use the entire <filename>.config</filename> file as the
-                <filename>defconfig</filename> file as described in the
-                "<link linkend='changing-the-configuration'>Changing the Configuration</link>" section.
-                For more information on the <filename>.config</filename> file,
-                see the
-                "<link linkend='using-menuconfig'>Using <filename>menuconfig</filename></link>"
-                section.
-                <note>
-                    You can determine what a variable expands to by looking
-                    at the output of the <filename>bitbake -e</filename>
-                    command:
-                    <literallayout class='monospaced'>
-     $ bitbake -e virtual/kernel
-                    </literallayout>
-                    Search the output for the variable in which you are
-                    interested to see exactly how it is expanded and used.
-                </note>
-            </para>
-
-            <para>
-                A better method is to create a configuration fragment using the
-                differences between two configuration files: one previously
-                created and saved, and one freshly created using the
-                <filename>menuconfig</filename> tool.
-            </para>
-
-            <para>
-                To create a configuration fragment using this method, follow
-                these steps:
-                <orderedlist>
-                    <listitem><para>Complete a build at least through the kernel
-                        configuration task as follows:
-                        <literallayout class='monospaced'>
-     $ bitbake linux-yocto -c kernel_configme -f
-                        </literallayout>
-                        This step ensures that you will be creating a
-                        <filename>.config</filename> file from a known state.
-                        Because situations exist where your build state might
-                        become unknown, it is best to run the previous
-                        command prior to starting up
-                        <filename>menuconfig</filename>.
-                        </para></listitem>
-                    <listitem><para>Run the <filename>menuconfig</filename>
-                        command:
-                        <literallayout class='monospaced'>
-     $ bitbake linux-yocto -c menuconfig
-                        </literallayout></para></listitem>
-                    <listitem><para>Run the <filename>diffconfig</filename>
-                        command to prepare a configuration fragment.
-                        The resulting file <filename>fragment.cfg</filename>
-                        will be placed in the
-                        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename> directory:
-                        <literallayout class='monospaced'>
-     $ bitbake linux-yocto -c diffconfig
-                        </literallayout></para></listitem>
-                </orderedlist>
-            </para>
-
-            <para>
-                The <filename>diffconfig</filename> command creates a file that is a
-                list of Linux kernel <filename>CONFIG_</filename> assignments.
-                See the "<link linkend='changing-the-configuration'>Changing the Configuration</link>"
-                section for information on how to use the output as a
-                configuration fragment.
-                <note>
-                    You can also use this method to create configuration
-                    fragments for a BSP.
-                    See the "<link linkend='bsp-descriptions'>BSP Descriptions</link>"
-                    section for more information.
-                </note>
-            </para>
-        </section>
 
         <section id='modifying-source-code'>
             <title>Modifying Source Code</title>
