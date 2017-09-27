@@ -814,7 +814,9 @@
                 For a detailed example showing how to patch the kernel using
                 <filename>devtool</filename>, see the
                 "<link linkend='using-devtool-to-patch-the-kernel'>Using <filename>devtool</filename> to Patch the Kernel</link>"
-                section.
+                and
+                "<link linkend='using-traditional-kernel-development-to-patch-the-kernel'>Using Traditional Kernel Development to Patch the Kernel'></link>"
+                sections.
             </para>
         </section>
 
@@ -2113,11 +2115,12 @@
         </para>
     </section>
 
-    <section id='using-an-iterative-development-process'>
-        <title>Using an Iterative Development Process</title>
+    <section id='iteratively-modifying-source-code'>
+        <title>Iteratively Modifying Source Code</title>
 
         <para>
-            If you do not have existing patches or configuration files,
+            If you do not have existing patches or configuration files and
+            you are using traditional kernel development methods,
             you can iteratively generate them from within the BitBake build
             environment as described within this section.
             During an iterative workflow, running a previously completed BitBake
@@ -2133,95 +2136,91 @@
             "linux-yocto".
         </para>
 
-        <section id='modifying-source-code'>
-            <title>Modifying Source Code</title>
-
-            <para>
-                You can experiment with source code changes and create a
-                simple patch without leaving the BitBake environment.
-                To get started, be sure to complete a build at
-                least through the kernel configuration task:
-                <literallayout class='monospaced'>
+        <para>
+            You can experiment with source code changes and create a
+            simple patch without leaving the BitBake environment.
+            To get started, be sure to complete a build at
+            least through the kernel configuration task:
+            <literallayout class='monospaced'>
      $ bitbake linux-yocto -c kernel_configme -f
-                </literallayout>
-                Taking this step ensures you have the sources prepared
-                and the configuration completed.
-                You can find the sources in the build directory within the
-                <filename>source/</filename> directory, which is a symlink
-                (i.e. <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink><filename>}/source</filename>).
-                The <filename>source/</filename> directory expands to
-                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename><filename>/linux-</filename><filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink><filename>}-${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE'><filename>LINUX_KERNEL_TYPE</filename></ulink><filename>}-build/source</filename>.
-                The directory pointed to by the
-                <filename>source/</filename> symlink is also known as
-                <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_KERNEL_DIR'><filename>STAGING_KERNEL_DIR</filename></ulink><filename>}</filename>.
-            </para>
+            </literallayout>
+            Taking this step ensures you have the sources prepared
+            and the configuration completed.
+            You can find the sources in the build directory within the
+            <filename>source/</filename> directory, which is a symlink
+            (i.e. <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink><filename>}/source</filename>).
+            The <filename>source/</filename> directory expands to
+            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename><filename>/linux-</filename><filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink><filename>}-${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE'><filename>LINUX_KERNEL_TYPE</filename></ulink><filename>}-build/source</filename>.
+            The directory pointed to by the
+            <filename>source/</filename> symlink is also known as
+            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_KERNEL_DIR'><filename>STAGING_KERNEL_DIR</filename></ulink><filename>}</filename>.
+        </para>
 
-            <para>
-                You can edit the sources as you would any other Linux source
-                tree.
-                However, keep in mind that you will lose changes if you
-                trigger the
-                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-fetch'><filename>do_fetch</filename></ulink>
-                task for the recipe.
-                You can avoid triggering this task by not using BitBake to
-                run the
-                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleanall'><filename>cleanall</filename></ulink>,
-                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleansstate'><filename>cleansstate</filename></ulink>,
-                or forced
-                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-fetch'><filename>fetch</filename></ulink>
-                commands.
-                Also, do not modify the recipe itself while working
-                with temporary changes or BitBake might run the
-                <filename>fetch</filename> command depending on the
-                changes to the recipe.
-            </para>
+        <para>
+            You can edit the sources as you would any other Linux source
+            tree.
+            However, keep in mind that you will lose changes if you
+            trigger the
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-fetch'><filename>do_fetch</filename></ulink>
+            task for the recipe.
+            You can avoid triggering this task by not using BitBake to
+            run the
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleanall'><filename>cleanall</filename></ulink>,
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleansstate'><filename>cleansstate</filename></ulink>,
+            or forced
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-fetch'><filename>fetch</filename></ulink>
+            commands.
+            Also, do not modify the recipe itself while working
+            with temporary changes or BitBake might run the
+            <filename>fetch</filename> command depending on the
+            changes to the recipe.
+        </para>
 
-            <para>
-                To test your temporary changes, instruct BitBake to run the
-                <filename>compile</filename> again.
-                The <filename>-f</filename> option forces the command to run
-                even though BitBake might think it has already done so:
-                <literallayout class='monospaced'>
+        <para>
+            To test your temporary changes, instruct BitBake to run the
+            <filename>compile</filename> again.
+            The <filename>-f</filename> option forces the command to run
+            even though BitBake might think it has already done so:
+            <literallayout class='monospaced'>
      $ bitbake linux-yocto -c compile -f
-                </literallayout>
-                If the compile fails, you can update the sources and repeat
-                the <filename>compile</filename>.
-                Once compilation is successful, you can inspect and test
-                the resulting build (i.e. kernel, modules, and so forth) from
-                the following build directory:
-                <literallayout class='monospaced'>
+            </literallayout>
+            If the compile fails, you can update the sources and repeat
+            the <filename>compile</filename>.
+            Once compilation is successful, you can inspect and test
+            the resulting build (i.e. kernel, modules, and so forth) from
+            the following build directory:
+            <literallayout class='monospaced'>
      ${WORKDIR}/linux-${PACKAGE_ARCH}-${LINUX_KERNEL_TYPE}-build
-                </literallayout>
-                Alternatively, you can run the <filename>deploy</filename>
-                command to place the kernel image in the
-                <filename>tmp/deploy/images</filename> directory:
-                <literallayout class='monospaced'>
-	$ bitbake linux-yocto -c deploy
-                </literallayout>
-                And, of course, you can perform the remaining installation and
-                packaging steps by issuing:
-                <literallayout class='monospaced'>
-	$ bitbake linux-yocto
-                </literallayout>
-            </para>
+            </literallayout>
+            Alternatively, you can run the <filename>deploy</filename>
+            command to place the kernel image in the
+            <filename>tmp/deploy/images</filename> directory:
+            <literallayout class='monospaced'>
+     $ bitbake linux-yocto -c deploy
+            </literallayout>
+            And, of course, you can perform the remaining installation and
+            packaging steps by issuing:
+            <literallayout class='monospaced'>
+     $ bitbake linux-yocto
+            </literallayout>
+        </para>
 
-            <para>
-                For rapid iterative development, the edit-compile-repeat loop
-                described in this section is preferable to rebuilding the
-                entire recipe because the installation and packaging tasks
-                are very time consuming.
-            </para>
+        <para>
+            For rapid iterative development, the edit-compile-repeat loop
+            described in this section is preferable to rebuilding the
+            entire recipe because the installation and packaging tasks
+            are very time consuming.
+        </para>
 
-            <para>
-                Once you are satisfied with your source code modifications,
-                you can make them permanent by generating patches and
-                applying them to the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                statement as described in the
-                "<link linkend='applying-patches'>Applying Patches</link>"
-                section.
-            </para>
-        </section>
+        <para>
+            Once you are satisfied with your source code modifications,
+            you can make them permanent by generating patches and
+            applying them to the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+            statement as described in the
+            "<link linkend='applying-patches'>Applying Patches</link>"
+            section.
+        </para>
     </section>
 
     <section id='working-with-your-own-sources'>
