@@ -1752,28 +1752,41 @@
             <title>Fine-Tuning the Kernel Configuration File</title>
 
             <para>
-                You can make sure the <filename>.config</filename> file is as lean or efficient as
-                possible by reading the output of the kernel configuration fragment audit,
-                noting any issues, making changes to correct the issues, and then repeating.
+                You can make sure the <filename>.config</filename> file is as
+                lean or efficient as possible by reading the output of the
+                kernel configuration fragment audit, noting any issues, making
+                changes to correct the issues, and then repeating.
             </para>
 
             <para>
                 As part of the kernel build process, the
                 <filename>do_kernel_configcheck</filename> task runs.
-                This task validates the kernel configuration by checking the final
-                <filename>.config</filename> file against the input files.
-                During the check, the task produces warning messages for the following
-                issues:
+                This task validates the kernel configuration by checking the
+                final <filename>.config</filename> file against the input
+                files.
+                During the check, the task produces warning messages for the
+                following issues:
                 <itemizedlist>
-                    <listitem><para>Requested options that did not make the final
-                        <filename>.config</filename> file.</para></listitem>
-                    <listitem><para>Configuration items that appear twice in the same
-                        configuration fragment.</para></listitem>
-                    <listitem><para>Configuration items tagged as "required" that were overridden.
+                    <listitem><para>
+                        Requested options that did not make the final
+                        <filename>.config</filename> file.
                         </para></listitem>
-                    <listitem><para>A board overrides a non-board specific option.</para></listitem>
-                    <listitem><para>Listed options not valid for the kernel being processed.
-                        In other words, the option does not appear anywhere.</para></listitem>
+                    <listitem><para>
+                        Configuration items that appear twice in the same
+                        configuration fragment.
+                        </para></listitem>
+                    <listitem><para>
+                        Configuration items tagged as "required" that were
+                        overridden.
+                        </para></listitem>
+                    <listitem><para>
+                        A board overrides a non-board specific option.
+                        </para></listitem>
+                    <listitem><para>
+                        Listed options not valid for the kernel being
+                        processed.
+                        In other words, the option does not appear anywhere.
+                        </para></listitem>
                 </itemizedlist>
                 <note>
                     The <filename>do_kernel_configcheck</filename> task can
@@ -1793,11 +1806,17 @@
             <para>
                 To streamline the configuration, do the following:
                 <orderedlist>
-                    <listitem><para>Start with a full configuration that you
-                        know works - it builds and boots successfully.
-                        This configuration file will be your baseline.
+                    <listitem><para>
+                        <emphasis>Use a Working Configuration:</emphasis>
+                        Start with a full configuration that you
+                        know works.
+                        Be sure the configuration builds and boots
+                        successfully.
+                        Use this configuration file as your baseline.
                         </para></listitem>
-                    <listitem><para>Separately run the
+                    <listitem><para>
+                        <emphasis>Run Configure and Check Tasks:</emphasis>
+                        Separately run the
                         <filename>do_kernel_configme</filename> and
                         <filename>do_kernel_configcheck</filename> tasks:
                         <literallayout class='monospaced'>
@@ -1805,7 +1824,9 @@
      $ bitbake linux-yocto -c kernel_configcheck -f
                         </literallayout>
                         </para></listitem>
-                    <listitem><para>Take the resulting list of files from the
+                    <listitem><para>
+                        <emphasis>Process the Results:</emphasis>
+                        Take the resulting list of files from the
                         <filename>do_kernel_configcheck</filename> task
                         warnings and do the following:
                         <itemizedlist>
@@ -1826,8 +1847,10 @@
                             <listitem><para>
                                 Remove repeated and invalid options.
                                 </para></listitem>
-                        </itemizedlist></para></listitem>
+                        </itemizedlist>
+                        </para></listitem>
                     <listitem><para>
+                        <emphasis>Re-Run Configure and Check Tasks:</emphasis>
                         After you have worked through the output of the kernel
                         configuration audit, you can re-run the
                         <filename>do_kernel_configme</filename> and
