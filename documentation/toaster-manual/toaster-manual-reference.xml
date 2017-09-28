@@ -148,177 +148,46 @@
                     </para>
                 </section>
 
-                <section id='select-the-toasterconf-json-file'>
-                    <title>Use the <filename>toasterconf.json</filename> File</title>
+                <section id='use-the-fixture-feature'>
+                    <title>Use the Fixture Feature</title>
 
                     <para>
-                        If you do not want to use the Administration
-                        Interface, you can edit the
-                        <link linkend='toaster-json-files'><filename>toasterconf.json</filename></link>
-                        file and reload it to Toaster.
-                    </para>
-
-                    <para>
-                        The Toaster startup script in
-                        <filename>/bitbake/bin/toaster</filename> specifies
-                        the location of a Toaster configuration file
-                        <filename>toasterconf.json</filename> as the value of
-                        the <filename>TOASTER_CONF</filename> variable.
-                        This configuration file is used to set up the initial
-                        configuration values within the Toaster database
-                        including the layer sources.
-                        Two versions of the configuration file exist:
-                        <itemizedlist>
-                            <listitem><para>
-                                The first version of the file is found in the
-                                <filename>conf</filename> directory of the
-                                <filename>meta-poky</filename> layer
-                                (i.e.
-                                <filename>meta-poky/conf/toasterconf.json</filename>).
-                                This version contains the default Yocto Project
-                                configuration for Toaster.
-                                </para></listitem>
-                            <listitem><para>
-                                The second version of the file is in the
-                                <filename>conf</filename> directory of the
-                                <filename>openembedded-core</filename> layer
-                                (i.e. <filename>meta/conf/toasterconf.json</filename>).
-                                This version contains the default OpenEmbedded
-                                configuration for Toaster.
-                                </para></listitem>
-                        </itemizedlist>
-                    </para>
-                </section>
-
-                <section id='edit-the-configuration-file'>
-                    <title>Edit the Configuration File</title>
-
-                    <para>
-                        Edit the version of the
-                        <filename>toasterconf.json</filename> file you
-                        used to set up your Toaster instance.
-                        In the file, you will find a section for layer sources
-                        such as the following:
+                        The Django fixture feature overrides the default layer
+                        server when you use it to specify a custom URL. To use
+                        the fixture feature, create (or edit) the file
+                        <filename>bitbake/lib/toaster.orm/fixtures/custom.xml</filename>,
+                        and then set the following Toaster setting to your
+                        custom URL:
                         <literallayout class='monospaced'>
-    "layersources": [
-        {
-            "name": "Local Yocto Project",
-            "sourcetype": "local",
-            "apiurl": "../../",
-            "branches": ["HEAD" ],
-            "layers": [
-                {
-                    "name": "openembedded-core",
-                    "local_path": "meta",
-                    "vcs_url": "remote:origin",
-                    "dirpath": "meta"
-                },
-                {
-                    "name": "meta-poky",
-                    "local_path": "meta-poky",
-                    "vcs_url": "remote:origin",
-                    "dirpath": "meta-poky"
-                },
-                {
-                    "name": "meta-yocto-bsp",
-                    "local_path": "meta-yocto-bsp",
-                    "vcs_url": "remote:origin",
-                    "dirpath": "meta-yocto-bsp"
-                }
-
-            ]
-        },
-        {
-            "name": "OpenEmbedded",
-            "sourcetype": "layerindex",
-            "apiurl": "http://layers.openembedded.org/layerindex/api/",
-            "branches": ["master", "jethro" ,"fido"]
-        },
-        {
-            "name": "Imported layers",
-            "sourcetype": "imported",
-            "apiurl": "",
-            "branches": ["master", "jethro","fido", "HEAD"]
-
-        }
-    ],
+     &lt;?xml version="1.0" ?&gt;
+     &lt;django-objects version="1.0"&gt;
+       &lt;object model="orm.toastersetting" pk="100"&gt;
+                     &lt;field name="name" type="CharField"&gt;CUSTOM_LAYERINDEX_SERVER&lt;/field&gt;
+                     &lt;field name="value" type="CharField"&gt;https://layers.my_organization.org/layerindex/branch/master/layers/&lt;/field&gt;
+       &lt;/object&gt;
+     &lt;django-objects&gt;
                         </literallayout>
-                        You should add your own layer source to this section by
-                        following the same format used for the "OpenEmbedded"
-                        layer source shown above.
-                    </para>
-
-                    <para>
-                        Give your layer source a name, provide the URL of your
-                        layer source API, use the source type "layerindex", and
-                        indicate which branches from your layer source you want
-                        to make available through Toaster.
-                        For example, the OpenEmbedded layer source makes
-                        available only its "master", "fido", and "jethro"
-                        branches.
-                    </para>
-
-                    <para>
-                        The branches must match the branch you
-                        set when configuring your releases.
-                        For example, if you configure one release in Toaster
-                        by setting its branch to "branch-one" and you configure
-                        another release in Toaster by setting its branch to
-                        "branch-two", the branches in your layer source should
-                        be "branch-one" and "branch-two" as well.
-                        Doing so creates a connection between the releases
-                        and the layer information from your layer source.
-                        Thus, when users create a project with a given
-                        release, they will see the appropriate layers from
-                        your layer source.
-                        This connection ensures that only layers that are
-                        compatible with the selected project release can be
-                        selected for building.
-                    </para>
-
-                    <para>
-                        Once you have added this information to the
-                        <filename>toasterconf.json</filename> file, save your
-                        changes.
-                    </para>
-
-                    <para>
-                        In a terminal window, navigate to the directory that
-                        contains the Toaster database, which by default is the
-                        root of the Yocto Project
-                        <ulink url='&YOCTO_DOCS_DEV_URL;#source-directory'>Source Directory</ulink>.
-                        Once you are located in that directory, run the
-                        "<filename>loadconf</filename>" command, which takes as
-                        an argument the full path to the
-                        <filename>toasterconf.json</filename> file you just edited.
-                        For example, if you cloned the
-                        <filename>poky</filename> repository and you edited the
-                        <filename>meta-poky/conf/toasterconf.json</filename> file,
-                        you would type something like the following:
-                        <literallayout class='monospaced'>
-     $ bitbake/lib/toaster/manage.py loadconf /home/scottrif/poky/meta-poky/conf/toasterconf.json
-                        </literallayout>
-                        After entering this command, you need to update the
-                        Toaster database with the information coming from your
-                        new layer source.
-                        To do that, you should run the
-                        "<filename>lsupdates</filename>" command from the directory
-                        that contains the Toaster database.
-                        Here is an example:
-                        <literallayout class='monospaced'>
-     $ bitbake/lib/toaster/manage.py lsupdates
-                        </literallayout>
-                        If Toaster can reach the API URL, you should see a message
-                        telling you that Toaster is updating the layer source
-                        information.
+                        When you start Toaster for the first time, or if you
+                        delete the file <filename>toaster.sqlite</filename> and restart,
+                        the database will populate from this layer index server.
                     </para>
 
                     <para>
                         Once the information has been updated, verify the new layer
                         information is available by using the Toaster web interface.
                         To do that, visit the "All compatible layers" page inside a
-                        Toaster project.
-                        The layers from your layer source should be listed there.
+                        Toaster project. The layers from your layer source should be
+                        listed there.
+                    </para>
+
+                    <para>
+                        If you change the information in your layer index server,
+                        refresh the Toaster database by running the following command:
+                        <literallayout class='monospaced'>
+     $ bitbake/lib/toaster/manage.py lsupdates
+                        </literallayout>
+                        If Toaster can reach the API URL, you should see a message
+                        telling you that Toaster is updating the layer source information.
                     </para>
                 </section>
             </section>
@@ -364,7 +233,7 @@
                         This release causes your Toaster projects to build
                         against the head of the &DISTRO_NAME_NO_CAP; branch at
                         <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/log/?h=rocko'></ulink>
-                        or <ulink url='http://git.openembedded.org/openembedded-core/commit/?h=rocko'></ulink>. 
+                        or <ulink url='http://git.openembedded.org/openembedded-core/commit/?h=rocko'></ulink>.
                         </para></listitem>
                     <listitem><para><emphasis>Yocto Project "Master" or OpenEmbedded "Master":</emphasis>
                         This release causes your Toaster Projects to
