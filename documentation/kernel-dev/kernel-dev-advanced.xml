@@ -273,11 +273,13 @@
 
     <para>
         Paths used in kernel Metadata files are relative to
-        <filename>&lt;base&gt;</filename>, which is either
+        <replaceable>base</replaceable>, which is either
         <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
         if you are creating Metadata in
         <link linkend='recipe-space-metadata'>recipe-space</link>,
-        or <filename>yocto-kernel-cache/cfg</filename> if you are creating
+        or the top level of
+        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/yocto-kernel-cache/tree/'><filename>yocto-kernel-cache</filename></ulink>
+        if you are creating
         <link linkend='metadata-outside-the-recipe-space'>Metadata outside of the recipe-space</link>.
     </para>
 
@@ -294,12 +296,18 @@
         </para>
 
         <para>
-            The Symmetric Multi-Processing (SMP) fragment included in the
-            <filename>linux-yocto-3.19</filename> Git repository
-            consists of the following two files:
+            As an example, consider the Symmetric Multi-Processing (SMP)
+            fragment used with the <filename>linux-yocto-4.12</filename>
+            kernel as defined outside of the recipe space (i.e.
+            <filename>yocto-kernel-cache</filename>).
+            This Metadata consists of two files: <filename>smp.scc</filename>
+            and <filename>smp.cfg</filename>.
+            You can find these files in the <filename>cfg</filename> directory
+            of the <filename>yocto-4.12</filename> branch in the
+            <filename>yocto-kernel-cache</filename> Git repository:
             <literallayout class='monospaced'>
      cfg/smp.scc:
-        define KFEATURE_DESCRIPTION "Enable SMP"
+        define KFEATURE_DESCRIPTION "Enable SMP for 32 bit builds"
         define KFEATURE_COMPATIBILITY all
 
         kconf hardware smp.cfg
@@ -310,20 +318,27 @@
         # Increase default NR_CPUS from 8 to 64 so that platform with
         # more than 8 processors can be all activated at boot time
         CONFIG_NR_CPUS=64
+        # The following is nedded when setting NR_CPUS to something
+        # greater than 8 on x86 architectures, it should be automatically
+        # disregarded by Kconfig when using a different arch
+        CONFIG_X86_BIGSMP=y
             </literallayout>
-            You can find information on configuration fragment files in the
+            You can find general information on configuration fragment files in
+            the
             "<link linkend='creating-config-fragments'>Creating Configuration Fragments</link>"
             section.
         </para>
 
         <para>
+            Within the <filename>smp.scc</filename> file, the
             <ulink url='&YOCTO_DOCS_REF_URL;#var-KFEATURE_DESCRIPTION'><filename>KFEATURE_DESCRIPTION</filename></ulink>
-            provides a short description of the fragment.
+            statement provides a short description of the fragment.
             Higher level kernel tools use this description.
         </para>
 
         <para>
-            The <filename>kconf</filename> command is used to include the
+            Also within the <filename>smp.scc</filename> file, the
+            <filename>kconf</filename> command includes the
             actual configuration fragment in an <filename>.scc</filename>
             file, and the "hardware" keyword identifies the fragment as
             being hardware enabling, as opposed to general policy,
@@ -355,26 +370,71 @@
             Patch descriptions are very similar to configuration fragment
             descriptions, which are described in the previous section.
             However, instead of a <filename>.cfg</filename> file, these
-            descriptions work with source patches.
+            descriptions work with source patches (i.e.
+            <filename>.patch</filename> files).
         </para>
 
         <para>
-            A typical patch includes a description file and the patch itself:
+            A typical patch includes a description file and the patch itself.
+            As an example, consider the build patches used with the
+            <filename>linux-yocto-4.12</filename> kernel as defined outside of
+            the recipe space (i.e. <filename>yocto-kernel-cache</filename>).
+            This Metadata consists of several files:
+            <filename>build.scc</filename> and a set of
+            <filename>*.patch</filename> files.
+            You can find these files in the <filename>patches/build</filename>
+            directory of the <filename>yocto-4.12</filename> branch in the
+            <filename>yocto-kernel-cache</filename> Git repository.
+        </para>
+
+        <para>
+            The following listings show the <filename>build.scc</filename>
+            file and part of the
+            <filename>modpost-mask-trivial-warnings.patch</filename> file:
             <literallayout class='monospaced'>
-     patches/mypatch.scc:
-        patch mypatch.patch
+     patches/build/build.scc:
+        patch arm-serialize-build-targets.patch
+        patch powerpc-serialize-image-targets.patch
+        patch kbuild-exclude-meta-directory-from-distclean-processi.patch
 
-     patches/mypatch.patch:
-        <replaceable>typical-patch</replaceable>
+        # applied by kgit
+        # patch kbuild-add-meta-files-to-the-ignore-li.patch
+
+        patch modpost-mask-trivial-warnings.patch
+        patch menuconfig-check-lxdiaglog.sh-Allow-specification-of.patch
+
+     patches/build/modpost-mask-trivial-warnings.patch:
+        From bd48931bc142bdd104668f3a062a1f22600aae61 Mon Sep 17 00:00:00 2001
+        From: Paul Gortmaker &lt;paul.gortmaker@windriver.com&gt;
+        Date: Sun, 25 Jan 2009 17:58:09 -0500
+        Subject: [PATCH] modpost: mask trivial warnings
+
+        Newer HOSTCC will complain about various stdio fcns because
+                          .
+                          .
+                          .
+ 	        char *dump_write = NULL, *files_source = NULL;
+ 	        int opt;
+        --
+        2.10.1
+
+        generated by cgit v0.10.2 at 2017-09-28 15:23:23 (GMT)
             </literallayout>
-            You can create the typical <filename>.patch</filename>
-            file using <filename>diff -Nurp</filename> or
-            <filename>git format-patch</filename>.
+            The description file can include multiple patch statements where
+            each statement handles a single patch.
+            In the example <filename>build.scc</filename> file, five patch
+            statements exist for the five patches in the directory.
         </para>
 
         <para>
-            The description file can include multiple patch statements,
-            one per patch.
+            You can create a typical <filename>.patch</filename> file using
+            <filename>diff -Nurp</filename> or
+            <filename>git format-patch</filename> commands.
+            For information on how to create patches, see the
+            "<link linkend='using-devtool-to-patch-the-kernel'>Using <filename>devtool</filename> to Patch the Kernel</link>"
+            and
+            "<link linkend='using-traditional-kernel-development-to-patch-the-kernel'>Using Traditional Kernel Development to Patch the Kernel</link>"
+            sections.
         </para>
     </section>
 
@@ -383,26 +443,23 @@
 
         <para>
             Features are complex kernel Metadata types that consist
-            of configuration fragments (<filename>kconf</filename>), patches
-            (<filename>patch</filename>), and possibly other feature
-            description files (<filename>include</filename>).
-        </para>
-
-        <para>
-            Here is an example that shows a feature description file:
+            of configuration fragments, patches, and possibly other feature
+            description files.
+            As an example, consider the following generic listing:
             <literallayout class='monospaced'>
-     features/myfeature.scc
-        define KFEATURE_DESCRIPTION "Enable myfeature"
+     features/<replaceable>myfeature</replaceable>.scc
+        define KFEATURE_DESCRIPTION "Enable <replaceable>myfeature</replaceable>"
 
-        patch 0001-myfeature-core.patch
-        patch 0002-myfeature-interface.patch
+        patch 0001-<replaceable>myfeature</replaceable>-core.patch
+        patch 0002-<replaceable>myfeature</replaceable>-interface.patch
 
-        include cfg/myfeature_dependency.scc
-        kconf non-hardware myfeature.cfg
+        include cfg/<replaceable>myfeature</replaceable>_dependency.scc
+        kconf non-hardware <replaceable>myfeature</replaceable>.cfg
             </literallayout>
             This example shows how the <filename>patch</filename> and
             <filename>kconf</filename> commands are used as well as
-            how an additional feature description file is included.
+            how an additional feature description file is included with
+            the <filename>include</filename> command.
         </para>
 
         <para>
@@ -422,21 +479,47 @@
         <para>
             A kernel type defines a high-level kernel policy by
             aggregating non-hardware configuration fragments with
-            patches you want to use when building a Linux kernels of a
-            specific type.
+            patches you want to use when building a Linux kernel of a
+            specific type (e.g. a real-time kernel).
             Syntactically, kernel types are no different than features
             as described in the "<link linkend='features'>Features</link>"
             section.
-            The <filename>LINUX_KERNEL_TYPE</filename> variable in the kernel
-            recipe selects the kernel type.
-            See the "<link linkend='using-kernel-metadata-in-a-recipe'>Using Kernel Metadata in a Recipe</link>"
-            section for more information.
+            The
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE'><filename>LINUX_KERNEL_TYPE</filename></ulink>
+            variable in the kernel recipe selects the kernel type.
+            For example, in the <filename>linux-yocto_4.12.bb</filename>
+            kernel recipe found in
+            <filename>poky/meta/recipes-kernel/linux</filename>, a
+            <ulink url='&YOCTO_DOCS_BB_URL;#require-inclusion'><filename>require</filename></ulink>
+            directive includes the
+            <filename>poky/meta/recipes-kernel/linux/linux-yocto.inc</filename>
+            file, which has the following statement that defines the default
+            kernel type:
+            <literallayout class='monospaced'>
+     LINUX_KERNEL_TYPE ??= "standard"
+            </literallayout>
         </para>
 
         <para>
-            As an example, the <filename>linux-yocto-3.19</filename>
-            tree defines three kernel types: "standard",
-            "tiny", and "preempt-rt":
+            Another example would be the real-time kernel (i.e.
+            <filename>linux-yocto-rt_4.12.bb</filename>).
+            This kernel recipe directly sets the kernel type as follows:
+            <literallayout class='monospaced'>
+     LINUX_KERNEL_TYPE = "preempt-rt"
+            </literallayout>
+            <note>
+                You can find kernel recipes in the
+                <filename>meta/recipes-kernel/linux</filename> directory of the
+                <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+                (e.g. <filename>poky/meta/recipes-kernel/linux/linux-yocto_4.12.bb</filename>).
+                See the "<link linkend='using-kernel-metadata-in-a-recipe'>Using Kernel Metadata in a Recipe</link>"
+                section for more information.
+            </note>
+        </para>
+
+        <para>
+            Three kernel types ("standard", "tiny", and "preempt-rt") are
+            supported for Linux Yocto kernels:
             <itemizedlist>
                 <listitem><para>"standard":
                     Includes the generic Linux kernel policy of the Yocto
@@ -463,29 +546,40 @@
         </para>
 
         <para>
-            The "standard" kernel type is defined by
-            <filename>standard.scc</filename>:
+            For any given kernel type, the Metadata is defined by the
+            <filename>.scc</filename> (e.g. <filename>standard.scc</filename>).
+            Here is a partial listing for the <filename>standard.scc</filename>
+            file, which is found in the <filename>ktypes/standard</filename>
+            directory of the <filename>yocto-kernel-cache</filename> Git
+            repository:
             <literallayout class='monospaced'>
      # Include this kernel type fragment to get the standard features and
      # configuration values.
 
-     # Include all standard features
-     include standard-nocfg.scc
+     # Note: if only the features are desired, but not the configuration
+     #       then this should be included as:
+     #             include ktypes/standard/standard.scc nocfg
+     #       if no chained configuration is desired, include it as:
+     #             include ktypes/standard/standard.scc nocfg inherit
+
+
+
+     include ktypes/base/base.scc
+     branch standard
 
      kconf non-hardware standard.cfg
 
-     # individual cfg block section
-     include cfg/fs/devtmpfs.scc
-     include cfg/fs/debugfs.scc
-     include cfg/fs/btrfs.scc
-     include cfg/fs/ext2.scc
-     include cfg/fs/ext3.scc
-     include cfg/fs/ext4.scc
+     include features/kgdb/kgdb.scc
+                .
+                .
+                .
 
-     include cfg/net/ipv6.scc
-     include cfg/net/ip_nf.scc
      include cfg/net/ip6_nf.scc
      include cfg/net/bridge.scc
+
+     include cfg/systemd.scc
+
+     include features/rfkill/rfkill.scc
             </literallayout>
         </para>
 
@@ -531,9 +625,9 @@
         </para>
 
         <para>
-            This section provides a BSP description structural overview along
-            with aggregation concepts as well as a detailed example using
-            a BSP supported by the Yocto Project (i.e. Minnow Board).
+            This section overviews the BSP description structure, the
+            aggregation concepts, and presents a detailed example using
+            a BSP supported by the Yocto Project (i.e. BeagleBone Board).
         </para>
 
         <section id='bsp-description-file-overview'>
@@ -541,7 +635,7 @@
 
             <para>
                 For simplicity, consider the following top-level BSP
-                description file.
+                description files for the BeagleBone board.
                 Top-level BSP descriptions files employ both a structure
                 and naming convention for consistency.
                 The naming convention for the file is as follows:
@@ -549,31 +643,30 @@
      <replaceable>bsp_name</replaceable>-<replaceable>kernel_type</replaceable>.scc
                 </literallayout>
                 Here are some example top-level BSP filenames for the
-                Minnow Board BSP, which is supported by the Yocto Project:
+                BeagleBone Board BSP, which is supported by the Yocto Project:
                 <literallayout class='monospaced'>
-     minnow-standard.scc
-     minnow-preempt-rt.scc
-     minnow-tiny.scc
+     beaglebone-standard.scc
+     beaglebone-preempt-rt.scc
                 </literallayout>
                 Each file uses the BSP name followed by the kernel type.
             </para>
 
             <para>
-                is simple BSP description file whose name has the
-                form
-                <replaceable>mybsp</replaceable><filename>-standard</filename>
-                and supports the <replaceable>mybsp</replaceable> machine using
-                a standard kernel:
+                Examine the <filename>beaglebone-standard.scc</filename>
+                file:
                 <literallayout class='monospaced'>
-     define KMACHINE <replaceable>mybsp</replaceable>
+     define KMACHINE beaglebone
      define KTYPE standard
-     define KARCH i386
+     define KARCH arm
 
-     include ktypes/standard
+     include ktypes/standard/standard.scc
+     branch beaglebone
 
-     include <replaceable>mybsp</replaceable>.scc
+     include beaglebone.scc
 
-     kconf hardware <replaceable>mybsp</replaceable>-<replaceable>extra</replaceable>.cfg
+     # default policy for standard kernels
+     include features/latencytop/latencytop.scc
+     include features/profiling/profiling.scc
                 </literallayout>
                 Every top-level BSP description file should define the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>,
@@ -583,19 +676,20 @@
                 These variables allow the OpenEmbedded build system to identify
                 the description as meeting the criteria set by the recipe being
                 built.
-                This simple example supports the "mybsp" machine for the "standard"
-                kernel and the "i386" architecture.
+                This example supports the "beaglebone" machine for the
+                "standard" kernel and the "arm" architecture.
             </para>
 
             <para>
                 Be aware that a hard link between the
-                <filename>KTYPE</filename> variable and a kernel type description
-                file does not exist.
-                Thus, if you do not have kernel types defined in your kernel
-                Metadata, you only need to ensure that the kernel recipe's
+                <filename>KTYPE</filename> variable and a kernel type
+                description file does not exist.
+                Thus, if you do not have the kernel type defined in your kernel
+                Metadata as it is here, you only need to ensure that the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE'><filename>LINUX_KERNEL_TYPE</filename></ulink>
-                variable and the <filename>KTYPE</filename> variable in the
-                BSP description file match.
+                variable in the kernel recipe and the
+                <filename>KTYPE</filename> variable in the BSP descriptionn
+                file match.
                 <note>
                     Future versions of the tooling make the specification of
                     <filename>KTYPE</filename> in the BSP optional.
@@ -608,13 +702,12 @@
                 "standard".
                 In the previous example, this is done using the following:
                 <literallayout class='monospaced'>
-     include ktypes/standard
+     include ktypes/standard/standard.scc
                 </literallayout>
-                In the previous example, <filename>ktypes/standard.scc</filename>
-                aggregates all the configuration fragments, patches, and
-                features that make up your standard kernel policy.
-                See the "<link linkend='kernel-types'>Kernel Types</link>" section
-                for more information.
+                This file aggregates all the configuration fragments, patches,
+                and features that make up your standard kernel policy.
+                See the "<link linkend='kernel-types'>Kernel Types</link>"
+                section for more information.
             </para>
 
             <para>
@@ -622,6 +715,10 @@
                 kernel for <replaceable>mybsp</replaceable>, use the following:
                 <literallayout class='monospaced'>
      include <replaceable>mybsp</replaceable>.scc
+                </literallayout>
+                You can see that in the BeagleBone example with the following:
+                <literallayout class='monospaced'>
+     include beaglebone.scc
                 </literallayout>
                 For information on how to break a complete
                 <filename>.config</filename> file into the various
@@ -637,6 +734,23 @@
                 <literallayout class='monospaced'>
      kconf hardware <replaceable>mybsp</replaceable>-<replaceable>extra</replaceable>.cfg
                 </literallayout>
+                The BeagleBone example does not include these types of
+                configurations.
+                However, the Malta 32-bit board does ("mti-malta32").
+                Here is the <filename>mti-malta32-le-standard.scc</filename>
+                file:
+                <literallayout class='monospaced'>
+     define KMACHINE mti-malta32-le
+     define KMACHINE qemumipsel
+     define KTYPE standard
+     define KARCH mips
+
+     include ktypes/standard/standard.scc
+     branch mti-malta32
+
+     include mti-malta32.scc
+     kconf hardware mti-malta32-le.cfg
+                </literallayout>
             </para>
         </section>
 
@@ -647,14 +761,15 @@
                 Many real-world examples are more complex.
                 Like any other <filename>.scc</filename> file, BSP
                 descriptions can aggregate features.
-                Consider the Minnow BSP definition from the
-                <filename>linux-yocto-4.4</filename> in the
-                Yocto Project
-                <ulink url='&YOCTO_DOCS_REF_URL;#source-repositories'>Source Repositories</ulink>
-                (i.e.
-                <filename>yocto-kernel-cache/bsp/minnow</filename>):
+                Consider the Minnow BSP definition given the
+                <filename>linux-yocto-4.4</filename> branch of the
+                <filename>yocto-kernel-cache</filename> (i.e.
+                <filename>yocto-kernel-cache/bsp/minnow/minnow.scc</filename>):
+                <note>
+                    Although the Minnow Board BSP is unused, the Metadata
+                    remains and is being used here just as an example.
+                </note>
                 <literallayout class='monospaced'>
-     minnow.scc:
          include cfg/x86.scc
          include features/eg20t/eg20t.scc
          include cfg/dmaengine.scc
@@ -690,9 +805,8 @@
                 "minnow" description files for the supported kernel types
                 (i.e. "standard", "preempt-rt", and "tiny").
                 Consider the "minnow" description for the "standard" kernel
-                type:
+                type (i.e. <filename>minnow-standard.scc</filename>:
                 <literallayout class='monospaced'>
-     minnow-standard.scc:
          define KMACHINE minnow
          define KTYPE standard
          define KARCH i386
@@ -727,9 +841,8 @@
 
             <para>
                 Now consider the "minnow" description for the "tiny" kernel
-                type:
+                type (i.e. <filename>minnow-tiny.scc</filename>:
                 <literallayout class='monospaced'>
-     minnow-tiny.scc:
         define KMACHINE minnow
         define KTYPE tiny
         define KARCH i386
@@ -749,10 +862,12 @@
 
             <para>
                 Notice again the three critical variables:
-                <filename>KMACHINE</filename>, <filename>KTYPE</filename>,
-                and <filename>KARCH</filename>.
-                Of these variables, only the <filename>KTYPE</filename> has changed.
-                It is now set to "tiny".
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>,
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KTYPE'><filename>KTYPE</filename></ulink>,
+                and
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-KARCH'><filename>KARCH</filename></ulink>.
+                Of these variables, only <filename>KTYPE</filename>
+                has changed to specify the "tiny" kernel type.
             </para>
         </section>
     </section>
