@@ -44,20 +44,18 @@
     <title>Using Kernel Metadata in a Recipe</title>
 
     <para>
-        The kernel sources in the Yocto Project contain kernel Metadata, which
-        is located in the <filename>meta</filename> branches of the kernel
-        source Git repositories.
+        As mentioned in the introduction, the Yocto Project contains kernel
+        Metadata, which is located in the
+        <filename>yocto-kernel-cache</filename> Git repository.
         This Metadata defines Board Support Packages (BSPs) that
-        correspond to definitions in linux-yocto recipes for the same BSPs.
+        correspond to definitions in linux-yocto recipes for corresponding BSPs.
         A BSP consists of an aggregation of kernel policy and enabled
         hardware-specific features.
         The BSP can be influenced from within the linux-yocto recipe.
         <note>
-            Linux kernel source that contains kernel Metadata is said to be
-            "linux-yocto style" kernel source.
-            A Linux kernel recipe that inherits from the
-            <filename>linux-yocto.inc</filename> include file is said to be a
-            "linux-yocto style" recipe.
+            A Linux kernel recipe that contains kernel Metadata (e.g.
+            inherits from the <filename>linux-yocto.inc</filename> file)
+            is said to be a "linux-yocto style" recipe.
         </note>
     </para>
 
@@ -92,9 +90,9 @@
         <note>
             You can use the <filename>KBRANCH</filename> value to define an
             alternate branch typically with a machine override as shown here
-            from the <filename>meta-emenlow</filename> layer:
+            from the <filename>meta-yocto-bsp</filename> layer:
             <literallayout class='monospaced'>
-     KBRANCH_emenlow-noemgd = "standard/base"
+     KBRANCH_edgerouter = "standard/edgerouter"
             </literallayout>
         </note>
     </para>
@@ -133,16 +131,7 @@
         recipe.
         The tools use the first BSP description it finds that match
         both variables.
-        If the tools cannot find a match, they issue a warning such as
-        the following:
-        <literallayout class='monospaced'>
-     WARNING: Can't find any BSP hardware or required configuration fragments.
-     WARNING: Looked at meta/cfg/broken/emenlow-broken/hdw_frags.txt and
-              meta/cfg/broken/emenlow-broken/required_frags.txt in directory:
-              meta/cfg/broken/emenlow-broken
-        </literallayout>
-        In this example, <filename>KMACHINE</filename> was set to "emenlow-broken"
-        and <filename>LINUX_KERNEL_TYPE</filename> was set to "broken".
+        If the tools cannot find a match, they issue a warning.
     </para>
 
     <para>
