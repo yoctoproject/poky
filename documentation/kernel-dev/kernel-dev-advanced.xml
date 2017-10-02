@@ -987,11 +987,11 @@
             <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
             variable.
             As an example, consider the following <filename>SRC_URI</filename>
-            statement from the <filename>linux-yocto_4.4.bb</filename>
+            statement from the <filename>linux-yocto_4.12.bb</filename>
             kernel recipe:
             <literallayout class='monospaced'>
-     SRC_URI = "git://git.yoctoproject.org/linux-yocto-4.4.git;name=machine;branch=${KBRANCH}; \
-                git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=yocto-4.4;destsuffix=${KMETA}"
+     SRC_URI = "git://git.yoctoproject.org/linux-yocto-4.12.git;name=machine;branch=${KBRANCH}; \
+                git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=yocto-4.12;destsuffix=${KMETA}"
             </literallayout>
             <filename>${KMETA}</filename>, in this context, is simply used to
             name the directory into which the Git fetcher places the Metadata.
@@ -1009,46 +1009,6 @@
             Doing so makes the kernel Metadata available during the
             configuration phase.
         </para>
-
-<!--
-
-
-        <para>
-            Following is an example that shows how a trivial tree of Metadata
-            is stored in a custom Linux kernel Git repository:
-            <literallayout class='monospaced'>
-     meta/
-     `&dash;&dash; cfg
-         `&dash;&dash; kernel-cache
-             |&dash;&dash; bsp-standard.scc
-             |&dash;&dash; bsp.cfg
-             `&dash;&dash; standard.cfg
-            </literallayout>
-        </para>
-
-        <para>
-            To use a branch different from where the sources reside,
-            specify the branch in the <filename>KMETA</filename> variable
-            in your Linux kernel recipe.
-            Here is an example:
-            <literallayout class='monospaced'>
-     KMETA = "meta"
-            </literallayout>
-            To use the same branch as the sources, set
-            <filename>KMETA</filename> to an empty string:
-            <literallayout class='monospaced'>
-     KMETA = ""
-            </literallayout>
-            If you are working with your own sources and want to create an
-            orphan <filename>meta</filename> branch, use these commands
-            from within your Linux kernel Git repository:
-            <literallayout class='monospaced'>
-     $ git checkout &dash;&dash;orphan meta
-     $ git rm -rf .
-     $ git commit &dash;&dash;allow-empty -m "Create orphan meta branch"
-            </literallayout>
-        </para>
--->
 
         <para>
             If you modify the Metadata, you must not forget to update the
