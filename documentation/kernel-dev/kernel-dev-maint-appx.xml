@@ -7,86 +7,137 @@
 
     <section id='tree-construction'>
         <title>Tree Construction</title>
+
         <para>
-            This section describes construction of the Yocto Project kernel source repositories
-            as accomplished by the Yocto Project team to create kernel repositories.
-            These kernel repositories are found under the heading "Yocto Linux Kernel" at
+            This section describes construction of the Yocto Project kernel
+            source repositories as accomplished by the Yocto Project team to
+            create Yocto Linux kernel repositories.
+            These kernel repositories are found under the heading "Yocto Linux
+            Kernel" at
             <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>&YOCTO_GIT_URL;/cgit.cgi</ulink>
-            and can be shipped as part of a Yocto Project release.
-            The team creates these repositories by
-            compiling and executing the set of feature descriptions for every BSP
-            and feature in the product.
+            and are shipped as part of a Yocto Project release.
+            The team creates these repositories by compiling and executing the
+            set of feature descriptions for every BSP and feature in the
+            product.
             Those feature descriptions list all necessary patches,
-            configuration, branching, tagging and feature divisions found in a kernel.
-            Thus, the Yocto Project kernel repository (or tree) is built.
+            configurations, branches, tags, and feature divisions found in a
+            Yocto Linux kernel.
+            Thus, the Yocto Project Linux kernel repository (or tree) is built.
         </para>
+
         <para>
-            The existence of this tree allows you to access and clone a particular
-            Yocto Project kernel repository and use it to build images based on their configurations
-            and features.
+            The existence of this tree allows you to access and clone a
+            particular Yocto Project Linux kernel repository and use it to
+            build images based on their configurations and features.
         </para>
+
         <para>
-            You can find the files used to describe all the valid features and BSPs
-            in the Yocto Project kernel in any clone of the Yocto Project kernel source repository
-            Git tree.
-            For example, the following command clones the Yocto Project baseline kernel that
-            branched off of <filename>linux.org</filename> version 3.19:
+            You can find the files used to describe all the valid features and
+            BSPs in the Yocto Project Linux kernel in any clone of the Yocto
+            Project Linux kernel source repository Git tree.
+            For example, the following command clones the Yocto Project
+            baseline Linux kernel that branches off
+            <filename>linux.org</filename> version 4.12:
             <literallayout class='monospaced'>
-     $ git clone git://git.yoctoproject.org/linux-yocto-3.19
+     $ git clone git://git.yoctoproject.org/linux-yocto-4.12
             </literallayout>
             For more information on how to set up a local Git repository of
-            the Yocto Project kernel files, see the
+            the Yocto Project Linux kernel files, see the
             "<link linkend='preparing-the-build-host-to-work-on-the-kernel'>Preparing the Build Host to Work on the Kernel</link>"
             section.
         </para>
+
         <para>
-            Once you have cloned the kernel Git repository on your local machine, you can
-            switch to the <filename>meta</filename> branch within the repository.
-            Here is an example that assumes the local Git repository for the kernel is in
-            a top-level directory named <filename>linux-yocto-3.19</filename>:
+            Once you have cloned the kernel Git repository on your local
+            machine, you can discover the branches that are avilable in the
+            repository using the following Git command:
             <literallayout class='monospaced'>
-     $ cd linux-yocto-3.19
-     $ git checkout -b meta origin/meta
+     $ git branch -a
             </literallayout>
-            Once you have checked out and switched to the <filename>meta</filename> branch,
-            you can see a snapshot of all the kernel configuration and feature descriptions that are
-            used to build that particular kernel repository.
-            These descriptions are in the form of <filename>.scc</filename> files.
+            Checking out a branch allows you to work with a particular
+            Yocto Linux kernel.
+            For example, the following command checks out the
+            <filename>standard/beagleboard</filename> branch of the
+            repository:
+            <literallayout class='monospaced'>
+     $ cd linux-yocto-4.12
+     $ git checkout -b my-kernel-4.12 standard/beagleboard
+            </literallayout>
+            Once you have checked out and switched to the
+            <filename>standard/beagleboard</filename> branch,
+            you can see a snapshot of all the kernel source files used to
+            used to build that particular Yocto Linux kernel for that
+            particular board.
         </para>
+
         <para>
-            You should realize, however, that browsing your local kernel repository
-            for feature descriptions and patches is not an effective way to determine what is in a
-            particular kernel branch.
-            Instead, you should use Git directly to discover the changes in a branch.
-            Using Git is an efficient and flexible way to inspect changes to the kernel.
+            To see the features and configurations for a particular Yocto
+            Linux kernel, you need to examine the
+            <filename>yocto-kernel-cache</filename> Git repository.
+            Branches in the <filename>yocto-kernel-cache</filename> repository
+            correspond to Yocto Linux kernel versions (e.g.
+            <filename>yocto-4.12</filename>).
+            Branches contain descriptions in the form of
+            <filename>.scc</filename> and <filename>.cfg</filename> files.
+        </para>
+
+        <para>
+            You should realize, however, that browsing your local
+            <filename>yocto-kernel-cache</filename> repository for feature
+            descriptions and patches is not an effective way to determine what
+            is in a particular kernel branch.
+            Instead, you should use Git directly to discover the changes in
+            a branch.
+            Using Git is an efficient and flexible way to inspect changes to
+            the kernel.
             <note>
-                Ground up reconstruction of the complete kernel tree is an action only taken by the
-                Yocto Project team during an active development cycle.
-                When you create a clone of the kernel Git repository, you are simply making it
-                efficiently available for building and development.
+                Ground up reconstruction of the complete kernel tree is an
+                action only taken by the Yocto Project team during an active
+                development cycle.
+                When you create a clone of the kernel Git repository, you are
+                simply making it efficiently available for building and
+                development.
             </note>
         </para>
+
         <para>
-            The following steps describe what happens when the Yocto Project Team constructs
-            the Yocto Project kernel source Git repository (or tree) found at
+            The following steps describe what happens when the Yocto Project
+            Team constructs the Yocto Project kernel source Git repository
+            (or tree) found at
             <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink> given the
             introduction of a new top-level kernel feature or BSP.
             These are the actions that effectively create the tree
             that includes the new feature, patch or BSP:
             <orderedlist>
-                <listitem><para>A top-level kernel feature is passed to the kernel build subsystem.
-                    Normally, this feature is a BSP for a particular kernel type.</para></listitem>
-                <listitem><para>The file that describes the top-level feature is located by searching
-                    these system directories:
+                <listitem><para>
+                    A top-level kernel feature is passed to the kernel build
+                    subsystem.
+                    Normally, this feature is a BSP for a particular kernel
+                    type.
+                    </para></listitem>
+                <listitem><para>
+                    The file that describes the top-level feature is located
+                    by searching these system directories:
                     <itemizedlist>
-                        <listitem><para>The in-tree kernel-cache directories, which are located
-                            in <filename>meta/cfg/kernel-cache</filename></para></listitem>
-                        <listitem><para>Areas pointed to by <filename>SRC_URI</filename> statements
-                            found in recipes</para></listitem>
+                        <listitem><para>
+                            The in-tree kernel-cache directories, which are
+                            located in
+                            <filename>yocto-kernel-cache/cfg/kernel-cache</filename>
+                            </para></listitem>
+                        <listitem><para>
+                            Areas pointed to by <filename>SRC_URI</filename>
+                            statements found in recipes
+                            </para></listitem>
                     </itemizedlist>
                     For a typical build, the target of the search is a
                     feature description in an <filename>.scc</filename> file
                     whose name follows this format:
+
+
+I AM HERE
+
+
+
                     <literallayout class='monospaced'>
      <replaceable>bsp_name</replaceable>-<replaceable>kernel_type</replaceable>.scc
                     </literallayout>
