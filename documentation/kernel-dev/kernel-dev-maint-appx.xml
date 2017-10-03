@@ -22,11 +22,13 @@
             Those feature descriptions list all necessary patches,
             configurations, branches, tags, and feature divisions found in a
             Yocto Linux kernel.
-            Thus, the Yocto Project Linux kernel repository (or tree) is built.
+            Thus, the Yocto Project Linux kernel repository (or tree) and
+            accompanying Metadata in the
+            <filename>yocto-kernel-cache</filename> are built.
         </para>
 
         <para>
-            The existence of this tree allows you to access and clone a
+            The existence of these repositories allow you to access and clone a
             particular Yocto Project Linux kernel repository and use it to
             build images based on their configurations and features.
         </para>
@@ -34,12 +36,16 @@
         <para>
             You can find the files used to describe all the valid features and
             BSPs in the Yocto Project Linux kernel in any clone of the Yocto
-            Project Linux kernel source repository Git tree.
-            For example, the following command clones the Yocto Project
+            Project Linux kernel source repository and
+            <filename>yocto-kernel-cache</filename> Git trees.
+            For example, the following commands clone the Yocto Project
             baseline Linux kernel that branches off
-            <filename>linux.org</filename> version 4.12:
+            <filename>linux.org</filename> version 4.12 and the
+            <filename>yocto-kernel-cache</filename>, which contains stores of
+            kernel Metadata:
             <literallayout class='monospaced'>
      $ git clone git://git.yoctoproject.org/linux-yocto-4.12
+     $ git clone git://git.yoctoproject.org/linux-kernel-cache
             </literallayout>
             For more information on how to set up a local Git repository of
             the Yocto Project Linux kernel files, see the
@@ -48,25 +54,33 @@
         </para>
 
         <para>
-            Once you have cloned the kernel Git repository on your local
-            machine, you can discover the branches that are avilable in the
-            repository using the following Git command:
+            Once you have cloned the kernel Git repository and the
+            cache of Metadata on your local machine, you can discover the
+            branches that are avilable in the repository using the following
+            Git command:
             <literallayout class='monospaced'>
      $ git branch -a
             </literallayout>
             Checking out a branch allows you to work with a particular
             Yocto Linux kernel.
-            For example, the following command checks out the
-            <filename>standard/beagleboard</filename> branch of the
-            repository:
+            For example, the following commands check out the
+            "standard/beagleboard" branch of the Yocto Linux kernel repository
+            and the "yocto-4.12" branch of the
+            <filename>yocto-kernel-cache</filename> repository:
             <literallayout class='monospaced'>
-     $ cd linux-yocto-4.12
-     $ git checkout -b my-kernel-4.12 standard/beagleboard
+     $ cd ~/linux-yocto-4.12
+     $ git checkout -b my-kernel-4.12 remotes/origin/standard/beagleboard
+     $ cd ~/linux-kernel-cache
+     $ git checkout -b my-4.12-metadata remotes/origin/yocto-4.12
             </literallayout>
-            Once you have checked out and switched to the
-            <filename>standard/beagleboard</filename> branch,
+            <note>
+                Branches in the <filename>yocto-kernel-cache</filename>
+                repository correspond to Yocto Linux kernel versions
+                (e.g. "yocto-4.12", "yocto-4.10", "yocto-4.9", and so forth).
+            </note>
+            Once you have checked out and switched to appropriate branches,
             you can see a snapshot of all the kernel source files used to
-            used to build that particular Yocto Linux kernel for that
+            used to build that particular Yocto Linux kernel for a
             particular board.
         </para>
 
@@ -74,9 +88,9 @@
             To see the features and configurations for a particular Yocto
             Linux kernel, you need to examine the
             <filename>yocto-kernel-cache</filename> Git repository.
-            Branches in the <filename>yocto-kernel-cache</filename> repository
-            correspond to Yocto Linux kernel versions (e.g.
-            <filename>yocto-4.12</filename>).
+            As mentioned, branches in the
+            <filename>yocto-kernel-cache</filename> repository correspond to
+            Yocto Linux kernel versions (e.g. <filename>yocto-4.12</filename>).
             Branches contain descriptions in the form of
             <filename>.scc</filename> and <filename>.cfg</filename> files.
         </para>
@@ -106,77 +120,106 @@
             (or tree) found at
             <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink> given the
             introduction of a new top-level kernel feature or BSP.
-            These are the actions that effectively create the tree
-            that includes the new feature, patch or BSP:
+            These are the actions that effectively provide the Metadata
+            and create the tree that includes the new feature, patch or BSP:
             <orderedlist>
                 <listitem><para>
+                    <emphasis>Pass Feature to Build Subsystem:</emphasis>
                     A top-level kernel feature is passed to the kernel build
                     subsystem.
                     Normally, this feature is a BSP for a particular kernel
                     type.
                     </para></listitem>
                 <listitem><para>
+                    <emphasis>Locate Feature:</emphasis>
                     The file that describes the top-level feature is located
                     by searching these system directories:
                     <itemizedlist>
                         <listitem><para>
                             The in-tree kernel-cache directories, which are
-                            located in
-                            <filename>yocto-kernel-cache/cfg/kernel-cache</filename>
+                            located in the
+                            <filename>yocto-kernel-cache</filename>
+                            repository
                             </para></listitem>
                         <listitem><para>
                             Areas pointed to by <filename>SRC_URI</filename>
-                            statements found in recipes
+                            statements found in kernel recipes
                             </para></listitem>
                     </itemizedlist>
                     For a typical build, the target of the search is a
                     feature description in an <filename>.scc</filename> file
                     whose name follows this format:
-
-
-I AM HERE
-
-
-
                     <literallayout class='monospaced'>
      <replaceable>bsp_name</replaceable>-<replaceable>kernel_type</replaceable>.scc
                     </literallayout>
                 </para></listitem>
-                <listitem><para>Once located, the feature description is either compiled into a simple script
-                    of actions, or into an existing equivalent script that is already part of the
-                    shipped kernel.</para></listitem>
-                <listitem><para>Extra features are appended to the top-level feature description.
+                <listitem><para>
+                    <emphasis>Compile Feature:</emphasis>
+                    Once located, the feature description is either compiled
+                    into a simple script of actions, or into an existing
+                    equivalent script that is already part of the shipped
+                    kernel.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Append Extra Features:</emphasis>
+                    Extra features are appended to the top-level feature
+                    description.
                     These features can come from the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES'><filename>KERNEL_FEATURES</filename></ulink>
-                    variable in recipes.</para></listitem>
-                <listitem><para>Each extra feature is located, compiled and appended to the script
-                    as described in step three.</para></listitem>
-                <listitem><para>The script is executed to produce a series of <filename>meta-*</filename>
-                    directories.
-                    These directories are descriptions of all the branches, tags, patches and configurations that
-                    need to be applied to the base Git repository to completely create the
-                    source (build) branch for the new BSP or feature.</para></listitem>
-                <listitem><para>The base repository is cloned, and the actions
-                    listed in the <filename>meta-*</filename> directories are applied to the
-                    tree.</para></listitem>
-                <listitem><para>The Git repository is left with the desired branch checked out and any
-                    required branching, patching and tagging has been performed.</para></listitem>
+                    variable in recipes.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Locate, Compile, and Append Each Feature:</emphasis>
+                    Each extra feature is located, compiled and appended to
+                    the script as described in step three.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Execute the Script:</emphasis>
+                    The script is executed to produce files
+                    <filename>.scc</filename> and <filename>.cfg</filename>
+                    files in appropriate directories of the
+                    <filename>yocto-kernel-cache</filename> repository.
+                    These files are descriptions of all the branches, tags,
+                    patches and configurations that need to be applied to the
+                    base Git repository to completely create the
+                    source (build) branch for the new BSP or feature.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Clone Base Repository:</emphasis>
+                    The base repository is cloned, and the actions
+                    listed in the <filename>yocto-kernel-cache</filename>
+                    irectories are applied to the tree.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Perform Cleanup:</emphasis>
+                    The Git repositories are left with the desired branches
+                    checked out and any required branching, patching and
+                    tagging has been performed.
+                    </para></listitem>
             </orderedlist>
         </para>
+
         <para>
-            The kernel tree is now ready for developer consumption to be locally cloned,
-            configured, and built into a Yocto Project kernel specific to some target hardware.
-            <note><para>The generated <filename>meta-*</filename> directories add to the kernel
-                as shipped with the Yocto Project release.
-                Any add-ons and configuration data are applied to the end of an existing branch.
+            The kernel tree and cache are ready for developer consumption to
+            be locally cloned, configured, and built into a Yocto Project
+            kernel specific to some target hardware.
+            <note>
+                <para>The generated <filename>yocto-kernel-cache</filename>
+                repository adds to the kernel as shipped with the Yocto Project
+                release.
+                Any add-ons and configuration data are applied to the end of
+                an existing branch.
                 The full repository generation that is found in the
                 official Yocto Project kernel repositories at
                 <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>http://git.yoctoproject.org/cgit.cgi</ulink>
-                is the combination of all supported boards and configurations.</para>
-                <para>The technique the Yocto Project team uses is flexible and allows for seamless
-                blending of an immutable history with additional patches specific to a
-                deployment.
-                Any additions to the kernel become an integrated part of the branches.</para>
+                is the combination of all supported boards and configurations.
+                </para>
+
+                <para>The technique the Yocto Project team uses is flexible
+                and allows for seamless blending of an immutable history with
+                additional patches specific to a deployment.
+                Any additions to the kernel become an integrated part of the
+                branches.</para>
             </note>
         </para>
     </section>
