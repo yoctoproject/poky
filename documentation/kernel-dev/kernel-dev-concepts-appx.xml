@@ -9,7 +9,7 @@
         <title>Yocto Project Kernel Development and Maintenance</title>
 
         <para>
-            Kernels available through the Yocto Project (Linux Yocto kernels),
+            Kernels available through the Yocto Project (Yocto Linux kernels),
             like other kernels, are based off the Linux kernel releases from
             <ulink url='http://www.kernel.org'></ulink>.
             At the beginning of a major Linux kernel development cycle, the
@@ -29,18 +29,18 @@
 
         <para>
             This balance allows the Yocto Project team to deliver the most
-            up-to-date Linux Yocto kernel possible, while still ensuring that
+            up-to-date Yocto Linux kernel possible, while still ensuring that
             the team has a stable official release for the baseline Linux
             kernel version.
         </para>
 
         <para>
-            As implied earlier, the ultimate source for Linux Yocto kernels
+            As implied earlier, the ultimate source for Yocto Linux kernels
             are released kernels from <filename>kernel.org</filename>.
             In addition to a foundational kernel from
             <filename>kernel.org</filename>, the available Yocto Linux kernels
             contain a mix of important new mainline developments, non-mainline
-            developments (when there is no alternative), Board Support Package
+            developments (when no alternative exists), Board Support Package
             (BSP) developments, and custom features.
             These additions result in a commercially released Yocto
             Project Linux kernel that caters to specific embedded designer
@@ -70,6 +70,16 @@
                     This kernel is based on the Linux 4.4 released kernel.
                     </para></listitem>
                 <listitem><para>
+                    <emphasis><filename>linux-yocto-4.6</filename>:</emphasis>
+                    A temporary kernel that is not tied to any Yocto Project
+                    release.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>linux-yocto-4.8</filename>:</emphasis>
+                    The stable yocto Project kernel to use with the Yocto
+                    Project Release 2.2.
+                    </para></listitem>
+                <listitem><para>
                     <emphasis><filename>linux-yocto-4.9</filename>:</emphasis>
                     The stable Yocto Project kernel to use with the Yocto
                     Project Release 2.3.
@@ -94,6 +104,10 @@
                     tree.
                     This repository is useful when working on the linux-yocto
                     kernel.
+                    For more information on this "Advanced Kernel Metadata",
+                    see the
+                    "<link linkend='kernel-dev-advanced'>Working With Advanced Metadata (<filename>yocto-kernel-cache</filename>)</link>"
+                    Chapter.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>linux-yocto-dev</filename>:</emphasis>
@@ -157,9 +171,9 @@
             introduces new bugs.
             These consequences are the basic properties of upstream
             Linux kernel development and are managed by the Yocto Project
-            team's Linux Yocto kernel development strategy.
+            team's Yocto Linux kernel development strategy.
             It is the Yocto Project team's policy to not back-port minor
-            features to the released Linux Yocto kernel.
+            features to the released Yocto Linux kernel.
             They only consider back-porting significant technological
             jumps &dash; and, that is done after a complete gap analysis.
             The reason for this policy is that back-porting any small to
@@ -169,19 +183,19 @@
 
         <para>
             The policies described in this section result in both a stable
-            and a cutting edge Linux Yocto kernel that mixes forward ports of
+            and a cutting edge Yocto Linux kernel that mixes forward ports of
             existing Linux kernel features and significant and critical new
             functionality.
-            Forward porting Linux kernel functionality into the Linux Yocto
+            Forward porting Linux kernel functionality into the Yocto Linux
             kernels available through the Yocto Project can be thought of as
             a "micro uprev."
-            The many “micro uprevs” produce a Linux Yocto kernel version with
+            The many “micro uprevs” produce a Yocto Linux kernel version with
             a mix of important new mainline, non-mainline, BSP developments
             and feature integrations.
             This Yocto Linux kernel gives insight into new features and
             allows focused amounts of testing to be done on the kernel,
             which prevents surprises when selecting the next major uprev.
-            The quality of these cutting edge Linux Yocto kernels is evolving
+            The quality of these cutting edge Yocto Linux kernels is evolving
             and the kernels are used in leading edge feature and BSP
             development.
         </para>
@@ -211,13 +225,12 @@
                 <itemizedlist>
                     <listitem><para>
                         Git is the obvious SCM for meeting the Yocto Linux
-                        kernel organizational and structural goals
-                        described in this section.
-                        Not only is Git the SCM for Linux kernel
-                        development in <filename>kernel.org</filename> but,
-                        Git continues to grow in popularity and supports
-                        many different work flows, front-ends and
-                        management techniques.
+                        kernel organizational and structural goals described
+                        in this section.
+                        Not only is Git the SCM for Linux kernel development in
+                        <filename>kernel.org</filename> but, Git continues to
+                         grow in popularity and supports many different work
+                         flows, front-ends and management techniques.
                         </para></listitem>
                     <listitem><para>
                         You can find documentation on Git at
@@ -251,12 +264,11 @@
         </para>
 
         <para>
-            This "tree-like" architecture results in a tree that has
-            features organized to be specific for particular
-            functionality, single kernel types, or a subset of kernel
-            types.
-            Thus, the user has the ability to see the added
-            features and the commits that make up those features.
+            This "tree-like" architecture results in a structure that has
+            features organized to be specific for particular functionality,
+            single kernel types, or a subset of kernel types.
+            Thus, the user has the ability to see the added features and the
+            commits that make up those features.
             In addition to being able to see added features, the user
             can also view the history of what made up the baseline
             Linux kernel.
@@ -388,7 +400,8 @@
         <para>
             Because commits only change at significant release points in the
             product life cycle, developers can work on a branch created
-            from the last relevant commit in the shipped Yocto Project kernel.
+            from the last relevant commit in the shipped Yocto Project Linux
+            kernel.
             As mentioned previously, the structure is transparent to the
             developer because the kernel tree is left in this state after
             cloning and building the kernel.
@@ -476,7 +489,9 @@
             section.
             You can also reference the
             "<link linkend='using-devtool-to-patch-the-kernel'>Using <filename>devtool</filename> to Patch the Kernel</link>"
-            section for a detailed example that modifies the kernel.
+            and
+            "<link linkend='using-traditional-kernel-development-to-patch-the-kernel'>Using Traditional Kernel Development to Patch the Kernel</link>"
+            sections for detailed example that modifies the kernel.
         </para>
     </section>
 
@@ -513,30 +528,32 @@
 
         <para>
             To determine whether or not a given option is "hardware" or
-            "non-hardware", the kernel Metadata contains files that
+            "non-hardware", the kernel Metadata in
+            <filename>yocto-kernel-cache</filename> contains files that
             classify individual or groups of options as either hardware
             or non-hardware.
             To better show this, consider a situation where the
-            Yocto Project kernel cache contains the following files:
+            <filename>yocto-kernel-cache</filename> contains the following
+            files:
             <literallayout class='monospaced'>
-     kernel-cache/features/drm-psb/hardware.cfg
-     kernel-cache/features/kgdb/hardware.cfg
-     kernel-cache/ktypes/base/hardware.cfg
-     kernel-cache/bsp/mti-malta32/hardware.cfg
-     kernel-cache/bsp/fsl-mpc8315e-rdb/hardware.cfg
-     kernel-cache/bsp/qemu-ppc32/hardware.cfg
-     kernel-cache/bsp/qemuarma9/hardware.cfg
-     kernel-cache/bsp/mti-malta64/hardware.cfg
-     kernel-cache/bsp/arm-versatile-926ejs/hardware.cfg
-     kernel-cache/bsp/common-pc/hardware.cfg
-     kernel-cache/bsp/common-pc-64/hardware.cfg
-     kernel-cache/features/rfkill/non-hardware.cfg
-     kernel-cache/ktypes/base/non-hardware.cfg
-     kernel-cache/features/aufs/non-hardware.kcf
-     kernel-cache/features/ocf/non-hardware.kcf
-     kernel-cache/ktypes/base/non-hardware.kcf
-     kernel-cache/ktypes/base/hardware.kcf
-     kernel-cache/bsp/qemu-ppc32/hardware.kcf
+     yocto-kernel-cache/features/drm-psb/hardware.cfg
+     yocto-kernel-cache/features/kgdb/hardware.cfg
+     yocto-kernel-cache/ktypes/base/hardware.cfg
+     yocto-kernel-cache/bsp/mti-malta32/hardware.cfg
+     yocto-kernel-cache/bsp/fsl-mpc8315e-rdb/hardware.cfg
+     yocto-kernel-cache/bsp/qemu-ppc32/hardware.cfg
+     yocto-kernel-cache/bsp/qemuarma9/hardware.cfg
+     yocto-kernel-cache/bsp/mti-malta64/hardware.cfg
+     yocto-kernel-cache/bsp/arm-versatile-926ejs/hardware.cfg
+     yocto-kernel-cache/bsp/common-pc/hardware.cfg
+     yocto-kernel-cache/bsp/common-pc-64/hardware.cfg
+     yocto-kernel-cache/features/rfkill/non-hardware.cfg
+     yocto-kernel-cache/ktypes/base/non-hardware.cfg
+     yocto-kernel-cache/features/aufs/non-hardware.kcf
+     yocto-kernel-cache/features/ocf/non-hardware.kcf
+     yocto-kernel-cache/ktypes/base/non-hardware.kcf
+     yocto-kernel-cache/ktypes/base/hardware.kcf
+     yocto-kernel-cache/bsp/qemu-ppc32/hardware.kcf
             </literallayout>
             The following list provides explanations for the various
             files:
