@@ -2258,23 +2258,29 @@
         </para>
 
         <para>
-            Here are some basic steps you can use to work with your own sources:
+            Here are some basic steps you can use to work with your own
+            sources:
             <orderedlist>
-                <listitem><para>Copy the <filename>linux-yocto-custom.bb</filename>
+                <listitem><para>
+                    <emphasis>Create a Copy of the Kernel Recipe:</emphasis>
+                    Copy the <filename>linux-yocto-custom.bb</filename>
                     recipe to your layer and give it a meaningful name.
-                    The name should include the version of the Linux kernel you
-                    are using (e.g.
-                    <filename>linux-yocto-myproject_3.19.bb</filename>,
-                    where "3.19" is the base version of the Linux kernel
-                    with which you would be working).</para></listitem>
-                <listitem><para>In the same directory inside your layer,
-                    create a matching directory
-                    to store your patches and configuration files (e.g.
-                    <filename>linux-yocto-myproject</filename>).
+                    The name should include the version of the Yocto Linux
+                    kernel you are using (e.g.
+                    <filename>linux-yocto-myproject_4.12.bb</filename>,
+                    where "4.12" is the base version of the Linux kernel
+                    with which you would be working).
                     </para></listitem>
-                <listitem><para>Make sure you have either a
-                    <filename>defconfig</filename> file or configuration
-                    fragment files.
+                <listitem><para>
+                    <emphasis>Create a Directory for Your Patches:</emphasis>
+                    In the same directory inside your layer, create a matching
+                    directory to store your patches and configuration files
+                    (e.g. <filename>linux-yocto-myproject</filename>).
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Ensure You Have Configurations:</emphasis>
+                    Make sure you have either a <filename>defconfig</filename>
+                    file or configuration fragment files in your layer.
                     When you use the <filename>linux-yocto-custom.bb</filename>
                     recipe, you must specify a configuration.
                     If you do not have a <filename>defconfig</filename> file,
@@ -2283,27 +2289,32 @@
      $ make defconfig
                     </literallayout>
                     After running the command, copy the resulting
-                    <filename>.config</filename> to the
-                    <filename>files</filename> directory as "defconfig" and
-                    then add it to the
+                    <filename>.config</filename> file to the
+                    <filename>files</filename> directory in your layer
+                    as "defconfig" and then add it to the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
                     variable in the recipe.</para>
+
                     <para>Running the <filename>make defconfig</filename>
                     command results in the default configuration for your
                     architecture as defined by your kernel.
                     However, no guarantee exists that this configuration is
                     valid for your use case, or that your board will even boot.
-                    This is particularly true for non-x86 architectures.
-                    To use non-x86 <filename>defconfig</filename> files, you
-                    need to be more specific and find one that matches your
+                    This is particularly true for non-x86 architectures.</para>
+
+                    <para>To use non-x86 <filename>defconfig</filename> files,
+                    you need to be more specific and find one that matches your
                     board (i.e. for arm, you look in
                     <filename>arch/arm/configs</filename> and use the one that
                     is the best starting point for your board).
                     </para></listitem>
-                <listitem><para>Edit the following variables in your recipe
-                    as appropriate for your project:
+                <listitem><para>
+                    <emphasis>Edit the Recipe:</emphasis>
+                    Edit the following variables in your recipe as appropriate
+                    for your project:
                     <itemizedlist>
-                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>:
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>:
                             The <filename>SRC_URI</filename> should specify
                             a Git repository that uses one of the supported Git
                             fetcher protocols (i.e. <filename>file</filename>,
@@ -2315,24 +2326,32 @@
                             The skeleton recipe provides an example
                             <filename>SRC_URI</filename> as a syntax reference.
                             </para></listitem>
-                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_VERSION'><filename>LINUX_VERSION</filename></ulink>:
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_VERSION'><filename>LINUX_VERSION</filename></ulink>:
                             The Linux kernel version you are using (e.g.
-                            "3.19").</para></listitem>
-                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_VERSION_EXTENSION'><filename>LINUX_VERSION_EXTENSION</filename></ulink>:
-                            The Linux kernel <filename>CONFIG_LOCALVERSION</filename>
-                            that is compiled into the resulting kernel and visible
+                            "4.12").
+                            </para></listitem>
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_VERSION_EXTENSION'><filename>LINUX_VERSION_EXTENSION</filename></ulink>:
+                            The Linux kernel
+                            <filename>CONFIG_LOCALVERSION</filename> that is
+                            compiled into the resulting kernel and visible
                             through the <filename>uname</filename> command.
                             </para></listitem>
-                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>:
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>:
                             The commit ID from which you want to build.
                             </para></listitem>
-                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>:
-                            Treat this variable the same as you would in any other
-                            recipe.
-                            Increment the variable to indicate to the OpenEmbedded
-                            build system that the recipe has changed.
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>:
+                            Treat this variable the same as you would in any
+                            other recipe.
+                            Increment the variable to indicate to the
+                            OpenEmbedded build system that the recipe has
+                            changed.
                             </para></listitem>
-                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>:
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>:
                             The default <filename>PV</filename> assignment is
                             typically adequate.
                             It combines the <filename>LINUX_VERSION</filename>
@@ -2340,16 +2359,17 @@
                             as derived from the
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCPV'><filename>SRCPV</filename></ulink>
                             variable.
-                            The combined results are a string with
-                            the following form:
+                            The combined results are a string with the
+                            following form:
                             <literallayout class='monospaced'>
      3.19.11+git1+68a635bf8dfb64b02263c1ac80c948647cc76d5f_1+218bd8d2022b9852c60d32f0d770931e3cf343e2
                             </literallayout>
-                            While lengthy, the extra verbosity in <filename>PV</filename>
-                            helps ensure you are using the exact
-                            sources from which you intend to build.
+                            While lengthy, the extra verbosity in
+                            <filename>PV</filename> helps ensure you are using
+                            the exact sources from which you intend to build.
                             </para></listitem>
-                        <listitem><para><ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>:
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>:
                             A list of the machines supported by your new recipe.
                             This variable in the example recipe is set
                             by default to a regular expression that matches
@@ -2358,18 +2378,24 @@
                             failure.
                             You must change it to match a list of the machines
                             that your new recipe supports.
-                            For example, to support the <filename>qemux86</filename>
-                            and <filename>qemux86-64</filename> machines, use
+                            For example, to support the
+                            <filename>qemux86</filename> and
+                            <filename>qemux86-64</filename> machines, use
                             the following form:
                             <literallayout class='monospaced'>
      COMPATIBLE_MACHINE = "qemux86|qemux86-64"
-                            </literallayout></para></listitem>
-                    </itemizedlist></para></listitem>
-                <listitem><para>Provide further customizations to your recipe
+                            </literallayout>
+                            </para></listitem>
+                    </itemizedlist>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Customize Your Recipe as Needed:</emphasis>
+                    Provide further customizations to your recipe
                     as needed just as you would customize an existing
                     linux-yocto recipe.
-                    See the "<link linkend='modifying-an-existing-recipe'>Modifying
-                    an Existing Recipe</link>" section for information.
+                    See the
+                    "<link linkend='modifying-an-existing-recipe'>Modifying an Existing Recipe</link>"
+                    section for information.
                     </para></listitem>
             </orderedlist>
         </para>
