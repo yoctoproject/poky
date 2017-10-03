@@ -56,7 +56,7 @@
         <para>
             Once you have cloned the kernel Git repository and the
             cache of Metadata on your local machine, you can discover the
-            branches that are avilable in the repository using the following
+            branches that are available in the repository using the following
             Git command:
             <literallayout class='monospaced'>
      $ git branch -a
@@ -188,7 +188,7 @@
                     <emphasis>Clone Base Repository:</emphasis>
                     The base repository is cloned, and the actions
                     listed in the <filename>yocto-kernel-cache</filename>
-                    irectories are applied to the tree.
+                    directories are applied to the tree.
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Perform Cleanup:</emphasis>
@@ -228,74 +228,99 @@
         <title>Build Strategy</title>
 
         <para>
-            Once a local Git repository of the Yocto Project kernel exists on a development system,
-            you can consider the compilation phase of kernel development - building a kernel image.
-            Some prerequisites exist that are validated by the build process before compilation
-            starts:
+            Once you have cloned a Yocto Linux kernel repository and the
+            cache repository (<filename>yocto-kernel-cache</filename>) onto
+            your development system, you can consider the compilation phase
+            of kernel development, which is building a kernel image.
+            Some prerequisites exist that are validated by the build process
+            before compilation starts:
         </para>
 
         <itemizedlist>
-            <listitem><para>The
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink> points
-                to the kernel Git repository.</para></listitem>
-            <listitem><para>A BSP build branch exists.
-                This branch has the following form:
+            <listitem><para>
+                The
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                points to the kernel Git repository.
+                </para></listitem>
+            <listitem><para>
+                A BSP build branch with Metadata exists in the
+                <filename>yocto-kernel-cache</filename> repository.
+                The branch is based on the Yocto Linux kernel version and
+                has configurations and features grouped under the
+                <filename>yocto-kernel-cache/bsp</filename> directory.
+                For example, features and configurations for the
+                BeagleBone Board assuming a
+                <filename>linux-yocto_4.12</filename> kernel reside in the
+                following area of the <filename>yocto-kernel-cache</filename>
+                repository:
                 <literallayout class='monospaced'>
-     <replaceable>kernel_type</replaceable>/<replaceable>bsp_name</replaceable>
-                </literallayout></para></listitem>
+     yocto-kernel-cache/bsp/beaglebone
+                </literallayout>
+                <note>
+                    In the previous example, the "yocto-4.12" branch is
+                    checked out in the <filename>yocto-kernel-cache</filename>
+                    repository.
+                </note>
+                </para></listitem>
         </itemizedlist>
 
         <para>
-            The OpenEmbedded build system makes sure these conditions exist before attempting compilation.
+            The OpenEmbedded build system makes sure these conditions exist
+            before attempting compilation.
             Other means, however, do exist, such as as bootstrapping a BSP.
         </para>
 
         <para>
             Before building a kernel, the build process verifies the tree
             and configures the kernel by processing all of the
-            configuration "fragments" specified by feature descriptions in the <filename>.scc</filename>
-            files.
-            As the features are compiled, associated kernel configuration fragments are noted
-            and recorded in the <filename>meta-*</filename> series of directories in their compilation order.
-            The fragments are migrated, pre-processed and passed to the Linux Kernel
-            Configuration subsystem (<filename>lkc</filename>) as raw input in the form
-            of a <filename>.config</filename> file.
-            The <filename>lkc</filename> uses its own internal dependency constraints to do the final
-            processing of that information and generates the final <filename>.config</filename> file
-            that is used during compilation.
+            configuration "fragments" specified by feature descriptions
+            in the <filename>.scc</filename> files.
+            As the features are compiled, associated kernel configuration
+            fragments are noted and recorded in the series of directories
+            in their compilation order.
+            The fragments are migrated, pre-processed and passed to the
+            Linux Kernel Configuration subsystem (<filename>lkc</filename>) as
+            raw input in the form of a <filename>.config</filename> file.
+            The <filename>lkc</filename> uses its own internal dependency
+            constraints to do the final processing of that information and
+            generates the final <filename>.config</filename> file that is used
+            during compilation.
         </para>
 
         <para>
-            Using the board's architecture and other relevant values from the board's template,
-            kernel compilation is started and a kernel image is produced.
+            Using the board's architecture and other relevant values from
+            the board's template, kernel compilation is started and a kernel
+            image is produced.
         </para>
 
         <para>
             The other thing that you notice once you configure a kernel is that
-            the build process generates a build tree that is separate from your kernel's local Git
-            source repository tree.
+            the build process generates a build tree that is separate from
+            your kernel's local Git source repository tree.
             This build tree has a name that uses the following form, where
-            <filename>${MACHINE}</filename> is the metadata name of the machine (BSP) and "kernel_type" is one
-            of the Yocto Project supported kernel types (e.g. "standard"):
+            <filename>${MACHINE}</filename> is the metadata name of the
+            machine (BSP) and "kernel_type" is one of the Yocto Project
+            supported kernel types (e.g. "standard"):
         <literallayout class='monospaced'>
      linux-${MACHINE}-<replaceable>kernel_type</replaceable>-build
         </literallayout>
         </para>
 
         <para>
-            The existing support in the <filename>kernel.org</filename> tree achieves this
-            default functionality.
+            The existing support in the <filename>kernel.org</filename> tree
+            achieves this default functionality.
         </para>
 
         <para>
-            This behavior means that all the generated files for a particular machine or BSP are now in
-            the build tree directory.
-            The files include the final <filename>.config</filename> file, all the <filename>.o</filename>
-            files, the <filename>.a</filename> files, and so forth.
+            This behavior means that all the generated files for a particular
+            machine or BSP are now in the build tree directory.
+            The files include the final <filename>.config</filename> file,
+            all the <filename>.o</filename> files, the <filename>.a</filename>
+            files, and so forth.
             Since each machine or BSP has its own separate
             <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
-            in its own separate branch
-            of the Git repository, you can easily switch between different builds.
+            in its own separate branch of the Git repository, you can easily
+            switch between different builds.
         </para>
     </section>
 </appendix>
