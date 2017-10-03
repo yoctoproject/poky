@@ -7166,41 +7166,50 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-KERNEL_FEATURES'><glossterm>KERNEL_FEATURES</glossterm>
             <info>
-                KERNEL_FEATURES[doc] = "Includes additional metadata from the Yocto Project kernel Git repository. The metadata you add through this variable includes config fragments and features descriptions."
+                KERNEL_FEATURES[doc] = "Includes additional kernel metadata. The metadata you add through this variable includes config fragments and features descriptions."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Includes additional metadata from the Yocto Project kernel Git repository.
-                    In the OpenEmbedded build system, the default Board Support Packages (BSPs)
+                    Includes additional kernel metadata.
+                    In the OpenEmbedded build system, the default Board Support
+                    Packages (BSPs)
                     <ulink url='&YOCTO_DOCS_REF_URL;#metadata'>Metadata</ulink>
                     is provided through
                     the <link linkend='var-KMACHINE'><filename>KMACHINE</filename></link>
-                    and <link linkend='var-KBRANCH'><filename>KBRANCH</filename></link> variables.
-                    You can use the <filename>KERNEL_FEATURES</filename> variable to further
-                    add metadata for all BSPs.
+                    and
+                    <link linkend='var-KBRANCH'><filename>KBRANCH</filename></link>
+                    variables.
+                    You can use the <filename>KERNEL_FEATURES</filename>
+                    variable from within the kernel recipe or kernel append
+                    file to further add metadata for all BSPs or specific
+                    BSPs.
                 </para>
 
                 <para>
-                    The metadata you add through this variable includes config fragments and
-                    features descriptions,
+                    The metadata you add through this variable includes config
+                    fragments and features descriptions,
                     which usually includes patches as well as config fragments.
-                    You typically override the <filename>KERNEL_FEATURES</filename> variable
-                    for a specific machine.
-                    In this way, you can provide validated, but optional, sets of kernel
-                    configurations and features.
+                    You typically override the
+                    <filename>KERNEL_FEATURES</filename> variable for a
+                    specific machine.
+                    In this way, you can provide validated, but optional,
+                    sets of kernel configurations and features.
                 </para>
 
                 <para>
-                    For example, the following adds <filename>netfilter</filename> to all
-                    the Yocto Project kernels and adds sound support to the <filename>qemux86</filename>
-                    machine:
+                    For example, the following example from the
+                    <filename>linux-yocto-rt_4.12</filename> kernel recipe
+                    adds "netfilter" and "taskstats" features to all BSPs
+                    as well as "virtio" configurations to all QEMU machines.
+                    The last two statements add specific configurations to
+                    targeted machine types:
                     <literallayout class='monospaced'>
-     # Add netfilter to all linux-yocto kernels
-     KERNEL_FEATURES="features/netfilter/netfilter.scc"
-
-     # Add sound support to the qemux86 machine
-     KERNEL_FEATURES_append_qemux86=" cfg/sound.scc"
+     KERNEL_EXTRA_FEATURES ?= "features/netfilter/netfilter.scc features/taskstats/taskstats.scc"
+     KERNEL_FEATURES_append = " ${KERNEL_EXTRA_FEATURES}"
+     KERNEL_FEATURES_append_qemuall=" cfg/virtio.scc"
+     KERNEL_FEATURES_append_qemux86=" cfg/sound.scc cfg/paravirt_kvm.scc"
+     KERNEL_FEATURES_append_qemux86-64=" cfg/sound.scc"
                     </literallayout></para>
             </glossdef>
         </glossentry>
