@@ -4742,7 +4742,8 @@
                     in a directory that has the same name as the corresponding
                     append file.
                     <note>
-                        <para>When extending <filename>FILESEXTRAPATHS</filename>,
+                        <para>When extending
+                        <filename>FILESEXTRAPATHS</filename>,
                         be sure to use the immediate expansion
                         (<filename>:=</filename>) operator.
                         Immediate expansion makes sure that BitBake evaluates
@@ -4751,6 +4752,7 @@
                         some later time when expansion might result in a
                         directory that does not contain the files you need.
                         </para>
+
                         <para>Also, include the trailing separating colon
                         character if you are prepending.
                         The trailing colon character is necessary because you
@@ -4768,10 +4770,34 @@
                 </para>
 
                 <para>
-                    Here is a final example that specifically adds three paths:
+                    This next example specifically adds three paths:
                     <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "path_1:path_2:path_3:"
                     </literallayout>
+                </para>
+
+                <para>
+                    A final example shows how you can extend the search path
+                    and include a
+                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link>-specific
+                    override, which is useful in a BSP layer:
+                    <literallayout class='monospaced'>
+     FILESEXTRAPATHS_prepend_intel-x86-common := "${THISDIR}/${PN}:"
+                    </literallayout>
+                    The previous statement appears in the
+                    <filename>linux-yocto-dev.bbappend</filename> file, which
+                    is found in the Yocto Project
+                    <link linkend='source-repositories'>Source Repositories</link>
+                    in
+                    <filename>meta-intel/common/recipes-kernel/linux</filename>.
+                    Here, the machine override is a special
+                    <link linkend='var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></link>
+                    definition for multiple <filename>meta-intel</filename>
+                    machines.
+                    <note>
+                        For a layer that supports a single BSP, the override
+                        could just be the value of <filename>MACHINE</filename>.
+                    </note>
                 </para>
 
                 <para>
