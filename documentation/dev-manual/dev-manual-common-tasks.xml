@@ -5467,22 +5467,22 @@
                 <title>Plug-ins</title>
 
                 <para>
-                    Plug-ins allow Wic functionality to
-                    be extended and specialized by users.
-                    This section documents the plug-in interface, which is
-                    currently restricted to source plug-ins.
+                    You can extend and specialize Wic functionality by using
+                    Wic plug-ins.
+                    This section explains the Wic plug-in interface.
+                    <note>
+                        Wic plug-ins consist of "source" and "imager" plug-ins.
+                        Imager plug-ins are beyond the scope of this section.
+                    </note>
                 </para>
 
                 <para>
-                    Source plug-ins provide a mechanism to customize
-                    various aspects of the image generation process in
-                    Wic, mainly the contents of
-                    partitions.
-                    The plug-ins provide a mechanism for mapping values
-                    specified in <filename>.wks</filename> files using the
-                    <filename>--source</filename> keyword to a
-                    particular plug-in implementation that populates a
-                    corresponding partition.
+                    Source plug-ins provide a mechanism to customize partition
+                    content during the Wic image generation process.
+                    You can use source plug-ins to map values that you specify
+                    using <filename>--source</filename> commands in kickstart
+                    files (i.e. <filename>*.wks</filename>) to a plug-in
+                    implementation used to populate a given partition.
                     <note>
                         If you use plug-ins that have build-time dependencies
                         (e.g. native tools, bootloaders, and so forth)
@@ -5494,80 +5494,119 @@
                 </para>
 
                 <para>
-                    A source plug-in is created as a subclass of
-                    <filename>SourcePlugin</filename>.
-                    The plug-in file containing it is added to
-                    <filename>scripts/lib/wic/plugins/source/</filename> to
-                    make the plug-in implementation available to the
-                    Wic implementation.
-                    For more information, see
-                    <filename>scripts/lib/wic/pluginbase.py</filename>.
+                    Source plug-ins are subclasses defined in plug-in files.
+                    As shipped, the Yocto Project provides several plug-in
+                    files.
+                    You can see the source plug-in files that ship with the
+                    Yocto Project
+                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/scripts/lib/wic/plugins/source'>here</ulink>.
+                    Each of these plug-in files contain source plug-ins that
+                    are designed to populate a specific Wic image partition.
                 </para>
 
                 <para>
-                    Source plug-ins can also be implemented and added by
-                    external layers.
-                    As such, any plug-ins found in a
+                    Source plug-ins are subclasses of the
+                    <filename>SourcePlugin</filename> class, which is
+                    defined in the
+                    <filename>poky/scripts/lib/wic/pluginbase.py</filename>
+                    file.
+                    For example, the <filename>BootimgEFIPlugin</filename>
+                    source plug-in found in the
+                    <filename>bootimg-efi.py</filename> file is a subclass of
+                    the <filename>SourcePlugin</filename> class, which is found
+                    in the <filename>pluginbase.py</filename> file.
+                </para>
+
+                <para>
+                    You can also implement source plug-ins in a layer outside
+                    of the Source Repositories (external layer).
+                    To do so, be sure that your plug-in files are located in
+                    a directory whose path is
                     <filename>scripts/lib/wic/plugins/source/</filename>
-                    directory in an external layer are also made
-                    available.
+                    within your external layer.
+                    When the plug-in files are located there, the source
+                    plug-ins they contain are made available to Wic.
                 </para>
 
                 <para>
-                    When the Wic implementation needs
-                    to invoke a partition-specific implementation, it looks
-                    for the plug-in that has the same name as the
-                    <filename>--source</filename> parameter given to
-                    that partition.
-                    For example, if the partition is set up as follows:
+                    When the Wic implementation needs to invoke a
+                    partition-specific implementation, it looks for the plug-in
+                    with the same name as the <filename>--source</filename>
+                    parameter used in the kickstart file given to that
+                    partition.
+                    For example, if the partition is set up using the following
+                    command in a kickstart file:
                     <literallayout class='monospaced'>
-     part /boot --source bootimg-pcbios   ...
+     part /boot --source bootimg-pcbios --ondisk sda --label boot --active --align 1024
                     </literallayout>
-                    The methods defined as class members of the plug-in
-                    having the matching <filename>bootimg-pcbios.name</filename>
-                    class member are used.
+                    The methods defined as class members of the matching
+                    source plug-in (i.e. <filename>bootimg-pcbios</filename>)
+                    in the <filename>bootimg-pcbios.py</filename> plug-in file
+                    are used.
                 </para>
 
                 <para>
-                    To be more concrete, here is the plug-in definition that
-                    matches a
-                    <filename>--source bootimg-pcbios</filename> usage,
-                    along with an example
-                    method called by the Wic implementation
-                    when it needs to invoke an implementation-specific
-                    partition-preparation function:
+                    To be more concrete, here is the corresponding plug-in
+                    definition from the <filename>bootimg-pcbios.py</filename>
+                    file for the previous command along with an example
+                    method called by the Wic implementation when it needs to
+                    prepare a partition using an implementation-specific
+                    function:
                     <literallayout class='monospaced'>
-    class BootimgPcbiosPlugin(SourcePlugin):
+     bootimg-pcbios.py
+                  .
+                  .
+                  .
+        class BootimgPcbiosPlugin(SourcePlugin):
+        """
+        Create MBR boot partition and install syslinux on it.
+        """
+
         name = 'bootimg-pcbios'
-
-    @classmethod
-        def do_prepare_partition(self, part, ...)
+                  .
+                  .
+                  .
+        @classmethod
+        def do_prepare_partition(cls, part, source_params, creator, cr_workdir,
+                                 oe_builddir, bootimg_dir, kernel_dir,
+                                 rootfs_dir, native_sysroot):
+            """
+            Called to do the actual content population for a partition i.e. it
+            'prepares' the partition to be incorporated into the image.
+            In this case, prepare content for legacy bios boot partition.
+            """
+                  .
+                  .
+                  .
                     </literallayout>
-                    If the subclass itself does not implement a function, a
-                    default version in a superclass is located and
-                    used, which is why all plug-ins must be derived from
-                    <filename>SourcePlugin</filename>.
+                    If a subclass (plug-in) itself does not implement a
+                    particular function, Wic locates and uses the default
+                    version in the superclass.
+                    It is for this reason that all source plug-ins are derived
+                    from the <filename>SourcePlugin</filename> class.
                 </para>
 
                 <para>
-                    The <filename>SourcePlugin</filename> class defines the
-                    following methods, which is the current set of methods
-                    that can be implemented or overridden by
-                    <filename>--source</filename> plug-ins.
-                    Any methods not implemented by a
-                    <filename>SourcePlugin</filename> subclass inherit the
-                    implementations present in the
-                    <filename>SourcePlugin</filename> class.
+                    The <filename>SourcePlugin</filename> class defined in
+                    the <filename>pluginbase.py</filename> file defines
+                    a set of methods that source plug-ins can implement or
+                    override.
+                    Any plug-ins (subclass of
+                    <filename>SourcePlugin</filename>) that do not implement
+                    a particular method inherit the implementation of the
+                    method from the <filename>SourcePlugin</filename> class.
                     For more information, see the
-                    <filename>SourcePlugin</filename> source for details:
+                    <filename>SourcePlugin</filename> class in the
+                    <filename>pluginbase.py</filename> file for details:
                 </para>
 
                 <para>
+                    The following list describes the methods implemented in the
+                    <filename>SourcePlugin</filename> class:
                     <itemizedlist>
                         <listitem><para>
                             <emphasis><filename>do_prepare_partition()</filename>:</emphasis>
-                            Called to do the actual content population for a
-                            partition.
+                            Called to populate a partition with actual content.
                             In other words, the method prepares the final
                             partition image that is incorporated into the
                             disk image.
@@ -5575,27 +5614,27 @@
                         <listitem><para>
                             <emphasis><filename>do_configure_partition()</filename>:</emphasis>
                             Called before
-                            <filename>do_prepare_partition()</filename>.
-                            This method is typically used to create custom
-                            configuration files for a partition (e.g. syslinux
-                            or grub configuration files).
+                            <filename>do_prepare_partition()</filename> to
+                            create custom configuration files for a partition
+                            (e.g. syslinux or grub configuration files).
                             </para></listitem>
                         <listitem><para>
                             <emphasis><filename>do_install_disk()</filename>:</emphasis>
                             Called after all partitions have been prepared and
                             assembled into a disk image.
                             This method provides a hook to allow finalization
-                            of a disk image, (e.g. writing an MBR).
+                            of a disk image (e.g. writing an MBR).
                             </para></listitem>
                         <listitem><para>
                             <emphasis><filename>do_stage_partition()</filename>:</emphasis>
                             Special content-staging hook called before
                             <filename>do_prepare_partition()</filename>.
                             This method is normally empty.</para>
+
                             <para>Typically, a partition just uses the passed-in
                             parameters (e.g. the unmodified value of
                             <filename>bootimg_dir</filename>).
-                            However, in some cases things might need to be
+                            However, in some cases, things might need to be
                             more tailored.
                             As an example, certain files might additionally
                             need to be taken from
@@ -5605,27 +5644,26 @@
                             <note>
                                 <filename>get_bitbake_var()</filename>
                                 allows you to access non-standard variables
-                                that you might want to use for this.
+                                that you might want to use for this
+                                behavior.
                             </note>
                             </para></listitem>
                     </itemizedlist>
                 </para>
 
                 <para>
-                    This scheme is extensible.
-                    Adding more hooks is a simple matter of adding more
-                    plug-in methods to <filename>SourcePlugin</filename> and
-                    derived classes.
-                    The code that then needs to call the plug-in methods uses
+                    You can extend the source plug-in mechanism.
+                    To add more hooks, create more source plug-in methods
+                    within <filename>SourcePlugin</filename> and the
+                    corresponding derived subclasses.
+                    The code that calls the plug-in methods uses the
                     <filename>plugin.get_source_plugin_methods()</filename>
-                    to find the method or methods needed by the call.
-                    Retrieval of those methods is accomplished
-                    by filling up a dict with keys
-                    containing the method names of interest.
+                    function to find the method or methods needed by the call.
+                    Retrieval of those methods is accomplished by filling up
+                    a dict with keys that contain the method names of interest.
                     On success, these will be filled in with the actual
                     methods.
-                    Please see the Wic
-                    implementation for examples and details.
+                    See the Wic implementation for examples and details.
                 </para>
             </section>
 
