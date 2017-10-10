@@ -57,7 +57,7 @@
         </para>
 
         <section id='getting-ready-to-develop-using-devtool'>
-            <title>Getting Ready to Develop using <filename>devtool</filename></title>
+            <title>Getting Ready to Develop Using <filename>devtool</filename></title>
 
             <para>
                 Follow these steps to prepare to update the kernel image using
@@ -129,15 +129,18 @@
       Don't forget to add it to your BBLAYERS (for details see ../meta-mylayer/README).
                         </literallayout>
                         <note>
-                            For background information on working with layers,
-                            see the
+                            For background information on working with
+                            common and BSP layers, see the
                             "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
-                            section in the Yocto Project Development Manual.
-                            See the
+                            section in the Yocto Project Development Manual
+                            and the
+                            "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
+                            section in the Yocto Project Board Support (BSP)
+                            Developer's Guide, respectively.
+                            For information on how to use the
+                            <filename>yocto-layer</filename> script, see the
                             "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-general-layer-using-the-yocto-layer-script'>Creating a General Layer Using the yocto-layer Script</ulink>"
-                            section in the Yocto Project Development Manual for
-                            details on how to use the
-                            <filename>yocto-layer</filename> script.
+                            section in the Yocto Project Development Manual.
                         </note>
                         </para></listitem>
                     <listitem><para>
@@ -350,15 +353,18 @@
       Don't forget to add it to your BBLAYERS (for details see ../meta-mylayer/README).
                         </literallayout>
                         <note>
-                            For background information on working with layers,
-                            see the
+                            For background information on working with
+                            common and BSP layers, see the
                             "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
-                            section in the Yocto Project Development Manual.
-                            See the
+                            section in the Yocto Project Development Manual
+                            and the
+                            "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
+                            section in the Yocto Project Board Support (BSP)
+                            Developer's Guide, respectively.
+                            For information on how to use the
+                            <filename>yocto-layer</filename> script, see the
                             "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-general-layer-using-the-yocto-layer-script'>Creating a General Layer Using the yocto-layer Script</ulink>"
-                            section in the Yocto Project Development Manual for
-                            details on how to use the
-                            <filename>yocto-layer</filename> script.
+                            section in the Yocto Project Development Manual.
                         </note>
                         </para></listitem>
                     <listitem><para>
@@ -815,7 +821,7 @@
                 <filename>devtool</filename>, see the
                 "<link linkend='using-devtool-to-patch-the-kernel'>Using <filename>devtool</filename> to Patch the Kernel</link>"
                 and
-                "<link linkend='using-traditional-kernel-development-to-patch-the-kernel'>Using Traditional Kernel Development to Patch the Kernel'></link>"
+                "<link linkend='using-traditional-kernel-development-to-patch-the-kernel'>Using Traditional Kernel Development to Patch the Kernel</link>"
                 sections.
             </para>
         </section>
@@ -935,16 +941,17 @@
 
             <para>
                 To specify an "in-tree" <filename>defconfig</filename> file,
-                use the following
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-KBUILD_DEFCONFIG'><filename>KBUILD_DEFCONFIG</filename></ulink>
-                statement form in the append file for the kernel recipe:
+                use the following statement form:
                 <literallayout class='monospaced'>
      KBUILD_DEFCONFIG_<replaceable>KMACHINE</replaceable> ?= <replaceable>defconfig_file</replaceable>
                 </literallayout>
-                You need to append the variable with
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>
-                and then supply the path to your "in-tree"
-                <filename>defconfig</filename> file.
+                Here is an example that appends the
+                <filename>KBUILD_DEFCONFIG</filename> variable with
+                "common-pc" and provides the path to the "in-tree"
+                <filename>defconfig</filename> file:
+                <literallayout class='monospaced'>
+     KBUILD_DEFCONFIG_common-pc ?= "/home/scottrif/configfiles/my_defconfig_file"
+                </literallayout>
             </para>
 
             <para>
@@ -990,14 +997,6 @@
             to an existing kernel, changing or adding recipes to the kernel
             that are needed to support specific hardware features, or even
             altering the source code itself.
-            <note>
-                You can also use the <filename>yocto-kernel</filename> script
-                found in the <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
-                under <filename>scripts</filename> to manage kernel patches and configuration.
-                See the "<ulink url='&YOCTO_DOCS_BSP_URL;#managing-kernel-patches-and-config-items-with-yocto-kernel'>Managing kernel Patches and Config Items with yocto-kernel</ulink>"
-                section in the Yocto Project Board Support Packages (BSP)
-                Developer's Guide for more information.
-            </note>
         </para>
 
         <para>
@@ -1007,12 +1006,10 @@
             code file.
             Applying the patch and booting the modified image causes the added
             messages to appear on the emulator's console.
-            <note>
-                The example is a continuation of the setup procedure found in
-                the
-                "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop using <filename>devtool</filename></link>"
-                Section.
-            </note>
+            The example is a continuation of the setup procedure found in
+            the
+            "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop Using <filename>devtool</filename></link>"
+            Section.
             <orderedlist>
                 <listitem><para>
                     <emphasis>Check Out the Kernel Source Files:</emphasis>
@@ -1161,7 +1158,7 @@
                     <filename>meta-mylayer</filename>.
                     <note>
                         See Step 3 of the
-                        "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop using devtool</link>"
+                        "<link linkend='getting-ready-to-develop-using-devtool'>Getting Ready to Develop Using devtool</link>"
                         section for information on setting up this layer.
                     </note>
                     <literallayout class='monospaced'>
@@ -1212,31 +1209,31 @@
             to an existing kernel, changing or adding recipes to the kernel
             that are needed to support specific hardware features, or even
             altering the source code itself.
-            <note>
-                You can also use the <filename>yocto-kernel</filename> script
-                found in the
-                <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
-                under <filename>scripts</filename> to manage kernel patches
-                and configuration.
-                See the "<ulink url='&YOCTO_DOCS_BSP_URL;#managing-kernel-patches-and-config-items-with-yocto-kernel'>Managing kernel Patches and Config Items with yocto-kernel</ulink>"
-                section in the Yocto Project Board Support Packages (BSP)
-                Developer's Guide for more information.
-            </note>
         </para>
 
         <para>
-            This example creates a simple patch by adding some QEMU emulator
-            console output at boot time through <filename>printk</filename>
-            statements in the kernel's <filename>calibrate.c</filename> source
-            code file.
+            The example in this section creates a simple patch by adding some
+            QEMU emulator console output at boot time through
+            <filename>printk</filename> statements in the kernel's
+            <filename>calibrate.c</filename> source code file.
             Applying the patch and booting the modified image causes the added
             messages to appear on the emulator's console.
-            <note>
-                The example is a continuation of the setup procedure found in
-                the
-                "<link linkend='getting-ready-for-traditional-kernel-development'>Getting Ready for Traditional Kernel Development</link>"
-                Section.
-            </note>
+            The example is a continuation of the setup procedure found in
+            the
+            "<link linkend='getting-ready-for-traditional-kernel-development'>Getting Ready for Traditional Kernel Development</link>"
+            Section.
+        </para>
+
+        <para>
+            Although this example uses Git and shell commands to generate the
+            patch, you could use the <filename>yocto-kernel</filename> script
+            found in the <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+            under <filename>scripts</filename> to add and manage kernel
+            patches and configuration.
+            See the "<ulink url='&YOCTO_DOCS_BSP_URL;#managing-kernel-patches-and-config-items-with-yocto-kernel'>Managing kernel Patches and Config Items with yocto-kernel</ulink>"
+            section in the Yocto Project Board Support Packages (BSP)
+            Developer's Guide for more information on the
+            <filename>yocto-kernel</filename> script.
             <orderedlist>
                 <listitem><para>
                     <emphasis>Edit the Source Files</emphasis>
@@ -2112,114 +2109,6 @@
                     section.
                     </para></listitem>
             </orderedlist>
-        </para>
-    </section>
-
-    <section id='iteratively-modifying-source-code'>
-        <title>Iteratively Modifying Source Code</title>
-
-        <para>
-            If you do not have existing patches or configuration files and
-            you are using traditional kernel development methods,
-            you can iteratively generate them from within the BitBake build
-            environment as described within this section.
-            During an iterative workflow, running a previously completed BitBake
-            task causes BitBake to invalidate the tasks that follow the
-            completed task in the build sequence.
-            Invalidated tasks rebuild the next time you run the build using
-            BitBake.
-        </para>
-
-        <para>
-            As you read this section, be sure to substitute the name
-            of your Linux kernel recipe for the term
-            "linux-yocto".
-        </para>
-
-        <para>
-            You can experiment with source code changes and create a
-            simple patch without leaving the BitBake environment.
-            To get started, be sure to complete a build at
-            least through the kernel configuration task:
-            <literallayout class='monospaced'>
-     $ bitbake linux-yocto -c kernel_configme -f
-            </literallayout>
-            Taking this step ensures you have the sources prepared
-            and the configuration completed.
-            You can find the sources in the build directory within the
-            <filename>source/</filename> directory, which is a symlink
-            (i.e. <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-B'><filename>B</filename></ulink><filename>}/source</filename>).
-            The <filename>source/</filename> directory expands to
-            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename><filename>/linux-</filename><filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink><filename>}-${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE'><filename>LINUX_KERNEL_TYPE</filename></ulink><filename>}-build/source</filename>.
-            The directory pointed to by the
-            <filename>source/</filename> symlink is also known as
-            <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_KERNEL_DIR'><filename>STAGING_KERNEL_DIR</filename></ulink><filename>}</filename>.
-        </para>
-
-        <para>
-            You can edit the sources as you would any other Linux source
-            tree.
-            However, keep in mind that you will lose changes if you
-            trigger the
-            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-fetch'><filename>do_fetch</filename></ulink>
-            task for the recipe.
-            You can avoid triggering this task by not using BitBake to
-            run the
-            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleanall'><filename>cleanall</filename></ulink>,
-            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-cleansstate'><filename>cleansstate</filename></ulink>,
-            or forced
-            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-fetch'><filename>fetch</filename></ulink>
-            commands.
-            Also, do not modify the recipe itself while working
-            with temporary changes or BitBake might run the
-            <filename>fetch</filename> command depending on the
-            changes to the recipe.
-        </para>
-
-        <para>
-            To test your temporary changes, instruct BitBake to run the
-            <filename>compile</filename> again.
-            The <filename>-f</filename> option forces the command to run
-            even though BitBake might think it has already done so:
-            <literallayout class='monospaced'>
-     $ bitbake linux-yocto -c compile -f
-            </literallayout>
-            If the compile fails, you can update the sources and repeat
-            the <filename>compile</filename>.
-            Once compilation is successful, you can inspect and test
-            the resulting build (i.e. kernel, modules, and so forth) from
-            the following build directory:
-            <literallayout class='monospaced'>
-     ${WORKDIR}/linux-${PACKAGE_ARCH}-${LINUX_KERNEL_TYPE}-build
-            </literallayout>
-            Alternatively, you can run the <filename>deploy</filename>
-            command to place the kernel image in the
-            <filename>tmp/deploy/images</filename> directory:
-            <literallayout class='monospaced'>
-     $ bitbake linux-yocto -c deploy
-            </literallayout>
-            And, of course, you can perform the remaining installation and
-            packaging steps by issuing:
-            <literallayout class='monospaced'>
-     $ bitbake linux-yocto
-            </literallayout>
-        </para>
-
-        <para>
-            For rapid iterative development, the edit-compile-repeat loop
-            described in this section is preferable to rebuilding the
-            entire recipe because the installation and packaging tasks
-            are very time consuming.
-        </para>
-
-        <para>
-            Once you are satisfied with your source code modifications,
-            you can make them permanent by generating patches and
-            applying them to the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-            statement as described in the
-            "<link linkend='applying-patches'>Applying Patches</link>"
-            section.
         </para>
     </section>
 
