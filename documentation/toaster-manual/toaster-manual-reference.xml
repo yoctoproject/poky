@@ -316,6 +316,9 @@
                 For example, you can add one or more additional selections that
                 present custom layer sets or distros, and any other local or proprietary
                 content.
+            </para>
+
+            <para>
                 Additionally, you can completely disable the content from the
                 <filename>oe-core.xml</filename> and <filename>poky.xml</filename>
                 files by defining the section shown below in the
@@ -331,7 +334,6 @@
                 <literallayout class='monospaced'>
      &lt;object model="orm.toastersetting" pk="99"&gt;
        &lt;field type="CharField" name="name"&gt;CUSTOM_XML_ONLY&lt;/field&gt;
-
        &lt;field type="CharField" name="value"&gt;True&lt;/field&gt;
      &lt;/object&gt;
                 </literallayout>
@@ -342,15 +344,15 @@
             <title>Understanding Fixture File Format</title>
 
             <para>
-                The following is an overview of the file format used by the 
+                The following is an overview of the file format used by the
                 <filename>oe-core.xml</filename>, <filename>poky.xml</filename>,
                 and <filename>custom.xml</filename> files.
             </para>
 
             <para>
-                The following subsections describe each of the sections in the 
+                The following subsections describe each of the sections in the
                 fixture files, and outline an example section of the XML code.
-                you can use to help understand this information and create a local 
+                you can use to help understand this information and create a local
                 <filename>custom.xml</filename> file.
             </para>
 
@@ -447,6 +449,12 @@
                     Layer definitions are the most complex.
                     The following defines each of the layers, and then defines the exact layer
                     version of the layer used for each respective release.
+                    You must have one <filename>orm.layer</filename>
+                    entry for each layer.
+                    Then, with each entry you need a set of
+                    <filename>orm.layer_version</filename> entries that connects
+                    the layer with each release that includes the layer.
+                    In general all releases include the layer.
                     <literallayout class='monospaced'>
      &lt;object model="orm.layer" pk="1"&gt;
        &lt;field type="CharField" name="name"&gt;openembedded-core&lt;/field&gt;
