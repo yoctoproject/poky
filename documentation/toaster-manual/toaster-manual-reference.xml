@@ -254,331 +254,239 @@
         </section>
     </section>
 
-    <section id='toaster-json-files'>
-        <title>JSON Files</title>
+    <section id='configuring-toaster'>
+        <title>Configuring Toaster</title>
 
         <para>
-            You must configure Toaster before using it.
-            Configuration customizes layer source settings and Toaster defaults
-            for all users and is performed by the person responsible for
-            Toaster Configuration (i.e  the Toaster Administrator).
-            The Toaster Administrator performs this configuration through the
-            Django administration interface.
+            In order to use Toaster, you must configure the database with the
+            default content. The following subsections describe various aspects
+            of Toaster configuration.
         </para>
 
-<!--
-        <para>
-            To make it easier to initially start Toaster, you can import a
-            pre-defined configuration file using the
-            <link linkend='toaster-command-loadconf'><filename>loadconf</filename></link>
-            command.
-            <note>
-                The configuration file is a JSON-formatted text file with
-                specific fields that Toaster recognizes.
-                It is not a data dump from the database, so it cannot be
-                loaded directly in the database.
-            </note>
-        </para>
--->
-
-        <para>
-            By convention, the supplied configuration files are named
-            <filename>toasterconf.json</filename>.
-            The Toaster Administrator can customize the file prior to loading
-            it into Toaster.
-            The <filename>TOASTER_CONF</filename> variable in the
-            Toaster startup script at <filename>bitbake/bin/toaster</filename>
-            specifies the location of the <filename>toasterconf.json</filename> file.
-        </para>
-
-        <section id='json-file-choices'>
-            <title>Configuration File Choices</title>
+        <section id='configuring-the-workflow'>
+            <title>Configuring the Workflow</title>
 
             <para>
-                Two versions of the configuration file exist:
-                <itemizedlist>
+                The
+                <filename>bldcontrol/management/commands/checksettings.py</filename>
+                file controls workflow configuration.
+                The following steps outline the process to initially populate
+                this database.
+                <orderedlist>
                     <listitem><para>
-                        The
-                        <filename>meta-poky/conf/toasterconf.json</filename>
-                        in the <filename>conf</filename> directory of the
-                        Yocto Project's <filename>meta-poky</filename> layer.
-                        This version contains the default Yocto Project
-                        configuration for Toaster.
-                        You are prompted to select this file during the Toaster
-                        set up process if you cloned the
-                        <filename>poky</filename> repository (i.e.
-                        <filename>&YOCTO_GIT_URL;/poky</filename>).
+                        The default project settings are set from
+                        <filename>orm/fixtures/settings.xml</filename>.
                         </para></listitem>
                     <listitem><para>
-                        The <filename>meta/conf/toasterconf.json</filename>
-                        in the <filename>conf</filename> directory of the
-                        OpenEmbedded's <filename>openembedded-core</filename>
-                        layer.
-                        This version contains the default OpenEmbedded
-                        configuration for Toaster.
-                        You are prompted to select this file during the Toaster
-                        set up process if you had cloned the
-                        <filename>openembedded-core</filename> repository (i.e.
-                        <filename>git://git.openembedded.org/openembedded-core</filename>).
+                        The default project distro and layers are added
+                        from <filename>orm/fixtures/poky.xml</filename> if poky
+                        is installed.
+                        If poky is not installed, they are added
+                        from <filename>orm/fixtures/oe-core.xml</filename>.
                         </para></listitem>
-                </itemizedlist>
+                    <listitem><para>
+                        If the <filename>orm/fixtures/custom.xml</filename> file
+                        exists, then its values are added.
+                        </para></listitem>
+                    <listitem><para>
+                        The layer index is then scanned and added to the database.
+                        </para></listitem>
+                </orderedlist>
+                Once these steps complete, Toaster is set up and ready to use.
             </para>
         </section>
 
-        <section id='json-structure'>
-            <title>File Structure</title>
+        <section id='customizing-pre-set-data'>
+            <title>Customizing Pre-Set Data</title>
 
             <para>
-                The <filename>toasterconf.json</filename> file consists of
-                easily readable areas: configuration, layer sources, BitBake,
-                default release, and releases.
+                The pre-set data for Toaster is easily customizable. You can
+                create the <filename>orm/fixtures/custom.xml</filename> file
+                to customize the values that go into to the database.
+                Customization is additive,
+                and can either extend or completely replace the existing values.
             </para>
 
-            <section id='json-config-area'>
-                <title>Configuration Area</title>
+            <para>
+                You use the <filename>orm/fixtures/custom.xml</filename> file
+                to change the default project settings for the machine, distro,
+                file images, and layers.
+                When creating a new project, you can use the file to define
+                the offered alternate project release selections.
+                For example, you can add one or more additional selections that
+                present custom layer sets or distros, and any other local or proprietary
+                content.
+                Additionally, you can completely disable the content from the
+                <filename>oe-core.xml</filename> and <filename>poky.xml</filename>
+                files by defining the section shown below in the
+                <filename>settings.xml</filename> file.
+                For example, this option is particularly useful if your custom
+                configuration defines fewer releases or layers than the default
+                fixture files.
+            </para>
+
+            <para>
+                The following example sets "name" to "CUSTOM_XML_ONLY" and its value
+                to "True".
+                <literallayout class='monospaced'>
+     &lt;object model="orm.toastersetting" pk="99"&gt;
+       &lt;field type="CharField" name="name"&gt;CUSTOM_XML_ONLY&lt;/field&gt;
+
+       &lt;field type="CharField" name="value"&gt;True&lt;/field&gt;
+     &lt;/object&gt;
+                </literallayout>
+            </para>
+        </section>
+
+        <section id='understanding-fixture-file-format'>
+            <title>Understanding Fixture File Format</title>
+
+            <para>
+                The following is an overview of the file format used by the 
+                <filename>oe-core.xml</filename>, <filename>poky.xml</filename>,
+                and <filename>custom.xml</filename> files.
+            </para>
+
+            <para>
+                The following subsections describe each of the sections in the 
+                fixture files, and outline an example section of the XML code.
+                you can use to help understand this information and create a local 
+                <filename>custom.xml</filename> file.
+            </para>
+
+            <section id='defining-the-default-distro'>
+                <title>Defining the Default Distro</title>
 
                 <para>
-                    This area of the JSON file sets which variables are exposed
-                    to users through the Toaster web interface.
-                    Users can easily edit these variables.
-                </para>
-
-                <para>
-                    The variables you set here are displayed in the
-                    "Configuration variables" page in Toaster.
-                    Minimally, you should set the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
-                    variable, which appears to users as part of the project
-                    page in Toaster.
-                </para>
-
-                <para>
-                    Here is the default <filename>config</filename> area:
+                    This section defines the default distro value for new projects.
+                    By default, it reserves the first Toaster Setting record "1".
+                    The following demonstrates how to set the project default value
+                    for
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO'><filename>DISTRO</filename></ulink>:
                     <literallayout class='monospaced'>
-     "config": {
-         "MACHINE"      : "qemux86",
-         "DISTRO"       : "poky",
-         "IMAGE_FSTYPES": "ext3 jffs2 tar.bz2",
-         "IMAGE_INSTALL_append": "",
-         "PACKAGE_CLASSES": "package_rpm",
-     },
+     &lt;!-- Set the project default value for DISTRO --&gt;
+     &lt;object model="orm.toastersetting" pk="1"&gt;
+       &lt;field type="CharField" name="name"&gt;DEFCONF_DISTRO&lt;/field&gt;
+       &lt;field type="CharField" name="value"&gt;poky&lt;/field&gt;
+     &lt;/object&gt;
                     </literallayout>
-                </para>
-            </section>
-
-            <section id='json-layersources-area'>
-                <title>Layer Sources Area</title>
-
-                <para>
-                    This area of the JSON file defines the
-                    <link linkend='layer-source'>layer sources</link>
-                    Toaster uses.
-                    Toaster reads layer information from layer sources.
-                    Three types of layer sources exist that Toaster
-                    recognizes: Local, LayerIndex, and Imported.
-                </para>
-
-                <para>
-                    The Local layer source reads layers from Git clones
-                    available on your local drive.
-                    Using a local layer source enables you to easily test
-                    Toaster.
                     <note>
-                        If you are setting up a hosted version of Toaster,
-                        it does not make sense to have a local layer source.
+                       You can override the default value by adding additional
+                       Toaster Setting sections such as any of the settings coming
+                       from the <filename>settings.xml</filename> file.
+                       Also, you can add custom values that are included in the
+                       BitBake environment.
+                       The "pk" values must be unique.
+                       By convention, values that set default project values have a
+                       "DEFCONF" prefix.
                     </note>
                 </para>
+            </section>
+
+            <section id='defining-bitbake-version'>
+                <title>Defining BitBake Version</title>
 
                 <para>
-                    The LayerIndex layer source uses a REST API exposed by
-                    instances of the Layer Index application (e.g the public
-                    <ulink url='http://layers.openembedded.org/'></ulink>)
-                    to read layer data.
-                </para>
-
-                <para>
-                    The Imported layer source is reserved for layer data
-                    manually introduced by the user or Toaster Administrator
-                    through the GUI.
-                    This layer source lets users import their own layers
-                    and build them with Toaster.
-                    You should not remove the imported layer source.
-                </para>
-
-                <para>
-                    Here is the default <filename>layersources</filename> area:
+                    The following defines which version of BitBake is used
+                    for the following release selection:
                     <literallayout class='monospaced'>
-    "layersources": [
-        {
-            "name": "Local Yocto Project",
-            "sourcetype": "local",
-            "apiurl": "../../",
-            "branches": ["HEAD" ],
-            "layers": [
-                {
-                    "name": "openembedded-core",
-                    "local_path": "meta",
-                    "vcs_url": "remote:origin",
-                    "dirpath": "meta"
-                },
-                {
-                    "name": "meta-poky",
-                    "local_path": "meta-poky",
-                    "vcs_url": "remote:origin",
-                    "dirpath": "meta-poky"
-                },
-                {
-                    "name": "meta-yocto-bsp",
-                    "local_path": "meta-yocto-bsp",
-                    "vcs_url": "remote:origin",
-                    "dirpath": "meta-yocto-bsp"
-                }
-
-            ]
-        },
-        {
-            "name": "OpenEmbedded",
-            "sourcetype": "layerindex",
-            "apiurl": "http://layers.openembedded.org/layerindex/api/",
-            "branches": ["master", "jethro" ,"fido"]
-        },
-        {
-            "name": "Imported layers",
-            "sourcetype": "imported",
-            "apiurl": "",
-            "branches": ["master", "jethro","fido", "HEAD"]
-
-        }
-    ],
+     &lt;!-- Bitbake versions which correspond to the metadata release --&gt;
+     &lt;object model="orm.bitbakeversion" pk="1"&gt;
+       &lt;field type="CharField" name="name"&gt;rocko&lt;/field&gt;
+       &lt;field type="CharField" name="giturl"&gt;git://git.yoctoproject.org/poky&lt;/field&gt;
+       &lt;field type="CharField" name="branch"&gt;rocko&lt;/field&gt;
+       &lt;field type="CharField" name="dirpath"&gt;bitbake&lt;/field&gt;
+     &lt;/object&gt;
                     </literallayout>
                 </para>
             </section>
 
-            <section id='json-bitbake-area'>
-                <title>BitBake Area</title>
+            <section id='defining-releases'>
+                <title>Defining Release</title>
 
                 <para>
-                    This area of the JSON file defines the version of
-                    BitBake Toaster uses.
-                    As shipped, Toaster is configured to recognize four
-                    versions of BitBake: master, fido, jethro, and HEAD.
-                    <note>
-                        HEAD is a special option that builds whatever is
-                        available on disk, without checking out any remote
-                        Git repositories.
-                    </note>
-                </para>
-
-                <para>
-                    Here is the default <filename>bitbake</filename> area:
+                    The following defines the releases when you create a new
+                    project.
                     <literallayout class='monospaced'>
-     "bitbake" : [
-         {
-             "name": "master",
-             "giturl": "remote:origin",
-             "branch": "master",
-             "dirpath": "bitbake"
-         },
-        {
-             "name": "jethro",
-             "giturl": "remote:origin",
-             "branch": "jethro",
-             "dirpath": "bitbake"
-         },
-         {
-             "name": "fido",
-             "giturl": "remote:origin",
-             "branch": "fido",
-            "dirpath": "bitbake"
-        },
-         {
-             "name": "HEAD",
-             "giturl": "remote:origin",
-             "branch": "HEAD",
-             "dirpath": "bitbake"
-         }
-     ],
+     &lt;!-- Releases available --&gt;
+     &lt;object model="orm.release" pk="1"&gt;
+       &lt;field type="CharField" name="name"&gt;rocko&lt;/field&gt;
+       &lt;field type="CharField" name="description"&gt;Yocto Project 2.4 "Rocko"&lt;/field&gt;
+       &lt;field rel="ManyToOneRel" to="orm.bitbakeversion" name="bitbake_version"&gt;1&lt;/field&gt;
+       &lt;field type="CharField" name="branch_name"&gt;rocko&lt;/field&gt;
+       &lt;field type="TextField" name="helptext"&gt;Toaster will run your builds using the tip of the &lt;a href="http://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?h=rocko"&gt;Yocto Project Rocko branch&lt;/a&gt;.&lt;/field&gt;
+     &lt;/object&gt;
                     </literallayout>
+                    The "pk" value must match the above respective BitBake
+                    version record.
                 </para>
             </section>
 
-            <section id='json-default-area'>
-                <title>Default Area</title>
+            <section id='defining-the-release-default-layer-names'>
+                <title>Defining the Release Default Layer Names</title>
 
                 <para>
-                    This area of the JSON file establishes a default
-                    release used by Toaster.
-                    As shipped, Toaster uses the "master" release.
-                </para>
-
-                <para>
-                    Here is the statement in the JSON file that establishes
-                    the default release:
+                    The following defines the default layers for each release:
                     <literallayout class='monospaced'>
-     "defaultrelease": "master",
+     &lt;!-- Default project layers for each release --&gt;
+     &lt;object model="orm.releasedefaultlayer" pk="1"&gt;
+       &lt;field rel="ManyToOneRel" to="orm.release" name="release"&gt;1&lt;/field&gt;
+       &lt;field type="CharField" name="layer_name"&gt;openembedded-core&lt;/field&gt;
+     &lt;/object&gt;
                     </literallayout>
+                    The 'pk' values in the example above should start at "1" and increment
+                    uniquely.
+                    You can use the same layer name in multiple releases.
                 </para>
             </section>
 
-            <section id='json-releases-area'>
-                <title>Releases Area</title>
+            <section id='defining-layer-definitions'>
+                <title>Defining Layer Definitions</title>
 
                 <para>
-                    This area of the JSON file defines the versions of the
-                    OpenEmbedded build system Toaster recognizes.
-                    As shipped, Toaster is configured to work with the four
-                    releases described in the
-                    "<link linkend='toaster-releases-supported'>Pre-Configured Releases</link>"
-                    section.
-                </para>
-
-                <para>
-                    Here is the default <filename>releases</filename> area:
+                    Layer definitions are the most complex.
+                    The following defines each of the layers, and then defines the exact layer
+                    version of the layer used for each respective release.
                     <literallayout class='monospaced'>
-     "releases": [
-         {
-             "name": "master",
-             "description": "Yocto Project master",
-             "bitbake": "master",
-             "branch": "master",
-             "defaultlayers": [ "openembedded-core", "meta-poky", "meta-yocto-bsp"],
-             "layersourcepriority": { "Imported layers": 99, "Local Yocto Project" : 10, "OpenEmbedded" :  0 },
-             "helptext": "Toaster will run your builds using the tip of the &lt;a href=\"http://git.yoctoproject.org/cgit/cgit.cgi/poky/log/\"&gt;Yocto Project master branch&lt;/a&gt;, where active development takes place. This is not a stable branch, so your builds might not work as expected."
-         },
-         {
-             "name": "jethro",
-             "description": "Yocto Project 2.0 Jethro",
-             "bitbake": "jethro",
-             "branch": "jethro",
-             "defaultlayers": [ "openembedded-core", "meta-poky", "meta-yocto-bsp"],
-             "layersourcepriority": { "Imported layers": 99, "Local Yocto Project" : 10, "OpenEmbedded" :  0 },
-             "helptext": "Toaster will run your builds with the tip of the &lt;a href=\"http://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?h=jethro\"&gt;Yocto Project 2.0 \"Jethro\"&lt;/a&gt; branch."
-         },
-         {
-             "name": "fido",
-             "description": "Yocto Project 1.8 Fido",
-             "bitbake": "fido",
-             "branch": "fido",
-             "defaultlayers": [ "openembedded-core", "meta-poky", "meta-yocto-bsp"],
-             "layersourcepriority": { "Imported layers": 99, "Local Yocto Project" : 10, "OpenEmbedded" :  0 },
-             "helptext": "Toaster will run your builds with the tip of the &lt;a href=\"http://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?h=fido\"&gt;Yocto Project 1.8 \"Fido\"&lt;/a&gt; branch."
-         },
-         {
-             "name": "local",
-             "description": "Local Yocto Project",
-             "bitbake": "HEAD",
-             "branch": "HEAD",
-             "defaultlayers": [ "openembedded-core", "meta-poky", "meta-yocto-bsp"],
-             "layersourcepriority": { "Imported layers": 99, "Local Yocto Project" : 10, "OpenEmbedded" :  0 },
-             "helptext": "Toaster will run your builds with the version of the Yocto Project you have cloned or downloaded to your computer."
-         }
-     ]
+     &lt;object model="orm.layer" pk="1"&gt;
+       &lt;field type="CharField" name="name"&gt;openembedded-core&lt;/field&gt;
+       &lt;field type="CharField" name="layer_index_url"&gt;&lt;/field&gt;
+       &lt;field type="CharField" name="vcs_url"&gt;git://git.yoctoproject.org/poky&lt;/field&gt;
+       &lt;field type="CharField" name="vcs_web_url"&gt;http://git.yoctoproject.org/cgit/cgit.cgi/poky&lt;/field&gt;
+       &lt;field type="CharField" name="vcs_web_tree_base_url"&gt;http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/%path%?h=%branch%&lt;/field&gt;
+       &lt;field type="CharField" name="vcs_web_file_base_url"&gt;http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/%path%?h=%branch%&lt;/field&gt;
+     &lt;/object&gt;
+     &lt;object model="orm.layer_version" pk="1"&gt;
+       &lt;field rel="ManyToOneRel" to="orm.layer" name="layer"&gt;1&lt;/field&gt;
+       &lt;field type="IntegerField" name="layer_source"&gt;0&lt;/field&gt;
+       &lt;field rel="ManyToOneRel" to="orm.release" name="release"&gt;1&lt;/field&gt;
+       &lt;field type="CharField" name="branch"&gt;rocko&lt;/field&gt;
+       &lt;field type="CharField" name="dirpath"&gt;meta&lt;/field&gt;
+     &lt;/object&gt;
+     &lt;object model="orm.layer_version" pk="2"&gt;
+       &lt;field rel="ManyToOneRel" to="orm.layer" name="layer"&gt;1&lt;/field&gt;
+       &lt;field type="IntegerField" name="layer_source"&gt;0&lt;/field&gt;
+       &lt;field rel="ManyToOneRel" to="orm.release" name="release"&gt;2&lt;/field&gt;
+       &lt;field type="CharField" name="branch"&gt;HEAD&lt;/field&gt;
+       &lt;field type="CharField" name="commit"&gt;HEAD&lt;/field&gt;
+       &lt;field type="CharField" name="dirpath"&gt;meta&lt;/field&gt;
+     &lt;/object&gt;
+     &lt;object model="orm.layer_version" pk="3"&gt;
+       &lt;field rel="ManyToOneRel" to="orm.layer" name="layer"&gt;1&lt;/field&gt;
+       &lt;field type="IntegerField" name="layer_source"&gt;0&lt;/field&gt;
+       &lt;field rel="ManyToOneRel" to="orm.release" name="release"&gt;3&lt;/field&gt;
+
+       &lt;field type="CharField" name="branch"&gt;master&lt;/field&gt;
+       &lt;field type="CharField" name="dirpath"&gt;meta&lt;/field&gt;
+     &lt;/object&gt;
                     </literallayout>
+                    The layer "pk" values above must be unique, and typically start at "1".
+                    The layer version "pk" values must also be unique across all layers,
+                    and typically start at "1".
                 </para>
             </section>
         </section>
-    </section>
-
+    </section>      
 
     <section id='remote-toaster-monitoring'>
         <title>Remote Toaster Monitoring</title>
