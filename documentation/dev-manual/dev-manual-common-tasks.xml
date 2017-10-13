@@ -5438,6 +5438,138 @@
                     artifact is manually specified.
                 </para>
             </section>
+
+            <section id='using-wic-to-manipulate-an-image'>
+                <title>Using Wic to Manipulate an Image</title>
+
+                <para>
+                    Wic image manipulation allows you to shorten turnaround
+                    time during image development.
+                    For example, you can use Wic to delete the kernel partition
+                    of a Wic image and then insert a newly built kernel.
+                    This saves you time from having to rebuild the entire image
+                    each time you modify the kernel.
+                    <note>
+                        In order to use Wic to manipulate a Wic image as in
+                        this example, your development machine must have the
+                        <filename>mtools</filename> package installed.
+                    </note>
+                </para>
+
+                <para>
+                    The following example examines the contents of the Wic
+                    image, deletes the existing kernel, and then inserts a
+                    new kernel:
+                    <orderedlist>
+                        <listitem><para>
+                            <emphasis>List the Partitions:</emphasis>
+                            Use the <filename>wic ls</filename> command to list
+                            all the partitions in the Wic image:
+                            <literallayout class='monospaced'>
+     $ wic ls tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic
+     Num     Start        End          Size      Fstype
+      1       1048576     25041919     23993344  fat16
+      2      25165824     72157183     46991360  ext4
+                            </literallayout>
+                            The previous output shows two partitions in the
+                            <filename>core-image-minimal-qemux86.wic</filename>
+                            image.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Examine a Particular Partition:</emphasis>
+                            Use the <filename>wic ls</filename> command again
+                            but in a different form to examine a particular
+                            partition.
+                            <note>
+                                You can get command usage on any Wic command
+                                using the following form:
+                                <literallayout class='monospaced'>
+     $ wic help <replaceable>command</replaceable>
+                                </literallayout>
+                                For example, the following command shows you
+                                the various ways to use the
+                                <filename>wic ls</filename> command:
+                                <literallayout class='monospaced'>
+     $ wic help ls
+                                </literallayout>
+                            </note>
+                            The following command shows what is in Partition
+                            one:
+                            <literallayout class='monospaced'>
+     $ wic ls tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic:1
+     Volume in drive : is boot
+      Volume Serial Number is E894-1809
+     Directory for ::/
+
+     libcom32 c32    186500 2017-10-09  16:06
+     libutil  c32     24148 2017-10-09  16:06
+     syslinux cfg       220 2017-10-09  16:06
+     vesamenu c32     27104 2017-10-09  16:06
+     vmlinuz        6904608 2017-10-09  16:06
+             5 files           7 142 580 bytes
+                              16 582 656 bytes free
+                            </literallayout>
+                            The previous output shows five files, with the
+                            <filename>vmlinuz</filename> being the kernel.
+                            <note>
+                                If you see the following error, you need to
+                                update or create a
+                                <filename>~/.mtoolsrc</filename> with the
+                                suggested statement and then run the Wic
+                                command again:
+                                <literallayout class='monospaced'>
+     ERROR: _exec_cmd: /usr/bin/mdir -i /tmp/wic-parttfokuwra ::/ returned '1' instead of 0
+      output: Total number of sectors (47824) not a multiple of sectors per track (32)!
+      Add mtools_skip_check=1 to your .mtoolsrc file to skip this test
+                                </literallayout>
+                             </note>
+                             </para></listitem>
+                         <listitem><para>
+                             <emphasis>Remove the Old Kernel:</emphasis>
+                             Use the <filename>wic rm</filename> command to
+                             remove the <filename>vmlinuz</filename> file
+                             (kernel):
+                             <literallayout class='monospaced'>
+     $ wic rm tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic:1/vmlinuz
+                             </literallayout>
+                             </para></listitem>
+                         <listitem><para>
+                             <emphasis>Add In the New Kernel:</emphasis>
+                             Use the <filename>wic cp</filename> command to
+                             add the updated kernel to the Wic image.
+                             Depending on how you built your kernel, it could
+                             be in different places.
+                             If you used <filename>devtool</filename> and
+                             an SDK to build your kernel, it resides in the
+                             <filename>tmp/work</filename> directory of the
+                             extensible SDK.
+                             If you used <filename>make</filename> to build the
+                             kernel, the kernel will be in the
+                             <filename>workspace/sources</filename> area.
+                             </para>
+
+                             <para>The following example assumes
+                             <filename>devtool</filename> was used to build
+                             the kernel:
+                             <literallayout class='monospaced'>
+     cp ~/poky_sdk/tmp/work/qemux86-poky-linux/linux-yocto/4.12.12+git999-r0/linux-yocto-4.12.12+git999/arch/x86/boot/bzImage \
+        ~/poky/build/tmp/deploy/images/qemux86/core-image-minimal-qemux86.wic:1/vmlinuz
+                             </literallayout>
+                             Once the new kernel is added back into the image,
+                             you can use the <filename>dd</filename>
+                             command or
+                             <link linkend='flashing-images-using-bmaptool'><filename>bmaptool</filename></link>
+                             to flash your wic image onto an SD card
+                             or USB stick and test your target.
+                             <note>
+                                 Using <filename>bmaptool</filename> is
+                                 generally 10 to 20 times faster than using
+                                 <filename>dd</filename>.
+                             </note>
+                             </para></listitem>
+                     </orderedlist>
+                 </para>
+             </section>
         </section>
     </section>
 
