@@ -8,7 +8,7 @@
 # system.  These manuals also include an "eclipse" sub-directory as part of
 # the make process.
 #
-# Note that the figures for the Yocto Project Development Manual
+# Note that the figures for the Yocto Project Development Tasks Manual
 # differ depending on the BRANCH being built.
 #
 # The Makefile has these targets:
@@ -42,7 +42,7 @@
 # To build a manual, you must invoke Makefile with the DOC argument.  If you
 # are going to publish the manual, then you must invoke Makefile with both the
 # DOC and the VER argument.  Furthermore, if you are building or publishing
-# the edison or denzil versions of the Yocto Project Development Manual or
+# the edison or denzil versions of the Yocto Project Development Tasks Manual or
 # the mega-manual, you must also use the BRANCH argument.
 #
 # Examples:
@@ -59,7 +59,7 @@
 # 'make DOC=yocto-project-qs' command would be equivalent. The third example
 # generates just the PDF version of the Yocto Project Reference Manual.
 # The fourth example generates the HTML 'edison' version and (if available)
-# the Eclipse help version of the YP Development Manual.  The last example
+# the Eclipse help version of the YP Development Tasks Manual.  The last example
 # generates the HTML version of the mega-manual and uses the 'denzil'
 # branch when choosing figures for the tarball of figures.  Any example that does
 # not use the BRANCH argument builds the current version of the manual set.
@@ -79,9 +79,9 @@
 # The first example publishes the 1.7 version of both the PDF and HTML versions of
 # the BSP Guide.  The second example publishes the 1.6 version of both the PDF and
 # HTML versions of the ADT Manual. The third example publishes the 1.1.1 version of
-# the PDF and HTML YP Development Manual for the 'edison' branch.  The fourth example
-# publishes the 1.2 version of the PDF and HTML YP Development Manual for the
-# 'denzil' branch.
+# the PDF and HTML YP Development Tasks Manual for the 'edison' branch.  The fourth
+# example publishes the 1.2 version of the PDF and HTML YP Development Tasks Manual
+# for the 'denzil' branch.
 #
 
 ifeq ($(DOC),bsp-guide)
