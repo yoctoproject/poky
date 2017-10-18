@@ -1509,8 +1509,8 @@
                     You can find a complete description of the
                     <filename>devtool add</filename> command in the
                     "<ulink url='&YOCTO_DOCS_SDK_URL;#sdk-a-closer-look-at-devtool-add'>A Closer Look at <filename>devtool</filename> add</ulink>"
-                    section in the Yocto Project Software Development Kit
-                    (SDK) Developer's Guide.
+                    section in the Yocto Project Application Development
+                    and the Extensible Software Development Kit (eSDK) manual.
                 </para>
             </section>
 
@@ -3775,9 +3775,9 @@
                 clean a recipe or have <filename>rm_work</filename> enabled,
                 the
                 <ulink url='&YOCTO_DOCS_SDK_URL;#using-devtool-in-your-sdk-workflow'><filename>devtool</filename> workflow</ulink>
-                as described in the Yocto Project Software Development Kit
-                (SDK) Developer's Guide is a safer development flow than the
-                flow that uses Quilt.
+                as described in the Yocto Project Application Development
+                and the Extensible Software Development Kit (eSDK) manual
+                is a safer development flow than the flow that uses Quilt.
             </note>
         </para>
 
@@ -9992,182 +9992,6 @@ Some notes from Cal:
             </orderedlist>
         </para>
     </section>
-
-<!--
-        <section id='platdev-gdb-remotedebug-setup'>
-            <title>Set Up the Cross-Development Debugging Environment</title>
-
-            <para>
-                Before you can initiate a remote debugging session, you need
-                to be sure you have set up the cross-development environment,
-                toolchain, and sysroot.
-                The <ulink url='&YOCTO_DOCS_SDK_URL;#sdk-intro'>Yocto Project Software Development Kit (SDK) Developer's Guide</ulink>
-                describes this process.
-            </para>
-        </section>
-
-        <section id="platdev-gdb-remotedebug-launch-gdbserver">
-            <title>Launch gdbserver on the Target</title>
-
-            <para>
-                Make sure gdbserver is installed on the target.
-                If it is not, install the package
-                <filename>gdbserver</filename>, which needs the
-                <filename>libthread-db1</filename> package.
-            </para>
-
-            <para>
-                Here is an example, that when entered from the host,
-                connects to the target and launches gdbserver in order to
-                "debug" a binary named <filename>helloworld</filename>:
-                <literallayout class='monospaced'>
-     $ gdbserver localhost:2345 /usr/bin/helloworld
-                </literallayout>
-                gdbserver should now be listening on port 2345 for debugging
-                commands coming from a remote GDB process that is running on
-                the host computer.
-                Communication between gdbserver and the host GDB are done
-                using TCP.
-                To use other communication protocols, please refer to the
-                <ulink url='http://www.gnu.org/software/gdb/'>Gdbserver documentation</ulink>.
-            </para>
-        </section>
-
-        <section id="platdev-gdb-remotedebug-launch-gdb">
-            <title>Launch GDB on the Host Computer</title>
-
-            <para>
-                Running GDB on the host computer takes a number of stages, which
-                this section describes.
-            </para>
-
-            <section id="platdev-gdb-remotedebug-launch-gdb-buildcross">
-                <title>Build the Cross-GDB Package</title>
-                <para>
-                    A suitable GDB cross-binary is required that runs on your
-                    host computer but also knows about the the ABI of the
-                    remote target.
-                    You can get this binary from the
-                    <link linkend='cross-development-toolchain'>Cross-Development Toolchain</link>.
-                    Here is an example where the toolchain has been installed
-                    in the default directory
-                    <filename>/opt/poky/&DISTRO;</filename>:
-                    <literallayout class='monospaced'>
-     /opt/poky/&DISTRO;/sysroots/i686-pokysdk-linux/usr/bin/armv7a-vfp-neon-poky-linux-gnueabi/arm-poky-linux-gnueabi-gdb
-                    </literallayout>
-                    where <filename>arm</filename> is the target architecture
-                    and <filename>linux-gnueabi</filename> is the target ABI.
-                </para>
-
-                <para>
-                    Alternatively, you can use BitBake to build the
-                    <filename>gdb-cross</filename> binary.
-                    Here is an example:
-                    <literallayout class='monospaced'>
-     $ bitbake gdb-cross
-                    </literallayout>
-                    Once the binary is built, you can find it here:
-                    <literallayout class='monospaced'>
-     tmp/sysroots/<replaceable>host-arch</replaceable>/usr/bin/<replaceable>target-platform</replaceable>/<replaceable>target-abi</replaceable>-gdb
-                    </literallayout>
-                </para>
-            </section>
-
-            <section id='create-the-gdb-initialization-file'>
-                <title>Create the GDB Initialization File and Point to Your Root Filesystem</title>
-
-                <para>
-                    Aside from the GDB cross-binary, you also need a GDB
-                    initialization file in the same top directory in which
-                    your binary resides.
-                    When you start GDB on your host development system, GDB
-                    finds this initialization file and executes all the
-                    commands within.
-                    For information on the <filename>.gdbinit</filename>, see
-                    "<ulink url='http://sourceware.org/gdb/onlinedocs/gdb/'>Debugging with GDB</ulink>",
-                    which is maintained by
-                    <ulink url='http://www.sourceware.org'>sourceware.org</ulink>.
-                </para>
-
-                <para>
-                    You need to add a statement in the
-                    <filename>~/.gdbinit</filename> file that points to your
-                    root filesystem.
-                    Here is an example that points to the root filesystem for
-                    an ARM-based target device:
-                    <literallayout class='monospaced'>
-     set sysroot ~/sysroot_arm
-                    </literallayout>
-                </para>
-            </section>
-
-            <section id="platdev-gdb-remotedebug-launch-gdb-launchhost">
-                <title>Launch the Host GDB</title>
-
-                <para>
-                    Before launching the host GDB, you need to be sure
-                    you have sourced the cross-debugging environment script,
-                    which if you installed the root filesystem in the default
-                    location is at <filename>/opt/poky/&DISTRO;</filename>
-                    and begins with the string "environment-setup".
-                    For more information, see the
-                    <ulink url='&YOCTO_DOCS_SDK_URL;#sdk-manual'>Yocto Project Software Development Kit (SDK) Developer's
-                    Guide</ulink>.
-                </para>
-
-                <para>
-                    Finally, switch to the directory where the binary resides
-                    and run the <filename>cross-gdb</filename> binary.
-                    Provide the binary file you are going to debug.
-                    For example, the following command continues with the
-                    example used in the previous section by loading
-                    the <filename>helloworld</filename> binary as well as the
-                    debugging information:
-                    <literallayout class='monospaced'>
-     $ arm-poky-linux-gnuabi-gdb helloworld
-                    </literallayout>
-                    The commands in your <filename>.gdbinit</filename> execute
-                    and the GDB prompt appears.
-                </para>
-            </section>
-        </section>
-
-        <section id='platdev-gdb-connect-to-the-remote-gdb-server'>
-            <title>Connect to the Remote GDB Server</title>
-
-            <para>
-                From the target, you need to connect to the remote GDB
-                server that is running on the host.
-                You need to specify the remote host and port.
-                Here is the command continuing with the example:
-                <literallayout class='monospaced'>
-     target remote 192.168.7.2:2345
-                </literallayout>
-            </para>
-        </section>
-
-        <section id="platdev-gdb-remotedebug-launch-gdb-using">
-            <title>Use the Debugger</title>
-
-            <para>
-                You can now proceed with debugging as normal - as if you were debugging
-                on the local machine.
-                For example, to instruct GDB to break in the "main" function and then
-                continue with execution of the inferior binary use the following commands
-                from within GDB:
-                <literallayout class='monospaced'>
-     (gdb) break main
-     (gdb) continue
-                </literallayout>
-            </para>
-
-            <para>
-                For more information about using GDB, see the project's online documentation at
-                <ulink url="http://sourceware.org/gdb/download/onlinedocs/"/>.
-            </para>
-        </section>
-    </section>
--->
 
     <section id='debugging-with-the-gnu-project-debugger-gdb-on-the-target'>
         <title>Debugging with the GNU Project Debugger (GDB) on the Target</title>
