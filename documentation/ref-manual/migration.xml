@@ -3057,8 +3057,7 @@
             and the
             <ulink url='&YOCTO_DOCS_SDK_URL;#sdk-extensible'>extensible SDK</ulink>.
             For information on these SDKs and how to build and use them, see the
-            <ulink url='&YOCTO_DOCS_SDK_URL;#sdk-intro'>Yocto Project Application Development and the Extensible Software Development Kit (eSDK)</ulink>
-            manual.
+            <ulink url='&YOCTO_DOCS_SDK_URL;#sdk-intro'>Yocto Project Software Development Kit (SDK) Developer's Guide</ulink>.
             <note>
                 The Yocto Project Eclipse IDE Plug-in is still supported and
                 is not affected by this change.
@@ -4717,6 +4716,530 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     The <filename>MULTIMACH_HOST_SYS</filename>
                     variable has been removed as it is no longer needed
                     with recipe-specific sysroots.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
+
+<section id='moving-to-the-yocto-project-2.4-release'>
+    <title>Moving to the Yocto Project 2.4 Release</title>
+
+    <para>
+        This section provides migration information for moving to the
+        Yocto Project 2.4 Release from the prior release.
+    </para>
+
+    <section id='migration-2.4-memory-resident-mode'>
+        <title>Memory Resident Mode</title>
+
+        <para>
+            A persistent mode is now available in BitBake's default operation,
+            replacing its previous "memory resident mode" (i.e.
+            <filename>oe-init-build-env-memres</filename>).
+            Now you only need to set
+            <filename>BB_SERVER_TIMEOUT</filename> to a timeout
+            (in seconds) and BitBake's server stays resident for that
+            amount of time between invocations.
+            The <filename>oe-init-build-env-memres</filename> script has been
+            removed which means a separate environment setup script is no longer
+            needed.
+        </para>
+    </section>
+
+    <section id='migration-2.4-packaging-changes'>
+        <title>Packaging Changes</title>
+
+        <para>
+            This section provides information about packaging changes that have
+            ocurred:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis><filename>python3</filename> Changes:</emphasis>
+                    <itemizedlist>
+                        <listitem><para>
+                            The main "python3" package now brings in all of the
+                            standard Python 3 distributions rather than a subset.
+                            This behavior matches what is expected based on
+                            traditional Linux distributions.
+                            If you wish to install a subset of Python 3, specify
+                            <filename>python-core</filename> plus one or more of
+                            the individual packages that are still produced.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis><filename>python3</filename>:</emphasis>
+                            The <filename>bz2.py</filename>,
+                            <filename>lzma.py</filename>, and
+                            <filename>_compression.py</filename> scripts have
+                            been moved from the
+                            <filename>python3-misc</filename> package to
+                            the <filename>python3-compression</filename> package.
+                            </para></listitem>
+                    </itemizedlist>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>binutils</filename>:</emphasis>
+                    The <filename>libbfd</filename> package is now packaged in
+                    a separate "libbfd" package.
+                    This packaging saves space when certain tools
+                    (e.g. <filename>perf</filename>) are installed.
+                    In such cases, the tools only need
+                    <filename>libbfd</filename> rather than all the packages in
+                    <filename>binutils</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>util-linux</filename> Changes:</emphasis>
+                    <itemizedlist>
+                        <listitem><para>
+                            The <filename>su</filename> package is now packaged
+                            in a separate "util-linux-su" package, which is only
+                            built when "pam" is listed in the
+                            <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>
+                            variable.
+                            <filename>util-linux</filename> should not be
+                            installed unless it is needed because
+                            <filename>su</filename> is normally provided through
+                            the shadow file format.
+                            The main <filename>util-linux</filename> package has
+                            runtime dependencies (i.e.
+                            <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>)
+                            on the <filename>util-linux</filename> package when
+                            "pam" is in
+                            <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
+                            </para></listitem>
+                        <listitem><para>
+                            The <filename>switch_root</filename> package is now
+                            packaged in a separate "util-linux-switch-root"
+                            package for small initramfs images that do not need
+                            the whole <filename>util-linux</filename> package or
+                            the busybox binary, which are both much larger than
+                            <filename>switch_root</filename>.
+                            The main <filename>util-linux</filename> package has
+                            a recommended runtime dependency (i.e.
+                            <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>)
+                            on the <filename>switch_root</filename> package.
+                            </para></listitem>
+                        <listitem><para>
+                            The <filename>ionice</filename> package is now
+                            packaged in a separate "util-linux-ionice" package.
+                            The main <filename>util-linux</filename> package has
+                            a recommended runtime dependency (i.e.
+                            <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>)
+                            on the <filename>ionice</filename> package.
+                            </para></listitem>
+                    </itemizedlist>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>initscripts</filename>:</emphasis>
+                    The <filename>sushell</filename> package is now packaged in
+                    a separate "initscripts-sushell" package.
+                    This packaging change allows systems to pull
+                    <filename>sushell</filename> in when
+                    <filename>selinux</filename> is enabled.
+                    The change also eliminates needing to pull in the entire
+                    <filename>initscripts</filename> package.
+                    The main <filename>initscripts</filename> package has a
+                    runtime dependency (i.e.
+                    <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>)
+                    on the <filename>sushell</filename> package when
+                    "selinux" is in
+                    <link linkend='var-DISTRO_FEATURES'><filename>DISTRO_FEATURES</filename></link>.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>glib-2.0</filename>:</emphasis>
+                    The <filename>glib-2.0</filename> package now has a
+                    recommended runtime dependency (i.e.
+                    <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>)
+                    on the
+                    <filename>shared-mime-info</filename> package, since large
+                    portions of GIO are not useful without the MIME database.
+                    You can remove the dependency by using the
+                    <link linkend='var-BAD_RECOMMENDATIONS'><filename>BAD_RECOMMENDATIONS</filename></link>
+                    variable if <filename>shared-mime-info</filename> is too
+                    large and is not required.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>Go Standard Runtime</filename>:</emphasis>
+                    The Go standard runtime has been split out from the main
+                    <filename>go</filename> recipe into a separate
+                    <filename>go-runtime</filename> recipe.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.4-removed-recipes'>
+        <title>Removed Recipes</title>
+
+        <para>
+            The following recipes have been removed:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis><filename>acpitests</filename>:</emphasis>
+                    This recipe is not maintained.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>autogen-native</filename>:</emphasis>
+                    No longer required by Grub, <filename>oe-core</filename>, or
+                    <filename>meta-oe</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>bdwgc</filename>:</emphasis>
+                    Nothing in OpenEmbedded-Core requires this recipe.
+                    It has moved to <filename>meta-oe</filename>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>byacc</filename>:</emphasis>
+                    This recipe was only needed by rpm 5.x and has moved to
+                    <filename>meta-oe</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>gcc (5.4)</filename>:</emphasis>
+                    The 5.4 series dropped the recipe in favor of 6.3 / 7.2.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>gnome-common</filename>:</emphasis>
+                    Deprecated upstream and no longer needed.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>go-bootstrap-native</filename>:</emphasis>
+                    Go 1.9 does its own bootstrapping so this recipe has been
+                    removed.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>guile</filename>:</emphasis>
+                    This recipe was only needed by
+                    <filename>autogen-native</filename> and
+                    <filename>remake</filename>.
+                    It is no longer needed by either of these programs.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libclass-isa-perl</filename>:</emphasis>
+                    This recipe was previously needed for LSB 4, which no longer
+                    requires the recipe.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libdumpvalue-perl</filename>:</emphasis>
+                    This recipe was previously needed for LSB 4, which no longer
+                    requires the recipe.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libenv-perl</filename>:</emphasis>
+                    This recipe was previously needed for LSB 4, which no longer
+                    requires the recipe.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libfile-checktree-perl</filename>:</emphasis>
+                    This recipe was previously needed for LSB 4, which no longer
+                    requires the recipe.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libi18n-collate-perl</filename>:</emphasis>
+                    This recipe was previously needed for LSB 4, which no longer
+                    requires the recipe.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libiconv</filename>:</emphasis>
+                    This recipe was only needed for <filename>uclibc</filename>,
+                    which was removed in the previous release.
+                    <filename>glibc</filename> and <filename>musl</filename>
+                    have their own implementations.
+                    <filename>meta-mingw</filename> still needs
+                    <filename>libiconv</filename>, so it has
+                    been moved to <filename>meta-mingw</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libpng12</filename>:</emphasis>
+                    This recipe was previously needed for LSB. The current
+                    <filename>libpng</filename> is 1.6.x.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libpod-plainer-perl</filename>:</emphasis>
+                    This recipe was previously needed for LSB 4, which no longer
+                    requires the recipe.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>linux-yocto (4.1)</filename>:</emphasis>
+                    This recipe was removed in favor of 4.4, 4.9, 4.10 and 4.12.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>mailx</filename>:</emphasis>
+                    This recipe was previously only needed for LSB
+                    compatibility, and upstream is defunct.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>mesa (git version only)</filename>:</emphasis>
+                    This recipe is stale with respect to the release version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>ofono (git version only)</filename>:</emphasis>
+                    This recipe is stale with respect to the release version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>portmap</filename>:</emphasis>
+                    This recipe is obsolete and is superseded by
+                    <filename>rpcbind</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python3-pygpgme</filename>:</emphasis>
+                    This recipe is old and unmaintained. It was previously
+                    required by <filename>dnf</filename>, which has switched
+                    to official <filename>gpgme</filename> Python bindings.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python-async</filename>:</emphasis>
+                    This recipe has been removed in favor of the Python 3
+                    version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python-gitdb</filename>:</emphasis>
+                    This recipe has been removed in favor of the Python 3
+                    version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python-git</filename>:</emphasis>
+                    This recipe was removed in favor of the Python 3
+                    version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python-mako</filename>:</emphasis>
+                    This recipe was removed in favor of the Python 3
+                    version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python-pexpect</filename>:</emphasis>
+                    This recipe was removed in favor of the Python 3 version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python-ptyprocess</filename>:</emphasis>
+                    This recipe was removed in favor of Python the 3 version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python-pycurl</filename>:</emphasis>
+                    Nothing is using this recipe in OpenEmbedded-Core
+                    (i.e. <filename>meta-oe</filename>).
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python-six</filename>:</emphasis>
+                    This recipe was removed in favor of the Python 3 version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python-smmap</filename>:</emphasis>
+                    This recipe was removed in favor of the Python 3 version.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>remake</filename>:</emphasis>
+                    Using <filename>remake</filename> as the provider of
+                    <filename>virtual/make</filename> is broken.
+                    Consequently, this recipe is not needed in OpenEmbedded-Core.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.4-kernel-device-tree-move'>
+        <title>Kernel Device Tree Move</title>
+
+        <para>
+            Kernel Device Tree support is easy to enable in a kernel
+            recipe.
+            The Device Tree code has moved to a
+            <filename>kernel-devicetree</filename> class.
+            Functionality is automatically enabled for any recipe that inherits
+            the
+            <link linkend='ref-classes-kernel'><filename>kernel</filename></link>
+            class and sets the
+            <link linkend='var-KERNEL_DEVICETREE'><filename>KERNEL_DEVICETREE</filename></link>
+            variable.
+            The previous mechanism for doing this,
+            <filename>meta/recipes-kernel/linux/linux-dtb.inc</filename>,
+            is still available to avoid breakage, but triggers a
+            deprecation warning.
+            Future releases of the Yocto Project will remove
+            <filename>meta/recipes-kernel/linux/linux-dtb.inc</filename>.
+            It is advisable to remove any <filename>require</filename>
+            statements that request
+            <filename>meta/recipes-kernel/linux/linux-dtb.inc</filename>
+            from any custom kernel recipes you might have.
+            This will avoid breakage in post 2.4 releases.
+        </para>
+    </section>
+
+    <section id='migration-2.4-package-qa-changes'>
+        <title>Package QA Changes</title>
+
+        <para>
+            The following package QA changes took place:
+            <itemizedlist>
+                <listitem><para>
+                    The "unsafe-references-in-scripts" QA check has been
+                    removed.
+                    Previously, this check ensured
+                    that the backslash character (i.e.
+                    <filename>/</filename>) and <filename>/usr</filename>
+                    could be on different filesystems and that
+                    <filename>/usr</filename> is no longer actively supported.
+                    </para></listitem>
+                <listitem><para>
+                    If you refer to <filename>${COREBASE}/LICENSE</filename>
+                    within
+                    <link linkend='var-LIC_FILES_CHKSUM'><filename>LIC_FILES_CHKSUM</filename></link>
+                    you receive a warning because this file is a description of
+                    the license for OE-Core.
+                    Use <filename>${COMMON_LICENSE_DIR}/MIT</filename>
+                    if your recipe is MIT-licensed and you cannot use the
+                    preferred method of referring to a file within the source
+                    tree.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.4-readme-changes'>
+        <title><filename>README</filename> File Changes</title>
+
+        <para>
+            The following are changes to <filename>README</filename> files:
+            <itemizedlist>
+                <listitem><para>
+                    The main Poky <filename>README</filename> file has been
+                    moved to the <filename>meta-poky</filename> layer and
+                    has been renamed <filename>README.poky</filename>.
+                    A symlink has been created so that references to the old
+                    location work.
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>README.hardware</filename> file has been moved
+                    to <filename>meta-yocto-bsp</filename>.
+                    A symlink has been created so that references to the old
+                    location work.
+                    </para></listitem>
+                <listitem><para>
+                    A <filename>README.qemu</filename> file has been created
+                    with coverage of the <filename>qemu*</filename> machines.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.4-miscellaneous-changes'>
+        <title>Miscellaneous Changes</title>
+
+        <para>
+            The following are additional changes:
+            <itemizedlist>
+                <listitem><para>
+                    The <filename>ROOTFS_PKGMANAGE_BOOTSTRAP</filename>
+                    variable and any references to it have been removed.
+                    You should remove this variable from any custom recipes.
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>meta-yocto</filename> directory has been
+                    removed.
+                    <note>
+                        In the Yocto Project 2.1 release
+                        <filename>meta-yocto</filename> was renamed to
+                        <filename>meta-poky</filename> and the
+                        <filename>meta-yocto</filename> subdirectory remained
+                        to avoid breaking existing configurations.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>maintainers.inc</filename> file, which tracks
+                    maintainers by listing a primary person responsible for each
+                    recipe in OE-Core, has been moved from
+                    <filename>meta-poky</filename> to OE-Core (i.e. from
+                    <filename>meta-poky/conf/distro/include</filename> to
+                    <filename>meta/conf/distro/include</filename>).
+                    </para></listitem>
+                <listitem><para>
+                    The
+                    <link linkend='ref-classes-buildhistory'><filename>buildhistory</filename></link>
+                    class now makes a single commit per build rather than one
+                    commit per subdirectory in the repository.
+                    This behavior assumes the commits are enabled with
+                    <link linkend='var-BUILDHISTORY_COMMIT'><filename>BUILDHISTORY_COMMIT</filename></link>
+                    = "1", which is typical.
+                    Previously, the <filename>buildhistory</filename> class made
+                    one commit per subdirectory in the repository in order to
+                    make it easier to see the changes for a particular
+                    subdirectory.
+                    Now Git can filter these changes itself when viewed.
+                    To view a particular change, specify that subdirectory as
+                    the last parameter on the <filename>git show</filename>
+                    or <filename>git diff</filename> commands.
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>x86-base.inc</filename> file, which is
+                    included by all x86-based machine configurations, now sets
+                    <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                    using <filename>?=</filename> to "live" rather than
+                    appending with <filename>+=</filename>.
+                    This change makes the default easier to override.
+                    </para></listitem>
+                <listitem><para>
+                    BitBake fires multiple "BuildStarted" events when
+                    <filename>multiconfig</filename> is enabled.
+                    This is limited to one per configuration.
+                    For more information, see the
+                    "<ulink url='&YOCTO_DOCS_BB_URL;#events'>Events</ulink>"
+                    in the BitBake User Manual.
+                    </para></listitem>
+                <listitem><para>
+                    By default, the <filename>security_flags.inc</filename> file
+                    sets a <filename>GCCPIE</filename> variable with an option
+                    to enable Position Independent Executables (PIE) within
+                    <filename>gcc</filename>.
+                    Enabling PIE in the GNU C Compiler (GCC), makes Return
+                    Oriented Programming (ROP) attacks much more difficult to
+                    execute.
+                    </para></listitem>
+                <listitem><para>
+                    OE-Core now provides a
+                    <filename>bitbake-layers</filename> plugin that implements
+                    a "create-layer" subcommand.
+                    The implementation of this subcommand has resulted in the
+                    <filename>yocto-layer</filename> script being deprecated and
+                    will likely be removed in the next Yocto Project release.
+                    </para></listitem>
+                <listitem><para>
+                      The <filename>vmdk</filename>, <filename>vdi</filename>,
+                      and <filename>qcow2</filename> image file types are now
+                      used in conjunction with the "wic" image type through
+                      <filename>CONVERSION_CMD</filename>.
+                      Consequently, the equivalent image types are now
+                      <filename>wic.vmdk</filename>, <filename>wic.vdi</filename>,
+                      and <filename>wic.qcow2</filename>, respectively.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>do_image_&lt;type&gt;[depends]</filename> has
+                    replaced <filename>IMAGE_DEPENDS_&lt;type&gt;</filename>.
+                    If you have your own classes that implement custom image
+                    types, then you need to update them.
+                    </para></listitem>
+                <listitem><para>
+                    OpenSSL 1.1 has been introduced.
+                    However, the default is still 1.0.x through the
+                    <link linkend='var-PREFERRED_VERSION'><filename>PREFERRED_VERSION</filename></link>
+                    variable.
+                    This change is due to the remaining compatibility issues
+                    with other software.
+                    The
+                    <link linkend='var-PROVIDES'><filename>PROVIDES</filename></link>
+                    variable includes "openssl10" as a marker for recipes that
+                    still depend on OpenSSL 1.0.
+                    </para></listitem>
+                <listitem><para>
+                    To ensure consistent behavior, BitBake's "-r" and "-R"
+                    options (i.e. prefile and postfile), which are used to
+                    <filename>read</filename> or <filename>post-read</filename>
+                    additional configuration files from the command line, now
+                    only affect the current BitBake command.
+                    Before this change these options would "stick" for
+                    future executions.
+                    <note>
+                        BitBake server changes necessitated this change.
+                    </note>
                     </para></listitem>
             </itemizedlist>
         </para>
