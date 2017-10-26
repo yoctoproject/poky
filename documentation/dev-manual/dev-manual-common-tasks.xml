@@ -108,7 +108,7 @@
                 "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a New BSP Layer Using the yocto-bsp Script</ulink>"
                 section in the Yocto Project Board Support Package (BSP)
                 Developer's Guide and the
-                "<link linkend='creating-a-general-layer-using-the-yocto-layer-script'>Creating a General Layer Using the yocto-layer Script</link>"
+                "<link linkend='creating-a-general-layer-using-the-bitbake-layers-script'>Creating a General Layer Using the <filename>bitbake-layers</filename> Script</link>"
                 section further down in this manual.
             </para>
 
@@ -968,122 +968,141 @@
             </para>
         </section>
 
-        <section id='creating-a-general-layer-using-the-yocto-layer-script'>
-            <title>Creating a General Layer Using the yocto-layer Script</title>
+        <section id='creating-a-general-layer-using-the-bitbake-layers-script'>
+            <title>Creating a General Layer Using the <filename>bitbake-layers</filename> Script</title>
 
             <para>
-                The <filename>yocto-layer</filename> script simplifies
+                The <filename>bitbake-layers</filename> script with the
+                <filename>create-layer</filename> subcommand simplifies
                 creating a new general layer.
-                <note>
-                    For information on BSP layers, see the
-                    "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
-                    section in the Yocto Project Board Specific (BSP)
-                    Developer's Guide.
+                <note><title>Notes</title>
+                    <itemizedlist>
+                        <listitem><para>
+                            For information on BSP layers, see the
+                            "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
+                            section in the Yocto Project Board Specific (BSP)
+                            Developer's Guide.
+                            </para></listitem>
+                        <listitem><para>
+                            The <filename>bitbake-layers</filename> script
+                            replaces the <filename>yocto-layer</filename>
+                            script, which is deprecated in the Yocto Project
+                            2.4 release.
+                            The <filename>yocto-layer</filename> script
+                            continues to function as part of the 2.4 release
+                            but will be removed post 2.4.
+                            </para></listitem>
+                    </itemizedlist>
                 </note>
-                The default mode of the script's operation is to prompt you for
-                information needed to generate the layer:
+                The default mode of the script's operation with this
+                subcommand is to create a layer with the following:
                 <itemizedlist>
-                    <listitem><para>The layer priority.
+                    <listitem><para>A layer priority of 6.
                         </para></listitem>
-                    <listitem><para>Whether or not to create a sample recipe.
+                    <listitem><para>A <filename>conf</filename>
+                        subdirectory that contains a
+                        <filename>layer.conf</filename> file.
                         </para></listitem>
-                    <listitem><para>Whether or not to create a sample
-                        append file.
+                    <listitem><para>
+                        A <filename>recipes-example</filename> subdirectory
+                        that contains a further subdirectory named
+                        <filename>example</filename>, which contains
+                        an <filename>example.bb</filename> recipe file.
+                        </para></listitem>
+                    <listitem><para>A <filename >COPYING.MIT</filename>,
+                        which is the license statement for the layer.
+                        The script assumes you want to use the MIT license,
+                        which is typical for most layers, for the contents of
+                        the layer itself.
+                        </para></listitem>
+                    <listitem><para>
+                        A <filename>README</filename> file, which is a file
+                        describing the contents of your new layer.
                         </para></listitem>
                 </itemizedlist>
             </para>
 
             <para>
-                Use the <filename>yocto-layer create</filename> sub-command
-                to create a new general layer.
-                In its simplest form, you can create a layer as follows:
+                In its simplest form, you can use the following command form
+                to create a layer.
+                The command creates a layer whose name corresponds to
+                <replaceable>your_layer_name</replaceable> in the current
+                directory:
                 <literallayout class='monospaced'>
-     $ yocto-layer create mylayer
+     $ bitbake-layers create-layer <replaceable>your_layer_name</replaceable>
                 </literallayout>
-                The previous example creates a layer named
-                <filename>meta-mylayer</filename> in the current directory.
             </para>
 
             <para>
-                As the <filename>yocto-layer create</filename> command runs,
-                default values for the prompts appear in brackets.
-                Pressing enter without supplying anything for the prompts
-                or pressing enter and providing an invalid response causes the
-                script to accept the default value.
-                Once the script completes, the new layer
-                is created in the current working directory.
-                The script names the layer by prepending
-                <filename>meta-</filename> to the name you provide.
+                If you want to set the priority of the layer to other than the
+                default value of "6", you can either use the
+                <filename>&dash;&dash;priority</filename> option or you can
+                edit the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'><filename>BBFILE_PRIORITY</filename></ulink>
+                value in the <filename>conf/layer.conf</filename> after the
+                script creates it.
+                Furthermore, if you want to give the example recipe file
+                some name other than the default, you can
+                use the
+                <filename>&dash;&dash;example-recipe-name</filename> option.
             </para>
 
             <para>
-                Minimally, the script creates the following within the layer:
-                <itemizedlist>
-                    <listitem><para><emphasis>The <filename>conf</filename>
-                        directory:</emphasis>
-                        This directory contains the layer's configuration file.
-                        The root name for the file is the same as the root name
-                        your provided for the layer (e.g.
-                        <filename><replaceable>layer</replaceable>.conf</filename>).
-                        </para></listitem>
-                    <listitem><para><emphasis>The
-                        <filename>COPYING.MIT</filename> file:</emphasis>
-                        The copyright and use notice for the software.
-                        </para></listitem>
-                    <listitem><para><emphasis>The <filename>README</filename>
-                        file:</emphasis>
-                        A file describing the contents of your new layer.
-                        </para></listitem>
-                </itemizedlist>
-            </para>
-
-            <para>
-                If you choose to generate a sample recipe file, the script
-                prompts you for the name for the recipe and then creates it
-                in <filename><replaceable>layer</replaceable>/recipes-example/example/</filename>.
-                The script creates a <filename>.bb</filename> file and a
-                directory, which contains a sample
-                <filename>helloworld.c</filename> source file, along with
-                a sample patch file.
-                If you do not provide a recipe name, the script uses
-                "example".
-            </para>
-
-            <para>
-                If you choose to generate a sample append file, the script
-                prompts you for the name for the file and then creates it
-                in <filename><replaceable>layer</replaceable>/recipes-example-bbappend/example-bbappend/</filename>.
-                The script creates a <filename>.bbappend</filename> file and a
-                directory, which contains a sample patch file.
-                If you do not provide a recipe name, the script uses
-                "example".
-                The script also prompts you for the version of the append file.
-                The version should match the recipe to which the append file
-                is associated.
-            </para>
-
-            <para>
-                The easiest way to see how the <filename>yocto-layer</filename>
-                script works is to experiment with the script.
+                The easiest way to see how the
+                <filename>bitbake-layers create-layer</filename> command
+                works is to experiment with the script.
                 You can also read the usage information by entering the
                 following:
                 <literallayout class='monospaced'>
-     $ yocto-layer help
+     $ bitbake-layers create-layer --help
+     NOTE: Starting bitbake server...
+     usage: bitbake-layers create-layer [-h] [--priority PRIORITY]
+                                        [--example-recipe-name EXAMPLERECIPE]
+                                        layerdir
+
+     Create a basic layer
+
+     positional arguments:
+       layerdir              Layer directory to create
+
+     optional arguments:
+       -h, --help            show this help message and exit
+       --priority PRIORITY, -p PRIORITY
+                             Layer directory to create
+       --example-recipe-name EXAMPLERECIPE, -e EXAMPLERECIPE
+                             Filename of the example recipe
                 </literallayout>
             </para>
 
             <para>
                 Once you create your general layer, you must add it to your
                 <filename>bblayers.conf</filename> file.
-                Here is an example where a layer named
-                <filename>meta-mylayer</filename> is added:
+                You can add your layer by using the
+                <filename>bitbake-layers add-layer</filename> command:
                 <literallayout class='monospaced'>
-     BBLAYERS = ?" \
-        /usr/local/src/yocto/meta \
-        /usr/local/src/yocto/meta-poky \
-        /usr/local/src/yocto/meta-yocto-bsp \
-        /usr/local/src/yocto/meta-mylayer \
-        "
+     $ bitbake-layers add-layer <replaceable>your_layer_name</replaceable>
+                </literallayout>
+                Here is an example where a layer named
+                <filename>meta-scottrif</filename> is added and then the
+                layers are shown using the
+                <filename>bitbake-layers show-layers</filename> command:
+                <literallayout class='monospaced'>
+     $ bitbake-layers add-layer meta-scottrif
+     NOTE: Starting bitbake server...
+     Loading cache: 100% |############################################| Time: 0:00:00
+     Loaded 1275 entries from dependency cache.
+     Parsing recipes: 100% |##########################################| Time: 0:00:00
+     Parsing of 819 .bb files complete (817 cached, 2 parsed). 1276 targets, 44 skipped, 0 masked, 0 errors.
+     $ bitbake-layers show-layers
+     NOTE: Starting bitbake server...
+     layer                 path                                      priority
+     ==========================================================================
+     meta                  /home/scottrif/poky/meta                  5
+     meta-poky             /home/scottrif/poky/meta-poky             5
+     meta-yocto-bsp        /home/scottrif/poky/meta-yocto-bsp        5
+     meta-mylayer          /home/scottrif/meta-mylayer               6
+     workspace             /home/scottrif/poky/build/workspace       99
+     meta-scottrif         /home/scottrif/poky/build/meta-scottrif   6
                 </literallayout>
                 Adding the layer to this file enables the build system to
                 locate the layer during the build.
@@ -6060,7 +6079,7 @@ Some notes from Cal:
                     configuration file makes it easier to reproduce the same
                     build configuration when using multiple build machines.
                     See the
-                    "<link linkend='creating-a-general-layer-using-the-yocto-layer-script'>Creating a General Layer Using the yocto-layer Script</link>"
+                    "<link linkend='creating-a-general-layer-using-the-bitbake-layers-script'>Creating a General Layer Using the <filename>bitbake-layers</filename> Script</link>"
                     section for information on how to quickly set up a layer.
                     </para></listitem>
                 <listitem><para><emphasis>Create the distribution configuration file:</emphasis>
