@@ -190,7 +190,7 @@ TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
 	figures/source-repos.png figures/yp-download.png \
 	figures/wip.png
         else
-TARFILES = mega-manual.html mega-style.css figures/yocto-environment.png \
+TARFILES = mega-manual.html mega-style.css \
         figures/building-an-image.png figures/YP-flow-diagram.png \
 	figures/using-a-pre-built-image.png \
 	figures/poky-title.png figures/buildhistory.png \
