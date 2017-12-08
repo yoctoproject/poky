@@ -151,7 +151,7 @@
                 to work with BSP layers.
                 Once you have the host set up, you can create the layer
                 as described in the
-                "<link linkend='creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a new BSP Layer Using the yocto-bsp Script</link>"
+                "<link linkend='creating-a-new-bsp-layer-using-the-bitbake-layers-script'>Creating a new BSP Layer Using the yocto-bsp Script</link>"
                 section.
                 <note>
                     For structural information on BSPs, see the
@@ -866,7 +866,7 @@
             <para>
                 For an example that shows how to create a new layer using
                 the tools, see the
-                "<link linkend='creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a New BSP Layer Using the yocto-bsp Script</link>"
+                "<link linkend='creating-a-new-bsp-layer-using-the-bitbake-layers-script'>Creating a New BSP Layer Using the yocto-bsp Script</link>"
                  section.
             </para>
 
@@ -901,7 +901,7 @@
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Create Your Own BSP Layer Using the
-                        <link linkend='creating-a-new-bsp-layer-using-the-yocto-bsp-script'><filename>yocto-bsp</filename></link>
+                        <link linkend='creating-a-new-bsp-layer-using-the-bitbake-layers-script'><filename>yocto-bsp</filename></link>
                         script:</emphasis>
                         Layers are ideal for isolating and storing work for a
                         given piece of hardware.
@@ -912,7 +912,7 @@
                         compliant with the Yocto Project is to use the
                         <filename>yocto-bsp</filename> script.
                         For information about that script, see the
-                        "<link linkend='creating-a-new-bsp-layer-using-the-yocto-bsp-script'>Creating a New BSP Layer Using the yocto-bsp Script</link>"
+                        "<link linkend='creating-a-new-bsp-layer-using-the-bitbake-layers-script'>Creating a New BSP Layer Using the yocto-bsp Script</link>"
                         section.</para>
 
                         <para>Another example that illustrates a layer
@@ -1608,21 +1608,20 @@
             </section>
 
 
-            <section id='creating-a-new-bsp-layer-using-the-yocto-bsp-script'>
-                <title>Creating a new BSP Layer Using the yocto-bsp Script</title>
+            <section id='creating-a-new-bsp-layer-using-the-bitbake-layers-script'>
+                <title>Creating a new BSP Layer Using the <filename>bitbake-layers</filename> Script</title>
 
-                <para>
-                    [SOMETHING ABOUT CREATING A GENERAL LAYER USING bitbake-layers SCRIPT]
-                    The [MODIFICATION NAME] sub-command creates a new
-                    <link linkend='bsp-layers'>BSP layer</link> for any architecture
-                    supported by the Yocto Project, as well as QEMU versions of the same.
-                    The default mode of the script's operation is to prompt you for
-                    information needed to generate the BSP layer.
+                <para role='writernotes'>
+                    I have put in information that will be the basis of this section,
+                    but it is missing a lot at this point.
+                    This whole section needs reviewed and filled in with proper
+                    information.
                 </para>
 
                 <para>
-                    For the current set of BSPs, the [SCRIPT] prompts you for various
-                    important parameters such as:
+                    [INTRODUCE THE PROCEDURE AND LINK BACK TO <link linkend='bsp-layers'>BSP layer</link>.
+                    IF THERE IS A LAUNDRY LIST OF ITEMS THAT NEED DEFINITION OR GET SET
+                    UP AS A RESULT OF THIS PROCEDURE, LIST THEM HERE.]
                     <itemizedlist>
                         <listitem><para>[PAREMETER 1]</para></listitem>
                         <listitem><para>[PARAMETER 2]</para></listitem>
@@ -1635,11 +1634,49 @@
                 </para>
 
                 <para>
-                    [ASSUMING STEP ONE IS RUNNING bitbake-layers TO CREATE GENERIC LAYER - INTRO]
-                    For instructions on how to create a general layer using the
-                    <filename>bitbake-layers</filename> script see the
-                    "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-general-layer-using-the-bitbake-layers-script'>Creating a General Layer Using the <filename>bitbake-layers</filename> Script</ulink>"
-                    section.
+                    The following procedure creates a BSP layer:
+                    <itemizedlist>
+                        <listitem><para>
+                            <emphasis>Create General Layer:</emphasis>
+                            Use the <filename>bitbake-layers</filename> script with the
+                            <filename>create-layer</filename> subcommand to create a
+                            new general layer.
+                            For instructions on how to create a general layer using the
+                            <filename>bitbake-layers</filename> script, see the
+                            "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-general-layer-using-the-bitbake-layers-script'>Creating a General Layer Using the <filename>bitbake-layers</filename> Script</ulink>"
+                            section in the Yocto Project Development Tasks Manual.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Create a Machine Configuration File:</emphasis>
+                            Create a <filename>conf/machine/&gt;machine&lt;.conf</filename>
+                            file.
+                            See <filename>meta-yocto-bsp/conf/machine</filename> for sample
+                            <filename>&gt;machine.conf&lt;</filename> files.
+                            Other samples exist from other vendors such as
+                            <filename>meta-intel</filename>, <filename>meta-ti</filename>,
+                            and <filename>meta-freescale</filename> that have more specific machine
+                            and tuning examples.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Create a Kernel Recipe:</emphasis>
+                            Create a kernel recipe in <filename>recipes-kernel/linux</filename>
+                            either using a linux-yocto kernel with a <filename>.bbappend</filename>
+                            file or a new custom kernel recipe file (i.e. <filename>.bb</filename>
+                            file).
+                            The BSP layers mentioned in the previous step also contain different
+                            kernel examples.
+                            You can start with the linux-yocto or use a custom kernel.
+                            See the
+                            "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#modifying-an-existing-recipe'>Modifying an Existing Recipe</ulink>"
+                            section in the Yocto Project Linux Kernel Development Manual
+                            for information on how to create a custom kernel.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+
+                <para role='writernotes'>
+                    [THERE IS MORE INFORMATION THAT NEEDS TO BE FILLED IN HERE. THIS NEEDS TO
+                    BE PROVIDED BY ENGINEERS.]
                 </para>
 
                 <para>
@@ -1654,7 +1691,7 @@
                     and can easily be followed without requiring actual hardware.
                 </para>
 
-                <para>
+<!--                <para>
                     [ASSUMING SIMLILAR ACTION OCCURS]As the [SUBCOMMAND] command runs, default values for
                     the prompts appear in brackets.
                     Pressing enter without supplying anything on the command line or pressing enter
@@ -1665,14 +1702,14 @@
                     <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>
                     setup script.
                 </para>
+-->
 
                 <para>
-                    Following is the complete example:
+                    Following is a complete example:
                     <literallayout class='monospaced'>
-[INSERT EXAMPLE]
+     [INSERT EXAMPLE - NEED EXAMPLE]
                     </literallayout>
-                    Take a closer look at the example now:
-                    [UPDATE EXAMPLE STRUCTURE BASED ON NEW INSTRUCTIONS]
+<!--
                     <orderedlist>
                         <listitem><para>For the QEMU architecture,
                             the script first prompts you for which emulated architecture to use.
@@ -1710,6 +1747,7 @@
                             (i.e. <filename>poky/build</filename>).
                             </para></listitem>
                     </orderedlist>
+-->
                 </para>
 
                 <para>
@@ -1724,10 +1762,8 @@
         /usr/local/src/yocto/meta-myarm \
         "
                     </literallayout>
-                    [YOCTO-KERNEL WILL BE REMOVED - THIS NEEDS UPDATED WITH NEW INFO]
                     Adding the layer to this file allows the build system to build the BSP and
-                    the <filename>yocto-kernel</filename> tool to be able to find the layer and
-                    other Metadata it needs on which to operate.
+                    find the layer along with other Metadata it needs.
                 </para>
             </section>
 
@@ -1736,7 +1772,7 @@
 
                 <para>
                     Assuming you have created a <link linkend='bsp-layers'>BSP Layer</link> using
-                    <link linkend='creating-a-new-bsp-layer-using-the-yocto-bsp-script'>
+                    <link linkend='creating-a-new-bsp-layer-using-the-bitbake-layers-script'>
                     <filename>yocto-bsp</filename></link> and you added it to your
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'><filename>BBLAYERS</filename></ulink>
                     variable in the <filename>bblayers.conf</filename> file, you can now use
