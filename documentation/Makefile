@@ -88,6 +88,12 @@ ifeq ($(DOC),overview-manual)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = overview-style.css overview-manual.html figures/overview-title.png \
+           figures/git-workflow.png figures/source-repos.png figures/index-downloads.png \
+           figures/yp-download.png figures/yocto-environment-ref.png figures/user-configuration.png \
+           figures/layer-input.png figures/source-input.png figures/package-feeds.png \
+           figures/source-fetching.png figures/patching.png figures/configuration-compile-autoreconf.png \
+           figures/analysis-for-package-splitting.png figures/image-generation.png \
+           figures/sdk-generation.png figures/images.png figures/sdk.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
@@ -274,16 +280,11 @@ ifeq ($(DOC),ref-manual)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = ref-manual.html ref-style.css figures/poky-title.png figures/YP-flow-diagram.png \
-	figures/buildhistory.png figures/buildhistory-web.png eclipse \
-        figures/cross-development-toolchains.png figures/layer-input.png \
-	figures/package-feeds.png figures/source-input.png \
-	figures/user-configuration.png figures/yocto-environment-ref.png \
-	figures/images.png figures/sdk.png figures/source-fetching.png \
-	figures/patching.png figures/configuration-compile-autoreconf.png \
-	figures/analysis-for-package-splitting.png figures/image-generation.png \
-	figures/sdk-generation.png figures/building-an-image.png \
-	figures/build-workspace-directory.png figures/source-repos.png \
-	figures/index-downloads.png figures/yp-download.png figures/git-workflow.png
+	figures/buildhistory.png figures/buildhistory-web.png \
+        figures/cross-development-toolchains.png \
+	figures/building-an-image.png \
+	figures/build-workspace-directory.png \
+	eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
