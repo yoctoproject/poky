@@ -4531,6 +4531,38 @@
         </section>
     </section>
 
+    <section id='using-x32-psabi'>
+        <title>Using x32 psABI</title>
+
+        <para>
+            x32 processor-specific Application Binary Interface
+            (<ulink url='https://software.intel.com/en-us/node/628948'>x32 psABI</ulink>)
+            is a native 32-bit processor-specific ABI for
+            <trademark class='registered'>Intel</trademark> 64 (x86-64)
+            architectures.
+            <note>
+                For more information on x32 psABI, see the
+                "<ulink url='&YOCTO_DOCS_OVERVIEW_URL;#x32'>x32 psABI</ulink>"
+                section in the Yocto Project Overview Manual.
+            </note>
+            To use the x32 psABI, you need to edit your
+            <filename>conf/local.conf</filename> configuration file as
+            follows:
+            <literallayout class='monospaced'>
+     MACHINE = "qemux86-64"
+     DEFAULTTUNE = "x86-64-x32"
+     baselib = "${@d.getVar('BASE_LIB_tune-' + (d.getVar('DEFAULTTUNE', True) \
+        or 'INVALID'), True) or 'lib'}"
+            </literallayout>
+            Once you have set up your configuration file, use BitBake to
+            build an image that supports the x32 psABI.
+            Here is an example:
+            <literallayout class='monospaced'>
+     $ bitbake core-image-sato
+            </literallayout>
+        </para>
+    </section>
+
     <section id='enabling-gobject-introspection-support'>
         <title>Enabling GObject Introspection Support</title>
 
