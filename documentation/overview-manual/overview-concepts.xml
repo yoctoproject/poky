@@ -6,72 +6,320 @@
 <title>Yocto Project Concepts</title>
 
     <para>
-        This chapter presents key Yocto Project concepts.
+        This chapter describes concepts for various areas of the Yocto Project.
+        Currently, topics include Yocto Project components, cross-development
+        generation, shared state (sstate) cache, runtime dependencies,
+        Pseudo and Fakeroot, x32 psABI, Wayland support, and Licenses.
     </para>
 
-<section id='x32'>
-    <title>x32 psABI</title>
+    <section id='yocto-project-components'>
+        <title>Yocto Project Components</title>
 
-    <para>
-        x32 processor-specific Application Binary Interface
-        (<ulink url='https://software.intel.com/en-us/node/628948'>x32 psABI</ulink>)
-        is a native 32-bit processor-specific ABI for
-        <trademark class='registered'>Intel</trademark> 64 (x86-64)
-        architectures.
-        An ABI defines the calling conventions between functions in a
-        processing environment.
-        The interface determines what registers are used and what the sizes are
-        for various C data types.
-    </para>
+        <para>
+            The
+            <ulink url='&YOCTO_DOCS_REF_URL;#bitbake-term'>BitBake</ulink>
+            task executor together with various types of configuration files
+            form the OpenEmbedded Core.
+            This section overviews these components by describing their use and
+            how they interact.
+        </para>
 
-    <para>
-        Some processing environments prefer using 32-bit applications even when
-        running on Intel 64-bit platforms.
-        Consider the i386 psABI, which is a very old 32-bit ABI for Intel
-        64-bit platforms.
-        The i386 psABI does not provide efficient use and access of the
-        Intel 64-bit processor resources, leaving the system underutilized.
-        Now consider the x86_64 psABI.
-        This ABI is newer and uses 64-bits for data sizes and program pointers.
-        The extra bits increase the footprint size of the programs, libraries,
-        and also increases the memory and file system size requirements.
-        Executing under the x32 psABI enables user programs to utilize CPU
-        and system resources more efficiently while keeping the memory
-        footprint of the applications low.
-        Extra bits are used for registers but not for addressing mechanisms.
-    </para>
+        <para>
+            BitBake handles the parsing and execution of the data files.
+            The data itself is of various types:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis>Recipes:</emphasis>
+                    Provides details about particular pieces of software.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Class Data:</emphasis>
+                    Abstracts common build information (e.g. how to build a
+                    Linux kernel).
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Configuration Data:</emphasis>
+                    Defines machine-specific settings, policy decisions, and
+                    so forth.
+                    Configuration data acts as the glue to bind everything
+                    together.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
 
-    <para>
-        The Yocto Project supports the final specifications of x32 psABI
-        as follows:
-        <itemizedlist>
-            <listitem><para>
-                You can create packages and images in x32 psABI format on
-                x86_64 architecture targets.
-                </para></listitem>
-            <listitem><para>
-                You can successfully build recipes with the x32 toolchain.
-                </para></listitem>
-            <listitem><para>
-                You can create and boot
-                <filename>core-image-minimal</filename> and
-                <filename>core-image-sato</filename> images.
-                </para></listitem>
-            <listitem><para>
-                RPM Package Manager (RPM) support exists for x32 binaries.
-                </para></listitem>
-            <listitem><para>
-                Support for large images exists.
-                </para></listitem>
-        </itemizedlist>
-    </para>
+        <para>
+            BitBake knows how to combine multiple data sources together and
+            refers to each data source as a layer.
+            For information on layers, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
+            section of the Yocto Project Development Tasks Manual.
+        </para>
 
-    <para>
-        For steps on how to use x32 psABI, see the
-        "<ulink url='&YOCTO_DOCS_DEV_URL;#using-x32-psabi'>Using x32 psABI</ulink>"
-        section in the Yocto Project Development Tasks Manual.
-    </para>
-</section>
+        <para>
+            Following are some brief details on these core components.
+            For additional information on how these components interact during
+            a build, see the
+            "<link linkend='development-concepts'>Development Concepts</link>"
+            section.
+        </para>
+
+        <section id='usingpoky-components-bitbake'>
+            <title>BitBake</title>
+
+            <para>
+                BitBake is the tool at the heart of the OpenEmbedded build
+                system and is responsible for parsing the
+                <ulink url='&YOCTO_DOCS_REF_URL;#metadata'>Metadata</ulink>,
+                generating a list of tasks from it, and then executing those
+                tasks.
+            </para>
+
+            <para>
+                This section briefly introduces BitBake.
+                If you want more information on BitBake, see the
+                <ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual'>BitBake User Manual</ulink>.
+            </para>
+
+            <para>
+                To see a list of the options BitBake supports, use either of
+                the following commands:
+                <literallayout class='monospaced'>
+     $ bitbake -h
+     $ bitbake --help
+                </literallayout>
+            </para>
+
+            <para>
+                The most common usage for BitBake is
+                <filename>bitbake <replaceable>packagename</replaceable></filename>,
+                where <filename>packagename</filename> is the name of the
+                package you want to build (referred to as the "target" in this
+                manual).
+                The target often equates to the first part of a recipe's
+                filename (e.g. "foo" for a recipe named
+                <filename>foo_1.3.0-r0.bb</filename>).
+                So, to process the
+                <filename>matchbox-desktop_1.2.3.bb</filename> recipe file, you
+                might type the following:
+                <literallayout class='monospaced'>
+     $ bitbake matchbox-desktop
+                </literallayout>
+                Several different versions of
+                <filename>matchbox-desktop</filename> might exist.
+                BitBake chooses the one selected by the distribution
+                configuration.
+                You can get more details about how BitBake chooses between
+                different target versions and providers in the
+                "<ulink url='&YOCTO_DOCS_BB_URL;#bb-bitbake-preferences'>Preferences</ulink>"
+                section of the BitBake User Manual.
+            </para>
+
+            <para>
+                BitBake also tries to execute any dependent tasks first.
+                So for example, before building
+                <filename>matchbox-desktop</filename>, BitBake would build a
+                cross compiler and <filename>glibc</filename> if they had not
+                already been built.
+            </para>
+
+            <para>
+                A useful BitBake option to consider is the
+                <filename>-k</filename> or <filename>--continue</filename>
+                option.
+                This option instructs BitBake to try and continue processing
+                the job as long as possible even after encountering an error.
+                When an error occurs, the target that failed and those that
+                depend on it cannot be remade.
+                However, when you use this option other dependencies can
+                still be processed.
+            </para>
+        </section>
+
+        <section id='usingpoky-components-metadata'>
+            <title>Metadata (Recipes)</title>
+
+            <para>
+                Files that have the <filename>.bb</filename> suffix are
+                "recipes" files.
+                In general, a recipe contains information about a single piece
+                of software.
+                This information includes the location from which to download
+                the unaltered source, any source patches to be applied to that
+                source (if needed), which special configuration options to
+                apply, how to compile the source files, and how to package the
+                compiled output.
+            </para>
+
+            <para>
+                The term "package" is sometimes used to refer to recipes.
+                However, since the word "package" is used for the packaged
+                output from the OpenEmbedded build system (i.e.
+                <filename>.ipk</filename> or <filename>.deb</filename> files),
+                this document avoids using the term "package" when referring
+                to recipes.
+            </para>
+        </section>
+
+        <section id='metadata-virtual-providers'>
+            <title>Metadata (Virtual Providers)</title>
+
+            <para>
+                Prior to the build, if you know that several different recipes
+                provide the same functionality, you can use a virtual provider
+                (i.e. <filename>virtual/*</filename>) as a placeholder for the
+                actual provider.
+                The actual provider would be determined at build time.
+                In this case, you should add <filename>virtual/*</filename>
+                to
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>,
+                rather than listing the specified provider.
+                You would select the actual provider by setting the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER</filename></ulink>
+                variable (i.e.
+                <filename>PREFERRED_PROVIDER_virtual/*</filename>)
+                in the build's configuration file (e.g.
+                <filename>poky/build/conf/local.conf</filename>).
+                <note>
+                    Any recipe that PROVIDES a <filename>virtual/*</filename>
+                    item that is ultimately not selected through
+                    <filename>PREFERRED_PROVIDER</filename> does not get built.
+                    Preventing these recipes from building is usually the
+                    desired behavior since this mechanism's purpose is to
+                    select between mutually exclusive alternative providers.
+                </note>
+            </para>
+
+            <para>
+                The following lists specific examples of virtual providers:
+                <itemizedlist>
+                    <listitem><para>
+                        <filename>virtual/mesa</filename>:
+                        Provides <filename>gbm.pc</filename>.
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/egl</filename>:
+                        Provides <filename>egl.pc</filename> and possibly
+                        <filename>wayland-egl.pc</filename>.
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/libgl</filename>:
+                        Provides <filename>gl.pc</filename> (i.e. libGL).
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/libgles1</filename>:
+                        Provides <filename>glesv1_cm.pc</filename>
+                        (i.e. libGLESv1_CM).
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/libgles2</filename>:
+                        Provides <filename>glesv2.pc</filename>
+                        (i.e. libGLESv2).
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='usingpoky-components-classes'>
+            <title>Classes</title>
+
+            <para>
+                Class files (<filename>.bbclass</filename>) contain information
+                that is useful to share between
+                <ulink url='&YOCTO_DOCS_REF_URL;#metadata'>Metadata</ulink>
+                files.
+                An example is the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-autotools'><filename>autotools</filename></ulink>
+                class, which contains common settings for any application that
+                Autotools uses.
+                The
+                "<ulink url='&YOCTO_DOCS_REF_URL;#ref-classes'>Classes</ulink>"
+                chapter in the Yocto Project Reference Manual provides
+                details about classes and how to use them.
+            </para>
+        </section>
+
+        <section id='usingpoky-components-configuration'>
+            <title>Configuration</title>
+
+            <para>
+                The configuration files (<filename>.conf</filename>) define
+                various configuration variables that govern the OpenEmbedded
+                build process.
+                These files fall into several areas that define machine
+                configuration options, distribution configuration options,
+                compiler tuning options, general common configuration options,
+                and user configuration options in
+                <filename>local.conf</filename>, which is found in the
+                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
+            </para>
+        </section>
+    </section>
+
+    <section id='x32'>
+        <title>x32 psABI</title>
+
+        <para>
+            x32 processor-specific Application Binary Interface
+            (<ulink url='https://software.intel.com/en-us/node/628948'>x32 psABI</ulink>)
+            is a native 32-bit processor-specific ABI for
+            <trademark class='registered'>Intel</trademark> 64 (x86-64)
+            architectures.
+            An ABI defines the calling conventions between functions in a
+            processing environment.
+            The interface determines what registers are used and what the sizes are
+            for various C data types.
+        </para>
+
+        <para>
+            Some processing environments prefer using 32-bit applications even
+            when running on Intel 64-bit platforms.
+            Consider the i386 psABI, which is a very old 32-bit ABI for Intel
+            64-bit platforms.
+            The i386 psABI does not provide efficient use and access of the
+            Intel 64-bit processor resources, leaving the system underutilized.
+            Now consider the x86_64 psABI.
+            This ABI is newer and uses 64-bits for data sizes and program
+            pointers.
+            The extra bits increase the footprint size of the programs,
+            libraries, and also increases the memory and file system size
+            requirements.
+            Executing under the x32 psABI enables user programs to utilize CPU
+            and system resources more efficiently while keeping the memory
+            footprint of the applications low.
+            Extra bits are used for registers but not for addressing mechanisms.
+        </para>
+
+        <para>
+            The Yocto Project supports the final specifications of x32 psABI
+            as follows:
+            <itemizedlist>
+                <listitem><para>
+                    You can create packages and images in x32 psABI format on
+                    x86_64 architecture targets.
+                    </para></listitem>
+                <listitem><para>
+                    You can successfully build recipes with the x32 toolchain.
+                    </para></listitem>
+                <listitem><para>
+                    You can create and boot
+                    <filename>core-image-minimal</filename> and
+                    <filename>core-image-sato</filename> images.
+                    </para></listitem>
+                <listitem><para>
+                    RPM Package Manager (RPM) support exists for x32 binaries.
+                    </para></listitem>
+                <listitem><para>
+                    Support for large images exists.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            For steps on how to use x32 psABI, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#using-x32-psabi'>Using x32 psABI</ulink>"
+            section in the Yocto Project Development Tasks Manual.
+        </para>
+    </section>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
