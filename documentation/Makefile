@@ -94,7 +94,7 @@ TARFILES = overview-style.css overview-manual.html figures/overview-title.png \
            figures/source-fetching.png figures/patching.png figures/configuration-compile-autoreconf.png \
            figures/analysis-for-package-splitting.png figures/image-generation.png \
            figures/sdk-generation.png figures/images.png figures/sdk.png \
-           figures/YP-flow-diagram.png \
+           figures/YP-flow-diagram.png figures/cross-development-toolchains.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
@@ -282,7 +282,6 @@ XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
 	figures/buildhistory.png figures/buildhistory-web.png \
-        figures/cross-development-toolchains.png \
 	figures/building-an-image.png \
 	figures/build-workspace-directory.png \
 	eclipse
