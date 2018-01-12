@@ -1258,11 +1258,15 @@
 
         <para>
             Some tasks are easier to implement when allowed to perform certain
-            operations that are normally reserved for the root user.
-            For example, the
-            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
-            task benefits from being able to set the UID and GID of installed
-            files to arbitrary values.
+            operations that are normally reserved for the root user (e.g.
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>,
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb'><filename>do_package_write*</filename></ulink>,
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-rootfs'><filename>do_rootfs</filename></ulink>,
+            and
+            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-image'><filename>do_image*</filename></ulink>).
+            For example, the <filename>do_install</filename> task benefits
+            from being able to set the UID and GID of installed files to
+            arbitrary values.
         </para>
 
         <para>
@@ -1281,32 +1285,34 @@
 
         <para>
             The capability to run tasks in a fake root environment is known as
-            "fakeroot", which is derived from the BitBake keyword/variable
+            "<ulink url='http://man.he.net/man1/fakeroot'>fakeroot</ulink>",
+            which is derived from the BitBake keyword/variable
             flag that requests a fake root environment for a task.
-            In current versions of the OpenEmbedded build system,
-            the program that implements fakeroot is known as Pseudo.
         </para>
 
         <para>
-            Pseudo overrides system calls through the
-            <filename>LD_PRELOAD</filename> mechanism to give the
-            illusion of running as root.
+            In the OpenEmbedded build system, the program that implements
+            fakeroot is known as Pseudo.
+            Pseudo overrides system calls by using the environment variable
+            <filename>LD_PRELOAD</filename>, which results in the illusion
+            of running as root.
             To keep track of "fake" file ownership and permissions resulting
-            from operations that require root permissions, an sqlite3
-            database is used.
+            from operations that require root permissions, Pseudo uses
+            an SQLite 3 database.
             This database is stored in
             <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}/pseudo/files.db</filename>
             for individual recipes.
             Storing the database in a file as opposed to in memory
-            gives persistence between tasks, and even between builds.
+            gives persistence between tasks and builds, which is not
+            accomplished using fakeroot.
             <note><title>Caution</title>
                 If you add your own task that manipulates the same files or
-                directories as a fakeroot task, then that task should also run
-                under fakeroot.
-                Otherwise, the task will not be able to run root-only
-                operations, and will not see the fake file ownership and
-                permissions set by the other task.
-                You should also add a dependency on
+                directories as a fakeroot task, then that task also needs to
+                run under fakeroot.
+                Otherwise, the task cannot run root-only operations, and
+                cannot see the fake file ownership and permissions set by the
+                other task.
+                You need to also add a dependency on
                 <filename>virtual/fakeroot-native:do_populate_sysroot</filename>,
                 giving the following:
                 <literallayout class='monospaced'>
@@ -1319,9 +1325,11 @@
             For more information, see the
             <ulink url='&YOCTO_DOCS_BB_URL;#var-FAKEROOT'><filename>FAKEROOT*</filename></ulink>
             variables in the BitBake User Manual.
-            You can also reference this
-            <ulink url='http://www.ibm.com/developerworks/opensource/library/os-aapseudo1/index.html'>Pseudo</ulink>
-            article.
+            You can also reference the
+            "<ulink url='http://www.ibm.com/developerworks/opensource/library/os-aapseudo1/index.html'>Pseudo</ulink>"
+            and
+            "<ulink url='https://github.com/wrpseudo/pseudo/wiki/WhyNotFakeroot'>Why Not Fakeroot?</ulink>"
+            articles for background information on Pseudo.
         </para>
     </section>
 
