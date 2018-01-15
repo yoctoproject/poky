@@ -701,13 +701,16 @@
     </section>
 </section>
 
-<section id='performing-a-simple-build'>
-    <title>Performing a Simple Build</title>
+<section id='dev-building-an-image'>
+    <title>Building an Image</title>
 
     <para>
+        In the development environment, you need to build an image whenever
+        you change hardware support, add or change system libraries, or add
+        or change services that have dependencies.
         Several methods exist that allow you to build an image within the
         Yocto Project.
-        This procedure shows how to build an image using BitBake from a
+        This section shows you how to build an image using BitBake from a
         Linux host.
         <note><title>Notes</title>
             <itemizedlist>
@@ -715,7 +718,7 @@
                     For information on how to build an image using
                     <ulink url='&YOCTO_DOCS_REF_URL;#toaster-term'>Toaster</ulink>,
                     see the
-                    <ulink url='&YOCTO_DOCS_TOAST_URL;'>Yocto Project Toaster Manual</ulink>.
+                    <ulink url='&YOCTO_DOCS_TOAST_URL;'>Toaster Manual</ulink>.
                     </para></listitem>
                 <listitem><para>
                     For information on how to use
@@ -723,6 +726,12 @@
                     "<ulink url='&YOCTO_DOCS_SDK_URL;#using-devtool-in-your-sdk-workflow'>Using <filename>devtool</filename> in Your SDK Workflow</ulink>"
                     section in the Yocto Project Application Development and
                     the Extensible Software Development Kit (eSDK) manual.
+                    </para></listitem>
+                <listitem><para>
+                    For a practical example on how to build an image using the
+                    OpenEmbedded build system, see the
+                    "<ulink url='&YOCTO_DOCS_QS_URL;#qs-building-images'>Building Images</ulink>"
+                    section of the Yocto Project Quick Start.
                     </para></listitem>
             </itemizedlist>
         </note>
@@ -736,9 +745,6 @@
         For detailed information on the build process using BitBake, see the
         "<ulink url='&YOCTO_DOCS_OVERVIEW_URL;#images-dev-environment'>Images</ulink>"
         section in the Yocto Project Overview Manual.
-        You can also reference the
-        "<ulink url='&YOCTO_DOCS_QS_URL;#qs-building-images'>Building Images</ulink>"
-        section in the Yocto Project Quick Start.
     </para>
 
     <para>
@@ -757,14 +763,30 @@
                 <emphasis>Initialize the Build Environment:</emphasis>
                 Initialize the build environment by sourcing the build
                 environment script (i.e.
-                <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>).
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>):
+                <literallayout class='monospaced'>
+     $ source &OE_INIT_FILE; [<replaceable>build_dir</replaceable>]
+                </literallayout></para>
+
+                <para>When you use the initialization script, the
+                OpenEmbedded build system uses <filename>build</filename> as
+                the default Build Directory in your current work directory.
+                You can use a <replaceable>build_dir</replaceable> argument
+                with the script to specify a different build directory.
+                <note><title>Tip</title>
+                    A common practice is to use a different Build Directory for
+                    different targets.
+                    For example, <filename>~/build/x86</filename> for a
+                    <filename>qemux86</filename> target, and
+                    <filename>~/build/arm</filename> for a
+                    <filename>qemuarm</filename> target.
+                </note>
                 </para></listitem>
             <listitem><para>
                 <emphasis>Make Sure Your <filename>local.conf</filename>
                 File is Correct:</emphasis>
                 Ensure the <filename>conf/local.conf</filename> configuration
-                file, which is found in the
-                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>,
+                file, which is found in the Build Directory,
                 is set up how you want it.
                 This file defines many aspects of the build environment
                 including the target machine architecture through the
@@ -772,18 +794,100 @@
                 the packaging format used during the build
                 (<ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink>),
                 and a centralized tarball download directory through the
-                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'>DL_DIR</ulink></filename> variable.
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink> variable.
                 </para></listitem>
             <listitem><para>
                 <emphasis>Build the Image:</emphasis>
-                Build the image using the <filename>bitbake</filename> command.
-                For example, the following command builds the
+                Build the image using the <filename>bitbake</filename> command:
+                <literallayout class='monospaced'>
+     $ bitbake <replaceable>target</replaceable>
+                </literallayout>
+                <note>
+                    For information on BitBake, see the
+                    <ulink url='&YOCTO_DOCS_BB_URL;'>BitBake User Manual</ulink>.
+                </note>
+                The <replaceable>target</replaceable> is the name of the
+                recipe you want to build.
+                Common targets are the images in
+                <filename>meta/recipes-core/images</filename>,
+                <filename>meta/recipes-sato/images</filename>, etc. all found
+                in the
+                <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
+                Or, the target can be the name of a recipe for a specific
+                piece of software such as BusyBox.
+                For more details about the images the OpenEmbedded build
+                system supports, see the
+                "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
+                chapter in the Yocto Project Reference Manual.</para>
+
+                <para>As an example, the following command builds the
                 <filename>core-image-minimal</filename> image:
                 <literallayout class='monospaced'>
      $ bitbake core-image-minimal
                 </literallayout>
-                For information on BitBake, see the
-                <ulink url='&YOCTO_DOCS_BB_URL;'>BitBake User Manual</ulink>.
+                Once an image has been built, it often needs to be installed.
+                The images and kernels built by the OpenEmbedded build system
+                are placed in the Build Directory in
+                <filename class="directory">tmp/deploy/images</filename>.
+                For information on how to run pre-built images such as
+                <filename>qemux86</filename> and <filename>qemuarm</filename>,
+                see the
+                <ulink url='&YOCTO_DOCS_SDK_URL;'>Yocto Project Application Development and the Extensible Software Development Kit (eSDK)</ulink>
+                manual.
+                For information about how to install these images, see the
+                documentation for your particular board or machine.
+                <note><title>Build Notes</title>
+                    <itemizedlist>
+                        <listitem><para>
+                            If you experience a build error due to resources
+                            temporarily being unavailable and it appears you
+                            should not be having this issue, it might be due
+                            to the combination of a 4.3+ Linux kernel and
+                            <filename>systemd</filename> version 228+
+                            (i.e. see this
+                            <ulink url='http://unix.stackexchange.com/questions/253903/creating-threads-fails-with-resource-temporarily-unavailable-with-4-3-kernel'>link</ulink>
+                            for information).</para>
+
+                            <para>To work around this issue, you can try either
+                            of the following:
+                            <itemizedlist>
+                                <listitem><para>
+                                    Try the build again.
+                                    </para></listitem>
+                                <listitem><para>
+                                    Modify the "DefaultTasksMax"
+                                    <filename>systemd</filename> parameter
+                                    by uncommenting it and setting it to
+                                    "infinity".
+                                    You can find this parameter in the
+                                    <filename>system.conf</filename> file
+                                    located in
+                                    <filename>/etc/systemd</filename>
+                                    on most systems.
+                                    </para></listitem>
+                            </itemizedlist>
+                            </para></listitem>
+                        <listitem><para>
+                            Building an image without GNU General Public
+                            License Version 3 (GPLv3), or similarly licensed,
+                            components is supported for only minimal and
+                            base images.
+                            See the
+                            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
+                            chapter in the Yocto Project Reference Manual
+                            for more information.
+                            </para></listitem>
+                        <listitem><para>
+                            When building an image using GPL components,
+                            you need to maintain your original settings and
+                            not switch back and forth applying different
+                            versions of the GNU General Public License.
+                            If you rebuild using different versions of GPL,
+                            dependency errors might occur due to some components
+                            not being rebuilt.
+                            </para></listitem>
+                    </itemizedlist>
+                </note>
                 </para></listitem>
         </orderedlist>
     </para>
