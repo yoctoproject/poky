@@ -146,8 +146,8 @@ TARFILES = dev-style.css dev-manual.html \
            figures/source-repos.png figures/yp-download.png \
            figures/wip.png
         else
-TARFILES = dev-style.css dev-manual.html \
-           figures/dev-title.png \
+TARFILES = dev-style.css dev-manual.html figures/buildhistory-web.png \
+           figures/dev-title.png figures/buildhistory.png \
            figures/recipe-workflow.png figures/bitbake-build-flow.png \
            eclipse
 	endif
@@ -281,7 +281,6 @@ ifeq ($(DOC),ref-manual)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = ref-manual.html ref-style.css figures/poky-title.png \
-	figures/buildhistory.png figures/buildhistory-web.png \
 	figures/build-workspace-directory.png \
 	eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
