@@ -1,0 +1,209 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.3.2. Checksums (Signatures)</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="shared-state-cache.html" title="3.3. Shared State Cache">
+<link rel="prev" href="overall-architecture.html" title="3.3.1. Overall Architecture">
+<link rel="next" href="shared-state.html" title="3.3.3. Shared State">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.3.2. Checksums (Signatures)">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="overview-checksums"></a>3.3.2. Checksums (Signatures)</h3></div></div></div>
+<p>
+                The shared state code uses a checksum, which is a unique
+                signature of a task's inputs, to determine if a task needs to
+                be run again.
+                Because it is a change in a task's inputs that triggers a
+                rerun, the process needs to detect all the inputs to a given
+                task.
+                For shell tasks, this turns out to be fairly easy because
+                the build process generates a "run" shell script for each task
+                and it is possible to create a checksum that gives you a good
+                idea of when the task's data changes.
+            </p>
+<p>
+                To complicate the problem, there are things that should not be
+                included in the checksum.
+                First, there is the actual specific build path of a given
+                task - the
+                <a class="link" href="../ref-manual/var-WORKDIR.html" target="_self"><code class="filename">WORKDIR</code></a>.
+                It does not matter if the work directory changes because it
+                should not affect the output for target packages.
+                Also, the build process has the objective of making native
+                or cross packages relocatable.
+                </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                    Both native and cross packages run on the build host.
+                    However, cross packages generate output for the target
+                    architecture.
+                </div>
+<p>
+                The checksum therefore needs to exclude
+                <code class="filename">WORKDIR</code>.
+                The simplistic approach for excluding the work directory is to
+                set <code class="filename">WORKDIR</code> to some fixed value and
+                create the checksum for the "run" script.
+            </p>
+<p>
+                Another problem results from the "run" scripts containing
+                functions that might or might not get called.
+                The incremental build solution contains code that figures out
+                dependencies between shell functions.
+                This code is used to prune the "run" scripts down to the
+                minimum set, thereby alleviating this problem and making the
+                "run" scripts much more readable as a bonus.
+            </p>
+<p>
+                So far we have solutions for shell scripts.
+                What about Python tasks?
+                The same approach applies even though these tasks are more
+                difficult.
+                The process needs to figure out what variables a Python
+                function accesses and what functions it calls.
+                Again, the incremental build solution contains code that first
+                figures out the variable and function dependencies, and then
+                creates a checksum for the data used as the input to the task.
+            </p>
+<p>
+                Like the <code class="filename">WORKDIR</code> case, situations exist
+                where dependencies should be ignored.
+                For these cases, you can instruct the build process to
+                ignore a dependency by using a line like the following:
+                </p>
+<pre class="literallayout">
+     PACKAGE_ARCHS[vardepsexclude] = "MACHINE"
+                </pre>
+<p>
+                This example ensures that the
+                <a class="link" href="../ref-manual/var-PACKAGE_ARCHS.html" target="_self"><code class="filename">PACKAGE_ARCHS</code></a>
+                variable does not depend on the value of
+                <a class="link" href="../ref-manual/var-MACHINE.html" target="_self"><code class="filename">MACHINE</code></a>,
+                even if it does reference it.
+            </p>
+<p>
+                Equally, there are cases where we need to add dependencies
+                BitBake is not able to find.
+                You can accomplish this by using a line like the following:
+                </p>
+<pre class="literallayout">
+      PACKAGE_ARCHS[vardeps] = "MACHINE"
+                </pre>
+<p>
+                This example explicitly adds the <code class="filename">MACHINE</code>
+                variable as a dependency for
+                <code class="filename">PACKAGE_ARCHS</code>.
+            </p>
+<p>
+                Consider a case with in-line Python, for example, where
+                BitBake is not able to figure out dependencies.
+                When running in debug mode (i.e. using
+                <code class="filename">-DDD</code>), BitBake produces output when it
+                discovers something for which it cannot figure out dependencies.
+                The Yocto Project team has currently not managed to cover
+                those dependencies in detail and is aware of the need to fix
+                this situation.
+            </p>
+<p>
+                Thus far, this section has limited discussion to the direct
+                inputs into a task.
+                Information based on direct inputs is referred to as the
+                "basehash" in the code.
+                However, there is still the question of a task's indirect
+                inputs - the things that were already built and present in the
+                <a class="link" href="../ref-manual/build-directory.html" target="_self">Build Directory</a>.
+                The checksum (or signature) for a particular task needs to add
+                the hashes of all the tasks on which the particular task
+                depends.
+                Choosing which dependencies to add is a policy decision.
+                However, the effect is to generate a master checksum that
+                combines the basehash and the hashes of the task's
+                dependencies.
+            </p>
+<p>
+                At the code level, there are a variety of ways both the
+                basehash and the dependent task hashes can be influenced.
+                Within the BitBake configuration file, we can give BitBake
+                some extra information to help it construct the basehash.
+                The following statement effectively results in a list of
+                global variable dependency excludes - variables never
+                included in any checksum:
+                </p>
+<pre class="literallayout">
+     BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH DL_DIR \
+         SSTATE_DIR THISDIR FILESEXTRAPATHS FILE_DIRNAME HOME LOGNAME SHELL TERM \
+         USER FILESPATH STAGING_DIR_HOST STAGING_DIR_TARGET COREBASE PRSERV_HOST \
+         PRSERV_DUMPDIR PRSERV_DUMPFILE PRSERV_LOCKDOWN PARALLEL_MAKE \
+         CCACHE_DIR EXTERNAL_TOOLCHAIN CCACHE CCACHE_DISABLE LICENSE_PATH SDKPKGSUFFIX"
+                </pre>
+<p>
+                The previous example excludes
+                <a class="link" href="../ref-manual/var-WORKDIR.html" target="_self"><code class="filename">WORKDIR</code></a>
+                since that variable is actually constructed as a path within
+                <a class="link" href="../ref-manual/var-TMPDIR.html" target="_self"><code class="filename">TMPDIR</code></a>,
+                which is on the whitelist.
+            </p>
+<p>
+                The rules for deciding which hashes of dependent tasks to
+                include through dependency chains are more complex and are
+                generally accomplished with a Python function.
+                The code in <code class="filename">meta/lib/oe/sstatesig.py</code> shows
+                two examples of this and also illustrates how you can insert
+                your own policy into the system if so desired.
+                This file defines the two basic signature generators
+                <a class="link" href="../ref-manual/oe-core.html" target="_self">OE-Core</a>
+                uses:  "OEBasic" and "OEBasicHash".
+                By default, there is a dummy "noop" signature handler enabled
+                in BitBake.
+                This means that behavior is unchanged from previous versions.
+                OE-Core uses the "OEBasicHash" signature handler by default
+                through this setting in the <code class="filename">bitbake.conf</code>
+                file:
+                </p>
+<pre class="literallayout">
+     BB_SIGNATURE_HANDLER ?= "OEBasicHash"
+                </pre>
+<p>
+                The "OEBasicHash" <code class="filename">BB_SIGNATURE_HANDLER</code>
+                is the same as the "OEBasic" version but adds the task hash to
+                the stamp files.
+                This results in any
+                <a class="link" href="../ref-manual/metadata.html" target="_self">Metadata</a>
+                change that changes the task hash, automatically
+                causing the task to be run again.
+                This removes the need to bump
+                <a class="link" href="../ref-manual/var-PR.html" target="_self"><code class="filename">PR</code></a>
+                values, and changes to Metadata automatically ripple across
+                the build.
+            </p>
+<p>
+                It is also worth noting that the end result of these
+                signature generators is to make some dependency and hash
+                information available to the build.
+                This information includes:
+                </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+                        <code class="filename">BB_BASEHASH_task-</code><em class="replaceable"><code>taskname</code></em>:
+                        The base hashes for each task in the recipe.
+                        </p></li>
+<li class="listitem"><p>
+                        <code class="filename">BB_BASEHASH_</code><em class="replaceable"><code>filename</code></em><code class="filename">:</code><em class="replaceable"><code>taskname</code></em>:
+                        The base hashes for each dependent task.
+                        </p></li>
+<li class="listitem"><p>
+                        <code class="filename">BBHASHDEPS_</code><em class="replaceable"><code>filename</code></em><code class="filename">:</code><em class="replaceable"><code>taskname</code></em>:
+                        The task dependencies for each task.
+                        </p></li>
+<li class="listitem"><p>
+                        <code class="filename">BB_TASKHASH</code>:
+                        The hash of the currently running task.
+                        </p></li>
+</ul></div>
+<p>
+            </p>
+</div></body>
+</html>

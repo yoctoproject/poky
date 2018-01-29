@@ -1,0 +1,178 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>2.8.5.5. Image Generation</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="bitbake-dev-environment.html" title="2.8.5. BitBake">
+<link rel="prev" href="package-splitting-dev-environment.html" title="2.8.5.4. Package Splitting">
+<link rel="next" href="sdk-generation-dev-environment.html" title="2.8.5.6. SDK Generation">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="2.8.5.5. Image Generation">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="image-generation-dev-environment"></a>2.8.5.5. Image Generation</h4></div></div></div>
+<p>
+                Once packages are split and stored in the Package Feeds area,
+                the OpenEmbedded build system uses BitBake to generate the
+                root filesystem image:
+                </p>
+<table border="0" summary="manufactured viewport for HTML img" cellspacing="0" cellpadding="0" width="540"><tr style="height: 630px"><td align="center"><img src="figures/image-generation.png" align="middle" width="540"></td></tr></table>
+<p>
+            </p>
+<p>
+                The image generation process consists of several stages and
+                depends on several tasks and variables.
+                The
+                <a class="link" href="../ref-manual/ref-tasks-rootfs.html" target="_self"><code class="filename">do_rootfs</code></a>
+                task creates the root filesystem (file and directory structure)
+                for an image.
+                This task uses several key variables to help create the list
+                of packages to actually install:
+                </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p><a class="link" href="../ref-manual/var-IMAGE_INSTALL.html" target="_self"><code class="filename">IMAGE_INSTALL</code></a>:
+                        Lists out the base set of packages to install from
+                        the Package Feeds area.</p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-PACKAGE_EXCLUDE.html" target="_self"><code class="filename">PACKAGE_EXCLUDE</code></a>:
+                        Specifies packages that should not be installed.
+                        </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-IMAGE_FEATURES.html" target="_self"><code class="filename">IMAGE_FEATURES</code></a>:
+                        Specifies features to include in the image.
+                        Most of these features map to additional packages for
+                        installation.</p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-PACKAGE_CLASSES.html" target="_self"><code class="filename">PACKAGE_CLASSES</code></a>:
+                        Specifies the package backend to use and consequently
+                        helps determine where to locate packages within the
+                        Package Feeds area.</p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-IMAGE_LINGUAS.html" target="_self"><code class="filename">IMAGE_LINGUAS</code></a>:
+                        Determines the language(s) for which additional
+                        language support packages are installed.
+                        </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-PACKAGE_INSTALL.html" target="_self"><code class="filename">PACKAGE_INSTALL</code></a>:
+                        The final list of packages passed to the package manager
+                        for installation into the image.
+                        </p></li>
+</ul></div>
+<p>
+            </p>
+<p>
+                With
+                <a class="link" href="../ref-manual/var-IMAGE_ROOTFS.html" target="_self"><code class="filename">IMAGE_ROOTFS</code></a>
+                pointing to the location of the filesystem under construction and
+                the <code class="filename">PACKAGE_INSTALL</code> variable providing the
+                final list of packages to install, the root file system is
+                created.
+            </p>
+<p>
+                Package installation is under control of the package manager
+                (e.g. dnf/rpm, opkg, or apt/dpkg) regardless of whether or
+                not package management is enabled for the target.
+                At the end of the process, if package management is not
+                enabled for the target, the package manager's data files
+                are deleted from the root filesystem.
+                As part of the final stage of package installation, postinstall
+                scripts that are part of the packages are run.
+                Any scripts that fail to run
+                on the build host are run on the target when the target system
+                is first booted.
+                If you are using a
+                <a class="link" href="../dev-manual/creating-a-read-only-root-filesystem.html" target="_self">read-only root filesystem</a>,
+                all the post installation scripts must succeed during the
+                package installation phase since the root filesystem is
+                read-only.
+            </p>
+<p>
+                The final stages of the <code class="filename">do_rootfs</code> task
+                handle post processing.
+                Post processing includes creation of a manifest file and
+                optimizations.
+            </p>
+<p>
+                The manifest file (<code class="filename">.manifest</code>) resides
+                in the same directory as the root filesystem image.
+                This file lists out, line-by-line, the installed packages.
+                The manifest file is useful for the
+                <a class="link" href="../ref-manual/ref-classes-testimage*.html" target="_self"><code class="filename">testimage</code></a>
+                class, for example, to determine whether or not to run
+                specific tests.
+                See the
+                <a class="link" href="../ref-manual/var-IMAGE_MANIFEST.html" target="_self"><code class="filename">IMAGE_MANIFEST</code></a>
+                variable for additional information.
+            </p>
+<p>
+                Optimizing processes run across the image include
+                <code class="filename">mklibs</code>, <code class="filename">prelink</code>,
+                and any other post-processing commands as defined by the
+                <a class="link" href="../ref-manual/var-ROOTFS_POSTPROCESS_COMMAND.html" target="_self"><code class="filename">ROOTFS_POSTPROCESS_COMMAND</code></a>
+                variable.
+                The <code class="filename">mklibs</code> process optimizes the size
+                of the libraries, while the
+                <code class="filename">prelink</code> process optimizes the dynamic
+                linking of shared libraries to reduce start up time of
+                executables.
+            </p>
+<p>
+                After the root filesystem is built, processing begins on
+                the image through the
+                <a class="link" href="../ref-manual/ref-tasks-image.html" target="_self"><code class="filename">do_image</code></a>
+                task.
+                The build system runs any pre-processing commands as defined
+                by the
+                <a class="link" href="../ref-manual/var-IMAGE_PREPROCESS_COMMAND.html" target="_self"><code class="filename">IMAGE_PREPROCESS_COMMAND</code></a>
+                variable.
+                This variable specifies a list of functions to call before
+                the OpenEmbedded build system creates the final image output
+                files.
+            </p>
+<p>
+                The OpenEmbedded build system dynamically creates
+                <code class="filename">do_image_*</code> tasks as needed, based
+                on the image types specified in the
+                <a class="link" href="../ref-manual/var-IMAGE_FSTYPES.html" target="_self"><code class="filename">IMAGE_FSTYPES</code></a>
+                variable.
+                The process turns everything into an image file or a set of
+                image files and compresses the root filesystem image to reduce
+                the overall size of the image.
+                The formats used for the root filesystem depend on the
+                <code class="filename">IMAGE_FSTYPES</code> variable.
+            </p>
+<p>
+                As an example, a dynamically created task when creating a
+                particular image <em class="replaceable"><code>type</code></em> would take the
+                following form:
+                </p>
+<pre class="literallayout">
+     do_image_<em class="replaceable"><code>type</code></em>[depends]
+                </pre>
+<p>
+                So, if the <em class="replaceable"><code>type</code></em> as specified by the
+                <code class="filename">IMAGE_FSTYPES</code> were
+                <code class="filename">ext4</code>, the dynamically generated task
+                would be as follows:
+                </p>
+<pre class="literallayout">
+     do_image_ext4[depends]
+                </pre>
+<p>
+            </p>
+<p>
+                The final task involved in image creation is the
+                <a class="link" href="../ref-manual/ref-tasks-image-complete.html" target="_self"><code class="filename">do_image_complete</code></a>
+                task.
+                This task completes the image by applying any image
+                post processing as defined through the
+                <a class="link" href="../ref-manual/var-IMAGE_POSTPROCESS_COMMAND.html" target="_self"><code class="filename">IMAGE_POSTPROCESS_COMMAND</code></a>
+                variable.
+                The variable specifies a list of functions to call once the
+                OpenEmbedded build system has created the final image output
+                files.
+            </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                The entire image generation process is run under Pseudo.
+                Running under Pseudo ensures that the files in the root
+                filesystem have correct ownership.
+            </div>
+</div></body>
+</html>

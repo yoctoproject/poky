@@ -1,0 +1,72 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>2.8.5.6. SDK Generation</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="bitbake-dev-environment.html" title="2.8.5. BitBake">
+<link rel="prev" href="image-generation-dev-environment.html" title="2.8.5.5. Image Generation">
+<link rel="next" href="stamp-files-and-the-rerunning-of-tasks.html" title="2.8.5.7. Stamp Files and the Rerunning of Tasks">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="2.8.5.6. SDK Generation">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="sdk-generation-dev-environment"></a>2.8.5.6. SDK Generation</h4></div></div></div>
+<p>
+                The OpenEmbedded build system uses BitBake to generate the
+                Software Development Kit (SDK) installer script for both the
+                standard and extensible SDKs:
+                <img src="figures/sdk-generation.png" align="middle">
+            </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                For more information on the cross-development toolchain
+                generation, see the
+                "<a class="link" href="cross-development-toolchain-generation.html" title="3.2. Cross-Development Toolchain Generation">Cross-Development Toolchain Generation</a>"
+                section.
+                For information on advantages gained when building a
+                cross-development toolchain using the
+                <a class="link" href="../ref-manual/ref-tasks-populate_sdk.html" target="_self"><code class="filename">do_populate_sdk</code></a>
+                task, see the
+                "<a class="link" href="../sdk-manual/sdk-building-an-sdk-installer.html" target="_self">Building an SDK Installer</a>"
+                section in the Yocto Project Application Development and the
+                Extensible Software Development Kit (SDK) manual.
+            </div>
+<p>
+                Like image generation, the SDK script process consists of
+                several stages and depends on many variables.
+                The <code class="filename">do_populate_sdk</code> and
+                <code class="filename">do_populate_sdk_ext</code> tasks use these
+                key variables to help create the list of packages to actually
+                install.
+                For information on the variables listed in the figure, see the
+                "<a class="link" href="sdk-dev-environment.html" title="2.8.7. Application Development SDK">Application Development SDK</a>"
+                section.
+            </p>
+<p>
+                The <code class="filename">do_populate_sdk</code> task helps create
+                the standard SDK and handles two parts: a target part and a
+                host part.
+                The target part is the part built for the target hardware and
+                includes libraries and headers.
+                The host part is the part of the SDK that runs on the
+                <a class="link" href="../ref-manual/var-SDKMACHINE.html" target="_self"><code class="filename">SDKMACHINE</code></a>.
+            </p>
+<p>
+                The <code class="filename">do_populate_sdk_ext</code> task helps create
+                the extensible SDK and handles host and target parts
+                differently than its counter part does for the standard SDK.
+                For the extensible SDK, the task encapsulates the build system,
+                which includes everything needed (host and target) for the SDK.
+            </p>
+<p>
+                Regardless of the type of SDK being constructed, the
+                tasks perform some cleanup after which a cross-development
+                environment setup script and any needed configuration files
+                are created.
+                The final output is the Cross-development
+                toolchain installation script (<code class="filename">.sh</code> file),
+                which includes the environment setup script.
+            </p>
+</div></body>
+</html>

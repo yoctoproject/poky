@@ -1,0 +1,77 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.3.4.2. Invalidating Shared State</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="tips-and-tricks.html" title="3.3.4. Tips and Tricks">
+<link rel="prev" href="overview-debugging.html" title="3.3.4.1. Debugging">
+<link rel="next" href="automatically-added-runtime-dependencies.html" title="3.4. Automatically Added Runtime Dependencies">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.3.4.2. Invalidating Shared State">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="invalidating-shared-state"></a>3.3.4.2. Invalidating Shared State</h4></div></div></div>
+<p>
+                    The OpenEmbedded build system uses checksums and shared
+                    state cache to avoid unnecessarily rebuilding tasks.
+                    Collectively, this scheme is known as "shared state code."
+                </p>
+<p>
+                    As with all schemes, this one has some drawbacks.
+                    It is possible that you could make implicit changes to your
+                    code that the checksum calculations do not take into
+                    account.
+                    These implicit changes affect a task's output but do not
+                    trigger the shared state code into rebuilding a recipe.
+                    Consider an example during which a tool changes its output.
+                    Assume that the output of <code class="filename">rpmdeps</code>
+                    changes.
+                    The result of the change should be that all the
+                    <code class="filename">package</code> and
+                    <code class="filename">package_write_rpm</code> shared state cache
+                    items become invalid.
+                    However, because the change to the output is
+                    external to the code and therefore implicit,
+                    the associated shared state cache items do not become
+                    invalidated.
+                    In this case, the build process uses the cached items
+                    rather than running the task again.
+                    Obviously, these types of implicit changes can cause
+                    problems.
+                </p>
+<p>
+                    To avoid these problems during the build, you need to
+                    understand the effects of any changes you make.
+                    Realize that changes you make directly to a function
+                    are automatically factored into the checksum calculation.
+                    Thus, these explicit changes invalidate the associated
+                    area of shared state cache.
+                    However, you need to be aware of any implicit changes that
+                    are not obvious changes to the code and could affect
+                    the output of a given task.
+                </p>
+<p>
+                    When you identify an implicit change, you can easily
+                    take steps to invalidate the cache and force the tasks
+                    to run.
+                    The steps you can take are as simple as changing a
+                    function's comments in the source code.
+                    For example, to invalidate package shared state files,
+                    change the comment statements of
+                    <a class="link" href="../ref-manual/ref-tasks-package.html" target="_self"><code class="filename">do_package</code></a>
+                    or the comments of one of the functions it calls.
+                    Even though the change is purely cosmetic, it causes the
+                    checksum to be recalculated and forces the OpenEmbedded
+                    build system to run the task again.
+                    </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                        For an example of a commit that makes a cosmetic
+                        change to invalidate shared state, see this
+                        <a class="ulink" href="http://git.yoctoproject.org/cgit.cgi/poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54" target="_self">commit</a>.
+                    </div>
+<p>
+                </p>
+</div></body>
+</html>

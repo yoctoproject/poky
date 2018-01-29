@@ -16,7 +16,7 @@ s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/poky-ref-manual\/po
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/sdk-manual\/sdk-manual.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/bsp-guide\/bsp-guide.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/dev-manual\/dev-manual.html#/\"link\" href=\"#/g
-s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/overview-manual\/overview-manual.html#/\"link\" href=\"#/g
+s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/getting-started\/getting-started.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/kernel-dev\/kernel-dev.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/profile-manual\/profile-manual.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/ref-manual\/ref-manual.html#/\"link\" href=\"#/g
@@ -25,7 +25,7 @@ s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/toaster-manual\/toa
 # Process cases where just an external manual is referenced without an id anchor
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/yocto-project-qs\/yocto-project-qs.html\" target=\"_top\">Yocto Project Quick Start<\/a>/Yocto Project Quick Start/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/dev-manual\/dev-manual.html\" target=\"_top\">Yocto Project Development Tasks Manual<\/a>/Yocto Project Development Tasks Manual/g
-s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/overview-manual\/overview-manual.html\" target=\"_top\">Yocto Project Overview Manual<\/a>/Yocto Project Overview Manual/g
+s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/getting-started\/getting-started.html\" target=\"_top\">Yocto Project Overview Manual<\/a>/Yocto Project Overview Manual/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/sdk-manual\/sdk-manual.html\" target=\"_top\">Yocto Project Application Development and the Extensible Software Development Kit (eSDK)<\/a>/Yocto Project Application Development and the Extensible Software Development Kit (eSDK)/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/bsp-guide\/bsp-guide.html\" target=\"_top\">Yocto Project Board Support Package (BSP) Developer's Guide<\/a>/Yocto Project Board Support Package (BSP) Developer's Guide/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/profile-manual\/profile-manual.html\" target=\"_top\">Yocto Project Profiling and Tracing Manual<\/a>/Yocto Project Profiling and Tracing Manual/g

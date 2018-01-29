@@ -1,0 +1,82 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.1.1. BitBake</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="yocto-project-components.html" title="3.1. Yocto Project Components">
+<link rel="prev" href="yocto-project-components.html" title="3.1. Yocto Project Components">
+<link rel="next" href="usingpoky-components-metadata.html" title="3.1.2. Metadata (Recipes)">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.1.1. BitBake">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="usingpoky-components-bitbake"></a>3.1.1. BitBake</h3></div></div></div>
+<p>
+                BitBake is the tool at the heart of the OpenEmbedded build
+                system and is responsible for parsing the
+                <a class="link" href="../ref-manual/metadata.html" target="_self">Metadata</a>,
+                generating a list of tasks from it, and then executing those
+                tasks.
+            </p>
+<p>
+                This section briefly introduces BitBake.
+                If you want more information on BitBake, see the
+                <a class="link" href="../bitbake-user-manual/bitbake-user-manual.html" target="_self">BitBake User Manual</a>.
+            </p>
+<p>
+                To see a list of the options BitBake supports, use either of
+                the following commands:
+                </p>
+<pre class="literallayout">
+     $ bitbake -h
+     $ bitbake --help
+                </pre>
+<p>
+            </p>
+<p>
+                The most common usage for BitBake is
+                <code class="filename">bitbake <em class="replaceable"><code>packagename</code></em></code>,
+                where <code class="filename">packagename</code> is the name of the
+                package you want to build (referred to as the "target" in this
+                manual).
+                The target often equates to the first part of a recipe's
+                filename (e.g. "foo" for a recipe named
+                <code class="filename">foo_1.3.0-r0.bb</code>).
+                So, to process the
+                <code class="filename">matchbox-desktop_1.2.3.bb</code> recipe file, you
+                might type the following:
+                </p>
+<pre class="literallayout">
+     $ bitbake matchbox-desktop
+                </pre>
+<p>
+                Several different versions of
+                <code class="filename">matchbox-desktop</code> might exist.
+                BitBake chooses the one selected by the distribution
+                configuration.
+                You can get more details about how BitBake chooses between
+                different target versions and providers in the
+                "<a class="link" href="../bitbake-user-manual/bb-bitbake-preferences.html" target="_self">Preferences</a>"
+                section of the BitBake User Manual.
+            </p>
+<p>
+                BitBake also tries to execute any dependent tasks first.
+                So for example, before building
+                <code class="filename">matchbox-desktop</code>, BitBake would build a
+                cross compiler and <code class="filename">glibc</code> if they had not
+                already been built.
+            </p>
+<p>
+                A useful BitBake option to consider is the
+                <code class="filename">-k</code> or <code class="filename">--continue</code>
+                option.
+                This option instructs BitBake to try and continue processing
+                the job as long as possible even after encountering an error.
+                When an error occurs, the target that failed and those that
+                depend on it cannot be remade.
+                However, when you use this option other dependencies can
+                still be processed.
+            </p>
+</div></body>
+</html>

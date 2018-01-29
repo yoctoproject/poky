@@ -1,0 +1,91 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.7.2. Enabling Commercially Licensed Recipes</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="overview-licenses.html" title="3.7. Licenses">
+<link rel="prev" href="usingpoky-LIC_FILES_CHKSUM-explanation-of-syntax.html" title="3.7.1.2. Explanation of Syntax">
+<link rel="next" href="license-flag-matching.html" title="3.7.2.1. License Flag Matching">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.7.2. Enabling Commercially Licensed Recipes">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="enabling-commercially-licensed-recipes"></a>3.7.2. Enabling Commercially Licensed Recipes</h3></div></div></div>
+<p>
+                By default, the OpenEmbedded build system disables
+                components that have commercial or other special licensing
+                requirements.
+                Such requirements are defined on a
+                recipe-by-recipe basis through the
+                <a class="link" href="../ref-manual/var-LICENSE_FLAGS.html" target="_self"><code class="filename">LICENSE_FLAGS</code></a>
+                variable definition in the affected recipe.
+                For instance, the
+                <code class="filename">poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly</code>
+                recipe contains the following statement:
+                </p>
+<pre class="literallayout">
+     LICENSE_FLAGS = "commercial"
+                </pre>
+<p>
+                Here is a slightly more complicated example that contains both
+                an explicit recipe name and version (after variable expansion):
+                </p>
+<pre class="literallayout">
+     LICENSE_FLAGS = "license_${PN}_${PV}"
+                </pre>
+<p>
+	            In order for a component restricted by a
+                <code class="filename">LICENSE_FLAGS</code> definition to be enabled and
+                included in an image, it needs to have a matching entry in the
+                global
+	            <a class="link" href="../ref-manual/var-LICENSE_FLAGS_WHITELIST.html" target="_self"><code class="filename">LICENSE_FLAGS_WHITELIST</code></a>
+                variable, which is a variable typically defined in your
+                <code class="filename">local.conf</code> file.
+                For example, to enable the
+                <code class="filename">poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly</code>
+	            package, you could add either the string
+	            "commercial_gst-plugins-ugly" or the more general string
+	            "commercial" to <code class="filename">LICENSE_FLAGS_WHITELIST</code>.
+                See the
+                "<a class="link" href="license-flag-matching.html" title="3.7.2.1. License Flag Matching">License Flag Matching</a>"
+                section for a full
+                explanation of how <code class="filename">LICENSE_FLAGS</code> matching
+                works.
+                Here is the example:
+                </p>
+<pre class="literallayout">
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly"
+                </pre>
+<p>
+	            Likewise, to additionally enable the package built from the
+                recipe containing
+	            <code class="filename">LICENSE_FLAGS = "license_${PN}_${PV}"</code>,
+                and assuming that the actual recipe name was
+                <code class="filename">emgd_1.10.bb</code>, the following string would
+                enable that package as well as the original
+                <code class="filename">gst-plugins-ugly</code> package:
+                </p>
+<pre class="literallayout">
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly license_emgd_1.10"
+                </pre>
+<p>
+	            As a convenience, you do not need to specify the complete
+                license string in the whitelist for every package.
+                You can use an abbreviated form, which consists
+                of just the first portion or portions of the license
+                string before the initial underscore character or characters.
+                A partial string will match any license that contains the
+                given string as the first portion of its license.
+                For example, the following whitelist string will also match
+                both of the packages previously mentioned as well as any other
+                packages that have licenses starting with "commercial" or
+                "license".
+                </p>
+<pre class="literallayout">
+     LICENSE_FLAGS_WHITELIST = "commercial license"
+                </pre>
+<p>
+            </p>
+</div></body>
+</html>

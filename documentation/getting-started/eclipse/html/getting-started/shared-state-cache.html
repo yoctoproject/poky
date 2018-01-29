@@ -1,0 +1,93 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.3. Shared State Cache</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="overview-concepts.html" title="Chapter 3. Yocto Project Concepts">
+<link rel="prev" href="cross-development-toolchain-generation.html" title="3.2. Cross-Development Toolchain Generation">
+<link rel="next" href="overall-architecture.html" title="3.3.1. Overall Architecture">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.3. Shared State Cache">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="shared-state-cache"></a>3.3. Shared State Cache</h2></div></div></div>
+<p>
+            By design, the OpenEmbedded build system builds everything from
+            scratch unless BitBake can determine that parts do not need to be
+            rebuilt.
+            Fundamentally, building from scratch is attractive as it means all
+            parts are built fresh and there is no possibility of stale data
+            causing problems.
+            When developers hit problems, they typically default back to
+            building from scratch so they know the state of things from the
+            start.
+        </p>
+<p>
+            Building an image from scratch is both an advantage and a
+            disadvantage to the process.
+            As mentioned in the previous paragraph, building from scratch
+            ensures that everything is current and starts from a known state.
+            However, building from scratch also takes much longer as it
+            generally means rebuilding things that do not necessarily need
+            to be rebuilt.
+        </p>
+<p>
+            The Yocto Project implements shared state code that supports
+            incremental builds.
+            The implementation of the shared state code answers the following
+            questions that were fundamental roadblocks within the OpenEmbedded
+            incremental build support system:
+            </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+                    What pieces of the system have changed and what pieces have
+                    not changed?
+                    </p></li>
+<li class="listitem"><p>
+                    How are changed pieces of software removed and replaced?
+                    </p></li>
+<li class="listitem"><p>
+                    How are pre-built components that do not need to be rebuilt
+                    from scratch used when they are available?
+                    </p></li>
+</ul></div>
+<p>
+        </p>
+<p>
+            For the first question, the build system detects changes in the
+            "inputs" to a given task by creating a checksum (or signature) of
+            the task's inputs.
+            If the checksum changes, the system assumes the inputs have changed
+            and the task needs to be rerun.
+            For the second question, the shared state (sstate) code tracks
+            which tasks add which output to the build process.
+            This means the output from a given task can be removed, upgraded
+            or otherwise manipulated.
+            The third question is partly addressed by the solution for the
+            second question assuming the build system can fetch the sstate
+            objects from remote locations and install them if they are deemed
+            to be valid.
+            </p>
+<div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+                The OpenEmbedded build system does not maintain
+                <a class="link" href="../ref-manual/var-PR.html" target="_self"><code class="filename">PR</code></a>
+                information as part of the shared state packages.
+                Consequently, considerations exist that affect maintaining
+                shared state feeds.
+                For information on how the OpenEmbedded build system
+                works with packages and can track incrementing
+                <code class="filename">PR</code> information, see the
+                "<a class="link" href="../dev-manual/automatically-incrementing-a-binary-package-revision-number.html" target="_self">Automatically Incrementing a Binary Package Revision Number</a>"
+                section in the Yocto Project Development Tasks Manual.
+            </div>
+<p>
+        </p>
+<p>
+            The rest of this section goes into detail about the overall
+            incremental build architecture, the checksums (signatures), shared
+            state, and some tips and tricks.
+        </p>
+</div></body>
+</html>

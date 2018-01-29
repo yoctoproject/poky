@@ -1,0 +1,82 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.7.1.1. Specifying the LIC_FILES_CHKSUM Variable</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="usingpoky-configuring-LIC_FILES_CHKSUM.html" title="3.7.1. Tracking License Changes">
+<link rel="prev" href="usingpoky-configuring-LIC_FILES_CHKSUM.html" title="3.7.1. Tracking License Changes">
+<link rel="next" href="usingpoky-LIC_FILES_CHKSUM-explanation-of-syntax.html" title="3.7.1.2. Explanation of Syntax">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.7.1.1. Specifying the LIC_FILES_CHKSUM Variable">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="usingpoky-specifying-LIC_FILES_CHKSUM"></a>3.7.1.1. Specifying the <code class="filename">LIC_FILES_CHKSUM</code> Variable</h4></div></div></div>
+<p>
+                    The <code class="filename">LIC_FILES_CHKSUM</code>
+                    variable contains checksums of the license text in the
+                    source code for the recipe.
+                    Following is an example of how to specify
+                    <code class="filename">LIC_FILES_CHKSUM</code>:
+                    </p>
+<pre class="literallayout">
+     LIC_FILES_CHKSUM = "file://COPYING;md5=xxxx \
+                         file://licfile1.txt;beginline=5;endline=29;md5=yyyy \
+                         file://licfile2.txt;endline=50;md5=zzzz \
+                         ..."
+                    </pre>
+<p>
+                    </p>
+<div class="note" title="Notes" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Notes</h3>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+                                When using "beginline" and "endline", realize
+                                that line numbering begins with one and not
+                                zero.
+                                Also, the included lines are inclusive (i.e.
+                                lines five through and including 29 in the
+                                previous example for
+                                <code class="filename">licfile1.txt</code>).
+                                </p></li>
+<li class="listitem"><p>
+                                When a license check fails, the selected license
+                                text is included as part of the QA message.
+                                Using this output, you can determine the exact
+                                start and finish for the needed license text.
+                                </p></li>
+</ul></div>
+</div>
+<p>
+                </p>
+<p>
+                    The build system uses the
+                    <a class="link" href="../ref-manual/var-S.html" target="_self"><code class="filename">S</code></a>
+                    variable as the default directory when searching files
+                    listed in <code class="filename">LIC_FILES_CHKSUM</code>.
+                    The previous example employs the default directory.
+                </p>
+<p>
+                    Consider this next example:
+                    </p>
+<pre class="literallayout">
+     LIC_FILES_CHKSUM = "file://src/ls.c;beginline=5;endline=16;\
+                                         md5=bb14ed3c4cda583abc85401304b5cd4e"
+     LIC_FILES_CHKSUM = "file://${WORKDIR}/license.html;md5=5c94767cedb5d6987c902ac850ded2c6"
+                    </pre>
+<p>
+                </p>
+<p>
+                    The first line locates a file in
+                    <code class="filename">${S}/src/ls.c</code> and isolates lines five
+                    through 16 as license text.
+                    The second line refers to a file in
+                    <a class="link" href="../ref-manual/var-WORKDIR.html" target="_self"><code class="filename">WORKDIR</code></a>.
+                </p>
+<p>
+                    Note that <code class="filename">LIC_FILES_CHKSUM</code> variable is
+                    mandatory for all recipes, unless the
+                    <code class="filename">LICENSE</code> variable is set to "CLOSED".
+                </p>
+</div></body>
+</html>

@@ -1,0 +1,150 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>2.8.7. Application Development SDK</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="development-concepts.html" title="2.8. Development Concepts">
+<link rel="prev" href="images-dev-environment.html" title="2.8.6. Images">
+<link rel="next" href="overview-concepts.html" title="Chapter 3. Yocto Project Concepts">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="2.8.7. Application Development SDK">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="sdk-dev-environment"></a>2.8.7. Application Development SDK</h3></div></div></div>
+<p>
+            In the
+            <a class="link" href="development-concepts.html#general-yocto-environment-figure">general Yocto Project Development Environment figure</a>,
+            the output labeled "Application Development SDK" represents an
+            SDK.
+            The SDK generation process differs depending on whether you build
+            a standard SDK
+            (e.g. <code class="filename">bitbake -c populate_sdk</code> <em class="replaceable"><code>imagename</code></em>)
+            or an extensible SDK
+            (e.g. <code class="filename">bitbake -c populate_sdk_ext</code> <em class="replaceable"><code>imagename</code></em>).
+            This section is going to take a closer look at this output:
+            </p>
+<table border="0" summary="manufactured viewport for HTML img" cellspacing="0" cellpadding="0" width="810"><tr style="height: 653px"><td align="center"><img src="figures/sdk.png" align="middle" width="810"></td></tr></table>
+<p>
+        </p>
+<p>
+            The specific form of this output is a self-extracting
+            SDK installer (<code class="filename">*.sh</code>) that, when run,
+            installs the SDK, which consists of a cross-development
+            toolchain, a set of libraries and headers, and an SDK
+            environment setup script.
+            Running this installer essentially sets up your
+            cross-development environment.
+            You can think of the cross-toolchain as the "host"
+            part because it runs on the SDK machine.
+            You can think of the libraries and headers as the "target"
+            part because they are built for the target hardware.
+            The environment setup script is added so that you can initialize
+            the environment before using the tools.
+        </p>
+<div class="note" title="Notes" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Notes</h3>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+                    The Yocto Project supports several methods by which you can
+                    set up this cross-development environment.
+                    These methods include downloading pre-built SDK installers
+                    or building and installing your own SDK installer.
+                    </p></li>
+<li class="listitem"><p>
+                    For background information on cross-development toolchains
+                    in the Yocto Project development environment, see the
+                    "<a class="link" href="cross-development-toolchain-generation.html" title="3.2. Cross-Development Toolchain Generation">Cross-Development Toolchain Generation</a>"
+                    section.
+                    </p></li>
+<li class="listitem"><p>
+                    For information on setting up a cross-development
+                    environment, see the
+                    <a class="link" href="../sdk-manual/index.html" target="_self">Yocto Project Application Development and the Extensible Software Development Kit (eSDK)</a>
+                    manual.
+                    </p></li>
+</ul></div>
+</div>
+<p>
+            Once built, the SDK installers are written out to the
+            <code class="filename">deploy/sdk</code> folder inside the
+            <a class="link" href="../ref-manual/build-directory.html" target="_self">Build Directory</a>
+            as shown in the figure at the beginning of this section.
+            Depending on the type of SDK, several variables exist that help
+            configure these files.
+            The following list shows the variables associated with a standard
+            SDK:
+            </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p><a class="link" href="../ref-manual/var-DEPLOY_DIR.html" target="_self"><code class="filename">DEPLOY_DIR</code></a>:
+                    Points to the <code class="filename">deploy</code>
+                    directory.</p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-SDKMACHINE.html" target="_self"><code class="filename">SDKMACHINE</code></a>:
+                    Specifies the architecture of the machine
+                    on which the cross-development tools are run to
+                    create packages for the target hardware.
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-SDKIMAGE_FEATURES.html" target="_self"><code class="filename">SDKIMAGE_FEATURES</code></a>:
+                    Lists the features to include in the "target" part
+                    of the SDK.
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-TOOLCHAIN_HOST_TASK.html" target="_self"><code class="filename">TOOLCHAIN_HOST_TASK</code></a>:
+                    Lists packages that make up the host
+                    part of the SDK (i.e. the part that runs on
+                    the <code class="filename">SDKMACHINE</code>).
+                    When you use
+                    <code class="filename">bitbake -c populate_sdk <em class="replaceable"><code>imagename</code></em></code>
+                    to create the SDK, a set of default packages
+                    apply.
+                    This variable allows you to add more packages.
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-TOOLCHAIN_TARGET_TASK.html" target="_self"><code class="filename">TOOLCHAIN_TARGET_TASK</code></a>:
+                    Lists packages that make up the target part
+                    of the SDK (i.e. the part built for the
+                    target hardware).
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-SDKPATH.html" target="_self"><code class="filename">SDKPATH</code></a>:
+                    Defines the default SDK installation path offered by the
+                    installation script.
+                    </p></li>
+</ul></div>
+<p>
+            This next list, shows the variables associated with an extensible
+            SDK:
+            </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p><a class="link" href="../ref-manual/var-DEPLOY_DIR.html" target="_self"><code class="filename">DEPLOY_DIR</code></a>:
+                    Points to the <code class="filename">deploy</code> directory.
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-SDK_EXT_TYPE.html" target="_self"><code class="filename">SDK_EXT_TYPE</code></a>:
+                    Controls whether or not shared state artifacts are copied
+                    into the extensible SDK.
+                    By default, all required shared state artifacts are copied
+                    into the SDK.
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-SDK_INCLUDE_PKGDATA.html" target="_self"><code class="filename">SDK_INCLUDE_PKGDATA</code></a>:
+                    Specifies whether or not packagedata will be included in
+                    the extensible SDK for all recipes in the "world" target.
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-SDK_INCLUDE_TOOLCHAIN.html" target="_self"><code class="filename">SDK_INCLUDE_TOOLCHAIN</code></a>:
+                    Specifies whether or not the toolchain will be included
+                    when building the extensible SDK.
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-SDK_LOCAL_CONF_WHITELIST.html" target="_self"><code class="filename">SDK_LOCAL_CONF_WHITELIST</code></a>:
+                    A list of variables allowed through from the build system
+                    configuration into the extensible SDK configuration.
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-SDK_LOCAL_CONF_BLACKLIST.html" target="_self"><code class="filename">SDK_LOCAL_CONF_BLACKLIST</code></a>:
+                    A list of variables not allowed through from the build
+                    system configuration into the extensible SDK configuration.
+                    </p></li>
+<li class="listitem"><p><a class="link" href="../ref-manual/var-SDK_INHERIT_BLACKLIST.html" target="_self"><code class="filename">SDK_INHERIT_BLACKLIST</code></a>:
+                    A list of classes to remove from the
+                    <a class="link" href="../ref-manual/var-INHERIT.html" target="_self"><code class="filename">INHERIT</code></a>
+                    value globally within the extensible SDK configuration.
+                    </p></li>
+</ul></div>
+<p>
+        </p>
+</div></body>
+</html>

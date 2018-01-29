@@ -1,0 +1,91 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.5. Fakeroot and Pseudo</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="overview-concepts.html" title="Chapter 3. Yocto Project Concepts">
+<link rel="prev" href="automatically-added-runtime-dependencies.html" title="3.4. Automatically Added Runtime Dependencies">
+<link rel="next" href="wayland.html" title="3.6. Wayland">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.5. Fakeroot and Pseudo">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="fakeroot-and-pseudo"></a>3.5. Fakeroot and Pseudo</h2></div></div></div>
+<p>
+            Some tasks are easier to implement when allowed to perform certain
+            operations that are normally reserved for the root user (e.g.
+            <a class="link" href="../ref-manual/ref-tasks-install.html" target="_self"><code class="filename">do_install</code></a>,
+            <a class="link" href="../ref-manual/ref-tasks-package_write_deb.html" target="_self"><code class="filename">do_package_write*</code></a>,
+            <a class="link" href="../ref-manual/ref-tasks-rootfs.html" target="_self"><code class="filename">do_rootfs</code></a>,
+            and
+            <a class="link" href="../ref-manual/ref-tasks-image.html" target="_self"><code class="filename">do_image*</code></a>).
+            For example, the <code class="filename">do_install</code> task benefits
+            from being able to set the UID and GID of installed files to
+            arbitrary values.
+        </p>
+<p>
+            One approach to allowing tasks to perform root-only operations
+            would be to require BitBake to run as root.
+            However, this method is cumbersome and has security issues.
+            The approach that is actually used is to run tasks that benefit
+            from root privileges in a "fake" root environment.
+            Within this environment, the task and its child processes believe
+            that they are running as the root user, and see an internally
+            consistent view of the filesystem.
+            As long as generating the final output (e.g. a package or an image)
+            does not require root privileges, the fact that some earlier
+            steps ran in a fake root environment does not cause problems.
+        </p>
+<p>
+            The capability to run tasks in a fake root environment is known as
+            "<a class="ulink" href="http://man.he.net/man1/fakeroot" target="_self">fakeroot</a>",
+            which is derived from the BitBake keyword/variable
+            flag that requests a fake root environment for a task.
+        </p>
+<p>
+            In the OpenEmbedded build system, the program that implements
+            fakeroot is known as Pseudo.
+            Pseudo overrides system calls by using the environment variable
+            <code class="filename">LD_PRELOAD</code>, which results in the illusion
+            of running as root.
+            To keep track of "fake" file ownership and permissions resulting
+            from operations that require root permissions, Pseudo uses
+            an SQLite 3 database.
+            This database is stored in
+            <code class="filename">${</code><a class="link" href="../ref-manual/var-WORKDIR.html" target="_self"><code class="filename">WORKDIR</code></a><code class="filename">}/pseudo/files.db</code>
+            for individual recipes.
+            Storing the database in a file as opposed to in memory
+            gives persistence between tasks and builds, which is not
+            accomplished using fakeroot.
+            </p>
+<div class="note" title="Caution" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Caution</h3>
+                If you add your own task that manipulates the same files or
+                directories as a fakeroot task, then that task also needs to
+                run under fakeroot.
+                Otherwise, the task cannot run root-only operations, and
+                cannot see the fake file ownership and permissions set by the
+                other task.
+                You need to also add a dependency on
+                <code class="filename">virtual/fakeroot-native:do_populate_sysroot</code>,
+                giving the following:
+                <pre class="literallayout">
+       fakeroot do_mytask () {
+           ...
+       }
+       do_mytask[depends] += "virtual/fakeroot-native:do_populate_sysroot"
+                </pre>
+</div>
+<p>
+            For more information, see the
+            <a class="link" href="../bitbake-user-manual/var-FAKEROOT.html" target="_self"><code class="filename">FAKEROOT*</code></a>
+            variables in the BitBake User Manual.
+            You can also reference the
+            "<a class="ulink" href="http://www.ibm.com/developerworks/opensource/library/os-aapseudo1/index.html" target="_self">Pseudo</a>"
+            and
+            "<a class="ulink" href="https://github.com/wrpseudo/pseudo/wiki/WhyNotFakeroot" target="_self">Why Not Fakeroot?</a>"
+            articles for background information on Pseudo.
+        </p>
+</div></body>
+</html>

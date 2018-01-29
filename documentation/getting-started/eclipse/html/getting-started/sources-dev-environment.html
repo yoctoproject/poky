@@ -1,0 +1,80 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>2.8.3. Sources</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="development-concepts.html" title="2.8. Development Concepts">
+<link rel="prev" href="software-layer.html" title="2.8.2.3. Software Layer">
+<link rel="next" href="upstream-project-releases.html" title="2.8.3.1. Upstream Project Releases">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="2.8.3. Sources">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="sources-dev-environment"></a>2.8.3. Sources</h3></div></div></div>
+<p>
+            In order for the OpenEmbedded build system to create an image or
+            any target, it must be able to access source files.
+            The
+            <a class="link" href="development-concepts.html#general-yocto-environment-figure">general Yocto Project Development Environment figure</a>
+            represents source files using the "Upstream Project Releases",
+            "Local Projects", and "SCMs (optional)" boxes.
+            The figure represents mirrors, which also play a role in locating
+            source files, with the "Source Mirror(s)" box.
+        </p>
+<p>
+            The method by which source files are ultimately organized is
+            a function of the project.
+            For example, for released software, projects tend to use tarballs
+            or other archived files that can capture the state of a release
+            guaranteeing that it is statically represented.
+            On the other hand, for a project that is more dynamic or
+            experimental in nature, a project might keep source files in a
+            repository controlled by a Source Control Manager (SCM) such as
+            Git.
+            Pulling source from a repository allows you to control
+            the point in the repository (the revision) from which you want to
+            build software.
+            Finally, a combination of the two might exist, which would give the
+            consumer a choice when deciding where to get source files.
+        </p>
+<p>
+            BitBake uses the
+            <a class="link" href="../ref-manual/var-SRC_URI.html" target="_self"><code class="filename">SRC_URI</code></a>
+            variable to point to source files regardless of their location.
+            Each recipe must have a <code class="filename">SRC_URI</code> variable
+            that points to the source.
+        </p>
+<p>
+            Another area that plays a significant role in where source files
+            come from is pointed to by the
+            <a class="link" href="../ref-manual/var-DL_DIR.html" target="_self"><code class="filename">DL_DIR</code></a>
+            variable.
+            This area is a cache that can hold previously downloaded source.
+            You can also instruct the OpenEmbedded build system to create
+            tarballs from Git repositories, which is not the default behavior,
+            and store them in the <code class="filename">DL_DIR</code> by using the
+            <a class="link" href="../ref-manual/var-BB_GENERATE_MIRROR_TARBALLS.html" target="_self"><code class="filename">BB_GENERATE_MIRROR_TARBALLS</code></a>
+            variable.
+        </p>
+<p>
+            Judicious use of a <code class="filename">DL_DIR</code> directory can
+            save the build system a trip across the Internet when looking
+            for files.
+            A good method for using a download directory is to have
+            <code class="filename">DL_DIR</code> point to an area outside of your
+            Build Directory.
+            Doing so allows you to safely delete the Build Directory
+            if needed without fear of removing any downloaded source file.
+        </p>
+<p>
+            The remainder of this section provides a deeper look into the
+            source files and the mirrors.
+            Here is a more detailed look at the source file area of the
+            base figure:
+            </p>
+<table border="0" summary="manufactured viewport for HTML img" cellspacing="0" cellpadding="0" width="630"><tr style="height: 675px"><td align="center"><img src="figures/source-input.png" align="middle" width="630"></td></tr></table>
+<p>
+        </p>
+</div></body>
+</html>

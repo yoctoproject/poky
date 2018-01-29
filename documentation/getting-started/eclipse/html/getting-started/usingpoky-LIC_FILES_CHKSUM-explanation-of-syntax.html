@@ -1,0 +1,76 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>3.7.1.2. Explanation of Syntax</title>
+<link rel="stylesheet" type="text/css" href="../book.css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Getting Started With Yocto Project">
+<link rel="up" href="usingpoky-configuring-LIC_FILES_CHKSUM.html" title="3.7.1. Tracking License Changes">
+<link rel="prev" href="usingpoky-specifying-LIC_FILES_CHKSUM.html" title="3.7.1.1. Specifying the LIC_FILES_CHKSUM Variable">
+<link rel="next" href="enabling-commercially-licensed-recipes.html" title="3.7.2. Enabling Commercially Licensed Recipes">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="3.7.1.2. Explanation of Syntax">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="usingpoky-LIC_FILES_CHKSUM-explanation-of-syntax"></a>3.7.1.2. Explanation of Syntax</h4></div></div></div>
+<p>
+                    As mentioned in the previous section, the
+                    <code class="filename">LIC_FILES_CHKSUM</code> variable lists all
+                    the important files that contain the license text for the
+                    source code.
+                    It is possible to specify a checksum for an entire file,
+                    or a specific section of a file (specified by beginning and
+                    ending line numbers with the "beginline" and "endline"
+                    parameters, respectively).
+                    The latter is useful for source files with a license
+                    notice header, README documents, and so forth.
+                    If you do not use the "beginline" parameter, then it is
+                    assumed that the text begins on the first line of the file.
+                    Similarly, if you do not use the "endline" parameter,
+                    it is assumed that the license text ends with the last
+                    line of the file.
+                </p>
+<p>
+                    The "md5" parameter stores the md5 checksum of the license
+                    text.
+                    If the license text changes in any way as compared to
+                    this parameter then a mismatch occurs.
+                    This mismatch triggers a build failure and notifies
+                    the developer.
+                    Notification allows the developer to review and address
+                    the license text changes.
+                    Also note that if a mismatch occurs during the build,
+                    the correct md5 checksum is placed in the build log and
+                    can be easily copied to the recipe.
+                </p>
+<p>
+                    There is no limit to how many files you can specify using
+                    the <code class="filename">LIC_FILES_CHKSUM</code> variable.
+                    Generally, however, every project requires a few
+                    specifications for license tracking.
+                    Many projects have a "COPYING" file that stores the
+                    license information for all the source code files.
+                    This practice allows you to just track the "COPYING"
+                    file as long as it is kept up to date.
+                    </p>
+<div class="note" title="Tips" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Tips</h3>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+                                If you specify an empty or invalid "md5"
+                                parameter, BitBake returns an md5 mis-match
+                                error and displays the correct "md5" parameter
+                                value during the build.
+                                The correct parameter is also captured in
+                                the build log.
+                                </p></li>
+<li class="listitem"><p>
+                                If the whole file contains only license text,
+                                you do not need to use the "beginline" and
+                               "endline" parameters.
+                               </p></li>
+</ul></div>
+</div>
+<p>
+                </p>
+</div></body>
+</html>
