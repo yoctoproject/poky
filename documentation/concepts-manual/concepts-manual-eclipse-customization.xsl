@@ -22,7 +22,7 @@
   <xsl:param name="chunk.section.depth" select="10"/>
   <xsl:param name="use.id.as.filename" select="1"/>
   <xsl:param name="ulink.target" select="'_self'" />
-  <xsl:param name="base.dir" select="'html/getting-started/'"/>
+  <xsl:param name="base.dir" select="'html/concepts-manual/'"/>
   <xsl:param name="html.stylesheet" select="'../book.css'"/>
   <xsl:param name="eclipse.manifest" select="0"/>
   <xsl:param name="create.plugin.xml" select="0"/>

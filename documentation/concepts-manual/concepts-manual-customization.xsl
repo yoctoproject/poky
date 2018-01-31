@@ -17,7 +17,7 @@
   <xsl:include href="../template/division.title.xsl"/>
   <xsl:include href="../template/formal.object.heading.xsl"/>
 
-  <xsl:param name="html.stylesheet" select="'getting-started-style.css'" />
+  <xsl:param name="html.stylesheet" select="'concepts-manual-style.css'" />
   <xsl:param name="chapter.autolabel" select="1" />
   <xsl:param name="appendix.autolabel" select="A" />
   <xsl:param name="section.autolabel" select="1" />
