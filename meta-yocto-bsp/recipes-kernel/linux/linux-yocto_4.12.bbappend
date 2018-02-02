@@ -10,9 +10,9 @@ KBRANCH_mpc8315e-rdb = "standard/fsl-mpc8315e-rdb"
 
 SRCREV_machine_genericx86    ?= "257f843ea367744620f1d92910afd2f454e31483"
 SRCREV_machine_genericx86-64 ?= "257f843ea367744620f1d92910afd2f454e31483"
-SRCREV_machine_edgerouter ?= "558fe84d691abbb8c8f5e149aa29ef4a478d0128"
-SRCREV_machine_beaglebone-yocto ?= "558fe84d691abbb8c8f5e149aa29ef4a478d0128"
-SRCREV_machine_mpc8315e-rdb ?= "f3c9a151c503869e39cea788b504b26b21e83ea4"
+SRCREV_machine_edgerouter ?= "257f843ea367744620f1d92910afd2f454e31483"
+SRCREV_machine_beaglebone-yocto ?= "257f843ea367744620f1d92910afd2f454e31483"
+SRCREV_machine_mpc8315e-rdb ?= "014560874f9eb2a86138c9cc35046ff1720485e1"
 
 
 COMPATIBLE_MACHINE_genericx86 = "genericx86"
@@ -23,6 +23,6 @@ COMPATIBLE_MACHINE_mpc8315e-rdb = "mpc8315e-rdb"
 
 LINUX_VERSION_genericx86 = "4.12.19"
 LINUX_VERSION_genericx86-64 = "4.12.19"
-LINUX_VERSION_edgerouter = "4.12.18"
-LINUX_VERSION_beaglebone-yocto = "4.12.18"
-LINUX_VERSION_mpc8315e-rdb = "4.12.18"
+LINUX_VERSION_edgerouter = "4.12.19"
+LINUX_VERSION_beaglebone-yocto = "4.12.19"
+LINUX_VERSION_mpc8315e-rdb = "4.12.19"
