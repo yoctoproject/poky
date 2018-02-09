@@ -89,7 +89,7 @@ XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
 TARFILES = getting-started-style.css getting-started.html figures/getting-started-title.png \
            figures/git-workflow.png figures/source-repos.png figures/index-downloads.png \
-           figures/yp-download.png figures/YP-flow-diagram.png \
+           figures/yp-download.png figures/YP-flow-diagram.png figures/key-dev-elements.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
@@ -270,7 +270,7 @@ TARFILES = mega-manual.html mega-style.css \
 	figures/source-fetching.png figures/patching.png \
         figures/configuration-compile-autoreconf.png \
 	figures/analysis-for-package-splitting.png \
-        figures/image-generation.png \
+        figures/image-generation.png figures/key-dev-elements.png\
 	figures/sdk-generation.png figures/recipe-workflow.png \
 	figures/build-workspace-directory.png figures/mega-title.png \
 	figures/toaster-title.png figures/hosted-service.png \
