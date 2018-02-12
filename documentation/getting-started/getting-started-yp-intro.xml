@@ -265,9 +265,123 @@
         </section>
     </section>
 
-    <section id='what-are-layers'>
-        <title>What are Layers?</title>
+    <section id='the-yocto-project-layer-model'>
+        <title>The Yocto Project Layer Model</title>
 
+        <para>
+            The Yocto Project's "Layer Model" is a development model for
+            embedded and IoT Linux creation that distinguishes the
+            Yocto Project from other simple build systems.
+            The Layer Model simultaneously supports collaboration and
+            customization.
+            Layers are repositories that contain related sets of instructions
+            that tell the OpenEmbedded build system what to do.
+            You can collaborate, share, and reuse layers.
+        </para>
+
+        <para>
+            Layers can contain changes to previous instructions or settings
+            at any time.
+            This powerful override capability is what allows you to customize
+            previously supplied collaborative or community layers to suit your
+            product requirements.
+        </para>
+
+        <para>
+            You use different layers to logically separate information in your
+            build.
+            As an example, you could have BSP, GUI, distro configuration,
+            middleware, or application layers.
+            Putting your entire build into one layer limits and complicates
+            future customization and reuse.
+            Isolating information into layers, on the other hand, helps
+            simplify future customizations and reuse.
+            You might find it tempting to keep everything in one layer when
+            working on a single project.
+            However, the more modular your Metadata, the easier
+            it is to cope with future changes.
+            <note><title>Notes</title>
+                <itemizedlist>
+                    <listitem><para>
+                        Use Board Support Package (BSP) layers from silicon
+                        vendors when possible.
+                        </para></listitem>
+                    <listitem><para>
+                        Familiarize yourself with the
+                        <ulink url='https://caffelli-staging.yoctoproject.org/software-overview/layers/'>Yocto Project curated layer index</ulink>
+                        or the
+                        <ulink url='http://layers.openembedded.org/layerindex/branch/master/layers/'>OpenEmbedded layer index</ulink>.
+                        The latter contains more layers but they are less
+                        universally validated.
+                        </para></listitem>
+                    <listitem><para>
+                        Layers support the inclusion of technologies, hardware
+                        components, and software components.
+                        The Yocto Project Compatible designation provides a
+                        minimum level of standardization that contributes to a
+                        strong ecosystem.
+                        "YP Compatible" is applied to appropriate products and
+                        software components such as BSPs, other OE-compatible
+                        layers, and related open-source projects, allowing the
+                        producer to use Yocto Project badges and branding
+                        assets.
+                        </para></listitem>
+                </itemizedlist>
+            </note>
+        </para>
+
+        <para>
+            To illustrate how layers are used to keep things modular, consider
+            machine customizations.
+            These types of customizations typically reside in a special layer,
+            rather than a general layer, called a BSP Layer.
+            Furthermore, the machine customizations should be isolated from
+            recipes and Metadata that support a new GUI environment,
+            for example.
+            This situation gives you a couple of layers: one for the machine
+            configurations, and one for the GUI environment.
+            It is important to understand, however, that the BSP layer can
+            still make machine-specific additions to recipes within the GUI
+            environment layer without polluting the GUI layer itself
+            with those machine-specific changes.
+            You can accomplish this through a recipe that is a BitBake append
+            (<filename>.bbappend</filename>) file, which is described later
+            in this section.
+            <note>
+                For general information on BSP layer structure, see the
+                <ulink url='&YOCTO_DOCS_BSP_URL;#bsp'>Board Support Packages (BSP) - Developer's Guide</ulink>.
+            </note>
+        </para>
+
+        <para>
+            The
+            <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+            contains both general layers and BSP layers right out of the box.
+            You can easily identify layers that ship with a Yocto Project
+            release in the Source Directory by their names.
+            Layers typically have names that begin with the string
+            <filename>meta-</filename>.
+            <note>
+                It is not a requirement that a layer name begin with the
+                prefix <filename>meta-</filename>, but it is a commonly
+                accepted standard in the Yocto Project community.
+            </note>
+            For example, if you were to examine the
+            <ulink url='https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/'>tree view</ulink>
+            of the <filename>poky</filename> repository, you will see several
+            layers: <filename>meta</filename>,
+            <filename>meta-skeleton</filename>,
+            <filename>meta-selftest</filename>,
+            <filename>meta-poky</filename>, and
+            <filename>meta-yocto-bsp</filename>.
+            Each of these repositories represents a distinct layer.
+        </para>
+
+        <para>
+            For procedures on how to create layers, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
+            section in the Yocto Project Development Tasks Manual.
+        </para>
     </section>
 
     <section id='components-and-tools'>
