@@ -32,12 +32,9 @@
             maintained and scaled.
         </para>
 
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="figures/key-dev-elements.png"
-                    format="PNG" align='center' width="8in"/>
-            </imageobject>
-        </mediaobject>
+        <para id='yp-key-dev-elements'>
+                <imagedata fileref="figures/key-dev-elements.png" format="PNG" align='center' width="8in"/>
+        </para>
 
         <para>
             For further introductory information on the Yocto Project, you
@@ -387,6 +384,452 @@
     <section id='components-and-tools'>
         <title>Components and Tools</title>
 
+        <para>
+            The Yocto Project employs a collection of components and
+            tools used by the project itself, by project developers,
+            and by those using the Yocto Project.
+            These components and tools are open source projects and
+            metadata that are separate from the reference distribution
+            (Poky) and the OpenEmbedded build system.
+            Most of the components and tools are downloaded separately.
+        </para>
+
+        <para>
+            This section provides brief overviews of the components and
+            tools associated with the Yocto Project.
+        </para>
+
+        <section id='gs-development-tools'>
+            <title>Development Tools</title>
+
+            <para>
+                The following list consists of tools that help you develop
+                images and applications using the Yocto Project:
+                <itemizedlist>
+                    <listitem><para id='gs-crops-overview'>
+                        <emphasis>CROPS:</emphasis>
+                        <ulink url='https://git.yoctoproject.org/cgit/cgit.cgi/crops/about/'>CROPS</ulink>
+                        is an open source, cross-platform development framework
+                        that leverages
+                        <ulink url='https://www.docker.com/'>Docker Containers</ulink>.
+                        CROPS provides an easily managed, extensible environment
+                        that allows you to build binaries for a variety of
+                        architectures on Windows, Linux and Mac OS X hosts.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis><filename>devtool</filename>:</emphasis>
+                        This command-line tool is available as part of the
+                        extensible SDK (eSDK) and is its cornerstone.
+                        You can use <filename>devtool</filename> to help build,
+                        test, and package software within the eSDK.
+                        You can use the tool to optionally integrate what you
+                        build into an image built by the OpenEmbedded build
+                        system.</para>
+
+                        <para>The <filename>devtool</filename> command employs
+                        a number of sub-commands that allow you to add, modify,
+                        and upgrade recipes.
+                        As with the OpenEmbedded build system, “recipes”
+                        represent software packages within
+                        <filename>devtool</filename>.
+                        When you use <filename>devtool add</filename>, a recipe
+                        is automatically created.
+                        When you use <filename>devtool modify</filename>, the
+                        specified existing recipe is used in order to determine
+                        where to get the source code and how to patch it.
+                        In both cases, an environment is set up so that when
+                        you build the recipe a source tree that is under your
+                        control is used in order to allow you to make changes
+                        to the source as desired.
+                        By default, both new recipes and the source go into
+                        a “workspace” directory under the eSDK.
+                        The <filename>devtool upgrade</filename> command
+                        updates an existing recipe so that you can build it
+                        for an updated set of source files.</para>
+
+                        <para>You can read about the
+                        <filename>devtool</filename> workflow in the Yocto
+                        Project Application Development and Extensible
+                        Software Development Kit (eSDK) Manual in the
+                        "<ulink url='&YOCTO_DOCS_SDK_URL;#using-devtool-in-your-sdk-workflow'>Using <filename>devtool</filename> in Your SDK Workflow'</ulink>"
+                        section.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Extensible Software Development Kit (eSDK):</emphasis>
+                        The eSDK provides a cross-development toolchain and
+                        libraries tailored to the contents of a specific image.
+                        The eSDK makes it easy to add new applications and
+                        libraries to an image, modify the source for an
+                        existing component, test changes on the target
+                        hardware, and integrate into the rest of the
+                        OpenEmbedded build system.
+                        The eSDK gives you a toolchain experience supplemented
+                        with the powerful set of <filename>devtool</filename>
+                        commands tailored for the Yocto Project environment.
+                        </para>
+
+                        <para>For information on the eSDK, see the
+                        <ulink url='&YOCTO_DOCS_SDK_URL;'>Yocto Project Application Development and Extensible Software Development Kit (eSDK) Manual</ulink>.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis><trademark class='trade'>Eclipse</trademark> IDE Plug-in:</emphasis>
+                        This plug-in enables you to use the popular Eclipse
+                        Integrated Development Environment (IDE), which allows
+                        for development using the Yocto Project all within the
+                        Eclipse IDE.
+                        You can work within Eclipse to cross-compile, deploy,
+                        and execute your output into a QEMU emulation session
+                        as well as onto actual target hardware.</para>
+
+                        <para>The environment also supports performance
+                        enhancing tools that allow you to perform remote
+                        profiling, tracing, collection of power data,
+                        collection of latency data, and collection of
+                        performance data.</para>
+
+                        <para>Once you enable the plug-in, standard Eclipse
+                        functions automatically use the cross-toolchain
+                        and target system libraries.
+                        You can build applications using any of these
+                        libraries.</para>
+
+                        <para>For more information on the Eclipse plug-in,
+                        see the
+                        "<ulink url='&YOCTO_DOCS_SDK_URL;#adt-eclipse'>Working Within Eclipse</ulink>"
+                        section in the Yocto Project Application Development
+                        and the Extensible Software Development Kit (eSDK)
+                        manual.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Toaster:</emphasis>
+                        Toaster is a web interface to the Yocto Project
+                        OpenEmbedded build system.
+                        Toaster allows you to configure, run, and view
+                        information about builds.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='gs-production-tools'>
+            <title>Production Tools</title>
+
+            <para>
+                The following list consists of tools that help production
+                related activities using the Yocto Project:
+                <itemizedlist>
+                    <listitem><para>
+                        <emphasis>Auto Upgrade Helper:</emphasis>
+                        This utility when used in conjunction with the
+                        OpenEmbedded build system (BitBake and OE-Core)
+                        automatically generates upgrades for recipes that
+                        are based on new versions of the recipes published
+                        upstream.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Recipe Reporting System:</emphasis>
+                        The Recipe Reporting System tracks recipe versions
+                        available for Yocto Project.
+                        The main purpose of the system is to help you
+                        manage the recipes you maintain and to offer a dynamic
+                        overview of the project.
+                        The Recipe Reporting System tracks is built on top
+                        the of OpenEmbedded Metadata Index, which is a website
+                        that indexes layers for the OpenEmbedded build system.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Patchwork:</emphasis>
+                        <ulink url='http://jk.ozlabs.org/projects/patchwork/'>Patchwork</ulink>
+                        is a fork of a project originally started by
+                        <ulink url='http://ozlabs.org/'>OzLabs</ulink>.
+                        The project is a web-based tracking system designed
+                        to streamline the process of bringing contributions
+                        into a project.
+                        The Yocto Project uses Patchwork as an organizational
+                        tool to handle patches, which number in the thousands
+                        for every release.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>AutoBuilder:</emphasis>
+                        AutoBuilder is a project that automates build tests
+                        and quality assurance (QA).
+                        By using the public AutoBuilder, anyone can determine
+                        the status of the current "master" branch of Poky.
+                        </para>
+
+                        <para>A goal of the Yocto Project is to lead the
+                        open source industry with a project that automates
+                        testing and QA procedures.
+                        In doing so, the project encourages a development
+                        community that publishes QA and test plans, publicly
+                        demonstrates QA and test plans, and encourages
+                        development of tools that automate and test and QA
+                        procedures for the benefit of the development
+                        community.</para>
+
+                        <para>You can learn more about the AutoBuilder used
+                        by the Yocto Project
+                        <ulink url='&YOCTO_AB_URL;'>here</ulink>.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Cross-Prelink:</emphasis>
+                        Prelinking is the process of pre-computing the load
+                        addresses and link tables generated by the dynamic
+                        linker as compared to doing this at runtime.
+                        Doing this ahead of time results in performance
+                        improvements when the application is launched and
+                        reduced memory usage for libraries shared by many
+                        applications.</para>
+
+                        <para>Historically, cross-prelink is a variant of
+                        prelink, which was conceived by
+                        <ulink url='http://people.redhat.com/jakub/prelink.pdf'>Jakub Jel&iacute;nek</ulink>
+                        a number of years ago.
+                        Both prelink and cross-prelink are maintained in the
+                        same repository albeit on separate branches.
+                        By providing an emulated runtime dynamic linker
+                        (i.e. <filename>glibc</filename>-derived
+                        <filename>ld.so</filename> emulation), the
+                        cross-prelink project extends the prelink software’s
+                        ability to prelink a sysroot environment.
+                        Additionally, the cross-prelink software enables the
+                        ability to work in sysroot style environments.</para>
+
+                        <para>The dynamic linker determines standard load
+                        address calculations based on a variety of factors
+                        such as mapping addresses, library usage, and library
+                        function conflicts.
+                        The prelink tool uses this information, from the
+                        dynamic linker, to determine unique load addresses
+                        for executable and linkable format (ELF) binaries
+                        that are shared libraries and dynamically linked.
+                        The prelink tool modifies these ELF binaries with the
+                        pre-computed information.
+                        The result is faster loading and often lower memory
+                        consumption because more of the library code can
+                        be re-used from shared Copy-On-Write (COW) pages.
+                        </para>
+
+                        <para>The original upstream prelink project only
+                        supports running prelink on the end target device
+                        due to the reliance on the target device’s dynamic
+                        linker.
+                        This restriction causes issues when developing a
+                        cross-compiled system.
+                        The cross-prelink adds a synthesized dynamic loader
+                        that runs on the host, thus permitting cross-prelinking
+                        without ever having to run on a read-write target
+                        filesystem.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Pseudo:</emphasis>
+                        Pseudo is the Yocto Project implementation of
+                        <ulink url='http://man.he.net/man1/fakeroot'>fakeroot</ulink>,
+                        which is used to run commands in an environment
+                        that seemingly has root privileges.</para>
+
+                        <para>During a build, it can be necessary to perform
+                        operations that require system administrator
+                        privileges.
+                        For example, file ownership or permissions might need
+                        definition.
+                        Pseudo is a tool that you can either use directly or
+                        through the environment variable
+                        <filename>LD_PRELOAD</filename>.
+                        Either method allows these operations to succeed as
+                        if system administrator privileges exist even
+                        when they do not.</para>
+
+                        <para>You can read more about Pseudo in the
+                        "<ulink url='&YOCTO_DOCS_CM_URL;#fakeroot-and-pseudo'>Fakeroot and Pseudo</ulink>"
+                        section of the Yocto Project Concepts Manual.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='gs-openembedded-build-system'>
+            <title>Open-Embedded Build System Components</title>
+
+            <para>
+                The following list consists of components associated with the
+                Open-Embedded build system:
+                <itemizedlist>
+                    <listitem><para>
+                        <emphasis>BitBake:</emphasis>
+                        BitBake is a core component of the Yocto Project and is
+                        used by the OpenEmbedded build system to build images.
+                        While BitBake is key to the build system, BitBake
+                        is maintained separately from the Yocto Project.</para>
+
+                        <para>BitBake is a generic task execution engine that
+                        allows shell and Python tasks to be run efficiently
+                        and in parallel while working within complex inter-task
+                        dependency constraints.
+                        In short, BitBake is a build engine that works
+                        through recipes written in a specific format in order
+                        to perform sets of tasks.</para>
+
+                        <para>You can learn more about BitBake in the
+                        <ulink url='&YOCTO_DOCS_BB_URL;'>BitBake User Manual</ulink>.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Openembedded Core:</emphasis>
+                        OpenEmbedded Core (OE-Core) is a common layer of
+                        metadata (i.e. recipes, classes, and associated files)
+                        used by OpenEmbedded-derived systems, which includes
+                        the Yocto Project.
+                        The Yocto Project and the OpenEmbedded Project both
+                        maintain the OpenEmbedded Core.
+                        You can find the OE-Core metadata in the Yocto
+                        Project
+                        <ulink url='&YOCTO_DOCS_GS_URL;#source-repositories'>Source Repositories</ulink>
+                        <ulink url='https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta'>here</ulink>.
+                        </para>
+
+                        <para>Historically, the Yocto Project integrated the
+                        OE-Core metadata throughout the Yocto Project
+                        source repository reference system (Poky).
+                        After Yocto Project Version 1.0, the Yocto Project
+                        and OpenEmbedded agreed to work together and share a
+                        common core set of metadata (OE-Core), which contained
+                        much of the functionality previously found in Poky.
+                        This collaboration achieved a long-standing
+                        OpenEmbedded objective for having a more tightly
+                        controlled and quality-assured core.
+                        The results also fit well with the Yocto Project
+                        objective of achieving a smaller number of fully
+                        featured tools as compared to many different ones.
+                        </para>
+
+                        <para>Sharing a core set of metadata results in Poky
+                        as an integration layer on top of OE-Core.
+                        You can see that in this
+                        <link linkend='yp-key-dev-elements'>figure</link>.
+                        The Yocto Project combines various components such as
+                        BitBake, OE-Core, script “glue”, and documentation
+                        for its build system.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='gs-reference-distribution-poky'>
+            <title>Reference Distribution (Poky)</title>
+
+            <para>
+                Poky is the Yocto Project reference distribution.
+                It contains the OpenEmbedded build system (BitBake and OE-Core)
+                as well as a set of metadata to get you started building your
+                own distribution.
+                See the
+                <link linkend='what-is-the-yocto-project'>figure</link> in
+                "What is the Yocto Project?" section for an illustration
+                that shows Poky and its relationship with other parts of the
+                Yocto Project.</para>
+
+                <para>To use the Yocto Project tools and components, you
+                can download (<filename>clone</filename>) Poky and use it
+                to bootstrap your own distribution.
+                <note>
+                    Poky does not contain binary files.
+                    It is a working example of how to build your own custom
+                    Linux distribution from source.
+                </note>
+            </para>
+        </section>
+
+        <section id='gs-packages-for-finished-targets'>
+            <title>Packages for Finished Targets</title>
+
+            <para>
+                The following lists components associated with packages
+                for finished targets:
+                <itemizedlist>
+                    <listitem><para>
+                        <emphasis>Matchbox:</emphasis>
+                        Matchbox is an Open Source, base environment for the
+                        X Window System running on non-desktop, embedded
+                        platforms such as handhelds, set-top boxes, kiosks,
+                        and anything else for which screen space, input
+                        mechanisms, or system resources are limited.</para>
+
+                        <para>Matchbox consists of a number of interchangeable
+                        and optional applications that you can tailor to a
+                        specific, non-desktop platform to enhance usability
+                        in constrained environments.</para>
+
+                        <para>You can find the Matchbox source in its
+                        <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>repository</ulink>
+                        listed in the Yocto Project
+                        <ulink url='&YOCTO_DOCS_GS_URL;#source-repositories'>Source Repositories</ulink>.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Opkg</emphasis>
+                        Open PacKaGe management (opkg) is a lightweight
+                        package management system based on the itsy package
+                        (ipkg) management system.
+                        Opkg is written in C and resembles Advanced Package
+                        Tool (APT) and Debian Package (dpkg) in operation.
+                        </para>
+
+                        <para>Opkg is intended for use on embedded Linux
+                        devices and is used in this capacity in the
+                        <ulink url='http://www.openembedded.org/wiki/Main_Page'>OpenEmbedded</ulink>
+                        and
+                        <ulink url='https://openwrt.org/'>OpenWrt</ulink>
+                        projects, as well as the Yocto Project.
+                        <note>
+                            As best it can, opkg maintains backwards
+                            compatibility with ipkg and conforms to a subset
+                            of Debian’s policy manual regarding control files.
+                        </note>
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
+        <section id='gs-archived-components'>
+            <title>Archived Components</title>
+
+            <para>
+                The Build Appliance is a virtual machine image that enables
+                you to build and boot a custom embedded Linux image with
+                the Yocto Project using a non-Linux development system.
+            </para>
+
+            <para>
+                Historically, the Build Appliance was the second of three
+                methods by which you could use the Yocto Project on a system
+                that was not native to Linux.
+                <orderedlist>
+                    <listitem><para>
+                        <emphasis>Hob:</emphasis>
+                        Hob, which is now deprecated and is no longer available
+                        since the 2.1 release of the Yocto Project provided
+                        a rudimentary, GUI-based interface to the Yocto
+                        Project.
+                        Toaster has fully replaced Hob.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Build Appliance:</emphasis>
+                        Post Hob, the Build Appliance became available.
+                        It was never recommended that you use the Build
+                        Appliance as a day-to-day production development
+                        environment with the Yocto Project.
+                        Build Appliance was useful as a way to try out
+                        development in the Yocto Project environment.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>CROPS:</emphasis>
+                        The final and best solution available now for
+                        developing using the Yocto Project on a system
+                        not native to Linux is with
+                        <link linkend='gs-crops-overview'>CROPS</link>.
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
     </section>
 
     <section id='the-development-environment'>
