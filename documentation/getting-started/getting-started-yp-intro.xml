@@ -933,6 +933,142 @@
     <section id='reference-embedded-distribution'>
         <title>Reference Embedded Distribution (Poky)</title>
 
+        <para>
+            "Poky", which is pronounced <emphasis>Pock</emphasis>-ee, is the
+            name of the Yocto Project's reference distribution or Reference OS
+            Kit.
+            Poky contains the
+            <ulink url='&YOCTO_DOCS_REF_URL;#build-system-term'>OpenEmbedded Build System</ulink>
+            build system
+            (<ulink url='&YOCTO_DOCS_REF_URL;#bitbake-term'>BitBake</ulink> and
+            <ulink url='&YOCTO_DOCS_REF_URL;#oe-core'>OpenEmbedded Core</ulink>)
+            as well as a set of
+            <ulink url='&YOCTO_DOCS_REF_URL;#metadata'>metadata</ulink> to get
+            you started building your own distro.
+            In other words, Poky is a base specification of the functionality
+            needed for a typical embedded system as well as the components
+            from the Yocto Project that allow you to build a distribution into
+            a usable binary image.
+        </para>
+
+        <para>
+            Poky is a combined repository of BitBake, OpenEmbedded-Core
+            (found in <filename>meta</filename>),
+            <filename>meta-poky</filename>,
+            <filename>meta-yocto-bsp</filename>, and documentation provided
+            all together and known to work well together.
+            You can view the Poky repository as part of the
+            <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink>.
+            <note>
+                If you are interested in all the contents of the
+                <filename>poky</filename> Git repository, see the
+                "<ulink url='&YOCTO_DOCS_REF_URL;#structure-core'>Top-Level Core Components</ulink>"
+                section in the Yocto Project Reference Manual.
+            </note>
+        </para>
+
+        <para id='gs-poky-reference-distribution'>
+            The following figure illustrates what generally comprises Poky:
+            <imagedata fileref="figures/poky-reference-distribution.png" format="PNG" align='center' width="8in"/>
+            <itemizedlist>
+                <listitem><para>
+                    BitBake is a task executor and scheduler that is the heart of
+                    the OpenEmbedded build system.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>meta-poky</filename>, which is Poky-specific
+                    metadata.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>meta-yocto-bsp</filename>, which is Yocto
+                    Project-specific Board Support Packages (BSPs).
+                    </para></listitem>
+                <listitem><para>
+                    OpenEmbedded-Core (OE-Core) metadata, which includes
+                    shared configurations, global variable definitions,
+                    shared classes, packaging, and recipes.
+                    Classes define the encapsulation and inheritance of build
+                    logic.
+                    Recipes are the logical units of software and images
+                    to be built.
+                    </para></listitem>
+                <listitem><para>
+                    Documentation, which contains the Yocto Project source
+                    files used to make the set of user manuals.
+                    </para></listitem>
+            </itemizedlist>
+            <note>
+                While Poky is a "complete" distribution specification and is
+                tested and put through QA, you cannot use it as a product
+                "out of the box" in its current form.
+            </note>
+        </para>
+
+        <para>
+            To use the Yocto Project tools, you can use Git to clone (download)
+            the Poky repository then use your local copy of the reference
+            distribution to bootstrap your own distribution.
+            <note>
+                Poky does not contain binary files.
+                It is a working example of how to build your own custom Linux distribution
+                from source.
+            </note>
+        </para>
+
+        <para>
+            Poky has a regular, well established, six-month release cycle
+            under its own version.
+            Major releases occur at the same time major releases (point
+            releases) occur for the Yocto Project, which are typically in the
+            Spring and Fall.
+            For more information on the Yocto Project release schedule and
+            cadence, see the
+            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-release-process'>Yocto Project Releases and the Stable Release Process</ulink>"
+            chapter in the Yocto Project Reference Manual.
+        </para>
+
+        <para>
+            Much has been said about Poky being a "default configuration."
+            A default configuration provides a starting image footprint.
+            You can use Poky out of the box to create an image ranging from a
+            shell-accessible minimal image all the way up to a Linux
+            Standard Base-compliant image that uses a GNOME Mobile and
+            Embedded (GMAE) based reference user interface called Sato.
+        </para>
+
+        <para>
+            One of the most powerful properties of Poky is that every aspect
+            of a build is controlled by the metadata.
+            You can use metadata to augment these base image types by
+            adding metadata layers that extend functionality.
+            These layers can provide, for example, an additional software
+            stack for an image type, add a board support package (BSP) for
+            additional hardware, or even create a new image type.
+        </para>
+
+        <para>
+            Metadata is loosely grouped into configuration files or package
+            recipes.
+            A recipe is a collection of non-executable metadata used by
+            BitBake to set variables or define additional build-time tasks.
+            A recipe contains fields such as the recipe description, the recipe
+            version, the license of the package and the upstream source
+            repository.
+            A recipe might also indicate that the build process uses autotools,
+            make, distutils or any other build process, in which case the basic
+            functionality can be defined by the classes it inherits from
+            the OE-Core layer's class definitions in
+            <filename>./meta/classes</filename>.
+            Within a recipe you can also define additional tasks as well as
+            task prerequisites.
+            Recipe syntax through BitBake also supports both
+            <filename>_prepend</filename> and <filename>_append</filename>
+            operators as a method of extending task functionality.
+            These operators inject code into the beginning or end of a task.
+            For information on these BitBake operators, see the
+            "<ulink url='&YOCTO_DOCS_BB_URL;#appending-and-prepending-override-style-syntax'>Appending and Prepending (Override Style Syntax)</ulink>"
+            section in the BitBake User's Manual.
+        </para>
     </section>
 
     <section id='the-yocto-project-workflow'>

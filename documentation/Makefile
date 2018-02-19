@@ -90,6 +90,7 @@ ALLPREQ = html eclipse tarball
 TARFILES = getting-started-style.css getting-started.html figures/getting-started-title.png \
            figures/git-workflow.png figures/source-repos.png figures/index-downloads.png \
            figures/yp-download.png figures/YP-flow-diagram.png figures/key-dev-elements.png \
+           figures/poky-reference-distribution.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
@@ -274,7 +275,7 @@ TARFILES = mega-manual.html mega-style.css \
 	figures/sdk-generation.png figures/recipe-workflow.png \
 	figures/build-workspace-directory.png figures/mega-title.png \
 	figures/toaster-title.png figures/hosted-service.png \
-	figures/simple-configuration.png \
+	figures/simple-configuration.png figures/poky-reference-distribution.png \
 	figures/compatible-layers.png figures/import-layer.png figures/new-project.png \
 	figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png \
 	figures/sdk-devtool-add-flow.png figures/sdk-installed-extensible-sdk-directory.png \
