@@ -72,7 +72,11 @@
                         Most ODMs, OSVs, and chip vendors create and supply
                         BSPs that support their hardware.
                         If you have custom silicon, you can create a BSP
-                        that supports that architecture.
+                        that supports that architecture.</para>
+
+                        <para>Aside from lots of architecture support, the
+                        Yocto Project fully supports a wide range of device
+                        emulation through the Quick EMUlator (QEMU).
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Images and Code Transfer Easily:</emphasis>
@@ -104,6 +108,13 @@
                         embedded devices.
                         You only add the feature support or packages that you
                         absolutely need for the device.
+                        For devices that have display hardware, you can use
+                        available system components such as X11, GTK+, Qt,
+                        Clutter, and SDL (among others) to create a rich user
+                        experience.
+                        For devices that do not have a display or where you
+                        want to use alternative UI frameworks, you can choose
+                        to not install these components.
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Comprehensive Toolchain Capabilities:</emphasis>
@@ -130,7 +141,9 @@
                         You can incrementally add these grouped functionalities
                         to your project as needed.
                         Using layers to isolate and group functionality
-                        reduces project complexity and redundancy.
+                        reduces project complexity and redundancy, allows you
+                        to easily extend the system, make customizations,
+                        and keep functionality organized.
                         </para></listitem>
                      <listitem><para>
                         <emphasis>Supports Partial Builds:</emphasis>
@@ -736,6 +749,9 @@
                     It is a working example of how to build your own custom
                     Linux distribution from source.
                 </note>
+                You can read more about Poky in the
+                "<link linkend='reference-embedded-distribution'>Reference Embedded Distribution (Poky)</link>"
+                section.
             </para>
         </section>
 
@@ -1071,9 +1087,60 @@
         </para>
     </section>
 
-    <section id='the-yocto-project-workflow'>
-        <title>The Yocto Project Workflow</title>
+    <section id='openembedded-build-system-workflow'>
+        <title>The OpenEmbedded Build System Workflow</title>
 
+        <para>
+            The OpenEmbedded build system uses a "workflow" to accomplish
+            image and SDK generation.
+            The following figure overviews that workflow:
+            <imagedata fileref="figures/YP-flow-diagram.png"
+                format="PNG" align='center' width="8in"/>
+            Following is a brief summary of the "workflow":
+            <orderedlist>
+                <listitem><para>
+                    Developers specify architecture, policies, patches and
+                    configuration details.
+                    </para></listitem>
+                <listitem><para>
+                    The build system fetches and downloads the source code
+                    from the specified location.
+                    The build system supports standard methods such as tarballs
+                    or source code repositories systems such as Git.
+                    </para></listitem>
+                <listitem><para>
+                    Once downloaded, the build system extracts the sources
+                    into a local work area where patches are applied and
+                    common steps for configuring and compiling the software
+                    are run.
+                    </para></listitem>
+                <listitem><para>
+                    The build system then installs the software into a
+                    temporary staging area where the binary package format you
+                    select (DEB, RPM, or IPK) is used to roll up the software.
+                    </para></listitem>
+                <listitem><para>
+                    Different QA and sanity checks run throughout entire
+                    build process.
+                    </para></listitem>
+                <listitem><para>
+                    After the binaries are created, the build system
+                    generates a binary package feed that is used to create
+                    the final root file image.
+                    </para></listitem>
+                <listitem><para>
+                    The build system generates the file system image and a
+                    customized Extensible SDK (eSDSK) for application
+                    development in parallel.
+                    </para></listitem>
+            </orderedlist>
+        </para>
+
+        <para>
+            For a very detailed look at this workflow, see the
+            "<ulink url='&YOCTO_DOCS_CM_URL;#development-concepts'>Development Concepts</ulink>"
+            section in the Yocto Project Concepts Manual.
+        </para>
     </section>
 
 
