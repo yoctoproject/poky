@@ -1147,8 +1147,184 @@
     <section id='some-basic-terms'>
         <title>Some Basic Terms</title>
 
-    </section>
+        <para>
+            It helps to understand some basic fundamental terms when
+            learning the Yocto Project.
+            Although a list of terms exists in the
+            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-terms'>Yocto Project Terms</ulink>"
+            section of the Yocto Project Reference Manual, this section
+            provides the definitions of some terms helpful for getting started:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis>Configuration Files:</emphasis>
+                    Files that hold global definitions of variables,
+                    user-defined variables, and hardware configuration
+                    information.
+                    These files tell the OpenEmbedded build system what to
+                    build and what to put into the image to support a
+                    particular platform.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Extensible Software Development Kit (eSDK):</emphasis>
+                    A custom SDK for application developers.
+                    This eSDK allows developers to incorporate their library
+                    and programming changes back into the image to make
+                    their code available to other application developers.
+                    For information on the eSDK, see the
+                    <ulink url='&YOCTO_DOCS_SDK_URL;'>Yocto Project Application Development and Extensible Software Development Kit (eSDK)</ulink>
+                    manual.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Layer:</emphasis>
+                    A collection of related recipes.
+                    Layers allow you to consolidate related metadata to
+                    customize your build.
+                    Layers also isolate information used when building
+                    for multiple architectures.
+                    Layers are hierarchical in their ability to override
+                    previous specifications.
+                    You can include any number of available layers from the
+                    Yocto Project and customize the build by adding your
+                    layers after them.
+                    You can search the Layer Index for layers used within
+                    Yocto Project.</para>
 
+                    <para>For more detailed information on layers, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
+                    section in the Yocto Project Development Tasks Manual.
+                    For a discussion specifically on BSP Layers, see the
+                    "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
+                    section in the Yocto Project Board Support Packages (BSP)
+                    Developer's Guide.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Metadata:</emphasis>
+                    A key element of the Yocto Project is the Metadata that
+                    is used to construct a Linux distribution and is contained
+                    in the files that the
+                    <link linkend='gs-term-openembedded-build-system'>OpenEmbedded build system</link> parses
+                    when building an image.
+                    In general, Metadata includes recipes, configuration
+                    files, and other information that refers to the build
+                    instructions themselves, as well as the data used to
+                    control what things get built and the effects of the
+                    build.
+                    Metadata also includes commands and data used to
+                    indicate what versions of software are used, from
+                    where they are obtained, and changes or additions to the
+                    software itself (patches or auxiliary files) that
+                    are used to fix bugs or customize the software for use
+                    in a particular situation.
+                    OpenEmbedded Core is an important set of validated
+                    metadata.
+                    </para></listitem>
+                <listitem><para id='gs-term-openembedded-build-system'>
+                    <emphasis>OpenEmbedded Build System:</emphasis>
+                    The terms "BitBake" and "build system" are sometimes
+                    used for the OpenEmbedded Build System.</para>
+
+                    <para>BitBake is a task scheduler and execution engine
+                    that parses instructions (i.e. recipes) and configuration
+                    data.
+                    After a parsing phase, BitBake creates a dependency tree
+                    to order the compilation, schedules the compilation of
+                    the included code, and finally executes the building
+                    of the specified custom Linux image (distribution).
+                    BitBake is similar to the <filename>make</filename>
+                    tool.</para>
+
+                    <para>During a build process, the build system tracks
+                    dependencies and performs a native or cross-compilation
+                    of the package.
+                    As a first step in a cross-build setup, the framework
+                    attempts to create a cross-compiler toolchain
+                    (i.e. Extensible SDK) suited for the target platform.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>OpenEmbedded-Core (OE-Core):</emphasis>
+                    OE-Core is metadata comprised of foundation recipes,
+                    classes, and associated files that are meant to be
+                    common among many different OpenEmbedded-derived systems,
+                    including the Yocto Project.
+                    OE-Core is a curated subset of an original repository
+                    developed by the OpenEmbedded community that has been
+                    pared down into a smaller, core set of continuously
+                    validated recipes.
+                    The result is a tightly controlled and an quality-assured
+                    core set of recipes.</para>
+
+                    <para>You can see the Metadata in the
+                    <filename>meta</filename> directory of the Yocto Project
+                    <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>Source Repositories</ulink>.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Packages:</emphasis>
+                    In the context of the Yocto Project, this term refers to a
+                    recipe's packaged output produced by BitBake (i.e. a
+                    "baked recipe").
+                    A package is generally the compiled binaries produced from the
+                    recipe's sources.
+                    You "bake" something by running it through BitBake.</para>
+
+                    <para>It is worth noting that the term "package" can,
+                    in general, have subtle meanings.
+                    For example, the packages referred to in the
+                    "<ulink url='&YOCTO_DOCS_QS_URL;#packages'>The Build Host Packages</ulink>"
+                    section in the Yocto Project Quick Start are compiled binaries
+                    that, when installed, add functionality to your Linux
+                    distribution.</para>
+
+                    <para>Another point worth noting is that historically within
+                    the Yocto Project, recipes were referred to as packages - thus,
+                    the existence of several BitBake variables that are seemingly
+                    mis-named,
+                    (e.g. <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>,
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>,
+                    and
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PE'><filename>PE</filename></ulink>).
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Poky:</emphasis>
+                    Poky, which is pronounced <emphasis>Pock</emphasis>-ee,
+                    is a reference embedded distribution and a reference
+                    test configuration.
+                    Poky provides the following:
+                    <itemizedlist>
+                        <listitem><para>
+                            A base-level functional distro used to illustrate
+                            how to customize a distribution.
+                            </para></listitem>
+                        <listitem><para>
+                            A means by which to test the Yocto Project
+                            components (i.e. Poky is used to validate
+                            the Yocto Project).
+                            </para></listitem>
+                        <listitem><para>
+                            A vehicle through which you can download
+                            the Yocto Project.
+                            </para></listitem>
+                    </itemizedlist>
+                    Poky is not a product level distro.
+                    Rather, it is a good starting point for customization.
+                    <note>
+                        Poky is an integration layer on top of OE-Core.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Recipe:</emphasis>
+                    The most common form of metadata.
+                    A recipe contains a list of settings and tasks
+                    (i.e. instructions) for building packages that are then
+                    used to build the binary image.
+                    A recipe describes where you get source code and which
+                    patches to apply.
+                    Recipes describe dependencies for libraries or for other
+                    recipes as well as configuration and compilation options.
+                    Related recipes are consolidated into a layer.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
