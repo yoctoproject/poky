@@ -135,8 +135,15 @@
                 </para></listitem>
             <listitem><para>
                 <emphasis>Configuration File:</emphasis>
-                Configuration information in various <filename>.conf</filename>
-                files provides global definitions of variables.
+                Files that hold global definitions of variables,
+                user-defined variables, and hardware configuration
+                information.
+                These files tell the OpenEmbedded build system what to
+                build and what to put into the image to support a
+                particular platform.</para>
+
+                <para>Configuration files end with a <filename>.conf</filename>
+                filename extension.
                 The <filename>conf/local.conf</filename> configuration file in
                 the
                 <link linkend='build-directory'>Build Directory</link>
@@ -152,8 +159,6 @@
                 <filename>machine/beaglebone.conf</filename> configuration
                 file defines variables for the Texas Instruments ARM Cortex-A8
                 development board).
-                Configuration files end with a <filename>.conf</filename>
-                filename extension.
                 </para></listitem>
             <listitem><para id='cross-development-toolchain'>
                 <emphasis>Cross-Development Toolchain:</emphasis>
@@ -189,6 +194,17 @@
                 manual.
                 </para></listitem>
             <listitem><para>
+                <emphasis>Extensible Software Development Kit (eSDK):</emphasis>
+                A custom SDK for application developers.
+                This eSDK allows developers to incorporate their library
+                and programming changes back into the image to make
+                their code available to other application developers.</para>
+
+                <para>For information on the eSDK, see the
+                <ulink url='&YOCTO_DOCS_SDK_URL;'>Yocto Project Application Development and Extensible Software Development Kit (eSDK)</ulink>
+                manual.
+                </para></listitem>
+            <listitem><para>
                 <emphasis>Image:</emphasis>
                 An image is an artifact of the BitBake build process given
                 a collection of recipes and related Metadata.
@@ -201,8 +217,25 @@
                 </para></listitem>
             <listitem><para>
                 <emphasis>Layer:</emphasis>
-                A collection of recipes representing the core,
-                a BSP, or an application stack.
+                A collection of related recipes.
+                Layers allow you to consolidate related metadata to
+                customize your build.
+                Layers also isolate information used when building
+                for multiple architectures.
+                Layers are hierarchical in their ability to override
+                previous specifications.
+                You can include any number of available layers from the
+                Yocto Project and customize the build by adding your
+                layers after them.
+                You can search the Layer Index for layers used within
+                Yocto Project.</para>
+
+                <para>For introductory information on layers, see the
+                "<ulink url='&YOCTO_DOCS_GS_URL;#the-yocto-project-layer-model'>The Yocto Project Layer Model</ulink>"
+                section in the Getting Started With Yocto Project Manual.
+                For more detailed information on layers, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
+                section in the Yocto Project Development Tasks Manual.
                 For a discussion specifically on BSP Layers, see the
                 "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
                 section in the Yocto Project Board Support Packages (BSP)
@@ -210,22 +243,47 @@
                 </para></listitem>
             <listitem><para id='metadata'>
                 <emphasis>Metadata:</emphasis>
-                The files that BitBake parses when building an image.
-                In general, Metadata includes recipes, classes, and
-                configuration files.
-                In the context of the kernel ("kernel Metadata"), the
+                A key element of the Yocto Project is the Metadata that
+                is used to construct a Linux distribution and is contained
+                in the files that the
+                <link linkend='build-system-term'>OpenEmbedded build system</link>
+                parses when building an image.
+                In general, Metadata includes recipes, configuration
+                files, and other information that refers to the build
+                instructions themselves, as well as the data used to
+                control what things get built and the effects of the
+                build.
+                Metadata also includes commands and data used to
+                indicate what versions of software are used, from
+                where they are obtained, and changes or additions to the
+                software itself (patches or auxiliary files) that
+                are used to fix bugs or customize the software for use
+                in a particular situation.
+                OpenEmbedded Core is an important set of validated
+                metadata.</para>
+
+                <para>In the context of the kernel ("kernel Metadata"), the
                 term refers to the kernel config fragments and features
                 contained in the
                 <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/yocto-kernel-cache'><filename>yocto-kernel-cache</filename></ulink>
                 Git repository.
                 </para></listitem>
             <listitem><para id='oe-core'>
-                <emphasis>OE-Core:</emphasis>
-                A core set of Metadata originating with OpenEmbedded (OE)
-                that is shared between OE and the Yocto Project.
-                This Metadata is found in the <filename>meta</filename>
-                directory of the
-                <link linkend='source-directory'>Source Directory</link>.
+                <emphasis>OpenEmbedded Core (OE-Core):</emphasis>
+                OE-Core is metadata comprised of foundational recipes,
+                classes, and associated files that are meant to be
+                common among many different OpenEmbedded-derived systems,
+                including the Yocto Project.
+                OE-Core is a curated subset of an original repository
+                developed by the OpenEmbedded community that has been
+                pared down into a smaller, core set of continuously
+                validated recipes.
+                The result is a tightly controlled and an quality-assured
+                core set of recipes.</para>
+
+                <para>You can see the Metadata in the
+                <filename>meta</filename> directory of the Yocto Project
+                <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>Source Repositories</ulink>.
                 </para></listitem>
             <listitem><para id='build-system-term'>
                 <emphasis>OpenEmbedded Build System:</emphasis>
@@ -285,37 +343,37 @@
                 </para></listitem>
             <listitem><para id='poky'>
                 <emphasis>Poky:</emphasis>
-                The term "poky", which is pronounced
-                <emphasis>Pock</emphasis>-ee, can mean several things:
+                Poky, which is pronounced <emphasis>Pock</emphasis>-ee,
+                is a reference embedded distribution and a reference
+                test configuration.
+                Poky provides the following:
                 <itemizedlist>
                     <listitem><para>
-                        In its most general sense, poky is an open-source
-                        project that was initially developed by OpenedHand.
-                        OpenedHand developed poky off of the existing
-                        OpenEmbedded build system to create a commercially
-                        supportable build system for embedded Linux.
-                        After Intel Corporation acquired OpenedHand, the
-                        poky project became the basis for the Yocto Project's
-                        build system.
+                        A base-level functional distro used to illustrate
+                        how to customize a distribution.
                         </para></listitem>
                     <listitem><para>
-                        Within the Yocto Project
-                        <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink>,
-                        "poky" exists as a separate Git
-                        repository from which you can clone to yield a local
-                        Git repository that is a copy on your host system.
-                        Thus, "poky" can refer to the upstream or
-                        local copy of the files used for development within
+                        A means by which to test the Yocto Project
+                        components (i.e. Poky is used to validate
+                        the Yocto Project).
+                        </para></listitem>
+                    <listitem><para>
+                        A vehicle through which you can download
                         the Yocto Project.
                         </para></listitem>
-                    <listitem><para>
-                        Finally, "poky" can refer to the default
-                        <link linkend='var-DISTRO'><filename>DISTRO</filename></link>
-                        (i.e. distribution) created when you use the Yocto
-                        Project in conjunction with the
-                        <filename>poky</filename> repository to build an image.
-                        </para></listitem>
                 </itemizedlist>
+                Poky is not a product level distro.
+                Rather, it is a good starting point for customization.
+                <note>
+                    Poky began an open-source
+                    project initially developed by OpenedHand.
+                    OpenedHand developed Poky from the existing
+                    OpenEmbedded build system to create a commercially
+                    supportable build system for embedded Linux.
+                    After Intel Corporation acquired OpenedHand, the
+                    poky project became the basis for the Yocto Project's
+                    build system.
+                </note>
                 </para></listitem>
             <listitem><para>
                 <emphasis>Recipe:</emphasis>
