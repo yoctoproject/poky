@@ -15,9 +15,8 @@
 </para>
 
 <para>
-    Specifically, this chapter addresses open source philosophy, workflows,
-    Git, source repositories, licensing, and development
-    syntax.
+    Specifically, this chapter addresses open source philosophy, source
+    repositories, workflows, Git, and licensing.
 </para>
 
 <section id='open-source-philosophy'>
@@ -66,8 +65,256 @@
     </para>
 </section>
 
-<section id='workflows'>
-    <title>Workflows</title>
+<section id='gs-the-development-host'>
+    <title>The Development Host</title>
+
+    <para>
+        A development host or build host is key to using the Yocto Project.
+        Because the goal of the Yocto Project is to develop images or
+        applications that run on embedded hardware, development of those
+        images and applications generally takes place on a system not
+        intended to run the software - the development host.
+    </para>
+
+    <para>
+        You need to set up a development host in order to use it with the
+        Yocto Project.
+        Most find that it is best to have a native Linux machine function as
+        the development host.
+        However, it is possible to use a system that does not run Linux
+        as its operating system as your development host.
+        When you have a Mac or Windows-based system, you can set it up
+        as the development host by using
+        <ulink url='https://git.yoctoproject.org/cgit/cgit.cgi/crops/about/'>CROPS</ulink>,
+        which leverages
+        <ulink url='https://www.docker.com/'>Docker Containers</ulink>.
+        Once you take the steps to set up a CROPS machine, you effectively
+        have access to a shell environment that is similar to what you see
+        when using a Linux-based development host.
+        For the steps needed to set up a system using CROPS, see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#setting-up-to-use-crops'>Setting Up to Use CROss PlatformS (CROPS)</ulink>"
+        section in the Yocto Project Development Tasks Manual.
+    </para>
+
+    <para>
+        If your development host is going to be a system that runs a Linux
+        distribution, steps still exist that you must take to prepare the
+        system for use with the Yocto Project.
+        You need to be sure that the Linux distribution on the system is
+        one that supports the Yocto Project.
+        You also need to be sure that the correct set of host packages are
+        installed that allow development using the Yocto Project.
+        For the steps needed to set up a development host that runs Linux,
+        see the
+        "<ulink url='&YOCTO_DOCS_DEV_URL;#setting-up-a-native-linux-host'>Setting Up a Native Linux Host</ulink>"
+        section in the Yocto Project Development Tasks Manual.
+    </para>
+
+    <para>
+        Once your development host is set up to use the Yocto Project,
+        several methods exist for you to do work in the Yocto Project
+        environment:
+        <itemizedlist>
+            <listitem><para>
+                <emphasis>Command Lines, BitBake, and Shells:</emphasis>
+                Traditional development in the Yocto Project involves using
+                OpenEmbedded build system, which uses BitBake, in a
+                command-line environment from a shell on your development
+                host.
+                You can accomplish this from a host that is a native Linux
+                machine or from a host that has been set up with CROPS.
+                Either way, you create, modify, and build images and
+                applications all within a shell-based environment using
+                components and tools available through your Linux distribution
+                and the Yocto Project.</para>
+
+                <para>For a general flow of the build procedures, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#dev-building-an-image'>Building an Image</ulink>"
+                section in the Yocto Project Development Tasks Manual.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Board Support Package (BSP) Development:</emphasis>
+                Development of BSPs involves using the Yocto Project to
+                create and test layers that allow easy development of
+                images and applications targeted for specific hardware.
+                To development BSPs, you need to take some additional steps
+                beyond what was described in setting up a development host.
+                </para>
+
+                <para>The
+                <ulink url='&YOCTO_DOCS_BSP_URL;'>Yocto Project Board Support Package (BSP) Developer's Guide'</ulink>
+                provides BSP-related development information.
+                For specifics on development host preparation, see the
+                "<ulink url='&YOCTO_DOCS_BSP_URL;#preparing-your-build-host-to-work-with-bsp-layers'>Preparing Your Build Host to Work With BSP Layers</ulink>"
+                section in the Yocto Project Board Support Package (BSP)
+                Developer's Guide.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Kernel Development:</emphasis>
+                If you are going to be developing kernels using the Yocto
+                Project you likely will be using <filename>devtool</filename>.
+                A workflow using <filename>devtool</filename> makes kernel
+                development quicker by reducing iteration cycle times.</para>
+
+                <para>The
+                <ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;'>Yocto Project Linux Kernel Development Manual</ulink>
+                provides kernel-related development information.
+                For specifics on development host preparation, see the
+                "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#preparing-the-build-host-to-work-on-the-kernel'>Preparing the Build Host to Work on the Kernel</ulink>"
+                section in the Yocto Project Linux Kernel Development Manual.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Using the <trademark class='trade'>Eclipse</trademark> IDE:</emphasis>
+                One of two Yocto Project development methods that involves an
+                interface that effectively puts the Yocto Project into the
+                background is the popular Eclipse IDE.
+                This method of development is advantageous if you are already
+                familiar with working within Eclipse.
+                Development is supported through a plugin that you install
+                onto your development host.</para>
+
+                <para>For steps that show you how to set up your development
+                host to use the Eclipse Yocto Project plugin, see the
+                "<ulink url='&YOCTO_DOCS_SDK_URL;#sdk-eclipse-project'>Developing Applications Using <trademark class='trade'>Eclipse</trademark></ulink>"
+                Chapter in the Yocto Project Application Development and the
+                Extensible Software Development Kit (eSDK) manual.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Using the Toaster:</emphasis>
+                The other Yocto Project development method that involves an
+                interface that effectively puts the Yocto Project into the
+                background is Toaster.
+                Toaster provides an interface to the OpenEmbedded build system.
+                The interface enables you to configure and run your builds.
+                Information about builds is collected and stored in a database.
+                You can use Toaster to configure and start builds on multiple
+                remote build servers.</para>
+
+                <para>For steps that show you how to set up your development
+                host to use Toaster and on how to use Toaster in general,
+                see the
+                <ulink url='&YOCTO_DOCS_TOAST_URL;'>Toaster User Manual</ulink>.
+                </para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+
+<section id='yocto-project-repositories'>
+    <title>Yocto Project Source Repositories</title>
+
+    <para>
+        The Yocto Project team maintains complete source repositories for all
+        Yocto Project files at
+        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi'></ulink>.
+        This web-based source code browser is organized into categories by
+        function such as IDE Plugins, Matchbox, Poky, Yocto Linux Kernel, and
+        so forth.
+        From the interface, you can click on any particular item in the "Name"
+        column and see the URL at the bottom of the page that you need to clone
+        a Git repository for that particular item.
+        Having a local Git repository of the
+        <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>,
+        which is usually named "poky", allows
+        you to make changes, contribute to the history, and ultimately enhance
+        the Yocto Project's tools, Board Support Packages, and so forth.
+    </para>
+
+    <para>
+        For any supported release of Yocto Project, you can also go to the
+        <ulink url='&YOCTO_HOME_URL;'>Yocto Project Website</ulink> and
+        select the "Downloads" tab and get a released tarball of the
+        <filename>poky</filename> repository or any supported BSP tarballs.
+        Unpacking these tarballs gives you a snapshot of the released
+        files.
+        <note><title>Notes</title>
+            <itemizedlist>
+                <listitem><para>
+                    The recommended method for setting up the Yocto Project
+                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+                    and the files for supported BSPs
+                    (e.g., <filename>meta-intel</filename>) is to use
+                    <link linkend='git'>Git</link> to create a local copy of
+                    the upstream repositories.
+                    </para></listitem>
+                <listitem><para>
+                    Be sure to always work in matching branches for both
+                    the selected BSP repository and the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
+                    (i.e. <filename>poky</filename>) repository.
+                    For example, if you have checked out the "master" branch
+                    of <filename>poky</filename> and you are going to use
+                    <filename>meta-intel</filename>, be sure to checkout the
+                    "master" branch of <filename>meta-intel</filename>.
+                    </para></listitem>
+            </itemizedlist>
+        </note>
+    </para>
+
+    <para>
+        In summary, here is where you can get the project files needed for
+        development:
+        <itemizedlist>
+            <listitem><para id='source-repositories'>
+                <emphasis>
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi'>Source Repositories:</ulink>
+                </emphasis>
+                This area contains IDE Plugins, Matchbox, Poky, Poky Support,
+                Tools, Yocto Linux Kernel, and Yocto Metadata Layers.
+                You can create local copies of Git repositories for each of
+                these areas.</para>
+
+                <para>
+                <imagedata fileref="figures/source-repos.png" align="center" width="6in" depth="4in" />
+                For steps on how to view and access these upstream Git
+                repositories, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#accessing-source-repositories'>Accessing Source Repositories</ulink>"
+                Section in the Yocto Project Development Tasks Manual.
+                </para></listitem>
+            <listitem><para><anchor id='index-downloads' />
+                <emphasis>
+                <ulink url='&YOCTO_DL_URL;/releases/'>Index of /releases:</ulink>
+                </emphasis>
+                This is an index of releases such as
+                the <trademark class='trade'>Eclipse</trademark>
+                Yocto Plug-in, miscellaneous support, Poky, Pseudo, installers
+                for cross-development toolchains, and all released versions of
+                Yocto Project in the form of images or tarballs.
+                Downloading and extracting these files does not produce a local
+                copy of the Git repository but rather a snapshot of a
+                particular release or image.</para>
+
+                <para>
+                <imagedata fileref="figures/index-downloads.png" align="center" width="6in" depth="3.5in" />
+                For steps on how to view and access these files, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#accessing-index-of-releases'>Accessing Index of Releases</ulink>"
+                section in the Yocto Project Development Tasks Manual.
+                </para></listitem>
+            <listitem><para id='downloads-page'>
+                <emphasis>"Downloads" page for the
+                <ulink url='&YOCTO_HOME_URL;'>Yocto Project Website</ulink>:
+                </emphasis></para>
+
+                <para role="writernotes">This section will change due to
+                reworking of the YP Website.</para>
+
+                <para>The Yocto Project website includes a "Downloads" tab
+                that allows you to download any Yocto Project
+                release and Board Support Package (BSP) in tarball form.
+                The tarballs are similar to those found in the
+                <ulink url='&YOCTO_DL_URL;/releases/'>Index of /releases:</ulink> area.</para>
+
+                <para>
+                <imagedata fileref="figures/yp-download.png" align="center" width="6in" depth="4in" />
+                For steps on how to use the "Downloads" page, see the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#using-the-downloads-page'>Using the Downloads Page</ulink>"
+                section in the Yocto Project Development Tasks Manual.
+                </para></listitem>
+        </itemizedlist>
+    </para>
+</section>
+
+<section id='gs-git-workflows-and-the-yocto-project'>
+    <title>Git Workflows and the Yocto Project</title>
 
     <para>
         This section provides workflow concepts using the Yocto Project and
@@ -298,8 +545,8 @@
 
         <para>
             As mentioned briefly in the previous section and also in the
-            "<link linkend='workflows'>Workflows</link>" section,
-            the Yocto Project maintains source repositories at
+            "<link linkend='gs-git-workflows-and-the-yocto-project'>Git Workflows and the Yocto Project</link>"
+            section, the Yocto Project maintains source repositories at
             <ulink url='&YOCTO_GIT_URL;/cgit.cgi'></ulink>.
             If you look at this web-interface of the repositories, each item
             is a separate Git repository.
@@ -620,120 +867,6 @@
             </itemizedlist>
         </para>
     </section>
-</section>
-
-<section id='yocto-project-repositories'>
-    <title>Yocto Project Source Repositories</title>
-
-    <para>
-        The Yocto Project team maintains complete source repositories for all
-        Yocto Project files at
-        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi'></ulink>.
-        This web-based source code browser is organized into categories by
-        function such as IDE Plugins, Matchbox, Poky, Yocto Linux Kernel, and
-        so forth.
-        From the interface, you can click on any particular item in the "Name"
-        column and see the URL at the bottom of the page that you need to clone
-        a Git repository for that particular item.
-        Having a local Git repository of the
-        <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>,
-        which is usually named "poky", allows
-        you to make changes, contribute to the history, and ultimately enhance
-        the Yocto Project's tools, Board Support Packages, and so forth.
-    </para>
-
-    <para>
-        For any supported release of Yocto Project, you can also go to the
-        <ulink url='&YOCTO_HOME_URL;'>Yocto Project Website</ulink> and
-        select the "Downloads" tab and get a released tarball of the
-        <filename>poky</filename> repository or any supported BSP tarballs.
-        Unpacking these tarballs gives you a snapshot of the released
-        files.
-        <note><title>Notes</title>
-            <itemizedlist>
-                <listitem><para>
-                    The recommended method for setting up the Yocto Project
-                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
-                    and the files for supported BSPs
-                    (e.g., <filename>meta-intel</filename>) is to use
-                    <link linkend='git'>Git</link> to create a local copy of
-                    the upstream repositories.
-                    </para></listitem>
-                <listitem><para>
-                    Be sure to always work in matching branches for both
-                    the selected BSP repository and the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
-                    (i.e. <filename>poky</filename>) repository.
-                    For example, if you have checked out the "master" branch
-                    of <filename>poky</filename> and you are going to use
-                    <filename>meta-intel</filename>, be sure to checkout the
-                    "master" branch of <filename>meta-intel</filename>.
-                    </para></listitem>
-            </itemizedlist>
-        </note>
-    </para>
-
-    <para>
-        In summary, here is where you can get the project files needed for
-        development:
-        <itemizedlist>
-            <listitem><para id='source-repositories'>
-                <emphasis>
-                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi'>Source Repositories:</ulink>
-                </emphasis>
-                This area contains IDE Plugins, Matchbox, Poky, Poky Support,
-                Tools, Yocto Linux Kernel, and Yocto Metadata Layers.
-                You can create local copies of Git repositories for each of
-                these areas.</para>
-
-                <para>
-                <imagedata fileref="figures/source-repos.png" align="center" width="6in" depth="4in" />
-                For steps on how to view and access these upstream Git
-                repositories, see the
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#accessing-source-repositories'>Accessing Source Repositories</ulink>"
-                Section in the Yocto Project Development Tasks Manual.
-                </para></listitem>
-            <listitem><para><anchor id='index-downloads' />
-                <emphasis>
-                <ulink url='&YOCTO_DL_URL;/releases/'>Index of /releases:</ulink>
-                </emphasis>
-                This is an index of releases such as
-                the <trademark class='trade'>Eclipse</trademark>
-                Yocto Plug-in, miscellaneous support, Poky, Pseudo, installers
-                for cross-development toolchains, and all released versions of
-                Yocto Project in the form of images or tarballs.
-                Downloading and extracting these files does not produce a local
-                copy of the Git repository but rather a snapshot of a
-                particular release or image.</para>
-
-                <para>
-                <imagedata fileref="figures/index-downloads.png" align="center" width="6in" depth="3.5in" />
-                For steps on how to view and access these files, see the
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#accessing-index-of-releases'>Accessing Index of Releases</ulink>"
-                section in the Yocto Project Development Tasks Manual.
-                </para></listitem>
-            <listitem><para id='downloads-page'>
-                <emphasis>"Downloads" page for the
-                <ulink url='&YOCTO_HOME_URL;'>Yocto Project Website</ulink>:
-                </emphasis></para>
-
-                <para role="writernotes">This section will change due to
-                reworking of the YP Website.</para>
-
-                <para>The Yocto Project website includes a "Downloads" tab
-                that allows you to download any Yocto Project
-                release and Board Support Package (BSP) in tarball form.
-                The tarballs are similar to those found in the
-                <ulink url='&YOCTO_DL_URL;/releases/'>Index of /releases:</ulink> area.</para>
-
-                <para>
-                <imagedata fileref="figures/yp-download.png" align="center" width="6in" depth="4in" />
-                For steps on how to use the "Downloads" page, see the
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#using-the-downloads-page'>Using the Downloads Page</ulink>"
-                section in the Yocto Project Development Tasks Manual.
-                </para></listitem>
-        </itemizedlist>
-    </para>
 </section>
 
 <section id='licensing'>
