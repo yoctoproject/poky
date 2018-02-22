@@ -5268,6 +5268,7 @@
                 <literallayout class='monospaced'>
      $ wic -h
      $ wic --help
+     $ wic help
                 </literallayout>
             </para>
 
@@ -5277,51 +5278,66 @@
                 <filename>help</filename>, <filename>list</filename>,
                 <filename>ls</filename>, <filename>rm</filename>, and
                 <filename>write</filename>.
-                You can get help for these commands as follows with
-                <replaceable>command</replaceable> being one of the
-                supported commands:
+                You can get help for all these commands except "help" by
+                using the following form:
                 <literallayout class='monospaced'>
      $ wic help <replaceable>command</replaceable>
                 </literallayout>
-            </para>
-
-            <para>
-                You can also get detailed help on a number of topics
-                from the help system.
-                The output of <filename>wic --help</filename>
-                displays a list of available help
-                topics under a "Help topics" heading.
-                You can have the help system display the help text for
-                a given topic by prefacing the topic with
-                <filename>wic help</filename>:
+                For example, the following command returns help for the
+                <filename>write</filename> command:
                 <literallayout class='monospaced'>
-     $ wic help <replaceable>help_topic</replaceable>
+     $ wic help write
                 </literallayout>
             </para>
 
             <para>
-                You can find out more about the images Wic creates using
-                the existing kickstart files with the following form of
-                the command:
+                Wic supports help for three topics:
+                <filename>overview</filename>,
+                <filename>plugins</filename>, and
+                <filename>kickstart</filename>.
+                You can get help for any topic using the following form:
                 <literallayout class='monospaced'>
-     $ wic list <replaceable>image</replaceable> help
+     $ wic help <replaceable>topic</replaceable>
                 </literallayout>
-                For <replaceable>image</replaceable>, you can provide
-                any of the following:
+                For example, the following returns overview help for Wic:
                 <literallayout class='monospaced'>
-       beaglebone
-       mpc8315e-rdb
-       genericx86
-       edgerouter
-       qemux86-directdisk
-       directdisk-gpt
-       mkefidisk
-       directdisk
-       systemd-bootdisk
-       mkhybridiso
-       sdimage-bootpart
-       directdisk-multi-rootfs
-       directdisk-bootloader-config
+     $ wic help overview
+                </literallayout>
+            </para>
+
+            <para>
+                One additional level of help exists for Wic.
+                You can get help on individual images through the
+                <filename>list</filename> command.
+                You can use the <filename>list</filename> command to return the
+                available Wic images as follows:
+                <literallayout class='monospaced'>
+     $ wic list images
+       mpc8315e-rdb                  		Create SD card image for MPC8315E-RDB
+       genericx86                    		Create an EFI disk image for genericx86*
+       beaglebone-yocto              		Create SD card image for Beaglebone
+       edgerouter                    		Create SD card image for Edgerouter
+       qemux86-directdisk            		Create a qemu machine 'pcbios' direct disk image
+       directdisk-gpt                		Create a 'pcbios' direct disk image
+       mkefidisk                     		Create an EFI disk image
+       directdisk                    		Create a 'pcbios' direct disk image
+       systemd-bootdisk              		Create an EFI disk image with systemd-boot
+       mkhybridiso                   		Create a hybrid ISO image
+       sdimage-bootpart              		Create SD card image with a boot partition
+       directdisk-multi-rootfs       		Create multi rootfs image using rootfs plugin
+       directdisk-bootloader-config  		Create a 'pcbios' direct disk image with custom bootloader config
+                </literallayout>
+                Once you know the list of available Wic images, you can use
+                <filename>help</filename> with the command to get help on a
+                particular image.
+                For example, the following command returns help on the
+                "beaglebone-yocto" image:
+                <literallayout class='monospaced'>
+     $ wic list beaglebone-yocto help
+
+
+     Creates a partitioned SD card image for Beaglebone.
+     Boot files are located in the first vfat partition.
                 </literallayout>
             </para>
         </section>
@@ -5338,7 +5354,7 @@
                     <listitem><para>
                         <emphasis>Raw Mode:</emphasis>
                         You explicitly specify build artifacts through
-                        <filename>wic</filename> command-line arguments.
+                        Wic command-line arguments.
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Cooked Mode:</emphasis>
@@ -5433,7 +5449,7 @@
 
                 <para>
                     Running Wic in cooked mode leverages off artifacts in
-                    Build Directory.
+                    the Build Directory.
                     In other words, you do not have to specify kernel or
                     root filesystem locations as part of the command.
                     All you need to provide is a kickstart file and the
@@ -5485,9 +5501,9 @@
                 files:
                 <literallayout class='monospaced'>
      $ wic list images
-       beaglebone                    		Create SD card image for Beaglebone
        mpc8315e-rdb                  		Create SD card image for MPC8315E-RDB
        genericx86                    		Create an EFI disk image for genericx86*
+       beaglebone-yocto              		Create SD card image for Beaglebone
        edgerouter                    		Create SD card image for Edgerouter
        qemux86-directdisk            		Create a qemu machine 'pcbios' direct disk image
        directdisk-gpt                		Create a 'pcbios' direct disk image
@@ -5615,28 +5631,27 @@
                 prepare a partition using an implementation-specific
                 function:
                 <literallayout class='monospaced'>
-     bootimg-pcbios.py
                   .
                   .
                   .
-        class BootimgPcbiosPlugin(SourcePlugin):
-        """
-        Create MBR boot partition and install syslinux on it.
-        """
+     class BootimgPcbiosPlugin(SourcePlugin):
+         """
+         Create MBR boot partition and install syslinux on it.
+         """
 
-        name = 'bootimg-pcbios'
+         name = 'bootimg-pcbios'
                   .
                   .
                   .
-        @classmethod
-        def do_prepare_partition(cls, part, source_params, creator, cr_workdir,
-                                 oe_builddir, bootimg_dir, kernel_dir,
-                                 rootfs_dir, native_sysroot):
-            """
-            Called to do the actual content population for a partition i.e. it
-            'prepares' the partition to be incorporated into the image.
-            In this case, prepare content for legacy bios boot partition.
-            """
+         @classmethod
+         def do_prepare_partition(cls, part, source_params, creator, cr_workdir,
+                                  oe_builddir, bootimg_dir, kernel_dir,
+                                  rootfs_dir, native_sysroot):
+             """
+             Called to do the actual content population for a partition i.e. it
+             'prepares' the partition to be incorporated into the image.
+             In this case, prepare content for legacy bios boot partition.
+             """
                   .
                   .
                   .
@@ -5745,9 +5760,11 @@
             <section id='generate-an-image-using-a-provided-kickstart-file'>
                 <title>Generate an Image using an Existing Kickstart File</title>
 
-                <para>
+                <para role='writernotes'>
                     This example runs in Cooked Mode and uses the
                     <filename>mkefidisk</filename> kickstart file:
+                    [OUTPUT IS WRONG DUE TO A BUG - ROOTFS_DIR AND BOOTIMG_DIR
+                    ARE DISPLAYING TEMPORARY FILES THAT WIC CLEANS UP BY DELETING]
                     <literallayout class='monospaced'>
      $ wic create mkefidisk -e core-image-minimal
      INFO: Building wic-tools...
@@ -5755,10 +5772,10 @@
                .
                .
      INFO: The new image(s) can be found here:
-       ./mkefidisk-201710061409-sda.direct
+       ./mkefidisk-201802211426-sda.direct
 
      The following build artifacts were used to create the image(s):
-       ROOTFS_DIR:                   /home/scottrif/poky/build/tmp.wic.r4hkds0b/rootfs_copy
+       ROOTFS_DIR:                   /home/scottrif/poky/build/tmp.wic.zjs_iw41/rootfs_copy
        BOOTIMG_DIR:                  /home/scottrif/poky/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
        KERNEL_DIR:                   /home/scottrif/poky/build/tmp/deploy/images/qemux86
        NATIVE_SYSROOT:               /home/scottrif/poky/build/tmp/work/i586-poky-linux/wic-tools/1.0-r0/recipe-sysroot-native
@@ -5795,11 +5812,11 @@
                     <filename>bmaptool</filename> or
                     <filename>dd</filename>:
                     <literallayout class='monospaced'>
-     $ oe-run-native bmaptool copy build/mkefidisk-201710061409-sda.direct /dev/sd<replaceable>X</replaceable>
+     $ oe-run-native bmaptool copy build/mkefidisk-201802211426-sda.direct /dev/sd<replaceable>X</replaceable>
                     </literallayout>
                     or
                     <literallayout class='monospaced'>
-     $ sudo dd if=build/mkefidisk-201710061409-sda.direct of=/dev/sd<replaceable>X</replaceable>
+     $ sudo dd if=build/mkefidisk-201802211426-sda.direct of=/dev/sd<replaceable>X</replaceable>
                     </literallayout>
                     <note>
                         For more information on how to use the
