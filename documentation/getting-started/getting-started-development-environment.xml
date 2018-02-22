@@ -539,8 +539,8 @@
                     <ulink url='http://git-scm.com/download'></ulink>.
                     </para></listitem>
                 <listitem><para>
-                    For examples beyond the limited few in this section on how
-                    to use Git with the Yocto Project, see the
+                    For information beyond the introductory nature in this
+                    section, see the
                     "<ulink url='&YOCTO_DOCS_DEV_URL;#working-with-yocto-project-source-files'>Working With Yocto Project Source Files</ulink>"
                     section in the Yocto Project Development Tasks Manual.
                     </para></listitem>
@@ -575,8 +575,8 @@
             A Git repository represents all development efforts for a given
             project.
             For example, the Git repository <filename>poky</filename> contains
-            all changes and developments for Poky over the course of its
-            entire life.
+            all changes and developments for that repository over the course
+            of its entire life.
             That means that all changes that make up all releases are captured.
             The repository maintains a complete history of changes.
         </para>
@@ -653,15 +653,16 @@
             of the upstream repository.
             In other words, creating and checking out a local branch based on
             the "&DISTRO_NAME_NO_CAP;" branch name is not the same as
-            cloning and checking out the "master" branch if the repository.
+            checking out the "master" branch in the repository.
             Keep reading to see how you create a local snapshot of a Yocto
             Project Release.
         </para>
 
         <para>
-            Git uses "tags" to mark specific changes in a repository.
+            Git uses "tags" to mark specific changes in a repository branch
+            structure.
             Typically, a tag is used to mark a special point such as the final
-            change before a project is released.
+            change (or commit) before a project is released.
             You can see the tags used with the <filename>poky</filename> Git
             repository by going to
             <ulink url='&YOCTO_GIT_URL;/cgit.cgi/poky/'></ulink> and
@@ -671,7 +672,7 @@
         </para>
 
         <para>
-            Some key tags for the <filename>poky</filename> are
+            Some key tags for the <filename>poky</filename> repository are
             <filename>jethro-14.0.3</filename>,
             <filename>morty-16.0.1</filename>,
             <filename>pyro-17.0.0</filename>, and
@@ -704,15 +705,15 @@
             tags available locally in your repository.
             Finally, the <filename>git checkout</filename> command
             creates and checks out a branch named "my-pyro-17.0.0" that is
-            based on the specific change upstream in the repository
-            associated with the "pyro-17.0.0" tag.
+            based on the upstream branch whose "HEAD" matches the
+            commit in the repository associated with the "pyro-17.0.0" tag.
             The files in your repository now exactly match that particular
             Yocto Project release as it is tagged in the upstream Git
             repository.
             It is important to understand that when you create and
             checkout a local working branch based on a tag, your environment
             matches a specific point in time and not the entire development
-            branch (i.e. the "tip" of the branch).
+            branch (i.e. from the "tip" of the branch backwards).
         </para>
     </section>
 
@@ -740,7 +741,7 @@
             The following list of Git commands briefly describes some basic
             Git operations as a way to get started.
             As with any set of commands, this list (in most cases) simply shows
-            the base command and omits the many arguments they support.
+            the base command and omits the many arguments it supports.
             See the Git documentation for complete descriptions and strategies
             on how to use these commands:
             <itemizedlist>
@@ -781,12 +782,16 @@
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>git checkout</filename> <replaceable>branch-name</replaceable>:</emphasis>
-                    Changes your working branch.
+                    Changes your local working branch and in this form
+                    assumes the local branch already exists.
                     This command is analogous to "cd".
                     </para></listitem>
-                <listitem><para><emphasis><filename>git checkout –b</filename> <replaceable>working-branch</replaceable>:</emphasis>
+                <listitem><para>
+                    <emphasis><filename>git checkout –b</filename> <replaceable>working-branch</replaceable> <replaceable>upstream-branch</replaceable>:</emphasis>
                     Creates and checks out a working branch on your local
-                    machine that you can use to isolate your work.
+                    machine.
+                    The local branch tracks the upstream branch.
+                    You can use your local branch to isolate your work.
                     It is a good idea to use local branches when adding
                     specific features or changes.
                     Using isolated branches facilitates easy removal of
@@ -806,15 +811,18 @@
                     <replaceable>branch-name</replaceable>.
                     </para></listitem>
                 <listitem><para>
-                    <emphasis><filename>git pull</filename>:</emphasis>
+                    <emphasis><filename>git pull --rebase</filename>:</emphasis>
                     Retrieves information from an upstream Git repository
                     and places it in your local Git repository.
                     You use this command to make sure you are synchronized with
                     the repository from which you are basing changes
                     (.e.g. the "master" branch).
+                    The "--rebase" option ensures that any local commits you
+                    have in your branch are preserved at the top of your
+                    local branch.
                     </para></listitem>
                 <listitem><para>
-                    <emphasis><filename>git push</filename>:</emphasis>
+                    <emphasis><filename>git push</filename> <replaceable>repo-name</replaceable> <replaceable>local-branch</replaceable><filename>:</filename><replaceable>upstream-branch</replaceable>:</emphasis>
                     Sends all your committed local changes to the upstream Git
                     repository that your local repository is tracking
                     (e.g. a contribution repository).
@@ -840,7 +848,7 @@
                     the isolated branch.
                     </para></listitem>
                 <listitem><para>
-                    <emphasis><filename>git cherry-pick</filename>:</emphasis>
+                    <emphasis><filename>git cherry-pick</filename> <replaceable>commits</replaceable>:</emphasis>
                     Choose and apply specific commits from one branch
                     into another branch.
                     There are times when you might not be able to merge
