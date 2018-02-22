@@ -317,6 +317,10 @@
     <title>Git Workflows and the Yocto Project</title>
 
     <para>
+        Developing using the Yocto Project likely requires the use of
+        <link linkend='git'>Git</link>.
+        Git is a free, open source distributed version control system
+        used as part of many collaborative design environments.
         This section provides workflow concepts using the Yocto Project and
         Git.
         In particular, the information covers basic practices that describe
@@ -328,22 +332,24 @@
     </para>
 
     <para>
-        The Yocto Project files are maintained using Git in "master"
-        branches whose Git histories track every change and whose structures
-        provides branches for all diverging functionality.
+        The Yocto Project files are maintained using Git in "branches"
+        whose Git histories track every change and whose structures
+        provide branches for all diverging functionality.
         Although there is no need to use Git, many open source projects do so.
     <para>
 
     </para>
         For the Yocto Project, a key individual called the "maintainer" is
-        responsible for the "master" branch of a given Git repository.
+        responsible for the integrity of the "master" branch of a given Git
+        repository.
         The "master" branch is the “upstream” repository from which final or
-        most recent builds of the project occur.
+        most recent builds of a project occur.
         The maintainer is responsible for accepting changes from other
         developers and for organizing the underlying branch structure to
         reflect release strategies and so forth.
-        <note>For information on finding out who is responsible for (maintains)
-            a particular area of code, see the
+        <note>
+            For information on finding out who is responsible for (maintains)
+            a particular area of code in the Yocto Project, see the
             "<ulink url='&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change'>Submitting a Change to the Yocto Project</ulink>"
             section of the Yocto Project Development Tasks Manual.
         </note>
@@ -357,7 +363,7 @@
         of the
         <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink> organized
         within the "Poky Support" area.
-        These branches temporarily hold changes to the project that have been
+        These branches hold changes (commits) to the project that have been
         submitted or committed by the Yocto Project development team and by
         community members who contribute to the project.
         The maintainer determines if the changes are qualified to be moved
@@ -367,20 +373,20 @@
 
     <para>
         Developers (including contributing community members) create and
-        maintain cloned repositories of the upstream "master" branch.
+        maintain cloned repositories of upstream branches.
         The cloned repositories are local to their development platforms and
         are used to develop changes.
         When a developer is satisfied with a particular feature or change,
-        they "push" the changes to the appropriate "contrib" repository.
+        they "push" the change to the appropriate "contrib" repository.
     </para>
 
     <para>
         Developers are responsible for keeping their local repository
-        up-to-date with "master".
+        up-to-date with whatever upstream branch they are working against.
         They are also responsible for straightening out any conflicts that
         might arise within files that are being worked on simultaneously by
         more than one person.
-        All this work is done locally on the developer’s machine before
+        All this work is done locally on the development host before
         anything is pushed to a "contrib" area and examined at the maintainer’s
         level.
     </para>
@@ -388,7 +394,7 @@
     <para>
         A somewhat formal method exists by which developers commit changes
         and push them into the "contrib" area and subsequently request that
-        the maintainer include them into "master".
+        the maintainer include them into an upstream branch.
         This process is called “submitting a patch” or "submitting a change."
         For information on submitting patches and changes, see the
         "<ulink url='&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change'>Submitting a Change to the Yocto Project</ulink>"
@@ -397,7 +403,7 @@
 
     <para>
         To summarize the development workflow:  a single point of entry
-        exists for changes into the project’s "master" branch of the
+        exists for changes into a "master" or development branch of the
         Git repository, which is controlled by the project’s maintainer.
         And, a set of developers exist who independently develop, test, and
         submit changes to "contrib" areas for the maintainer to examine.
@@ -422,9 +428,11 @@
                 It is best to keep the changes you commit small as compared to
                 bundling many disparate changes into a single commit.
                 This practice not only keeps things manageable but also allows
-                the maintainer to more easily include or refuse changes.</para>
-
-                <para>It is also good practice to leave the repository in a
+                the maintainer to more easily include or refuse changes.
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Make Complete Changes:</emphasis>
+                It is also good practice to leave the repository in a
                 state that allows you to still successfully build your project.
                 In other words, do not commit half of a feature,
                 then add the other half as a separate, later commit.
@@ -434,7 +442,7 @@
             <listitem><para>
                 <emphasis>Use Branches Liberally:</emphasis>
                 It is very easy to create, use, and delete local branches in
-                your working Git repository.
+                your working Git repository on the development host.
                 You can name these branches anything you like.
                 It is helpful to give them names associated with the particular
                 feature or change on which you are working.
