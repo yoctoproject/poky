@@ -4799,11 +4799,57 @@
             is a native 32-bit processor-specific ABI for
             <trademark class='registered'>Intel</trademark> 64 (x86-64)
             architectures.
-            <note>
-                For more information on x32 psABI, see the
-                "<ulink url='&YOCTO_DOCS_CM_URL;#x32'>x32 psABI</ulink>"
-                section in the Yocto Project Concepts Manual.
-            </note>
+            An ABI defines the calling conventions between functions in a
+            processing environment.
+            The interface determines what registers are used and what the
+            sizes are for various C data types.
+        </para>
+
+        <para>
+            Some processing environments prefer using 32-bit applications even
+            when running on Intel 64-bit platforms.
+            Consider the i386 psABI, which is a very old 32-bit ABI for Intel
+            64-bit platforms.
+            The i386 psABI does not provide efficient use and access of the
+            Intel 64-bit processor resources, leaving the system underutilized.
+            Now consider the x86_64 psABI.
+            This ABI is newer and uses 64-bits for data sizes and program
+            pointers.
+            The extra bits increase the footprint size of the programs,
+            libraries, and also increases the memory and file system size
+            requirements.
+            Executing under the x32 psABI enables user programs to utilize CPU
+            and system resources more efficiently while keeping the memory
+            footprint of the applications low.
+            Extra bits are used for registers but not for addressing mechanisms.
+        </para>
+
+        <para>
+            The Yocto Project supports the final specifications of x32 psABI
+            as follows:
+            <itemizedlist>
+                <listitem><para>
+                    You can create packages and images in x32 psABI format on
+                    x86_64 architecture targets.
+                    </para></listitem>
+                <listitem><para>
+                    You can successfully build recipes with the x32 toolchain.
+                    </para></listitem>
+                <listitem><para>
+                    You can create and boot
+                    <filename>core-image-minimal</filename> and
+                    <filename>core-image-sato</filename> images.
+                    </para></listitem>
+                <listitem><para>
+                    RPM Package Manager (RPM) support exists for x32 binaries.
+                    </para></listitem>
+                <listitem><para>
+                    Support for large images exists.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
             To use the x32 psABI, you need to edit your
             <filename>conf/local.conf</filename> configuration file as
             follows:
