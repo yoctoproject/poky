@@ -6253,79 +6253,87 @@ Some notes from Cal:
         <title>Flashing Images Using <filename>bmaptool</filename></title>
 
         <para>
-            An easy way to flash an image to a bootable device is to use
-            <filename>bmaptool</filename>, which is integrated into the
-            OpenEmbedded build system.
+            A fast and easy way to flash an image to a bootable device
+            is to use Bmaptool, which is integrated into the OpenEmbedded
+            build system.
+            Bmaptool is a generic tool that creates a file's block map (bmap)
+            and then uses that map to copy the file.
+            As compared to traditional tools such as dd or cp, Bmaptool
+            can copy (or flash) large files like raw system image files
+            much faster.
+            <note><title>Notes</title>
+                <itemizedlist>
+                    <listitem><para>
+                        If you are using Ubuntu or Debian distributions, you
+                        can install the <filename>bmap-tools</filename> package
+                        using the following command and then use the tool
+                        without specifying <filename>PATH</filename> even from
+                        the root account:
+                        <literallayout class='monospaced'>
+     $ sudo apt-get install bmap-tools
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        If you are unable to install the
+                        <filename>bmap-tools</filename> package, you will
+                        need to build Bmaptool before using it.
+                        Use the following command:
+                        <literallayout class='monospaced'>
+     $ bitbake bmap-tools-native
+                        </literallayout>
+                        </para></listitem>
+                </itemizedlist>
+            </note>
         </para>
 
         <para>
             Following, is an example that shows how to flash a Wic image.
-            <note>
-                You can use <filename>bmaptool</filename> to flash any
-                type of image.
-            </note>
-            Use these steps to flash an image using
-            <filename>bmaptool</filename>:
-            <note>
-                Unless you are able to install the
-                <filename>bmap-tools</filename> package as mentioned in the note
-                in the second bullet of step 3 further down, you will need to build
-                <filename>bmaptool</filename> before using it.
-                Build the tool using the following command:
-                <literallayout class='monospaced'>
-     $ bitbake bmap-tools-native
-                </literallayout>
-            </note>
+            Realize that while this example uses a Wic image, you can use
+            Bmaptool to flash any type of image.
+            Use these steps to flash an image using Bmaptool:
             <orderedlist>
                 <listitem><para>
-                    <emphasis>Update the <filename>local.conf</filename> File:</emphasis>
-                    Add the following to your <filename>local.conf</filename>
-                    file:
+                    <emphasis>Update your <filename>local.conf</filename> File:</emphasis>
+                    You need to have the following set in your
+                    <filename>local.conf</filename> file before building
+                    your image:
                     <literallayout class='monospaced'>
      IMAGE_FSTYPES += "wic wic.bmap"
                     </literallayout>
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Get Your Image:</emphasis>
-                    Either have your image ready (pre-built) or take the step
-                    build the image:
+                    Either have your image ready (pre-built with the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></ulink>
+                    setting previously mentioned) or take the step to build
+                    the image:
                     <literallayout class='monospaced'>
      $ bitbake <replaceable>image</replaceable>
                     </literallayout>
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Flash the Device:</emphasis>
-                    Flash the device with the image by using
-                    <filename>bmaptool</filename> depending on your particular
-                    setup:
+                    Flash the device with the image by using Bmaptool
+                    depending on your particular setup.
+                    The following commands assume the image resides in the
+                    Build Directory's <filename>deploy/images/</filename>
+                    area:
                     <itemizedlist>
                         <listitem><para>
-                            If you have write access to the media,
-                            use this command form:
+                            If you have write access to the media, use this
+                            command form:
                             <literallayout class='monospaced'>
-     $ oe-run-native bmap-tools-native bmaptool copy ./tmp/deploy/images/qemux86-64-core-image-minimal-<replaceable>machine</replaceable>.wic /dev/sd<replaceable>X</replaceable>
+     $ oe-run-native bmap-tools-native bmaptool copy <replaceable>build-directory</replaceable>/tmp/deploy/images/<replaceable>machine</replaceable>/<replaceable>image</replaceable>.wic /dev/sd<replaceable>X</replaceable>
                             </literallayout>
                             </para></listitem>
                         <listitem><para>
-                            If you do not have write access to
-                            the media, use the following
-                            commands:
+                            If you do not have write access to the media, set
+                            your permissions first and then use the same
+                            command form:
                             <literallayout class='monospaced'>
      $ sudo chmod 666 /dev/sd<replaceable>X</replaceable>
-     $ oe-run-native bmap-tools-native bmaptool copy ./tmp/deploy/images/qemux86-64-core-image-minimal-<replaceable>machine</replaceable>.wic /dev/sd<replaceable>X</replaceable>
+     $ oe-run-native bmap-tools-native bmaptool copy <replaceable>build-directory</replaceable>/tmp/deploy/images/<replaceable>machine</replaceable>/<replaceable>image</replaceable>.wic /dev/sd<replaceable>X</replaceable>
                             </literallayout>
-                            <note>
-                                If you are using Ubuntu or Debian distributions,
-                                you can install the
-                                <filename>bmap-tools</filename> package using
-                                the following command and then use the tool
-                                without specifying
-                                <filename>PATH</filename> even from the
-                                root account:
-                                <literallayout class='monospaced'>
-     $ sudo apt-get install bmap-tools
-                                </literallayout>
-                            </note>
                             </para></listitem>
                     </itemizedlist>
                     </para></listitem>
