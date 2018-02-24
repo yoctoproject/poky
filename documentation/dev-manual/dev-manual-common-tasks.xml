@@ -2898,6 +2898,131 @@
             </para>
         </section>
 
+        <section id='metadata-virtual-providers'>
+            <title>Using Virtual Providers</title>
+
+            <para>
+                Prior to a build, if you know that several different recipes
+                provide the same functionality, you can use a virtual provider
+                (i.e. <filename>virtual/*</filename>) as a placeholder for the
+                actual provider.
+                The actual provider is determined at build-time.
+            </para>
+
+            <para>
+                A common scenario where a virtual provider is used would be
+                for the kernel recipe.
+                Suppose you have three kernel recipes whose
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink>
+                values map to <filename>kernel-big</filename>,
+                <filename>kernel-mid</filename>, and
+                <filename>kernel-small</filename>.
+                Furthermore, each of these recipes in some way uses a
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PROVIDES'><filename>PROVIDES</filename></ulink>
+                statement that essentially identifies itself as being able
+                to provide <filename>virtual/kernel</filename>.
+                Here is one way through the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-kernel'><filename>kernel</filename></ulink>
+                class:
+                <literallayout class='monospaced'>
+     PROVIDES += "${@ "virtual/kernel" if (d.getVar("KERNEL_PACKAGE_NAME") == "kernel") else "" }"
+                </literallayout>
+                Any recipe that inherits the <filename>kernel</filename> class
+                is going to utilize a <filename>PROVIDES</filename> statement
+                that identifies that recipe as being able to provide the
+                <filename>virtual/kernel</filename> item.
+            </para>
+
+            <para>
+                Now comes the time to actually build an image and you need a
+                kernel recipe, but which one?
+                You can configure your build to call out the kernel recipe
+                you want by using the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER</filename></ulink>
+                variable.
+                As an example, consider the
+                <ulink url='https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/machine/include/x86-base.inc'><filename>x86-base.inc</filename></ulink>
+                include file.
+                This include file is the reason all x86-based machines use the
+                <filename>linux-yocto</filename> kernel.
+                Here are the relevant lines from the include file:
+                <literallayout class='monospaced'>
+     PREFERRED_PROVIDER_virtual/kernel ??= "linux-yocto"
+     PREFERRED_VERSION_linux-yocto ??= "4.15%"
+                </literallayout>
+            </para>
+
+            <para>
+                When you use a virtual provider, you do not have to
+                "hard code" a recipe name as a build dependency.
+                You can use the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
+                variable to state the build is dependent on
+                <filename>virtual/kernel</filename> for example:
+                <literallayout class='monospaced'>
+     DEPENDS = "virtual/kernel"
+                </literallayout>
+                During the build, the OpenEmbedded build system picks
+                the correct recipe needed for the
+                <filename>virtual/kernel</filename> dependency based on the
+                <filename>PREFERRED_PROVIDER</filename> variable.
+                If you want to use the small kernel mentioned at the beginning
+                of this section, configure your build as follows:
+                <literallayout class='monospaced'>
+     PREFERRED_PROVIDER_virtual/kernel ??= "kernel-small"
+                </literallayout>
+                <note>
+                    Any recipe that
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PROVIDES'><filename>PROVIDES</filename></ulink>
+                    a <filename>virtual/*</filename> item that is ultimately
+                    not selected through
+                    <filename>PREFERRED_PROVIDER</filename> does not get built.
+                    Preventing these recipes from building is usually the
+                    desired behavior since this mechanism's purpose is to
+                    select between mutually exclusive alternative providers.
+                </note>
+            </para>
+
+            <para>
+                The following lists specific examples of virtual providers:
+                <itemizedlist>
+                    <listitem><para>
+                        <filename>virtual/kernel</filename>:
+                        Provides the name of the kernel recipe to use when
+                        building a kernel image.
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/bootloader</filename>:
+                        Provides the name of the bootloader to use when
+                        building an image.
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/mesa</filename>:
+                        Provides <filename>gbm.pc</filename>.
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/egl</filename>:
+                        Provides <filename>egl.pc</filename> and possibly
+                        <filename>wayland-egl.pc</filename>.
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/libgl</filename>:
+                        Provides <filename>gl.pc</filename> (i.e. libGL).
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/libgles1</filename>:
+                        Provides <filename>glesv1_cm.pc</filename>
+                        (i.e. libGLESv1_CM).
+                        </para></listitem>
+                    <listitem><para>
+                        <filename>virtual/libgles2</filename>:
+                        Provides <filename>glesv2.pc</filename>
+                        (i.e. libGLESv2).
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
+
         <section id='properly-versioning-pre-release-recipes'>
             <title>Properly Versioning Pre-Release Recipes</title>
 
