@@ -10701,27 +10701,40 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    If multiple recipes provide an item, this variable
-                    determines which recipe should be given preference.
-                    You should always suffix the variable with the name of the
-                    provided item, and you should set it to the
-                    <link linkend='var-PN'><filename>PN</filename></link>
-                    of the recipe to which you want to give precedence.
-                    Some examples:
+                    If multiple recipes provide the same item, this variable
+                    determines which recipe is preferred and thus provides
+                    the item (i.e. the preferred provider).
+                    You should always suffix this variable with the name of the
+                    provided item.
+                    And, you should define the variable using the preferred
+                    recipe's name
+                    (<link linkend='var-PN'><filename>PN</filename></link>).
+                    Here is a common example:
                     <literallayout class='monospaced'>
      PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
+                    </literallayout>
+                    In the previous example, multiple recipes are providing
+                    "virtual/kernel".
+                    The <filename>PREFERRED_PROVIDER</filename> variable is
+                    set with the name (<filename>PN</filename>) of the recipe
+                    you prefer to provide "virtual/kernel".
+                </para>
+
+                <para>
+                    Following are more examples:
+                    <literallayout class='monospaced'>
      PREFERRED_PROVIDER_virtual/xserver = "xserver-xf86"
      PREFERRED_PROVIDER_virtual/libgl ?= "mesa"
                     </literallayout>
                     For more information, see the
-                    "<ulink url='&YOCTO_DOCS_CM_URL;#metadata-virtual-providers'>Metadata (Virtual Providers)</ulink>"
-                    section in the Yocto Project Concepts Manual.
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#metadata-virtual-providers'>Using Virtual Providers</ulink>"
+                    section in the Yocto Project Development Tasks Manual.
                     <note>
-                        If you set <filename>PREFERRED_PROVIDER</filename>
-                        for a <filename>virtual/*</filename> item, then any
+                        If you use a <filename>virtual/*</filename> item
+                        with <filename>PREFERRED_PROVIDER</filename>, then any
                         recipe that
                         <link linkend='var-PROVIDES'><filename>PROVIDES</filename></link>
-                        that item that is not selected by
+                        that item but is not selected (defined) by
                         <filename>PREFERRED_PROVIDER</filename> is prevented
                         from building, which is usually desirable since this
                         mechanism is designed to select between mutually
