@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>My First Yocto Project Build</title><link rel="stylesheet" type="text/css" href="brief-yoctoprojectqs-style.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><meta name="description" content="" /></head><body><div class="article" title="My First Yocto Project Build"><div xmlns="" class="titlepage"><div><div><table xmlns="http://www.w3.org/1999/xhtml" border="0" summary="manufactured viewport for HTML img" cellspacing="0" cellpadding="0" width="540"><tr style="height: 90px"><td align="right"><img src="figures/yocto-project-transp.png" align="right" width="135" /></td></tr></table></div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="brief-yocto-project-qs-intro"></a>My First Yocto Project Build<span class="permalink"><a alt="Permalink" title="Permalink" href="#brief-yocto-project-qs-intro">¶</a></span></h2></div><div><p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2010-2018 Linux Foundation</p></div><div><div xmlns="http://www.w3.org/1999/xhtml" class="legalnotice" title="Legal Notice"><a id="idm45250776346368"></a><p>
+                Permission is granted to copy, distribute and/or modify this document under
+                the terms of the <a class="ulink" href="http://creativecommons.org/licenses/by-sa/2.0/uk/" target="_top">Creative Commons Attribution-Share Alike 2.0 UK: England &amp; Wales</a> as published by Creative Commons.
+            </p><div class="note" title="Manual Notes" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Manual Notes</h3><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+                        For the latest version of this document associated with
+                        this Yocto Project release
+                        (version 2.5), see the "My First
+                        Yocto Project Build" from the
+                        <a class="ulink" href="http://www.yoctoproject.org/documentation" target="_top">Yocto Project documentation page</a>.
+                        </p></li><li class="listitem"><p>
+                        This version of the manual is version
+                        2.5.
+                        For later releases of the Yocto Project (if they exist),
+                        go to the
+                        <a class="ulink" href="http://www.yoctoproject.org/documentation" target="_top">Yocto Project documentation page</a>
+                        and use the drop-down "Active Releases" button
+                        and choose the Yocto Project version for which you want
+                        the manual.
+                        </p></li></ul></div></div></div></div></div><hr /></div><div class="section" title="1. Welcome!"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title" style="clear: both"><a id="brief-welcome"></a>1. Welcome!<span class="permalink"><a alt="Permalink" title="Permalink" href="#brief-welcome">¶</a></span></h2></div></div></div><p>
+            Welcome!
+            This short document steps you through the process for a typical
+            image build using the Yocto Project.
+            The build uses Poky, which is the reference embedded OS that is
+            completely specified.
+            </p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+                The examples in this paper assume you are using a native Linux
+                system running a recent Ubuntu Linux distribution.
+                If the machine you want to use
+                Yocto Project on to build an image is not a native Linux
+                system, you can still perform these steps by using CROss
+                PlatformS (CROPS) and setting up a Poky container.
+                See the
+                <a class="ulink" href="http://www.yoctoproject.org/docs/2.5/dev-manual/dev-manual.html#setting-up-to-use-crops" target="_top">Setting Up to Use CROss PlatformS (CROPS)</a>"
+                section in the Yocto Project Development Tasks Manual for more
+                information.
+            </div><p>
+        </p><p>
+            If you want more conceptual or background information on the
+            Yocto Project, see the
+            <a class="ulink" href="http://www.yoctoproject.org/docs/2.5/getting-started/getting-started.html" target="_top">Getting Started With Yocto Project Manual</a>.
+        </p></div><div class="section" title="2. Compatible Linux Distribution"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title" style="clear: both"><a id="brief-compatible-distro"></a>2. Compatible Linux Distribution<span class="permalink"><a alt="Permalink" title="Permalink" href="#brief-compatible-distro">¶</a></span></h2></div></div></div><p>
+            Make sure your build system meets the following requirements:
+            </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+                    50 Gbytes of free disk space
+                    </p></li><li class="listitem"><p>
+                    Runs a supported Linux distribution (i.e. recent releases of
+                    Fedora, openSUSE, CentOS, Debian, or Ubuntu). For a list of
+                    Linux distributions that support the Yocto Project, see the
+                    "<a class="ulink" href="http://www.yoctoproject.org/docs/2.5/ref-manual/ref-manual.html#detailed-supported-distros" target="_top">Supported Linux Distributions</a>"
+                    section in the Yocto Project Reference Manual.
+                    </p></li><li class="listitem"><p>
+                    </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>
+                            Git 1.8.3.1 or greater
+                            </p></li><li class="listitem"><p>
+                            tar 1.27 or greater
+                            </p></li><li class="listitem"><p>
+                            Python 3.4.0 or greater.
+                            </p></li></ul></div><p>
+                    If your build host does not meet any of these three listed
+                    version requirements, you can take steps to prepare the
+                    system so that you can still use the Yocto Project.
+                    See the
+                    "<a class="ulink" href="http://www.yoctoproject.org/docs/2.5/ref-manual/ref-manual.html#required-git-tar-and-python-versions" target="_top">Required Git, tar, and Python Versions</a>"
+                    section in the Yocto Project Reference Manual for information.
+                    </p></li></ul></div><p>
+        </p></div><div class="section" title="3. Build System Packages"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title" style="clear: both"><a id="brief-build-system-packages"></a>3. Build System Packages<span class="permalink"><a alt="Permalink" title="Permalink" href="#brief-build-system-packages">¶</a></span></h2></div></div></div><p>
+            You must install essential host packages on your
+            development host.
+            The following command installs the host packages based on an
+            Ubuntu distribution:
+            </p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3>
+                For host package requirements on all supported Linux
+                distributions, see the
+                "<a class="ulink" href="http://www.yoctoproject.org/docs/2.5/ref-manual/ref-manual.html#required-packages-for-the-host-development-system" target="_top">Required Packages for the Host Development System</a>"
+                section in the Yocto Project Reference Manual.
+            </div><p>
+            </p><pre class="literallayout">
+     $ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
+     build-essential chrpath socat cpio python python3 python3-pip python3-pexpect \
+     xz-utils debianutils iputils-ping libsdl1.2-dev xterm
+            </pre><p>
+        </p></div><div class="section" title="4. Use Git to Clone Poky"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title" style="clear: both"><a id="brief-use-git-to-clone-poky"></a>4. Use Git to Clone Poky<span class="permalink"><a alt="Permalink" title="Permalink" href="#brief-use-git-to-clone-poky">¶</a></span></h2></div></div></div><p>
+            Once you complete the setup instructions for your machine,
+            you need to get a copy of the Poky repository on your build
+            system.
+            Use the following commands to clone the Poky
+            repository and then checkout the yocto-2.5 release:
+            </p><pre class="literallayout">
+     $ git clone git://git.yoctoproject.org/poky
+     Cloning into 'poky'...
+     remote: Counting objects: 361782, done.
+     remote: Compressing objects: 100% (87100/87100), done.
+     remote: Total 361782 (delta 268619), reused 361439 (delta 268277)
+     Receiving objects: 100% (361782/361782), 131.94 MiB | 6.88 MiB/s, done.
+     Resolving deltas: 100% (268619/268619), done.
+     Checking connectivity... done.
+     $ git checkout tags/yocto-2.5 -b my-yocto-2.5
+            </pre><p>
+            The previous Git checkout command creates a local branch
+            named my-yocto-2.5. The files available to you in that
+            branch exactly match the repository's files in the
+            "sumo" development branch at the time of the
+            Yocto Project 2.5 release.
+        </p><p>
+            For more options and information about accessing Yocto
+            Project related repositories, see the
+            "<a class="ulink" href="http://www.yoctoproject.org/docs/2.5/dev-manual/dev-manual.html#working-with-yocto-project-source-files" target="_top">Working With Yocto Project Source Files</a>"
+            section in the Yocto Project Development Tasks Manual.
+        </p></div><div class="section" title="5. Building Your Image"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title" style="clear: both"><a id="brief-building-your-image"></a>5. Building Your Image<span class="permalink"><a alt="Permalink" title="Permalink" href="#brief-building-your-image">¶</a></span></h2></div></div></div><p>
+            Use the following steps to build your image.
+            The OpenEmbedded build system creates an entire Linux
+            distribution, including the toolchain, from source.
+            </p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+                        If you are working behind a firewall and your build
+                        host is not set up for proxies, you could encounter
+                        problems with the build process when fetching source
+                        code (e.g. fetcher failures or Git failures).
+                        </p></li><li class="listitem"><p>
+                        If you do not know your proxy settings, consult your
+                        local network infrastructure resources and get that
+                        information.
+                        A good starting point could also be to check your
+                        web browser settings.
+                        Finally, you can find more information on the
+                        "<a class="ulink" href="https://wiki.yoctoproject.org/wiki/Working_Behind_a_Network_Proxy" target="_top">Working Behind a Network Proxy</a>"
+                        wiki page.
+                        </p></li></ul></div></div><p>
+        </p><p>
+            </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+                    <span class="emphasis"><em>Initialize the Build Environment:</em></span>
+                    Run the
+                    <a class="ulink" href="http://www.yoctoproject.org/docs/2.5/ref-manual/ref-manual.html#structure-core-script" target="_top"><code class="filename">oe-init-build-env</code></a>
+                    environment setup script to define the OpenEmbedded
+                    build environment on your build host.
+                    </p><pre class="literallayout">
+     $ source oe-init-build-env
+                    </pre><p>
+                    Among other things, the script creates the
+                    <a class="ulink" href="http://www.yoctoproject.org/docs/2.5/ref-manual/ref-manual.html#build-directory" target="_top">Build Directory</a>,
+                    which is <code class="filename">build</code> in this case
+                    and is located in the
+                    <a class="ulink" href="http://www.yoctoproject.org/docs/2.5/ref-manual/ref-manual.html#source-directory" target="_top">Source Directory</a>.
+                    After the script runs, your current working directory
+                    is set to the Build Directory.
+                    Later, when the build completes, the Build Directory
+                    contains all the files created during the build.
+                    </p></li><li class="listitem"><p>
+                    <span class="emphasis"><em>Examine Your Local Configuration File:</em></span>
+                    When you set up the build environment, a local
+                    configuration file named
+                    <code class="filename">local.conf</code> becomes available in
+                    a <code class="filename">conf</code> subdirectory of the
+                    Build Directory.
+                    For this quick start, the defaults are set to build
+                    for a <code class="filename">qemux86</code> target, which is
+                    suitable for emulation.
+                    The package manager used is set to the RPM package
+                    manager.
+                    </p></li><li class="listitem"><p>
+                    <span class="emphasis"><em>Start the Build:</em></span>
+                    Continue with the following command to build an OS image
+                    for the target, which is
+                    <code class="filename">core-image-sato</code> in this example:
+                    </p><pre class="literallayout">
+     $ bitbake core-image-sato
+                    </pre><p>
+                    For information on using the
+                    <code class="filename">bitbake</code> command, see the
+                    "<a class="ulink" href="http://www.yoctoproject.org/docs/2.5/overview-manual/overview-manual.html#usingpoky-components-bitbake" target="_top">BitBake</a>"
+                    section in the Yocto Project Overview Manual, or
+                    see the
+                    "<a class="ulink" href="http://www.yoctoproject.org/docs/2.5/bitbake-user-manual/bitbake-user-manual.html#bitbake-user-manual-command" target="_top">BitBake Command</a>"
+                    section in the BitBake User Manual.
+                    </p></li><li class="listitem"><p>
+                    <span class="emphasis"><em>Simulate Your Image Using QEMU:</em></span>
+                    Once this particular image is built, you can start
+                    QEMU, which is a Quick EMUlator that ships with
+                    the Yocto Project:
+                    </p><pre class="literallayout">
+     $ runqemu qemux86
+                    </pre><p>
+                    If you want to learn more about running QEMU, see the
+                    "<a class="ulink" href="http://www.yoctoproject.org/docs/2.5/dev-manual/dev-manual.html#dev-manual-qemu" target="_top">Using the Quick EMUlator (QEMU)</a>"
+                    chapter in the Yocto Project Development Tasks Manual.
+                    </p></li><li class="listitem"><p>
+                    <span class="emphasis"><em>Exit QEMU:</em></span>
+                    Exit QEMU by either clicking on the shutdown icon or by
+                    typing <code class="filename">Ctrl-C</code> in the QEMU
+                    transcript window from which you evoked QEMU.
+                    </p></li></ol></div><p>
+        </p></div><div class="section" title="6. Where To Go Next"><div xmlns="" class="titlepage"><div><div><h2 xmlns="http://www.w3.org/1999/xhtml" class="title" style="clear: both"><a id="brief-where-to-go-next"></a>6. Where To Go Next<span class="permalink"><a alt="Permalink" title="Permalink" href="#brief-where-to-go-next">¶</a></span></h2></div></div></div><p>
+            Now that you have experienced using the Yocto Project, you might
+            be asking yourself "What now?"
+            The Yocto Project has many sources of information including
+            the website, wiki pages, and user manuals:
+            </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+                    <span class="emphasis"><em>Website:</em></span>
+                    The
+                    <a class="ulink" href="http://www.yoctoproject.org" target="_top">Yocto Project Website</a>
+                    provides background information, the latest builds,
+                    breaking news, full development documentation, and
+                    access to a rich Yocto Project Development Community
+                    into which you can tap.
+                    </p></li><li class="listitem"><p>
+                    <span class="emphasis"><em>Developer Screencast:</em></span>
+                    The
+                    <a class="ulink" href="http://vimeo.com/36450321" target="_top">Getting Started with the Yocto Project - New Developer Screencast Tutorial</a>
+                    provides a 30-minute video created for users unfamiliar
+                    with the Yocto Project but familiar with Linux build
+                    hosts.
+                    While this screencast is somewhat dated, the
+                    introductory and fundamental concepts are useful for
+                    the beginner.
+                    </p></li><li class="listitem"><p>
+                    <span class="emphasis"><em>Yocto Project Wiki:</em></span>
+                    The
+                    <a class="ulink" href="https://wiki.yoctoproject.org" target="_top">Yocto Project Wiki</a>
+                    provides additional information on where to go next
+                    when ramping up with the Yocto Project, release
+                    information, project planning, and QA information.
+                    </p></li><li class="listitem"><p>
+                    <span class="emphasis"><em>Yocto Project Mailing Lists:</em></span>
+                    Related mailing lists provide a forum for discussion,
+                    patch submission and announcements.
+                    Several mailing lists exist and are grouped according
+                    to areas of concern.
+                    See the
+                    "<a class="ulink" href="http://www.yoctoproject.org/docs/2.5/ref-manual/ref-manual.html#resources-mailinglist" target="_top">Mailing lists</a>"
+                    section in the Yocto Project Reference Manual for a
+                    complete list of Yocto Project mailing lists.
+                    </p></li><li class="listitem"><p>
+                    <span class="emphasis"><em>Comprehensive List of Links and Other Documentation:</em></span>
+                    The
+                    "<a class="ulink" href="http://www.yoctoproject.org/docs/2.5/ref-manual/ref-manual.html#resources-links-and-related-documentation" target="_top">Links and Related Documentation</a>"
+                    section in the Yocto Project Reference Manual provides a
+                    comprehensive list of all related links and other
+                    user documentation.
+                    </p></li></ul></div><p>
+        </p></div></div></body></html>

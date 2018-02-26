@@ -84,6 +84,21 @@
 # for the 'denzil' branch.
 #
 
+ifeq ($(DOC),brief-yoctoprojectqs)
+XSLTOPTS = --stringparam html.stylesheet brief-yoctoprojectqs-style.css \
+           --stringparam  chapter.autolabel 1 \
+           --stringparam  section.autolabel 1 \
+           --stringparam  section.label.includes.component.label 1 \
+           --xinclude
+ALLPREQ = html tarball
+TARFILES = brief-yoctoprojectqs-style.css brief-yoctoprojectqs.html figures/ypqs-title.png \
+           figures/yocto-project-transp.png
+MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
+FIGURES = figures
+STYLESHEET = $(DOC)/*.css
+
+endif
+
 ifeq ($(DOC),getting-started)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
@@ -384,9 +399,9 @@ XSL_XHTML_URI = $(XSL_BASE_URI)/xhtml/docbook.xsl
 all: $(ALLPREQ)
 
 pdf:
-ifeq ($(DOC),yocto-project-qs)
+ifeq ($(DOC),yocto-project-qs brief-yoctoprojectqs)
 	@echo " "
-	@echo "ERROR: You cannot generate a yocto-project-qs PDF file."
+	@echo "ERROR: You cannot generate yocto-project-qs or brief-yoctoprojectqs PDF files."
 	@echo " "
 
 else ifeq ($(DOC),mega-manual)
