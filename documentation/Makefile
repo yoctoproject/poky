@@ -86,9 +86,9 @@
 
 ifeq ($(DOC),brief-yoctoprojectqs)
 XSLTOPTS = --stringparam html.stylesheet brief-yoctoprojectqs-style.css \
-           --stringparam  chapter.autolabel 1 \
-           --stringparam  section.autolabel 1 \
-           --stringparam  section.label.includes.component.label 1 \
+           --stringparam  chapter.autolabel 0 \
+           --stringparam  section.autolabel 0 \
+           --stringparam  section.label.includes.component.label 0 \
            --xinclude
 ALLPREQ = html tarball
 TARFILES = brief-yoctoprojectqs-style.css brief-yoctoprojectqs.html figures/ypqs-title.png \
