@@ -4156,7 +4156,7 @@
                         </literallayout>
                         </para></listitem>
                     <listitem><para>
-                        <emphasis>Clone the AUH Respository:</emphasis>
+                        <emphasis>Clone the AUH Repository:</emphasis>
                         To use AUH, you must clone the repository onto your
                         development host.
                         The following command uses Git to create a local
@@ -4521,6 +4521,99 @@
         <section id='dev-manually-upgrading-a-recipe'>
             <title>Manually Upgrading a Recipe</title>
 
+            <para>
+                If for some reason you choose not to upgrade recipes using the
+                <link linkend='gs-using-the-auto-upgrade-helper'>Auto Upgrade Helper (AUH)</link>
+                or by using
+                <link linkend='gs-using-devtool-upgrade'><filename>devtool upgrade</filename></link>,
+                you can manually edit the recipe files to upgrade the versions.
+                <note><title>Caution</title>
+                    Manually updating multiple recipes scales poorly and
+                    involves many steps.
+                    The recommendation to upgrade recipe versions is through
+                    AUH or <filename>devtool upgrade</filename>, both of which
+                    automate some steps and provide guidance for others needed
+                    for the manual process.
+                </note>
+            </para>
+
+            <para>
+                To manually upgrade recipe versions, follow these general steps:
+                <orderedlist>
+                    <listitem><para>
+                        <emphasis>Change the Recipe Name:</emphasis>
+                        Adjust the version (i.e.
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>)
+                        part of the recipe name such that it uses the
+                        new version number.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Update <filename>SRCREV</filename> if Needed:</emphasis>
+                        If the source code your recipe builds is fetched from
+                        Git or some other Version Control System (VCS),
+                        update
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>
+                        to point to the commit hash that matches the new
+                        version.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Build the Software:</emphasis>
+                        Try to build the recipe using BitBake.
+                        Typical build failures include the following:
+                        <itemizedlist>
+                            <listitem><para>
+                                License terms were updated for the new version.
+                                For this case, you need to review the new
+                                terms of the license and update the values of
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE'><filename>LICENSE</filename></ulink>
+                                and
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM'><filename>LIC_FILES_CHKSUM</filename></ulink>
+                                as needed.
+                                </para></listitem>
+                            <listitem><para>
+                                Custom patches carried by the older version of
+                                the recipe might fail to apply to the new
+                                version.
+                                For these cases, you need to review the
+                                failures.
+                                Patches might not be necessary for the new
+                                version of the software if the upgraded version
+                                has fixed those issues.
+                                If a patch is necessary and failing, you need
+                                to rebase it into the new version.
+                                </para></listitem>
+                        </itemizedlist>
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Optionally Attempt to Build for Several Architectures:</emphasis>
+                        Once you successfully build the new software for a
+                        given architecture, you could test the build for
+                        other architectures by changing the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                        variable and rebuilding the software.
+                        This optional step is especially important if the
+                        recipe is public.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Check the Upstream Change Log or Release Notes:</emphasis>
+                        Checking both these reveals if new features exist that
+                        could break backwards-compatibility.
+                        If so, you need to take steps to mitigate or eliminate
+                        that situation.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Optionally Create a Bootable Image and Test:</emphasis>
+                        If you want, you can test the new software by booting
+                        it onto actual hardware.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Create a Commit with the Change in the Layer Repository:</emphasis>
+                        After all builds work and any testing is successful,
+                        you can create commits for any changes in the layer
+                        holding your upgraded recipe.
+                        </para></listitem>
+                </orderedlist>
+            </para>
         </section>
     </section>
 
