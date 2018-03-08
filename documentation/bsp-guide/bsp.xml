@@ -1425,39 +1425,55 @@
                 <title>Released BSP Recommendations</title>
 
                 <para>
-                    Following are recommendations for a released BSP that conforms to the
-                    Yocto Project:
+                    Following are recommendations for released BSPs that
+                    conform to the Yocto Project:
                     <itemizedlist>
-                        <listitem><para><emphasis>Bootable Images:</emphasis>
-                            BSP releases
-                            can contain one or more bootable images.
-                            Including bootable images allows users to easily try out the BSP
-                            on their own hardware.</para>
-                            <para>In some cases, it might not be convenient to include a
-                            bootable image.
-                            In this case, you might want to make two versions of the
-                            BSP available: one that contains binary images, and one
-                            that does not.
-                            The version that does not contain bootable images avoids
-                            unnecessary download times for users not interested in the images.
-                            </para>
-                            <para>If you need to distribute a BSP and include bootable images or build kernel and
-                            filesystems meant to allow users to boot the BSP for evaluation
-                            purposes, you should put the images and artifacts within a
-                            <filename>binary/</filename> subdirectory located in the
-                            <filename>meta-<replaceable>bsp_name</replaceable></filename> directory.
-                            <note>If you do include a bootable image as part of the BSP and the image
-                            was built by software covered by the GPL or other open source licenses,
-                            it is your responsibility to understand
-                            and meet all licensing requirements, which could include distribution
-                            of source files.</note></para></listitem>
-                        <listitem><para><emphasis>Use a Yocto Linux Kernel:</emphasis>
-                            Kernel recipes in the BSP should be based on a Yocto Linux kernel.
-                            Basing your recipes on these kernels reduces the costs for maintaining
-                            the BSP and increases its scalability.
-                            See the <filename>Yocto Linux Kernel</filename> category in the
+                        <listitem><para>
+                            <emphasis>Bootable Images:</emphasis>
+                            Released BSPs can contain one or more bootable
+                            images.
+                            Including bootable images allows users to easily
+                            try out the BSP using their own hardware.</para>
+
+                            <para>In some cases, it might not be convenient
+                            to include a bootable image.
+                            If so, you might want to make two versions of the
+                            BSP available: one that contains binary images, and
+                            one that does not.
+                            The version that does not contain bootable images
+                            avoids unnecessary download times for users not
+                            interested in the images.</para>
+
+                            <para>If you need to distribute a BSP and include
+                            bootable images or build kernel and filesystems
+                            meant to allow users to boot the BSP for evaluation
+                            purposes, you should put the images and artifacts
+                            within a
+                            <filename>binary/</filename> subdirectory located
+                            in the
+                            <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                            directory.
+                            <note>
+                                If you do include a bootable image as part
+                                of the BSP and the image was built by software
+                                covered by the GPL or other open source licenses,
+                                it is your responsibility to understand
+                                and meet all licensing requirements, which could
+                                include distribution of source files.
+                            </note>
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Use a Yocto Linux Kernel:</emphasis>
+                            Kernel recipes in the BSP should be based on a
+                            Yocto Linux kernel.
+                            Basing your recipes on these kernels reduces
+                            the costs for maintaining the BSP and increases
+                            its scalability.
+                            See the <filename>Yocto Linux Kernel</filename>
+                            category in the
                             <ulink url='&YOCTO_GIT_URL;/cgit.cgi'>Source Repositories</ulink>
-                            for these kernels.</para></listitem>
+                            for these kernels.
+                            </para></listitem>
                     </itemizedlist>
                 </para>
             </section>
@@ -1467,78 +1483,94 @@
             <title>Customizing a Recipe for a BSP</title>
 
             <para>
-               If you plan on customizing a recipe for a particular BSP, you need to do the
-               following:
-               <itemizedlist>
-                   <listitem><para>Create a <filename>.bbappend</filename>
-                       file for the modified recipe.
-                       For information on using append files, see the
-                       "<ulink url='&YOCTO_DOCS_DEV_URL;#using-bbappend-files'>Using .bbappend Files in Your Layer</ulink>"
-                       section in the Yocto Project Development Tasks Manual.
-                       </para></listitem>
-                   <listitem><para>
-                       Ensure your directory structure in the BSP layer
-                       that supports your machine is such that it can be found
-                       by the build system.
-                       See the example later in this section for more information.
-                       </para></listitem>
-                   <listitem><para>
-                       Put the append file in a directory whose name matches
-                       the machine's name and is located in an appropriate
-                       sub-directory inside the BSP layer (i.e.
-                       <filename>recipes-bsp</filename>, <filename>recipes-graphics</filename>,
-                       <filename>recipes-core</filename>, and so forth).
-                       </para></listitem>
-                   <listitem><para>Place the BSP-specific files in the proper directory
-                       inside the BSP layer.
-                       How expansive the layer is affects where you must place these files.
-                       For example, if your layer supports several different machine types,
-                       you need to be sure your layer's directory structure includes hierarchy
-                       that separates the files out according to machine.
-                       If your layer does not support multiple machines, the layer would not
-                       have that additional hierarchy and the files would obviously not be
-                       able to reside in a machine-specific directory.
-                       </para></listitem>
-               </itemizedlist>
-           </para>
+                If you plan on customizing a recipe for a particular BSP,
+                you need to do the following:
+                <itemizedlist>
+                    <listitem><para>
+                        Create a <filename>*.bbappend</filename> file for
+                        the modified recipe.
+                        For information on using append files, see the
+                        "<ulink url='&YOCTO_DOCS_DEV_URL;#using-bbappend-files'>Using .bbappend Files in Your Layer</ulink>"
+                        section in the Yocto Project Development Tasks
+                        Manual.
+                        </para></listitem>
+                    <listitem><para>
+                        Ensure your directory structure in the BSP layer
+                        that supports your machine is such that the
+                        OpenEmbedded build system can find it.
+                        See the example later in this section for more
+                        information.
+                        </para></listitem>
+                    <listitem><para>
+                        Put the append file in a directory whose name matches
+                        the machine's name and is located in an appropriate
+                        sub-directory inside the BSP layer (i.e.
+                        <filename>recipes-bsp</filename>,
+                        <filename>recipes-graphics</filename>,
+                        <filename>recipes-core</filename>, and so forth).
+                        </para></listitem>
+                    <listitem><para>
+                        Place the BSP-specific files in the proper
+                        directory inside the BSP layer.
+                        How expansive the layer is affects where you must
+                        place these files.
+                        For example, if your layer supports several
+                        different machine types, you need to be sure your
+                        layer's directory structure includes hierarchy
+                        that separates the files according to machine.
+                        If your layer does not support multiple machines,
+                        the layer would not have that additional hierarchy
+                        and the files would obviously not be able to reside
+                        in a machine-specific directory.
+                        </para></listitem>
+                </itemizedlist>
+            </para>
 
-           <para>
-               Following is a specific example to help you better understand the process.
-               Consider an example that customizes a recipe by adding
-               a BSP-specific configuration file named <filename>interfaces</filename> to the
-               <filename>init-ifupdown_1.0.bb</filename> recipe for machine "xyz" where the
-               BSP layer also supports several other machines.
-               Do the following:
-               <orderedlist>
-                   <listitem><para>Edit the <filename>init-ifupdown_1.0.bbappend</filename> file so that it
-                       contains the following:
-                       <literallayout class='monospaced'>
+            <para>
+                Following is a specific example to help you better understand
+                the process.
+                This example customizes customizes a recipe by adding a
+                BSP-specific configuration file named
+                <filename>interfaces</filename> to the
+                <filename>init-ifupdown_1.0.bb</filename> recipe for machine
+                "xyz" where the BSP layer also supports several other
+                 machines:
+                <orderedlist>
+                    <listitem><para>
+                        Edit the
+                        <filename>init-ifupdown_1.0.bbappend</filename> file
+                        so that it contains the following:
+                        <literallayout class='monospaced'>
      FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
-                       </literallayout>
-                       The append file needs to be in the
-                       <filename>meta-xyz/recipes-core/init-ifupdown</filename> directory.
-                       </para></listitem>
-                   <listitem><para>Create and place the new <filename>interfaces</filename>
-                       configuration file in the BSP's layer here:
-                       <literallayout class='monospaced'>
+                        </literallayout>
+                        The append file needs to be in the
+                        <filename>meta-xyz/recipes-core/init-ifupdown</filename>
+                        directory.
+                        </para></listitem>
+                    <listitem><para>
+                        Create and place the new
+                        <filename>interfaces</filename> configuration file in
+                        the BSP's layer here:
+                        <literallayout class='monospaced'>
      meta-xyz/recipes-core/init-ifupdown/files/xyz-machine-one/interfaces
-                       </literallayout>
-                       <note>
-                           If the <filename>meta-xyz</filename> layer did not support
-                           multiple machines, you would place the
-                           <filename>interfaces</filename> configuration file in the
-                           layer here:
-                           <literallayout class='monospaced'>
+                        </literallayout>
+                        <note>
+                            If the <filename>meta-xyz</filename> layer did
+                            not support multiple machines, you would place
+                            the <filename>interfaces</filename> configuration
+                            file in the layer here:
+                            <literallayout class='monospaced'>
      meta-xyz/recipes-core/init-ifupdown/files/interfaces
-                           </literallayout>
-                       </note>
-                       The
-                       <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
-                       variable in the append files extends the search path
-                       the build system uses to find files during the build.
-                       Consequently, for this example you need to have the
-                       <filename>files</filename> directory in the same location
-                       as your append file.</para></listitem>
+                            </literallayout>
+                        </note>
+                        The
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></ulink>
+                        variable in the append files extends the search path
+                        the build system uses to find files during the build.
+                        Consequently, for this example you need to have the
+                        <filename>files</filename> directory in the same
+                        location as your append file.
+                        </para></listitem>
                </orderedlist>
             </para>
         </section>
@@ -1547,115 +1579,131 @@
             <title>BSP Licensing Considerations</title>
 
             <para>
-                In some cases, a BSP contains separately licensed Intellectual Property (IP)
-                for a component or components.
-                For these cases, you are required to accept the terms of a commercial or other
-                type of license that requires some kind of explicit End User License Agreement (EULA).
-                Once the license is accepted, the OpenEmbedded build system can then build and
-                include the corresponding component in the final BSP image.
-                If the BSP is available as a pre-built image, you can download the image after
-                agreeing to the license or EULA.
+                In some cases, a BSP contains separately licensed
+                Intellectual Property (IP) for a component or components.
+                For these cases, you are required to accept the terms
+                of a commercial or other type of license that requires
+                some kind of explicit End User License Agreement (EULA).
+                Once you accept the license, the OpenEmbedded build system
+                can then build and include the corresponding component
+                in the final BSP image.
+                If the BSP is available as a pre-built image, you can
+                download the image after agreeing to the license or EULA.
             </para>
 
             <para>
-                You could find that some separately licensed components that are essential
-                for normal operation of the system might not have an unencumbered (or free)
-                substitute.
-                Without these essential components, the system would be non-functional.
-                Then again, you might find that other licensed components that are simply
-                'good-to-have' or purely elective do have an unencumbered, free replacement
-                component that you can use rather than agreeing to the separately licensed component.
-                Even for components essential to the system, you might find an unencumbered component
-                that is not identical but will work as a less-capable version of the
-                licensed version in the BSP recipe.
+                You could find that some separately licensed components
+                that are essential for normal operation of the system might
+                not have an unencumbered (or free) substitute.
+                Without these essential components, the system would be
+                non-functional.
+                Then again, you might find that other licensed components
+                that are simply 'good-to-have' or purely elective do have
+                an unencumbered, free replacement component that you can
+                use rather than agreeing to the separately licensed
+                component.
+                Even for components essential to the system, you might
+                find an unencumbered component that is not identical but
+                will work as a less-capable version of the licensed version
+                in the BSP recipe.
             </para>
 
             <para>
-                For cases where you can substitute a free component and still
-                maintain the system's functionality, the "Downloads" page from the
-                <ulink url='&YOCTO_HOME_URL;'>Yocto Project website's</ulink>
-                makes available de-featured BSPs
-                that are completely free of any IP encumbrances.
+                For cases where you can substitute a free component and
+                still maintain the system's functionality, the "DOWNLOADS"
+                selection from the "SOFTWARE" tab on the
+                <ulink url='&YOCTO_HOME_URL;'>Yocto Project website</ulink>
+                makes available de-featured BSPs that are completely free
+                of any IP encumbrances.
                 For these cases, you can use the substitution directly and
                 without any further licensing requirements.
-                If present, these fully de-featured BSPs are named appropriately
-                different as compared to the names of the respective
-                encumbered BSPs.
-                If available, these substitutions are your
-                simplest and most preferred options.
-                Use of these substitutions of course assumes the resulting functionality meets
-                system requirements.
+                If present, these fully de-featured BSPs are named
+                appropriately different as compared to the names of their
+                respective encumbered BSPs.
+                If available, these substitutions are your simplest and
+                most preferred options.
+                Obviously, use of these substitutions assumes the resulting
+                functionality meets system requirements.
+                <note>
+                    If however, a non-encumbered version is unavailable or
+                    it provides unsuitable functionality or quality, you can
+                    use an encumbered version.
+                </note>
             </para>
 
             <para>
-                If however, a non-encumbered version is unavailable or
-                it provides unsuitable functionality or quality, you can use an encumbered
-                version.
-            </para>
-
-            <para>
-                A couple different methods exist within the OpenEmbedded build system to
-                satisfy the licensing requirements for an encumbered BSP.
+                A couple different methods exist within the OpenEmbedded
+                build system to satisfy the licensing requirements for an
+                encumbered BSP.
                 The following list describes them in order of preference:
 	        <orderedlist>
-                    <listitem><para><emphasis>Use the
+                    <listitem><para>
+                        <emphasis>Use the
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE_FLAGS'><filename>LICENSE_FLAGS</filename></ulink>
-                        variable to define the recipes that have commercial or other
-                        types of specially-licensed packages:</emphasis>
-                        For each of those recipes, you can
-                        specify a matching license string in a
+                        Variable to Define the Recipes that Have Commercial
+                        or Other Types of Specially-Licensed Packages:</emphasis>
+                        For each of those recipes, you can specify a
+                        matching license string in a
                         <filename>local.conf</filename> variable named
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE_FLAGS_WHITELIST'><filename>LICENSE_FLAGS_WHITELIST</filename></ulink>.
-                        Specifying the matching license string signifies that you agree to the license.
-                        Thus, the build system can build the corresponding recipe and include
-                        the component in the image.
+                        Specifying the matching license string signifies
+                        that you agree to the license.
+                        Thus, the build system can build the corresponding
+                        recipe and include the component in the image.
                         See the
                         "<ulink url='&YOCTO_DOCS_CM_URL;#enabling-commercially-licensed-recipes'>Enabling Commercially Licensed Recipes</ulink>"
-                        section in the Yocto Project Concepts Manual for details on how
-                        to use these variables.</para>
+                        section in the Yocto Project Concepts Manual for
+                        details on how to use these variables.</para>
+
                         <para>If you build as you normally would, without
 		        specifying any recipes in the
-		        <filename>LICENSE_FLAGS_WHITELIST</filename>, the build stops and
-		        provides you with the list of recipes that you have
-		        tried to include in the image that need entries in
-		        the <filename>LICENSE_FLAGS_WHITELIST</filename>.
-		        Once you enter the appropriate license flags into the whitelist,
-		        restart the build to continue where it left off.
+		        <filename>LICENSE_FLAGS_WHITELIST</filename>, the
+                        build stops and provides you with the list of recipes
+                        that you have tried to include in the image that
+                        need entries in the
+                        <filename>LICENSE_FLAGS_WHITELIST</filename>.
+		        Once you enter the appropriate license flags into
+                        the whitelist, restart the build to continue where
+                        it left off.
 		        During the build, the prompt will not appear again
 		        since you have satisfied the requirement.</para>
-                        <para>Once the appropriate license flags are on the white list
-		        in the <filename>LICENSE_FLAGS_WHITELIST</filename> variable, you
-		        can build the encumbered image with no change at all
-		        to the normal build process.</para></listitem>
-                    <listitem><para><emphasis>Get a pre-built version of the BSP:</emphasis>
-                        You can get this type of BSP by visiting the
-                        "Downloads" page of the
+
+                        <para>Once the appropriate license flags are on the
+                        white list in the
+                        <filename>LICENSE_FLAGS_WHITELIST</filename> variable,
+                        you can build the encumbered image with no change
+                        at all to the normal build process.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Get a Pre-Built Version of the BSP:</emphasis>
+                        You can get this type of BSP by selecting the
+                        "DOWNLOADS" item from the "SOFTWARE" tab on the
                         <ulink url='&YOCTO_HOME_URL;'>Yocto Project website</ulink>.
-                        You can download BSP tarballs that contain proprietary components
-                        after agreeing to the licensing
-                        requirements of each of the individually encumbered
-                        packages as part of the download process.
-                        Obtaining the BSP this way allows you to access an encumbered
-                        image immediately after agreeing to the
+                        You can download BSP tarballs that contain
+                        proprietary components after agreeing to the
+                        licensing requirements of each of the individually
+                        encumbered packages as part of the download process.
+                        Obtaining the BSP this way allows you to access an
+                        encumbered image immediately after agreeing to the
                         click-through license agreements presented by the
                         website.
-                        Note that if you want to build the image
-                        yourself using the recipes contained within the BSP
-                        tarball, you will still need to create an
-                        appropriate <filename>LICENSE_FLAGS_WHITELIST</filename> to match the
-                        encumbered recipes in the BSP.</para></listitem>
+                        If you want to build the image yourself using
+                        the recipes contained within the BSP tarball,
+                        you will still need to create an appropriate
+                        <filename>LICENSE_FLAGS_WHITELIST</filename>
+                        to match the encumbered recipes in the BSP.
+                        </para></listitem>
 	        </orderedlist>
+                <note>
+                    Pre-compiled images are bundled with a time-limited
+                    kernel that runs for a predetermined amount of time
+                    (10 days) before it forces the system to reboot.
+                    This limitation is meant to discourage direct
+                    redistribution of the image.
+                    You must eventually rebuild the image if you want
+                    to remove this restriction.
+                </note>
             </para>
-
-            <note>
-                Pre-compiled images are bundled with
-                a time-limited kernel that runs for a
-                predetermined amount of time (10 days) before it forces
-                the system to reboot.
-                This limitation is meant to discourage direct redistribution
-                of the image.
-                You must eventually rebuild the image if you want to remove this restriction.
-            </note>
         </section>
 
         <section id='using-the-yocto-projects-bsp-tools'>
@@ -1818,7 +1866,7 @@
                     IF THERE IS A LAUNDRY LIST OF ITEMS THAT NEED DEFINITION OR GET SET
                     UP AS A RESULT OF THIS PROCEDURE, LIST THEM HERE.]
                     <itemizedlist>
-                        <listitem><para>[PAREMETER 1]</para></listitem>
+                        <listitem><para>[PARAMETER 1]</para></listitem>
                         <listitem><para>[PARAMETER 2]</para></listitem>
                         <listitem><para>[PARAMETER 3]</para></listitem>
                         <listitem><para>[PARAMETER 4]</para></listitem>
@@ -1887,7 +1935,7 @@
                 </para>
 
 <!--                <para>
-                    [ASSUMING SIMLILAR ACTION OCCURS]As the [SUBCOMMAND] command runs, default values for
+                    [ASSUMING SIMILAR ACTION OCCURS]As the [SUBCOMMAND] command runs, default values for
                     the prompts appear in brackets.
                     Pressing enter without supplying anything on the command line or pressing enter
                     with an invalid response causes the script to accept the default value.
