@@ -310,38 +310,47 @@
             <title>Example Filesystem Layout</title>
 
             <para>
-                Defining a common BSP directory structure allows end-users to understand and
-                become familiar with that structure.
-                A common format also encourages standardization of software support of hardware.
+                Defining a common BSP directory structure allows
+                end-users to understand and become familiar with
+                that standard.
+                A common format also encourages standardization
+                of software support for hardware.
             </para>
 
             <para>
-                The proposed form does have elements that are specific to the
-                OpenEmbedded build system.
-                It is intended that this information can be
-                used by other build systems besides the OpenEmbedded build system
-                and that it will be simple
-                to extract information and convert it to other formats if required.
-                The OpenEmbedded build system, through its standard layers mechanism, can directly
-                accept the format described as a layer.
-                The BSP captures all
-                the hardware-specific details in one place in a standard format, which is
-                useful for any person wishing to use the hardware platform regardless of
-                the build system they are using.
+                The proposed form described in this section does
+                have elements that are specific to the OpenEmbedded
+                build system.
+                It is intended that developers can use this structure
+                with other build systems besides the OpenEmbedded build
+                system.
+                It is also intended that it will be be simple to extract
+                information and convert it to other formats if required.
+                The OpenEmbedded build system, through its standard
+                <ulink url='&YOCTO_DOCS_GS_URL;#the-yocto-project-layer-model'>layers mechanism</ulink>,
+                can directly accept the format described as a layer.
+                The BSP layer captures all the hardware-specific details
+                in one place using a standard format, which is useful
+                for any person wishing to use the hardware platform
+                regardless of the build system they are using.
             </para>
 
             <para>
-                The BSP specification does not include a build system or other tools -
-                it is concerned with the hardware-specific components only.
-                At the end-distribution point, you can ship the BSP combined with a build system
-                and other tools.
-                However, it is important to maintain the distinction that these
-                are separate components that happen to be combined in certain end products.
+                The BSP specification does not include a build system
+                or other tools - the specification is concerned with
+                the hardware-specific components only.
+                At the end-distribution point, you can ship the BSP
+                layer combined with a build system and other tools.
+                Realize that it is important to maintain the distinction
+                that the BSP layer, a build system, and tools are
+                separate components that could to be combined in
+                certain end products.
             </para>
 
             <para>
-                Before looking at the common form for the file structure inside a BSP Layer,
-                you should be aware that some requirements do exist in order for a BSP to
+                Before looking at the common form for the file structure
+                inside a BSP Layer, you should be aware that some
+                requirements do exist in order for a BSP layer to
                 be considered compliant with the Yocto Project.
                 For that list of requirements, see the
                 "<link linkend='released-bsp-requirements'>Released BSP Requirements</link>"
@@ -349,10 +358,11 @@
             </para>
 
             <para>
-                Below is the common form for the file structure inside a BSP Layer.
-                While you can use this basic form for the standard, realize that the actual structures
-                for specific BSPs could differ.
-
+                Below is the common form for the file structure
+                inside a BSP Layer.
+                While this basic form represents the standard,
+                realize that the actual file structures for specific
+                BSPs could differ.
                 <literallayout class='monospaced'>
      meta-<replaceable>bsp_name</replaceable>/
      meta-<replaceable>bsp_name</replaceable>/<replaceable>bsp_license_file</replaceable>
@@ -369,27 +379,39 @@
             </para>
 
             <para>
-                Below is an example of the Raspberry Pi BSP:
-
+                Below is an example of the Raspberry Pi BSP
+                layer that ships with the Yocto Project:
                 <literallayout class='monospaced'>
      meta-raspberrypi/COPYING.MIT
-     meta-raspberrypi/README
+     meta-raspberrypi/README.md
      meta-raspberrypi/classes
-     meta-raspberrypi/classes/linux-raspberrypi-base.bbclass
      meta-raspberrypi/classes/sdcard_image-rpi.bbclass
      meta-raspberrypi/conf/
      meta-raspberrypi/conf/layer.conf
      meta-raspberrypi/conf/machine/
+     meta-raspberrypi/conf/machine/raspberrypi-cm.conf
+     meta-raspberrypi/conf/machine/raspberrypi-cm3.conf
      meta-raspberrypi/conf/machine/raspberrypi.conf
+     meta-raspberrypi/conf/machine/raspberrypi0-wifi.conf
      meta-raspberrypi/conf/machine/raspberrypi0.conf
      meta-raspberrypi/conf/machine/raspberrypi2.conf
+     meta-raspberrypi/conf/machine/raspberrypi3-64.conf
      meta-raspberrypi/conf/machine/raspberrypi3.conf
      meta-raspberrypi/conf/machine/include
      meta-raspberrypi/conf/machine/include/rpi-base.inc
      meta-raspberrypi/conf/machine/include/rpi-default-providers.inc
      meta-raspberrypi/conf/machine/include/rpi-default-settings.inc
      meta-raspberrypi/conf/machine/include/rpi-default-versions.inc
-     meta-raspberrypi/conf/machine/include/rpi-tune-arm1176jzf-s.inc
+     meta-raspberrypi/conf/machine/include/tune-arm1176jzf-s.inc
+     meta-raspberrypi/docs
+     meta-raspberrypi/docs/Makefile
+     meta-raspberrypi/docs/conf.py
+     meta-raspberrypi/docs/contributing.md
+     meta-raspberrypi/docs/extra-apps.md
+     meta-raspberrypi/docs/extra-build-config.md
+     meta-raspberrypi/docs/index.rst
+     meta-raspberrypi/docs/layer-contents.md
+     meta-raspberrypi/docs/readme.md
      meta-raspberrypi/files
      meta-raspberrypi/files/custom-licenses
      meta-raspberrypi/files/custom-licenses/Broadcom
@@ -399,12 +421,26 @@
      meta-raspberrypi/recipes-bsp/bootfiles/rpi-config_git.bb
      meta-raspberrypi/recipes-bsp/common
      meta-raspberrypi/recipes-bsp/common/firmware.inc
-     meta-raspberrypi/recipes-bsp/formfactor_00.bbappend
-     meta-raspberrypi/recipes-bsp/formfactor/raspberrypi/machconfig
-     meta-raspberrypi/recipes-bsp/rpi-mkimage_git.bb
-     meta-raspberrypi/recipes-bsp/rpi-mkimage/License
-     meta-raspberrypi/recipes-bsp/rpi-mkimage/open-files-relative-to-script.patch
-     meta-raspberrypi/recipes-bsp/u-boot/u-boot-rpi_git.bb
+     meta-raspberrypi/recipes-bsp/formfactor
+     meta-raspberrypi/recipes-bsp/formfactor/formfactor
+     meta-raspberrypi/recipes-bsp/formfactor/formfactor/raspberrypi
+     meta-raspberrypi/recipes-bsp/formfactor/formfactor/raspberrypi/machconfig
+     meta-raspberrypi/recipes-bsp/formfactor/formfactor_0.0.bbappend
+     meta-raspberrypi/recipes-bsp/rpi-u-boot-src
+     meta-raspberrypi/recipes-bsp/rpi-u-boot-src/files
+     meta-raspberrypi/recipes-bsp/rpi-u-boot-src/files/boot.cmd.in
+     meta-raspberrypi/recipes-bsp/rpi-u-boot-src/rpi-u-boot-scr.bb
+     meta-raspberrypi/recipes-bsp/u-boot
+     meta-raspberrypi/recipes-bsp/u-boot/u-boot
+     meta-raspberrypi/recipes-bsp/u-boot/u-boot/*.patch
+     meta-raspberrypi/recipes-bsp/u-boot/u-boot_%.bbappend
+     meta-raspberrypi/recipes-connectivity
+     meta-raspberrypi/recipes-connectivity/bluez5
+     meta-raspberrypi/recipes-connectivity/bluez5/bluez5
+     meta-raspberrypi/recipes-connectivity/bluez5/bluez5/*.patch
+     meta-raspberrypi/recipes-connectivity/bluez5/bluez5/BCM43430A1.hcd
+     meta-raspberrypi/recipes-connectivity/bluez5/bluez5brcm43438.service
+     meta-raspberrypi/recipes-connectivity/bluez5/bluez5_%.bbappend
      meta-raspberrypi/recipes-core
      meta-raspberrypi/recipes-core/images
      meta-raspberrypi/recipes-core/images/rpi-basic-image.bb
@@ -414,37 +450,41 @@
      meta-raspberrypi/recipes-core/packagegroups/packagegroup-rpi-test.bb
      meta-raspberrypi/recipes-core/psplash
      meta-raspberrypi/recipes-core/psplash/files
-     meta-raspberrypi/recipes-core/psplash/psplash_git.bbappend
      meta-raspberrypi/recipes-core/psplash/files/psplash-raspberrypi-img.h
+     meta-raspberrypi/recipes-core/psplash/psplash_git.bbappend
+     meta-raspberrypi/recipes-core/udev
+     meta-raspberrypi/recipes-core/udev/udev-rules-rpi
+     meta-raspberrypi/recipes-core/udev/udev-rules-rpi/99-com.rules
+     meta-raspberrypi/recipes-core/udev/udev-rules-rpi.bb
      meta-raspberrypi/recipes-devtools
      meta-raspberrypi/recipes-devtools/bcm2835
-     meta-raspberrypi/recipes-devtools/bcm2835/bcm2835_1.46.bb
+     meta-raspberrypi/recipes-devtools/bcm2835/bcm2835_1.52.bb
      meta-raspberrypi/recipes-devtools/pi-blaster
      meta-raspberrypi/recipes-devtools/pi-blaster/files
-     meta-raspberrypi/recipes-devtools/pi-blaster/*.patch
-     meta-raspberrypi/recipes-devtools/pi-blaster/pi-blaster.inc
+     meta-raspberrypi/recipes-devtools/pi-blaster/files/*.patch
      meta-raspberrypi/recipes-devtools/pi-blaster/pi-blaster_git.bb
      meta-raspberrypi/recipes-devtools/python
      meta-raspberrypi/recipes-devtools/python/python-rtimu
      meta-raspberrypi/recipes-devtools/python/python-rtimu/*.patch
      meta-raspberrypi/recipes-devtools/python/python-rtimu_git.bb
-     meta-raspberrypi/recipes-devtools/python/python-sense-hat_2.1.0.bb
+     meta-raspberrypi/recipes-devtools/python/python-sense-hat_2.2.0.bb
      meta-raspberrypi/recipes-devtools/python/rpi-gpio
      meta-raspberrypi/recipes-devtools/python/rpi-gpio/*.patch
-     meta-raspberrypi/recipes-devtools/python/rpi-gpio_0.6.1.bb
+     meta-raspberrypi/recipes-devtools/python/rpi-gpio_0.6.3.bb
      meta-raspberrypi/recipes-devtools/python/rpio
      meta-raspberrypi/recipes-devtools/python/rpio/*.patch
      meta-raspberrypi/recipes-devtools/python/rpio_0.10.0.bb
      meta-raspberrypi/recipes-devtools/wiringPi
      meta-raspberrypi/recipes-devtools/wiringPi/files
      meta-raspberrypi/recipes-devtools/wiringPi/files/*.patch
-     meta-raspberrypi/recipes-devtools/wiringPi/wiringpi
-     meta-raspberrypi/recipes-devtools/wiringPi/wiringpi/*.patch
      meta-raspberrypi/recipes-devtools/wiringPi/wiringpi_git.bb
      meta-raspberrypi/recipes-graphics
      meta-raspberrypi/recipes-graphics/eglinfo
      meta-raspberrypi/recipes-graphics/eglinfo/eglinfo-fb_%.bbappend
      meta-raspberrypi/recipes-graphics/eglinfo/eglinfo-x11_%.bbappend
+     meta-raspberrypi/recipes-graphics/mesa
+     meta-raspberrypi/recipes-graphics/mesa/mesa-gl_%.bbappend
+     meta-raspberrypi/recipes-graphics/mesa/mesa_%.bbappend
      meta-raspberrypi/recipes-graphics/userland
      meta-raspberrypi/recipes-graphics/userland/userland
      meta-raspberrypi/recipes-graphics/userland/userland/*.patch
@@ -458,58 +498,49 @@
      meta-raspberrypi/recipes-graphics/vc-graphics/vc-graphics.inc
      meta-raspberrypi/recipes-graphics/wayland
      meta-raspberrypi/recipes-graphics/wayland/weston_%.bbappend
-     meta-raspberrypi/recipes-graphics/weston
-     meta-raspberrypi/recipes-graphics/weston/weston_%.bbappend
      meta-raspberrypi/recipes-graphics/xorg-xserver
      meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xf86-config
      meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xf86-config/rpi
      meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xf86-config/rpi/xorg.conf
      meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xf86-config/rpi/xorg.conf.d
      meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xf86-config/rpi/xorg.conf.d/10-evdev.conf
-     meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xf86-config/rpi/xorg.conf.d/99-pitft.conf
+     meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xf86-config/rpi/xorg.conf.d/98-pitft.conf
+     meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xf86-config/rpi/xorg.conf.d/99-calibration.conf
      meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xf86-config_0.1.bbappend
+     meta-raspberrypi/recipes-graphics/xorg-xserver/xserver-xorg_%.bbappend
      meta-raspberrypi/recipes-kernel
      meta-raspberrypi/recipes-kernel/linux-firmware
-     meta-raspberrypi/recipes-kernel/linux-firmware/linux-firmware
-     meta-raspberrypi/recipes-kernel/linux-firmware/linux-firmware/LICENSE.broadcom_brcm80211
-     meta-raspberrypi/recipes-kernel/linux-firmware/linux-firmware/brcmfmac43430-sdio.bin
-     meta-raspberrypi/recipes-kernel/linux-firmware/linux-firmware/brcmfmac43430-sdio.txt
-     meta-raspberrypi/recipes-kernel/linux-firmware/linux-firmware_git.bbappend
+     meta-raspberrypi/recipes-kernel/linux-firmware/files
+     meta-raspberrypi/recipes-kernel/linux-firmware/files/brcmfmac43430-sdio.bin
+     meta-raspberrypi/recipes-kernel/linux-firmware/files/brcfmac43430-sdio.txt
+     meta-raspberrypi/recipes-kernel/linux-firmware/linux-firmware_%.bbappend
      meta-raspberrypi/recipes-kernel/linux
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi-3.14
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi-3.14/*.patch
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi-3.18
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi-3.18/*.patch
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi-4.1
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi-4.1/*.patch
+     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi-dev.bb
      meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi.inc
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi/defconfig
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi_3.14.bb
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi_3.18.bb
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi_4.1.bb
-     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi_4.4.bb
-     meta-raspberrypi/recipes-kernel/linux/linux.inc
+     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi_4.14.bb
+     meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi_4.9.bb
      meta-raspberrypi/recipes-multimedia
      meta-raspberrypi/recipes-multimedia/gstreamer
      meta-raspberrypi/recipes-multimedia/gstreamer/gstreamer1.0-omx
      meta-raspberrypi/recipes-multimedia/gstreamer/gstreamer1.0-omx/*.patch
      meta-raspberrypi/recipes-multimedia/gstreamer/gstreamer1.0-omx_%.bbappend
      meta-raspberrypi/recipes-multimedia/gstreamer/gstreamer1.0-plugins-bad_%.bbappend
+     meta-raspberrypi/recipes-multimedia/gstreamer/gstreamer1.0-omx-1.12
+     meta-raspberrypi/recipes-multimedia/gstreamer/gstreamer1.0-omx-1.12/*.patch
      meta-raspberrypi/recipes-multimedia/omxplayer
      meta-raspberrypi/recipes-multimedia/omxplayer/omxplayer
      meta-raspberrypi/recipes-multimedia/omxplayer/omxplayer/*.patch
      meta-raspberrypi/recipes-multimedia/omxplayer/omxplayer_git.bb
-     meta-raspberrypi/scripts
-     meta-raspberrypi/scripts/lib
-     meta-raspberrypi/scripts/lib/image
-     meta-raspberrypi/scripts/lib/image/canned-wks
-     meta-raspberrypi/scripts/lib/image/canned-wks/sdimage-raspberrypi.wks
+     meta-raspberrypi/recipes-multimedia/x264
+     meta-raspberrypi/recipes-multimedia/x264/x264_git.bbappend
+     meta-raspberrypi/wic
+     meta-raspberrypi/wic/sdimage-raspberrypi.wks
                 </literallayout>
             </para>
 
             <para>
-                The following sections describe each part of the proposed BSP format.
+                The following sections describe each part of the proposed
+                BSP format.
             </para>
 
             <section id="bsp-filelayout-license">
@@ -523,15 +554,24 @@
                 </para>
 
                 <para>
-                    These optional files satisfy licensing requirements for the BSP.
-                    The type or types of files here can vary depending on the licensing requirements.
-                    For example, in the Raspberry Pi BSP all licensing requirements are handled with the
+                    These optional files satisfy licensing requirements
+                    for the BSP.
+                    The type or types of files here can vary depending
+                    on the licensing requirements.
+                    For example, in the Raspberry Pi BSP all licensing
+                    requirements are handled with the
                     <filename>COPYING.MIT</filename> file.
                 </para>
 
                 <para>
                     Licensing files can be MIT, BSD, GPLv*, and so forth.
-                    These files are recommended for the BSP but are optional and totally up to the BSP developer.
+                    These files are recommended for the BSP but are
+                    optional and totally up to the BSP developer.
+                    For information on how to maintain license
+                    compliance, see the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#maintaining-open-source-license-compliance-during-your-products-lifecycle'>Maintaining Open Source License Compliance During Your Product's Lifecycle</ulink>"
+                    section in the Yocto Project Development Tasks
+                    Manual.
                 </para>
             </section>
 
@@ -546,10 +586,11 @@
                 </para>
 
                 <para>
-                    This file provides information on how to boot the live images that are optionally
-                    included in the <filename>binary/</filename> directory.
-                    The <filename>README</filename> file also provides special information needed for
-                    building the image.
+                    This file provides information on how to boot the live
+                    images that are optionally included in the
+                    <filename>binary/</filename> directory.
+                    The <filename>README</filename> file also provides
+                    information needed for building the image.
                 </para>
 
                 <para>
@@ -572,7 +613,8 @@
 
                 <para>
                     This file provides information on where to locate the BSP
-                    source files used to build the images (if any) that reside in
+                    source files used to build the images (if any) that
+                    reside in
                     <filename>meta-<replaceable>bsp_name</replaceable>/binary</filename>.
                     Images in the <filename>binary</filename> would be images
                     released with the BSP.
@@ -584,7 +626,7 @@
                         If the BSP's <filename>binary</filename> directory is
                         missing or the directory has no images, an existing
                         <filename>README.sources</filename> file is
-                        meaningless.
+                        meaningless and usually does not exist.
                     </note>
                 </para>
             </section>
@@ -600,26 +642,30 @@
                 </para>
 
                 <para>
-                    This optional area contains useful pre-built kernels and
-                    user-space filesystem images released with the BSP that are
-                    appropriate to the target system.
-                    This directory typically contains graphical (e.g. Sato) and
-                    minimal live images when the BSP tarball has been created and
-                    made available in the
-                    <ulink url='&YOCTO_HOME_URL;'>Yocto Project</ulink> website.
-                    You can use these kernels and images to get a system running
-                    and quickly get started on development tasks.
+                    This optional area contains useful pre-built kernels
+                    and user-space filesystem images released with the
+                    BSP that are appropriate to the target system.
+                    This directory typically contains graphical (e.g. Sato)
+                    and minimal live images when the BSP tarball has been
+                    created and made available in the
+                    <ulink url='&YOCTO_HOME_URL;'>Yocto Project</ulink>
+                    website.
+                    You can use these kernels and images to get a system
+                    running and quickly get started on development tasks.
                 </para>
 
                 <para>
                     The exact types of binaries present are highly
                     hardware-dependent.
-                    The <filename>README</filename> file should be present in the
-                    BSP Layer and it will explain how to use the images with the
-                    target hardware.
-                    Additionally, the <filename>README.sources</filename> file
-                    should be present to locate the sources used to build the
-                    images and provide information on the Metadata.
+                    The
+                    <link linkend='bsp-filelayout-readme'><filename>README</filename></link>
+                    file should be present in the BSP Layer and it
+                    explains how to use the images with the target hardware.
+                    Additionally, the
+                    <link linkend='bsp-filelayout-readme-sources'><filename>README.sources</filename></link>
+                    file should be present to locate the sources used to
+                    build the images and provide information on the
+                    Metadata.
                 </para>
             </section>
 
@@ -634,14 +680,18 @@
                 </para>
 
                 <para>
-                    The <filename>conf/layer.conf</filename> file identifies the file structure as a
-                    layer, identifies the
-                    contents of the layer, and contains information about how the build
-                    system should use it.
-                    Generally, a standard boilerplate file such as the following works.
-                    In the following example, you would replace "<replaceable>bsp</replaceable>" and
-                    "<replaceable>_bsp</replaceable>" with the actual name
-                    of the BSP (i.e. <replaceable>bsp_name</replaceable> from the example template).
+                    The <filename>conf/layer.conf</filename> file
+                    identifies the file structure as a layer,
+                    identifies the contents of the layer, and
+                    contains information about how the build system should
+                    use it.
+                    Generally, a standard boilerplate file such as the
+                    following works.
+                    In the following example, you would replace
+                    <replaceable>bsp</replaceable> with the actual
+                    name of the BSP (i.e.
+                    <replaceable>bsp_name</replaceable> from the example
+                    template).
                 </para>
 
                 <para>
@@ -662,8 +712,9 @@
                 </para>
 
                 <para>
-                    To illustrate the string substitutions, here are the corresponding statements
-                    from the Raspberry Pi <filename>conf/layer.conf</filename> file:
+                    To illustrate the string substitutions, here are
+                    the corresponding statements from the Raspberry
+                    Pi <filename>conf/layer.conf</filename> file:
                    <literallayout class='monospaced'>
      # We have a conf and classes directory, append to BBPATH
      BBPATH .= ":${LAYERDIR}"
@@ -678,6 +729,9 @@
 
      # Additional license directories.
      LICENSE_PATH += "${LAYERDIR}/files/custom-licenses"
+          .
+          .
+          .
                     </literallayout>
                 </para>
 
@@ -685,7 +739,8 @@
                     This file simply makes
                     <ulink url='&YOCTO_DOCS_REF_URL;#bitbake-term'>BitBake</ulink>
                     aware of the recipes and configuration directories.
-                    The file must exist so that the OpenEmbedded build system can recognize the BSP.
+                    The file must exist so that the OpenEmbedded build system
+                    can recognize the BSP.
                 </para>
             </section>
 
@@ -700,41 +755,48 @@
                 </para>
 
                 <para>
-                    The machine files bind together all the information contained elsewhere
-                    in the BSP into a format that the build system can understand.
-                    If the BSP supports multiple machines, multiple machine configuration files
-                    can be present.
-                    These filenames correspond to the values to which users have set the
+                    The machine files bind together all the information
+                    contained elsewhere in the BSP into a format that
+                    the build system can understand.
+                    Each BSP Layer requires at least one machine file.
+                    If the BSP supports multiple machines, multiple
+                    machine configuration files can exist.
+                    These filenames correspond to the values to which
+                    users have set the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink> variable.
                 </para>
 
                 <para>
-                    These files define things such as the kernel package to use
+                    These files define things such as the kernel package
+                    to use
                     (<ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER</filename></ulink>
-                    of virtual/kernel), the hardware drivers to
-                    include in different types of images, any special software components
-                    that are needed, any bootloader information, and also any special image
-                    format requirements.
+                    of
+                    <ulink url='&YOCTO_DOCS_DEV_URL;#metadata-virtual-providers'>virtual/kernel</ulink>),
+                    the hardware drivers to include in different types
+                    of images, any special software components that are
+                    needed, any bootloader information, and also any
+                    special image format requirements.
                 </para>
 
                 <para>
-                    Each BSP Layer requires at least one machine file.
-                    However, you can supply more than one file.
+                    This configuration file could also include a hardware
+                    "tuning" file that is commonly used to define the
+                    package architecture and specify optimization flags,
+                    which are carefully chosen to give best performance
+                    on a given processor.
                 </para>
 
                 <para>
-                    This configuration file could also include a hardware "tuning"
-                    file that is commonly used to define the package architecture
-                    and specify optimization flags, which are carefully chosen
-                    to give best performance on a given processor.
-                </para>
-
-                <para>
-                    Tuning files are found in the <filename>meta/conf/machine/include</filename>
+                    Tuning files are found in the
+                    <filename>meta/conf/machine/include</filename>
                     directory within the
                     <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
-                    For example, the <filename>ia32-base.inc</filename> file resides in the
-                    <filename>meta/conf/machine/include</filename> directory.
+                    For example, many <filename>tune-*</filename> files
+                    (e.g. <filename>tune-arm1136jf-s.inc</filename>,
+                    <filename>tun-1586-nlp.inc</filename>, and so forth)
+                    reside in the
+                    <filename>poky/meta/conf/machine/include</filename>
+                    directory.
                 </para>
 
                 <para>
@@ -744,7 +806,7 @@
                     <filename>raspberrypi3.conf</filename> contains the
                     following statement:
                     <literallayout class='monospaced'>
-     include conf/machine/raspberrypi2.conf
+     include conf/machine/include/rpi-base.inc
                     </literallayout>
                 </para>
             </section>
@@ -760,18 +822,19 @@
                 </para>
 
                 <para>
-                    This optional directory contains miscellaneous recipe files for
-                    the BSP.
+                    This optional directory contains miscellaneous recipe
+                    files for the BSP.
                     Most notably would be the formfactor files.
                     For example, in the Raspberry Pi BSP there is the
-                    <filename>formfactor_0.0.bbappend</filename> file, which is an
-                    append file used to augment the recipe that starts the build.
-                    Furthermore, there are machine-specific settings used during
-                    the build that are defined by the
-                    <filename>machconfig</filename> file further down in the
-                    directory.
-                    Here is the <filename>machconfig</filename>
-                    file for the Raspberry Pi BSP:
+                    <filename>formfactor_0.0.bbappend</filename> file,
+                    which is an append file used to augment the recipe
+                    that starts the build.
+                    Furthermore, there are machine-specific settings used
+                    during the build that are defined by the
+                    <filename>machconfig</filename> file further down in
+                    the directory.
+                    Here is the <filename>machconfig</filename> file for
+                    the Raspberry Pi BSP:
                     <literallayout class='monospaced'>
      HAVE_TOUCHSCREEN=0
      HAVE_KEYBOARD=1
@@ -783,8 +846,9 @@
                 </para>
 
                 <note><para>
-                    If a BSP does not have a formfactor entry, defaults are established according to
-                    the formfactor configuration file that is installed by the main
+                    If a BSP does not have a formfactor entry, defaults
+                    are established according to the formfactor
+                    configuration file that is installed by the main
                     formfactor recipe
                     <filename>meta/recipes-bsp/formfactor/formfactor_0.0.bb</filename>,
                     which is found in the
@@ -803,10 +867,11 @@
                 </para>
 
                 <para>
-                    This optional directory contains recipes for the BSP if it has
-                    special requirements for graphics support.
-                    All files that are needed for the BSP to support a display are
-                    kept here.
+                    This optional directory contains recipes for the
+                    BSP if it has special requirements for graphics
+                    support.
+                    All files that are needed for the BSP to support
+                    a display are kept here.
                 </para>
             </section>
 
@@ -830,15 +895,17 @@
                     Project kernel recipe found in the
                     <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
                     at <filename>meta/recipes-kernel/linux</filename>.
-                    You can append machine-specific changes to the kernel recipe
-                    by using a similarly named append file, which is located in
-                    the BSP Layer for your target device (e.g. the
+                    You can append machine-specific changes to the
+                    kernel recipe by using a similarly named append
+                    file, which is located in the BSP Layer for your
+                    target device (e.g. the
                     <filename>meta-<replaceable>bsp_name</replaceable>/recipes-kernel/linux</filename> directory).
                 </para>
 
                 <para>
-                    Suppose you are using the <filename>linux-yocto_4.4.bb</filename>
-                    recipe to build the kernel.
+                    Suppose you are using the
+                    <filename>linux-yocto_4.4.bb</filename> recipe to
+                    build the kernel.
                     In other words, you have selected the kernel in your
                     <replaceable>bsp_name</replaceable><filename>.conf</filename>
                     file by adding
@@ -851,14 +918,16 @@
      PREFERRED_VERSION_linux-yocto ?= "4.4%"
                     </literallayout>
                     <note>
-                        When the preferred provider is assumed by default, the
+                        When the preferred provider is assumed by
+                        default, the
                         <filename>PREFERRED_PROVIDER</filename>
                         statement does not appear in the
                         <replaceable>bsp_name</replaceable><filename>.conf</filename> file.
                     </note>
-                    You would use the <filename>linux-yocto_4.4.bbappend</filename>
-                    file to append specific BSP settings to the kernel, thus
-                    configuring the kernel for your particular BSP.
+                    You would use the
+                    <filename>linux-yocto_4.4.bbappend</filename>
+                    file to append specific BSP settings to the kernel,
+                    thus configuring the kernel for your particular BSP.
                 </para>
 
                 <para>
