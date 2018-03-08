@@ -34,8 +34,8 @@
                 A BSP consists of a file structure inside a base directory.
                 Collectively, you can think of the base directory, its file structure,
                 and the contents as a BSP Layer.
-                Although not a strict requirement, layers in the Yocto Project use the
-                following well-established naming convention:
+                Although not a strict requirement, BSP layers in the Yocto Project
+                use the following well-established naming convention:
                 <literallayout class='monospaced'>
      meta-<replaceable>bsp_name</replaceable>
                 </literallayout>
@@ -46,8 +46,8 @@
                     it is advisable to follow it when creating layers.
                     Technically speaking, a BSP layer name does not need to
                     start with <filename>meta-</filename>.
-                    However, you might run into situations where obscure
-                    scripts assume this convention.
+                    However, various scripts and tools in the Yocto Project
+                    development environment assume this convention.
                 </note>
             </para>
 
@@ -58,9 +58,15 @@
                 <ulink url='&YOCTO_DOCS_GS_URL;#yocto-project-repositories'>Yocto Project Source Repositories</ulink>
                 through a web interface at
                 <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi'></ulink>.
-                If you go to that interface, you will find near the bottom of the list
-                under "Yocto Metadata Layers" several BSP layers all of which are
-                supported by the Yocto Project (e.g. <filename>meta-raspberrypi</filename> and
+                If you go to that interface, you will find a list of repositories
+                under "Yocto Metadata Layers".
+                <note>
+                    Layers that are no longer actively supported as part of the
+                    Yocto Project appear under the heading "Yocto Metadata Layer
+                    Archive."
+                </note>
+                Each repository is a BSP layer supported by the Yocto Project
+                (e.g. <filename>meta-raspberrypi</filename> and
                 <filename>meta-intel</filename>).
                 Each of these layers is a repository unto itself and clicking on a
                 layer reveals information that includes two links from which you can choose
@@ -72,13 +78,12 @@
             </para>
 
             <para>
-                In addition to BSP layers near the bottom of that referenced
-                Yocto Project Source Repository, the
+                In addition to BSP layers, the
                 <filename>meta-yocto-bsp</filename> layer is part of the
                 shipped <filename>poky</filename> repository.
                 The <filename>meta-yocto-bsp</filename> layer maintains several
                 BSPs such as the Beaglebone, EdgeRouter, and generic versions of
-                both 32 and 64-bit IA machines.
+                both 32-bit and 64-bit IA machines.
             </para>
 
             <para>
@@ -102,8 +107,9 @@
                 which is established after you run the OpenEmbedded build environment
                 setup script (i.e.
                 <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>).
-                Adding the root allows the OpenEmbedded build system to recognize the BSP
-                definition and from it build an image.
+                Adding the root allows the
+                <ulink url='&YOCTO_DOCS_REF_URL;#build-system-term'>OpenEmbedded build system</ulink>
+                to recognize the BSP layer and from it build an image.
                 Here is an example:
                 <literallayout class='monospaced'>
      BBLAYERS ?= " \
@@ -129,15 +135,20 @@
 
             <para>
                 Some layers function as a layer to hold other BSP layers.
-                An example of this type of layer is the <filename>meta-intel</filename> layer,
-                which contains a number of individual BSP sub-layers, as well as a directory
-                named <filename>common/</filename> full of common content across those layers.
-                Another example is the <filename>meta-yocto-bsp</filename> layer mentioned
-                earlier.
+                An example of this type of layer is the
+                <filename>meta-intel</filename> layer.
+                This layer contains BSP layers for the Intel-core2-32
+                <trademark class='registered'>Intel</trademark> Common Core
+                (Intel-core2-32) and the Intel-corei7-64
+                <trademark class='registered'>Intel</trademark> Common Core
+                (Intel-corei7-64).
+                the <filename>meta-intel</filename> layer also contains
+                the <filename>common/</filename> directory, which contains
+                common content across those layers.
             </para>
 
             <para>
-                For more detailed information on layers, see the
+                For more information on layers, see the
                 "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
                 section of the Yocto Project Development Tasks Manual.
             </para>
