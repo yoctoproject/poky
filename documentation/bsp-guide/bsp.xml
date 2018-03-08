@@ -1171,175 +1171,251 @@
             <title>Requirements and Recommendations for Released BSPs</title>
 
             <para>
-                Certain requirements exist for a released BSP to be considered
-                compliant with the Yocto Project.
+                Certain requirements exist for a released BSP to be
+                considered compliant with the Yocto Project.
                 Additionally, recommendations also exist.
-                This section describes the requirements and recommendations for
-                released BSPs.
+                This section describes the requirements and
+                recommendations for released BSPs.
             </para>
 
             <section id='released-bsp-requirements'>
                 <title>Released BSP Requirements</title>
 
                 <para>
-                    Before looking at BSP requirements, you should consider the following:
+                    Before looking at BSP requirements, you should consider
+                    the following:
                     <itemizedlist>
-                        <listitem><para>The requirements here assume the BSP layer is a well-formed, "legal"
-                            layer that can be added to the Yocto Project.
-                            For guidelines on creating a layer that meets these base requirements, see the
-                            "<link linkend='bsp-layers'>BSP Layers</link>" and the
-                            "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding
-                            and Creating Layers"</ulink> in the Yocto Project Development Tasks Manual.
+                        <listitem><para>
+                            The requirements here assume the BSP layer
+                            is a well-formed, "legal" layer that can be
+                            added to the Yocto Project.
+                            For guidelines on creating a layer that meets
+                            these base requirements, see the
+                            "<link linkend='bsp-layers'>BSP Layers</link>"
+                            section in this manual and the
+                            "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers"</ulink>"
+                            section in the Yocto Project Development Tasks
+                            Manual.
                             </para></listitem>
-                        <listitem><para>The requirements in this section apply regardless of how you
-                            package a BSP.
-                            You should consult the packaging and distribution guidelines for your
-                            specific release process.
-                            For an example of packaging and distribution requirements, see the
+                        <listitem><para>
+                            The requirements in this section apply
+                            regardless of how you package a BSP.
+                            You should consult the packaging and distribution
+                            guidelines for your specific release process.
+                            For an example of packaging and distribution
+                            requirements, see the
                             "<ulink url='https://wiki.yoctoproject.org/wiki/Third_Party_BSP_Release_Process'>Third Party BSP Release Process</ulink>"
                             wiki page.
                             </para></listitem>
-                        <listitem><para>The requirements for the BSP as it is made available to a developer
-                            are completely independent of the released form of the BSP.
-                            For example, the BSP Metadata can be contained within a Git repository
-                            and could have a directory structure completely different from what appears
+                        <listitem><para>
+                            The requirements for the BSP as it is made
+                            available to a developer are completely
+                            independent of the released form of the BSP.
+                            For example, the BSP Metadata can be contained
+                            within a Git repository and could have a directory
+                            structure completely different from what appears
                             in the officially released BSP layer.
                             </para></listitem>
-                        <listitem><para>It is not required that specific packages or package
-                            modifications exist in the BSP layer, beyond the requirements for general
+                        <listitem><para>
+                            It is not required that specific packages or
+                            package modifications exist in the BSP layer,
+                            beyond the requirements for general
                             compliance with the Yocto Project.
-                            For example, no requirement exists dictating that a specific kernel or
-                            kernel version be used in a given BSP.
+                            For example, no requirement exists dictating
+                            that a specific kernel or kernel version be
+                            used in a given BSP.
                             </para></listitem>
                     </itemizedlist>
                 </para>
 
                 <para>
-                    Following are the requirements for a released BSP that conform to the
-                    Yocto Project:
+                    Following are the requirements for a released BSP
+                    that conform to the Yocto Project:
                     <itemizedlist>
-                        <listitem><para><emphasis>Layer Name:</emphasis>
-                            The BSP must have a layer name that follows the Yocto
-                            Project standards.
+                        <listitem><para>
+                            <emphasis>Layer Name:</emphasis>
+                            The BSP must have a layer name that follows
+                            the Yocto Project standards.
                             For information on BSP layer names, see the
                             "<link linkend='bsp-layers'>BSP Layers</link>" section.
                             </para></listitem>
-                        <listitem><para><emphasis>File System Layout:</emphasis>
-                            When possible, use the same directory names in your
-                            BSP layer as listed in the <filename>recipes.txt</filename> file.
-                            In particular, you should place recipes
-                            (<filename>.bb</filename> files) and recipe
-                            modifications (<filename>.bbappend</filename> files) into
-                            <filename>recipes-*</filename> subdirectories by functional area
-                            as outlined in <filename>recipes.txt</filename>.
-                            If you cannot find a category in <filename>recipes.txt</filename>
-                            to fit a particular recipe, you can make up your own
-                            <filename>recipes-*</filename> subdirectory.
-                            You can find <filename>recipes.txt</filename> in the
-                            <filename>meta</filename> directory of the
-                            <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>,
+                        <listitem><para>
+                            <emphasis>File System Layout:</emphasis>
+                            When possible, use the same directory names
+                            in your BSP layer as listed in the
+                            <filename>recipes.txt</filename> file, which
+                            is found in <filename>poky/meta</filename>
+                            directory of the
+                            <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>
                             or in the OpenEmbedded Core Layer
-                            (<filename>openembedded-core</filename>) found at
+                            (<filename>openembedded-core</filename>) at
                             <ulink url='http://git.openembedded.org/openembedded-core/tree/meta'></ulink>.
                             </para>
-                            <para>Within any particular <filename>recipes-*</filename> category, the layout
-                            should match what is found in the OpenEmbedded Core
-                            Git repository (<filename>openembedded-core</filename>)
+
+                            <para>You should place recipes
+                            (<filename>*.bb</filename> files) and recipe
+                            modifications (<filename>*.bbappend</filename>
+                            files) into <filename>recipes-*</filename>
+                            subdirectories by functional area as outlined
+                            in <filename>recipes.txt</filename>.
+                            If you cannot find a category in
+                            <filename>recipes.txt</filename> to fit a
+                            particular recipe, you can make up your own
+                            <filename>recipes-*</filename> subdirectory.
+                            </para>
+
+                            <para>Within any particular
+                            <filename>recipes-*</filename> category, the
+                            layout should match what is found in the
+                            OpenEmbedded Core Git repository
+                            (<filename>openembedded-core</filename>)
                             or the Source Directory (<filename>poky</filename>).
-                            In other words, make sure you place related files in appropriately
-                            related <filename>recipes-*</filename> subdirectories specific to the
-                            recipe's function, or within a subdirectory containing a set of closely-related
+                            In other words, make sure you place related
+                            files in appropriately related
+                            <filename>recipes-*</filename> subdirectories
+                            specific to the recipe's function, or within
+                            a subdirectory containing a set of closely-related
                             recipes.
-                            The recipes themselves should follow the general guidelines
-                            for recipes used in the Yocto Project found in the
+                            The recipes themselves should follow the general
+                            guidelines for recipes used in the Yocto Project
+                            found in the
                             "<ulink url='http://openembedded.org/wiki/Styleguide'>OpenEmbedded Style Guide</ulink>".
                             </para></listitem>
-                        <listitem><para><emphasis>License File:</emphasis>
+                        <listitem><para>
+                            <emphasis>License File:</emphasis>
                             You must include a license file in the
-                            <filename>meta-<replaceable>bsp_name</replaceable></filename> directory.
+                            <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                            directory.
                             This license covers the BSP Metadata as a whole.
-                            You must specify which license to use since there is no
-                            default license if one is not specified.
+                            You must specify which license to use since no
+                            default license exists when one not specified.
                             See the
                             <ulink url='&YOCTO_GIT_URL;/cgit.cgi/meta-raspberrypi/tree/COPYING.MIT'><filename>COPYING.MIT</filename></ulink>
                             file for the Raspberry Pi BSP in the
-                            <filename>meta-raspberrypi</filename> BSP layer as an example.
+                            <filename>meta-raspberrypi</filename> BSP layer
+                            as an example.
                             </para></listitem>
-                        <listitem><para><emphasis>README File:</emphasis>
-                            You must include a <filename>README</filename> file in the
-                            <filename>meta-<replaceable>bsp_name</replaceable></filename> directory.
+                        <listitem><para>
+                            <emphasis>README File:</emphasis>
+                            You must include a <filename>README</filename>
+                            file in the
+                            <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                            directory.
                             See the
                             <ulink url='&YOCTO_GIT_URL;/cgit.cgi/meta-raspberrypi/tree/README'><filename>README</filename></ulink>
-                            file for the Raspberry Pi BSP in the <filename>meta-raspberrypi</filename> BSP layer
+                            file for the Raspberry Pi BSP in the
+                            <filename>meta-raspberrypi</filename> BSP layer
                             as an example.</para>
-                            <para>At a minimum, the <filename>README</filename> file should
-                            contain the following:
+
+                            <para>At a minimum, the <filename>README</filename>
+                            file should contain the following:
                             <itemizedlist>
-                                <listitem><para>A brief description about the hardware the BSP
-                                    targets.</para></listitem>
-                                <listitem><para>A list of all the dependencies
-                                    on which a BSP layer depends.
-                                    These dependencies are typically a list of required layers needed
-                                    to build the BSP.
-                                    However, the dependencies should also contain information regarding
-                                    any other dependencies the BSP might have.</para></listitem>
-                                <listitem><para>Any required special licensing information.
-                                    For example, this information includes information on
-                                    special variables needed to satisfy a EULA,
-                                    or instructions on information needed to build or distribute
-                                    binaries built from the BSP Metadata.</para></listitem>
-                                <listitem><para>The name and contact information for the
-                                    BSP layer maintainer.
-                                    This is the person to whom patches and questions should
-                                    be sent.
-                                    For information on how to find the right person, see the
-                                    "<ulink url='&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change'>Submitting a Change to the Yocto Project</ulink>"
-                                    section in the Yocto Project Development Tasks Manual.
+                                <listitem><para>
+                                    A brief description about the hardware the BSP
+                                    targets.
                                     </para></listitem>
-                                <listitem><para>Instructions on how to build the BSP using the BSP
-                                    layer.</para></listitem>
-                                <listitem><para>Instructions on how to boot the BSP build from
-                                    the BSP layer.</para></listitem>
-                                <listitem><para>Instructions on how to boot the binary images
-                                    contained in the <filename>binary</filename> directory,
-                                    if present.</para></listitem>
-                                <listitem><para>Information on any known bugs or issues that users
-                                    should know about when either building or booting the BSP
-                                    binaries.</para></listitem>
-                            </itemizedlist></para></listitem>
-                        <listitem><para><emphasis>README.sources File:</emphasis>
-                            You must include a <filename>README.sources</filename> in the
-                            <filename>meta-<replaceable>bsp_name</replaceable></filename> directory.
-                            This file specifies exactly where you can find the sources used to
-                            generate the binary images contained in the
-                            <filename>binary</filename> directory, if present.
+                                <listitem><para>
+                                    A list of all the dependencies
+                                    on which a BSP layer depends.
+                                    These dependencies are typically a list
+                                    of required layers needed to build the
+                                    BSP.
+                                    However, the dependencies should also
+                                    contain information regarding any other
+                                    dependencies the BSP might have.
+                                    </para></listitem>
+                                <listitem><para>
+                                    Any required special licensing information.
+                                    For example, this information includes
+                                    information on special variables needed
+                                    to satisfy a EULA, or instructions on
+                                    information needed to build or distribute
+                                    binaries built from the BSP Metadata.
+                                    </para></listitem>
+                                <listitem><para>
+                                    The name and contact information for the
+                                    BSP layer maintainer.
+                                    This is the person to whom patches and
+                                    questions should be sent.
+                                    For information on how to find the right
+                                    person, see the
+                                    "<ulink url='&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change'>Submitting a Change to the Yocto Project</ulink>"
+                                    section in the Yocto Project Development
+                                    Tasks Manual.
+                                    </para></listitem>
+                                <listitem><para>
+                                    Instructions on how to build the BSP using
+                                    the BSP layer.
+                                    </para></listitem>
+                                <listitem><para>
+                                    Instructions on how to boot the BSP build
+                                    from the BSP layer.
+                                    </para></listitem>
+                                <listitem><para>
+                                    Instructions on how to boot the binary
+                                    images contained in the
+                                    <filename>binary</filename> directory,
+                                    if present.
+                                    </para></listitem>
+                                <listitem><para>
+                                    Information on any known bugs or issues
+                                    that users should know about when either
+                                    building or booting the BSP binaries.
+                                    </para></listitem>
+                            </itemizedlist>
                             </para></listitem>
-                        <listitem><para><emphasis>Layer Configuration File:</emphasis>
-                            You must include a <filename>conf/layer.conf</filename> in the
-                            <filename>meta-<replaceable>bsp_name</replaceable></filename> directory.
-                            This file identifies the <filename>meta-<replaceable>bsp_name</replaceable></filename>
-                            BSP layer as a layer to the build system.</para></listitem>
-                        <listitem><para><emphasis>Machine Configuration File:</emphasis>
+                        <listitem><para>
+                            <emphasis>README.sources File:</emphasis>
+                            If you BSP contains binary images in the
+                            <filename>binary</filename> directory, you must
+                            include a <filename>README.sources</filename>
+                            file in the
+                            <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                            directory.
+                            This file specifies exactly where you can find
+                            the sources used to generate the binary images.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Layer Configuration File:</emphasis>
+                            You must include a
+                            <filename>conf/layer.conf</filename> file in
+                            the
+                            <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                            directory.
+                            This file identifies the
+                            <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                            BSP layer as a layer to the build system.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Machine Configuration File:</emphasis>
                             You must include one or more
-                            <filename>conf/machine/<replaceable>bsp_name</replaceable>.conf</filename>
-                            files in the <filename>meta-<replaceable>bsp_name</replaceable></filename> directory.
-                            These configuration files define machine targets that can be built
-                            using the BSP layer.
-                            Multiple machine configuration files define variations of machine
-                            configurations that are supported by the BSP.
-                            If a BSP supports multiple machine variations, you need to
-                            adequately describe each variation in the BSP
-                            <filename>README</filename> file.
-                            Do not use multiple machine configuration files to describe disparate
-                            hardware.
-                            If you do have very different targets, you should create separate
-                            BSP layers for each target.
-                            <note>It is completely possible for a developer to structure the
-                            working repository as a conglomeration of unrelated BSP
-                            files, and to possibly generate BSPs targeted for release
-                            from that directory using scripts or some other mechanism
-                            (e.g. <filename>meta-yocto-bsp</filename> layer).
-                            Such considerations are outside the scope of this document.</note>
+                            <filename>conf/machine/</filename><replaceable>bsp_name</replaceable><filename>.conf</filename>
+                            files in the
+                            <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                            directory.
+                            These configuration files define machine targets
+                            that can be built using the BSP layer.
+                            Multiple machine configuration files define
+                            variations of machine configurations that the
+                            BSP supports.
+                            If a BSP supports multiple machine variations,
+                            you need to adequately describe each variation
+                            in the BSP <filename>README</filename> file.
+                            Do not use multiple machine configuration files
+                            to describe disparate hardware.
+                            If you do have very different targets, you should
+                            create separate BSP layers for each target.
+                            <note>
+                                It is completely possible for a developer to
+                                structure the working repository as a
+                                conglomeration of unrelated BSP files, and to
+                                possibly generate BSPs targeted for release
+                                from that directory using scripts or some
+                                other mechanism
+                                (e.g. <filename>meta-yocto-bsp</filename> layer).
+                                Such considerations are outside the scope of
+                                this document.
+                            </note>
                             </para></listitem>
                     </itemizedlist>
                 </para>
