@@ -5951,52 +5951,19 @@
                     class.
                     You should use the <filename>IMAGE_INSTALL</filename>
                     variable with care to avoid ordering issues.
-                    <note>
-                        When working with an
-                        <link linkend='images-core-image-minimal-initramfs'><filename>core-image-minimal-initramfs</filename></link>
-                        image, do not use the <filename>IMAGE_INSTALL</filename>
-                        variable to specify packages for installation.
-                        Instead, use the
-                        <link linkend='var-PACKAGE_INSTALL'><filename>PACKAGE_INSTALL</filename></link>
-                        variable, which allows the initial RAM filesystem
-                        (initramfs) recipe to use a fixed set of packages and
-                        not be affected by <filename>IMAGE_INSTALL</filename>.
-                        For information on creating an initramfs, see the
-                        "<ulink url='&YOCTO_DOCS_DEV_URL;#building-an-initramfs-image'>Building an Initial RAM Filesystem (initramfs) Image</ulink>"
-                        section in the Yocto Project Development Tasks Manual.
-                    </note>
                 </para>
 
                 <para>
                     Image recipes set <filename>IMAGE_INSTALL</filename>
                     to specify the packages to install into an image through
                     <filename>image.bbclass</filename>.
-                    Additionally, "helper" classes exist, such as
-                    <filename>core-image.bbclass</filename>, that can take
+                    Additionally, "helper" classes exist, such as the
+                    <link linkend='ref-classes-core-image'><filename>core-image</filename></link>,
+                    class that can take
                     <filename><link linkend='var-IMAGE_FEATURES'>IMAGE_FEATURES</link></filename>
                     lists and turn these into auto-generated entries in
                     <filename>IMAGE_INSTALL</filename> in addition to its
                     default contents.
-                </para>
-
-                <para>
-                    Using <filename>IMAGE_INSTALL</filename> with the
-                    <filename>+=</filename> operator from the
-                    <filename>/conf/local.conf</filename> file or from within
-                    an image recipe is not recommended as it can cause ordering
-                    issues.
-                    Since <filename>core-image.bbclass</filename> sets
-                    <filename>IMAGE_INSTALL</filename> to a default value using
-                    the <filename>?=</filename> operator, using a
-                    <filename>+=</filename> operation against
-                    <filename>IMAGE_INSTALL</filename> will result in
-                    unexpected behavior when used in
-                    <filename>conf/local.conf</filename>.
-                    Furthermore, the same operation from within an image
-                    recipe may or may not succeed depending on the specific
-                    situation.
-                    In both these cases, the behavior is contrary to how most
-                    users expect the <filename>+=</filename> operator to work.
                 </para>
 
                 <para>
@@ -6006,6 +5973,53 @@
                     </literallayout>
                     Be sure to include the space between the quotation character
                     and the start of the package name or names.
+                    <note><title>Caution</title>
+                        <itemizedlist>
+                            <listitem><para>
+                                When working with a
+                                <link linkend='images-core-image-minimal-initramfs'><filename>core-image-minimal-initramfs</filename></link>
+                                image, do not use the
+                                <filename>IMAGE_INSTALL</filename> variable to
+                                specify packages for installation.
+                                Instead, use the
+                                <link linkend='var-PACKAGE_INSTALL'><filename>PACKAGE_INSTALL</filename></link>
+                                variable, which allows the initial RAM
+                                filesystem (initramfs) recipe to use a fixed
+                                set of packages and not be affected by
+                                <filename>IMAGE_INSTALL</filename>.
+                                For information on creating an initramfs, see
+                                the
+                                "<ulink url='&YOCTO_DOCS_DEV_URL;#building-an-initramfs-image'>Building an Initial RAM Filesystem (initramfs) Image</ulink>"
+                                section in the Yocto Project Development Tasks
+                                Manual.
+                                </para></listitem>
+                            <listitem><para>
+                                Using <filename>IMAGE_INSTALL</filename> with
+                                the
+                                <ulink url='&YOCTO_DOCS_BB_URL;#appending-and-prepending'><filename>+=</filename></ulink>
+                                BitBake operator within the
+                                <filename>/conf/local.conf</filename> file or
+                                from within an image recipe is not recommended.
+                                Use of this operator in these ways can cause
+                                ordering issues.
+                                Since <filename>core-image.bbclass</filename>
+                                sets <filename>IMAGE_INSTALL</filename> to a
+                                default value using the
+                                <ulink url='&YOCTO_DOCS_BB_URL;#setting-a-default-value'><filename>?=</filename></ulink>
+                                operator, using a <filename>+=</filename>
+                                operation against
+                                <filename>IMAGE_INSTALL</filename> results in
+                                unexpected behavior when used within
+                                <filename>conf/local.conf</filename>.
+                                Furthermore, the same operation from within
+                                an image recipe may or may not succeed
+                                depending on the specific situation.
+                                In both these cases, the behavior is contrary
+                                to how most users expect the
+                                <filename>+=</filename> operator to work.
+                                </para></listitem>
+                        </itemizedlist>
+                    </note>
                 </para>
             </glossdef>
         </glossentry>
