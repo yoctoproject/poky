@@ -34,11 +34,11 @@
             <para>
                 It is very easy to create your own layers to use with the
                 OpenEmbedded build system.
-                The Yocto Project ships with scripts that speed up creating
-                general layers and BSP layers.
+                The Yocto Project ships with tools that speed up creating
+                layers.
                 This section describes the steps you perform by hand to create
                 a layer so that you can better understand them.
-                For information about the layer-creation scripts, see the
+                For information about the layer-creation tools, see the
                 "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-bitbake-layers-script'>Creating a New BSP Layer Using the <filename>bitbake-layers</filename> Script</ulink>"
                 section in the Yocto Project Board Support Package (BSP)
                 Developer's Guide and the
@@ -47,9 +47,11 @@
             </para>
 
             <para>
-                Follow these general steps to create your layer without the aid of a script:
+                Follow these general steps to create your layer without using
+                tools:
                 <orderedlist>
-                    <listitem><para><emphasis>Check Existing Layers:</emphasis>
+                    <listitem><para>
+                        <emphasis>Check Existing Layers:</emphasis>
                         Before creating a new layer, you should be sure someone
                         has not already created a layer containing the Metadata
                         you need.
@@ -57,19 +59,31 @@
                         <ulink url='http://layers.openembedded.org/layerindex/layers/'><filename>OpenEmbedded Metadata Index</filename></ulink>
                         for a list of layers from the OpenEmbedded community
                         that can be used in the Yocto Project.
+                        You could find a layer that is identical or close to
+                        what you need.
                         </para></listitem>
-                    <listitem><para><emphasis>Create a Directory:</emphasis>
+                    <listitem><para>
+                        <emphasis>Create a Directory:</emphasis>
                         Create the directory for your layer.
                         While not strictly required, prepend the name of the
-                        folder with the string <filename>meta-</filename>.
+                        directory with the string "meta-".
                         For example:
                         <literallayout class='monospaced'>
      meta-mylayer
      meta-GUI_xyz
      meta-mymachine
                         </literallayout>
+                        Realize that the name of your layer does not include
+                        the "meta-" string.
+                        For example, the names of the previous three layers
+                        are "mylayer", "GUI_xyz", and "mymachine".
+                        Following this layer directory naming convention can
+                        save you trouble later when tools or components
+                        "assume" your layer resides in a directory whose name
+                        starts with "meta-".
                         </para></listitem>
-                    <listitem><para><emphasis>Create a Layer Configuration
+                    <listitem><para>
+                       <emphasis>Create a Layer Configuration
                        File:</emphasis>
                        Inside your new layer folder, you need to create a
                        <filename>conf/layer.conf</filename> file.
@@ -77,9 +91,14 @@
                        file and copy that to your layer's
                        <filename>conf</filename> directory and then modify the
                        file as needed.</para>
+
                        <para>The
                        <filename>meta-yocto-bsp/conf/layer.conf</filename> file
-                       demonstrates the required syntax:
+                       in the Yocto Project
+                       <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink>
+                       demonstrates the required syntax.
+                       For your layer, you need to replace "yoctobsp" with the
+                       root name of your layer:
                        <literallayout class='monospaced'>
      # We have a conf and classes directory, add to BBPATH
      BBPATH .= ":${LAYERDIR}"
@@ -91,35 +110,41 @@
      BBFILE_COLLECTIONS += "yoctobsp"
      BBFILE_PATTERN_yoctobsp = "^${LAYERDIR}/"
      BBFILE_PRIORITY_yoctobsp = "5"
-     LAYERVERSION_yoctobsp = "3"
+     LAYERVERSION_yoctobsp = "4"
+     LAYERSERIES_COMPAT_yoctobsp = "&DISTRO_NAME_NO_CAP;"
                         </literallayout></para>
+
                         <para>Here is an explanation of the example:
                         <itemizedlist>
-                            <listitem><para>The configuration and
-                                classes directory is appended to
+                            <listitem><para>
+                                The configuration and classes directory is
+                                appended to
                                 <ulink url='&YOCTO_DOCS_REF_URL;#var-BBPATH'><filename>BBPATH</filename></ulink>.
                                 <note>
                                     All non-distro layers, which include all BSP
                                     layers, are expected to append the layer
-                                    directory to the
-                                    <filename>BBPATH</filename>.
+                                    directory to <filename>BBPATH</filename>.
                                     On the other hand, distro layers, such as
                                     <filename>meta-poky</filename>, can choose
                                     to enforce their own precedence over
                                     <filename>BBPATH</filename>.
                                     For an example of that syntax, see the
-                                    <filename>layer.conf</filename> file for
-                                    the <filename>meta-poky</filename> layer.
-                                </note></para></listitem>
-                            <listitem><para>The recipes for the layers are
-                                appended to
+                                    <filename>meta-poky/conf/layer.conf</filename>
+                                    file for in the Source Repositories.
+                                </note>
+                                </para></listitem>
+                            <listitem><para>
+                                The recipes for the layers are appended to
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'>BBFILES</ulink></filename>.
                                 </para></listitem>
-                            <listitem><para>The
+                            <listitem><para>
+                                The
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_COLLECTIONS'>BBFILE_COLLECTIONS</ulink></filename>
-                                variable is then appended with the layer name.
+                                variable is then appended with the layer name,
+                                which is "yoctobsp" in this example.
                                 </para></listitem>
-                            <listitem><para>The
+                            <listitem><para>
+                                The
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PATTERN'>BBFILE_PATTERN</ulink></filename>
                                 variable is set to a regular expression and is
                                 used to match files from
@@ -127,24 +152,34 @@
                                 layer.
                                 In this case,
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename>
-                                is used to make <filename>BBFILE_PATTERN</filename> match within the
-                                layer's path.</para></listitem>
-                            <listitem><para>The
+                                is used to make
+                                <filename>BBFILE_PATTERN</filename> match
+                                within the layer's path.
+                                </para></listitem>
+                            <listitem><para>
+                                The
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'>BBFILE_PRIORITY</ulink></filename>
                                 variable then assigns a priority to the layer.
                                 Applying priorities is useful in situations
                                 where the same recipe might appear in multiple
-                                layers and allows you to choose the layer
-                                that takes precedence.</para></listitem>
-                            <listitem><para>The
+                                layers.
+                                A priority allows you to choose the layer
+                                that takes precedence.
+                                </para></listitem>
+                            <listitem><para>
+                                The
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERVERSION'>LAYERVERSION</ulink></filename>
                                 variable optionally specifies the version of a
-                                layer as a single number.</para></listitem>
+                                layer as a single number.
+                                </para></listitem>
+                            <listitem><para>
+                                The
+                                <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename>
+                                variable expands to the directory of the
+                                current layer
+                                </list></listitem>
                         </itemizedlist></para>
-                        <para>Note the use of the
-                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'>LAYERDIR</ulink></filename>
-                        variable, which expands to the directory of the current
-                        layer.</para>
+
                         <para>Through the use of the <filename>BBPATH</filename>
                         variable, BitBake locates class files
                         (<filename>.bbclass</filename>),
@@ -156,10 +191,11 @@
                         This is similar to the way the <filename>PATH</filename>
                         variable is used for binaries.
                         It is recommended, therefore, that you use unique
-                        class and configuration
-                        filenames in your custom layer.</para></listitem>
-                    <listitem><para><emphasis>Add Content:</emphasis> Depending
-                        on the type of layer, add the content.
+                        class and configuration filenames in your custom layer.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Add Content:</emphasis>
+                        Depending on the type of layer, add the content.
                         If the layer adds support for a machine, add the machine
                         configuration in a <filename>conf/machine/</filename>
                         file within the layer.
@@ -169,7 +205,8 @@
                         If the layer introduces new recipes, put the recipes
                         you need in <filename>recipes-*</filename>
                         subdirectories within the layer.
-                        <note>In order to be compliant with the Yocto Project,
+                        <note>
+                            In order to be compliant with the Yocto Project,
                             a layer must contain a
                             <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-filelayout-readme'>README file.</ulink>
                         </note>
@@ -8835,11 +8872,13 @@ Some notes from Cal:
                 During a build, BitBake always transforms a recipe into one or
                 more packages.
                 For example, BitBake takes the <filename>bash</filename> recipe
-                and currently produces the <filename>bash-dbg</filename>,
-                <filename>bash-staticdev</filename>,
-                <filename>bash-dev</filename>, <filename>bash-doc</filename>,
-                <filename>bash-locale</filename>, and
-                <filename>bash</filename> packages.
+                and produces a number of packages (e.g.
+                <filename>bash</filename>, <filename>bash-bashbug</filename>,
+                <filename>bash-completion</filename>,
+                <filename>bash-completion-dbg</filename>,
+                <filename>bash-completion-dev</filename>,
+                <filename>bash-completion-extra</filename>,
+                <filename>bash-dbg</filename>, and so forth).
                 Not all generated packages are included in an image.
             </para>
 
@@ -8883,7 +8922,7 @@ Some notes from Cal:
 
             <para>
                 In order to use runtime package management, you
-                need a host/server machine that serves up the pre-compiled
+                need a host or server machine that serves up the pre-compiled
                 packages plus the required metadata.
                 You also need package manipulation tools on the target.
                 The build machine is a likely candidate to act as the server.
@@ -8891,6 +8930,10 @@ Some notes from Cal:
                 package server.
                 The build machine could push its artifacts to another machine
                 that acts as the server (e.g. Internet-facing).
+                In fact, doing so is advantageous for a production
+                environment as getting the packages away from the
+                development system's build directory prevents accidental
+                overwrites.
             </para>
 
             <para>
@@ -8900,11 +8943,11 @@ Some notes from Cal:
                 out into a couple of different package groupings based on
                 criteria such as the target's CPU architecture, the target
                 board, or the C library used on the target.
-                For example, a build targeting the <filename>qemuarm</filename>
+                For example, a build targeting the <filename>qemux86</filename>
                 device produces the following three package databases:
-                <filename>all</filename>, <filename>armv5te</filename>, and
-                <filename>qemuarm</filename>.
-                If you wanted your <filename>qemuarm</filename> device to be
+                <filename>noarch</filename>, <filename>i586</filename>, and
+                <filename>qemux86</filename>.
+                If you wanted your <filename>qemux86</filename> device to be
                 aware of all the packages that were available to it,
                 you would need to point it to each of these databases
                 individually.
@@ -8950,10 +8993,10 @@ Some notes from Cal:
      PACKAGE_CLASSES ?= “package_<replaceable>packageformat</replaceable>”
                             </literallayout>
                             where <replaceable>packageformat</replaceable>
-                            can be "ipk", "rpm", and "deb", which are the
+                            can be "ipk", "rpm", "deb", or "tar" which are the
                             supported package formats.
                             <note>
-                                Because the Yocto Project supports three
+                                Because the Yocto Project supports four
                                 different package formats, you can set the
                                 variable with more than one argument.
                                 However, the OpenEmbedded build system only
@@ -8972,12 +9015,12 @@ Some notes from Cal:
                     "package-management" in the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></ulink>
                     variable.
-                    Including "package-management" in this
-                    configuration variable ensures that when the image
-                    is assembled for your target, the image includes
-                    the currently-known package databases as well as
-                    the target-specific tools required for runtime
-                    package management to be performed on the target.
+                    Including "package-management" in this configuration
+                    variable ensures that when the image is assembled for your
+                    target, the image includes the currently-known package
+                    databases as well as the target-specific tools required
+                    for runtime package management to be performed on the
+                    target.
                     However, this is not strictly necessary.
                     You could start your image off without any databases
                     but only include the required on-target package
@@ -8991,21 +9034,26 @@ Some notes from Cal:
 
                 <para>
                     Whenever you perform any sort of build step that can
-                    potentially generate a package or modify an existing
+                    potentially generate a package or modify   existing
                     package, it is always a good idea to re-generate the
-                    package index with:
+                    package index after the build by using the following
+                    command:
                     <literallayout class='monospaced'>
     $ bitbake package-index
                     </literallayout>
-                    Realize that it is not sufficient to simply do the
-                    following:
+                    It might be tempting to build the package and the
+                    package index at the same time with a command such as
+                    the following:
                     <literallayout class='monospaced'>
     $ bitbake <replaceable>some-package</replaceable> package-index
                     </literallayout>
-                    The reason for this restriction is because BitBake does not
-                    properly schedule the <filename>package-index</filename>
-                    target fully after any other target has completed.
-                    Thus, be sure to run the package update step separately.
+                    Do not do this as BitBake does not schedule the package
+                    index for after the completion of the package you are
+                    building.
+                    Consequently, you cannot be sure of the package index
+                    including information for the package you just built.
+                    Thus, be sure to run the package update step separately
+                    after building any packages.
                 </para>
 
                 <para>
@@ -9030,8 +9078,8 @@ Some notes from Cal:
                     For example, if
                     <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink><filename>}</filename>
                     is <filename>tmp</filename> and your selected package type
-                    is IPK, then your IPK packages are available in
-                    <filename>tmp/deploy/ipk</filename>.
+                    is RPM, then your RPM packages are available in
+                    <filename>tmp/deploy/rpm</filename>.
                 </para>
             </section>
 
@@ -9086,17 +9134,39 @@ Some notes from Cal:
                     <title>Using RPM</title>
 
                     <para>
-                        The <filename>dnf</filename> application performs
-                        runtime package management of RPM packages.
-                        You must perform an initial setup for
-                        <filename>dnf</filename> on the target machine
-                        if the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_ARCHS'><filename>PACKAGE_FEED_ARCHS</filename></ulink>,
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_BASE_PATHS'><filename>PACKAGE_FEED_BASE_PATHS</filename></ulink>,
-                        and
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_URIS'><filename>PACKAGE_FEED_URIS</filename></ulink>
-                        variables have not been set or the target image was
-                        built before the variables were set.
+                        The
+                        <ulink url='https://en.wikipedia.org/wiki/DNF_(software)'>Dandified Packaging Tool</ulink>
+                        (DNF) performs runtime package management of RPM
+                        packages.
+                        In order to use DNF for runtime package management,
+                        you must perform an initial setup on the target
+                        machine for cases where the
+                        <filename>PACKAGE_FEED_*</filename> variables were not
+                        set as part of the image that is running on the
+                        target.
+                        This means if you built your image and did not not use
+                        these variables as part of the build and your image is
+                        now running on the target, you need to perform the
+                        steps in this section if you want to use runtime
+                        package management.
+                        <note>
+                            For information on the
+                            <filename>PACKAGE_FEED_*</filename> variables, see
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_ARCHS'><filename>PACKAGE_FEED_ARCHS</filename></ulink>,
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_BASE_PATHS'><filename>PACKAGE_FEED_BASE_PATHS</filename></ulink>,
+                            and
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_URIS'><filename>PACKAGE_FEED_URIS</filename></ulink>
+                            in the Yocto Project Reference Manual variables
+                            glossary.
+                        </note>
+                    </para>
+
+                    <para>
+                        On the target, you must inform DNF that package
+                        databases are available.
+                        You do this by creating a file named
+                        <filename>/etc/yum.repos.d/oe-packages.repo</filename>
+                        and defining the <filename>oe-packages</filename>.
                     </para>
 
                     <para>
@@ -9105,21 +9175,60 @@ Some notes from Cal:
                         <filename>all</filename>, <filename>i586</filename>,
                         and <filename>qemux86</filename> from a server named
                         <filename>my.server</filename>.
-                        You must inform <filename>dnf</filename> of the
-                        availability of these databases by creating a
-                        <filename>/etc/yum.repos.d/oe-packages.repo</filename>
-                        file with the following content:
-                        <literallayout class='monospaced'>
+                        The specifics for setting up the web server are up to
+                        you.
+                        The critical requirement is that the URIs in the
+                        target repository configuration point to the
+                        correct remote location for the feeds.
+                        This example uses a location outside of the build
+                        system's <filename>deploy</filename> directory.
+                        Realize that it is possible to run a web server
+                        that gets the databases from
+                        <filename>deploy</filename> directory where the image
+                        was built.
+                    </para>
+
+                    <para>
+                        When telling DNF where to look for the package
+                        databases, you must declare individual locations
+                        per architecture or a single location used for all
+                        architectures.
+                        You cannot do both:
+                        <itemizedlist>
+                            <listitem><para>
+                                <emphasis>Create an Explicit List of Architectures:</emphasis>
+                                Define individual base URLs to identify where
+                                each package database is located:
+                                <literallayout class='monospaced'>
      [oe-packages]
-     baseurl=http://my.server http://my.server/rpm/qemux86 http://my.server/rpm/all
-                        </literallayout>
-                        From the target machine, fetch the repository:
+     baseurl=http://my.server/rpm/i586 http://my.server/rpm/qemux86 http://my.server/rpm/all
+                                </literallayout>
+                                This example informs DNF about individual
+                                package databases for all three architectures.
+                                </para></listitem>
+                            <listitem><para>
+                                <emphasis>Create a Single (Full) Package Index:</emphasis>
+                                Define a single base URL that identifies where
+                                a full package database is located:
+                                <literallayout class='monospaced'>
+     [oe-packages]
+     baseurl=http://my.server/rpm
+                                </literallayout>
+                                This example informs DNF about a single package
+                                database that contains all the package index
+                                information for all supported architectures.
+                                </para></listitem>
+                        </itemizedlist>
+                    </para>
+
+                    <para>
+                        Once you have informed DNF where to find the package
+                        databases, you need to fetch them:
                         <literallayout class='monospaced'>
      # dnf makecache
                         </literallayout>
-                        After everything is set up, <filename>dnf</filename>
-                        is able to find, install, and upgrade packages from
-                        the specified repository.
+                        DNF is now able to find, install, and upgrade packages
+                        from the specified repository or repositories.
                         <note>
                             See the
                             <ulink url='http://dnf.readthedocs.io/en/latest/'>DNF documentation</ulink>
