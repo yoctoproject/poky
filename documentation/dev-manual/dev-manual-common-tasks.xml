@@ -966,11 +966,24 @@
                 The <filename>bitbake-layers</filename> script with the
                 <filename>create-layer</filename> subcommand simplifies
                 creating a new general layer.
-                <note>
-                    For information on BSP layers, see the
-                    "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
-                    section in the Yocto Project Board Specific (BSP)
-                    Developer's Guide.
+                <note><title>Notes</title>
+                    <itemizedlist>
+                        <listitem><para>
+                            For information on BSP layers, see the
+                            "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP Layers</ulink>"
+                            section in the Yocto Project Board Specific (BSP)
+                            Developer's Guide.
+                            </para></listitem>
+                        <listitem><para>
+                            In order to use a layer with the OpenEmbedded
+                            build system, you need to add the layer to your
+                            <filename>bblayers.conf</filename> configuration
+                            file.
+                            See the
+                            "<link linkend='adding-a-layer-using-the-bitbake-layers-script'>Adding a Layer Using the <filename>bitbake-layers</filename> Script</link>"
+                            section for more information.
+                            </para></listitem>
+                    </itemizedlist>
                 </note>
                 The default mode of the script's operation with this
                 subcommand is to create a layer with the following:
@@ -1008,6 +1021,13 @@
                 directory:
                 <literallayout class='monospaced'>
      $ bitbake-layers create-layer <replaceable>your_layer_name</replaceable>
+                </literallayout>
+                As an example, the following command adds a layer named
+                <filename>meta-scottrif</filename>:
+                <literallayout class='monospaced'>
+     $ bitbake-layers create-layer meta-scottrif
+     NOTE: Starting bitbake server...
+     Add your new layer with 'bitbake-layers add-layer meta-scottrif'
                 </literallayout>
             </para>
 
@@ -1051,19 +1071,31 @@
                              Filename of the example recipe
                 </literallayout>
             </para>
+        </section>
+
+        <section id='adding-a-layer-using-the-bitbake-layers-script'>
+            <title>Adding a Layer Using the <filename>bitbake-layers</filename> Script</title>
 
             <para>
                 Once you create your general layer, you must add it to your
                 <filename>bblayers.conf</filename> file.
-                You can add your layer by using the
+                Adding the layer to this configuration file makes the
+                OpenEmbedded build system aware of your layer so that it can
+                search it for metadata.
+            </para>
+
+            <para>
+                Add your layer by using the
                 <filename>bitbake-layers add-layer</filename> command:
                 <literallayout class='monospaced'>
      $ bitbake-layers add-layer <replaceable>your_layer_name</replaceable>
                 </literallayout>
-                Here is an example where a layer named
-                <filename>meta-scottrif</filename> is added and then the
-                layers are shown using the
-                <filename>bitbake-layers show-layers</filename> command:
+                Here is an example that adds a layer named
+                <filename>meta-scottrif</filename> to the configuration file.
+                Following the command that adds the layer is another
+                <filename>bitbake-layers</filename> command that shows the
+                layers that are in your <filename>bblayers.conf</filename>
+                file:
                 <literallayout class='monospaced'>
      $ bitbake-layers add-layer meta-scottrif
      NOTE: Starting bitbake server...
@@ -1081,6 +1113,11 @@
                 </literallayout>
                 Adding the layer to this file enables the build system to
                 locate the layer during the build.
+                <note>
+                    During a build, the OpenEmbedded build system looks in
+                    the layers from the top of the list down to the bottom
+                    in that order.
+                </note>
                 </para>
         </section>
     </section>
