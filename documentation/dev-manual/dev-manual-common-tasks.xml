@@ -73,14 +73,18 @@
      meta-GUI_xyz
      meta-mymachine
                         </literallayout>
-                        Realize that the name of your layer does not include
-                        the "meta-" string.
-                        For example, the names of the previous three layers
-                        are "mylayer", "GUI_xyz", and "mymachine".
-                        Following this layer directory naming convention can
-                        save you trouble later when tools or components
-                        "assume" your layer resides in a directory whose name
-                        starts with "meta-".
+                        With rare exceptions, a layer's name follows this
+                        form:
+                        <literallayout class='monospaced'>
+     meta-<replaceable>root_name</replaceable>
+                        </literallayout>
+                        Following this layer naming convention can
+                        save you trouble later when tools, components, or
+                        variables "assume" your layer name begins with "meta-".
+                        A notable example is in configuration files as
+                        shown in the following step where layer names without
+                        the "meta-" string are appended
+                        to several variables used in the configuration.
                         </para></listitem>
                     <listitem><para>
                        <emphasis>Create a Layer Configuration
@@ -141,7 +145,7 @@
                             <listitem><para>
                                 The
                                 <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_COLLECTIONS'>BBFILE_COLLECTIONS</ulink></filename>
-                                variable is appended with the layer name,
+                                variable is appended with the layer's root name,
                                 which is "yoctobsp" in this example.
                                 </para></listitem>
                             <listitem><para>
@@ -637,7 +641,8 @@
 
             <para>
                 BitBake parses each <filename>conf/layer.conf</filename> file
-                as specified in the <filename>BBLAYERS</filename> variable
+                from the top down as specified in the
+                <filename>BBLAYERS</filename> variable
                 within the <filename>conf/bblayers.conf</filename> file.
                 During the processing of each
                 <filename>conf/layer.conf</filename> file, BitBake adds the
@@ -815,8 +820,7 @@
             <para>
                 To specify the layer's priority manually, use the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'><filename>BBFILE_PRIORITY</filename></ulink>
-                variable.
-                For example:
+                variable and append the layer's root name:
                 <literallayout class='monospaced'>
      BBFILE_PRIORITY_mylayer = "1"
                 </literallayout>
@@ -837,7 +841,8 @@
             <title>Managing Layers</title>
 
             <para>
-                You can use the BitBake layer management tool to provide a view
+                You can use the BitBake layer management tool
+                <filename>bitbake-layers</filename> to provide a view
                 into the structure of recipes across a multi-layer project.
                 Being able to generate output that reports on configured layers
                 with their paths and priorities and on
@@ -846,42 +851,88 @@
             </para>
 
             <para>
-                Use the following form when running the layer management tool.
+                For help on the BitBake layer management tool, use the
+                following command:
                 <literallayout class='monospaced'>
-     $ bitbake-layers <replaceable>command</replaceable> [<replaceable>arguments</replaceable>]
+     $ bitbake-layers --help
+     NOTE: Starting bitbake server...
+     usage: bitbake-layers [-d] [-q] [-F] [--color COLOR] [-h] &lt;subcommand&gt; ...
+
+     BitBake layers utility
+
+     optional arguments:
+       -d, --debug           Enable debug output
+       -q, --quiet           Print only errors
+       -F, --force           Force add without recipe parse verification
+       --color COLOR         Colorize output (where COLOR is auto, always, never)
+       -h, --help            show this help message and exit
+
+     subcommands:
+       &lt;subcommand&gt;
+         show-layers         show current configured layers.
+         show-overlayed      list overlayed recipes (where the same recipe exists
+                             in another layer)
+         show-recipes        list available recipes, showing the layer they are
+                             provided by
+         show-appends        list bbappend files and recipe files they apply to
+         show-cross-depends  Show dependencies between recipes that cross layer
+                             boundaries.
+         add-layer           Add one or more layers to bblayers.conf.
+         remove-layer        Remove one or more layers from bblayers.conf.
+         flatten             flatten layer configuration into a separate output
+                             directory.
+         layerindex-fetch    Fetches a layer from a layer index along with its
+                             dependent layers, and adds them to conf/bblayers.conf.
+         layerindex-show-depends
+                             Find layer dependencies from layer index.
+         create-layer        Create a basic layer
+
+     Use bitbake-layers &lt;subcommand&gt; --help to get help on a specific command
                 </literallayout>
+            </para>
+
+            <para>
                 The following list describes the available commands:
                 <itemizedlist>
-                    <listitem><para><filename><emphasis>help:</emphasis></filename>
+                    <listitem><para>
+                        <emphasis><filename>help:</filename></emphasis>
                         Displays general help or help on a specified command.
                         </para></listitem>
-                    <listitem><para><filename><emphasis>show-layers:</emphasis></filename>
+                    <listitem><para>
+                        <emphasis><filename>show-layers:</filename></emphasis>
                         Shows the current configured layers.
                         </para></listitem>
-                    <listitem><para><filename><emphasis>show-recipes:</emphasis></filename>
-                        Lists available recipes and the layers that provide them.
-                        </para></listitem>
-                    <listitem><para><filename><emphasis>show-overlayed:</emphasis></filename>
+                    <listitem><para>
+                        <emphasis><filename>show-overlayed:</filename></emphasis>
                         Lists overlayed recipes.
                         A recipe is overlayed when a recipe with the same name
                         exists in another layer that has a higher layer
                         priority.
                         </para></listitem>
-                    <listitem><para><filename><emphasis>show-appends:</emphasis></filename>
+                    <listitem><para>
+                        <emphasis><filename>show-recipes:</filename></emphasis>
+                        Lists available recipes and the layers that provide them.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis><filename>show-appends:</filename></emphasis>
                         Lists <filename>.bbappend</filename> files and the
                         recipe files to which they apply.
                         </para></listitem>
-                    <listitem><para><filename><emphasis>show-cross-depends:</emphasis></filename>
+                    <listitem><para>
+                        <emphasis><filename>show-cross-depends:</filename></emphasis>
                         Lists dependency relationships between recipes that
                         cross layer boundaries.
                         </para></listitem>
-                    <listitem><para><filename><emphasis>add-layer:</emphasis></filename>
+                    <listitem><para>
+                        <emphasis><filename>add-layer:</filename></emphasis>
                         Adds a layer to <filename>bblayers.conf</filename>.
                         </para></listitem>
-                    <listitem><para><filename><emphasis>remove-layer:</emphasis></filename>
+                    <listitem><para>
+                        <emphasis><filename>remove-layer:</filename></emphasis>
                         Removes a layer from <filename>bblayers.conf</filename>
                         </para></listitem>
-                    <listitem><para><filename><emphasis>flatten:</emphasis></filename>
+                    <listitem><para>
+                        <emphasis><filename>flatten:</filename></emphasis>
                         Flattens the layer configuration into a separate output
                         directory.
                         Flattening your layer configuration builds a "flattened"
@@ -892,18 +943,21 @@
                         You might have to perform some manual cleanup of the
                         flattened layer as follows:
                         <itemizedlist>
-                            <listitem><para>Non-recipe files (such as patches)
+                            <listitem><para>
+                                Non-recipe files (such as patches)
                                 are overwritten.
                                 The flatten command shows a warning for these
                                 files.
                                 </para></listitem>
-                            <listitem><para>Anything beyond the normal layer
+                            <listitem><para>
+                                Anything beyond the normal layer
                                 setup has been added to the
                                 <filename>layer.conf</filename> file.
                                 Only the lowest priority layer's
                                 <filename>layer.conf</filename> is used.
                                 </para></listitem>
-                            <listitem><para>Overridden and appended items from
+                            <listitem><para>
+                                Overridden and appended items from
                                 <filename>.bbappend</filename> files need to be
                                 cleaned up.
                                 The contents of each
@@ -1568,47 +1622,43 @@
                     and have sourced the build environment setup script
                     (i.e.
                     <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>oe-init-build-env</filename></ulink>).
-                    Here is the basic <filename>recipetool</filename> syntax:
-                    <note>
-                        Running <filename>recipetool -h</filename> or
-                        <filename>recipetool create -h</filename> produces the
-                        Python-generated help, which presented differently
-                        than what follows here.
-                    </note>
+                    To get help on the tool, use the following command:
                     <literallayout class='monospaced'>
-     recipetool -h
-     recipetool create [-h]
-     recipetool [-d] [-q] [--color auto | always | never ] create -o <replaceable>OUTFILE</replaceable> [-m] [-x <replaceable>EXTERNALSRC</replaceable>] <replaceable>source</replaceable>
+     $ recipetool -h
+     NOTE: Starting bitbake server...
+     usage: recipetool [-d] [-q] [--color COLOR] [-h] &lt;subcommand&gt; ...
 
-          -d       Enables debug output.
-          -q       Outputs only errors (quiet mode).
-          --color  Colorizes the output automatically, always, or never.
-          -h       Displays Python generated syntax for recipetool.
-          create   Causes recipetool to create a base recipe.  The create
-                   command is further defined with these options:
+     OpenEmbedded recipe tool
 
-                   -o <replaceable>OUTFILE</replaceable>      Specifies the full path and filename for the generated
-                                   recipe.
-                   -m              Causes the recipe to be machine-specific rather than
-                                   architecture-specific (default).
-                   -x <replaceable>EXTERNALSRC</replaceable>  Fetches and extracts source files from <replaceable>source</replaceable>
-                                   and places them in <replaceable>EXTERNALSRC</replaceable>.
-                                   <replaceable>source</replaceable> must be a URL.
-                   -h              Displays Python-generated syntax for create.
-                   <replaceable>source</replaceable>          Specifies the source code on which to base the
-                                   recipe.
+     options:
+       -d, --debug     Enable debug output
+       -q, --quiet     Print only errors
+       --color COLOR   Colorize output (where COLOR is auto, always, never)
+       -h, --help      show this help message and exit
+
+     subcommands:
+       create          Create a new recipe
+       newappend       Create a bbappend for the specified target in the specified
+                       layer
+       setvar          Set a variable within a recipe
+       appendfile      Create/update a bbappend to replace a target file
+       appendsrcfiles  Create/update a bbappend to add or replace source files
+       appendsrcfile   Create/update a bbappend to add or replace a source file
+     Use recipetool &lt;subcommand&gt; --help to get help on a specific command
                     </literallayout>
                 </para>
 
                 <para>
-                    Running <filename>recipetool create -o</filename>&nbsp;<replaceable>OUTFILE</replaceable>
+                    Running
+                    <filename>recipetool create -o</filename>&nbsp;<replaceable>OUTFILE</replaceable>
                     creates the base recipe and locates it properly in the
                     layer that contains your source files.
                     Following are some syntax examples:
                 </para>
 
                 <para>
-                    Use this syntax to generate a recipe based on <replaceable>source</replaceable>.
+                    Use this syntax to generate a recipe based on
+                    <replaceable>source</replaceable>.
                     Once generated, the recipe resides in the existing source
                     code layer:
                     <literallayout class='monospaced'>
@@ -1621,7 +1671,8 @@
                     <literallayout class='monospaced'>
      recipetool create -o <replaceable>OUTFILE</replaceable> -x <replaceable>EXTERNALSRC</replaceable> <replaceable>source</replaceable>
                     </literallayout>
-                    Use this syntax to generate a recipe based on <replaceable>source</replaceable>.
+                    Use this syntax to generate a recipe based on
+                    <replaceable>source</replaceable>.
                     The options direct <filename>recipetool</filename> to
                     generate debugging information.
                     Once generated, the recipe resides in the existing source
