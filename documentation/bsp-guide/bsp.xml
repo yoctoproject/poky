@@ -38,10 +38,10 @@
         Although not a strict requirement, BSP layers in the Yocto Project
         use the following well-established naming convention:
         <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>
+     meta-<replaceable>bsp_root_name</replaceable>
         </literallayout>
         The string "meta-" is prepended to the machine or platform name, which is
-        <replaceable>bsp_name</replaceable> in the above form.
+        <replaceable>bsp_root_name</replaceable> in the above form.
         <note><title>Tip</title>
             Because the BSP layer naming convention is well-established,
             it is advisable to follow it when creating layers.
@@ -99,16 +99,16 @@
 
     <para>
         The layer's base directory
-        (<filename>meta-<replaceable>bsp_name</replaceable></filename>)
-        is the root of the BSP Layer.
-        This root is what you add to the
+        (<filename>meta-<replaceable>bsp_root_name</replaceable></filename>)
+        is the root directory of the BSP Layer.
+        This directory is what you add to the
         <ulink url='&YOCTO_DOCS_REF_URL;#var-BBLAYERS'><filename>BBLAYERS</filename></ulink>
         variable in the <filename>conf/bblayers.conf</filename> file found in the
         <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>,
         which is established after you run the OpenEmbedded build environment
         setup script (i.e.
         <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>).
-        Adding the root allows the
+        Adding the root directory allows the
         <ulink url='&YOCTO_DOCS_REF_URL;#build-system-term'>OpenEmbedded build system</ulink>
         to recognize the BSP layer and from it build an image.
         Here is an example:
@@ -120,22 +120,34 @@
        /usr/local/src/yocto/meta-mylayer \
        "
         </literallayout>
+        <note><title>Tip</title>
+            Ordering and
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'><filename>BBFILE_PRIORITY</filename></ulink>
+            for the layers listed in <filename>BBLAYERS</filename>
+            matter.
+            For example, if multiple layers define a machine
+            configuration, the OpenEmbedded build system uses
+            the last layer searched given similar layer
+            priorities.
+            The build system works from the top-down through
+            the layers listed in <filename>BBLAYERS</filename>.
+        </note>
     </para>
 
     <para>
-        Some BSPs require additional layers on
-        top of the BSP's root layer in order to be functional.
-        For these cases, you also need to add those layers to the
-        <filename>BBLAYERS</filename> variable in order to build the BSP.
-        You must also specify in the "Dependencies" section of the BSP's
-        <filename>README</filename> file any requirements for additional
-        layers and, preferably, any
-        build instructions that might be contained elsewhere
-        in the <filename>README</filename> file.
+        Some BSPs require or depend on additional layers
+        beyond the BSP's root layer in order to be functional.
+        In this case, you need to specify these layers in the
+        <filename>README</filename> "Dependencies" section of the
+        BSP's root layer.
+        Additionally, if any build instructions exist for the
+        BSP, you must add them to the "Dependencies" section.
     </para>
 
     <para>
         Some layers function as a layer to hold other BSP layers.
+        These layers are knows as
+        "<ulink url='&YOCTO_DOCS_REF_URL;#term-container-layer'>container layers</ulink>".
         An example of this type of layer is the
         <filename>meta-intel</filename> layer.
         This layer contains BSP layers for the Intel-core2-32
@@ -365,17 +377,17 @@
         realize that the actual file structures for specific
         BSPs could differ.
         <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/
-     meta-<replaceable>bsp_name</replaceable>/<replaceable>bsp_license_file</replaceable>
-     meta-<replaceable>bsp_name</replaceable>/README
-     meta-<replaceable>bsp_name</replaceable>/README.sources
-     meta-<replaceable>bsp_name</replaceable>/binary/<replaceable>bootable_images</replaceable>
-     meta-<replaceable>bsp_name</replaceable>/conf/layer.conf
-     meta-<replaceable>bsp_name</replaceable>/conf/machine/*.conf
-     meta-<replaceable>bsp_name</replaceable>/recipes-bsp/*
-     meta-<replaceable>bsp_name</replaceable>/recipes-core/*
-     meta-<replaceable>bsp_name</replaceable>/recipes-graphics/*
-     meta-<replaceable>bsp_name</replaceable>/recipes-kernel/linux/linux-yocto_<replaceable>kernel_rev</replaceable>.bbappend
+     meta-<replaceable>bsp_root_name</replaceable>/
+     meta-<replaceable>bsp_root_name</replaceable>/<replaceable>bsp_license_file</replaceable>
+     meta-<replaceable>bsp_root_name</replaceable>/README
+     meta-<replaceable>bsp_root_name</replaceable>/README.sources
+     meta-<replaceable>bsp_root_name</replaceable>/binary/<replaceable>bootable_images</replaceable>
+     meta-<replaceable>bsp_root_name</replaceable>/conf/layer.conf
+     meta-<replaceable>bsp_root_name</replaceable>/conf/machine/*.conf
+     meta-<replaceable>bsp_root_name</replaceable>/recipes-bsp/*
+     meta-<replaceable>bsp_root_name</replaceable>/recipes-core/*
+     meta-<replaceable>bsp_root_name</replaceable>/recipes-graphics/*
+     meta-<replaceable>bsp_root_name</replaceable>/recipes-kernel/linux/linux-yocto_<replaceable>kernel_rev</replaceable>.bbappend
         </literallayout>
     </para>
 
@@ -551,7 +563,7 @@
         <para>
             You can find these files in the BSP Layer at:
             <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/<replaceable>bsp_license_file</replaceable>
+     meta-<replaceable>bsp_root_name</replaceable>/<replaceable>bsp_license_file</replaceable>
             </literallayout>
         </para>
 
@@ -583,7 +595,7 @@
         <para>
             You can find this file in the BSP Layer at:
             <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/README
+     meta-<replaceable>bsp_root_name</replaceable>/README
             </literallayout>
         </para>
 
@@ -609,7 +621,7 @@
         <para>
             You can find this file in the BSP Layer at:
             <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/README.sources
+     meta-<replaceable>bsp_root_name</replaceable>/README.sources
             </literallayout>
         </para>
 
@@ -617,7 +629,7 @@
             This file provides information on where to locate the BSP
             source files used to build the images (if any) that
             reside in
-            <filename>meta-<replaceable>bsp_name</replaceable>/binary</filename>.
+            <filename>meta-<replaceable>bsp_root_name</replaceable>/binary</filename>.
             Images in the <filename>binary</filename> would be images
             released with the BSP.
             The information in the <filename>README.sources</filename>
@@ -639,7 +651,7 @@
         <para>
             You can find these files in the BSP Layer at:
             <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/binary/<replaceable>bootable_images</replaceable>
+     meta-<replaceable>bsp_root_name</replaceable>/binary/<replaceable>bootable_images</replaceable>
             </literallayout>
         </para>
 
@@ -677,7 +689,7 @@
         <para>
             You can find this file in the BSP Layer at:
             <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/conf/layer.conf
+     meta-<replaceable>bsp_root_name</replaceable>/conf/layer.conf
             </literallayout>
         </para>
 
@@ -692,7 +704,7 @@
             In the following example, you would replace
             <replaceable>bsp</replaceable> with the actual
             name of the BSP (i.e.
-            <replaceable>bsp_name</replaceable> from the example
+            <replaceable>bsp_root_name</replaceable> from the example
             template).
         </para>
 
@@ -752,7 +764,7 @@
         <para>
             You can find these files in the BSP Layer at:
             <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/conf/machine/*.conf
+     meta-<replaceable>bsp_root_name</replaceable>/conf/machine/*.conf
             </literallayout>
         </para>
 
@@ -819,7 +831,7 @@
         <para>
             You can find these files in the BSP Layer at:
             <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/recipes-bsp/*
+     meta-<replaceable>bsp_root_name</replaceable>/recipes-bsp/*
             </literallayout>
         </para>
 
@@ -864,7 +876,7 @@
         <para>
             You can find these files in the BSP Layer at:
             <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/recipes-graphics/*
+     meta-<replaceable>bsp_root_name</replaceable>/recipes-graphics/*
             </literallayout>
         </para>
 
@@ -883,8 +895,8 @@
         <para>
             You can find these files in the BSP Layer at:
             <literallayout class='monospaced'>
-     meta-<replaceable>bsp_name</replaceable>/recipes-kernel/linux/linux*.bbappend
-     meta-<replaceable>bsp_name</replaceable>/recipes-kernel/linux/*.bb
+     meta-<replaceable>bsp_root_name</replaceable>/recipes-kernel/linux/linux*.bbappend
+     meta-<replaceable>bsp_root_name</replaceable>/recipes-kernel/linux/*.bb
             </literallayout>
         </para>
 
@@ -907,7 +919,7 @@
             kernel recipe by using a similarly named append
             file, which is located in the BSP Layer for your
             target device (e.g. the
-            <filename>meta-<replaceable>bsp_name</replaceable>/recipes-kernel/linux</filename> directory).
+            <filename>meta-<replaceable>bsp_root_name</replaceable>/recipes-kernel/linux</filename> directory).
         </para>
 
         <para>
@@ -915,7 +927,7 @@
             <filename>linux-yocto_4.4.bb</filename> recipe to
             build the kernel.
             In other words, you have selected the kernel in your
-            <replaceable>bsp_name</replaceable><filename>.conf</filename>
+            <replaceable>bsp_root_name</replaceable><filename>.conf</filename>
             file by adding
             <ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER</filename></ulink>
             and
@@ -930,7 +942,7 @@
                 default, the
                 <filename>PREFERRED_PROVIDER</filename>
                 statement does not appear in the
-                <replaceable>bsp_name</replaceable><filename>.conf</filename> file.
+                <replaceable>bsp_root_name</replaceable><filename>.conf</filename> file.
             </note>
             You would use the
             <filename>linux-yocto_4.4.bbappend</filename>
@@ -1308,7 +1320,7 @@
                 <listitem><para>
                     <emphasis>License File:</emphasis>
                     You must include a license file in the
-                    <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                    <filename>meta-</filename><replaceable>bsp_root_name</replaceable>
                     directory.
                     This license covers the BSP Metadata as a whole.
                     You must specify which license to use since no
@@ -1323,7 +1335,7 @@
                     <emphasis>README File:</emphasis>
                     You must include a <filename>README</filename>
                     file in the
-                    <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                    <filename>meta-</filename><replaceable>bsp_root_name</replaceable>
                     directory.
                     See the
                     <ulink url='&YOCTO_GIT_URL;/cgit.cgi/meta-raspberrypi/tree/README'><filename>README</filename></ulink>
@@ -1394,7 +1406,7 @@
                     <filename>binary</filename> directory, you must
                     include a <filename>README.sources</filename>
                     file in the
-                    <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                    <filename>meta-</filename><replaceable>bsp_root_name</replaceable>
                     directory.
                     This file specifies exactly where you can find
                     the sources used to generate the binary images.
@@ -1404,18 +1416,18 @@
                     You must include a
                     <filename>conf/layer.conf</filename> file in
                     the
-                    <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                    <filename>meta-</filename><replaceable>bsp_root_name</replaceable>
                     directory.
                     This file identifies the
-                    <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                    <filename>meta-</filename><replaceable>bsp_root_name</replaceable>
                     BSP layer as a layer to the build system.
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Machine Configuration File:</emphasis>
                     You must include one or more
-                    <filename>conf/machine/</filename><replaceable>bsp_name</replaceable><filename>.conf</filename>
+                    <filename>conf/machine/</filename><replaceable>bsp_root_name</replaceable><filename>.conf</filename>
                     files in the
-                    <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                    <filename>meta-</filename><replaceable>bsp_root_name</replaceable>
                     directory.
                     These configuration files define machine targets
                     that can be built using the BSP layer.
@@ -1475,7 +1487,7 @@
                     within a
                     <filename>binary/</filename> subdirectory located
                     in the
-                    <filename>meta-</filename><replaceable>bsp_name</replaceable>
+                    <filename>meta-</filename><replaceable>bsp_root_name</replaceable>
                     directory.
                     <note>
                         If you do include a bootable image as part
