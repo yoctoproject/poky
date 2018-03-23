@@ -94,23 +94,23 @@
                         to several variables used in the configuration.
                         </para></listitem>
                     <listitem><para>
-                       <emphasis>Create a Layer Configuration
-                       File:</emphasis>
-                       Inside your new layer folder, you need to create a
-                       <filename>conf/layer.conf</filename> file.
-                       It is easiest to take an existing layer configuration
-                       file and copy that to your layer's
-                       <filename>conf</filename> directory and then modify the
-                       file as needed.</para>
+                        <emphasis>Create a Layer Configuration File:</emphasis>
+                        Inside your new layer folder, you need to create a
+                        <filename>conf/layer.conf</filename> file.
+                        It is easiest to take an existing layer configuration
+                        file and copy that to your layer's
+                        <filename>conf</filename> directory and then modify the
+                        file as needed.</para>
 
-                       <para>The
-                       <filename>meta-yocto-bsp/conf/layer.conf</filename> file
-                       in the Yocto Project
-                       <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto-bsp/conf'>Source Repositories</ulink>
-                       demonstrates the required syntax.
-                       For your layer, you need to replace "yoctobsp" with the
-                       root name of your layer:
-                       <literallayout class='monospaced'>
+                        <para>The
+                        <filename>meta-yocto-bsp/conf/layer.conf</filename> file
+                        in the Yocto Project
+                        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto-bsp/conf'>Source Repositories</ulink>
+                        demonstrates the required syntax.
+                        For your layer, you need to replace "yoctobsp" with
+                        a unique identifier for your layer (e.g. "machinexyz"
+                        for a layer named "meta-machinexyz"):
+                        <literallayout class='monospaced'>
      # We have a conf and classes directory, add to BBPATH
      BBPATH .= ":${LAYERDIR}"
 
@@ -123,93 +123,76 @@
      BBFILE_PRIORITY_yoctobsp = "5"
      LAYERVERSION_yoctobsp = "4"
      LAYERSERIES_COMPAT_yoctobsp = "&DISTRO_NAME_NO_CAP;"
-                        </literallayout></para>
-
-                        <para>Here is an explanation of the example:
+                        </literallayout>
+                        Following is an explanation of the layer configuration
+                        file:
                         <itemizedlist>
                             <listitem><para>
-                                The configuration and classes directory is
-                                appended to
-                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBPATH'><filename>BBPATH</filename></ulink>.
-                                <note>
-                                    All non-distro layers are expected to
-                                    append the layer directory to
-                                    <filename>BBPATH</filename>.
-                                    On the other hand, distro layers, such as
-                                    <filename>meta-poky</filename>, can choose
-                                    to enforce their own precedence over
-                                    <filename>BBPATH</filename>.
-                                    For an example of that syntax, see the
-                                    <filename>meta-poky/conf/layer.conf</filename>
-                                    file for in the
-                                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky/conf'>Source Repositories</ulink>.
-                                </note>
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBPATH'><filename>BBPATH</filename></ulink>:
+                                Adds the layer's root directory to BitBake's
+                                search path.
+                                Through the use of the
+                                <filename>BBPATH</filename> variable, BitBake
+                                locates class files
+                                (<filename>.bbclass</filename>),
+                                configuration files, and files that are
+                                included with <filename>include</filename> and
+                                <filename>require</filename> statements.
+                                For these cases, BitBake uses the first file
+                                that matches the name found in
+                                <filename>BBPATH</filename>.
+                                This is similar to the way the
+                                <filename>PATH</filename> variable is used for
+                                binaries.
+                                It is recommended, therefore, that you use
+                                unique class and configuration filenames in
+                                your custom layer.
                                 </para></listitem>
                             <listitem><para>
-                                The recipes for the layers are appended to
-                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'><filename>BBFILES</filename></ulink>.
-                                </para></listitem>
-                            <listitem><para>
-                                The
-                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_COLLECTIONS'><filename>BBFILE_COLLECTIONS</filename></ulink>
-                                variable is appended with the layer's root name,
-                                which is "yoctobsp" in this example.
-                                </para></listitem>
-                            <listitem><para>
-                                The
-                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PATTERN'><filename>BBFILE_PATTERN</filename></ulink>
-                                variable is set to a regular expression and is
-                                used to match files from
-                                <filename>BBFILES</filename> into a particular
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILES'><filename>BBFILES</filename></ulink>:
+                                Defines the location for all recipes in the
                                 layer.
-                                In this case,
-                                <ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'><filename>LAYERDIR</filename></ulink>
-                                is used to make
-                                <filename>BBFILE_PATTERN</filename> match
-                                within the layer's path.
                                 </para></listitem>
                             <listitem><para>
-                                The
-                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'><filename>BBFILE_PRIORITY</filename></ulink>
-                                variable assigns a priority to the layer.
-                                Applying priorities is useful in situations
-                                where the same recipe might appear in multiple
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_COLLECTIONS'><filename>BBFILE_COLLECTIONS</filename></ulink>:
+                                Establishes the current layer through a
+                                unique identifier that is used throughout the
+                                OpenEmbedded build system to refer to the layer.
+                                In this example, the identifier "yoctobsp" is
+                                the representation for the container layer
+                                named "meta-yocto-bsp".
+                                </para></listitem>
+                            <listitem><para>
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PATTERN'><filename>BBFILE_PATTERN</filename></ulink>:
+                                Expands immediately during parsing to
+                                provide the directory of the layer.
+                                </para></listitem>
+                            <listitem><para>
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY'><filename>BBFILE_PRIORITY</filename></ulink>:
+                                Establishes a priority to use for
+                                recipes in the layer when the OpenEmbedded build
+                                finds recipes of the same name in different
                                 layers.
-                                A priority allows you to choose the layer
-                                that takes precedence.
                                 </para></listitem>
                             <listitem><para>
-                                The
-                                <ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDIR'><filename>LAYERDIR</filename></ulink>
-                                variable expands to the directory of the
-                                current layer
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERVERSION'><filename>LAYERVERSION</filename></ulink>:
+                                Establishes a version number for the layer.
+                                You can use this version number to specify this
+                                exact version of the layer as a dependency when
+                                using the
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERDEPENDS'><filename>LAYERDEPENDS</filename></ulink>
+                                variable.
                                 </para></listitem>
                             <listitem><para>
-                                The
-                                <ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERVERSION'><filename>LAYERVERSION</filename></ulink>
-                                variable optionally specifies the version of a
-                                layer as a single number.
+                                <ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERSERIES_COMPAT'><filename>LAYERSERIES_COMPAT</filename></ulink>:
+                                Lists the
+                                <ulink url='&YOCTO_WIKI_URL;/wiki/Releases'>Yocto Project</ulink>
+                                releases for which the current version is
+                                compatible.
+                                This variable is a good way to indicate how
+                                up-to-date your particular layer is.
                                 </para></listitem>
-                            <listitem><para>
-                                The
-                                <ulink url='&YOCTO_DOCS_REF_URL;#var-LAYERSERIES_COMPAT'><filename>LAYERSERIES_COMPAT</filename></ulink>
-                                lists the Yocto Project releases for which the
-                                layer is compatible.
-                                </para></listitem>
-                        </itemizedlist></para>
-
-                        <para>Through the use of the <filename>BBPATH</filename>
-                        variable, BitBake locates class files
-                        (<filename>.bbclass</filename>),
-                        configuration files, and files that are included
-                        with <filename>include</filename> and
-                        <filename>require</filename> statements.
-                        For these cases, BitBake uses the first file that
-                        matches the name found in <filename>BBPATH</filename>.
-                        This is similar to the way the <filename>PATH</filename>
-                        variable is used for binaries.
-                        It is recommended, therefore, that you use unique
-                        class and configuration filenames in your custom layer.
+                        </itemizedlist>
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Add Content:</emphasis>
