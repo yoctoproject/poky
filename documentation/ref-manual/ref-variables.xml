@@ -12982,6 +12982,48 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-SPL_BINARY'><glossterm>SPL_BINARY</glossterm>
+            <info>
+                SPL_BINARY[doc] = "The file type of the Secondary Program Loader (SPL)."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    The file type for the Secondary Program Loader (SPL).
+                    Some devices use an SPL from which to boot (e.g. the
+                    BeagleBone development board).
+                    For such cases, you can declare the file type of the
+                    SPL binary in the <filename>u-boot.inc</filename> include
+                    file, which is used in the U-Boot recipe.
+                </para>
+
+                <para>
+                    The SPL file type is set to "null" by default in the
+                    <filename>u-boot.inc</filename> file as follows:
+                    <literallayout class='monospaced'>
+     # Some versions of u-boot build an SPL (Second Program Loader) image that
+     # should be packaged along with the u-boot binary as well as placed in the
+     # deploy directory.  For those versions they can set the following variables
+     # to allow packaging the SPL.
+     SPL_BINARY ?= ""
+     SPL_BINARYNAME ?= "${@os.path.basename(d.getVar("SPL_BINARY"))}"
+     SPL_IMAGE ?= "${SPL_BINARYNAME}-${MACHINE}-${PV}-${PR}"
+     SPL_SYMLINK ?= "${SPL_BINARYNAME}-${MACHINE}"
+                    </literallayout>
+                    The <filename>SPL_BINARY</filename> variable helps form
+                    various <filename>SPL_*</filename> variables used by
+                    the OpenEmbedded build system.
+                </para>
+
+                <para>
+                    See the BeagleBone machine configuration example in the
+                    "<ulink url='&YOCTO_DOCS_BSP_URL;#creating-a-new-bsp-layer-using-the-bitbake-layers-script'>Creating a new BSP Layer Using the <filename>bitbake-layers</filename> Script</ulink>"
+                    section in the Yocto Project Board Support Package
+                    Developer's Guide for additional information.
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-SRC_URI'><glossterm>SRC_URI</glossterm>
             <info>
                 SRC_URI[doc] = "The list of source files - local or remote. This variable tells the OpenEmbedded build system what bits to pull in for the build and how to pull them in."
