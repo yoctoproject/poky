@@ -1746,25 +1746,20 @@
     <title>Creating a new BSP Layer Using the <filename>bitbake-layers</filename> Script</title>
 
     <para>
-        [INTRODUCE THE PROCEDURE AND LINK BACK TO <link linkend='bsp-layers'>BSP layer</link>.
-        IF THERE IS A LAUNDRY LIST OF ITEMS THAT NEED DEFINITION OR GET SET
-        UP AS A RESULT OF THIS PROCEDURE, LIST THEM HERE.]
-        <itemizedlist>
-            <listitem><para>[PARAMETER 1]</para></listitem>
-            <listitem><para>[PARAMETER 2]</para></listitem>
-            <listitem><para>[PARAMETER 3]</para></listitem>
-            <listitem><para>[PARAMETER 4]</para></listitem>
-            <listitem><para>[PARAMETER 5]</para></listitem>
-            <listitem><para>[PARAMETER 6]</para></listitem>
-            <listitem><para>[PARAMETER 7]</para></listitem>
-        </itemizedlist>
+        The <filename>bitbake-layers create-layer</filename> script
+        automates creating a BSP layer.
+        What makes a layer a "BSP layer", is the presence of a machine
+        configuration file.
+        Additionally, a BSP layer usually has a kernel recipe
+        or an append file that leverages off an existing kernel recipe.
+        The primary requirement, however, is the machine configuration.
     </para>
 
     <para>
-        The following procedure creates a BSP layer:
+        Use these steps to create a BSP layer:
         <itemizedlist>
             <listitem><para>
-                <emphasis>Create General Layer:</emphasis>
+                <emphasis>Create a General Layer:</emphasis>
                 Use the <filename>bitbake-layers</filename> script with the
                 <filename>create-layer</filename> subcommand to create a
                 new general layer.
@@ -1774,25 +1769,41 @@
                 section in the Yocto Project Development Tasks Manual.
                 </para></listitem>
             <listitem><para>
-                <emphasis>Create a Machine Configuration File:</emphasis>
-                Create a <filename>conf/machine/&gt;machine&lt;.conf</filename>
+                <emphasis>Create a Layer Configuration File:</emphasis>
+                Every layer needs a layer configuration file.
+                This configuration file establishes locations for the
+                layer's recipes, priorities for the layer, and so forth.
+                You can find examples of <filename>layer.conf</filename>
+                files in the Yocto Project
+                <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink>.
+                To get examples of what you need in your configuration
+                file, locate a layer (e.g. "meta-ti") and examine the
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-ti/tree/conf/layer.conf'></ulink>
                 file.
-                See <filename>meta-yocto-bsp/conf/machine</filename> for sample
-                <filename>&gt;machine.conf&lt;</filename> files.
-                Other samples exist from other vendors such as
-                <filename>meta-intel</filename>, <filename>meta-ti</filename>,
-                and <filename>meta-freescale</filename> that have more specific machine
+                </para></listitem>
+            <listitem><para>
+                <emphasis>Create a Machine Configuration File:</emphasis>
+                Create a <filename>conf/machine/</filename><replaceable>bsp_root_name</replaceable><filename>.conf</filename>
+                file.
+                See
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto-bsp/conf/machine'><filename>meta-yocto-bsp/conf/machine</filename></ulink>
+                for sample
+                <replaceable>bsp_root_name</replaceable><filename>.conf</filename>
+                files.
+                Other samples such as
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-ti/tree/conf/machine'><filename>meta-ti</filename></ulink>
+                and
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/tree/conf/machine'><filename>meta-freescale</filename></ulink>
+                exist from other vendors that have more specific machine
                 and tuning examples.
                 </para></listitem>
             <listitem><para>
                 <emphasis>Create a Kernel Recipe:</emphasis>
                 Create a kernel recipe in <filename>recipes-kernel/linux</filename>
-                either using a linux-yocto kernel with a <filename>.bbappend</filename>
-                file or a new custom kernel recipe file (i.e. <filename>.bb</filename>
-                file).
+                by either using a kernel append file or a new custom kernel
+                recipe file (e.g. <filename>yocto-linux_4.12.bb</filename>).
                 The BSP layers mentioned in the previous step also contain different
                 kernel examples.
-                You can start with the linux-yocto or use a custom kernel.
                 See the
                 "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#modifying-an-existing-recipe'>Modifying an Existing Recipe</ulink>"
                 section in the Yocto Project Linux Kernel Development Manual
@@ -1802,43 +1813,462 @@
     </para>
 
     <para>
-        [THERE IS MORE INFORMATION THAT NEEDS TO BE FILLED IN HERE. THIS NEEDS TO
-        BE PROVIDED BY ENGINEERS.]
+        The remainder of this section provides a description of
+        the Yocto Project reference BSP for Beaglebone, which
+        resides in the
+        <ulink url='&YOCTO_DOCS_REF_URL;#term-container-layer'>Container Layer</ulink>
+        (i.e.
+        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto-bsp'><filename>meta-yocto-bsp</filename></ulink>).
     </para>
 
-    <para>
-        The remainder of this section presents an example that uses
-        <filename>myarm</filename> as the machine name and <filename>qemu</filename>
-        as the machine architecture.
-        Of the available architectures, <filename>qemu</filename> is the only architecture
-        that causes the script to prompt you further for an actual architecture.
-        In every other way, this architecture is representative of how creating a BSP for
-        an actual machine would work.
-        The reason the example uses this architecture is because it is an emulated architecture
-        and can easily be followed without requiring actual hardware.
-    </para>
+    <section id='bsp-layer-configuration-example'>
+        <title>BSP Layer Configuration Example</title>
 
-    <para>
-        Following is a complete example:
-        <literallayout class='monospaced'>
-     [INSERT EXAMPLE - NEED EXAMPLE]
-        </literallayout>
-    </para>
+        <para>
+            The layer's <filename>conf</filename> directory
+            contains the <filename>layer.conf</filename>
+            configuration file.
+            In this example, the
+            <filename>conf/layer.conf</filename> is the
+            following:
+            <literallayout class='monospaced'>
+     # We have a conf and classes directory, add to BBPATH
+     BBPATH .= ":${LAYERDIR}"
 
-    <para>
-        Once the BSP Layer is created, you must add it to your
-        <filename>bblayers.conf</filename> file.
-        Here is an example:
-        <literallayout class='monospaced'>
-     BBLAYERS = ? " \
-        /usr/local/src/yocto/meta \
-        /usr/local/src/yocto/meta-poky \
-        /usr/local/src/yocto/meta-yocto-bsp \
-        /usr/local/src/yocto/meta-myarm \
-        "
-        </literallayout>
-        Adding the layer to this file allows the build system to build the BSP and
-        find the layer along with other Metadata it needs.
-    </para>
+     # We have recipes-* directories, add to BBFILES
+     BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
+                 ${LAYERDIR}/recipes-*/*/*.bbappend"
+
+     BBFILE_COLLECTIONS += "yoctobsp"
+     BBFILE_PATTERN_yoctobsp = "^${LAYERDIR}/"
+     BBFILE_PRIORITY_yoctobsp = "5"
+     LAYERVERSION_yoctobsp = "4"
+     LAYERSERIES_COMPAT_yoctobsp = "&DISTRO_NAME_NO_CAP;"
+            </literallayout>
+            The variables used in this file configure the
+            layer.
+            A good way to learn about layer configuration
+            files is to examine various files for BSP from
+            the
+            <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink>.
+        </para>
+
+        <para>
+            For a detailed description of this particular
+            layer configuration file, see
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#dev-layer-config-file-description'>step 3</ulink>
+            in the discussion that describes how to create
+            layers in the Yocto Project Development Tasks Manual.
+        </para>
+    </section>
+
+    <section id='bsp-machine-configuration-example'>
+        <title>BSP Machine Configuration Example</title>
+
+        <para>
+            As mentioned earlier in this section, the existence
+            of a machine configuration file is what makes a
+            layer a BSP layer as compared to a general or
+            kernel layer.
+        </para>
+
+        <para>
+            Machine configuration files exist in the
+            <replaceable>bsp_layer</replaceable><filename>/conf/machine/</filename>
+            directory of the layer:
+            <literallayout class='monospaced'>
+     <replaceable>bsp_layer</replaceable><filename>/conf/machine/</filename><replaceable>machine</replaceable><filename>.conf</filename>
+            </literallayout>
+            For example, the machine configuration file for the
+            <ulink url='http://beagleboard.org/bone'>BeagleBone and BeagleBone Black development boards</ulink>
+            is located in the container layer
+            <filename>poky/meta-yocto-bsp/conf/machine</filename>
+            and is named <filename>beaglebone-yocto.conf</filename>:
+            <literallayout class='monospaced'>
+     #@TYPE: Machine
+     #@NAME: Beaglebone-yocto machine
+     #@DESCRIPTION: Reference machine configuration for http://beagleboard.org/bone and http://beagleboard.org/black boards
+
+     PREFERRED_PROVIDER_virtual/xserver ?= "xserver-xorg"
+     XSERVER ?= "xserver-xorg \
+                xf86-video-modesetting \
+                "
+
+     MACHINE_EXTRA_RRECOMMENDS = " kernel-modules kernel-devicetree"
+
+     EXTRA_IMAGEDEPENDS += "u-boot"
+
+     DEFAULTTUNE ?= "cortexa8hf-neon"
+     include conf/machine/include/tune-cortexa8.inc
+
+     IMAGE_FSTYPES += "tar.bz2 jffs2 wic wic.bmap"
+     EXTRA_IMAGECMD_jffs2 = "-lnp "
+     WKS_FILE ?= "beaglebone-yocto.wks"
+     IMAGE_INSTALL_append = " kernel-devicetree kernel-image-zimage"
+     do_image_wic[depends] += "mtools-native:do_populate_sysroot dosfstools-native:do_populate_sysroot"
+
+     SERIAL_CONSOLE = "115200 ttyO0"
+
+     PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
+     PREFERRED_VERSION_linux-yocto ?= "4.12%"
+
+     KERNEL_IMAGETYPE = "zImage"
+     KERNEL_DEVICETREE = "am335x-bone.dtb am335x-boneblack.dtb am335x-bonegreen.dtb"
+     KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
+
+     SPL_BINARY = "MLO"
+     UBOOT_SUFFIX = "img"
+     UBOOT_MACHINE = "am335x_boneblack_config"
+     UBOOT_ENTRYPOINT = "0x80008000"
+     UBOOT_LOADADDRESS = "0x80008000"
+
+     MACHINE_FEATURES = "usbgadget usbhost vfat alsa"
+
+     IMAGE_BOOT_FILES ?= "u-boot.${UBOOT_SUFFIX} MLO"
+            </literallayout>
+            The variables used to configure the machine define
+            machine-specific properties.
+            For example, machine-dependent packages, machine
+            tunings, the type of kernel to build, and
+            U-Boot configurations.
+        </para>
+
+        <para>
+            The following list provides some explanation
+            for the statements found in the example reference
+            machine configuration file for the BeagleBone
+            development boards.
+            Realize that much more can be defined as part of
+            a machines configuration file.
+            In general, you can learn about related variables
+            that this example does not have by locating the
+            variables in the
+            "<ulink url='&YOCTO_DOCS_REF_URL;#ref-variables-glos'>Yocto Project Variables Glossary</ulink>"
+            in the Yocto Project Reference Manual.
+            <itemizedlist>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER_virtual/xserver</filename></ulink>:
+                    The recipe that provides "virtual/xserver" when
+                    more than one provider is found.
+                    In this case, the recipe that provides
+                    "virtual/xserver" is "xserver-xorg", which
+                    exists in
+                    <filename>poky/meta/recipes-graphics/xserver-xorg</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-XSERVER'><filename>XSERVER</filename></ulink>:
+                    The packages that should be installed to provide
+                    an X server and drivers for the machine.
+                    In this example, the "xserver-xorg" and
+                    "xf86-video-modesetting" are installed.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RRECOMMENDS'><filename>MACHINE_EXTRA_RRECOMMENDS</filename></ulink>:
+                    A list of machine-dependent packages
+                    not essential for booting the image.
+                    Thus, the build does not fail if the packages
+                    do not exist.
+                    However, the packages are required for a
+                    fully-featured image.
+                    <note><title>Tip</title>
+                        Many <filename>MACHINE*</filename> variables
+                        exist that help you configure a particular
+                        piece of hardware.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGEDEPENDS'><filename>EXTRA_IMAGEDEPENDS</filename></ulink>:
+                    Recipes to build that do not provide packages
+                    for installing into the root filesystem
+                    but building the image depends on the
+                    recipes.
+                    Sometimes a recipe is required to build
+                    the final image but is not needed in the
+                    root filesystem.
+                    In this case, the U-Boot recipe must be
+                    built for the image.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-DEFAULTTUNE'><filename>DEFAULTTUNE</filename></ulink>:
+                    Machines use tunings to optimize machine,
+                    CPU, and application performance.
+                    These features, which are collectively known
+                    as "tuning features", exist in the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#oe-core'>OpenEmbedded Core (OE-Core)</ulink>
+                    layer (e.g.
+                    <filename>poky/meta/conf/machine/include</filename>).
+                    In this example, the default tunning file is
+                    "cortexa8hf-neon".
+                    <note>
+                        The <filename>include</filename> statement
+                        that pulls in the
+                        <filename>conf/machine/include/tune-cortexa8.inc</filename>
+                        file provides many tuning possibilities.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></ulink>:
+                    The formats the OpenEmbedded build system
+                    uses during the build when creating the
+                    root filesystem.
+                    In this example, four types of images are
+                    supported.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGECMD'><filename>EXTRA_IMAGECMD</filename></ulink>:
+                    Specifies additional options for image
+                    creation commands.
+                    In this example, the "-lnp " option is used
+                    when creating the
+                    <ulink url='https://en.wikipedia.org/wiki/JFFS2'>JFFS2</ulink>
+                    image.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-WKS_FILE'><filename>WKS_FILE</filename></ulink>:
+                    The location of the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-kickstart'>Wic kickstart</ulink>
+                    file used by the OpenEmbedded build system to
+                    create a partitioned image (image.wic).
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL'><filename>IMAGE_INSTALL</filename></ulink>:
+                    Specifies packages to install into an image
+                    through the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-image'><filename>image</filename></ulink>
+                    class.
+                    Recipes use the <filename>IMAGE_INSTALL</filename>
+                    variable.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>do_image_wic[depends]</filename>:
+                    A task that is constructed during the build.
+                    In this example, the task depends on specific tools
+                    in order to create the sysroot when buiding a Wic
+                    image.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SERIAL_CONSOLE'><filename>SERIAL_CONSOLE</filename></ulink>:
+                    Defines a serial console (TTY) to enable using
+                    getty.
+                    In this case, the baud rate is "115200" and the
+                    device name is "ttyO0".
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER'><filename>PREFERRED_PROVIDER_virtual/kernel</filename></ulink>:
+                    Specifies the recipe that provides
+                    "virtual/kernel" when more than one provider
+                    is found.
+                    In this case, the recipe that provides
+                    "virtual/kernel" is "linux-yocto", which
+                    exists in the layer's
+                    <filename>recipes-kernel/linux</filename> directory.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PREFERRED_VERSION'><filename>PREFERRED_VERSION_linux-yocto</filename></ulink>:
+                    Defines the version of the recipe used
+                    to build the kernel, which is "4.12" in this
+                    case.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_IMAGETYPE'><filename>KERNEL_IMAGETYPE</filename></ulink>:
+                    The type of kernel to build for the device.
+                    In this case, the OpenEmbedded build system
+                    creates a "zImage" image type.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_DEVICETREE'><filename>KERNEL_DEVICETREE</filename></ulink>:
+                    The name of the generated Linux kernel device
+                    tree (i.e. the <filename>.dtb</filename>) file.
+                    All the device trees for the various BeagleBone
+                    devices are included.
+<!--
+                    You have to include some *.inc files according to the definition of KERNEL_DEVICETREE.
+                    I don't see where these are being provided.
+-->
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-KERNEL_EXTRA_ARGS'><filename>KERNEL_EXTRA_ARGS</filename></ulink>:
+                    Additional <filename>make</filename>
+                    command-line arguments the OpenEmbedded build
+                    system passes on when compiling the kernel.
+                    In this example, "LOADADDR=${UBOOT_ENTRYPOINT}"
+                    is passed as a command-line argument.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SPL_BINARY'><filename>SPL_BINARY</filename></ulink>:
+                    Defines the Secondary Program Loader (SPL) binary
+                    type.
+                    In this case, the SPL binary is set to
+                    "MLO", which stands for Multimedia card LOader.
+                    </para>
+
+                    <para>The BeagleBone development board requires a
+                    MLO file in order to boot.
+                    Consequently, the machine configuration needs to
+                    define the SPL as an MLO type file and use it
+                    as the Xloader.
+                    <note>
+                        For more information on how the SPL variables
+                        are used, see the
+                        <ulink url='&YOCTO_GIT_URL;#/cgit/cgit.cgi/poky/tree/meta/recipes-bsp/u-boot/u-boot.inc'><filename>u-boot.inc</filename></ulink>
+                        include file.
+                    </note>
+                    </para></listitem>
+<!--
+                     There is an SPL Framework documented here - http://git.denx.de/?p=u-boot.git;a=blob;f=doc/README.SPL;hb=HEAD.
+                     SPL is the "secondary program loader."  Here is some stuff from the
+                     poky/meta/recipes-bsp/u-boot/u-boot.inc file:
+-->
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-UBOOT_ENTRYPOINT'><filename>UBOOT_*</filename></ulink>:
+                    Defines various U-Boot configurations needed
+                    to build a U-Boot image.
+                    In this example, a U-Boot image is required
+                    to boot the BeagleBone device.
+                    See the following variables for more information:
+                    <itemizedlist>
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-UBOOT_SUFFIX'><filename>UBOOT_SUFFIX</filename></ulink>:
+                            Points to the generated U-Boot extension.
+                            </para></listitem>
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-UBOOT_MACHINE'><filename>UBOOT_MACHINE</filename></ulink>:
+                            Specifies the value passed on the make command line when building a U-Boot image.
+                            </para></listitem>
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-UBOOT_ENTRYPOINT'><filename>UBOOT_ENTRYPOINT</filename></ulink>:
+                            Specifies the entry point for the U-Boot image.
+                            </para></listitem>
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-UBOOT_LOADADDRESS'><filename>UBOOT_LOADADDRESS</filename></ulink>:
+                            Specifies the load address for the U-Boot image.
+                            </para></listitem>
+                    </itemizedlist>
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></ulink>:
+                    Specifies the list of hardware features the
+                    BeagleBone device is capable of supporting.
+                    In this case, the device supports
+                    "usbgadget usbhost vfat alsa".
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-IMAGE_BOOT_FILES'><filename>IMAGE_BOOT_FILES</filename></ulink>:
+                    Files installed into the device's boot partition
+                    when preparing the image using the Wic tool
+                    with the <filename>bootimg-partition</filename>
+                    source plugin.
+                    In this case, the "u-boot.${UBOOT_SUFFIX}" and
+                    "MLO" files are installed.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='bsp-kernel-recipe-example'>
+        <title>BSP Kernel Recipe Example</title>
+
+        <para>
+            The kernel recipe used to build the kernel image
+            for the BeagleBone device was established in the
+            machine configuration:
+            <literallayout class='monospaced'>
+     PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
+     PREFERRED_VERSION_linux-yocto ?= "4.12%"
+            </literallayout>
+            The <filename>meta-yocto-bsp/recipes-kernel/linux</filename>
+            directory in the layer contains metadata used
+            to build the kernel.
+            In this case, a kernel append file is used to
+            override an established kernel recipe, which is
+            located in
+            <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/recipes-kernel/linux'></ulink>
+            and named
+            <filename>linux-yocto_4.12.bb</filename>.
+        </para>
+
+        <para>
+            Following is the contents of the append file:
+            <literallayout class='monospaced'>
+     KBRANCH_genericx86  = "standard/base"
+     KBRANCH_genericx86-64  = "standard/base"
+
+     KMACHINE_genericx86 ?= "common-pc"
+     KMACHINE_genericx86-64 ?= "common-pc-64"
+     KBRANCH_edgerouter = "standard/edgerouter"
+     KBRANCH_beaglebone-yocto = "standard/beaglebone"
+     KMACHINE_beaglebone-yocto = "beaglebone"
+     KBRANCH_mpc8315e-rdb = "standard/fsl-mpc8315e-rdb"
+
+     SRCREV_machine_genericx86    ?= "1c4ad569af3e23a77994235435040e322908687f"
+     SRCREV_machine_genericx86-64 ?= "1c4ad569af3e23a77994235435040e322908687f"
+     SRCREV_machine_edgerouter ?= "257f843ea367744620f1d92910afd2f454e31483"
+     SRCREV_machine_beaglebone-yocto ?= "257f843ea367744620f1d92910afd2f454e31483"
+     SRCREV_machine_mpc8315e-rdb ?= "014560874f9eb2a86138c9cc35046ff1720485e1"
+
+
+     COMPATIBLE_MACHINE_genericx86 = "genericx86"
+     COMPATIBLE_MACHINE_genericx86-64 = "genericx86-64"
+     COMPATIBLE_MACHINE_edgerouter = "edgerouter"
+     COMPATIBLE_MACHINE_beaglebone-yocto = "beaglebone-yocto"
+     COMPATIBLE_MACHINE_mpc8315e-rdb = "mpc8315e-rdb"
+
+     LINUX_VERSION_genericx86 = "4.12.20"
+     LINUX_VERSION_genericx86-64 = "4.12.20"
+     LINUX_VERSION_edgerouter = "4.12.19"
+     LINUX_VERSION_beaglebone-yocto = "4.12.19"
+     LINUX_VERSION_mpc8315e-rdb = "4.12.19"
+            </literallayout>
+            This particular append file works for all the
+            machines that are part of the
+            <filename>meta-yocto-bsp</filename> container
+            layer.
+            The relevant statements are appended with
+            the "beaglebone-yocto" string.
+            The OpenEmbedded build system uses these
+            statements to override similar statements
+            in the kernel recipe:
+            <itemizedlist>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-KBRANCH'><filename>KBRANCH</filename></ulink>:
+                    Identifies the kernel branch that is validated,
+                    patched, and configured during the build.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-KMACHINE'><filename>KMACHINE</filename></ulink>:
+                    Identifies the machine name as known by the
+                    kernel, which is sometimes a different name
+                    than what is known by the OpenEmbedded build
+                    system.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>:
+                    Identifies the revision of the source code used
+                    to build the image.
+<!--
+                    You find out about that point in the kernel source tree by
+                    doing the following command:
+
+                    git log &dash;&dash;decorate 257f843ea367744620f1d92910afd2f454e31483
+
+                    Returns information about the commit, which is usually
+                    that it is a merge point for a stable kernel release.
+-->
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>:
+                    A regular expression that resolves to one or
+                    more target machines with which the recipe
+                    is compatible.
+                    </para></listitem>
+                <listitem><para>
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-LINUX_VERSION'><filename>LINUX_VERSION</filename></ulink>:
+                    The Linux version from kernel.org used by
+                    the OpenEmbedded build system to build the
+                    kernel image.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
 </section>
 </chapter>
