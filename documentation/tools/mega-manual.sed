@@ -18,12 +18,14 @@ s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/bsp-guide\/bsp-guid
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/dev-manual\/dev-manual.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/getting-started\/getting-started.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/concepts-manual\/concepts-manual.html#/\"link\" href=\"#/g
+s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/brief-yoctoprojectqs\/brief-yoctoprojectqs.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/kernel-dev\/kernel-dev.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/profile-manual\/profile-manual.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/ref-manual\/ref-manual.html#/\"link\" href=\"#/g
 s/\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/toaster-manual\/toaster-manual.html#/\"link\" href=\"#/g
 
 # Process cases where just an external manual is referenced without an id anchor
+s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/brief-yoctoprojectqs\/brief-yoctoprojectqs.html\" target=\"_top\">Yocto Project Quick Build<\/a>/Yocto Project Quick Build/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/yocto-project-qs\/yocto-project-qs.html\" target=\"_top\">Yocto Project Quick Start<\/a>/Yocto Project Quick Start/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/dev-manual\/dev-manual.html\" target=\"_top\">Yocto Project Development Tasks Manual<\/a>/Yocto Project Development Tasks Manual/g
 s/<a class=\"ulink\" href=\"http:\/\/www.yoctoproject.org\/docs\/2.5\/getting-started\/getting-started.html\" target=\"_top\">Getting Started With Yocto Project Manual<\/a>/Getting Started With Yocto Project Manual/g
