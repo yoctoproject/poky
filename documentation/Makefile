@@ -91,7 +91,7 @@ XSLTOPTS = --stringparam html.stylesheet brief-yoctoprojectqs-style.css \
            --stringparam  section.label.includes.component.label 0 \
            --xinclude
 ALLPREQ = html tarball
-TARFILES = brief-yoctoprojectqs-style.css brief-yoctoprojectqs.html figures/ypqs-title.png \
+TARFILES = brief-yoctoprojectqs-style.css brief-yoctoprojectqs.html figures/bypqs-title.png \
            figures/yocto-project-transp.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
@@ -184,22 +184,6 @@ MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
 STYLESHEET = $(DOC)/*.css
 
-endif
-
-ifeq ($(DOC),yocto-project-qs)
-XSLTOPTS = --stringparam html.stylesheet qs-style.css \
-           --stringparam  chapter.autolabel 1 \
-           --stringparam  section.autolabel 1 \
-           --stringparam  section.label.includes.component.label 1 \
-           --xinclude
-ALLPREQ = html eclipse tarball
-
-TARFILES = yocto-project-qs.html qs-style.css \
-           figures/yocto-project-transp.png figures/ypqs-title.png \
-           eclipse
-MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
-FIGURES = figures
-STYLESHEET = $(DOC)/*.css
 endif
 
 ifeq ($(DOC),mega-manual)
@@ -295,7 +279,7 @@ TARFILES = mega-manual.html mega-style.css \
 	figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png \
 	figures/sdk-devtool-add-flow.png figures/sdk-installed-extensible-sdk-directory.png \
 	figures/sdk-devtool-modify-flow.png figures/sdk-eclipse-dev-flow.png \
-	figures/sdk-devtool-upgrade-flow.png figures/bitbake-build-flow.png figures/ypqs-title.png \
+	figures/sdk-devtool-upgrade-flow.png figures/bitbake-build-flow.png figures/bypqs-title.png \
 	figures/getting-started-title.png figures/concepts-manual-title.png
 	endif
 
