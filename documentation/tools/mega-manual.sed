@@ -28,7 +28,7 @@ s/"ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/toaster-manual\/toaste
 s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/brief-yoctoprojectqs\/brief-yoctoprojectqs.html" target="_top">Yocto Project Quick Build<\/a>/Yocto Project Quick Build/g
 s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/yocto-project-qs\/yocto-project-qs.html" target="_top">Yocto Project Quick Start<\/a>/Yocto Project Quick Start/g
 s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/dev-manual\/dev-manual.html" target="_top">Yocto Project Development Tasks Manual<\/a>/Yocto Project Development Tasks Manual/g
-s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/getting-started\/getting-started.html" target="_top">Getting Started With Yocto Project Manual<\/a>/Getting Started With Yocto Project Manual/g
+s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/getting-started\/getting-started.html" target="_top">Getting Started With Yocto Project<\/a>/Getting Started With Yocto Project/g
 s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/concepts-manual\/concepts-manual.html" target="_top">Yocto Project Concepts Manual<\/a>/Yocto Project Concepts Manual/g
 s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/sdk-manual\/sdk-manual.html" target="_top">Yocto Project Application Development and the Extensible Software Development Kit (eSDK)<\/a>/Yocto Project Application Development and the Extensible Software Development Kit (eSDK)/g
 s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/bsp-guide\/bsp-guide.html" target="_top">Yocto Project Board Support Package (BSP) Developer's Guide<\/a>/Yocto Project Board Support Package (BSP) Developer's Guide/g
