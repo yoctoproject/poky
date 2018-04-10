@@ -106,17 +106,6 @@ TARFILES = getting-started-style.css getting-started.html figures/getting-starte
            figures/git-workflow.png figures/source-repos.png figures/index-downloads.png \
            figures/yp-download.png figures/YP-flow-diagram.png figures/key-dev-elements.png \
            figures/poky-reference-distribution.png \
-           eclipse
-MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
-FIGURES = figures
-STYLESHEET = $(DOC)/*.css
-
-endif
-
-ifeq ($(DOC),concepts-manual)
-XSLTOPTS = --xinclude
-ALLPREQ = html eclipse tarball
-TARFILES = concepts-manual-style.css concepts-manual.html figures/concepts-manual-title.png \
            figures/cross-development-toolchains.png figures/yocto-environment-ref.png \
            figures/user-configuration.png figures/layer-input.png figures/source-input.png \
            figures/package-feeds.png figures/patching.png figures/source-fetching.png \
@@ -280,7 +269,7 @@ TARFILES = mega-manual.html mega-style.css \
 	figures/sdk-devtool-add-flow.png figures/sdk-installed-extensible-sdk-directory.png \
 	figures/sdk-devtool-modify-flow.png figures/sdk-eclipse-dev-flow.png \
 	figures/sdk-devtool-upgrade-flow.png figures/bitbake-build-flow.png figures/bypqs-title.png \
-	figures/getting-started-title.png figures/concepts-manual-title.png
+	figures/getting-started-title.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
@@ -429,11 +418,10 @@ eclipse: eclipse-generate eclipse-resolve-links
 .PHONY : eclipse-generate eclipse-resolve-links
 
 eclipse-generate:
-ifeq ($(filter $(DOC), concepts-manual getting-started sdk-manual bsp-guide dev-manual kernel-dev profile-manual ref-manual yocto-project-qs),)
+ifeq ($(filter $(DOC), getting-started sdk-manual bsp-guide dev-manual kernel-dev profile-manual ref-manual yocto-project-qs),)
 	@echo " "
 	@echo "ERROR: You can only create eclipse documentation"
 	@echo "       of the following documentation parts:"
-	@echo "       - concepts-manual"
 	@echo "       - getting-started"
 	@echo "       - sdk-manual"
 	@echo "       - bsp-guide"
