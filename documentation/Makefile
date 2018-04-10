@@ -48,7 +48,7 @@
 # Examples:
 #
 #     make DOC=bsp-guide
-#     make html DOC=yocto-project-qs
+#     make html DOC=brief-yoctoprojectqs
 #     make pdf DOC=ref-manual
 #     make DOC=dev-manual BRANCH=edison
 #     make DOC=mega-manual BRANCH=denzil
@@ -56,7 +56,7 @@
 # The first example generates the HTML and Eclipse help versions of the BSP Guide.
 # The second example generates the HTML version only of the Quick Start.  Note
 # that the Quick Start only has an HTML version available.  So, the
-# 'make DOC=yocto-project-qs' command would be equivalent. The third example
+# 'make DOC=brief-yoctoprojectqs' command would be equivalent. The third example
 # generates just the PDF version of the Yocto Project Reference Manual.
 # The fourth example generates the HTML 'edison' version and (if available)
 # the Eclipse help version of the YP Development Tasks Manual.  The last example
@@ -372,9 +372,9 @@ XSL_XHTML_URI = $(XSL_BASE_URI)/xhtml/docbook.xsl
 all: $(ALLPREQ)
 
 pdf:
-ifeq ($(DOC),yocto-project-qs brief-yoctoprojectqs)
+ifeq ($(DOC),brief-yoctoprojectqs)
 	@echo " "
-	@echo "ERROR: You cannot generate yocto-project-qs or brief-yoctoprojectqs PDF files."
+	@echo "ERROR: You cannot generate a PDF file for brief-yoctoprojectqs."
 	@echo " "
 
 else ifeq ($(DOC),mega-manual)
@@ -418,7 +418,7 @@ eclipse: eclipse-generate eclipse-resolve-links
 .PHONY : eclipse-generate eclipse-resolve-links
 
 eclipse-generate:
-ifeq ($(filter $(DOC), getting-started sdk-manual bsp-guide dev-manual kernel-dev profile-manual ref-manual yocto-project-qs),)
+ifeq ($(filter $(DOC), getting-started sdk-manual bsp-guide dev-manual kernel-dev profile-manual ref-manual brief-yoctoprojectqs),)
 	@echo " "
 	@echo "ERROR: You can only create eclipse documentation"
 	@echo "       of the following documentation parts:"
@@ -429,7 +429,7 @@ ifeq ($(filter $(DOC), getting-started sdk-manual bsp-guide dev-manual kernel-de
 	@echo "       - kernel-dev"
 	@echo "       - profile-manual"
 	@echo "       - ref-manual"
-	@echo "       - yocto-project-qs"
+	@echo "       - brief-yoctoprojectqs"
 	@echo " "
 else
 	@echo " "
