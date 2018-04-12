@@ -99,10 +99,10 @@ STYLESHEET = $(DOC)/*.css
 
 endif
 
-ifeq ($(DOC),getting-started)
+ifeq ($(DOC),overview-manual)
 XSLTOPTS = --xinclude
 ALLPREQ = html eclipse tarball
-TARFILES = getting-started-style.css getting-started.html figures/getting-started-title.png \
+TARFILES = overview-manual-style.css overview-manual.html figures/overview-manual-title.png \
            figures/git-workflow.png figures/source-repos.png figures/index-downloads.png \
            figures/yp-download.png figures/YP-flow-diagram.png figures/key-dev-elements.png \
            figures/poky-reference-distribution.png \
@@ -269,7 +269,7 @@ TARFILES = mega-manual.html mega-style.css \
 	figures/sdk-devtool-add-flow.png figures/sdk-installed-extensible-sdk-directory.png \
 	figures/sdk-devtool-modify-flow.png figures/sdk-eclipse-dev-flow.png \
 	figures/sdk-devtool-upgrade-flow.png figures/bitbake-build-flow.png figures/bypqs-title.png \
-	figures/getting-started-title.png
+	figures/overview-manual-title.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
@@ -418,11 +418,11 @@ eclipse: eclipse-generate eclipse-resolve-links
 .PHONY : eclipse-generate eclipse-resolve-links
 
 eclipse-generate:
-ifeq ($(filter $(DOC), getting-started sdk-manual bsp-guide dev-manual kernel-dev profile-manual ref-manual brief-yoctoprojectqs),)
+ifeq ($(filter $(DOC), overview-manual sdk-manual bsp-guide dev-manual kernel-dev profile-manual ref-manual brief-yoctoprojectqs),)
 	@echo " "
 	@echo "ERROR: You can only create eclipse documentation"
 	@echo "       of the following documentation parts:"
-	@echo "       - getting-started"
+	@echo "       - overview-manual"
 	@echo "       - sdk-manual"
 	@echo "       - bsp-guide"
 	@echo "       - dev-manual"
