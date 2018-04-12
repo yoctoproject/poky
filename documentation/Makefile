@@ -90,7 +90,7 @@ XSLTOPTS = --stringparam html.stylesheet brief-yoctoprojectqs-style.css \
            --stringparam  section.autolabel 0 \
            --stringparam  section.label.includes.component.label 0 \
            --xinclude
-ALLPREQ = html tarball
+ALLPREQ = html eclipse tarball
 TARFILES = brief-yoctoprojectqs-style.css brief-yoctoprojectqs.html figures/bypqs-title.png \
            figures/yocto-project-transp.png
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
