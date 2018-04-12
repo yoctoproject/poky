@@ -34,3 +34,7 @@ s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/profile-manua
 s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/kernel-dev\/kernel-dev.html" target="_top">Yocto Project Linux Kernel Development Manual<\/a>/Yocto Project Linux Kernel Development Manual/g
 s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/ref-manual\/ref-manual.html" target="_top">Yocto Project Reference Manual<\/a>/Yocto Project Reference Manual/g
 s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/toaster-manual\/toaster-manual.html" target="_top">Toaster User Manual<\/a>/Toaster User Manual/g
+
+# Process a single, rouge occurrence of a linked reference to the Mega-Manual.
+s/<a class="ulink" href="http:\/\/www.yoctoproject.org\/docs\/2.5\/mega-manual\/mega-manual.html" target="_top">Yocto Project Mega-Manual<\/a>/Yocto Project Mega-Manual/g
+
