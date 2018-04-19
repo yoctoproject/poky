@@ -6615,11 +6615,9 @@
             <section id='generate-an-image-using-a-provided-kickstart-file'>
                 <title>Generate an Image using an Existing Kickstart File</title>
 
-                <para role='writernotes'>
+                <para>
                     This example runs in Cooked Mode and uses the
                     <filename>mkefidisk</filename> kickstart file:
-                    [OUTPUT IS WRONG DUE TO A BUG - ROOTFS_DIR AND BOOTIMG_DIR
-                    ARE DISPLAYING TEMPORARY FILES THAT WIC CLEANS UP BY DELETING]
                     <literallayout class='monospaced'>
      $ wic create mkefidisk -e core-image-minimal
      INFO: Building wic-tools...
@@ -6627,16 +6625,16 @@
                .
                .
      INFO: The new image(s) can be found here:
-       ./mkefidisk-201802211426-sda.direct
+       ./mkefidisk-201804191017-sda.direct
 
      The following build artifacts were used to create the image(s):
-       ROOTFS_DIR:                   /home/scottrif/poky/build/tmp.wic.zjs_iw41/rootfs_copy
-       BOOTIMG_DIR:                  /home/scottrif/poky/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
-       KERNEL_DIR:                   /home/scottrif/poky/build/tmp/deploy/images/qemux86
-       NATIVE_SYSROOT:               /home/scottrif/poky/build/tmp/work/i586-poky-linux/wic-tools/1.0-r0/recipe-sysroot-native
+       ROOTFS_DIR:                   /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/rootfs
+       BOOTIMG_DIR:                  /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
+       KERNEL_DIR:                   /home/stephano/build/master/build/tmp-glibc/deploy/images/qemux86
+       NATIVE_SYSROOT:               /home/stephano/build/master/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
 
      INFO: The image(s) were created using OE kickstart file:
-       /home/scottrif/poky/scripts/lib/wic/canned-wks/mkefidisk.wks
+       /home/stephano/build/master/openembedded-core/scripts/lib/wic/canned-wks/mkefidisk.wks
                     </literallayout>
                     The previous example shows the easiest way to create
                     an image by running in cooked mode and supplying
@@ -6668,11 +6666,11 @@
                     <filename>bmaptool</filename> or
                     <filename>dd</filename>:
                     <literallayout class='monospaced'>
-     $ oe-run-native bmaptool copy mkefidisk-201802211426-sda.direct /dev/sd<replaceable>X</replaceable>
+     $ oe-run-native bmaptool copy mkefidisk-201804191017-sda.direct /dev/sd<replaceable>X</replaceable>
                     </literallayout>
                     or
                     <literallayout class='monospaced'>
-     $ sudo dd if=mkefidisk-201802211426-sda.direct of=/dev/sd<replaceable>X</replaceable>
+     $ sudo dd if=mkefidisk-201804191017-sda.direct of=/dev/sd<replaceable>X</replaceable>
                     </literallayout>
                     <note>
                         For more information on how to use the
@@ -6732,8 +6730,8 @@
                     directory and then by changing the lines that specify
                     the target disk from which to boot.
                     <literallayout class='monospaced'>
-     $ cp /home/scottrif/poky/scripts/lib/wic/canned-wks/directdisk-gpt.wks \
-          /home/scottrif/poky/scripts/lib/wic/canned-wks/directdisksdb-gpt.wks
+     $ cp /home/stephano/poky/scripts/lib/wic/canned-wks/directdisk-gpt.wks \
+          /home/stephano/poky/scripts/lib/wic/canned-wks/directdisksdb-gpt.wks
                     </literallayout>
                     Next, the example modifies the
                     <filename>directdisksdb-gpt.wks</filename> file and
@@ -6769,13 +6767,13 @@
        ./directdisksdb-gpt-201710090938-sdb.direct
 
      The following build artifacts were used to create the image(s):
-       ROOTFS_DIR:                   /home/scottrif/poky/build/tmp.wic.hk3wl6zn/rootfs_copy
-       BOOTIMG_DIR:                  /home/scottrif/poky/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
-       KERNEL_DIR:                   /home/scottrif/poky/build/tmp/deploy/images/qemux86
-       NATIVE_SYSROOT:               /home/scottrif/poky/build/tmp/work/i586-poky-linux/wic-tools/1.0-r0/recipe-sysroot-native
+       ROOTFS_DIR:                   /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/rootfs
+       BOOTIMG_DIR:                  /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
+       KERNEL_DIR:                   /home/stephano/build/master/build/tmp-glibc/deploy/images/qemux86
+       NATIVE_SYSROOT:               /home/stephano/build/master/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
 
      INFO: The image(s) were created using OE kickstart file:
-       /home/scottrif/poky/scripts/lib/wic/canned-wks/directdisksdb-gpt.wks
+       /home/stephano/poky/scripts/lib/wic/canned-wks/directdisksdb-gpt.wks
                     </literallayout>
                     Continuing with the example, you can now directly
                     <filename>dd</filename> the image to a USB stick, or
@@ -6803,10 +6801,10 @@
                     which is the current directory:
                     <literallayout class='monospaced'>
      $ wic create /home/scottrif/my_yocto/test.wks -o /home/scottrif/testwic \
-          --rootfs-dir /home/scottrif/poky/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/rootfs \
-          --bootimg-dir /home/scottrif/poky/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share \
-          --kernel-dir /home/scottrif/poky/build/tmp/deploy/images/qemux86 \
-          --native-sysroot /home/scottrif/poky/build/tmp/work/i586-poky-linux/wic-tools/1.0-r0/recipe-sysroot-native
+          --rootfs-dir /home/stephano/build/master/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/rootfs \
+          --bootimg-dir /home/stephano/build/master/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share \
+          --kernel-dir /home/stephano/build/master/build/tmp/deploy/images/qemux86 \
+          --native-sysroot /home/stephano/build/master/build/tmp/work/i586-poky-linux/wic-tools/1.0-r0/recipe-sysroot-native
 
      INFO: Creating image(s)...
 
@@ -6814,10 +6812,10 @@
        /home/scottrif/testwic/test-201710091445-sdb.direct
 
      The following build artifacts were used to create the image(s):
-       ROOTFS_DIR:                   /home/scottrif/testwic/tmp.wic.x4wipbmb/rootfs_copy
-       BOOTIMG_DIR:                  /home/scottrif/poky/build/tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
-       KERNEL_DIR:                   /home/scottrif/poky/build/tmp/deploy/images/qemux86
-       NATIVE_SYSROOT:               /home/scottrif/poky/build/tmp/work/i586-poky-linux/wic-tools/1.0-r0/recipe-sysroot-native
+       ROOTFS_DIR:                   /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/rootfs
+       BOOTIMG_DIR:                  /home/stephano/build/master/build/tmp-glibc/work/qemux86-oe-linux/core-image-minimal/1.0-r0/recipe-sysroot/usr/share
+       KERNEL_DIR:                   /home/stephano/build/master/build/tmp-glibc/deploy/images/qemux86
+       NATIVE_SYSROOT:               /home/stephano/build/master/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
 
      INFO: The image(s) were created using OE kickstart file:
        /home/scottrif/my_yocto/test.wks
