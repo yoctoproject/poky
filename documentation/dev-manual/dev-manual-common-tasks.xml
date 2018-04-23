@@ -8140,13 +8140,15 @@ Some notes from Cal:
             cause the OpenEmbedded build system to reuse software across the
             various machines where it makes sense.
         </para>
+
         <para>
             If build speed and package feed maintenance are considerations,
             you should consider the points in this section that can help you
             optimize your tunings to best consider build times and package
             feed maintenance.
             <itemizedlist>
-                <listitem><para><emphasis>Share the Build Directory:</emphasis>
+                <listitem><para>
+                    <emphasis>Share the Build Directory:</emphasis>
                     If at all possible, share the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>
                     across builds.
@@ -8172,7 +8174,8 @@ Some notes from Cal:
                         <filename>TMPDIR</filename>.
                     </note>
                     </para></listitem>
-                <listitem><para><emphasis>Enable the Appropriate Package Architecture:</emphasis>
+                <listitem><para>
+                    <emphasis>Enable the Appropriate Package Architecture:</emphasis>
                     By default, the OpenEmbedded build system enables three
                     levels of package architectures: "all", "tune" or "package",
                     and "machine".
@@ -8181,6 +8184,7 @@ Some notes from Cal:
                     Depending for what a given recipe creates packages, making
                     sure you enable the appropriate package architecture can
                     directly impact the build time.</para>
+
                     <para>A recipe that just generates scripts can enable
                     "all" architecture because there are no binaries to build.
                     To specifically enable "all" architecture, be sure your
@@ -8190,6 +8194,7 @@ Some notes from Cal:
                     This class is useful for "all" architectures because it
                     configures many variables so packages can be used across
                     multiple architectures.</para>
+
                     <para>If your recipe needs to generate packages that are
                     machine-specific or when one of the build or runtime
                     dependencies is already machine-architecture dependent,
@@ -8211,7 +8216,8 @@ Some notes from Cal:
      PACKAGE_ARCH = "${TUNE_PKGARCH}"
                     </literallayout>
                     </para></listitem>
-                <listitem><para><emphasis>Choose a Generic Tuning File if Possible:</emphasis>
+                <listitem><para>
+                    <emphasis>Choose a Generic Tuning File if Possible:</emphasis>
                     Some tunes are more generic and can run on multiple targets
                     (e.g. an <filename>armv5</filename> set of packages could
                     run on <filename>armv6</filename> and
@@ -8220,6 +8226,7 @@ Some notes from Cal:
                     on <filename>i586</filename> and higher processors.
                     You should realize, however, that advances on newer
                     processor versions would not be used.</para>
+
                     <para>If you select the same tune for several different
                     machines, the OpenEmbedded build system reuses software
                     previously built, thus speeding up the overall build time.
@@ -8227,34 +8234,35 @@ Some notes from Cal:
                     generated, the software is not recompiled and only one
                     package feed exists.
                     </para></listitem>
-                <listitem><para><emphasis>Manage Granular Level Packaging:</emphasis>
-                    Sometimes cases exist where injecting another level
-                    of package architecture beyond the three higher levels
-                    noted earlier can be useful.
-                    For example, consider the <filename>emgd</filename>
-                    graphics stack in the
-                    <filename>meta-intel</filename> layer.
-                    In this layer, a subset of software exists that is
-                    compiled against something different from the rest of the
-                    generic packages.
-                    You can examine the key code in the
-                    <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi'>Source Repositories</ulink>
-                    "daisy" branch in
-                    <filename>classes/emgd-gl.bbclass</filename>.
-                    For a specific set of packages, the code redefines
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>.
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_EXTRA_ARCHS'><filename>PACKAGE_EXTRA_ARCHS</filename></ulink>
-                    is then appended with this extra tune name in
-                    <filename>meta-intel-emgd.inc</filename>.
-                    The result is that when searching for packages, the
-                    build system uses a four-level search and the packages
-                    in this new level are preferred as compared to the standard
-                    tune.
-                    The overall result is that the build system reuses most
-                    software from the common tune except for specific cases
-                    as needed.
+                <listitem><para>
+                    <emphasis>Manage Granular Level Packaging:</emphasis>
+                    Sometimes cases exist where injecting another level of
+                    package architecture beyond the three higher levels noted
+                    earlier can be useful.
+                    For example, consider how NXP (formerly Freescale) allows
+                    for the easy reuse of binary packages in their layer
+                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/'><filename>meta-freescale</filename></ulink>.
+                    In this example, the
+                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/tree/classes/fsl-dynamic-packagearch.bbclass'><filename>fsl-dynamic-packagearch</filename></ulink>
+                    class shares GPU packages for i.MX53 boards because
+                    all boards share the AMD GPU.
+                    The i.MX6-based boards can do the same because all boards
+                    share the Vivante GPU.
+                    This class inspects the BitBake datastore to identify if
+                    the package provides or depends on one of the
+                    sub-architecture values.
+                    If so, the class sets the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>
+                    value as <filename>MACHINE_SUBARCH</filename>.
+                    If the package does not provide or depend on one of the
+                    sub-architecture values but it matches a value in the
+                    machine-specific filter, it sets
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ARCH'><filename>MACHINE_ARCH</filename></ulink>.
+                    This behavior reduces the number of packages built and
+                    saves build time by reusing binaries.
                     </para></listitem>
-                <listitem><para><emphasis>Use Tools to Debug Issues:</emphasis>
+                <listitem><para>
+                    <emphasis>Use Tools to Debug Issues:</emphasis>
                     Sometimes you can run into situations where software is
                     being rebuilt when you think it should not be.
                     For example, the OpenEmbedded build system might not be
@@ -8279,17 +8287,20 @@ Some notes from Cal:
                         Patches to fix any issues identified are most welcome
                         as these issues occasionally do occur.
                     </note></para>
+
                     <para>For such cases, you can use some tools to help you
                     sort out the situation:
                     <itemizedlist>
-                        <listitem><para><emphasis><filename>sstate-diff-machines.sh</filename>:</emphasis>
+                        <listitem><para>
+                            <emphasis><filename>sstate-diff-machines.sh</filename>:</emphasis>
                             You can find this tool in the
                             <filename>scripts</filename> directory of the
                             Source Repositories.
                             See the comments in the script for information on
                             how to use the tool.
                             </para></listitem>
-                        <listitem><para><emphasis>BitBake's "-S printdiff" Option:</emphasis>
+                        <listitem><para>
+                            <emphasis>BitBake's "-S printdiff" Option:</emphasis>
                             Using this option causes BitBake to try to
                             establish the closest signature match it can
                             (e.g. in the shared state cache) and then run
