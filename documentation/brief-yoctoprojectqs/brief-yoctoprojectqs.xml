@@ -33,6 +33,8 @@
             Welcome!
             This short document steps you through the process for a typical
             image build using the Yocto Project.
+            The document also introduces how to add a machine layer and a
+            general layer to your Yocto Project development environment.
             You will use Yocto Project to build a reference embedded OS
             called Poky.
             <note>
@@ -200,7 +202,7 @@
                     Later, when the build completes, the Build Directory
                     contains all the files created during the build.
                     </para></listitem>
-                <listitem><para>
+                <listitem><para id='conf-file-step'>
                     <emphasis>Examine Your Local Configuration File:</emphasis>
                     When you set up the build environment, a local
                     configuration file named
@@ -267,6 +269,140 @@
                     transcript window from which you evoked QEMU.
                     </para></listitem>
             </orderedlist>
+        </para>
+    </section>
+
+    <section id='adding-a-hardware-layer'>
+        <title>Adding a Hardware Layer</title>
+
+        <para>
+            So far, all you have done is quickly built an image suitable
+            for emulation only.
+            This section shows you how you can add a hardware layer into
+            the Yocto Project development environment.
+        </para>
+
+        <para>
+            A hardware layer provides the metadata to support specific
+            hardware.
+            By convention, hardware layers (i.e. Board Support Packages)
+            start with the string "meta-".
+        </para>
+
+        <para>
+            Follow these steps to add a hardware layer:
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Find a Layer:</emphasis>
+                    Lots of hardware layers exist.
+                    The Yocto Project
+                    <ulink url='&YOCTO_GIT_URL;'>Source Repositories</ulink>
+                    has many hardware layers.
+                    This example adds the
+                    <ulink url='https://github.com/kraj/meta-altera'>meta-altera</ulink>
+                    hardware layer.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Clone the Layer</emphasis>
+                    Use Git to make a local copy of the layer on your machine.
+                    You can put the copy in the top level of the copy of the
+                    Poky repository created earlier:
+                    <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ git clone https://github.com/kraj/meta-altera.git
+     Cloning into 'meta-altera'...
+     remote: Counting objects: 25170, done.
+     remote: Compressing objects: 100% (350/350), done.
+     remote: Total 25170 (delta 645), reused 719 (delta 538), pack-reused 24219
+     Receiving objects: 100% (25170/25170), 41.02 MiB | 1.64 MiB/s, done.
+     Resolving deltas: 100% (13385/13385), done.
+     Checking connectivity... done.
+                    </literallayout>
+                    The hardware layer now exists inside as
+                    <filename>meta-altera</filename> and contains all the
+                    metadata needed to support hardware from Altera, which
+                    is owned by Intel.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Change the Configuration to Build for a Specific Machine:</emphasis>
+                    The
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                    variable in the <filename>local.conf</filename> file
+                    specifies the machine for the build.
+                    For this example, set the <filename>MACHINE</filename>
+                    variable to "cyclone5".
+                    The build system will use the machine configurations here:
+                    <ulink url='https://github.com/kraj/meta-altera/blob/master/conf/machine/cyclone5.conf'></ulink>.
+                    <note>
+                        See the
+                        "<link linkend='conf-file-step'>Examine Your Local Configuration File</link>"
+                        step earlier for more information on configuring the
+                        build.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Add Your Layer to the Layer Configuration File:</emphasis>
+                    Before you can use a layer during a build, you must add it
+                    to your <filename>bblayers.conf</filename> file, which
+                    is found in the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory's</ulink>
+                    <filename>conf</filename> directory.</para>
+
+                    <para>Use the <filename>bitbake-layers add-layer</filename>
+                    command:
+                    <literallayout class='monospaced'>
+     $ cd ~/poky/build
+     $ bitbake-layers add-layer ../meta-altera
+     NOTE: Starting bitbake server...
+     Parsing recipes: 100% |##################################################################| Time: 0:00:32
+     Parsing of 918 .bb files complete (0 cached, 918 parsed). 1401 targets, 123 skipped, 0 masked, 0 errors.
+                    </literallayout>
+                    You can find more information on adding layers in the
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#adding-a-layer-using-the-bitbake-layers-script'>Adding a Layer Using the <filename>bitbake-layers</filename> Script</ulink>"
+                    section.
+                    </para></listitem>
+            </orderedlist>
+            Completing these steps has added the
+            <filename>meta-altera</filename> layer to your Yocto Project
+            development environment and configured it to build for the
+            "imx6sxsabresd" machine.
+            <note>
+                The previous steps are for demonstration purposes only.
+                If you were to attempt to build an image for the
+                "cyclone5" build, you should read the Altera
+                <filename>README</filename>.
+            </note>
+        </para>
+    </section>
+
+    <section id='adding-your-own-layer'>
+        <title>Adding Your Own Layer</title>
+
+        <para>
+            Maybe you have an application or specific set of behaviors you
+            need to isolate.
+            You can create your own layer using the
+            <filename>bitbake-layers create-layer</filename> command.
+            The tool automates layer creation by setting up a
+            subdirectory with a <filename>layer.conf</filename>
+            configuration file, a <filename>recipes-example</filename>
+            subdirectory that contains an <filename>example.bb</filename>
+            recipe, a licensing file, and a <filename>README</filename>.
+        </para>
+
+        <para>
+            The following commands run the tool to create a layer named
+            <filename>meta-mylayer</filename> in the
+            <filename>poky</filename> directory:
+            <literallayout class='monospaced'>
+     $ cd ~/poky
+     $ bitbake-layers create-layer meta-mylayer
+     NOTE: Starting bitbake server...
+     Add your new layer with 'bitbake-layers add-layer meta-mylayer'
+            </literallayout>
+            For more information on layers and how to create them, see the
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-a-general-layer-using-the-bitbake-layers-script'>Creating a General Layer Using the <filename>bitbake-layers</filename> Script</ulink>"
+            section in the Yocto Project Development Tasks Manual.
         </para>
     </section>
 
