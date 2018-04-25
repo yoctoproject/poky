@@ -251,13 +251,14 @@
         </para>
 
         <para>
-            The following diagram represents a build at a high level.
+            The following diagram represents the high-level workflow of a
+            build.
             The remainder of this section expands on the fundamental input,
             output, process, and metadata logical blocks that make up the
-            OpenEmbedded build system's workflow.
+            workflow.
         </para>
 
-        <para id='general-yocto-environment-figure'>
+        <para id='general-workflow-figure'>
             <imagedata fileref="figures/YP-flow-diagram.png" format="PNG" align='center' width="8in"/>
         </para>
 
@@ -323,7 +324,7 @@
             <para>
                 The following figure shows an expanded representation of the
                 "User Configuration" box of the
-                <link linkend='general-yocto-environment-figure'>general Build Process figure</link>:
+                <link linkend='general-workflow-figure'>general workflow figure</link>:
             </para>
 
             <para>
@@ -335,21 +336,22 @@
                 complete a build.
                 These files are <filename>*.conf</filename> files.
                 The minimally necessary ones reside as example files in the
+                <filename>build/conf</filename> directory of the
                 <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
                 For simplicity, this section refers to the Source Directory as
                 the "Poky Directory."
             </para>
 
             <para>
-                When you clone the <filename>poky</filename> Git repository
-                or you download and unpack a Yocto Project release, you
-                can set up the Source Directory to be named anything you want.
+                When you clone the
+                <ulink url='&YOCTO_DOCS_REF_URL;#poky'>Poky</ulink>
+                Git repository or you download and unpack a Yocto Project
+                release, you can set up the Source Directory to be named
+                anything you want.
                 For this discussion, the cloned repository uses the default
                 name <filename>poky</filename>.
                 <note>
-                    The
-                    <ulink url='&YOCTO_DOCS_REF_URL;#poky'>Poky</ulink>
-                    repository is primarily an aggregation of existing
+                    The Poky repository is primarily an aggregation of existing
                     repositories.
                     It is not a canonical upstream source.
                 </note>
@@ -360,10 +362,9 @@
                 a <filename>conf</filename> directory that has example
                 configuration files.
                 These example files are used as a basis for creating actual
-                configuration files when you source the build environment
-                script
-                (i.e.
-                <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>).
+                configuration files when you source
+                <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>,
+                which is the build environment script.
             </para>
 
             <para>
@@ -415,18 +416,9 @@
                 To see the default configurations in a
                 <filename>local.conf</filename> file created by the build
                 environment script, see the
-                <filename>local.conf.sample</filename> in the
-                <filename>meta-poky</filename> layer:
+                <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample'><filename>local.conf.sample</filename></ulink>
+                in the <filename>meta-poky</filename> layer:
                 <itemizedlist>
-                    <listitem><para>
-                        <emphasis>Parallelism Options:</emphasis>
-                        Controlled by the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink>,
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink>,
-                        and
-                        <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_NUMBER_PARSE_THREADS'><filename>BB_NUMBER_PARSE_THREADS</filename></ulink>
-                        variables.
-                        </para></listitem>
                     <listitem><para>
                         <emphasis>Target Machine Selection:</emphasis>
                         Controlled by the
@@ -449,6 +441,30 @@
                         <emphasis>Build Output:</emphasis>
                         Controlled by the
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>
+                        variable.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Distribution Policy:</emphasis>
+                        Controlled by the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO'><filename>DISTRO</filename></ulink>
+                        variable.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Packaging Format:</emphasis>
+                        Controlled by the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink>
+                        variable.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>SDK Target Architecture:</emphasis>
+                        Controlled by the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKMACHINE'><filename>SDKMACHINE</filename></ulink>
+                        variable.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Extra Image Packages:</emphasis>
+                        Controlled by the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES'><filename>EXTRA_IMAGE_FEATURES</filename></ulink>
                         variable.
                         </para></listitem>
                 </itemizedlist>
@@ -540,7 +556,9 @@
                 <filename>site.conf</filename>, <filename>auto.conf</filename>,
                 and <filename>local.conf</filename>.
                 And, the build system applies the normal assignment statement
-                rules.
+                rules as described in the
+                "<ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual-metadata'>Syntax and Operators</ulink>"
+                chapter of the BitBake User Manual.
                 Because the files are parsed in a specific order, variable
                 assignments for the same variable could be affected.
                 For example, if the <filename>auto.conf</filename> file and
@@ -594,7 +612,7 @@
                 The following figure shows an expanded representation of the
                 Metadata, Machine Configuration, and Policy Configuration input
                 (layers) boxes of the
-                <link linkend='general-yocto-environment-figure'>general Build Process figure</link>:
+                <link linkend='general-workflow-figure'>general workflow figure</link>:
             </para>
 
             <para>
@@ -757,7 +775,7 @@
                 In order for the OpenEmbedded build system to create an
                 image or any target, it must be able to access source files.
                 The
-                <link linkend='general-yocto-environment-figure'>general Build Process figure</link>
+                <link linkend='general-workflow-figure'>general workflow figure</link>
                 represents source files using the "Upstream Project Releases",
                 "Local Projects", and "SCMs (optional)" boxes.
                 The figure represents mirrors, which also play a role in
@@ -821,7 +839,7 @@
                 The remainder of this section provides a deeper look into the
                 source files and the mirrors.
                 Here is a more detailed look at the source file area of the
-                <link linkend='general-yocto-environment-figure'>general Build Process figure</link>:
+                <link linkend='general-workflow-figure'>general workflow figure</link>:
                 <imagedata fileref="figures/source-input.png" align="center" width="7in" depth="7.5in" />
             </para>
 
@@ -934,7 +952,7 @@
                 in the
                 <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
                 The
-                <link linkend='general-yocto-environment-figure'>general Build Process figure</link>
+                <link linkend='general-workflow-figure'>general workflow figure</link>
                 shows this package feeds area in the upper-right corner.
             </para>
 
@@ -1028,7 +1046,7 @@
                 <ulink url='&YOCTO_DOCS_REF_URL;#bitbake-term'>BitBake</ulink>
                 to produce images.
                 You can see from the
-                <link linkend='general-yocto-environment-figure'>general Build Process figure</link>,
+                <link linkend='general-workflow-figure'>general workflow figure</link>,
                 the BitBake area consists of several functional areas.
                 This section takes a closer look at each of those areas.
             </para>
@@ -1785,7 +1803,7 @@
                 are compressed forms of the
                 root filesystem that are ready to boot on a target device.
                 You can see from the
-                <link linkend='general-yocto-environment-figure'>general Build Process figure</link>
+                <link linkend='general-workflow-figure'>general workflow figure</link>
                 that BitBake output, in part, consists of images.
                 This section is going to look more closely at this output:
                 <imagedata fileref="figures/images.png" align="center" width="5.5in" depth="5.5in" />
@@ -1881,7 +1899,7 @@
 
             <para>
                 In the
-                <link linkend='general-yocto-environment-figure'>general Yocto Project Development Environment figure</link>,
+                <link linkend='general-workflow-figure'>general Yocto Project Development Environment figure</link>,
                 the output labeled "Application Development SDK" represents an
                 SDK.
                 The SDK generation process differs depending on whether you
