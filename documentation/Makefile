@@ -105,8 +105,7 @@ ALLPREQ = html eclipse tarball
 TARFILES = overview-manual-style.css overview-manual.html figures/overview-manual-title.png \
            figures/git-workflow.png figures/source-repos.png figures/index-downloads.png \
            figures/yp-download.png figures/YP-flow-diagram.png figures/key-dev-elements.png \
-           figures/poky-reference-distribution.png \
-           figures/cross-development-toolchains.png figures/yocto-environment-ref.png \
+           figures/poky-reference-distribution.png figures/cross-development-toolchains.png \
            figures/user-configuration.png figures/layer-input.png figures/source-input.png \
            figures/package-feeds.png figures/patching.png figures/source-fetching.png \
            figures/configuration-compile-autoreconf.png figures/analysis-for-package-splitting.png \
@@ -253,7 +252,7 @@ TARFILES = mega-manual.html mega-style.css \
         figures/sched-wakeup-profile.png figures/sysprof-callers.png \
         figures/sysprof-copy-from-user.png figures/sysprof-copy-to-user.png \
         figures/cross-development-toolchains.png \
-	figures/yocto-environment-ref.png figures/user-configuration.png \
+	figures/user-configuration.png \
         figures/source-input.png figures/package-feeds.png \
         figures/layer-input.png figures/images.png figures/sdk.png \
 	figures/source-fetching.png figures/patching.png \
