@@ -580,64 +580,92 @@
                 This section takes a closer look at the layers the build system
                 uses to further control the build.
                 These layers provide Metadata for the software, machine, and
-                policy.
+                policies.
             </para>
 
             <para>
-                In general, three types of layer input exist:
+                In general, three types of layer input exists.
+                You can see them below the "User Configuration" box in the
+                <link linkend='general-workflow-figure'>general workflow figure</link>:
                 <itemizedlist>
                     <listitem><para>
-                        <emphasis>Policy Configuration:</emphasis>
-                        Distribution Layers provide top-level or general
-                        policies for the image or SDK being built.
-                        For example, this layer would dictate whether BitBake
-                        produces RPM or IPK packages.
+                        <emphasis>Metadata (<filename>.bb</filename> + Patches):</emphasis>
+                        Software layers containing user-supplied recipe files,
+                        patches, and append files.
+                        A good example of a software layer might be the
+                        <ulink url='https://github.com/meta-qt5/meta-qt5'><filename>meta-qt5</filename></ulink>
+                        layer from the
+                        <ulink url='http://layers.openembedded.org/layerindex/branch/master/layers/'>OpenEmbedded Layer Index</ulink>.
+                        This layer is for version 5.0 of the popular
+                        <ulink url='https://wiki.qt.io/About_Qt'>Qt</ulink>
+                        cross-platform application development framework for
+                        desktop, embedded and mobile.
                         </para></listitem>
                     <listitem><para>
-                        <emphasis>Machine Configuration:</emphasis>
-                        Board Support Package (BSP) layers provide machine
+                        <emphasis>Machine BSP Configuration:</emphasis>
+                        Board Support Package (BSP) layers (i.e. "BSP Layer"
+                        in the following figure) providing machine-specific
                         configurations.
                         This type of information is specific to a particular
                         target architecture.
+                        A good example of a BSP layer from the
+                        <link linkend='gs-reference-distribution-poky'>Poky Reference Distribution</link>
+                        is the
+                        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto-bsp'><filename>meta-yocto-bsp</filename></ulink>
+                        layer.
                         </para></listitem>
                     <listitem><para>
-                        <emphasis>Metadata:</emphasis>
-                        Software layers contain user-supplied recipe files,
-                        patches, and append files.
+                        <emphasis>Policy Configuration:</emphasis>
+                        Distribution Layers (i.e. "Distro Layer" in the
+                        following figure) providing top-level or general
+                        policies for the images or SDKs being built for a
+                        particular distribution.
+                        For example, in the Poky Reference Distribution the
+                        distro layer is the
+                        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky'><filename>meta-poky</filename></ulink>
+                        layer.
+                        Within the distro layer is a
+                        <filename>conf/distro</filename> directory that
+                        contains distro configuration files (e.g.
+                        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky/conf/distro/poky.conf'><filename>poky.conf</filename></ulink>
+                        that contain many policy configurations for the
+                        Poky distribution.
                         </para></listitem>
                 </itemizedlist>
             </para>
 
             <para>
-                The following figure shows an expanded representation of the
-                Metadata, Machine Configuration, and Policy Configuration input
-                (layers) boxes of the
+                The following figure shows an expanded representation of
+                these three layers from the
                 <link linkend='general-workflow-figure'>general workflow figure</link>:
-            </para>
-
-            <para>
-                <imagedata fileref="figures/layer-input.png" align="center" width="8in" depth="7.5in" />
+                <imagedata fileref="figures/layer-input.png" align="center" width="816px" depth="1056px" scalefit="1" />
             </para>
 
             <para>
                 In general, all layers have a similar structure.
                 They all contain a licensing file
-                (e.g. <filename>COPYING</filename>) if the layer is to be
+                (e.g. <filename>COPYING.MIT</filename>) if the layer is to be
                 distributed, a <filename>README</filename> file as good
                 practice and especially if the layer is to be distributed, a
                 configuration directory, and recipe directories.
+                You can learn about the general structure for layers used with
+                the Yocto Project in the
+                "<ulink url='&YOCTO_DOCS_DEV_URL;#creating-your-own-layer'>Creating Your Own Layer</ulink>"
+                section in the Yocto Project Development Tasks Manual.
+                For a general discussion on layers and the many layers from
+                which you can draw, see the
+                "<link linkend='overview-layers'>Layers</link>" and
+                "<link linkend='the-yocto-project-layer-model'>The Yocto Project Layer Model</link>"
+                sections both earlier in this manual.
             </para>
 
             <para>
-                The Yocto Project has many layers that can be used.
-                You can see a web-interface listing of them on the
+                If you explored the previous links, you discovered some
+                areas where many layers that work with the Yocto Project
+                exist.
+                The
                 <ulink url="http://git.yoctoproject.org/">Source Repositories</ulink>
-                page.
-                The layers appear at the bottom categorized under
-                "Yocto Metadata Layers."
-                These layers are fundamentally a subset of the
-                <ulink url="http://layers.openembedded.org/layerindex/layers/">OpenEmbedded Layer Index</ulink>,
-                which lists all layers provided by the OpenEmbedded community.
+                also shows layers categorized under "Yocto Metadata Layers."
                 <note>
                     Layers exist in the Yocto Project Source Repositories that
                     cannot be found in the OpenEmbedded Layer Index.
@@ -650,12 +678,6 @@
                 BitBake uses the <filename>conf/bblayers.conf</filename> file,
                 which is part of the user configuration, to find what layers it
                 should be using as part of the build.
-            </para>
-
-            <para>
-                For more information on layers, see the
-                "<ulink url='&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers'>Understanding and Creating Layers</ulink>"
-                section in the Yocto Project Development Tasks Manual.
             </para>
 
             <section id="distro-layer">
@@ -704,6 +726,16 @@
                             to add distribution-specific configuration,
                             initialization scripts, custom image recipes,
                             and so forth.
+                            Examples of <filename>recipes-*</filename>
+                            directories are <filename>recipes-core</filename>
+                            and <filename>recipes-extra</filename>.
+                            Hierarchy and contents within a
+                            <filename>recipes-*</filename> directory can vary.
+                            Generally, these directories contain recipe files
+                            (<filename>*.bb</filename>), recipe append files
+                            (<filename>*.bbappend</filename>), directories
+                            that are distro-specific for configuration files,
+                            and so forth.
                             </para></listitem>
                     </itemizedlist>
                 </para>
@@ -713,7 +745,8 @@
                 <title>BSP Layer</title>
 
                 <para>
-                    The BSP Layer provides machine configurations.
+                    The BSP Layer provides machine configurations that
+                    target specific hardware.
                     Everything in this layer is specific to the machine for
                     which you are building the image or the SDK.
                     A common structure or form is defined for BSP layers.
@@ -738,8 +771,8 @@
                     The remainder of the layer is dedicated to specific recipes
                     by function: <filename>recipes-bsp</filename>,
                     <filename>recipes-core</filename>,
-                    <filename>recipes-graphics</filename>, and
-                    <filename>recipes-kernel</filename>.
+                    <filename>recipes-graphics</filename>,
+                    <filename>recipes-kernel</filename>, and so forth.
                     Metadata can exist for multiple formfactors, graphics
                     support systems, and so forth.
                     <note>
@@ -762,8 +795,8 @@
                 </para>
 
                 <para>
-                    This layer contains any new recipes that your project
-                    needs in the form of recipe files.
+                    This layer contains any recipes, append files, and
+                    patches, that your project needs.
                 </para>
             </section>
         </section>
