@@ -343,6 +343,40 @@
         </para>
     </section>
 
+    <section id='qemu-kvm-cpu-compatibility'>
+        <title>QEMU CPU Compatibility Under KVM</title>
+
+        <para>
+            By default, the QEMU build compiles for and targets 64-bit and x86
+            <trademark class='registered'>Intel</trademark> <trademark class='trademark'>Core</trademark>2
+            Duo processors and 32-bit x86
+            <trademark class='registered'>Intel</trademark> <trademark class='registered'>Pentium</trademark>
+            II processors.
+            QEMU builds for and targets these CPU types because they display
+            a broad range of CPU feature compatibility with many commonly
+            used CPUs.
+        </para>
+
+        <para>
+            Despite this broad range of compatibility, the CPUs could support
+            a feature that your host CPU does not support.
+            Although this situation is not a problem when QEMU uses software
+            emulation of the feature, it can be a problem when QEMU is
+            running with KVM enabled.
+            Specifically, software compiled with a certain CPU feature crashes
+            when run on a CPU under KVM that does not support that feature.
+            To work around this problem, you can override QEMU's runtime CPU
+            setting by changing the <filename>QB_CPU_KVM</filename>
+            variable in <filename>qemuboot.conf</filename> in the
+            <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory's</ulink>
+            <filename>deploy/image</filename> directory.
+            This setting specifies a <filename>-cpu</filename> option
+            passed into QEMU in the <filename>runqemu</filename> script.
+            Running <filename>qemu -cpu help</filename> returns a list of
+            available supported CPU types.
+        </para>
+    </section>
+
     <section id='qemu-dev-performance'>
         <title>QEMU Performance</title>
 
