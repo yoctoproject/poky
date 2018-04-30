@@ -61,6 +61,60 @@
         </para>
     </section>
 
+    <section id='setting-up-toaster-without-a-web-server'>
+        <title>Setting Up Toaster Without a Web Server</title>
+
+        <para>
+            You can start a Toaster environment without starting its
+            web server. This is useful for the following:
+            <itemizedlist>
+                <listitem><para>
+                    Capturing a command-line build’s statistics into
+                    the Toaster database for examination later.
+                    </para></listitem>
+                <listitem><para>
+                    Capturing a command-line build’s statistics when
+                    the Toaster server is already running.
+                    </para></listitem>
+            </itemizedlist>
+            The following commands show how to start a Toaster environment
+            without starting its web server, perform BitBake operations,
+            and then shut down the Toaster environment.
+            Once the environment is shut down, you can examine the
+            BitBake build statistics:
+            <literallayout class='monospaced'>
+     $ source toaster start noweb
+     $ bitbake <replaceable>target</replaceable>
+     $ source toaster stop
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='setting-up-toaster-without-a-build-server'>
+        <title>Setting Up Toaster Without a Build Server</title>
+
+        <para>
+            You can start a Toaster environment with the
+            “New Projects” feature disabled.
+            Doing so is useful for the following:
+            <itemizedlist>
+                <listitem><para>
+                    Sharing your build results over the web server while
+                    blocking others from starting builds on your host.
+                    </para></listitem>
+                <listitem><para>
+                    Allowing only local command-line builds to be captured
+                    into the Toaster database.
+                    </para></listitem>
+            </itemizedlist>
+            Use the following command to set up Toaster without a
+            build server:
+            <literallayout class='monospaced'>
+     $ source toaster start nobuild webport=<replaceable>port</replaceable>
+            </literallayout>
+        </para>
+    </section>
+
     <section id='setting-up-external-access'>
         <title>Setting up External Access</title>
 
@@ -312,7 +366,7 @@
                       <itemizedlist>
                           <listitem><para>
                               Edit the
-                              <ulink url='http://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-SECRET_KEY'>DATABASE</ulink>
+                              <ulink url='https://docs.djangoproject.com/en/1.11/ref/settings/#databases'>DATABASES</ulink>
                               settings:
                               <literallayout class='monospaced'>
    DATABASES = {
@@ -329,14 +383,14 @@
                               </para></listitem>
                           <listitem><para>
                               Edit the
-                              <ulink url='http://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-SECRET_KEY'>SECRET_KEY</ulink>:
+                              <ulink url='https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-SECRET_KEY'>SECRET_KEY</ulink>:
                               <literallayout class='monospaced'>
    SECRET_KEY = '<replaceable>your_secret_key</replaceable>'
                               </literallayout>
                               </para></listitem>
                           <listitem><para>
                               Edit the
-                              <ulink url='http://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-SECRET_KEY'>STATIC_ROOT</ulink>:
+                              <ulink url='https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-STATIC_ROOT'>STATIC_ROOT</ulink>:
                               <literallayout class='monospaced'>
    STATIC_ROOT = '/var/www/toaster/static_files/'
                               </literallayout>
