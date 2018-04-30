@@ -414,58 +414,48 @@
                       <literallayout class='monospaced'>
    $ cd  /var/www/toaster/poky/
    $ ./bitbake/lib/toaster/manage.py migrate
-   $ TOASTER_DIR=`pwd` TOASTER_CONF=./meta-poky/conf/toasterconf.json \
+   $ TOASTER_DIR=`pwd` TEMPLATECONF='poky' \
      ./bitbake/lib/toaster/manage.py checksettings
    $ ./bitbake/lib/toaster/manage.py collectstatic
                       </literallayout>
-                      </para>
+                      In the previous example, from the <filename>poky</filename>
+                      directory, the <filename>migrate</filename> command
+                      ensures the database schema changes have propagated
+                      correctly (i.e. migrations).
+                      The next line sets the Toaster root directory
+                      <filename>TOASTER_DIR</filename> and the location
+                      of the Toaster configuration file
+                      <filename>TOASTER_CONF</filename>, which is relative to
+                      <filename>TOASTER_DIR</filename>.
+                      The <filename>TEMPLATECONF</filename> value reflects the
+                      contents of <filename>poky/.templateconf</filename>, and
+                      by default, should include the string "poky".
+                      For more information on the Toaster configuration
+                      file, see the
+                      "<link linkend='configuring-toaster'>Configuring Toaster</link>"
+                      section.</para>
 
-                      <para>
-                          For the above set of commands, after moving to the
-                          <filename>poky</filename> directory,
-                          the <filename>migrate</filename>
-                          command ensures the database
-                          schema has had changes propagated correctly (i.e.
-                          migrations).
-                      </para>
-
-                      <para>
-                          The next line sets the Toaster root directory
-                          <filename>TOASTER_DIR</filename> and the location of
-                          the Toaster configuration file
-                          <filename>TOASTER_CONF</filename>, which is
-                          relative to the Toaster root directory
-                          <filename>TOASTER_DIR</filename>.
-                          For more information on the Toaster configuration file,
-                          see the
-                          "<link linkend='configuring-toaster'>Configuring Toaster</link>"
-                          section.
-                      </para>
-
-                      <para>
-                          This line also runs the <filename>checksettings</filename>
-                          command, which configures the location of the Toaster
-                          <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
-                          The Toaster root directory <filename>TOASTER_DIR</filename>
-                          determines where the Toaster build directory
-                          is created on the file system.
-                          In the example above,
-                          <filename>TOASTER_DIR</filename> is set as follows:
-                          <literallayout class="monospaced">
+                      <para>This line also runs the <filename>checksettings</filename>
+                      command, which configures the location of the Toaster
+                      <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
+                      The Toaster root directory <filename>TOASTER_DIR</filename>
+                      determines where the Toaster build directory
+                      is created on the file system.
+                      In the example above,
+                      <filename>TOASTER_DIR</filename> is set as follows:
+                      <literallayout class="monospaced">
    /var/www/toaster/poky
-                          </literallayout>
-                          This setting causes the Toaster build directory to be:
-                          <literallayout class="monospaced">
+                      </literallayout>
+                      This setting causes the Toaster build directory to be:
+                      <literallayout class="monospaced">
    /var/www/toaster/poky/build
-                          </literallayout>
-                      </para>
+                      </literallayout></para>
 
-                      <para>
-                          Finally, the <filename>collectstatic</filename> command
-                          is a Django framework command that collects all the
-                          statically served files into a designated directory to
-                          be served up by the Apache web server as defined by
-                          <filename>STATIC_ROOT</filename>.
+                      <para>Finally, the <filename>collectstatic</filename> command
+                      is a Django framework command that collects all the
+                      statically served files into a designated directory to
+                      be served up by the Apache web server as defined by
+                      <filename>STATIC_ROOT</filename>.
                       </para></listitem>
                   <listitem><para>
                       Add an Apache configuration file for Toaster to your Apache web
