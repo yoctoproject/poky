@@ -1083,18 +1083,17 @@
             <para>
                 The OpenEmbedded build system uses
                 <ulink url='&YOCTO_DOCS_REF_URL;#bitbake-term'>BitBake</ulink>
-                to produce images.
+                to produce images and Software Development Kits (SDKs).
                 You can see from the
                 <link linkend='general-workflow-figure'>general workflow figure</link>,
                 the BitBake area consists of several functional areas.
                 This section takes a closer look at each of those areas.
-            </para>
-
-            <para>
-                Separate documentation exists for the BitBake tool.
-                See the
-                <ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual'>BitBake User Manual</ulink>
-                for reference material on BitBake.
+                <note>
+                    Separate documentation exists for the BitBake tool.
+                    See the
+                    <ulink url='&YOCTO_DOCS_BB_URL;#bitbake-user-manual'>BitBake User Manual</ulink>
+                    for reference material on BitBake.
+                </note>
             </para>
 
             <section id='source-fetching-dev-environment'>
@@ -1111,8 +1110,8 @@
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-fetch'><filename>do_fetch</filename></ulink>
                     and
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-unpack'><filename>do_unpack</filename></ulink>
-                    tasks fetch the source files and unpack them into the work
-                    directory.
+                    tasks fetch the source files and unpack them into the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
                     <note>
                         For every local file (e.g. <filename>file://</filename>)
                         that is part of a recipe's
@@ -1120,14 +1119,13 @@
                         statement, the OpenEmbedded build system takes a
                         checksum of the file for the recipe and inserts the
                         checksum into the signature for the
-                        <filename>do_fetch</filename>.
+                        <filename>do_fetch</filename> task.
                         If any local file has been modified, the
                         <filename>do_fetch</filename> task and all tasks that
                         depend on it are re-executed.
                     </note>
-                    By default, everything is accomplished in the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>,
-                    which has a defined structure.
+                    By default, everything is accomplished in the Build
+                    Directory, which has a defined structure.
                     For additional general information on the Build Directory,
                     see the
                     "<ulink url='&YOCTO_DOCS_REF_URL;#structure-core-build'><filename>build/</filename></ulink>"
@@ -1135,54 +1133,97 @@
                 </para>
 
                 <para>
-                    Unpacked source files are pointed to by the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
-                    variable.
                     Each recipe has an area in the Build Directory where the
                     unpacked source code resides.
+                    The
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
+                    variable points to this area for a recipe's unpacked source
+                    code.
                     The name of that directory for any given recipe is defined
                     from several different variables.
-                    You can see the variables that define these directories
-                    by looking at the figure:
+                    The preceding figure and the following list describe
+                    the Build Directory's hierarchy:
                     <itemizedlist>
                         <listitem><para>
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>:
                             The base directory where the OpenEmbedded build
                             system performs all its work during the build.
+                            The default base directory is the
+                            <filename>tmp</filename> directory.
                             </para></listitem>
                         <listitem><para>
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>:
                             The architecture of the built package or packages.
+                            Depending on the eventual destination of the
+                            package or packages (i.e. machine architecture,
+                            <ulink url='&YOCTO_DOCS_REF_URL;#hardware-build-system-term'>build host</ulink>,
+                            SDK, or specific machine),
+                            <filename>PACKAGE_ARCH</filename> varies.
+                            See the variable's description for details.
                             </para></listitem>
                         <listitem><para>
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-TARGET_OS'><filename>TARGET_OS</filename></ulink>:
                             The operating system of the target device.
+                            A typical value would be "linux" (e.g.
+                            "qemux86-poky-linux").
                             </para></listitem>
                         <listitem><para>
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink>:
-                            The name of the built package.
-                            </para></listitem>
-                        <listitem><para>
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>:
-                            The version of the recipe used to build the
-                            package.
-                            </para></listitem>
-                        <listitem><para>
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>:
-                            The revision of the recipe used to build the
-                            package.
+                            The name of the recipe used to build the package.
+                            This variable can have multiple meanings.
+                            However, when used in the context of input files,
+                            <filename>PN</filename> represents the the name
+                            of the recipe.
                             </para></listitem>
                         <listitem><para>
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink>:
-                            The location within <filename>TMPDIR</filename>
-                            where a specific package is built.
+                            The location where the OpenEmbedded build system
+                            builds a recipe (i.e. does the work to create the
+                            package).
+                            <itemizedlist>
+                                <listitem><para>
+                                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>:
+                                    The version of the recipe used to build the
+                                    package.
+                                    </para></listitem>
+                                <listitem><para>
+                                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>:
+                                    The revision of the recipe used to build the
+                                    package.
+                                    </para></listitem>
+                            </itemizedlist>
                             </para></listitem>
                         <listitem><para>
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>:
                             Contains the unpacked source files for a given
                             recipe.
+                            <itemizedlist>
+                                <listitem><para>
+                                    <ulink url='&YOCTO_DOCS_REF_URL;#var-BPN'><filename>BPN</filename></ulink>:
+                                    The name of the recipe used to build the
+                                    package.
+                                    The <filename>BPN</filename> variable is
+                                    a version of the <filename>PN</filename>
+                                    variable but with common prefixes and
+                                    suffixes removed.
+                                    </para></listitem>
+                                <listitem><para>
+                                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PV'><filename>PV</filename></ulink>:
+                                    The version of the recipe used to build the
+                                    package.
+                                    </para></listitem>
+                            </itemizedlist>
                             </para></listitem>
                     </itemizedlist>
+                    In the previous figure, notice that two sample
+                    hierarchies exist: one based on package architecture (i.e.
+                    <filename>PACKAGE_ARCH</filename>) and one based on a
+                    machine (i.e. <filename>MACHINE</filename>).
+                    The underlying structures are identical.
+                    The differentiator being what the OpenEmbedded build
+                    system is using as a build target (e.g. general
+                    architecture, a build host, an SDK, or a specific
+                    machine).
                 </para>
             </section>
 
