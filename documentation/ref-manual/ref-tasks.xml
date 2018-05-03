@@ -429,12 +429,80 @@
 
         <para>
             Locates patch files and applies them to the source code.
-            See the
+        </para>
+
+        <para>
+            After fetching and unpacking source files, the build system locates
+            and applies patches to the source code.
+            Patch files, by default, are <filename>*.patch</filename> and
+            <filename>*.diff</filename> files created and kept in a
+            subdirectory of the directory holding the recipe file.
+            For example, consider the
+            <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/recipes-connectivity/bluez5'><filename>bluez5</filename></ulink>
+            recipe from the OE-Core layer (i.e.
+            <filename>poky/meta</filename>):
+            <literallayout class='monospaced'>
+     poky/meta/recipes-connectivity/bluez5
+            </literallayout>
+            This recipe has two patch files located here:
+            <literallayout class='monospaced'>
+     poky/meta/recipes-connectivity/bluez5/bluez5
+            </literallayout>
+        </para>
+
+        <para>
+            The recipe for <filename>bluez5</filename> uses the
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+            variable to point to the source and patch files needed to build
+            the recipe.
+            <note>
+                In the case for the <filename>bluez5_5.48.bb</filename>
+                recipe, the <filename>SRC_URI</filename> statements are from an
+                include file <filename>bluez5.inc</filename>.
+            </note>
+        </para>
+
+        <para>
+            As mentioned earlier, the build system treats files whose file
+            types are <filename>.patch</filename> and
+            <filename>.diff</filename> as patch files.
+            However, you can use the "apply=yes" parameter with the
+            <filename>SRC_URI</filename> statement to indicate any file as a
+            patch file:
+            <literallayout class='monospaced'>
+     SRC_URI = " \
+          git://<replaceable>path_to_repo</replaceable>/<replaceable>some_recipe</replaceable> \
+          file://<replaceable>file</replaceable>;apply=yes \
+     "
+            </literallayout>
+        </para>
+
+        <para>
+            Conversely, if you have a directory full of patch files and you
+            want to exclude some so that the <filename>do_patch</filename>
+            task does not apply them during the patch phase, you can use
+            the "apply=no" parameter with the <filename>SRC_URI</filename>
+            statement:
+            <literallayout class='monospaced'>
+     SRC_URI = " \
+          git://<replaceable>path_to_repo</replaceable>/<replaceable>some_recipe</replaceable> \
+          file://<replaceable>path_to_lots_of_patch_files</replaceable> \
+          file://<replaceable>path_to_lots_of_patch_files</replaceable>/<replaceable>patch_file5</replaceable>;apply=no \
+     "
+            </literallayout>
+            In the previous example, assuming all the files in the directory
+            holding the patch files end with either <filename>.patch</filename>
+            or <filename>.diff</filename>, every file would be applied as a
+            patch by default except for the
+            <replaceable>patch_file5</replaceable> patch.
+        </para>
+
+        <para>
+            You can find out more about the patching process in the
             "<ulink url='&YOCTO_DOCS_OM_URL;#patching-dev-environment'>Patching</ulink>"
             section in the Yocto Project Overview and Concepts Manual and the
-            "<ulink url='&YOCTO_DOCS_DEV_URL;#new-recipe-patching-code'>Patching Code"</ulink>"
-            section in the Yocto Project Development Tasks Manual for more
-            information.
+            "<ulink url='&YOCTO_DOCS_DEV_URL;#new-recipe-patching-code'>Patching Code</ulink>"
+            section in the Yocto Project Development Tasks Manual.
         </para>
     </section>
 
