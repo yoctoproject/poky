@@ -520,21 +520,20 @@
 
             <para>
                 The <filename>devtool modify</filename> command prepares the
-                way to work on existing code that already has a recipe in
-                place.
-                The command is flexible enough to allow you to extract code,
-                specify the existing recipe, and keep track of and gather any
-                patch files from other developers that are
-                associated with the code.
+                way to work on existing code that already has a local recipe in
+                place that is used to build the software.
+                The command is flexible enough to allow you to extract code
+                from an upstream source, specify the existing recipe, and
+                keep track of and gather any patch files from other developers
+                that are associated with the code.
             </para>
 
             <para>
                 Depending on your particular scenario, the arguments and options
                 you use with <filename>devtool modify</filename> form different
                 combinations.
-                The following diagram shows common development flows
-                you would use with the <filename>devtool modify</filename>
-                command:
+                The following diagram shows common development flows for the
+                <filename>devtool modify</filename> command:
             </para>
 
             <para>
@@ -543,140 +542,165 @@
 
             <para>
                 <orderedlist>
-                    <listitem><para><emphasis>Preparing to Modify the Code</emphasis>:
+                    <listitem><para>
+                        <emphasis>Preparing to Modify the Code</emphasis>:
                         The top part of the flow shows three scenarios by which
                         you could use <filename>devtool modify</filename> to
                         prepare to work on source files.
                         Each scenario assumes the following:
                         <itemizedlist>
-                            <listitem><para>The recipe exists in some layer external
+                            <listitem><para>
+                                The recipe exists locally in a layer external
                                 to the <filename>devtool</filename> workspace.
                                 </para></listitem>
-                            <listitem><para>The source files exist upstream in an
+                            <listitem><para>
+                                The source files exist either upstream in an
                                 un-extracted state or locally in a previously
                                 extracted state.
                                 </para></listitem>
                         </itemizedlist>
                         The typical situation is where another developer has
-                        created some layer for use with the Yocto Project and
+                        created a layer for use with the Yocto Project and
                         their recipe already resides in that layer.
                         Furthermore, their source code is readily available
                         either upstream or locally.
                         <itemizedlist>
-                            <listitem><para><emphasis>Left</emphasis>:
-                                The left scenario represents a common situation
-                                where the source code does not exist locally
-                                and needs to be extracted.
+                            <listitem><para>
+                                <emphasis>Left</emphasis>:
+                                The left scenario in the figure represents a
+                                common situation where the source code does
+                                not exist locally and it needs to be extracted
+                                from an upstream source.
                                 In this situation, the source is extracted
-                                into the default workspace location.
+                                into the default <filename>devtool</filename>
+                                workspace location.
                                 The recipe, in this scenario, is in its own
                                 layer outside the workspace
                                 (i.e.
                                 <filename>meta-</filename><replaceable>layername</replaceable>).
                                 </para>
 
-                                <para>The following command identifies the recipe
-                                and by default extracts the source files:
+                                <para>The following command identifies the
+                                recipe and, by default, extracts the source
+                                files:
                                 <literallayout class='monospaced'>
      $ devtool modify <replaceable>recipe</replaceable>
                                 </literallayout>
-                                Once <filename>devtool</filename>locates the recipe,
-                                it uses the
+                                Once <filename>devtool</filename>locates the
+                                recipe, <filename>devtool</filename> uses the
+                                recipe's
                                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-                                variable to locate the source code and
-                                any local patch files from other developers are
-                                located.
-                                <note>
-                                    You cannot provide an URL for
-                                    <replaceable>srctree</replaceable> when using the
-                                    <filename>devtool modify</filename> command.
-                                </note>
-                                With this scenario, however, since no
-                                <replaceable>srctree</replaceable> argument exists, the
-                                <filename>devtool modify</filename> command by default
-                                extracts the source files to a Git structure.
-                                Furthermore, the location for the extracted source is the
-                                default area within the workspace.
-                                The result is that the command sets up both the source
-                                code and an append file within the workspace with the
-                                recipe remaining in its original location.
+                                statements to locate the source code and any
+                                local patch files from other developers.</para>
+
+                                <para>With this scenario, no
+                                <replaceable>srctree</replaceable> argument
+                                exists.
+                                Consequently, the default behavior of the
+                                <filename>devtool modify</filename> command is
+                                to extract the source files pointed to by the
+                                <filename>SRC_URI</filename> statements into a
+                                local Git structure.
+                                Furthermore, the location for the extracted
+                                source is the default area within the
+                                <filename>devtool</filename> workspace.
+                                The result is that the command sets up both
+                                the source code and an append file within the
+                                workspace while the recipe remains in its
+                                original location.
                                 </para></listitem>
-                            <listitem><para><emphasis>Middle</emphasis>:
-                                The middle scenario represents a situation where
-                                the source code also does not exist locally.
+                            <listitem><para>
+                                <emphasis>Middle</emphasis>:
+                                The middle scenario in the figure represents a
+                                situation where the source code also does not
+                                exist locally.
                                 In this case, the code is again upstream
                                 and needs to be extracted to some
                                 local area as a Git repository.
-                                The recipe, in this scenario, is again in its own
-                                layer outside the workspace.</para>
+                                The recipe, in this scenario, is again local
+                                and in its own layer outside the workspace.
+                                </para>
 
                                 <para>The following command tells
                                 <filename>devtool</filename> what recipe with
-                                which to work and, in this case, identifies a local
-                                area for the extracted source files that is outside
-                                of the default workspace:
+                                which to work and, in this case, identifies a
+                                local area for the extracted source files that
+                                is outside of the default
+                                <filename>devtool</filename> workspace:
                                 <literallayout class='monospaced'>
      $ devtool modify <replaceable>recipe srctree</replaceable>
                                 </literallayout>
+                                <note>
+                                    You cannot provide a URL for
+                                    <replaceable>srctree</replaceable> using
+                                    the <filename>devtool</filename> command.
+                                </note>
                                 As with all extractions, the command uses
-                                the recipe's <filename>SRC_URI</filename> to locate the
-                                source files.
-                                Once the files are located, the command by default
-                                extracts them.
-                                Providing the <replaceable>srctree</replaceable>
-                                argument instructs <filename>devtool</filename> where
-                                to place the extracted source.</para>
+                                the recipe's <filename>SRC_URI</filename>
+                                statements to locate the source files and any
+                                associated patch files.
+                                Once the files are located, the command by
+                                default extracts them into
+                                <replaceable>srctree</replaceable>.</para>
 
-                                <para>Within workspace, <filename>devtool</filename>
-                                creates an append file for the recipe.
+                                <para>Within workspace,
+                                <filename>devtool</filename> creates an append
+                                file for the recipe.
                                 The recipe remains in its original location but
-                                the source files are extracted to the location you
-                                provided with <replaceable>srctree</replaceable>.
+                                the source files are extracted to the location
+                                you provide with
+                                <replaceable>srctree</replaceable>.
                                 </para></listitem>
-                            <listitem><para><emphasis>Right</emphasis>:
-                                The right scenario represents a situation
-                                where the source tree
-                                (<replaceable>srctree</replaceable>) exists as a
-                                previously extracted Git structure outside of
-                                the <filename>devtool</filename> workspace.
+                            <listitem><para>
+                                <emphasis>Right</emphasis>:
+                                The right scenario in the figure represents a
+                                situation where the source tree
+                                (<replaceable>srctree</replaceable>) already
+                                exists locally as a previously extracted Git
+                                structure outside of the
+                                <filename>devtool</filename> workspace.
                                 In this example, the recipe also exists
-                                elsewhere in its own layer.
+                                elsewhere locally in its own layer.
                                 </para>
 
                                 <para>The following command tells
                                 <filename>devtool</filename> the recipe
-                                with which to work, uses the "-n" option to indicate
-                                source does not need to be extracted, and uses
-                                <replaceable>srctree</replaceable> to point to the
-                                previously extracted source files:
+                                with which to work, uses the "-n" option to
+                                indicate source does not need to be extracted,
+                                and uses <replaceable>srctree</replaceable> to
+                                point to the previously extracted source files:
                                 <literallayout class='monospaced'>
      $ devtool modify -n <replaceable>recipe srctree</replaceable>
                                 </literallayout>
                                 </para>
 
                                 <para>Once the command finishes, it creates only
-                                an append file for the recipe in the workspace.
+                                an append file for the recipe in the
+                                <filename>devtool</filename> workspace.
                                 The recipe and the source code remain in their
                                 original locations.
                                 </para></listitem>
                             </itemizedlist>
                         </para></listitem>
-                    <listitem><para><emphasis>Edit the Source</emphasis>:
-                        Once you have used the <filename>devtool modify</filename>
-                        command, you are free to make changes to the source
-                        files.
+                    <listitem><para>
+                        <emphasis>Edit the Source</emphasis>:
+                        Once you have used the
+                        <filename>devtool modify</filename> command, you are
+                        free to make changes to the source files.
                         You can use any editor you like to make and save
                         your source code modifications.
                         </para></listitem>
-                    <listitem><para><emphasis>Build the Recipe</emphasis>:
+                    <listitem><para>
+                        <emphasis>Build the Recipe</emphasis>:
                         Once you have updated the source files, you can build
                         the recipe.
                         </para></listitem>
-                    <listitem><para><emphasis>Deploy the Build Output</emphasis>:
+                    <listitem><para>
+                        <emphasis>Deploy the Build Output</emphasis>:
                         When you use the <filename>devtool build</filename>
-                        command to build out your recipe, you probably want to see
-                        if the resulting build output works as expected on target
-                        hardware.
+                        command to build out your recipe, you probably want to
+                        see if the resulting build output works as expected
+                        on target hardware.
                         <note>
                             This step assumes you have a previously built
                             image that is already either running in QEMU or
@@ -686,19 +710,22 @@
                             the image is running on real hardware that you have
                             network access to and from your development machine.
                         </note>
-                        You can deploy your build output to that target hardware by
-                        using the <filename>devtool deploy-target</filename> command:
+                        You can deploy your build output to that target
+                        hardware by using the
+                        <filename>devtool deploy-target</filename> command:
                         <literallayout class='monospaced'>
      $ devtool deploy-target <replaceable>recipe target</replaceable>
                         </literallayout>
-                        The <replaceable>target</replaceable> is a live target machine
-                        running as an SSH server.</para>
+                        The <replaceable>target</replaceable> is a live target
+                        machine running as an SSH server.</para>
 
-                        <para>You can, of course, also deploy the image you build
-                        using the <filename>devtool build-image</filename> command
-                        to actual hardware.
-                        However, <filename>devtool</filename> does not provide a
-                        specific command that allows you to do this.
+                        <para>You can, of course, use other methods to deploy
+                        the image you built using the
+                        <filename>devtool build-image</filename> command to
+                        actual hardware.
+                        <filename>devtool</filename> does not provide
+                        a specific command to deploy the image to actual
+                        hardware.
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Finish Your Work With the Recipe</emphasis>:
@@ -707,28 +734,30 @@
                         Git repository, updates the recipe to point to them
                         (or creates a <filename>.bbappend</filename> file to do
                         so, depending on the specified destination layer), and
-                        then resets the recipe so that the recipe is built normally
-                        rather than from the workspace.
+                        then resets the recipe so that the recipe is built
+                        normally rather than from the workspace.
                         <literallayout class='monospaced'>
      $ devtool finish <replaceable>recipe layer</replaceable>
                         </literallayout>
                         <note>
                             Any changes you want to turn into patches must be
-                            committed to the Git repository in the source tree.
+                            staged and committed within the local Git
+                            repository before you use the
+                            <filename>devtool finish</filename> command.
                         </note></para>
 
                         <para>Because there is no need to move the recipe,
                         <filename>devtool finish</filename> either updates the
                         original recipe in the original layer or the command
-                        creates a <filename>.bbappend</filename> in a different
-                        layer as provided by <replaceable>layer</replaceable>.
-                        </para>
+                        creates a <filename>.bbappend</filename> file in a
+                        different layer as provided by
+                        <replaceable>layer</replaceable>.</para>
 
                         <para>As a final process of the
                         <filename>devtool finish</filename> command, the state
                         of the standard layers and the upstream source is
                         restored so that you can build the recipe from those
-                        areas rather than the workspace.
+                        areas rather than from the workspace.
                         <note>
                             You can use the <filename>devtool reset</filename>
                             command to put things back should you decide you
