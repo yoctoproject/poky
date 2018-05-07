@@ -5227,6 +5227,423 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
         </para>
     </section>
 </section>
+
+<section id='moving-to-the-yocto-project-2.5-release'>
+    <title>Moving to the Yocto Project 2.5 Release</title>
+
+    <para>
+        This section provides migration information for moving to the
+        Yocto Project 2.5 Release from the prior release.
+    </para>
+
+    <section id='migration-2.5-packaging-changes'>
+        <title>Packaging Changes</title>
+
+        <para>
+            This section provides information about packaging changes that have
+            ocurred:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis><filename>bind-libs</filename>:</emphasis>
+                    The libraries packaged by the bind recipe are in a
+                    separate <filename>bind-libs</filename> package.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libfm-gtk</filename>:</emphasis>
+                    The <filename>libfm gtk</filename>package and bindings are
+                    split into a separate <filename>libfm-gtk</filename> package.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>flex-libfl</filename>:</emphasis>
+                    The flex recipe splits out libfl into a separate
+                    <filename>flex-libfl</filename> package to avoid too many
+                    dependencies being pulled in where only the library is
+                    needed.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>grub-efi</filename>:</emphasis>
+                    The <filename>grub-efi</filename> configuration is split
+                    into a separate <filename>grub-bootconf</filename>
+                    recipe.
+                    However, the dependency relationship from
+                    <filename>grub-efi</filename> is through a
+                    virtual/grub-bootconf provider making it possible to have
+                    your own recipe provide the dependency.
+                    Alternatively, you can use a BitBake append file to bring
+                    the configuration back into the
+                    <filename>grub-efi</filename> recipe.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>ARMv7-A Legacy Support:</emphasis>
+                    Legacy support is removed for transitioning from ARMv7-A
+                    to armv7a-vfp-neon in package feeds, which was previously
+                    enabled by setting
+                    <filename>PKGARCHCOMPAT_ARMV7A</filename>.
+                    This transition occurred in 2011 and active package feeds
+                    should by now be updated to the new naming.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.5-removed-recipes'>
+        <title>Removed Recipes</title>
+
+        <para>
+            The following recipes have been removed:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis><filename>gcc</filename>:</emphasis>
+                    The version 6.4 recipes are replaced by 7.x.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>gst-player</filename>:</emphasis>
+                    Renamed to <filename>gst-examples</filename> as per
+                    upstream.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>hostap-utils</filename>:</emphasis>
+                    This recipe is obsolete.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>latencytop</filename>:</emphasis>
+                    This recipe is no longer maintained upstream.
+                    The last release was in 2009.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>libpfm4</filename>:</emphasis>
+                    The only file that requires this recipe is
+                    <filename>oprofile</filename>, which has been removed.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>linux-yocto</filename>:</emphasis>
+                    The version 4.4, 4.9, and 4.10 recipes have been removed.
+                    Versions 4.12, 4.14, and 4.15 remain.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>man</filename>:</emphasis>
+                    This recipe has been replaced by
+                    <filename>modern man-db</filename>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>mkelfimage</filename>:</emphasis>
+                    This recipe has been removed in the upstream coreboot,
+                    and is no longer needed with the removal of the ELF image
+                    type.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>nativesdk-postinst-intercept</filename>:</emphasis>
+                    This recipe is not maintained.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>neon</filename>:</emphasis>
+                    This recipe is not maintained upstream and is not used by
+                    anything in OpenEmbedded-Core.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>oprofile</filename>:</emphasis>
+                    The functionality of this recipe is replaced by
+                    <filename>perf</filename> since keeping ongoing
+                    compatibility on with <filename>musl</filename> is
+                    difficult.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>pax</filename>:</emphasis>
+                    This recipe is obsolete.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>stat</filename>:</emphasis>
+                    This recipe is not maintained upstream.
+                    <filename>coreutils</filename> provides a modern binary for
+                    the stat recipe.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>zisofs-tools-native</filename>:</emphasis>
+                    This recipe is no longer needed because the compressed
+                    ISO image feature has been removed.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id='migration-2.5-scripts-and-tools-changes'>
+        <title>Scripts and Tools Changes</title>
+
+        <para>
+            The following are changes to scripts and tools:
+            <itemizedlist>
+                <listitem><para>
+                    <filename>yocto-bsp</filename>,
+                    <filename>yocto-kernel</filename>, and
+                    <filename>yocto-layer</filename>:
+                    The <filename>yocto-bsp</filename>,
+                    <filename>yocto-kernel</filename>, and
+                    <filename>yocto-layer</filename> scripts previously shipped
+                    with poky but not in OpenEmbedded-Core have been removed.
+                    These scripts are not maintained and are outdated.
+                    In many cases, they are also limited in scope.
+                    The <filename>bitbake-layers create-layer</filename> command
+                    is a direct replacement for <filename>yocto-layer</filename>.
+                    See the documentation to create a BSP or kernel recipe in
+                    the
+                    "<ulink url='&YOCTO_DOCS_BSP_URL;#bsp-kernel-recipe-example'>BSP Kernel Recipe Example</ulink>"
+                     section.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>devtool finish</filename>:</emphasis>
+                    will now exit with an error if there are uncommitted changes
+                    or a rebase/am in progress in the source repository for the
+                    recipe, as it may indicate that you have forgotten to
+                    commit some changes (and thus these would not be reflected
+                    in updates to the patches applied by the recipe).
+                    A -f/--force option is provided for situations where you
+                    know that those uncomitted changes are inconsequential and
+                    wish to proceed regardless.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>scripts/oe-setup-rpmrepo</filename> script:</emphasis>
+                    has been removed as its functionality can be replaced by
+                    bitbake package-index.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>scripts/test-dependencies.sh</filename> script:</emphasis>
+                    has been removed as it was largely made obsolete by the
+                    recipe-specific sysroots functionality introduced in the
+                    previous release.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.5-bitbake-changes'>
+        <title>BitBake Changes</title>
+
+        <para>
+            The following are changes BitBake:
+            <itemizedlist>
+                <listitem><para>
+                    The --runall option has changed behaviour slightly.
+                    There are in fact two different behaviours people may want:
+                    <itemizedlist>
+                        <listitem><para>
+                            For a given target (or set of targets) look through
+                            the task graph and run task X only if its present
+                            and would have been built.
+                            </para></listitem>
+                        <listitem><para>
+                            For a given target (or set of targets) look through
+                            the task graph and run task X if any recipe in the
+                            taskgraph has such a target even if it wasn't in the
+                            original task graph.
+                            </para></listitem>
+                    </itemizedlist>
+                    The --runall option now performs (b), previously it behaved
+                    like (a). A --runonly option has been added to retain the
+                    ability to perform (a).
+                    </para></listitem>
+                <listitem><para>
+                    Several explicit "run this task for all recipes in the
+                    dependency tree" tasks (such as fetchall, checkuriall, and
+                    the *all tasks provided by the distrodata and archiver
+                    classes) have now been removed as there is a bitbake option
+                    to do this for any arbitrary task, for example:
+                    <literallayout class='monospaced'>
+     bitbake &lt;target&gt; -c fetchall
+                    </literallayout>
+                    should now be replaced with:
+                    <literallayout class='monospaced'>
+     bitbake &lt;target&gt; --runall=fetch
+                    </literallayout>
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+
+    <section id='migration-2.5-miscellaneous-changes'>
+        <title>Miscellaneous Changes</title>
+
+        <para>
+            The following are additional changes:
+            <itemizedlist>
+                <listitem><para>
+                    The kernel class now supports building packages for multiple
+                    kernels. If your kernel recipe/bbappend mentions packaging
+                    at all, then you are advised to replace references to kernel
+                    in package names with ${KERNEL_PACKAGE_NAME}. For example,
+                    if you disable automatic installation of the kernel image
+                    using RDEPENDS_kernel-base = "" then to avoid warnings you
+                    will now need to use
+                    RDEPENDS_${KERNEL_PACKAGE_NAME}-base = "" instead.
+                    </para></listitem>
+                <listitem><para>
+                    The buildhistory class now commits changes to the repository
+                    by default, so setting BUILDHISTORY_COMMIT = "1" is no
+                    longer necessary. If you wish commits to be disabled, then
+                    you will now need to set BUILDHISTORY_COMMIT = "0" in your
+                    configuration.
+                    </para></listitem>
+                <listitem><para>
+                    The beaglebone reference machine has been renamed to
+                    beaglebone-yocto. The beaglebone-yocto BSP is a reference
+                    implementation using only mainline components available in
+                    OpenEmbedded-Core and meta-yocto-bsp, whereas Texas
+                    Instruments maintain a full-featured BSP in the meta-ti
+                    layer, and the rename avoids the previous name clash that
+                    existed between the two BSPs.
+                    </para></listitem>
+                <listitem><para>
+                    The update-alternatives class will now no longer work with
+                    SysV init scripts as such usage has been proven to be
+                    problematic.
+                    Related to this, the sysklogd recipe no longer uses
+                    update-alternatives as it is incompatible with other
+                    implementations.
+                    </para></listitem>
+                <listitem><para>
+                    The cmake class now uses ninja instead of make by default
+                    for building in order to improve build performance. If a
+                    recipe is broken with ninja then the recipe can set
+                    OECMAKE_GENERATOR = "Unix Makefiles" to change back to make.
+                    </para></listitem>
+                <listitem><para>
+                    python: Restructure python packaging and replace it with
+                    autopackaging
+                    </para></listitem>
+                <listitem><para>
+                    python3: Restructure python3 packaging and replace it with
+                    autopackaging
+                    </para></listitem>
+                <listitem><para>
+                    The previously deprecated base_* functions have now removed,
+                    in favour of their replacements in meta/lib/oe and
+                    bitbake/lib/bb.
+                    These are typically used from recipes and classes and any
+                    references to the old functions will now need to be updated.
+                    The full list along with each of their replacements:
+                      <itemizedlist>
+                          <listitem><para>
+                              base_path_join() -> oe.path.join()
+                              </para></listitem>
+                              base_path_relative() -> oe.path.relative()
+                          <listitem><para>
+                              base_path_out() -> oe.path.format_display()
+                              </para></listitem>
+                          <listitem><para>
+                              base_read_file() -> oe.utils.read_file()
+                              </para></listitem>
+                          <listitem><para>
+                              base_ifelse() -> oe.utils.ifelse()
+                              </para></listitem>
+                          <listitem><para>
+                              base_conditional() -> oe.utils.conditional()
+                              </para></listitem>
+                          <listitem><para>
+                              base_less_or_equal() -> oe.utils.less_or_equal()
+                              </para></listitem>
+                          <listitem><para>
+                              base_version_less_or_equal() -> oe.utils.version_less_or_equal()
+                              </para></listitem>
+                          <listitem><para>
+                              base_contains() -> bb.utils.contains()
+                              </para></listitem>
+                          <listitem><para>
+                              base_both_contain() -> oe.utils.both_contain()
+                              </para></listitem>
+                          <listitem><para>
+                              base_prune_suffix() -> oe.utils.prune_suffix()
+                              </para></listitem>
+                          <listitem><para>
+                              oe_filter() -> oe.utils.str_filter()
+                              </para></listitem>
+                          <listitem><para>
+                              oe_filter_out() -> oe.utils.str_filter_out()
+                              (or use the _remove operator)
+                              </para></listitem>
+                      </itemizedlist>
+                    </para></listitem>
+                <listitem><para>
+                    Using exit 1 as a means of explicitly deferring a
+                    postinstall script until first boot is now deprecated, as
+                    it is not an obvious mechanism and can mask actual errors.
+                    If you want to explicitly defer a postinstall to first boot
+                    on the target rather than possibly at rootfs creation time,
+                    use pkg_postinst_ontarget() or alternatively call
+                    postinst-intercepts defer_to_first_boot from pkg_postinst().
+                    Any failure of a pkg_postinst() script (including exit 1)
+                    will now trigger a warning during do_rootfs.
+                    </para></listitem>
+                <listitem><para>
+                    The elf image type has been removed, as the mkelfimage tool
+                    that was required to create it is no longer provided by
+                    coreboot upstream, and required updating every time binutils
+                    got updated.
+                    </para></listitem>
+                <listitem><para>
+                    Support for .iso image compression (previously enabled via
+                    COMPRESSISO = "1") has been removed, since the userspace
+                    tools (zisofs-tools) are unmaintained and squashfs provides
+                    better performance and compression.
+                    In order to build a live image with squashfs+lz4 compression
+                    enabled you would set LIVE_ROOTFS_TYPE = "squashfs-lz4"
+                    and ensure that live is in IMAGE_FSTYPES.
+                    </para></listitem>
+                <listitem><para>
+                    Recipes having an unconditional dependency on libpam will
+                    now only be buildable with pam in DISTRO_FEATURES.
+                    If the dependency is truly optional then it is recommended
+                    that the dependency be made conditional upon pam being in
+                    DISTRO_FEATURES.
+                    </para></listitem>
+                <listitem><para>
+                    For EFI-based machines, the bootloader (grub-efi by default)
+                    is now installed into the image at /boot. wic can be used to
+                    split this into separate boot and rootfs partitions if
+                    desired.
+                    </para></listitem>
+                <listitem><para>
+                    Patches whose context does not match exactly (i.e. where
+                    patch reports "fuzz" when applying) will now generate a
+                    warning.
+                    See http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=cc97bc08125b63821ce3f616771830f77c456f57
+                    </para></listitem>
+                <listitem><para>
+                    Layers are now expected to set LAYERSERIES_COMPAT_layername
+                    to match the version(s) of OpenEmbedded-Core they are
+                    compatible with (specified as codenames using spaces to
+                    separate multiple values, e.g. "rocko sumo").
+                    If a layer does not set this, a warning will be shown.
+                    If a layer sets a value that does not include the current
+                    version, then an error will be produced.
+                    </para></listitem>
+                <listitem><para>
+                    The TZ environment variable is now set to "UTC" within the
+                    build environment in order to fix reproducibility problems
+                    in some recipes.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+</section>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
