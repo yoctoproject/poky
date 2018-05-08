@@ -1291,14 +1291,14 @@
                 </para>
             </section>
 
-            <section id='configuration-and-compilation-dev-environment'>
-                <title>Configuration and Compilation</title>
+            <section id='configuration-compilation-and-staging-dev-environment'>
+                <title>Configuration, Compilation, and Staging</title>
 
                 <para>
                     After source code is patched, BitBake executes tasks that
                     configure and compile the source code.
                     Once compilation occurs, the files are copied to a holding
-                    area in preparation for packaging:
+                    area (staged) in preparation for packaging:
                     <imagedata fileref="figures/configuration-compile-autoreconf.png" align="center" width="7in" depth="5in" />
                 </para>
 
@@ -1385,9 +1385,9 @@
                 <title>Package Splitting</title>
 
                 <para>
-                    After source code is configured and compiled, the
-                    OpenEmbedded build system analyzes
-                    the results and splits the output into packages:
+                    After source code is configured, compiled, and staged, the
+                    build system analyzes the results and splits the output
+                    into packages:
                     <imagedata fileref="figures/analysis-for-package-splitting.png" align="center" width="7in" depth="7in" />
                 </para>
 
@@ -1398,15 +1398,15 @@
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-packagedata'><filename>do_packagedata</filename></ulink>
                     tasks combine to analyze the files found in the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink>
-                    directory and split them into subsets based on available
-                    packages and files.
-                    The analyzing process involves the following as well as
-                    other items: splitting out debugging symbols, looking at
-                    shared library dependencies between packages, and looking
-                    at package relationships.
+                    directory (i.e. the staging area) and split them into
+                    subsets based on available packages and files.
+                    Analysis involves the following as well as other items:
+                    splitting out debugging symbols, looking at shared library
+                    dependencies between packages, and looking at package
+                    relationships.
                     The <filename>do_packagedata</filename> task creates
                     package metadata based on the analysis such that the
-                    OpenEmbedded build system can generate the final packages.
+                    build system can generate the final packages.
                     Working, staged, and intermediate results of the analysis
                     and package splitting process use these areas:
                     <itemizedlist>
@@ -1436,9 +1436,8 @@
                     variable defines the files that go into each package in
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGES'><filename>PACKAGES</filename></ulink>.
                     If you want details on how this is accomplished, you can
-                    look at the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-package'><filename>package</filename></ulink>
-                    class.
+                    look at
+                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/package.bbclass'><filename>package.bbclass</filename></ulink>.
                 </para>
 
                 <para>
