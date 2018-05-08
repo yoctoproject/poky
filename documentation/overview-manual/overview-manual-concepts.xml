@@ -1296,12 +1296,15 @@
 
                 <para>
                     After source code is patched, BitBake executes tasks that
-                    configure and compile the source code:
+                    configure and compile the source code.
+                    Once compilation occurs, the files are copied to a holding
+                    area in preparation for packaging:
                     <imagedata fileref="figures/configuration-compile-autoreconf.png" align="center" width="7in" depth="5in" />
                 </para>
 
                 <para>
-                    This step in the build process consists of three tasks:
+                    This step in the build process consists of the following
+                    tasks:
                     <itemizedlist>
                         <listitem><para>
                             <emphasis><ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-prepare_recipe_sysroot'><filename>do_prepare_recipe_sysroot</filename></ulink></emphasis>:
@@ -1329,8 +1332,8 @@
 
                             <para>The configurations handled by the
                             <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-configure'><filename>do_configure</filename></ulink>
-                            task are specific to source code configuration for
-                            the source code being built by the recipe.</para>
+                            task are specific to configurations for the source
+                            code being built by the recipe.</para>
 
                             <para>If you are using the
                             <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-autotools'><filename>autotools</filename></ulink>
@@ -1342,13 +1345,14 @@
                             variables.
                             For information on how this variable works within
                             that class, see the
-                            <filename>meta/classes/autotools.bbclass</filename>
-                            file.
+                            <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-autotools'><filename>autotools</filename></ulink>
+                            class
+                            <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/autotools.bbclass'>here</ulink>.
                             </para></listitem>
                         <listitem><para>
                             <emphasis><filename>do_compile</filename></emphasis>:
-                            Once a configuration task has been satisfied, BitBake
-                            compiles the source using the
+                            Once a configuration task has been satisfied,
+                            BitBake compiles the source using the
                             <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-compile'><filename>do_compile</filename></ulink>
                             task.
                             Compilation occurs in the directory pointed to by
@@ -1362,7 +1366,7 @@
                             </para></listitem>
                         <listitem><para>
                             <emphasis><filename>do_install</filename></emphasis>:
-                            Once compilation is done, BitBake executes the
+                            After compilation completes, BitBake executes the
                             <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
                             task.
                             This task copies files from the
@@ -1370,6 +1374,8 @@
                             in a holding area pointed to by the
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink>
                             variable.
+                            Packaging occurs later using files from this
+                            holding directory.
                             </para></listitem>
                     </itemizedlist>
                 </para>
