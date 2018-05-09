@@ -1830,8 +1830,8 @@
 
                 <para>
                     The description of tasks so far assumes that BitBake needs
-                    to build everything and there are no prebuilt objects
-                    available.
+                    to build everything and no available prebuilt objects
+                    exist.
                     BitBake does support skipping tasks if prebuilt objects are
                     available.
                     These objects are usually made available in the form of a
@@ -1856,34 +1856,33 @@
                     variant (e.g. generating package files in the
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb'><filename>do_package_write_*</filename></ulink>
                     task).
-                    In other cases, it does not make sense, (e.g. a
+                    In other cases, it does not make sense (e.g. a
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-patch'><filename>do_patch</filename></ulink>
-                    task or
+                    task or a
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-unpack'><filename>do_unpack</filename></ulink>
                     task) since the work involved would be equal to or greater
                     than the underlying task.
                 </para>
 
                 <para>
-                    In the OpenEmbedded build system, the common tasks that
-                    have setscene variants are
+                    In the build system, the common tasks that have setscene
+                    variants are
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-package'><filename>do_package</filename></ulink>,
                     <filename>do_package_write_*</filename>,
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-deploy'><filename>do_deploy</filename></ulink>,
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-packagedata'><filename>do_packagedata</filename></ulink>,
                     and
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></ulink>.
-                    Notice that these are most of the tasks whose output is an
-                    end result.
+                    Notice that these tasks represent most of the tasks whose
+                    output is an end result.
                 </para>
 
                 <para>
-                    The OpenEmbedded build system has knowledge of the
-                    relationship between these tasks and other tasks that
-                    precede them.
+                    The build system has knowledge of the relationship between
+                    these tasks and other preceding tasks.
                     For example, if BitBake runs
                     <filename>do_populate_sysroot_setscene</filename> for
-                    something, there is little point in running any of the
+                    something, it does not make sense to run any of the
                     <filename>do_fetch</filename>,
                     <filename>do_unpack</filename>,
                     <filename>do_patch</filename>,
@@ -1891,7 +1890,7 @@
                     <filename>do_compile</filename>, and
                     <filename>do_install</filename> tasks.
                     However, if <filename>do_package</filename> needs to be
-                    run, BitBake would need to run those other tasks.
+                    run, BitBake needs to run those other tasks.
                 </para>
 
                 <para>
@@ -1899,7 +1898,7 @@
                     from an sstate cache because some objects are simply
                     not required at all.
                     For example, you do not need a compiler or native tools,
-                    such as quilt, if there is nothing to compile or patch.
+                    such as quilt, if nothing exists to compile or patch.
                     If the <filename>do_package_write_*</filename> packages
                     are available from sstate, BitBake does not need the
                     <filename>do_package</filename> task data.
@@ -1918,26 +1917,24 @@
                 </para>
 
                 <para>
-                    If objects are found in the sstate cache, the OpenEmbedded
-                    build system works backwards from the end targets specified
-                    by the user.
-                    For example, if an image is being built, the OpenEmbedded
-                    build system first looks for the packages needed for
-                    that image and the tools needed to construct an image.
+                    If objects are found in the sstate cache, the build system
+                    works backwards from the end targets specified by the user.
+                    For example, if an image is being built, the build system
+                    first looks for the packages needed for that image and the
+                    tools needed to construct an image.
                     If those are available, the compiler is not needed.
                     Thus, the compiler is not even downloaded.
                     If something was found to be unavailable, or the
-                    download or setscene task fails, the OpenEmbedded build
-                    system then tries to install dependencies, such as the
-                    compiler, from the cache.
+                    download or setscene task fails, the build system then
+                    tries to install dependencies, such as the compiler, from
+                    the cache.
                 </para>
 
                 <para>
                     The availability of objects in the sstate cache is
                     handled by the function specified by the
                     <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_HASHCHECK_FUNCTION'><filename>BB_HASHCHECK_FUNCTION</filename></ulink>
-                    variable and returns a list of the objects that are
-                    available.
+                    variable and returns a list of available objects.
                     The function specified by the
                     <ulink url='&YOCTO_DOCS_BB_URL;#var-BB_SETSCENE_DEPVALID'><filename>BB_SETSCENE_DEPVALID</filename></ulink>
                     variable is the function that determines whether a given
