@@ -1312,7 +1312,8 @@
                             <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink><filename>}</filename>
                             (i.e. <filename>recipe-sysroot</filename> and
                             <filename>recipe-sysroot-native</filename>) so that
-                            the sysroots contain the contents of the
+                            during the packaging phase the sysroots can contain
+                            the contents of the
                             <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></ulink>
                             tasks of the recipes on which the recipe
                             containing the tasks depends.
@@ -1398,37 +1399,74 @@
                     <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-packagedata'><filename>do_packagedata</filename></ulink>
                     tasks combine to analyze the files found in the
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink>
-                    directory (i.e. the staging area) and split them into
-                    subsets based on available packages and files.
+                    directory and split them into subsets based on available
+                    packages and files.
                     Analysis involves the following as well as other items:
                     splitting out debugging symbols, looking at shared library
                     dependencies between packages, and looking at package
                     relationships.
+                </para>
+
+                <para>
                     The <filename>do_packagedata</filename> task creates
                     package metadata based on the analysis such that the
                     build system can generate the final packages.
+                    The
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot'><filename>do_populate_sysroot</filename></ulink>
+                    task stages (copies) a subset of the files installed by
+                    the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
+                    task into the appropriate sysroot.
                     Working, staged, and intermediate results of the analysis
-                    and package splitting process use these areas:
+                    and package splitting process use several areas:
                     <itemizedlist>
                         <listitem><para>
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-PKGD'><filename>PKGD</filename></ulink>:
-                            The destination directory for packages before they
-                            are split.
-                            </para></listitem>
-                        <listitem><para>
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></ulink>:
-                            A shared, global-state directory that holds data
-                            generated during the packaging process.
+                            The destination directory
+                            (i.e. <filename>package</filename>) for packages
+                            before they are split into individual packages.
                             </para></listitem>
                         <listitem><para>
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-PKGDESTWORK'><filename>PKGDESTWORK</filename></ulink>:
-                            A temporary work area used by the
-                            <filename>do_package</filename> task.
+                            A temporary work area (i.e.
+                            <filename>pkgdata</filename>) used by the
+                            <filename>do_package</filename> task to save
+                            package metadata.
                             </para></listitem>
                         <listitem><para>
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-PKGDEST'><filename>PKGDEST</filename></ulink>:
-                            The parent directory for packages after they have
-                            been split.
+                            The parent directory (i.e.
+                            <filename>packages-split</filename>) for packages
+                            after they have been split.
+                            </para></listitem>
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-PKGDATA_DIR'><filename>PKGDATA_DIR</filename></ulink>:
+                            A shared, global-state directory that holds
+                            packaging metadata generated during the packaging
+                            process.
+                            The packaging process copies metadata from
+                            <filename>PKGDESTWORK</filename> to the
+                            <filename>PKGDATA_DIR</filename> area where it
+                            becomes globally available.
+                            </para></listitem>
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_DIR_HOST'><filename>STAGING_DIR_HOST</filename></ulink>:
+                            The path for the sysroot for the system on which
+                            a component is built to run (i.e.
+                            <filename>recipe-sysroot</filename>).
+                            </para></listitem>
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_DIR_NATIVE'><filename>STAGING_DIR_NATIVE</filename></ulink>:
+                            The path for the sysroot used when building
+                            components for the build host (i.e.
+                            <filename>recipe-sysroot-native</filename>).
+                            </para></listitem>
+                        <listitem><para>
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-STAGING_DIR_TARGET'><filename>STAGING_DIR_TARGET</filename></ulink>:
+                            The path for the sysroot used when a component that
+                            is built to execute on a system and it generates
+                            code for yet another machine (e.g. cross-canadian
+                            recipes).
                             </para></listitem>
                     </itemizedlist>
                     The
