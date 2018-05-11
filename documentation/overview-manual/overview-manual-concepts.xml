@@ -2048,24 +2048,26 @@
 
             <para>
                 In the
-                <link linkend='general-workflow-figure'>general Yocto Project Development Environment figure</link>,
+                <link linkend='general-workflow-figure'>general workflow figure</link>,
                 the output labeled "Application Development SDK" represents an
                 SDK.
                 The SDK generation process differs depending on whether you
-                build a standard SDK (e.g.
-                <filename>bitbake -c populate_sdk</filename> <replaceable>imagename</replaceable>)
-                or an extensible SDK (e.g.
-                <filename>bitbake -c populate_sdk_ext</filename> <replaceable>imagename</replaceable>).
-                This section is going to take a closer look at this output:
+                build an extensible SDK (e.g.
+                <filename>bitbake -c populate_sdk_ext</filename> <replaceable>imagename</replaceable>)
+                or a standard SDK (e.g.
+                <filename>bitbake -c populate_sdk</filename> <replaceable>imagename</replaceable>).
+                This section takes a closer look at this output:
                 <imagedata fileref="figures/sdk.png" align="center" width="9in" depth="7.25in" />
             </para>
 
             <para>
-                The specific form of this output is a self-extracting
-                SDK installer (<filename>*.sh</filename>) that, when run,
-                installs the SDK, which consists of a cross-development
-                toolchain, a set of libraries and headers, and an SDK
-                environment setup script.
+                The specific form of this output is a set of files that
+                includes a self-extracting SDK installer
+                (<filename>*.sh</filename>), host and target manifest files,
+                and files used for SDK testing.
+                When the SDK installer file is run, it installs the SDK.
+                The SDK consists of a cross-development toolchain, a set of
+                libraries and headers, and an SDK environment setup script.
                 Running this installer essentially sets up your
                 cross-development environment.
                 You can think of the cross-toolchain as the "host"
@@ -2102,55 +2104,13 @@
             </note>
 
             <para>
-                Once built, the SDK installers are written out to the
+                All the output files for an SDK are written to the
                 <filename>deploy/sdk</filename> folder inside the
                 <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
-                as shown in the figure at the beginning of this section.
+                as shown in the previous figure.
                 Depending on the type of SDK, several variables exist that help
                 configure these files.
-                The following list shows the variables associated with
-                a standard SDK:
-                <itemizedlist>
-                    <listitem><para>
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></ulink>:
-                        Points to the <filename>deploy</filename>
-                        directory.
-                        </para></listitem>
-                    <listitem><para>
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKMACHINE'><filename>SDKMACHINE</filename></ulink>:
-                        Specifies the architecture of the machine
-                        on which the cross-development tools are run to
-                        create packages for the target hardware.
-                        </para></listitem>
-                    <listitem><para>
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKIMAGE_FEATURES'><filename>SDKIMAGE_FEATURES</filename></ulink>:
-                        Lists the features to include in the "target" part
-                        of the SDK.
-                        </para></listitem>
-                    <listitem><para>
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_HOST_TASK'><filename>TOOLCHAIN_HOST_TASK</filename></ulink>:
-                        Lists packages that make up the host
-                        part of the SDK (i.e. the part that runs on
-                        the <filename>SDKMACHINE</filename>).
-                        When you use
-                        <filename>bitbake -c populate_sdk <replaceable>imagename</replaceable></filename>
-                        to create the SDK, a set of default packages
-                        apply.
-                        This variable allows you to add more packages.
-                        </para></listitem>
-                    <listitem><para>
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_TARGET_TASK'><filename>TOOLCHAIN_TARGET_TASK</filename></ulink>:
-                        Lists packages that make up the target part
-                        of the SDK (i.e. the part built for the
-                        target hardware).
-                        </para></listitem>
-                    <listitem><para>
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKPATH'><filename>SDKPATH</filename></ulink>:
-                        Defines the default SDK installation path offered
-                        by the installation script.
-                        </para></listitem>
-                </itemizedlist>
-                This next list, shows the variables associated with an
+                The following list shows the variables associated with an
                 extensible SDK:
                 <itemizedlist>
                     <listitem><para>
@@ -2166,13 +2126,12 @@
                         </para></listitem>
                     <listitem><para>
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_INCLUDE_PKGDATA'><filename>SDK_INCLUDE_PKGDATA</filename></ulink>:
-                        Specifies whether or not packagedata will be
-                        included in the extensible SDK for all recipes in
-                        the "world" target.
+                        Specifies whether or not packagedata is included in the
+                        extensible SDK for all recipes in the "world" target.
                         </para></listitem>
                     <listitem><para>
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_INCLUDE_TOOLCHAIN'><filename>SDK_INCLUDE_TOOLCHAIN</filename></ulink>:
-                        Specifies whether or not the toolchain will be included
+                        Specifies whether or not the toolchain is included
                         when building the extensible SDK.
                         </para></listitem>
                     <listitem><para>
@@ -2192,6 +2151,61 @@
                         A list of classes to remove from the
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-INHERIT'><filename>INHERIT</filename></ulink>
                         value globally within the extensible SDK configuration.
+                        </para></listitem>
+                </itemizedlist>
+                This next list, shows the variables associated with a standard
+                SDK:
+                <itemizedlist>
+                    <listitem><para>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR'><filename>DEPLOY_DIR</filename></ulink>:
+                        Points to the <filename>deploy</filename> directory.
+                        </para></listitem>
+                    <listitem><para>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKMACHINE'><filename>SDKMACHINE</filename></ulink>:
+                        Specifies the architecture of the machine on which the
+                        cross-development tools are run to create packages for
+                        the target hardware.
+                        </para></listitem>
+                    <listitem><para>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKIMAGE_FEATURES'><filename>SDKIMAGE_FEATURES</filename></ulink>:
+                        Lists the features to include in the "target" part
+                        of the SDK.
+                        </para></listitem>
+                    <listitem><para>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_HOST_TASK'><filename>TOOLCHAIN_HOST_TASK</filename></ulink>:
+                        Lists packages that make up the host part of the SDK
+                        (i.e. the part that runs on the
+                        <filename>SDKMACHINE</filename>).
+                        When you use
+                        <filename>bitbake -c populate_sdk <replaceable>imagename</replaceable></filename>
+                        to create the SDK, a set of default packages apply.
+                        This variable allows you to add more packages.
+                        </para></listitem>
+                    <listitem><para>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_TARGET_TASK'><filename>TOOLCHAIN_TARGET_TASK</filename></ulink>:
+                        Lists packages that make up the target part of the SDK
+                        (i.e. the part built for the target hardware).
+                        </para></listitem>
+                    <listitem><para>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKPATH'><filename>SDKPATH</filename></ulink>:
+                        Defines the default SDK installation path offered by
+                        the installation script.
+                        </para></listitem>
+                    <listitem><para>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_HOST_MANIFEST'><filename>SDK_HOST_MANIFEST</filename></ulink>:
+                        Lists all the installed packages that make up the host
+                        part of the SDK.
+                        This variable also plays a minor role for extensible
+                        SDK development as well.
+                        However, it is mainly used for the standard SDK.
+                        </para></listitem>
+                    <listitem><para>
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_TARGET_MANIFEST'><filename>SDK_TARGET_MANIFEST</filename></ulink>:
+                        Lists all the installed packages that make up the
+                        target part of the SDK.
+                        This variable also plays a minor role for extensible
+                        SDK development as well.
+                        However, it is mainly used for the standard SDK.
                         </para></listitem>
                 </itemizedlist>
             </para>
