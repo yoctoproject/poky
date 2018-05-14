@@ -12344,6 +12344,98 @@ Some notes from Cal:
             </para>
         </section>
 
+        <section id='dev-viewing-metadata-used-to-create-the-input-signature-of-a-shared-state-task'>
+            <title>Viewing Metadata Used to Create the Input Signature of a Shared State Task</title>
+
+            <para>
+                Seeing what metadata went into creating the input signature
+                of a shared state (sstate) task can be a useful debugging
+                aid.
+                This information is available in signature information
+                (<filename>siginfo</filename>) files in
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SSTATE_DIR'><filename>SSTATE_DIR</filename></ulink>.
+                For information on how to view and interpret information in
+                <filename>siginfo</filename> files, see the
+                "<link linkend='dev-viewing-task-variable-dependencies'>Viewing Task Variable Dependencies</link>"
+                section.
+            </para>
+
+            <para>
+                For conceptual information on shared state, see the
+                "<ulink url='&YOCTO_DOCS_OM_URL;#shared-state'>Shared State</ulink>"
+                section in the Yocto Project Overview and Concepts Manual.
+            </para>
+        </section>
+
+        <section id='dev-invalidating-shared-state-to-force-a-task-to-run'>
+            <title>Invalidating Shared State to Force a Task to Run</title>
+
+            <para>
+                The OpenEmbedded build system uses
+                <ulink url='&YOCTO_DOCS_OM_URL;#overview-checksums'>checksums</ulink>
+                and
+                <ulink url='&YOCTO_DOCS_OM_URL;#shared-state'>shared state</ulink>
+                cache to avoid unnecessarily rebuilding tasks.
+                Collectively, this scheme is known as "shared state code."
+            </para>
+
+            <para>
+                As with all schemes, this one has some drawbacks.
+                It is possible that you could make implicit changes to your
+                code that the checksum calculations do not take into
+                account.
+                These implicit changes affect a task's output but do not
+                trigger the shared state code into rebuilding a recipe.
+                Consider an example during which a tool changes its output.
+                Assume that the output of <filename>rpmdeps</filename>
+                changes.
+                The result of the change should be that all the
+                <filename>package</filename> and
+                <filename>package_write_rpm</filename> shared state cache
+                items become invalid.
+                However, because the change to the output is
+                external to the code and therefore implicit,
+                the associated shared state cache items do not become
+                invalidated.
+                In this case, the build process uses the cached items
+                rather than running the task again.
+                Obviously, these types of implicit changes can cause
+                problems.
+            </para>
+
+            <para>
+                To avoid these problems during the build, you need to
+                understand the effects of any changes you make.
+                Realize that changes you make directly to a function
+                are automatically factored into the checksum calculation.
+                Thus, these explicit changes invalidate the associated
+                area of shared state cache.
+                However, you need to be aware of any implicit changes that
+                are not obvious changes to the code and could affect
+                the output of a given task.
+            </para>
+
+            <para>
+                When you identify an implicit change, you can easily
+                take steps to invalidate the cache and force the tasks
+                to run.
+                The steps you can take are as simple as changing a
+                function's comments in the source code.
+                For example, to invalidate package shared state files,
+                change the comment statements of
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-package'><filename>do_package</filename></ulink>
+                or the comments of one of the functions it calls.
+                Even though the change is purely cosmetic, it causes the
+                checksum to be recalculated and forces the build system to
+                run the task again.
+                <note>
+                    For an example of a commit that makes a cosmetic
+                    change to invalidate shared state, see this
+                    <ulink url='&YOCTO_GIT_URL;/cgit.cgi/poky/commit/meta/classes/package.bbclass?id=737f8bbb4f27b4837047cb9b4fbfe01dfde36d54'>commit</ulink>.
+                </note>
+            </para>
+        </section>
+
         <section id='dev-debugging-taskrunning'>
             <title>Running Specific Tasks</title>
 
