@@ -5241,7 +5241,7 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
 
         <para>
             This section provides information about packaging changes that have
-            ocurred:
+            occurred:
             <itemizedlist>
                 <listitem><para>
                     <emphasis><filename>bind-libs</filename>:</emphasis>
@@ -5366,25 +5366,6 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
         </para>
     </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <section id='migration-2.5-scripts-and-tools-changes'>
         <title>Scripts and Tools Changes</title>
 
@@ -5392,9 +5373,9 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
             The following are changes to scripts and tools:
             <itemizedlist>
                 <listitem><para>
-                    <filename>yocto-bsp</filename>,
+                    <emphasis><filename>yocto-bsp</filename>,
                     <filename>yocto-kernel</filename>, and
-                    <filename>yocto-layer</filename>:
+                    <filename>yocto-layer</filename></emphasis>:
                     The <filename>yocto-bsp</filename>,
                     <filename>yocto-kernel</filename>, and
                     <filename>yocto-layer</filename> scripts previously shipped
@@ -5410,25 +5391,27 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>devtool finish</filename>:</emphasis>
-                    will now exit with an error if there are uncommitted changes
-                    or a rebase/am in progress in the source repository for the
-                    recipe, as it may indicate that you have forgotten to
-                    commit some changes (and thus these would not be reflected
-                    in updates to the patches applied by the recipe).
-                    A -f/--force option is provided for situations where you
-                    know that those uncomitted changes are inconsequential and
-                    wish to proceed regardless.
+                    <filename>devtool finish</filename> now exits with an error
+                    if there are uncommitted changes or a rebase/am in progress
+                    in the recipe's source repository.
+                    If this error occurs, there might be uncommitted changes
+                    that will not be included in updates to the patches applied
+                    by the recipe.
+                    A -f/--force option is provided for situations that the
+                    uncommitted changes are inconsequential and you want to
+                    proceed regardless.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>scripts/oe-setup-rpmrepo</filename> script:</emphasis>
-                    has been removed as its functionality can be replaced by
-                    bitbake package-index.
+                    The functionality of
+                    <filename>scripts/oe-setup-rpmrepo</filename> is replaced by
+                    <filename>bitbake package-index</filename>.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>scripts/test-dependencies.sh</filename> script:</emphasis>
-                    has been removed as it was largely made obsolete by the
-                    recipe-specific sysroots functionality introduced in the
-                    previous release.
+                    The script is largely made obsolete by the
+                    recipe-specific <filename>sysroots</filename>
+                    functionality introduced in the previous release.
                     </para></listitem>
             </itemizedlist>
         </para>
@@ -5438,34 +5421,41 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
         <title>BitBake Changes</title>
 
         <para>
-            The following are changes BitBake:
+            The following are BitBake changes:
             <itemizedlist>
                 <listitem><para>
-                    The --runall option has changed behaviour slightly.
-                    There are in fact two different behaviours people may want:
+                    The <filename>--runall</filename> option has changed.
+                    There are two different behaviors people might want:
                     <itemizedlist>
                         <listitem><para>
                             For a given target (or set of targets) look through
-                            the task graph and run task X only if its present
-                            and would have been built.
+                            the task graph and run task X only if it is present
+                            and will be built.
                             </para></listitem>
                         <listitem><para>
                             For a given target (or set of targets) look through
                             the task graph and run task X if any recipe in the
-                            taskgraph has such a target even if it wasn't in the
-                            original task graph.
+                            taskgraph has such a target, even if it is not in
+                            the original task graph.
                             </para></listitem>
                     </itemizedlist>
-                    The --runall option now performs (b), previously it behaved
-                    like (a). A --runonly option has been added to retain the
-                    ability to perform (a).
+                    The <filename>--runall</filename> option now performs
+                    list item (b) mentioned in the previous bullet point.
+                    Previously <filename>--runall</filename> behaved like list
+                    item (a) mentioned in the previous bullet point.
+                    A <filename>--runonly</filename> option now exists to
+                    retain the ability to perform list item (a).
                     </para></listitem>
                 <listitem><para>
                     Several explicit "run this task for all recipes in the
-                    dependency tree" tasks (such as fetchall, checkuriall, and
-                    the *all tasks provided by the distrodata and archiver
-                    classes) have now been removed as there is a bitbake option
-                    to do this for any arbitrary task, for example:
+                    dependency tree" tasks have been removed (e.g.
+                    <filename>fetchall</filename>,
+                    <filename>checkuriall</filename>, and the
+                    <filename>*all</filename> tasks provided by the
+                    <filename>distrodata</filename> and
+                    <filename>archiver</filename> classes).
+                    There is a BitBake option to complete this for any arbitrary
+                    task. For example:
                     <literallayout class='monospaced'>
      bitbake &lt;target&gt; -c fetchall
                     </literallayout>
@@ -5486,159 +5476,223 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
             The following are additional changes:
             <itemizedlist>
                 <listitem><para>
-                    The kernel class now supports building packages for multiple
-                    kernels. If your kernel recipe/bbappend mentions packaging
-                    at all, then you are advised to replace references to kernel
-                    in package names with ${KERNEL_PACKAGE_NAME}. For example,
-                    if you disable automatic installation of the kernel image
-                    using RDEPENDS_kernel-base = "" then to avoid warnings you
-                    will now need to use
-                    RDEPENDS_${KERNEL_PACKAGE_NAME}-base = "" instead.
+                    The <filename>kernel</filename> class supports building
+                    packages for multiple kernels.
+                    If your kernel recipe or <filename>.bbappend</filename> file
+                    mentions packaging at all, you should replace references to
+                    the kernel in package names with
+                    <filename>${KERNEL_PACKAGE_NAME}</filename>.
+                    For example, if you disable automatic installation of the
+                    kernel image using
+                    <filename>RDEPENDS_kernel-base = ""</filename> you can avoid
+                    warnings using
+                    <filename>RDEPENDS_${KERNEL_PACKAGE_NAME}-base = ""</filename>
+                    instead.
                     </para></listitem>
                 <listitem><para>
-                    The buildhistory class now commits changes to the repository
-                    by default, so setting BUILDHISTORY_COMMIT = "1" is no
-                    longer necessary. If you wish commits to be disabled, then
-                    you will now need to set BUILDHISTORY_COMMIT = "0" in your
+                    The <filename>buildhistory</filename> class commits changes
+                    to the repository by default so you no longer need to set
+                    <filename>BUILDHISTORY_COMMIT = "1"</filename>.
+                    If you want to disable commits you need to set
+                    <filename>BUILDHISTORY_COMMIT = "0"</filename> in your
                     configuration.
                     </para></listitem>
                 <listitem><para>
-                    The beaglebone reference machine has been renamed to
-                    beaglebone-yocto. The beaglebone-yocto BSP is a reference
+                    The <filename>beaglebone</filename> reference machine has
+                    been renamed to <filename>beaglebone-yocto</filename>.
+                    The <filename>beaglebone-yocto</filename> BSP is a reference
                     implementation using only mainline components available in
-                    OpenEmbedded-Core and meta-yocto-bsp, whereas Texas
-                    Instruments maintain a full-featured BSP in the meta-ti
-                    layer, and the rename avoids the previous name clash that
-                    existed between the two BSPs.
+                    OpenEmbedded-Core and <filename>meta-yocto-bsp</filename>,
+                    whereas Texas Instruments maintains a full-featured BSP in
+                    the <filename>meta-ti</filename> layer.
+                    This rename avoids the previous name clash that existed
+                    between the two BSPs.
                     </para></listitem>
                 <listitem><para>
-                    The update-alternatives class will now no longer work with
-                    SysV init scripts as such usage has been proven to be
-                    problematic.
-                    Related to this, the sysklogd recipe no longer uses
-                    update-alternatives as it is incompatible with other
-                    implementations.
+                    The <filename>update-alternatives</filename> class no longer
+                    works with SysV <filename>init</filename> scripts because
+                    this usage has been problematic.
+                    Also, the <filename>sysklogd</filename> recipe no longer
+                    uses <filename>update-alternatives</filename> because it is
+                    incompatible with other implementations.
                     </para></listitem>
                 <listitem><para>
-                    The cmake class now uses ninja instead of make by default
-                    for building in order to improve build performance. If a
-                    recipe is broken with ninja then the recipe can set
-                    OECMAKE_GENERATOR = "Unix Makefiles" to change back to make.
+                    By default, the <filename>cmake</filename> class uses
+                    <filename>ninja</filename> instead of
+                    <filename>make</filename> for building.
+                    This improves build performance.
+                    If a recipe is broken with <filename>ninja</filename>, then
+                    the recipe can set
+                    <filename>OECMAKE_GENERATOR = "Unix Makefiles"</filename>
+                    to change back to <filename>make</filename>.
                     </para></listitem>
                 <listitem><para>
-                    python: Restructure python packaging and replace it with
-                    autopackaging
+                    <filename>python</filename>:
+                    This command restructures
+                    Python packaging and replaces it with autopackaging.
                     </para></listitem>
                 <listitem><para>
-                    python3: Restructure python3 packaging and replace it with
-                    autopackaging
+                    <filename>python3</filename>:
+                    This command restructures Python3 packaging and replaces it
+                    with autopackaging.
                     </para></listitem>
                 <listitem><para>
-                    The previously deprecated base_* functions have now removed,
-                    in favour of their replacements in meta/lib/oe and
-                    bitbake/lib/bb.
-                    These are typically used from recipes and classes and any
-                    references to the old functions will now need to be updated.
-                    The full list along with each of their replacements:
+                    The previously deprecated <filename>base_*</filename>
+                    functions have been removed in favor of their replacements
+                    in <filename>meta/lib/oe</filename> and
+                    <filename>bitbake/lib/bb</filename>.
+                    These are typically used from recipes and classes.
+                    Any references to the old functions should be updated.
+                    The following is a full list, along with each of their
+                    replacements:
                       <itemizedlist>
                           <listitem><para>
-                              base_path_join() -> oe.path.join()
-                              </para></listitem>
-                              base_path_relative() -> oe.path.relative()
-                          <listitem><para>
-                              base_path_out() -> oe.path.format_display()
+                              <filename>base_path_join()</filename>
+                              is replaced by
+                              <filename>oe.path.join()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              base_read_file() -> oe.utils.read_file()
+                              <filename>base_path_relative()</filename>
+                              is replaced by
+                              <filename>oe.path.relative()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              base_ifelse() -> oe.utils.ifelse()
+                              <filename>base_path_out()</filename>
+                              is replaced by
+                              <filename>oe.path.format_display()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              base_conditional() -> oe.utils.conditional()
+                              <filename>base_read_file()</filename>
+                              is replaced by
+                              <filename>oe.utils.read_file()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              base_less_or_equal() -> oe.utils.less_or_equal()
+                              <filename>base_ifelse()</filename>
+                              is replaced by
+                              <filename>oe.utils.ifelse()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              base_version_less_or_equal() -> oe.utils.version_less_or_equal()
+                              <filename>base_conditional()</filename>
+                              is replaced by
+                              <filename>oe.utils.conditional()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              base_contains() -> bb.utils.contains()
+                              <filename>base_less_or_equal()</filename>
+                              is replaced by
+                              <filename>oe.utils.less_or_equal()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              base_both_contain() -> oe.utils.both_contain()
+                              <filename>base_version_less_or_equal()</filename>
+                              is replaced by
+                              <filename>oe.utils.version_less_or_equal()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              base_prune_suffix() -> oe.utils.prune_suffix()
+                              <filename>base_contains()</filename>
+                              is replaced by
+                              <filename>bb.utils.contains()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              oe_filter() -> oe.utils.str_filter()
+                              <filename>base_both_contain()</filename>
+                              is replaced by
+                              <filename>oe.utils.both_contain()</filename>.
                               </para></listitem>
                           <listitem><para>
-                              oe_filter_out() -> oe.utils.str_filter_out()
-                              (or use the _remove operator)
+                              <filename>base_prune_suffix()</filename>
+                              is replaced by
+                              <filename>oe.utils.prune_suffix()</filename>.
+                              </para></listitem>
+                          <listitem><para>
+                              <filename>oe_filter()</filename>
+                              is replaced by
+                              <filename>oe.utils.str_filter()</filename>.
+                              </para></listitem>
+                          <listitem><para>
+                              <filename>oe_filter_out()</filename>
+                              is replaced by
+                              <filename>oe.utils.str_filter_out()</filename>
+                              (or use the <filename>_remove</filename>
+                              operator).
                               </para></listitem>
                       </itemizedlist>
                     </para></listitem>
                 <listitem><para>
-                    Using exit 1 as a means of explicitly deferring a
-                    postinstall script until first boot is now deprecated, as
+                    Using <filename>exit 1</filename> to explicitly defer a
+                    postinstall script until first boot is now deprecated since
                     it is not an obvious mechanism and can mask actual errors.
                     If you want to explicitly defer a postinstall to first boot
-                    on the target rather than possibly at rootfs creation time,
-                    use pkg_postinst_ontarget() or alternatively call
-                    postinst-intercepts defer_to_first_boot from pkg_postinst().
-                    Any failure of a pkg_postinst() script (including exit 1)
-                    will now trigger a warning during do_rootfs.
+                    on the target rather than at <filename>rootfs</filename>
+                    creation time, use
+                    <filename>pkg_postinst_ontarget()</filename>
+                    or call
+                    <filename>postinst-intercepts defer_to_first_boot</filename>
+                    from <filename>pkg_postinst()</filename>.
+                    Any failure of a <filename>pkg_postinst()</filename>
+                    script (including <filename>exit 1</filename>)
+                    will trigger a warning during
+                    <filename>do_rootfs</filename>.
                     </para></listitem>
                 <listitem><para>
-                    The elf image type has been removed, as the mkelfimage tool
+                    The <filename>elf</filename> image type has been removed.
+                    This image type was removed because the
+                    <filename>mkelfimage</filename> tool
                     that was required to create it is no longer provided by
-                    coreboot upstream, and required updating every time binutils
-                    got updated.
+                    coreboot upstream and required updating every time
+                    <filename>binutils</filename> updated.
                     </para></listitem>
                 <listitem><para>
-                    Support for .iso image compression (previously enabled via
-                    COMPRESSISO = "1") has been removed, since the userspace
-                    tools (zisofs-tools) are unmaintained and squashfs provides
+                    Support for .iso image compression (previously enabled
+                    through <filename>COMPRESSISO = "1"</filename>) has been
+                    removed.
+                    The userspace tools (<filename>zisofs-tools</filename>) are
+                    unmaintained and <filename>squashfs</filename> provides
                     better performance and compression.
                     In order to build a live image with squashfs+lz4 compression
-                    enabled you would set LIVE_ROOTFS_TYPE = "squashfs-lz4"
-                    and ensure that live is in IMAGE_FSTYPES.
+                    enabled you set
+                    <filename>LIVE_ROOTFS_TYPE = "squashfs-lz4"</filename>
+                    and ensure that <filename>live</filename>
+                    is in <filename>IMAGE_FSTYPES</filename>.
                     </para></listitem>
                 <listitem><para>
-                    Recipes having an unconditional dependency on libpam will
-                    now only be buildable with pam in DISTRO_FEATURES.
+                    Recipes with an unconditional dependency on
+                    <filename>libpam</filename> are only buildable with
+                    <filename>pam</filename> in
+                    <filename>DISTRO_FEATURES</filename>.
                     If the dependency is truly optional then it is recommended
-                    that the dependency be made conditional upon pam being in
-                    DISTRO_FEATURES.
+                    that the dependency be conditional upon
+                    <filename>pam</filename> being in
+                    <filename>DISTRO_FEATURES</filename>.
                     </para></listitem>
                 <listitem><para>
-                    For EFI-based machines, the bootloader (grub-efi by default)
-                    is now installed into the image at /boot. wic can be used to
-                    split this into separate boot and rootfs partitions if
-                    desired.
+                    For EFI-based machines, the bootloader
+                    (<filename>grub-efi</filename> by default) is installed into
+                    the image at /boot.
+                    Wic can be used to split the bootloader into separate boot
+                    and rootfs partitions if necessary.
                     </para></listitem>
                 <listitem><para>
                     Patches whose context does not match exactly (i.e. where
-                    patch reports "fuzz" when applying) will now generate a
+                    patch reports "fuzz" when applying) will generate a
                     warning.
-                    See http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=cc97bc08125b63821ce3f616771830f77c456f57
+                    For an example of this see
+                    <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=cc97bc08125b63821ce3f616771830f77c456f57'>this commit</ulink>.
                     </para></listitem>
                 <listitem><para>
-                    Layers are now expected to set LAYERSERIES_COMPAT_layername
+                    Layers are expected to set
+                    <filename>LAYERSERIES_COMPAT_layername</filename>
                     to match the version(s) of OpenEmbedded-Core they are
-                    compatible with (specified as codenames using spaces to
-                    separate multiple values, e.g. "rocko sumo").
-                    If a layer does not set this, a warning will be shown.
+                    compatible with.
+                    This is specified as codenames using spaces to separate
+                    multiple values (e.g. "rocko sumo").
+                    If a layer does not set
+                    <filename>LAYERSERIES_COMPAT_layername</filename>, a warning
+                    will is shown.
                     If a layer sets a value that does not include the current
-                    version, then an error will be produced.
+                    version, then an error is be produced.
                     </para></listitem>
                 <listitem><para>
-                    The TZ environment variable is now set to "UTC" within the
-                    build environment in order to fix reproducibility problems
-                    in some recipes.
+                    The <filename>TZ</filename> environment variable is set to
+                    "UTC" within the build environment in order to fix
+                    reproducibility problems in some recipes.
                     </para></listitem>
             </itemizedlist>
         </para>
