@@ -2443,10 +2443,10 @@
             <ulink url='&YOCTO_DOCS_REF_URL;#bitbake-term'>BitBake</ulink>
             can determine that parts do not need to be rebuilt.
             Fundamentally, building from scratch is attractive as it means all
-            parts are built fresh and there is no possibility of stale data
-            causing problems.
+            parts are built fresh and no possibility of stale data exists that
+            can cause problems.
             When developers hit problems, they typically default back to
-            building from scratch so they know the state of things from the
+            building from scratch so they have a know state from the
             start.
         </para>
 
@@ -2482,10 +2482,9 @@
         </para>
 
         <para>
-            For the first question, the
-            <ulink url='&YOCTO_DOCS_REF_URL;#build-system-term'>OpenEmbedded build system</ulink>
-            detects changes in the "inputs" to a given task by creating a
-            checksum (or signature) of the task's inputs.
+            For the first question, the build system detects changes in the
+            "inputs" to a given task by creating a checksum (or signature) of
+            the task's inputs.
             If the checksum changes, the system assumes the inputs have changed
             and the task needs to be rerun.
             For the second question, the shared state (sstate) code tracks
@@ -2497,13 +2496,13 @@
             objects from remote locations and install them if they are deemed
             to be valid.
             <note>
-                The OpenEmbedded build system does not maintain
+                The build system does not maintain
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
                 information as part of the shared state packages.
                 Consequently, considerations exist that affect maintaining
                 shared state feeds.
-                For information on how the OpenEmbedded build system
-                works with packages and can track incrementing
+                For information on how the build system works with packages
+                and can track incrementing
                 <filename>PR</filename> information, see the
                 "<ulink url='&YOCTO_DOCS_DEV_URL;#automatically-incrementing-a-binary-package-revision-number'>Automatically Incrementing a Binary Package Revision Number</ulink>"
                 section in the Yocto Project Development Tasks Manual.
@@ -2649,8 +2648,8 @@
                 inputs into a task.
                 Information based on direct inputs is referred to as the
                 "basehash" in the code.
-                However, there is still the question of a task's indirect
-                inputs - the things that were already built and present in the
+                However, the question of a task's indirect inputs still
+                exits - items already built and present in the
                 <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
                 The checksum (or signature) for a particular task needs to add
                 the hashes of all the tasks on which the particular task
@@ -2667,8 +2666,8 @@
                 Within the BitBake configuration file, you can give BitBake
                 some extra information to help it construct the basehash.
                 The following statement effectively results in a list of
-                global variable dependency excludes - variables never
-                included in any checksum:
+                global variable dependency excludes (i.e. variables never
+                included in any checksum):
                 <literallayout class='monospaced'>
      BB_HASHBASE_WHITELIST ?= "TMPDIR FILE PATH PWD BB_TASKHASH BBPATH DL_DIR \
          SSTATE_DIR THISDIR FILESEXTRAPATHS FILE_DIRNAME HOME LOGNAME SHELL TERM \
@@ -2693,7 +2692,7 @@
                 This file defines the two basic signature generators
                 <ulink url='&YOCTO_DOCS_REF_URL;#oe-core'>OE-Core</ulink>
                 uses:  "OEBasic" and "OEBasicHash".
-                By default, there is a dummy "noop" signature handler enabled
+                By default, a dummy "noop" signature handler is enabled
                 in BitBake.
                 This means that behavior is unchanged from previous versions.
                 OE-Core uses the "OEBasicHash" signature handler by default
@@ -2704,14 +2703,13 @@
                 </literallayout>
                 The "OEBasicHash" <filename>BB_SIGNATURE_HANDLER</filename>
                 is the same as the "OEBasic" version but adds the task hash to
-                the stamp files.
-                This results in any
-                <ulink url='&YOCTO_DOCS_REF_URL;#metadata'>Metadata</ulink>
-                change that changes the task hash, automatically
-                causing the task to be run again.
+                the
+                <link linkend='stamp-files-and-the-rerunning-of-tasks'>stamp files</link>.
+                This results in any metadata change that changes the task hash,
+                automatically causing the task to be run again.
                 This removes the need to bump
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-PR'><filename>PR</filename></ulink>
-                values, and changes to Metadata automatically ripple across
+                values, and changes to metadata automatically ripple across
                 the build.
             </para>
 
@@ -2747,7 +2745,7 @@
             <para>
                 Checksums and dependencies, as discussed in the previous
                 section, solve half the problem of supporting a shared state.
-                The other part of the problem is being able to use checksum
+                The other half of the problem is being able to use checksum
                 information during the build and being able to reuse or rebuild
                 specific components.
             </para>
@@ -2760,8 +2758,9 @@
                 The idea is that the build process does not care about the
                 source of a task's output.
                 Output could be freshly built or it could be downloaded and
-                unpacked from somewhere - the build process does not need to
-                worry about its origin.
+                unpacked from somewhere.
+                In other words, the build process does not need to worry about
+                its origin.
             </para>
 
             <para>
@@ -2779,8 +2778,8 @@
             <para>
                 The Yocto Project team has tried to keep the details of the
                 implementation hidden in <filename>sstate</filename> class.
-                From a user's perspective, adding shared state wrapping to a task
-                is as simple as this
+                From a user's perspective, adding shared state wrapping to a
+                task is as simple as this
                 <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-deploy'><filename>do_deploy</filename></ulink>
                 example taken from the
                 <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-deploy'><filename>deploy</filename></ulink>
@@ -2796,6 +2795,7 @@
      }
      addtask do_deploy_setscene
      do_deploy[dirs] = "${DEPLOYDIR} ${B}"
+     do_deploy[stamp-extra-info] = "${MACHINE_ARCH}"
                 </literallayout>
                 The following list explains the previous example:
                 <itemizedlist>
@@ -2825,7 +2825,7 @@
                             If <filename>do_deploy</filename> is not already in
                             the shared state cache or if its input checksum
                             (signature) has changed from when the output was
-                            cached, the task will be run to populate the shared
+                            cached, the task runs to populate the shared
                             state cache, after which the contents of the shared
                             state cache is copied to
                             <filename>${DEPLOY_DIR_IMAGE}</filename>.
@@ -2833,7 +2833,7 @@
                             state cache and its signature indicates that the
                             cached output is still valid (i.e. if no
                             relevant task inputs have changed), then the
-                            contents of the shared state cache will be copied
+                            contents of the shared state cache copies
                             directly to
                             <filename>${DEPLOY_DIR_IMAGE}</filename> by the
                             <filename>do_deploy_setscene</filename> task
@@ -2888,6 +2888,18 @@
      do_package[sstate-plaindirs] = "${PKGD} ${PKGDEST}"
                             </literallayout>
                         </note>
+                        </para></listitem>
+                    <listitem><para>
+                        The <filename>do_deploy[stamp-extra-info] = "${MACHINE_ARCH}"</filename>
+                        line appends extra metadata to the
+                        <link linkend='stamp-files-and-the-rerunning-of-tasks'>stamp file</link>.
+                        In this case, the metadata makes the task specific
+                        to a machine's architecture.
+                        See
+                        "<ulink url='&YOCTO_DOCS_BB_URL;#ref-bitbake-tasklist'>The Task List</ulink>"
+                        section in the BitBake User Manual for more
+                        information on the <filename>stamp-extra-info</filename>
+                        flag.
                         </para></listitem>
                     <listitem><para>
                         <filename>sstate-inputdirs</filename> and
@@ -2970,7 +2982,7 @@
                 Since the sysroot is not used, it would never get extracted.
                 This is another reason why a task-based approach is preferred
                 over a recipe-based approach, which would have to install the
-                output from every task.n
+                output from every task.
             </para>
         </section>
 
