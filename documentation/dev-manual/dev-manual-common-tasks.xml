@@ -2187,9 +2187,8 @@
                         containing the current checksum.
                         For more explanation and examples of how to set the
                         <filename>LIC_FILES_CHKSUM</filename> variable, see the
-                        "<ulink url='&YOCTO_DOCS_OM_URL;#usingpoky-configuring-LIC_FILES_CHKSUM'>Tracking License Changes</ulink>"
-                        section in the Yocto Project Overview and Concepts
-                        Manual.</para>
+                        "<link link='usingpoky-configuring-LIC_FILES_CHKSUM'>Tracking License Changes</link>"
+                        section.</para>
 
                         <para>To determine the correct checksum string, you
                         can list the appropriate files in the
@@ -3400,7 +3399,7 @@
                     The variable
                     <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM'>LIC_FILES_CHKSUM</ulink></filename>
                     is used to track source license changes as described in the
-                    "<ulink url='&YOCTO_DOCS_OM_URL;#usingpoky-configuring-LIC_FILES_CHKSUM'>Tracking License Changes</ulink>"
+                    "<link linkend='usingpoky-configuring-LIC_FILES_CHKSUM'>Tracking License Changes</link>"
                     section in the Yocto Project Overview and Concepts Manual.
                     You can quickly create Autotool-based recipes in a manner
                     similar to the previous example.
@@ -13501,127 +13500,515 @@ Some notes from Cal:
         </section>
     </section>
 
-    <section id='maintaining-open-source-license-compliance-during-your-products-lifecycle'>
-        <title>Maintaining Open Source License Compliance During Your Product's Lifecycle</title>
+    <section id='working-with-licenses'>
+        <title>Working With Licenses</title>
 
         <para>
-            One of the concerns for a development organization using open source
-            software is how to maintain compliance with various open source
-            licensing during the lifecycle of the product.
-            While this section does not provide legal advice or
-            comprehensively cover all scenarios, it does
-            present methods that you can use to
-            assist you in meeting the compliance requirements during a software
-            release.
+            As mentioned in the
+            "<ulink url='&YOCTO_DOCS_OM_URL;#licensing'>Licensing</ulink>"
+            section in the Yocto Project Overview and Concepts Manual,
+            open source projects are open to the public and they
+            consequently have different licensing structures in place.
+            This section describes the mechanism by which the
+            <ulink url='&YOCTO_DOCS_REF_URL;#build-system-term'>OpenEmbedded build system</ulink>
+            tracks changes to licensing text and covers how to maintain open
+            source license compliance during your project's lifecycle.
+            The section also describes how to enable commercially licensed
+            recipes, which by default are disabled.
         </para>
 
-        <para>
-            With hundreds of different open source licenses that the Yocto
-            Project tracks, it is difficult to know the requirements of each
-            and every license.
-            However, the requirements of the major FLOSS licenses can begin
-            to be covered by
-            assuming that three main areas of concern exist:
-            <itemizedlist>
-                <listitem><para>Source code must be provided.</para></listitem>
-                <listitem><para>License text for the software must be
-                    provided.</para></listitem>
-                <listitem><para>Compilation scripts and modifications to the
-                    source code must be provided.
-                    </para></listitem>
-            </itemizedlist>
-            There are other requirements beyond the scope of these
-            three and the methods described in this section
-            (e.g. the mechanism through which source code is distributed).
-        </para>
-
-        <para>
-            As different organizations have different methods of complying with
-            open source licensing, this section is not meant to imply that
-            there is only one single way to meet your compliance obligations,
-            but rather to describe one method of achieving compliance.
-            The remainder of this section describes methods supported to meet the
-            previously mentioned three requirements.
-            Once you take steps to meet these requirements,
-            and prior to releasing images, sources, and the build system,
-            you should audit all artifacts to ensure completeness.
-            <note>
-                The Yocto Project generates a license manifest during
-                image creation that is located
-                in <filename>${DEPLOY_DIR}/licenses/<replaceable>image_name-datestamp</replaceable></filename>
-                to assist with any audits.
-            </note>
-        </para>
-
-        <section id='providing-the-source-code'>
-            <title>Providing the Source Code</title>
+        <section id="usingpoky-configuring-LIC_FILES_CHKSUM">
+            <title>Tracking License Changes</title>
 
             <para>
-                Compliance activities should begin before you generate the
-                final image.
-                The first thing you should look at is the requirement that
-                tops the list for most compliance groups - providing
-                the source.
-                The Yocto Project has a few ways of meeting this
-                requirement.
+                The license of an upstream project might change in the future.
+                In order to prevent these changes going unnoticed, the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM'><filename>LIC_FILES_CHKSUM</filename></ulink>
+                variable tracks changes to the license text. The checksums are
+                validated at the end of the configure step, and if the
+                checksums do not match, the build will fail.
             </para>
 
-            <para>
-                One of the easiest ways to meet this requirement is
-                to provide the entire
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink>
-                used by the build.
-                This method, however, has a few issues.
-                The most obvious is the size of the directory since it includes
-                all sources used in the build and not just the source used in
-                the released image.
-                It will include toolchain source, and other artifacts, which
-                you would not generally release.
-                However, the more serious issue for most companies is accidental
-                release of proprietary software.
-                The Yocto Project provides an
-                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-archiver'><filename>archiver</filename></ulink>
-                class to help avoid some of these concerns.
-            </para>
+            <section id="usingpoky-specifying-LIC_FILES_CHKSUM">
+                <title>Specifying the <filename>LIC_FILES_CHKSUM</filename> Variable</title>
+
+                <para>
+                    The <filename>LIC_FILES_CHKSUM</filename>
+                    variable contains checksums of the license text in the
+                    source code for the recipe.
+                    Following is an example of how to specify
+                    <filename>LIC_FILES_CHKSUM</filename>:
+                    <literallayout class='monospaced'>
+     LIC_FILES_CHKSUM = "file://COPYING;md5=xxxx \
+                         file://licfile1.txt;beginline=5;endline=29;md5=yyyy \
+                         file://licfile2.txt;endline=50;md5=zzzz \
+                         ..."
+                    </literallayout>
+                    <note><title>Notes</title>
+                        <itemizedlist>
+                            <listitem><para>
+                                When using "beginline" and "endline", realize
+                                that line numbering begins with one and not
+                                zero.
+                                Also, the included lines are inclusive (i.e.
+                                lines five through and including 29 in the
+                                previous example for
+                                <filename>licfile1.txt</filename>).
+                                </para></listitem>
+                            <listitem><para>
+                                When a license check fails, the selected license
+                                text is included as part of the QA message.
+                                Using this output, you can determine the exact
+                                start and finish for the needed license text.
+                                </para></listitem>
+                        </itemizedlist>
+                    </note>
+                </para>
+
+                <para>
+                    The build system uses the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-S'><filename>S</filename></ulink>
+                    variable as the default directory when searching files
+                    listed in <filename>LIC_FILES_CHKSUM</filename>.
+                    The previous example employs the default directory.
+                </para>
+
+                <para>
+                    Consider this next example:
+                    <literallayout class='monospaced'>
+     LIC_FILES_CHKSUM = "file://src/ls.c;beginline=5;endline=16;\
+                                         md5=bb14ed3c4cda583abc85401304b5cd4e"
+     LIC_FILES_CHKSUM = "file://${WORKDIR}/license.html;md5=5c94767cedb5d6987c902ac850ded2c6"
+                    </literallayout>
+                </para>
+
+                <para>
+                    The first line locates a file in
+                    <filename>${S}/src/ls.c</filename> and isolates lines five
+                    through 16 as license text.
+                    The second line refers to a file in
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-WORKDIR'><filename>WORKDIR</filename></ulink>.
+                </para>
+
+                <para>
+                    Note that <filename>LIC_FILES_CHKSUM</filename> variable is
+                    mandatory for all recipes, unless the
+                    <filename>LICENSE</filename> variable is set to "CLOSED".
+                </para>
+            </section>
+
+            <section id="usingpoky-LIC_FILES_CHKSUM-explanation-of-syntax">
+                <title>Explanation of Syntax</title>
+
+                <para>
+                    As mentioned in the previous section, the
+                    <filename>LIC_FILES_CHKSUM</filename> variable lists all
+                    the important files that contain the license text for the
+                    source code.
+                    It is possible to specify a checksum for an entire file,
+                    or a specific section of a file (specified by beginning and
+                    ending line numbers with the "beginline" and "endline"
+                    parameters, respectively).
+                    The latter is useful for source files with a license
+                    notice header, README documents, and so forth.
+                    If you do not use the "beginline" parameter, then it is
+                    assumed that the text begins on the first line of the file.
+                    Similarly, if you do not use the "endline" parameter,
+                    it is assumed that the license text ends with the last
+                    line of the file.
+                </para>
+
+                <para>
+                    The "md5" parameter stores the md5 checksum of the license
+                    text.
+                    If the license text changes in any way as compared to
+                    this parameter then a mismatch occurs.
+                    This mismatch triggers a build failure and notifies
+                    the developer.
+                    Notification allows the developer to review and address
+                    the license text changes.
+                    Also note that if a mismatch occurs during the build,
+                    the correct md5 checksum is placed in the build log and
+                    can be easily copied to the recipe.
+                </para>
+
+                <para>
+                    There is no limit to how many files you can specify using
+                    the <filename>LIC_FILES_CHKSUM</filename> variable.
+                    Generally, however, every project requires a few
+                    specifications for license tracking.
+                    Many projects have a "COPYING" file that stores the
+                    license information for all the source code files.
+                    This practice allows you to just track the "COPYING"
+                    file as long as it is kept up to date.
+                    <note><title>Tips</title>
+                        <itemizedlist>
+                            <listitem><para>
+                                If you specify an empty or invalid "md5"
+                                parameter,
+                                <ulink url='&YOCTO_DOCS_REF_URL;#bitbake-term'>BitBake</ulink>
+                                returns an md5 mis-match
+                                error and displays the correct "md5" parameter
+                                value during the build.
+                                The correct parameter is also captured in
+                                the build log.
+                                </para></listitem>
+                            <listitem><para>
+                                If the whole file contains only license text,
+                                you do not need to use the "beginline" and
+                               "endline" parameters.
+                               </para></listitem>
+                        </itemizedlist>
+                    </note>
+                </para>
+            </section>
+        </section>
+
+        <section id="enabling-commercially-licensed-recipes">
+            <title>Enabling Commercially Licensed Recipes</title>
 
             <para>
-                Before you employ <filename>DL_DIR</filename> or the
-                <filename>archiver</filename> class, you need to decide how
-                you choose to provide source.
-                The source <filename>archiver</filename> class can generate
-                tarballs and SRPMs and can create them with various levels of
-                compliance in mind.
-            </para>
-
-            <para>
-                One way of doing this (but certainly not the only way) is to
-                release just the source as a tarball.
-                You can do this by adding the following to the
-                <filename>local.conf</filename> file found in the
-                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>:
+                By default, the OpenEmbedded build system disables
+                components that have commercial or other special licensing
+                requirements.
+                Such requirements are defined on a
+                recipe-by-recipe basis through the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE_FLAGS'><filename>LICENSE_FLAGS</filename></ulink>
+                variable definition in the affected recipe.
+                For instance, the
+                <filename>poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly</filename>
+                recipe contains the following statement:
                 <literallayout class='monospaced'>
+     LICENSE_FLAGS = "commercial"
+                </literallayout>
+                Here is a slightly more complicated example that contains both
+                an explicit recipe name and version (after variable expansion):
+                <literallayout class='monospaced'>
+     LICENSE_FLAGS = "license_${PN}_${PV}"
+                </literallayout>
+	            In order for a component restricted by a
+                <filename>LICENSE_FLAGS</filename> definition to be enabled and
+                included in an image, it needs to have a matching entry in the
+                global
+	            <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE_FLAGS_WHITELIST'><filename>LICENSE_FLAGS_WHITELIST</filename></ulink>
+                variable, which is a variable typically defined in your
+                <filename>local.conf</filename> file.
+                For example, to enable the
+                <filename>poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly</filename>
+	            package, you could add either the string
+	            "commercial_gst-plugins-ugly" or the more general string
+	            "commercial" to <filename>LICENSE_FLAGS_WHITELIST</filename>.
+                See the
+                "<link linkend='license-flag-matching'>License Flag Matching</link>"
+                section for a full
+                explanation of how <filename>LICENSE_FLAGS</filename> matching
+                works.
+                Here is the example:
+                <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly"
+                </literallayout>
+	            Likewise, to additionally enable the package built from the
+                recipe containing
+	            <filename>LICENSE_FLAGS = "license_${PN}_${PV}"</filename>,
+                and assuming that the actual recipe name was
+                <filename>emgd_1.10.bb</filename>, the following string would
+                enable that package as well as the original
+                <filename>gst-plugins-ugly</filename> package:
+                <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly license_emgd_1.10"
+                </literallayout>
+	            As a convenience, you do not need to specify the complete
+                license string in the whitelist for every package.
+                You can use an abbreviated form, which consists
+                of just the first portion or portions of the license
+                string before the initial underscore character or characters.
+                A partial string will match any license that contains the
+                given string as the first portion of its license.
+                For example, the following whitelist string will also match
+                both of the packages previously mentioned as well as any other
+                packages that have licenses starting with "commercial" or
+                "license".
+                <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial license"
+                </literallayout>
+            </para>
+
+            <section id="license-flag-matching">
+                <title>License Flag Matching</title>
+
+                <para>
+		            License flag matching allows you to control what recipes
+                    the OpenEmbedded build system includes in the build.
+                    Fundamentally, the build system attempts to match
+                    <filename>LICENSE_FLAGS</filename> strings found in recipes
+                    against <filename>LICENSE_FLAGS_WHITELIST</filename>
+                    strings found in the whitelist.
+                    A match causes the build system to include a recipe in the
+                    build, while failure to find a match causes the build
+                    system to exclude a recipe.
+                </para>
+
+                <para>
+                    In general, license flag matching is simple.
+                    However, understanding some concepts will help you
+                    correctly and effectively use matching.
+                </para>
+
+                <para>
+                    Before a flag
+                    defined by a particular recipe is tested against the
+                    contents of the whitelist, the expanded string
+                    <filename>_${PN}</filename> is appended to the flag.
+                    This expansion makes each
+                    <filename>LICENSE_FLAGS</filename> value recipe-specific.
+                    After expansion, the string is then matched against the
+                    whitelist.
+                    Thus, specifying
+                    <filename>LICENSE_FLAGS = "commercial"</filename>
+                    in recipe "foo", for example, results in the string
+                    <filename>"commercial_foo"</filename>.
+                    And, to create a match, that string must appear in the
+                    whitelist.
+                </para>
+
+                <para>
+                    Judicious use of the <filename>LICENSE_FLAGS</filename>
+                    strings and the contents of the
+                    <filename>LICENSE_FLAGS_WHITELIST</filename> variable
+                    allows you a lot of flexibility for including or excluding
+                    recipes based on licensing.
+                    For example, you can broaden the matching capabilities by
+                    using license flags string subsets in the whitelist.
+                    <note>
+                        When using a string subset, be sure to use the part of
+                        the expanded string that precedes the appended
+                        underscore character (e.g.
+                        <filename>usethispart_1.3</filename>,
+                        <filename>usethispart_1.4</filename>, and so forth).
+                    </note>
+                    For example, simply specifying the string "commercial" in
+                    the whitelist matches any expanded
+                    <filename>LICENSE_FLAGS</filename> definition that starts
+                    with the string "commercial" such as "commercial_foo" and
+                    "commercial_bar", which are the strings the build system
+                    automatically generates for hypothetical recipes named
+                    "foo" and "bar" assuming those recipes simply specify the
+                    following:
+                    <literallayout class='monospaced'>
+     LICENSE_FLAGS = "commercial"
+                    </literallayout>
+                    Thus, you can choose to exhaustively
+                    enumerate each license flag in the whitelist and
+                    allow only specific recipes into the image, or
+                    you can use a string subset that causes a broader range of
+                    matches to allow a range of recipes into the image.
+                </para>
+
+                <para>
+                    This scheme works even if the
+                    <filename>LICENSE_FLAGS</filename> string already
+                    has <filename>_${PN}</filename> appended.
+                    For example, the build system turns the license flag
+                    "commercial_1.2_foo" into "commercial_1.2_foo_foo" and
+                    would match both the general "commercial" and the specific
+                    "commercial_1.2_foo" strings found in the whitelist, as
+                    expected.
+                </para>
+
+                <para>
+                    Here are some other scenarios:
+                    <itemizedlist>
+                        <listitem><para>
+                            You can specify a versioned string in the recipe
+                            such as "commercial_foo_1.2" in a "foo" recipe.
+                            The build system expands this string to
+                            "commercial_foo_1.2_foo".
+                            Combine this license flag with a whitelist that has
+                            the string "commercial" and you match the flag
+                            along with any other flag that starts with the
+                            string "commercial".
+                            </para></listitem>
+                        <listitem><para>
+                            Under the same circumstances, you can use
+                            "commercial_foo" in the whitelist and the build
+                            system not only matches "commercial_foo_1.2" but
+                            also matches any license flag with the string
+                            "commercial_foo", regardless of the version.
+                            </para></listitem>
+                        <listitem><para>
+                            You can be very specific and use both the
+                            package and version parts in the whitelist (e.g.
+                            "commercial_foo_1.2") to specifically match a
+                            versioned recipe.
+                            </para></listitem>
+                    </itemizedlist>
+                </para>
+            </section>
+
+            <section id="other-variables-related-to-commercial-licenses">
+                <title>Other Variables Related to Commercial Licenses</title>
+
+                <para>
+                    Other helpful variables related to commercial
+                    license handling exist and are defined in the
+                    <filename>poky/meta/conf/distro/include/default-distrovars.inc</filename> file:
+                    <literallayout class='monospaced'>
+     COMMERCIAL_AUDIO_PLUGINS ?= ""
+     COMMERCIAL_VIDEO_PLUGINS ?= ""
+                    </literallayout>
+                    If you want to enable these components, you can do so by
+                    making sure you have statements similar to the following
+                    in your <filename>local.conf</filename> configuration file:
+                    <literallayout class='monospaced'>
+     COMMERCIAL_AUDIO_PLUGINS = "gst-plugins-ugly-mad \
+        gst-plugins-ugly-mpegaudioparse"
+     COMMERCIAL_VIDEO_PLUGINS = "gst-plugins-ugly-mpeg2dec \
+        gst-plugins-ugly-mpegstream gst-plugins-bad-mpegvideoparse"
+     LICENSE_FLAGS_WHITELIST = "commercial_gst-plugins-ugly commercial_gst-plugins-bad commercial_qmmp"
+                    </literallayout>
+                    Of course, you could also create a matching whitelist
+                    for those components using the more general "commercial"
+                    in the whitelist, but that would also enable all the
+                    other packages with <filename>LICENSE_FLAGS</filename>
+                    containing "commercial", which you may or may not want:
+                    <literallayout class='monospaced'>
+     LICENSE_FLAGS_WHITELIST = "commercial"
+                    </literallayout>
+                </para>
+
+                <para>
+                    Specifying audio and video plug-ins as part of the
+                    <filename>COMMERCIAL_AUDIO_PLUGINS</filename> and
+                    <filename>COMMERCIAL_VIDEO_PLUGINS</filename> statements
+                    (along with the enabling
+                    <filename>LICENSE_FLAGS_WHITELIST</filename>) includes the
+                    plug-ins or components into built images, thus adding
+                    support for media formats or components.
+                </para>
+            </section>
+        </section>
+
+        <section id='maintaining-open-source-license-compliance-during-your-products-lifecycle'>
+            <title>Maintaining Open Source License Compliance During Your Product's Lifecycle</title>
+
+            <para>
+                One of the concerns for a development organization using open source
+                software is how to maintain compliance with various open source
+                licensing during the lifecycle of the product.
+                While this section does not provide legal advice or
+                comprehensively cover all scenarios, it does
+                present methods that you can use to
+                assist you in meeting the compliance requirements during a software
+                release.
+            </para>
+
+            <para>
+                With hundreds of different open source licenses that the Yocto
+                Project tracks, it is difficult to know the requirements of each
+                and every license.
+                However, the requirements of the major FLOSS licenses can begin
+                to be covered by
+                assuming that three main areas of concern exist:
+                <itemizedlist>
+                    <listitem><para>Source code must be provided.</para></listitem>
+                    <listitem><para>License text for the software must be
+                        provided.</para></listitem>
+                    <listitem><para>Compilation scripts and modifications to the
+                        source code must be provided.
+                        </para></listitem>
+                </itemizedlist>
+                There are other requirements beyond the scope of these
+                three and the methods described in this section
+                (e.g. the mechanism through which source code is distributed).
+            </para>
+
+            <para>
+                As different organizations have different methods of complying with
+                open source licensing, this section is not meant to imply that
+                there is only one single way to meet your compliance obligations,
+                but rather to describe one method of achieving compliance.
+                The remainder of this section describes methods supported to meet the
+                previously mentioned three requirements.
+                Once you take steps to meet these requirements,
+                and prior to releasing images, sources, and the build system,
+                you should audit all artifacts to ensure completeness.
+                <note>
+                    The Yocto Project generates a license manifest during
+                    image creation that is located
+                    in <filename>${DEPLOY_DIR}/licenses/<replaceable>image_name-datestamp</replaceable></filename>
+                    to assist with any audits.
+                </note>
+            </para>
+
+            <section id='providing-the-source-code'>
+                <title>Providing the Source Code</title>
+
+                <para>
+                    Compliance activities should begin before you generate the
+                    final image.
+                    The first thing you should look at is the requirement that
+                    tops the list for most compliance groups - providing
+                    the source.
+                    The Yocto Project has a few ways of meeting this
+                    requirement.
+                </para>
+
+                <para>
+                    One of the easiest ways to meet this requirement is
+                    to provide the entire
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink>
+                    used by the build.
+                    This method, however, has a few issues.
+                    The most obvious is the size of the directory since it includes
+                    all sources used in the build and not just the source used in
+                    the released image.
+                    It will include toolchain source, and other artifacts, which
+                    you would not generally release.
+                    However, the more serious issue for most companies is accidental
+                    release of proprietary software.
+                    The Yocto Project provides an
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-archiver'><filename>archiver</filename></ulink>
+                    class to help avoid some of these concerns.
+                </para>
+
+                <para>
+                    Before you employ <filename>DL_DIR</filename> or the
+                    <filename>archiver</filename> class, you need to decide how
+                    you choose to provide source.
+                    The source <filename>archiver</filename> class can generate
+                    tarballs and SRPMs and can create them with various levels of
+                    compliance in mind.
+                </para>
+
+                <para>
+                    One way of doing this (but certainly not the only way) is to
+                    release just the source as a tarball.
+                    You can do this by adding the following to the
+                    <filename>local.conf</filename> file found in the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>:
+                    <literallayout class='monospaced'>
      INHERIT += "archiver"
      ARCHIVER_MODE[src] = "original"
-                </literallayout>
-                During the creation of your image, the source from all
-                recipes that deploy packages to the image is placed within
-                subdirectories of
-                <filename>DEPLOY_DIR/sources</filename> based on the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE'><filename>LICENSE</filename></ulink>
-                for each recipe.
-                Releasing the entire directory enables you to comply with
-                requirements concerning providing the unmodified source.
-                It is important to note that the size of the directory can
-                get large.
-            </para>
+                    </literallayout>
+                    During the creation of your image, the source from all
+                    recipes that deploy packages to the image is placed within
+                    subdirectories of
+                    <filename>DEPLOY_DIR/sources</filename> based on the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE'><filename>LICENSE</filename></ulink>
+                    for each recipe.
+                    Releasing the entire directory enables you to comply with
+                    requirements concerning providing the unmodified source.
+                    It is important to note that the size of the directory can
+                    get large.
+                </para>
 
-            <para>
-                A way to help mitigate the size issue is to only release
-                tarballs for licenses that require the release of
-                source.
-                Let us assume you are only concerned with GPL code as
-                identified by running the following script:
-                <literallayout class='monospaced'>
+                <para>
+                    A way to help mitigate the size issue is to only release
+                    tarballs for licenses that require the release of
+                    source.
+                    Let us assume you are only concerned with GPL code as
+                    identified by running the following script:
+                    <literallayout class='monospaced'>
      # Script to archive a subset of packages matching specific license(s)
      # Source and license files are copied into sub folders of package folder
      # Must be run from build folder
@@ -13644,96 +14031,97 @@ Some notes from Cal:
               cp tmp/deploy/licenses/$p/* $src_release_dir/$p/license 2> /dev/null
            fi
         done
-     done                </literallayout>
-                At this point, you could create a tarball from the
-                <filename>gpl_source_release</filename> directory and
-                provide that to the end user.
-                This method would be a step toward achieving compliance
-                with section 3a of GPLv2 and with section 6 of GPLv3.
-            </para>
-        </section>
+     done
+                    </literallayout>
+                    At this point, you could create a tarball from the
+                    <filename>gpl_source_release</filename> directory and
+                    provide that to the end user.
+                    This method would be a step toward achieving compliance
+                    with section 3a of GPLv2 and with section 6 of GPLv3.
+                </para>
+            </section>
 
-        <section id='providing-license-text'>
-            <title>Providing License Text</title>
+            <section id='providing-license-text'>
+                <title>Providing License Text</title>
 
-            <para>
-                One requirement that is often overlooked is inclusion
-                of license text.
-                This requirement also needs to be dealt with prior to
-                generating the final image.
-                Some licenses require the license text to accompany
-                the binary.
-                You can achieve this by adding the following to your
-                <filename>local.conf</filename> file:
-                <literallayout class='monospaced'>
+                <para>
+                    One requirement that is often overlooked is inclusion
+                    of license text.
+                    This requirement also needs to be dealt with prior to
+                    generating the final image.
+                    Some licenses require the license text to accompany
+                    the binary.
+                    You can achieve this by adding the following to your
+                    <filename>local.conf</filename> file:
+                    <literallayout class='monospaced'>
      COPY_LIC_MANIFEST = "1"
      COPY_LIC_DIRS = "1"
      LICENSE_CREATE_PACKAGE = "1"
-                </literallayout>
-                Adding these statements to the configuration file ensures
-                that the licenses collected during package generation
-                are included on your image.
-                <note>
-                    <para>Setting all three variables to "1" results in the
-                    image having two copies of the same license file.
-                    One copy resides in
-                    <filename>/usr/share/common-licenses</filename> and
-                    the other resides in
-                    <filename>/usr/share/license</filename>.</para>
+                    </literallayout>
+                    Adding these statements to the configuration file ensures
+                    that the licenses collected during package generation
+                    are included on your image.
+                    <note>
+                        <para>Setting all three variables to "1" results in the
+                        image having two copies of the same license file.
+                        One copy resides in
+                        <filename>/usr/share/common-licenses</filename> and
+                        the other resides in
+                        <filename>/usr/share/license</filename>.</para>
 
-                    <para>The reason for this behavior is because
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-COPY_LIC_DIRS'><filename>COPY_LIC_DIRS</filename></ulink>
-                    and
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-COPY_LIC_MANIFEST'><filename>COPY_LIC_MANIFEST</filename></ulink>
-                    add a copy of the license when the image is built but do
-                    not offer a path for adding licenses for newly installed
-                    packages to an image.
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE_CREATE_PACKAGE'><filename>LICENSE_CREATE_PACKAGE</filename></ulink>
-                    adds a separate package and an upgrade path for adding
-                    licenses to an image.</para>
-                </note>
-            </para>
+                        <para>The reason for this behavior is because
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-COPY_LIC_DIRS'><filename>COPY_LIC_DIRS</filename></ulink>
+                        and
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-COPY_LIC_MANIFEST'><filename>COPY_LIC_MANIFEST</filename></ulink>
+                        add a copy of the license when the image is built but do
+                        not offer a path for adding licenses for newly installed
+                        packages to an image.
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-LICENSE_CREATE_PACKAGE'><filename>LICENSE_CREATE_PACKAGE</filename></ulink>
+                        adds a separate package and an upgrade path for adding
+                        licenses to an image.</para>
+                    </note>
+                </para>
 
-            <para>
-                As the source <filename>archiver</filename> class has already
-                archived the original
-                unmodified source that contains the license files,
-                you would have already met the requirements for inclusion
-                of the license information with source as defined by the GPL
-                and other open source licenses.
-            </para>
-        </section>
+                <para>
+                    As the source <filename>archiver</filename> class has already
+                    archived the original
+                    unmodified source that contains the license files,
+                    you would have already met the requirements for inclusion
+                    of the license information with source as defined by the GPL
+                    and other open source licenses.
+                </para>
+            </section>
 
-        <section id='providing-compilation-scripts-and-source-code-modifications'>
-            <title>Providing Compilation Scripts and Source Code Modifications</title>
+            <section id='providing-compilation-scripts-and-source-code-modifications'>
+                <title>Providing Compilation Scripts and Source Code Modifications</title>
 
-            <para>
-                At this point, we have addressed all we need to
-                prior to generating the image.
-                The next two requirements are addressed during the final
-                packaging of the release.
-            </para>
+                <para>
+                    At this point, we have addressed all we need to
+                    prior to generating the image.
+                    The next two requirements are addressed during the final
+                    packaging of the release.
+                </para>
 
-            <para>
-                By releasing the version of the OpenEmbedded build system
-                and the layers used during the build, you will be providing both
-                compilation scripts and the source code modifications in one
-                step.
-            </para>
+                <para>
+                    By releasing the version of the OpenEmbedded build system
+                    and the layers used during the build, you will be providing both
+                    compilation scripts and the source code modifications in one
+                    step.
+                </para>
 
-            <para>
-                If the deployment team has a
-                <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP layer</ulink>
-                and a distro layer, and those those layers are used to patch,
-                compile, package, or modify (in any way) any open source
-                software included in your released images, you
-                might be required to release those layers under section 3 of
-                GPLv2 or section 1 of GPLv3.
-                One way of doing that is with a clean
-                checkout of the version of the Yocto Project and layers used
-                during your build.
-                Here is an example:
-                <literallayout class='monospaced'>
+                <para>
+                    If the deployment team has a
+                    <ulink url='&YOCTO_DOCS_BSP_URL;#bsp-layers'>BSP layer</ulink>
+                    and a distro layer, and those those layers are used to patch,
+                    compile, package, or modify (in any way) any open source
+                    software included in your released images, you
+                    might be required to release those layers under section 3 of
+                    GPLv2 or section 1 of GPLv3.
+                    One way of doing that is with a clean
+                    checkout of the version of the Yocto Project and layers used
+                    during your build.
+                    Here is an example:
+                    <literallayout class='monospaced'>
      # We built using the &DISTRO_NAME_NO_CAP; branch of the poky repo
      $ git clone -b &DISTRO_NAME_NO_CAP; git://git.yoctoproject.org/poky
      $ cd poky
@@ -13742,15 +14130,15 @@ Some notes from Cal:
      $ git clone -b release_branch git://git.mycompany.com/meta-my-software-layer
      # clean up the .git repos
      $ find . -name ".git" -type d -exec rm -rf {} \;
-                </literallayout>
-                One thing a development organization might want to consider
-                for end-user convenience is to modify
-                <filename>meta-poky/conf/bblayers.conf.sample</filename> to
-                ensure that when the end user utilizes the released build
-                system to build an image, the development organization's
-                layers are included in the <filename>bblayers.conf</filename>
-                file automatically:
-                <literallayout class='monospaced'>
+                    </literallayout>
+                    One thing a development organization might want to consider
+                    for end-user convenience is to modify
+                    <filename>meta-poky/conf/bblayers.conf.sample</filename> to
+                    ensure that when the end user utilizes the released build
+                    system to build an image, the development organization's
+                    layers are included in the <filename>bblayers.conf</filename>
+                    file automatically:
+                    <literallayout class='monospaced'>
      # POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
      # changes incompatibly
      POKY_BBLAYERS_CONF_VERSION = "2"
@@ -13764,14 +14152,15 @@ Some notes from Cal:
        ##OEROOT##/meta-yocto-bsp \
        ##OEROOT##/meta-mylayer \
        "
-                </literallayout>
-                Creating and providing an archive of the
-                <ulink url='&YOCTO_DOCS_REF_URL;#metadata'>Metadata</ulink>
-                layers (recipes, configuration files, and so forth)
-                enables you to meet your
-                requirements to include the scripts to control compilation
-                as well as any modifications to the original source.
-            </para>
+                    </literallayout>
+                    Creating and providing an archive of the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#metadata'>Metadata</ulink>
+                    layers (recipes, configuration files, and so forth)
+                    enables you to meet your
+                    requirements to include the scripts to control compilation
+                    as well as any modifications to the original source.
+                </para>
+            </section>
         </section>
     </section>
 
