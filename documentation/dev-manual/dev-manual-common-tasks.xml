@@ -6145,6 +6145,81 @@
                 </itemizedlist>
             </para>
         </section>
+
+        <section id="building-software-from-an-external-source">
+            <title>Building Software from an External Source</title>
+
+            <para>
+                By default, the OpenEmbedded build system uses the
+                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
+                when building source code.
+                The build process involves fetching the source files, unpacking
+                them, and then patching them if necessary before the build takes
+                place.
+            </para>
+
+            <para>
+                Situations exist where you might want to build software from source
+                files that are external to and thus outside of the
+                OpenEmbedded build system.
+                For example, suppose you have a project that includes a new BSP with
+                a heavily customized kernel.
+                And, you want to minimize exposing the build system to the
+                development team so that they can focus on their project and
+                maintain everyone's workflow as much as possible.
+                In this case, you want a kernel source directory on the development
+                machine where the development occurs.
+                You want the recipe's
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
+                variable to point to the external directory and use it as is, not
+                copy it.
+            </para>
+
+            <para>
+                To build from software that comes from an external source, all you
+                need to do is inherit the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-externalsrc'><filename>externalsrc</filename></ulink>
+                class and then set the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTERNALSRC'><filename>EXTERNALSRC</filename></ulink>
+                variable to point to your external source code.
+                Here are the statements to put in your
+                <filename>local.conf</filename> file:
+                <literallayout class='monospaced'>
+     INHERIT += "externalsrc"
+     EXTERNALSRC_pn-<replaceable>myrecipe</replaceable> = "<replaceable>path-to-your-source-tree</replaceable>"
+                </literallayout>
+            </para>
+
+            <para>
+                This next example shows how to accomplish the same thing by setting
+                <filename>EXTERNALSRC</filename> in the recipe itself or in the
+                recipe's append file:
+                <literallayout class='monospaced'>
+     EXTERNALSRC = "<replaceable>path</replaceable>"
+     EXTERNALSRC_BUILD = "<replaceable>path</replaceable>"
+                </literallayout>
+                <note>
+                    In order for these settings to take effect, you must globally
+                    or locally inherit the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-externalsrc'><filename>externalsrc</filename></ulink>
+                    class.
+                </note>
+            </para>
+
+            <para>
+                By default, <filename>externalsrc.bbclass</filename> builds
+                the source code in a directory separate from the external source
+                directory as specified by
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTERNALSRC'><filename>EXTERNALSRC</filename></ulink>.
+                If you need to have the source built in the same directory in
+                which it resides, or some other nominated directory, you can set
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTERNALSRC_BUILD'><filename>EXTERNALSRC_BUILD</filename></ulink>
+                to point to that directory:
+                <literallayout class='monospaced'>
+     EXTERNALSRC_BUILD_pn-<replaceable>myrecipe</replaceable> = "<replaceable>path-to-your-source-tree</replaceable>"
+                </literallayout>
+            </para>
+        </section>
     </section>
 
 
@@ -9990,81 +10065,6 @@
                 later offline.
             </para>
         </section>
-    </section>
-
-    <section id="building-software-from-an-external-source">
-        <title>Building Software from an External Source</title>
-
-        <para>
-            By default, the OpenEmbedded build system uses the
-            <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
-            when building source code.
-            The build process involves fetching the source files, unpacking
-            them, and then patching them if necessary before the build takes
-            place.
-        </para>
-
-        <para>
-            Situations exist where you might want to build software from source
-            files that are external to and thus outside of the
-            OpenEmbedded build system.
-            For example, suppose you have a project that includes a new BSP with
-            a heavily customized kernel.
-            And, you want to minimize exposing the build system to the
-            development team so that they can focus on their project and
-            maintain everyone's workflow as much as possible.
-            In this case, you want a kernel source directory on the development
-            machine where the development occurs.
-            You want the recipe's
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
-            variable to point to the external directory and use it as is, not
-            copy it.
-        </para>
-
-        <para>
-            To build from software that comes from an external source, all you
-            need to do is inherit the
-            <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-externalsrc'><filename>externalsrc</filename></ulink>
-            class and then set the
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTERNALSRC'><filename>EXTERNALSRC</filename></ulink>
-            variable to point to your external source code.
-            Here are the statements to put in your
-            <filename>local.conf</filename> file:
-            <literallayout class='monospaced'>
-     INHERIT += "externalsrc"
-     EXTERNALSRC_pn-<replaceable>myrecipe</replaceable> = "<replaceable>path-to-your-source-tree</replaceable>"
-            </literallayout>
-        </para>
-
-        <para>
-            This next example shows how to accomplish the same thing by setting
-            <filename>EXTERNALSRC</filename> in the recipe itself or in the
-            recipe's append file:
-            <literallayout class='monospaced'>
-     EXTERNALSRC = "<replaceable>path</replaceable>"
-     EXTERNALSRC_BUILD = "<replaceable>path</replaceable>"
-            </literallayout>
-            <note>
-                In order for these settings to take effect, you must globally
-                or locally inherit the
-                <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-externalsrc'><filename>externalsrc</filename></ulink>
-                class.
-            </note>
-        </para>
-
-        <para>
-            By default, <filename>externalsrc.bbclass</filename> builds
-            the source code in a directory separate from the external source
-            directory as specified by
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTERNALSRC'><filename>EXTERNALSRC</filename></ulink>.
-            If you need to have the source built in the same directory in
-            which it resides, or some other nominated directory, you can set
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTERNALSRC_BUILD'><filename>EXTERNALSRC_BUILD</filename></ulink>
-            to point to that directory:
-            <literallayout class='monospaced'>
-     EXTERNALSRC_BUILD_pn-<replaceable>myrecipe</replaceable> = "<replaceable>path-to-your-source-tree</replaceable>"
-            </literallayout>
-        </para>
     </section>
 
     <section id="selecting-an-initialization-manager">
