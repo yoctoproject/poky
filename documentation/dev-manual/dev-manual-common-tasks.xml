@@ -5947,6 +5947,204 @@
                 </para>
             </section>
         </section>
+
+        <section id='building-images-for-more-than-one-machine'>
+            <title>Building Images for More than One Machine</title>
+
+            <para>
+                A common scenario developers face is creating images for several
+                different machines that use the same software environment.
+                In this situation, it is tempting to set the
+                tunings and optimization flags for each build specifically for
+                the targeted hardware (i.e. "maxing out" the tunings).
+                Doing so can considerably add to build times and package feed
+                maintenance collectively for the machines.
+                For example, selecting tunes that are extremely specific to a
+                CPU core used in a system might enable some micro optimizations
+                in GCC for that particular system but would otherwise not gain
+                you much of a performance difference across the other systems
+                as compared to using a more general tuning across all the builds
+                (e.g. setting
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-DEFAULTTUNE'><filename>DEFAULTTUNE</filename></ulink>
+                specifically for each machine's build).
+                Rather than "max out" each build's tunings, you can take steps that
+                cause the OpenEmbedded build system to reuse software across the
+                various machines where it makes sense.
+            </para>
+
+            <para>
+                If build speed and package feed maintenance are considerations,
+                you should consider the points in this section that can help you
+                optimize your tunings to best consider build times and package
+                feed maintenance.
+                <itemizedlist>
+                    <listitem><para>
+                        <emphasis>Share the Build Directory:</emphasis>
+                        If at all possible, share the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>
+                        across builds.
+                        The Yocto Project supports switching between different
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
+                        values in the same <filename>TMPDIR</filename>.
+                        This practice is well supported and regularly used by
+                        developers when building for multiple machines.
+                        When you use the same <filename>TMPDIR</filename> for
+                        multiple machine builds, the OpenEmbedded build system can
+                        reuse the existing native and often cross-recipes for
+                        multiple machines.
+                        Thus, build time decreases.
+                        <note>
+                            If
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO'><filename>DISTRO</filename></ulink>
+                            settings change or fundamental configuration settings
+                            such as the filesystem layout, you need to work with
+                            a clean <filename>TMPDIR</filename>.
+                            Sharing <filename>TMPDIR</filename> under these
+                            circumstances might work but since it is not
+                            guaranteed, you should use a clean
+                            <filename>TMPDIR</filename>.
+                        </note>
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Enable the Appropriate Package Architecture:</emphasis>
+                        By default, the OpenEmbedded build system enables three
+                        levels of package architectures: "all", "tune" or "package",
+                        and "machine".
+                        Any given recipe usually selects one of these package
+                        architectures (types) for its output.
+                        Depending for what a given recipe creates packages, making
+                        sure you enable the appropriate package architecture can
+                        directly impact the build time.</para>
+
+                        <para>A recipe that just generates scripts can enable
+                        "all" architecture because there are no binaries to build.
+                        To specifically enable "all" architecture, be sure your
+                        recipe inherits the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-allarch'><filename>allarch</filename></ulink>
+                        class.
+                        This class is useful for "all" architectures because it
+                        configures many variables so packages can be used across
+                        multiple architectures.</para>
+
+                        <para>If your recipe needs to generate packages that are
+                        machine-specific or when one of the build or runtime
+                        dependencies is already machine-architecture dependent,
+                        which makes your recipe also machine-architecture dependent,
+                        make sure your recipe enables the "machine" package
+                        architecture through the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ARCH'><filename>MACHINE_ARCH</filename></ulink>
+                        variable:
+                        <literallayout class='monospaced'>
+     PACKAGE_ARCH = "${MACHINE_ARCH}"
+                        </literallayout>
+                        When you do not specifically enable a package
+                        architecture through the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>,
+                        The OpenEmbedded build system defaults to the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TUNE_PKGARCH'><filename>TUNE_PKGARCH</filename></ulink>
+                        setting:
+                        <literallayout class='monospaced'>
+     PACKAGE_ARCH = "${TUNE_PKGARCH}"
+                        </literallayout>
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Choose a Generic Tuning File if Possible:</emphasis>
+                        Some tunes are more generic and can run on multiple targets
+                        (e.g. an <filename>armv5</filename> set of packages could
+                        run on <filename>armv6</filename> and
+                        <filename>armv7</filename> processors in most cases).
+                        Similarly, <filename>i486</filename> binaries could work
+                        on <filename>i586</filename> and higher processors.
+                        You should realize, however, that advances on newer
+                        processor versions would not be used.</para>
+
+                        <para>If you select the same tune for several different
+                        machines, the OpenEmbedded build system reuses software
+                        previously built, thus speeding up the overall build time.
+                        Realize that even though a new sysroot for each machine is
+                        generated, the software is not recompiled and only one
+                        package feed exists.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Manage Granular Level Packaging:</emphasis>
+                        Sometimes cases exist where injecting another level of
+                        package architecture beyond the three higher levels noted
+                        earlier can be useful.
+                        For example, consider how NXP (formerly Freescale) allows
+                        for the easy reuse of binary packages in their layer
+                        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/'><filename>meta-freescale</filename></ulink>.
+                        In this example, the
+                        <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/tree/classes/fsl-dynamic-packagearch.bbclass'><filename>fsl-dynamic-packagearch</filename></ulink>
+                        class shares GPU packages for i.MX53 boards because
+                        all boards share the AMD GPU.
+                        The i.MX6-based boards can do the same because all boards
+                        share the Vivante GPU.
+                        This class inspects the BitBake datastore to identify if
+                        the package provides or depends on one of the
+                        sub-architecture values.
+                        If so, the class sets the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>
+                        value based on the <filename>MACHINE_SUBARCH</filename>
+                        value.
+                        If the package does not provide or depend on one of the
+                        sub-architecture values but it matches a value in the
+                        machine-specific filter, it sets
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ARCH'><filename>MACHINE_ARCH</filename></ulink>.
+                        This behavior reduces the number of packages built and
+                        saves build time by reusing binaries.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Use Tools to Debug Issues:</emphasis>
+                        Sometimes you can run into situations where software is
+                        being rebuilt when you think it should not be.
+                        For example, the OpenEmbedded build system might not be
+                        using shared state between machines when you think it
+                        should be.
+                        These types of situations are usually due to references
+                        to machine-specific variables such as
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>,
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SERIAL_CONSOLES'><filename>SERIAL_CONSOLES</filename></ulink>,
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-XSERVER'><filename>XSERVER</filename></ulink>,
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></ulink>,
+                        and so forth in code that is supposed to only be
+                        tune-specific or when the recipe depends
+                        (<ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>,
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>,
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'><filename>RRECOMMENDS</filename></ulink>,
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-RSUGGESTS'><filename>RSUGGESTS</filename></ulink>,
+                        and so forth) on some other recipe that already has
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>
+                        defined as "${MACHINE_ARCH}".
+                        <note>
+                            Patches to fix any issues identified are most welcome
+                            as these issues occasionally do occur.
+                        </note></para>
+
+                        <para>For such cases, you can use some tools to help you
+                        sort out the situation:
+                        <itemizedlist>
+                            <listitem><para>
+                                <emphasis><filename>sstate-diff-machines.sh</filename>:</emphasis>
+                                You can find this tool in the
+                                <filename>scripts</filename> directory of the
+                                Source Repositories.
+                                See the comments in the script for information on
+                                how to use the tool.
+                                </para></listitem>
+                            <listitem><para>
+                                <emphasis>BitBake's "-S printdiff" Option:</emphasis>
+                                Using this option causes BitBake to try to
+                                establish the closest signature match it can
+                                (e.g. in the shared state cache) and then run
+                                <filename>bitbake-diffsigs</filename> over the
+                                matches to determine the stamps and delta where
+                                these two stamp trees diverge.
+                                </para></listitem>
+                        </itemizedlist>
+                        </para></listitem>
+                </itemizedlist>
+            </para>
+        </section>
     </section>
 
 
@@ -8243,204 +8441,6 @@
             For more information on "rm_work", see the
             <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-rm-work'><filename>rm_work</filename></ulink>
             class in the Yocto Project Reference Manual.
-        </para>
-    </section>
-
-    <section id='building-images-for-more-than-one-machine'>
-        <title>Building Images for More than One Machine</title>
-
-        <para>
-            A common scenario developers face is creating images for several
-            different machines that use the same software environment.
-            In this situation, it is tempting to set the
-            tunings and optimization flags for each build specifically for
-            the targeted hardware (i.e. "maxing out" the tunings).
-            Doing so can considerably add to build times and package feed
-            maintenance collectively for the machines.
-            For example, selecting tunes that are extremely specific to a
-            CPU core used in a system might enable some micro optimizations
-            in GCC for that particular system but would otherwise not gain
-            you much of a performance difference across the other systems
-            as compared to using a more general tuning across all the builds
-            (e.g. setting
-            <ulink url='&YOCTO_DOCS_REF_URL;#var-DEFAULTTUNE'><filename>DEFAULTTUNE</filename></ulink>
-            specifically for each machine's build).
-            Rather than "max out" each build's tunings, you can take steps that
-            cause the OpenEmbedded build system to reuse software across the
-            various machines where it makes sense.
-        </para>
-
-        <para>
-            If build speed and package feed maintenance are considerations,
-            you should consider the points in this section that can help you
-            optimize your tunings to best consider build times and package
-            feed maintenance.
-            <itemizedlist>
-                <listitem><para>
-                    <emphasis>Share the Build Directory:</emphasis>
-                    If at all possible, share the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>
-                    across builds.
-                    The Yocto Project supports switching between different
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
-                    values in the same <filename>TMPDIR</filename>.
-                    This practice is well supported and regularly used by
-                    developers when building for multiple machines.
-                    When you use the same <filename>TMPDIR</filename> for
-                    multiple machine builds, the OpenEmbedded build system can
-                    reuse the existing native and often cross-recipes for
-                    multiple machines.
-                    Thus, build time decreases.
-                    <note>
-                        If
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO'><filename>DISTRO</filename></ulink>
-                        settings change or fundamental configuration settings
-                        such as the filesystem layout, you need to work with
-                        a clean <filename>TMPDIR</filename>.
-                        Sharing <filename>TMPDIR</filename> under these
-                        circumstances might work but since it is not
-                        guaranteed, you should use a clean
-                        <filename>TMPDIR</filename>.
-                    </note>
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>Enable the Appropriate Package Architecture:</emphasis>
-                    By default, the OpenEmbedded build system enables three
-                    levels of package architectures: "all", "tune" or "package",
-                    and "machine".
-                    Any given recipe usually selects one of these package
-                    architectures (types) for its output.
-                    Depending for what a given recipe creates packages, making
-                    sure you enable the appropriate package architecture can
-                    directly impact the build time.</para>
-
-                    <para>A recipe that just generates scripts can enable
-                    "all" architecture because there are no binaries to build.
-                    To specifically enable "all" architecture, be sure your
-                    recipe inherits the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-allarch'><filename>allarch</filename></ulink>
-                    class.
-                    This class is useful for "all" architectures because it
-                    configures many variables so packages can be used across
-                    multiple architectures.</para>
-
-                    <para>If your recipe needs to generate packages that are
-                    machine-specific or when one of the build or runtime
-                    dependencies is already machine-architecture dependent,
-                    which makes your recipe also machine-architecture dependent,
-                    make sure your recipe enables the "machine" package
-                    architecture through the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ARCH'><filename>MACHINE_ARCH</filename></ulink>
-                    variable:
-                    <literallayout class='monospaced'>
-     PACKAGE_ARCH = "${MACHINE_ARCH}"
-                    </literallayout>
-                    When you do not specifically enable a package
-                    architecture through the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>,
-                    The OpenEmbedded build system defaults to the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-TUNE_PKGARCH'><filename>TUNE_PKGARCH</filename></ulink>
-                    setting:
-                    <literallayout class='monospaced'>
-     PACKAGE_ARCH = "${TUNE_PKGARCH}"
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>Choose a Generic Tuning File if Possible:</emphasis>
-                    Some tunes are more generic and can run on multiple targets
-                    (e.g. an <filename>armv5</filename> set of packages could
-                    run on <filename>armv6</filename> and
-                    <filename>armv7</filename> processors in most cases).
-                    Similarly, <filename>i486</filename> binaries could work
-                    on <filename>i586</filename> and higher processors.
-                    You should realize, however, that advances on newer
-                    processor versions would not be used.</para>
-
-                    <para>If you select the same tune for several different
-                    machines, the OpenEmbedded build system reuses software
-                    previously built, thus speeding up the overall build time.
-                    Realize that even though a new sysroot for each machine is
-                    generated, the software is not recompiled and only one
-                    package feed exists.
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>Manage Granular Level Packaging:</emphasis>
-                    Sometimes cases exist where injecting another level of
-                    package architecture beyond the three higher levels noted
-                    earlier can be useful.
-                    For example, consider how NXP (formerly Freescale) allows
-                    for the easy reuse of binary packages in their layer
-                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/'><filename>meta-freescale</filename></ulink>.
-                    In this example, the
-                    <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/tree/classes/fsl-dynamic-packagearch.bbclass'><filename>fsl-dynamic-packagearch</filename></ulink>
-                    class shares GPU packages for i.MX53 boards because
-                    all boards share the AMD GPU.
-                    The i.MX6-based boards can do the same because all boards
-                    share the Vivante GPU.
-                    This class inspects the BitBake datastore to identify if
-                    the package provides or depends on one of the
-                    sub-architecture values.
-                    If so, the class sets the
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>
-                    value based on the <filename>MACHINE_SUBARCH</filename>
-                    value.
-                    If the package does not provide or depend on one of the
-                    sub-architecture values but it matches a value in the
-                    machine-specific filter, it sets
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_ARCH'><filename>MACHINE_ARCH</filename></ulink>.
-                    This behavior reduces the number of packages built and
-                    saves build time by reusing binaries.
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>Use Tools to Debug Issues:</emphasis>
-                    Sometimes you can run into situations where software is
-                    being rebuilt when you think it should not be.
-                    For example, the OpenEmbedded build system might not be
-                    using shared state between machines when you think it
-                    should be.
-                    These types of situations are usually due to references
-                    to machine-specific variables such as
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>,
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-SERIAL_CONSOLES'><filename>SERIAL_CONSOLES</filename></ulink>,
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-XSERVER'><filename>XSERVER</filename></ulink>,
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></ulink>,
-                    and so forth in code that is supposed to only be
-                    tune-specific or when the recipe depends
-                    (<ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>,
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-RDEPENDS'><filename>RDEPENDS</filename></ulink>,
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS'><filename>RRECOMMENDS</filename></ulink>,
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-RSUGGESTS'><filename>RSUGGESTS</filename></ulink>,
-                    and so forth) on some other recipe that already has
-                    <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH'><filename>PACKAGE_ARCH</filename></ulink>
-                    defined as "${MACHINE_ARCH}".
-                    <note>
-                        Patches to fix any issues identified are most welcome
-                        as these issues occasionally do occur.
-                    </note></para>
-
-                    <para>For such cases, you can use some tools to help you
-                    sort out the situation:
-                    <itemizedlist>
-                        <listitem><para>
-                            <emphasis><filename>sstate-diff-machines.sh</filename>:</emphasis>
-                            You can find this tool in the
-                            <filename>scripts</filename> directory of the
-                            Source Repositories.
-                            See the comments in the script for information on
-                            how to use the tool.
-                            </para></listitem>
-                        <listitem><para>
-                            <emphasis>BitBake's "-S printdiff" Option:</emphasis>
-                            Using this option causes BitBake to try to
-                            establish the closest signature match it can
-                            (e.g. in the shared state cache) and then run
-                            <filename>bitbake-diffsigs</filename> over the
-                            matches to determine the stamps and delta where
-                            these two stamp trees diverge.
-                            </para></listitem>
-                    </itemizedlist>
-                    </para></listitem>
-            </itemizedlist>
         </para>
     </section>
 
