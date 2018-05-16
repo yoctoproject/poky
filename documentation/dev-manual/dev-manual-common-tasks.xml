@@ -5163,6 +5163,171 @@
         </para>
     </section>
 
+    <section id='dev-building'>
+        <title>Building</title>
+
+        <para>
+            This section describes various build procedures.
+            For example, the steps needed for a simple build, a target that
+            uses multiple configurations, building an image for more than
+            one machine, and so forth.
+        </para>
+
+        <section id='dev-building-a-simple-image'>
+            <title>Building a Simple Image</title>
+
+            <para>
+                In the development environment, you need to build an image
+                whenever you change hardware support, add or change system
+                libraries, or add or change services that have dependencies.
+                Several methods exist that allow you to build an image within
+                the Yocto Project.
+                This section presents the basic steps you need to build a
+                simple image using BitBake from a build host running Linux.
+                <note><title>Notes</title>
+                    <itemizedlist>
+                        <listitem><para>
+                            For information on how to build an image using
+                            <ulink url='&YOCTO_DOCS_REF_URL;#toaster-term'>Toaster</ulink>,
+                            see the
+                            <ulink url='&YOCTO_DOCS_TOAST_URL;'>Toaster User Manual</ulink>.
+                            </para></listitem>
+                        <listitem><para>
+                            For information on how to use
+                            <filename>devtool</filename> to build images, see
+                            the
+                            "<ulink url='&YOCTO_DOCS_SDK_URL;#using-devtool-in-your-sdk-workflow'>Using <filename>devtool</filename> in Your SDK Workflow</ulink>"
+                            section in the Yocto Project Application
+                            Development and the Extensible Software Development
+                            Kit (eSDK) manual.
+                            </para></listitem>
+                        <listitem><para>
+                            For a quick example on how to build an image using
+                            the OpenEmbedded build system, see the
+                            <ulink url='&YOCTO_DOCS_BRIEF_URL;'>Yocto Project Quick Build</ulink>
+                            document.
+                            </para></listitem>
+                    </itemizedlist>
+                </note>
+            </para>
+
+            <para>
+                The build process creates an entire Linux distribution from
+                source and places it in your
+                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
+                under <filename>tmp/deploy/images</filename>.
+                For detailed information on the build process using BitBake,
+                see the
+                "<ulink url='&YOCTO_DOCS_OM_URL;#images-dev-environment'>Images</ulink>"
+                section in the Yocto Project Overview and Concepts Manual.
+            </para>
+
+            <para>
+                The following figure and list overviews the build process:
+                <imagedata fileref="figures/bitbake-build-flow.png" width="7in" depth="4in" align="center" scalefit="1" />
+                <orderedlist>
+                    <listitem><para>
+                        <emphasis>Set up Your Host Development System to Support
+                        Development Using the Yocto Project</emphasis>:
+                        See the
+                        "<link linkend='dev-manual-start'>Setting Up to Use the Yocto Project</link>"
+                        section for options on how to get a build host ready to
+                        use the Yocto Project.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Initialize the Build Environment:</emphasis>
+                        Initialize the build environment by sourcing the build
+                        environment script (i.e.
+                        <ulink url='&YOCTO_DOCS_REF_URL;#structure-core-script'><filename>&OE_INIT_FILE;</filename></ulink>):
+                        <literallayout class='monospaced'>
+     $ source &OE_INIT_FILE; [<replaceable>build_dir</replaceable>]
+                        </literallayout></para>
+
+                        <para>When you use the initialization script, the
+                        OpenEmbedded build system uses
+                        <filename>build</filename> as the default Build
+                        Directory in your current work directory.
+                        You can use a <replaceable>build_dir</replaceable>
+                        argument with the script to specify a different build
+                        directory.
+                        <note><title>Tip</title>
+                            A common practice is to use a different Build
+                            Directory for different targets.
+                            For example, <filename>~/build/x86</filename> for a
+                            <filename>qemux86</filename> target, and
+                            <filename>~/build/arm</filename> for a
+                            <filename>qemuarm</filename> target.
+                        </note>
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Make Sure Your <filename>local.conf</filename>
+                        File is Correct:</emphasis>
+                        Ensure the <filename>conf/local.conf</filename>
+                        configuration file, which is found in the Build
+                        Directory, is set up how you want it.
+                        This file defines many aspects of the build environment
+                        including the target machine architecture through the
+                        <filename><ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'>MACHINE</ulink></filename> variable,
+                        the packaging format used during the build
+                        (<ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES'><filename>PACKAGE_CLASSES</filename></ulink>),
+                        and a centralized tarball download directory through the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink> variable.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Build the Image:</emphasis>
+                        Build the image using the <filename>bitbake</filename>
+                        command:
+                        <literallayout class='monospaced'>
+     $ bitbake <replaceable>target</replaceable>
+                        </literallayout>
+                        <note>
+                            For information on BitBake, see the
+                            <ulink url='&YOCTO_DOCS_BB_URL;'>BitBake User Manual</ulink>.
+                        </note>
+                        The <replaceable>target</replaceable> is the name of the
+                        recipe you want to build.
+                        Common targets are the images in
+                        <filename>meta/recipes-core/images</filename>,
+                        <filename>meta/recipes-sato/images</filename>, and so
+                        forth all found in the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
+                        Or, the target can be the name of a recipe for a
+                        specific piece of software such as BusyBox.
+                        For more details about the images the OpenEmbedded build
+                        system supports, see the
+                        "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>"
+                        chapter in the Yocto Project Reference Manual.</para>
+
+                        <para>As an example, the following command builds the
+                        <filename>core-image-minimal</filename> image:
+                        <literallayout class='monospaced'>
+     $ bitbake core-image-minimal
+                        </literallayout>
+                        Once an image has been built, it often needs to be
+                        installed.
+                        The images and kernels built by the OpenEmbedded
+                        build system are placed in the Build Directory in
+                        <filename class="directory">tmp/deploy/images</filename>.
+                        For information on how to run pre-built images such as
+                        <filename>qemux86</filename> and <filename>qemuarm</filename>,
+                        see the
+                        <ulink url='&YOCTO_DOCS_SDK_URL;'>Yocto Project Application Development and the Extensible Software Development Kit (eSDK)</ulink>
+                        manual.
+                        For information about how to install these images,
+                        see the documentation for your particular board or
+                        machine.
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
+    </section>
+
+
+
+
+
+
+
     <section id='platdev-building-targets-with-multiple-configurations'>
         <title>Building Targets with Multiple Configurations</title>
 
