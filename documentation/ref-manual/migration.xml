@@ -5250,8 +5250,8 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>libfm-gtk</filename>:</emphasis>
-                    The <filename>libfm gtk</filename>package and bindings are
-                    split into a separate <filename>libfm-gtk</filename> package.
+                    The <filename>libfm</filename> GTK+ bindings are split into
+                    a separate <filename>libfm-gtk</filename> package.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>flex-libfl</filename>:</emphasis>
@@ -5274,10 +5274,11 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     <filename>grub-efi</filename> recipe.
                     </para></listitem>
                 <listitem><para>
-                    <emphasis>ARMv7-A Legacy Support:</emphasis>
-                    Legacy support is removed for transitioning from ARMv7-A
-                    to armv7a-vfp-neon in package feeds, which was previously
-                    enabled by setting
+                    <emphasis>armv7a Legacy Package Feed Support:</emphasis>
+                    Legacy support is removed for transitioning from
+                    <filename>armv7a</filename> to
+                    <filename>armv7a-vfp-neon</filename> in package feeds,
+                    which was previously enabled by setting
                     <filename>PKGARCHCOMPAT_ARMV7A</filename>.
                     This transition occurred in 2011 and active package feeds
                     should by now be updated to the new naming.
@@ -5303,7 +5304,7 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>hostap-utils</filename>:</emphasis>
-                    This recipe is obsolete.
+                    This software package is obsolete.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>latencytop</filename>:</emphasis>
@@ -5322,12 +5323,12 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>man</filename>:</emphasis>
-                    This recipe has been replaced by
-                    <filename>modern man-db</filename>
+                    This recipe has been replaced by modern
+                    <filename>man-db</filename>
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>mkelfimage</filename>:</emphasis>
-                    This recipe has been removed in the upstream coreboot,
+                    This tool has been removed in the upstream coreboot project,
                     and is no longer needed with the removal of the ELF image
                     type.
                     </para></listitem>
@@ -5337,25 +5338,24 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>neon</filename>:</emphasis>
-                    This recipe is not maintained upstream and is not used by
-                    anything in OpenEmbedded-Core.
+                    This software package is no longer maintained upstream and
+                    is no longer needed by anything in OpenEmbedded-Core.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>oprofile</filename>:</emphasis>
                     The functionality of this recipe is replaced by
-                    <filename>perf</filename> since keeping ongoing
-                    compatibility on with <filename>musl</filename> is
+                    <filename>perf</filename> and keeping compatibility on
+                    an ongoing basis with <filename>musl</filename> is
                     difficult.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>pax</filename>:</emphasis>
-                    This recipe is obsolete.
+                    This software package is obsolete.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>stat</filename>:</emphasis>
-                    This recipe is not maintained upstream.
-                    <filename>coreutils</filename> provides a modern binary for
-                    the stat recipe.
+                    This software package is not maintained upstream.
+                    <filename>coreutils</filename> provides a modern stat binary.
                     </para></listitem>
                 <listitem><para>
                     <emphasis><filename>zisofs-tools-native</filename>:</emphasis>
@@ -5410,8 +5410,8 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                 <listitem><para>
                     <emphasis><filename>scripts/test-dependencies.sh</filename> script:</emphasis>
                     The script is largely made obsolete by the
-                    recipe-specific <filename>sysroots</filename>
-                    functionality introduced in the previous release.
+                    recipe-specific sysroots functionality introduced in the
+                    previous release.
                     </para></listitem>
             </itemizedlist>
         </para>
@@ -5428,11 +5428,13 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     There are two different behaviors people might want:
                     <itemizedlist>
                         <listitem><para>
+                            <emphasis>Behavior A:</emphasis>
                             For a given target (or set of targets) look through
                             the task graph and run task X only if it is present
                             and will be built.
                             </para></listitem>
                         <listitem><para>
+                            <emphasis>Behavior B:</emphasis>
                             For a given target (or set of targets) look through
                             the task graph and run task X if any recipe in the
                             taskgraph has such a target, even if it is not in
@@ -5440,11 +5442,11 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                             </para></listitem>
                     </itemizedlist>
                     The <filename>--runall</filename> option now performs
-                    list item (b) mentioned in the previous bullet point.
-                    Previously <filename>--runall</filename> behaved like list
-                    item (a) mentioned in the previous bullet point.
-                    A <filename>--runonly</filename> option now exists to
-                    retain the ability to perform list item (a).
+                    "Behavior B".
+                    Previously <filename>--runall</filename> behaved like
+                    "Behavior A".
+                    A <filename>--runonly</filename> option has been added to
+                    retain the ability to perform "Behavior A".
                     </para></listitem>
                 <listitem><para>
                     Several explicit "run this task for all recipes in the
@@ -5468,6 +5470,44 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
         </para>
     </section>
 
+    <section id='migration-2.5-python-and-python3-changes'>
+        <title>Python and Python 3 Changes</title>
+
+        <para>
+            The following are auto-packaging changes to Python and Python 3:
+        </para>
+        <para>
+            The script-managed <filename>python-*-manifest.inc</filename> files
+            that were previously used to generate Python and Python 3
+            packages have been replaced with a JSON-based file that is
+            easier to read and maintain.
+            A new task is available for maintainers of the Python recipes to
+            update the JSON file when upgrading to new Python versions.
+            You can now edit the file directly instead of having to edit a
+            script and run it to update the file.
+        </para>
+        <para>
+            One particular change to note is that the Python recipes no longer
+            have build-time provides for their packages.
+            This assumes <filename>python-foo</filename> is one of the packages
+            provided by the Python recipe.
+            You can no longer run <filename>bitbake python-foo</filename> or
+            have a <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink> on
+            <filename>python-foo</filename>, but doing either of the following
+            causes the package to work as expected:
+            <literallayout class='monospaced'>
+     IMAGE_INSTALL_append = " python-foo"
+            </literallayout>
+            or
+            <literallayout class='monospaced'>
+     RDEPENDS_${PN} = "python-foo"
+            </literallayout>
+            The earlier build-time provides behavior was a quirk of the way the
+            Python manifest file was created.
+            For more information on this change please see
+            <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=8d94b9db221d1def42f091b991903faa2d1651ce'>this commit</ulink>.
+        </para>
+    </section>
 
     <section id='migration-2.5-miscellaneous-changes'>
         <title>Miscellaneous Changes</title>
@@ -5527,93 +5567,32 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     to change back to <filename>make</filename>.
                     </para></listitem>
                 <listitem><para>
-                    <filename>python</filename>:
-                    This command restructures
-                    Python packaging and replaces it with autopackaging.
-                    </para></listitem>
-                <listitem><para>
-                    <filename>python3</filename>:
-                    This command restructures Python3 packaging and replaces it
-                    with autopackaging.
-                    </para></listitem>
-                <listitem><para>
                     The previously deprecated <filename>base_*</filename>
                     functions have been removed in favor of their replacements
                     in <filename>meta/lib/oe</filename> and
                     <filename>bitbake/lib/bb</filename>.
                     These are typically used from recipes and classes.
-                    Any references to the old functions should be updated.
-                    The following is a full list, along with each of their
+                    Any references to the old functions must be updated.
+                    The following table shows the removed functions and their
                     replacements:
-                      <itemizedlist>
-                          <listitem><para>
-                              <filename>base_path_join()</filename>
-                              is replaced by
-                              <filename>oe.path.join()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_path_relative()</filename>
-                              is replaced by
-                              <filename>oe.path.relative()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_path_out()</filename>
-                              is replaced by
-                              <filename>oe.path.format_display()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_read_file()</filename>
-                              is replaced by
-                              <filename>oe.utils.read_file()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_ifelse()</filename>
-                              is replaced by
-                              <filename>oe.utils.ifelse()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_conditional()</filename>
-                              is replaced by
-                              <filename>oe.utils.conditional()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_less_or_equal()</filename>
-                              is replaced by
-                              <filename>oe.utils.less_or_equal()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_version_less_or_equal()</filename>
-                              is replaced by
-                              <filename>oe.utils.version_less_or_equal()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_contains()</filename>
-                              is replaced by
-                              <filename>bb.utils.contains()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_both_contain()</filename>
-                              is replaced by
-                              <filename>oe.utils.both_contain()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>base_prune_suffix()</filename>
-                              is replaced by
-                              <filename>oe.utils.prune_suffix()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>oe_filter()</filename>
-                              is replaced by
-                              <filename>oe.utils.str_filter()</filename>.
-                              </para></listitem>
-                          <listitem><para>
-                              <filename>oe_filter_out()</filename>
-                              is replaced by
-                              <filename>oe.utils.str_filter_out()</filename>
-                              (or use the <filename>_remove</filename>
-                              operator).
-                              </para></listitem>
-                      </itemizedlist>
+
+                    <literallayout class='monospaced'>
+     <emphasis>Removed</emphasis>                                 <emphasis>Replacement</emphasis>
+     ============================            ============================
+     base_path_join()                        oe.path.join()
+     base_path_relative()                    oe.path.relative()
+     base_path_out()                         oe.path.format_display()
+     base_read_file()                        oe.utils.read_file()
+     base_ifelse()                           oe.utils.ifelse()
+     base_conditional()                      oe.utils.conditional()
+     base_less_or_equal()                    oe.utils.less_or_equal()
+     base_version_less_or_equal()            oe.utils.version_less_or_equal()
+     base_contains()                         bb.utils.contains()
+     base_both_contain()                     oe.utils.both_contain()
+     base_prune_suffix()                     oe.utils.prune_suffix()
+     oe_filter()                             oe.utils.str_filter()
+     oe_filter_out()                         oe.utils.str_filter_out() (or use the _remove operator).
+                    </literallayout>
                     </para></listitem>
                 <listitem><para>
                     Using <filename>exit 1</filename> to explicitly defer a
@@ -5647,7 +5626,7 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     unmaintained and <filename>squashfs</filename> provides
                     better performance and compression.
                     In order to build a live image with squashfs+lz4 compression
-                    enabled you set
+                    enabled you should now set
                     <filename>LIVE_ROOTFS_TYPE = "squashfs-lz4"</filename>
                     and ensure that <filename>live</filename>
                     is in <filename>IMAGE_FSTYPES</filename>.
@@ -5687,7 +5666,8 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     <filename>LAYERSERIES_COMPAT_layername</filename>, a warning
                     will is shown.
                     If a layer sets a value that does not include the current
-                    version, then an error is be produced.
+                    version ("sumo" for the 2.5 release), then an error will be
+                    produced.
                     </para></listitem>
                 <listitem><para>
                     The <filename>TZ</filename> environment variable is set to
