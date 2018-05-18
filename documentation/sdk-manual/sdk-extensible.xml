@@ -54,29 +54,29 @@
         </para>
     </section>
 
-    <section id='sdk-setting-up-to-use-the-extensible-sdk'>
-        <title>Setting Up to Use the Extensible SDK</title>
+    <section id='sdk-installing-the-extensible-sdk'>
+        <title>Installing the Extensible SDK</title>
 
         <para>
-            The first thing you need to do is install the SDK on your host
-            development machine by running the <filename>*.sh</filename>
-            installation script.
+            The first thing you need to do is install the SDK on your
+            <ulink url='&YOCTO_DOCS_REF_URL;#hardware-build-system-term'>Build Host</ulink>
+            by running the <filename>*.sh</filename> installation script.
         </para>
 
         <para>
             You can download a tarball installer, which includes the
             pre-built toolchain, the <filename>runqemu</filename>
             script, the internal build system, <filename>devtool</filename>,
-            and support files from the appropriate directory under
-            <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'></ulink>.
-            Toolchains are available for 32-bit and 64-bit x86 development
-            systems from the <filename>i686</filename> and
-            <filename>x86_64</filename> directories, respectively.
+            and support files from the appropriate
+            <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'>toolchain</ulink>
+            directory within the Index of Releases.
+            Toolchains are available for several 32-bit and 64-bit
+            architectures with the <filename>x86_64</filename> directories,
+            respectively.
             The toolchains the Yocto Project provides are based off the
-            <filename>core-image-sato</filename> image and contain
+            <filename>core-image-sato</filename> and
+            <filename>core-image-minimal</filename> images and contain
             libraries appropriate for developing against that image.
-            Each type of development system supports five or more target
-            architectures.
         </para>
 
         <para>
@@ -85,6 +85,7 @@
             filename and then is immediately followed by a string
             representing the target architecture.
             An extensible SDK has the string "-ext" as part of the name.
+            Following is the general form:
             <literallayout class='monospaced'>
      poky-glibc-<replaceable>host_system</replaceable>-<replaceable>image_type</replaceable>-<replaceable>arch</replaceable>-toolchain-ext-<replaceable>release_version</replaceable>.sh
 
@@ -93,14 +94,15 @@
 
                     i686 or x86_64.
 
-         <replaceable>image_type</replaceable> is the image for which the SDK was built.
+         <replaceable>image_type</replaceable> is the image for which the SDK was built:
+
+                    core-image-sato or core-image-minimal
 
          <replaceable>arch</replaceable> is a string representing the tuned target architecture:
 
-                    i586, x86_64, powerpc, mips, armv7a or armv5te
+                    aarch64, armv5e, core2-64, i586, mips32r2, mips64, ppc7400, or cortexa8hf-neon
 
-         <replaceable>release_version</replaceable> is a string representing the release number of the
-                Yocto Project:
+         <replaceable>release_version</replaceable> is a string representing the release number of the Yocto Project:
 
                     &DISTRO;, &DISTRO;+snapshot
             </literallayout>
@@ -131,9 +133,10 @@
             home directory.
             You can choose to install the extensible SDK in any location when
             you run the installer.
-            However, the location you choose needs to be writable for whichever
-            users need to use the SDK, since files will need to be written
-            under that directory during the normal course of operation.
+            However, because files need to be written under that directory
+            during the normal course of operation, the location you choose
+            for installation must be writable for whichever
+            users need to use the SDK.
         </para>
 
         <para>
@@ -141,28 +144,34 @@
             toolchain tarball for a 64-bit x86 development host system and
             a 64-bit x86 target architecture.
             The example assumes the SDK installer is located in
-            <filename>~/Downloads/</filename>.
+            <filename>~/Downloads/</filename> and has execution rights.
             <note>
                 If you do not have write permissions for the directory
                 into which you are installing the SDK, the installer
                 notifies you and exits.
-                Be sure you have write permissions in the directory and
-                run the installer again.
+                For that case, set up the proper permissions in the directory
+                and run the installer again.
             </note>
             <literallayout class='monospaced'>
-     $ ./poky-glibc-x86_64-core-image-minimal-core2-64-toolchain-ext-&DISTRO;.sh
-     Poky (Yocto Project Reference Distro) Extensible SDK installer version &DISTRO;
-     ===================================================================================
+     $ ./Downloads/poky-glibc-x86_64-core-image-minimal-core2-64-toolchain-ext-2.5.sh
+     Poky (Yocto Project Reference Distro) Extensible SDK installer version 2.5
+     ==========================================================================
      Enter target directory for SDK (default: ~/poky_sdk):
      You are about to install the SDK to "/home/scottrif/poky_sdk". Proceed[Y/n]? Y
-     Extracting SDK......................................................................done
+     Extracting SDK..............done
      Setting it up...
      Extracting buildtools...
      Preparing build system...
+     Parsing recipes: 100% |##################################################################| Time: 0:00:52
+     Initialising tasks: 100% |###############################################################| Time: 0:00:00
+     Checking sstate mirror object availability: 100% |#######################################| Time: 0:00:00
+     Loading cache: 100% |####################################################################| Time: 0:00:00
+     Initialising tasks: 100% |###############################################################| Time: 0:00:00
      done
      SDK has been successfully set up and is ready to be used.
      Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
       $ . /home/scottrif/poky_sdk/environment-setup-core2-64-poky-linux
+
             </literallayout>
         </para>
     </section>
