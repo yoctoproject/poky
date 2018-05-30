@@ -708,9 +708,25 @@
                         your source code modifications.
                         </para></listitem>
                     <listitem><para>
-                        <emphasis>Build the Recipe</emphasis>:
-                        Once you have updated the source files, you can build
-                        the recipe.
+                        <emphasis>Build the Recipe or Rebuild the Image</emphasis>:
+                        The next step you take depends on what you are going
+                        to do with the new code.</para>
+
+                        <para>If you need to eventually move the build output
+                        to the target hardware, use the following
+                        <filename>devtool</filename> command:
+                        <literallayout class='monospaced'>
+     $ devtool build <replaceable>recipe</replaceable>
+                        </literallayout></para>
+
+                        <para>On the other hand, if you want an image to
+                        contain the recipe's packages from the workspace
+                        for immediate deployment onto a device (e.g. for
+                        testing purposes), you can use
+                        the <filename>devtool build-image</filename> command:
+                        <literallayout class='monospaced'>
+     $ devtool build-image <replaceable>image</replaceable>
+                        </literallayout>
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Deploy the Build Output</emphasis>:
@@ -800,7 +816,7 @@
                 workflow to make sure your recipes you are using for builds
                 are up-to-date with their upstream counterparts.
                 <note>
-                    Several methods exist by which you can upgrade recipes.
+                    Several methods exist by which you can upgrade recipes -
                     <filename>devtool upgrade</filename> happens to be one.
                     You can read about all the methods by which you can
                     upgrade recipes in the
@@ -819,12 +835,8 @@
             </para>
 
             <para>
-                Depending on your particular scenario, the arguments and
-                options you use with <filename>devtool upgrade</filename> form
-                different combinations.
-                The following diagram shows a common development flow
-                you would use with the <filename>devtool upgrade</filename>
-                command:
+                The following diagram shows the common development flow
+                used with the <filename>devtool upgrade</filename> command:
             </para>
 
             <para>
@@ -835,19 +847,18 @@
                 <orderedlist>
                     <listitem><para>
                         <emphasis>Initiate the Upgrade</emphasis>:
-                        The top part of the flow shows a typical scenario by
-                        which you could use
-                        <filename>devtool upgrade</filename>.
+                        The top part of the flow shows the typical scenario by
+                        which you use the <filename>devtool upgrade</filename>
+                        command.
                         The following conditions exist:
                         <itemizedlist>
                             <listitem><para>
-                                The recipe exists in some layer external
+                                The recipe exists in a local layer external
                                 to the <filename>devtool</filename> workspace.
                                 </para></listitem>
                             <listitem><para>
                                 The source files for the new release
-                                exist adjacent to the same location pointed to
-                                by
+                                exist in the same location pointed to by
                                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SRC_URI'><filename>SRC_URI</filename></ulink>
                                 in the recipe (e.g. a tarball with the new
                                 version number in the name, or as a different
@@ -888,19 +899,19 @@
                         <para>Once <filename>devtool</filename> locates the
                         recipe, it uses the <filename>SRC_URI</filename>
                         variable to locate the source code and any local patch
-                        files from other developers are located.
+                        files from other developers.
                         The result is that the command sets up the source
                         code, the new version of the recipe, and an append file
                         all within the workspace.
                         </para></listitem>
-                    <listitem><para><emphasis>
-                        Resolve any Conflicts created by the Upgrade</emphasis>:
-                        At this point, conflicts could exist due to the
-                        software being upgraded to a new version.
+                    <listitem><para>
+                        <emphasis>Resolve any Conflicts created by the Upgrade</emphasis>:
+                        Conflicts could exist due to the software being
+                        upgraded to a new version.
                         Conflicts occur if your recipe specifies some patch
                         files in <filename>SRC_URI</filename> that conflict
                         with changes made in the new version of the software.
-                        If this is the case, you need to resolve the conflicts
+                        For such cases, you need to resolve the conflicts
                         by editing the source and following the normal
                         <filename>git rebase</filename> conflict resolution
                         process.</para>
@@ -910,13 +921,25 @@
                         newer or different version of the software.
                         </para></listitem>
                     <listitem><para>
-                        <emphasis>Build the Recipe</emphasis>:
-                        Once you have your recipe in order, you can build it.
-                        You can either use <filename>devtool build</filename>
-                        or <filename>bitbake</filename>.
-                        Either method produces build output that is stored
-                        in
-                        <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>.
+                        <emphasis>Build the Recipe or Rebuild the Image</emphasis>:
+                        The next step you take depends on what you are going
+                        to do with the new code.</para>
+
+                        <para>If you need to eventually move the build output
+                        to the target hardware, use the following
+                        <filename>devtool</filename> command:
+                        <literallayout class='monospaced'>
+     $ devtool build <replaceable>recipe</replaceable>
+                        </literallayout></para>
+
+                        <para>On the other hand, if you want an image to
+                        contain the recipe's packages from the workspace
+                        for immediate deployment onto a device (e.g. for
+                        testing purposes), you can use
+                        the <filename>devtool build-image</filename> command:
+                        <literallayout class='monospaced'>
+     $ devtool build-image <replaceable>image</replaceable>
+                        </literallayout>
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Deploy the Build Output</emphasis>:
