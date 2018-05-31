@@ -1202,8 +1202,8 @@
             <title>Adding Makefile-Only Software</title>
 
             <para>
-                The use of <filename>make</filename> by itself is very common
-                in both proprietary and open source software.
+                The use of Make by itself is very common in both proprietary
+                and open-source software.
                 Unfortunately, Makefiles are often not written with
                 cross-compilation in mind.
                 Thus, <filename>devtool add</filename> often cannot do very
@@ -1216,7 +1216,7 @@
                 <filename>gcc</filename> is the compiler for the build host
                 and the cross-compiler is named something similar to
                 <filename>arm-poky-linux-gnueabi-gcc</filename> and might
-                require some arguments (e.g. to point to the associated sysroot
+                require arguments (e.g. to point to the associated sysroot
                 for the target machine).
             </para>
 
@@ -1231,18 +1231,17 @@
                         <filename>g++</filename>.
                         </para></listitem>
                     <listitem><para>
-                        The environment in which <filename>make</filename> runs
-                        is set up with various standard variables for
-                        compilation (e.g. <filename>CC</filename>,
-                        <filename>CXX</filename>, and so forth) in a similar
-                        manner to the environment set up by the SDK's
-                        environment setup script.
+                        The environment in which Make runs is set up with
+                        various standard variables for compilation (e.g.
+                        <filename>CC</filename>, <filename>CXX</filename>, and
+                        so forth) in a similar manner to the environment set
+                        up by the SDK's environment setup script.
                         One easy way to see these variables is to run the
                         <filename>devtool build</filename> command on the
                         recipe and then look in
                         <filename>oe-logs/run.do_compile</filename>.
-                        Towards the top of this file you will see a list of
-                        environment variables that are being set.
+                        Towards the top of this file, a list of environment
+                        variables exists that are being set.
                         You can take advantage of these variables within the
                         Makefile.
                         </para></listitem>
@@ -1250,7 +1249,7 @@
                         If the Makefile sets a default for a variable using "=",
                         that default overrides the value set in the environment,
                         which is usually not desirable.
-                        In this situation, you can either patch the Makefile
+                        For this case, you can either patch the Makefile
                         so it sets the default using the "?=" operator, or
                         you can alternatively force the value on the
                         <filename>make</filename> command line.
@@ -1275,16 +1274,17 @@
                         This is particularly true because those hardcoded paths
                         often point to locations on the build host and thus
                         will either be read-only or will introduce
-                        contamination into the cross-compilation by virtue of
-                        being specific to the build host rather than the target.
+                        contamination into the cross-compilation because they
+                        are specific to the build host rather than the target.
                         Patching the Makefile to use prefix variables or other
-                        path variables is usually the way to handle this.
+                        path variables is usually the way to handle this
+                        situation.
                         </para></listitem>
                     <listitem><para>
                         Sometimes a Makefile runs target-specific commands such
                         as <filename>ldconfig</filename>.
-                        For such cases, you might be able to simply apply
-                        patches that remove these commands from the Makefile.
+                        For such cases, you might be able to apply patches that
+                        remove these commands from the Makefile.
                         </para></listitem>
                 </itemizedlist>
             </para>
