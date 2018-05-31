@@ -1450,46 +1450,57 @@
             <title>Finding Logs and Work Files</title>
 
             <para>
-                When you are debugging a recipe that you previously created using
-                <filename>devtool add</filename> or whose source you are modifying
-                by using the <filename>devtool modify</filename> command, after
-                the first run of <filename>devtool build</filename>, you will
-                find some symbolic links created within the source tree:
-                <filename>oe-logs</filename>, which points to the directory in
-                which log files and run scripts for each build step are created
-                and <filename>oe-workdir</filename>, which points to the temporary
-                work area for the recipe.
-                You can use these links to get more information on what is
-                happening at each build step.
-            </para>
-
-            <para>
-                These locations under <filename>oe-workdir</filename> are
-                particularly useful:
+                After the first run of the <filename>devtool build</filename>
+                command, recipes that were previously created using the
+                <filename>devtool add</filename> command or whose sources were
+                modified using the <filename>devtool modify</filename>
+                command contain symbolic links created within the source tree:
                 <itemizedlist>
-                    <listitem><para><filename>image/</filename>:
-                        Contains all of the files installed at the
-                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
-                        stage.
-                        Within a recipe, this directory is referred to by the
-                        expression
-                        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>.
+                    <listitem><para>
+                        <filename>oe-logs</filename>:
+                        This link points to the directory in which log files
+                        and run scripts for each build step are created.
                         </para></listitem>
-                    <listitem><para><filename>sysroot-destdir/</filename>:
-                        Contains a subset of files installed within
-                        <filename>do_install</filename> that have been put into the
-                        shared sysroot.
-                        For more information, see the
-                        "<link linkend='sdk-sharing-files-between-recipes'>Sharing Files Between Recipes</link>"
-                        section.
-                        </para></listitem>
-                    <listitem><para><filename>packages-split/</filename>:
-                        Contains subdirectories for each package produced by the
+                    <listitem><para>
+                        <filename>oe-workdir</filename>:
+                        This link points to the temporary work area for the
                         recipe.
-                        For more information, see the
-                        "<link linkend='sdk-packaging'>Packaging</link>" section.
+                        The following locations under
+                        <filename>oe-workdir</filename> are particularly
+                        useful:
+                            <itemizedlist>
+                                <listitem><para>
+                                    <filename>image/</filename>:
+                                    Contains all of the files installed during
+                                    the
+                                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
+                                    stage.
+                                    Within a recipe, this directory is referred
+                                    to by the expression
+                                    <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-D'><filename>D</filename></ulink><filename>}</filename>.
+                                    </para></listitem>
+                                <listitem><para>
+                                    <filename>sysroot-destdir/</filename>:
+                                    Contains a subset of files installed within
+                                    <filename>do_install</filename> that have
+                                    been put into the shared sysroot.
+                                    For more information, see the
+                                    "<link linkend='sdk-sharing-files-between-recipes'>Sharing Files Between Recipes</link>"
+                                    section.
+                                    </para></listitem>
+                                <listitem><para>
+                                    <filename>packages-split/</filename>:
+                                    Contains subdirectories for each package
+                                    produced by the recipe.
+                                    For more information, see the
+                                    "<link linkend='sdk-packaging'>Packaging</link>"
+                                    section.
+                                    </para></listitem>
+                            </itemizedlist>
                         </para></listitem>
                 </itemizedlist>
+                You can use these links to get more information on what is
+                happening at each build step.
             </para>
         </section>
 
