@@ -1592,20 +1592,20 @@
                 <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-package'><filename>do_package</filename></ulink>
                 task, files installed during the
                 <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>
-                task are split into one main package, which is almost always named
-                the same as the recipe, and several other packages.
-                This separation is done because not all of those installed files
-                are always useful in every image.
+                task are split into one main package, which is almost always
+                named the same as the recipe, and into several other packages.
+                This separation exists because not all of those installed files
+                are useful in every image.
                 For example, you probably do not need any of the documentation
                 installed in a production image.
-                Consequently, for each recipe the documentation files are separated
-                into a <filename>-doc</filename> package.
-                Recipes that package software that has optional modules or
-                plugins might do additional package splitting as well.
+                Consequently, for each recipe the documentation files are
+                separated into a <filename>-doc</filename> package.
+                Recipes that package software containing optional modules or
+                plugins might undergo additional package splitting as well.
             </para>
 
             <para>
-                After building a recipe you can see where files have gone by
+                After building a recipe, you can see where files have gone by
                 looking in the <filename>oe-workdir/packages-split</filename>
                 directory, which contains a subdirectory for each package.
                 Apart from some advanced cases, the
@@ -1615,17 +1615,18 @@
                 variables controls splitting.
                 The <filename>PACKAGES</filename> variable lists all of the
                 packages to be produced, while the <filename>FILES</filename>
-                variable specifies which files to include in each package,
+                variable specifies which files to include in each package by
                 using an override to specify the package.
-                For example, <filename>FILES_${PN}</filename> specifies the files
-                to go into the main package (i.e. the main package is named the
-                same as the recipe and
+                For example, <filename>FILES_${PN}</filename> specifies the
+                files to go into the main package (i.e. the main package has
+                the same name as the recipe and
                 <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-PN'><filename>PN</filename></ulink><filename>}</filename>
                 evaluates to the recipe name).
-                The order of the <filename>PACKAGES</filename> value is significant.
+                The order of the <filename>PACKAGES</filename> value is
+                significant.
                 For each installed file, the first package whose
-                <filename>FILES</filename> value matches the file is the package
-                into which the file goes.
+                <filename>FILES</filename> value matches the file is the
+                package into which the file goes.
                 Defaults exist for both the <filename>PACKAGES</filename> and
                 <filename>FILES</filename> variables.
                 Consequently, you might find you do not even need to set these
