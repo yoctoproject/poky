@@ -1114,26 +1114,27 @@
                 detect build-time dependencies and map them to other recipes
                 in the system.
                 During this mapping, the command fills in the names of those
-                recipes in the
+                recipes as part of the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-DEPENDS'><filename>DEPENDS</filename></ulink>
-                value within the recipe.
-                If a dependency cannot be mapped, then a comment is placed in
-                the recipe indicating such.
-                The inability to map a dependency might be caused because the
-                naming is not recognized or because the dependency simply is
-                not available.
+                variable within the recipe.
+                If a dependency cannot be mapped, <filename>devtool</filename>
+                places a comment in the recipe indicating such.
+                The inability to map a dependency can result from naming not
+                being recognized or because the dependency simply is not
+                available.
                 For cases where the dependency is not available, you must use
                 the <filename>devtool add</filename> command to add an
-                additional recipe to satisfy the dependency and then come
-                back to the first recipe and add its name to
-                <filename>DEPENDS</filename>.
+                additional recipe that satisfies the dependency.
+                Once you add that recipe, you need to update the
+                <filename>DEPENDS</filename> variable in the original recipe
+                to include the new recipe.
             </para>
 
             <para>
                 If you need to add runtime dependencies, you can do so by
                 adding the following to your recipe:
                 <literallayout class='monospaced'>
-     RDEPENDS_${PN} += "dependency1 dependency2 ..."
+     RDEPENDS_${PN} += "<replaceable>dependency1 dependency2 ...</replaceable>"
                 </literallayout>
                 <note>
                     The <filename>devtool add</filename> command often cannot
@@ -1144,7 +1145,7 @@
                     script for the software the recipe is building for further
                     details.
                     In some cases, you might find you can substitute the
-                    dependency for an option to disable the associated
+                    dependency with an option that disables the associated
                     functionality passed to the configure script.
                 </note>
             </para>
