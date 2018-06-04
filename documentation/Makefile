@@ -268,7 +268,7 @@ TARFILES = mega-manual.html mega-style.css \
 	figures/sdk-devtool-add-flow.png figures/sdk-installed-extensible-sdk-directory.png \
 	figures/sdk-devtool-modify-flow.png figures/sdk-eclipse-dev-flow.png \
 	figures/sdk-devtool-upgrade-flow.png figures/bitbake-build-flow.png figures/bypqs-title.png \
-	figures/overview-manual-title.png
+	figures/overview-manual-title.png figures/sdk-autotools-flow.png
 	endif
 
 MANUALS = $(DOC)/$(DOC).html
@@ -295,7 +295,7 @@ TARFILES = sdk-manual.html sdk-style.css figures/sdk-title.png \
            figures/sdk-environment.png figures/sdk-installed-standard-sdk-directory.png \
 	   figures/sdk-installed-extensible-sdk-directory.png figures/sdk-devtool-add-flow.png \
 	   figures/sdk-devtool-modify-flow.png figures/sdk-eclipse-dev-flow.png \
-	   figures/sdk-devtool-upgrade-flow.png \
+	   figures/sdk-devtool-upgrade-flow.png figures/sdk-autotools-flow.png \
            eclipse
 MANUALS = $(DOC)/$(DOC).html $(DOC)/eclipse
 FIGURES = figures
