@@ -222,8 +222,8 @@
         <para>
             This section presents a simple Makefile development flow and
             provides an example that lets you see how you can use
-            cross-toolchain environment variables to replace or override
-            variables used in your Makefile.
+            cross-toolchain environment variables and Makefile variables
+            during development.
             <imagedata fileref="figures/sdk-makefile-flow.png" width="6in" height="7in" align="center" />
         </para>
 
@@ -233,7 +233,7 @@
             <itemizedlist>
                 <listitem><para>
                     <emphasis>Case 1 - No Variables Set in the
-                    <filename>Makefile</filename> that Map to Equivalent
+                    <filename>Makefile</filename> Map to Equivalent
                     Environment Variables Set in the SDK Setup Script:</emphasis>
                     Because matching variables are not specifically set in the
                     <filename>Makefile</filename>, the variables retain their
@@ -255,21 +255,19 @@
                     that Map to Equivalent Environment Variables from the
                     SDK Setup Script:</emphasis>
                     Executing the <filename>Makefile</filename> from the
-                    command line results in the environment settings of the
-                    variables being overwritten.
+                    command line results in the environment variables being
+                    overwritten.
                     In this case, the command-line content is used.
-                    <note>
-                        The one exception to this is if you use the following
-                        command-line option:
-                        <literallayout class='monospaced'>
-     $ make -e <replaceable>target</replaceable>
-                        </literallayout>
-                        Using the "-e" option with <filename>make</filename>
-                        causes the environment variables to be used during
-                        the build.
-                    </note>
                     </para></listitem>
             </itemizedlist>
+            <note>
+                Regardless of how you set your variables, if you use
+                the "-e" option with <filename>make</filename>, the
+                variables from the SDK setup script take precedence:
+                <literallayout class='monospaced'>
+     $ make -e <replaceable>target</replaceable>
+                </literallayout>
+            </note>
         </para>
 
         <para>
@@ -280,58 +278,235 @@
         <para>
             In a new shell environment variables are not established for the
             SDK until you run the setup script.
-            For example, the following commands show null values for four
-            variables that are set when you run the SDK environment setup
-            script for a 64-bit build host and an i586-tuned target
-            architecture for a <filename>core-image-sato</filename> image
-            using the current &DISTRO; Yocto Project release:
+            For example, the following commands show a null value for the
+            compiler variable (i.e.
+            <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'><filename>CC</filename></ulink>).
             <literallayout class='monospaced'>
      $ echo ${CC}
 
-     $ echo ${LD}
-
-     $ echo ${CFLAGS}
-
-     $ echo ${CXXFLAGS}
+     $
             </literallayout>
-            Running the setup script and then echoing the variables shows the
-            values established for the SDK:
+            Running the SDK setup script for a 64-bit build host and an
+            i586-tuned target architecture for a
+            <filename>core-image-sato</filename> image using the current
+            &DISTRO; Yocto Project release and then echoing that variable
+            shows the value established through the script:
             <literallayout class='monospaced'>
-     $ source /opt/poky/2.5/environment-setup-i586-poky-linux
+     $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
      $ echo ${CC}
      i586-poky-linux-gcc -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux
-     $ echo ${LD}
-     i586-poky-linux-ld --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux
-     $ echo ${CFLAGS}
-     -O2 -pipe -g -feliminate-unused-debug-types
-     $ echo ${CXXFLAGS}
-     -O2 -pipe -g -feliminate-unused-debug-types
             </literallayout>
         </para>
 
-        <para role='writernotes'>
-            NEED REST OF THE EXAMPLE.
-            WORKING ON GETTING IT TO WORK PROPERLY.
-        </para>
+        <para>
+            To illustrate variable use, work through this simple "Hello World!"
+            example:
+            <orderedlist>
+                <listitem><para>
+                    <emphasis>Create a Working Directory and Populate It:</emphasis>
+                    Create a clean directory for your project and then make
+                    that directory your working location.
+                    <literallayout class='monospaced'>
+     $ mkdir $HOME/helloworld
+     $ cd $HOME/helloworld
+                    </literallayout>
+                    After setting up the directory, populate it with files
+                    needed for the flow.
+                    You need a <filename>main.c</filename> file from which you
+                    call your function, a <filename>module.h</filename> file
+                    to contain headers, and a <filename>module.c</filename>
+                    that defines your function.
+                    </para>
 
-<!--
-To illustrate this, consider the following four cross-toolchain
-            environment variables:
-            <literallayout class='monospaced'>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'>CC</ulink>="i586-poky-linux-gcc -m32 -march=i586 &DASH;&DASH;sysroot=/opt/poky/&DISTRO;/sysroots/i586-poky-linux"
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'>LD</ulink>="i586-poky-linux-ld &DASH;&DASH;sysroot=/opt/poky/&DISTRO;/sysroots/i586-poky-linux"
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink>="-O2 -pipe -g -feliminate-unused-debug-types"
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-CXXFLAGS'>CXXFLAGS</ulink>="-O2 -pipe -g -feliminate-unused-debug-types"
-            </literallayout>
-            Now, consider the following three cases:
-            <note>
-                For information on the variables set up by the cross-toolchain
-                environment setup script, see the
-                "<link linkend='sdk-running-the-extensible-sdk-environment-setup-script'>Running the Extensible SDK Environment Setup Script</link>"
-                section.
-            </note>
+                    <para>Create the three files as follows:
+                        <itemizedlist>
+                            <listitem><para>
+                                <emphasis><filename>main.c</filename>:</emphasis>
+                                <literallayout class='monospaced'>
+     #include "module.h"
+     void sample_func();
+     int main()
+     {
+     	sample_func();
+     	return 0;
+     }
+                                </literallayout>
+                                </para></listitem>
+                            <listitem><para>
+                                <emphasis><filename>module.h</filename>:</emphasis>
+                                <literallayout class='monospaced'>
+     #include &lt;stdio.h&gt;
+     void sample_func();
+                                </literallayout>
+                                </para></listitem>
+                            <listitem><para>
+                                <emphasis><filename>module.c</filename>:</emphasis>
+                                <literallayout class='monospaced'>
+     #include "module.h"
+     void sample_func()
+     {
+	     printf("Hello World!");
+	     printf("\n");
+     }
+                                </literallayout>
+                                </para></listitem>
+                        </itemizedlist>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Source the Cross-Toolchain Environment Setup File:</emphasis>
+                    As described earlier in the manual, installing the
+                    cross-toolchain creates a cross-toolchain environment setup
+                    script in the directory that the SDK was installed.
+                    Before you can use the tools to develop your project,
+                    you must source this setup script.
+                    The script begins with the string "environment-setup"
+                    and contains the machine architecture, which is
+                    followed by the string "poky-linux".
+                    For this example, the command sources a script from the
+                    default SDK installation directory that uses the
+                    32-bit Intel x86 Architecture and the
+                    &DISTRO_NAME; Yocto Project release:
+                    <literallayout class='monospaced'>
+     $ source /opt/poky/&DISTRO;/environment-setup-i586-poky-linux
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Create the <filename>Makefile</filename>:</emphasis>
+                    For this example, the Makefile contains two lines that
+                    can be used to set the <filename>CC</filename> variable.
+                    One line is identical to the value that is set when you
+                    run the SDK environment setup script, and the other line
+                    sets <filename>CC</filename> to "gcc", the default GNU
+                    compiler on the build host:
+                    <literallayout class='monospaced'>
+     # CC=i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux
+     # CC="gcc"
+     all: main.o module.o
+     	 ${CC} main.o module.o -o target_bin
+     main.o: main.c module.h
+	     ${CC} -I . -c main.c
+     module.o: module.c module.h
+	     ${CC} -I . -c module.c
+     clean:
+	     rm -rf *.o
+	     rm target_bin
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Make the Project:</emphasis>
+                    Use the <filename>make</filename> command to create the
+                    binary output file.
+                    Because variables are commented out in the Makefile,
+                    the value used for <filename>CC</filename> is the value
+                    set when the SDK environment setup file was run:
+                    <literallayout class='monospaced'>
+     $ make
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux -I . -c main.c
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux -I . -c module.c
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux main.o module.o -o target_bin
+                    </literallayout>
+                    From the results of the previous command, you can see that
+                    the compiler used was the compiler established through
+                    the <filename>CC</filename> variable defined in the
+                    setup script.</para>
+
+                    <para>You can override the <filename>CC</filename>
+                    environment variable with the same variable as set from
+                    the Makefile by uncommenting the line in the Makefile
+                    and running <filename>make</filename> again.
+                    <literallayout class='monospaced'>
+     $ make clean
+     rm -rf *.o
+     rm target_bin
+     #
+     # Edit the Makefile by uncommenting the line that sets CC to "gcc"
+     #
+     $ make
+     gcc -I . -c main.c
+     gcc -I . -c module.c
+     gcc main.o module.o -o target_bin
+                    </literallayout>
+                    As shown in the previous example, the cross-toolchain
+                    compiler is not used.
+                    Rather, the default compiler is used.</para>
+
+                    <para>This next case shows how to override a variable
+                    by providing the variable as part of the command line.
+                    Go into the Makefile and re-insert the comment character
+                    so that running <filename>make</filename> uses
+                    the established SDK compiler.
+                    However, when you run <filename>make</filename>, use a
+                    command-line argument to set <filename>CC</filename>
+                    to "gcc":
+                    <literallayout class='monospaced'>
+     $ make clean
+     rm -rf *.o
+     rm target_bin
+     #
+     # Edit the Makefile to comment out the line setting CC to "gcc"
+     #
+     $ make
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux -I . -c main.c
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux -I . -c module.c
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux main.o module.o -o target_bin
+     $ make clean
+     rm -rf *.o
+     rm target_bin
+     $ make CC="gcc"
+     gcc -I . -c main.c
+     gcc -I . -c module.c
+     gcc main.o module.o -o target_bin
+                    </literallayout>
+                    In the previous case, the command-line argument overrides
+                    the SDK environment variable.</para>
+
+                    <para>In this last case, edit Makefile again to use the
+                    "gcc" compiler but then use the "-e" option on the
+                    <filename>make</filename> command line:
+                    <literallayout class='monospaced'>
+     $ make clean
+     rm -rf *.o
+     rm target_bin
+     #
+     # Edit the Makefile to use "gcc"
+     #
+     $ make
+     gcc -I . -c main.c
+     gcc -I . -c module.c
+     gcc main.o module.o -o target_bin
+     $ make clean
+     rm -rf *.o
+     rm target_bin
+     $ make -e
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux -I . -c main.c
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux -I . -c module.c
+     i586-poky-linux-gcc  -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux main.o module.o -o target_bin
+                    </literallayout>
+                    In the previous case, the "-e" option forces
+                    <filename>make</filename> to use the SDK environment
+                    variables regardless of the values in the Makefile.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Execute Your Project:</emphasis>
+                    To execute the project (i.e.
+                    <filename>target_bin</filename>), use the following
+                    command:
+                    <literallayout class='monospaced'>
+     $ ./target_bin
+     Hello World!
+                    </literallayout>
+                    <note>
+                        If you used the cross-toolchain compiler to build
+                        <filename>target_bin</filename> and your build host
+                        differs in architecture from that of the target
+                        machine, you need to run your project on the target
+                        device.
+                    </note>
+                    As expected, the project displays the "Hello World!"
+                    message.
+                    </para></listitem>
+            </orderedlist>
         </para>
--->
     </section>
 </chapter>
 <!--
