@@ -50,13 +50,22 @@
      $ mkdir $HOME/helloworld
      $ cd $HOME/helloworld
                     </literallayout>
-                    After setting up the directory, populate it with three
-                    simple files needed for the flow.
+                    After setting up the directory, populate it with files
+                    needed for the flow.
                     You need a project source file, a file to help with
-                    configuration, and a file to help create the Makefile:
+                    configuration, and a file to help create the Makefile,
+                    and a README file:
                     <filename>hello.c</filename>,
-                    <filename>configure.ac</filename>, and
-                    <filename>Makefile.am</filename>, respectively:
+                    <filename>configure.ac</filename>,
+                    <filename>Makefile.am</filename>, and
+                    <filename>README</filename>, respectively.</para>
+
+                    <para> Use the following command to create an empty README
+                    file, which is required by GNU Coding Standards:
+                    <literallayout class='monospaced'>
+     $ touch README
+                    </literallayout>
+                    Create the remaining three files as follows:
                     <itemizedlist>
                         <listitem><para>
                             <emphasis><filename>hello.c</filename>:</emphasis>
@@ -109,40 +118,25 @@
                     </literallayout>
                     </para></listitem>
                 <listitem><para>
-                    <emphasis>Generate the Local <filename>aclocal.m4</filename> Files:</emphasis>
-                    The following command generates the local
-                    <filename>aclocal.m4</filename> files, which are used
-                    later with the <filename>autoconf</filename> command:
-                    <literallayout class='monospaced'>
-     $ aclocal
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para>
                     <emphasis>Create the <filename>configure</filename> Script:</emphasis>
-                    The following command creates the
-                    <filename>configure</filename> script:
+                    Use the <filename>autoreconf</filename> command to
+                    generate the <filename>configure</filename> script.
                     <literallayout class='monospaced'>
-     $ autoconf
+     $ autoreconf
                     </literallayout>
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>Generate Files Needed by GNU Coding
-                    Standards:</emphasis>
-                    GNU coding standards require certain files in order
-                    for the project to be compliant.
-                    This command creates those files:
-                    <literallayout class='monospaced'>
-     $ touch NEWS README AUTHORS ChangeLog
-                    </literallayout>
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>Generate the <filename>Makefile.in</filename> File:</emphasis>
-                    This command generates the
-                    <filename>Makefile.in</filename>, which is used later
-                    during cross-compilation:
-                    <literallayout class='monospaced'>
-     $ automake -a
-                    </literallayout>
+                    The <filename>autoreconf</filename> tool takes care
+                    of running the other Autotools such as
+                    <filename>aclocal</filename>,
+                    <filename>autoconf</filename>, and
+                    <filename>automake</filename>.
+                    <note>
+                        If you get errors from
+                        <filename>configure.ac</filename>, which
+                        <filename>autoreconf</filename> runs, that indicate
+                        missing files, you can use the "-i" option, which
+                        ensures missing auxiliary files are copied to the build
+                        host.
+                    </note>
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Cross-Compile the Project:</emphasis>
@@ -159,33 +153,18 @@
                     cross-toolchain by just passing the appropriate host
                     option to <filename>configure.sh</filename>.
                     The host option you use is derived from the name of the
-                    environment setup script found in the directory in which you
-                    installed the cross-toolchain.
-                    For example, the host option for an ARM-based target that uses
-                    the GNU EABI is
+                    environment setup script found in the directory in which
+                    you installed the cross-toolchain.
+                    For example, the host option for an ARM-based target that
+                    uses the GNU EABI is
                     <filename>armv5te-poky-linux-gnueabi</filename>.
                     You will notice that the name of the script is
                     <filename>environment-setup-armv5te-poky-linux-gnueabi</filename>.
                     Thus, the following command works to update your project
                     and rebuild it using the appropriate cross-toolchain tools:
                     <literallayout class='monospaced'>
-     $ ./configure --host=armv5te-poky-linux-gnueabi \
-        --with-libtool-sysroot=<replaceable>sysroot_dir</replaceable>
+     $ ./configure --host=armv5te-poky-linux-gnueabi --with-libtool-sysroot=<replaceable>sysroot_dir</replaceable>
                     </literallayout>
-                    <note>
-                        If the <filename>configure</filename> script results in
-                        problems recognizing the
-                        <filename>--with-libtool-sysroot=</filename><replaceable>sysroot-dir</replaceable>
-                        option, regenerate the script to enable the support by
-                        doing the following and then run the script again:
-                        <literallayout class='monospaced'>
-     $ libtoolize --automake
-     $ aclocal -I ${OECORE_TARGET_SYSROOT}/usr/share/aclocal [-I <replaceable>dir_containing_your_project-specific_m4_macros</replaceable>]
-     $ autoconf
-     $ autoheader
-     $ automake -a
-                        </literallayout>
-                    </note>
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Make and Install the Project:</emphasis>
@@ -215,12 +194,12 @@
                     </para></listitem>
                 <listitem><para>
                     <emphasis>Execute Your Project:</emphasis>
-                    To execute the project in the shell, simply enter
-                    the name.
-                    You could also copy the binary to the actual target
-                    hardware and run the project there as well:
+                    To execute the project, you would need to run it on your
+                    target hardware.
+                    If your target hardware happens to be your build host,
+                    you could run the project as follows:
                     <literallayout class='monospaced'>
-     $ ./hello
+     $ ./tmp/usr/local/bin/hello
                     </literallayout>
                     As expected, the project displays the "Hello World!"
                     message.
