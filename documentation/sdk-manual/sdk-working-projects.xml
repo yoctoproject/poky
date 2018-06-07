@@ -233,56 +233,118 @@
         <title>Makefile-Based Projects</title>
 
         <para>
-            For Makefile-based projects, the cross-toolchain environment
-            variables established by running the cross-toolchain environment
-            setup script are subject to general <filename>make</filename>
-            rules.
+            Simple Makefile-based projects use and interact with the
+            cross-toolchain environment variables established when you run
+            the cross-toolchain environment setup script.
+            The environment variables are subject to general
+            <filename>make</filename> rules.
         </para>
 
         <para>
-            To illustrate this, consider the following four cross-toolchain
+            This section presents a simple Makefile development flow and
+            provides an example that lets you see how you can use
+            cross-toolchain environment variables to replace or override
+            variables used in your Makefile.
+            <imagedata fileref="figures/sdk-makefile-flow.png" width="6in" height="7in" align="center" />
+        </para>
+
+        <para>
+            The main point of this section is to explain the following three
+            cases regarding variable behavior:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis>Case 1 - No Variables Set in the
+                    <filename>Makefile</filename> that Map to Equivalent
+                    Environment Variables Set in the SDK Setup Script:</emphasis>
+                    Because matching variables are not specifically set in the
+                    <filename>Makefile</filename>, the variables retain their
+                    values based on the environment setup script.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Case 2 - Variables Are Set in the Makefile that
+                    Map to Equivalent Environment Variables from the SDK
+                    Setup Script:</emphasis>
+                    Specifically setting matching variables in the
+                    <filename>Makefile</filename> during the build results in
+                    the environment settings of the variables being
+                    overwritten.
+                    In this case, the variables you set in the
+                    <filename>Makefile</filename> are used.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Case 3 - Variables Are Set Using the Command Line
+                    that Map to Equivalent Environment Variables from the
+                    SDK Setup Script:</emphasis>
+                    Executing the <filename>Makefile</filename> from the
+                    command line results in the environment settings of the
+                    variables being overwritten.
+                    In this case, the command-line content is used.
+                    <note>
+                        The one exception to this is if you use the following
+                        command-line option:
+                        <literallayout class='monospaced'>
+     $ make -e <replaceable>target</replaceable>
+                        </literallayout>
+                        Using the "-e" option with <filename>make</filename>
+                        causes the environment variables to be used during
+                        the build.
+                    </note>
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            The remainder of this section presents a simple Makefile example
+            that demonstrates these variable behaviors.
+        </para>
+
+        <para>
+            In a new shell environment variables are not established for the
+            SDK until you run the setup script.
+            For example, the following commands show null values for four
+            variables that are set when you run the SDK environment setup
+            script for a 64-bit build host and an i586-tuned target
+            architecture for a <filename>core-image-sato</filename> image
+            using the current &DISTRO; Yocto Project release:
+            <literallayout class='monospaced'>
+     $ echo ${CC}
+
+     $ echo ${LD}
+
+     $ echo ${CFLAGS}
+
+     $ echo ${CXXFLAGS}
+            </literallayout>
+            Running the setup script and then echoing the variables shows the
+            values established for the SDK:
+            <literallayout class='monospaced'>
+     $ source /opt/poky/2.5/environment-setup-i586-poky-linux
+     $ echo ${CC}
+     i586-poky-linux-gcc -m32 -march=i586 --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux
+     $ echo ${LD}
+     i586-poky-linux-ld --sysroot=/opt/poky/2.5/sysroots/i586-poky-linux
+     $ echo ${CFLAGS}
+     -O2 -pipe -g -feliminate-unused-debug-types
+     $ echo ${CXXFLAGS}
+     -O2 -pipe -g -feliminate-unused-debug-types
+            </literallayout>
+        </para>
+
+        <para role='writernotes'>
+            NEED REST OF THE EXAMPLE.
+            WORKING ON GETTING IT TO WORK PROPERLY.
+        </para>
+
+<!--
+To illustrate this, consider the following four cross-toolchain
             environment variables:
             <literallayout class='monospaced'>
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'>CC</ulink>="i586-poky-linux-gcc -m32 -march=i586 --sysroot=/opt/poky/&DISTRO;/sysroots/i586-poky-linux"
-     <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'>LD</ulink>="i586-poky-linux-ld --sysroot=/opt/poky/&DISTRO;/sysroots/i586-poky-linux"
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-CC'>CC</ulink>="i586-poky-linux-gcc -m32 -march=i586 &DASH;&DASH;sysroot=/opt/poky/&DISTRO;/sysroots/i586-poky-linux"
+     <ulink url='&YOCTO_DOCS_REF_URL;#var-LD'>LD</ulink>="i586-poky-linux-ld &DASH;&DASH;sysroot=/opt/poky/&DISTRO;/sysroots/i586-poky-linux"
      <ulink url='&YOCTO_DOCS_REF_URL;#var-CFLAGS'>CFLAGS</ulink>="-O2 -pipe -g -feliminate-unused-debug-types"
      <ulink url='&YOCTO_DOCS_REF_URL;#var-CXXFLAGS'>CXXFLAGS</ulink>="-O2 -pipe -g -feliminate-unused-debug-types"
             </literallayout>
             Now, consider the following three cases:
-            <itemizedlist>
-                <listitem><para>
-                    <emphasis>Case 1 - No Variables Set in the
-                    <filename>Makefile</filename>:</emphasis>
-                    Because these variables are not specifically set in the
-                    <filename>Makefile</filename>, the variables retain their
-                    values based on the environment.
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>Case 2 - Variables Set in the
-                    <filename>Makefile</filename>:</emphasis>
-                    Specifically setting variables in the
-                    <filename>Makefile</filename> during the build results in
-                    the environment settings of the variables being
-                    overwritten.
-                    </para></listitem>
-                <listitem><para>
-                    <emphasis>Case 3 - Variables Set when the
-                    <filename>Makefile</filename> is Executed from the
-                    Command Line:</emphasis>
-                    Executing the <filename>Makefile</filename> from the
-                    command-line results in the variables being overwritten
-                    with command-line content regardless of what is being set
-                    in the <filename>Makefile</filename>.
-                    In this case, environment variables are not considered
-                    unless you use the "-e" flag during the build:
-                    <literallayout class='monospaced'>
-     $ make -e <replaceable>file</replaceable>
-                    </literallayout>
-                    If you use this flag, then the environment values of the
-                    variables override any variables specifically set in the
-                    <filename>Makefile</filename>.
-                    </para></listitem>
-            </itemizedlist>
             <note>
                 For information on the variables set up by the cross-toolchain
                 environment setup script, see the
@@ -290,6 +352,7 @@
                 section.
             </note>
         </para>
+-->
     </section>
 </chapter>
 <!--
