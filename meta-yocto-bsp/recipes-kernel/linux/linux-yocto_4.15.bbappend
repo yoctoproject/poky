@@ -10,8 +10,8 @@ KMACHINE_beaglebone-yocto ?= "beaglebone"
 
 SRCREV_machine_genericx86    ?= "51273ff79f4ad930f4a788257f58e1266cb236e3"
 SRCREV_machine_genericx86-64 ?= "51273ff79f4ad930f4a788257f58e1266cb236e3"
-SRCREV_machine_edgerouter ?= "683cfd2540fcb659774458352e8fb121ec764e0e"
-SRCREV_machine_beaglebone-yocto ?= "683cfd2540fcb659774458352e8fb121ec764e0e"
+SRCREV_machine_edgerouter ?= "e25dbfe95302eeaa1a03a828d05c09479574488a"
+SRCREV_machine_beaglebone-yocto ?= "e25dbfe95302eeaa1a03a828d05c09479574488a"
 SRCREV_machine_mpc8315e-rdb ?= "0b32edc46dfe7c40bf5451e9b7533c823bb2c6c4"
 
 COMPATIBLE_MACHINE_genericx86 = "genericx86"
