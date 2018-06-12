@@ -9011,6 +9011,40 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-NO_GENERIC_LICENSE'><glossterm>NO_GENERIC_LICENSE</glossterm>
+            <info>
+                NO_GENERIC_LICENSE[doc] = "Used to allow copying a license that does not exist in common licenses."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    Avoids QA errors when you use a non-common, non-CLOSED
+                    license in a recipe.
+                    Packages exist, such as the linux-firmware package, with
+                    many licenses that are not in any way common.
+                    Also, new licenses are added occasionally to avoid
+                    introducing a lot of common license files, which are only
+                    applicable to a specific package.
+                    <filename>NO_GENERIC_LICENSE</filename> is used to allow
+                    copying a license that does not exist in common licenses.
+                </para>
+
+                <para>
+                    The following example shows how to add
+                    <filename>NO_GENERIC_LICENSE</filename> to a recipe:
+                    <literallayout class='monospaced'>
+     NO_GENERIC_LICENSE[<replaceable>license_name</replaceable>] = "<replaceable>license_file_in_fetched_source</replaceable>"
+                    </literallayout>
+                    The following is an example that uses the
+                    <filename>LICENSE.Abilis.txt</filename> file as the license
+                    from the fetched source:
+                    <literallayout class='monospaced'>
+     NO_GENERIC_LICENSE[Firmware-Abilis] = "LICENSE.Abilis.txt"
+                    </literallayout>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-NO_RECOMMENDATIONS'><glossterm>NO_RECOMMENDATIONS</glossterm>
             <info>
                 NO_RECOMMENDATIONS[doc] = "When set to '1', no recommended packages will be installed. Some recommended packages might be required for certain system functionality, such as kernel-modules. It is up to the user to add packages to IMAGE_INSTALL as needed."
