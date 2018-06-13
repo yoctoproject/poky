@@ -19,8 +19,8 @@
 
         <para>
             The following figure and supporting list summarize the
-            application development general workflow that employs both the
-            SDK Eclipse.
+            general workflow for application development that uses the
+            SDK within the Eclipse IDE.
         </para>
 
         <para>
@@ -259,15 +259,17 @@
                             </para></listitem>
                         <listitem><para>
                             <emphasis>Install the Software:</emphasis>
-                            Accept the default "cpp-oxygen" directory and
-                            click "Install".
-                            Accept any license agreements and approve any
-                            certificates.
+                            Click "Install" to begin the installation.
+                            Accept all the certificates and any license
+                            agreements.
+                            Click "Install" again to finish the installation.
                             </para></listitem>
                         <listitem><para>
                             <emphasis>Launch Oxygen:</emphasis>
-                            Click the "Launch" button and accept the
-                            default "workspace".
+                            Accept the default "workspace" and click the
+                            "Launch" button.
+                            You should see the Eclipse welcome page from which
+                            can click "workbench" to enter your workspace.
                             </para></listitem>
                     </orderedlist>
                 </para>
@@ -278,17 +280,29 @@
 
                 <para>
                     Follow these steps to configure the Oxygen Eclipse IDE.
-                    <note>
-                        Depending on how you installed Eclipse and what
-                        you have already done, some of the options will
-                        not appear.
-                        If you cannot find an option as directed by the
-                        manual, it has already been installed.
+                    <note><title>Notes</title>
+                        <itemizedlist>
+                            <listitem><para>
+                                Depending on how you installed Eclipse and what
+                                you have already done, some of the options will
+                                not appear.
+                                If you cannot find an option as directed by the
+                                manual, it has already been installed.
+                                </para></listitem>
+                            <listitem><para>
+                                If you want to see all items regardless of
+                                whether they are installed or not, deselect the
+                                "Hide items that are already installed"
+                                check box.
+                                </para></listitem>
+                        </itemizedlist>
                     </note>
                     <orderedlist>
                         <listitem><para>
                             Be sure Eclipse is running and you are in your
                             workbench.
+                            Just click "workbench" if you are not in your
+                            default workspace.
                             </para></listitem>
                         <listitem><para>
                             Select "Install New Software" from the "Help"
@@ -341,7 +355,7 @@
                 <para>
                     You can install the Eclipse Yocto Plug-in into the
                     Eclipse IDE one of two ways:  use the Yocto Project's
-                    Eclipse Update site to install the pre-built plug-in
+                    Eclipse Update site to install the pre-built plug-in,
                     or build and install the plug-in from the latest
                     source code.
                 </para>
@@ -370,12 +384,10 @@
                                 name in the "Name" field.
                                 </para></listitem>
                             <listitem><para>
-                                Click "OK" to have the entry added
-                                to the "Work with:" drop-down list.
-                                </para></listitem>
-                            <listitem><para>
-                                Select the entry for the plug-in
-                                from the "Work with:" drop-down list.
+                                Click "OK" to have the entry automatically
+                                populate the "Work with:" field and to have
+                                the items for installation appear in the window
+                                below.
                                 </para></listitem>
                             <listitem><para>
                                 Check the boxes next to the following:
@@ -407,8 +419,13 @@
                         latest source code, follow these steps:
                         <orderedlist>
                             <listitem><para>
-                                Be sure your development system
-                                has JDK 1.8+
+                                Be sure your build host has JDK version 1.8
+                                or greater.
+                                On a Linux build host you can determine the
+                                version using the following command:
+                                <literallayout class='monospaced'>
+     $ java -version
+                                </literallayout>
                                 </para></listitem>
                             <listitem><para>
                                 Install X11-related packages:
@@ -428,12 +445,12 @@
                                 Use Git to create the correct tag:
                                 <literallayout class='monospaced'>
      $ cd ~/eclipse-yocto
-     $ git checkout -b oxygen/yocto-&DISTRO; remotes/origin/oxygen-master
+     $ git checkout -b oxygen/&DISTRO_NAME_NO_CAP; remotes/origin/oxygen/&DISTRO_NAME_NO_CAP;
                                 </literallayout>
                                 This creates a local tag named
-                                <filename>oxygen/yocto-&DISTRO;</filename>
+                                <filename>oxygen/&DISTRO_NAME_NO_CAP;</filename>
                                 based on the branch
-                                <filename>origin/oxygen-master</filename>.
+                                <filename>origin/oxygen/&DISTRO_NAME_NO_CAP;</filename>.
                                 You are put into a detached HEAD state,
                                 which is fine since you are only going to
                                 be building and not developing.
@@ -467,11 +484,11 @@
                                 <para>
                                 Following is an example:
                                 <literallayout class='monospaced'>
-     $ ECLIPSE_HOME=/home/scottrif/eclipse-yocto/scripts/eclipse ./build.sh -l oxygen/yocto-&DISTRO; master yocto-&DISTRO; 2>&amp;1 | tee build.log
+     $ ECLIPSE_HOME=/home/scottrif/eclipse-yocto/scripts/eclipse ./build.sh -l oxygen/&DISTRO_NAME_NO_CAP; master yocto-&DISTRO; 2>&amp;1 | tee build.log
                                 </literallayout>
                                 The previous example command adds the tag
                                 you need for
-                                <filename>oxygen/yocto-&DISTRO;</filename>
+                                <filename>oxygen/&DISTRO_NAME_NO_CAP;</filename>
                                 to <filename>HEAD</filename>, then tells
                                 the build script to use the local (-l) Git
                                 checkout for the build.
@@ -553,7 +570,7 @@
                 <para>
                     To start, you need to do the following from within the
                     Eclipse IDE:
-                    <itemizedlist>
+                    <orderedlist>
                         <listitem><para>
                             Choose "Preferences" from the "Window" menu to
                             display the Preferences Dialog.
@@ -562,7 +579,7 @@
                             Click "Yocto Project SDK" to display
                             the configuration screen.
                             </para></listitem>
-                    </itemizedlist>
+                    </orderedlist>
                     The following sub-sections describe how to configure
                     the plug-in.
                     <note>
@@ -784,7 +801,7 @@
                     </para>
 
                     <para>
-                        Click the "Apply" and "OK" to save your plug-in
+                        Click "Apply and Close" to save your plug-in
                         configurations.
                     </para>
                 </section>
@@ -822,17 +839,15 @@
                         click "Next".
                         </para></listitem>
                     <listitem><para>
-                        Expand
-                        <filename>Yocto Project SDK Autotools Project</filename>.
+                        Expand "Yocto Project SDK Autotools Project".
                         </para></listitem>
                     <listitem><para>
-                        Select <filename>Hello World ANSI C Autotools Projects</filename>.
+                        Select "Hello World ANSI C Autotools Projects".
                         This is an Autotools-based project based on a Yocto
                         template.
                         </para></listitem>
                     <listitem><para>
-                        Put a name in the
-                        <filename>Project name:</filename> field.
+                        Put a name in the "Project name:" field.
                         Do not use hyphens as part of the name
                         (e.g. <filename>hello</filename>).
                         </para></listitem>
@@ -886,21 +901,15 @@
                         </para></listitem>
                     <listitem><para>
                         Make or verify your configurations for the
-                        project and click "OK".
+                        project and click "Apply and Close".
                         </para></listitem>
                     <listitem><para>
-                        Right-click in the navigation pane and
-                        select "Reconfigure Project" from the pop-up menu.
+                        Right-click in the navigation pane and select
+                        "Reconfigure Project" from the pop-up menu.
                         This selection reconfigures the project by running
-                        <filename>autogen.sh</filename> in the workspace
-                        for your project.
-                        The script also runs
-                        <filename>libtoolize</filename>,
-                        <filename>aclocal</filename>,
-                        <filename>autoconf</filename>,
-                        <filename>autoheader</filename>,
-                        <filename>automake --a</filename>, and
-                        <filename>./configure</filename>.
+                        <ulink url='https://en.wikipedia.org/wiki/GNU_Build_System'>Autotools GNU utility programs</ulink>
+                        such as Autoconf, Automake, and so forth in the
+                        workspace for your project.
                         Click on the "Console" tab beneath your source code
                         to see the results of reconfiguring your project.
                         </para></listitem>
@@ -914,7 +923,8 @@
                 To build the project select "Build All" from the
                 "Project" menu.
                 The console should update and you can note the
-                cross-compiler you are using.
+                cross-compiler you are using (i.e.
+                <filename>i586-poky-linux-gcc</filename> in this example).
                 <note>
                     When building "Yocto Project SDK Autotools" projects,
                     the Eclipse IDE might display error messages for
@@ -934,17 +944,15 @@
                             <filename>File > New</filename> menu.
                             </para></listitem>
                         <listitem><para>
-                            In the "New Folder" Dialog, select "Link to
-                            alternate location (linked folder)".
+                            In the "New Folder" Dialog, click the "Advanced"
+                            button and then activate "Link to
+                            alternate location (linked folder)" button.
                             </para></listitem>
                         <listitem><para>
                             Click "Browse" to navigate to the include
                             folder inside the same sysroot location
                             selected in the Yocto Project
                             configuration preferences.
-                            </para></listitem>
-                        <listitem><para>
-                            Click "OK".
                             </para></listitem>
                         <listitem><para>
                             Click "Finish" to save the linked folder.
@@ -988,8 +996,8 @@
                             <filename>rpcbind</filename>, follow the
                             suggestions to get the service running.
                             As an example, on a new Ubuntu 16.04 LTS
-                            installation, you must do the following in
-                            order to get QEMU to launch:
+                            installation, you must do the following in a new
+                            shell in order to get QEMU to launch:
                             <literallayout class='monospaced'>
      $ sudo apt-get install rpcbind
                             </literallayout>
