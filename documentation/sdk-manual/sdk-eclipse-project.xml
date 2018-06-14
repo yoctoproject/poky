@@ -12,15 +12,34 @@
         application all from within Eclipse.
         This chapter describes general workflow using the SDK and Eclipse
         and how to configure and set up Eclipse.
+        <note><title>Notes</title>
+            <itemizedlist>
+                <listitem><para>
+                    This chapter assumes development of applications on top of
+                    an image prepared using the Yocto Project.
+                    As such, inclusion of a pre-built image or the building of
+                    an image is included in the workflow.
+                    </para></listitem>
+                <listitem><para>
+                    The chapter also assumes development on a build host that
+                    is set up to use the Yocto Project.
+                    Realize that you can easily use Eclipse and the Yocto
+                    Project plug-in to develop an application for any number
+                    of images developed and tested on different machines.
+                    </para></listitem>
+            </itemizedlist>
+        </note>
     </para>
 
-    <section id='workflow-using-eclipse'>
-        <title>Workflow Using <trademark class='trade'>Eclipse</trademark></title>
+    <section id='application-development-workflow-using-eclipse'>
+        <title>Application Development Workflow Using <trademark class='trade'>Eclipse</trademark></title>
 
         <para>
-            The following figure and supporting list summarize the
+            The following figure and supporting list summarize a
             general workflow for application development that uses the
             SDK within the Eclipse IDE.
+            The application developed runs on top of an image created using
+            the Yocto Project.
         </para>
 
         <para>
@@ -32,20 +51,26 @@
             <orderedlist>
                 <listitem><para>
                     <emphasis>Prepare the Host System for the Yocto Project</emphasis>:
+                    Because this example workflow assumes development on a
+                    system set up to use the Yocto Project, you need to be
+                    sure your
+                    <ulink url='&YOCTO_DOCS_REF_URL;#hardware-build-system-term'>build host</ulink>
+                    can use the Yocto Project.
                     See the
-                    "<ulink url='&YOCTO_DOCS_REF_URL;#detailed-supported-distros'>Supported Linux Distributions</ulink>"
-                    and
-                    "<ulink url='&YOCTO_DOCS_REF_URL;#required-packages-for-the-host-development-system'>Required Packages for the Host Development System</ulink>"
-                    sections both in the Yocto Project Reference Manual for
-                    requirements.
-                    In particular, be sure your host system has the
-                    <filename>xterm</filename> package installed.
+                    "<ulink url='&YOCTO_DOCS_DEV_URL;#setting-up-the-development-host-to-use-the-yocto-project'>Preparing a Build Host</ulink>"
+                    section in the Yocto Project Development Tasks Manual for
+                    information on how to set up your build host.
+                    <note>
+                        Be sure you install the "xterm" package, which is a
+                        <ulink url='&YOCTO_DOCS_REF_URL;#required-packages-for-the-host-development-system'>graphical and Eclipse plug-in extra</ulink>
+                        needed by Eclipse.
+                    </note>
                     </para></listitem>
                 <listitem><para>
-                    <emphasis>Secure the Yocto Project Kernel Target
-                    Image</emphasis>:
+                    <emphasis>Secure the Yocto Project Kernel Target Image</emphasis>:
                     You must have a target kernel image that has been built
                     using the OpenEmbedded build system.</para>
+
                     <para>Depending on whether the Yocto Project has a
                     pre-built image that matches your target architecture
                     and where you are going to run the image while you
@@ -78,6 +103,9 @@
                             "<ulink url='&YOCTO_DOCS_KERNEL_DEV_URL;#using-devtool-to-patch-the-kernel'>Using <filename>devtool</filename> to Patch the Kernel</ulink>"
                             section in the Yocto Project Linux Kernel
                             Development Manual for an example.
+                            You can also see the
+                            "<ulink url='https://wiki.yoctoproject.org/wiki/TipsAndTricks/RunningEclipseAgainstBuiltImage#Making_a_Suitable_Qemux86_Image'>Making a Suitable Qemux86 Image</ulink>"
+                            wiki for steps needed to build the image for QEMU.
                             </para></listitem>
                     </itemizedlist>
                     </para></listitem>
@@ -91,10 +119,10 @@
                     section.
                     </para></listitem>
                 <listitem><para>
-                    <emphasis>Secure the Target Root Filesystem
-                    and the Cross-Development Toolchain</emphasis>:
+                    <emphasis>Secure the Target Root Filesystem and the Cross-Development Toolchain</emphasis>:
                     You need to find and download the appropriate root
                     filesystem and the cross-development toolchain.</para>
+
                     <para>You can find the tarballs for the root filesystem
                     in the same area used for the kernel image.
                     Depending on the type of image you are running, the
@@ -102,6 +130,7 @@
                     For example, if you are developing an application that
                     runs on an image that supports Sato, you need to get a
                     root filesystem that supports Sato.</para>
+
                     <para>You can find the cross-development toolchains at
                     <ulink url='&YOCTO_TOOLCHAIN_DL_URL;'><filename>toolchains</filename></ulink>.
                     Be sure to get the correct toolchain for your
