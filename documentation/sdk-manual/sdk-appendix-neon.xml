@@ -212,8 +212,14 @@
                     To install the Neon Eclipse Yocto Plug-in from the latest
                     source code, follow these steps:
                     <orderedlist>
-                        <listitem><para>Be sure your development system
-                            has JDK 1.8+
+                        <listitem><para>
+                            Be sure your build host has JDK version 1.8
+                            or greater.
+                            On a Linux build host you can determine the
+                            version using the following command:
+                            <literallayout class='monospaced'>
+     $ java -version
+                            </literallayout>
                             </para></listitem>
                         <listitem><para>install X11-related packages:
                             <literallayout class='monospaced'>
@@ -227,18 +233,19 @@
      $ git clone git://git.yoctoproject.org/eclipse-yocto
                             </literallayout>
                             </para></listitem>
-                        <listitem><para>Use Git to checkout the correct
-                            tag:
+                        <listitem><para>
+                            Use Git to create the correct tag:
                             <literallayout class='monospaced'>
      $ cd ~/eclipse-yocto
-     $ git checkout neon/yocto-&DISTRO;
+     $ git checkout -b neon/&DISTRO_NAME_NO_CAP; remotes/origin/neon/&DISTRO_NAME_NO_CAP;
                             </literallayout>
                             This creates a local tag named
-                            <filename>neon/yocto-&DISTRO;</filename> based on
-                            the branch <filename>origin/neon-master</filename>.
-                            This puts you in a detached HEAD state, which
-                            is fine since you are only going to be building
-                            and not developing.
+                            <filename>neon/&DISTRO_NAME_NO_CAP;</filename>
+                            based on the branch
+                            <filename>origin/neon/&DISTRO_NAME_NO_CAP;</filename>.
+                            You are put into a detached HEAD state,
+                            which is fine since you are only going to
+                            be building and not developing.
                             </para></listitem>
                         <listitem><para>Change to the
                             <filename>scripts</filename>
@@ -259,20 +266,22 @@
                             directory of the Git repository created
                             earlier.
                             </para></listitem>
-                        <listitem><para>Run the <filename>build.sh</filename>
+                        <listitem><para>
+                            Run the <filename>build.sh</filename>
                             script as directed.
-                            Be sure to provide the tag name, documentation
-                            branch, and a release name.</para>
-                            <para>
-                            Following is an example:
+                            Be sure to provide the tag name,
+                            documentation branch, and a release name.</para>
+
+                            <para>Following is an example:
                             <literallayout class='monospaced'>
-     $ ECLIPSE_HOME=/home/scottrif/eclipse-yocto/scripts/eclipse ./build.sh -l neon/yocto-&DISTRO; master yocto-&DISTRO; 2>&amp;1 | tee build.log
+     $ ECLIPSE_HOME=/home/scottrif/eclipse-yocto/scripts/eclipse ./build.sh -l neon/&DISTRO_NAME_NO_CAP; master yocto-&DISTRO; 2>&amp;1 | tee build.log
                             </literallayout>
-                            The previous example command adds the tag you
-                            need for <filename>neon/yocto-&DISTRO;</filename>
-                            to <filename>HEAD</filename>, then tells the
-                            build script to use the local (-l) Git checkout
-                            for the build.
+                            The previous example command adds the tag
+                            you need for
+                            <filename>neon/&DISTRO_NAME_NO_CAP;</filename>
+                            to <filename>HEAD</filename>, then tells
+                            the build script to use the local (-l) Git
+                            checkout for the build.
                             After running the script, the file
                             <filename>org.yocto.sdk-</filename><replaceable>release</replaceable><filename>-</filename><replaceable>date</replaceable><filename>-archive.zip</filename>
                             is in the current directory.
