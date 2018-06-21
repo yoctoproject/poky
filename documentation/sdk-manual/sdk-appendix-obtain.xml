@@ -98,7 +98,7 @@
     <title>Building an SDK Installer</title>
 
     <para>
-        As an alternative to locating and downloading a SDK installer,
+        As an alternative to locating and downloading an SDK installer,
         you can build the SDK installer.
         Follow these steps:
         <orderedlist>
@@ -139,8 +139,7 @@
                 Among other things, the script creates the
                 <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>,
                 which is <filename>build</filename> in this case
-                and is located in the
-                <ulink url='&YOCTO_DOCS_REF_URL;#source-directory'>Source Directory</ulink>.
+                and is located in the Source Directory.
                 After the script runs, your current working directory
                 is set to the <filename>build</filename> directory.
                 </para></listitem>
@@ -149,14 +148,14 @@
                 Check to be sure that your
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>
                 variable in the <filename>local.conf</filename> file in your
-                <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
-                matches the architecture for which you are building.
+                Build Directory matches the architecture for which you are
+                building.
                 </para></listitem>
             <listitem><para>
                 <emphasis>Make Sure Your SDK Machine is Correctly Set:</emphasis>
                 If you are building a toolchain designed to run on an
                 architecture that differs from your current development host
-                machine (i.e. the build machine), be sure that the
+                machine (i.e. the build host), be sure that the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKMACHINE'><filename>SDKMACHINE</filename></ulink>
                 variable in the <filename>local.conf</filename> file in your
                 Build Directory is correctly set.
@@ -175,7 +174,7 @@
                 <literallayout class='monospaced'>
      $ bitbake <replaceable>image</replaceable> -c populate_sdk_ext
                 </literallayout>
-                These commands result in a SDK installer that contains the
+                These commands produce an SDK installer that contains the
                 sysroot that matches your target root filesystem.</para>
 
                 <para>When the <filename>bitbake</filename> command completes,
@@ -184,16 +183,18 @@
                 <note><title>Notes</title>
                     <itemizedlist>
                         <listitem><para>
-                            By default, this toolchain does not build static
-                            binaries.
+                            By default, the previous BitBake command does not
+                            build static binaries.
                             If you want to use the toolchain to build these
                             types of libraries, you need to be sure your SDK
                             has the appropriate static development libraries.
                             Use the
                             <ulink url='&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_TARGET_TASK'><filename>TOOLCHAIN_TARGET_TASK</filename></ulink>
                             variable inside your <filename>local.conf</filename>
-                            file to install the appropriate library packages
-                            in the SDK.
+                            file before building the SDK installer.
+                            Doing so ensures that the eventual SDK installation
+                            process installs the appropriate library packages
+                            as part of the SDK.
                             Following is an example using
                             <filename>libc</filename> static development
                             libraries:
