@@ -278,13 +278,14 @@
                 Root Filesystem Image File:</emphasis>
                 You need to find and download the root filesystem image
                 file that is appropriate for your target system.
-                These files are kept in the
+                These files are kept in machine-specific folders in the
                 <ulink url='&YOCTO_DL_URL;/releases/yocto/yocto-&DISTRO;/machines/'>Index of Releases</ulink>
                 in the "machines" directory.</para>
 
-                <para>The "machines" directory contains tarballs
-                (<filename>*.tar.bz2</filename>) for supported machines.
-                The directory also contains flattened root filesystem
+                <para>The machine-specific folders of the "machines" directory
+                contain tarballs (<filename>*.tar.bz2</filename>) for supported
+                machines.
+                These directories also contain flattened root filesystem
                 image files (<filename>*.ext4</filename>), which you can use
                 with QEMU directly.</para>
 
@@ -298,14 +299,15 @@
 
      Where:
          <replaceable>profile</replaceable> is the filesystem image's profile:
-                   lsb, lsb-dev, lsb-sdk, lsb-qt3, minimal, minimal-dev, sato,
-                   sato-dev, sato-sdk, minimal-initramfs, or sdk-ptest. For
-                   information on these types of image profiles, see the
-                   "Images" chapter in the Yocto Project Reference Manual.
+                   lsb, lsb-dev, lsb-sdk, minimal, minimal-dev, minimal-initramfs,
+                   sato, sato-dev, sato-sdk, sato-sdk-ptest. For information on
+                   these types of image profiles, see the "<ulink url='&YOCTO_DOCS_REF_URL;#ref-images'>Images</ulink>" chapter in
+                   the Yocto Project Reference Manual.
 
          <replaceable>arch</replaceable> is a string representing the target architecture:
-                   beaglebone, edgerouter, genericx86, genericx86-64, mpc8315e-rdb,
-                   and several versions for qemu*.
+                   beaglebone-yocto, beaglebone-yocto-lsb, edgerouter, edgerouter-lsb,
+                   genericx86, genericx86-64, genericx86-64-lsb, genericx86-lsb,
+                   mpc8315e-rdb, mpc8315e-rdb-lsb, and qemu*.
 
 <!-->
          <replaceable>date_time</replaceable> is a date and time stamp.
@@ -317,26 +319,28 @@
                 <filename>core-image-minimal</filename> images.
                 </para>
 
-                <para>For example, if your target hardware system is a
-                BeagleBone board and your image is a
-                <filename>core-image-minimal</filename> image, you need
-                to download the following root filesystem image file:
+                <para>For example, if you plan on using a BeagleBone device
+                as your target hardware and your image is a
+                <filename>core-image-sato-sdk</filename>
+                image, you can download the following file:
                 <literallayout class='monospaced'>
-     core-image-minimal-beaglebone-yocto.tar.bz2
+     core-image-sato-sdk-beaglebone-yocto.tar.bz2
                 </literallayout>
                 </para></listitem>
             <listitem><para>
                 <emphasis>Initialize the Cross-Development Environment:</emphasis>
-                You must <filename>source</filename>
-                the cross-development environment setup script to establish
-                necessary environment variables.</para>
+                You must <filename>source</filename> the cross-development
+                environment setup script to establish necessary environment
+                variables.</para>
 
                 <para>This script is located in the top-level directory in
                 which you installed the toolchain (e.g.
                 <filename>poky_sdk</filename>).</para>
 
-                <para>Following is an example for the BeagleBone Board
-                previously shown:
+                <para>Following is an example based on the toolchain installed
+                in the
+                "<link linkend='sdk-locating-pre-built-sdk-installers'>Locating Pre-Built SDK Installers</link>"
+                section:
                 <literallayout class='monospaced'>
      $ source ~/poky_sdk/environment-setup-core2-64-poky-linux
                 </literallayout>
@@ -353,10 +357,10 @@
                 This command extracts the root filesystem into the
                 <filename>core2-64-sato</filename> directory:
                 <literallayout class='monospaced'>
-     $ runqemu-extract-sdk ~/Downloads/core-image-sato-core2-64.tar.bz2 ~/core2-64-sato
+     $ runqemu-extract-sdk ~/Downloads/core-image-sato-sdk-beaglebone-yocto.tar.bz2 ~/beaglebone-sato
                 </literallayout>
                 You could now point to the target sysroot at
-                <filename>core2-64-sato</filename>.
+                <filename>beablebone-sato</filename>.
                 </para></listitem>
         </orderedlist>
     </para>
