@@ -17,26 +17,31 @@
         The extensible SDK primarily consists of a pre-configured copy of
         the OpenEmbedded build system from which it was produced.
         Thus, the SDK's configuration is derived using that build system and
-        the following filters, which the OpenEmbedded build system applies
-        against <filename>local.conf</filename> and
-        <filename>auto.conf</filename> if they are present:
+        the filters shown in the following list.
+        When these filters are present, the OpenEmbedded build system applies
+        them against <filename>local.conf</filename> and
+        <filename>auto.conf</filename>:
         <itemizedlist>
             <listitem><para>
                 Variables whose values start with "/" are excluded since the
                 assumption is that those values are paths that are likely to
-                be specific to the build host.
+                be specific to the
+                <ulink url='&YOCTO_DOCS_REF_URL;#hardware-build-system-term'>build host</ulink>.
                 </para></listitem>
             <listitem><para>
                 Variables listed in
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_LOCAL_CONF_BLACKLIST'><filename>SDK_LOCAL_CONF_BLACKLIST</filename></ulink>
                 are excluded.
-                The default value blacklists
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-CONF_VERSION'><filename>CONF_VERSION</filename></ulink>,
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS'><filename>BB_NUMBER_THREADS</filename></ulink>,
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE'><filename>PARALLEL_MAKE</filename></ulink>,
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-PRSERV_HOST'><filename>PRSERV_HOST</filename></ulink>,
-                and
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-SSTATE_MIRRORS'><filename>SSTATE_MIRRORS</filename></ulink>.
+                These variables are not allowed through from the OpenEmbedded
+                build system configuration into the extensible SDK
+                configuration.
+                Typically, these variables are specific to the machine on
+                which the build system is running and could be problematic
+                as part of the extensible SDK configuration.</para>
+
+                <para>For a list of the variables excluded by default, see the
+                <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_LOCAL_CONF_BLACKLIST'><filename>SDK_LOCAL_CONF_BLACKLIST</filename></ulink>
+                in the glossary of the Yocto Project Reference Manual.
                 </para></listitem>
             <listitem><para>
                 Variables listed in
@@ -44,7 +49,7 @@
                 are included.
                 Including a variable in the value of
                 <filename>SDK_LOCAL_CONF_WHITELIST</filename> overrides either
-                of the above two conditions.
+                of the previous two filters.
                 The default value is blank.
                 </para></listitem>
             <listitem><para>
