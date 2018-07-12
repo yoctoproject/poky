@@ -78,11 +78,13 @@
     </para>
 </section>
 
-<section id='adjusting-the-extensible-sdk-to-suit-your-build-system-setup'>
-    <title>Adjusting the Extensible SDK to Suit Your Build System Setup</title>
+<section id='adjusting-the-extensible-sdk-to-suit-your-build-hosts-setup'>
+    <title>Adjusting the Extensible SDK to Suit Your Build Host's Setup</title>
 
     <para>
-        In most cases, the extensible SDK defaults should work.
+        In most cases, the extensible SDK defaults should work with your
+        <ulink url='&YOCTO_DOCS_REF_URL;#hardware-build-system-term'>build host's</ulink>
+        setup.
         However, some cases exist for which you might consider making
         adjustments:
         <itemizedlist>
@@ -93,33 +95,43 @@
                 variable and you do not need or want those classes enabled in
                 the SDK, you can blacklist them by adding them to the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_INHERIT_BLACKLIST'><filename>SDK_INHERIT_BLACKLIST</filename></ulink>
-                variable.
-                The default value of <filename>SDK_INHERIT_BLACKLIST</filename>
-                is set using the "?=" operator.
-                Consequently, you will need to either set the complete value
-                using "=" or append the value using "_append".
+                variable as described in the fourth bullet of the previous
+                section.
+                <note>
+                    The default value of
+                    <filename>SDK_INHERIT_BLACKLIST</filename> is set using
+                    the "?=" operator.
+                    Consequently, you will need to either define the entire
+                    list by using the "=" operator, or you will need to append
+                    a value using either "_append" or the "+=" operator.
+                    You can learn more about these operators in the
+                    "<ulink url='&YOCTO_DOCS_BB_URL;#basic-syntax'>Basic Syntax</ulink>"
+                    section of the BitBake User Manual.
+                </note>.
                 </para></listitem>
             <listitem><para>
                 If you have classes or recipes that add additional tasks to
-                the standard build flow (i.e. that execute as part of building
-                the recipe as opposed to needing to be called explicitly), then
-                you need to do one of the following:
+                the standard build flow (i.e. the tasks execute as the recipe
+                builds as opposed to being called explicitly), then you need
+                to do one of the following:
                 <itemizedlist>
                     <listitem><para>
-                        Ensure the tasks are shared state tasks (i.e. their
-                        output is saved to and can be restored from the shared
-                        state cache), or that the tasks are able to be
-                        produced quickly from a task that is a shared state
-                        task and add the task name to the value of
+                        After ensuring the tasks are
+                        <ulink url='&YOCTO_DOCS_OM_URL;#shared-state-cache'>shared state</ulink>
+                        tasks (i.e. the output of the task is saved to and
+                        can be restored from the shared state cache) or
+                        ensuring the tasks are able to be produced quickly from
+                        a task that is a shared state task, add the task name
+                        to the value of
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-SDK_RECRDEP_TASKS'><filename>SDK_RECRDEP_TASKS</filename></ulink>.
                         </para></listitem>
                     <listitem><para>
                         Disable the tasks if they are added by a class and
                         you do not need the functionality the class provides
                         in the extensible SDK.
-                        To disable the tasks, add the class to
-                        <filename>SDK_INHERIT_BLACKLIST</filename> as previously
-                        described.
+                        To disable the tasks, add the class to the
+                        <filename>SDK_INHERIT_BLACKLIST</filename> variable
+                        as described in the previous section.
                         </para></listitem>
                 </itemizedlist>
                 </para></listitem>
