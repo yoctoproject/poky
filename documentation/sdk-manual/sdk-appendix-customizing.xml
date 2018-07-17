@@ -260,6 +260,51 @@
     </para>
 </section>
 
+<section id='sdk-changing-the-default-sdk-installation-directory'>
+    <title>Changing the Default SDK Installation Directory</title>
+
+    <para>
+        When you build the installer for the Extensible SDK, the default
+        installation directory for the SDK is based on the
+        <ulink url='&YOCTO_DOCS_REF_URL;#var-DISTRO'><filename>DISTRO</filename></ulink>
+        and
+        <ulink url='&YOCTO_DOCS_REF_URL;#var-SDKEXTPATH'><filename>SDKEXTPATH</filename></ulink>
+        variables from within the
+        <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-populate-sdk-*'><filename>populate_sdk_base</filename></ulink>
+        class as follows:
+        <literallayout class='monospaced'>
+     SDKEXTPATH ??= "~/${@d.getVar('DISTRO')}_sdk"
+        </literallayout>
+        You can change this default installation directory by specifically
+        setting the <filename>SDKEXTPATH</filename> variable.
+    </para>
+
+    <para>
+        While a number of ways exist through which you can set this variable,
+        the method that makes the most sense is to set the variable in your
+        distribution's configuration file.
+        Doing so creates an SDK installer default directory that applies
+        across your distribution.
+        As an example, assume you have your own layer for your distribution
+        named "meta-mydistro" and you are using the same type of file
+        hierarchy as does the default "poky" distribution.
+        If so, you could update the <filename>SDKEXTPATH</filename> variable
+        in the
+        <filename>~/meta-mydistro/conf/distro/mydistro.conf</filename> file
+        using the following form:
+        <literallayout class='monospaced'>
+     SDKEXTPATH = "<replaceable>some_path_for_your_installed_sdk</replaceable>"
+        </literallayout>
+    </para>
+
+    <para>
+        After building your installer, running it prompts the user for
+        acceptance of the
+        <replaceable>some_path_for_your_installed_sdk</replaceable> directory
+        as the default location to install the Extensible SDK.
+    </para>
+</section>
+
 <section id='sdk-providing-additional-installable-extensible-sdk-content'>
     <title>Providing Additional Installable Extensible SDK Content</title>
 
