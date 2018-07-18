@@ -12600,22 +12600,33 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-SDK_TITLE'><glossterm>SDK_TITLE</glossterm>
             <info>
-                SDK_TITLE[doc] = "Specifies a title to be printed when running the SDK installer."
+                SDK_TITLE[doc] = "The title to be printed when running the SDK installer."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    Specifies a title to be printed when running the SDK
-                    installer.
-                    The <filename>SDK_TITLE</filename> variable defaults to
-                    "<replaceable>distro</replaceable> SDK" for the standard
-                    SDK and "<replaceable>distro</replaceable> Extensible SDK"
-                    for the extensible SDK, where
-                    <replaceable>distro</replaceable> is the first one of
+                    The title to be printed when running the SDK installer.
+                    By default, this title is based on the
                     <link linkend='var-DISTRO_NAME'><filename>DISTRO_NAME</filename></link>
                     or
                     <link linkend='var-DISTRO'><filename>DISTRO</filename></link>
-                    that is set in your configuration.
+                    variable and is set in the
+                    <link linkend='ref-classes-populate-sdk-*'><filename>populate_sdk_base</filename></link>
+                    class as follows:
+                    <literallayout class='monospaced'>
+     SDK_TITLE ??= "${@d.getVar('DISTRO_NAME') or d.getVar('DISTRO')} SDK"
+                    </literallayout>
+                    For the default distribution "poky",
+                    <filename>SDK_TITLE</filename> is set to
+                    "Poky (Yocto Project Reference Distro)".
+                </para>
+
+                <para>
+                    For information on how to change this default title,
+                    see the
+                    "<ulink url='&YOCTO_DOCS_SDK_URL;#sdk-changing-the-sdk-installer-title'>Changing the Extensible SDK Installer Title</ulink>"
+                    section in the Yocto Project Application Development and
+                    the Extensible Software Development Kit (eSDK) manual.
                 </para>
             </glossdef>
         </glossentry>
