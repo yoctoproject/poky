@@ -337,27 +337,38 @@
     <title>Providing Additional Installable Extensible SDK Content</title>
 
     <para>
-        If you want the users of the extensible SDK you are building to be
-        able to add items to the SDK without needing to build the
-        items from source, you need to do a number of things:
-        <orderedlist>
+        If you want the users of an extensible SDK you build to be
+        able to add items to the SDK without requiring the users to build
+        the items from source, you need to do a number of things:
+        <itemizedlist>
             <listitem><para>
                 Ensure the additional items you want the user to be able to
-                install are actually built.
-                You can ensure these items are built a number of different
-                ways: 1) Build them explicitly, perhaps using one or more
-                "meta" recipes that depend on lists of other recipes to keep
-                things tidy, or 2) Build the "world" target and set
-                <filename>EXCLUDE_FROM_WORLD_pn-</filename><replaceable>recipename</replaceable>
-                for the recipes you do not want built.
-                See the
-                <ulink url='&YOCTO_DOCS_REF_URL;#var-EXCLUDE_FROM_WORLD'><filename>EXCLUDE_FROM_WORLD</filename></ulink>
-                variable for additional information.
+                install are already built:
+                <itemizedlist>
+                    <listitem><para>
+                        Build the items explicitly.
+                        You could use one or more "meta" recipes that depend
+                        on lists of other recipes.
+                        </para></listitem>
+                    <listitem><para>
+                        Build the "world" target and set
+                        <filename>EXCLUDE_FROM_WORLD_pn-</filename><replaceable>recipename</replaceable>
+                        for the recipes you do not want built.
+                        See the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-EXCLUDE_FROM_WORLD'><filename>EXCLUDE_FROM_WORLD</filename></ulink>
+                        variable for additional information.
+                        </para></listitem>
+                </itemizedlist>
                 </para></listitem>
             <listitem><para>
                 Expose the <filename>sstate-cache</filename> directory
                 produced by the build.
-                Typically, you expose this directory over HTTP or HTTPS.
+                Typically, you expose this directory by making it available
+                through an
+                <ulink url='https://en.wikipedia.org/wiki/Apache_HTTP_Server'>Apache HTTP Server</ulink>
+                or
+                <ulink url='https://en.wikipedia.org/wiki/Nginx'>Nginx</ulink>
+                server.
                 </para></listitem>
             <listitem><para>
                 Set the appropriate configuration so that the produced SDK
@@ -390,7 +401,7 @@
                         Alternatively, if you just want to set the
                         <filename>SSTATE_MIRRORS</filename> variable's value
                         for the SDK alone, create a
-                        <filename>conf/sdk-extra.conf</filename> either in
+                        <filename>conf/sdk-extra.conf</filename> file either in
                         your
                         <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>
                         or within any layer and put your
@@ -404,7 +415,7 @@
                         </para></listitem>
                 </itemizedlist>
                 </para></listitem>
-        </orderedlist>
+        </itemizedlist>
     </para>
 </section>
 
@@ -478,7 +489,7 @@
             then providing a shared state mirror is mandatory so that items
             can be installed as needed.
             See the
-            "<link linkend='sdk-providing-additional-installable-extensible-sdk-content'>Providing Additional Installable Extensible SDK Content</link>"
+            "<link linkend='sdk-providing-additional-extensible-sdk-content'>Providing Additional Installable Extensible SDK Content</link>"
             section for more information.
         </note>
     </para>
