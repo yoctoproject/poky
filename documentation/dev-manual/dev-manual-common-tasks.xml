@@ -5325,100 +5325,204 @@
             <title>Building Images for Multiple Targets Using Multiple Configurations</title>
 
             <para>
-                Bitbake also has functionality that allows you to build
-                multiple targets at the same time, where each target uses
-                a different configuration.
+                You can use a single <filename>bitbake</filename> command
+                to build multiple images for different targets where each
+                image requires a different configuration (multiple
+                configuration builds).
+                The builds, in this scenario, are sometimes referred to as
+                "multiconfigs", and this section uses that term throughout.
             </para>
 
             <para>
-                In order to accomplish this, you setup each of the configurations
-                you need to use in parallel by placing the configuration files in
-                your current build directory alongside the usual
-                <filename>local.conf</filename> file.
+                This section describes how to set up for multiple
+                configuration builds and how to account for cross-build
+                dependencies between the multiconfigs.
             </para>
 
-            <para>
-                Follow these guidelines to create an environment that supports
-                multiple configurations:
-                <itemizedlist>
-                    <listitem><para>
-                        <emphasis>Create Configuration Files</emphasis>:
-                        You need to create a single configuration file for each
-                        configuration for which you want to add support.
-                        These files would contain lines such as the following:
-                        <literallayout class='monospaced'>
-     MACHINE = "A"
-                        </literallayout>
-                        The files would contain any other variables that can
-                        be set and built in the same directory.
-                        <note>
-                            You can change the
-                            <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>
-                            to not conflict.
-                        </note></para>
+            <section id='dev-setting-up-and-running-a-multiple-configuration-build'>
+                <title>Setting Up and Running a Multiple Configuration Build</title>
 
-                        <para>
-                        Furthermore, the configuration file must be located in the
-                        current build directory in a directory named
-                        <filename>multiconfig</filename> under the build's
-                        <filename>conf</filename> directory where
-                        <filename>local.conf</filename> resides.
-                        The reason for this restriction is because the
-                        <filename>BBPATH</filename> variable is not constructed
-                        until the layers are parsed.
-                        Consequently, using the configuration file as a
-                        pre-configuration file is not possible unless it is
-                        located in the current working directory.
-                        </para></listitem>
-                    <listitem><para>
-                        <emphasis>Add the BitBake Multi-Config Variable to you Local Configuration File</emphasis>:
-                        Use the
-                        <filename>BBMULTICONFIG</filename>
-                        variable in your <filename>conf/local.conf</filename>
-                        configuration file to specify each separate configuration.
-                        For example, the following line tells BitBake it should load
-                        <filename>conf/multiconfig/configA.conf</filename>,
-                        <filename>conf/multiconfig/configB.conf</filename>, and
-                        <filename>conf/multiconfig/configC.conf</filename>.
-                        <literallayout class='monospaced'>
-     BBMULTICONFIG = "configA configB configC"
-                        </literallayout>
-                        </para></listitem>
-                    <listitem><para>
-                        <emphasis>Launch BitBake</emphasis>:
-                        Use the following BitBake command form to launch the
-                        build:
-                        <literallayout class='monospaced'>
+                <para>
+                    To accomplish a multiple configuration build, you must
+                    define each target's configuration separately using
+                    a parallel configuration file in the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>,
+                    and you must follow a required file hierarchy.
+                    Additionally, you must enable the multiple configuration
+                    builds in your <filename>local.conf</filename> file.
+                </para>
+
+                <para>
+                    Follow these steps to set up and execute multiple
+                    configuration builds:
+                    <itemizedlist>
+                        <listitem><para>
+                            <emphasis>Create Separate Configuration Files</emphasis>:
+                            You need to create a single configuration file for
+                            each build target (each multiconfig).
+                            Minimally, each configuration file must define the
+                            machine and the temporary directory BitBake uses
+                            for the build.
+                            You must not overlap the temporary directories
+                            used during the build.</para>
+
+                            <para>Here is an example showing the minimal
+                            statements needed in a configuration file for
+                            a "qemux86" target whose temporary build directory
+                            is <filename>tmpmultix86</filename>:
+                            <literallayout class='monospaced'>
+     MACHINE="qemux86"
+     TMPDIR="${TOPDIR}/tmpmultix86"
+                            </literallayout></para>
+
+                            <para>The location for these multiconfig
+                            configuration files is specific.
+                            They must reside in the current build directory in
+                            a sub-directory of <filename>conf</filename> named
+                            <filename>multiconfig</filename>.
+                            Following is an example that defines two
+                            configuration files for the "x86" and "arm"
+                            multiconfigs:
+                            <imagedata fileref="figures/multiconfig_files.png" align="center" width="4in" depth="3in" />
+                            </para>
+
+                            <para>The reason for this required file hierarchy
+                            is because the <filename>BBPATH</filename> variable
+                            is not constructed until the layers are parsed.
+                            Consequently, using the configuration file as a
+                            pre-configuration file is not possible unless it is
+                            located in the current working directory.
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Add the BitBake Multi-configuration Variable to the Local Configuration File</emphasis>:
+                            Use the
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-BBMULTICONFIG'><filename>BBMULTICONFIG</filename></ulink>
+                            variable in your
+                            <filename>conf/local.conf</filename> configuration
+                            file to specify each multiconfig.
+                            Continuing with the example from the previous
+                            figure, the <filename>BBMULTICONFIG</filename>
+                            variable needs to enable two multiconfigs: "x86"
+                            and "arm" by specifying each configuration file:
+                            <literallayout class='monospaced'>
+     BBMULTICONFIG = "x86 arm"
+                            </literallayout>
+                            </para></listitem>
+                        <listitem><para>
+                            <emphasis>Launch BitBake</emphasis>:
+                            Use the following BitBake command form to launch the
+                            multiple configuration build:
+                            <literallayout class='monospaced'>
      $ bitbake [multiconfig:<replaceable>multiconfigname</replaceable>:]<replaceable>target</replaceable> [[[multiconfig:<replaceable>multiconfigname</replaceable>:]<replaceable>target</replaceable>] ... ]
-                        </literallayout>
-                        Following is an example that supports building a minimal
-                        image for configuration A alongside a standard
-                        <filename>core-image-sato</filename>, which takes its
-                        configuration from <filename>local.conf</filename>:
-                        <literallayout class='monospaced'>
-     $ bitbake multiconfig:configA:core-image-minimal core-image-sato
-                        </literallayout>
-                        </para></listitem>
-                </itemizedlist>
-            </para>
-
-            <para>
-                Support for multiple configurations in this current release of
-                the Yocto Project (&DISTRO_NAME; &DISTRO;) has some known issues:
-                <itemizedlist>
-                    <listitem><para>
-                        No inter-multi-configuration dependencies exist.
-                        </para></listitem>
-                    <listitem><para>
-                        Shared State (sstate) optimizations do not exist.
-                        Consequently, if the build uses the same object twice
+                            </literallayout>
+                            For the example in this section, the following
+                            command applies:
+                            <literallayout class='monospaced'>
+     $ bitbake multiconfig:x86:core-image-minimal multiconfig:arm:core-image-sato
+                            </literallayout>
+                            The previous BitBake command builds a
+                            <filename>core-image-minimal</filename> image that
+                            is configured through the
+                            <filename>x86.conf</filename> configuration file
+                            and builds a <filename>core-image-sato</filename>
+                            image that is configured through the
+                            <filename>arm.conf</filename> configuration file.
+                            </para></listitem>
+                    </itemizedlist>
+                    <note>
+                        Support for multiple configuration builds in the
+                        Yocto Project &DISTRO; (&DISTRO_NAME;) Release does
+                        not include Shared State (sstate) optimizations.
+                        Consequently, if a build uses the same object twice
                         in, for example, two different
                         <filename>TMPDIR</filename> directories, the build
-                        will either load from an existing sstate cache at the
-                        start or build the object twice.
-                        </para></listitem>
-                </itemizedlist>
-            </para>
+                        either loads from an existing sstate cache for that
+                        build at the start or builds the object fresh.
+                    </note>
+                </para>
+            </section>
+
+            <section id='dev-enabling-multiple-configuration-build-dependencies'>
+                <title>Enabling Multiple Configuration Build Dependencies</title>
+
+                <para>
+                    Sometimes dependencies can exist between targets
+                    (multiconfigs) in a multiple configuration build.
+                    For example, suppose that in order to build a
+                    <filename>core-image-sato</filename> image for an "x86"
+                    multiconfig, the root filesystem of an "arm"
+                    multiconfig must exist.
+                    This dependency is essentially that the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-image'><filename>do_image</filename></ulink>
+                    task in the <filename>core-image-sato</filename> recipe
+                    depends on the completion of the
+                    <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-rootfs'><filename>do_rootfs</filename></ulink>
+                    task of the <filename>core-image-minimal</filename>
+                    recipe.
+                </para>
+
+                <para>
+                    To enable dependencies in a multiple configuration
+                    build, you must declare the dependencies in the recipe
+                    using the following statement form:
+                    <literallayout class='monospaced'>
+     <replaceable>task_or_package</replaceable>[mcdepends] = "multiconfig:<replaceable>from_multiconfig</replaceable>:<replaceable>to_multiconfig</replaceable>:<replaceable>recipe_name</replaceable>:<replaceable>task_or_package_on_which_to_depend</replaceable>"
+                    </literallayout>
+                    <note>
+                        Dependencies can be on tasks or packages.
+                    </note>
+                    To better show how to use this statement, consider the
+                    example scenario from the first paragraph of this section.
+                    The following statement needs to be added to the recipe
+                    that builds the <filename>core-image-sato</filename>
+                    image:
+                    <literallayout class='monospaced'>
+     do_image[mcdepends] = "multiconfig:x86:arm:core-image-minimal:do_rootfs"
+                    </literallayout>
+                    In this example, the
+                    <replaceable>from_multiconfig</replaceable> is "x86".
+                    The <replaceable>to_multiconfig</replaceable> is "arm".
+                    The task on which the <filename>do_image</filename> task
+                    in the recipe depends is the <filename>do_rootfs</filename>
+                    task from the <filename>core-image-minimal</filename>
+                    recipe associated with the "arm" multiconfig.
+               </para>
+
+               <para>
+                   Once you set up this dependency, you can build the
+                   "x86" multiconfig using a BitBake command as follows:
+                   <literallayout class='monospaced'>
+     $ bitbake multiconfig:x86:core-image-sato
+                   </literallayout>
+                   This command executes all the tasks needed to create
+                   the <filename>core-image-sato</filename> image for the
+                   "x86" multiconfig.
+                   Because of the dependency, BitBake also executes through
+                   the <filename>do_rootfs</filename> task for the "arm"
+                   multiconfig build.
+               </para>
+
+               <para>
+                   Having a recipe depend on the root filesystem of another
+                   build might not seem that useful.
+                   Consider this change to the statement in the
+                   <filename>core-image-sato</filename> recipe:
+                   <literallayout class='monospaced'>
+     do_image[mcdepends] = "multiconfig:x86:arm:core-image-minimal:do_image"
+                   </literallayout>
+                   In this case, BitBake must create the
+                   <filename>core-image-minimal</filename> image for the
+                   "arm" build since the "x86" build depends on it.
+               </para>
+
+               <para>
+                   Because "x86" and "arm" are enabled for multiple
+                   configuration builds and have separate configuration
+                   files, BitBake places the artifacts for each build in the
+                   respective temporary build directories (i.e.
+                   <ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>.
+               </para>
+            </section>
         </section>
 
         <section id='building-an-initramfs-image'>
