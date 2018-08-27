@@ -5326,9 +5326,9 @@
 
             <para>
                 You can use a single <filename>bitbake</filename> command
-                to build multiple images for different targets where each
-                image requires a different configuration (multiple
-                configuration builds).
+                to build multiple images or packages for different targets
+                where each image or package requires a different configuration
+                (multiple configuration builds).
                 The builds, in this scenario, are sometimes referred to as
                 "multiconfigs", and this section uses that term throughout.
             </para>
@@ -5363,8 +5363,18 @@
                             Minimally, each configuration file must define the
                             machine and the temporary directory BitBake uses
                             for the build.
-                            You must not overlap the temporary directories
-                            used during the build.</para>
+                            Suggested practice dictates that you do not
+                            overlap the temporary directories
+                            used during the builds.
+                            However, it is possible that you can share the
+                            temporary directory
+                            (<ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink>).
+                            For example, consider a scenario with two
+                            different multiconfigs for the same
+                            <ulink url='&YOCTO_DOCS_REF_URL;#var-MACHINE'><filename>MACHINE</filename></ulink>: "qemux86" built for
+                            two distributions such as "poky" and "poky-lsb".
+                            In this case, you might want to use the same
+                            <filename>TMPDIR</filename>.</para>
 
                             <para>Here is an example showing the minimal
                             statements needed in a configuration file for
