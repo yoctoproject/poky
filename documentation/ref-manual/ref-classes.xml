@@ -2173,8 +2173,9 @@ This check was removed for YP 2.3 release
 
     <para>
         The <filename>native</filename> class provides common
-        functionality for recipes that wish to build tools to run on the build
-        host (i.e. tools that use the compiler or other tools from the
+        functionality for recipes that build tools to run on the
+        <link linkend='hardware-build-system-term'>build host</link>
+        (i.e. tools that use the compiler or other tools from the
         build host).
     </para>
 
@@ -2182,30 +2183,35 @@ This check was removed for YP 2.3 release
         You can create a recipe that builds tools that run natively on the
         host a couple different ways:
         <itemizedlist>
-            <listitem><para>Create a <replaceable>myrecipe</replaceable><filename>-native.bb</filename>
-                that inherits the <filename>native</filename> class.
+            <listitem><para>
+                Create a
+                <replaceable>myrecipe</replaceable><filename>-native.bb</filename>
+                recipe that inherits the <filename>native</filename> class.
                 If you use this method, you must order the inherit statement
                 in the recipe after all other inherit statements so that the
                 <filename>native</filename> class is inherited last.
+                <note><title>Warning</title>
+                    When creating a recipe this way, the recipe name must
+                    follow this naming convention:
+                    <literallayout class='monospaced'>
+     <replaceable>myrecipe</replaceable>-native.bb
+                    </literallayout>
+                    Not using this naming convention can lead to subtle
+                    problems caused by existing code that depends on that
+                    naming convention.
+                </note>
                 </para></listitem>
-            <listitem><para>Create or modify a target recipe that contains
-                the following:
+            <listitem><para>
+                Create or modify a target recipe that contains the following:
                 <literallayout class='monospaced'>
      <link linkend='var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></link> = "native"
                 </literallayout>
                 Inside the recipe, use <filename>_class-native</filename> and
                 <filename>_class-target</filename> overrides to specify any
                 functionality specific to the respective native or target
-                case.</para></listitem>
+                case.
+                </para></listitem>
         </itemizedlist>
-        <note><title>Warning</title>
-            When creating a recipe, you must follow this naming convention:
-            <literallayout class='monospaced'>
-     native-<replaceable>myrecipe</replaceable>.bb
-            </literallayout>
-            Not doing so can lead to subtle problems because code exists
-            that depends on the naming convention.
-        </note>
     </para>
 
     <para>
