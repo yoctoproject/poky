@@ -679,6 +679,13 @@
                             <literallayout class='monospaced'>
      BB_ALLOWED_NETWORKS = "*.gnu.org"
                             </literallayout>
+                            <note><title>Important</title>
+                                The use of the "<filename>*</filename>"
+                                character only works at the beginning of
+                                a host name.
+                                You cannot use the wildcard character in any
+                                other location of the name.
+                            </note>
                             </para></listitem>
                         <listitem><para>
                             Mirrors not in the host list are skipped and
@@ -1133,12 +1140,22 @@
 
         <glossentry id='var-BBFILES'><glossterm>BBFILES</glossterm>
             <info>
-                BBFILES[doc] = "List of recipe files used by BitBake to build software."
+                BBFILES[doc] = "A space-separated list of recipe files BitBake uses to build software."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    List of recipe files used by BitBake to build software.
+                    A space-separated list of recipe files BitBake uses to
+                    build software.
+                </para>
+
+                <para>
+                    When specifying recipe files, you can pattern match using
+                    Python's
+                    <ulink url='https://docs.python.org/2/library/glob.html'><filename>glob</filename></ulink>
+                    syntax.
+                    For details on the syntax, see the documentation by
+                    following the previous link.
                 </para>
             </glossdef>
         </glossentry>
@@ -1267,15 +1284,19 @@
                     match any of the expressions.
                     It is as if BitBake does not see them at all.
                     Consequently, matching files are not parsed or otherwise
-                    used by BitBake.</para>
+                    used by BitBake.
+                </para>
+
                 <para>
                     The values you provide are passed to Python's regular
                     expression compiler.
+                    Consequently, the syntax follows Python's Regular
+                    Expression (re) syntax.
                     The expressions are compared against the full paths to
                     the files.
                     For complete syntax information, see Python's
-                    documentation for the appropriate release at
-                    <ulink url='http://docs.python.org/release/'></ulink>.
+                    documentation at
+                    <ulink url='http://docs.python.org/release/2.3/lib/re-syntax.html'></ulink>.
                 </para>
 
                 <para>
@@ -1443,6 +1464,17 @@
                     set up during compilation so that they are correct for
                     use when installed into the sysroot and called by the
                     build processes of other recipes.
+                    <note>
+                        The <filename>BINCONFIG_GLOB</filename> variable
+                        uses
+                        <ulink url='http://tldp.org/LDP/abs/html/globbingref.html'>shell globbing</ulink>,
+                        which is recognition and expansion of wildcards during
+                        pattern matching.
+                        Shell globbing is very similar to
+                        <ulink url='https://docs.python.org/2/library/fnmatch.html#module-fnmatch'><filename>fnmatch</filename></ulink>
+                        and
+                        <ulink url='https://docs.python.org/2/library/glob.html'><filename>glob</filename></ulink>.
+                    </note>
                 </para>
 
                 <para>
@@ -2366,6 +2398,14 @@
                     Defines wildcards to match when installing a list of
                     complementary packages for all the packages explicitly
                     (or implicitly) installed in an image.
+                    <note>
+                        The <filename>COMPLEMENTARY_GLOB</filename> variable
+                        uses Unix filename pattern matching
+                        (<ulink url='https://docs.python.org/2/library/fnmatch.html#module-fnmatch'><filename>fnmatch</filename></ulink>),
+                        which is similar to the Unix style pathname pattern
+                        expansion
+                        (<ulink url='https://docs.python.org/2/library/glob.html'><filename>glob</filename></ulink>).
+                    </note>
                     The resulting list of complementary packages is associated
                     with an item that can be added to
                     <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>.
@@ -4782,22 +4822,37 @@
                     <literallayout class='monospaced'>
      FILES_${PN} += "${bindir}/mydir1 ${bindir}/mydir2/myfile"
                     </literallayout>
+                    <note><title>Notes</title>
+                        <itemizedlist>
+                            <listitem><para>
+                                When specifying files or paths, you can pattern
+                                match using Python's
+                                <ulink url='https://docs.python.org/2/library/glob.html'><filename>glob</filename></ulink>
+                                syntax.
+                                For details on the syntax, see the
+                                documentation by following the previous link.
+                                </para></listitem>
+                            <listitem><para>
+                                When specifying paths as part of the
+                                <filename>FILES</filename> variable, it is
+                                good practice to use appropriate path
+                                variables.
+                                For example, use <filename>${sysconfdir}</filename>
+                                rather than <filename>/etc</filename>, or
+                                <filename>${bindir}</filename> rather than
+                                <filename>/usr/bin</filename>.
+                                You can find a list of these variables at the
+                                top of the
+                                <filename>meta/conf/bitbake.conf</filename>
+                                file in the
+                                <link linkend='source-directory'>Source Directory</link>.
+                                You will also find the default values of the
+                                various <filename>FILES_*</filename> variables
+                                in this file.
+                                </para></listitem>
+                        </itemizedlist>
+                    </note>
                 </para>
-
-                <note>
-                    When specifying paths as part of the
-                    <filename>FILES</filename> variable, it is good practice
-                    to use appropriate path variables.
-                    For example, use <filename>${sysconfdir}</filename> rather
-                    than <filename>/etc</filename>, or
-                    <filename>${bindir}</filename> rather than
-                    <filename>/usr/bin</filename>.
-                    You can find a list of these variables at the top of the
-                    <filename>meta/conf/bitbake.conf</filename> file in the
-                    <link linkend='source-directory'>Source Directory</link>.
-                    You will also find the default values of the various
-                    <filename>FILES_*</filename> variables in this file.
-                </note>
 
                 <para>
                     If some of the files you provide with the
@@ -10935,47 +10990,63 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    If there are multiple versions of recipes available, this
-                    variable determines which recipe should be given preference.
+                    If multiple versions of recipes exist, this
+                    variable determines which version is given preference.
                     You must always suffix the variable with the
                     <link linkend='var-PN'><filename>PN</filename></link>
                     you want to select, and you should set the
                     <link linkend='var-PV'><filename>PV</filename></link>
                     accordingly for precedence.
-                    You can use the "<filename>%</filename>" character as a
-                    wildcard to match any number of characters, which can be
-                    useful when specifying versions that contain long revision
-                    numbers that could potentially change.
+                </para>
+
+                <para>
+                    The <filename>PREFERRED_VERSION</filename> variable
+                    supports limited wildcard use through the
+                    "<filename>%</filename>" character.
+                    You can use the character to match any number of
+                    characters, which can be useful when specifying versions
+                    that contain long revision numbers that potentially change.
                     Here are two examples:
                     <literallayout class='monospaced'>
      PREFERRED_VERSION_python = "3.4.0"
      PREFERRED_VERSION_linux-yocto = "4.12%"
                     </literallayout>
-                    <note>
-                        The specified version is matched against
-                        <link linkend='var-PV'><filename>PV</filename></link>,
-                        which does not necessarily match the version part of
-                        the recipe's filename.
-                        For example, consider two recipes
-                        <filename>foo_1.2.bb</filename> and
-                        <filename>foo_git.bb</filename> where
-                        <filename>foo_git.bb</filename> contains the following
-                        assignment:
-                        <literallayout class='monospaced'>
-     PV = "1.1+git${SRCPV}"
-                        </literallayout>
-                        In this case, the correct way to select
-                        <filename>foo_git.bb</filename> is by using an
-                        assignment such as the following:
-                        <literallayout class='monospaced'>
-     PREFERRED_VERSION_foo = "1.1+git%"
-                        </literallayout>
-                        Compare that previous example against the following
-                        incorrect example, which does not work:
-                        <literallayout class='monospaced'>
-     PREFERRED_VERSION_foo = "git"
-                        </literallayout>
+                    <note><title>Important</title>
+                        The use of the "<filename>%</filename>" character
+                        is limited in that it only works at the end of the
+                        string.
+                        You cannot use the wildcard character in any other
+                        location of the string.
                     </note>
+                </para>
+
+                <para>
+                    The specified version is matched against
+                    <link linkend='var-PV'><filename>PV</filename></link>,
+                    which does not necessarily match the version part of
+                    the recipe's filename.
+                    For example, consider two recipes
+                    <filename>foo_1.2.bb</filename> and
+                    <filename>foo_git.bb</filename> where
+                    <filename>foo_git.bb</filename> contains the following
+                    assignment:
+                    <literallayout class='monospaced'>
+     PV = "1.1+git${SRCPV}"
+                    </literallayout>
+                    In this case, the correct way to select
+                    <filename>foo_git.bb</filename> is by using an
+                    assignment such as the following:
+                    <literallayout class='monospaced'>
+     PREFERRED_VERSION_foo = "1.1+git%"
+                    </literallayout>
+                    Compare that previous example against the following
+                    incorrect example, which does not work:
+                    <literallayout class='monospaced'>
+     PREFERRED_VERSION_foo = "git"
+                    </literallayout>
+                </para>
+
+                <para>
                     Sometimes the <filename>PREFERRED_VERSION</filename>
                     variable can be set by configuration files in a way that
                     is hard to change.
