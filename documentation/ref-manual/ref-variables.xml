@@ -13670,12 +13670,16 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 </para>
 
                 <para>
-                    If you want to use native sstate artifacts that are
-                    provided by a server, you need to configure
-                    <filename>SSTATE_MIRROR</filename> regular expressions
-                    so that the local search paths get mapped to paths
-                    provided by the server.
-                    The server paths must take into account the GCC versions.
+                    When pointing to sstate build artifacts on another machine
+                    that uses a different GCC version for native builds,
+                    you must configure <filename>SSTATE_MIRROR</filename>
+                    with a regular expression that maps local search paths
+                    to server paths.
+                    The paths need to take into account
+                    <link linkend='var-NATIVELSBSTRING'><filename>NATIVELSBSTRING</filename></link>
+                    set by the
+                    <link linkend='ref-classes-uninative'><filename>uninative</filename></link>
+                    class.
                     For example, the following maps the local search path
                     <filename>universal-4.9</filename> to the server-provided
                     path <replaceable>server_url_sstate_path</replaceable>:
