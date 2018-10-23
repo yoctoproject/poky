@@ -13657,7 +13657,7 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     <link linkend='var-MIRRORS'><filename>MIRRORS</filename></link>
                     and <link linkend='var-PREMIRRORS'><filename>PREMIRRORS</filename></link>
                     and points to the cache locations to check for the shared
-                    objects.
+                    state (sstate) objects.
                 </para>
 
                 <para>
@@ -13667,6 +13667,21 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                     cache (sstate-cache) results from previous builds.
                     The sstate-cache you point to can also be from builds on
                     other machines.
+                </para>
+
+                <para>
+                    If you want to use native sstate artifacts that are
+                    provided by a server, you need to configure
+                    <filename>SSTATE_MIRROR</filename> regular expressions
+                    so that the local search paths get mapped to paths
+                    provided by the server.
+                    The server paths must take into account the GCC versions.
+                    For example, the following maps the local search path
+                    <filename>universal-4.9</filename> to the server-provided
+                    path <replaceable>server_url_sstate_path</replaceable>:
+                    <literallayout class='monospaced'>
+     SSTATE_MIRRORS ?= file://universal-4.9/(.*) http://<replaceable>server_url_sstate_path</replaceable>/universal-4.8/\1 \n
+                    </literallayout>
                 </para>
 
                 <para>
