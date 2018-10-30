@@ -5678,6 +5678,94 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
         </para>
     </section>
 </section>
+
+<section id='moving-to-the-yocto-project-2.6-release'>
+    <title>Moving to the Yocto Project 2.6 Release</title>
+
+    <para>
+        This section provides migration information for moving to the
+        Yocto Project 2.6 Release from the prior release.
+    </para>
+
+    <section id='migration-2.5-automatic-testing-changes'>
+        <title>Automatic Testing Changes</title>
+
+        <para>
+            This section provides information about automatic testing
+            changes:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis><filename>TEST_IMAGE</filename> Variable Removed:</emphasis>
+                    Prior to this release, you set the
+                    <filename>TEST_IMAGE</filename> variable to "1" to
+                    enable automatic testing for successfully built images.
+                    The <filename>TEST_IMAGE</filename> variable no longer
+                    exists and has been replaced by the
+                    <link linkend='var-TESTIMAGE_AUTO'><filename>TESTIMAGE_AUTO</filename></link>
+                    variable.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>Inheriting the <filename>testimage</filename> and
+                    <filename>testsdk</filename> Classes:</emphasis>
+                    Best practices now dictate that you use the
+                    <link linkend='var-IMAGE_CLASSES'><filename>IMAGE_CLASSES</filename></link>
+                    variable rather than the
+                    <link linkend='var-INHERIT'><filename>INHERIT</filename></link>
+                    variable when you inherit the
+                    <link linkend='ref-classes-testimage*'><filename>testimage</filename></link>
+                    and
+                    <link linkend='ref-classes-testsdk'><filename>testsdk</filename></link>
+                    classes used for automatic testing.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.6-openssl-changes'>
+        <title>OpenSSL Changes</title>
+
+        <para>
+            <ulink url='https://www.openssl.org/'>OpenSSL</ulink> has been
+            upgraded from 1.0 to 1.1.
+            By default, this upgrade could cause problems for recipes that
+            have both versions their dependency chains.
+            The problem is that both versions cannot be installed together
+            at build time.
+            <note>
+                It is possible to have both versions of the library at runtime.
+            </note>
+        </para>
+    </section>
+
+    <section id='migration-2.6-bitbake-changes'>
+        <title>BitBake Changes</title>
+
+        <para>
+            The "_remove" operator now preserves whitespace.
+        </para>
+    </section>
+
+    <section id='migration-2.6-security-changes'>
+        <title>Security Changes</title>
+
+        <para>
+            The Poky distribution now uses security compiler files by
+            default.
+            Inclusion of these files could cause new failures due to stricter
+            checking for various potential security issues in code.
+        </para>
+    </section>
+
+    <section id='migration-2.6-post-installation-changes'>
+        <title>Post Installation Changes</title>
+
+        <para>
+            You must explicitly mark post installs to defer to the target.
+            Warnings in the previous Yocto Project releases have become
+            errors.
+        </para>
+    </section>
+</section>
 </chapter>
 <!--
 vim: expandtab tw=80 ts=4
