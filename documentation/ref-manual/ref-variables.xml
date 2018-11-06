@@ -7515,13 +7515,20 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
 
         <glossentry id='var-KERNEL_IMAGE_BASE_NAME'><glossterm>KERNEL_IMAGE_BASE_NAME</glossterm>
             <info>
-                KERNEL_IMAGE_BASE_NAME[doc] = "The base name of the kernel image."
+                KERNEL_IMAGE_BASE_NAME[doc] = "The base name of the kernel image. Deprecated post Yocto Project 2.6 release."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    The base name of the kernel image.
-                    This variable is set in the
+                    <note>
+                        See the
+                        <link linkend='var-KERNEL_IMAGE_NAME'><filename>KERNEL_IMAGE_NAME</filename></link>
+                        variable for information.
+                        The <filename>KERNEL_IMAGE_BASE_NAME</filename>
+                        variable's name has changed post Yocto Project 2.6.
+                    </note>
+                    Prior to the 2.6 release of Yocto Project, this variable
+                    was set in the
                     <link linkend='ref-classes-kernel'>kernel</link> class
                     as follows:
                     <literallayout class='monospaced'>
@@ -7569,6 +7576,40 @@ recipes-graphics/xorg-font/font-alias_1.0.3.bb:PR = "${INC_PR}.3"
                 <para>
                     By default, this variable is not set, which means the
                     size of the kernel image is not checked.
+                </para>
+            </glossdef>
+        </glossentry>
+
+        <glossentry id='var-KERNEL_IMAGE_NAME'><glossterm>KERNEL_IMAGE_NAME</glossterm>
+            <info>
+                KERNEL_IMAGE_NAME[doc] = "The base name of the kernel image."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    The base name of the kernel image.
+                    This variable is set in the
+                    <filename>meta/classes/kernel-artifact-names.bbclass</filename>
+                    file as follows:
+                    <literallayout class='monospaced'>
+     KERNEL_IMAGE_NAME ?= "${KERNEL_ARTIFACT_NAME}"
+                    </literallayout>
+                    The value of the <filename>KERNEL_ARTIFACT_NAME</filename>
+                    variable, which is set in the same file, has the following
+                    value:
+                    <literallayout class='monospaced'>
+     KERNEL_ARTIFACT_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+                    </literallayout>
+                </para>
+
+                <para>
+                    See the
+                    <link linkend='var-PKGE'><filename>PKGE</filename></link>,
+                    <link linkend='var-PKGV'><filename>PKGV</filename></link>,
+                    <link linkend='var-PKGR'><filename>PKGR</filename></link>,
+                    and
+                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link>
+                    variables for additional information.
                 </para>
             </glossdef>
         </glossentry>
