@@ -3619,7 +3619,7 @@ $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.
 
         <para>
             The
-            <link linkend='var-KERNEL_IMAGE_BASE_NAME'><filename>KERNEL_IMAGE_BASE_NAME</filename></link>
+            <filename>KERNEL_IMAGE_BASE_NAME</filename>
             variable no longer uses the
             <link linkend='var-KERNEL_IMAGETYPE'><filename>KERNEL_IMAGETYPE</filename></link>
             variable to create the image's base name.
@@ -5687,7 +5687,289 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
         Yocto Project 2.6 Release from the prior release.
     </para>
 
-    <section id='migration-2.5-automatic-testing-changes'>
+    <section id='migration-2.6-gcc-changes'>
+        <title>GCC 8.2 is Now Used by Default</title>
+
+        <para>
+            The GNU Compiler Collection version 8.2 is now used by default
+            for compilation.
+            For more information on what has changed in the GCC 8.x release,
+            see
+            <ulink url='https://gcc.gnu.org/gcc-8/changes.html'></ulink>.
+        </para>
+
+        <para>
+            If you still need to compile with version 7.x, GCC 7.3 is
+            also provided.
+            You can select this version by setting the
+            and can be selected by setting the
+            <link linkend='var-GCCVERSION'><filename>GCCVERSION</filename></link>
+            variable to "7.%" in your configuration.
+        </para>
+    </section>
+
+    <section id='migration-2.6-removed-recipes'>
+        <title>Removed Recipes</title>
+
+        <para>
+            The following recipes have been removed:
+            <literallayout class='monospaced'>
+     <emphasis><filename>beecrypt</filename>:</emphasis> No longer needed since moving to <filename>rpm4</filename>.
+     <emphasis><filename>bigreqsproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>calibrateproto</filename>:</emphasis> Removed in favor of <filename>xinput</filename>.
+     <emphasis><filename>compositeproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>damageproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>dmxproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>dri2proto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>dri3proto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>eee-acpi-scripts</filename>:</emphasis> Became obsolete.
+     <emphasis><filename>fixesproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>fontsproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>fstests</filename>:</emphasis> Became obsolete.
+     <emphasis><filename>gccmakedep</filename>:</emphasis> No longer used.
+     <emphasis><filename>glproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>gnome-desktop3</filename>:</emphasis> No longer needed.  This recipe has moved to <filename>meta-oe</filename>.
+     <emphasis><filename>icon-naming-utils</filename>:</emphasis> No longer used since the Sato theme was removed in 2016.
+     <emphasis><filename>inputproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>kbproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>libusb-compat</filename>:</emphasis> Became obsolete.
+     <emphasis><filename>libuser</filename>:</emphasis> Became obsolete.
+     <emphasis><filename>libnfsidmap</filename>:</emphasis> No longer an external requirement since <filename>nfs-utils</filename> 2.2.1.  <filename>libnfsidmap</filename> is now integrated.
+     <emphasis><filename>libxcalibrate</filename>:</emphasis> No longer needed with <filename>xinput</filename>
+     <emphasis><filename>mktemp</filename>:</emphasis> Became obsolete. The <filename>mktemp</filename> command is provided by both <filename>busybox</filename> and <filename>coreutils</filename>.
+     <emphasis><filename>ossp-uuid</filename>:</emphasis> Is not being maintained and has mostly been replaced by <filename>uuid.h</filename> in <filename>util-linux</filename>.
+     <emphasis><filename>pax-utils</filename>:</emphasis> No longer needed.  Previous QA tests that did use this recipe are now done at build time.
+     <emphasis><filename>pcmciautils</filename>:</emphasis> Became obsolete.
+     <emphasis><filename>pixz</filename>:</emphasis> No longer needed. <filename>xz</filename> now supports multi-threaded compression.
+     <emphasis><filename>presentproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>randrproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>recordproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>renderproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>resourceproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>scrnsaverproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>trace-cmd</filename>:</emphasis> Became obsolete.  <filename>perf</filename> replaced this recipe's functionally.
+     <emphasis><filename>videoproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>wireless-tools</filename>:</emphasis> Became obsolete.  Superseded by <filename>iw</filename>.
+     <emphasis><filename>xcmiscproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>xextproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>xf86dgaproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>xf86driproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>xf86miscproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>xf86-video-omapfb</filename>:</emphasis> Became obsolete.  Use kernel modesetting driver instead.
+     <emphasis><filename>xf86-video-omap</filename>:</emphasis> Became obsolete  Use kernel modesetting driver instead.
+     <emphasis><filename>xf86vidmodeproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>xineramaproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>xproto</filename>:</emphasis> Replaced by <filename>xorgproto</filename>.
+     <emphasis><filename>yasm</filename>:</emphasis> No longer needed since previous usages are now satisfied by <filename>nasm</filename>.
+            </literallayout>
+        </para>
+    </section>
+
+    <section id='migration-2.6-packaging-changes'>
+        <title>Packaging Changes</title>
+
+        <para>
+            The following packaging changes have been made:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis><filename>cmake</filename>:</emphasis>
+                    <filename>cmake.m4</filename> and
+                    <filename>toolchain</filename> files have been moved to the
+                    main package.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>iptables</filename>:</emphasis>
+                    The <filename>iptables</filename> modules have been split
+                    into separate packages.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>alsa-lib</filename>:</emphasis>
+                    <filename>libasound</filename> is now in the main
+                    <filename>alsa-lib</filename> package instead of
+                    <filename>libasound</filename>.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>glibc</filename>:</emphasis>
+                    <filename>libnss-db</filename> is now in its own package
+                    along with a <filename>/var/db/makedbs.sh</filename>
+                    script to update databases.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>python</filename> and <filename>python3</filename>:</emphasis>
+                    These have been removed from the main package entirely.
+                    You must install specific packages or
+                    <filename>python-modules</filename> for everything.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis><filename>systemtap</filename>:</emphasis>
+                    Moved <filename>systemtap-exporter</filename> into its own
+                    package.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.6-xorg-protocol-dependencies'>
+        <title>XOrg Protocol dependencies</title>
+
+        <para>
+            The "*proto" upstream repositories have been combined into one
+            "xorgproto" repository.
+            Thus, the corresponding recipes have also been combined into a
+            single <filename>xorgproto</filename> recipe.
+            Any recipes that depend upon the older <filename>*proto</filename>
+            recipes need to be changed to depend on the newer
+            <filename>xorgproto</filename> recipe instead.
+        </para>
+
+        <para>
+            For names of recipes removed because of this repository change,
+            see the
+            <link linkend="migration-2.6-removed-recipes">Removed Recipes</link>
+            section.
+        </para>
+    </section>
+
+    <section id='migration-2.6-distutils-distutils3-fetching-dependencies'>
+        <title><filename>distutils</filename> and <filename>distutils3</filename> Now Prevent Fetching Dependencies During the <filename>do_configure</filename> Task</title>
+
+        <para>
+            Previously, it was possible for Python recipes that inherited
+            the
+            <link linkend='ref-classes-distutils'><filename>distutils</filename></link>
+            and
+            <link linkend='ref-classes-distutils3'><filename>distutils3</filename></link>
+            classes to fetch code during the
+            <link linkend='ref-tasks-configure'><filename>do_configure</filename></link>
+            task to satisfy dependencies mentioned in
+            <filename>setup.py</filename> if those dependencies were not
+            provided in the sysroot (i.e. recipes providing the dependencies
+            were missing from
+            <link linkend='var-DEPENDS'><filename>DEPENDS</filename></link>).
+            <note>
+                This dependency affects classes beyond just the two mentioned
+                (i.e. <filename>distutils</filename> and
+                <filename>distutils3</filename>).
+                Any recipe that inherits <filename>distutils*</filename>
+                classes are affected.
+                For example, the <filename>setuptools</filename> and
+                <filename>setuptools3</filename> recipes are affected since
+                they inherit the <filename>distutils*</filename> classes.
+            </note>
+        </para>
+
+        <para>
+            Fetching these types of dependencies that are not provided in the
+            sysroot negatively affects the ability to reproduce builds.
+            This type of fetching is now explicitly disabled.
+            Consequently, any missing dependencies in Python recipes that
+            use these classes now result in an error during the
+            <filename>do_configure</filename> task.
+        </para>
+    </section>
+
+    <section id='migration-2.6-linux-yocto-configuration-audit-issues-now-correctly-reported'>
+        <title><filename>linux-yocto</filename> Configuration Audit Issues Now Correctly Reported</title>
+
+        <para>
+            Due to a bug, the kernel configuration audit functionality was
+            not writing out any resulting warnings during the build.
+            This issue is now corrected.
+            You might notice these warnings now if you have a custom kernel
+            configuration with a <filename>linux-yocto</filename> style
+            kernel recipe.
+        </para>
+    </section>
+
+    <section id='migration-2.6-image-kernel-artifact-naming-changes'>
+        <title>Image/Kernel Artifact Naming Changes</title>
+
+        <para>
+            The following changes have been made:
+            <itemizedlist>
+                <listitem><para>
+                    Name variables (e.g.
+                    <link linkend='var-IMAGE_NAME'><filename>IMAGE_NAME</filename></link>)
+                    use a new <filename>IMAGE_VERSION_SUFFIX</filename>
+                    variable instead of
+                    <link linkend='var-DATETIME'><filename>DATETIME</filename></link>.
+                    Using <filename>IMAGE_VERSION_SUFFIX</filename> allows
+                    easier and more direct changes.</para>
+
+                    <para>The <filename>IMAGE_VERSION_SUFFIX</filename>
+                    variable is set in the
+                    <filename>bitbake.conf</filename> configuration file as
+                    follows:
+                    <literallayout class='monospaced'>
+     IMAGE_VERSION_SUFFIX = "-${DATETIME}"
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    Several variables have changed names for consistency:
+                    <literallayout class='monospaced'>
+    Old Variable Name               New Variable Name
+    ========================================================
+    KERNEL_IMAGE_BASE_NAME          <link linkend='var-KERNEL_IMAGE_NAME'>KERNEL_IMAGE_NAME</link>
+    KERNEL_IMAGE_SYMLINK_NAME       <link linkend='var-KERNEL_IMAGE_LINK_NAME'>KERNEL_IMAGE_LINK_NAME</link>
+    MODULE_TARBALL_BASE_NAME        <link linkend='var-MODULE_TARBALL_NAME'>MODULE_TARBALL_NAME</link>
+    MODULE_TARBALL_SYMLINK_NAME     <link linkend='var-MODULE_TARBALL_LINK_NAME'>MODULE_TARBALL_LINK_NAME</link>
+    INITRAMFS_BASE_NAME             <link linkend='var-INITRAMFS_NAME'>INITRAMFS_NAME</link>
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>MODULE_IMAGE_BASE_NAME</filename> variable
+                    has been removed.
+                    The module tarball name is now controlled directly with the
+                    <link linkend='var-MODULE_TARBALL_NAME'><filename>MODULE_TARBALL_NAME</filename></link>
+                    variable.
+                    </para></listitem>
+                <listitem><para>
+                    The
+                    <link linkend='var-KERNEL_DTB_NAME'><filename>KERNEL_DTB_NAME</filename></link>
+                    and
+                    <link linkend='var-KERNEL_DTB_LINK_NAME'><filename>KERNEL_DTB_LINK_NAME</filename></link>
+                    variables have been introduced to control kernel Device
+                    Tree Binary (DTB) artifact names instead of mangling
+                    <filename>KERNEL_IMAGE_*</filename> variables.
+                    </para></listitem>
+                <listitem><para>
+                    The
+                    <link linkend='var-KERNEL_FIT_NAME'><filename>KERNEL_FIT_NAME</filename></link>
+                    and
+                    <link linkend='var-KERNEL_FIT_LINK_NAME'><filename>KERNEL_FIT_LINK_NAME</filename></link>
+                    variables have been introduced to specify the name of
+                    flattened image tree (FIT) kernel images similar to other
+                    deployed artifacts.
+                    </para></listitem>
+                <listitem><para>
+                    The
+                    <link linkend='var-MODULE_TARBALL_NAME'><filename>MODULE_TARBALL_NAME</filename></link>
+                    and
+                    <link linkend='var-MODULE_TARBALL_LINK_NAME'><filename>MODULE_TARBALL_LINK_NAME</filename></link>
+                    variable values no longer include the "module-" prefix or
+                    ".tgz" suffix.
+                    These parts are now hardcoded so that the values are
+                    consistent with other artifact naming variables.
+                    </para></listitem>
+                <listitem><para>
+                    Added the
+                    <link linkend='var-INITRAMFS_LINK_NAME'><filename>INITRAMFS_LINK_NAME</filename></link>
+                    variable so that the symlink can be controlled similarly
+                    to other artifact types.
+                    </para></listitem>
+                <listitem><para>
+                    <link linkend='var-INITRAMFS_NAME'><filename>INITRAMFS_NAME</filename></link>
+                    now uses
+                    "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
+                    instead of
+                    "${PV}-${PR}-${MACHINE}-${DATETIME}", which
+                    makes it consistent with other variables.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.6-automatic-testing-changes'>
         <title>Automatic Testing Changes</title>
 
         <para>
