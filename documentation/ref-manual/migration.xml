@@ -5969,6 +5969,136 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
         </para>
     </section>
 
+    <section id='migration-2.6-serial-console-deprecated'>
+        <title><filename>SERIAL_CONSOLE</filename> Deprecated</title>
+
+        <para>
+            The
+            <link linkend='var-SERIAL_CONSOLE'><filename>SERIAL_CONSOLE</filename></link>
+            variable has been functionally replaced by the
+            <link linkend='var-SERIAL_CONSOLES'><filename>SERIAL_CONSOLES</filename></link>
+            variable for some time.
+            With the Yocto Project 2.6 release,
+            <filename>SERIAL_CONSOLE</filename> has been officially deprecated.
+        </para>
+
+        <para>
+            <filename>SERIAL_CONSOLE</filename> will continue to work as
+            before for the 2.6 release.
+            However, for the sake of future compatibility, it is recommended
+            that you replace all instances of
+            <filename>SERIAL_CONSOLE</filename> with
+            <filename>SERIAL_CONSOLES</filename>.
+            <note>
+                The only difference in usage is that
+                <filename>SERIAL_CONSOLES</filename> expects entries to be
+                separated using semicolons as compared to
+                <filename>SERIAL_CONSOLE</filename>, which expects spaces.
+            </note>
+        </para>
+    </section>
+
+    <section id='migration-2.6-poky-sets-unknown-configure-option-to-qa-error'>
+        <title>Configure Script Reports Unknown Options as Errors</title>
+
+        <para>
+            If the configure script reports an unknown option, this now
+            triggers a QA error instead of a warning.
+            Any recipes that previously got away with specifying such unknown
+            options now need to be fixed.
+        </para>
+    </section>
+
+    <section id='migration-2.6-override-changes'>
+        <title>Override Changes</title>
+
+        <para>
+            The following changes have occurred:
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis>The <filename>virtclass-native</filename> and
+                    <filename>virtclass-nativesdk</filename> Overrides Have
+                    Been Removed:</emphasis>
+                    The <filename>virtclass-native</filename> and
+                    <filename>virtclass-nativesdk</filename> overrides have
+                    been deprecated since 2012 in favor of
+                    <filename>class-native</filename> and
+                    <filename>class-nativesdk</filename>, respectively.
+                    Both <filename>virtclass-native</filename> and
+                    <filename>virtclass-nativesdk</filename> are now dropped.
+                    <note>
+                        The <filename>virtclass-multilib-</filename> overrides
+                        for multilib are still valid.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>The <filename>forcevariable</filename>
+                    Override Now Has a Higher Priority Than
+                    <filename>libc</filename> Overrides:</emphasis>
+                    The <filename>forcevariable</filename> override is
+                    documented to be the highest priority override.
+                    However, due to a long-standing quirk of how
+                    <link linkend='var-OVERRIDES'><filename>OVERRIDES</filename></link>
+                    is set, the <filename>libc</filename> overrides (e.g.
+                    <filename>libc-glibc</filename>,
+                    <filename>libc-musl</filename>, and so forth) erroneously
+                    had a higher priority.
+                    This issue is now corrected.</para>
+
+                    <para>It is likely this change will not cause any
+                    problems.
+                    However, it is possible with some unusual configurations
+                    that you might see a change in behavior if you were
+                    relying on the previous behavior.
+                    Be sure to check how you use
+                    <filename>forcevariable</filename> and
+                    <filename>libc-*</filename> overrides in your custom
+                    layers and configuration files to ensure they make sense.
+                    </para></listitem>
+                <listitem><para>
+                    <emphasis>The <filename>build-${BUILD_OS}</filename>
+                    Override Has Been Removed:</emphasis>
+                    The <filename>build-${BUILD_OS}</filename>, which is
+                    typically <filename>build-linux</filename>, override has
+                    been removed because building on a host operating system
+                    other than a recent version of Linux is neither supported
+                    nor recommended.
+                    Dropping the override avoids giving the impression that
+                    other host operating systems might be supported.
+                    </para></listitem>
+            </itemizedlist>
+        </para>
+    </section>
+
+    <section id='migration-2.6-systemd-configuration-now-split-out-to-system-conf'>
+        <title><filename>systemd</filename> Configuration is Now Split Into <filename>systemd-conf</filename></title>
+
+        <para>
+            The configuration for the <filename>systemd</filename> recipe
+            has been moved into a <filename>system-conf</filename> recipe.
+            Moving this configuration to a separate recipe avoids the
+            <filename>systemd</filename> recipe from becoming machine-specific
+            for cases where machine-specific configurations need to be applied
+            (e.g. for <filename>qemu*</filename> machines).
+        </para>
+
+        <para>
+            Currently, the new recipe packages the following files:
+            <literallayout class='monospaced'>
+     ${sysconfdir}/machine-id
+     ${sysconfdir}/systemd/coredump.conf
+     ${sysconfdir}/systemd/journald.conf
+     ${sysconfdir}/systemd/logind.conf
+     ${sysconfdir}/systemd/system.conf
+     ${sysconfdir}/systemd/user.conf
+            </literallayout>
+            If you previously used BitBake append files to append the
+            <filename>systemd</filename> recipe to change any of the
+            listed files, you must do so for the
+            <filename>systemd-conf</filename> recipe instead.
+        </para>
+    </section>
+
     <section id='migration-2.6-automatic-testing-changes'>
         <title>Automatic Testing Changes</title>
 
@@ -6023,16 +6153,26 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
         <title>BitBake Changes</title>
 
         <para>
-            The "_remove" operator now preserves whitespace.
-            Consequently, when specifying list items to remove, be aware
-            that leading and trailing whitespace resulting from the
-            removal is retained.
-        </para>
+            The following BitBake changes occurred:
+            <itemizedlist>
+                <listitem><para>
+                    The "_remove" operator now preserves whitespace.
+                    Consequently, when specifying list items to remove, be
+                    aware that leading and trailing whitespace resulting from
+                    the removal is retained.</para>
 
-        <para>
-            See the
-            "<ulink url='&YOCTO_DOCS_BB_URL;#removing-override-style-syntax'>Removal (Override Style Syntax)</ulink>"
-            section in the BitBake User Manual for a detailed example.
+                    <para>See the
+                    "<ulink url='&YOCTO_DOCS_BB_URL;#removing-override-style-syntax'>Removal (Override Style Syntax)</ulink>"
+                    section in the BitBake User Manual for a detailed example.
+                    </para></listitem>
+                <listitem><para>
+                    The server logfile
+                    <filename>bitbake-cookerdaemon.log</filename> is now always
+                    placed in the
+                    <link linkend='build-directory'>Build Directory</link>
+                    instead of the current directory.
+                    </para></listitem>
+            </itemizedlist>
         </para>
     </section>
 
@@ -6054,6 +6194,92 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
             You must explicitly mark post installs to defer to the target.
             Warnings in the previous Yocto Project releases have become
             errors.
+        </para>
+    </section>
+
+    <section id='migration-2.6-miscellaneous-changes'>
+        <title>Miscellaneous Changes</title>
+
+        <para>
+            The following miscellaneous changes occurred:
+            <itemizedlist>
+                <listitem><para>
+                    Default to using the Thumb-2 instruction set for armv7a
+                    and above.
+                    If you have any custom recipes that build software that
+                    needs to be built with the ARM instruction set, change the
+                    recipe to set the instruction set as follows:
+                    <literallayout class='monospaced'>
+     ARM_INSTRUCTION_SET = "arm"
+                    </literallayout>
+                    </para></listitem>
+                <listitem><para>
+                    <filename>run-postinsts</filename> no longer uses
+                    <filename>/etc/*-postinsts</filename> for
+                    <filename>dpkg/opkg</filename> in favor of built-in
+                    postinst support.
+                    <note>
+                        RPM behavior remains unchanged.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>NOISO</filename> and
+                    <filename>NOHDD</filename> variables are no longer used.
+                    You now control building <filename>*.iso</filename> and
+                    <filename>*.hddimg</filename> image types directly
+                    by using the
+                    <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
+                    variable.
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>scripts/contrib/mkefidisk.sh</filename>
+                    has been removed in favor of Wic.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>kernel-modules</filename> has been removed from
+                    <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>
+                    for <filename>qemumips</filename> and
+                    <filename>qemumips64</filename> machines.
+                    Removal also impacts the <filename>x86-base.inc</filename>
+                    file.
+                    <note>
+                        <filename>genericx86</filename> and
+                        <filename>genericx86-64</filename> retain
+                        <filename>kernel-modules</filename> as part of the
+                        <filename>RRECOMMENDS</filename> variable setting.
+                    </note>
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>LGPLv2_WHITELIST_GPL-3.0</filename>
+                    variable has been removed.
+                    If you are setting this variable in your configuration,
+                    set or append it to the
+                    <filename>WHITELIST_GPL-3.0</filename> variable instead.
+                    </para></listitem>
+                <listitem><para>
+                    <filename>${ASNEEDED}</filename> is now included in
+                    the
+                    <link linkend='var-TARGET_LDFLAGS'><filename>TARGET_LDFLAGS</filename></link>
+                    variable directly.
+                    The remaining definitions from
+                    <filename>meta/conf/distro/include/as-needed.inc</filename>
+                    have been moved to corresponding recipes.
+                    </para></listitem>
+                <listitem><para>
+                    Support for DSA host keys has been dropped from the
+                    OpenSSH recipes.
+                    If you are still using DSA keys, you must switch over to a
+                    more secure algorithm as recommended by the OpenSSH
+                    upstream.
+                    </para></listitem>
+                <listitem><para>
+                    The <filename>dhcp</filename> recipe now uses the
+                    <filename>dhcpd6.conf</filename> configuration file in
+                    <filename>dhcpd6.service</filename> for IPv6 DHCP rather
+                    than re-using <filename>dhcpd.conf</filename>, which is
+                    now reserved for IPv4.
+                    </para></listitem>
+            </itemizedlist>
         </para>
     </section>
 </section>
