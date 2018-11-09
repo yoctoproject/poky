@@ -6203,6 +6203,39 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
         </para>
     </section>
 
+    <section id='migration-2.6-python-3-profile-guided-optimizations'>
+        <title>Python 3 Profile-Guided Optimization</title>
+
+        <para>
+            The <filename>python3</filename> recipe now enables profile-guided
+            optimization.
+            Using this optimization requires a little extra build time in
+            exchange for improved performance on the target at runtime.
+            And, the optimization is only enabled if the current
+            <link linkend='var-MACHINE'><filename>MACHINE</filename></link>
+            has support for user-mode emulation in QEMU (i.e. "qemu-usermode"
+            is in
+            <link linkend='var-MACHINE_FEATURES'><filename>MACHINE_FEATURES</filename></link>,
+            which it is by default).
+        </para>
+
+        <para>
+            If you wish to disable Python profile-guided optimization
+            regardless of the value of
+            <filename>MACHINE_FEATURES</filename>, then ensure that
+            <link linkend='var-PACKAGECONFIG'><filename>PACKAGECONFIG</filename></link>
+            for the <filename>python3</filename> recipe does not contain "pgo".
+            You could accomplish the latter using the following at the
+            configuration level:
+            <literallayout class='monospaced'>
+     PACKAGECONFIG_remove_pn-python3 = "pgo"
+            </literallayout>
+            Alternatively, you can set
+            <filename>PACKAGECONFIG</filename> using an append file for the
+            <filename>python3</filename> recipe.
+        </para>
+    </section>
+
     <section id='migration-2.6-miscellaneous-changes'>
         <title>Miscellaneous Changes</title>
 
