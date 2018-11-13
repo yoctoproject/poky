@@ -3237,30 +3237,22 @@
                 post-installation script to be delayed until the first boot.
                 For example, the script might need to be executed on the
                 device itself.
-                To delay script execution until boot time, use the following
-                structure in the post-installation script:
-                <literallayout class='monospaced'>
-     pkg_postinst_<replaceable>PACKAGENAME</replaceable>() {
-     if [ x"$D" = "x" ]; then
-          # Actions to carry out on the device go here
-     else
-          exit 1
-     fi
-     }
-                </literallayout>
+                To delay script execution until boot time, you must explicitly
+                mark post installs to defer to the target.
+                You can use <filename>pkg_postinst_ontarget()</filename> or
+                call
+                <filename>postinst-intercepts defer_to_first_boot</filename>
+                from <filename>pkg_postinst()</filename>.
+                Any failure of a <filename>pkg_postinst()</filename> script
+                (including exit 1) triggers an error during the
+                <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-rootfs'><filename>do_rootfs</filename></ulink>
+                task.
             </para>
 
             <para>
-                The previous example delays execution until the image boots
-                again because the environment variable <filename>D</filename>
-                points to the directory containing the image when
-                the root filesystem is created at build time but is unset
-                when executed on the first boot.
-            </para>
-
-            <para>
-                If you have recipes that use <filename>pkg_postinst</filename>
-                scripts and they require the use of non-standard native
+                If you have recipes that use
+                <filename>pkg_postinst</filename> function
+                and they require the use of non-standard native
                 tools that have dependencies during rootfs construction, you
                 need to use the
                 <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGE_WRITE_DEPS'><filename>PACKAGE_WRITE_DEPS</filename></ulink>
@@ -3279,8 +3271,8 @@
                 <filename>pkg_prerm</filename>, and
                 <filename>pkg_postrm</filename>, respectively.
                 These scrips work in exactly the same way as does
-                <filename>pkg_postinst</filename> with the exception that they
-                run at different times.
+                <filename>pkg_postinst</filename> with the exception
+                that they run at different times.
                 Also, because of when they run, they are not applicable to
                 being run at image creation time like
                 <filename>pkg_postinst</filename>.
