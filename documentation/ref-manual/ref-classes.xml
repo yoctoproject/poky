@@ -1314,28 +1314,35 @@
     <title><filename>image_types.bbclass</filename></title>
 
     <para>
-        The <filename>image_types</filename> class defines all of
-        the standard image output types that you can enable through the
+        The <filename>image_types</filename> class defines all of the
+        standard image output types that you can enable through the
         <link linkend='var-IMAGE_FSTYPES'><filename>IMAGE_FSTYPES</filename></link>
         variable.
-        You can use this class as a reference on how to add support for custom
-        image output types.
+        You can use this class as a reference on how to add support for
+        custom image output types.
     </para>
 
     <para>
-        By default, this class is enabled through the
-        <link linkend='var-IMAGE_CLASSES'><filename>IMAGE_CLASSES</filename></link>
-        variable in
-        <link linkend='ref-classes-image'><filename>image.bbclass</filename></link>.
-        If you define your own image types using a custom BitBake class and
-        then use <filename>IMAGE_CLASSES</filename> to enable it, the custom
-        class must either inherit <filename>image_types</filename> or
-        <filename>image_types</filename> must also appear in
-        <filename>IMAGE_CLASSES</filename>.
+        By default, the
+        <link linkend='ref-classes-image'><filename>image</filename></link>
+        class automatically enables the <filename>image_types</filename> class.
+        The <filename>image</filename> class uses the
+        <filename>IMGCLASSES</filename> variable as follows:
+        <literallayout class='monospaced'>
+     IMGCLASSES = "rootfs_${IMAGE_PKGTYPE} image_types ${IMAGE_CLASSES}"
+     IMGCLASSES += "${@['populate_sdk_base', 'populate_sdk_ext']['linux' in d.getVar("SDK_OS")]}"
+     IMGCLASSES += "${@bb.utils.contains_any('IMAGE_FSTYPES', 'live iso hddimg', 'image-live', '', d)}"
+     IMGCLASSES += "${@bb.utils.contains('IMAGE_FSTYPES', 'container', 'image-container', '', d)}"
+     IMGCLASSES += "image_types_wic"
+     IMGCLASSES += "rootfs-postcommands"
+     IMGCLASSES += "image-postinst-intercepts"
+     inherit ${IMGCLASSES}
+        </literallayout>
     </para>
 
     <para>
-        This class also handles conversion and compression of images.
+        The <filename>image_types</filename> class also handles conversion and
+        compression of images.
         <note>
             To build a VMware VMDK image, you need to add "wic.vmdk" to
             <filename>IMAGE_FSTYPES</filename>.
