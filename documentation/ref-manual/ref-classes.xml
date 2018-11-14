@@ -645,6 +645,54 @@
     </para>
 </section>
 
+<section id='ref-classes-devupstream'>
+    <title><filename>devupstream.bbclass</filename></title>
+
+    <para>
+        The <filename>devupstream</filename> class uses
+        <link linkend='var-BBCLASSEXTEND'><filename>BBCLASSEXTEND</filename></link>
+        to add a variant of the recipe that fetches from an alternative URI
+        (e.g. Git) instead of a tarball.
+        Following is an example:
+        <literallayout class='monospaced'>
+     BBCLASSEXTEND = "devupstream:target"
+     SRC_URI_class-devupstream = "git://git.example.com/example"
+     SRCREV_class-devupstream = "abcd1234"
+        </literallayout>
+        Adding the above statements to your recipe creates a variant that has
+        <link linkend='var-DEFAULT_PREFERENCE'><filename>DEFAULT_PREFERENCE</filename></link>
+        set to "-1".
+        Consequently, you need to select the variant of the recipe to use it.
+        Any development-specific adjustments can be done by using the
+        <filename>class-devupstream</filename> override.
+        Here is an example:
+        <literallayout class='monospaced'>
+     DEPENDS_append_class-devupstream = " gperf-native"
+
+     do_configure_prepend_class-devupstream() {
+        touch ${S}/README
+     }
+        </literallayout>
+        The class currently only supports creating a development variant of
+        the target recipe, not <filename>native</filename> or
+        <filename>nativesdk</filename> variants.
+    </para>
+
+    <para>
+        The <filename>BBCLASSEXTEND</filename> syntax
+        (i.e. <filename>devupstream:target</filename>) provides support for
+        <filename>native</filename> and <filename>nativesdk</filename>
+        variants.
+        Consequently, this functionality can be added in a future release.
+    </para>
+
+    <para>
+        Support for other version control systems such as Subversion is
+        limited due to BitBake's automatic fetch dependencies (e.g.
+        <filename>subversion-native</filename>).
+    </para>
+</section>
+
 <section id='ref-classes-distro_features_check'>
     <title><filename>distro_features_check.bbclass</filename></title>
 
