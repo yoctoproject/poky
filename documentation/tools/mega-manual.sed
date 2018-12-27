@@ -1,16 +1,12 @@
-# Processes poky-ref-manual and yocto-project-qs manual (<word>-<word>-<word> style).
-# This style is for manual folders like "yocto-project-qs" and "poky-ref-manual".
-# This is the old way that did it.  Can't do that now that we have "bitbake-user-manual" strings
-# in the mega-manual.
+# Processes bitbake-user-manual (<word>-<word>-<word> style).
+# This style is for manual three-word folders, which currently is only the BitBake User Manual.
+# We used to have the "yocto-project-qs" and "poky-ref-manual" folders but no longer do.
 # s@"ulink" href="http://www.yoctoproject.org/docs/2.7/[a-z]*-[a-z]*-[a-z]*/[a-z]*-[a-z]*-[a-z]*.html#@"link" href="#@g
-s@"ulink" href="http://www.yoctoproject.org/docs/2.7/yocto-project-qs/yocto-project-qs.html#@"link" href="#@g
-s@"ulink" href="http://www.yoctoproject.org/docs/2.7/poky-ref-manual/poky-ref-manual.html#@"link" href="#@g
+s@"ulink" href="http://www.yoctoproject.org/docs/2.7/bitbake-user-manual/bitbake-user-manual.html#@"link" href="#@g
 
-# Processes all other manuals (<word>-<word> style) except for the BitBake User Manual because
-# it is not included in the mega-manual.
+# Processes all other manuals (<word>-<word> style).
 # This style is for manual folders that use two word, which is the standard now (e.g. "ref-manual").
-# This was the one-liner that worked before we introduced the BitBake User Manual, which is
-# not in the mega-manual.
+# Here is the one-liner:
 # s@"ulink" href="http://www.yoctoproject.org/docs/2.7/[a-z]*-[a-z]*/[a-z]*-[a-z]*.html#@"link" href="#@g
 
 s@"ulink" href="http://www.yoctoproject.org/docs/2.7/sdk-manual/sdk-manual.html#@"link" href="#@g
@@ -25,7 +21,7 @@ s@"ulink" href="http://www.yoctoproject.org/docs/2.7/toaster-manual/toaster-manu
 
 # Process cases where just an external manual is referenced without an id anchor
 s@<a class="ulink" href="http://www.yoctoproject.org/docs/2.7/brief-yoctoprojectqs/brief-yoctoprojectqs.html" target="_top">Yocto Project Quick Build</a>@Yocto Project Quick Build@g
-s@<a class="ulink" href="http://www.yoctoproject.org/docs/2.7/yocto-project-qs/yocto-project-qs.html" target="_top">Yocto Project Quick Start</a>@Yocto Project Quick Start@g
+s@<a class="ulink" href="http://www.yoctoproject.org/docs/2.7/bitbake-user-manual/bitbake-user-manual.html" target="_top">BitBake User Manual</a>@BitBake User Manual@g
 s@<a class="ulink" href="http://www.yoctoproject.org/docs/2.7/dev-manual/dev-manual.html" target="_top">Yocto Project Development Tasks Manual</a>@Yocto Project Development Tasks Manual@g
 s@<a class="ulink" href="http://www.yoctoproject.org/docs/2.7/overview-manual/overview-manual.html" target="_top">Yocto Project Overview and Concepts Manual</a>@Yocto project Overview and Concepts Manual@g
 s@<a class="ulink" href="http://www.yoctoproject.org/docs/2.7/sdk-manual/sdk-manual.html" target="_top">Yocto Project Application Development and the Extensible Software Development Kit (eSDK)</a>@Yocto Project Application Development and the Extensible Software Development Kit (eSDK)@g
