@@ -5041,14 +5041,42 @@
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    The default set of directories the OpenEmbedded build system
-                    uses when searching for patches and files.
-                    During the build process, BitBake searches each directory in
-                    <filename>FILESPATH</filename> in the specified order when
-                    looking for files and patches specified by each
+                    The default set of directories the OpenEmbedded build
+                    system uses when searching for patches and files.
+                </para>
+
+                <para>
+                    During the build process, BitBake searches each directory
+                    in <filename>FILESPATH</filename> in the specified order
+                    when looking for files and patches specified by each
                     <filename>file://</filename> URI in a recipe's
                     <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
                     statements.
+                </para>
+
+                <para>
+                    You can take advantage of this searching behavior in
+                    useful ways.
+                    For example, consider a case where the following
+                    directory structure exists for general and machine-specific
+                    configurations:
+                    <literallayout class='monospaced'>
+     files/defconfig
+     files/MACHINEA/defconfig
+     files/MACHINEB/defconfig
+                    </literallayout>
+                    Also in the example, the <filename>SRC_URI</filename>
+                    statement contains "file://defconfig".
+                    Given this scenario, you can set
+                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link>
+                    to "MACHINEA" and cause the build system to use files
+                    from <filename>files/MACHINEA</filename>.
+                    Set <filename>MACHINE</filename> to "MACHINEB" and the
+                    build system uses files from
+                    <filename>files/MACHINEB</filename>.
+                    Finally, for any machine other than "MACHINEA" and
+                    "MACHINEB", the build system uses files from
+                    <filename>files/defconfig</filename>.
                 </para>
 
                 <para>
@@ -5060,23 +5088,37 @@
      FILESPATH = "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", \
         "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}"
                     </literallayout>
-                    <note>
-                        Do not hand-edit the <filename>FILESPATH</filename>
-                        variable.
-                        If you want the build system to look in directories
-                        other than the defaults, extend the
-                        <filename>FILESPATH</filename> variable by using the
-                        <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link>
-                        variable.
+                    The <filename>FILESPATH</filename> variable is automatically
+                    extended using the overrides from the
+                    <link linkend='var-FILESOVERRIDES'><filename>FILESOVERRIDES</filename></link>
+                    variable.
+                    <note><title>Notes</title>
+                        <itemizedlist>
+                            <listitem><para>
+                                Do not hand-edit the
+                                <filename>FILESPATH</filename> variable.
+                                If you want the build system to look in
+                                directories other than the defaults, extend the
+                                <filename>FILESPATH</filename> variable by
+                                using the
+                                <link linkend='var-FILESEXTRAPATHS'><filename>FILESEXTRAPATHS</filename></link>
+                                variable.
+                                </para></listitem>
+                            <listitem><para>
+                                Be aware that the default
+                                <filename>FILESPATH</filename> directories do
+                                not map to directories in custom layers
+                                where append files
+                                (<filename>.bbappend</filename>) are used.
+                                If you want the build system to find patches
+                                or files that reside with your append files,
+                                you need to extend the
+                                <filename>FILESPATH</filename> variable by
+                                using the <filename>FILESEXTRAPATHS</filename>
+                                variable.
+                                </para></listitem>
+                        </itemizedlist>
                     </note>
-                    Be aware that the default <filename>FILESPATH</filename>
-                    directories do not map to directories in custom layers
-                    where append files (<filename>.bbappend</filename>)
-                    are used.
-                    If you want the build system to find patches or files
-                    that reside with your append files, you need to extend
-                    the <filename>FILESPATH</filename> variable by using
-                    the <filename>FILESEXTRAPATHS</filename> variable.
                 </para>
 
                 <para>
@@ -6076,11 +6118,12 @@
                 <note><title>Notes</title>
                     <itemizedlist>
                         <listitem><para>
-                            If you add "live" to
-                            <filename>IMAGE_FSTYPES</filename> inside an image
-                            recipe, be sure that you do so prior to the
-                            "inherit image" line of the recipe or the live
-                            image will not build.
+                            If an image recipe uses the "inherit image" line
+                            and you are setting
+                            <filename>IMAGE_FSTYPES</filename> inside the
+                            recipe, you must set
+                            <filename>IMAGE_FSTYPES</filename> prior to
+                            using the "inherit image" line.
                             </para></listitem>
                         <listitem><para>
                             Due to the way the OpenEmbedded build system
