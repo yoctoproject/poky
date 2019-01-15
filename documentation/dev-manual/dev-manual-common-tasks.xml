@@ -5116,15 +5116,15 @@
             So, commands such as the following are useful when exploring the data
             store and running functions:
             <literallayout class='monospaced'>
-     pydevshell> d.getVar("STAGING_DIR", True)
+     pydevshell> d.getVar("STAGING_DIR")
      '/media/build1/poky/build/tmp/sysroots'
-     pydevshell> d.getVar("STAGING_DIR", False)
+     pydevshell> d.getVar("STAGING_DIR")
      '${TMPDIR}/sysroots'
      pydevshell> d.setVar("FOO", "bar")
-     pydevshell> d.getVar("FOO", True)
+     pydevshell> d.getVar("FOO")
      'bar'
      pydevshell> d.delVar("FOO")
-     pydevshell> d.getVar("FOO", True)
+     pydevshell> d.getVar("FOO")
      pydevshell> bb.build.exec_func("do_unpack", d)
      pydevshell>
             </literallayout>
@@ -6892,8 +6892,8 @@
             <literallayout class='monospaced'>
      MACHINE = "qemux86-64"
      DEFAULTTUNE = "x86-64-x32"
-     baselib = "${@d.getVar('BASE_LIB_tune-' + (d.getVar('DEFAULTTUNE', True) \
-        or 'INVALID'), True) or 'lib'}"
+     baselib = "${@d.getVar('BASE_LIB_tune-' + (d.getVar('DEFAULTTUNE') \
+        or 'INVALID')) or 'lib'}"
             </literallayout>
             Once you have set up your configuration file, use BitBake to
             build an image that supports the x32 psABI.
