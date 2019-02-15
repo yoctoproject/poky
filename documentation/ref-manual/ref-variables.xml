@@ -5012,9 +5012,14 @@
                     A subset of <link linkend='var-OVERRIDES'><filename>OVERRIDES</filename></link>
                     used by the OpenEmbedded build system for creating
                     <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>.
+                    The <filename>FILESOVERRIDES</filename> variable uses
+                    overrides to automatically extend the
+                    <link linkend='var-FILESPATH'><filename>FILESPATH</filename></link>
+                    variable.
                     You can find more information on how overrides are handled
                     in the
-                    <ulink url='&YOCTO_DOCS_BB_URL;'>BitBake User Manual</ulink>.
+                    "<ulink url='&YOCTO_DOCS_BB_URL;#conditional-syntax-overrides'>Conditional Syntax (Overrides)</ulink>"
+                    section of the BitBake User Manual.
                 </para>
 
                 <para>
@@ -5052,31 +5057,6 @@
                     <filename>file://</filename> URI in a recipe's
                     <link linkend='var-SRC_URI'><filename>SRC_URI</filename></link>
                     statements.
-                </para>
-
-                <para>
-                    You can take advantage of this searching behavior in
-                    useful ways.
-                    For example, consider a case where the following
-                    directory structure exists for general and machine-specific
-                    configurations:
-                    <literallayout class='monospaced'>
-     files/defconfig
-     files/MACHINEA/defconfig
-     files/MACHINEB/defconfig
-                    </literallayout>
-                    Also in the example, the <filename>SRC_URI</filename>
-                    statement contains "file://defconfig".
-                    Given this scenario, you can set
-                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link>
-                    to "MACHINEA" and cause the build system to use files
-                    from <filename>files/MACHINEA</filename>.
-                    Set <filename>MACHINE</filename> to "MACHINEB" and the
-                    build system uses files from
-                    <filename>files/MACHINEB</filename>.
-                    Finally, for any machine other than "MACHINEA" and
-                    "MACHINEB", the build system uses files from
-                    <filename>files/defconfig</filename>.
                 </para>
 
                 <para>
@@ -5119,6 +5099,31 @@
                                 </para></listitem>
                         </itemizedlist>
                     </note>
+                </para>
+
+                <para>
+                    You can take advantage of this searching behavior in
+                    useful ways.
+                    For example, consider a case where the following
+                    directory structure exists for general and machine-specific
+                    configurations:
+                    <literallayout class='monospaced'>
+     files/defconfig
+     files/MACHINEA/defconfig
+     files/MACHINEB/defconfig
+                    </literallayout>
+                    Also in the example, the <filename>SRC_URI</filename>
+                    statement contains "file://defconfig".
+                    Given this scenario, you can set
+                    <link linkend='var-MACHINE'><filename>MACHINE</filename></link>
+                    to "MACHINEA" and cause the build system to use files
+                    from <filename>files/MACHINEA</filename>.
+                    Set <filename>MACHINE</filename> to "MACHINEB" and the
+                    build system uses files from
+                    <filename>files/MACHINEB</filename>.
+                    Finally, for any machine other than "MACHINEA" and
+                    "MACHINEB", the build system uses files from
+                    <filename>files/defconfig</filename>.
                 </para>
 
                 <para>
