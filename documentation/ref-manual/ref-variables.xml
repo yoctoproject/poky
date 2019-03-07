@@ -6919,6 +6919,44 @@
             </glossdef>
         </glossentry>
 
+        <glossentry id='var-INHIBIT_SYSROOT_STRIP'><glossterm>INHIBIT_SYSROOT_STRIP</glossterm>
+            <info>
+                INHIBIT_SYSROOT_STRIP[doc] = "If set to "1", causes the build to not strip binaries in the resulting sysroot."
+            </info>
+            <glossdef>
+                <para role="glossdeffirst">
+<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
+                    If set to "1", causes the build to not strip binaries in
+                    the resulting sysroot.
+                </para>
+
+                <para>
+                    By default, the OpenEmbedded build system strips
+                    binaries in the resulting sysroot.
+                    When you specifically set the
+                    <filename>INHIBIT_SYSROOT_STRIP</filename> variable to
+                    "1" in your recipe, you inhibit this stripping.
+                </para>
+
+                <para>
+                    If you want to use this variable, include the
+                    <link linkend='ref-classes-staging'><filename>staging</filename></link>
+                    class.
+                    This class uses a <filename>sys_strip()</filename>
+                    function to test for the variable and acts accordingly.
+                    <note>
+                        Use of the <filename>INHIBIT_SYSROOT_STRIP</filename>
+                        variable occurs in rare and special circumstances.
+                        For example, suppose you are building bare-metal
+                        firmware by using an external GCC toolchain.
+                        Furthermore, even if the toolchain's binaries are
+                        strippable, other files exist that are needed for the
+                        build that are not strippable.
+                    </note>
+                </para>
+            </glossdef>
+        </glossentry>
+
         <glossentry id='var-INITRAMFS_FSTYPES'><glossterm>INITRAMFS_FSTYPES</glossterm>
             <info>
                 INITRAMFS_FSTYPES[doc] = "Defines the format for the output image of an initial RAM filesystem (initramfs), which is used during boot."
