@@ -6323,9 +6323,97 @@
                 </literallayout>
             </para>
         </section>
+
+        <section id="replicating-a-build-offline">
+            <title>Replicating a Build Offline</title>
+
+            <para>
+                It can be useful to take a "snapshot" of upstream sources
+                used in a build and then use that "snapshot" later to
+                replicate the build offline.
+            </para>
+
+            <para>
+                Follow these steps to replicate a build offline by using a
+                known "snapshot" of source files:
+                <orderedlist>
+                    <listitem><para>
+                        <emphasis>Create a Clean Downloads Directory:</emphasis>
+                        Start with an empty downloads directory
+                        (<ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink>).
+                        You start with an empty downloads directory by either
+                        removing the files in the existing directory or by
+                        setting <filename>DL_DIR</filename> to point to either
+                        an empty location or one that does not yet exist.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Create Your "own-mirror" From Your Downloads Directory:</emphasis>
+                        Edit your <filename>local.conf</filename> configuration
+                        file as follows:
+                        <literallayout class='monospaced'>
+     SOURCE_MIRROR_URL ?= "file:///home/<replaceable>your-download-dir</replaceable>/"
+     INHERIT += "own-mirrors"
+     BB_GENERATE_MIRROR_TARBALLS = "1"
+                        </literallayout>
+                        During the fetch process, BitBake looks in your mirror
+                        for source files.
+                        The
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_GENERATE_MIRROR_TARBALLS'><filename>BB_GENERATE_MIRROR_TARBALLS</filename></ulink>
+                        variable causes the build process to create source
+                        tarballs in the downloads directory.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Populate Your Downloads Directory Without Building:</emphasis>
+                        Use BitBake to fetch your sources but inhibit the
+                        build:
+                        <literallayout class='monospaced'>
+     $ bitbake <replaceable>target</replaceable> --runonly=fetch"
+                        </literallayout>
+                        The downloads directory now has a "snapshot" of the
+                        source files used for the build.
+                        The directory also has the tarballs.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Remove Any Git or other SCM Subdirectories From the Downloads Directory:</emphasis>
+                        You can clean up your downloads directory by removing
+                        any Git or other Source Control Management (SCM)
+                        subdirectories such as
+                        <filename>${DL_DIR}/git2/*</filename>.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Instruct the Build Process to Build Using Local Files:</emphasis>
+                        Add the
+                        <ulink url='&YOCTO_DOCS_BB_URL;#var-bb-BB_NO_NETWORK'><filename>BB_NO_NETWORK</filename></ulink>
+                        variables to your <filename>local.conf</filename>.
+                        <literallayout class='monospaced'>
+     BB_NO_NETWORK = "1"
+                        </literallayout>
+                        Using the <filename>BB_NO_NETWORK</filename>
+                        variable makes sure that BitBake's fetching process
+                        stays local, which means your "own-mirror" is used.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Start With a Clean Build:</emphasis>
+                        You can start with a clean build by removing the
+                        <filename>${</filename><ulink url='&YOCTO_DOCS_REF_URL;#var-TMPDIR'><filename>TMPDIR</filename></ulink><filename>}</filename>
+                        directory or using a new
+                        <ulink url='&YOCTO_DOCS_REF_URL;#build-directory'>Build Directory</ulink>.
+                        </para></listitem>
+                    <listitem><para>
+                        <emphasis>Build Your Target:</emphasis>
+                        Use BitBake to build your target again:
+                        <literallayout class='monospaced'>
+     $ bitbake <replaceable>target</replaceable>
+                        </literallayout>
+                        The build completes using the know local "snapshot" of
+                        source files from your mirror.
+                        The resulting tarballs for your "snapshot" of source
+                        files are in the downloads directory.
+                        </para></listitem>
+                </orderedlist>
+            </para>
+        </section>
     </section>
-
-
 
     <section id='speeding-up-a-build'>
         <title>Speeding Up a Build</title>
