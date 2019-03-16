@@ -6331,11 +6331,14 @@
                 It can be useful to take a "snapshot" of upstream sources
                 used in a build and then use that "snapshot" later to
                 replicate the build offline.
+                To do so, you need to first prepare and populate your downloads
+                directory your "snapshot" of files.
+                Once your downloads directory is ready, you can use it at
+                any time and from any machine to replicate your build.
             </para>
 
             <para>
-                Follow these steps to replicate a build offline by using a
-                known "snapshot" of source files:
+                Follow these steps to populate your Downloads directory:
                 <orderedlist>
                     <listitem><para>
                         <emphasis>Create a Clean Downloads Directory:</emphasis>
@@ -6355,8 +6358,8 @@
      INHERIT += "own-mirrors"
      BB_GENERATE_MIRROR_TARBALLS = "1"
                         </literallayout>
-                        During the fetch process, BitBake looks in your mirror
-                        for source files.
+                        During the fetch process in the next step, BitBake
+                        looks in your mirror for source files.
                         The
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_GENERATE_MIRROR_TARBALLS'><filename>BB_GENERATE_MIRROR_TARBALLS</filename></ulink>
                         variable causes the build process to create source
@@ -6374,12 +6377,26 @@
                         The directory also has the tarballs.
                         </para></listitem>
                     <listitem><para>
-                        <emphasis>Remove Any Git or other SCM Subdirectories From the Downloads Directory:</emphasis>
-                        You can clean up your downloads directory by removing
-                        any Git or other Source Control Management (SCM)
-                        subdirectories such as
+                        <emphasis>Optionally Remove Any Git or other SCM Subdirectories From the Downloads Directory:</emphasis>
+                        If you want, you can clean up your downloads directory
+                        by removing any Git or other Source Control Management
+                        (SCM) subdirectories such as
                         <filename>${DL_DIR}/git2/*</filename>.
                         </para></listitem>
+                </orderedlist>
+            </para>
+
+            <para>
+                Once your downloads directory has everything it needs regarding
+                source files, you can build your target.
+                Understand that you can use the files to build the target
+                offline from any machine and at any time.
+            </para>
+
+            <para>
+                Follow these steps to build your target using the files in the
+                downloads directory:
+                <orderedlist>
                     <listitem><para>
                         <emphasis>Instruct the Build Process to Build Using Local Files:</emphasis>
                         Add the
@@ -6390,7 +6407,8 @@
                         </literallayout>
                         Using the <filename>BB_NO_NETWORK</filename>
                         variable makes sure that BitBake's fetching process
-                        stays local, which means your "own-mirror" is used.
+                        in step 3 stays local, which means files from
+                        your "own-mirror" are used.
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Start With a Clean Build:</emphasis>
@@ -6401,7 +6419,7 @@
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Build Your Target:</emphasis>
-                        Use BitBake to build your target again:
+                        Use BitBake to build your target:
                         <literallayout class='monospaced'>
      $ bitbake <replaceable>target</replaceable>
                         </literallayout>
