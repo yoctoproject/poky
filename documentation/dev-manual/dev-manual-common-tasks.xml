@@ -6346,24 +6346,24 @@
                         (<ulink url='&YOCTO_DOCS_REF_URL;#var-DL_DIR'><filename>DL_DIR</filename></ulink>).
                         You start with an empty downloads directory by either
                         removing the files in the existing directory or by
-                        setting <filename>DL_DIR</filename> to point to either
-                        an empty location or one that does not yet exist.
+                        setting
+                        <filename>DL_DIR</filename> to point to either an
+                        empty location or one that does not yet exist.
                         </para></listitem>
                     <listitem><para>
-                        <emphasis>Create Your "own-mirror" From Your Downloads Directory:</emphasis>
+                        <emphasis>Generate Tarballs of the Source Git Repositories:</emphasis>
                         Edit your <filename>local.conf</filename> configuration
                         file as follows:
                         <literallayout class='monospaced'>
-     SOURCE_MIRROR_URL ?= "file:///home/<replaceable>your-download-dir</replaceable>/"
-     INHERIT += "own-mirrors"
+     DL_DIR = "/home/<replaceable>your-download-dir</replaceable>/"
      BB_GENERATE_MIRROR_TARBALLS = "1"
                         </literallayout>
                         During the fetch process in the next step, BitBake
-                        looks in your mirror for source files.
-                        The
+                        gathers the source files and creates tarballs in
+                        the directory pointed to by <filename>DL_DIR</filename>.
+                        See the
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-BB_GENERATE_MIRROR_TARBALLS'><filename>BB_GENERATE_MIRROR_TARBALLS</filename></ulink>
-                        variable causes the build process to create source
-                        tarballs in the downloads directory.
+                        variable for more information.
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Populate Your Downloads Directory Without Building:</emphasis>
@@ -6372,9 +6372,10 @@
                         <literallayout class='monospaced'>
      $ bitbake <replaceable>target</replaceable> --runonly=fetch
                         </literallayout>
-                        The downloads directory now has a "snapshot" of the
-                        source files used for the build.
-                        The directory also has the tarballs.
+                        The downloads directory (i.e.
+                        <filename>${DL_DIR}</filename>) now has a "snapshot" of
+                        the source files in the form of tarballs, which can
+                        be used for the build.
                         </para></listitem>
                     <listitem><para>
                         <emphasis>Optionally Remove Any Git or other SCM Subdirectories From the Downloads Directory:</emphasis>
@@ -6389,7 +6390,8 @@
 
             <para>
                 Once your downloads directory has everything it needs regarding
-                source files, you can build your target.
+                source files, you can create your "own-mirror" and build
+                your target.
                 Understand that you can use the files to build the target
                 offline from any machine and at any time.
             </para>
@@ -6400,12 +6402,22 @@
                 <orderedlist>
                     <listitem><para>
                         <emphasis>Using Local Files Only:</emphasis>
-                        Add the
+                        Inside your <filename>local.conf</filename> file, add
+                        the
+                        <ulink url='&YOCTO_DOCS_REF_URL;#var-SOURCE_MIRROR_URL'><filename>SOURCE_MIRROR_URL</filename></ulink>
+                        variable,
+                        inherit the <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-own-mirrors'><filename>own-mirrors</filename></ulink>
+                        class, and use the
                         <ulink url='&YOCTO_DOCS_BB_URL;#var-bb-BB_NO_NETWORK'><filename>BB_NO_NETWORK</filename></ulink>
-                        variables to your <filename>local.conf</filename>.
+                        variable to your <filename>local.conf</filename>.
                         <literallayout class='monospaced'>
+     SOURCE_MIRROR_URL ?= "file:///home/<replaceable>your-download-dir</replaceable>/"
+     INHERIT += "own-mirrors"
      BB_NO_NETWORK = "1"
                         </literallayout>
+                        The <filename>SOURCE_MIRROR_URL</filename> and
+                        <filename>own-mirror</filename> class set up the system
+                        to use the downloads directory as your "own mirror".
                         Using the <filename>BB_NO_NETWORK</filename>
                         variable makes sure that BitBake's fetching process
                         in step 3 stays local, which means files from
