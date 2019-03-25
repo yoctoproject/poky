@@ -3621,60 +3621,6 @@
             </glossdef>
         </glossentry>
 
-        <glossentry id='var-DISK_SIGNATURE'><glossterm>DISK_SIGNATURE</glossterm>
-            <info>
-                DISK_SIGNATURE[doc] = "A 32-bit MBR disk signature used by directdisk images."
-            </info>
-            <glossdef>
-                <para role="glossdeffirst">
-<!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    A 32-bit MBR disk signature used by
-                    <filename>directdisk</filename> images.
-                </para>
-
-                <para>
-                    By default, the signature is set to an automatically
-                    generated random value that allows the OpenEmbedded
-                    build system to create a boot loader.
-                    You can override the signature in the image recipe
-                    by setting <filename>DISK_SIGNATURE</filename> to an
-                    8-digit hex string.
-                    You might want to override
-                    <filename>DISK_SIGNATURE</filename> if you want the disk
-                    signature to remain constant between image builds.
-                </para>
-
-                <para>
-                    When using Linux 3.8 or later, you can use
-                    <filename>DISK_SIGNATURE</filename> to specify the root
-                    by UUID to allow the kernel to locate the root device
-                    even if the device name changes due to differences in
-                    hardware configuration.
-                    By default, <filename>ROOT_VM</filename> is set
-                    as follows:
-                    <literallayout class='monospaced'>
-     ROOT_VM ?= "root=/dev/sda2"
-                    </literallayout>
-                    However, you can change this to locate the root device
-                    using the disk signature instead:
-                    <literallayout class='monospaced'>
-     ROOT_VM = "root=PARTUUID=${DISK_SIGNATURE}-02"
-                    </literallayout>
-                </para>
-
-                <para>
-                    As previously mentioned, it is possible to set the
-                    <filename>DISK_SIGNATURE</filename> variable in your
-                    <filename>local.conf</filename> file to a fixed
-                    value if you do not want <filename>syslinux.cfg</filename>
-                    changing for each build.
-                    You might find this useful when you want to upgrade the
-                    root filesystem on a device without having to recreate or
-                    modify the master boot record.
-                </para>
-            </glossdef>
-        </glossentry>
-
         <glossentry id='var-DISTRO'><glossterm>DISTRO</glossterm>
             <info>
                 DISTRO[doc] = "The short name of the distribution. If the variable is blank, meta/conf/distro/defaultsetup.conf will be used."
