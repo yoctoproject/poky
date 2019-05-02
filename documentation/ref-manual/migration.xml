@@ -6341,7 +6341,10 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
             The following changes have been made to BitBake:
             <itemizedlist>
                 <listitem><para>
-                    The BBHandler now checks tab indentation for Python code.
+                    BitBake now checks anonymous Python functions and pure
+                    Python functions (e.g. <filename>def funcname:</filename>)
+                    in the metadata for tab indentation.
+                    If found, BitBake  produces a warning.
                     </para></listitem>
                 <listitem><para>
                     Bitbake now checks
@@ -6446,36 +6449,40 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     </para></listitem>
                 <listitem><para>
                     Debug split: The default debug split has been changed to
-                    create separate source packages.
+                    create separate source packages (i.e.
+                    <replaceable>package_name</replaceable><filename>-dbg</filename>
+                    and
+                    <replaceable>package_name</replaceable><filename>-src</filename>).
+                    If you are currently using <filename>dbg-pkgs</filename>
+                    in
+                    <link linkend='var-IMAGE_FEATURES'><filename>IMAGE_FEATURES</filename></link>
+                    to bring in debug symbols and you still need the sources,
+                    you must now also add <filename>src-pkgs</filename> to
+                    <filename>IMAGE_FEATURES</filename>.
+                    Source packages remain in the target portion of the SDK
+                    by default, unless you have set your own value for
+                    <link linkend='var-SDKIMAGE_FEATURES'><filename>SDKIMAGE_FEATURES</filename></link>
+                    that does not include <filename>src-pkgs</filename>.
                     </para></listitem>
                 <listitem><para>
-                    <filename>util-linux</filename>:
-                    <itemizedlist>
-                        <listitem><para>
-                            <filename>blkdiscard</filename> has been split out
-                            into own package.
-                            </para></listitem>
-                        <listitem><para>
-                            one package per binary (pt 1:
-                            <filename>base_sbindir</filename>)
-                            </para></listitem>
-                        <listitem><para>
-                            one package per binary (pt 2:
-                            <filename>base_bindir</filename>)
-                            </para></listitem>
-                        <listitem><para>
-                            one package per binary (pt 3:
-                            <filename>sbindir</filename>)
-                            </para></listitem>
-                        <listitem><para>
-                            one package per binary (pt 4:
-                            <filename>bindir</filename>)
-                            </para></listitem>
-                        <listitem><para>
-                            <filename>/etc/default/mountall</filename> has
-                            moved into the -mount sub-package.
-                            </para></listitem>
-                    </itemizedlist>
+                    Mount all using <filename>util-linux</filename>:
+                    <filename>/etc/default/mountall</filename> has
+                    moved into the -mount sub-package.
+                    </para></listitem>
+                <listitem><para>
+                    Splitting binaries using <filename>util-linux</filename>:
+                    <filename>util-linux</filename> now splits each binary into
+                    its own package for fine-grained control.
+                    The main <filename>util-linux</filename> package pulls in
+                    the individual binary packages using the
+                    <link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>
+                    and
+                    <link linkend='var-RDEPENDS'><filename>RDEPENDS</filename></link>
+                    variables.
+                    As a result, existing images should not see any changes
+                    assuming
+                    <link linkend='var-NO_RECOMMENDATIONS'><filename>NO_RECOMMENDATIONS</filename></link>
+                    is not set.
                     </para></listitem>
                 <listitem><para>
                     <filename>netbase/base-files</filename>:
@@ -6520,9 +6527,9 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
 
      <emphasis>gtk-icon-utils-native</emphasis>: These tools are now provided by gtk+3-native
 
-     <emphasis>gcc-cross-initial</emphasis>: No longer needed. gcc-cross/gcc-crosssdk are now used.
+     <emphasis>gcc-cross-initial</emphasis>: No longer needed. gcc-cross/gcc-crosssdk is now used instead.
 
-     <emphasis>gcc-crosssdk-initial</emphasis>: No longer needed. gcc-cross/gcc-crosssdk are now used.
+     <emphasis>gcc-crosssdk-initial</emphasis>: No longer needed. gcc-cross/gcc-crosssdk is now used instead.
 
      <emphasis>glibc-initial</emphasis>: Removed because the benefits of having it for site_config are
         currently outweighed by the cost of building the recipe.
@@ -6558,8 +6565,11 @@ id=f4d4f99cfbc2396e49c1613a7d237b9e57f06f81'>commit message</ulink>.
                     <filename>scripts</filename> directory.
                     </para></listitem>
                 <listitem><para>
-                    Perl added a version that builds recipes using
-                    <filename>perl-cross</filename>
+                    Perl now builds for the target using
+                    <ulink url='http://arsv.github.io/perl-cross/'><filename>perl-cross</filename></ulink>
+                    for better maintainability and improved build performance.
+                    This change should not present any problems unless you have
+                    heavily customized your Perl recipe.
                     </para></listitem>
                 <listitem><para>
                     <filename>arm-tunes</filename>: Removed the "-march"
