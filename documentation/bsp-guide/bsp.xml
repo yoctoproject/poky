@@ -2162,7 +2162,7 @@
             machine configuration:
             <literallayout class='monospaced'>
      PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-     PREFERRED_VERSION_linux-yocto ?= "4.12%"
+     PREFERRED_VERSION_linux-yocto ?= "5.0%"
             </literallayout>
             The <filename>meta-yocto-bsp/recipes-kernel/linux</filename>
             directory in the layer contains metadata used
@@ -2172,28 +2172,27 @@
             located in
             <ulink url='&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/recipes-kernel/linux'></ulink>
             and named
-            <filename>linux-yocto_4.12.bb</filename>.
+            <filename>linux-yocto_5.0.bbappend</filename>.
         </para>
 
         <para>
             Following is the contents of the append file:
             <literallayout class='monospaced'>
-     KBRANCH_genericx86  = "standard/base"
-     KBRANCH_genericx86-64  = "standard/base"
+     KBRANCH_genericx86  = "v5.0/standard/base"
+     KBRANCH_genericx86-64  = "v5.0/standard/base"
+     KBRANCH_edgerouter = "v5.0/standard/edgerouter"
+     KBRANCH_beaglebone-yocto = "v5.0/standard/beaglebone"
+     KBRANCH_mpc8315e-rdb = "v5.0/standard/fsl-mpc8315e-rdb"
 
      KMACHINE_genericx86 ?= "common-pc"
      KMACHINE_genericx86-64 ?= "common-pc-64"
-     KBRANCH_edgerouter = "standard/edgerouter"
-     KBRANCH_beaglebone-yocto = "standard/beaglebone"
-     KMACHINE_beaglebone-yocto = "beaglebone"
-     KBRANCH_mpc8315e-rdb = "standard/fsl-mpc8315e-rdb"
+     KMACHINE_beaglebone-yocto ?= "beaglebone"
 
-     SRCREV_machine_genericx86    ?= "1c4ad569af3e23a77994235435040e322908687f"
-     SRCREV_machine_genericx86-64 ?= "1c4ad569af3e23a77994235435040e322908687f"
-     SRCREV_machine_edgerouter ?= "257f843ea367744620f1d92910afd2f454e31483"
-     SRCREV_machine_beaglebone-yocto ?= "257f843ea367744620f1d92910afd2f454e31483"
-     SRCREV_machine_mpc8315e-rdb ?= "014560874f9eb2a86138c9cc35046ff1720485e1"
-
+     SRCREV_machine_genericx86    ?= "3df4aae6074e94e794e27fe7f17451d9353cdf3d"
+     SRCREV_machine_genericx86-64 ?= "3df4aae6074e94e794e27fe7f17451d9353cdf3d"
+     SRCREV_machine_edgerouter ?= "3df4aae6074e94e794e27fe7f17451d9353cdf3d"
+     SRCREV_machine_beaglebone-yocto ?= "3df4aae6074e94e794e27fe7f17451d9353cdf3d"
+     SRCREV_machine_mpc8315e-rdb ?= "8b62af7f252af10588276802c4c6d7c502e875be"
 
      COMPATIBLE_MACHINE_genericx86 = "genericx86"
      COMPATIBLE_MACHINE_genericx86-64 = "genericx86-64"
@@ -2201,11 +2200,11 @@
      COMPATIBLE_MACHINE_beaglebone-yocto = "beaglebone-yocto"
      COMPATIBLE_MACHINE_mpc8315e-rdb = "mpc8315e-rdb"
 
-     LINUX_VERSION_genericx86 = "4.12.20"
-     LINUX_VERSION_genericx86-64 = "4.12.20"
-     LINUX_VERSION_edgerouter = "4.12.19"
-     LINUX_VERSION_beaglebone-yocto = "4.12.19"
-     LINUX_VERSION_mpc8315e-rdb = "4.12.19"
+     LINUX_VERSION_genericx86 = "5.0.3"
+     LINUX_VERSION_genericx86-64 = "5.0.3"
+     LINUX_VERSION_edgerouter = "5.0.3"
+     LINUX_VERSION_beaglebone-yocto = "5.0.3"
+     LINUX_VERSION_mpc8315e-rdb = "5.0.3"
             </literallayout>
             This particular append file works for all the
             machines that are part of the
@@ -2232,15 +2231,6 @@
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-SRCREV'><filename>SRCREV</filename></ulink>:
                     Identifies the revision of the source code used
                     to build the image.
-<!--
-                    You find out about that point in the kernel source tree by
-                    doing the following command:
-
-                    git log &dash;&dash;decorate 257f843ea367744620f1d92910afd2f454e31483
-
-                    Returns information about the commit, which is usually
-                    that it is a merge point for a stable kernel release.
--->
                     </para></listitem>
                 <listitem><para>
                     <ulink url='&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE'><filename>COMPATIBLE_MACHINE</filename></ulink>:
