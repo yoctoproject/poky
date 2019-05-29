@@ -427,6 +427,71 @@
         </para>
     </section>
 
+
+    <section id='devtool-checking-on-the-upgrade-status-of-a-recipe'>
+        <title>Checking on the Upgrade Status of a Recipe</title>
+
+        <para>
+            Upstream recipes change over time.
+            Consequently, you might find that you need to determine if you
+            can upgrade a recipe to a newer version.
+        </para>
+
+        <para>
+            To check on the upgrade status of a recipe, use the
+            <filename>devtool check-upgrade-status</filename> command.
+            The command displays a table of your current recipe versions,
+            the latest upstream versions, and any additional information
+            such as commit hash strings and reasons you might be able to
+            upgrade a particular recipe.
+        </para>
+
+        <para>
+            As with all <filename>devtool</filename> commands, you can get
+            help on the individual command:
+            <literallayout class='monospaced'>
+     $ devtool check-upgrade-status -h
+     NOTE: Starting bitbake server...
+     usage: devtool check-upgrade-status [-h] [--all] [recipe [recipe ...]]
+
+     Prints a table of recipes together with versions currently provided by
+     recipes, and latest upstream versions, when there is a later version available
+
+     arguments:
+       recipe      Name of the recipe to report (omit to report upgrade info for
+                   all recipes)
+
+     options:
+      -h, --help  show this help message and exit
+       --all, -a   Show all recipes, not just recipes needing upgrade
+            </literallayout>
+            Following is a partial example table which reports on all the
+            recipes:
+            <literallayout class='monospaced'>
+     $ devtool check-upgrade-status
+         ...
+         NOTE: acpid                     2.0.30          2.0.31
+     Ross Burton &lt;ross.burton@intel.com&gt;
+         NOTE: u-boot-fw-utils           2018.11         2019.01
+     Marek Vasut &lt;marek.vasut@gmail.com&gt;
+     d3689267f92c5956e09cc7d1baa4700141662bff
+         NOTE: u-boot-tools              2018.11         2019.01
+     Marek Vasut &lt;marek.vasut@gmail.com&gt;
+     d3689267f92c5956e09cc7d1baa4700141662bff
+          .
+          .
+          .
+         NOTE: base-passwd               3.5.29          3.5.45
+     Anuj Mittal &lt;anuj.mittal@intel.com&gt;  cannot be updated due to: Version
+     3.5.38 requires cdebconf for update-passwd utility
+         NOTE: busybox                   1.29.2          1.30.0
+     Andrej Valek &lt;andrej.valek@siemens.com&gt;
+         NOTE: dbus-test                 1.12.10         1.12.12
+     Chen Qi &lt;Qi.Chen@windriver.com&gt;
+            </literallayout>
+        </para>
+    </section>
+
     <section id='devtool-upgrading-a-recipe'>
         <title>Upgrading a Recipe</title>
 
@@ -441,6 +506,13 @@
             section of the Yocto Project Development Tasks Manual.
             This section overviews the <filename>devtool upgrade</filename>
             command.
+            <note>
+                Before you upgrade a recipe, you can check on its upgrade
+                status.
+                See the
+                "<link linkend='devtool-checking-on-the-upgrade-status-of-a-recipe'>Checking on the Upgrade Status of a Recipe</link>"
+                for more information.
+            </note>
         </para>
 
         <para>
