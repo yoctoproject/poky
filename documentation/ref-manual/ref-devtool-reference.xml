@@ -427,7 +427,6 @@
         </para>
     </section>
 
-
     <section id='devtool-checking-on-the-upgrade-status-of-a-recipe'>
         <title>Checking on the Upgrade Status of a Recipe</title>
 
@@ -441,9 +440,26 @@
             To check on the upgrade status of a recipe, use the
             <filename>devtool check-upgrade-status</filename> command.
             The command displays a table of your current recipe versions,
-            the latest upstream versions, and any additional information
-            such as commit hash strings and reasons you might be able to
-            upgrade a particular recipe.
+            the latest upstream versions, the email address of the recipe's
+            maintainer, and any additional information such as commit hash
+            strings and reasons you might be able to upgrade a particular
+            recipe.
+            <note><title>NOTES:</title>
+                <itemizedlist>
+                    <listitem><para>
+                        For the <filename>oe-core</filename> layer, recipe
+                        maintainers come from the
+                        <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/distro/include/maintainers.inc'><filename>maintainers.inc</filename></ulink>
+                        file.
+                        </para></listitem>
+                    <listitem><para>
+                        If the recipe is using the
+                        <ulink url='&YOCTO_DOCS_BB_URL;#git-fetcher'>Git fetcher</ulink>
+                        rather than a tarball, the commit hash points to the
+                        commit that matches the recipe's latest version tag.
+                        </para></listitem>
+                </itemizedlist>
+            </note>
         </para>
 
         <para>
@@ -465,8 +481,29 @@
       -h, --help  show this help message and exit
        --all, -a   Show all recipes, not just recipes needing upgrade
             </literallayout>
-            Following is a partial example table which reports on all the
-            recipes:
+        </para>
+
+        <para>
+            Unless you provide a specific recipe name on the command line,
+            the command checks all recipes in all configured layers.
+        </para>
+
+        <para>
+            Following is a partial example table that reports on all the
+            recipes.
+            Notice the reported reason for not upgrading the
+            <filename>base-passwd</filename> recipe.
+            In this example, while a new version is available upstream,
+            you do not want to use it because the dependency on
+            <filename>cdebconf</filename> is not easily satisfied.
+            <note>
+                When a reason for not upgrading displays, the reason is
+                usually written into the recipe using the
+                <filename>RECIPE_NO_UPDATE_REASON</filename> variable.
+                See the
+                <ulink url='http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/recipes-core/base-passwd/base-passwd_3.5.29.bb'><filename>base-passwd.bb</filename></ulink>
+                recipe for an example.
+            </note>
             <literallayout class='monospaced'>
      $ devtool check-upgrade-status
          ...
