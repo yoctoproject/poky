@@ -10820,6 +10820,47 @@
         </para>
 
         <para>
+            By default, the Yocto Project uses SysVinit as the initialization
+            manager.
+            However, support also exists for systemd,
+            which is a full replacement for init with
+            parallel starting of services, reduced shell overhead and other
+            features that are used by many distributions.
+        </para>
+
+        <para>
+            Within the system, SysVinit treats system components as services.
+            These services are maintained as shell scripts stored in the
+            <filename>/etc/init.d/</filename> directory.
+            Services organize into different run levels.
+            This organization is maintained by putting links to the services
+            in the <filename>/etc/rcN.d/</filename> directories, where
+            <replaceable>N/</replaceable> is one of the following options:
+            "S", "0", "1", "2", "3", "4", "5", or "6".
+            <note>
+                Each runlevel has a dependency on the previous runlevel.
+                This dependency allows the services to work properly.
+            </note>
+        </para>
+
+        <para>
+            In comparison, systemd treats components as units.
+            Using units is a broader concept as compared to using a service.
+            A unit includes several different types of entities.
+            Service is one of the types of entities.
+            The runlevel concept in SysVinit corresponds to the concept of a
+            target in systemd, where target is also a type of supported unit.
+        </para>
+
+        <para>
+            In a SysVinit-based system, services load sequentially (i.e. one
+            by one) during and parallelization is not supported.
+            With systemd, services start in parallel.
+            Needless to say, the method can have an impact on system startup
+            performance.
+        </para>
+
+        <para>
             If you want to use SysVinit, you do
             not have to do anything.
             But, if you want to use systemd, you must
