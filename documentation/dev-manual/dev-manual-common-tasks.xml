@@ -2348,7 +2348,7 @@
                 Most software provides some means of setting build-time
                 configuration options before compilation.
                 Typically, setting these options is accomplished by running a
-                configure script with some options, or by modifying a build
+                configure script with options, or by modifying a build
                 configuration file.
                 <note>
                     As of Yocto Project Release 1.7, some of the core recipes
@@ -2388,6 +2388,7 @@
                         software is built using Autotools.
                         If this is the case, you just need to worry about
                         modifying the configuration.</para>
+
                         <para>When using Autotools, your recipe needs to inherit
                         the
                         <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-autotools'><filename>autotools</filename></ulink>
@@ -2400,13 +2401,15 @@
                         or
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-PACKAGECONFIG_CONFARGS'><filename>PACKAGECONFIG_CONFARGS</filename></ulink>
                         to pass any needed configure options that are specific
-                        to the recipe.</para></listitem>
+                        to the recipe.
+                        </para></listitem>
                     <listitem><para><emphasis>CMake:</emphasis>
                         If your source files have a
                         <filename>CMakeLists.txt</filename> file, then your
                         software is built using CMake.
                         If this is the case, you just need to worry about
                         modifying the configuration.</para>
+
                         <para>When you use CMake, your recipe needs to inherit
                         the
                         <ulink url='&YOCTO_DOCS_REF_URL;#ref-classes-cmake'><filename>cmake</filename></ulink>
@@ -2416,7 +2419,16 @@
                         You can make some adjustments by setting
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-EXTRA_OECMAKE'><filename>EXTRA_OECMAKE</filename></ulink>
                         to pass any needed configure options that are specific
-                        to the recipe.</para></listitem>
+                        to the recipe.
+                        <note>
+                            If you need to install one or more custom CMake
+                            toolchain files that are supplied by the
+                            application you are building, install the files to
+                            <filename>${D}${datadir}/cmake/</filename> Modules
+                            during
+                            <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>.
+                        </note>
+                        </para></listitem>
                     <listitem><para><emphasis>Other:</emphasis>
                         If your source files do not have a
                         <filename>configure.ac</filename> or
@@ -2778,6 +2790,14 @@
                         See
                         <ulink url='&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKEINST'><filename>PARALLEL_MAKEINST</filename></ulink>
                         for additional information.
+                        </para></listitem>
+                    <listitem><para>
+                        If you need to install one or more custom CMake
+                        toolchain files that are supplied by the
+                        application you are building, install the files to
+                        <filename>${D}${datadir}/cmake/</filename> Modules
+                        during
+                        <ulink url='&YOCTO_DOCS_REF_URL;#ref-tasks-install'><filename>do_install</filename></ulink>.
                         </para></listitem>
                 </itemizedlist>
             </note>
