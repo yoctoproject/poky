@@ -38,9 +38,9 @@ class Systemdboot(OESelftestTestCase):
         """
         Summary:      Check if EFI bootloader for systemd is correctly build
         Dependencies: Image was built correctly on testcase 1445
-        Steps:        1. Copy bootx64.efi file form the hddimg created
+        Steps:        1. Copy bootx64.efi file from the wic created
                       under build/tmp/deploy/images/genericx86-64
-                      2. Check bootx64.efi was copied form hddimg
+                      2. Check bootx64.efi was copied from wic
                       3. Verify the checksums from the copied and previously
                       created file are equal.
         Expected :    Systemd-bootx64.efi and bootx64.efi should be the same
@@ -50,15 +50,14 @@ class Systemdboot(OESelftestTestCase):
         AutomatedBy:  Jose Perez Carranza <jose.perez.carranza at linux-intel.com>
         """
 
-        systemdbootimage = os.path.join(deploydir, 'core-image-minimal-genericx86-64.hddimg')
+        systemdbootimage = os.path.join(deploydir, 'core-image-minimal-genericx86-64.wic')
         imagebootfile = os.path.join(deploydir, 'bootx64.efi')
-        mcopynative = os.path.join(get_bb_var('STAGING_BINDIR_NATIVE', "core-image-minimal"), 'mcopy')
 
         # Clean environment before start the test
         if os.path.isfile(imagebootfile):
             runCmd('rm -f %s' % imagebootfile)
 
-        runCmd('%s -i %s ::EFI/BOOT/bootx64.efi %s' % (mcopynative ,systemdbootimage,
+        runCmd('wic cp %s:1/EFI/BOOT/bootx64.efi %s' % (systemdbootimage,
                                                            imagebootfile))
 
         found = os.path.isfile(imagebootfile)
