@@ -30,7 +30,7 @@ class Systemdboot(OESelftestTestCase):
         runCmd('rm -f %s' % systemdbootfile)
 
         # Build a genericx86-64/efi systemdboot image
-        bitbake('mtools-native core-image-minimal')
+        bitbake('mtools-native core-image-minimal wic-tools')
 
         found = os.path.isfile(systemdbootfile)
         self.assertTrue(found, 'Systemd-Boot file %s not found' % systemdbootfile)
@@ -57,8 +57,10 @@ class Systemdboot(OESelftestTestCase):
         if os.path.isfile(imagebootfile):
             runCmd('rm -f %s' % imagebootfile)
 
-        runCmd('wic cp %s:1/EFI/BOOT/bootx64.efi %s' % (systemdbootimage,
-                                                           imagebootfile))
+        sysroot = get_bb_var('RECIPE_SYSROOT_NATIVE', 'wic-tools')
+
+        runCmd('wic cp %s:1/EFI/BOOT/bootx64.efi %s -n %s' % (systemdbootimage,
+                                                           imagebootfile, sysroot))
 
         found = os.path.isfile(imagebootfile)
         self.assertTrue(found, 'bootx64.efi file %s was not copied from image'
