@@ -16770,18 +16770,21 @@
 
         <glossentry id='var-USERADD_ERROR_DYNAMIC'><glossterm>USERADD_ERROR_DYNAMIC</glossterm>
             <info>
-               USERADD_ERROR_DYNAMIC[doc] = "If set to 'error', forces the OpenEmbedded build system to produce an error if the user identification (uid) and group identification (gid) values are not defined in files/passwd and files/group files. If set to 'warn', a warning will be issued instead."
+               USERADD_ERROR_DYNAMIC[doc] = "If set to 'error', forces the OpenEmbedded build system to produce an error if the user identification (uid) and group identification (gid) values are not defined in any of the files listed in USERADD_UID_TABLES and USERADD_GID_TABLES. If set to 'warn', a warning will be issued instead."
             </info>
             <glossdef>
                 <para role="glossdeffirst">
 <!--                <para role="glossdeffirst"><imagedata fileref="figures/define-generic.png" /> -->
-                    If set to "error", forces the OpenEmbedded build system to
-                    produce an error if the user identification
-                    (<filename>uid</filename>) and group identification
-                    (<filename>gid</filename>) values are not defined
-                    in <filename>files/passwd</filename>
-                    and <filename>files/group</filename> files.
-                    If set to "warn", a warning will be issued instead.
+
+                    If set to <filename>error</filename>, forces the
+                    OpenEmbedded build system to produce an error if the user
+                    identification (<filename>uid</filename>) and group
+                    identification (<filename>gid</filename>) values are not
+                    defined in any of the files listed
+                    in <link linkend='var-USERADD_UID_TABLES'><filename>USERADD_UID_TABLES</filename></link>
+                    and <link linkend='var-USERADD_GID_TABLES'><filename>USERADD_GID_TABLES</filename></link>. If
+                    set to <filename>warn</filename>, a warning will be issued
+                    instead.
                 </para>
 
                 <para>
@@ -16808,6 +16811,20 @@
                     <link linkend='var-USERADD_GID_TABLES'><filename>USERADD_GID_TABLES</filename></link>
                     variables.
                 </para>
+
+                <note>
+                    There is a difference in behavior between
+                    setting <filename>USERADD_ERROR_DYNAMIC</filename>
+                    to <filename>error</filename> and setting it
+                    to <filename>warn</filename>. When it is set
+                    to <filename>warn</filename>, the build system will report a
+                    warning for every undefined <filename>uid</filename> and
+                    <filename>gid</filename> in any recipe. But when it is set
+                    to <filename>error</filename>, it will only report errors
+                    for recipes that are actually built. This saves you from
+                    having to add static IDs for recipes that you know will
+                    never be built.
+                </note>
             </glossdef>
         </glossentry>
 
