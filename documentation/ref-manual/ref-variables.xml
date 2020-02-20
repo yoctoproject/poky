@@ -6774,6 +6774,25 @@
                     components that are required to produce a functional system
                     image.
                 </note>
+
+                <note><title>Tips</title>
+                    It is possible to define a list of licenses that are allowed
+                    to be used instead of the licenses that are excluded. To do
+                    this, define a
+                    variable <filename>COMPATIBLE_LICENSES</filename> with the
+                    names of the licences that are allowed. Then
+                    define <filename>INCOMPATIBLE_LICENSE</filename> as:
+                    <literallayout class='monospaced'>
+     INCOMPATIBLE_LICENSE = "${@' '.join(sorted(set(d.getVar('AVAILABLE_LICENSES').split()) - set(d.getVar('COMPATIBLE_LICENSES').split())))}"
+                    </literallayout>
+                    This will result
+                    in <filename>INCOMPATIBLE_LICENSE</filename> containing the
+                    names of all licences
+                    from <link linkend='var-AVAILABLE_LICENSES'><filename>AVAILABLE_LICENSES</filename></link>
+                    except the ones specified
+                    in <filename>COMPATIBLE_LICENSES</filename>, thus only
+                    allowing the latter licences to be used.
+                </note>
             </glossdef>
         </glossentry>
 
