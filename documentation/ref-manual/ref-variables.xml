@@ -11542,23 +11542,35 @@
                     By default, a recipe's own
                     <filename><link linkend='var-PN'>PN</link></filename>
                     is implicitly already in its <filename>PROVIDES</filename>
-                    list.
+                    list and therefore does not need to mention that it provides itself.
                     If a recipe uses <filename>PROVIDES</filename>, the
                     additional aliases are synonyms for the recipe and can
-                    be useful satisfying dependencies of other recipes during
+                    be useful for satisfying dependencies of other recipes during
                     the build as specified by
                     <filename><link linkend='var-DEPENDS'>DEPENDS</link></filename>.
                 </para>
 
                 <para>
                     Consider the following example
-                    <filename>PROVIDES</filename> statement from a recipe
-                    file <filename>libav_0.8.11.bb</filename>:
+                    <filename>PROVIDES</filename> statement from the recipe
+                    file <filename>eudev_3.2.9.bb</filename>:
                     <literallayout class='monospaced'>
-     PROVIDES += "libpostproc"
+     PROVIDES = "udev"
                     </literallayout>
                     The <filename>PROVIDES</filename> statement results in
-                    the "libav" recipe also being known as "libpostproc".
+                    the "eudev" recipe also being available as simply "udev".
+
+                    <note>
+                        Given that a recipe's own recipe name is already
+                        implicitly in its own <filename>PROVIDES</filename> list,
+                        it is unnecessary to add aliases with the "+=" operator;
+                        using a simple assignment will be sufficient. In other
+                        words, while you could write:
+                        <literallayout class='monospaced'>
+     PROVIDES += "udev"
+                        </literallayout>
+                        in the above, the "+=" is overkill and unnecessary.
+                    </note>
                 </para>
 
                 <para>
