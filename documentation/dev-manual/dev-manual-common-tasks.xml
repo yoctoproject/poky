@@ -319,12 +319,26 @@
      DEPENDS_append_one = " foo"
      DEPENDS_prepend_one = "foo "
                                 </literallayout>
-                                As an actual example, here's a line from the recipe
-                                for gnutls, which adds dependencies on
-                                "argp-standalone" when building with the musl C
-                                library:
+                                As an actual example, here's a snippet from the
+                                generic kernel include file
+                                <filename>linux-yocto.inc</filename>,
+                                wherein the kernel compile and link options are
+                                adjusted in the case of a subset of the supported
+                                architectures:
                                 <literallayout class='monospaced'>
-     DEPENDS_append_libc-musl = " argp-standalone"
+     DEPENDS_append_aarch64 = " libgcc"
+     KERNEL_CC_append_aarch64 = " ${TOOLCHAIN_OPTIONS}"
+     KERNEL_LD_append_aarch64 = " ${TOOLCHAIN_OPTIONS}"
+
+     DEPENDS_append_nios2 = " libgcc"
+     KERNEL_CC_append_nios2 = " ${TOOLCHAIN_OPTIONS}"
+     KERNEL_LD_append_nios2 = " ${TOOLCHAIN_OPTIONS}"
+
+     DEPENDS_append_arc = " libgcc"
+     KERNEL_CC_append_arc = " ${TOOLCHAIN_OPTIONS}"
+     KERNEL_LD_append_arc = " ${TOOLCHAIN_OPTIONS}"
+
+     KERNEL_FEATURES_append_qemuall=" features/debug/printk.scc"
                                 </literallayout>
                                 <note>
                                     Avoiding "+=" and "=+" and using
