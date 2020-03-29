@@ -1454,28 +1454,32 @@
 
             <para>
                 Here is a short, fabricated example showing the same basic
-                pieces:
+                pieces for a hypothetical packagegroup defined in
+                <filename>packagegroup-custom.bb</filename>, where the
+                variable <filename>PN</filename> is the standard way to
+                abbreviate the reference to the full packagegroup name
+                <filename>packagegroup-custom</filename>:
                 <literallayout class='monospaced'>
      DESCRIPTION = "My Custom Package Groups"
 
      inherit packagegroup
 
      PACKAGES = "\
-         packagegroup-custom-apps \
-         packagegroup-custom-tools \
+         ${PN}-apps \
+         ${PN}-tools \
          "
 
-     RDEPENDS_packagegroup-custom-apps = "\
+     RDEPENDS_${PN}-apps = "\
          dropbear \
          portmap \
          psplash"
 
-     RDEPENDS_packagegroup-custom-tools = "\
+     RDEPENDS_${PN}-tools = "\
          oprofile \
          oprofileui-server \
          lttng-tools"
 
-     RRECOMMENDS_packagegroup-custom-tools = "\
+     RRECOMMENDS_${PN}-tools = "\
          kernel-module-oprofile"
                 </literallayout>
             </para>
