@@ -10417,12 +10417,20 @@
                     <filename>PACKAGECONFIG</filename> blocks are defined
                     in recipes when you specify features and then arguments
                     that define feature behaviors.
-                    Here is the basic block structure:
+                    Here is the basic block structure (broken over multiple
+                    lines for readability):
                     <literallayout class='monospaced'>
      PACKAGECONFIG ??= "f1 f2 f3 ..."
-     PACKAGECONFIG[f1] = "--with-f1,--without-f1,build-deps-f1,rt-deps-f1,rt-recs-f1"
-     PACKAGECONFIG[f2] = "--with-f2,--without-f2,build-deps-f2,rt-deps-f2,rt-recs-f2"
-     PACKAGECONFIG[f3] = "--with-f3,--without-f3,build-deps-f3,rt-deps-f3,rt-recs-f3"
+     PACKAGECONFIG[f1] = "\
+                          --with-f1, \
+                          --without-f1, \
+                          build-deps-for-f1, \
+                          runtime-deps-for-f1, \
+                          runtime-recommends-for-f1, \
+                          packageconfig-conflicts-for-f1 \
+                          "
+     PACKAGECONFIG[f2] = "\
+                         ... and so on and so on ...
                     </literallayout>
                 </para>
 
@@ -10431,7 +10439,7 @@
                     variable itself specifies a space-separated list of the
                     features to enable.
                     Following the features, you can determine the behavior of
-                    each feature by providing up to five order-dependent
+                    each feature by providing up to six order-dependent
                     arguments, which are separated by commas.
                     You can omit any argument you like but must retain the
                     separating commas.
@@ -10461,6 +10469,10 @@
                             (<link linkend='var-RRECOMMENDS'><filename>RRECOMMENDS</filename></link>)
                             that should be added if the feature is enabled.
                             </para></listitem>
+                        <listitem><para>Any conflicting (that is, mutually
+                            exclusive) <filename>PACKAGECONFIG</filename>
+                            settings for this feature.
+                            </para></listitem>
                     </orderedlist>
                 </para>
 
@@ -10468,25 +10480,23 @@
                     Consider the following
                     <filename>PACKAGECONFIG</filename> block taken from the
                     <filename>librsvg</filename> recipe.
-                    In this example the feature is <filename>croco</filename>,
+                    In this example the feature is <filename>gtk</filename>,
                     which has three arguments that determine the feature's
                     behavior.
                     <literallayout class='monospaced'>
-     PACKAGECONFIG ??= "croco"
-     PACKAGECONFIG[croco] = "--with-croco,--without-croco,libcroco"
+     PACKAGECONFIG[gtk] = "--with-gtk3,--without-gtk3,gtk+3"
                     </literallayout>
-                    The <filename>--with-croco</filename> and
-                    <filename>libcroco</filename> arguments apply only if
+                    The <filename>--with-gtk3</filename> and
+                    <filename>gtk+3</filename> arguments apply only if
                     the feature is enabled.
-                    In this case, <filename>--with-croco</filename> is
+                    In this case, <filename>--with-gtk3</filename> is
                     added to the configure script argument list and
-                    <filename>libcroco</filename> is added to
+                    <filename>gtk+3</filename> is added to
                     <filename>DEPENDS</filename>.
                     On the other hand, if the feature is disabled say through
                     a <filename>.bbappend</filename> file in another layer, then
-                    the second argument <filename>--without-croco</filename> is
-                    added to the configure script rather than
-                    <filename>--with-croco</filename>.
+                    the second argument <filename>--without-gtk3</filename> is
+                    added to the configure script instead.
                 </para>
 
                 <para>
