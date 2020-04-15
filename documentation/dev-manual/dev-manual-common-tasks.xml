@@ -10590,7 +10590,7 @@
                     <filename>devtool</filename> and the NPM fetcher to
                     create the recipe:
                     <literallayout class='monospaced'>
-     $ devtool add "npm://registry.npmjs.org;name=cute-files;version=1.0.2"
+     $ devtool add "npm://registry.npmjs.org;package=cute-files;version=1.0.2"
                     </literallayout>
                     The <filename>devtool add</filename> command runs
                     <filename>recipetool create</filename> and uses the
@@ -10615,25 +10615,13 @@
                 </para>
 
                 <para>
-                    <filename>recipetool</filename> creates "shrinkwrap" and
-                    "lockdown" files for your recipe.
+                    <filename>recipetool</filename> creates a "shrinkwrap" file
+                    for your recipe.
                     Shrinkwrap files capture the version of all dependent
                     modules.
                     Many packages do not provide shrinkwrap files.
                     <filename>recipetool</filename> create a shrinkwrap
                     file as it runs.
-                    You can replace the shrinkwrap file with your own file
-                    by setting the <filename>NPM_SHRINKWRAP</filename>
-                    variable.
-                </para>
-
-                <para>
-                    Lockdown files contain the checksum for each module
-                    to determine if your users download the same files when
-                    building with a recipe.
-                    Lockdown files ensure that dependencies have not been
-                    changed and that your NPM registry is still providing
-                    the same file.
                     <note>
                         A package is created for each sub-module.
                         This policy is the only practical way to have the
@@ -10648,23 +10636,26 @@
                     <literallayout class='monospaced'>
      $ devtool edit-recipe cute-files
      SUMMARY = "Turn any folder on your computer into a cute file browser, available on the local network."
-     LICENSE = "BSD-3-Clause &amp; Unknown &amp; MIT &amp; ISC"
+     LICENSE = "MIT &amp; ISC &amp; Unknown"
      LIC_FILES_CHKSUM = "file://LICENSE;md5=71d98c0a1db42956787b1909c74a86ca \
-                         file://node_modules/content-disposition/LICENSE;md5=c6e0ce1e688c5ff16db06b7259e9cd20 \
-                         file://node_modules/express/LICENSE;md5=5513c00a5c36cd361da863dd9aa8875d \
+                         file://node_modules/toidentifier/LICENSE;md5=1a261071a044d02eb6f2bb47f51a3502 \
+                         file://node_modules/debug/LICENSE;md5=ddd815a475e7338b0be7a14d8ee35a99 \
                          ...
 
-     SRC_URI = "npm://registry.npmjs.org;name=cute-files;version=${PV}"
-     NPM_SHRINKWRAP := "${THISDIR}/${PN}/npm-shrinkwrap.json"
-     NPM_LOCKDOWN := "${THISDIR}/${PN}/lockdown.json"
-     inherit npm
-     # Must be set after inherit npm since that itself sets S
-     S = "${WORKDIR}/npmpkg"
+     SRC_URI = " \
+         npm://registry.npmjs.org/;package=cute-files;version=${PV} \
+         npmsw://${THISDIR}/${BPN}/npm-shrinkwrap.json \
+     "
 
-     LICENSE_${PN}-content-disposition = "MIT"
-     ...
-     LICENSE_${PN}-express = "MIT"
+     S = "${WORKDIR}/npm"
+
+     inherit npm
+
      LICENSE_${PN} = "MIT"
+     LICENSE_${PN}-accepts = "MIT"
+     LICENSE_${PN}-array-flatten = "MIT"
+     ...
+     LICENSE_${PN}-vary = "MIT"
                     </literallayout>
                     Three key points exist in the previous example:
                     <itemizedlist>
@@ -10757,11 +10748,10 @@
                     However, the <filename>SRC_URI</filename> looks like the
                     following:
                     <literallayout class='monospaced'>
-     SRC_URI = "git://github.com/martinaglv/cute-files.git;protocol=https \
-               npm://registry.npmjs.org;name=commander;version=2.9.0;subdir=node_modules/commander \
-               npm://registry.npmjs.org;name=express;version=4.14.0;subdir=node_modules/express \
-               npm://registry.npmjs.org;name=content-disposition;version=0.3.0;subdir=node_modules/content-disposition \
-               "
+     SRC_URI = " \
+         git://github.com/martinaglv/cute-files.git;protocol=https \
+         npmsw://${THISDIR}/${BPN}/npm-shrinkwrap.json \
+         "
                     </literallayout>
                     In this example, the main module is taken from the Git
                     repository and dependents are taken from the NPM registry.
