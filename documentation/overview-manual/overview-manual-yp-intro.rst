@@ -21,6 +21,9 @@ comes to delivering embedded software stacks. The project allows
 software customizations and build interchange for multiple hardware
 platforms as well as software stacks that can be maintained and scaled.
 
+.. image:: figures/key-dev-elements.png
+    :align: center
+
 For further introductory information on the Yocto Project, you might be
 interested in this
 `article <https://www.embedded.com/electronics-blogs/say-what-/4458600/Why-the-Yocto-Project-for-my-IoT-Project->`__
@@ -704,6 +707,9 @@ Repositories <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/>`__.
 
 The following figure illustrates what generally comprises Poky:
 
+.. image:: figures/poky-reference-distribution.png
+    :align: center
+
 -  BitBake is a task executor and scheduler that is the heart of the
    OpenEmbedded build system.
 
@@ -784,7 +790,12 @@ The OpenEmbedded Build System Workflow
 The `OpenEmbedded build
 system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ uses a "workflow" to
 accomplish image and SDK generation. The following figure overviews that
-workflow: Following is a brief summary of the "workflow":
+workflow:
+
+.. image:: figures/YP-flow-diagram.png
+    :align: center
+
+Following is a brief summary of the "workflow":
 
 1. Developers specify architecture, policies, patches and configuration
    details.

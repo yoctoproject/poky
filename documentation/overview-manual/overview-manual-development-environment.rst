@@ -179,6 +179,9 @@ development:
    Yocto Metadata Layers. You can create local copies of Git
    repositories for each of these areas.
 
+   .. image:: figures/source-repos.png
+      :align: center
+
    For steps on how to view and access these upstream Git repositories,
    see the "`Accessing Source
    Repositories <&YOCTO_DOCS_DEV_URL;#accessing-source-repositories>`__"
@@ -190,6 +193,9 @@ development:
    Project in the form of images or tarballs. Downloading and extracting
    these files does not produce a local copy of the Git repository but
    rather a snapshot of a particular release or image.
+
+   .. image:: figures/index-downloads.png
+      :align: center
 
    For steps on how to view and access these files, see the "`Accessing
    Index of
@@ -204,6 +210,9 @@ development:
    Project release, tool, and Board Support Package (BSP) in tarball
    form. The tarballs are similar to those found in the `Index of
    /releases: <&YOCTO_DL_URL;/releases/>`__ area.
+
+   .. image:: figures/yp-download.png
+      :align: center
 
    For steps on how to use the "DOWNLOADS" page, see the "`Using the
    Downloads Page <&YOCTO_DOCS_DEV_URL;#using-the-downloads-page>`__"
@@ -284,6 +293,9 @@ project’s maintainer. And, a set of developers exist who independently
 develop, test, and submit changes to "contrib" areas for the maintainer
 to examine. The maintainer then chooses which changes are going to
 become a permanent part of the project.
+
+.. image:: figures/git-workflow.png
+   :align: center
 
 While each development environment is unique, there are some best
 practices or methods that help development run smoothly. The following

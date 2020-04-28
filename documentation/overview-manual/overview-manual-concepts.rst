@@ -171,6 +171,9 @@ The following diagram represents the high-level workflow of a build. The
 remainder of this section expands on the fundamental input, output,
 process, and metadata logical blocks that make up the workflow.
 
+.. image:: figures/YP-flow-diagram.png
+   :align: center
+
 In general, the build's workflow consists of several functional areas:
 
 -  *User Configuration:* metadata you can use to control the build
@@ -210,6 +213,9 @@ the image, where to store downloaded source, and other build properties.
 The following figure shows an expanded representation of the "User
 Configuration" box of the `general workflow
 figure <#general-workflow-figure>`__:
+
+.. image:: figures/user-configuration.png
+   :align: center
 
 BitBake needs some basic configuration files in order to complete a
 build. These files are ``*.conf`` files. The minimally necessary ones
@@ -405,6 +411,9 @@ figure <#general-workflow-figure>`__:
 The following figure shows an expanded representation of these three
 layers from the `general workflow figure <#general-workflow-figure>`__:
 
+.. image:: figures/layer-input.png
+   :align: center
+
 In general, all layers have a similar structure. They all contain a
 licensing file (e.g. ``COPYING.MIT``) if the layer is to be distributed,
 a ``README`` file as good practice and especially if the layer is to be
@@ -556,6 +565,9 @@ The remainder of this section provides a deeper look into the source
 files and the mirrors. Here is a more detailed look at the source file
 area of the `general workflow figure <#general-workflow-figure>`__:
 
+.. image:: figures/source-input.png
+   :align: center
+
 Upstream Project Releases
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -637,6 +649,9 @@ area in the upper-right corner.
 This section looks a little closer into the package feeds area used by
 the build system. Here is a more detailed look at the area:
 
+.. image:: figures/package-feeds.png
+   :align: center
+
 Package feeds are an intermediary step in the build process. The
 OpenEmbedded build system provides classes to generate different package
 types, and you specify which classes to enable through the
@@ -710,6 +725,9 @@ Source Fetching
 
 The first stages of building a recipe are to fetch and unpack the source
 code:
+
+.. image:: figures/source-fetching.png
+   :align: center
 
 The ```do_fetch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-fetch>`__ and
 ```do_unpack`` <&YOCTO_DOCS_REF_URL;#ref-tasks-unpack>`__ tasks fetch
@@ -802,6 +820,9 @@ Patching
 Once source code is fetched and unpacked, BitBake locates patch files
 and applies them to the source files:
 
+.. image:: figures/patching.png
+   :align: center
+
 The ```do_patch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-patch>`__ task uses a
 recipe's ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statements
 and the ```FILESPATH`` <&YOCTO_DOCS_REF_URL;#var-FILESPATH>`__ variable
@@ -842,6 +863,9 @@ Configuration, Compilation, and Staging
 After source code is patched, BitBake executes tasks that configure and
 compile the source code. Once compilation occurs, the files are copied
 to a holding area (staged) in preparation for packaging:
+
+.. image:: figures/configuration-compile-autoreconf.png
+   :align: center
 
 This step in the build process consists of the following tasks:
 
@@ -899,6 +923,9 @@ Package Splitting
 
 After source code is configured, compiled, and staged, the build system
 analyzes the results and splits the output into packages:
+
+.. image:: figures/analysis-for-package-splitting.png
+   :align: center
 
 The ```do_package`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package>`__ and
 ```do_packagedata`` <&YOCTO_DOCS_REF_URL;#ref-tasks-packagedata>`__
@@ -978,6 +1005,9 @@ Image Generation
 
 Once packages are split and stored in the Package Feeds area, the build
 system uses BitBake to generate the root filesystem image:
+
+.. image:: figures/image-generation.png
+   :align: center
 
 The image generation process consists of several stages and depends on
 several tasks and variables. The
@@ -1092,6 +1122,9 @@ SDK Generation
 The OpenEmbedded build system uses BitBake to generate the Software
 Development Kit (SDK) installer scripts for both the standard SDK and
 the extensible SDK (eSDK):
+
+.. image:: figures/sdk-generation.png
+   :align: center
 
 .. note::
 
@@ -1272,6 +1305,9 @@ the `general workflow figure <#general-workflow-figure>`__ that BitBake
 output, in part, consists of images. This section takes a closer look at
 this output:
 
+.. image:: figures/images.png
+   :align: center
+
 .. note::
 
    For a list of example images that the Yocto Project provides, see the
@@ -1330,6 +1366,9 @@ generation process differs depending on whether you build an extensible
 SDK (e.g. ``bitbake -c populate_sdk_ext`` imagename) or a standard SDK
 (e.g. ``bitbake -c populate_sdk`` imagename). This section takes a
 closer look at this output:
+
+.. image:: figures/sdk.png
+   :align: center
 
 The specific form of this output is a set of files that includes a
 self-extracting SDK installer (``*.sh``), host and target manifest
@@ -1449,6 +1488,9 @@ creates these necessary toolchains for you.
 
 The following figure shows a high-level build environment regarding
 toolchain construction and use.
+
+.. image:: figures/cross-development-toolchains.png
+   :align: center
 
 Most of the work occurs on the Build Host. This is the machine used to
 build images and generally work within the the Yocto Project
