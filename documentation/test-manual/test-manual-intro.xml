@@ -214,52 +214,41 @@
             Tests map into the codebase as follows:
             <itemizedlist>
                 <listitem><para>
-                        <emphasis>bitbake-selftest</emphasis>: <itemizedlist>
-                            <listitem>
-                                <para>These tests are self-contained and test BitBake as well as its
-                                    APIs, which include the fetchers. The tests are located in
-                                        <filename>bitbake/lib/*/tests</filename>. </para>
-                            </listitem>
-                            <listitem>
-                                <para>From within the BitBake repository, run the following:
-                                    <literallayout class="monospaced">
+                        <emphasis>bitbake-selftest</emphasis>: </para>
+                    <para>These tests are self-contained and test BitBake as well as its APIs, which
+                        include the fetchers. The tests are located in
+                            <filename>bitbake/lib/*/tests</filename>. </para>
+                    <para>From within the BitBake repository, run the following:
+                        <literallayout class="monospaced">
      $ bitbake-selftest
                             </literallayout>
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>To skip tests that access the Internet, use the
-                                        <filename>BB_SKIP_NETTEST</filename> variable when running
-                                    "bitbake-selftest" as follows:
-                                    <literallayout class="monospaced">
+                    </para>
+                    <para>To skip tests that access the Internet, use the
+                            <filename>BB_SKIP_NETTEST</filename> variable when running
+                        "bitbake-selftest" as follows:
+                        <literallayout class="monospaced">
      $ BB_SKIP_NETTEST=yes bitbake-selftest
-                            </literallayout>The
-                                    default output is quiet and just prints a summary of what was
-                                    run. To see more information, there is a verbose
-                                    option:<literallayout>
+                            </literallayout></para>
+                    <para>The default output is quiet and just prints a summary of what was run. To
+                        see more information, there is a verbose
+                        option:<literallayout class="monospaced">
      $ bitbake-selftest -v
                              </literallayout></para>
-                                <para>Use this option when you wish to skip tests that access the
-                                    network, which are mostly necessary to test the fetcher modules.
-                                    To specify individual test modules to run, append the test
-                                    module name to the "bitbake-selftest" command. For example, to
-                                    specify the tests for the bb.data.module, run:
-                                    <literallayout class="monospaced">
+                    <para>Use this option when you wish to skip tests that access the network, which
+                        are mostly necessary to test the fetcher modules. To specify individual test
+                        modules to run, append the test module name to the "bitbake-selftest"
+                        command. For example, to specify the tests for the bb.data.module, run:
+                        <literallayout class="monospaced">
      $ bitbake-selftest bb.test.data.module
                             </literallayout>You
-                                    can also specify individual tests by defining the full name and
-                                    module plus the class path of the test, for example:
-                                    <literallayout>
+                        can also specify individual tests by defining the full name and module plus
+                        the class path of the test, for example:
+                        <literallayout class="monospaced">
      $ bitbake-selftest bb.tests.data.TestOverrides.test_one_override
                              </literallayout></para>
-                            </listitem>
-                            <listitem>
-                                <para>The tests are based on <ulink
-                                        url="https://docs.python.org/3/library/unittest.html">Python
-                                        unittest</ulink>. </para>
-                            </listitem>
-                        </itemizedlist>
-                    </para></listitem>
+                    <para>The tests are based on <ulink
+                            url="https://docs.python.org/3/library/unittest.html">Python
+                            unittest</ulink>. </para></listitem>
                 <listitem><para>
                         <emphasis>oe-selftest</emphasis>: <itemizedlist>
                             <listitem>
@@ -297,12 +286,12 @@
                             </literallayout>
                                     For example, the following command would run the tinfoil getVar
                                     API
-                                    test:<literallayout>
+                                    test:<literallayout class="monospaced">
      $ oe-selftest -r tinfoil.TinfoilTests.test_getvar
                             </literallayout>It
                                     is also possible to run a set of tests. For example the
                                     following command will run all of the tinfoil
-                                    tests:<literallayout>
+                                    tests:<literallayout class="monospaced">
      $ oe-selftest -r  tinfoil
                             </literallayout></para>
                             </listitem>
@@ -408,7 +397,7 @@
             <title><filename>bitbake-selftest</filename></title>
 
             <para>A simple test example from <filename>lib/bb/tests/data.py</filename> is:
-                <literallayout>
+                <literallayout class="monospaced">
      class DataExpansions(unittest.TestCase):
          def setUp(self):
              self.d = bb.data.init()
@@ -438,7 +427,7 @@
                 builds. Rather than directly using Python's unittest, the code wraps most of the
                 standard objects. The tests can be simple, such as testing a command from within the
                 OE build environment using the following
-                example:<literallayout>
+                example:<literallayout class="monospaced">
      class BitbakeLayers(OESelftestTestCase):
           def test_bitbakelayers_showcrossdepends(self):
              result = runCmd('bitbake-layers show-cross-depends')       
@@ -487,7 +476,7 @@
                 under QEMU. As a result, they are assumed to be running in a target image
                 environment, as opposed to a host build environment. A simple example from
                     <filename>meta/lib/oeqa/runtime/cases/python.py</filename> contains the
-                following:<literallayout>
+                following:<literallayout class="monospaced">
      class PythonTest(OERuntimeTestCase):
          @OETestDepends(['ssh.SSHTest.test_ssh'])
          @OEHasPackage(['python3-core'])
@@ -514,7 +503,7 @@
             <para>These tests are run against built extensible SDKs (eSDKs). The tests can assume
                 that the eSDK environment has already been setup. An example from
                     <filename>meta/lib/oeqa/sdk/cases/devtool.py</filename> contains the
-                following:<literallayout>
+                following:<literallayout class="monospaced">
      class DevtoolTest(OESDKExtTestCase):
           @classmethod
           def setUpClass(cls):
@@ -548,7 +537,7 @@
             <para>These tests are run against built SDKs. The tests can assume that an SDK has
                 already been extracted and its environment file has been sourced. A simple example
                 from <filename>meta/lib/oeqa/sdk/cases/python2.py</filename> contains the
-                following:<literallayout>
+                following:<literallayout class="monospaced">
      class Python3Test(OESDKTestCase):
          def setUp(self):
              if not (self.tc.hasHostPackage("nativesdk-python3-core") or
@@ -571,7 +560,7 @@
             <para>The performance tests usually measure how long operations take and the resource
                 utilisation as that happens. An example from
                     <filename>meta/lib/oeqa/buildperf/test_basic.py</filename> contains the
-                following:<literallayout>
+                following:<literallayout class="monospaced">
      class Test3(BuildPerfTestCase):
 
        def test3(self):

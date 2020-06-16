@@ -20,7 +20,7 @@
                 <filename>config.json</filename> file within the
                 <filename>yocto-autobuilder-helper</filename> repository. The targets are defined in
             the ‘overrides’ section, a quick example could be qemux86-64 which looks
-            like:<literallayout>
+            like:<literallayout class="monospaced">
      "qemux86-64" : {
          "MACHINE" : "qemux86-64",
          "TEMPLATE" : "arch-qemu",
@@ -32,7 +32,7 @@
      },
                     </literallayout>And
             to expand that, you need the “arch-qemu” entry from the “templates” section, which looks
-            like:<literallayout>
+            like:<literallayout class="monospaced">
      "arch-qemu" : {
          "BUILDINFO" : true,
          "BUILDHISTORY" : true,
@@ -52,11 +52,12 @@
          }
      },
                     </literallayout>Combining
-            these two entries you can see that “qemux86-64” is a three step build where the “bitbake
-            BBTARGETS” would be run, then “bitbake SANITYTARGETS” for each step; all for
-            MACHINE=”qemx86-64” but with differing SDKMACHINE settings. In step 1 an extra variable
-            is added to the <filename>auto.conf</filename> file to enable wic image
-            generation.</para>
+            these two entries you can see that “qemux86-64” is a three step build where the
+                <filename>bitbake BBTARGETS</filename> would be run, then <filename>bitbake
+                SANITYTARGETS</filename> for each step; all for
+                <filename>MACHINE=”qemx86-64”</filename> but with differing SDKMACHINE settings. In
+            step 1 an extra variable is added to the <filename>auto.conf</filename> file to enable
+            wic image generation.</para>
         <para>While not every detail of this is covered here, you can see how the templating
             mechanism allows quite complex configurations to be built up yet allows duplication and
             repetition to be kept to a minimum.</para>
@@ -284,18 +285,18 @@
             substitution of the paths. The Helper script repository includes a
                 <filename>local-example.json</filename> file to show how you could override these
             from a separate configuration file. Pass the following into the environment of the
-            Autobuilder:<literallayout>
+            Autobuilder:<literallayout class="monospaced">
      $ ABHELPER_JSON="config.json local-example.json"
                     </literallayout>As
             another example, you could also pass the following into the
-            environment:<literallayout>
+            environment:<literallayout class="monospaced">
      $ ABHELPER_JSON="config.json <replaceable>/some/location/</replaceable>local.json"
                     </literallayout>One
             issue users often run into is validation of the <filename>config.json</filename> files.
             A tip for minimizing issues from invalid json files is to use a Git
                 <filename>pre-commit-hook.sh</filename> script to verify the JSON file before
             committing it. Create a symbolic link as
-            follows:<literallayout>
+            follows:<literallayout class="monospaced">
      $ ln -s ../../scripts/pre-commit-hook.sh .git/hooks/pre-commit
                     </literallayout></para>
     </section>
