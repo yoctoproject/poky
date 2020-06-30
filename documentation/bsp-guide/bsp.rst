@@ -686,6 +686,9 @@ section.
 The following illustration and list summarize the BSP creation general
 workflow.
 
+.. image:: figures/bsp-dev-flow.png
+   :align: center
+
 1. *Set up Your Host Development System to Support Development Using the
    Yocto Project*: See the "`Preparing the Build
    Host <&YOCTO_DOCS_DEV_URL;#dev-preparing-the-build-host>`__" section
