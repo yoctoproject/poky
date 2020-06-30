@@ -1,3 +1,5 @@
+.. SPDX-License-Identifier: CC-BY-2.0-UK
+
 ========================================================================================
 Yocto Project Application Development and the Extensible Software Development Kit (eSDK)
 ========================================================================================

@@ -1,3 +1,5 @@
+.. SPDX-License-Identifier: CC-BY-2.0-UK
+
 ************************************************
 Board Support Packages (BSP) - Developer's Guide
 ************************************************

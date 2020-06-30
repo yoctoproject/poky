@@ -1,3 +1,5 @@
+.. SPDX-License-Identifier: CC-BY-2.0-UK
+
 *************************************************************
 Overall Architecture of the Linux Tracing and Profiling Tools
 *************************************************************

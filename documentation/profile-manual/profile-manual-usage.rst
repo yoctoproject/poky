@@ -1,3 +1,5 @@
+.. SPDX-License-Identifier: CC-BY-2.0-UK
+
 ***************************************************************
 Basic Usage (with examples) for each of the Yocto Tracing Tools
 ***************************************************************

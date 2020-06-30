@@ -1,3 +1,5 @@
+.. SPDX-License-Identifier: CC-BY-2.0-UK
+
 ***********************************
 Setting Up to Use the Yocto Project
 ***********************************
