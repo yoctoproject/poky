@@ -16,11 +16,11 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import datetime
 
 # -- Project information -----------------------------------------------------
-
 project = 'The Yocto Project'
-copyright = '2020, The Linux Foundation'
+copyright = '2010-%s, The Linux Foundation' % datetime.datetime.now().year
 author = 'The Linux Foundation'
 
 
