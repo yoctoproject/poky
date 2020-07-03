@@ -26,10 +26,15 @@ author = 'The Linux Foundation'
 
 # -- General configuration ---------------------------------------------------
 
+# to load local extension from the folder 'sphinx'
+sys.path.insert(0, os.path.abspath('sphinx'))
+
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.extlinks',
+    'yocto-vars'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -43,6 +48,26 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # master document name. The default changed from contents to index. so better
 # set it ourselves.
 master_doc = 'index'
+
+# create substitution for project configuration variables
+rst_prolog = """
+.. |project_name| replace:: %s
+.. |copyright| replace:: %s
+.. |author| replace:: %s
+""" % (project, copyright, author)
+
+# external links and substitutions
+extlinks = {
+    'yocto_home': ('https://yoctoproject.org%s', None),
+    'yocto_wiki': ('https://wiki.yoctoproject.org%s', None),
+    'yocto_dl': ('https://downloads.yoctoproject.org%s', None),
+    'yocto_lists': ('https://lists.yoctoproject.org%s', None),
+    'yocto_bugs': ('https://bugzilla.yoctoproject.org%s', None),
+    'yocto_ab': ('https://autobuilder.yoctoproject.org%s', None),
+    'yocto_git': ('https://git.yoctoproject.org%s', None),
+    'oe_home': ('https://www.openembedded.org%s', None),
+    'oe_lists': ('https://lists.openembedded.org%s', None),
+}
 
 # -- Options for HTML output -------------------------------------------------
 
