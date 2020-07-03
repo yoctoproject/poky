@@ -22,3 +22,4 @@ Welcome to The Yocto Project's documentation!
    sdk-manual/sdk-manual
    toaster-manual/toaster-manual
    test-manual/test-manual
+   genindex
