@@ -4,6 +4,8 @@
 Toaster User Manual
 ===================
 
+.. include:: /boilerplate.rst
+
 .. toctree::
    :caption: Table of Contents
    :numbered:
