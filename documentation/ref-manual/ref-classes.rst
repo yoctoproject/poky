@@ -855,8 +855,8 @@ using an empty :term:`PARALLEL_MAKE` variable.
 
 Inheriting the ``icecc`` class changes all sstate signatures.
 Consequently, if a development team has a dedicated build system that
-populates ```STATE_MIRRORS`` <#var-SSTATE_MIRRORS>`__ and they want to
-reuse sstate from ``STATE_MIRRORS``, then all developers and the build
+populates :term:`SSTATE_MIRRORS` and they want to
+reuse sstate from ``SSTATE_MIRRORS``, then all developers and the build
 system need to either inherit the ``icecc`` class or nobody should.
 
 At the distribution level, you can inherit the ``icecc`` class to be
