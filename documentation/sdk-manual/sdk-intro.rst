@@ -56,8 +56,8 @@ toolchain binaries are produced for any given architecture. This feature
 takes advantage of the fact that the target hardware can be passed to
 ``gcc`` as a set of compiler options. Those options are set up by the
 environment script and contained in variables such as
-```CC`` <&YOCTO_DOCS_REF_URL;#var-CC>`__ and
-```LD`` <&YOCTO_DOCS_REF_URL;#var-LD>`__. This reduces the space needed
+:term:`CC` and
+:term:`LD`. This reduces the space needed
 for the tools. Understand, however, that every target still needs a
 sysroot because those binaries are target-specific.
 
@@ -66,7 +66,7 @@ The SDK development environment consists of the following:
 -  The self-contained SDK, which is an architecture-specific
    cross-toolchain and matching sysroots (target and native) all built
    by the OpenEmbedded build system (e.g. the SDK). The toolchain and
-   sysroots are based on a `Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__
+   sysroots are based on a :term:`Metadata`
    configuration and extensions, which allows you to cross-develop on
    the host machine for the target hardware. Additionally, the
    extensible SDK contains the ``devtool`` functionality.
@@ -107,9 +107,9 @@ when considering which to build:
 +-----------------------+-----------------------+-----------------------+
 
 \* Extensible SDK contains the toolchain and debugger if
-```SDK_EXT_TYPE`` <&YOCTO_DOCS_REF_URL;#var-SDK_EXT_TYPE>`__ is "full"
+:term:`SDK_EXT_TYPE` is "full"
 or
-```SDK_INCLUDE_TOOLCHAIN`` <&YOCTO_DOCS_REF_URL;#var-SDK_INCLUDE_TOOLCHAIN>`__
+:term:`SDK_INCLUDE_TOOLCHAIN`
 is "1", which is the default. \*\* Sysroot is managed through the use of
 ``devtool``. Thus, it is less likely that you will corrupt your SDK
 sysroot when you try to add additional libraries. \**\* You can add

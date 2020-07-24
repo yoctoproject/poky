@@ -113,7 +113,7 @@ universal, the list includes them just in case:
       Files that provide for logic encapsulation and inheritance so that
       commonly used patterns can be defined once and then easily used in
       multiple recipes. For reference information on the Yocto Project classes,
-      see the "`Classes <#ref-classes>`__" chapter. Class files end with the
+      see the ":ref:`ref-manual/ref-classes:Classes`" chapter. Class files end with the
       ``.bbclass`` filename extension.
 
    Configuration File
@@ -200,7 +200,7 @@ universal, the list includes them just in case:
    Metadata
       A key element of the Yocto Project is the Metadata that
       is used to construct a Linux distribution and is contained in the
-      files that the `OpenEmbedded build system <#build-system-term>`__
+      files that the :term:`OpenEmbedded Build System`
       parses when building an image. In general, Metadata includes recipes,
       configuration files, and other information that refers to the build
       instructions themselves, as well as the data used to control what
@@ -233,7 +233,7 @@ universal, the list includes them just in case:
    OpenEmbedded Build System
       The build system specific to the Yocto
       Project. The OpenEmbedded build system is based on another project
-      known as "Poky", which uses `BitBake <#bitbake-term>`__ as the task
+      known as "Poky", which uses :term:`BitBake` as the task
       executor. Throughout the Yocto Project documentation set, the
       OpenEmbedded build system is sometimes referred to simply as "the
       build system". If other build systems, such as a host or target build
@@ -262,8 +262,8 @@ universal, the list includes them just in case:
       Another point worth noting is that historically within the Yocto
       Project, recipes were referred to as packages - thus, the existence
       of several BitBake variables that are seemingly mis-named, (e.g.
-      ```PR`` <#var-PR>`__, ```PV`` <#var-PV>`__, and
-      ```PE`` <#var-PE>`__).
+      :term:`PR`, :term:`PV`, and
+      :term:`PE`).
 
    Package Groups
       Arbitrary groups of software Recipes. You use
@@ -373,9 +373,9 @@ universal, the list includes them just in case:
 
    Task
       A unit of execution for BitBake (e.g.
-      ```do_compile`` <#ref-tasks-compile>`__,
-      ```do_fetch`` <#ref-tasks-fetch>`__,
-      ```do_patch`` <#ref-tasks-patch>`__, and so forth).
+      :ref:`ref-tasks-compile`,
+      :ref:`ref-tasks-fetch`,
+      :ref:`ref-tasks-patch`, and so forth).
 
    Toaster
       A web interface to the Yocto Project's `OpenEmbedded Build

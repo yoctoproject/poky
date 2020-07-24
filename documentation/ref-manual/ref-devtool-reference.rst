@@ -217,7 +217,7 @@ Git, checks out a branch for development, and applies any patches from
 the recipe as commits on top. You can use the following command to
 checkout the source files: $ devtool modify recipe Using the above
 command form, ``devtool`` uses the existing recipe's
-```SRC_URI`` <#var-SRC_URI>`__ statement to locate the upstream source,
+:term:`SRC_URI` statement to locate the upstream source,
 extracts the source into the default sources location in the workspace.
 The default development branch used is "devtool".
 
@@ -360,9 +360,9 @@ When you use the ``devtool upgrade`` command, you must supply the root
 name of the recipe (i.e. no version, paths, or extensions), and you must
 supply the directory to which you want the source extracted. Additional
 command options let you control things such as the version number to
-which you want to upgrade (i.e. the ```PV`` <#var-PV>`__), the source
+which you want to upgrade (i.e. the :term:`PV`), the source
 revision to which you want to upgrade (i.e. the
-```SRCREV`` <#var-SRCREV>`__), whether or not to apply patches, and so
+:term:`SRCREV`), whether or not to apply patches, and so
 forth.
 
 You can read more on the ``devtool upgrade`` workflow in the "`Use
@@ -439,7 +439,7 @@ The target is the address of the target machine, which must be running
 an SSH server (i.e. ``user@hostname[:destdir]``).
 
 This command deploys all files installed during the
-```do_install`` <#ref-tasks-install>`__ task. Furthermore, you do not
+:ref:`ref-tasks-install` task. Furthermore, you do not
 need to have package management enabled within the target machine. If
 you do, the package manager is bypassed.
 
@@ -492,7 +492,7 @@ Creating the Workspace Layer in an Alternative Location
 =======================================================
 
 Use the ``devtool create-workspace`` command to create a new workspace
-layer in your `Build Directory <#build-directory>`__. When you create a
+layer in your :term:`Build Directory`. When you create a
 new workspace layer, it is populated with the ``README`` file and the
 ``conf`` directory only.
 

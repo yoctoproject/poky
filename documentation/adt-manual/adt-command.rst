@@ -85,7 +85,7 @@ Follow these steps to create a simple Autotools-based project:
 
 7.  *Cross-compile the project:* This command compiles the project using
     the cross-compiler. The
-    ```CONFIGURE_FLAGS`` <&YOCTO_DOCS_REF_URL;#var-CONFIGURE_FLAGS>`__
+    :term:`CONFIGURE_FLAGS`
     environment variable provides the minimal arguments for GNU
     configure: $ ./configure ${CONFIGURE_FLAGS}
 
@@ -146,13 +146,13 @@ subject to general ``make`` rules.
 
 To illustrate this, consider the following four cross-toolchain
 environment variables:
-`CC <&YOCTO_DOCS_REF_URL;#var-CC>`__\ =i586-poky-linux-gcc -m32
+:term:`CC`\ =i586-poky-linux-gcc -m32
 -march=i586 --sysroot=/opt/poky/1.8/sysroots/i586-poky-linux
-`LD <&YOCTO_DOCS_REF_URL;#var-LD>`__\ =i586-poky-linux-ld
+:term:`LD`\ =i586-poky-linux-ld
 --sysroot=/opt/poky/1.8/sysroots/i586-poky-linux
-`CFLAGS <&YOCTO_DOCS_REF_URL;#var-CFLAGS>`__\ =-O2 -pipe -g
+:term:`CFLAGS`\ =-O2 -pipe -g
 -feliminate-unused-debug-types
-`CXXFLAGS <&YOCTO_DOCS_REF_URL;#var-CXXFLAGS>`__\ =-O2 -pipe -g
+:term:`CXXFLAGS`\ =-O2 -pipe -g
 -feliminate-unused-debug-types Now, consider the following three cases:
 
 -  *Case 1 - No Variables Set in the ``Makefile``:* Because these

@@ -75,7 +75,7 @@ particular working environment and set of practices.
     development environment.
 
 4.  *Use Git as Your Source Control Manager (SCM):* Keeping your
-    `Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__ (i.e. recipes,
+    :term:`Metadata` (i.e. recipes,
     configuration files, classes, and so forth) and any software you are
     developing under the control of an SCM system that is compatible
     with the OpenEmbedded build system is advisable. Of all of the SCMs
@@ -248,7 +248,7 @@ particular working environment and set of practices.
        for related upstream Yocto Project Git repositories.
 
     -  Set up the directory for the shared state cache
-       (```SSTATE_DIR`` <&YOCTO_DOCS_REF_URL;#var-SSTATE_DIR>`__) where
+       (:term:`SSTATE_DIR`) where
        it makes sense. For example, set up the sstate cache on a system
        used by developers in the same organization and share the same
        source directories on their machines.

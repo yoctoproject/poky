@@ -244,7 +244,7 @@ Defining the Default Distro and Other Values
 This section defines the default distro value for new projects. By
 default, it reserves the first Toaster Setting record "1". The following
 demonstrates how to set the project default value for
-```DISTRO`` <&YOCTO_DOCS_REF_URL;#var-DISTRO>`__: <!-- Set the project
+:term:`DISTRO`: <!-- Set the project
 default value for DISTRO --> <object model="orm.toastersetting" pk="1">
 <field type="CharField" name="name">DEFCONF_DISTRO</field> <field
 type="CharField" name="value">poky</field> </object> You can override

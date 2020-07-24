@@ -149,7 +149,7 @@ Plugins, Matchbox, Poky, Yocto Linux Kernel, and so forth. From the
 interface, you can click on any particular item in the "Name" column and
 see the URL at the bottom of the page that you need to clone a Git
 repository for that particular item. Having a local Git repository of
-the `Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__, which
+the :term:`Source Directory`, which
 is usually named "poky", allows you to make changes, contribute to the
 history, and ultimately enhance the Yocto Project's tools, Board Support
 Packages, and so forth.
@@ -636,7 +636,7 @@ find information on the GNU GPL
 
 When you build an image using the Yocto Project, the build process uses
 a known list of licenses to ensure compliance. You can find this list in
-the `Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ at
+the :term:`Source Directory` at
 ``meta/files/common-licenses``. Once the build completes, the list of
 all licenses found and used during that build are kept in the `Build
 Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ at
@@ -660,7 +660,7 @@ that conform to the Open Source Definition (OSD).
 
 You can find a list of the combined SPDX and OSI licenses that the Yocto
 Project uses in the ``meta/files/common-licenses`` directory in your
-`Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__.
+:term:`Source Directory`.
 
 For information that can help you maintain compliance with various open
 source licensing during the lifecycle of a product created using the

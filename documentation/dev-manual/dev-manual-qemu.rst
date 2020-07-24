@@ -75,7 +75,7 @@ available. Follow these general steps to run QEMU:
 
    -  If you have previously built an image for QEMU (e.g. ``qemux86``,
       ``qemuarm``, and so forth), then the artifacts are in place in
-      your `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
+      your :term:`Build Directory`.
 
    -  If you have not built an image, you can go to the
       `machines/qemu <&YOCTO_MACHINES_DL_URL;>`__ area and download a

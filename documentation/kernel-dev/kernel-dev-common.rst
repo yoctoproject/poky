@@ -72,7 +72,7 @@ section:
       "poky".
 
 2. *Prepare Your ``local.conf`` File:* By default, the
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ variable is set to
+   :term:`MACHINE` variable is set to
    "qemux86-64", which is fine if you are building for the QEMU emulator
    in 64-bit mode. However, if you are not, you need to set the
    ``MACHINE`` variable appropriately in your ``conf/local.conf`` file
@@ -82,7 +82,7 @@ section:
 
    Also, since you are preparing to work on the kernel image, you need
    to set the
-   ```MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS>`__
+   :term:`MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS`
    variable to include kernel modules.
 
    In this example we wish to build for qemux86 so we must set the
@@ -115,7 +115,7 @@ section:
 
 4. *Inform the BitBake Build Environment About Your Layer:* As directed
    when you created your layer, you need to add the layer to the
-   ```BBLAYERS`` <&YOCTO_DOCS_REF_URL;#var-BBLAYERS>`__ variable in the
+   :term:`BBLAYERS` variable in the
    ``bblayers.conf`` file as follows: $ cd ~/poky/build $ bitbake-layers
    add-layer ../../meta-mylayer NOTE: Starting bitbake server... $
 
@@ -236,7 +236,7 @@ section:
       "poky".
 
 2. *Prepare Your ``local.conf`` File:* By default, the
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ variable is set to
+   :term:`MACHINE` variable is set to
    "qemux86-64", which is fine if you are building for the QEMU emulator
    in 64-bit mode. However, if you are not, you need to set the
    ``MACHINE`` variable appropriately in your ``conf/local.conf`` file
@@ -246,7 +246,7 @@ section:
 
    Also, since you are preparing to work on the kernel image, you need
    to set the
-   ```MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS>`__
+   :term:`MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS`
    variable to include kernel modules.
 
    In this example we wish to build for qemux86 so we must set the
@@ -279,7 +279,7 @@ section:
 
 4. *Inform the BitBake Build Environment About Your Layer:* As directed
    when you created your layer, you need to add the layer to the
-   ```BBLAYERS`` <&YOCTO_DOCS_REF_URL;#var-BBLAYERS>`__ variable in the
+   :term:`BBLAYERS` variable in the
    ``bblayers.conf`` file as follows: $ cd ~/poky/build $ bitbake-layers
    add-layer ../../meta-mylayer NOTE: Starting bitbake server ... $
 
@@ -343,7 +343,7 @@ Creating and Preparing a Layer
 
 If you are going to be modifying kernel recipes, it is recommended that
 you create and prepare your own layer in which to do your work. Your
-layer contains its own `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__
+layer contains its own :term:`BitBake`
 append files (``.bbappend``) and provides a convenient mechanism to
 create your own recipe files (``.bb``) as well as store and use kernel
 patch files. For background information on working with layers, see the
@@ -393,8 +393,8 @@ home directory:
    "${THISDIR}/${PN}:" SRC_URI_append = " file://patch-file-one"
    SRC_URI_append = " file://patch-file-two" SRC_URI_append = "
    file://patch-file-three" The
-   ```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__
-   and ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statements
+   :term:`FILESEXTRAPATHS`
+   and :term:`SRC_URI` statements
    enable the OpenEmbedded build system to find patch files. For more
    information on using append files, see the "`Using .bbappend Files in
    Your Layer <&YOCTO_DOCS_DEV_URL;#using-bbappend-files>`__" section in
@@ -406,7 +406,7 @@ Modifying an Existing Recipe
 In many cases, you can customize an existing linux-yocto recipe to meet
 the needs of your project. Each release of the Yocto Project provides a
 few Linux kernel recipes from which you can choose. These are located in
-the `Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ in
+the :term:`Source Directory` in
 ``meta/recipes-kernel/linux``.
 
 Modifying an existing recipe can consist of the following:
@@ -431,12 +431,12 @@ modifying the ``meta/recipes-kernel/linux/linux-yocto_4.12.bb`` recipe,
 the append file will typically be located as follows within your custom
 layer: your-layer/recipes-kernel/linux/linux-yocto_4.12.bbappend The
 append file should initially extend the
-```FILESPATH`` <&YOCTO_DOCS_REF_URL;#var-FILESPATH>`__ search path by
+:term:`FILESPATH` search path by
 prepending the directory that contains your files to the
-```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__
+:term:`FILESEXTRAPATHS`
 variable as follows: FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:" The
 path
-``${``\ ```THISDIR`` <&YOCTO_DOCS_REF_URL;#var-THISDIR>`__\ ``}/${``\ ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__\ ``}``
+``${``\ :term:`THISDIR`\ ``}/${``\ :term:`PN`\ ``}``
 expands to "linux-yocto" in the current directory for this example. If
 you add any new files that modify the kernel recipe and you have
 extended ``FILESPATH`` as described above, you must place the files in
@@ -472,16 +472,16 @@ COMPATIBLE_MACHINE_beaglebone = "beaglebone" LINUX_VERSION_genericx86 =
 = "4.12.10" LINUX_VERSION_beaglebone = "4.12.10" This append file
 contains statements used to support several BSPs that ship with the
 Yocto Project. The file defines machines using the
-```COMPATIBLE_MACHINE`` <&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE>`__
+:term:`COMPATIBLE_MACHINE`
 variable and uses the
-```KMACHINE`` <&YOCTO_DOCS_REF_URL;#var-KMACHINE>`__ variable to ensure
+:term:`KMACHINE` variable to ensure
 the machine name used by the OpenEmbedded build system maps to the
 machine name used by the Linux Yocto kernel. The file also uses the
-optional ```KBRANCH`` <&YOCTO_DOCS_REF_URL;#var-KBRANCH>`__ variable to
+optional :term:`KBRANCH` variable to
 ensure the build process uses the appropriate kernel branch.
 
 Although this particular example does not use it, the
-```KERNEL_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES>`__
+:term:`KERNEL_FEATURES`
 variable could be used to enable features specific to the kernel. The
 append file points to specific commits in the `Source
 Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ Git repository and
@@ -497,7 +497,7 @@ accomplish this definition by putting the configurations in a file or a
 set of files inside a directory located at the same level as your
 kernel's append file and having the same name as the kernel's main
 recipe file. With all these conditions met, simply reference those files
-in the ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statement in
+in the :term:`SRC_URI` statement in
 the append file.
 
 For example, suppose you had some configuration options in a file called
@@ -515,7 +515,7 @@ the following in your append file: SRC_URI += "file://myconfig.cfg \\
 file://eth.cfg \\ file://gfx.cfg"
 
 Another variable you can use in your kernel recipe append file is the
-```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__
+:term:`FILESEXTRAPATHS`
 variable. When you use this statement, you are extending the locations
 used by the OpenEmbedded system to look for files and patches as the
 recipe is processed.
@@ -546,9 +546,9 @@ Applying Patches
 If you have a single patch or a small series of patches that you want to
 apply to the Linux kernel source, you can do so just as you would with
 any other recipe. You first copy the patches to the path added to
-```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__ in
+:term:`FILESEXTRAPATHS` in
 your ``.bbappend`` file as described in the previous section, and then
-reference them in ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__
+reference them in :term:`SRC_URI`
 statements.
 
 For example, you can apply a three-patch series by adding the following
@@ -572,7 +572,7 @@ Changing the Configuration
 You can make wholesale or incremental changes to the final ``.config``
 file used for the eventual Linux kernel configuration by including a
 ``defconfig`` file and by specifying configuration fragments in the
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ to be applied to that
+:term:`SRC_URI` to be applied to that
 file.
 
 If you have a complete, working Linux kernel ``.config`` file you want
@@ -583,8 +583,8 @@ following lines to the linux-yocto ``.bbappend`` file in your layer:
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:" SRC_URI +=
 "file://defconfig" The ``SRC_URI`` tells the build system how to search
 for the file, while the
-```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__
-extends the ```FILESPATH`` <&YOCTO_DOCS_REF_URL;#var-FILESPATH>`__
+:term:`FILESEXTRAPATHS`
+extends the :term:`FILESPATH`
 variable (search directories) to include the ``${PN}`` directory you
 created to hold the configuration changes.
 
@@ -631,7 +631,7 @@ looks for ``defconfig`` files in the layer used for Metadata, which is
 ``defconfig`` files in your layer but would rather allow users to use
 the default configuration from the kernel tree and still be able to add
 configuration fragments to the
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ through, for example,
+:term:`SRC_URI` through, for example,
 append files, you can direct the OpenEmbedded build system to use a
 ``defconfig`` file that is "in-tree".
 
@@ -651,7 +651,7 @@ build system detects a statement that identifies an "out-of-tree"
 ``KBUILD_DEFCONFIG`` variable.
 
 See the
-```KBUILD_DEFCONFIG`` <&YOCTO_DOCS_REF_URL;#var-KBUILD_DEFCONFIG>`__
+:term:`KBUILD_DEFCONFIG`
 variable description for more information.
 
 Using ``devtool`` to Patch the Kernel
@@ -844,8 +844,8 @@ Section.
    addition to your ``local.conf`` file specifying to use
    "kernel-modules" and the "qemux86" machine, it must also point to the
    updated kernel source files. Add
-   ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ and
-   ```SRCREV`` <&YOCTO_DOCS_REF_URL;#var-SRCREV>`__ statements similar
+   :term:`SRC_URI` and
+   :term:`SRCREV` statements similar
    to the following to your ``local.conf``: $ cd ~/poky/build/conf Add
    the following to the ``local.conf``: SRC_URI_pn-linux-yocto =
    "git:///path-to/linux-yocto-4.12;protocol=file;name=machine;branch=standard/base;
@@ -907,8 +907,8 @@ Section.
    contents: FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
    SRC_URI_append = "
    file://0001-calibrate.c-Added-some-printk-statements.patch" The
-   ```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__
-   and ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statements
+   :term:`FILESEXTRAPATHS`
+   and :term:`SRC_URI` statements
    enable the OpenEmbedded build system to find the patch file.
 
    For more information on append files and patches, see the "`Creating
@@ -968,16 +968,16 @@ environment, you must do the following:
 -  Because you launch ``menuconfig`` using BitBake, you must be sure to
    set up your environment by running the
    ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__ script found in
-   the `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
+   the :term:`Build Directory`.
 
 -  You must be sure of the state of your build's configuration in the
-   `Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__.
+   :term:`Source Directory`.
 
 -  Your build host must have the following two packages installed:
    libncurses5-dev libtinfo-dev
 
 The following commands initialize the BitBake environment, run the
-```do_kernel_configme`` <&YOCTO_DOCS_REF_URL;#ref-tasks-kernel_configme>`__
+:ref:`ref-tasks-kernel_configme`
 task, and launch ``menuconfig``. These commands assume the Source
 Directory's top-level folder is ``~/poky``: $ cd poky $ source
 oe-init-build-env $ bitbake linux-yocto -c kernel_configme -f $ bitbake
@@ -1089,17 +1089,17 @@ which the OpenEmbedded build system can draw to create the final
 
 To create a ``defconfig``, start with a complete, working Linux kernel
 ``.config`` file. Copy that file to the appropriate
-``${``\ ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__\ ``}`` directory in
+``${``\ :term:`PN`\ ``}`` directory in
 your layer's ``recipes-kernel/linux`` directory, and rename the copied
 file to "defconfig" (e.g.
 ``~/meta-mylayer/recipes-kernel/linux/linux-yocto/defconfig``). Then,
 add the following lines to the linux-yocto ``.bbappend`` file in your
 layer: FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:" SRC_URI +=
 "file://defconfig" The
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ tells the build
+:term:`SRC_URI` tells the build
 system how to search for the file, while the
-```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__
-extends the ```FILESPATH`` <&YOCTO_DOCS_REF_URL;#var-FILESPATH>`__
+:term:`FILESEXTRAPATHS`
+extends the :term:`FILESPATH`
 variable (search directories) to include the ``${PN}`` directory you
 created to hold the configuration changes.
 
@@ -1179,7 +1179,7 @@ steps:
 3. *Create the Configuration Fragment:* Run the ``diffconfig`` command
    to prepare a configuration fragment. The resulting file
    ``fragment.cfg`` is placed in the
-   ``${``\ ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__\ ``}``
+   ``${``\ :term:`WORKDIR`\ ``}``
    directory: $ bitbake linux-yocto -c diffconfig
 
 The ``diffconfig`` command creates a file that is a list of Linux kernel
@@ -1196,7 +1196,7 @@ information on how to use the output as a configuration fragment.
 
 Where do you put your configuration fragment files? You can place these
 files in an area pointed to by
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ as directed by your
+:term:`SRC_URI` as directed by your
 ``bblayers.conf`` file, which is located in your layer. The OpenEmbedded
 build system picks up the configuration and adds it to the kernel's
 configuration. For example, suppose you had a set of configuration
@@ -1219,7 +1219,7 @@ Validating Configuration
 ------------------------
 
 You can use the
-```do_kernel_configcheck`` <&YOCTO_DOCS_REF_URL;#ref-tasks-kernel_configcheck>`__
+:ref:`ref-tasks-kernel_configcheck`
 task to provide configuration validation: $ bitbake linux-yocto -c
 kernel_configcheck -f Running this task produces warnings for when a
 requested configuration does not appear in the final ``.config`` file or
@@ -1268,9 +1268,9 @@ The output describes the various problems that you can encounter along
 with where to find the offending configuration items. You can use the
 information in the logs to adjust your configuration files and then
 repeat the
-```do_kernel_configme`` <&YOCTO_DOCS_REF_URL;#ref-tasks-kernel_configme>`__
+:ref:`ref-tasks-kernel_configme`
 and
-```do_kernel_configcheck`` <&YOCTO_DOCS_REF_URL;#ref-tasks-kernel_configcheck>`__
+:ref:`ref-tasks-kernel_configcheck`
 tasks until they produce no warnings.
 
 For more information on how to use the ``menuconfig`` tool, see the
@@ -1395,7 +1395,7 @@ If you cannot work with one of the Linux kernel versions supported by
 existing linux-yocto recipes, you can still make use of the Yocto
 Project Linux kernel tooling by working with your own sources. When you
 use your own sources, you will not be able to leverage the existing
-kernel `Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__ and stabilization
+kernel :term:`Metadata` and stabilization
 work of the linux-yocto sources. However, you will be able to manage
 your own Metadata in the same format as the linux-yocto sources.
 Maintaining format compatibility facilitates converging with linux-yocto
@@ -1428,7 +1428,7 @@ Here are some basic steps you can use to work with your own sources:
    the following: $ make defconfig After running the command, copy the
    resulting ``.config`` file to the ``files`` directory in your layer
    as "defconfig" and then add it to the
-   ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ variable in the
+   :term:`SRC_URI` variable in the
    recipe.
 
    Running the ``make defconfig`` command results in the default
@@ -1445,7 +1445,7 @@ Here are some basic steps you can use to work with your own sources:
 4. *Edit the Recipe:* Edit the following variables in your recipe as
    appropriate for your project:
 
-   -  ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__: The
+   -  :term:`SRC_URI`: The
       ``SRC_URI`` should specify a Git repository that uses one of the
       supported Git fetcher protocols (i.e. ``file``, ``git``, ``http``,
       and so forth). The ``SRC_URI`` variable should also specify either
@@ -1453,32 +1453,32 @@ Here are some basic steps you can use to work with your own sources:
       skeleton recipe provides an example ``SRC_URI`` as a syntax
       reference.
 
-   -  ```LINUX_VERSION`` <&YOCTO_DOCS_REF_URL;#var-LINUX_VERSION>`__:
+   -  :term:`LINUX_VERSION`:
       The Linux kernel version you are using (e.g. "4.12").
 
-   -  ```LINUX_VERSION_EXTENSION`` <&YOCTO_DOCS_REF_URL;#var-LINUX_VERSION_EXTENSION>`__:
+   -  :term:`LINUX_VERSION_EXTENSION`:
       The Linux kernel ``CONFIG_LOCALVERSION`` that is compiled into the
       resulting kernel and visible through the ``uname`` command.
 
-   -  ```SRCREV`` <&YOCTO_DOCS_REF_URL;#var-SRCREV>`__: The commit ID
+   -  :term:`SRCREV`: The commit ID
       from which you want to build.
 
-   -  ```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__: Treat this variable the
+   -  :term:`PR`: Treat this variable the
       same as you would in any other recipe. Increment the variable to
       indicate to the OpenEmbedded build system that the recipe has
       changed.
 
-   -  ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__: The default ``PV``
+   -  :term:`PV`: The default ``PV``
       assignment is typically adequate. It combines the
       ``LINUX_VERSION`` with the Source Control Manager (SCM) revision
-      as derived from the ```SRCPV`` <&YOCTO_DOCS_REF_URL;#var-SRCPV>`__
+      as derived from the :term:`SRCPV`
       variable. The combined results are a string with the following
       form:
       3.19.11+git1+68a635bf8dfb64b02263c1ac80c948647cc76d5f_1+218bd8d2022b9852c60d32f0d770931e3cf343e2
       While lengthy, the extra verbosity in ``PV`` helps ensure you are
       using the exact sources from which you intend to build.
 
-   -  ```COMPATIBLE_MACHINE`` <&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE>`__:
+   -  :term:`COMPATIBLE_MACHINE`:
       A list of the machines supported by your new recipe. This variable
       in the example recipe is set by default to a regular expression
       that matches only the empty string, "(^$)". This default setting
@@ -1546,13 +1546,13 @@ or other files necessary for building the module that do not come with
 the sources. Finally, update the recipe as needed for the module.
 Typically, you will need to set the following variables:
 
--  ```DESCRIPTION`` <&YOCTO_DOCS_REF_URL;#var-DESCRIPTION>`__
+-  :term:`DESCRIPTION`
 
 -  ```LICENSE*`` <&YOCTO_DOCS_REF_URL;#var-LICENSE>`__
 
--  ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__
+-  :term:`SRC_URI`
 
--  ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__
+-  :term:`PV`
 
 Depending on the build system used by the module sources, you might need
 to make some adjustments. For example, a typical module ``Makefile``
@@ -1561,14 +1561,14 @@ looks much like the one provided with the ``hello-mod`` template: obj-m
 modules_install: $(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules_install ...
 
 The important point to note here is the
-```KERNEL_SRC`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_SRC>`__ variable. The
-```module`` <&YOCTO_DOCS_REF_URL;#ref-classes-module>`__ class sets this
+:term:`KERNEL_SRC` variable. The
+:ref:`module <ref-classes-module>` class sets this
 variable and the
-```KERNEL_PATH`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_PATH>`__ variable to
+:term:`KERNEL_PATH` variable to
 ``${STAGING_KERNEL_DIR}`` with the necessary Linux kernel build
 information to build modules. If your module ``Makefile`` uses a
 different variable, you might want to override the
-```do_compile`` <&YOCTO_DOCS_REF_URL;#ref-tasks-compile>`__ step, or
+:ref:`ref-tasks-compile` step, or
 create a patch to the ``Makefile`` to work with the more typical
 ``KERNEL_SRC`` or ``KERNEL_PATH`` variables.
 
@@ -1577,13 +1577,13 @@ module in your images. To do this, see the documentation for the
 following variables in the Yocto Project Reference Manual and set one of
 them appropriately for your machine configuration file:
 
--  ```MACHINE_ESSENTIAL_EXTRA_RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS>`__
+-  :term:`MACHINE_ESSENTIAL_EXTRA_RDEPENDS`
 
--  ```MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS>`__
+-  :term:`MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS`
 
--  ```MACHINE_EXTRA_RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RDEPENDS>`__
+-  :term:`MACHINE_EXTRA_RDEPENDS`
 
--  ```MACHINE_EXTRA_RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RRECOMMENDS>`__
+-  :term:`MACHINE_EXTRA_RRECOMMENDS`
 
 Modules are often not required for boot and can be excluded from certain
 build configurations. The following allows for the most flexibility:
@@ -1592,8 +1592,8 @@ derived by appending the module filename without the ``.ko`` extension
 to the string "kernel-module-".
 
 Because the variable is
-```RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS>`__ and not a
-```RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-RDEPENDS>`__ variable, the build
+:term:`RRECOMMENDS` and not a
+:term:`RDEPENDS` variable, the build
 will not fail if this module is not available to include in the image.
 
 Inspecting Changes and Commits
@@ -1661,9 +1661,9 @@ Adding Recipe-Space Kernel Features
 
 You can add kernel features in the
 `recipe-space <#recipe-space-metadata>`__ by using the
-```KERNEL_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES>`__
+:term:`KERNEL_FEATURES`
 variable and by specifying the feature's ``.scc`` file path in the
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statement. When you
+:term:`SRC_URI` statement. When you
 add features using this method, the OpenEmbedded build system checks to
 be sure the features are present. If the features are not present, the
 build stops. Kernel features are the last elements processed for

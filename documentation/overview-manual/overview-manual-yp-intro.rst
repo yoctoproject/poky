@@ -260,7 +260,7 @@ accomplish this through a recipe that is a BitBake append
    Yocto Project Board Support Packages (BSP) Developer's Guide
    .
 
-The `Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__
+The :term:`Source Directory`
 contains both general layers and BSP layers right out of the box. You
 can easily identify layers that ship with a Yocto Project release in the
 Source Directory by their names. Layers typically have names that begin
@@ -461,7 +461,7 @@ Open-Embedded Build System Components
 -------------------------------------
 
 The following list consists of components associated with the
-`OpenEmbedded build system <&YOCTO_DOCS_REF_URL;#build-system-term>`__:
+:term:`OpenEmbedded Build System`:
 
 -  *BitBake:* BitBake is a core component of the Yocto Project and is
    used by the OpenEmbedded build system to build images. While BitBake
@@ -508,7 +508,7 @@ Reference Distribution (Poky)
 -----------------------------
 
 Poky is the Yocto Project reference distribution. It contains the
-`Open-Embedded build system <&YOCTO_DOCS_REF_URL;#build-system-term>`__
+:term:`OpenEmbedded Build System`
 (BitBake and OE-Core) as well as a set of metadata to get you started
 building your own distribution. See the
 `figure <#what-is-the-yocto-project>`__ in "What is the Yocto Project?"
@@ -618,7 +618,7 @@ Project.
 -  *Native Linux Host:* By far the best option for a Build Host. A
    system running Linux as its native operating system allows you to
    develop software by directly using the
-   `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__ tool. You can
+   :term:`BitBake` tool. You can
    accomplish all aspects of development from a familiar shell of a
    supported Linux distribution.
 
@@ -684,9 +684,9 @@ Reference Embedded Distribution (Poky)
 
 "Poky", which is pronounced *Pock*-ee, is the name of the Yocto
 Project's reference distribution or Reference OS Kit. Poky contains the
-`OpenEmbedded Build System <&YOCTO_DOCS_REF_URL;#build-system-term>`__
-(`BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__ and
-`OpenEmbedded-Core <&YOCTO_DOCS_REF_URL;#oe-core>`__) as well as a set
+:term:`OpenEmbedded Build System`
+(:term:`BitBake` and
+:term:`OpenEmbedded-Core (OE-Core)`) as well as a set
 of `metadata <&YOCTO_DOCS_REF_URL;#metadata>`__ to get you started
 building your own distro. In other words, Poky is a base specification
 of the functionality needed for a typical embedded system as well as the
@@ -923,9 +923,9 @@ helpful for getting started:
    Another point worth noting is that historically within the Yocto
    Project, recipes were referred to as packages - thus, the existence
    of several BitBake variables that are seemingly mis-named, (e.g.
-   ```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__,
-   ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__, and
-   ```PE`` <&YOCTO_DOCS_REF_URL;#var-PE>`__).
+   :term:`PR`,
+   :term:`PV`, and
+   :term:`PE`).
 
 -  *Poky:* Poky is a reference embedded distribution and a reference
    test configuration. Poky provides the following:

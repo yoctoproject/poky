@@ -86,7 +86,7 @@ Following is a list of supported recipes:
    has the Minimal RAM-based Initial Root Filesystem (initramfs) as part
    of the kernel, which allows the system to find the first “init”
    program more efficiently. See the
-   ```PACKAGE_INSTALL`` <#var-PACKAGE_INSTALL>`__ variable for
+   :term:`PACKAGE_INSTALL` variable for
    additional information helpful when working with initramfs images.
 
 -  ``core-image-minimal-mtdutils``: A ``core-image-minimal`` image that

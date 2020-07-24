@@ -38,7 +38,7 @@ Configuring the PMS
 ===================
 
 Whichever PMS you are using, you need to be sure that the
-```PACKAGE_CLASSES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES>`__
+:term:`PACKAGE_CLASSES`
 variable in the ``conf/local.conf`` file is set to reflect that system.
 The first value you choose for the variable specifies the package file
 format for the root filesystem at sysroot. Additional values specify

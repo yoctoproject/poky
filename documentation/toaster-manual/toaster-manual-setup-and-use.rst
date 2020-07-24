@@ -132,7 +132,7 @@ superuser by following these steps:
    command: $ export PATH=$PATH:$HOME/.local/bin
 
 2. From the directory containing the Toaster database, which by default
-   is the `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__,
+   is the :term:`Build Directory`,
    invoke the ``createsuperuser`` command from ``manage.py``: $ cd
    ~/poky/build $ ../bitbake/lib/toaster/manage.py createsuperuser
 
@@ -482,7 +482,7 @@ For the ``bash`` case, version 4.3.30-r0 is built by default.
 Unfortunately, Toaster as it exists, is not able to override the default
 recipe version. If you would like to build bash 3.2.48, you need to set
 the
-```PREFERRED_VERSION`` <&YOCTO_DOCS_REF_URL;#var-PREFERRED_VERSION>`__
+:term:`PREFERRED_VERSION`
 variable. You can do so from Toaster, using the "Add variable" form,
 which is available in the "BitBake variables" page of the project
 configuration section as shown in the following screen:

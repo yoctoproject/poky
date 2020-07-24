@@ -50,7 +50,7 @@ outlined in the General Setup section.
 
 In particular, you'll get the most mileage out of perf if you profile an
 image built with the following in your ``local.conf`` file:
-`INHIBIT_PACKAGE_STRIP <&YOCTO_DOCS_REF_URL;#var-INHIBIT_PACKAGE_STRIP>`__
+:term:`INHIBIT_PACKAGE_STRIP`
 = "1"
 
 perf runs on the target system for the most part. You can archive
@@ -246,7 +246,7 @@ system.
 
 One way around that is to put the following in your ``local.conf`` file
 when you build the image:
-`INHIBIT_PACKAGE_STRIP <&YOCTO_DOCS_REF_URL;#var-INHIBIT_PACKAGE_STRIP>`__
+:term:`INHIBIT_PACKAGE_STRIP`
 = "1" However, we already have an image with the binaries stripped, so
 what can we do to get perf to resolve the symbols? Basically we need to
 install the debuginfo for the busybox package.
@@ -256,7 +256,7 @@ dbg-pkgs to EXTRA_IMAGE_FEATURES in local.conf. For example:
 EXTRA_IMAGE_FEATURES = "debug-tweaks tools-profile dbg-pkgs"
 Additionally, in order to generate the type of debuginfo that perf
 understands, we also need to set
-```PACKAGE_DEBUG_SPLIT_STYLE`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_DEBUG_SPLIT_STYLE>`__
+:term:`PACKAGE_DEBUG_SPLIT_STYLE`
 in the ``local.conf`` file: PACKAGE_DEBUG_SPLIT_STYLE =
 'debug-file-directory' Once we've done that, we can install the
 debuginfo for busybox. The debug packages once built can be found in

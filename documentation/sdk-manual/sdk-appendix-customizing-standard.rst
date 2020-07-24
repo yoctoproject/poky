@@ -11,9 +11,9 @@ Adding Individual Packages to the Standard SDK
 
 When you build a standard SDK using the ``bitbake -c populate_sdk``, a
 default set of packages is included in the resulting SDK. The
-```TOOLCHAIN_HOST_TASK`` <&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_HOST_TASK>`__
+:term:`TOOLCHAIN_HOST_TASK`
 and
-```TOOLCHAIN_TARGET_TASK`` <&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_TARGET_TASK>`__
+:term:`TOOLCHAIN_TARGET_TASK`
 variables control the set of packages adding to the SDK.
 
 If you want to add individual packages to the toolchain that runs on the
@@ -28,7 +28,7 @@ Adding API Documentation to the Standard SDK
 You can include API documentation as well as any other documentation
 provided by recipes with the standard SDK by adding "api-documentation"
 to the
-```DISTRO_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES>`__
+:term:`DISTRO_FEATURES`
 variable: DISTRO_FEATURES_append = " api-documentation" Setting this
 variable as shown here causes the OpenEmbedded build system to build the
 documentation and then include it in the standard SDK.

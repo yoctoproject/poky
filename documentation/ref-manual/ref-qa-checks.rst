@@ -28,7 +28,7 @@ error form along with an explanation.
 .. note::
 
    -  At the end of each message, the name of the associated QA test (as
-      listed in the "```insane.bbclass`` <#ref-classes-insane>`__"
+      listed in the ":ref:`insane.bbclass <ref-classes-insane>`"
       section) appears within square brackets.
 
    -  As mentioned, this list of error and warning messages is for QA
@@ -56,10 +56,10 @@ Errors and Warnings
 
    The specified binary produced by the recipe contains dynamic library
    load paths (rpaths) that contain build system paths such as
-   ```TMPDIR`` <#var-TMPDIR>`__, which are incorrect for the target and
+   :term:`TMPDIR`, which are incorrect for the target and
    could potentially be a security issue. Check for bad ``-rpath``
    options being passed to the linker in your
-   ```do_compile`` <#ref-tasks-compile>`__ log. Depending on the build
+   :ref:`ref-tasks-compile` log. Depending on the build
    system used by the software being built, there might be a configure
    option to disable rpath usage completely within the build of the
    software.
@@ -82,7 +82,7 @@ Errors and Warnings
 
    A file-level dependency has been identified from the specified
    package on the specified files, but there is no explicit
-   corresponding entry in ```RDEPENDS`` <#var-RDEPENDS>`__. If
+   corresponding entry in :term:`RDEPENDS`. If
    particular files are required at runtime then ``RDEPENDS`` should be
    declared in the recipe to ensure the packages providing them are
    built.
@@ -95,7 +95,7 @@ Errors and Warnings
    there is nothing explicit within the recipe to enable the
    OpenEmbedded build system to ensure that dependency is satisfied.
    This condition is usually triggered by an
-   ```RDEPENDS`` <#var-RDEPENDS>`__ value being added at the packaging
+   :term:`RDEPENDS` value being added at the packaging
    stage rather than up front, which is usually automatic based on the
    contents of the package. In most cases, you should change the recipe
    to add an explicit ``RDEPENDS`` for the dependency.
@@ -107,8 +107,8 @@ Errors and Warnings
    Symlink ``.so`` files are for development only, and should therefore
    go into the ``-dev`` package. This situation might occur if you add
    ``*.so*`` rather than ``*.so.*`` to a non-dev package. Change
-   ```FILES`` <#var-FILES>`__ (and possibly
-   ```PACKAGES`` <#var-PACKAGES>`__) such that the specified ``.so``
+   :term:`FILES` (and possibly
+   :term:`PACKAGES`) such that the specified ``.so``
    file goes into an appropriate ``-dev`` package.
 
     
@@ -116,8 +116,8 @@ Errors and Warnings
 -  ``non -staticdev package contains static .a library: <packagename> path '<path>' [staticdev]``
 
    Static ``.a`` library files should go into a ``-staticdev`` package.
-   Change ```FILES`` <#var-FILES>`__ (and possibly
-   ```PACKAGES`` <#var-PACKAGES>`__) such that the specified ``.a`` file
+   Change :term:`FILES` (and possibly
+   :term:`PACKAGES`) such that the specified ``.a`` file
    goes into an appropriate ``-staticdev`` package.
 
     
@@ -130,7 +130,7 @@ Errors and Warnings
    "lib32". Another example is when recipes install
    ``/usr/lib64/foo.so`` when ``${libdir}`` is "/usr/lib". False
    positives occasionally exist. For these cases add "libdir" to
-   ```INSANE_SKIP`` <#var-INSANE_SKIP>`__ for the package.
+   :term:`INSANE_SKIP` for the package.
 
     
 
@@ -141,7 +141,7 @@ Errors and Warnings
    occur if you add a path which contains a ``.debug`` directory and do
    not explicitly add the ``.debug`` directory to the ``-dbg`` package.
    If this is the case, add the ``.debug`` directory explicitly to
-   ``FILES_${PN}-dbg``. See ```FILES`` <#var-FILES>`__ for additional
+   ``FILES_${PN}-dbg``. See :term:`FILES` for additional
    information on ``FILES``.
 
     
@@ -158,8 +158,8 @@ Errors and Warnings
    the error for is firmware that is not intended to be executed within
    the target operating system or is intended to run on a separate
    processor within the device, you can add "arch" to
-   ```INSANE_SKIP`` <#var-INSANE_SKIP>`__ for the package. Another
-   option is to check the ```do_compile`` <#ref-tasks-compile>`__ log
+   :term:`INSANE_SKIP` for the package. Another
+   option is to check the :ref:`ref-tasks-compile` log
    and verify that the compiler options being used are correct.
 
     
@@ -176,8 +176,8 @@ Errors and Warnings
    the error for is firmware that is not intended to be executed within
    the target operating system or is intended to run on a separate
    processor within the device, you can add "arch" to
-   ```INSANE_SKIP`` <#var-INSANE_SKIP>`__ for the package. Another
-   option is to check the ```do_compile`` <#ref-tasks-compile>`__ log
+   :term:`INSANE_SKIP` for the package. Another
+   option is to check the :ref:`ref-tasks-compile` log
    and verify that the compiler options being used are correct.
 
     
@@ -194,8 +194,8 @@ Errors and Warnings
    the error for is firmware that is not intended to be executed within
    the target operating system or is intended to run on a separate
    processor within the device, you can add "arch" to
-   ```INSANE_SKIP`` <#var-INSANE_SKIP>`__ for the package. Another
-   option is to check the ```do_compile`` <#ref-tasks-compile>`__ log
+   :term:`INSANE_SKIP` for the package. Another
+   option is to check the :ref:`ref-tasks-compile` log
    and verify that the compiler options being used are correct.
 
     
@@ -208,7 +208,7 @@ Errors and Warnings
 
    Typically, the way to solve this performance issue is to add "-fPIC"
    or "-fpic" to the compiler command-line options. For example, given
-   software that reads ```CFLAGS`` <#var-CFLAGS>`__ when you build it,
+   software that reads :term:`CFLAGS` when you build it,
    you could add the following to your recipe: CFLAGS_append = " -fPIC "
 
    For more information on text relocations at runtime, see
@@ -219,11 +219,11 @@ Errors and Warnings
 -  ``No GNU_HASH in the elf binary: '<file>' [ldflags]``
 
    This indicates that binaries produced when building the recipe have
-   not been linked with the ```LDFLAGS`` <#var-LDFLAGS>`__ options
+   not been linked with the :term:`LDFLAGS` options
    provided by the build system. Check to be sure that the ``LDFLAGS``
    variable is being passed to the linker command. A common workaround
    for this situation is to pass in ``LDFLAGS`` using
-   ```TARGET_CC_ARCH`` <#var-TARGET_CC_ARCH>`__ within the recipe as
+   :term:`TARGET_CC_ARCH` within the recipe as
    follows: TARGET_CC_ARCH += "${LDFLAGS}"
 
     
@@ -243,7 +243,7 @@ Errors and Warnings
 -  ``The /usr/share/info/dir file is not meant to be shipped in a particular package. [infodir]``
 
    The ``/usr/share/info/dir`` should not be packaged. Add the following
-   line to your ```do_install`` <#ref-tasks-install>`__ task or to your
+   line to your :ref:`ref-tasks-install` task or to your
    ``do_install_append`` within the recipe as follows: rm
    ${D}${infodir}/dir
 
@@ -251,7 +251,7 @@ Errors and Warnings
 
 -  ``Symlink <path> in <packagename> points to TMPDIR [symlink-to-sysroot]``
 
-   The specified symlink points into ```TMPDIR`` <#var-TMPDIR>`__ on the
+   The specified symlink points into :term:`TMPDIR` on the
    host. Such symlinks will work on the host. However, they are clearly
    invalid when running on the target. You should either correct the
    symlink to use a relative path or remove the symlink.
@@ -260,7 +260,7 @@ Errors and Warnings
 
 -  ``<file> failed sanity test (workdir) in path <path> [la]``
 
-   The specified ``.la`` file contains ```TMPDIR`` <#var-TMPDIR>`__
+   The specified ``.la`` file contains :term:`TMPDIR`
    paths. Any ``.la`` file containing these paths is incorrect since
    ``libtool`` adds the correct sysroot prefix when using the files
    automatically itself.
@@ -270,7 +270,7 @@ Errors and Warnings
 -  ``<file> failed sanity test (tmpdir) in path <path> [pkgconfig]``
 
    The specified ``.pc`` file contains
-   ```TMPDIR`` <#var-TMPDIR>`__\ ``/``\ ```WORKDIR`` <#var-WORKDIR>`__
+   :term:`TMPDIR`\ ``/``\ :term:`WORKDIR`
    paths. Any ``.pc`` file containing these paths is incorrect since
    ``pkg-config`` itself adds the correct sysroot prefix when the files
    are accessed.
@@ -285,9 +285,9 @@ Errors and Warnings
    brought in using several different methods:
 
    -  Using the ``dbg-pkgs``
-      ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__ value.
+      :term:`IMAGE_FEATURES` value.
 
-   -  Using ```IMAGE_INSTALL`` <#var-IMAGE_INSTALL>`__.
+   -  Using :term:`IMAGE_INSTALL`.
 
    -  As a dependency of another ``dbg`` package that was brought in
       using one of the above methods.
@@ -295,7 +295,7 @@ Errors and Warnings
    The dependency might have been automatically added because the
    ``dbg`` package erroneously contains files that it should not contain
    (e.g. a non-symlink ``.so`` file) or it might have been added
-   manually (e.g. by adding to ```RDEPENDS`` <#var-RDEPENDS>`__).
+   manually (e.g. by adding to :term:`RDEPENDS`).
 
     
 
@@ -307,9 +307,9 @@ Errors and Warnings
    usually brought in using several different methods:
 
    -  Using the ``dev-pkgs``
-      ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__ value.
+      :term:`IMAGE_FEATURES` value.
 
-   -  Using ```IMAGE_INSTALL`` <#var-IMAGE_INSTALL>`__.
+   -  Using :term:`IMAGE_INSTALL`.
 
    -  As a dependency of another ``dev`` package that was brought in
       using one of the above methods.
@@ -317,19 +317,19 @@ Errors and Warnings
    The dependency might have been automatically added (because the
    ``dev`` package erroneously contains files that it should not have
    (e.g. a non-symlink ``.so`` file) or it might have been added
-   manually (e.g. by adding to ```RDEPENDS`` <#var-RDEPENDS>`__).
+   manually (e.g. by adding to :term:`RDEPENDS`).
 
     
 
 -  ``<var>_<packagename> is invalid: <comparison> (<value>)   only comparisons <, =, >, <=, and >= are allowed [dep-cmp]``
 
    If you are adding a versioned dependency relationship to one of the
-   dependency variables (```RDEPENDS`` <#var-RDEPENDS>`__,
-   ```RRECOMMENDS`` <#var-RRECOMMENDS>`__,
-   ```RSUGGESTS`` <#var-RSUGGESTS>`__,
-   ```RPROVIDES`` <#var-RPROVIDES>`__,
-   ```RREPLACES`` <#var-RREPLACES>`__, or
-   ```RCONFLICTS`` <#var-RCONFLICTS>`__), you must only use the named
+   dependency variables (:term:`RDEPENDS`,
+   :term:`RRECOMMENDS`,
+   :term:`RSUGGESTS`,
+   :term:`RPROVIDES`,
+   :term:`RREPLACES`, or
+   :term:`RCONFLICTS`), you must only use the named
    comparison operators. Change the versioned dependency values you are
    adding to match those listed in the message.
 
@@ -337,7 +337,7 @@ Errors and Warnings
 
 -  ``<recipename>: The compile log indicates that host include and/or library paths were used. Please check the log '<logfile>' for more information. [compile-host-path]``
 
-   The log for the ```do_compile`` <#ref-tasks-compile>`__ task
+   The log for the :ref:`ref-tasks-compile` task
    indicates that paths on the host were searched for files, which is
    not appropriate when cross-compiling. Look for "is unsafe for
    cross-compilation" or "CROSS COMPILE Badness" in the specified log
@@ -347,7 +347,7 @@ Errors and Warnings
 
 -  ``<recipename>: The install log indicates that host include and/or library paths were used. Please check the log '<logfile>' for more information. [install-host-path]``
 
-   The log for the ```do_install`` <#ref-tasks-install>`__ task
+   The log for the :ref:`ref-tasks-install` task
    indicates that paths on the host were searched for files, which is
    not appropriate when cross-compiling. Look for "is unsafe for
    cross-compilation" or "CROSS COMPILE Badness" in the specified log
@@ -357,7 +357,7 @@ Errors and Warnings
 
 -  ``This autoconf log indicates errors, it looked at host include and/or library paths while determining system capabilities. Rerun configure task after fixing this. The path was '<path>'``
 
-   The log for the ```do_configure`` <#ref-tasks-configure>`__ task
+   The log for the :ref:`ref-tasks-configure` task
    indicates that paths on the host were searched for files, which is
    not appropriate when cross-compiling. Look for "is unsafe for
    cross-compilation" or "CROSS COMPILE Badness" in the specified log
@@ -371,7 +371,7 @@ Errors and Warnings
    enforced by the package manager itself) is to require that package
    names are all lower case and to allow a restricted set of characters.
    If your recipe name does not match this, or you add packages to
-   ```PACKAGES`` <#var-PACKAGES>`__ that do not conform to the
+   :term:`PACKAGES` that do not conform to the
    convention, then you will receive this error. Rename your recipe. Or,
    if you have added a non-conforming package name to ``PACKAGES``,
    change the package name appropriately.
@@ -388,38 +388,38 @@ Errors and Warnings
    upstream build documentation, the ``./configure --help`` output, and
    the upstream change log or release notes. Once you have worked out
    what the appropriate change is, you can update
-   ```EXTRA_OECONF`` <#var-EXTRA_OECONF>`__,
-   ```PACKAGECONFIG_CONFARGS`` <#var-PACKAGECONFIG_CONFARGS>`__, or the
-   individual ```PACKAGECONFIG`` <#var-PACKAGECONFIG>`__ option values
+   :term:`EXTRA_OECONF`,
+   :term:`PACKAGECONFIG_CONFARGS`, or the
+   individual :term:`PACKAGECONFIG` option values
    accordingly.
 
     
 
 -  ``Recipe <recipefile> has PN of "<recipename>" which is in OVERRIDES, this can result in unexpected behavior. [pn-overrides]``
 
-   The specified recipe has a name (```PN`` <#var-PN>`__) value that
-   appears in ```OVERRIDES`` <#var-OVERRIDES>`__. If a recipe is named
+   The specified recipe has a name (:term:`PN`) value that
+   appears in :term:`OVERRIDES`. If a recipe is named
    such that its ``PN`` value matches something already in ``OVERRIDES``
-   (e.g. ``PN`` happens to be the same as ```MACHINE`` <#var-MACHINE>`__
-   or ```DISTRO`` <#var-DISTRO>`__), it can have unexpected
+   (e.g. ``PN`` happens to be the same as :term:`MACHINE`
+   or :term:`DISTRO`), it can have unexpected
    consequences. For example, assignments such as
    ``FILES_${PN} = "xyz"`` effectively turn into ``FILES = "xyz"``.
    Rename your recipe (or if ``PN`` is being set explicitly, change the
    ``PN`` value) so that the conflict does not occur. See
-   ```FILES`` <#var-FILES>`__ for additional information.
+   :term:`FILES` for additional information.
 
     
 
 -  ``<recipefile>: Variable <variable> is set as not being package specific, please fix this. [pkgvarcheck]``
 
-   Certain variables (```RDEPENDS`` <#var-RDEPENDS>`__,
-   ```RRECOMMENDS`` <#var-RRECOMMENDS>`__,
-   ```RSUGGESTS`` <#var-RSUGGESTS>`__,
-   ```RCONFLICTS`` <#var-RCONFLICTS>`__,
-   ```RPROVIDES`` <#var-RPROVIDES>`__,
-   ```RREPLACES`` <#var-RREPLACES>`__, ```FILES`` <#var-FILES>`__,
+   Certain variables (:term:`RDEPENDS`,
+   :term:`RRECOMMENDS`,
+   :term:`RSUGGESTS`,
+   :term:`RCONFLICTS`,
+   :term:`RPROVIDES`,
+   :term:`RREPLACES`, :term:`FILES`,
    ``pkg_preinst``, ``pkg_postinst``, ``pkg_prerm``, ``pkg_postrm``, and
-   ```ALLOW_EMPTY`` <#var-ALLOW_EMPTY>`__) should always be set specific
+   :term:`ALLOW_EMPTY`) should always be set specific
    to a package (i.e. they should be set with a package name override
    such as ``RDEPENDS_${PN} = "value"`` rather than
    ``RDEPENDS = "value"``). If you receive this error, correct any
@@ -456,7 +456,7 @@ Errors and Warnings
 -  ``<packagename> is listed in PACKAGES multiple times, this leads to packaging errors. [packages-list]``
 
    Package names must appear only once in the
-   ```PACKAGES`` <#var-PACKAGES>`__ variable. You might receive this
+   :term:`PACKAGES` variable. You might receive this
    error if you are attempting to add a package to ``PACKAGES`` that is
    already in the variable's value.
 
@@ -465,7 +465,7 @@ Errors and Warnings
 -  ``FILES variable for package <packagename> contains '//' which is invalid. Attempting to fix this but you should correct the metadata. [files-invalid]``
 
    The string "//" is invalid in a Unix path. Correct all occurrences
-   where this string appears in a ```FILES`` <#var-FILES>`__ variable so
+   where this string appears in a :term:`FILES` variable so
    that there is only a single "/".
 
     
@@ -473,14 +473,14 @@ Errors and Warnings
 -  ``<recipename>: Files/directories were installed but not shipped in any package [installed-vs-shipped]``
 
    Files have been installed within the
-   ```do_install`` <#ref-tasks-install>`__ task but have not been
-   included in any package by way of the ```FILES`` <#var-FILES>`__
+   :ref:`ref-tasks-install` task but have not been
+   included in any package by way of the :term:`FILES`
    variable. Files that do not appear in any package cannot be present
    in an image later on in the build process. You need to do one of the
    following:
 
    -  Add the files to ``FILES`` for the package you want them to appear
-      in (e.g. ``FILES_${``\ ```PN`` <#var-PN>`__\ ``}`` for the main
+      in (e.g. ``FILES_${``\ :term:`PN`\ ``}`` for the main
       package).
 
    -  Delete the files at the end of the ``do_install`` task if the
@@ -496,15 +496,15 @@ Errors and Warnings
    message might indicate that a private version of a library is being
    erroneously picked up as the provider for a common library. If that
    is the case, you should add the library's ``.so`` file name to
-   ```PRIVATE_LIBS`` <#var-PRIVATE_LIBS>`__ in the recipe that provides
+   :term:`PRIVATE_LIBS` in the recipe that provides
    the private version of the library.
 
 -  ``LICENSE_<packagename> includes licenses (<licenses>) that are not listed in LICENSE [unlisted-pkg-lics]``
 
-   The ```LICENSE`` <#var-LICENSE>`__ of the recipe should be a superset
+   The :term:`LICENSE` of the recipe should be a superset
    of all the licenses of all packages produced by this recipe. In other
    words, any license in ``LICENSE_*`` should also appear in
-   ```LICENSE`` <#var-LICENSE>`__.
+   :term:`LICENSE`.
 
     
 
@@ -513,11 +513,11 @@ Configuring and Disabling QA Checks
 
 You can configure the QA checks globally so that specific check failures
 either raise a warning or an error message, using the
-```WARN_QA`` <#var-WARN_QA>`__ and ```ERROR_QA`` <#var-ERROR_QA>`__
+:term:`WARN_QA` and :term:`ERROR_QA`
 variables, respectively. You can also disable checks within a particular
-recipe using ```INSANE_SKIP`` <#var-INSANE_SKIP>`__. For information on
+recipe using :term:`INSANE_SKIP`. For information on
 how to work with the QA checks, see the
-"```insane.bbclass`` <#ref-classes-insane>`__" section.
+":ref:`insane.bbclass <ref-classes-insane>`" section.
 
 .. note::
 

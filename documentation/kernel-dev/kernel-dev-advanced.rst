@@ -11,7 +11,7 @@ Overview
 
 In addition to supporting configuration fragments and patches, the Yocto
 Project kernel tools also support rich
-`Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__ that you can use to define
+:term:`Metadata` that you can use to define
 complex policies and Board Support Package (BSP) support. The purpose of
 the Metadata and the tools that manage it is to help you manage the
 complexity of the configuration and sources used to support multiple
@@ -27,7 +27,7 @@ Kernel development tools ("kern-tools") exist also in the Yocto Project
 Source Repositories under the "Yocto Linux Kernel" heading in the
 ``yocto-kernel-tools`` Git repository. The recipe that builds these
 tools is ``meta/recipes-kernel/kern-tools/kern-tools-native_git.bb`` in
-the `Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (e.g.
+the :term:`Source Directory` (e.g.
 ``poky``).
 
 Using Kernel Metadata in a Recipe
@@ -49,9 +49,9 @@ linux-yocto recipe.
    file) is said to be a "linux-yocto style" recipe.
 
 Every linux-yocto style recipe must define the
-```KMACHINE`` <&YOCTO_DOCS_REF_URL;#var-KMACHINE>`__ variable. This
+:term:`KMACHINE` variable. This
 variable is typically set to the same value as the ``MACHINE`` variable,
-which is used by `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__.
+which is used by :term:`BitBake`.
 However, in some cases, the variable might instead refer to the
 underlying platform of the ``MACHINE``.
 
@@ -65,7 +65,7 @@ Descriptions <#bsp-descriptions>`__ section for more information.
 
 Every linux-yocto style recipe must also indicate the Linux kernel
 source repository branch used to build the Linux kernel. The
-```KBRANCH`` <&YOCTO_DOCS_REF_URL;#var-KBRANCH>`__ variable must be set
+:term:`KBRANCH` variable must be set
 to indicate the branch.
 
 .. note::
@@ -84,7 +84,7 @@ to indicate the branch.
 The linux-yocto style recipes can optionally define the following
 variables: KERNEL_FEATURES LINUX_KERNEL_TYPE
 
-```LINUX_KERNEL_TYPE`` <&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE>`__
+:term:`LINUX_KERNEL_TYPE`
 defines the kernel type to be used in assembling the configuration. If
 you do not specify a ``LINUX_KERNEL_TYPE``, it defaults to "standard".
 Together with ``KMACHINE``, ``LINUX_KERNEL_TYPE`` defines the search
@@ -103,10 +103,10 @@ a match, they issue a warning.
 The tools first search for the ``KMACHINE`` and then for the
 ``LINUX_KERNEL_TYPE``. If the tools cannot find a partial match, they
 will use the sources from the ``KBRANCH`` and any configuration
-specified in the ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__.
+specified in the :term:`SRC_URI`.
 
 You can use the
-```KERNEL_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES>`__
+:term:`KERNEL_FEATURES`
 variable to include features (configuration fragments, patches, or both)
 that are not already included by the ``KMACHINE`` and
 ``LINUX_KERNEL_TYPE`` variable combination. For example, to include a
@@ -185,7 +185,7 @@ contain "features" as far as the kernel tools are concerned.
 
 Paths used in kernel Metadata files are relative to base, which is
 either
-```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__ if
+:term:`FILESEXTRAPATHS` if
 you are creating Metadata in `recipe-space <#recipe-space-metadata>`__,
 or the top level of
 ```yocto-kernel-cache`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/yocto-kernel-cache/tree/>`__
@@ -218,7 +218,7 @@ fragment files in the "`Creating Configuration
 Fragments <#creating-config-fragments>`__" section.
 
 Within the ``smp.scc`` file, the
-```KFEATURE_DESCRIPTION`` <&YOCTO_DOCS_REF_URL;#var-KFEATURE_DESCRIPTION>`__
+:term:`KFEATURE_DESCRIPTION`
 statement provides a short description of the fragment. Higher level
 kernel tools use this description.
 
@@ -312,7 +312,7 @@ non-hardware configuration fragments with patches you want to use when
 building a Linux kernel of a specific type (e.g. a real-time kernel).
 Syntactically, kernel types are no different than features as described
 in the "`Features <#features>`__" section. The
-```LINUX_KERNEL_TYPE`` <&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE>`__
+:term:`LINUX_KERNEL_TYPE`
 variable in the kernel recipe selects the kernel type. For example, in
 the ``linux-yocto_4.12.bb`` kernel recipe found in
 ``poky/meta/recipes-kernel/linux``, a
@@ -432,9 +432,9 @@ ktypes/standard/standard.scc branch beaglebone include beaglebone.scc #
 default policy for standard kernels include
 features/latencytop/latencytop.scc include
 features/profiling/profiling.scc Every top-level BSP description file
-should define the ```KMACHINE`` <&YOCTO_DOCS_REF_URL;#var-KMACHINE>`__,
-```KTYPE`` <&YOCTO_DOCS_REF_URL;#var-KTYPE>`__, and
-```KARCH`` <&YOCTO_DOCS_REF_URL;#var-KARCH>`__ variables. These
+should define the :term:`KMACHINE`,
+:term:`KTYPE`, and
+:term:`KARCH` variables. These
 variables allow the OpenEmbedded build system to identify the
 description as meeting the criteria set by the recipe being built. This
 example supports the "beaglebone" machine for the "standard" kernel and
@@ -444,7 +444,7 @@ Be aware that a hard link between the ``KTYPE`` variable and a kernel
 type description file does not exist. Thus, if you do not have the
 kernel type defined in your kernel Metadata as it is here, you only need
 to ensure that the
-```LINUX_KERNEL_TYPE`` <&YOCTO_DOCS_REF_URL;#var-LINUX_KERNEL_TYPE>`__
+:term:`LINUX_KERNEL_TYPE`
 variable in the kernel recipe and the ``KTYPE`` variable in the BSP
 description file match.
 
@@ -529,9 +529,9 @@ with the most basic functionality of the system as defined in the base
 "minnow" description file.
 
 Notice again the three critical variables:
-```KMACHINE`` <&YOCTO_DOCS_REF_URL;#var-KMACHINE>`__,
-```KTYPE`` <&YOCTO_DOCS_REF_URL;#var-KTYPE>`__, and
-```KARCH`` <&YOCTO_DOCS_REF_URL;#var-KARCH>`__. Of these variables, only
+:term:`KMACHINE`,
+:term:`KTYPE`, and
+:term:`KARCH`. Of these variables, only
 ``KTYPE`` has changed to specify the "tiny" kernel type.
 
 Kernel Metadata Location
@@ -564,12 +564,12 @@ Recipe-Space Metadata
 
 When stored in recipe-space, the kernel Metadata files reside in a
 directory hierarchy below
-```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__. For
+:term:`FILESEXTRAPATHS`. For
 a linux-yocto recipe or for a Linux kernel recipe derived by copying and
 modifying
 ``oe-core/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb`` to
 a recipe in your layer, ``FILESEXTRAPATHS`` is typically set to
-``${``\ ```THISDIR`` <&YOCTO_DOCS_REF_URL;#var-THISDIR>`__\ ``}/${``\ ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__\ ``}``.
+``${``\ :term:`THISDIR`\ ``}/${``\ :term:`PN`\ ``}``.
 See the "`Modifying an Existing
 Recipe <#modifying-an-existing-recipe>`__" section for more information.
 
@@ -582,10 +582,10 @@ When the Metadata is stored in recipe-space, you must take steps to
 ensure BitBake has the necessary information to decide what files to
 fetch and when they need to be fetched again. It is only necessary to
 specify the ``.scc`` files on the
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__. BitBake parses them
+:term:`SRC_URI`. BitBake parses them
 and fetches any files referenced in the ``.scc`` files by the
 ``include``, ``patch``, or ``kconf`` commands. Because of this, it is
-necessary to bump the recipe ```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__
+necessary to bump the recipe :term:`PR`
 value when changing the content of files not explicitly listed in the
 ``SRC_URI``.
 
@@ -600,7 +600,7 @@ Metadata Outside the Recipe-Space
 When stored outside of the recipe-space, the kernel Metadata files
 reside in a separate repository. The OpenEmbedded build system adds the
 Metadata to the build as a "type=kmeta" repository through the
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ variable. As an
+:term:`SRC_URI` variable. As an
 example, consider the following ``SRC_URI`` statement from the
 ``linux-yocto_4.12.bb`` kernel recipe: SRC_URI =
 "git://git.yoctoproject.org/linux-yocto-4.12.git;name=machine;branch=${KBRANCH};
@@ -742,10 +742,10 @@ within an SCC description file (``.scc``):
    "ref" if specified.
 
 -  ``define``: Defines variables, such as
-   ```KMACHINE`` <&YOCTO_DOCS_REF_URL;#var-KMACHINE>`__,
-   ```KTYPE`` <&YOCTO_DOCS_REF_URL;#var-KTYPE>`__,
-   ```KARCH`` <&YOCTO_DOCS_REF_URL;#var-KARCH>`__, and
-   ```KFEATURE_DESCRIPTION`` <&YOCTO_DOCS_REF_URL;#var-KFEATURE_DESCRIPTION>`__.
+   :term:`KMACHINE`,
+   :term:`KTYPE`,
+   :term:`KARCH`, and
+   :term:`KFEATURE_DESCRIPTION`.
 
 -  ``include SCC_FILE``: Includes an SCC file in the current file. The
    file is parsed as if you had inserted it inline.

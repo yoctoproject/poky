@@ -13,7 +13,7 @@ Regardless of how you intend to make use of the Yocto Project, chances
 are you will work with the Linux kernel. This manual describes how to
 set up your build host to support kernel development, introduces the
 kernel development process, provides background information on the Yocto
-Linux kernel `Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__, describes
+Linux kernel :term:`Metadata`, describes
 common tasks you can perform using the kernel tools, shows you how to
 use the kernel Metadata needed to work with the kernel inside the Yocto
 Project, and provides insight into how the Yocto Project team develops

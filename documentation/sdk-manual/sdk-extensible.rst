@@ -148,8 +148,8 @@ SDK environment now set up; additionally you may now run devtool to
 perform development tasks. Run devtool --help for further details.
 Running the setup script defines many environment variables needed in
 order to use the SDK (e.g. ``PATH``,
-```CC`` <&YOCTO_DOCS_REF_URL;#var-CC>`__,
-```LD`` <&YOCTO_DOCS_REF_URL;#var-LD>`__, and so forth). If you want to
+:term:`CC`,
+:term:`LD`, and so forth). If you want to
 see all the environment variables the script exports, examine the
 installation file itself.
 
@@ -215,7 +215,7 @@ Use ``devtool add`` to Add an Application
 
 The ``devtool add`` command generates a new recipe based on existing
 source code. This command takes advantage of the
-`workspace <&YOCTO_DOCS_REF_URL;#devtool-the-workspace-layer-structure>`__
+:ref:`devtool-the-workspace-layer-structure`
 layer that many ``devtool`` commands use. The command is flexible enough
 to allow you to extract source code into both the workspace or a
 separate local Git repository and to use existing code that does not
@@ -397,7 +397,7 @@ command:
       The following command identifies the recipe and, by default,
       extracts the source files: $ devtool modify recipe Once
       ``devtool``\ locates the recipe, ``devtool`` uses the recipe's
-      ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statements to
+      :term:`SRC_URI` statements to
       locate the source code and any local patch files from other
       developers.
 
@@ -569,7 +569,7 @@ counterparts.
 The ``devtool upgrade`` command is flexible enough to allow you to
 specify source code revision and versioning schemes, extract code into
 or out of the ``devtool``
-`workspace <&YOCTO_DOCS_REF_URL;#devtool-the-workspace-layer-structure>`__,
+:ref:`devtool-the-workspace-layer-structure`,
 and work with any source file forms that the
 `fetchers <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__ support.
 
@@ -584,7 +584,7 @@ The following diagram shows the common development flow used with the
       workspace.
 
    -  The source files for the new release exist in the same location
-      pointed to by ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__
+      pointed to by :term:`SRC_URI`
       in the recipe (e.g. a tarball with the new version number in the
       name, or as a different revision in the upstream Git repository).
 
@@ -594,7 +594,7 @@ The following diagram shows the common development flow used with the
    use the newer version of the software: $ devtool upgrade -V version
    recipe By default, the ``devtool upgrade`` command extracts source
    code into the ``sources`` directory in the
-   `workspace <&YOCTO_DOCS_REF_URL;#devtool-the-workspace-layer-structure>`__.
+   :ref:`devtool-the-workspace-layer-structure`.
    If you want the code extracted to any other location, you need to
    provide the srctree positional argument with the command as follows:
    $ devtool upgrade -V version recipe srctree
@@ -773,7 +773,7 @@ Dependency Detection and Mapping
 The ``devtool add`` command attempts to detect build-time dependencies
 and map them to other recipes in the system. During this mapping, the
 command fills in the names of those recipes as part of the
-```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ variable within the
+:term:`DEPENDS` variable within the
 recipe. If a dependency cannot be mapped, ``devtool`` places a comment
 in the recipe indicating such. The inability to map a dependency can
 result from naming not being recognized or because the dependency simply
@@ -807,13 +807,13 @@ License Detection
 The ``devtool add`` command attempts to determine if the software you
 are adding is able to be distributed under a common, open-source
 license. If so, the command sets the
-```LICENSE`` <&YOCTO_DOCS_REF_URL;#var-LICENSE>`__ value accordingly.
+:term:`LICENSE` value accordingly.
 You should double-check the value added by the command against the
 documentation or source files for the software you are building and, if
 necessary, update that ``LICENSE`` value.
 
 The ``devtool add`` command also sets the
-```LIC_FILES_CHKSUM`` <&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM>`__
+:term:`LIC_FILES_CHKSUM`
 value to point to all files that appear to be license-related. Realize
 that license statements often appear in comments at the top of source
 files or within the documentation. In such cases, the command does not
@@ -842,7 +842,7 @@ open-source software. Unfortunately, Makefiles are often not written
 with cross-compilation in mind. Thus, ``devtool add`` often cannot do
 very much to ensure that these Makefiles build correctly. It is very
 common, for example, to explicitly call ``gcc`` instead of using the
-```CC`` <&YOCTO_DOCS_REF_URL;#var-CC>`__ variable. Usually, in a
+:term:`CC` variable. Usually, in a
 cross-compilation environment, ``gcc`` is the compiler for the build
 host and the cross-compiler is named something similar to
 ``arm-poky-linux-gnueabi-gcc`` and might require arguments (e.g. to
@@ -869,8 +869,8 @@ mind:
    sets the default using the "?=" operator, or you can alternatively
    force the value on the ``make`` command line. To force the value on
    the command line, add the variable setting to
-   ```EXTRA_OEMAKE`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_OEMAKE>`__ or
-   ```PACKAGECONFIG_CONFARGS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGECONFIG_CONFARGS>`__
+   :term:`EXTRA_OEMAKE` or
+   :term:`PACKAGECONFIG_CONFARGS`
    within the recipe. Here is an example using ``EXTRA_OEMAKE``:
    EXTRA_OEMAKE += "'CC=${CC}' 'CXX=${CXX}'" In the above example,
    single quotes are used around the variable settings as the values are
@@ -951,7 +951,7 @@ repository or local source tree. To add modules this way, use
 https://github.com/diversario/node-ssdp In this example, ``devtool``
 fetches the specified Git repository, detects the code as Node.js code,
 fetches dependencies using ``npm``, and sets
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ accordingly.
+:term:`SRC_URI` accordingly.
 
 .. _sdk-working-with-recipes:
 
@@ -976,8 +976,8 @@ build progresses as follows:
 For recipes in the workspace, fetching and unpacking is disabled as the
 source tree has already been prepared and is persistent. Each of these
 build steps is defined as a function (task), usually with a "do_" prefix
-(e.g. ```do_fetch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-fetch>`__,
-```do_unpack`` <&YOCTO_DOCS_REF_URL;#ref-tasks-unpack>`__, and so
+(e.g. :ref:`ref-tasks-fetch`,
+:ref:`ref-tasks-unpack`, and so
 forth). These functions are typically shell scripts but can instead be
 written in Python.
 
@@ -986,7 +986,7 @@ does not include complete instructions for building the software.
 Instead, common functionality is encapsulated in classes inherited with
 the ``inherit`` directive. This technique leaves the recipe to describe
 just the things that are specific to the software being built. A
-```base`` <&YOCTO_DOCS_REF_URL;#ref-classes-base>`__ class exists that
+:ref:`base <ref-classes-base>` class exists that
 is implicitly inherited by all recipes and provides the functionality
 that most recipes typically need.
 
@@ -1011,9 +1011,9 @@ links created within the source tree:
    useful:
 
    -  ``image/``: Contains all of the files installed during the
-      ```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ stage.
+      :ref:`ref-tasks-install` stage.
       Within a recipe, this directory is referred to by the expression
-      ``${``\ ```D`` <&YOCTO_DOCS_REF_URL;#var-D>`__\ ``}``.
+      ``${``\ :term:`D`\ ``}``.
 
    -  ``sysroot-destdir/``: Contains a subset of files installed within
       ``do_install`` that have been put into the shared sysroot. For
@@ -1035,16 +1035,16 @@ Setting Configure Arguments
 If the software your recipe is building uses GNU autoconf, then a fixed
 set of arguments is passed to it to enable cross-compilation plus any
 extras specified by
-```EXTRA_OECONF`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_OECONF>`__ or
-```PACKAGECONFIG_CONFARGS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGECONFIG_CONFARGS>`__
+:term:`EXTRA_OECONF` or
+:term:`PACKAGECONFIG_CONFARGS`
 set within the recipe. If you wish to pass additional options, add them
 to ``EXTRA_OECONF`` or ``PACKAGECONFIG_CONFARGS``. Other supported build
 tools have similar variables (e.g.
-```EXTRA_OECMAKE`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_OECMAKE>`__ for
-CMake, ```EXTRA_OESCONS`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_OESCONS>`__
+:term:`EXTRA_OECMAKE` for
+CMake, :term:`EXTRA_OESCONS`
 for Scons, and so forth). If you need to pass anything on the ``make``
 command line, you can use ``EXTRA_OEMAKE`` or the
-```PACKAGECONFIG_CONFARGS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGECONFIG_CONFARGS>`__
+:term:`PACKAGECONFIG_CONFARGS`
 variables to do so.
 
 You can use the ``devtool configure-help`` command to help you set the
@@ -1071,8 +1071,8 @@ the build host.
 
 Recipes should never write files directly into the sysroot. Instead,
 files should be installed into standard locations during the
-```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ task within
-the ``${``\ ```D`` <&YOCTO_DOCS_REF_URL;#var-D>`__\ ``}`` directory. A
+:ref:`ref-tasks-install` task within
+the ``${``\ :term:`D`\ ``}`` directory. A
 subset of these files automatically goes into the sysroot. The reason
 for this limitation is that almost all files that go into the sysroot
 are cataloged in manifests in order to ensure they can be removed later
@@ -1090,9 +1090,9 @@ the target device, it is important to understand packaging because the
 contents of the image are expressed in terms of packages and not
 recipes.
 
-During the ```do_package`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package>`__
+During the :ref:`ref-tasks-package`
 task, files installed during the
-```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ task are
+:ref:`ref-tasks-install` task are
 split into one main package, which is almost always named the same as
 the recipe, and into several other packages. This separation exists
 because not all of those installed files are useful in every image. For
@@ -1105,14 +1105,14 @@ package splitting as well.
 After building a recipe, you can see where files have gone by looking in
 the ``oe-workdir/packages-split`` directory, which contains a
 subdirectory for each package. Apart from some advanced cases, the
-```PACKAGES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGES>`__ and
-```FILES`` <&YOCTO_DOCS_REF_URL;#var-FILES>`__ variables controls
+:term:`PACKAGES` and
+:term:`FILES` variables controls
 splitting. The ``PACKAGES`` variable lists all of the packages to be
 produced, while the ``FILES`` variable specifies which files to include
 in each package by using an override to specify the package. For
 example, ``FILES_${PN}`` specifies the files to go into the main package
 (i.e. the main package has the same name as the recipe and
-``${``\ ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__\ ``}`` evaluates to the
+``${``\ :term:`PN`\ ``}`` evaluates to the
 recipe name). The order of the ``PACKAGES`` value is significant. For
 each installed file, the first package whose ``FILES`` value matches the
 file is the package into which the file goes. Defaults exist for both
@@ -1190,7 +1190,7 @@ manually "pull down" the updates into the installed SDK.
 To update your installed SDK, use ``devtool`` as follows: $ devtool
 sdk-update The previous command assumes your SDK provider has set the
 default update URL for you through the
-```SDK_UPDATE_URL`` <&YOCTO_DOCS_REF_URL;#var-SDK_UPDATE_URL>`__
+:term:`SDK_UPDATE_URL`
 variable as described in the "`Providing Updates to the Extensible SDK
 After
 Installation <#sdk-providing-updates-to-the-extensible-sdk-after-installation>`__"

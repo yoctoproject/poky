@@ -4,7 +4,7 @@
 Source Directory Structure
 **************************
 
-The `Source Directory <#source-directory>`__ consists of numerous files,
+The :term:`Source Directory` consists of numerous files,
 directories and subdirectories; understanding their locations and
 contents is key to using the Yocto Project effectively. This chapter
 describes the Source Directory and gives information about those files
@@ -36,7 +36,7 @@ Directory <#source-directory>`__.
 
 This directory includes a copy of BitBake for ease of use. The copy
 usually matches the current stable BitBake release from the BitBake
-project. BitBake, a `Metadata <#metadata>`__ interpreter, reads the
+project. BitBake, a :term:`Metadata` interpreter, reads the
 Yocto Project Metadata and runs the tasks defined by that data. Failures
 are usually caused by errors in your Metadata and not from BitBake
 itself; consequently, most users do not need to worry about BitBake.
@@ -63,7 +63,7 @@ the OpenEmbedded build environment setup script (i.e.
 ````` <#structure-core-script>`__).
 
 It is also possible to place output and configuration files in a
-directory separate from the `Source Directory <#source-directory>`__ by
+directory separate from the :term:`Source Directory` by
 providing a directory name when you ``source`` the setup script. For
 information on separating output from your local Source Directory files
 (commonly described as an "out of tree" build), see the
@@ -152,7 +152,7 @@ BitBake commands. The script uses other scripts within the ``scripts``
 directory to do the bulk of the work.
 
 When you run this script, your Yocto Project environment is set up, a
-`Build Directory <#build-directory>`__ is created, your working
+:term:`Build Directory` is created, your working
 directory becomes the Build Directory, and you are presented with some
 simple suggestions as to what to do next, including a list of some
 possible targets to build. Here is an example: $ source
@@ -162,7 +162,7 @@ core-image-sato meta-toolchain meta-ide-support You can also run
 generated qemu images with a command like 'runqemu qemux86-64' The
 default output of the ``oe-init-build-env`` script is from the
 ``conf-notes.txt`` file, which is found in the ``meta-poky`` directory
-within the `Source Directory <#source-directory>`__. If you design a
+within the :term:`Source Directory`. If you design a
 custom distribution, you can include your own version of this
 configuration file to mention the targets defined by your distribution.
 See the "`Creating a Custom Template Configuration
@@ -213,7 +213,7 @@ Directory a specific name when you run the setup script, the name
 defaults to ``build/``.
 
 For subsequent parsing and processing, the name of the Build directory
-is available via the ```TOPDIR`` <#var-TOPDIR>`__ variable.
+is available via the :term:`TOPDIR` variable.
 
 .. _structure-build-buildhistory:
 
@@ -243,7 +243,7 @@ relatively rare.
 
 At a minimum, you would normally edit this file to select the target
 ``MACHINE``, which package types you wish to use
-(```PACKAGE_CLASSES`` <#var-PACKAGE_CLASSES>`__), and the location from
+(:term:`PACKAGE_CLASSES`), and the location from
 which you want to access downloaded files (``DL_DIR``).
 
 If ``local.conf`` is not present when you start the build, the
@@ -261,7 +261,7 @@ build environment from any layer by setting the variable in the
 top-level build environment setup script as follows:
 TEMPLATECONF=your_layer/conf Once the build process gets the sample
 file, it uses ``sed`` to substitute final
-``${``\ ```OEROOT`` <#var-OEROOT>`__\ ``}`` values for all
+``${``\ :term:`OEROOT`\ ``}`` values for all
 ``##OEROOT##`` values.
 
 .. note::
@@ -286,7 +286,7 @@ file, it uses ``sed`` to substitute final
 This configuration file defines
 `layers <&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers>`__,
 which are directory trees, traversed (or walked) by BitBake. The
-``bblayers.conf`` file uses the ```BBLAYERS`` <#var-BBLAYERS>`__
+``bblayers.conf`` file uses the :term:`BBLAYERS`
 variable to list the layers BitBake tries to find.
 
 If ``bblayers.conf`` is not present when you start the build, the
@@ -304,7 +304,7 @@ implies that you can base your build from any layer by setting the
 variable in the top-level build environment setup script as follows:
 TEMPLATECONF=your_layer/conf Once the build process gets the sample
 file, it uses ``sed`` to substitute final
-``${``\ ```OEROOT`` <#var-OEROOT>`__\ ``}`` values for all
+``${``\ :term:`OEROOT`\ ``}`` values for all
 ``##OEROOT##`` values.
 
 .. note::
@@ -355,7 +355,7 @@ You can control the location of this directory through the
 --------------
 
 The OpenEmbedded build system creates and uses this directory for all
-the build system's output. The ```TMPDIR`` <#var-TMPDIR>`__ variable
+the build system's output. The :term:`TMPDIR` variable
 points to this directory.
 
 BitBake creates this directory if it does not exist. As a last resort,
@@ -393,7 +393,7 @@ cache is reused. If the file has changed, it is reparsed.
 ---------------------
 
 This directory contains any "end result" output from the OpenEmbedded
-build process. The ```DEPLOY_DIR`` <#var-DEPLOY_DIR>`__ variable points
+build process. The :term:`DEPLOY_DIR` variable points
 to this directory. For more detail on the contents of the ``deploy``
 directory, see the
 "`Images <&YOCTO_DOCS_OM_URL;#images-dev-environment>`__" and
@@ -497,11 +497,11 @@ another.
 ----------------------------------
 
 This directory is the location of the sysroot contents that the task
-```do_prepare_recipe_sysroot`` <#ref-tasks-prepare_recipe_sysroot>`__
+:ref:`ref-tasks-prepare_recipe_sysroot`
 links or copies into the recipe-specific sysroot for each recipe listed
-in ```DEPENDS`` <#var-DEPENDS>`__. Population of this directory is
+in :term:`DEPENDS`. Population of this directory is
 handled through shared state, while the path is specified by the
-```COMPONENTS_DIR`` <#var-COMPONENTS_DIR>`__ variable. Apart from a few
+:term:`COMPONENTS_DIR` variable. Apart from a few
 unusual circumstances, handling of the ``sysroots-components`` directory
 should be automatic, and recipes should not directly reference
 ``build/tmp/sysroots-components``.
@@ -514,7 +514,7 @@ should be automatic, and recipes should not directly reference
 Previous versions of the OpenEmbedded build system used to create a
 global shared sysroot per machine along with a native sysroot. Beginning
 with the DISTRO version of the Yocto Project, sysroots exist in
-recipe-specific ```WORKDIR`` <#var-WORKDIR>`__ directories. Thus, the
+recipe-specific :term:`WORKDIR` directories. Thus, the
 ``build/tmp/sysroots/`` directory is unused.
 
 .. note::
@@ -566,7 +566,7 @@ directory. For example, the source for a particular package is unpacked,
 patched, configured and compiled all within its own work directory.
 Within the work directory, organization is based on the package group
 and version for which the source is being compiled as defined by the
-```WORKDIR`` <#var-WORKDIR>`__.
+:term:`WORKDIR`.
 
 It is worth considering the structure of a typical work directory. As an
 example, consider ``linux-yocto-kernel-3.0`` on the machine ``qemux86``
@@ -599,12 +599,12 @@ As described earlier in the
 "```build/tmp/sysroots/`` <#structure-build-tmp-sysroots>`__" section,
 beginning with the DISTRO release of the Yocto Project, the OpenEmbedded
 build system builds each recipe in its own work directory (i.e.
-```WORKDIR`` <#var-WORKDIR>`__). The path to the work directory is
+:term:`WORKDIR`). The path to the work directory is
 constructed using the architecture of the given build (e.g.
-```TUNE_PKGARCH`` <#var-TUNE_PKGARCH>`__,
-```MACHINE_ARCH`` <#var-MACHINE_ARCH>`__, or "allarch"), the recipe
+:term:`TUNE_PKGARCH`,
+:term:`MACHINE_ARCH`, or "allarch"), the recipe
 name, and the version of the recipe (i.e.
-```PE`` <#var-PE>`__\ ``:``\ ```PV`` <#var-PV>`__\ ``-``\ ```PR`` <#var-PR>`__).
+:term:`PE`\ ``:``\ :term:`PV`\ ``-``\ :term:`PR`).
 
 A number of key subdirectories exist within each recipe work directory:
 
@@ -614,17 +614,17 @@ A number of key subdirectories exist within each recipe work directory:
    which tasks were executed.
 
 -  ``${WORKDIR}/image``: Contains the output of the
-   ```do_install`` <#ref-tasks-install>`__ task, which corresponds to
-   the ``${``\ ```D`` <#var-D>`__\ ``}`` variable in that task.
+   :ref:`ref-tasks-install` task, which corresponds to
+   the ``${``\ :term:`D`\ ``}`` variable in that task.
 
 -  ``${WORKDIR}/pseudo``: Contains the pseudo database and log for any
    tasks executed under pseudo for the recipe.
 
 -  ``${WORKDIR}/sysroot-destdir``: Contains the output of the
-   ```do_populate_sysroot`` <#ref-tasks-populate_sysroot>`__ task.
+   :ref:`ref-tasks-populate_sysroot` task.
 
 -  ``${WORKDIR}/package``: Contains the output of the
-   ```do_package`` <#ref-tasks-package>`__ task before the output is
+   :ref:`ref-tasks-package` task before the output is
    split into individual packages.
 
 -  ``${WORKDIR}/packages-split``: Contains the output of the
@@ -645,7 +645,7 @@ A number of key subdirectories exist within each recipe work directory:
 -  ``${WORKDIR}/build``: This subdirectory applies only to recipes that
    support builds where the source is separate from the build artifacts.
    The OpenEmbedded build system uses this directory as a separate build
-   directory (i.e. ``${``\ ```B`` <#var-B>`__\ ``}``).
+   directory (i.e. ``${``\ :term:`B`\ ``}``).
 
 .. _structure-build-work-shared:
 
@@ -662,7 +662,7 @@ recipes. In practice, this is only used for ``gcc`` and its variants
 The Metadata - ``meta/``
 ========================
 
-As mentioned previously, `Metadata <#metadata>`__ is the core of the
+As mentioned previously, :term:`Metadata` is the core of the
 Yocto Project. Metadata has several important subdivisions:
 
 .. _structure-meta-classes:
@@ -681,7 +681,7 @@ generation or packaging also have their specific class files such as
 ``image.bbclass``, ``rootfs_*.bbclass`` and ``package*.bbclass``.
 
 For reference information on classes, see the
-"`Classes <#ref-classes>`__" chapter.
+":ref:`ref-manual/ref-classes:Classes`" chapter.
 
 .. _structure-meta-conf:
 
@@ -726,7 +726,7 @@ file mainly inherits its configuration from Poky.
 
 The OpenEmbedded build system searches this directory for configuration
 files that correspond to the value of
-```SDKMACHINE`` <#var-SDKMACHINE>`__. By default, 32-bit and 64-bit x86
+:term:`SDKMACHINE`. By default, 32-bit and 64-bit x86
 files ship with the Yocto Project that support some SDK hosts. However,
 it is possible to extend that support to other SDK hosts by adding
 additional configuration files in this subdirectory within another

@@ -79,7 +79,7 @@ instructions:
    mailing list about OpenEmbedded.
 
 -  ` <&OE_LISTS_URL;/listinfo/bitbake-devel>`__ - Discussion mailing
-   list about the `BitBake <#bitbake-term>`__ build tool.
+   list about the :term:`BitBake` build tool.
 
 -  ` <&YOCTO_LISTS_URL;/listinfo/poky>`__ - Discussion mailing list
    about `Poky <#poky>`__.
@@ -179,7 +179,7 @@ Here is a list of resources you might find helpful:
 -  `Toaster User Manual <&YOCTO_DOCS_TOAST_URL;>`__\ *:* This manual
    introduces and describes how to set up and use Toaster. Toaster is an
    Application Programming Interface (API) and web-based interface to
-   the `OpenEmbedded Build System <#build-system-term>`__, which uses
+   the :term:`OpenEmbedded Build System`, which uses
    BitBake, that reports build information.
 
 -  `FAQ <&YOCTO_WIKI_URL;/wiki/FAQ>`__\ *:* A list of commonly asked

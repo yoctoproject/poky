@@ -32,7 +32,7 @@ tasks required to build a recipe.
 --------------
 
 Compiles the source code. This task runs with the current working
-directory set to ``${``\ ```B`` <#var-B>`__\ ``}``.
+directory set to ``${``\ :term:`B`\ ``}``.
 
 The default behavior of this task is to run the ``oe_runmake`` function
 if a makefile (``Makefile``, ``makefile``, or ``GNUmakefile``) is found.
@@ -52,11 +52,11 @@ Compiles the runtime test suite included in the software being built.
 
 Configures the source by enabling and disabling any build-time and
 configuration options for the software being built. The task runs with
-the current working directory set to ``${``\ ```B`` <#var-B>`__\ ``}``.
+the current working directory set to ``${``\ :term:`B`\ ``}``.
 
 The default behavior of this task is to run ``oe_runmake clean`` if a
 makefile (``Makefile``, ``makefile``, or ``GNUmakefile``) is found and
-```CLEANBROKEN`` <#var-CLEANBROKEN>`__ is not set to "1". If no such
+:term:`CLEANBROKEN` is not set to "1". If no such
 file is found or the ``CLEANBROKEN`` variable is set to "1", the
 ``do_configure`` task does nothing.
 
@@ -73,13 +73,13 @@ Configures the runtime test suite included in the software being built.
 -------------
 
 Writes output files that are to be deployed to
-``${``\ ```DEPLOY_DIR_IMAGE`` <#var-DEPLOY_DIR_IMAGE>`__\ ``}``. The
+``${``\ :term:`DEPLOY_DIR_IMAGE`\ ``}``. The
 task runs with the current working directory set to
-``${``\ ```B`` <#var-B>`__\ ``}``.
+``${``\ :term:`B`\ ``}``.
 
 Recipes implementing this task should inherit the
-```deploy`` <#ref-classes-deploy>`__ class and should write the output
-to ``${``\ ```DEPLOYDIR`` <#var-DEPLOYDIR>`__\ ``}``, which is not to be
+:ref:`deploy <ref-classes-deploy>` class and should write the output
+to ``${``\ :term:`DEPLOYDIR`\ ``}``, which is not to be
 confused with ``${DEPLOY_DIR}``. The ``deploy`` class sets up
 ``do_deploy`` as a shared state (sstate) task that can be accelerated
 through sstate use. The sstate mechanism takes care of copying the
@@ -93,7 +93,7 @@ output from ``${DEPLOYDIR}`` to ``${DEPLOY_DIR_IMAGE}``.
 
 The ``do_deploy`` task is not added as a task by default and
 consequently needs to be added manually. If you want the task to run
-after ```do_compile`` <#ref-tasks-compile>`__, you can add it by doing
+after :ref:`ref-tasks-compile`, you can add it by doing
 the following: addtask deploy after do_compile Adding ``do_deploy``
 after other tasks works the same way.
 
@@ -124,7 +124,7 @@ If the ``do_deploy`` task re-executes, any previous output is removed
 ------------
 
 Fetches the source code. This task uses the
-```SRC_URI`` <#var-SRC_URI>`__ variable and the argument's prefix to
+:term:`SRC_URI` variable and the argument's prefix to
 determine the correct `fetcher <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__
 module.
 
@@ -135,12 +135,12 @@ module.
 
 Starts the image generation process. The ``do_image`` task runs after
 the OpenEmbedded build system has run the
-```do_rootfs`` <#ref-tasks-rootfs>`__ task during which packages are
+:ref:`ref-tasks-rootfs` task during which packages are
 identified for installation into the image and the root filesystem is
 created, complete with post-processing.
 
 The ``do_image`` task performs pre-processing on the image through the
-```IMAGE_PREPROCESS_COMMAND`` <#var-IMAGE_PREPROCESS_COMMAND>`__ and
+:term:`IMAGE_PREPROCESS_COMMAND` and
 dynamically generates supporting ``do_image_*`` tasks as needed.
 
 For more information on image creation, see the "`Image
@@ -154,13 +154,13 @@ section in the Yocto Project Overview and Concepts Manual.
 
 Completes the image generation process. The ``do_image_complete`` task
 runs after the OpenEmbedded build system has run the
-```do_image`` <#ref-tasks-image>`__ task during which image
+:ref:`ref-tasks-image` task during which image
 pre-processing occurs and through dynamically generated ``do_image_*``
 tasks the image is constructed.
 
 The ``do_image_complete`` task performs post-processing on the image
 through the
-```IMAGE_POSTPROCESS_COMMAND`` <#var-IMAGE_POSTPROCESS_COMMAND>`__.
+:term:`IMAGE_POSTPROCESS_COMMAND`.
 
 For more information on image creation, see the "`Image
 Generation <&YOCTO_DOCS_OM_URL;#image-generation-dev-environment>`__"
@@ -172,13 +172,13 @@ section in the Yocto Project Overview and Concepts Manual.
 --------------
 
 Copies files that are to be packaged into the holding area
-``${``\ ```D`` <#var-D>`__\ ``}``. This task runs with the current
-working directory set to ``${``\ ```B`` <#var-B>`__\ ``}``, which is the
+``${``\ :term:`D`\ ``}``. This task runs with the current
+working directory set to ``${``\ :term:`B`\ ``}``, which is the
 compilation directory. The ``do_install`` task, as well as other tasks
 that either directly or indirectly depend on the installed files (e.g.
-```do_package`` <#ref-tasks-package>`__,
+:ref:`ref-tasks-package`,
 ```do_package_write_*`` <#ref-tasks-package_write_deb>`__, and
-```do_rootfs`` <#ref-tasks-rootfs>`__), run under
+:ref:`ref-tasks-rootfs`), run under
 `fakeroot <&YOCTO_DOCS_OM_URL;#fakeroot-and-pseudo>`__.
 
 .. note::
@@ -199,7 +199,7 @@ that either directly or indirectly depend on the installed files (e.g.
 
    -  The ``tar`` command with the "--no-same-owner" option. See the
       ``bin_package.bbclass`` file in the ``meta/classes`` directory of
-      the `Source Directory <#source-directory>`__ for an example.
+      the :term:`Source Directory` for an example.
 
 .. _ref-tasks-install_ptest_base:
 
@@ -215,15 +215,15 @@ holding area.
 --------------
 
 Analyzes the content of the holding area
-``${``\ ```D`` <#var-D>`__\ ``}`` and splits the content into subsets
+``${``\ :term:`D`\ ``}`` and splits the content into subsets
 based on available packages and files. This task makes use of the
-```PACKAGES`` <#var-PACKAGES>`__ and ```FILES`` <#var-FILES>`__
+:term:`PACKAGES` and :term:`FILES`
 variables.
 
 The ``do_package`` task, in conjunction with the
-```do_packagedata`` <#ref-tasks-packagedata>`__ task, also saves some
+:ref:`ref-tasks-packagedata` task, also saves some
 important package metadata. For additional information, see the
-```PKGDESTWORK`` <#var-PKGDESTWORK>`__ variable and the "`Automatically
+:term:`PKGDESTWORK` variable and the "`Automatically
 Added Runtime
 Dependencies <&YOCTO_DOCS_OM_URL;#automatically-added-runtime-dependencies>`__"
 section in the Yocto Project Overview and Concepts Manual.
@@ -234,7 +234,7 @@ section in the Yocto Project Overview and Concepts Manual.
 -----------------
 
 Runs QA checks on packaged files. For more information on these checks,
-see the ```insane`` <#ref-classes-insane>`__ class.
+see the :ref:`insane <ref-classes-insane>` class.
 
 .. _ref-tasks-package_write_deb:
 
@@ -242,7 +242,7 @@ see the ```insane`` <#ref-classes-insane>`__ class.
 ------------------------
 
 Creates Debian packages (i.e. ``*.deb`` files) and places them in the
-``${``\ ```DEPLOY_DIR_DEB`` <#var-DEPLOY_DIR_DEB>`__\ ``}`` directory in
+``${``\ :term:`DEPLOY_DIR_DEB`\ ``}`` directory in
 the package feeds area. For more information, see the "`Package
 Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section in
 the Yocto Project Overview and Concepts Manual.
@@ -253,7 +253,7 @@ the Yocto Project Overview and Concepts Manual.
 ------------------------
 
 Creates IPK packages (i.e. ``*.ipk`` files) and places them in the
-``${``\ ```DEPLOY_DIR_IPK`` <#var-DEPLOY_DIR_IPK>`__\ ``}`` directory in
+``${``\ :term:`DEPLOY_DIR_IPK`\ ``}`` directory in
 the package feeds area. For more information, see the "`Package
 Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section in
 the Yocto Project Overview and Concepts Manual.
@@ -264,7 +264,7 @@ the Yocto Project Overview and Concepts Manual.
 ------------------------
 
 Creates RPM packages (i.e. ``*.rpm`` files) and places them in the
-``${``\ ```DEPLOY_DIR_RPM`` <#var-DEPLOY_DIR_RPM>`__\ ``}`` directory in
+``${``\ :term:`DEPLOY_DIR_RPM`\ ``}`` directory in
 the package feeds area. For more information, see the "`Package
 Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section in
 the Yocto Project Overview and Concepts Manual.
@@ -275,7 +275,7 @@ the Yocto Project Overview and Concepts Manual.
 ------------------------
 
 Creates tarballs and places them in the
-``${``\ ```DEPLOY_DIR_TAR`` <#var-DEPLOY_DIR_TAR>`__\ ``}`` directory in
+``${``\ :term:`DEPLOY_DIR_TAR`\ ``}`` directory in
 the package feeds area. For more information, see the "`Package
 Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section in
 the Yocto Project Overview and Concepts Manual.
@@ -286,8 +286,8 @@ the Yocto Project Overview and Concepts Manual.
 ------------------
 
 Saves package metadata generated by the
-```do_package`` <#ref-tasks-package>`__ task in
-```PKGDATA_DIR`` <#var-PKGDATA_DIR>`__ to make it available globally.
+:ref:`ref-tasks-package` task in
+:term:`PKGDATA_DIR` to make it available globally.
 
 .. _ref-tasks-patch:
 
@@ -297,7 +297,7 @@ Saves package metadata generated by the
 Locates patch files and applies them to the source code.
 
 After fetching and unpacking source files, the build system uses the
-recipe's ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statements
+recipe's :term:`SRC_URI` statements
 to locate and apply patch files to the source code.
 
 .. note::
@@ -375,7 +375,7 @@ information.
 -----------------------
 
 Stages (copies) a subset of the files installed by the
-```do_install`` <#ref-tasks-install>`__ task into the appropriate
+:ref:`ref-tasks-install` task into the appropriate
 sysroot. For information on how to access these files from other
 recipes, see the ```STAGING_DIR*`` <#var-STAGING_DIR_HOST>`__ variables.
 Directories that would typically not be needed by other recipes at build
@@ -398,9 +398,9 @@ that if the task is re-executed, any previous output is removed (i.e.
 
 Installs the files into the individual recipe specific sysroots (i.e.
 ``recipe-sysroot`` and ``recipe-sysroot-native`` under
-``${``\ ```WORKDIR`` <#var-WORKDIR>`__\ ``}`` based upon the
-dependencies specified by ```DEPENDS`` <#var-DEPENDS>`__). See the
-"```staging`` <#ref-classes-staging>`__" class for more information.
+``${``\ :term:`WORKDIR`\ ``}`` based upon the
+dependencies specified by :term:`DEPENDS`). See the
+":ref:`staging <ref-classes-staging>`" class for more information.
 
 .. _ref-tasks-rm_work:
 
@@ -417,7 +417,7 @@ them. You can learn more by looking at the
 -------------
 
 Unpacks the source code into a working directory pointed to by
-``${``\ ```WORKDIR`` <#var-WORKDIR>`__\ ``}``. The ```S`` <#var-S>`__
+``${``\ :term:`WORKDIR`\ ``}``. The :term:`S`
 variable also plays a role in where unpacked source files ultimately
 reside. For more information on how source files are unpacked, see the
 "`Source
@@ -459,7 +459,7 @@ default, the results are stored in ```$LOG_DIR`` <#var-LOG_DIR>`__ (e.g.
 ``do_checkuri``
 ---------------
 
-Validates the ```SRC_URI`` <#var-SRC_URI>`__ value.
+Validates the :term:`SRC_URI` value.
 
 .. _ref-tasks-clean:
 
@@ -467,11 +467,11 @@ Validates the ```SRC_URI`` <#var-SRC_URI>`__ value.
 ------------
 
 Removes all output files for a target from the
-```do_unpack`` <#ref-tasks-unpack>`__ task forward (i.e. ``do_unpack``,
-```do_configure`` <#ref-tasks-configure>`__,
-```do_compile`` <#ref-tasks-compile>`__,
-```do_install`` <#ref-tasks-install>`__, and
-```do_package`` <#ref-tasks-package>`__).
+:ref:`ref-tasks-unpack` task forward (i.e. ``do_unpack``,
+:ref:`ref-tasks-configure`,
+:ref:`ref-tasks-compile`,
+:ref:`ref-tasks-install`, and
+:ref:`ref-tasks-package`).
 
 You can run this task using BitBake as follows: $ bitbake -c clean
 recipe
@@ -481,7 +481,7 @@ Running this task does not remove the
 Consequently, if no changes have been made and the recipe is rebuilt
 after cleaning, output files are simply restored from the sstate cache.
 If you want to remove the sstate cache files for the recipe, you need to
-use the ```do_cleansstate`` <#ref-tasks-cleansstate>`__ task instead
+use the :ref:`ref-tasks-cleansstate` task instead
 (i.e. ``bitbake -c cleansstate`` recipe).
 
 .. _ref-tasks-cleanall:
@@ -492,15 +492,15 @@ use the ```do_cleansstate`` <#ref-tasks-cleansstate>`__ task instead
 Removes all output files, shared state
 (`sstate <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__) cache, and
 downloaded source files for a target (i.e. the contents of
-```DL_DIR`` <#var-DL_DIR>`__). Essentially, the ``do_cleanall`` task is
-identical to the ```do_cleansstate`` <#ref-tasks-cleansstate>`__ task
+:term:`DL_DIR`). Essentially, the ``do_cleanall`` task is
+identical to the :ref:`ref-tasks-cleansstate` task
 with the added removal of downloaded source files.
 
 You can run this task using BitBake as follows: $ bitbake -c cleanall
 recipe
 
 Typically, you would not normally use the ``cleanall`` task. Do so only
-if you want to start fresh with the ```do_fetch`` <#ref-tasks-fetch>`__
+if you want to start fresh with the :ref:`ref-tasks-fetch`
 task.
 
 .. _ref-tasks-cleansstate:
@@ -511,7 +511,7 @@ task.
 Removes all output files and shared state
 (`sstate <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__) cache for a
 target. Essentially, the ``do_cleansstate`` task is identical to the
-```do_clean`` <#ref-tasks-clean>`__ task with the added removal of
+:ref:`ref-tasks-clean` task with the added removal of
 shared state (`sstate <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__)
 cache.
 
@@ -596,7 +596,7 @@ The following tasks are applicable to image recipes.
 --------------
 
 Creates a bootable live image. See the
-```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__ variable for additional
+:term:`IMAGE_FSTYPES` variable for additional
 information on live image types.
 
 .. _ref-tasks-bundle_initramfs:
@@ -606,7 +606,7 @@ information on live image types.
 
 Combines an initial RAM disk (initramfs) image and kernel together to
 form a single image. The
-```CONFIG_INITRAMFS_SOURCE`` <#var-CONFIG_INITRAMFS_SOURCE>`__ variable
+:term:`CONFIG_INITRAMFS_SOURCE` variable
 has some more information about these types of images.
 
 .. _ref-tasks-rootfs:
@@ -638,7 +638,7 @@ section in the Yocto Project Development Tasks Manual.
 
 Boots an image and performs runtime tests within the image immediately
 after it has been built. This task is enabled when you set
-```TESTIMAGE_AUTO`` <#var-TESTIMAGE_AUTO>`__ equal to "1".
+:term:`TESTIMAGE_AUTO` equal to "1".
 
 For information on automatically testing images, see the "`Performing
 Automated Runtime
@@ -649,7 +649,7 @@ Kernel-Related Tasks
 ====================
 
 The following tasks are applicable to kernel recipes. Some of these
-tasks (e.g. the ```do_menuconfig`` <#ref-tasks-menuconfig>`__ task) are
+tasks (e.g. the :ref:`ref-tasks-menuconfig` task) are
 also applicable to recipes that use Linux kernel style configuration
 such as the BusyBox recipe.
 
@@ -669,9 +669,9 @@ kernel consists of two steps: 1) the kernel (``vmlinux``) is built, and
 
 When invoked by the user, this task creates a file containing the
 differences between the original config as produced by
-```do_kernel_configme`` <#ref-tasks-kernel_configme>`__ task and the
+:ref:`ref-tasks-kernel_configme` task and the
 changes made by the user with other methods (i.e. using
-(```do_kernel_menuconfig`` <#ref-tasks-kernel_menuconfig>`__). Once the
+(:ref:`ref-tasks-kernel_menuconfig`). Once the
 file of differences is created, it can be used to create a config
 fragment that only contains the differences. You can invoke this task
 from the command line as follows: $ bitbake linux-yocto -c diffconfig
@@ -696,7 +696,7 @@ kernel with the correct branches checked out.
 -------------------------
 
 Validates the configuration produced by the
-```do_kernel_menuconfig`` <#ref-tasks-kernel_menuconfig>`__ task. The
+:ref:`ref-tasks-kernel_menuconfig` task. The
 ``do_kernel_configcheck`` task produces warnings when a requested
 configuration does not appear in the final ``.config`` file or when you
 override a policy configuration in a hardware configuration fragment.
@@ -711,7 +711,7 @@ section in the Yocto Project Linux Kernel Development Manual.
 ``do_kernel_configme``
 ----------------------
 
-After the kernel is patched by the ```do_patch`` <#ref-tasks-patch>`__
+After the kernel is patched by the :ref:`ref-tasks-patch`
 task, the ``do_kernel_configme`` task assembles and merges all the
 kernel config fragments into a merged configuration that can then be
 passed to the kernel configuration phase proper. This is also the time
@@ -746,12 +746,12 @@ information on this configuration tool.
 ----------------------
 
 Collects all the features required for a given kernel build, whether the
-features come from ```SRC_URI`` <#var-SRC_URI>`__ or from Git
+features come from :term:`SRC_URI` or from Git
 repositories. After collection, the ``do_kernel_metadata`` task
 processes the features into a series of config fragments and patches,
 which can then be applied by subsequent tasks such as
-```do_patch`` <#ref-tasks-patch>`__ and
-```do_kernel_configme`` <#ref-tasks-kernel_configme>`__.
+:ref:`ref-tasks-patch` and
+:ref:`ref-tasks-kernel_configme`.
 
 .. _ref-tasks-menuconfig:
 
@@ -772,7 +772,7 @@ When invoked by the user, creates a defconfig file that can be used
 instead of the default defconfig. The saved defconfig contains the
 differences between the default defconfig and the changes made by the
 user using other methods (i.e. the
-```do_kernel_menuconfig`` <#ref-tasks-kernel_menuconfig>`__ task. You
+:ref:`ref-tasks-kernel_menuconfig` task. You
 can invoke the task using the following command: $ bitbake linux-yocto
 -c savedefconfig
 
@@ -785,7 +785,7 @@ After the kernel has been compiled but before the kernel modules have
 been compiled, this task copies files required for module builds and
 which are generated from the kernel build into the shared work
 directory. With these copies successfully copied, the
-```do_compile_kernelmodules`` <#ref-tasks-compile_kernelmodules>`__ task
+:ref:`ref-tasks-compile_kernelmodules` task
 can successfully build the kernel modules in the next step of the build.
 
 .. _ref-tasks-sizecheck:
@@ -795,7 +795,7 @@ can successfully build the kernel modules in the next step of the build.
 
 After the kernel has been built, this task checks the size of the
 stripped kernel image against
-```KERNEL_IMAGE_MAXSIZE`` <#var-KERNEL_IMAGE_MAXSIZE>`__. If that
+:term:`KERNEL_IMAGE_MAXSIZE`. If that
 variable was set and the size of the stripped kernel exceeds that size,
 the kernel build produces a warning to that effect.
 
@@ -816,9 +816,9 @@ sections from a size-sensitive configuration.
 
 After the kernel is unpacked but before it is patched, this task makes
 sure that the machine and metadata branches as specified by the
-```SRCREV`` <#var-SRCREV>`__ variables actually exist on the specified
+:term:`SRCREV` variables actually exist on the specified
 branches. If these branches do not exist and
-```AUTOREV`` <#var-AUTOREV>`__ is not being used, the
+:term:`AUTOREV` is not being used, the
 ``do_validate_branches`` task fails during the build.
 
 Miscellaneous Tasks
@@ -833,4 +833,4 @@ The following sections describe miscellaneous tasks.
 
 A build stage that takes the source code and scans it on a remote
 FOSSOLOGY server in order to produce an SPDX document. This task applies
-only to the ```spdx`` <#ref-classes-spdx>`__ class.
+only to the :ref:`spdx <ref-classes-spdx>` class.

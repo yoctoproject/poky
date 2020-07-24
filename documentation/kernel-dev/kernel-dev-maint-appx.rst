@@ -111,7 +111,7 @@ patch, or BSP:
 
 4. *Append Extra Features:* Extra features are appended to the top-level
    feature description. These features can come from the
-   ```KERNEL_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_FEATURES>`__
+   :term:`KERNEL_FEATURES`
    variable in recipes.
 
 5. *Locate, Expand, and Append Each Feature:* Each extra feature is
@@ -172,7 +172,7 @@ can consider the compilation phase of kernel development, which is
 building a kernel image. Some prerequisites exist that are validated by
 the build process before compilation starts:
 
--  The ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ points to the
+-  The :term:`SRC_URI` points to the
    kernel Git repository.
 
 -  A BSP build branch with Metadata exists in the ``yocto-kernel-cache``

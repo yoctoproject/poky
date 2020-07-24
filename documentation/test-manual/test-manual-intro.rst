@@ -95,8 +95,8 @@ The Autobuilder tests different elements of the project by using
 thefollowing types of tests:
 
 -  *Build Testing:* Tests whether specific configurations build by
-   varying ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__,
-   ```DISTRO`` <&YOCTO_DOCS_REF_URL;#var-DISTRO>`__, other configuration
+   varying :term:`MACHINE`,
+   :term:`DISTRO`, other configuration
    options, and the specific target images being built (or world). Used
    to trigger builds of all the different test configurations on the
    Autobuilder. Builds usually cover many different targets for
@@ -105,7 +105,7 @@ thefollowing types of tests:
    Autobuilder tests literally hundreds of configurations and targets.
 
    -  *Sanity Checks During the Build Process:* Tests initiated through
-      the ```insane`` <&YOCTO_DOCS_REF_URL;#ref-classes-insane>`__
+      the :ref:`insane <ref-classes-insane>`
       class. These checks ensure the output of the builds are correct.
       For example, does the ELF architecture in the generated binaries
       match the target system? ARM binaries would not work in a MIPS
@@ -133,9 +133,9 @@ thefollowing types of tests:
 
 -  *Image Testing:* Image tests initiated through the following command:
    $ bitbake image -c testimage The tests utilize the
-   ```testimage*`` <&YOCTO_DOCS_REF_URL;#ref-classes-testimage*>`__
+   :ref:`testimage* <ref-classes-testimage*>`
    classes and the
-   ```do_testimage`` <&YOCTO_DOCS_REF_URL;#ref-tasks-testimage>`__ task.
+   :ref:`ref-tasks-testimage` task.
 
 -  *Layer Testing:* The Autobuilder has the possibility to test whether
    specific layers work with the test of the system. The layers tested
@@ -152,7 +152,7 @@ thefollowing types of tests:
 
 -  *SDK Testing:* Image tests initiated through the following command: $
    bitbake image -c testsdk The tests utilize the
-   ```testsdk`` <&YOCTO_DOCS_REF_URL;#ref-classes-testsdk>`__ class and
+   :ref:`testsdk <ref-classes-testsdk>` class and
    the ``do_testsdk`` task.
 
 -  *Unit Testing:* Unit tests on various components of the system run
@@ -236,7 +236,7 @@ Tests map into the codebase as follows:
       ``meta/lib/oeqa/runtime/cases/``.
 
    -  You need to set the
-      ```IMAGE_CLASSES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_CLASSES>`__
+      :term:`IMAGE_CLASSES`
       variable as follows: IMAGE_CLASSES += "testimage"
 
    -  Run the tests using the following command form: $ bitbake image -c

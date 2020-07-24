@@ -8,7 +8,7 @@ FAQ
 
 **A:** The term "`Poky <#>`__" refers to the specific reference build
 system that the Yocto Project provides. Poky is based on
-`OE-Core <#oe-core>`__ and `BitBake <#bitbake-term>`__. Thus, the
+:term:`OpenEmbedded-Core (OE-Core)` and :term:`BitBake`. Thus, the
 generic term used here for the build system is the "OpenEmbedded build
 system." Development in the Yocto Project using Poky is closely tied to
 OpenEmbedded, with changes always being merged to OE-Core or BitBake
@@ -29,7 +29,7 @@ steps on how to update your build tools.
 
 **A:** There are three areas that help with stability;
 
--  The Yocto Project team keeps `OE-Core <#oe-core>`__ small and
+-  The Yocto Project team keeps :term:`OpenEmbedded-Core (OE-Core)` small and
    focused, containing around 830 recipes as opposed to the thousands
    available in other OpenEmbedded community layers. Keeping it small
    makes it easy to test and maintain.
@@ -227,19 +227,19 @@ meta-MACHINE/recipes-bsp/netbase/netbase_5.0.bbappend
 size, you need to set various configurations:
 
 -  *Image Size:* The OpenEmbedded build system uses the
-   ```IMAGE_ROOTFS_SIZE`` <#var-IMAGE_ROOTFS_SIZE>`__ variable to define
+   :term:`IMAGE_ROOTFS_SIZE` variable to define
    the size of the image in Kbytes. The build system determines the size
    by taking into account the initial root filesystem size before any
    modifications such as requested size for the image and any requested
    additional free disk space to be added to the image.
 
 -  *Overhead:* Use the
-   ```IMAGE_OVERHEAD_FACTOR`` <#var-IMAGE_OVERHEAD_FACTOR>`__ variable
+   :term:`IMAGE_OVERHEAD_FACTOR` variable
    to define the multiplier that the build system applies to the initial
    image size, which is 1.3 by default.
 
 -  *Additional Free Space:* Use the
-   ```IMAGE_ROOTFS_EXTRA_SPACE`` <#var-IMAGE_ROOTFS_EXTRA_SPACE>`__
+   :term:`IMAGE_ROOTFS_EXTRA_SPACE`
    variable to add additional free space to the image. The build system
    adds this space to the image after it determines its
    ``IMAGE_ROOTFS_SIZE``.
@@ -281,8 +281,8 @@ environments if HTTP transport is available.
 
 When the build system searches for source code, it first tries the local
 download directory. If that location fails, Poky tries
-```PREMIRRORS`` <#var-PREMIRRORS>`__, the upstream source, and then
-```MIRRORS`` <#var-MIRRORS>`__ in that order.
+:term:`PREMIRRORS`, the upstream source, and then
+:term:`MIRRORS` in that order.
 
 Assuming your distribution is "poky", the OpenEmbedded build system uses
 the Yocto Project source ``PREMIRRORS`` by default for SCM-based
@@ -409,7 +409,7 @@ my recipe is installing to the wrong place, or I am getting permissions
 errors during the do_install task in my recipe! What is wrong?
 
 **A:** This situation results when a build system does not recognize the
-environment variables supplied to it by `BitBake <#bitbake-term>`__. The
+environment variables supplied to it by :term:`BitBake`. The
 incident that prompted this FAQ entry involved a Makefile that used an
 environment variable named ``BINDIR`` instead of the more standard
 variable ``bindir``. The makefile's hardcoded default value of

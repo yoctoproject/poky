@@ -313,7 +313,7 @@ The temporary kernel source files resulting from a build using BitBake
 have a particular hierarchy. When you build the kernel on your
 development system, all files needed for the build are taken from the
 source repositories pointed to by the
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ variable and gathered
+:term:`SRC_URI` variable and gathered
 in a temporary work area where they are subsequently used to create the
 unique kernel. Thus, in a sense, the process constructs a local source
 tree specific to your kernel from which to generate the new kernel

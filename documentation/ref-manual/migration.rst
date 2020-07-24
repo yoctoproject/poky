@@ -68,7 +68,7 @@ Local Configuration
 -------------------
 
 Differences include changes for
-```SSTATE_MIRRORS`` <#var-SSTATE_MIRRORS>`__ and ``bblayers.conf``.
+:term:`SSTATE_MIRRORS` and ``bblayers.conf``.
 
 .. _migration-1.3-sstate-mirrors:
 
@@ -76,13 +76,13 @@ SSTATE_MIRRORS
 ~~~~~~~~~~~~~~
 
 The shared state cache (sstate-cache), as pointed to by
-```SSTATE_DIR`` <#var-SSTATE_DIR>`__, by default now has two-character
+:term:`SSTATE_DIR`, by default now has two-character
 subdirectories to prevent issues arising from too many files in the same
 directory. Also, native sstate-cache packages, which are built to run on
 the host system, will go into a subdirectory named using the distro ID
 string. If you copy the newly structured sstate-cache to a mirror
 location (either local or remote) and then point to it in
-```SSTATE_MIRRORS`` <#var-SSTATE_MIRRORS>`__, you need to append "PATH"
+:term:`SSTATE_MIRRORS`, you need to append "PATH"
 to the end of the mirror URL so that the path used by BitBake before the
 mirror substitution is appended to the path used to access the mirror.
 Here is an example: SSTATE_MIRRORS = "file://.\*
@@ -138,7 +138,7 @@ four-space indentation.
 proto= in SRC_URI
 ~~~~~~~~~~~~~~~~~
 
-Any use of ``proto=`` in ```SRC_URI`` <#var-SRC_URI>`__ needs to be
+Any use of ``proto=`` in :term:`SRC_URI` needs to be
 changed to ``protocol=``. In particular, this applies to the following
 URIs:
 
@@ -161,7 +161,7 @@ nativesdk
 The suffix ``nativesdk`` is now implemented as a prefix, which
 simplifies a lot of the packaging code for ``nativesdk`` recipes. All
 custom ``nativesdk`` recipes, which are relocatable packages that are
-native to ```SDK_ARCH`` <#var-SDK_ARCH>`__, and any references need to
+native to :term:`SDK_ARCH`, and any references need to
 be updated to use ``nativesdk-*`` instead of ``*-nativesdk``.
 
 .. _migration-1.3-task-recipes:
@@ -179,8 +179,8 @@ recipes to ``packagegroup-*``, and change them to inherit
 ``packagegroup`` instead of ``task``, as well as taking the opportunity
 to remove anything now handled by ``packagegroup.bbclass``, such as
 providing ``-dev`` and ``-dbg`` packages, setting
-```LIC_FILES_CHKSUM`` <#var-LIC_FILES_CHKSUM>`__, and so forth. See the
-"```packagegroup.bbclass`` <#ref-classes-packagegroup>`__" section for
+:term:`LIC_FILES_CHKSUM`, and so forth. See the
+":ref:`packagegroup.bbclass <ref-classes-packagegroup>`" section for
 further details.
 
 .. _migration-1.3-image-features:
@@ -189,7 +189,7 @@ IMAGE_FEATURES
 ~~~~~~~~~~~~~~
 
 Image recipes that previously included "apps-console-core" in
-```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__ should now include "splash"
+:term:`IMAGE_FEATURES` should now include "splash"
 instead to enable the boot-up splash screen. Retaining
 "apps-console-core" will still include the splash screen but generates a
 warning. The "apps-x11-core" and "apps-x11-games" ``IMAGE_FEATURES``
@@ -202,7 +202,7 @@ Removed Recipes
 
 The following recipes have been removed. For most of them, it is
 unlikely that you would have any references to them in your own
-`Metadata <#metadata>`__. However, you should check your metadata
+:term:`Metadata`. However, you should check your metadata
 against this list to be sure:
 
 -  *``libx11-trim``*: Replaced by ``libx11``, which has a negligible
@@ -247,7 +247,7 @@ Linux Kernel Naming
 -------------------
 
 The naming scheme for kernel output binaries has been changed to now
-include ```PE`` <#var-PE>`__ as part of the filename:
+include :term:`PE` as part of the filename:
 KERNEL_IMAGE_BASE_NAME ?=
 "${KERNEL_IMAGETYPE}-${PE}-${PV}-${PR}-${MACHINE}-${DATETIME}"
 
@@ -276,13 +276,13 @@ Differences include the following:
    a comment.
 
 -  *Package Name Overrides:* The runtime package specific variables
-   ```RDEPENDS`` <#var-RDEPENDS>`__,
-   ```RRECOMMENDS`` <#var-RRECOMMENDS>`__,
-   ```RSUGGESTS`` <#var-RSUGGESTS>`__,
-   ```RPROVIDES`` <#var-RPROVIDES>`__,
-   ```RCONFLICTS`` <#var-RCONFLICTS>`__,
-   ```RREPLACES`` <#var-RREPLACES>`__, ```FILES`` <#var-FILES>`__,
-   ```ALLOW_EMPTY`` <#var-ALLOW_EMPTY>`__, and the pre, post, install,
+   :term:`RDEPENDS`,
+   :term:`RRECOMMENDS`,
+   :term:`RSUGGESTS`,
+   :term:`RPROVIDES`,
+   :term:`RCONFLICTS`,
+   :term:`RREPLACES`, :term:`FILES`,
+   :term:`ALLOW_EMPTY`, and the pre, post, install,
    and uninstall script functions ``pkg_preinst``, ``pkg_postinst``,
    ``pkg_prerm``, and ``pkg_postrm`` should always have a package name
    override. For example, use ``RDEPENDS_${PN}`` for the main package
@@ -305,15 +305,15 @@ Differences include the following:
    you have missing declared dependencies.
 
 -  *Scanning Directory Names:* When scanning for files in
-   ```SRC_URI`` <#var-SRC_URI>`__, the build system now uses
-   ```FILESOVERRIDES`` <#var-FILESOVERRIDES>`__ instead of
-   ```OVERRIDES`` <#var-OVERRIDES>`__ for the directory names. In
+   :term:`SRC_URI`, the build system now uses
+   :term:`FILESOVERRIDES` instead of
+   :term:`OVERRIDES` for the directory names. In
    general, the values previously in ``OVERRIDES`` are now in
    ``FILESOVERRIDES`` as well. However, if you relied upon an additional
    value you previously added to ``OVERRIDES``, you might now need to
    add it to ``FILESOVERRIDES`` unless you are already adding it through
-   the ```MACHINEOVERRIDES`` <#var-MACHINEOVERRIDES>`__ or
-   ```DISTROOVERRIDES`` <#var-DISTROOVERRIDES>`__ variables, as
+   the :term:`MACHINEOVERRIDES` or
+   :term:`DISTROOVERRIDES` variables, as
    appropriate. For more related changes, see the
    "`Variables <#migration-1.4-variables>`__" section.
 
@@ -335,7 +335,7 @@ Custom Interfaces File (netbase change)
 If you have created your own custom ``etc/network/interfaces`` file by
 creating an append file for the ``netbase`` recipe, you now need to
 create an append file for the ``init-ifupdown`` recipe instead, which
-you can find in the `Source Directory <#source-directory>`__ at
+you can find in the :term:`Source Directory` at
 ``meta/recipes-core/init-ifupdown``. For information on how to use
 append files, see the "`Using .bbappend
 Files <&YOCTO_DOCS_DEV_URL;#using-bbappend-files>`__" section in the
@@ -363,24 +363,24 @@ The following variables have changed:
 -  *``SANITY_TESTED_DISTROS``:* This variable now uses a distribution
    ID, which is composed of the host distributor ID followed by the
    release. Previously,
-   ```SANITY_TESTED_DISTROS`` <#var-SANITY_TESTED_DISTROS>`__ was
+   :term:`SANITY_TESTED_DISTROS` was
    composed of the description field. For example, "Ubuntu 12.10"
    becomes "Ubuntu-12.10". You do not need to worry about this change if
    you are not specifically setting this variable, or if you are
    specifically setting it to "".
 
--  *``SRC_URI``:* The ``${``\ ```PN`` <#var-PN>`__\ ``}``,
-   ``${``\ ```PF`` <#var-PF>`__\ ``}``,
-   ``${``\ ```P`` <#var-P>`__\ ``}``, and ``FILE_DIRNAME`` directories
+-  *``SRC_URI``:* The ``${``\ :term:`PN`\ ``}``,
+   ``${``\ :term:`PF`\ ``}``,
+   ``${``\ :term:`P`\ ``}``, and ``FILE_DIRNAME`` directories
    have been dropped from the default value of the
-   ```FILESPATH`` <#var-FILESPATH>`__ variable, which is used as the
+   :term:`FILESPATH` variable, which is used as the
    search path for finding files referred to in
-   ```SRC_URI`` <#var-SRC_URI>`__. If you have a recipe that relied upon
+   :term:`SRC_URI`. If you have a recipe that relied upon
    these directories, which would be unusual, then you will need to add
    the appropriate paths within the recipe or, alternatively, rearrange
    the files. The most common locations are still covered by ``${BP}``,
    ``${BPN}``, and "files", which all remain in the default value of
-   ```FILESPATH`` <#var-FILESPATH>`__.
+   :term:`FILESPATH`.
 
 .. _migration-target-package-management-with-rpm:
 
@@ -554,9 +554,9 @@ The following changes have been made that relate to BitBake:
 
 -  The ``bitbake-runtask`` script has been removed.
 
--  ``${``\ ```P`` <#var-P>`__\ ``}`` and
-   ``${``\ ```PF`` <#var-PF>`__\ ``}`` are no longer added to
-   ```PROVIDES`` <#var-PROVIDES>`__ by default in ``bitbake.conf``.
+-  ``${``\ :term:`P`\ ``}`` and
+   ``${``\ :term:`PF`\ ``}`` are no longer added to
+   :term:`PROVIDES` by default in ``bitbake.conf``.
    These version-specific ``PROVIDES`` items were seldom used.
    Attempting to use them could result in two versions being built
    simultaneously rather than just one version due to the way BitBake
@@ -569,19 +569,19 @@ QA Warnings
 
 The following changes have been made to the package QA checks:
 
--  If you have customized ```ERROR_QA`` <#var-ERROR_QA>`__ or
-   ```WARN_QA`` <#var-WARN_QA>`__ values in your configuration, check
+-  If you have customized :term:`ERROR_QA` or
+   :term:`WARN_QA` values in your configuration, check
    that they contain all of the issues that you wish to be reported.
    Previous Yocto Project versions contained a bug that meant that any
    item not mentioned in ``ERROR_QA`` or ``WARN_QA`` would be treated as
    a warning. Consequently, several important items were not already in
    the default value of ``WARN_QA``. All of the possible QA checks are
-   now documented in the "```insane.bbclass`` <#ref-classes-insane>`__"
+   now documented in the ":ref:`insane.bbclass <ref-classes-insane>`"
    section.
 
 -  An additional QA check has been added to check if
    ``/usr/share/info/dir`` is being installed. Your recipe should delete
-   this file within ```do_install`` <#ref-tasks-install>`__ if "make
+   this file within :ref:`ref-tasks-install` if "make
    install" is installing it.
 
 -  If you are using the buildhistory class, the check for the package
@@ -591,7 +591,7 @@ The following changes have been made to the package QA checks:
    "version-going-backwards" to your value for one or the other
    variables depending on how you wish it to be handled. See the
    documented QA checks in the
-   "```insane.bbclass`` <#ref-classes-insane>`__" section.
+   ":ref:`insane.bbclass <ref-classes-insane>`" section.
 
 .. _migration-1.5-directory-layout-changes:
 
@@ -601,25 +601,25 @@ Directory Layout Changes
 The following directory changes exist:
 
 -  Output SDK installer files are now named to include the image name
-   and tuning architecture through the ```SDK_NAME`` <#var-SDK_NAME>`__
+   and tuning architecture through the :term:`SDK_NAME`
    variable.
 
 -  Images and related files are now installed into a directory that is
    specific to the machine, instead of a parent directory containing
    output files for multiple machines. The
-   ```DEPLOY_DIR_IMAGE`` <#var-DEPLOY_DIR_IMAGE>`__ variable continues
+   :term:`DEPLOY_DIR_IMAGE` variable continues
    to point to the directory containing images for the current
-   ```MACHINE`` <#var-MACHINE>`__ and should be used anywhere there is a
+   :term:`MACHINE` and should be used anywhere there is a
    need to refer to this directory. The ``runqemu`` script now uses this
    variable to find images and kernel binaries and will use BitBake to
    determine the directory. Alternatively, you can set the
    ``DEPLOY_DIR_IMAGE`` variable in the external environment.
 
 -  When buildhistory is enabled, its output is now written under the
-   `Build Directory <#build-directory>`__ rather than
-   ```TMPDIR`` <#var-TMPDIR>`__. Doing so makes it easier to delete
+   :term:`Build Directory` rather than
+   :term:`TMPDIR`. Doing so makes it easier to delete
    ``TMPDIR`` and preserve the build history. Additionally, data for
-   produced SDKs is now split by ```IMAGE_NAME`` <#var-IMAGE_NAME>`__.
+   produced SDKs is now split by :term:`IMAGE_NAME`.
 
 -  The ``pkgdata`` directory produced as part of the packaging process
    has been collapsed into a single machine-specific directory. This
@@ -632,7 +632,7 @@ Shortened Git ``SRCREV`` Values
 -------------------------------
 
 BitBake will now shorten revisions from Git repositories from the normal
-40 characters down to 10 characters within ```SRCPV`` <#var-SRCPV>`__
+40 characters down to 10 characters within :term:`SRCPV`
 for improved usability in path and file names. This change should be
 safe within contexts where these revisions are used because the chances
 of spatially close collisions is very low. Distant collisions are not a
@@ -644,16 +644,16 @@ major issue in the way the values are used.
 ------------------
 
 The following changes have been made that relate to
-```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__:
+:term:`IMAGE_FEATURES`:
 
 -  The value of ``IMAGE_FEATURES`` is now validated to ensure invalid
    feature items are not added. Some users mistakenly add package names
    to this variable instead of using
-   ```IMAGE_INSTALL`` <#var-IMAGE_INSTALL>`__ in order to have the
+   :term:`IMAGE_INSTALL` in order to have the
    package added to the image, which does not work. This change is
    intended to catch those kinds of situations. Valid ``IMAGE_FEATURES``
    are drawn from ``PACKAGE_GROUP`` definitions,
-   ```COMPLEMENTARY_GLOB`` <#var-COMPLEMENTARY_GLOB>`__ and a new
+   :term:`COMPLEMENTARY_GLOB` and a new
    "validitems" varflag on ``IMAGE_FEATURES``. The "validitems" varflag
    change allows additional features to be added if they are not
    provided using the previous two mechanisms.
@@ -682,9 +682,9 @@ Removal of Package Manager Database Within Image Recipes
 
 The image ``core-image-minimal`` no longer adds
 ``remove_packaging_data_files`` to
-```ROOTFS_POSTPROCESS_COMMAND`` <#var-ROOTFS_POSTPROCESS_COMMAND>`__.
+:term:`ROOTFS_POSTPROCESS_COMMAND`.
 This addition is now handled automatically when "package-management" is
-not in ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__. If you have custom
+not in :term:`IMAGE_FEATURES`. If you have custom
 image recipes that make this addition, you should remove the lines, as
 they are not needed and might interfere with correct operation of
 postinstall scripts.
@@ -694,7 +694,7 @@ postinstall scripts.
 Images Now Rebuild Only on Changes Instead of Every Time
 --------------------------------------------------------
 
-The ```do_rootfs`` <#ref-tasks-rootfs>`__ and other related image
+The :ref:`ref-tasks-rootfs` and other related image
 construction tasks are no longer marked as "nostamp". Consequently, they
 will only be re-executed when their inputs have changed. Previous
 versions of the OpenEmbedded build system always rebuilt the image when
@@ -711,7 +711,7 @@ them from ``task-*`` to ``packagegroup-*`` and inherit packagegroup
 instead.
 
 For more information, see the
-"```packagegroup.bbclass`` <#ref-classes-packagegroup>`__" section.
+":ref:`packagegroup.bbclass <ref-classes-packagegroup>`" section.
 
 .. _migration-1.5-busybox:
 
@@ -723,7 +723,7 @@ root for those components that need it, and another for the rest of the
 components. Splitting BusyBox allows for optimization that eliminates
 the ``tinylogin`` recipe as recommended by upstream. You can disable
 this split by setting
-```BUSYBOX_SPLIT_SUID`` <#var-BUSYBOX_SPLIT_SUID>`__ to "0".
+:term:`BUSYBOX_SPLIT_SUID` to "0".
 
 .. _migration-1.5-automated-image-testing:
 
@@ -771,7 +771,7 @@ section in the Yocto Project Development Tasks Manual.
 Following are changes to ``udev``:
 
 -  ``udev`` no longer brings in ``udev-extraconf`` automatically through
-   ```RRECOMMENDS`` <#var-RRECOMMENDS>`__, since this was originally
+   :term:`RRECOMMENDS`, since this was originally
    intended to be optional. If you need the extra rules, then add
    ``udev-extraconf`` to your image.
 
@@ -821,13 +821,13 @@ Following is a list of short entries describing other changes:
 -  ``alsa-state``: Provide an empty ``asound.conf`` by default.
 
 -  ``classes/image``: Ensure
-   ```BAD_RECOMMENDATIONS`` <#var-BAD_RECOMMENDATIONS>`__ supports
+   :term:`BAD_RECOMMENDATIONS` supports
    pre-renamed package names.
 
 -  ``classes/rootfs_rpm``: Implement ``BAD_RECOMMENDATIONS`` for RPM.
 
 -  ``systemd``: Remove ``systemd_unitdir`` if ``systemd`` is not in
-   ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__.
+   :term:`DISTRO_FEATURES`.
 
 -  ``systemd``: Remove ``init.d`` dir if ``systemd`` unit file is
    present and ``sysvinit`` is not a distro feature.
@@ -854,7 +854,7 @@ Project 1.6 Release from the prior release.
 ``archiver`` Class
 ------------------
 
-The ```archiver`` <#ref-classes-archiver>`__ class has been rewritten
+The :ref:`archiver <ref-classes-archiver>` class has been rewritten
 and its configuration has been simplified. For more details on the
 source archiver, see the "`Maintaining Open Source License Compliance
 During Your Product's
@@ -889,7 +889,7 @@ The following packaging changes have been made:
 BitBake
 -------
 
-The following changes have been made to `BitBake <#bitbake-term>`__.
+The following changes have been made to :term:`BitBake`.
 
 .. _migration-1.6-matching-branch-requirement-for-git-fetching:
 
@@ -897,8 +897,8 @@ Matching Branch Requirement for Git Fetching
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When fetching source from a Git repository using
-```SRC_URI`` <#var-SRC_URI>`__, BitBake will now validate the
-```SRCREV`` <#var-SRCREV>`__ value against the branch. You can specify
+:term:`SRC_URI`, BitBake will now validate the
+:term:`SRCREV` value against the branch. You can specify
 the branch using the following form: SRC_URI =
 "git://server.name/repository;branch=branchname" If you do not specify a
 branch, BitBake looks in the default "master" branch.
@@ -960,7 +960,7 @@ will need to add ``2>&1`` (or something similar) to the end of your
 ``task-``\ taskname overrides have been adjusted so that tasks whose
 names contain underscores have the underscores replaced by hyphens for
 the override so that they now function properly. For example, the task
-override for ```do_populate_sdk`` <#ref-tasks-populate_sdk>`__ is
+override for :ref:`ref-tasks-populate_sdk` is
 ``task-populate-sdk``.
 
 .. _migration-1.6-variable-changes:
@@ -977,7 +977,7 @@ Glossary <#ref-variables-glos>`__" Chapter.
 ``TMPDIR``
 ~~~~~~~~~~
 
-```TMPDIR`` <#var-TMPDIR>`__ can no longer be on an NFS mount. NFS does
+:term:`TMPDIR` can no longer be on an NFS mount. NFS does
 not offer full POSIX locking and inode consistency and can cause
 unexpected issues if used to store ``TMPDIR``.
 
@@ -990,7 +990,7 @@ NFS mount, an error occurs.
 ~~~~~~~~~
 
 The ``PRINC`` variable has been deprecated and triggers a warning if
-detected during a build. For ```PR`` <#var-PR>`__ increments on changes,
+detected during a build. For :term:`PR` increments on changes,
 use the PR service instead. You can find out more about this service in
 the "`Working With a PR
 Service <&YOCTO_DOCS_DEV_URL;#working-with-a-pr-service>`__" section in
@@ -1001,7 +1001,7 @@ the Yocto Project Development Tasks Manual.
 ``IMAGE_TYPES``
 ~~~~~~~~~~~~~~~
 
-The "sum.jffs2" option for ```IMAGE_TYPES`` <#var-IMAGE_TYPES>`__ has
+The "sum.jffs2" option for :term:`IMAGE_TYPES` has
 been replaced by the "jffs2.sum" option, which fits the processing
 order.
 
@@ -1010,7 +1010,7 @@ order.
 ``COPY_LIC_MANIFEST``
 ~~~~~~~~~~~~~~~~~~~~~
 
-The ```COPY_LIC_MANIFEST`` <#var-COPY_LIC_MANIFEST>`__ variable must now
+The :term:`COPY_LIC_MANIFEST` variable must now
 be set to "1" rather than any value in order to enable it.
 
 .. _migration-1.6-variable-changes-COPY_LIC_DIRS:
@@ -1018,7 +1018,7 @@ be set to "1" rather than any value in order to enable it.
 ``COPY_LIC_DIRS``
 ~~~~~~~~~~~~~~~~~
 
-The ```COPY_LIC_DIRS`` <#var-COPY_LIC_DIRS>`__ variable must now be set
+The :term:`COPY_LIC_DIRS` variable must now be set
 to "1" rather than any value in order to enable it.
 
 .. _migration-1.6-variable-changes-PACKAGE_GROUP:
@@ -1027,7 +1027,7 @@ to "1" rather than any value in order to enable it.
 ~~~~~~~~~~~~~~~~~
 
 The ``PACKAGE_GROUP`` variable has been renamed to
-```FEATURE_PACKAGES`` <#var-FEATURE_PACKAGES>`__ to more accurately
+:term:`FEATURE_PACKAGES` to more accurately
 reflect its purpose. You can still use ``PACKAGE_GROUP`` but the
 OpenEmbedded build system produces a warning message when it encounters
 the variable.
@@ -1039,15 +1039,15 @@ Preprocess and Post Process Command Variable Behavior
 
 The following variables now expect a semicolon separated list of
 functions to call and not arbitrary shell commands:
-`ROOTFS_PREPROCESS_COMMAND <#var-ROOTFS_PREPROCESS_COMMAND>`__
-`ROOTFS_POSTPROCESS_COMMAND <#var-ROOTFS_POSTPROCESS_COMMAND>`__
-`SDK_POSTPROCESS_COMMAND <#var-SDK_POSTPROCESS_COMMAND>`__
-`POPULATE_SDK_POST_TARGET_COMMAND <#var-POPULATE_SDK_POST_TARGET_COMMAND>`__
-`POPULATE_SDK_POST_HOST_COMMAND <#var-POPULATE_SDK_POST_HOST_COMMAND>`__
-`IMAGE_POSTPROCESS_COMMAND <#var-IMAGE_POSTPROCESS_COMMAND>`__
-`IMAGE_PREPROCESS_COMMAND <#var-IMAGE_PREPROCESS_COMMAND>`__
-`ROOTFS_POSTUNINSTALL_COMMAND <#var-ROOTFS_POSTUNINSTALL_COMMAND>`__
-`ROOTFS_POSTINSTALL_COMMAND <#var-ROOTFS_POSTINSTALL_COMMAND>`__ For
+:term:`ROOTFS_PREPROCESS_COMMAND`
+:term:`ROOTFS_POSTPROCESS_COMMAND`
+:term:`SDK_POSTPROCESS_COMMAND`
+:term:`POPULATE_SDK_POST_TARGET_COMMAND`
+:term:`POPULATE_SDK_POST_HOST_COMMAND`
+:term:`IMAGE_POSTPROCESS_COMMAND`
+:term:`IMAGE_PREPROCESS_COMMAND`
+:term:`ROOTFS_POSTUNINSTALL_COMMAND`
+:term:`ROOTFS_POSTINSTALL_COMMAND` For
 migration purposes, you can simply wrap shell commands in a shell
 function and then call the function. Here is an example:
 my_postprocess_function() { echo "hello" > ${IMAGE_ROOTFS}/hello.txt }
@@ -1062,7 +1062,7 @@ Package Tests (ptest) are built but not installed by default. For
 information on using Package Tests, see the "`Testing Packages with
 ptest <&YOCTO_DOCS_DEV_URL;#testing-packages-with-ptest>`__" section in
 the Yocto Project Development Tasks Manual. For information on the
-``ptest`` class, see the "```ptest.bbclass`` <#ref-classes-ptest>`__"
+``ptest`` class, see the ":ref:`ptest.bbclass <ref-classes-ptest>`"
 section.
 
 .. _migration-1.6-build-changes:
@@ -1072,8 +1072,8 @@ Build Changes
 
 Separate build and source directories have been enabled by default for
 selected recipes where it is known to work (a whitelist) and for all
-recipes that inherit the ```cmake`` <#ref-classes-cmake>`__ class. In
-future releases the ```autotools`` <#ref-classes-autotools>`__ class
+recipes that inherit the :ref:`cmake <ref-classes-cmake>` class. In
+future releases the :ref:`autotools <ref-classes-autotools>` class
 will enable a separate build directory by default as well. Recipes
 building Autotools-based software that fails to build with a separate
 build directory should be changed to inherit from the
@@ -1116,12 +1116,12 @@ Licensing
 ---------
 
 The top-level ``LICENSE`` file has been changed to better describe the
-license of the various components of `OE-Core <#oe-core>`__. However,
+license of the various components of :term:`OpenEmbedded-Core (OE-Core)`. However,
 the licensing itself remains unchanged.
 
 Normally, this change would not cause any side-effects. However, some
 recipes point to this file within
-```LIC_FILES_CHKSUM`` <#var-LIC_FILES_CHKSUM>`__ (as
+:term:`LIC_FILES_CHKSUM` (as
 ``${COREBASE}/LICENSE``) and thus the accompanying checksum must be
 changed from 3f40d7994397109285ec7b81fdeb3b58 to
 4d92cd373abda3937c2bc47fbc49d690. A better alternative is to have
@@ -1135,7 +1135,7 @@ rather than pointing to ``${COREBASE}/LICENSE``.
 ------------------
 
 The "-fpermissive" option has been removed from the default
-```CFLAGS`` <#var-CFLAGS>`__ value. You need to take action on
+:term:`CFLAGS` value. You need to take action on
 individual recipes that fail when building with this option. You need to
 either patch the recipes to fix the issues reported by the compiler, or
 you need to add "-fpermissive" to ``CFLAGS`` in the recipes.
@@ -1146,9 +1146,9 @@ Custom Image Output Types
 -------------------------
 
 Custom image output types, as selected using
-```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__, must declare their
+:term:`IMAGE_FSTYPES`, must declare their
 dependencies on other image types (if any) using a new
-```IMAGE_TYPEDEP`` <#var-IMAGE_TYPEDEP>`__ variable.
+:term:`IMAGE_TYPEDEP` variable.
 
 .. _migration-1.6-do-package-write-task:
 
@@ -1264,7 +1264,7 @@ Changes to Setting QEMU ``PACKAGECONFIG`` Options in ``local.conf``
 -------------------------------------------------------------------
 
 The QEMU recipe now uses a number of
-```PACKAGECONFIG`` <#var-PACKAGECONFIG>`__ options to enable various
+:term:`PACKAGECONFIG` options to enable various
 optional features. The method used to set defaults for these options
 means that existing ``local.conf`` files will need to be be modified to
 append to ``PACKAGECONFIG`` for ``qemu-native`` and ``nativesdk-qemu``
@@ -1291,13 +1291,13 @@ for more information.
 Autotools Class Changes
 -----------------------
 
-The following ```autotools`` <#ref-classes-autotools>`__ class changes
+The following :ref:`autotools <ref-classes-autotools>` class changes
 occurred:
 
 -  *A separate build directory is now used by default:* The
    ``autotools`` class has been changed to use a directory for building
-   (```B`` <#var-B>`__), which is separate from the source directory
-   (```S`` <#var-S>`__). This is commonly referred to as ``B != S``, or
+   (:term:`B`), which is separate from the source directory
+   (:term:`S`). This is commonly referred to as ``B != S``, or
    an out-of-tree build.
 
    If the software being built is already capable of building in a
@@ -1368,10 +1368,10 @@ Kernel Module Autoloading
 
 The ```module_autoload_*`` <#var-module_autoload>`__ variable is now
 deprecated and a new
-```KERNEL_MODULE_AUTOLOAD`` <#var-KERNEL_MODULE_AUTOLOAD>`__ variable
+:term:`KERNEL_MODULE_AUTOLOAD` variable
 should be used instead. Also, ```module_conf_*`` <#var-module_conf>`__
 must now be used in conjunction with a new
-```KERNEL_MODULE_PROBECONF`` <#var-KERNEL_MODULE_PROBECONF>`__ variable.
+:term:`KERNEL_MODULE_PROBECONF` variable.
 The new variables no longer require you to specify the module name as
 part of the variable name. This change not only simplifies usage but
 also allows the values of these variables to be appropriately
@@ -1395,15 +1395,15 @@ The following changes have occurred to the QA check process:
    see the "`QA Error and Warning Messages <#ref-qa-checks>`__" chapter.
 
 -  Package QA checks are now performed during a new
-   ```do_package_qa`` <#ref-tasks-package_qa>`__ task rather than being
-   part of the ```do_package`` <#ref-tasks-package>`__ task. This allows
+   :ref:`ref-tasks-package_qa` task rather than being
+   part of the :ref:`ref-tasks-package` task. This allows
    more parallel execution. This change is unlikely to be an issue
    except for highly customized recipes that disable packaging tasks
    themselves by marking them as ``noexec``. For those packages, you
    will need to disable the ``do_package_qa`` task as well.
 
 -  Files being overwritten during the
-   ```do_populate_sysroot`` <#ref-tasks-populate_sysroot>`__ task now
+   :ref:`ref-tasks-populate_sysroot` task now
    trigger an error instead of a warning. Recipes should not be
    overwriting files written to the sysroot by other recipes. If you
    have these types of recipes, you need to alter them so that they do
@@ -1412,7 +1412,7 @@ The following changes have occurred to the QA check process:
    You might now receive this error after changes in configuration or
    metadata resulting in orphaned files being left in the sysroot. If
    you do receive this error, the way to resolve the issue is to delete
-   your ```TMPDIR`` <#var-TMPDIR>`__ or to move it out of the way and
+   your :term:`TMPDIR` or to move it out of the way and
    then re-start the build. Anything that has been fully built up to
    that point and does not need rebuilding will be restored from the
    shared state cache and the rest of the build will be able to proceed
@@ -1508,7 +1508,7 @@ BlueZ 4.x / 5.x Selection
 
 Proper built-in support for selecting BlueZ 5.x in preference to the
 default of 4.x now exists. To use BlueZ 5.x, simply add "bluez5" to your
-```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__ value. If you had
+:term:`DISTRO_FEATURES` value. If you had
 previously added append files (``*.bbappend``) to make this selection,
 you can now remove them.
 
@@ -1532,8 +1532,8 @@ code tree. In theory, migration paths have been provided for most common
 usages in kernel recipes but this might not work in all cases. In
 particular, users need to ensure that ``${S}`` (source files) and
 ``${B}`` (build artifacts) are used correctly in functions such as
-```do_configure`` <#ref-tasks-configure>`__ and
-```do_install`` <#ref-tasks-install>`__. For kernel recipes that do not
+:ref:`ref-tasks-configure` and
+:ref:`ref-tasks-install`. For kernel recipes that do not
 inherit from ``kernel-yocto`` or include ``linux-yocto.inc``, you might
 wish to refer to the ``linux.inc`` file in the ``meta-oe`` layer for the
 kinds of changes you need to make. For reference, here is the
@@ -1554,7 +1554,7 @@ SSL 3.0 is now disabled when building OpenSSL. Disabling SSL 3.0 avoids
 any lingering instances of the POODLE vulnerability. If you feel you
 must re-enable SSL 3.0, then you can add an append file (``*.bbappend``)
 for the ``openssl`` recipe to remove "-no-ssl3" from
-```EXTRA_OECONF`` <#var-EXTRA_OECONF>`__.
+:term:`EXTRA_OECONF`.
 
 .. _migration-1.8-default-sysroot-poisoning:
 
@@ -1578,17 +1578,17 @@ need to take corrective steps.
 Rebuild Improvements
 --------------------
 
-Changes have been made to the ```base`` <#ref-classes-base>`__,
-```autotools`` <#ref-classes-autotools>`__, and
-```cmake`` <#ref-classes-cmake>`__ classes to clean out generated files
-when the ```do_configure`` <#ref-tasks-configure>`__ task needs to be
+Changes have been made to the :ref:`base <ref-classes-base>`,
+:ref:`autotools <ref-classes-autotools>`, and
+:ref:`cmake <ref-classes-cmake>` classes to clean out generated files
+when the :ref:`ref-tasks-configure` task needs to be
 re-executed.
 
 One of the improvements is to attempt to run "make clean" during the
 ``do_configure`` task if a ``Makefile`` exists. Some software packages
 do not provide a working clean target within their make files. If you
 have such recipes, you need to set
-```CLEANBROKEN`` <#var-CLEANBROKEN>`__ to "1" within the recipe, for
+:term:`CLEANBROKEN` to "1" within the recipe, for
 example: CLEANBROKEN = "1"
 
 .. _migration-1.8-qa-check-and-validation-changes:
@@ -1603,18 +1603,18 @@ The following QA Check and Validation Changes have occurred:
    recipe or append file.
 
 -  An additional QA check has been added to detect usage of ``${D}`` in
-   ```FILES`` <#var-FILES>`__ values where ```D`` <#var-D>`__ values
+   :term:`FILES` values where :term:`D` values
    should not be used at all. The same check ensures that ``$D`` is used
    in ``pkg_preinst/pkg_postinst/pkg_prerm/pkg_postrm`` functions
    instead of ``${D}``.
 
--  ```S`` <#var-S>`__ now needs to be set to a valid value within a
+-  :term:`S` now needs to be set to a valid value within a
    recipe. If ``S`` is not set in the recipe, the directory is not
    automatically created. If ``S`` does not point to a directory that
-   exists at the time the ```do_unpack`` <#ref-tasks-unpack>`__ task
+   exists at the time the :ref:`ref-tasks-unpack` task
    finishes, a warning will be shown.
 
--  ```LICENSE`` <#var-LICENSE>`__ is now validated for correct
+-  :term:`LICENSE` is now validated for correct
    formatting of multiple licenses. If the format is invalid (e.g.
    multiple licenses are specified with no operators to specify how the
    multiple licenses interact), then a warning will be shown.
@@ -1633,7 +1633,7 @@ The following miscellaneous changes have occurred:
 -  The ``oe-pkgdata-util`` script now expects a "-p" option to be
    specified before the ``pkgdata`` directory, which is now optional. If
    the ``pkgdata`` directory is not specified, the script will run
-   BitBake to query ```PKGDATA_DIR`` <#var-PKGDATA_DIR>`__ from the
+   BitBake to query :term:`PKGDATA_DIR` from the
    build environment.
 
 Moving to the Yocto Project 2.0 Release
@@ -1811,7 +1811,7 @@ Recipe Maintenance Tracking Data Moved to OE-Core
 -------------------------------------------------
 
 Maintenance tracking data for recipes that was previously part of
-``meta-yocto`` has been moved to `OE-Core <#oe-core>`__. The change
+``meta-yocto`` has been moved to :term:`OpenEmbedded-Core (OE-Core)`. The change
 includes ``package_regex.inc`` and ``distro_alias.inc``, which are
 typically enabled when using the ``distrodata`` class. Additionally, the
 contents of ``upstream_tracking.inc`` has now been split out to the
@@ -1827,7 +1827,7 @@ configuration are now automatically removed from sysroot as well as
 removed from any other place managed by shared state. This automatic
 cleanup means that the build system now properly handles situations such
 as renaming the build system side of recipes, removal of layers from
-``bblayers.conf``, and ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__
+``bblayers.conf``, and :term:`DISTRO_FEATURES`
 changes.
 
 Additionally, work directories for old versions of recipes are now
@@ -1847,7 +1847,7 @@ modifications synchronized, it is not always obvious to developers how
 to manipulate the Metadata as compared to the source.
 
 Metadata processing has now been removed from the
-```kernel-yocto`` <#ref-classes-kernel-yocto>`__ class and the external
+:ref:`kernel-yocto <ref-classes-kernel-yocto>` class and the external
 Metadata repository ``yocto-kernel-cache``, which has always been used
 to seed the ``linux-yocto`` "meta" branch. This separate ``linux-yocto``
 cache repository is now the primary location for this data. Due to this
@@ -1870,13 +1870,13 @@ The following QA checks have been added:
 
 -  Added an "invalid-chars" check for invalid (non-UTF8) characters in
    recipe metadata variable values (i.e.
-   ```DESCRIPTION`` <#var-DESCRIPTION>`__,
-   ```SUMMARY`` <#var-SUMMARY>`__, ```LICENSE`` <#var-LICENSE>`__, and
-   ```SECTION`` <#var-SECTION>`__). Some package managers do not support
+   :term:`DESCRIPTION`,
+   :term:`SUMMARY`, :term:`LICENSE`, and
+   :term:`SECTION`). Some package managers do not support
    these characters.
 
 -  Added an "invalid-packageconfig" check for any options specified in
-   ```PACKAGECONFIG`` <#var-PACKAGECONFIG>`__ that do not match any
+   :term:`PACKAGECONFIG` that do not match any
    ``PACKAGECONFIG`` option defined for the recipe.
 
 .. _migration-2.0-miscellaneous:
@@ -1888,7 +1888,7 @@ These additional changes exist:
 
 -  ``gtk-update-icon-cache`` has been renamed to ``gtk-icon-utils``.
 
--  The ``tools-profile`` ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__
+-  The ``tools-profile`` :term:`IMAGE_FEATURES`
    item as well as its corresponding packagegroup and
    ``packagegroup-core-tools-profile`` no longer bring in ``oprofile``.
    Bringing in ``oprofile`` was originally added to aid compilation on
@@ -1897,7 +1897,7 @@ These additional changes exist:
    powerful target platforms and the existence of better
    cross-compilation tools.
 
--  The ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__ variable's default
+-  The :term:`IMAGE_FSTYPES` variable's default
    value now specifies ``ext4`` instead of ``ext3``.
 
 -  All support for the ``PRINC`` variable has been removed.
@@ -1937,7 +1937,7 @@ The convention for overrides has always been for them to be lower-case
 characters. This practice is now a requirement as BitBake's datastore
 now assumes lower-case characters in order to give a slight performance
 boost during parsing. In practical terms, this requirement means that
-anything that ends up in ```OVERRIDES`` <#var-OVERRIDES>`__ must now
+anything that ends up in :term:`OVERRIDES` must now
 appear in lower-case characters (e.g. values for ``MACHINE``,
 ``TARGET_ARCH``, ``DISTRO``, and also recipe names if
 ``_pn-``\ recipename overrides are to be effective).
@@ -1970,7 +1970,7 @@ layer to make this change: sed -e 's:\(\.getVar([^,()]*\)):\1, False):g'
 Makefile Environment Changes
 ----------------------------
 
-```EXTRA_OEMAKE`` <#var-EXTRA_OEMAKE>`__ now defaults to "" instead of
+:term:`EXTRA_OEMAKE` now defaults to "" instead of
 "-e MAKEFLAGS=". Setting ``EXTRA_OEMAKE`` to "-e MAKEFLAGS=" by default
 was a historical accident that has required many classes (e.g.
 ``autotools``, ``module``) and recipes to override this default in order
@@ -2007,14 +2007,14 @@ breaking FHS.
 ``ac_cv_sizeof_off_t`` is No Longer Cached in Site Files
 --------------------------------------------------------
 
-For recipes inheriting the ```autotools`` <#ref-classes-autotools>`__
+For recipes inheriting the :ref:`autotools <ref-classes-autotools>`
 class, ``ac_cv_sizeof_off_t`` is no longer cached in the site files for
 ``autoconf``. The reason for this change is because the
 ``ac_cv_sizeof_off_t`` value is not necessarily static per architecture
 as was previously assumed. Rather, the value changes based on whether
 large file support is enabled. For most software that uses ``autoconf``,
 this change should not be a problem. However, if you have a recipe that
-bypasses the standard ```do_configure`` <#ref-tasks-configure>`__ task
+bypasses the standard :ref:`ref-tasks-configure` task
 from the ``autotools`` class and the software the recipe is building
 uses a very old version of ``autoconf``, the recipe might be incapable
 of determining the correct size of ``off_t`` during ``do_configure``.
@@ -2030,7 +2030,7 @@ implementation does get used.
 Image Generation is Now Split Out from Filesystem Generation
 ------------------------------------------------------------
 
-Previously, for image recipes the ```do_rootfs`` <#ref-tasks-rootfs>`__
+Previously, for image recipes the :ref:`ref-tasks-rootfs`
 task assembled the filesystem and then from that filesystem generated
 images. With this Yocto Project release, image generation is split into
 separate ```do_image_*`` <#ref-tasks-image>`__ tasks for clarity both in
@@ -2047,7 +2047,7 @@ time.
 
 A minor part of this restructuring is that the post-processing
 definitions and functions have been moved from the
-```image`` <#ref-classes-image>`__ class to the
+:ref:`image <ref-classes-image>` class to the
 ```rootfs-postcommands`` <#ref-classes-rootfs*>`__ class. Functionally,
 however, they remain unchanged.
 
@@ -2099,7 +2099,7 @@ Class Changes
 The following classes have changed:
 
 -  ``autotools_stage``: Removed because the
-   ```autotools`` <#ref-classes-autotools>`__ class now provides its
+   :ref:`autotools <ref-classes-autotools>` class now provides its
    functionality. Recipes that inherited from ``autotools_stage`` should
    now inherit from ``autotools`` instead.
 
@@ -2108,7 +2108,7 @@ The following classes have changed:
    this change should not cause any issues.
 
 -  ``bootimg``: Merged into the
-   ```image-live`` <#ref-classes-image-live>`__ class. The ``bootimg``
+   :ref:`image-live <ref-classes-image-live>` class. The ``bootimg``
    class was rarely directly used. Consequently, this change should not
    cause any issues.
 
@@ -2166,7 +2166,7 @@ The following changes have been made for the Poky distribution:
    not need to change anything unless you are relying on this naming
    elsewhere.
 
--  The ```uninative`` <#ref-classes-uninative>`__ class is now enabled
+-  The :ref:`uninative <ref-classes-uninative>` class is now enabled
    by default in Poky. This class attempts to isolate the build system
    from the host distribution's C library and makes re-use of native
    shared state artifacts across different host distributions practical.
@@ -2278,7 +2278,7 @@ These additional changes exist:
 
 -  Previously, the following list of packages were removed if
    package-management was not in
-   ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__, regardless of any
+   :term:`IMAGE_FEATURES`, regardless of any
    dependencies: update-rc.d base-passwd shadow update-alternatives
    run-postinsts With the Yocto Project 2.1 release, these packages are
    only removed if "read-only-rootfs" is in ``IMAGE_FEATURES``, since
@@ -2362,9 +2362,9 @@ Staging Directories in Sysroot Has Been Simplified
 --------------------------------------------------
 
 The way directories are staged in sysroot has been simplified and
-introduces the new ```SYSROOT_DIRS`` <#var-SYSROOT_DIRS>`__,
-```SYSROOT_DIRS_NATIVE`` <#var-SYSROOT_DIRS_NATIVE>`__, and
-```SYSROOT_DIRS_BLACKLIST`` <#var-SYSROOT_DIRS_BLACKLIST>`__. See the
+introduces the new :term:`SYSROOT_DIRS`,
+:term:`SYSROOT_DIRS_NATIVE`, and
+:term:`SYSROOT_DIRS_BLACKLIST`. See the
 `v2 patch series on the OE-Core Mailing
 List <http://lists.openembedded.org/pipermail/openembedded-core/2016-May/121365.html>`__
 for additional information.
@@ -2408,7 +2408,7 @@ Metadata Must Now Use Python 3 Syntax
 The metadata is now required to use Python 3 syntax. For help preparing
 metadata, see any of the many Python 3 porting guides available.
 Alternatively, you can reference the conversion commits for Bitbake and
-you can use `OE-Core <#oe-core>`__ as a guide for changes. Following are
+you can use :term:`OpenEmbedded-Core (OE-Core)` as a guide for changes. Following are
 particular areas of interest: \* subprocess command-line pipes needing
 locale decoding \* the syntax for octal values changed \* the
 ``iter*()`` functions changed name \* iterators now return views, not
@@ -2449,7 +2449,7 @@ compared to uClibc.
 ``${B}`` No Longer Default Working Directory for Tasks
 ------------------------------------------------------
 
-``${``\ ```B`` <#var-B>`__\ ``}`` is no longer the default working
+``${``\ :term:`B`\ ``}`` is no longer the default working
 directory for tasks. Consequently, any custom tasks you define now need
 to either have the
 ``[``\ ```dirs`` <&YOCTO_DOCS_BB_URL;#variable-flags>`__\ ``]`` flag
@@ -2479,7 +2479,7 @@ enables fine-grained tuning of options passed to QEMU without the
 ``runqemu`` script hard-coding any knowledge about different machines.
 Using a configuration file is particularly convenient when trying to use
 QEMU with machines other than the ``qemu*`` machines in
-`OE-Core <#oe-core>`__. The ``qemuboot.conf`` file is generated by the
+:term:`OpenEmbedded-Core (OE-Core)`. The ``qemuboot.conf`` file is generated by the
 ``qemuboot`` class when the root filesystem is being build (i.e. build
 rootfs). QEMU boot arguments can be set in BSP's configuration file and
 the ``qemuboot`` class will save them to ``qemuboot.conf``.
@@ -2527,7 +2527,7 @@ socket,id=virtcon,port=@PORT@,host=127.0.0.1 -device
 virtconsole,chardev=virtcon" runqemu will replace "@PORT@" with the port
 number which is used.
 
-To use ``runqemu``, set ```IMAGE_CLASSES`` <#var-IMAGE_CLASSES>`__ as
+To use ``runqemu``, set :term:`IMAGE_CLASSES` as
 follows and run ``runqemu``:
 
 .. note::
@@ -2545,7 +2545,7 @@ Default Linker Hash Style Changed
 
 The default linker hash style for ``gcc-cross`` is now "sysv" in order
 to catch recipes that are building software without using the
-OpenEmbedded ```LDFLAGS`` <#var-LDFLAGS>`__. This change could result in
+OpenEmbedded :term:`LDFLAGS`. This change could result in
 seeing some "No GNU_HASH in the elf binary" QA issues when building such
 recipes. You need to fix these recipes so that they use the expected
 ``LDFLAGS``. Depending on how the software is built, the build system
@@ -2559,7 +2559,7 @@ to the recipe: TARGET_CC_ARCH += "${LDFLAGS}"
 --------------------------------------------------------------
 
 The ``KERNEL_IMAGE_BASE_NAME`` variable no longer uses the
-```KERNEL_IMAGETYPE`` <#var-KERNEL_IMAGETYPE>`__ variable to create the
+:term:`KERNEL_IMAGETYPE` variable to create the
 image's base name. Because the OpenEmbedded build system can now build
 multiple kernel image types, this part of the kernel image base name as
 been removed leaving only the following: KERNEL_IMAGE_BASE_NAME ?=
@@ -2577,11 +2577,11 @@ The following changes took place for BitBake:
 -  The "goggle" UI and standalone image-writer tool have been removed as
    they both require GTK+ 2.0 and were not being maintained.
 
--  The Perforce fetcher now supports ```SRCREV`` <#var-SRCREV>`__ for
+-  The Perforce fetcher now supports :term:`SRCREV` for
    specifying the source revision to use, be it
-   ``${``\ ```AUTOREV`` <#var-AUTOREV>`__\ ``}``, changelist number,
+   ``${``\ :term:`AUTOREV`\ ``}``, changelist number,
    p4date, or label, in preference to separate
-   ```SRC_URI`` <#var-SRC_URI>`__ parameters to specify these. This
+   :term:`SRC_URI` parameters to specify these. This
    change is more in-line with how the other fetchers work for source
    control systems. Recipes that fetch from Perforce will need to be
    updated to use ``SRCREV`` in place of specifying the source revision
@@ -2687,8 +2687,8 @@ The following classes have been removed:
 
 -  ``distutils3-native-base``: No longer needed.
 
--  ``sdl``: Only set ```DEPENDS`` <#var-DEPENDS>`__ and
-   ```SECTION`` <#var-SECTION>`__, which are better set within the
+-  ``sdl``: Only set :term:`DEPENDS` and
+   :term:`SECTION`, which are better set within the
    recipe instead.
 
 -  ``sip``: Mostly unused.
@@ -2723,9 +2723,9 @@ The following miscellaneous changes have occurred:
    respective recipes.
 
 -  Both ``devtool add`` and ``recipetool create`` now use a fixed
-   ```SRCREV`` <#var-SRCREV>`__ by default when fetching from a Git
+   :term:`SRCREV` by default when fetching from a Git
    repository. You can override this in either case to use
-   ``${``\ ```AUTOREV`` <#var-AUTOREV>`__\ ``}`` instead by using the
+   ``${``\ :term:`AUTOREV`\ ``}`` instead by using the
    ``-a`` or ``DASHDASHautorev`` command-line option
 
 -  ``distcc``: GTK+ UI is now disabled by default.
@@ -2776,14 +2776,14 @@ Consider the following:
 -  *Specify Pre-Installation and Post-Installation Native Tool
    Dependencies:* You must specifically specify any special native tool
    dependencies of ``pkg_preinst`` and ``pkg_postinst`` scripts by using
-   the ```PACKAGE_WRITE_DEPS`` <#var-PACKAGE_WRITE_DEPS>`__ variable.
+   the :term:`PACKAGE_WRITE_DEPS` variable.
    Specifying these dependencies ensures that these tools are available
    if these scripts need to be run on the build host during the
-   ```do_rootfs`` <#ref-tasks-rootfs>`__ task.
+   :ref:`ref-tasks-rootfs` task.
 
    As an example, see the ``dbus`` recipe. You will see that this recipe
    has a ``pkg_postinst`` that calls ``systemctl`` if "systemd" is in
-   ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__. In the example,
+   :term:`DISTRO_FEATURES`. In the example,
    ``systemd-systemctl-native`` is added to ``PACKAGE_WRITE_DEPS``,
    which is also conditional on "systemd" being in ``DISTRO_FEATURES``.
 
@@ -2797,7 +2797,7 @@ Consider the following:
    functions being called through ``SSTATEPOSTINSTFUNCS`` are doing
    relocation, then you will need to change these to use a
    post-installation script that is installed by a function added to
-   ```SYSROOT_PREPROCESS_FUNCS`` <#var-SYSROOT_PREPROCESS_FUNCS>`__.
+   :term:`SYSROOT_PREPROCESS_FUNCS`.
 
    For an example, see the ``pixbufcache`` class in ``meta/classes/`` in
    the Yocto Project `Source
@@ -2821,7 +2821,7 @@ Consider the following:
    the shared sysroot is now gone, the scripts
    ``oe-find-native-sysroot`` and ``oe-run-native`` have been changed
    such that you need to specify which recipe's
-   ```STAGING_DIR_NATIVE`` <#var-STAGING_DIR_NATIVE>`__ is used.
+   :term:`STAGING_DIR_NATIVE` is used.
 
 .. note::
 
@@ -2839,8 +2839,8 @@ Within the environment used to run build tasks, the environment variable
 ``PATH`` is now sanitized such that the normal native binary paths
 (``/bin``, ``/sbin``, ``/usr/bin`` and so forth) are removed and a
 directory containing symbolic links linking only to the binaries from
-the host mentioned in the ```HOSTTOOLS`` <#var-HOSTTOOLS>`__ and
-```HOSTTOOLS_NONFATAL`` <#var-HOSTTOOLS_NONFATAL>`__ variables is added
+the host mentioned in the :term:`HOSTTOOLS` and
+:term:`HOSTTOOLS_NONFATAL` variables is added
 to ``PATH``.
 
 Consequently, any native binaries provided by the host that you need to
@@ -2848,7 +2848,7 @@ call needs to be in one of these two variables at the configuration
 level.
 
 Alternatively, you can add a native recipe (i.e. ``-native``) that
-provides the binary to the recipe's ```DEPENDS`` <#var-DEPENDS>`__
+provides the binary to the recipe's :term:`DEPENDS`
 value.
 
 .. note::
@@ -2881,7 +2881,7 @@ The following changes to scripts took place:
 -  *``cleanup-workdir``:* The ``cleanup-workdir`` script has been
    removed because the script was found to be deleting files it should
    not have, which lead to broken build trees. Rather than trying to
-   delete portions of ```TMPDIR`` <#var-TMPDIR>`__ and getting it wrong,
+   delete portions of :term:`TMPDIR` and getting it wrong,
    it is recommended that you delete ``TMPDIR`` and have it restored
    from shared state (sstate) on subsequent builds.
 
@@ -2927,8 +2927,8 @@ The following changes took place for BitBake:
    between recipes, which could be misleading.
 
 -  *Mirror Variable Splitting Changes:* Mirror variables including
-   ```MIRRORS`` <#var-MIRRORS>`__, ```PREMIRRORS`` <#var-PREMIRRORS>`__,
-   and ```SSTATE_MIRRORS`` <#var-SSTATE_MIRRORS>`__ can now separate
+   :term:`MIRRORS`, :term:`PREMIRRORS`,
+   and :term:`SSTATE_MIRRORS` can now separate
    values entirely with spaces. Consequently, you no longer need "\\n".
    BitBake looks for pairs of values, which simplifies usage. There
    should be no change required to existing mirror variable values
@@ -2940,7 +2940,7 @@ The following changes took place for BitBake:
    when the "protocol" parameter is set to "svn+ssh". You can only use
    the new parameter to specify the ``ssh`` program used by SVN. The SVN
    fetcher passes the new parameter through the ``SVN_SSH`` environment
-   variable during the ```do_fetch`` <#ref-tasks-fetch>`__ task.
+   variable during the :ref:`ref-tasks-fetch` task.
 
    See the "`Subversion (SVN) Fetcher
    (svn://) <&YOCTO_DOCS_BB_URL;#svn-fetcher>`__" section in the BitBake
@@ -2974,8 +2974,8 @@ GPLv2 Versions of GPLv3 Recipes Moved
 Older GPLv2 versions of GPLv3 recipes have moved to a separate
 ``meta-gplv2`` layer.
 
-If you use ```INCOMPATIBLE_LICENSE`` <#var-INCOMPATIBLE_LICENSE>`__ to
-exclude GPLv3 or set ```PREFERRED_VERSION`` <#var-PREFERRED_VERSION>`__
+If you use :term:`INCOMPATIBLE_LICENSE` to
+exclude GPLv3 or set :term:`PREFERRED_VERSION`
 to substitute a GPLv2 version of a GPLv3 recipe, then you must add the
 ``meta-gplv2`` layer to your configuration.
 
@@ -3052,7 +3052,7 @@ The following package management changes took place:
    This change was made because too many places in DNF/RPM4 stack
    already make that assumption. Only the filenames and the architecture
    tag has changed. Nothing else has changed in OE-core system,
-   particularly in the ```allarch.bbclass`` <#ref-classes-allarch>`__
+   particularly in the :ref:`allarch.bbclass <ref-classes-allarch>`
    class.
 
 -  Signing of remote package feeds using ``PACKAGE_FEED_SIGN`` is not
@@ -3100,7 +3100,7 @@ The following recipes have been removed:
 -  *``tremor:``* Moved to ``meta-multimedia``. Fixed-integer Vorbis
    decoding is not needed by current hardware. Thus, GStreamer's ivorbis
    plugin has been disabled by default eliminating the need for the
-   ``tremor`` recipe in `OE-Core <#oe-core>`__.
+   ``tremor`` recipe in :term:`OpenEmbedded-Core (OE-Core)`.
 
 -  *``gummiboot:``* Replaced by ``systemd-boot``.
 
@@ -3151,7 +3151,7 @@ The following QA checks have changed:
    warning, you need to address missing runtime dependencies.
 
    For additional information, see the
-   ```insane`` <#ref-classes-insane>`__ class and the "`Errors and
+   :ref:`insane <ref-classes-insane>` class and the "`Errors and
    Warnings <#qa-errors-and-warnings>`__" section.
 
 .. _migration-2.3-miscellaneous-changes:
@@ -3162,7 +3162,7 @@ Miscellaneous Changes
 The following miscellaneous changes have occurred:
 
 -  In this release, a number of recipes have been changed to ignore the
-   ``largefile`` ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__ item,
+   ``largefile`` :term:`DISTRO_FEATURES` item,
    enabling large file support unconditionally. This feature has always
    been enabled by default. Disabling the feature has not been widely
    tested.
@@ -3174,8 +3174,8 @@ The following miscellaneous changes have occurred:
       largefile
       feature, which would make it unconditionally enabled everywhere.
 
--  If the ```DISTRO_VERSION`` <#var-DISTRO_VERSION>`__ value contains
-   the value of the ```DATE`` <#var-DATE>`__ variable, which is the
+-  If the :term:`DISTRO_VERSION` value contains
+   the value of the :term:`DATE` variable, which is the
    default between Poky releases, the ``DATE`` value is explicitly
    excluded from ``/etc/issue`` and ``/etc/issue.net``, which is
    displayed at the login prompt, in order to avoid conflicts with
@@ -3186,7 +3186,7 @@ The following miscellaneous changes have occurred:
    If you need the build date recorded in ``/etc/issue*`` or anywhere
    else in your image, a better method is to define a post-processing
    function to do it and have the function called from
-   ```ROOTFS_POSTPROCESS_COMMAND`` <#var-ROOTFS_POSTPROCESS_COMMAND>`__.
+   :term:`ROOTFS_POSTPROCESS_COMMAND`.
    Doing so ensures the value is always up-to-date with the created
    image.
 
@@ -3195,7 +3195,7 @@ The following miscellaneous changes have occurred:
    RSA keys only, and with recent versions of OpenSSH, which deprecates
    DSA host keys.
 
--  The ```buildhistory`` <#ref-classes-buildhistory>`__ class now
+-  The :ref:`buildhistory <ref-classes-buildhistory>` class now
    correctly uses tabs as separators between all columns in
    ``installed-package-sizes.txt`` in order to aid import into other
    tools.
@@ -3206,7 +3206,7 @@ The following miscellaneous changes have occurred:
    DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " ldconfig"
 
 -  The default value of
-   ```COPYLEFT_LICENSE_INCLUDE`` <#var-COPYLEFT_LICENSE_INCLUDE>`__ now
+   :term:`COPYLEFT_LICENSE_INCLUDE` now
    includes all versions of AGPL licenses in addition to GPL and LGPL.
 
    .. note::
@@ -3227,14 +3227,14 @@ The following miscellaneous changes have occurred:
 
    If you need to preserve these ``.la`` files (e.g. in a custom
    distribution), you must change
-   ```INHERIT_DISTRO`` <#var-INHERIT_DISTRO>`__ such that
+   :term:`INHERIT_DISTRO` such that
    "remove-libtool" is not included in the value.
 
 -  Extensible SDKs built for GCC 5+ now refuse to install on a
    distribution where the host GCC version is 4.8 or 4.9. This change
    resulted from the fact that the installation is known to fail due to
    the way the ``uninative`` shared state (sstate) package is built. See
-   the ```uninative`` <#ref-classes-uninative>`__ class for additional
+   the :ref:`uninative <ref-classes-uninative>` class for additional
    information.
 
 -  All native and nativesdk recipes now use a separate
@@ -3242,18 +3242,18 @@ The following miscellaneous changes have occurred:
    recipes for the target, in order to avoid unnecessary rebuilds.
 
    The ``DISTRO_FEATURES`` for ``native`` recipes is
-   ```DISTRO_FEATURES_NATIVE`` <#var-DISTRO_FEATURES_NATIVE>`__ added to
+   :term:`DISTRO_FEATURES_NATIVE` added to
    an intersection of ``DISTRO_FEATURES`` and
-   ```DISTRO_FEATURES_FILTER_NATIVE`` <#var-DISTRO_FEATURES_FILTER_NATIVE>`__.
+   :term:`DISTRO_FEATURES_FILTER_NATIVE`.
 
    For nativesdk recipes, the corresponding variables are
-   ```DISTRO_FEATURES_NATIVESDK`` <#var-DISTRO_FEATURES_NATIVESDK>`__
+   :term:`DISTRO_FEATURES_NATIVESDK`
    and
-   ```DISTRO_FEATURES_FILTER_NATIVESDK`` <#var-DISTRO_FEATURES_FILTER_NATIVESDK>`__.
+   :term:`DISTRO_FEATURES_FILTER_NATIVESDK`.
 
 -  The ``FILESDIR`` variable, which was previously deprecated and rarely
    used, has now been removed. You should change any recipes that set
-   ``FILESDIR`` to set ```FILESPATH`` <#var-FILESPATH>`__ instead.
+   ``FILESDIR`` to set :term:`FILESPATH` instead.
 
 -  The ``MULTIMACH_HOST_SYS`` variable has been removed as it is no
    longer needed with recipe-specific sysroots.
@@ -3272,7 +3272,7 @@ Memory Resident Mode
 A persistent mode is now available in BitBake's default operation,
 replacing its previous "memory resident mode" (i.e.
 ``oe-init-build-env-memres``). Now you only need to set
-```BB_SERVER_TIMEOUT`` <#var-BB_SERVER_TIMEOUT>`__ to a timeout (in
+:term:`BB_SERVER_TIMEOUT` to a timeout (in
 seconds) and BitBake's server stays resident for that amount of time
 between invocations. The ``oe-init-build-env-memres`` script has been
 removed since a separate environment setup script is no longer needed.
@@ -3306,11 +3306,11 @@ occurred:
 
    -  The ``su`` program is now packaged in a separate "util-linux-su"
       package, which is only built when "pam" is listed in the
-      ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__ variable.
+      :term:`DISTRO_FEATURES` variable.
       ``util-linux`` should not be installed unless it is needed because
       ``su`` is normally provided through the shadow file format. The
       main ``util-linux`` package has runtime dependencies (i.e.
-      ```RDEPENDS`` <#var-RDEPENDS>`__) on the ``util-linux-su`` package
+      :term:`RDEPENDS`) on the ``util-linux-su`` package
       when "pam" is in ``DISTRO_FEATURES``.
 
    -  The ``switch_root`` program is now packaged in a separate
@@ -3318,7 +3318,7 @@ occurred:
       do not need the whole ``util-linux`` package or the busybox
       binary, which are both much larger than ``switch_root``. The main
       ``util-linux`` package has a recommended runtime dependency (i.e.
-      ```RRECOMMENDS`` <#var-RRECOMMENDS>`__) on the
+      :term:`RRECOMMENDS`) on the
       ``util-linux-switch-root`` package.
 
    -  The ``ionice`` program is now packaged in a separate
@@ -3338,7 +3338,7 @@ occurred:
    runtime dependency (i.e. ``RRECOMMENDS``) on the ``shared-mime-info``
    package, since large portions of GIO are not useful without the MIME
    database. You can remove the dependency by using the
-   ```BAD_RECOMMENDATIONS`` <#var-BAD_RECOMMENDATIONS>`__ variable if
+   :term:`BAD_RECOMMENDATIONS` variable if
    ``shared-mime-info`` is too large and is not required.
 
 -  *Go Standard Runtime:* The Go standard runtime has been split out
@@ -3456,10 +3456,10 @@ Kernel Device Tree Move
 
 Kernel Device Tree support is now easier to enable in a kernel recipe.
 The Device Tree code has moved to a
-```kernel-devicetree`` <#ref-classes-kernel-devicetree>`__ class.
+:ref:`kernel-devicetree <ref-classes-kernel-devicetree>` class.
 Functionality is automatically enabled for any recipe that inherits the
-```kernel`` <#ref-classes-kernel>`__ class and sets the
-```KERNEL_DEVICETREE`` <#var-KERNEL_DEVICETREE>`__ variable. The
+:ref:`kernel <ref-classes-kernel>` class and sets the
+:term:`KERNEL_DEVICETREE` variable. The
 previous mechanism for doing this,
 ``meta/recipes-kernel/linux/linux-dtb.inc``, is still available to avoid
 breakage, but triggers a deprecation warning. Future releases of the
@@ -3478,7 +3478,7 @@ The following package QA changes took place:
 -  The "unsafe-references-in-scripts" QA check has been removed.
 
 -  If you refer to ``${COREBASE}/LICENSE`` within
-   ```LIC_FILES_CHKSUM`` <#var-LIC_FILES_CHKSUM>`__ you receive a
+   :term:`LIC_FILES_CHKSUM` you receive a
    warning because this file is a description of the license for
    OE-Core. Use ``${COMMON_LICENSE_DIR}/MIT`` if your recipe is
    MIT-licensed and you cannot use the preferred method of referring to
@@ -3529,10 +3529,10 @@ The following are additional changes:
    from ``meta-poky`` to OE-Core (i.e. from
    ``meta-poky/conf/distro/include`` to ``meta/conf/distro/include``).
 
--  The ```buildhistory`` <#ref-classes-buildhistory>`__ class now makes
+-  The :ref:`buildhistory <ref-classes-buildhistory>` class now makes
    a single commit per build rather than one commit per subdirectory in
    the repository. This behavior assumes the commits are enabled with
-   ```BUILDHISTORY_COMMIT`` <#var-BUILDHISTORY_COMMIT>`__ = "1", which
+   :term:`BUILDHISTORY_COMMIT` = "1", which
    is typical. Previously, the ``buildhistory`` class made one commit
    per subdirectory in the repository in order to make it easier to see
    the changes for a particular subdirectory. To view a particular
@@ -3540,7 +3540,7 @@ The following are additional changes:
    ``git show`` or ``git diff`` commands.
 
 -  The ``x86-base.inc`` file, which is included by all x86-based machine
-   configurations, now sets ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__
+   configurations, now sets :term:`IMAGE_FSTYPES`
    using ``?=`` to "live" rather than appending with ``+=``. This change
    makes the default easier to override.
 
@@ -3550,7 +3550,7 @@ The following are additional changes:
    Manual.
 
 -  By default, the ``security_flags.inc`` file sets a
-   ```GCCPIE`` <#var-GCCPIE>`__ variable with an option to enable
+   :term:`GCCPIE` variable with an option to enable
    Position Independent Executables (PIE) within ``gcc``. Enabling PIE
    in the GNU C Compiler (GCC), makes Return Oriented Programming (ROP)
    attacks much more difficult to execute.
@@ -3570,12 +3570,12 @@ The following are additional changes:
    you need to update them.
 
 -  OpenSSL 1.1 has been introduced. However, the default is still 1.0.x
-   through the ```PREFERRED_VERSION`` <#var-PREFERRED_VERSION>`__
+   through the :term:`PREFERRED_VERSION`
    variable. This preference is set is due to the remaining
    compatibility issues with other software. The
-   ```PROVIDES`` <#var-PROVIDES>`__ variable in the openssl 1.0 recipe
+   :term:`PROVIDES` variable in the openssl 1.0 recipe
    now includes "openssl10" as a marker that can be used in
-   ```DEPENDS`` <#var-DEPENDS>`__ within recipes that build software
+   :term:`DEPENDS` within recipes that build software
    that still depend on OpenSSL 1.0.
 
 -  To ensure consistent behavior, BitBake's "-r" and "-R" options (i.e.
@@ -3747,7 +3747,7 @@ One particular change to note is that the Python recipes no longer have
 build-time provides for their packages. This assumes ``python-foo`` is
 one of the packages provided by the Python recipe. You can no longer run
 ``bitbake python-foo`` or have a
-```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ on ``python-foo``,
+:term:`DEPENDS` on ``python-foo``,
 but doing either of the following causes the package to work as
 expected: IMAGE_INSTALL_append = " python-foo" or RDEPENDS_${PN} =
 "python-foo" The earlier build-time provides behavior was a quirk of the
@@ -3787,7 +3787,7 @@ The following are additional changes:
    ``sysklogd`` recipe no longer uses ``update-alternatives`` because it
    is incompatible with other implementations.
 
--  By default, the ```cmake`` <#ref-classes-cmake>`__ class uses
+-  By default, the :ref:`cmake <ref-classes-cmake>` class uses
    ``ninja`` instead of ``make`` for building. This improves build
    performance. If a recipe is broken with ``ninja``, then the recipe
    can set ``OECMAKE_GENERATOR = "Unix Makefiles"`` to change back to
@@ -3878,7 +3878,7 @@ release, see ` <https://gcc.gnu.org/gcc-8/changes.html>`__.
 
 If you still need to compile with version 7.x, GCC 7.3 is also provided.
 You can select this version by setting the and can be selected by
-setting the ```GCCVERSION`` <#var-GCCVERSION>`__ variable to "7.%" in
+setting the :term:`GCCVERSION` variable to "7.%" in
 your configuration.
 
 .. _migration-2.6-removed-recipes:
@@ -3972,12 +3972,12 @@ For names of recipes removed because of this repository change, see the
 ---------------------------------------------------------------------------------------------------
 
 Previously, it was possible for Python recipes that inherited the
-```distutils`` <#ref-classes-distutils>`__ and
+:ref:`distutils <ref-classes-distutils>` and
 ```distutils3`` <#ref-classes-distutils3>`__ classes to fetch code
-during the ```do_configure`` <#ref-tasks-configure>`__ task to satisfy
+during the :ref:`ref-tasks-configure` task to satisfy
 dependencies mentioned in ``setup.py`` if those dependencies were not
 provided in the sysroot (i.e. recipes providing the dependencies were
-missing from ```DEPENDS`` <#var-DEPENDS>`__).
+missing from :term:`DEPENDS`).
 
 .. note::
 
@@ -4018,9 +4018,9 @@ Image/Kernel Artifact Naming Changes
 
 The following changes have been made:
 
--  Name variables (e.g. ```IMAGE_NAME`` <#var-IMAGE_NAME>`__) use a new
+-  Name variables (e.g. :term:`IMAGE_NAME`) use a new
    ``IMAGE_VERSION_SUFFIX`` variable instead of
-   ```DATETIME`` <#var-DATETIME>`__. Using ``IMAGE_VERSION_SUFFIX``
+   :term:`DATETIME`. Using ``IMAGE_VERSION_SUFFIX``
    allows easier and more direct changes.
 
    The ``IMAGE_VERSION_SUFFIX`` variable is set in the ``bitbake.conf``
@@ -4029,40 +4029,40 @@ The following changes have been made:
 -  Several variables have changed names for consistency: Old Variable
    Name New Variable Name
    ========================================================
-   KERNEL_IMAGE_BASE_NAME `KERNEL_IMAGE_NAME <#var-KERNEL_IMAGE_NAME>`__
+   KERNEL_IMAGE_BASE_NAME :term:`KERNEL_IMAGE_NAME`
    KERNEL_IMAGE_SYMLINK_NAME
-   `KERNEL_IMAGE_LINK_NAME <#var-KERNEL_IMAGE_LINK_NAME>`__
+   :term:`KERNEL_IMAGE_LINK_NAME`
    MODULE_TARBALL_BASE_NAME
-   `MODULE_TARBALL_NAME <#var-MODULE_TARBALL_NAME>`__
+   :term:`MODULE_TARBALL_NAME`
    MODULE_TARBALL_SYMLINK_NAME
-   `MODULE_TARBALL_LINK_NAME <#var-MODULE_TARBALL_LINK_NAME>`__
-   INITRAMFS_BASE_NAME `INITRAMFS_NAME <#var-INITRAMFS_NAME>`__
+   :term:`MODULE_TARBALL_LINK_NAME`
+   INITRAMFS_BASE_NAME :term:`INITRAMFS_NAME`
 
 -  The ``MODULE_IMAGE_BASE_NAME`` variable has been removed. The module
    tarball name is now controlled directly with the
-   ```MODULE_TARBALL_NAME`` <#var-MODULE_TARBALL_NAME>`__ variable.
+   :term:`MODULE_TARBALL_NAME` variable.
 
--  The ```KERNEL_DTB_NAME`` <#var-KERNEL_DTB_NAME>`__ and
-   ```KERNEL_DTB_LINK_NAME`` <#var-KERNEL_DTB_LINK_NAME>`__ variables
+-  The :term:`KERNEL_DTB_NAME` and
+   :term:`KERNEL_DTB_LINK_NAME` variables
    have been introduced to control kernel Device Tree Binary (DTB)
    artifact names instead of mangling ``KERNEL_IMAGE_*`` variables.
 
--  The ```KERNEL_FIT_NAME`` <#var-KERNEL_FIT_NAME>`__ and
-   ```KERNEL_FIT_LINK_NAME`` <#var-KERNEL_FIT_LINK_NAME>`__ variables
+-  The :term:`KERNEL_FIT_NAME` and
+   :term:`KERNEL_FIT_LINK_NAME` variables
    have been introduced to specify the name of flattened image tree
    (FIT) kernel images similar to other deployed artifacts.
 
--  The ```MODULE_TARBALL_NAME`` <#var-MODULE_TARBALL_NAME>`__ and
-   ```MODULE_TARBALL_LINK_NAME`` <#var-MODULE_TARBALL_LINK_NAME>`__
+-  The :term:`MODULE_TARBALL_NAME` and
+   :term:`MODULE_TARBALL_LINK_NAME`
    variable values no longer include the "module-" prefix or ".tgz"
    suffix. These parts are now hardcoded so that the values are
    consistent with other artifact naming variables.
 
--  Added the ```INITRAMFS_LINK_NAME`` <#var-INITRAMFS_LINK_NAME>`__
+-  Added the :term:`INITRAMFS_LINK_NAME`
    variable so that the symlink can be controlled similarly to other
    artifact types.
 
--  ```INITRAMFS_NAME`` <#var-INITRAMFS_NAME>`__ now uses
+-  :term:`INITRAMFS_NAME` now uses
    "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}" instead
    of "${PV}-${PR}-${MACHINE}-${DATETIME}", which makes it consistent
    with other variables.
@@ -4072,9 +4072,9 @@ The following changes have been made:
 ``SERIAL_CONSOLE`` Deprecated
 -----------------------------
 
-The ```SERIAL_CONSOLE`` <#var-SERIAL_CONSOLE>`__ variable has been
+The :term:`SERIAL_CONSOLE` variable has been
 functionally replaced by the
-```SERIAL_CONSOLES`` <#var-SERIAL_CONSOLES>`__ variable for some time.
+:term:`SERIAL_CONSOLES` variable for some time.
 With the Yocto Project 2.6 release, ``SERIAL_CONSOLE`` has been
 officially deprecated.
 
@@ -4122,7 +4122,7 @@ The following changes have occurred:
 -  *The ``forcevariable`` Override Now Has a Higher Priority Than
    ``libc`` Overrides:* The ``forcevariable`` override is documented to
    be the highest priority override. However, due to a long-standing
-   quirk of how ```OVERRIDES`` <#var-OVERRIDES>`__ is set, the ``libc``
+   quirk of how :term:`OVERRIDES` is set, the ``libc``
    overrides (e.g. ``libc-glibc``, ``libc-musl``, and so forth)
    erroneously had a higher priority. This issue is now corrected.
 
@@ -4177,14 +4177,14 @@ This section provides information about automatic testing changes:
    ``TEST_IMAGE`` variable to "1" to enable automatic testing for
    successfully built images. The ``TEST_IMAGE`` variable no longer
    exists and has been replaced by the
-   ```TESTIMAGE_AUTO`` <#var-TESTIMAGE_AUTO>`__ variable.
+   :term:`TESTIMAGE_AUTO` variable.
 
 -  *Inheriting the ``testimage`` and ``testsdk`` Classes:* Best
    practices now dictate that you use the
-   ```IMAGE_CLASSES`` <#var-IMAGE_CLASSES>`__ variable rather than the
-   ```INHERIT`` <#var-INHERIT>`__ variable when you inherit the
+   :term:`IMAGE_CLASSES` variable rather than the
+   :term:`INHERIT` variable when you inherit the
    ```testimage`` <#ref-classes-testimage*>`__ and
-   ```testsdk`` <#ref-classes-testsdk>`__ classes used for automatic
+   :ref:`testsdk <ref-classes-testsdk>` classes used for automatic
    testing.
 
 .. _migration-2.6-openssl-changes:
@@ -4207,7 +4207,7 @@ BitBake Changes
 ---------------
 
 The server logfile ``bitbake-cookerdaemon.log`` is now always placed in
-the `Build Directory <#build-directory>`__ instead of the current
+the :term:`Build Directory` instead of the current
 directory.
 
 .. _migration-2.6-security-changes:
@@ -4229,7 +4229,7 @@ want to explicitly defer a postinstall to first boot on the target
 rather than at rootfs creation time, use ``pkg_postinst_ontarget()`` or
 call ``postinst_intercept delay_to_first_boot`` from ``pkg_postinst()``.
 Any failure of a ``pkg_postinst()`` script (including exit 1) triggers
-an error during the ```do_rootfs`` <#ref-tasks-rootfs>`__ task.
+an error during the :ref:`ref-tasks-rootfs` task.
 
 For more information on post-installation behavior, see the
 "`Post-Installation
@@ -4245,14 +4245,14 @@ The ``python3`` recipe now enables profile-guided optimization. Using
 this optimization requires a little extra build time in exchange for
 improved performance on the target at runtime. Additionally, the
 optimization is only enabled if the current
-```MACHINE`` <#var-MACHINE>`__ has support for user-mode emulation in
+:term:`MACHINE` has support for user-mode emulation in
 QEMU (i.e. "qemu-usermode" is in
-```MACHINE_FEATURES`` <#var-MACHINE_FEATURES>`__, which it is by
+:term:`MACHINE_FEATURES`, which it is by
 default).
 
 If you wish to disable Python profile-guided optimization regardless of
 the value of ``MACHINE_FEATURES``, then ensure that
-```PACKAGECONFIG`` <#var-PACKAGECONFIG>`__ for the ``python3`` recipe
+:term:`PACKAGECONFIG` for the ``python3`` recipe
 does not contain "pgo". You could accomplish the latter using the
 following at the configuration level: PACKAGECONFIG_remove_pn-python3 =
 "pgo" Alternatively, you can set ``PACKAGECONFIG`` using an append file
@@ -4276,13 +4276,13 @@ The following miscellaneous changes occurred:
 
 -  The ``NOISO`` and ``NOHDD`` variables are no longer used. You now
    control building ``*.iso`` and ``*.hddimg`` image types directly by
-   using the ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__ variable.
+   using the :term:`IMAGE_FSTYPES` variable.
 
 -  The ``scripts/contrib/mkefidisk.sh`` has been removed in favor of
    Wic.
 
 -  ``kernel-modules`` has been removed from
-   ```RRECOMMENDS`` <#var-RRECOMMENDS>`__ for ``qemumips`` and
+   :term:`RRECOMMENDS` for ``qemumips`` and
    ``qemumips64`` machines. Removal also impacts the ``x86-base.inc``
    file.
 
@@ -4302,7 +4302,7 @@ The following miscellaneous changes occurred:
    the ``WHITELIST_GPL-3.0`` variable instead.
 
 -  ``${ASNEEDED}`` is now included in the
-   ```TARGET_LDFLAGS`` <#var-TARGET_LDFLAGS>`__ variable directly. The
+   :term:`TARGET_LDFLAGS` variable directly. The
    remaining definitions from ``meta/conf/distro/include/as-needed.inc``
    have been moved to corresponding recipes.
 
@@ -4332,7 +4332,7 @@ The following changes have been made to BitBake:
    indentation. If found, BitBake produces a warning.
 
 -  Bitbake now checks
-   ```BBFILE_COLLECTIONS`` <#var-BBFILE_COLLECTIONS>`__ for duplicate
+   :term:`BBFILE_COLLECTIONS` for duplicate
    entries and triggers an error if any are found.
 
 .. _migration-2.7-eclipse-support-dropped:
@@ -4386,7 +4386,7 @@ License Value Corrections
 -------------------------
 
 The following corrections have been made to the
-```LICENSE`` <#var-LICENSE>`__ values set by recipes: *socat*: Corrected
+:term:`LICENSE` values set by recipes: *socat*: Corrected
 ``LICENSE`` to be "GPLv2" rather than "GPLv2+". *libgfortran*: Set
 license to "GPL-3.0-with-GCC-exception". *elfutils*: Removed
 "Elfutils-Exception" and set to "GPLv2" for shared libraries
@@ -4404,11 +4404,11 @@ This section provides information about packaging changes.
 -  Debug split: The default debug split has been changed to create
    separate source packages (i.e. package_name\ ``-dbg`` and
    package_name\ ``-src``). If you are currently using ``dbg-pkgs`` in
-   ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__ to bring in debug
+   :term:`IMAGE_FEATURES` to bring in debug
    symbols and you still need the sources, you must now also add
    ``src-pkgs`` to ``IMAGE_FEATURES``. Source packages remain in the
    target portion of the SDK by default, unless you have set your own
-   value for ```SDKIMAGE_FEATURES`` <#var-SDKIMAGE_FEATURES>`__ that
+   value for :term:`SDKIMAGE_FEATURES` that
    does not include ``src-pkgs``.
 
 -  Mount all using ``util-linux``: ``/etc/default/mountall`` has moved
@@ -4417,10 +4417,10 @@ This section provides information about packaging changes.
 -  Splitting binaries using ``util-linux``: ``util-linux`` now splits
    each binary into its own package for fine-grained control. The main
    ``util-linux`` package pulls in the individual binary packages using
-   the ```RRECOMMENDS`` <#var-RRECOMMENDS>`__ and
-   ```RDEPENDS`` <#var-RDEPENDS>`__ variables. As a result, existing
+   the :term:`RRECOMMENDS` and
+   :term:`RDEPENDS` variables. As a result, existing
    images should not see any changes assuming
-   ```NO_RECOMMENDATIONS`` <#var-NO_RECOMMENDATIONS>`__ is not set.
+   :term:`NO_RECOMMENDATIONS` is not set.
 
 -  ``netbase/base-files``: ``/etc/hosts`` has moved from ``netbase`` to
    ``base-files``.
@@ -4480,13 +4480,13 @@ The following miscellaneous changes occurred:
 -  ``arm-tunes``: Removed the "-march" option if mcpu is already added.
 
 -  ``update-alternatives``: Convert file renames to
-   ```PACKAGE_PREPROCESS_FUNCS`` <#var-PACKAGE_PREPROCESS_FUNCS>`__
+   :term:`PACKAGE_PREPROCESS_FUNCS`
 
 -  ``base/pixbufcache``: Obsolete ``sstatecompletions`` code has been
    removed.
 
--  ```native`` <#ref-classes-native>`__ class:
-   ```RDEPENDS`` <#var-RDEPENDS>`__ handling has been enabled.
+-  :ref:`native <ref-classes-native>` class:
+   :term:`RDEPENDS` handling has been enabled.
 
 -  ``inetutils``: This recipe has rsh disabled.
 
@@ -4707,7 +4707,7 @@ Sanity Checks
 
 The following sanity check changes occurred.
 
--  ```SRC_URI`` <#var-SRC_URI>`__ is now checked for usage of two
+-  :term:`SRC_URI` is now checked for usage of two
    problematic items:
 
    -  "${PN}" prefix/suffix use - Warnings always appear if ${PN} is
@@ -4722,10 +4722,10 @@ The following sanity check changes occurred.
 
    Either one of these items now trigger a warning by default. If you
    wish to disable this check, remove ``src-uri-bad`` from
-   ```WARN_QA`` <#var-WARN_QA>`__.
+   :term:`WARN_QA`.
 
 -  The ``file-rdeps`` runtime dependency check no longer expands
-   ```RDEPENDS`` <#var-RDEPENDS>`__ recursively as there is no mechanism
+   :term:`RDEPENDS` recursively as there is no mechanism
    to ensure they can be fully computed, and thus races sometimes result
    in errors either showing up or not. Thus, you might now see errors
    for missing runtime dependencies that were previously satisfied
@@ -4736,7 +4736,7 @@ The following sanity check changes occurred.
 
 -  Setting ``DEPENDS_${PN}`` anywhere (i.e. typically in a recipe) now
    triggers an error. The error is triggered because
-   ```DEPENDS`` <#var-DEPENDS>`__ is not a package-specific variable
+   :term:`DEPENDS` is not a package-specific variable
    unlike RDEPENDS. You should set ``DEPENDS`` instead.
 
 -  systemd currently does not work well with the musl C library because
@@ -4757,14 +4757,14 @@ The following miscellaneous changes have occurred.
 
 -  The ``meta/recipes-kernel/linux/linux-dtb.inc`` file has been
    removed. This file was previously deprecated in favor of setting
-   ```KERNEL_DEVICETREE`` <#var-KERNEL_DEVICETREE>`__ in any kernel
+   :term:`KERNEL_DEVICETREE` in any kernel
    recipe and only produced a warning. Remove any ``include`` or
    ``require`` statements pointing to this file.
 
--  ```TARGET_CFLAGS`` <#var-TARGET_CFLAGS>`__,
-   ```TARGET_CPPFLAGS`` <#var-TARGET_CPPFLAGS>`__,
-   ```TARGET_CXXFLAGS`` <#var-TARGET_CXXFLAGS>`__, and
-   ```TARGET_LDFLAGS`` <#var-TARGET_LDFLAGS>`__ are no longer exported
+-  :term:`TARGET_CFLAGS`,
+   :term:`TARGET_CPPFLAGS`,
+   :term:`TARGET_CXXFLAGS`, and
+   :term:`TARGET_LDFLAGS` are no longer exported
    to the external environment. This change did not require any changes
    to core recipes, which is a good indicator that no changes will be
    required. However, if for some reason the software being built by one
@@ -4774,14 +4774,14 @@ The following miscellaneous changes have occurred.
    exporting is not necessary.
 
 -  You must change the host distro identifier used in
-   ```NATIVELSBSTRING`` <#var-NATIVELSBSTRING>`__ to use all lowercase
+   :term:`NATIVELSBSTRING` to use all lowercase
    characters even if it does not contain a version number. This change
    is necessary only if you are not using ``uninative`` and
-   ```SANITY_TESTED_DISTROS`` <#var-SANITY_TESTED_DISTROS>`__.
+   :term:`SANITY_TESTED_DISTROS`.
 
 -  In the ``base-files`` recipe, writing the hostname into
    ``/etc/hosts`` and ``/etc/hostname`` is now done within the main
-   ```do_install`` <#ref-tasks-install>`__ function rather than in the
+   :ref:`ref-tasks-install` function rather than in the
    ``do_install_basefilesissue`` function. The reason for the change is
    because ``do_install_basefilesissue`` is more easily overridden
    without having to duplicate the hostname functionality. If you have
@@ -4882,7 +4882,7 @@ significant increase in the number of components that will be built just
 when building a simple image such as core-image-minimal. If you do not
 need runtime tests enabled for core components, then it is recommended
 that you remove "ptest" from
-```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__ to save a significant
+:term:`DISTRO_FEATURES` to save a significant
 amount of build time e.g. by adding the following in your configuration:
 DISTRO_FEATURES_remove = "ptest"
 
@@ -4966,7 +4966,7 @@ SRC_URI checksum behaviour
 --------------------------
 
 Previously, recipes by tradition included both SHA256 and MD5 checksums
-for remotely fetched files in ```SRC_URI`` <#var-SRC_URI>`__, even
+for remotely fetched files in :term:`SRC_URI`, even
 though only one is actually mandated. However, the MD5 checksum does not
 add much given its inherent weakness; thus when a checksum fails only
 the SHA256 sum will now be printed. The md5sum will still be verified if
@@ -4984,7 +4984,7 @@ fetches the shrinkwrap file and the dependencies. This removes the
 slightly awkward ``NPM_LOCKDOWN`` and ``NPM_SHRINKWRAP`` variables which
 pointed to local files; the lockdown file is no longer needed at all.
 Additionally, the package name in ``npm://`` entries in
-```SRC_URI`` <#var-SRC_URI>`__ is now specified using a ``package``
+:term:`SRC_URI` is now specified using a ``package``
 parameter instead of the earlier ``name`` which overlapped with the
 generic ``name`` parameter. All recipes using the npm fetcher will need
 to be changed as a result.
@@ -5019,9 +5019,9 @@ Packaging changes
 
 -  The ``ldconfig`` binary built as part of glibc has now been moved to
    its own ``ldconfig`` package (note no ``glibc-`` prefix). This
-   package is in the ```RRECOMMENDS`` <#var-RRECOMMENDS>`__ of the main
+   package is in the :term:`RRECOMMENDS` of the main
    ``glibc`` package if ``ldconfig`` is present in
-   ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__.
+   :term:`DISTRO_FEATURES`.
 
 -  ``libevent`` now splits each shared library into its own package (as
    Debian does). Since these are shared libraries and will be pulled in
@@ -5058,7 +5058,7 @@ circumstances:
 
 ``conf/machine/include/x86-base.inc`` (inherited by most x86 machine
 configurations) now specifies ``wic`` instead of ``live`` by default in
-```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__. The ``live`` image type will
+:term:`IMAGE_FSTYPES`. The ``live`` image type will
 likely be removed in a future release so it is recommended that you use
 ``wic`` instead.
 

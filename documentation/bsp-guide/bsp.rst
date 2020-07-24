@@ -73,7 +73,7 @@ section in the Yocto Project Development Tasks Manual.
 
 The BSP layer's base directory (``meta-bsp_root_name``) is the root
 directory of that Layer. This directory is what you add to the
-```BBLAYERS`` <&YOCTO_DOCS_REF_URL;#var-BBLAYERS>`__ variable in the
+:term:`BBLAYERS` variable in the
 ``conf/bblayers.conf`` file found in your `Build
 Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, which is
 established after you run the OpenEmbedded build environment setup
@@ -466,7 +466,7 @@ This file provides information on where to locate the BSP source files
 used to build the images (if any) that reside in
 ``meta-bsp_root_name/binary``. Images in the ``binary`` would be images
 released with the BSP. The information in the ``README.sources`` file
-also helps you find the `Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__
+also helps you find the :term:`Metadata`
 used to generate the images that ship with the BSP.
 
 .. note::
@@ -532,7 +532,7 @@ BBFILE_PATTERN_raspberrypi := "^${LAYERDIR}/"
 BBFILE_PRIORITY_raspberrypi = "9" # Additional license directories.
 LICENSE_PATH += "${LAYERDIR}/files/custom-licenses" . . .
 
-This file simply makes `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__
+This file simply makes :term:`BitBake`
 aware of the recipes and configuration directories. The file must exist
 so that the OpenEmbedded build system can recognize the BSP.
 
@@ -549,10 +549,10 @@ in the BSP into a format that the build system can understand. Each BSP
 Layer requires at least one machine file. If the BSP supports multiple
 machines, multiple machine configuration files can exist. These
 filenames correspond to the values to which users have set the
-```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ variable.
+:term:`MACHINE` variable.
 
 These files define things such as the kernel package to use
-(```PREFERRED_PROVIDER`` <&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER>`__
+(:term:`PREFERRED_PROVIDER`
 of
 `virtual/kernel <&YOCTO_DOCS_DEV_URL;#metadata-virtual-providers>`__),
 the hardware drivers to include in different types of images, any
@@ -565,7 +565,7 @@ optimization flags, which are carefully chosen to give best performance
 on a given processor.
 
 Tuning files are found in the ``meta/conf/machine/include`` directory
-within the `Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__.
+within the :term:`Source Directory`.
 For example, many ``tune-*`` files (e.g. ``tune-arm1136jf-s.inc``,
 ``tune-1586-nlp.inc``, and so forth) reside in the
 ``poky/meta/conf/machine/include`` directory.
@@ -599,7 +599,7 @@ DISPLAY_ORIENTATION=0 DISPLAY_DPI=133
    according to the formfactor configuration file that is installed by
    the main formfactor recipe
    ``meta/recipes-bsp/formfactor/formfactor_0.0.bb``, which is found in
-   the `Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__.
+   the :term:`Source Directory`.
 
 .. _bsp-filelayout-recipes-graphics:
 
@@ -639,9 +639,9 @@ located in the BSP Layer for your target device (e.g. the
 Suppose you are using the ``linux-yocto_4.4.bb`` recipe to build the
 kernel. In other words, you have selected the kernel in your
 bsp_root_name\ ``.conf`` file by adding
-```PREFERRED_PROVIDER`` <&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER>`__
+:term:`PREFERRED_PROVIDER`
 and
-```PREFERRED_VERSION`` <&YOCTO_DOCS_REF_URL;#var-PREFERRED_VERSION>`__
+:term:`PREFERRED_VERSION`
 statements as follows: PREFERRED_PROVIDER_virtual/kernel ?=
 "linux-yocto" PREFERRED_VERSION_linux-yocto ?= "4.4%"
 
@@ -796,7 +796,7 @@ workflow.
 
    The build process supports several types of images to satisfy
    different needs. See the
-   "`Images <&YOCTO_DOCS_REF_URL;#ref-images>`__" chapter in the Yocto
+   ":ref:`ref-manual/ref-images:Images`" chapter in the Yocto
    Project Reference Manual for information on supported images.
 
 Requirements and Recommendations for Released BSPs
@@ -1038,7 +1038,7 @@ also supports several other machines:
                              
 
    The
-   ```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__
+   :term:`FILESEXTRAPATHS`
    variable in the append files extends the search path the build system
    uses to find files during the build. Consequently, for this example
    you need to have the ``files`` directory in the same location as your
@@ -1090,11 +1090,11 @@ satisfy the licensing requirements for an encumbered BSP. The following
 list describes them in order of preference:
 
 1. *Use
-   the*\ ```LICENSE_FLAGS`` <&YOCTO_DOCS_REF_URL;#var-LICENSE_FLAGS>`__\ *Variable
+   the*\ :term:`LICENSE_FLAGS`\ *Variable
    to Define the Recipes that Have Commercial or Other Types of
    Specially-Licensed Packages:* For each of those recipes, you can
    specify a matching license string in a ``local.conf`` variable named
-   ```LICENSE_FLAGS_WHITELIST`` <&YOCTO_DOCS_REF_URL;#var-LICENSE_FLAGS_WHITELIST>`__.
+   :term:`LICENSE_FLAGS_WHITELIST`.
    Specifying the matching license string signifies that you agree to
    the license. Thus, the build system can build the corresponding
    recipe and include the component in the image. See the "`Enabling
@@ -1266,12 +1266,12 @@ Project Reference Manual.
    "virtual/xserver" is "xserver-xorg", which exists in
    ``poky/meta/recipes-graphics/xorg-xserver``.
 
--  ```XSERVER`` <&YOCTO_DOCS_REF_URL;#var-XSERVER>`__: The packages that
+-  :term:`XSERVER`: The packages that
    should be installed to provide an X server and drivers for the
    machine. In this example, the "xserver-xorg" and
    "xf86-video-modesetting" are installed.
 
--  ```MACHINE_EXTRA_RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RRECOMMENDS>`__:
+-  :term:`MACHINE_EXTRA_RRECOMMENDS`:
    A list of machine-dependent packages not essential for booting the
    image. Thus, the build does not fail if the packages do not exist.
    However, the packages are required for a fully-featured image.
@@ -1283,14 +1283,14 @@ Project Reference Manual.
       variables exist that help you configure a particular piece of
       hardware.
 
--  ```EXTRA_IMAGEDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGEDEPENDS>`__:
+-  :term:`EXTRA_IMAGEDEPENDS`:
    Recipes to build that do not provide packages for installing into the
    root filesystem but building the image depends on the recipes.
    Sometimes a recipe is required to build the final image but is not
    needed in the root filesystem. In this case, the U-Boot recipe must
    be built for the image.
 
--  ```DEFAULTTUNE`` <&YOCTO_DOCS_REF_URL;#var-DEFAULTTUNE>`__: Machines
+-  :term:`DEFAULTTUNE`: Machines
    use tunings to optimize machine, CPU, and application performance.
    These features, which are collectively known as "tuning features",
    exist in the `OpenEmbedded-Core
@@ -1306,31 +1306,31 @@ Project Reference Manual.
       conf/machine/include/tune-cortexa8.inc
       file provides many tuning possibilities.
 
--  ```IMAGE_FSTYPES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FSTYPES>`__: The
+-  :term:`IMAGE_FSTYPES`: The
    formats the OpenEmbedded build system uses during the build when
    creating the root filesystem. In this example, four types of images
    are supported.
 
--  ```EXTRA_IMAGECMD`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGECMD>`__:
+-  :term:`EXTRA_IMAGECMD`:
    Specifies additional options for image creation commands. In this
    example, the "-lnp " option is used when creating the
    `JFFS2 <https://en.wikipedia.org/wiki/JFFS2>`__ image.
 
--  ```WKS_FILE`` <&YOCTO_DOCS_REF_URL;#var-WKS_FILE>`__: The location of
+-  :term:`WKS_FILE`: The location of
    the `Wic kickstart <&YOCTO_DOCS_REF_URL;#ref-kickstart>`__ file used
    by the OpenEmbedded build system to create a partitioned image
    (image.wic).
 
--  ```IMAGE_INSTALL`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL>`__:
+-  :term:`IMAGE_INSTALL`:
    Specifies packages to install into an image through the
-   ```image`` <&YOCTO_DOCS_REF_URL;#ref-classes-image>`__ class. Recipes
+   :ref:`image <ref-classes-image>` class. Recipes
    use the ``IMAGE_INSTALL`` variable.
 
 -  ``do_image_wic[depends]``: A task that is constructed during the
    build. In this example, the task depends on specific tools in order
    to create the sysroot when buiding a Wic image.
 
--  ```SERIAL_CONSOLES`` <&YOCTO_DOCS_REF_URL;#var-SERIAL_CONSOLES>`__:
+-  :term:`SERIAL_CONSOLES`:
    Defines a serial console (TTY) to enable using getty. In this case,
    the baud rate is "115200" and the device name is "ttyO0".
 
@@ -1344,21 +1344,21 @@ Project Reference Manual.
    Defines the version of the recipe used to build the kernel, which is
    "5.0" in this case.
 
--  ```KERNEL_IMAGETYPE`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_IMAGETYPE>`__:
+-  :term:`KERNEL_IMAGETYPE`:
    The type of kernel to build for the device. In this case, the
    OpenEmbedded build system creates a "zImage" image type.
 
--  ```KERNEL_DEVICETREE`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_DEVICETREE>`__:
+-  :term:`KERNEL_DEVICETREE`:
    The names of the generated Linux kernel device trees (i.e. the
    ``*.dtb``) files. All the device trees for the various BeagleBone
    devices are included.
 
--  ```KERNEL_EXTRA_ARGS`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_EXTRA_ARGS>`__:
+-  :term:`KERNEL_EXTRA_ARGS`:
    Additional ``make`` command-line arguments the OpenEmbedded build
    system passes on when compiling the kernel. In this example,
    "LOADADDR=${UBOOT_ENTRYPOINT}" is passed as a command-line argument.
 
--  ```SPL_BINARY`` <&YOCTO_DOCS_REF_URL;#var-SPL_BINARY>`__: Defines the
+-  :term:`SPL_BINARY`: Defines the
    Secondary Program Loader (SPL) binary type. In this case, the SPL
    binary is set to "MLO", which stands for Multimedia card LOader.
 
@@ -1377,25 +1377,25 @@ Project Reference Manual.
    example, a U-Boot image is required to boot the BeagleBone device.
    See the following variables for more information:
 
-   -  ```UBOOT_SUFFIX`` <&YOCTO_DOCS_REF_URL;#var-UBOOT_SUFFIX>`__:
+   -  :term:`UBOOT_SUFFIX`:
       Points to the generated U-Boot extension.
 
-   -  ```UBOOT_MACHINE`` <&YOCTO_DOCS_REF_URL;#var-UBOOT_MACHINE>`__:
+   -  :term:`UBOOT_MACHINE`:
       Specifies the value passed on the make command line when building
       a U-Boot image.
 
-   -  ```UBOOT_ENTRYPOINT`` <&YOCTO_DOCS_REF_URL;#var-UBOOT_ENTRYPOINT>`__:
+   -  :term:`UBOOT_ENTRYPOINT`:
       Specifies the entry point for the U-Boot image.
 
-   -  ```UBOOT_LOADADDRESS`` <&YOCTO_DOCS_REF_URL;#var-UBOOT_LOADADDRESS>`__:
+   -  :term:`UBOOT_LOADADDRESS`:
       Specifies the load address for the U-Boot image.
 
--  ```MACHINE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES>`__:
+-  :term:`MACHINE_FEATURES`:
    Specifies the list of hardware features the BeagleBone device is
    capable of supporting. In this case, the device supports "usbgadget
    usbhost vfat alsa".
 
--  ```IMAGE_BOOT_FILES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_BOOT_FILES>`__:
+-  :term:`IMAGE_BOOT_FILES`:
    Files installed into the device's boot partition when preparing the
    image using the Wic tool with the ``bootimg-partition`` or 
    ``bootimg-efi`` source plugin.
@@ -1435,21 +1435,21 @@ appended with the "beaglebone-yocto" string. The OpenEmbedded build
 system uses these statements to override similar statements in the
 kernel recipe:
 
--  ```KBRANCH`` <&YOCTO_DOCS_REF_URL;#var-KBRANCH>`__: Identifies the
+-  :term:`KBRANCH`: Identifies the
    kernel branch that is validated, patched, and configured during the
    build.
 
--  ```KMACHINE`` <&YOCTO_DOCS_REF_URL;#var-KMACHINE>`__: Identifies the
+-  :term:`KMACHINE`: Identifies the
    machine name as known by the kernel, which is sometimes a different
    name than what is known by the OpenEmbedded build system.
 
--  ```SRCREV`` <&YOCTO_DOCS_REF_URL;#var-SRCREV>`__: Identifies the
+-  :term:`SRCREV`: Identifies the
    revision of the source code used to build the image.
 
--  ```COMPATIBLE_MACHINE`` <&YOCTO_DOCS_REF_URL;#var-COMPATIBLE_MACHINE>`__:
+-  :term:`COMPATIBLE_MACHINE`:
    A regular expression that resolves to one or more target machines
    with which the recipe is compatible.
 
--  ```LINUX_VERSION`` <&YOCTO_DOCS_REF_URL;#var-LINUX_VERSION>`__: The
+-  :term:`LINUX_VERSION`: The
    Linux version from kernel.org used by the OpenEmbedded build system
    to build the kernel image.

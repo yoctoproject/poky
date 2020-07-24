@@ -14,9 +14,9 @@ explained.
 Yocto Project Components
 ========================
 
-The `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__ task executor
+The :term:`BitBake` task executor
 together with various types of configuration files form the
-`OpenEmbedded-Core <&YOCTO_DOCS_REF_URL;#oe-core>`__. This section
+:term:`OpenEmbedded-Core (OE-Core)`. This section
 overviews these components by describing their use and how they
 interact.
 
@@ -50,7 +50,7 @@ BitBake
 
 BitBake is the tool at the heart of the `OpenEmbedded build
 system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ and is responsible
-for parsing the `Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__, generating
+for parsing the :term:`Metadata`, generating
 a list of tasks from it, and then executing those tasks.
 
 This section briefly introduces BitBake. If you want more information on
@@ -107,7 +107,7 @@ Classes
 
 Class files (``.bbclass``) contain information that is useful to share
 between recipes files. An example is the
-```autotools`` <&YOCTO_DOCS_REF_URL;#ref-classes-autotools>`__ class,
+:ref:`autotools <ref-classes-autotools>` class,
 which contains common settings for any application that Autotools uses.
 The "`Classes <&YOCTO_DOCS_REF_URL;#ref-classes>`__" chapter in the
 Yocto Project Reference Manual provides details about classes and how to
@@ -187,7 +187,7 @@ In general, the build's workflow consists of several functional areas:
 -  *Source Files:* Upstream releases, local projects, and SCMs.
 
 -  *Build System:* Processes under the control of
-   `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__. This block expands
+   :term:`BitBake`. This block expands
    on how BitBake fetches source, applies patches, completes
    compilation, analyzes output for package generation, creates and
    tests packages, generates images, and generates cross-development
@@ -253,7 +253,7 @@ source the build environment setup script.
 Because the Poky repository is fundamentally an aggregation of existing
 repositories, some users might be familiar with running the ```` script
 in the context of separate
-`OpenEmbedded-Core <&YOCTO_DOCS_REF_URL;#oe-core>`__ and BitBake
+:term:`OpenEmbedded-Core (OE-Core)` and BitBake
 repositories rather than a single Poky repository. This discussion
 assumes the script is executed from within a cloned or unpacked version
 of Poky.
@@ -281,29 +281,29 @@ script, see the
 in the ``meta-poky`` layer:
 
 -  *Target Machine Selection:* Controlled by the
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ variable.
+   :term:`MACHINE` variable.
 
 -  *Download Directory:* Controlled by the
-   ```DL_DIR`` <&YOCTO_DOCS_REF_URL;#var-DL_DIR>`__ variable.
+   :term:`DL_DIR` variable.
 
 -  *Shared State Directory:* Controlled by the
-   ```SSTATE_DIR`` <&YOCTO_DOCS_REF_URL;#var-SSTATE_DIR>`__ variable.
+   :term:`SSTATE_DIR` variable.
 
 -  *Build Output:* Controlled by the
-   ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__ variable.
+   :term:`TMPDIR` variable.
 
 -  *Distribution Policy:* Controlled by the
-   ```DISTRO`` <&YOCTO_DOCS_REF_URL;#var-DISTRO>`__ variable.
+   :term:`DISTRO` variable.
 
 -  *Packaging Format:* Controlled by the
-   ```PACKAGE_CLASSES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES>`__
+   :term:`PACKAGE_CLASSES`
    variable.
 
 -  *SDK Target Architecture:* Controlled by the
-   ```SDKMACHINE`` <&YOCTO_DOCS_REF_URL;#var-SDKMACHINE>`__ variable.
+   :term:`SDKMACHINE` variable.
 
 -  *Extra Image Packages:* Controlled by the
-   ```EXTRA_IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES>`__
+   :term:`EXTRA_IMAGE_FEATURES`
    variable.
 
 .. note::
@@ -334,11 +334,11 @@ created by an autobuilder:
    you had several build environments and they shared some common
    features. You can set these default build properties here. A good
    example is perhaps the packaging format to use through the
-   ```PACKAGE_CLASSES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES>`__
+   :term:`PACKAGE_CLASSES`
    variable.
 
    One useful scenario for using the ``conf/site.conf`` file is to
-   extend your ```BBPATH`` <&YOCTO_DOCS_REF_URL;#var-BBPATH>`__ variable
+   extend your :term:`BBPATH` variable
    to include the path to a ``conf/site.conf``. Then, when BitBake looks
    for Metadata using ``BBPATH``, it finds the ``conf/site.conf`` file
    and applies your common configurations found in the file. To override
@@ -543,18 +543,18 @@ to build software. Finally, a combination of the two might exist, which
 would give the consumer a choice when deciding where to get source
 files.
 
-BitBake uses the ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__
+BitBake uses the :term:`SRC_URI`
 variable to point to source files regardless of their location. Each
 recipe must have a ``SRC_URI`` variable that points to the source.
 
 Another area that plays a significant role in where source files come
 from is pointed to by the
-```DL_DIR`` <&YOCTO_DOCS_REF_URL;#var-DL_DIR>`__ variable. This area is
+:term:`DL_DIR` variable. This area is
 a cache that can hold previously downloaded source. You can also
 instruct the OpenEmbedded build system to create tarballs from Git
 repositories, which is not the default behavior, and store them in the
 ``DL_DIR`` by using the
-```BB_GENERATE_MIRROR_TARBALLS`` <&YOCTO_DOCS_REF_URL;#var-BB_GENERATE_MIRROR_TARBALLS>`__
+:term:`BB_GENERATE_MIRROR_TARBALLS`
 variable.
 
 Judicious use of a ``DL_DIR`` directory can save the build system a trip
@@ -588,7 +588,7 @@ user checks in items (e.g. a local directory containing a development
 source tree used by the group).
 
 The canonical method through which to include a local project is to use
-the ```externalsrc`` <&YOCTO_DOCS_REF_URL;#ref-classes-externalsrc>`__
+the :ref:`externalsrc <ref-classes-externalsrc>`
 class to include that local project. You use either the ``local.conf``
 or a recipe's append file to override or set the recipe to point to the
 local directory on your disk to pull in the whole source tree.
@@ -602,8 +602,8 @@ Another place from which the build system can get source files is with
 `fetchers <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__ employing various Source
 Control Managers (SCMs) such as Git or Subversion. In such cases, a
 repository is cloned or checked out. The
-```do_fetch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-fetch>`__ task inside
-BitBake uses the ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__
+:ref:`ref-tasks-fetch` task inside
+BitBake uses the :term:`SRC_URI`
 variable and the argument's prefix to determine the correct fetcher
 module.
 
@@ -617,19 +617,19 @@ module.
    variable in the Yocto Project Reference Manual.
 
 When fetching a repository, BitBake uses the
-```SRCREV`` <&YOCTO_DOCS_REF_URL;#var-SRCREV>`__ variable to determine
+:term:`SRCREV` variable to determine
 the specific revision from which to build.
 
 Source Mirror(s)
 ~~~~~~~~~~~~~~~~
 
 Two kinds of mirrors exist: pre-mirrors and regular mirrors. The
-```PREMIRRORS`` <&YOCTO_DOCS_REF_URL;#var-PREMIRRORS>`__ and
-```MIRRORS`` <&YOCTO_DOCS_REF_URL;#var-MIRRORS>`__ variables point to
+:term:`PREMIRRORS` and
+:term:`MIRRORS` variables point to
 these, respectively. BitBake checks pre-mirrors before looking upstream
 for any source files. Pre-mirrors are appropriate when you have a shared
 directory that is not a directory defined by the
-```DL_DIR`` <&YOCTO_DOCS_REF_URL;#var-DL_DIR>`__ variable. A Pre-mirror
+:term:`DL_DIR` variable. A Pre-mirror
 typically points to a shared directory that is local to your
 organization.
 
@@ -657,10 +657,10 @@ the build system. Here is a more detailed look at the area:
 Package feeds are an intermediary step in the build process. The
 OpenEmbedded build system provides classes to generate different package
 types, and you specify which classes to enable through the
-```PACKAGE_CLASSES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES>`__
+:term:`PACKAGE_CLASSES`
 variable. Before placing the packages into package feeds, the build
 process validates them with generated output quality assurance checks
-through the ```insane`` <&YOCTO_DOCS_REF_URL;#ref-classes-insane>`__
+through the :ref:`insane <ref-classes-insane>`
 class.
 
 The package feed area resides in the Build Directory. The directory the
@@ -670,19 +670,19 @@ the "Package Feeds" box in the illustration and note the information to
 the right of that area. In particular, the following defines where
 package files are kept:
 
--  ```DEPLOY_DIR`` <&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR>`__: Defined as
+-  :term:`DEPLOY_DIR`: Defined as
    ``tmp/deploy`` in the Build Directory.
 
 -  ``DEPLOY_DIR_*``: Depending on the package manager used, the package
    type sub-folder. Given RPM, IPK, or DEB packaging and tarball
    creation, the
-   ```DEPLOY_DIR_RPM`` <&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR_RPM>`__,
-   ```DEPLOY_DIR_IPK`` <&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR_IPK>`__,
-   ```DEPLOY_DIR_DEB`` <&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR_DEB>`__, or
-   ```DEPLOY_DIR_TAR`` <&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR_TAR>`__,
+   :term:`DEPLOY_DIR_RPM`,
+   :term:`DEPLOY_DIR_IPK`,
+   :term:`DEPLOY_DIR_DEB`, or
+   :term:`DEPLOY_DIR_TAR`,
    variables are used, respectively.
 
--  ```PACKAGE_ARCH`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH>`__: Defines
+-  :term:`PACKAGE_ARCH`: Defines
    architecture-specific sub-folders. For example, packages could exist
    for the i586 or qemux86 architectures.
 
@@ -690,11 +690,11 @@ BitBake uses the
 ```do_package_write_*`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb>`__
 tasks to generate packages and place them into the package holding area
 (e.g. ``do_package_write_ipk`` for IPK packages). See the
-"```do_package_write_deb`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb>`__",
-"```do_package_write_ipk`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_ipk>`__",
-"```do_package_write_rpm`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_rpm>`__",
+":ref:`ref-tasks-package_write_deb`",
+":ref:`ref-tasks-package_write_ipk`",
+":ref:`ref-tasks-package_write_rpm`",
 and
-"```do_package_write_tar`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_tar>`__"
+":ref:`ref-tasks-package_write_tar`"
 sections in the Yocto Project Reference Manual for additional
 information. As an example, consider a scenario where an IPK packaging
 manager is being used and package architecture support for both i586 and
@@ -708,7 +708,7 @@ BitBake
 -------
 
 The OpenEmbedded build system uses
-`BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__ to produce images and
+:term:`BitBake` to produce images and
 Software Development Kits (SDKs). You can see from the `general workflow
 figure <#general-workflow-figure>`__, the BitBake area consists of
 several functional areas. This section takes a closer look at each of
@@ -731,8 +731,8 @@ code:
 .. image:: figures/source-fetching.png
    :align: center
 
-The ```do_fetch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-fetch>`__ and
-```do_unpack`` <&YOCTO_DOCS_REF_URL;#ref-tasks-unpack>`__ tasks fetch
+The :ref:`ref-tasks-fetch` and
+:ref:`ref-tasks-unpack` tasks fetch
 the source files and unpack them into the `Build
 Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
 
@@ -756,17 +756,17 @@ Directory, see the
 the Yocto Project Reference Manual.
 
 Each recipe has an area in the Build Directory where the unpacked source
-code resides. The ```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__ variable points
+code resides. The :term:`S` variable points
 to this area for a recipe's unpacked source code. The name of that
 directory for any given recipe is defined from several different
 variables. The preceding figure and the following list describe the
 Build Directory's hierarchy:
 
--  ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__: The base directory
+-  :term:`TMPDIR`: The base directory
    where the OpenEmbedded build system performs all its work during the
    build. The default base directory is the ``tmp`` directory.
 
--  ```PACKAGE_ARCH`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH>`__: The
+-  :term:`PACKAGE_ARCH`: The
    architecture of the built package or packages. Depending on the
    eventual destination of the package or packages (i.e. machine
    architecture, `build
@@ -774,33 +774,33 @@ Build Directory's hierarchy:
    specific machine), ``PACKAGE_ARCH`` varies. See the variable's
    description for details.
 
--  ```TARGET_OS`` <&YOCTO_DOCS_REF_URL;#var-TARGET_OS>`__: The operating
+-  :term:`TARGET_OS`: The operating
    system of the target device. A typical value would be "linux" (e.g.
    "qemux86-poky-linux").
 
--  ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__: The name of the recipe used
+-  :term:`PN`: The name of the recipe used
    to build the package. This variable can have multiple meanings.
    However, when used in the context of input files, ``PN`` represents
    the the name of the recipe.
 
--  ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__: The location
+-  :term:`WORKDIR`: The location
    where the OpenEmbedded build system builds a recipe (i.e. does the
    work to create the package).
 
-   -  ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__: The version of the
+   -  :term:`PV`: The version of the
       recipe used to build the package.
 
-   -  ```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__: The revision of the
+   -  :term:`PR`: The revision of the
       recipe used to build the package.
 
--  ```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__: Contains the unpacked source
+-  :term:`S`: Contains the unpacked source
    files for a given recipe.
 
-   -  ```BPN`` <&YOCTO_DOCS_REF_URL;#var-BPN>`__: The name of the recipe
+   -  :term:`BPN`: The name of the recipe
       used to build the package. The ``BPN`` variable is a version of
       the ``PN`` variable but with common prefixes and suffixes removed.
 
-   -  ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__: The version of the
+   -  :term:`PV`: The version of the
       recipe used to build the package.
 
 .. note::
@@ -825,15 +825,15 @@ and applies them to the source files:
 .. image:: figures/patching.png
    :align: center
 
-The ```do_patch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-patch>`__ task uses a
-recipe's ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statements
-and the ```FILESPATH`` <&YOCTO_DOCS_REF_URL;#var-FILESPATH>`__ variable
+The :ref:`ref-tasks-patch` task uses a
+recipe's :term:`SRC_URI` statements
+and the :term:`FILESPATH` variable
 to locate applicable patch files.
 
 Default processing for patch files assumes the files have either
 ``*.patch`` or ``*.diff`` file types. You can use ``SRC_URI`` parameters
 to change the way the build system recognizes patch files. See the
-```do_patch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-patch>`__ task for more
+:ref:`ref-tasks-patch` task for more
 information.
 
 BitBake finds and applies multiple patches for a single recipe in the
@@ -841,7 +841,7 @@ order in which it locates the patches. The ``FILESPATH`` variable
 defines the default set of directories that the build system uses to
 search for patch files. Once found, patches are applied to the recipe's
 source files, which are located in the
-```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__ directory.
+:term:`S` directory.
 
 For more information on how the source directories are created, see the
 "`Source Fetching <#source-fetching-dev-environment>`__" section. For
@@ -871,13 +871,13 @@ to a holding area (staged) in preparation for packaging:
 
 This step in the build process consists of the following tasks:
 
--  ```do_prepare_recipe_sysroot`` <&YOCTO_DOCS_REF_URL;#ref-tasks-prepare_recipe_sysroot>`__:
+-  :ref:`ref-tasks-prepare_recipe_sysroot`:
    This task sets up the two sysroots in
-   ``${``\ ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__\ ``}``
+   ``${``\ :term:`WORKDIR`\ ``}``
    (i.e. ``recipe-sysroot`` and ``recipe-sysroot-native``) so that
    during the packaging phase the sysroots can contain the contents of
    the
-   ```do_populate_sysroot`` <&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot>`__
+   :ref:`ref-tasks-populate_sysroot`
    tasks of the recipes on which the recipe containing the tasks
    depends. A sysroot exists for both the target and for the native
    binaries, which run on the host system.
@@ -889,32 +889,32 @@ This step in the build process consists of the following tasks:
    configure itself depending on the target for which it is being built.
 
    The configurations handled by the
-   ```do_configure`` <&YOCTO_DOCS_REF_URL;#ref-tasks-configure>`__ task
+   :ref:`ref-tasks-configure` task
    are specific to configurations for the source code being built by the
    recipe.
 
    If you are using the
-   ```autotools`` <&YOCTO_DOCS_REF_URL;#ref-classes-autotools>`__ class,
+   :ref:`autotools <ref-classes-autotools>` class,
    you can add additional configuration options by using the
-   ```EXTRA_OECONF`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_OECONF>`__ or
-   ```PACKAGECONFIG_CONFARGS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGECONFIG_CONFARGS>`__
+   :term:`EXTRA_OECONF` or
+   :term:`PACKAGECONFIG_CONFARGS`
    variables. For information on how this variable works within that
    class, see the
-   ```autotools`` <&YOCTO_DOCS_REF_URL;#ref-classes-autotools>`__ class
+   :ref:`autotools <ref-classes-autotools>` class
    `here <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/autotools.bbclass>`__.
 
 -  *``do_compile``*: Once a configuration task has been satisfied,
    BitBake compiles the source using the
-   ```do_compile`` <&YOCTO_DOCS_REF_URL;#ref-tasks-compile>`__ task.
+   :ref:`ref-tasks-compile` task.
    Compilation occurs in the directory pointed to by the
-   ```B`` <&YOCTO_DOCS_REF_URL;#var-B>`__ variable. Realize that the
+   :term:`B` variable. Realize that the
    ``B`` directory is, by default, the same as the
-   ```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__ directory.
+   :term:`S` directory.
 
 -  *``do_install``*: After compilation completes, BitBake executes the
-   ```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ task.
+   :ref:`ref-tasks-install` task.
    This task copies files from the ``B`` directory and places them in a
-   holding area pointed to by the ```D`` <&YOCTO_DOCS_REF_URL;#var-D>`__
+   holding area pointed to by the :term:`D`
    variable. Packaging occurs later using files from this holding
    directory.
 
@@ -929,10 +929,10 @@ analyzes the results and splits the output into packages:
 .. image:: figures/analysis-for-package-splitting.png
    :align: center
 
-The ```do_package`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package>`__ and
-```do_packagedata`` <&YOCTO_DOCS_REF_URL;#ref-tasks-packagedata>`__
+The :ref:`ref-tasks-package` and
+:ref:`ref-tasks-packagedata`
 tasks combine to analyze the files found in the
-```D`` <&YOCTO_DOCS_REF_URL;#var-D>`__ directory and split them into
+:term:`D` directory and split them into
 subsets based on available packages and files. Analysis involves the
 following as well as other items: splitting out debugging symbols,
 looking at shared library dependencies between packages, and looking at
@@ -940,46 +940,46 @@ package relationships.
 
 The ``do_packagedata`` task creates package metadata based on the
 analysis such that the build system can generate the final packages. The
-```do_populate_sysroot`` <&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot>`__
+:ref:`ref-tasks-populate_sysroot`
 task stages (copies) a subset of the files installed by the
-```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ task into
+:ref:`ref-tasks-install` task into
 the appropriate sysroot. Working, staged, and intermediate results of
 the analysis and package splitting process use several areas:
 
--  ```PKGD`` <&YOCTO_DOCS_REF_URL;#var-PKGD>`__: The destination
+-  :term:`PKGD`: The destination
    directory (i.e. ``package``) for packages before they are split into
    individual packages.
 
--  ```PKGDESTWORK`` <&YOCTO_DOCS_REF_URL;#var-PKGDESTWORK>`__: A
+-  :term:`PKGDESTWORK`: A
    temporary work area (i.e. ``pkgdata``) used by the ``do_package``
    task to save package metadata.
 
--  ```PKGDEST`` <&YOCTO_DOCS_REF_URL;#var-PKGDEST>`__: The parent
+-  :term:`PKGDEST`: The parent
    directory (i.e. ``packages-split``) for packages after they have been
    split.
 
--  ```PKGDATA_DIR`` <&YOCTO_DOCS_REF_URL;#var-PKGDATA_DIR>`__: A shared,
+-  :term:`PKGDATA_DIR`: A shared,
    global-state directory that holds packaging metadata generated during
    the packaging process. The packaging process copies metadata from
    ``PKGDESTWORK`` to the ``PKGDATA_DIR`` area where it becomes globally
    available.
 
--  ```STAGING_DIR_HOST`` <&YOCTO_DOCS_REF_URL;#var-STAGING_DIR_HOST>`__:
+-  :term:`STAGING_DIR_HOST`:
    The path for the sysroot for the system on which a component is built
    to run (i.e. ``recipe-sysroot``).
 
--  ```STAGING_DIR_NATIVE`` <&YOCTO_DOCS_REF_URL;#var-STAGING_DIR_NATIVE>`__:
+-  :term:`STAGING_DIR_NATIVE`:
    The path for the sysroot used when building components for the build
    host (i.e. ``recipe-sysroot-native``).
 
--  ```STAGING_DIR_TARGET`` <&YOCTO_DOCS_REF_URL;#var-STAGING_DIR_TARGET>`__:
+-  :term:`STAGING_DIR_TARGET`:
    The path for the sysroot used when a component that is built to
    execute on a system and it generates code for yet another machine
    (e.g. cross-canadian recipes).
 
-The ```FILES`` <&YOCTO_DOCS_REF_URL;#var-FILES>`__ variable defines the
+The :term:`FILES` variable defines the
 files that go into each package in
-```PACKAGES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGES>`__. If you want
+:term:`PACKAGES`. If you want
 details on how this is accomplished, you can look at
 ```package.bbclass`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/package.bbclass>`__.
 
@@ -1013,36 +1013,36 @@ system uses BitBake to generate the root filesystem image:
 
 The image generation process consists of several stages and depends on
 several tasks and variables. The
-```do_rootfs`` <&YOCTO_DOCS_REF_URL;#ref-tasks-rootfs>`__ task creates
+:ref:`ref-tasks-rootfs` task creates
 the root filesystem (file and directory structure) for an image. This
 task uses several key variables to help create the list of packages to
 actually install:
 
--  ```IMAGE_INSTALL`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL>`__: Lists
+-  :term:`IMAGE_INSTALL`: Lists
    out the base set of packages from which to install from the Package
    Feeds area.
 
--  ```PACKAGE_EXCLUDE`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_EXCLUDE>`__:
+-  :term:`PACKAGE_EXCLUDE`:
    Specifies packages that should not be installed into the image.
 
--  ```IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES>`__:
+-  :term:`IMAGE_FEATURES`:
    Specifies features to include in the image. Most of these features
    map to additional packages for installation.
 
--  ```PACKAGE_CLASSES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES>`__:
+-  :term:`PACKAGE_CLASSES`:
    Specifies the package backend (e.g. RPM, DEB, or IPK) to use and
    consequently helps determine where to locate packages within the
    Package Feeds area.
 
--  ```IMAGE_LINGUAS`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_LINGUAS>`__:
+-  :term:`IMAGE_LINGUAS`:
    Determines the language(s) for which additional language support
    packages are installed.
 
--  ```PACKAGE_INSTALL`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_INSTALL>`__:
+-  :term:`PACKAGE_INSTALL`:
    The final list of packages passed to the package manager for
    installation into the image.
 
-With ```IMAGE_ROOTFS`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_ROOTFS>`__
+With :term:`IMAGE_ROOTFS`
 pointing to the location of the filesystem under construction and the
 ``PACKAGE_INSTALL`` variable providing the final list of packages to
 install, the root file system is created.
@@ -1069,27 +1069,27 @@ root filesystem image. This file lists out, line-by-line, the installed
 packages. The manifest file is useful for the
 ```testimage`` <&YOCTO_DOCS_REF_URL;#ref-classes-testimage*>`__ class,
 for example, to determine whether or not to run specific tests. See the
-```IMAGE_MANIFEST`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_MANIFEST>`__
+:term:`IMAGE_MANIFEST`
 variable for additional information.
 
 Optimizing processes that are run across the image include ``mklibs``,
 ``prelink``, and any other post-processing commands as defined by the
-```ROOTFS_POSTPROCESS_COMMAND`` <&YOCTO_DOCS_REF_URL;#var-ROOTFS_POSTPROCESS_COMMAND>`__
+:term:`ROOTFS_POSTPROCESS_COMMAND`
 variable. The ``mklibs`` process optimizes the size of the libraries,
 while the ``prelink`` process optimizes the dynamic linking of shared
 libraries to reduce start up time of executables.
 
 After the root filesystem is built, processing begins on the image
-through the ```do_image`` <&YOCTO_DOCS_REF_URL;#ref-tasks-image>`__
+through the :ref:`ref-tasks-image`
 task. The build system runs any pre-processing commands as defined by
 the
-```IMAGE_PREPROCESS_COMMAND`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_PREPROCESS_COMMAND>`__
+:term:`IMAGE_PREPROCESS_COMMAND`
 variable. This variable specifies a list of functions to call before the
 build system creates the final image output files.
 
 The build system dynamically creates ``do_image_*`` tasks as needed,
 based on the image types specified in the
-```IMAGE_FSTYPES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FSTYPES>`__ variable.
+:term:`IMAGE_FSTYPES` variable.
 The process turns everything into an image file or a set of image files
 and can compress the root filesystem image to reduce the overall size of
 the image. The formats used for the root filesystem depend on the
@@ -1105,7 +1105,7 @@ The final task involved in image creation is the
 ```do_image_complete`` <&YOCTO_DOCS_REF_URL;#ref-tasks-image-complete>`__
 task. This task completes the image by applying any image post
 processing as defined through the
-```IMAGE_POSTPROCESS_COMMAND`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_POSTPROCESS_COMMAND>`__
+:term:`IMAGE_POSTPROCESS_COMMAND`
 variable. The variable specifies a list of functions to call once the
 build system has created the final image output files.
 
@@ -1143,9 +1143,9 @@ the extensible SDK (eSDK):
 
 Like image generation, the SDK script process consists of several stages
 and depends on many variables. The
-```do_populate_sdk`` <&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sdk>`__
+:ref:`ref-tasks-populate_sdk`
 and
-```do_populate_sdk_ext`` <&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sdk_ext>`__
+:ref:`ref-tasks-populate_sdk_ext`
 tasks use these key variables to help create the list of packages to
 actually install. For information on the variables listed in the figure,
 see the "`Application Development SDK <#sdk-dev-environment>`__"
@@ -1155,7 +1155,7 @@ The ``do_populate_sdk`` task helps create the standard SDK and handles
 two parts: a target part and a host part. The target part is the part
 built for the target hardware and includes libraries and headers. The
 host part is the part of the SDK that runs on the
-```SDKMACHINE`` <&YOCTO_DOCS_REF_URL;#var-SDKMACHINE>`__.
+:term:`SDKMACHINE`.
 
 The ``do_populate_sdk_ext`` task helps create the extensible SDK and
 handles host and target parts differently than its counter part does for
@@ -1173,9 +1173,9 @@ Stamp Files and the Rerunning of Tasks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For each task that completes successfully, BitBake writes a stamp file
-into the ```STAMPS_DIR`` <&YOCTO_DOCS_REF_URL;#var-STAMPS_DIR>`__
+into the :term:`STAMPS_DIR`
 directory. The beginning of the stamp file's filename is determined by
-the ```STAMP`` <&YOCTO_DOCS_REF_URL;#var-STAMP>`__ variable, and the end
+the :term:`STAMP` variable, and the end
 of the name consists of the task's name and current `input
 checksum <#overview-checksums>`__.
 
@@ -1202,8 +1202,8 @@ file does not exist, the task is rerun.
    However, you should realize that stamp files only serve as a marker
    that some work has been done and that these files do not record task
    output. The actual task output would usually be somewhere in
-   ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__ (e.g. in some
-   recipe's ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__.) What
+   :term:`TMPDIR` (e.g. in some
+   recipe's :term:`WORKDIR`.) What
    the sstate cache mechanism adds is a way to cache task output that
    can then be shared between build machines.
 
@@ -1244,16 +1244,16 @@ locations as needed. In some cases, it makes sense to have a setscene
 task variant (e.g. generating package files in the
 ```do_package_write_*`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb>`__
 task). In other cases, it does not make sense (e.g. a
-```do_patch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-patch>`__ task or a
-```do_unpack`` <&YOCTO_DOCS_REF_URL;#ref-tasks-unpack>`__ task) since
+:ref:`ref-tasks-patch` task or a
+:ref:`ref-tasks-unpack` task) since
 the work involved would be equal to or greater than the underlying task.
 
 In the build system, the common tasks that have setscene variants are
-```do_package`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package>`__,
+:ref:`ref-tasks-package`,
 ``do_package_write_*``,
-```do_deploy`` <&YOCTO_DOCS_REF_URL;#ref-tasks-deploy>`__,
-```do_packagedata`` <&YOCTO_DOCS_REF_URL;#ref-tasks-packagedata>`__, and
-```do_populate_sysroot`` <&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot>`__.
+:ref:`ref-tasks-deploy`,
+:ref:`ref-tasks-packagedata`, and
+:ref:`ref-tasks-populate_sysroot`.
 Notice that these tasks represent most of the tasks whose output is an
 end result.
 
@@ -1321,14 +1321,14 @@ The build process writes images out to the `Build
 Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ inside the
 ``tmp/deploy/images/machine/`` folder as shown in the figure. This
 folder contains any files expected to be loaded on the target device.
-The ```DEPLOY_DIR`` <&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR>`__ variable
+The :term:`DEPLOY_DIR` variable
 points to the ``deploy`` directory, while the
-```DEPLOY_DIR_IMAGE`` <&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR_IMAGE>`__
+:term:`DEPLOY_DIR_IMAGE`
 variable points to the appropriate directory containing images for the
 current configuration.
 
 -  kernel-image: A kernel binary file. The
-   ```KERNEL_IMAGETYPE`` <&YOCTO_DOCS_REF_URL;#var-KERNEL_IMAGETYPE>`__
+   :term:`KERNEL_IMAGETYPE`
    variable determines the naming scheme for the kernel image file.
    Depending on this variable, the file could begin with a variety of
    naming strings. The ``deploy/images/``\ machine directory can contain
@@ -1336,7 +1336,7 @@ current configuration.
 
 -  root-filesystem-image: Root filesystems for the target device (e.g.
    ``*.ext3`` or ``*.bz2`` files). The
-   ```IMAGE_FSTYPES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FSTYPES>`__
+   :term:`IMAGE_FSTYPES`
    variable determines the root filesystem image type. The
    ``deploy/images/``\ machine directory can contain multiple root
    filesystems for the machine.
@@ -1344,7 +1344,7 @@ current configuration.
 -  kernel-modules: Tarballs that contain all the modules built for the
    kernel. Kernel module tarballs exist for legacy purposes and can be
    suppressed by setting the
-   ```MODULE_TARBALL_DEPLOY`` <&YOCTO_DOCS_REF_URL;#var-MODULE_TARBALL_DEPLOY>`__
+   :term:`MODULE_TARBALL_DEPLOY`
    variable to "0". The ``deploy/images/``\ machine directory can
    contain multiple kernel module tarballs for the machine.
 
@@ -1401,72 +1401,72 @@ can initialize the environment before using the tools.
       Software Development Kit (eSDK) <&YOCTO_DOCS_SDK_URL;>`__ manual.
 
 All the output files for an SDK are written to the ``deploy/sdk`` folder
-inside the `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ as
+inside the :term:`Build Directory` as
 shown in the previous figure. Depending on the type of SDK, several
 variables exist that help configure these files. The following list
 shows the variables associated with an extensible SDK:
 
--  ```DEPLOY_DIR`` <&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR>`__: Points to
+-  :term:`DEPLOY_DIR`: Points to
    the ``deploy`` directory.
 
--  ```SDK_EXT_TYPE`` <&YOCTO_DOCS_REF_URL;#var-SDK_EXT_TYPE>`__:
+-  :term:`SDK_EXT_TYPE`:
    Controls whether or not shared state artifacts are copied into the
    extensible SDK. By default, all required shared state artifacts are
    copied into the SDK.
 
--  ```SDK_INCLUDE_PKGDATA`` <&YOCTO_DOCS_REF_URL;#var-SDK_INCLUDE_PKGDATA>`__:
+-  :term:`SDK_INCLUDE_PKGDATA`:
    Specifies whether or not packagedata is included in the extensible
    SDK for all recipes in the "world" target.
 
--  ```SDK_INCLUDE_TOOLCHAIN`` <&YOCTO_DOCS_REF_URL;#var-SDK_INCLUDE_TOOLCHAIN>`__:
+-  :term:`SDK_INCLUDE_TOOLCHAIN`:
    Specifies whether or not the toolchain is included when building the
    extensible SDK.
 
--  ```SDK_LOCAL_CONF_WHITELIST`` <&YOCTO_DOCS_REF_URL;#var-SDK_LOCAL_CONF_WHITELIST>`__:
+-  :term:`SDK_LOCAL_CONF_WHITELIST`:
    A list of variables allowed through from the build system
    configuration into the extensible SDK configuration.
 
--  ```SDK_LOCAL_CONF_BLACKLIST`` <&YOCTO_DOCS_REF_URL;#var-SDK_LOCAL_CONF_BLACKLIST>`__:
+-  :term:`SDK_LOCAL_CONF_BLACKLIST`:
    A list of variables not allowed through from the build system
    configuration into the extensible SDK configuration.
 
--  ```SDK_INHERIT_BLACKLIST`` <&YOCTO_DOCS_REF_URL;#var-SDK_INHERIT_BLACKLIST>`__:
+-  :term:`SDK_INHERIT_BLACKLIST`:
    A list of classes to remove from the
-   ```INHERIT`` <&YOCTO_DOCS_REF_URL;#var-INHERIT>`__ value globally
+   :term:`INHERIT` value globally
    within the extensible SDK configuration.
 
 This next list, shows the variables associated with a standard SDK:
 
--  ```DEPLOY_DIR`` <&YOCTO_DOCS_REF_URL;#var-DEPLOY_DIR>`__: Points to
+-  :term:`DEPLOY_DIR`: Points to
    the ``deploy`` directory.
 
--  ```SDKMACHINE`` <&YOCTO_DOCS_REF_URL;#var-SDKMACHINE>`__: Specifies
+-  :term:`SDKMACHINE`: Specifies
    the architecture of the machine on which the cross-development tools
    are run to create packages for the target hardware.
 
--  ```SDKIMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-SDKIMAGE_FEATURES>`__:
+-  :term:`SDKIMAGE_FEATURES`:
    Lists the features to include in the "target" part of the SDK.
 
--  ```TOOLCHAIN_HOST_TASK`` <&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_HOST_TASK>`__:
+-  :term:`TOOLCHAIN_HOST_TASK`:
    Lists packages that make up the host part of the SDK (i.e. the part
    that runs on the ``SDKMACHINE``). When you use
    ``bitbake -c populate_sdk imagename`` to create the SDK, a set of
    default packages apply. This variable allows you to add more
    packages.
 
--  ```TOOLCHAIN_TARGET_TASK`` <&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_TARGET_TASK>`__:
+-  :term:`TOOLCHAIN_TARGET_TASK`:
    Lists packages that make up the target part of the SDK (i.e. the part
    built for the target hardware).
 
--  ```SDKPATH`` <&YOCTO_DOCS_REF_URL;#var-SDKPATH>`__: Defines the
+-  :term:`SDKPATH`: Defines the
    default SDK installation path offered by the installation script.
 
--  ```SDK_HOST_MANIFEST`` <&YOCTO_DOCS_REF_URL;#var-SDK_HOST_MANIFEST>`__:
+-  :term:`SDK_HOST_MANIFEST`:
    Lists all the installed packages that make up the host part of the
    SDK. This variable also plays a minor role for extensible SDK
    development as well. However, it is mainly used for the standard SDK.
 
--  ```SDK_TARGET_MANIFEST`` <&YOCTO_DOCS_REF_URL;#var-SDK_TARGET_MANIFEST>`__:
+-  :term:`SDK_TARGET_MANIFEST`:
    Lists all the installed packages that make up the target part of the
    SDK. This variable also plays a minor role for extensible SDK
    development as well. However, it is mainly used for the standard SDK.
@@ -1497,7 +1497,7 @@ toolchain construction and use.
 Most of the work occurs on the Build Host. This is the machine used to
 build images and generally work within the the Yocto Project
 environment. When you run
-`BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__ to create an image, the
+:term:`BitBake` to create an image, the
 OpenEmbedded build system uses the host ``gcc`` compiler to bootstrap a
 cross-compiler named ``gcc-cross``. The ``gcc-cross`` compiler is what
 BitBake uses to compile source files when creating the target image. You
@@ -1558,11 +1558,11 @@ relocatable SDK used to develop applications. When you run the
 installer, it installs the toolchain, which contains the development
 tools (e.g., ``gcc-cross-canadian``, ``binutils-cross-canadian``, and
 other ``nativesdk-*`` tools), which are tools native to the SDK (i.e.
-native to ```SDK_ARCH`` <&YOCTO_DOCS_REF_URL;#var-SDK_ARCH>`__), you
+native to :term:`SDK_ARCH`), you
 need to cross-compile and test your software. The figure shows the
 commands you use to easily build out this toolchain. This
 cross-development toolchain is built to execute on the
-```SDKMACHINE`` <&YOCTO_DOCS_REF_URL;#var-SDKMACHINE>`__, which might or
+:term:`SDKMACHINE`, which might or
 might not be the same machine as the Build Host.
 
 .. note::
@@ -1603,7 +1603,7 @@ glibc-initial -> nativesdk-glibc -> gcc-crosssdk -> gcc-cross-canadian
    (i.e. it is designed to run on the build host).
 
 -  ``gcc-cross-canadian``: The final relocatable cross-compiler. When
-   run on the ```SDKMACHINE`` <&YOCTO_DOCS_REF_URL;#var-SDKMACHINE>`__,
+   run on the :term:`SDKMACHINE`,
    this tool produces executable code that runs on the target device.
    Only one cross-canadian compiler is produced per architecture since
    they can be targeted at different processor optimizations using
@@ -1623,7 +1623,7 @@ Shared State Cache
 ==================
 
 By design, the OpenEmbedded build system builds everything from scratch
-unless `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__ can determine
+unless :term:`BitBake` can determine
 that parts do not need to be rebuilt. Fundamentally, building from
 scratch is attractive as it means all parts are built fresh and no
 possibility of stale data exists that can cause problems. When
@@ -1664,7 +1664,7 @@ them if they are deemed to be valid.
 .. note::
 
    -  The build system does not maintain
-      ```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__ information as part of
+      :term:`PR` information as part of
       the shared state packages. Consequently, considerations exist that
       affect maintaining shared state feeds. For information on how the
       build system works with packages and can track incrementing ``PR``
@@ -1695,8 +1695,8 @@ works on a per-task basis rather than a per-recipe basis. You might
 wonder why using a per-task basis is preferred over a per-recipe basis.
 To help explain, consider having the IPK packaging backend enabled and
 then switching to DEB. In this case, the
-```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ and
-```do_package`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package>`__ task outputs
+:ref:`ref-tasks-install` and
+:ref:`ref-tasks-package` task outputs
 are still valid. However, with a per-recipe approach, the build would
 not include the ``.deb`` files. Consequently, you would have to
 invalidate the whole build and rerun it. Rerunning everything is not the
@@ -1720,7 +1720,7 @@ you a good idea of when the task's data changes.
 
 To complicate the problem, there are things that should not be included
 in the checksum. First, there is the actual specific build path of a
-given task - the ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__. It
+given task - the :term:`WORKDIR`. It
 does not matter if the work directory changes because it should not
 affect the output for target packages. Also, the build process has the
 objective of making native or cross packages relocatable.
@@ -1755,9 +1755,9 @@ Like the ``WORKDIR`` case, situations exist where dependencies should be
 ignored. For these situations, you can instruct the build process to
 ignore a dependency by using a line like the following:
 PACKAGE_ARCHS[vardepsexclude] = "MACHINE" This example ensures that the
-```PACKAGE_ARCHS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCHS>`__ variable
+:term:`PACKAGE_ARCHS` variable
 does not depend on the value of
-```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__, even if it does
+:term:`MACHINE`, even if it does
 reference it.
 
 Equally, there are cases where you need to add dependencies BitBake is
@@ -1795,9 +1795,9 @@ STAGING_DIR_TARGET COREBASE PRSERV_HOST \\ PRSERV_DUMPDIR
 PRSERV_DUMPFILE PRSERV_LOCKDOWN PARALLEL_MAKE \\ CCACHE_DIR
 EXTERNAL_TOOLCHAIN CCACHE CCACHE_DISABLE LICENSE_PATH SDKPKGSUFFIX" The
 previous example excludes
-```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__ since that variable
+:term:`WORKDIR` since that variable
 is actually constructed as a path within
-```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__, which is on the
+:term:`TMPDIR`, which is on the
 whitelist.
 
 The rules for deciding which hashes of dependent tasks to include
@@ -1806,7 +1806,7 @@ accomplished with a Python function. The code in
 ``meta/lib/oe/sstatesig.py`` shows two examples of this and also
 illustrates how you can insert your own policy into the system if so
 desired. This file defines the two basic signature generators
-`OE-Core <&YOCTO_DOCS_REF_URL;#oe-core>`__ uses: "OEBasic" and
+:term:`OpenEmbedded-Core (OE-Core)` uses: "OEBasic" and
 "OEBasicHash". By default, a dummy "noop" signature handler is enabled
 in BitBake. This means that behavior is unchanged from previous
 versions. OE-Core uses the "OEBasicHash" signature handler by default
@@ -1816,7 +1816,7 @@ as the "OEBasic" version but adds the task hash to the `stamp
 files <#stamp-files-and-the-rerunning-of-tasks>`__. This results in any
 metadata change that changes the task hash, automatically causing the
 task to be run again. This removes the need to bump
-```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__ values, and changes to metadata
+:term:`PR` values, and changes to metadata
 automatically ripple across the build.
 
 It is also worth noting that the end result of these signature
@@ -1842,7 +1842,7 @@ half the problem of supporting a shared state. The other half of the
 problem is being able to use checksum information during the build and
 being able to reuse or rebuild specific components.
 
-The ```sstate`` <&YOCTO_DOCS_REF_URL;#ref-classes-sstate>`__ class is a
+The :ref:`sstate <ref-classes-sstate>` class is a
 relatively generic implementation of how to "capture" a snapshot of a
 given task. The idea is that the build process does not care about the
 source of a task's output. Output could be freshly built or it could be
@@ -1850,18 +1850,18 @@ downloaded and unpacked from somewhere. In other words, the build
 process does not need to worry about its origin.
 
 Two types of output exist. One type is just about creating a directory
-in ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__. A good example is
+in :term:`WORKDIR`. A good example is
 the output of either
-```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ or
-```do_package`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package>`__. The other
+:ref:`ref-tasks-install` or
+:ref:`ref-tasks-package`. The other
 type of output occurs when a set of data is merged into a shared
 directory tree such as the sysroot.
 
 The Yocto Project team has tried to keep the details of the
 implementation hidden in ``sstate`` class. From a user's perspective,
 adding shared state wrapping to a task is as simple as this
-```do_deploy`` <&YOCTO_DOCS_REF_URL;#ref-tasks-deploy>`__ example taken
-from the ```deploy`` <&YOCTO_DOCS_REF_URL;#ref-classes-deploy>`__ class:
+:ref:`ref-tasks-deploy` example taken
+from the :ref:`deploy <ref-classes-deploy>` class:
 DEPLOYDIR = "${WORKDIR}/deploy-${PN}" SSTATETASKS += "do_deploy"
 do_deploy[sstate-inputdirs] = "${DEPLOYDIR}"
 do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}" python
@@ -1871,9 +1871,9 @@ do_deploy[dirs] = "${DEPLOYDIR} ${B}" do_deploy[stamp-extra-info] =
 
 -  Adding "do_deploy" to ``SSTATETASKS`` adds some required
    sstate-related processing, which is implemented in the
-   ```sstate`` <&YOCTO_DOCS_REF_URL;#ref-classes-sstate>`__ class, to
+   :ref:`sstate <ref-classes-sstate>` class, to
    before and after the
-   ```do_deploy`` <&YOCTO_DOCS_REF_URL;#ref-tasks-deploy>`__ task.
+   :ref:`ref-tasks-deploy` task.
 
 -  The ``do_deploy[sstate-inputdirs] = "${DEPLOYDIR}"`` declares that
    ``do_deploy`` places its output in ``${DEPLOYDIR}`` when run normally
@@ -1965,8 +1965,8 @@ do_deploy[dirs] = "${DEPLOYDIR} ${B}" do_deploy[stamp-extra-info] =
    "${PACKAGELOCK}"
 
 Behind the scenes, the shared state code works by looking in
-```SSTATE_DIR`` <&YOCTO_DOCS_REF_URL;#var-SSTATE_DIR>`__ and
-```SSTATE_MIRRORS`` <&YOCTO_DOCS_REF_URL;#var-SSTATE_MIRRORS>`__ for
+:term:`SSTATE_DIR` and
+:term:`SSTATE_MIRRORS` for
 shared state files. Here is an example: SSTATE_MIRRORS ?= "\\ file://.\*
 http://someserver.tld/share/sstate/PATH;downloadfilename=PATH \\n \\
 file://.\* file:///some/local/dir/sstate/PATH"
@@ -1998,7 +1998,7 @@ tasks on which it is dependent are not executed.
 
 As a real world example, the aim is when building an IPK-based image,
 only the
-```do_package_write_ipk`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_ipk>`__
+:ref:`ref-tasks-package_write_ipk`
 tasks would have their shared state packages fetched and extracted.
 Since the sysroot is not used, it would never get extracted. This is
 another reason why a task-based approach is preferred over a
@@ -2011,22 +2011,22 @@ Automatically Added Runtime Dependencies
 The OpenEmbedded build system automatically adds common types of runtime
 dependencies between packages, which means that you do not need to
 explicitly declare the packages using
-```RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-RDEPENDS>`__. Three automatic
+:term:`RDEPENDS`. Three automatic
 mechanisms exist (``shlibdeps``, ``pcdeps``, and ``depchains``) that
 handle shared libraries, package configuration (pkg-config) modules, and
 ``-dev`` and ``-dbg`` packages, respectively. For other types of runtime
 dependencies, you must manually declare the dependencies.
 
 -  ``shlibdeps``: During the
-   ```do_package`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package>`__ task of
+   :ref:`ref-tasks-package` task of
    each recipe, all shared libraries installed by the recipe are
    located. For each shared library, the package that contains the
    shared library is registered as providing the shared library. More
    specifically, the package is registered as providing the
    `soname <https://en.wikipedia.org/wiki/Soname>`__ of the library. The
    resulting shared-library-to-package mapping is saved globally in
-   ```PKGDATA_DIR`` <&YOCTO_DOCS_REF_URL;#var-PKGDATA_DIR>`__ by the
-   ```do_packagedata`` <&YOCTO_DOCS_REF_URL;#ref-tasks-packagedata>`__
+   :term:`PKGDATA_DIR` by the
+   :ref:`ref-tasks-packagedata`
    task.
 
    Simultaneously, all executables and shared libraries installed by the
@@ -2047,7 +2047,7 @@ dependencies, you must manually declare the dependencies.
    If you want to avoid a package being registered as providing a
    particular shared library (e.g. because the library is for internal
    use only), then add the library to
-   ```PRIVATE_LIBS`` <&YOCTO_DOCS_REF_URL;#var-PRIVATE_LIBS>`__ inside
+   :term:`PRIVATE_LIBS` inside
    the package's recipe.
 
 -  ``pcdeps``: During the ``do_package`` task of each recipe, all
@@ -2082,7 +2082,7 @@ dependencies, you must manually declare the dependencies.
    need for a dependency between the packages.
 
    The dependencies added by ``depchains`` are in the form of
-   ```RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS>`__.
+   :term:`RRECOMMENDS`.
 
    .. note::
 
@@ -2101,11 +2101,11 @@ dependencies, you must manually declare the dependencies.
    To ensure that the dependency chain is never broken, ``-dev`` and
    ``-dbg`` packages are always generated by default, even if the
    packages turn out to be empty. See the
-   ```ALLOW_EMPTY`` <&YOCTO_DOCS_REF_URL;#var-ALLOW_EMPTY>`__ variable
+   :term:`ALLOW_EMPTY` variable
    for more information.
 
 The ``do_package`` task depends on the ``do_packagedata`` task of each
-recipe in ```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ through use
+recipe in :term:`DEPENDS` through use
 of a ``[``\ ```deptask`` <&YOCTO_DOCS_BB_URL;#variable-flags>`__\ ``]``
 declaration, which guarantees that the required
 shared-library/module-to-package mapping information will be available
@@ -2116,15 +2116,15 @@ Fakeroot and Pseudo
 
 Some tasks are easier to implement when allowed to perform certain
 operations that are normally reserved for the root user (e.g.
-```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__,
+:ref:`ref-tasks-install`,
 ```do_package_write*`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb>`__,
-```do_rootfs`` <&YOCTO_DOCS_REF_URL;#ref-tasks-rootfs>`__, and
+:ref:`ref-tasks-rootfs`, and
 ```do_image*`` <&YOCTO_DOCS_REF_URL;#ref-tasks-image>`__). For example,
 the ``do_install`` task benefits from being able to set the UID and GID
 of installed files to arbitrary values.
 
 One approach to allowing tasks to perform root-only operations would be
-to require `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__ to run as
+to require :term:`BitBake` to run as
 root. However, this method is cumbersome and has security issues. The
 approach that is actually used is to run tasks that benefit from root
 privileges in a "fake" root environment. Within this environment, the
@@ -2148,7 +2148,7 @@ which results in the illusion of running as root. To keep track of
 "fake" file ownership and permissions resulting from operations that
 require root permissions, Pseudo uses an SQLite 3 database. This
 database is stored in
-``${``\ ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__\ ``}/pseudo/files.db``
+``${``\ :term:`WORKDIR`\ ``}/pseudo/files.db``
 for individual recipes. Storing the database in a file as opposed to in
 memory gives persistence between tasks and builds, which is not
 accomplished using fakeroot.

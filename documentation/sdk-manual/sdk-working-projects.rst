@@ -79,7 +79,7 @@ project:
 
 4. *Cross-Compile the Project:* This command compiles the project using
    the cross-compiler. The
-   ```CONFIGURE_FLAGS`` <&YOCTO_DOCS_REF_URL;#var-CONFIGURE_FLAGS>`__
+   :term:`CONFIGURE_FLAGS`
    environment variable provides the minimal arguments for GNU
    configure: $ ./configure ${CONFIGURE_FLAGS} For an Autotools-based
    project, you can use the cross-toolchain by just passing the
@@ -167,7 +167,7 @@ demonstrates these variable behaviors.
 In a new shell environment variables are not established for the SDK
 until you run the setup script. For example, the following commands show
 a null value for the compiler variable (i.e.
-```CC`` <&YOCTO_DOCS_REF_URL;#var-CC>`__). $ echo ${CC} $ Running the
+:term:`CC`). $ echo ${CC} $ Running the
 SDK setup script for a 64-bit build host and an i586-tuned target
 architecture for a ``core-image-sato`` image using the current DISTRO
 Yocto Project release and then echoing that variable shows the value

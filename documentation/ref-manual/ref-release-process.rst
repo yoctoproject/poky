@@ -41,7 +41,7 @@ Major Release Codenames
 Each major release receives a codename that identifies the release in
 the `Yocto Project Source
 Repositories <&YOCTO_DOCS_OM_URL;#yocto-project-repositories>`__. The
-concept is that branches of `Metadata <#metadata>`__ with the same
+concept is that branches of :term:`Metadata` with the same
 codename are likely to be compatible and thus work together.
 
 .. note::
@@ -107,12 +107,12 @@ consists of the following pieces:
 -  ``bitbake-selftest``: A standalone command that runs unit tests on
    key pieces of BitBake and its fetchers.
 
--  ```sanity.bbclass`` <#ref-classes-sanity>`__: This automatically
+-  :ref:`sanity.bbclass <ref-classes-sanity>`: This automatically
    included class checks the build environment for missing tools (e.g.
    ``gcc``) or common misconfigurations such as
-   ```MACHINE`` <#var-MACHINE>`__ set incorrectly.
+   :term:`MACHINE` set incorrectly.
 
--  ```insane.bbclass`` <#ref-classes-insane>`__: This class checks the
+-  :ref:`insane.bbclass <ref-classes-insane>`: This class checks the
    generated output from builds for sanity. For example, if building for
    an ARM target, did the build produce ARM binaries. If, for example,
    the build produced PPC binaries then there is a problem.
@@ -149,7 +149,7 @@ efficiently.
 
 The Yocto Project's main Autobuilder (``autobuilder.yoctoproject.org``)
 publicly tests each Yocto Project release's code in the
-`OE-Core <#oe-core>`__, Poky, and BitBake repositories. The testing
+:term:`OpenEmbedded-Core (OE-Core)`, Poky, and BitBake repositories. The testing
 occurs for both the current state of the "master" branch and also for
 submitted patches. Testing for submitted patches usually occurs in the
 "ross/mut" branch in the ``poky-contrib`` repository (i.e. the

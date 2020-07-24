@@ -95,14 +95,14 @@ build the SDK installer. Follow these steps:
 
 4. *Make Sure You Are Building an Installer for the Correct Machine:*
    Check to be sure that your
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ variable in the
+   :term:`MACHINE` variable in the
    ``local.conf`` file in your Build Directory matches the architecture
    for which you are building.
 
 5. *Make Sure Your SDK Machine is Correctly Set:* If you are building a
    toolchain designed to run on an architecture that differs from your
    current development host machine (i.e. the build host), be sure that
-   the ```SDKMACHINE`` <&YOCTO_DOCS_REF_URL;#var-SDKMACHINE>`__ variable
+   the :term:`SDKMACHINE` variable
    in the ``local.conf`` file in your Build Directory is correctly set.
 
    .. note::
@@ -138,7 +138,7 @@ build the SDK installer. Follow these steps:
          binaries. If you want to use the toolchain to build these types
          of libraries, you need to be sure your SDK has the appropriate
          static development libraries. Use the
-         ```TOOLCHAIN_TARGET_TASK`` <&YOCTO_DOCS_REF_URL;#var-TOOLCHAIN_TARGET_TASK>`__
+         :term:`TOOLCHAIN_TARGET_TASK`
          variable inside your ``local.conf`` file before building the
          SDK installer. Doing so ensures that the eventual SDK
          installation process installs the appropriate library packages
@@ -189,7 +189,7 @@ Follow these steps to extract the root filesystem:
    filesystem image's profile: lsb, lsb-dev, lsb-sdk, minimal,
    minimal-dev, minimal-initramfs, sato, sato-dev, sato-sdk,
    sato-sdk-ptest. For information on these types of image profiles, see
-   the "`Images <&YOCTO_DOCS_REF_URL;#ref-images>`__" chapter in the
+   the ":ref:`ref-manual/ref-images:Images`" chapter in the
    Yocto Project Reference Manual. arch is a string representing the
    target architecture: beaglebone-yocto, beaglebone-yocto-lsb,
    edgerouter, edgerouter-lsb, genericx86, genericx86-64,

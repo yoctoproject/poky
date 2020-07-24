@@ -28,12 +28,12 @@ append file to override metadata. How do I install a specific kernel
 module? Linux kernel modules are packaged individually. To ensure a
 specific kernel module is included in an image, include it in the
 appropriate machine
-```RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS>`__ variable.
+:term:`RRECOMMENDS` variable.
 These other variables are useful for installing specific modules:
-```MACHINE_ESSENTIAL_EXTRA_RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RDEPENDS>`__
-```MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS>`__
-```MACHINE_EXTRA_RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RDEPENDS>`__
-```MACHINE_EXTRA_RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_EXTRA_RRECOMMENDS>`__
+:term:`MACHINE_ESSENTIAL_EXTRA_RDEPENDS`
+:term:`MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS`
+:term:`MACHINE_EXTRA_RDEPENDS`
+:term:`MACHINE_EXTRA_RRECOMMENDS`
 For example, set the following in the ``qemux86.conf`` file to include
 the ``ab123`` kernel modules with images built for the ``qemux86``
 machine: MACHINE_EXTRA_RRECOMMENDS += "kernel-module-ab123" For more

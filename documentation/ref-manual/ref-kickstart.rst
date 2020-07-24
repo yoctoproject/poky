@@ -167,7 +167,7 @@ the ``part`` and ``partition`` commands:
 
 -  *``--fsuuid``:* This option is a Wic-specific option that specifies
    the filesystem UUID. You can generate or modify
-   ```WKS_FILE`` <#var-WKS_FILE>`__ with this option if a preconfigured
+   :term:`WKS_FILE` with this option if a preconfigured
    filesystem UUID is added to the kernel command line in the bootloader
    configuration before you run Wic.
 

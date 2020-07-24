@@ -51,7 +51,7 @@ well e.g.: $ bitbake core-image-sato
    it packages, which makes it difficult to use some of the tools.
 
    You can prevent that by setting the
-   ```INHIBIT_PACKAGE_STRIP`` <&YOCTO_DOCS_REF_URL;#var-INHIBIT_PACKAGE_STRIP>`__
+   :term:`INHIBIT_PACKAGE_STRIP`
    variable to "1" in your ``local.conf`` when you build the image:
 
 INHIBIT_PACKAGE_STRIP = "1" The above setting will noticeably increase
@@ -64,6 +64,6 @@ To generate debug info for packages, you can add dbg-pkgs to
 EXTRA_IMAGE_FEATURES in local.conf. For example: EXTRA_IMAGE_FEATURES =
 "debug-tweaks tools-profile dbg-pkgs" Additionally, in order to generate
 the right type of debuginfo, we also need to set
-```PACKAGE_DEBUG_SPLIT_STYLE`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_DEBUG_SPLIT_STYLE>`__
+:term:`PACKAGE_DEBUG_SPLIT_STYLE`
 in the ``local.conf`` file: PACKAGE_DEBUG_SPLIT_STYLE =
 'debug-file-directory'

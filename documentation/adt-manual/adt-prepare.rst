@@ -284,7 +284,7 @@ Follow these steps to generate the toolchain into the Build Directory:
    Directory <&YOCTO_DOCS_DEV_URL;#source-directory>`__.
 
 2. *Check your Local Configuration File:* At this point, you should be
-   sure that the ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__
+   sure that the :term:`MACHINE`
    variable in the ``local.conf`` file found in the ``conf`` directory
    of the Build Directory is set for the target architecture. Comments
    within the ``local.conf`` file list the values you can use for the
@@ -345,45 +345,45 @@ setup script for a 64-bit IA-based architecture installed in the default
 installation directory would be the following:
 YOCTO_ADTPATH_DIR/environment-setup-x86_64-poky-linux When you run the
 setup script, many environment variables are defined:
-```SDKTARGETSYSROOT`` <&YOCTO_DOCS_REF_URL;#var-SDKTARGETSYSROOT>`__ -
+:term:`SDKTARGETSYSROOT` -
 The path to the sysroot used for cross-compilation
-```PKG_CONFIG_PATH`` <&YOCTO_DOCS_REF_URL;#var-PKG_CONFIG_PATH>`__ - The
+:term:`PKG_CONFIG_PATH` - The
 path to the target pkg-config files
-```CONFIG_SITE`` <&YOCTO_DOCS_REF_URL;#var-CONFIG_SITE>`__ - A GNU
+:term:`CONFIG_SITE` - A GNU
 autoconf site file preconfigured for the target
-```CC`` <&YOCTO_DOCS_REF_URL;#var-CC>`__ - The minimal command and
+:term:`CC` - The minimal command and
 arguments to run the C compiler
-```CXX`` <&YOCTO_DOCS_REF_URL;#var-CXX>`__ - The minimal command and
+:term:`CXX` - The minimal command and
 arguments to run the C++ compiler
-```CPP`` <&YOCTO_DOCS_REF_URL;#var-CPP>`__ - The minimal command and
+:term:`CPP` - The minimal command and
 arguments to run the C preprocessor
-```AS`` <&YOCTO_DOCS_REF_URL;#var-AS>`__ - The minimal command and
-arguments to run the assembler ```LD`` <&YOCTO_DOCS_REF_URL;#var-LD>`__
+:term:`AS` - The minimal command and
+arguments to run the assembler :term:`LD`
 - The minimal command and arguments to run the linker
-```GDB`` <&YOCTO_DOCS_REF_URL;#var-GDB>`__ - The minimal command and
+:term:`GDB` - The minimal command and
 arguments to run the GNU Debugger
-```STRIP`` <&YOCTO_DOCS_REF_URL;#var-STRIP>`__ - The minimal command and
+:term:`STRIP` - The minimal command and
 arguments to run 'strip', which strips symbols
-```RANLIB`` <&YOCTO_DOCS_REF_URL;#var-RANLIB>`__ - The minimal command
+:term:`RANLIB` - The minimal command
 and arguments to run 'ranlib'
-```OBJCOPY`` <&YOCTO_DOCS_REF_URL;#var-OBJCOPY>`__ - The minimal command
+:term:`OBJCOPY` - The minimal command
 and arguments to run 'objcopy'
-```OBJDUMP`` <&YOCTO_DOCS_REF_URL;#var-OBJDUMP>`__ - The minimal command
-and arguments to run 'objdump' ```AR`` <&YOCTO_DOCS_REF_URL;#var-AR>`__
+:term:`OBJDUMP` - The minimal command
+and arguments to run 'objdump' :term:`AR`
 - The minimal command and arguments to run 'ar'
-```NM`` <&YOCTO_DOCS_REF_URL;#var-NM>`__ - The minimal command and
+:term:`NM` - The minimal command and
 arguments to run 'nm'
-```TARGET_PREFIX`` <&YOCTO_DOCS_REF_URL;#var-TARGET_PREFIX>`__ - The
+:term:`TARGET_PREFIX` - The
 toolchain binary prefix for the target tools
-```CROSS_COMPILE`` <&YOCTO_DOCS_REF_URL;#var-CROSS_COMPILE>`__ - The
+:term:`CROSS_COMPILE` - The
 toolchain binary prefix for the target tools
-```CONFIGURE_FLAGS`` <&YOCTO_DOCS_REF_URL;#var-CONFIGURE_FLAGS>`__ - The
+:term:`CONFIGURE_FLAGS` - The
 minimal arguments for GNU configure
-```CFLAGS`` <&YOCTO_DOCS_REF_URL;#var-CFLAGS>`__ - Suggested C flags
-```CXXFLAGS`` <&YOCTO_DOCS_REF_URL;#var-CXXFLAGS>`__ - Suggested C++
-flags ```LDFLAGS`` <&YOCTO_DOCS_REF_URL;#var-LDFLAGS>`__ - Suggested
+:term:`CFLAGS` - Suggested C flags
+:term:`CXXFLAGS` - Suggested C++
+flags :term:`LDFLAGS` - Suggested
 linker flags when you use CC to link
-```CPPFLAGS`` <&YOCTO_DOCS_REF_URL;#var-CPPFLAGS>`__ - Suggested
+:term:`CPPFLAGS` - Suggested
 preprocessor flags
 
 Securing Kernel and Filesystem Images
@@ -411,7 +411,7 @@ that you can use unaltered in the QEMU emulator. These kernel images
 reside in the release area - ` <&YOCTO_MACHINES_DL_URL;>`__ and are
 ideal for experimentation using Yocto Project. For information on the
 image types you can build using the OpenEmbedded build system, see the
-"`Images <&YOCTO_DOCS_REF_URL;#ref-images>`__" chapter in the Yocto
+":ref:`ref-manual/ref-images:Images`" chapter in the Yocto
 Project Reference Manual.
 
 If you are planning on developing against your image and you are not
@@ -434,7 +434,7 @@ this by including the ``eclipse-debug`` image feature.
 To include the ``eclipse-debug`` image feature, modify your
 ``local.conf`` file in the `Build
 Directory <&YOCTO_DOCS_DEV_URL;#build-directory>`__ so that the
-```EXTRA_IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES>`__
+:term:`EXTRA_IMAGE_FEATURES`
 variable includes the "eclipse-debug" feature. After modifying the
 configuration file, you can rebuild the image. Once the image is
 rebuilt, the ``tcf-agent`` will be included in the image and is launched
@@ -513,8 +513,8 @@ Another feature is that only one set of cross-canadian toolchain
 binaries are produced per architecture. This feature takes advantage of
 the fact that the target hardware can be passed to ``gcc`` as a set of
 compiler options. Those options are set up by the environment script and
-contained in variables such as ```CC`` <&YOCTO_DOCS_REF_URL;#var-CC>`__
-and ```LD`` <&YOCTO_DOCS_REF_URL;#var-LD>`__. This reduces the space
+contained in variables such as :term:`CC`
+and :term:`LD`. This reduces the space
 needed for the tools. Understand, however, that a sysroot is still
 needed for every target since those binaries are target-specific.
 
@@ -524,9 +524,9 @@ environment setup script (i.e.
 ```oe-init-build-env-memres`` <&YOCTO_DOCS_REF_URL;#structure-memres-core-script>`__)
 located in the Source Directory and you must make sure your
 ``conf/local.conf`` variables are correct. In particular, you need to be
-sure the ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ variable
+sure the :term:`MACHINE` variable
 matches the architecture for which you are building and that the
-```SDKMACHINE`` <&YOCTO_DOCS_REF_URL;#var-SDKMACHINE>`__ variable is
+:term:`SDKMACHINE` variable is
 correctly set if you are building a toolchain designed to run on an
 architecture that differs from your current development host machine
 (i.e. the build machine).
@@ -565,10 +565,10 @@ follows:
 
 -  Make sure you add the layer that contains the toolchain to your
    ``bblayers.conf`` file through the
-   ```BBLAYERS`` <&YOCTO_DOCS_REF_URL;#var-BBLAYERS>`__ variable.
+   :term:`BBLAYERS` variable.
 
 -  Set the
-   ```EXTERNAL_TOOLCHAIN`` <&YOCTO_DOCS_REF_URL;#var-EXTERNAL_TOOLCHAIN>`__
+   :term:`EXTERNAL_TOOLCHAIN`
    variable in your ``local.conf`` file to the location in which you
    installed the toolchain.
 
@@ -577,7 +577,7 @@ Mentor Graphics Sourcery G++ Toolchain. You can see information on how
 to use that particular layer in the ``README`` file at
 ` <http://github.com/MentorEmbedded/meta-sourcery/>`__. You can find
 further information by reading about the
-```TCMODE`` <&YOCTO_DOCS_REF_URL;#var-TCMODE>`__ variable in the Yocto
+:term:`TCMODE` variable in the Yocto
 Project Reference Manual's variable glossary.
 
 .. _using-pre-built:
@@ -712,7 +712,7 @@ core-image-profile-qemuarch.ext3 core-image-profile-qemuarch.tar.bz2
 Where: profile is the filesystem image's profile: lsb, lsb-dev, lsb-sdk,
 lsb-qt3, minimal, minimal-dev, sato, sato-dev, or sato-sdk. For
 information on these types of image profiles, see the
-"`Images <&YOCTO_DOCS_REF_URL;#ref-images>`__" chapter in the Yocto
+":ref:`ref-manual/ref-images:Images`" chapter in the Yocto
 Project Reference Manual. arch is a string representing the target
 architecture: x86, x86-64, ppc, mips, or arm.
 

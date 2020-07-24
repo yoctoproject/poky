@@ -22,7 +22,7 @@ build system applies them against ``local.conf`` and ``auto.conf``:
    host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__.
 
 -  Variables listed in
-   ```SDK_LOCAL_CONF_BLACKLIST`` <&YOCTO_DOCS_REF_URL;#var-SDK_LOCAL_CONF_BLACKLIST>`__
+   :term:`SDK_LOCAL_CONF_BLACKLIST`
    are excluded. These variables are not allowed through from the
    OpenEmbedded build system configuration into the extensible SDK
    configuration. Typically, these variables are specific to the machine
@@ -30,23 +30,23 @@ build system applies them against ``local.conf`` and ``auto.conf``:
    of the extensible SDK configuration.
 
    For a list of the variables excluded by default, see the
-   ```SDK_LOCAL_CONF_BLACKLIST`` <&YOCTO_DOCS_REF_URL;#var-SDK_LOCAL_CONF_BLACKLIST>`__
+   :term:`SDK_LOCAL_CONF_BLACKLIST`
    in the glossary of the Yocto Project Reference Manual.
 
 -  Variables listed in
-   ```SDK_LOCAL_CONF_WHITELIST`` <&YOCTO_DOCS_REF_URL;#var-SDK_LOCAL_CONF_WHITELIST>`__
+   :term:`SDK_LOCAL_CONF_WHITELIST`
    are included. Including a variable in the value of
    ``SDK_LOCAL_CONF_WHITELIST`` overrides either of the previous two
    filters. The default value is blank.
 
 -  Classes inherited globally with
-   ```INHERIT`` <&YOCTO_DOCS_REF_URL;#var-INHERIT>`__ that are listed in
-   ```SDK_INHERIT_BLACKLIST`` <&YOCTO_DOCS_REF_URL;#var-SDK_INHERIT_BLACKLIST>`__
+   :term:`INHERIT` that are listed in
+   :term:`SDK_INHERIT_BLACKLIST`
    are disabled. Using ``SDK_INHERIT_BLACKLIST`` to disable these
    classes is the typical method to disable classes that are problematic
    or unnecessary in the SDK context. The default value blacklists the
-   ```buildhistory`` <&YOCTO_DOCS_REF_URL;#ref-classes-buildhistory>`__
-   and ```icecc`` <&YOCTO_DOCS_REF_URL;#ref-classes-icecc>`__ classes.
+   :ref:`buildhistory <ref-classes-buildhistory>`
+   and :ref:`icecc <ref-classes-icecc>` classes.
 
 Additionally, the contents of ``conf/sdk-extra.conf``, when present, are
 appended to the end of ``conf/local.conf`` within the produced SDK,
@@ -63,10 +63,10 @@ However, some cases exist for which you might consider making
 adjustments:
 
 -  If your SDK configuration inherits additional classes using the
-   ```INHERIT`` <&YOCTO_DOCS_REF_URL;#var-INHERIT>`__ variable and you
+   :term:`INHERIT` variable and you
    do not need or want those classes enabled in the SDK, you can
    blacklist them by adding them to the
-   ```SDK_INHERIT_BLACKLIST`` <&YOCTO_DOCS_REF_URL;#var-SDK_INHERIT_BLACKLIST>`__
+   :term:`SDK_INHERIT_BLACKLIST`
    variable as described in the fourth bullet of the previous section.
 
    .. note::
@@ -93,7 +93,7 @@ adjustments:
       state cache) or ensuring the tasks are able to be produced quickly
       from a task that is a shared state task, add the task name to the
       value of
-      ```SDK_RECRDEP_TASKS`` <&YOCTO_DOCS_REF_URL;#var-SDK_RECRDEP_TASKS>`__.
+      :term:`SDK_RECRDEP_TASKS`.
 
    -  Disable the tasks if they are added by a class and you do not need
       the functionality the class provides in the extensible SDK. To
@@ -109,24 +109,24 @@ adjustments:
 
 -  If you want users of the SDK to be able to easily update the SDK, you
    need to set the
-   ```SDK_UPDATE_URL`` <&YOCTO_DOCS_REF_URL;#var-SDK_UPDATE_URL>`__
+   :term:`SDK_UPDATE_URL`
    variable. For more information, see the "`Providing Updates to the
    Extensible SDK After
    Installation <#sdk-providing-updates-to-the-extensible-sdk-after-installation>`__"
    section.
 
 -  If you have adjusted the list of files and directories that appear in
-   ```COREBASE`` <&YOCTO_DOCS_REF_URL;#var-COREBASE>`__ (other than
+   :term:`COREBASE` (other than
    layers that are enabled through ``bblayers.conf``), then you must
    list these files in
-   ```COREBASE_FILES`` <&YOCTO_DOCS_REF_URL;#var-COREBASE_FILES>`__ so
+   :term:`COREBASE_FILES` so
    that the files are copied into the SDK.
 
 -  If your OpenEmbedded build system setup uses a different environment
    setup script other than
    ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__, then you must
    set
-   ```OE_INIT_ENV_SCRIPT`` <&YOCTO_DOCS_REF_URL;#var-OE_INIT_ENV_SCRIPT>`__
+   :term:`OE_INIT_ENV_SCRIPT`
    to point to the environment setup script you use.
 
    .. note::
@@ -139,15 +139,15 @@ Changing the Extensible SDK Installer Title
 ===========================================
 
 You can change the displayed title for the SDK installer by setting the
-```SDK_TITLE`` <&YOCTO_DOCS_REF_URL;#var-SDK_TITLE>`__ variable and then
+:term:`SDK_TITLE` variable and then
 rebuilding the the SDK installer. For information on how to build an SDK
 installer, see the "`Building an SDK
 Installer <#sdk-building-an-sdk-installer>`__" section.
 
 By default, this title is derived from
-```DISTRO_NAME`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_NAME>`__ when it is
+:term:`DISTRO_NAME` when it is
 set. If the ``DISTRO_NAME`` variable is not set, the title is derived
-from the ```DISTRO`` <&YOCTO_DOCS_REF_URL;#var-DISTRO>`__ variable.
+from the :term:`DISTRO` variable.
 
 The
 ```populate_sdk_base`` <&YOCTO_DOCS_REF_URL;#ref-classes-populate-sdk-*>`__
@@ -181,7 +181,7 @@ the installed SDKs to update the installed SDKs by using the
    to host the directory. This directory must contain the published SDK.
 
 2. Set the
-   ```SDK_UPDATE_URL`` <&YOCTO_DOCS_REF_URL;#var-SDK_UPDATE_URL>`__
+   :term:`SDK_UPDATE_URL`
    variable to point to the corresponding HTTP or HTTPS URL. Setting
    this variable causes any SDK built to default to that URL and thus,
    the user does not have to pass the URL to the ``devtool sdk-update``
@@ -209,8 +209,8 @@ Changing the Default SDK Installation Directory
 
 When you build the installer for the Extensible SDK, the default
 installation directory for the SDK is based on the
-```DISTRO`` <&YOCTO_DOCS_REF_URL;#var-DISTRO>`__ and
-```SDKEXTPATH`` <&YOCTO_DOCS_REF_URL;#var-SDKEXTPATH>`__ variables from
+:term:`DISTRO` and
+:term:`SDKEXTPATH` variables from
 within the
 ```populate_sdk_base`` <&YOCTO_DOCS_REF_URL;#ref-classes-populate-sdk-*>`__
 class as follows: SDKEXTPATH ??= "~/${@d.getVar('DISTRO')}_sdk" You can
@@ -248,7 +248,7 @@ source, you need to do a number of things:
    -  Build the "world" target and set
       ``EXCLUDE_FROM_WORLD_pn-``\ recipename for the recipes you do not
       want built. See the
-      ```EXCLUDE_FROM_WORLD`` <&YOCTO_DOCS_REF_URL;#var-EXCLUDE_FROM_WORLD>`__
+      :term:`EXCLUDE_FROM_WORLD`
       variable for additional information.
 
 2. Expose the ``sstate-cache`` directory produced by the build.
@@ -259,7 +259,7 @@ source, you need to do a number of things:
 
 3. Set the appropriate configuration so that the produced SDK knows how
    to find the configuration. The variable you need to set is
-   ```SSTATE_MIRRORS`` <&YOCTO_DOCS_REF_URL;#var-SSTATE_MIRRORS>`__:
+   :term:`SSTATE_MIRRORS`:
    SSTATE_MIRRORS = "file://.\*
    http://example.com/some_path/sstate-cache/PATH" You can set the
    ``SSTATE_MIRRORS`` variable in two different places:
@@ -297,7 +297,7 @@ more in size. If the size of this file causes a problem, you can build
 an SDK that has just enough in it to install and provide access to the
 ``devtool command`` by setting the following in your configuration:
 SDK_EXT_TYPE = "minimal" Setting
-```SDK_EXT_TYPE`` <&YOCTO_DOCS_REF_URL;#var-SDK_EXT_TYPE>`__ to
+:term:`SDK_EXT_TYPE` to
 "minimal" produces an SDK installer that is around 35 Mbytes in size,
 which downloads and installs quickly. You need to realize, though, that
 the minimal installer does not install any libraries or tools out of the
@@ -315,7 +315,7 @@ results.
 
 To facilitate this wider range of information, you would need to set the
 following: SDK_INCLUDE_PKGDATA = "1" See the
-```SDK_INCLUDE_PKGDATA`` <&YOCTO_DOCS_REF_URL;#var-SDK_INCLUDE_PKGDATA>`__
+:term:`SDK_INCLUDE_PKGDATA`
 variable for additional information.
 
 Setting the ``SDK_INCLUDE_PKGDATA`` variable as shown causes the "world"
@@ -341,7 +341,7 @@ in most cases.
 
 You can explicitly control whether or not to include the toolchain when
 you build an SDK by setting the
-```SDK_INCLUDE_TOOLCHAIN`` <&YOCTO_DOCS_REF_URL;#var-SDK_INCLUDE_TOOLCHAIN>`__
+:term:`SDK_INCLUDE_TOOLCHAIN`
 variable to "1". In particular, it is useful to include the toolchain
 when you have set ``SDK_EXT_TYPE`` to "minimal", which by default,
 excludes the toolchain. Also, it is helpful if you are building a small

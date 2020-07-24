@@ -14,7 +14,7 @@ Understanding and Creating Layers
 =================================
 
 The OpenEmbedded build system supports organizing
-`Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__ into multiple layers.
+:term:`Metadata` into multiple layers.
 Layers allow you to isolate different types of customizations from each
 other. For introductory information on the Yocto Project Layer Model,
 see the "`The Yocto Project Layer
@@ -81,7 +81,7 @@ Follow these general steps to create your layer without using tools:
    = "4" LAYERSERIES_COMPAT_yoctobsp = "DISTRO_NAME_NO_CAP" Following is
    an explanation of the layer configuration file:
 
-   -  ```BBPATH`` <&YOCTO_DOCS_REF_URL;#var-BBPATH>`__: Adds the layer's
+   -  :term:`BBPATH`: Adds the layer's
       root directory to BitBake's search path. Through the use of the
       ``BBPATH`` variable, BitBake locates class files (``.bbclass``),
       configuration files, and files that are included with ``include``
@@ -91,35 +91,35 @@ Follow these general steps to create your layer without using tools:
       is recommended, therefore, that you use unique class and
       configuration filenames in your custom layer.
 
-   -  ```BBFILES`` <&YOCTO_DOCS_REF_URL;#var-BBFILES>`__: Defines the
+   -  :term:`BBFILES`: Defines the
       location for all recipes in the layer.
 
-   -  ```BBFILE_COLLECTIONS`` <&YOCTO_DOCS_REF_URL;#var-BBFILE_COLLECTIONS>`__:
+   -  :term:`BBFILE_COLLECTIONS`:
       Establishes the current layer through a unique identifier that is
       used throughout the OpenEmbedded build system to refer to the
       layer. In this example, the identifier "yoctobsp" is the
       representation for the container layer named "meta-yocto-bsp".
 
-   -  ```BBFILE_PATTERN`` <&YOCTO_DOCS_REF_URL;#var-BBFILE_PATTERN>`__:
+   -  :term:`BBFILE_PATTERN`:
       Expands immediately during parsing to provide the directory of the
       layer.
 
-   -  ```BBFILE_PRIORITY`` <&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY>`__:
+   -  :term:`BBFILE_PRIORITY`:
       Establishes a priority to use for recipes in the layer when the
       OpenEmbedded build finds recipes of the same name in different
       layers.
 
-   -  ```LAYERVERSION`` <&YOCTO_DOCS_REF_URL;#var-LAYERVERSION>`__:
+   -  :term:`LAYERVERSION`:
       Establishes a version number for the layer. You can use this
       version number to specify this exact version of the layer as a
       dependency when using the
-      ```LAYERDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-LAYERDEPENDS>`__
+      :term:`LAYERDEPENDS`
       variable.
 
-   -  ```LAYERDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-LAYERDEPENDS>`__:
+   -  :term:`LAYERDEPENDS`:
       Lists all layers on which this layer depends (if any).
 
-   -  ```LAYERSERIES_COMPAT`` <&YOCTO_DOCS_REF_URL;#var-LAYERSERIES_COMPAT>`__:
+   -  :term:`LAYERSERIES_COMPAT`:
       Lists the `Yocto Project <&YOCTO_WIKI_URL;/wiki/Releases>`__
       releases for which the current version is compatible. This
       variable is a good way to indicate if your particular layer is
@@ -184,7 +184,7 @@ following list:
       have a layer named ``meta-one`` that adds support for building
       machine "one". To do so, you use an append file named
       ``base-files.bbappend`` and create a dependency on "foo" by
-      altering the ```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__
+      altering the :term:`DEPENDS`
       variable: DEPENDS = "foo" The dependency is created during any
       build that includes the layer ``meta-one``. However, you might not
       want this dependency for all machines. For example, suppose you
@@ -221,13 +221,13 @@ following list:
 
    -  *Place Machine-Specific Files in Machine-Specific Locations:* When
       you have a base recipe, such as ``base-files.bb``, that contains a
-      ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statement to a
+      :term:`SRC_URI` statement to a
       file, you can use an append file to cause the build to use your
       own version of the file. For example, an append file in your layer
       at ``meta-one/recipes-core/base-files/base-files.bbappend`` could
-      extend ```FILESPATH`` <&YOCTO_DOCS_REF_URL;#var-FILESPATH>`__
+      extend :term:`FILESPATH`
       using
-      ```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__
+      :term:`FILESEXTRAPATHS`
       as follows: FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:" The
       build for machine "one" will pick up your machine-specific file as
       long as you have the file in
@@ -401,7 +401,7 @@ Enabling Your Layer
 Before the OpenEmbedded build system can use your new layer, you need to
 enable it. To enable your layer, simply add your layer's path to the
 ``BBLAYERS`` variable in your ``conf/bblayers.conf`` file, which is
-found in the `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
+found in the :term:`Build Directory`.
 The following example shows how to enable a layer named
 ``meta-mylayer``: # POKY_BBLAYERS_CONF_VERSION is increased each time
 build/conf/bblayers.conf # changes incompatibly
@@ -445,7 +445,7 @@ newer version, you must also rename and possibly update the
 corresponding ``.bbappend`` as well. During the build process, BitBake
 displays an error on starting if it detects a ``.bbappend`` file that
 does not have a corresponding recipe with a matching name. See the
-```BB_DANGLINGAPPENDS_WARNONLY`` <&YOCTO_DOCS_REF_URL;#var-BB_DANGLINGAPPENDS_WARNONLY>`__
+:term:`BB_DANGLINGAPPENDS_WARNONLY`
 variable for information on how to handle this error.
 
 As an example, consider the main formfactor recipe and a corresponding
@@ -462,7 +462,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}" INHIBIT_DEFAULT_DEPS = "1" do_install()
 ${D}${sysconfdir}/formfactor/ install -m 0644 ${S}/config
 ${D}${sysconfdir}/formfactor/ if [ -s "${S}/machconfig" ]; then install
 -m 0644 ${S}/machconfig ${D}${sysconfdir}/formfactor/ fi } In the main
-recipe, note the ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__
+recipe, note the :term:`SRC_URI`
 variable, which tells the OpenEmbedded build system where to find files
 during the build.
 
@@ -472,15 +472,15 @@ file is in the layer at ``recipes-bsp/formfactor``:
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 By default, the build system uses the
-```FILESPATH`` <&YOCTO_DOCS_REF_URL;#var-FILESPATH>`__ variable to
+:term:`FILESPATH` variable to
 locate files. This append file extends the locations by setting the
-```FILESEXTRAPATHS`` <&YOCTO_DOCS_REF_URL;#var-FILESEXTRAPATHS>`__
+:term:`FILESEXTRAPATHS`
 variable. Setting this variable in the ``.bbappend`` file is the most
 reliable and recommended method for adding directories to the search
 path used by the build system to find files.
 
 The statement in this example extends the directories to include
-``${``\ ```THISDIR`` <&YOCTO_DOCS_REF_URL;#var-THISDIR>`__\ ``}/${``\ ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__\ ``}``,
+``${``\ :term:`THISDIR`\ ``}/${``\ :term:`PN`\ ``}``,
 which resolves to a directory named ``formfactor`` in the same directory
 in which the append file resides (i.e.
 ``meta-raspberrypi/recipes-bsp/formfactor``. This implies that you must
@@ -514,13 +514,13 @@ applied. You can either specify the priority manually, or allow the
 build system to calculate it based on the layer's dependencies.
 
 To specify the layer's priority manually, use the
-```BBFILE_PRIORITY`` <&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY>`__
+:term:`BBFILE_PRIORITY`
 variable and append the layer's root name: BBFILE_PRIORITY_mylayer = "1"
 
 .. note::
 
    It is possible for a recipe with a lower version number
-   ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__ in a layer that has a higher
+   :term:`PV` in a layer that has a higher
    priority to take precedence.
 
    Also, the layer priority does not currently affect the precedence
@@ -665,7 +665,7 @@ meta-scottrif'
 If you want to set the priority of the layer to other than the default
 value of "6", you can either use the ``DASHDASHpriority`` option or you
 can edit the
-```BBFILE_PRIORITY`` <&YOCTO_DOCS_REF_URL;#var-BBFILE_PRIORITY>`__ value
+:term:`BBFILE_PRIORITY` value
 in the ``conf/layer.conf`` after the script creates it. Furthermore, if
 you want to give the example recipe file some name other than the
 default, you can use the ``DASHDASHexample-recipe-name`` option.
@@ -764,8 +764,8 @@ Customizing Images Using Custom ``IMAGE_FEATURES`` and ``EXTRA_IMAGE_FEATURES``
 
 Another method for customizing your image is to enable or disable
 high-level image features by using the
-```IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES>`__ and
-```EXTRA_IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES>`__
+:term:`IMAGE_FEATURES` and
+:term:`EXTRA_IMAGE_FEATURES`
 variables. Although the functions for both variables are nearly
 equivalent, best practices dictate using ``IMAGE_FEATURES`` from within
 a recipe and using ``EXTRA_IMAGE_FEATURES`` from within your
@@ -782,7 +782,7 @@ In summary, the file looks at the contents of the ``IMAGE_FEATURES``
 variable and then maps or configures the feature accordingly. Based on
 this information, the build system automatically adds the appropriate
 packages or configurations to the
-```IMAGE_INSTALL`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL>`__ variable.
+:term:`IMAGE_INSTALL` variable.
 Effectively, you are enabling extra features by extending the class or
 creating a custom class for use with specialized image ``.bb`` files.
 
@@ -893,7 +893,7 @@ Customizing an Image Hostname
 
 By default, the configured hostname (i.e. ``/etc/hostname``) in an image
 is the same as the machine name. For example, if
-```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ equals "qemux86", the
+:term:`MACHINE` equals "qemux86", the
 configured hostname written to ``/etc/hostname`` is "qemux86".
 
 You can customize this name by altering the value of the "hostname"
@@ -1072,7 +1072,7 @@ the recipe.
 
 -  *Storing Your Recipe:* The OpenEmbedded build system locates your
    recipe through the layer's ``conf/layer.conf`` file and the
-   ```BBFILES`` <&YOCTO_DOCS_REF_URL;#var-BBFILES>`__ variable. This
+   :term:`BBFILES` variable. This
    variable sets up a path from which the build system can locate
    recipes. Here is the typical use: BBFILES +=
    "${LAYERDIR}/recipes-*/*/*.bb \\ ${LAYERDIR}/recipes-*/*/*.bbappend"
@@ -1101,14 +1101,14 @@ progressively discover and add information to the recipe file.
 
 Assuming you have sourced the build environment setup script (i.e.
 ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__) and you are in
-the `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, use
+the :term:`Build Directory`, use
 BitBake to process your recipe. All you need to provide is the
 ``basename`` of the recipe as described in the previous section: $
 bitbake basename
 
 During the build, the OpenEmbedded build system creates a temporary work
 directory for each recipe
-(``${``\ ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__\ ``}``)
+(``${``\ :term:`WORKDIR`\ ``}``)
 where it keeps extracted source files, log files, intermediate
 compilation and packaging files, and so forth.
 
@@ -1154,26 +1154,26 @@ Fetching Code
 
 The first thing your recipe must do is specify how to fetch the source
 files. Fetching is controlled mainly through the
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ variable. Your recipe
+:term:`SRC_URI` variable. Your recipe
 must have a ``SRC_URI`` variable that points to where the source is
 located. For a graphical representation of source locations, see the
 "`Sources <&YOCTO_DOCS_OM_URL;#sources-dev-environment>`__" section in
 the Yocto Project Overview and Concepts Manual.
 
-The ```do_fetch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-fetch>`__ task uses
+The :ref:`ref-tasks-fetch` task uses
 the prefix of each entry in the ``SRC_URI`` variable value to determine
 which `fetcher <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__ to use to get your
 source files. It is the ``SRC_URI`` variable that triggers the fetcher.
-The ```do_patch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-patch>`__ task uses
+The :ref:`ref-tasks-patch` task uses
 the variable after source is fetched to apply patches. The OpenEmbedded
 build system uses
-```FILESOVERRIDES`` <&YOCTO_DOCS_REF_URL;#var-FILESOVERRIDES>`__ for
+:term:`FILESOVERRIDES` for
 scanning directory locations for local files in ``SRC_URI``.
 
 The ``SRC_URI`` variable in your recipe must define each unique location
 for your source files. It is good practice to not hard-code version
 numbers in a URL used in ``SRC_URI``. Rather than hard-code these
-values, use ``${``\ ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__\ ``}``,
+values, use ``${``\ :term:`PV`\ ``}``,
 which causes the fetch process to use the version specified in the
 recipe filename. Specifying the version in this manner means that
 upgrading the recipe to a future version is as simple as renaming the
@@ -1182,20 +1182,20 @@ recipe to match the new version.
 Here is a simple example from the
 ``meta/recipes-devtools/strace/strace_5.5.bb`` recipe where the source
 comes from a single tarball. Notice the use of the
-```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__ variable: SRC_URI =
+:term:`PV` variable: SRC_URI =
 "https://strace.io/files/${PV}/strace-${PV}.tar.xz \\
 
 Files mentioned in ``SRC_URI`` whose names end in a typical archive
 extension (e.g. ``.tar``, ``.tar.gz``, ``.tar.bz2``, ``.zip``, and so
 forth), are automatically extracted during the
-```do_unpack`` <&YOCTO_DOCS_REF_URL;#ref-tasks-unpack>`__ task. For
+:ref:`ref-tasks-unpack` task. For
 another example that specifies these types of files, see the
 "`Autotooled Package <#new-recipe-autotooled-package>`__" section.
 
 Another way of specifying source is from an SCM. For Git repositories,
-you must specify ```SRCREV`` <&YOCTO_DOCS_REF_URL;#var-SRCREV>`__ and
-you should specify ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__ to include
-the revision with ```SRCPV`` <&YOCTO_DOCS_REF_URL;#var-SRCPV>`__. Here
+you must specify :term:`SRCREV` and
+you should specify :term:`PV` to include
+the revision with :term:`SRCPV`. Here
 is an example from the recipe
 ``meta/recipes-kernel/blktrace/blktrace_git.bb``: SRCREV =
 "d6918c8832793b4205ed3bfede78c2f915c23385" PR = "r6" PV =
@@ -1254,10 +1254,10 @@ file://xwc.patch \\ file://rxvt.desktop \\ file://rxvt.png"
 
 When you specify local files using the ``file://`` URI protocol, the
 build system fetches files from the local machine. The path is relative
-to the ```FILESPATH`` <&YOCTO_DOCS_REF_URL;#var-FILESPATH>`__ variable
+to the :term:`FILESPATH` variable
 and searches specific directories in a certain order:
-``${``\ ```BP`` <&YOCTO_DOCS_REF_URL;#var-BP>`__\ ``}``,
-``${``\ ```BPN`` <&YOCTO_DOCS_REF_URL;#var-BPN>`__\ ``}``, and
+``${``\ :term:`BP`\ ``}``,
+``${``\ :term:`BPN`\ ``}``, and
 ``files``. The directories are assumed to be subdirectories of the
 directory in which the recipe or append file resides. For another
 example that specifies these types of files, see the "`Single .c File
@@ -1276,14 +1276,14 @@ Unpacking Code
 --------------
 
 During the build, the
-```do_unpack`` <&YOCTO_DOCS_REF_URL;#ref-tasks-unpack>`__ task unpacks
-the source with ``${``\ ```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__\ ``}``
+:ref:`ref-tasks-unpack` task unpacks
+the source with ``${``\ :term:`S`\ ``}``
 pointing to where it is unpacked.
 
 If you are fetching your source files from an upstream source archived
 tarball and the tarball's internal structure matches the common
 convention of a top-level subdirectory named
-``${``\ ```BPN`` <&YOCTO_DOCS_REF_URL;#var-BPN>`__\ ``}-${``\ ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__\ ``}``,
+``${``\ :term:`BPN`\ ``}-${``\ :term:`PV`\ ``}``,
 then you do not need to set ``S``. However, if ``SRC_URI`` specifies to
 fetch source from an archive that does not use this convention, or from
 an SCM like Git or Subversion, your recipe needs to define ``S``.
@@ -1301,7 +1301,7 @@ Sometimes it is necessary to patch code after it has been fetched. Any
 files mentioned in ``SRC_URI`` whose names end in ``.patch`` or
 ``.diff`` or compressed versions of these suffixes (e.g. ``diff.gz`` are
 treated as patches. The
-```do_patch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-patch>`__ task
+:ref:`ref-tasks-patch` task
 automatically applies these patches.
 
 The build system should be able to apply patches with the "-p1" option
@@ -1313,11 +1313,11 @@ specific subdirectory that is not specified in the patch file, use the
 "patchdir" option in the entry.
 
 As with all local files referenced in
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ using ``file://``,
+:term:`SRC_URI` using ``file://``,
 you should place patch files in a directory next to the recipe either
 named the same as the base name of the recipe
-(```BP`` <&YOCTO_DOCS_REF_URL;#var-BP>`__ and
-```BPN`` <&YOCTO_DOCS_REF_URL;#var-BPN>`__) or "files".
+(:term:`BP` and
+:term:`BPN`) or "files".
 
 .. _new-recipe-licensing:
 
@@ -1325,8 +1325,8 @@ Licensing
 ---------
 
 Your recipe needs to have both the
-```LICENSE`` <&YOCTO_DOCS_REF_URL;#var-LICENSE>`__ and
-```LIC_FILES_CHKSUM`` <&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM>`__
+:term:`LICENSE` and
+:term:`LIC_FILES_CHKSUM`
 variables:
 
 -  *``LICENSE``:* This variable specifies the license for the software.
@@ -1383,15 +1383,15 @@ software is built; and runtime dependencies, which are required to be
 installed on the target in order for the software to run.
 
 Within a recipe, you specify build-time dependencies using the
-```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ variable. Although
+:term:`DEPENDS` variable. Although
 nuances exist, items specified in ``DEPENDS`` should be names of other
 recipes. It is important that you specify all build-time dependencies
 explicitly. If you do not, due to the parallel nature of BitBake's
 execution, you can end up with a race condition where the dependency is
 present for one task of a recipe (e.g.
-```do_configure`` <&YOCTO_DOCS_REF_URL;#ref-tasks-configure>`__) and
+:ref:`ref-tasks-configure`) and
 then gone when the next task runs (e.g.
-```do_compile`` <&YOCTO_DOCS_REF_URL;#ref-tasks-compile>`__).
+:ref:`ref-tasks-compile`).
 
 Another consideration is that configure scripts might automatically
 check for optional dependencies and enable corresponding functionality
@@ -1402,18 +1402,18 @@ configure script explicitly to disable the functionality. If you wish to
 make a recipe that is more generally useful (e.g. publish the recipe in
 a layer for others to use), instead of hard-disabling the functionality,
 you can use the
-```PACKAGECONFIG`` <&YOCTO_DOCS_REF_URL;#var-PACKAGECONFIG>`__ variable
+:term:`PACKAGECONFIG` variable
 to allow functionality and the corresponding dependencies to be enabled
 and disabled easily by other users of the recipe.
 
 Similar to build-time dependencies, you specify runtime dependencies
 through a variable -
-```RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-RDEPENDS>`__, which is
+:term:`RDEPENDS`, which is
 package-specific. All variables that are package-specific need to have
 the name of the package added to the end as an override. Since the main
 package for a recipe has the same name as the recipe, and the recipe's
 name can be found through the
-``${``\ ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__\ ``}`` variable, then
+``${``\ :term:`PN`\ ``}`` variable, then
 you specify the dependencies for the main package by setting
 ``RDEPENDS_${PN}``. If the package were named ``${PN}-tools``, then you
 would set ``RDEPENDS_${PN}-tools``, and so forth.
@@ -1455,7 +1455,7 @@ A major part of build-time configuration is about checking for
 build-time dependencies and possibly enabling optional functionality as
 a result. You need to specify any build-time dependencies for the
 software you are building in your recipe's
-```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ value, in terms of
+:term:`DEPENDS` value, in terms of
 other recipes that satisfy those dependencies. You can often find
 build-time or runtime dependencies described in the software's
 documentation.
@@ -1468,13 +1468,13 @@ your software is built:
    need to worry about modifying the configuration.
 
    When using Autotools, your recipe needs to inherit the
-   ```autotools`` <&YOCTO_DOCS_REF_URL;#ref-classes-autotools>`__ class
+   :ref:`autotools <ref-classes-autotools>` class
    and your recipe does not have to contain a
-   ```do_configure`` <&YOCTO_DOCS_REF_URL;#ref-tasks-configure>`__ task.
+   :ref:`ref-tasks-configure` task.
    However, you might still want to make some adjustments. For example,
    you can set
-   ```EXTRA_OECONF`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_OECONF>`__ or
-   ```PACKAGECONFIG_CONFARGS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGECONFIG_CONFARGS>`__
+   :term:`EXTRA_OECONF` or
+   :term:`PACKAGECONFIG_CONFARGS`
    to pass any needed configure options that are specific to the recipe.
 
 -  *CMake:* If your source files have a ``CMakeLists.txt`` file, then
@@ -1482,11 +1482,11 @@ your software is built:
    need to worry about modifying the configuration.
 
    When you use CMake, your recipe needs to inherit the
-   ```cmake`` <&YOCTO_DOCS_REF_URL;#ref-classes-cmake>`__ class and your
+   :ref:`cmake <ref-classes-cmake>` class and your
    recipe does not have to contain a
-   ```do_configure`` <&YOCTO_DOCS_REF_URL;#ref-tasks-configure>`__ task.
+   :ref:`ref-tasks-configure` task.
    You can make some adjustments by setting
-   ```EXTRA_OECMAKE`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_OECMAKE>`__ to
+   :term:`EXTRA_OECMAKE` to
    pass any needed configure options that are specific to the recipe.
 
    .. note::
@@ -1503,7 +1503,7 @@ your software is built:
    ``CMakeLists.txt`` file, then your software is built using some
    method other than Autotools or CMake. If this is the case, you
    normally need to provide a
-   ```do_configure`` <&YOCTO_DOCS_REF_URL;#ref-tasks-configure>`__ task
+   :ref:`ref-tasks-configure` task
    in your recipe unless, of course, there is nothing to configure.
 
    Even if your software is not being built by Autotools or CMake, you
@@ -1591,7 +1591,7 @@ Consider a case where your kernel is older and you need an older
 standard mainline kernel, not your own custom one.
 
 When you use custom kernel headers you need to get them from
-```STAGING_KERNEL_DIR`` <&YOCTO_DOCS_REF_URL;#var-STAGING_KERNEL_DIR>`__,
+:term:`STAGING_KERNEL_DIR`,
 which is the directory with kernel headers that are required to build
 out-of-tree modules. Your recipe will also need the following:
 do_configure[depends] += "virtual/kernel:do_shared_workdir"
@@ -1629,7 +1629,7 @@ Here are some common issues that cause failures.
    To fix the problem, you need to either satisfy the missing dependency
    in the Makefile or whatever script produced the Makefile, or (as a
    workaround) set
-   ```PARALLEL_MAKE`` <&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE>`__ to an
+   :term:`PARALLEL_MAKE` to an
    empty string: PARALLEL_MAKE = ""
 
    For information on parallel Makefile issues, see the "`Debugging
@@ -1647,7 +1647,7 @@ Here are some common issues that cause failures.
 
 -  *Failure to find required libraries/headers:* If a build-time
    dependency is missing because it has not been declared in
-   ```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__, or because the
+   :term:`DEPENDS`, or because the
    dependency exists but the path used by the build process to find the
    file is incorrect and the configure step did not detect it, the
    compilation process could fail. For either of these failures, the
@@ -1671,10 +1671,10 @@ Installing
 During ``do_install``, the task copies the built files along with their
 hierarchy to locations that would mirror their locations on the target
 device. The installation process copies files from the
-``${``\ ```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__\ ``}``,
-``${``\ ```B`` <&YOCTO_DOCS_REF_URL;#var-B>`__\ ``}``, and
-``${``\ ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__\ ``}``
-directories to the ``${``\ ```D`` <&YOCTO_DOCS_REF_URL;#var-D>`__\ ``}``
+``${``\ :term:`S`\ ``}``,
+``${``\ :term:`B`\ ``}``, and
+``${``\ :term:`WORKDIR`\ ``}``
+directories to the ``${``\ :term:`D`\ ``}``
 directory to create the structure as it should appear on the target
 system.
 
@@ -1707,7 +1707,7 @@ the software being built:
 -  *Manual:* You need to define a ``do_install`` function in your
    recipe. The function must first use ``install -d`` to create the
    directories under
-   ``${``\ ```D`` <&YOCTO_DOCS_REF_URL;#var-D>`__\ ``}``. Once the
+   ``${``\ :term:`D`\ ``}``. Once the
    directories exist, your function can use ``install`` to manually
    install the built software into the directories.
 
@@ -1734,21 +1734,21 @@ installed correctly.
 
    -  ``oe_runmake install``, which can be run directly or can be run
       indirectly by the
-      ```autotools`` <&YOCTO_DOCS_REF_URL;#ref-classes-autotools>`__ and
-      ```cmake`` <&YOCTO_DOCS_REF_URL;#ref-classes-cmake>`__ classes,
+      :ref:`autotools <ref-classes-autotools>` and
+      :ref:`cmake <ref-classes-cmake>` classes,
       runs ``make install`` in parallel. Sometimes, a Makefile can have
       missing dependencies between targets that can result in race
       conditions. If you experience intermittent failures during
       ``do_install``, you might be able to work around them by disabling
       parallel Makefile installs by adding the following to the recipe:
       PARALLEL_MAKEINST = "" See
-      ```PARALLEL_MAKEINST`` <&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKEINST>`__
+      :term:`PARALLEL_MAKEINST`
       for additional information.
 
    -  If you need to install one or more custom CMake toolchain files
       that are supplied by the application you are building, install the
       files to ``${D}${datadir}/cmake/`` Modules during
-      ```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__.
+      :ref:`ref-tasks-install`.
 
 .. _new-recipe-enabling-system-services:
 
@@ -1781,15 +1781,15 @@ different ways:
    shutdown of all other programs.
 
    To enable a service using SysVinit, your recipe needs to inherit the
-   ```update-rc.d`` <&YOCTO_DOCS_REF_URL;#ref-classes-update-rc.d>`__
+   :ref:`update-rc.d <ref-classes-update-rc.d>`
    class. The class helps facilitate safely installing the package on
    the target.
 
    You will need to set the
-   ```INITSCRIPT_PACKAGES`` <&YOCTO_DOCS_REF_URL;#var-INITSCRIPT_PACKAGES>`__,
-   ```INITSCRIPT_NAME`` <&YOCTO_DOCS_REF_URL;#var-INITSCRIPT_NAME>`__,
+   :term:`INITSCRIPT_PACKAGES`,
+   :term:`INITSCRIPT_NAME`,
    and
-   ```INITSCRIPT_PARAMS`` <&YOCTO_DOCS_REF_URL;#var-INITSCRIPT_PARAMS>`__
+   :term:`INITSCRIPT_PARAMS`
    variables within your recipe.
 
 -  *systemd:* System Management Daemon (systemd) was designed to replace
@@ -1798,7 +1798,7 @@ different ways:
    ` <http://freedesktop.org/wiki/Software/systemd/>`__.
 
    To enable a service using systemd, your recipe needs to inherit the
-   ```systemd`` <&YOCTO_DOCS_REF_URL;#ref-classes-systemd>`__ class. See
+   :ref:`systemd <ref-classes-systemd>` class. See
    the ``systemd.bbclass`` file located in your `Source
    Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. section for
    more information.
@@ -1819,24 +1819,24 @@ take. The following list describes the process:
    task ensures that files are split up and packaged correctly.
 
 -  *Running QA Checks*: The
-   ```insane`` <&YOCTO_DOCS_REF_URL;#ref-classes-insane>`__ class adds a
+   :ref:`insane <ref-classes-insane>` class adds a
    step to the package generation process so that output quality
    assurance checks are generated by the OpenEmbedded build system. This
    step performs a range of checks to be sure the build's output is free
    of common problems that show up during runtime. For information on
    these checks, see the
-   ```insane`` <&YOCTO_DOCS_REF_URL;#ref-classes-insane>`__ class and
+   :ref:`insane <ref-classes-insane>` class and
    the "`QA Error and Warning
    Messages <&YOCTO_DOCS_REF_URL;#ref-qa-checks>`__" chapter in the
    Yocto Project Reference Manual.
 
 -  *Hand-Checking Your Packages*: After you build your software, you
    need to be sure your packages are correct. Examine the
-   ``${``\ ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__\ ``}/packages-split``
+   ``${``\ :term:`WORKDIR`\ ``}/packages-split``
    directory and make sure files are where you expect them to be. If you
    discover problems, you can set
-   ```PACKAGES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGES>`__,
-   ```FILES`` <&YOCTO_DOCS_REF_URL;#var-FILES>`__,
+   :term:`PACKAGES`,
+   :term:`FILES`,
    ``do_install(_append)``, and so forth as needed.
 
 -  *Splitting an Application into Multiple Packages*: If you need to
@@ -1858,7 +1858,7 @@ take. The following list describes the process:
    By default, packages apply to any machine with the same architecture
    as the target machine. When a recipe produces packages that are
    machine-specific (e.g. the
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ value is passed
+   :term:`MACHINE` value is passed
    into the configure script or a patch is applied only for a particular
    machine), you should mark them as such by adding the following to the
    recipe: PACKAGE_ARCH = "${MACHINE_ARCH}"
@@ -1867,7 +1867,7 @@ take. The following list describes the process:
    contain anything specific to the target machine or architecture at
    all (e.g. recipes that simply package script files or configuration
    files), you should use the
-   ```allarch`` <&YOCTO_DOCS_REF_URL;#ref-classes-allarch>`__ class to
+   :ref:`allarch <ref-classes-allarch>` class to
    do this for you by adding this to your recipe: inherit allarch
    Ensuring that the package architecture is correct is not critical
    while you are doing the first few builds of your recipe. However, it
@@ -1900,28 +1900,28 @@ recipe has two sysroots in its work directory, one for target files
 Recipes should never populate the sysroot directly (i.e. write files
 into sysroot). Instead, files should be installed into standard
 locations during the
-```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ task within
-the ``${``\ ```D`` <&YOCTO_DOCS_REF_URL;#var-D>`__\ ``}`` directory. The
+:ref:`ref-tasks-install` task within
+the ``${``\ :term:`D`\ ``}`` directory. The
 reason for this limitation is that almost all files that populate the
 sysroot are cataloged in manifests in order to ensure the files can be
 removed later when a recipe is either modified or removed. Thus, the
 sysroot is able to remain free from stale files.
 
 A subset of the files installed by the
-```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ task are
+:ref:`ref-tasks-install` task are
 used by the
-```do_populate_sysroot`` <&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot>`__
+:ref:`ref-tasks-populate_sysroot`
 task as defined by the the
-```SYSROOT_DIRS`` <&YOCTO_DOCS_REF_URL;#var-SYSROOT_DIRS>`__ variable to
+:term:`SYSROOT_DIRS` variable to
 automatically populate the sysroot. It is possible to modify the list of
 directories that populate the sysroot. The following example shows how
 you could add the ``/opt`` directory to the list of directories within a
 recipe: SYSROOT_DIRS += "/opt"
 
 For a more complete description of the
-```do_populate_sysroot`` <&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot>`__
+:ref:`ref-tasks-populate_sysroot`
 task and its associated functions, see the
-```staging`` <&YOCTO_DOCS_REF_URL;#ref-classes-staging>`__ class.
+:ref:`staging <ref-classes-staging>` class.
 
 .. _metadata-virtual-providers:
 
@@ -1935,12 +1935,12 @@ determined at build-time.
 
 A common scenario where a virtual provider is used would be for the
 kernel recipe. Suppose you have three kernel recipes whose
-```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__ values map to ``kernel-big``,
+:term:`PN` values map to ``kernel-big``,
 ``kernel-mid``, and ``kernel-small``. Furthermore, each of these recipes
-in some way uses a ```PROVIDES`` <&YOCTO_DOCS_REF_URL;#var-PROVIDES>`__
+in some way uses a :term:`PROVIDES`
 statement that essentially identifies itself as being able to provide
 ``virtual/kernel``. Here is one way through the
-```kernel`` <&YOCTO_DOCS_REF_URL;#ref-classes-kernel>`__ class: PROVIDES
+:ref:`kernel <ref-classes-kernel>` class: PROVIDES
 += "${@ "virtual/kernel" if (d.getVar("KERNEL_PACKAGE_NAME") ==
 "kernel") else "" }" Any recipe that inherits the ``kernel`` class is
 going to utilize a ``PROVIDES`` statement that identifies that recipe as
@@ -1949,11 +1949,11 @@ being able to provide the ``virtual/kernel`` item.
 Now comes the time to actually build an image and you need a kernel
 recipe, but which one? You can configure your build to call out the
 kernel recipe you want by using the
-```PREFERRED_PROVIDER`` <&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER>`__
+:term:`PREFERRED_PROVIDER`
 variable. As an example, consider the
 ```x86-base.inc`` <https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/machine/include/x86-base.inc>`__
 include file, which is a machine (i.e.
-```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__) configuration file.
+:term:`MACHINE`) configuration file.
 This include file is the reason all x86-based machines use the
 ``linux-yocto`` kernel. Here are the relevant lines from the include
 file: PREFERRED_PROVIDER_virtual/kernel ??= "linux-yocto"
@@ -1961,7 +1961,7 @@ PREFERRED_VERSION_linux-yocto ??= "4.15%"
 
 When you use a virtual provider, you do not have to "hard code" a recipe
 name as a build dependency. You can use the
-```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ variable to state the
+:term:`DEPENDS` variable to state the
 build is dependent on ``virtual/kernel`` for example: DEPENDS =
 "virtual/kernel" During the build, the OpenEmbedded build system picks
 the correct recipe needed for the ``virtual/kernel`` dependency based on
@@ -2014,7 +2014,7 @@ build system and package managers, so the resulting packages will not
 correctly trigger an upgrade.
 
 In order to ensure the versions compare properly, the recommended
-convention is to set ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__ within the
+convention is to set :term:`PV` within the
 recipe to "previous_version+current_version". You can use an additional
 variable so that you can use the current version elsewhere. Here is an
 example: REALPV = "0.8.16-rc1" PV = "0.8.15+${REALPV}"
@@ -2032,7 +2032,7 @@ image. To add a post-installation script to a package, add a
 to attach to the ``postinst`` script. To apply the post-installation
 script to the main package for the recipe, which is usually what is
 required, specify
-``${``\ ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__\ ``}`` in place of
+``${``\ :term:`PN`\ ``}`` in place of
 PACKAGENAME.
 
 A post-installation function has the following structure:
@@ -2057,12 +2057,12 @@ target. You can use ``pkg_postinst_ontarget()`` or call
 ``postinst_intercept delay_to_first_boot`` from ``pkg_postinst()``. Any
 failure of a ``pkg_postinst()`` script (including exit 1) triggers an
 error during the
-```do_rootfs`` <&YOCTO_DOCS_REF_URL;#ref-tasks-rootfs>`__ task.
+:ref:`ref-tasks-rootfs` task.
 
 If you have recipes that use ``pkg_postinst`` function and they require
 the use of non-standard native tools that have dependencies during
 rootfs construction, you need to use the
-```PACKAGE_WRITE_DEPS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_WRITE_DEPS>`__
+:term:`PACKAGE_WRITE_DEPS`
 variable in your recipe to list these tools. If you do not use this
 variable, the tools might be missing and execution of the
 post-installation script is deferred until first boot. Deferring the
@@ -2126,7 +2126,7 @@ under ``files``) requires a recipe that has the file listed in the
 ``SRC_URI`` variable. Additionally, you need to manually write the
 ``do_compile`` and ``do_install`` tasks. The ``S`` variable defines the
 directory containing the source code, which is set to
-```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__ in this case - the
+:term:`WORKDIR` in this case - the
 directory BitBake uses for the build. SUMMARY = "Simple helloworld
 application" SECTION = "examples" LICENSE = "MIT" LIC_FILES_CHKSUM =
 "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
@@ -2148,7 +2148,7 @@ Autotooled Package
 Applications that use Autotools such as ``autoconf`` and ``automake``
 require a recipe that has a source archive listed in ``SRC_URI`` and
 also inherit the
-```autotools`` <&YOCTO_DOCS_REF_URL;#ref-classes-autotools>`__ class,
+:ref:`autotools <ref-classes-autotools>` class,
 which contains the definitions of all the steps needed to build an
 Autotool-based application. The result of the build is automatically
 packaged. And, if the application uses NLS for localization, packages
@@ -2174,8 +2174,8 @@ source archive listed in ``SRC_URI``. You do not need to add a
 ``do_compile`` step since by default BitBake starts the ``make`` command
 to compile the application. If you need additional ``make`` options, you
 should store them in the
-```EXTRA_OEMAKE`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_OEMAKE>`__ or
-```PACKAGECONFIG_CONFARGS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGECONFIG_CONFARGS>`__
+:term:`EXTRA_OEMAKE` or
+:term:`PACKAGECONFIG_CONFARGS`
 variables. BitBake passes these options into the GNU ``make``
 invocation. Note that a ``do_install`` task is still required.
 Otherwise, BitBake runs an empty ``do_install`` task by default.
@@ -2242,7 +2242,7 @@ needs to use those binaries as part of an image that you are building
 using the OpenEmbedded build system. Since you only have the binaries
 and not the source code, you cannot use a typical recipe that expects to
 fetch the source specified in
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ and then compile it.
+:term:`SRC_URI` and then compile it.
 
 One method is to package the binaries and then install them as part of
 the image. Generally, it is not a good idea to package binaries since,
@@ -2256,23 +2256,23 @@ and to be sure that you are using default locations for build artifacts.
 In most cases, the ``bin_package`` class handles "skipping" the
 configure and compile steps as well as sets things up to grab packages
 from the appropriate area. In particular, this class sets ``noexec`` on
-both the ```do_configure`` <&YOCTO_DOCS_REF_URL;#ref-tasks-configure>`__
-and ```do_compile`` <&YOCTO_DOCS_REF_URL;#ref-tasks-compile>`__ tasks,
+both the :ref:`ref-tasks-configure`
+and :ref:`ref-tasks-compile` tasks,
 sets ``FILES_${PN}`` to "/" so that it picks up all files, and sets up a
-```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ task, which
+:ref:`ref-tasks-install` task, which
 effectively copies all files from ``${S}`` to ``${D}``. The
 ``bin_package`` class works well when the files extracted into ``${S}``
 are already laid out in the way they should be laid out on the target.
 For more information on these variables, see the
-```FILES`` <&YOCTO_DOCS_REF_URL;#var-FILES>`__,
-```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__,
-```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__, and
-```D`` <&YOCTO_DOCS_REF_URL;#var-D>`__ variables in the Yocto Project
+:term:`FILES`,
+:term:`PN`,
+:term:`S`, and
+:term:`D` variables in the Yocto Project
 Reference Manual's variable glossary.
 
 .. note::
 
-   -  Using ```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ is a good
+   -  Using :term:`DEPENDS` is a good
       idea even for components distributed in binary form, and is often
       necessary for shared libraries. For a shared library, listing the
       library dependencies in ``DEPENDS`` makes sure that the libraries
@@ -2291,12 +2291,12 @@ If you cannot use the ``bin_package`` class, you need to be sure you are
 doing the following:
 
 -  Create a recipe where the
-   ```do_configure`` <&YOCTO_DOCS_REF_URL;#ref-tasks-configure>`__ and
-   ```do_compile`` <&YOCTO_DOCS_REF_URL;#ref-tasks-compile>`__ tasks do
+   :ref:`ref-tasks-configure` and
+   :ref:`ref-tasks-compile` tasks do
    nothing: It is usually sufficient to just not define these tasks in
    the recipe, because the default implementations do nothing unless a
    Makefile is found in
-   ``${``\ ```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__\ ``}``.
+   ``${``\ :term:`S`\ ``}``.
 
    If ``${S}`` might contain a Makefile, or if you inherit some class
    that replaces ``do_configure`` and ``do_compile`` with custom
@@ -2306,17 +2306,17 @@ doing the following:
    = "1" do_compile[noexec] = "1" Unlike
    ```deleting the tasks`` <&YOCTO_DOCS_BB_URL;#deleting-a-task>`__,
    using the flag preserves the dependency chain from the
-   ```do_fetch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-fetch>`__,
-   ```do_unpack`` <&YOCTO_DOCS_REF_URL;#ref-tasks-unpack>`__, and
-   ```do_patch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-patch>`__ tasks to the
-   ```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ task.
+   :ref:`ref-tasks-fetch`,
+   :ref:`ref-tasks-unpack`, and
+   :ref:`ref-tasks-patch` tasks to the
+   :ref:`ref-tasks-install` task.
 
 -  Make sure your ``do_install`` task installs the binaries
    appropriately.
 
--  Ensure that you set up ```FILES`` <&YOCTO_DOCS_REF_URL;#var-FILES>`__
+-  Ensure that you set up :term:`FILES`
    (usually
-   ``FILES_${``\ ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__\ ``}``) to
+   ``FILES_${``\ :term:`PN`\ ``}``) to
    point to the files you have installed, which of course depends on
    where you have installed them and whether those files are in
    different locations than the defaults.
@@ -2482,16 +2482,16 @@ in the BitBake User Manual.
 
 -  *Overrides:* You can use overrides to set a value conditionally,
    typically based on how the recipe is being built. For example, to set
-   the ```KBRANCH`` <&YOCTO_DOCS_REF_URL;#var-KBRANCH>`__ variable's
+   the :term:`KBRANCH` variable's
    value to "standard/base" for any target
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__, except for
+   :term:`MACHINE`, except for
    qemuarm where it should be set to "standard/arm-versatile-926ejs",
    you would do the following: KBRANCH = "standard/base" KBRANCH_qemuarm
    = "standard/arm-versatile-926ejs" Overrides are also used to separate
    alternate values of a variable in other situations. For example, when
    setting variables such as
-   ```FILES`` <&YOCTO_DOCS_REF_URL;#var-FILES>`__ and
-   ```RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-RDEPENDS>`__ that are
+   :term:`FILES` and
+   :term:`RDEPENDS` that are
    specific to individual packages produced by a recipe, you should
    always use an override that specifies the name of the package.
 
@@ -2713,7 +2713,7 @@ The following steps describe how to set up the AUH utility:
    499), reused 703 (delta 434) Receiving objects: 100% (768/768),
    191.47 KiB \| 98.00 KiB/s, done. Resolving deltas: 100% (499/499),
    done. Checking connectivity... done. AUH is not part of the
-   `OpenEmbedded-Core (OE-Core) <&YOCTO_DOCS_REF_URL;#oe-core>`__ or
+   :term:`OpenEmbedded-Core (OE-Core)` or
    `Poky <&YOCTO_DOCS_REF_URL;#poky>`__ repositories.
 
 4. *Create a Dedicated Build Directory:* Run the
@@ -2956,13 +2956,13 @@ edit the recipe files to upgrade the versions.
 To manually upgrade recipe versions, follow these general steps:
 
 1. *Change the Version:* Rename the recipe such that the version (i.e.
-   the ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__ part of the recipe name)
+   the :term:`PV` part of the recipe name)
    changes appropriately. If the version is not part of the recipe name,
    change the value as it is set for ``PV`` within the recipe itself.
 
 2. *Update ``SRCREV`` if Needed:* If the source code your recipe builds
    is fetched from Git or some other version control system, update
-   ```SRCREV`` <&YOCTO_DOCS_REF_URL;#var-SRCREV>`__ to point to the
+   :term:`SRCREV` to point to the
    commit hash that matches the new version.
 
 3. *Build the Software:* Try to build the recipe using BitBake. Typical
@@ -2970,8 +2970,8 @@ To manually upgrade recipe versions, follow these general steps:
 
    -  License statements were updated for the new version. For this
       case, you need to review any changes to the license and update the
-      values of ```LICENSE`` <&YOCTO_DOCS_REF_URL;#var-LICENSE>`__ and
-      ```LIC_FILES_CHKSUM`` <&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM>`__
+      values of :term:`LICENSE` and
+      :term:`LIC_FILES_CHKSUM`
       as needed.
 
       .. note::
@@ -2989,7 +2989,7 @@ To manually upgrade recipe versions, follow these general steps:
 4. *Optionally Attempt to Build for Several Architectures:* Once you
    successfully build the new software for a given architecture, you
    could test the build for other architectures by changing the
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ variable and
+   :term:`MACHINE` variable and
    rebuilding the software. This optional step is especially important
    if the recipe is to be released publicly.
 
@@ -3022,7 +3022,7 @@ patches.
 
 During a build, the unpacked temporary source code used by recipes to
 build packages is available in the Build Directory as defined by the
-```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__ variable. Below is the default
+:term:`S` variable. Below is the default
 value for the ``S`` variable as defined in the
 ``meta/conf/bitbake.conf`` configuration file in the `Source
 Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__: S =
@@ -3042,26 +3042,26 @@ usually set ``S`` to ``${WORKDIR}/git``.
                       
 
 The path to the work directory for the recipe
-(```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__) is defined as
+(:term:`WORKDIR`) is defined as
 follows:
 ${TMPDIR}/work/${MULTIMACH_TARGET_SYS}/${PN}/${EXTENDPE}${PV}-${PR} The
 actual directory depends on several things:
 
--  ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__: The top-level build
+-  :term:`TMPDIR`: The top-level build
    output directory.
 
--  ```MULTIMACH_TARGET_SYS`` <&YOCTO_DOCS_REF_URL;#var-MULTIMACH_TARGET_SYS>`__:
+-  :term:`MULTIMACH_TARGET_SYS`:
    The target system identifier.
 
--  ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__: The recipe name.
+-  :term:`PN`: The recipe name.
 
--  ```EXTENDPE`` <&YOCTO_DOCS_REF_URL;#var-EXTENDPE>`__: The epoch - (if
-   ```PE`` <&YOCTO_DOCS_REF_URL;#var-PE>`__ is not specified, which is
+-  :term:`EXTENDPE`: The epoch - (if
+   :term:`PE` is not specified, which is
    usually the case for most recipes, then ``EXTENDPE`` is blank).
 
--  ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__: The recipe version.
+-  :term:`PV`: The recipe version.
 
--  ```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__: The recipe revision.
+-  :term:`PR`: The recipe revision.
 
 As an example, assume a Source Directory top-level folder named
 ``poky``, a default Build Directory at ``poky/build``, and a
@@ -3105,7 +3105,7 @@ Follow these general steps:
 
 2. *Change Your Working Directory:* You need to be in the directory that
    has the temporary source code. That directory is defined by the
-   ```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__ variable.
+   :term:`S` variable.
 
 3. *Create a New Patch:* Before modifying source code, you need to
    create a new patch. To create a new patch file, use ``quilt new`` as
@@ -3170,9 +3170,9 @@ Using a Development Shell
 When debugging certain commands or even when just editing packages,
 ``devshell`` can be a useful tool. When you invoke ``devshell``, all
 tasks up to and including
-```do_patch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-patch>`__ are run for the
+:ref:`ref-tasks-patch` are run for the
 specified target. Then, a new terminal is opened and you are placed in
-``${``\ ```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__\ ``}``, the source
+``${``\ :term:`S`\ ``}``, the source
 directory. In the new terminal, all the OpenEmbedded build-related
 environment variables are still defined so you can use commands such as
 ``configure`` and ``make``. The commands execute just as if the
@@ -3185,7 +3185,7 @@ Following is an example that uses ``devshell`` on a target named
 
 This command spawns a terminal with a shell prompt within the
 OpenEmbedded build environment. The
-```OE_TERMINAL`` <&YOCTO_DOCS_REF_URL;#var-OE_TERMINAL>`__ variable
+:term:`OE_TERMINAL` variable
 controls what type of shell is opened.
 
 For spawned terminals, the following occurs:
@@ -3200,11 +3200,11 @@ For spawned terminals, the following occurs:
 Within this environment, you can run configure or compile commands as if
 they were being run by the OpenEmbedded build system itself. As noted
 earlier, the working directory also automatically changes to the Source
-Directory (```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__).
+Directory (:term:`S`).
 
 To manually run a specific task using ``devshell``, run the
 corresponding ``run.*`` script in the
-``${``\ ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__\ ``}/temp``
+``${``\ :term:`WORKDIR`\ ``}/temp``
 directory (e.g., ``run.do_configure.``\ pid). If a task's script does
 not exist, which would be the case if the task was skipped by way of the
 sstate cache, you can create the task by first running it outside of the
@@ -3250,7 +3250,7 @@ previous section, you can also spawn and work within an interactive
 Python development shell. When debugging certain commands or even when
 just editing packages, ``devpyshell`` can be a useful tool. When you
 invoke ``devpyshell``, all tasks up to and including
-```do_patch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-patch>`__ are run for the
+:ref:`ref-tasks-patch` are run for the
 specified target. Then a new terminal is opened. Additionally, key
 Python objects and code are available in the same way they are to
 BitBake tasks, in particular, the data store 'd'. So, commands such as
@@ -3270,7 +3270,7 @@ Following is an example that uses ``devpyshell`` on a target named
 
 This command spawns a terminal and places you in an interactive Python
 interpreter within the OpenEmbedded build environment. The
-```OE_TERMINAL`` <&YOCTO_DOCS_REF_URL;#var-OE_TERMINAL>`__ variable
+:term:`OE_TERMINAL` variable
 controls what type of shell is opened.
 
 When you are finished using ``devpyshell``, you can exit the shell
@@ -3357,9 +3357,9 @@ The following figure and list overviews the build process:
    of the build environment including the target machine architecture
    through the ``MACHINE`` variable, the packaging format used during
    the build
-   (```PACKAGE_CLASSES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES>`__),
+   (:term:`PACKAGE_CLASSES`),
    and a centralized tarball download directory through the
-   ```DL_DIR`` <&YOCTO_DOCS_REF_URL;#var-DL_DIR>`__ variable.
+   :term:`DL_DIR` variable.
 
 4. *Build the Image:* Build the image using the ``bitbake`` command: $
    bitbake target
@@ -3377,7 +3377,7 @@ The following figure and list overviews the build process:
    can be the name of a recipe for a specific piece of software such as
    BusyBox. For more details about the images the OpenEmbedded build
    system supports, see the
-   "`Images <&YOCTO_DOCS_REF_URL;#ref-images>`__" chapter in the Yocto
+   ":ref:`ref-manual/ref-images:Images`" chapter in the Yocto
    Project Reference Manual.
 
    As an example, the following command builds the
@@ -3413,7 +3413,7 @@ Setting Up and Running a Multiple Configuration Build
 
 To accomplish a multiple configuration build, you must define each
 target's configuration separately using a parallel configuration file in
-the `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, and you
+the :term:`Build Directory`, and you
 must follow a required file hierarchy. Additionally, you must enable the
 multiple configuration builds in your ``local.conf`` file.
 
@@ -3426,9 +3426,9 @@ Follow these steps to set up and execute multiple configuration builds:
    dictates that you do not overlap the temporary directories used
    during the builds. However, it is possible that you can share the
    temporary directory
-   (```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__). For example,
+   (:term:`TMPDIR`). For example,
    consider a scenario with two different multiconfigs for the same
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__: "qemux86" built
+   :term:`MACHINE`: "qemux86" built
    for two distributions such as "poky" and "poky-lsb". In this case,
    you might want to use the same ``TMPDIR``.
 
@@ -3450,7 +3450,7 @@ Follow these steps to set up and execute multiple configuration builds:
 
 -  *Add the BitBake Multi-configuration Variable to the Local
    Configuration File*: Use the
-   ```BBMULTICONFIG`` <&YOCTO_DOCS_REF_URL;#var-BBMULTICONFIG>`__
+   :term:`BBMULTICONFIG`
    variable in your ``conf/local.conf`` configuration file to specify
    each multiconfig. Continuing with the example from the previous
    figure, the ``BBMULTICONFIG`` variable needs to enable two
@@ -3498,9 +3498,9 @@ multiple configuration build. For example, suppose that in order to
 build a ``core-image-sato`` image for an "x86" multiconfig, the root
 filesystem of an "arm" multiconfig must exist. This dependency is
 essentially that the
-```do_image`` <&YOCTO_DOCS_REF_URL;#ref-tasks-image>`__ task in the
+:ref:`ref-tasks-image` task in the
 ``core-image-sato`` recipe depends on the completion of the
-```do_rootfs`` <&YOCTO_DOCS_REF_URL;#ref-tasks-rootfs>`__ task of the
+:ref:`ref-tasks-rootfs` task of the
 ``core-image-minimal`` recipe.
 
 To enable dependencies in a multiple configuration build, you must
@@ -3533,7 +3533,7 @@ create the ``core-image-minimal`` image for the "arm" build since the
 Because "x86" and "arm" are enabled for multiple configuration builds
 and have separate configuration files, BitBake places the artifacts for
 each build in the respective temporary build directories (i.e.
-```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__).
+:term:`TMPDIR`).
 
 .. _building-an-initramfs-image:
 
@@ -3564,9 +3564,9 @@ Follow these steps to create an initramfs image:
 2. *Decide if You Need to Bundle the initramfs Image Into the Kernel
    Image:* If you want the initramfs image that is built to be bundled
    in with the kernel image, set the
-   ```INITRAMFS_IMAGE_BUNDLE`` <&YOCTO_DOCS_REF_URL;#var-INITRAMFS_IMAGE_BUNDLE>`__
+   :term:`INITRAMFS_IMAGE_BUNDLE`
    variable to "1" in your ``local.conf`` configuration file and set the
-   ```INITRAMFS_IMAGE`` <&YOCTO_DOCS_REF_URL;#var-INITRAMFS_IMAGE>`__
+   :term:`INITRAMFS_IMAGE`
    variable in the recipe that builds the kernel image.
 
    .. note::
@@ -3579,7 +3579,7 @@ Follow these steps to create an initramfs image:
    Setting the ``INITRAMFS_IMAGE_BUNDLE`` flag causes the initramfs
    image to be unpacked into the ``${B}/usr/`` directory. The unpacked
    initramfs image is then passed to the kernel's ``Makefile`` using the
-   ```CONFIG_INITRAMFS_SOURCE`` <&YOCTO_DOCS_REF_URL;#var-CONFIG_INITRAMFS_SOURCE>`__
+   :term:`CONFIG_INITRAMFS_SOURCE`
    variable, allowing the initramfs image to be built into the kernel
    normally.
 
@@ -3601,20 +3601,20 @@ Follow these steps to create an initramfs image:
 3. *Optionally Add Items to the initramfs Image Through the initramfs
    Image Recipe:* If you add items to the initramfs image by way of its
    recipe, you should use
-   ```PACKAGE_INSTALL`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_INSTALL>`__
+   :term:`PACKAGE_INSTALL`
    rather than
-   ```IMAGE_INSTALL`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL>`__.
+   :term:`IMAGE_INSTALL`.
    ``PACKAGE_INSTALL`` gives more direct control of what is added to the
    image as compared to the defaults you might not necessarily want that
-   are set by the ```image`` <&YOCTO_DOCS_REF_URL;#ref-classes-image>`__
-   or ```core-image`` <&YOCTO_DOCS_REF_URL;#ref-classes-core-image>`__
+   are set by the :ref:`image <ref-classes-image>`
+   or :ref:`core-image <ref-classes-core-image>`
    classes.
 
 4. *Build the Kernel Image and the initramfs Image:* Build your kernel
    image using BitBake. Because the initramfs image recipe is a
    dependency of the kernel image, the initramfs image is built as well
    and bundled with the kernel image if you used the
-   ```INITRAMFS_IMAGE_BUNDLE`` <&YOCTO_DOCS_REF_URL;#var-INITRAMFS_IMAGE_BUNDLE>`__
+   :term:`INITRAMFS_IMAGE_BUNDLE`
    variable described earlier.
 
 Building a Tiny System
@@ -3850,7 +3850,7 @@ dependencies as well as removing the package management data itself.
 
 To eliminate all the packaging requirements for an image, be sure that
 "package-management" is not part of your
-```IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES>`__
+:term:`IMAGE_FEATURES`
 statement for the image. When you remove this feature, you are removing
 the package manager as well as its dependencies from the root
 filesystem.
@@ -3866,7 +3866,7 @@ are a couple of areas to experiment with:
 -  ``glibc``: In general, follow this process:
 
    1. Remove ``glibc`` features from
-      ```DISTRO_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES>`__
+      :term:`DISTRO_FEATURES`
       that you think you do not need.
 
    2. Build your distribution.
@@ -3913,7 +3913,7 @@ that are extremely specific to a CPU core used in a system might enable
 some micro optimizations in GCC for that particular system but would
 otherwise not gain you much of a performance difference across the other
 systems as compared to using a more general tuning across all the builds
-(e.g. setting ```DEFAULTTUNE`` <&YOCTO_DOCS_REF_URL;#var-DEFAULTTUNE>`__
+(e.g. setting :term:`DEFAULTTUNE`
 specifically for each machine's build). Rather than "max out" each
 build's tunings, you can take steps that cause the OpenEmbedded build
 system to reuse software across the various machines where it makes
@@ -3924,9 +3924,9 @@ should consider the points in this section that can help you optimize
 your tunings to best consider build times and package feed maintenance.
 
 -  *Share the Build Directory:* If at all possible, share the
-   ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__ across builds. The
+   :term:`TMPDIR` across builds. The
    Yocto Project supports switching between different
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ values in the same
+   :term:`MACHINE` values in the same
    ``TMPDIR``. This practice is well supported and regularly used by
    developers when building for multiple machines. When you use the same
    ``TMPDIR`` for multiple machine builds, the OpenEmbedded build system
@@ -3958,7 +3958,7 @@ your tunings to best consider build times and package feed maintenance.
    A recipe that just generates scripts can enable "all" architecture
    because there are no binaries to build. To specifically enable "all"
    architecture, be sure your recipe inherits the
-   ```allarch`` <&YOCTO_DOCS_REF_URL;#ref-classes-allarch>`__ class.
+   :ref:`allarch <ref-classes-allarch>` class.
    This class is useful for "all" architectures because it configures
    many variables so packages can be used across multiple architectures.
 
@@ -3967,12 +3967,12 @@ your tunings to best consider build times and package feed maintenance.
    machine-architecture dependent, which makes your recipe also
    machine-architecture dependent, make sure your recipe enables the
    "machine" package architecture through the
-   ```MACHINE_ARCH`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_ARCH>`__
+   :term:`MACHINE_ARCH`
    variable: PACKAGE_ARCH = "${MACHINE_ARCH}" When you do not
    specifically enable a package architecture through the
-   ```PACKAGE_ARCH`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH>`__, The
+   :term:`PACKAGE_ARCH`, The
    OpenEmbedded build system defaults to the
-   ```TUNE_PKGARCH`` <&YOCTO_DOCS_REF_URL;#var-TUNE_PKGARCH>`__ setting:
+   :term:`TUNE_PKGARCH` setting:
    PACKAGE_ARCH = "${TUNE_PKGARCH}"
 
 -  *Choose a Generic Tuning File if Possible:* Some tunes are more
@@ -4001,11 +4001,11 @@ your tunings to best consider build times and package feed maintenance.
    boards share the Vivante GPU. This class inspects the BitBake
    datastore to identify if the package provides or depends on one of
    the sub-architecture values. If so, the class sets the
-   ```PACKAGE_ARCH`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH>`__ value
+   :term:`PACKAGE_ARCH` value
    based on the ``MACHINE_SUBARCH`` value. If the package does not
    provide or depend on one of the sub-architecture values but it
    matches a value in the machine-specific filter, it sets
-   ```MACHINE_ARCH`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_ARCH>`__. This
+   :term:`MACHINE_ARCH`. This
    behavior reduces the number of packages built and saves build time by
    reusing binaries.
 
@@ -4014,18 +4014,18 @@ your tunings to best consider build times and package feed maintenance.
    example, the OpenEmbedded build system might not be using shared
    state between machines when you think it should be. These types of
    situations are usually due to references to machine-specific
-   variables such as ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__,
-   ```SERIAL_CONSOLES`` <&YOCTO_DOCS_REF_URL;#var-SERIAL_CONSOLES>`__,
-   ```XSERVER`` <&YOCTO_DOCS_REF_URL;#var-XSERVER>`__,
-   ```MACHINE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES>`__,
+   variables such as :term:`MACHINE`,
+   :term:`SERIAL_CONSOLES`,
+   :term:`XSERVER`,
+   :term:`MACHINE_FEATURES`,
    and so forth in code that is supposed to only be tune-specific or
    when the recipe depends
-   (```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__,
-   ```RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-RDEPENDS>`__,
-   ```RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS>`__,
-   ```RSUGGESTS`` <&YOCTO_DOCS_REF_URL;#var-RSUGGESTS>`__, and so forth)
+   (:term:`DEPENDS`,
+   :term:`RDEPENDS`,
+   :term:`RRECOMMENDS`,
+   :term:`RSUGGESTS`, and so forth)
    on some other recipe that already has
-   ```PACKAGE_ARCH`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_ARCH>`__ defined
+   :term:`PACKAGE_ARCH` defined
    as "${MACHINE_ARCH}".
 
    .. note::
@@ -4062,14 +4062,14 @@ build system to the development team so that they can focus on their
 project and maintain everyone's workflow as much as possible. In this
 case, you want a kernel source directory on the development machine
 where the development occurs. You want the recipe's
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ variable to point to
+:term:`SRC_URI` variable to point to
 the external directory and use it as is, not copy it.
 
 To build from software that comes from an external source, all you need
 to do is inherit the
-```externalsrc`` <&YOCTO_DOCS_REF_URL;#ref-classes-externalsrc>`__ class
+:ref:`externalsrc <ref-classes-externalsrc>` class
 and then set the
-```EXTERNALSRC`` <&YOCTO_DOCS_REF_URL;#var-EXTERNALSRC>`__ variable to
+:term:`EXTERNALSRC` variable to
 point to your external source code. Here are the statements to put in
 your ``local.conf`` file: INHERIT += "externalsrc"
 EXTERNALSRC_pn-myrecipe = "path-to-your-source-tree"
@@ -4087,10 +4087,10 @@ EXTERNALSRC = "path" EXTERNALSRC_BUILD = "path"
 
 By default, ``externalsrc.bbclass`` builds the source code in a
 directory separate from the external source directory as specified by
-```EXTERNALSRC`` <&YOCTO_DOCS_REF_URL;#var-EXTERNALSRC>`__. If you need
+:term:`EXTERNALSRC`. If you need
 to have the source built in the same directory in which it resides, or
 some other nominated directory, you can set
-```EXTERNALSRC_BUILD`` <&YOCTO_DOCS_REF_URL;#var-EXTERNALSRC_BUILD>`__
+:term:`EXTERNALSRC_BUILD`
 to point to that directory: EXTERNALSRC_BUILD_pn-myrecipe =
 "path-to-your-source-tree"
 
@@ -4107,7 +4107,7 @@ build.
 Follow these steps to populate your Downloads directory:
 
 1. *Create a Clean Downloads Directory:* Start with an empty downloads
-   directory (```DL_DIR`` <&YOCTO_DOCS_REF_URL;#var-DL_DIR>`__). You
+   directory (:term:`DL_DIR`). You
    start with an empty downloads directory by either removing the files
    in the existing directory or by setting ``DL_DIR`` to point to either
    an empty location or one that does not yet exist.
@@ -4118,7 +4118,7 @@ Follow these steps to populate your Downloads directory:
    the fetch process in the next step, BitBake gathers the source files
    and creates tarballs in the directory pointed to by ``DL_DIR``. See
    the
-   ```BB_GENERATE_MIRROR_TARBALLS`` <&YOCTO_DOCS_REF_URL;#var-BB_GENERATE_MIRROR_TARBALLS>`__
+   :term:`BB_GENERATE_MIRROR_TARBALLS`
    variable for more information.
 
 3. *Populate Your Downloads Directory Without Building:* Use BitBake to
@@ -4142,9 +4142,9 @@ Follow these steps to build your target using the files in the downloads
 directory:
 
 1. *Using Local Files Only:* Inside your ``local.conf`` file, add the
-   ```SOURCE_MIRROR_URL`` <&YOCTO_DOCS_REF_URL;#var-SOURCE_MIRROR_URL>`__
+   :term:`SOURCE_MIRROR_URL`
    variable, inherit the
-   ```own-mirrors`` <&YOCTO_DOCS_REF_URL;#ref-classes-own-mirrors>`__
+   :ref:`own-mirrors <ref-classes-own-mirrors>`
    class, and use the
    ```BB_NO_NETWORK`` <&YOCTO_DOCS_BB_URL;#var-bb-BB_NO_NETWORK>`__
    variable to your ``local.conf``. SOURCE_MIRROR_URL ?=
@@ -4157,7 +4157,7 @@ directory:
 
 2. *Start With a Clean Build:* You can start with a clean build by
    removing the
-   ``${``\ ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__\ ``}``
+   ``${``\ :term:`TMPDIR`\ ``}``
    directory or using a new `Build
    Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
 
@@ -4170,8 +4170,8 @@ directory:
 
       The offline build does not work if recipes attempt to find the
       latest version of software by setting
-      ```SRCREV`` <&YOCTO_DOCS_REF_URL;#var-SRCREV>`__ to
-      ``${``\ ```AUTOREV`` <&YOCTO_DOCS_REF_URL;#var-AUTOREV>`__\ ``}``:
+      :term:`SRCREV` to
+      ``${``\ :term:`AUTOREV`\ ``}``:
       SRCREV = "${AUTOREV}" When a recipe sets ``SRCREV`` to
       ``${AUTOREV}``, the build system accesses the network in an
       attempt to determine the latest version of software from the SCM.
@@ -4214,12 +4214,12 @@ variable for more information:
 
 -  ```PARALLEL_MAKE``: <&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE>`__ Extra
    options passed to the ``make`` command during the
-   ```do_compile`` <&YOCTO_DOCS_REF_URL;#ref-tasks-compile>`__ task in
+   :ref:`ref-tasks-compile` task in
    order to specify parallel compilation on the local build host.
 
 -  ```PARALLEL_MAKEINST``: <&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKEINST>`__
    Extra options passed to the ``make`` command during the
-   ```do_install`` <&YOCTO_DOCS_REF_URL;#ref-tasks-install>`__ task in
+   :ref:`ref-tasks-install` task in
    order to specify parallel installation on the local build host.
 
 As mentioned, these variables all scale to the number of processor cores
@@ -4249,12 +4249,12 @@ Following are additional factors that can affect build speed:
    IPK is the fastest. Additionally, selecting a singular packaging
    backend also helps.
 
--  Using ``tmpfs`` for ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__
+-  Using ``tmpfs`` for :term:`TMPDIR`
    as a temporary file system: While this can help speed up the build,
    the benefits are limited due to the compiler using ``-pipe``. The
    build system goes to some lengths to avoid ``sync()`` calls into the
    file system on the principle that if there was a significant failure,
-   the `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__
+   the :term:`Build Directory`
    contents could easily be rebuilt.
 
 -  Inheriting the
@@ -4262,7 +4262,7 @@ Following are additional factors that can affect build speed:
    Inheriting this class has shown to speed up builds due to
    significantly lower amounts of data stored in the data cache as well
    as on disk. Inheriting this class also makes cleanup of
-   ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__ faster, at the
+   :term:`TMPDIR` faster, at the
    expense of being easily able to dive into the source code. File
    system maintainers have recommended that the fastest way to clean up
    large numbers of files is to reformat partitions rather than delete
@@ -4274,14 +4274,14 @@ Aside from the previous list, you should keep some trade offs in mind
 that can help you speed up the build:
 
 -  Remove items from
-   ```DISTRO_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES>`__
+   :term:`DISTRO_FEATURES`
    that you might not need.
 
 -  Exclude debug symbols and other debug information: If you do not need
    these symbols and other debug information, disabling the ``*-dbg``
    package generation can speed up the build. You can disable this
    generation by setting the
-   ```INHIBIT_PACKAGE_DEBUG_SPLIT`` <&YOCTO_DOCS_REF_URL;#var-INHIBIT_PACKAGE_DEBUG_SPLIT>`__
+   :term:`INHIBIT_PACKAGE_DEBUG_SPLIT`
    variable to "1".
 
 -  Disable static library generation for recipes derived from
@@ -4328,7 +4328,7 @@ If you are building a library and the library offers static linking, you
 can control which static library files (``*.a`` files) get included in
 the built library.
 
-The ```PACKAGES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGES>`__ and
+The :term:`PACKAGES` and
 ```FILES_*`` <&YOCTO_DOCS_REF_URL;#var-FILES>`__ variables in the
 ``meta/conf/bitbake.conf`` configuration file define how files installed
 by the ``do_install`` task are packaged. By default, the ``PACKAGES``
@@ -4391,7 +4391,7 @@ libraries could differ in architecture, compiler options, or other
 optimizations.
 
 Several examples exist in the ``meta-skeleton`` layer found in the
-`Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__:
+:term:`Source Directory`:
 
 -  ``conf/multilib-example.conf`` configuration file
 
@@ -4412,7 +4412,7 @@ already extended and support multiple libraries. You can check in the
 ``meta/conf/multilib.conf`` configuration file in the `Source
 Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ to see how this is
 done using the
-```BBCLASSEXTEND`` <&YOCTO_DOCS_REF_URL;#var-BBCLASSEXTEND>`__ variable.
+:term:`BBCLASSEXTEND` variable.
 Eventually, all recipes will be covered and this list will not be
 needed.
 
@@ -4420,12 +4420,12 @@ For the most part, the Multilib class extension works automatically to
 extend the package name from ``${PN}`` to ``${MLPREFIX}${PN}``, where
 ``MLPREFIX`` is the particular multilib (e.g. "lib32-" or "lib64-").
 Standard variables such as
-```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__,
-```RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-RDEPENDS>`__,
-```RPROVIDES`` <&YOCTO_DOCS_REF_URL;#var-RPROVIDES>`__,
-```RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS>`__,
-```PACKAGES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGES>`__, and
-```PACKAGES_DYNAMIC`` <&YOCTO_DOCS_REF_URL;#var-PACKAGES_DYNAMIC>`__ are
+:term:`DEPENDS`,
+:term:`RDEPENDS`,
+:term:`RPROVIDES`,
+:term:`RRECOMMENDS`,
+:term:`PACKAGES`, and
+:term:`PACKAGES_DYNAMIC` are
 automatically extended by the system. If you are extending any manual
 code in the recipe, you can use the ``${MLPREFIX}`` variable to ensure
 those names are extended correctly. This automatic extension code
@@ -4462,12 +4462,12 @@ that exist regardless of the package management system:
 
 -  The typical convention used for the class extension code as used by
    Multilib assumes that all package names specified in
-   ```PACKAGES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGES>`__ that contain
+   :term:`PACKAGES` that contain
    ``${PN}`` have ``${PN}`` at the start of the name. When that
    convention is not followed and ``${PN}`` appears at the middle or the
    end of a name, problems occur.
 
--  The ```TARGET_VENDOR`` <&YOCTO_DOCS_REF_URL;#var-TARGET_VENDOR>`__
+-  The :term:`TARGET_VENDOR`
    value under Multilib will be extended to "-vendormlmultilib" (e.g.
    "-pokymllib32" for a "lib32" Multilib with Poky). The reason for this
    slightly unwieldy contraction is that any "-" characters in the
@@ -4479,7 +4479,7 @@ details exist:
 
 -  A unique architecture is defined for the Multilib packages, along
    with creating a unique deploy folder under ``tmp/deploy/rpm`` in the
-   `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. For
+   :term:`Build Directory`. For
    example, consider ``lib32`` in a ``qemux86-64`` image. The possible
    architectures in the system are "all", "qemux86_64",
    "lib32_qemux86_64", and "lib32_x86".
@@ -4525,7 +4525,7 @@ versions of the same library in parallel on the same system.
 The process is straightforward as long as the libraries use proper
 versioning. With properly versioned libraries, all you need to do to
 individually specify the libraries is create separate, appropriately
-named recipes where the ```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__ part of
+named recipes where the :term:`PN` part of
 the name includes a portion that differentiates each library version
 (e.g.the major part of the version number). Thus, instead of having a
 single recipe that loads one version of a library (e.g. ``clutter``),
@@ -4534,7 +4534,7 @@ libraries you want. As an example, the following two recipes would allow
 the two separate versions of the ``clutter`` library to co-exist on the
 same system: clutter-1.6_1.6.20.bb clutter-1.8_1.8.4.bb Additionally, if
 you have other recipes that depend on a given library, you need to use
-the ```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ variable to
+the :term:`DEPENDS` variable to
 create the dependency. Continuing with the same example, if you want to
 have a recipe depend on the 1.8 version of the ``clutter`` library, use
 the following in your recipe: DEPENDS = "clutter-1.8"
@@ -4625,15 +4625,15 @@ Enabling the generation of introspection data (GIR files) in your
 library package involves the following:
 
 1. Inherit the
-   ```gobject-introspection`` <&YOCTO_DOCS_REF_URL;#ref-classes-gobject-introspection>`__
+   :ref:`gobject-introspection <ref-classes-gobject-introspection>`
    class.
 
 2. Make sure introspection is not disabled anywhere in the recipe or
    from anything the recipe includes. Also, make sure that
    "gobject-introspection-data" is not in
-   ```DISTRO_FEATURES_BACKFILL_CONSIDERED`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES_BACKFILL_CONSIDERED>`__
+   :term:`DISTRO_FEATURES_BACKFILL_CONSIDERED`
    and that "qemu-usermode" is not in
-   ```MACHINE_FEATURES_BACKFILL_CONSIDERED`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES_BACKFILL_CONSIDERED>`__.
+   :term:`MACHINE_FEATURES_BACKFILL_CONSIDERED`.
    If either of these conditions exist, nothing will happen.
 
 3. Try to build the recipe. If you encounter build errors that look like
@@ -4699,9 +4699,9 @@ Use the following procedure to test if generating introspection data is
 working in an image:
 
 1. Make sure that "gobject-introspection-data" is not in
-   ```DISTRO_FEATURES_BACKFILL_CONSIDERED`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES_BACKFILL_CONSIDERED>`__
+   :term:`DISTRO_FEATURES_BACKFILL_CONSIDERED`
    and that "qemu-usermode" is not in
-   ```MACHINE_FEATURES_BACKFILL_CONSIDERED`` <&YOCTO_DOCS_REF_URL;#var-MACHINE_FEATURES_BACKFILL_CONSIDERED>`__.
+   :term:`MACHINE_FEATURES_BACKFILL_CONSIDERED`.
 
 2. Build ``core-image-sato``.
 
@@ -4750,7 +4750,7 @@ follows:
 
 -  Make sure you add the layer that contains the toolchain to your
    ``bblayers.conf`` file through the
-   ```BBLAYERS`` <&YOCTO_DOCS_REF_URL;#var-BBLAYERS>`__ variable.
+   :term:`BBLAYERS` variable.
 
 -  Set the ``EXTERNAL_TOOLCHAIN`` variable in your ``local.conf`` file
    to the location in which you installed the toolchain.
@@ -4760,7 +4760,7 @@ Mentor Graphics Sourcery G++ Toolchain. You can see information on how
 to use that particular layer in the ``README`` file at
 ` <http://github.com/MentorEmbedded/meta-sourcery/>`__. You can find
 further information by reading about the
-```TCMODE`` <&YOCTO_DOCS_REF_URL;#var-TCMODE>`__ variable in the Yocto
+:term:`TCMODE` variable in the Yocto
 Project Reference Manual's variable glossary.
 
 Creating Partitioned Images Using Wic
@@ -4827,7 +4827,7 @@ this information is required to use Wic, you might find it interesting.
 -  Wic is a completely independent standalone utility that initially
    provides easier-to-use and more flexible replacements for an existing
    functionality in OE-Core's
-   ```image-live`` <&YOCTO_DOCS_REF_URL;#ref-classes-image-live>`__
+   :ref:`image-live <ref-classes-image-live>`
    class. The difference between Wic and those examples is that with Wic
    the functionality of those scripts is implemented by a
    general-purpose partitioning language, which is based on Redhat
@@ -4852,7 +4852,7 @@ system needs to meet the following requirements:
 
 -  You must have sourced the build environment setup script (i.e.
    ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__) found in the
-   `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
+   :term:`Build Directory`.
 
 -  You need to have the build artifacts already available, which
    typically means that you must have already created an image using the
@@ -4865,12 +4865,12 @@ system needs to meet the following requirements:
    build system: $ bitbake parted-native dosfstools-native mtools-native
 
 -  Include "wic" as part of the
-   ```IMAGE_FSTYPES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FSTYPES>`__
+   :term:`IMAGE_FSTYPES`
    variable.
 
 -  Include the name of the `wic kickstart
    file <&YOCTO_DOCS_REF_URL;#openembedded-kickstart-wks-reference>`__
-   as part of the ```WKS_FILE`` <&YOCTO_DOCS_REF_URL;#var-WKS_FILE>`__
+   as part of the :term:`WKS_FILE`
    variable
 
 .. _wic-getting-help:
@@ -4923,7 +4923,7 @@ for creating the image: Raw and Cooked:
    command-line arguments.
 
 -  *Cooked Mode:* The current
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ setting and image
+   :term:`MACHINE` setting and image
    name are used to automatically locate and provide the build
    artifacts. You just supply a kickstart file and the name of the image
    from which to use artifacts.
@@ -5172,7 +5172,7 @@ INFO: The image(s) were created using OE kickstart file:
 The previous example shows the easiest way to create an image by running
 in cooked mode and supplying a kickstart file and the "-e" option to
 point to the existing build artifacts. Your ``local.conf`` file needs to
-have the ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ variable set
+have the :term:`MACHINE` variable set
 to the machine you are using, which is "qemux86" in this example.
 
 Once the image builds, the output provides image location, artifact use,
@@ -5234,7 +5234,7 @@ untouched: part /boot --source bootimg-pcbios --ondisk sdb --label boot
 --label platform --align 1024 --use-uuid Once the lines are changed, the
 example generates the ``directdisksdb-gpt`` image. The command points
 the process at the ``core-image-minimal`` artifacts for the Next Unit of
-Computing (nuc) ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ the
+Computing (nuc) :term:`MACHINE` the
 ``local.conf``. $ wic create directdisksdb-gpt -e core-image-minimal
 INFO: Building wic-tools... . . . Initialising tasks: 100%
 \|#######################################\| Time: 0:00:01 NOTE:
@@ -5287,7 +5287,7 @@ NATIVE_SYSROOT:
 /home/stephano/build/master/build/tmp-glibc/work/i586-oe-linux/wic-tools/1.0-r0/recipe-sysroot-native
 INFO: The image(s) were created using OE kickstart file:
 /home/stephano/my_yocto/test.wks For this example,
-```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ did not have to be
+:term:`MACHINE` did not have to be
 specified in the ``local.conf`` file since the artifact is manually
 specified.
 
@@ -5419,7 +5419,7 @@ any type of image. Use these steps to flash an image using Bmaptool:
    += "wic wic.bmap"
 
 2. *Get Your Image:* Either have your image ready (pre-built with the
-   ```IMAGE_FSTYPES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FSTYPES>`__
+   :term:`IMAGE_FSTYPES`
    setting previously mentioned) or take the step to build the image: $
    bitbake image
 
@@ -5540,10 +5540,10 @@ You can take some steps that are specific to the OpenEmbedded build
 system to make your images more secure:
 
 -  Ensure "debug-tweaks" is not one of your selected
-   ```IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES>`__.
+   :term:`IMAGE_FEATURES`.
    When creating a new project, the default is to provide you with an
    initial ``local.conf`` file that enables this feature using the
-   ```EXTRA_IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES>`__
+   :term:`EXTRA_IMAGE_FEATURES`
    variable with the line: EXTRA_IMAGE_FEATURES = "debug-tweaks" To
    disable that feature, simply comment out that line in your
    ``local.conf`` file, or make sure ``IMAGE_FEATURES`` does not contain
@@ -5558,7 +5558,7 @@ system to make your images more secure:
    users, you should not duplicate passwords.
 
    To set up passwords, use the
-   ```extrausers`` <&YOCTO_DOCS_REF_URL;#ref-classes-extrausers>`__
+   :ref:`extrausers <ref-classes-extrausers>`
    class, which is the preferred method. For an example on how to set up
    both root and user passwords, see the
    "```extrausers.bbclass`` <&YOCTO_DOCS_REF_URL;#ref-classes-extrausers>`__"
@@ -5591,7 +5591,7 @@ Creating Your Own Distribution
 ==============================
 
 When you build an image using the Yocto Project and do not alter any
-distribution `Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__, you are
+distribution :term:`Metadata`, you are
 creating a Poky distribution. If you wish to gain more control over
 package alternative selections, compile-time options, and other
 low-level configurations, you can create your own distribution.
@@ -5633,14 +5633,14 @@ layer. The following steps provide some more detail:
    desired version and revisions for individual recipes.
 
    Your configuration file needs to set the following required
-   variables: ```DISTRO_NAME`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_NAME>`__
-   ```DISTRO_VERSION`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_VERSION>`__
+   variables: :term:`DISTRO_NAME`
+   :term:`DISTRO_VERSION`
    These following variables are optional and you typically set them
    from the distribution configuration file:
-   ```DISTRO_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES>`__
-   ```DISTRO_EXTRA_RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RDEPENDS>`__
-   ```DISTRO_EXTRA_RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_EXTRA_RRECOMMENDS>`__
-   ```TCLIBC`` <&YOCTO_DOCS_REF_URL;#var-TCLIBC>`__
+   :term:`DISTRO_FEATURES`
+   :term:`DISTRO_EXTRA_RDEPENDS`
+   :term:`DISTRO_EXTRA_RRECOMMENDS`
+   :term:`TCLIBC`
 
    .. tip::
 
@@ -5665,7 +5665,7 @@ layer. The following steps provide some more detail:
 -  *Point to Your distribution configuration file:* In your
    ``local.conf`` file in the `Build
    Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, set your
-   ```DISTRO`` <&YOCTO_DOCS_REF_URL;#var-DISTRO>`__ variable to point to
+   :term:`DISTRO` variable to point to
    your distribution's configuration file. For example, if your
    distribution's configuration file is named ``mydistro.conf``, then
    you point to it as follows: DISTRO = "mydistro"
@@ -5719,7 +5719,7 @@ To override these default configuration files with configurations you
 want used within every new Build Directory, simply set the
 ``TEMPLATECONF`` variable to your directory. The ``TEMPLATECONF``
 variable is set in the ``.templateconf`` file, which is in the top-level
-`Source Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ folder
+:term:`Source Directory` folder
 (e.g. ``poky``). Edit the ``.templateconf`` so that it can locate your
 directory.
 
@@ -5758,7 +5758,7 @@ Conserving Disk Space During Builds
 
 To help conserve disk space during builds, you can add the following
 statement to your project's ``local.conf`` configuration file found in
-the `Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: INHERIT
+the :term:`Build Directory`: INHERIT
 += "rm_work" Adding this statement deletes the work directory used for
 building a recipe once the recipe is built. For more information on
 "rm_work", see the
@@ -5810,15 +5810,15 @@ or attach them to a specific image recipe by using a recipe name
 override. For more detail on the variables, see the descriptions in the
 Yocto Project Reference Manual's glossary chapter.
 
--  ```BAD_RECOMMENDATIONS`` <&YOCTO_DOCS_REF_URL;#var-BAD_RECOMMENDATIONS>`__:
+-  :term:`BAD_RECOMMENDATIONS`:
    Use this variable to specify "recommended-only" packages that you do
    not want installed.
 
--  ```NO_RECOMMENDATIONS`` <&YOCTO_DOCS_REF_URL;#var-NO_RECOMMENDATIONS>`__:
+-  :term:`NO_RECOMMENDATIONS`:
    Use this variable to prevent all "recommended-only" packages from
    being installed.
 
--  ```PACKAGE_EXCLUDE`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_EXCLUDE>`__:
+-  :term:`PACKAGE_EXCLUDE`:
    Use this variable to prevent specific packages from being installed
    regardless of whether they are "recommended-only" or not. You need to
    realize that the build process could fail with an error when you
@@ -5852,8 +5852,8 @@ the following:
       .
 
    The version and revision are taken from the
-   ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__ and
-   ```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__ variables, respectively.
+   :term:`PV` and
+   :term:`PR` variables, respectively.
 
 -  ``PV``: The recipe version. ``PV`` represents the version of the
    software being packaged. Do not confuse ``PV`` with the binary
@@ -5861,7 +5861,7 @@ the following:
 
 -  ``PR``: The recipe revision.
 
--  ```SRCPV`` <&YOCTO_DOCS_REF_URL;#var-SRCPV>`__: The OpenEmbedded
+-  :term:`SRCPV`: The OpenEmbedded
    build system uses this string to help define the value of ``PV`` when
    the source code revision needs to be included in it.
 
@@ -5899,7 +5899,7 @@ Working With a PR Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As mentioned, attempting to maintain revision numbers in the
-`Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__ is error prone, inaccurate,
+:term:`Metadata` is error prone, inaccurate,
 and causes problems for people submitting recipes. Conversely, the PR
 Service automatically generates increasing numbers, particularly the
 revision field, which removes the human element.
@@ -5912,9 +5912,9 @@ revision field, which removes the human element.
 
 The Yocto Project uses variables in order of decreasing priority to
 facilitate revision numbering (i.e.
-```PE`` <&YOCTO_DOCS_REF_URL;#var-PE>`__,
-```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__, and
-```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__ for epoch, version, and
+:term:`PE`,
+:term:`PV`, and
+:term:`PR` for epoch, version, and
 revision, respectively). The values are highly dependent on the policies
 and procedures of a given distribution and package feed.
 
@@ -5946,7 +5946,7 @@ be consistent and correct with the latest changes.
 The simplest form for a PR Service is for it to exist for a single host
 development system that builds the package feed (building system). For
 this scenario, you can enable a local PR Service by setting
-```PRSERV_HOST`` <&YOCTO_DOCS_REF_URL;#var-PRSERV_HOST>`__ in your
+:term:`PRSERV_HOST` in your
 ``local.conf`` file in the `Build
 Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: PRSERV_HOST =
 "localhost:0" Once the service is started, packages will automatically
@@ -5988,7 +5988,7 @@ Manually Bumping PR
 ~~~~~~~~~~~~~~~~~~~
 
 The alternative to setting up a PR Service is to manually "bump" the
-```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__ variable.
+:term:`PR` variable.
 
 If a committed change results in changing the package output, then the
 value of the PR variable needs to be increased (or "bumped") as part of
@@ -6027,10 +6027,10 @@ Automatically Incrementing a Package Version Number
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When fetching a repository, BitBake uses the
-```SRCREV`` <&YOCTO_DOCS_REF_URL;#var-SRCREV>`__ variable to determine
+:term:`SRCREV` variable to determine
 the specific source code revision from which to build. You set the
 ``SRCREV`` variable to
-```AUTOREV`` <&YOCTO_DOCS_REF_URL;#var-AUTOREV>`__ to cause the
+:term:`AUTOREV` to cause the
 OpenEmbedded build system to automatically use the latest revision of
 the software: SRCREV = "${AUTOREV}"
 
@@ -6043,7 +6043,7 @@ with a number. The number used depends on the state of the PR Service:
 
 -  If PR Service is enabled, the build system increments the number,
    which is similar to the behavior of
-   ```PR`` <&YOCTO_DOCS_REF_URL;#var-PR>`__. This behavior results in
+   :term:`PR`. This behavior results in
    linearly increasing package versions, which is desirable. Here is an
    example: hello-world-git_0.0+git0+b6558dd387-r0.0_armv7a-neon.ipk
    hello-world-git_0.0+git1+dd2f5c3565-r0.0_armv7a-neon.ipk
@@ -6087,7 +6087,7 @@ To ensure the module packaging actually gets done, you use the
 function in your recipe. The ``do_split_packages`` function searches for
 a pattern of files or directories under a specified path and creates a
 package for each one it finds by appending to the
-```PACKAGES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGES>`__ variable and
+:term:`PACKAGES` variable and
 setting the appropriate values for ``FILES_packagename``,
 ``RDEPENDS_packagename``, ``DESCRIPTION_packagename``, and so forth.
 Here is an example from the ``lighttpd`` recipe: python
@@ -6112,7 +6112,7 @@ previous example specifies a number of things in the call to
    dependency on the main ``lighttpd`` package. Thus, if a file in
    ``${libdir}`` called ``mod_alias.so`` is found, a package called
    ``lighttpd-module-alias`` is created for it and the
-   ```DESCRIPTION`` <&YOCTO_DOCS_REF_URL;#var-DESCRIPTION>`__ is set to
+   :term:`DESCRIPTION` is set to
    "Lighttpd module for alias".
 
 Often, packaging modules is as simple as the previous example. However,
@@ -6165,13 +6165,13 @@ Satisfying Dependencies
 The second part for handling optional module packaging is to ensure that
 any dependencies on optional modules from other recipes are satisfied by
 your recipe. You can be sure these dependencies are satisfied by using
-the ```PACKAGES_DYNAMIC`` <&YOCTO_DOCS_REF_URL;#var-PACKAGES_DYNAMIC>`__
+the :term:`PACKAGES_DYNAMIC`
 variable. Here is an example that continues with the ``lighttpd`` recipe
 shown earlier: PACKAGES_DYNAMIC = "lighttpd-module-.*" The name
 specified in the regular expression can of course be anything. In this
 example, it is ``lighttpd-module-`` and is specified as the prefix to
-ensure that any ```RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-RDEPENDS>`__ and
-```RRECOMMENDS`` <&YOCTO_DOCS_REF_URL;#var-RRECOMMENDS>`__ on a package
+ensure that any :term:`RDEPENDS` and
+:term:`RRECOMMENDS` on a package
 name starting with the prefix are satisfied during build time. If you
 are using ``do_split_packages`` as described in the previous section,
 the value you put in ``PACKAGES_DYNAMIC`` should correspond to the name
@@ -6250,7 +6250,7 @@ aware in order to provide support for runtime package management.
 
 When BitBake generates packages, it needs to know what format or formats
 to use. In your configuration, you use the
-```PACKAGE_CLASSES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES>`__
+:term:`PACKAGE_CLASSES`
 variable to specify the format:
 
 1. Open the ``local.conf`` file inside your `Build
@@ -6272,7 +6272,7 @@ If you would like your image to start off with a basic package database
 containing the packages in your current build as well as to have the
 relevant tools available on the target for runtime package management,
 you can include "package-management" in the
-```IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES>`__
+:term:`IMAGE_FEATURES`
 variable. Including "package-management" in this configuration variable
 ensures that when the image is assembled for your target, the image
 includes the currently-known package databases as well as the
@@ -6281,7 +6281,7 @@ performed on the target. However, this is not strictly necessary. You
 could start your image off without any databases but only include the
 required on-target package tool(s). As an example, you could include
 "opkg" in your
-```IMAGE_INSTALL`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL>`__ variable
+:term:`IMAGE_INSTALL` variable
 if you are using the IPK package format. You can then initialize your
 target's package database(s) later once your image is up and running.
 
@@ -6298,10 +6298,10 @@ Thus, be sure to run the package update step separately after building
 any packages.
 
 You can use the
-```PACKAGE_FEED_ARCHS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_ARCHS>`__,
-```PACKAGE_FEED_BASE_PATHS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_BASE_PATHS>`__,
+:term:`PACKAGE_FEED_ARCHS`,
+:term:`PACKAGE_FEED_BASE_PATHS`,
 and
-```PACKAGE_FEED_URIS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_URIS>`__
+:term:`PACKAGE_FEED_URIS`
 variables to pre-configure target images to use a package feed. If you
 do not define these variables, then manual steps as described in the
 subsequent sections are necessary to configure the target. You should
@@ -6310,7 +6310,7 @@ correctly configured image.
 
 When your build is complete, your packages reside in the
 ``${TMPDIR}/deploy/packageformat`` directory. For example, if
-``${``\ ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__\ ``}`` is
+``${``\ :term:`TMPDIR`\ ``}`` is
 ``tmp`` and your selected package type is RPM, then your RPM packages
 are available in ``tmp/deploy/rpm``.
 
@@ -6333,7 +6333,7 @@ Lighttpd, or Nginx), take the appropriate steps to do so.
 
 From within the build directory where you have built an image based on
 your packaging choice (i.e. the
-```PACKAGE_CLASSES`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_CLASSES>`__
+:term:`PACKAGE_CLASSES`
 setting), simply start the server. The following example assumes a build
 directory of ``~/poky/build/tmp/deploy/rpm`` and a ``PACKAGE_CLASSES``
 setting of "package_rpm": $ cd ~/poky/build/tmp/deploy/rpm $ python -m
@@ -6431,10 +6431,10 @@ Using IPK
 The ``opkg`` application performs runtime package management of IPK
 packages. You must perform an initial setup for ``opkg`` on the target
 machine if the
-```PACKAGE_FEED_ARCHS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_ARCHS>`__,
-```PACKAGE_FEED_BASE_PATHS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_BASE_PATHS>`__,
+:term:`PACKAGE_FEED_ARCHS`,
+:term:`PACKAGE_FEED_BASE_PATHS`,
 and
-```PACKAGE_FEED_URIS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_URIS>`__
+:term:`PACKAGE_FEED_URIS`
 variables have not been set or the target image was built before the
 variables were set.
 
@@ -6463,10 +6463,10 @@ The ``apt`` application performs runtime package management of DEB
 packages. This application uses a source list file to find available
 package databases. You must perform an initial setup for ``apt`` on the
 target machine if the
-```PACKAGE_FEED_ARCHS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_ARCHS>`__,
-```PACKAGE_FEED_BASE_PATHS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_BASE_PATHS>`__,
+:term:`PACKAGE_FEED_ARCHS`,
+:term:`PACKAGE_FEED_BASE_PATHS`,
 and
-```PACKAGE_FEED_URIS`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_FEED_URIS>`__
+:term:`PACKAGE_FEED_URIS`
 variables have not been set or the target image was built before the
 variables were set.
 
@@ -6580,8 +6580,8 @@ Adding ptest to Your Build
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To add package testing to your build, add the
-```DISTRO_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES>`__ and
-```EXTRA_IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES>`__
+:term:`DISTRO_FEATURES` and
+:term:`EXTRA_IMAGE_FEATURES`
 variables to your ``local.conf`` file, which is found in the `Build
 Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__:
 DISTRO_FEATURES_append = " ptest" EXTRA_IMAGE_FEATURES += "ptest-pkgs"
@@ -6604,20 +6604,20 @@ you need to prepare the recipes that build the packages you want to
 test. Here is what you have to do for each recipe:
 
 -  *Be sure the recipe inherits
-   the*\ ```ptest`` <&YOCTO_DOCS_REF_URL;#ref-classes-ptest>`__\ *class:*
+   the*\ :ref:`ptest <ref-classes-ptest>`\ *class:*
    Include the following line in each recipe: inherit ptest
 
 -  *Create ``run-ptest``:* This script starts your test. Locate the
    script where you will refer to it using
-   ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__. Here is an
+   :term:`SRC_URI`. Here is an
    example that starts a test for ``dbus``: #!/bin/sh cd test make -k
    runtest-TESTS
 
 -  *Ensure dependencies are met:* If the test adds build or runtime
    dependencies that normally do not exist for the package (such as
    requiring "make" to run the test suite), use the
-   ```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ and
-   ```RDEPENDS`` <&YOCTO_DOCS_REF_URL;#var-RDEPENDS>`__ variables in
+   :term:`DEPENDS` and
+   :term:`RDEPENDS` variables in
    your recipe in order for the package to meet the dependencies. Here
    is an example where the package has a runtime dependency on "make":
    RDEPENDS_${PN}-ptest += "make"
@@ -6732,9 +6732,9 @@ possible. The result is a generated recipe.
 
 The recipe file is fairly simple and contains every license that
 ``recipetool`` finds and includes the licenses in the recipe's
-```LIC_FILES_CHKSUM`` <&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM>`__
+:term:`LIC_FILES_CHKSUM`
 variables. You need to examine the variables and look for those with
-"unknown" in the ```LICENSE`` <&YOCTO_DOCS_REF_URL;#var-LICENSE>`__
+"unknown" in the :term:`LICENSE`
 field. You need to track down the license information for "unknown"
 modules and manually add the information to the recipe.
 
@@ -6764,7 +6764,7 @@ inherit npm LICENSE_${PN} = "MIT" LICENSE_${PN}-accepts = "MIT"
 LICENSE_${PN}-array-flatten = "MIT" ... LICENSE_${PN}-vary = "MIT" Three
 key points exist in the previous example:
 
--  ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ uses the NPM
+-  :term:`SRC_URI` uses the NPM
    scheme so that the NPM fetcher is used.
 
 -  ``recipetool`` collects all the license information. If a
@@ -6772,7 +6772,7 @@ key points exist in the previous example:
    the comments.
 
 -  The ``inherit npm`` statement causes the
-   ```npm`` <&YOCTO_DOCS_REF_URL;#ref-classes-npm>`__ class to package
+   :ref:`npm <ref-classes-npm>` class to package
    up all the modules.
 
 You can run the following command to build the ``cute-files`` package: $
@@ -6828,7 +6828,7 @@ Adding custom metadata to packages
 ----------------------------------
 
 The variable
-```PACKAGE_ADD_METADATA`` <&YOCTO_DOCS_REF_URL;#var-PACKAGE_ADD_METADATA>`__
+:term:`PACKAGE_ADD_METADATA`
 can be used to add additional metadata to packages. This is reflected in
 the package control/spec file. To take the ipk format for example, the
 CONTROL file stored inside would contain the additional metadata as
@@ -6869,7 +6869,7 @@ Efficiently Fetching Source Files During a Build
 ================================================
 
 The OpenEmbedded build system works with source files located through
-the ```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ variable. When
+the :term:`SRC_URI` variable. When
 you build something using BitBake, a big part of the operation is
 locating and downloading all the source tarballs. For images,
 downloading all the source for various packages can take a significant
@@ -6896,15 +6896,15 @@ SOURCE_MIRROR_URL ?= "file:///home/you/your-download-dir/" INHERIT +=
 "own-mirrors" BB_GENERATE_MIRROR_TARBALLS = "1" # BB_NO_NETWORK = "1"
 
 In the previous example, the
-```BB_GENERATE_MIRROR_TARBALLS`` <&YOCTO_DOCS_REF_URL;#var-BB_GENERATE_MIRROR_TARBALLS>`__
+:term:`BB_GENERATE_MIRROR_TARBALLS`
 variable causes the OpenEmbedded build system to generate tarballs of
 the Git repositories and store them in the
-```DL_DIR`` <&YOCTO_DOCS_REF_URL;#var-DL_DIR>`__ directory. Due to
+:term:`DL_DIR` directory. Due to
 performance reasons, generating and storing these tarballs is not the
 build system's default behavior.
 
 You can also use the
-```PREMIRRORS`` <&YOCTO_DOCS_REF_URL;#var-PREMIRRORS>`__ variable. For
+:term:`PREMIRRORS` variable. For
 an example, see the variable's glossary entry in the Yocto Project
 Reference Manual.
 
@@ -6917,7 +6917,7 @@ actually starting a build. This technique lets you work through any
 download issues and ultimately gathers all the source files into your
 download directory
 ```build/downloads`` <&YOCTO_DOCS_REF_URL;#structure-build-downloads>`__,
-which is located with ```DL_DIR`` <&YOCTO_DOCS_REF_URL;#var-DL_DIR>`__.
+which is located with :term:`DL_DIR`.
 
 Use the following BitBake command form to fetch all the necessary
 sources without starting the build: $ bitbake target --runall=fetch This
@@ -6974,7 +6974,7 @@ To remove initscripts from your image altogether, set this variable
 also: VIRTUAL-RUNTIME_initscripts = ""
 
 For information on the backfill variable, see
-```DISTRO_FEATURES_BACKFILL_CONSIDERED`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES_BACKFILL_CONSIDERED>`__.
+:term:`DISTRO_FEATURES_BACKFILL_CONSIDERED`.
 
 Using systemd for the Main Image and Using SysVinit for the Rescue Image
 ------------------------------------------------------------------------
@@ -7011,12 +7011,12 @@ Using Persistent and Pre-Populated\ ``/dev``
 --------------------------------------------
 
 To use the static method for device population, you need to set the
-```USE_DEVFS`` <&YOCTO_DOCS_REF_URL;#var-USE_DEVFS>`__ variable to "0"
+:term:`USE_DEVFS` variable to "0"
 as follows: USE_DEVFS = "0"
 
 The content of the resulting ``/dev`` directory is defined in a Device
 Table file. The
-```IMAGE_DEVICE_TABLES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_DEVICE_TABLES>`__
+:term:`IMAGE_DEVICE_TABLES`
 variable defines the Device Table to use and should be set in the
 machine or distro configuration file. Alternatively, you can set this
 variable in your ``local.conf`` configuration file.
@@ -7034,7 +7034,7 @@ Using ``devtmpfs`` and a Device Manager
 ---------------------------------------
 
 To use the dynamic method for device population, you need to use (or be
-sure to set) the ```USE_DEVFS`` <&YOCTO_DOCS_REF_URL;#var-USE_DEVFS>`__
+sure to set) the :term:`USE_DEVFS`
 variable to "1", which is the default: USE_DEVFS = "1" With this
 setting, the resulting ``/dev`` directory is populated by the kernel
 using ``devtmpfs``. Make sure the corresponding kernel configuration
@@ -7065,12 +7065,12 @@ This only works for SCMs from which it is possible to get a sensible
 revision number for changes. Currently, you can do this with Apache
 Subversion (SVN), Git, and Bazaar (BZR) repositories.
 
-To enable this behavior, the ```PV`` <&YOCTO_DOCS_REF_URL;#var-PV>`__ of
+To enable this behavior, the :term:`PV` of
 the recipe needs to reference
-```SRCPV`` <&YOCTO_DOCS_REF_URL;#var-SRCPV>`__. Here is an example: PV =
+:term:`SRCPV`. Here is an example: PV =
 "1.2.3+git${SRCPV}" Then, you can add the following to your
 ``local.conf``: SRCREV_pn-PN = "${AUTOREV}"
-```PN`` <&YOCTO_DOCS_REF_URL;#var-PN>`__ is the name of the recipe for
+:term:`PN` is the name of the recipe for
 which you want to enable automatic source revision updating.
 
 If you do not want to update your local configuration file, you can add
@@ -7135,8 +7135,8 @@ For more information on how to use these variables, see the
 "`Customizing Images Using Custom ``IMAGE_FEATURES`` and
 ``EXTRA_IMAGE_FEATURES`` <#usingpoky-extend-customimage-imagefeatures>`__"
 section. For information on the variables, see
-```IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES>`__ and
-```EXTRA_IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-EXTRA_IMAGE_FEATURES>`__.
+:term:`IMAGE_FEATURES` and
+:term:`EXTRA_IMAGE_FEATURES`.
 
 Post-Installation Scripts
 -------------------------
@@ -7163,7 +7163,7 @@ Here are some common problems that prevent post-installation scripts
 from running during root filesystem creation:
 
 -  *Not using $D in front of absolute paths:* The build system defines
-   ``$``\ ```D`` <&YOCTO_DOCS_REF_URL;#var-D>`__ when the root
+   ``$``\ :term:`D` when the root
    filesystem is created. Furthermore, ``$D`` is blank when the script
    is run on the target device. This implies two purposes for ``$D``:
    ensuring paths are valid in both the host and target environments,
@@ -7175,7 +7175,7 @@ from running during root filesystem creation:
    native tools, which run on the host system, to accomplish the same
    tasks, or by alternatively running the processes under QEMU, which
    has the ``qemu_run_binary`` function. For more information, see the
-   ```qemu`` <&YOCTO_DOCS_REF_URL;#ref-classes-qemu>`__ class.
+   :ref:`qemu <ref-classes-qemu>` class.
 
 Areas With Write Access
 -----------------------
@@ -7200,7 +7200,7 @@ has already been built when the software is building, the software will
 link to the built library and that library will be pulled into your
 image along with the new software even if you did not want the library.
 
-The ```buildhistory`` <&YOCTO_DOCS_REF_URL;#ref-classes-buildhistory>`__
+The :ref:`buildhistory <ref-classes-buildhistory>`
 class exists to help you maintain the quality of your build output. You
 can use the class to highlight unexpected and possibly unwanted changes
 in the build output. When you enable build history, it records
@@ -7224,9 +7224,9 @@ Enabling and Disabling Build History
 
 Build history is disabled by default. To enable it, add the following
 ``INHERIT`` statement and set the
-```BUILDHISTORY_COMMIT`` <&YOCTO_DOCS_REF_URL;#var-BUILDHISTORY_COMMIT>`__
+:term:`BUILDHISTORY_COMMIT`
 variable to "1" at the end of your ``conf/local.conf`` file found in the
-`Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: INHERIT +=
+:term:`Build Directory`: INHERIT +=
 "buildhistory" BUILDHISTORY_COMMIT = "1" Enabling build history as
 previously described causes the OpenEmbedded build system to collect
 build output information and commit it as a single commit to a local
@@ -7245,9 +7245,9 @@ Understanding What the Build History Contains
 ---------------------------------------------
 
 Build history information is kept in
-``${``\ ```TOPDIR`` <&YOCTO_DOCS_REF_URL;#var-TOPDIR>`__\ ``}/buildhistory``
+``${``\ :term:`TOPDIR`\ ``}/buildhistory``
 in the Build Directory as defined by the
-```BUILDHISTORY_DIR`` <&YOCTO_DOCS_REF_URL;#var-BUILDHISTORY_DIR>`__
+:term:`BUILDHISTORY_DIR`
 variable. The following is an example abbreviated listing:
 
 At the top level, a ``metadata-revs`` file exists that lists the
@@ -7353,7 +7353,7 @@ The files produced for each image are as follows:
 
 -  ``image-files:`` A directory containing selected files from the root
    filesystem. The files are defined by
-   ```BUILDHISTORY_IMAGE_FILES`` <&YOCTO_DOCS_REF_URL;#var-BUILDHISTORY_IMAGE_FILES>`__.
+   :term:`BUILDHISTORY_IMAGE_FILES`.
 
 -  ``build-id.txt:`` Human-readable information about the build
    configuration and metadata source revisions. This file contains the
@@ -7411,7 +7411,7 @@ following to your ``conf/local.conf`` file found in the `Build
 Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: INHERIT +=
 "buildhistory" BUILDHISTORY_COMMIT = "0" BUILDHISTORY_FEATURES = "image"
 Here, you set the
-```BUILDHISTORY_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-BUILDHISTORY_FEATURES>`__
+:term:`BUILDHISTORY_FEATURES`
 variable to use the image feature only.
 
 Build History SDK Information
@@ -7491,7 +7491,7 @@ You can examine build history output from the command line or from a web
 interface.
 
 To see any changes that have occurred (assuming you have
-```BUILDHISTORY_COMMIT`` <&YOCTO_DOCS_REF_URL;#var-BUILDHISTORY_COMMIT>`__\ `` = "1"``),
+:term:`BUILDHISTORY_COMMIT`\ `` = "1"``),
 you can simply use any Git command that allows you to view the history
 of a repository. Here is one method: $ git log -p You need to realize,
 however, that this method does show changes that are not significant
@@ -7635,7 +7635,7 @@ Once you start running the tests, the following happens:
 3. A default timeout of 500 seconds occurs to allow for the boot process
    to reach the login prompt. You can change the timeout period by
    setting
-   ```TEST_QEMUBOOT_TIMEOUT`` <&YOCTO_DOCS_REF_URL;#var-TEST_QEMUBOOT_TIMEOUT>`__
+   :term:`TEST_QEMUBOOT_TIMEOUT`
    in the ``local.conf`` file.
 
 4. Once the boot process is reached and the login prompt appears, the
@@ -7815,7 +7815,7 @@ wish to experiment with automated hardware testing, you can use the
 dialog-power-control script that shows a dialog prompting you to perform
 the required power action. This script requires either KDialog or Zenity
 to be installed. To use this script, set the
-```TEST_POWERCONTROL_CMD`` <&YOCTO_DOCS_REF_URL;#var-TEST_POWERCONTROL_CMD>`__
+:term:`TEST_POWERCONTROL_CMD`
 variable as follows: TEST_POWERCONTROL_CMD =
 "${COREBASE}/scripts/contrib/dialog-power-control"
 
@@ -7826,9 +7826,9 @@ For test target classes requiring a serial console to interact with the
 bootloader (e.g. BeagleBoneTarget, EdgeRouterTarget, and GrubTarget),
 you need to specify a command to use to connect to the serial console of
 the target machine by using the
-```TEST_SERIALCONTROL_CMD`` <&YOCTO_DOCS_REF_URL;#var-TEST_SERIALCONTROL_CMD>`__
+:term:`TEST_SERIALCONTROL_CMD`
 variable and optionally the
-```TEST_SERIALCONTROL_EXTRA_ARGS`` <&YOCTO_DOCS_REF_URL;#var-TEST_SERIALCONTROL_EXTRA_ARGS>`__
+:term:`TEST_SERIALCONTROL_EXTRA_ARGS`
 variable.
 
 These cases could be a serial terminal program if the machine is
@@ -7855,7 +7855,7 @@ You can start the tests automatically or manually:
 -  *Automatically running tests:* To run the tests automatically after
    the OpenEmbedded build system successfully creates an image, first
    set the
-   ```TESTIMAGE_AUTO`` <&YOCTO_DOCS_REF_URL;#var-TESTIMAGE_AUTO>`__
+   :term:`TESTIMAGE_AUTO`
    variable to "1" in your ``local.conf`` file in the `Build
    Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: TESTIMAGE_AUTO =
    "1" Next, build your image. If the image successfully builds, the
@@ -7874,7 +7874,7 @@ individual tests. Tests are usually grouped together by the area tested
 (e.g tests for systemd reside in ``meta/lib/oeqa/runtime/systemd.py``).
 
 You can add tests to any layer provided you place them in the proper
-area and you extend ```BBPATH`` <&YOCTO_DOCS_REF_URL;#var-BBPATH>`__ in
+area and you extend :term:`BBPATH` in
 the ``local.conf`` file as normal. Be sure that tests reside in
 ``layer/lib/oeqa/runtime``.
 
@@ -7886,7 +7886,7 @@ the ``local.conf`` file as normal. Be sure that tests reside in
    .
 
 You can change the set of tests run by appending or overriding
-```TEST_SUITES`` <&YOCTO_DOCS_REF_URL;#var-TEST_SUITES>`__ variable in
+:term:`TEST_SUITES` variable in
 ``local.conf``. Each name in ``TEST_SUITES`` represents a required test
 for the image. Test modules named within ``TEST_SUITES`` cannot be
 skipped even if a test is not suitable for an image (e.g. running the
@@ -7927,7 +7927,7 @@ Exporting Tests
 You can export tests so that they can run independently of the build
 system. Exporting tests is required if you want to be able to hand the
 test execution off to a scheduler. You can only export tests that are
-defined in ```TEST_SUITES`` <&YOCTO_DOCS_REF_URL;#var-TEST_SUITES>`__.
+defined in :term:`TEST_SUITES`.
 
 If your image is already built, make sure the following are set in your
 ``local.conf`` file: INHERIT +="testexport" TEST_TARGET_IP =
@@ -7958,7 +7958,7 @@ As mentioned previously, all new test files need to be in the proper
 place for the build system to find them. New tests for additional
 functionality outside of the core should be added to the layer that adds
 the functionality, in ``layer/lib/oeqa/runtime`` (as long as
-```BBPATH`` <&YOCTO_DOCS_REF_URL;#var-BBPATH>`__ is extended in the
+:term:`BBPATH` is extended in the
 layer's ``layer.conf`` file as normal). Just remember the following:
 
 -  Filenames need to map directly to test (module) names.
@@ -7998,8 +7998,8 @@ Class methods are as follows:
    is generated during the ``do_rootfs`` task.
 
 -  *``hasFeature(feature)``:* Returns "True" if the feature is in
-   ```IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES>`__ or
-   ```DISTRO_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES>`__.
+   :term:`IMAGE_FEATURES` or
+   :term:`DISTRO_FEATURES`.
 
 .. _qemu-image-writing-tests-class-attributes:
 
@@ -8147,7 +8147,7 @@ section:
 -  "`Viewing Package Information with
    ``oe-pkgdata-util`` <#viewing-package-information-with-oe-pkgdata-util>`__"
    describes how to use the ``oe-pkgdata-util`` utility to query
-   ```PKGDATA_DIR`` <&YOCTO_DOCS_REF_URL;#var-PKGDATA_DIR>`__ and
+   :term:`PKGDATA_DIR` and
    display package-related information for built packages.
 
 -  "`Viewing Dependencies Between Recipes and
@@ -8203,12 +8203,12 @@ Viewing Logs from Failed Tasks
 ------------------------------
 
 You can find the log for a task in the file
-``${``\ ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__\ ``}/temp/log.do_``\ taskname.
+``${``\ :term:`WORKDIR`\ ``}/temp/log.do_``\ taskname.
 For example, the log for the
-```do_compile`` <&YOCTO_DOCS_REF_URL;#ref-tasks-compile>`__ task of the
+:ref:`ref-tasks-compile` task of the
 QEMU minimal image for the x86 machine (``qemux86``) might be in
 ``tmp/work/qemux86-poky-linux/core-image-minimal/1.0-r0/temp/log.do_compile``.
-To see the commands `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__ ran
+To see the commands :term:`BitBake` ran
 to generate a log, look at the corresponding ``run.do_``\ taskname file
 in the same directory.
 
@@ -8269,7 +8269,7 @@ In addition to variable values, the output of the ``bitbake -e`` and
    system (including the behavior of the `normal recipe build
    tasks <&YOCTO_DOCS_REF_URL;#normal-recipe-build-tasks>`__) is
    implemented in the
-   ```base`` <&YOCTO_DOCS_REF_URL;#ref-classes-base>`__ class and the
+   :ref:`base <ref-classes-base>` class and the
    classes it inherits, rather than being built into BitBake itself.
 
 -  After the variable values, all functions appear in the output. For
@@ -8282,7 +8282,7 @@ Viewing Package Information with ``oe-pkgdata-util``
 ----------------------------------------------------
 
 You can use the ``oe-pkgdata-util`` command-line utility to query
-```PKGDATA_DIR`` <&YOCTO_DOCS_REF_URL;#var-PKGDATA_DIR>`__ and display
+:term:`PKGDATA_DIR` and display
 various package-related information. When you use the utility, you must
 use it to view information on packages that have already been built.
 
@@ -8304,10 +8304,10 @@ Following are a few of the available ``oe-pkgdata-util`` subcommands.
 
       A different way to view the contents of a package is to look at
       the
-      ``${``\ ```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__\ ``}/packages-split``
+      ``${``\ :term:`WORKDIR`\ ``}/packages-split``
       directory of the recipe that generates the package. This directory
       is created by the
-      ```do_package`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package>`__ task
+      :ref:`ref-tasks-package` task
       and has one subdirectory for each package the recipe generates,
       which contains the files stored in that package.
 
@@ -8346,7 +8346,7 @@ in the current directory:
    recipename. "Involved" here means that at least one task from the
    recipe needs to run when building recipename from scratch. Targets
    that are in
-   ```ASSUME_PROVIDED`` <&YOCTO_DOCS_REF_URL;#var-ASSUME_PROVIDED>`__
+   :term:`ASSUME_PROVIDED`
    are not listed.
 
 -  ``task-depends.dot``: A graph showing dependencies between tasks.
@@ -8369,11 +8369,11 @@ format and can be converted to images (e.g. using the ``dot`` tool from
       as the following: "libxslt.do_configure" ->
       "libxml2.do_populate_sysroot" The above example line reveals that
       the
-      ```do_configure`` <&YOCTO_DOCS_REF_URL;#ref-tasks-configure>`__
+      :ref:`ref-tasks-configure`
       task in ``libxslt`` depends on the
-      ```do_populate_sysroot`` <&YOCTO_DOCS_REF_URL;#ref-tasks-populate_sysroot>`__
+      :ref:`ref-tasks-populate_sysroot`
       task in ``libxml2``, which is a normal
-      ```DEPENDS`` <&YOCTO_DOCS_REF_URL;#var-DEPENDS>`__ dependency
+      :term:`DEPENDS` dependency
       between the two recipes.
 
    -  For an example of how ``.dot`` files can be processed, see the
@@ -8407,19 +8407,19 @@ BitBake has determined by doing the following:
 
 1. Build the recipe containing the task: $ bitbake recipename
 
-2. Inside the ```STAMPS_DIR`` <&YOCTO_DOCS_REF_URL;#var-STAMPS_DIR>`__
+2. Inside the :term:`STAMPS_DIR`
    directory, find the signature data (``sigdata``) file that
    corresponds to the task. The ``sigdata`` files contain a pickled
    Python database of all the metadata that went into creating the input
    checksum for the task. As an example, for the
-   ```do_fetch`` <&YOCTO_DOCS_REF_URL;#ref-tasks-fetch>`__ task of the
+   :ref:`ref-tasks-fetch` task of the
    ``db`` recipe, the ``sigdata`` file might be found in the following
    location:
    ${BUILDDIR}/tmp/stamps/i586-poky-linux/db/6.0.30-r1.do_fetch.sigdata.7c048c18222b16ff0bcee2000ef648b1
    For tasks that are accelerated through the shared state
    (`sstate <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__) cache, an
    additional ``siginfo`` file is written into
-   ```SSTATE_DIR`` <&YOCTO_DOCS_REF_URL;#var-SSTATE_DIR>`__ along with
+   :term:`SSTATE_DIR` along with
    the cached task output. The ``siginfo`` files contain exactly the
    same information as ``sigdata`` files.
 
@@ -8475,7 +8475,7 @@ Viewing Metadata Used to Create the Input Signature of a Shared State Task
 Seeing what metadata went into creating the input signature of a shared
 state (sstate) task can be a useful debugging aid. This information is
 available in signature information (``siginfo``) files in
-```SSTATE_DIR`` <&YOCTO_DOCS_REF_URL;#var-SSTATE_DIR>`__. For
+:term:`SSTATE_DIR`. For
 information on how to view and interpret information in ``siginfo``
 files, see the "`Viewing Task Variable
 Dependencies <#dev-viewing-task-variable-dependencies>`__" section.
@@ -8521,7 +8521,7 @@ invalidate the cache and force the tasks to run. The steps you can take
 are as simple as changing a function's comments in the source code. For
 example, to invalidate package shared state files, change the comment
 statements of
-```do_package`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package>`__ or the
+:ref:`ref-tasks-package` or the
 comments of one of the functions it calls. Even though the change is
 purely cosmetic, it causes the checksum to be recalculated and forces
 the build system to run the task again.
@@ -8559,7 +8559,7 @@ BitBake determines whether a task is "out of date".
 
 If you want to force an up-to-date task to be rerun (e.g. because you
 made manual modifications to the recipe's
-```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__ that you want to try
+:term:`WORKDIR` that you want to try
 out), then you can use the ``-f`` option.
 
 .. note::
@@ -8595,7 +8595,7 @@ it is to use the ``-C`` option.
    option, which is lower-cased.
 
 Using this option invalidates the given task and then runs the
-```do_build`` <&YOCTO_DOCS_REF_URL;#ref-tasks-build>`__ task, which is
+:ref:`ref-tasks-build` task, which is
 the default task if no task is given, and the tasks on which it depends.
 You could replace the final two commands in the previous example with
 the following single command: $ bitbake matchbox-desktop -C compile
@@ -8702,7 +8702,7 @@ log to ``${T}/log.do_``\ task, and can also log to standard output
 The same logging functions are also available in shell functions, under
 the names ``bbplain``, ``bbnote``, ``bbdebug``, ``bbwarn``, ``bberror``,
 and ``bbfatal``. The
-```logging`` <&YOCTO_DOCS_REF_URL;#ref-classes-logging>`__ class
+:ref:`logging <ref-classes-logging>` class
 implements these functions. See that class in the ``meta/classes``
 folder of the `Source
 Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ for information.
@@ -8717,7 +8717,7 @@ in the log, use the "debug" loglevel.
 
 Following is an example written in Python. The code handles logging for
 a function that determines the number of tasks needed to be run. See the
-"```do_listtasks`` <&YOCTO_DOCS_REF_URL;#ref-tasks-listtasks>`__"
+":ref:`ref-tasks-listtasks`"
 section for additional information: python do_listtasks() { bb.debug(2,
 "Starting to figure out the task list") if noteworthy_condition:
 bb.note("There are 47 tasks to run") bb.debug(2, "Got to point xyz") if
@@ -8851,7 +8851,7 @@ exists. Thus, once the error surfaces, you need a way to reproduce it.
 In this example, compiling the "neard" package is causing the problem.
 So the first thing to do is build "neard" locally. Before you start the
 build, set the
-```PARALLEL_MAKE`` <&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE>`__ variable
+:term:`PARALLEL_MAKE` variable
 in your ``local.conf`` file to a high number (e.g. "-j 20"). Using a
 high value for ``PARALLEL_MAKE`` increases the chances of the race
 condition showing up: $ bitbake neard
@@ -8895,7 +8895,7 @@ Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ named ``poky``: $
 cp patches/parallelmake.patch poky/meta/recipes-connectivity/neard/neard
 The final thing you need to do to implement the fix in the build is to
 update the "neard" recipe (i.e. ``neard-0.14.bb``) so that the
-```SRC_URI`` <&YOCTO_DOCS_REF_URL;#var-SRC_URI>`__ statement includes
+:term:`SRC_URI` statement includes
 the patch file. The recipe file is in the folder above the patch. Here
 is what the edited ``SRC_URI`` statement would look like: SRC_URI =
 "${KERNELORG_MIRROR}/linux/network/nfc/${BPN}-${PV}.tar.xz \\
@@ -8930,7 +8930,7 @@ GDB allows you to examine running programs, which in turn helps you to
 understand and fix problems. It also allows you to perform post-mortem
 style analysis of program crashes. GDB is available as a package within
 the Yocto Project and is installed in SDK images by default. See the
-"`Images <&YOCTO_DOCS_REF_URL;#ref-images>`__" chapter in the Yocto
+":ref:`ref-manual/ref-images:Images`" chapter in the Yocto
 Project Reference Manual for a description of these images. You can find
 information on GDB at ` <http://sourceware.org/gdb/>`__.
 
@@ -9114,10 +9114,10 @@ debug on the target hardware.
 To support this kind of debugging, you need do the following:
 
 -  Ensure that GDB is on the target. You can do this by adding "gdb" to
-   ```IMAGE_INSTALL`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_INSTALL>`__:
+   :term:`IMAGE_INSTALL`:
    IMAGE_INSTALL_append = " gdb" Alternatively, you can add
    "tools-debug" to
-   ```IMAGE_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-IMAGE_FEATURES>`__:
+   :term:`IMAGE_FEATURES`:
    IMAGE_FEATURES_append = " tools-debug"
 
 -  Ensure that debug symbols are present. You can make sure these
@@ -9162,12 +9162,12 @@ Here are some other tips that you might find useful:
    is also possible to switch out of the splashscreen by switching the
    virtual console (e.g. Fn+Left or Fn+Right on a Zaurus).
 
--  Removing ```TMPDIR`` <&YOCTO_DOCS_REF_URL;#var-TMPDIR>`__ (usually
+-  Removing :term:`TMPDIR` (usually
    ``tmp/``, within the `Build
    Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__) can often fix
    temporary build issues. Removing ``TMPDIR`` is usually a relatively
    cheap operation, because task output will be cached in
-   ```SSTATE_DIR`` <&YOCTO_DOCS_REF_URL;#var-SSTATE_DIR>`__ (usually
+   :term:`SSTATE_DIR` (usually
    ``sstate-cache/``, which is also in the Build Directory).
 
    .. note::
@@ -9654,7 +9654,7 @@ Tracking License Changes
 
 The license of an upstream project might change in the future. In order
 to prevent these changes going unnoticed, the
-```LIC_FILES_CHKSUM`` <&YOCTO_DOCS_REF_URL;#var-LIC_FILES_CHKSUM>`__
+:term:`LIC_FILES_CHKSUM`
 variable tracks changes to the license text. The checksums are validated
 at the end of the configure step, and if the checksums do not match, the
 build will fail.
@@ -9682,7 +9682,7 @@ file://licfile2.txt;endline=50;md5=zzzz \\ ..."
       as part of the QA message. Using this output, you can determine
       the exact start and finish for the needed license text.
 
-The build system uses the ```S`` <&YOCTO_DOCS_REF_URL;#var-S>`__
+The build system uses the :term:`S`
 variable as the default directory when searching files listed in
 ``LIC_FILES_CHKSUM``. The previous example employs the default
 directory.
@@ -9694,7 +9694,7 @@ md5=bb14ed3c4cda583abc85401304b5cd4e" LIC_FILES_CHKSUM =
 
 The first line locates a file in ``${S}/src/ls.c`` and isolates lines
 five through 16 as license text. The second line refers to a file in
-```WORKDIR`` <&YOCTO_DOCS_REF_URL;#var-WORKDIR>`__.
+:term:`WORKDIR`.
 
 Note that ``LIC_FILES_CHKSUM`` variable is mandatory for all recipes,
 unless the ``LICENSE`` variable is set to "CLOSED".
@@ -9733,7 +9733,7 @@ long as it is kept up to date.
 .. note::
 
    -  If you specify an empty or invalid "md5" parameter,
-      `BitBake <&YOCTO_DOCS_REF_URL;#bitbake-term>`__ returns an md5
+      :term:`BitBake` returns an md5
       mis-match error and displays the correct "md5" parameter value
       during the build. The correct parameter is also captured in the
       build log.
@@ -9747,7 +9747,7 @@ Enabling Commercially Licensed Recipes
 By default, the OpenEmbedded build system disables components that have
 commercial or other special licensing requirements. Such requirements
 are defined on a recipe-by-recipe basis through the
-```LICENSE_FLAGS`` <&YOCTO_DOCS_REF_URL;#var-LICENSE_FLAGS>`__ variable
+:term:`LICENSE_FLAGS` variable
 definition in the affected recipe. For instance, the
 ``poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly`` recipe
 contains the following statement: LICENSE_FLAGS = "commercial" Here is a
@@ -9756,7 +9756,7 @@ name and version (after variable expansion): LICENSE_FLAGS =
 "license_${PN}_${PV}" In order for a component restricted by a
 ``LICENSE_FLAGS`` definition to be enabled and included in an image, it
 needs to have a matching entry in the global
-```LICENSE_FLAGS_WHITELIST`` <&YOCTO_DOCS_REF_URL;#var-LICENSE_FLAGS_WHITELIST>`__
+:term:`LICENSE_FLAGS_WHITELIST`
 variable, which is a variable typically defined in your ``local.conf``
 file. For example, to enable the
 ``poky/meta/recipes-multimedia/gstreamer/gst-plugins-ugly`` package, you
@@ -9930,14 +9930,14 @@ for most compliance groups - providing the source. The Yocto Project has
 a few ways of meeting this requirement.
 
 One of the easiest ways to meet this requirement is to provide the
-entire ```DL_DIR`` <&YOCTO_DOCS_REF_URL;#var-DL_DIR>`__ used by the
+entire :term:`DL_DIR` used by the
 build. This method, however, has a few issues. The most obvious is the
 size of the directory since it includes all sources used in the build
 and not just the source used in the released image. It will include
 toolchain source, and other artifacts, which you would not generally
 release. However, the more serious issue for most companies is
 accidental release of proprietary software. The Yocto Project provides
-an ```archiver`` <&YOCTO_DOCS_REF_URL;#ref-classes-archiver>`__ class to
+an :ref:`archiver <ref-classes-archiver>` class to
 help avoid some of these concerns.
 
 Before you employ ``DL_DIR`` or the ``archiver`` class, you need to
@@ -9952,7 +9952,7 @@ Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: INHERIT +=
 "archiver" ARCHIVER_MODE[src] = "original" During the creation of your
 image, the source from all recipes that deploy packages to the image is
 placed within subdirectories of ``DEPLOY_DIR/sources`` based on the
-```LICENSE`` <&YOCTO_DOCS_REF_URL;#var-LICENSE>`__ for each recipe.
+:term:`LICENSE` for each recipe.
 Releasing the entire directory enables you to comply with requirements
 concerning providing the unmodified source. It is important to note that
 the size of the directory can get large.
@@ -9997,11 +9997,11 @@ generation are included on your image.
    ``/usr/share/license``.
 
    The reason for this behavior is because
-   ```COPY_LIC_DIRS`` <&YOCTO_DOCS_REF_URL;#var-COPY_LIC_DIRS>`__ and
-   ```COPY_LIC_MANIFEST`` <&YOCTO_DOCS_REF_URL;#var-COPY_LIC_MANIFEST>`__
+   :term:`COPY_LIC_DIRS` and
+   :term:`COPY_LIC_MANIFEST`
    add a copy of the license when the image is built but do not offer a
    path for adding licenses for newly installed packages to an image.
-   ```LICENSE_CREATE_PACKAGE`` <&YOCTO_DOCS_REF_URL;#var-LICENSE_CREATE_PACKAGE>`__
+   :term:`LICENSE_CREATE_PACKAGE`
    adds a separate package and an upgrade path for adding licenses to an
    image.
 
@@ -10043,7 +10043,7 @@ is increased each time build/conf/bblayers.conf # changes incompatibly
 POKY_BBLAYERS_CONF_VERSION = "2" BBPATH = "${TOPDIR}" BBFILES ?= ""
 BBLAYERS ?= " \\ ##OEROOT##/meta \\ ##OEROOT##/meta-poky \\
 ##OEROOT##/meta-yocto-bsp \\ ##OEROOT##/meta-mylayer \\ " Creating and
-providing an archive of the `Metadata <&YOCTO_DOCS_REF_URL;#metadata>`__
+providing an archive of the :term:`Metadata`
 layers (recipes, configuration files, and so forth) enables you to meet
 your requirements to include the scripts to control compilation as well
 as any modifications to the original source.
@@ -10055,7 +10055,7 @@ Some packages, such as the linux-firmware package, have many licenses
 that are not in any way common. You can avoid adding a lot of these
 types of common license files, which are only applicable to a specific
 package, by using the
-```NO_GENERIC_LICENSE`` <&YOCTO_DOCS_REF_URL;#var-NO_GENERIC_LICENSE>`__
+:term:`NO_GENERIC_LICENSE`
 variable. Using this variable also avoids QA errors when you use a
 non-common, non-CLOSED license in a recipe.
 
@@ -10091,14 +10091,14 @@ Enabling and Using the Tool
 
 By default, the error reporting tool is disabled. You can enable it by
 inheriting the
-```report-error`` <&YOCTO_DOCS_REF_URL;#ref-classes-report-error>`__
+:ref:`report-error <ref-classes-report-error>`
 class by adding the following statement to the end of your
 ``local.conf`` file in your `Build
 Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. INHERIT +=
 "report-error"
 
 By default, the error reporting feature stores information in
-``${``\ ```LOG_DIR`` <&YOCTO_DOCS_REF_URL;#var-LOG_DIR>`__\ ``}/error-report``.
+``${``\ :term:`LOG_DIR`\ ``}/error-report``.
 However, you can specify a directory to use by adding the following to
 your ``local.conf`` file: ERR_REPORT_DIR = "path" Enabling error
 reporting causes the build process to collect the errors and store them
@@ -10127,7 +10127,7 @@ Disabling the Tool
 
 To disable the error reporting feature, simply remove or comment out the
 following statement from the end of your ``local.conf`` file in your
-`Build Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. INHERIT +=
+:term:`Build Directory`. INHERIT +=
 "report-error"
 
 Setting Up Your Own Error Reporting Server
@@ -10191,7 +10191,7 @@ To cause Mesa to build the ``wayland-egl`` platform and Weston to build
 Wayland with Kernel Mode Setting
 (`KMS <https://wiki.archlinux.org/index.php/Kernel_Mode_Setting>`__)
 support, include the "wayland" flag in the
-```DISTRO_FEATURES`` <&YOCTO_DOCS_REF_URL;#var-DISTRO_FEATURES>`__
+:term:`DISTRO_FEATURES`
 statement in your ``local.conf`` file: DISTRO_FEATURES_append = "
 wayland"
 
@@ -10207,7 +10207,7 @@ Installing
 
 To install the Wayland feature into an image, you must include the
 following
-```CORE_IMAGE_EXTRA_INSTALL`` <&YOCTO_DOCS_REF_URL;#var-CORE_IMAGE_EXTRA_INSTALL>`__
+:term:`CORE_IMAGE_EXTRA_INSTALL`
 statement in your ``local.conf`` file: CORE_IMAGE_EXTRA_INSTALL +=
 "wayland weston"
 

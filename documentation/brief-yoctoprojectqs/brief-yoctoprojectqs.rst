@@ -257,7 +257,7 @@ Follow these steps to add a hardware layer:
    support hardware from Altera, which is owned by Intel.
 
 3. *Change the Configuration to Build for a Specific Machine:* The
-   ```MACHINE`` <&YOCTO_DOCS_REF_URL;#var-MACHINE>`__ variable in the
+   :term:`MACHINE` variable in the
    ``local.conf`` file specifies the machine for the build. For this
    example, set the ``MACHINE`` variable to "cyclone5". These
    configurations are used:
