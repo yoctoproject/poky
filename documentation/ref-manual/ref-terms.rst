@@ -4,368 +4,389 @@
 Yocto Project Terms
 *******************
 
-Following is a list of terms and definitions users new to the Yocto
-Project development environment might find helpful. While some of these
-terms are universal, the list includes them just in case:
+Following is a list of terms and definitions users new to the Yocto Project
+development environment might find helpful. While some of these terms are
+universal, the list includes them just in case:
 
--  *Append Files:* Files that append build information to a recipe file.
-   Append files are known as BitBake append files and ``.bbappend``
-   files. The OpenEmbedded build system expects every append file to
-   have a corresponding recipe (``.bb``) file. Furthermore, the append
-   file and corresponding recipe file must use the same root filename.
-   The filenames can differ only in the file type suffix used (e.g.
-   ``formfactor_0.0.bb`` and ``formfactor_0.0.bbappend``).
+.. glossary::
 
-   Information in append files extends or overrides the information in
-   the similarly-named recipe file. For an example of an append file in
-   use, see the "`Using .bbappend Files in Your
-   Layer <&YOCTO_DOCS_DEV_URL;#using-bbappend-files>`__" section in the
-   Yocto Project Development Tasks Manual.
+   Append Files
+      Files that append build information to a recipe file.  Append files are
+      known as BitBake append files and ``.bbappend`` files. The OpenEmbedded
+      build system expects every append file to have a corresponding recipe
+      (``.bb``) file. Furthermore, the append file and corresponding recipe file
+      must use the same root filename.  The filenames can differ only in the
+      file type suffix used (e.g. ``formfactor_0.0.bb`` and
+      ``formfactor_0.0.bbappend``).
 
-   When you name an append file, you can use the "``%``" wildcard
-   character to allow for matching recipe names. For example, suppose
-   you have an append file named as follows: busybox_1.21.%.bbappend
-   That append file would match any ``busybox_1.21.``\ x\ ``.bb``
-   version of the recipe. So, the append file would match any of the
-   following recipe names: busybox_1.21.1.bb busybox_1.21.2.bb
-   busybox_1.21.3.bb busybox_1.21.10.bb busybox_1.21.25.bb
+      Information in append files extends or overrides the information in the
+      similarly-named recipe file. For an example of an append file in use, see
+      the ":ref:`dev-manual/dev-manual-common-tasks:Using .bbappend Files in
+      Your Layer`" section in the Yocto Project Development Tasks Manual.
 
-   .. note::
+      When you name an append file, you can use the "``%``" wildcard character
+      to allow for matching recipe names. For example, suppose you have an
+      append file named as follows: busybox_1.21.%.bbappend That append file
+      would match any ``busybox_1.21.``\ x\ ``.bb`` version of the recipe. So,
+      the append file would match any of the following recipe names:
 
-      The use of the "
-      %
-      " character is limited in that it only works directly in front of
-      the
-      .bbappend
-      portion of the append file's name. You cannot use the wildcard
-      character in any other location of the name.
+      .. code-block:: shell
 
--  *BitBake:* The task executor and scheduler used by the OpenEmbedded
-   build system to build images. For more information on BitBake, see
-   the `BitBake User Manual <&YOCTO_DOCS_BB_URL;>`__.
+         busybox_1.21.1.bb
+         busybox_1.21.2.bb
+         busybox_1.21.3.bb
+         busybox_1.21.10.bb
+         busybox_1.21.25.bb
 
--  *Board Support Package (BSP):* A group of drivers, definitions, and
-   other components that provide support for a specific hardware
-   configuration. For more information on BSPs, see the `Yocto Project
-   Board Support Package (BSP) Developer's
-   Guide <&YOCTO_DOCS_BSP_URL;>`__.
+      .. note::
 
--  *Build Directory:* This term refers to the area used by the
-   OpenEmbedded build system for builds. The area is created when you
-   ``source`` the setup environment script that is found in the Source
-   Directory (i.e. ````` <#structure-core-script>`__). The
-   ```TOPDIR`` <#var-TOPDIR>`__ variable points to the Build Directory.
+         The use of the " % " character is limited in that it only works
+         directly in front of the .bbappend portion of the append file's
+         name. You cannot use the wildcard character in any other location of
+         the name.
 
-   You have a lot of flexibility when creating the Build Directory.
-   Following are some examples that show how to create the directory.
-   The examples assume your `Source Directory <#source-directory>`__ is
-   named ``poky``:
+   BitBake
+      The task executor and scheduler used by the OpenEmbedded build system to
+      build images. For more information on BitBake, see the `BitBake User
+      Manual <&YOCTO_DOCS_BB_URL;>`__.
 
-   -  Create the Build Directory inside your Source Directory and let
-      the name of the Build Directory default to ``build``: $ cd
-      $HOME/poky $ source OE_INIT_FILE
+   Board Support Package (BSP)
+      A group of drivers, definitions, and other components that provide support
+      for a specific hardware configuration. For more information on BSPs, see
+      the :ref:`bsp-guide/bsp-guide:Yocto Project Board Support Package
+      Developer's Guide`.
 
-   -  Create the Build Directory inside your home directory and
-      specifically name it ``test-builds``: $ cd $HOME $ source
-      poky/OE_INIT_FILE test-builds
+   Build Directory
+      This term refers to the area used by the OpenEmbedded build system for
+      builds. The area is created when you ``source`` the setup environment
+      script that is found in the Source Directory
+      (i.e. :ref:`ref-manual/ref-structure:\`\`oe-init-build-env\`\``). The
+      :term:`TOPDIR` variable points to the Build Directory.
 
-   -  Provide a directory path and specifically name the Build
-      Directory. Any intermediate folders in the pathname must exist.
-      This next example creates a Build Directory named
-      ``YP-POKYVERSION`` in your home directory within the existing
-      directory ``mybuilds``: $ cd $HOME $ source
-      $HOME/poky/OE_INIT_FILE $HOME/mybuilds/YP-POKYVERSION
+      You have a lot of flexibility when creating the Build Directory.
+      Following are some examples that show how to create the directory.  The
+      examples assume your :term:`Source Directory` is named ``poky``:
 
-   .. note::
+         -  Create the Build Directory inside your Source Directory and let
+            the name of the Build Directory default to ``build``: 
 
-      By default, the Build Directory contains
-      TMPDIR
-      , which is a temporary directory the build system uses for its
-      work.
-      TMPDIR
-      cannot be under NFS. Thus, by default, the Build Directory cannot
-      be under NFS. However, if you need the Build Directory to be under
-      NFS, you can set this up by setting
-      TMPDIR
-      in your
-      local.conf
-      file to use a local drive. Doing so effectively separates
-      TMPDIR
-      from
-      TOPDIR
-      , which is the Build Directory.
+            .. code-block:: shell
 
--  *Build Host:* The system used to build images in a Yocto Project
-   Development environment. The build system is sometimes referred to as
-   the development host.
+               $ cd $HOME/poky 
+               $ source oe-init-build-env
 
--  *Classes:* Files that provide for logic encapsulation and inheritance
-   so that commonly used patterns can be defined once and then easily
-   used in multiple recipes. For reference information on the Yocto
-   Project classes, see the "`Classes <#ref-classes>`__" chapter. Class
-   files end with the ``.bbclass`` filename extension.
+         -  Create the Build Directory inside your home directory and
+            specifically name it ``test-builds``:
 
--  *Configuration File:* Files that hold global definitions of
-   variables, user-defined variables, and hardware configuration
-   information. These files tell the OpenEmbedded build system what to
-   build and what to put into the image to support a particular
-   platform.
+            .. code-block:: shell
 
-   Configuration files end with a ``.conf`` filename extension. The
-   ``conf/local.conf`` configuration file in the `Build
-   Directory <#build-directory>`__ contains user-defined variables that
-   affect every build. The ``meta-poky/conf/distro/poky.conf``
-   configuration file defines Yocto "distro" configuration variables
-   used only when building with this policy. Machine configuration
-   files, which are located throughout the `Source
-   Directory <#source-directory>`__, define variables for specific
-   hardware and are only used when building for that target (e.g. the
-   ``machine/beaglebone.conf`` configuration file defines variables for
-   the Texas Instruments ARM Cortex-A8 development board).
+               $ cd $HOME 
+               $ source poky/oe-init-build-env test-builds
 
--  *Container Layer:* Layers that hold other layers. An example of a
-   container layer is OpenEmbedded's
-   ```meta-openembedded`` <https://github.com/openembedded/meta-openembedded>`__
-   layer. The ``meta-openembedded`` layer contains many ``meta-*``
-   layers.
+         -  Provide a directory path and specifically name the Build
+            Directory. Any intermediate folders in the pathname must exist.
+            This next example creates a Build Directory named
+            ``YP-POKYVERSION`` in your home directory within the existing
+            directory ``mybuilds``: 
 
--  *Cross-Development Toolchain:* In general, a cross-development
-   toolchain is a collection of software development tools and utilities
-   that run on one architecture and allow you to develop software for a
-   different, or targeted, architecture. These toolchains contain
-   cross-compilers, linkers, and debuggers that are specific to the
-   target architecture.
+            .. code-block:: shell
 
-   The Yocto Project supports two different cross-development
-   toolchains:
+               $ cd $HOME 
+               $ source $HOME/poky/oe-init-build-env $HOME/mybuilds/YP-POKYVERSION
 
-   -  A toolchain only used by and within BitBake when building an image
-      for a target architecture.
+      .. note::
 
-   -  A relocatable toolchain used outside of BitBake by developers when
-      developing applications that will run on a targeted device.
+         By default, the Build Directory contains :term:`TMPDIR` , which is a
+         temporary directory the build system uses for its work. TMPDIR cannot
+         be under NFS. Thus, by default, the Build Directory cannot be under
+         NFS. However, if you need the Build Directory to be under NFS, you can
+         set this up by setting TMPDIR in your local.conf file to use a local
+         drive. Doing so effectively separates TMPDIR from TOPDIR , which is the
+         Build Directory.
 
-   Creation of these toolchains is simple and automated. For information
-   on toolchain concepts as they apply to the Yocto Project, see the
-   "`Cross-Development Toolchain
-   Generation <&YOCTO_DOCS_OM_URL;#cross-development-toolchain-generation>`__"
-   section in the Yocto Project Overview and Concepts Manual. You can
-   also find more information on using the relocatable toolchain in the
-   `Yocto Project Application Development and the Extensible Software
-   Development Kit (eSDK) <&YOCTO_DOCS_SDK_URL;>`__ manual.
+   Build Host
+      The system used to build images in a Yocto Project Development
+      environment. The build system is sometimes referred to as the development
+      host.
 
--  *Extensible Software Development Kit (eSDK):* A custom SDK for
-   application developers. This eSDK allows developers to incorporate
-   their library and programming changes back into the image to make
-   their code available to other application developers.
+   Classes
+      Files that provide for logic encapsulation and inheritance so that
+      commonly used patterns can be defined once and then easily used in
+      multiple recipes. For reference information on the Yocto Project classes,
+      see the "`Classes <#ref-classes>`__" chapter. Class files end with the
+      ``.bbclass`` filename extension.
 
-   For information on the eSDK, see the `Yocto Project Application
-   Development and the Extensible Software Development Kit
-   (eSDK) <&YOCTO_DOCS_SDK_URL;>`__ manual.
+   Configuration File
+      Files that hold global definitions of variables, user-defined variables,
+      and hardware configuration information. These files tell the OpenEmbedded
+      build system what to build and what to put into the image to support a
+      particular platform.
 
--  *Image:* An image is an artifact of the BitBake build process given a
-   collection of recipes and related Metadata. Images are the binary
-   output that run on specific hardware or QEMU and are used for
-   specific use-cases. For a list of the supported image types that the
-   Yocto Project provides, see the "`Images <#ref-images>`__" chapter.
+      Configuration files end with a ``.conf`` filename extension. The
+      :file:`conf/local.conf` configuration file in the :term:`Build Directory`
+      contains user-defined variables that affect every build. The
+      :file:`meta-poky/conf/distro/poky.conf` configuration file defines Yocto
+      "distro" configuration variables used only when building with this
+      policy. Machine configuration files, which are located throughout the
+      :term:`Source Directory`, define variables for specific hardware and are
+      only used when building for that target (e.g. the
+      :file:`machine/beaglebone.conf` configuration file defines variables for
+      the Texas Instruments ARM Cortex-A8 development board).
 
--  *Layer:* A collection of related recipes. Layers allow you to
-   consolidate related metadata to customize your build. Layers also
-   isolate information used when building for multiple architectures.
-   Layers are hierarchical in their ability to override previous
-   specifications. You can include any number of available layers from
-   the Yocto Project and customize the build by adding your layers after
-   them. You can search the Layer Index for layers used within Yocto
-   Project.
+   Container Layer
+      Layers that hold other layers. An example of a container layer is
+      OpenEmbedded's `meta-openembedded
+      <https://github.com/openembedded/meta-openembedded>`_ layer. The
+      ``meta-openembedded`` layer contains many ``meta-*`` layers.
 
-   For introductory information on layers, see the "`The Yocto Project
-   Layer Model <&YOCTO_DOCS_OM_URL;#the-yocto-project-layer-model>`__"
-   section in the Yocto Project Overview and Concepts Manual. For more
-   detailed information on layers, see the "`Understanding and Creating
-   Layers <&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers>`__"
-   section in the Yocto Project Development Tasks Manual. For a
-   discussion specifically on BSP Layers, see the "`BSP
-   Layers <&YOCTO_DOCS_BSP_URL;#bsp-layers>`__" section in the Yocto
-   Project Board Support Packages (BSP) Developer's Guide.
+   Cross-Development Toolchain
+      In general, a cross-development toolchain is a collection of software
+      development tools and utilities that run on one architecture and allow you
+      to develop software for a different, or targeted, architecture. These
+      toolchains contain cross-compilers, linkers, and debuggers that are
+      specific to the target architecture.
 
--  *Metadata:* A key element of the Yocto Project is the Metadata that
-   is used to construct a Linux distribution and is contained in the
-   files that the `OpenEmbedded build system <#build-system-term>`__
-   parses when building an image. In general, Metadata includes recipes,
-   configuration files, and other information that refers to the build
-   instructions themselves, as well as the data used to control what
-   things get built and the effects of the build. Metadata also includes
-   commands and data used to indicate what versions of software are
-   used, from where they are obtained, and changes or additions to the
-   software itself (patches or auxiliary files) that are used to fix
-   bugs or customize the software for use in a particular situation.
-   OpenEmbedded-Core is an important set of validated metadata.
+      The Yocto Project supports two different cross-development toolchains:
 
-   In the context of the kernel ("kernel Metadata"), the term refers to
-   the kernel config fragments and features contained in the
-   ```yocto-kernel-cache`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/yocto-kernel-cache>`__
-   Git repository.
+      - A toolchain only used by and within BitBake when building an image for a
+        target architecture.
 
--  *OpenEmbedded-Core (OE-Core):* OE-Core is metadata comprised of
-   foundational recipes, classes, and associated files that are meant to
-   be common among many different OpenEmbedded-derived systems,
-   including the Yocto Project. OE-Core is a curated subset of an
-   original repository developed by the OpenEmbedded community that has
-   been pared down into a smaller, core set of continuously validated
-   recipes. The result is a tightly controlled and an quality-assured
-   core set of recipes.
+      - A relocatable toolchain used outside of BitBake by developers when
+        developing applications that will run on a targeted device.
 
-   You can see the Metadata in the ``meta`` directory of the Yocto
-   Project `Source
-   Repositories <http://git.yoctoproject.org/cgit/cgit.cgi>`__.
+      Creation of these toolchains is simple and automated. For information on
+      toolchain concepts as they apply to the Yocto Project, see the
+      ":ref:`overview-manual/overview-manual-concepts:Cross-Development
+      Toolchain Generation`" section in the Yocto Project Overview and Concepts
+      Manual. You can also find more information on using the relocatable
+      toolchain in the :ref:`sdk-manual/sdk-manual:Yocto Project Application
+      Development and the Extensible Software Development Kit (eSDK)` manual.
 
--  *OpenEmbedded Build System:* The build system specific to the Yocto
-   Project. The OpenEmbedded build system is based on another project
-   known as "Poky", which uses `BitBake <#bitbake-term>`__ as the task
-   executor. Throughout the Yocto Project documentation set, the
-   OpenEmbedded build system is sometimes referred to simply as "the
-   build system". If other build systems, such as a host or target build
-   system are referenced, the documentation clearly states the
-   difference.
+   Extensible Software Development Kit (eSDK)
+      A custom SDK for application developers. This eSDK allows developers to
+      incorporate their library and programming changes back into the image to
+      make their code available to other application developers.
 
-   .. note::
+      For information on the eSDK, see the :ref:`sdk-manual/sdk-manual:Yocto
+      Project Application Development and the Extensible Software Development
+      Kit (eSDK)` manual.
 
-      For some historical information about Poky, see the
-      Poky
-      term.
+   Image
+      An image is an artifact of the BitBake build process given a collection of
+      recipes and related Metadata. Images are the binary output that run on
+      specific hardware or QEMU and are used for specific use-cases. For a list
+      of the supported image types that the Yocto Project provides, see the
+      ":ref:`ref-manual/ref-images:Images`" chapter.
 
--  *Package:* In the context of the Yocto Project, this term refers to a
-   recipe's packaged output produced by BitBake (i.e. a "baked recipe").
-   A package is generally the compiled binaries produced from the
-   recipe's sources. You "bake" something by running it through BitBake.
+   Layer
+      A collection of related recipes. Layers allow you to consolidate related
+      metadata to customize your build. Layers also isolate information used
+      when building for multiple architectures.  Layers are hierarchical in
+      their ability to override previous specifications. You can include any
+      number of available layers from the Yocto Project and customize the build
+      by adding your layers after them. You can search the Layer Index for
+      layers used within Yocto Project.
 
-   It is worth noting that the term "package" can, in general, have
-   subtle meanings. For example, the packages referred to in the
-   "`Required Packages for the Build
-   Host <#required-packages-for-the-build-host>`__" section are compiled
-   binaries that, when installed, add functionality to your Linux
-   distribution.
+      For introductory information on layers, see the
+      ":ref:`overview-manual/overview-manual-yp-intro:The Yocto Project Layer
+      Model`" section in the Yocto Project Overview and Concepts Manual. For
+      more detailed information on layers, see the
+      ":ref:`dev-manual/dev-manual-common-tasks:Understanding and Creating
+      Layers`" section in the Yocto Project Development Tasks Manual. For a
+      discussion specifically on BSP Layers, see the ":ref:`bsp-guide/bsp:BSP
+      Layers`" section in the Yocto Project Board Support Packages (BSP)
+      Developer's Guide.
 
-   Another point worth noting is that historically within the Yocto
-   Project, recipes were referred to as packages - thus, the existence
-   of several BitBake variables that are seemingly mis-named, (e.g.
-   ```PR`` <#var-PR>`__, ```PV`` <#var-PV>`__, and
-   ```PE`` <#var-PE>`__).
+   Metadata
+      A key element of the Yocto Project is the Metadata that
+      is used to construct a Linux distribution and is contained in the
+      files that the `OpenEmbedded build system <#build-system-term>`__
+      parses when building an image. In general, Metadata includes recipes,
+      configuration files, and other information that refers to the build
+      instructions themselves, as well as the data used to control what
+      things get built and the effects of the build. Metadata also includes
+      commands and data used to indicate what versions of software are
+      used, from where they are obtained, and changes or additions to the
+      software itself (patches or auxiliary files) that are used to fix
+      bugs or customize the software for use in a particular situation.
+      OpenEmbedded-Core is an important set of validated metadata.
 
--  *Package Groups:* Arbitrary groups of software Recipes. You use
-   package groups to hold recipes that, when built, usually accomplish a
-   single task. For example, a package group could contain the recipes
-   for a company’s proprietary or value-add software. Or, the package
-   group could contain the recipes that enable graphics. A package group
-   is really just another recipe. Because package group files are
-   recipes, they end with the ``.bb`` filename extension.
+      In the context of the kernel ("kernel Metadata"), the term refers to
+      the kernel config fragments and features contained in the
+      ```yocto-kernel-cache`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/yocto-kernel-cache>`__
+      Git repository.
 
--  *Poky:* Poky, which is pronounced *Pock*-ee, is a reference embedded
-   distribution and a reference test configuration. Poky provides the
-   following:
+   OpenEmbedded-Core (OE-Core)
+      OE-Core is metadata comprised of
+      foundational recipes, classes, and associated files that are meant to
+      be common among many different OpenEmbedded-derived systems,
+      including the Yocto Project. OE-Core is a curated subset of an
+      original repository developed by the OpenEmbedded community that has
+      been pared down into a smaller, core set of continuously validated
+      recipes. The result is a tightly controlled and an quality-assured
+      core set of recipes.
 
-   -  A base-level functional distro used to illustrate how to customize
-      a distribution.
+      You can see the Metadata in the ``meta`` directory of the Yocto
+      Project `Source
+      Repositories <http://git.yoctoproject.org/cgit/cgit.cgi>`__.
 
-   -  A means by which to test the Yocto Project components (i.e. Poky
-      is used to validate the Yocto Project).
+   OpenEmbedded Build System
+      The build system specific to the Yocto
+      Project. The OpenEmbedded build system is based on another project
+      known as "Poky", which uses `BitBake <#bitbake-term>`__ as the task
+      executor. Throughout the Yocto Project documentation set, the
+      OpenEmbedded build system is sometimes referred to simply as "the
+      build system". If other build systems, such as a host or target build
+      system are referenced, the documentation clearly states the
+      difference.
 
-   -  A vehicle through which you can download the Yocto Project.
+      .. note::
 
-   Poky is not a product level distro. Rather, it is a good starting
-   point for customization.
+         For some historical information about Poky, see the
+         Poky
+         term.
 
-   .. note::
+   Package
+      In the context of the Yocto Project, this term refers to a
+      recipe's packaged output produced by BitBake (i.e. a "baked recipe").
+      A package is generally the compiled binaries produced from the
+      recipe's sources. You "bake" something by running it through BitBake.
 
-      Poky began as an open-source project initially developed by
-      OpenedHand. OpenedHand developed Poky from the existing
-      OpenEmbedded build system to create a commercially supportable
-      build system for embedded Linux. After Intel Corporation acquired
-      OpenedHand, the poky project became the basis for the Yocto
-      Project's build system.
+      It is worth noting that the term "package" can, in general, have
+      subtle meanings. For example, the packages referred to in the
+      "`Required Packages for the Build
+      Host <#required-packages-for-the-build-host>`__" section are compiled
+      binaries that, when installed, add functionality to your Linux
+      distribution.
 
--  *Recipe:* A set of instructions for building packages. A recipe
-   describes where you get source code, which patches to apply, how to
-   configure the source, how to compile it and so on. Recipes also
-   describe dependencies for libraries or for other recipes. Recipes
-   represent the logical unit of execution, the software to build, the
-   images to build, and use the ``.bb`` file extension.
+      Another point worth noting is that historically within the Yocto
+      Project, recipes were referred to as packages - thus, the existence
+      of several BitBake variables that are seemingly mis-named, (e.g.
+      ```PR`` <#var-PR>`__, ```PV`` <#var-PV>`__, and
+      ```PE`` <#var-PE>`__).
 
--  *Reference Kit:* A working example of a system, which includes a
-   `BSP <#board-support-package-bsp-term>`__ as well as a `build
-   host <#hardware-build-system-term>`__ and other components, that can
-   work on specific hardware.
+   Package Groups
+      Arbitrary groups of software Recipes. You use
+      package groups to hold recipes that, when built, usually accomplish a
+      single task. For example, a package group could contain the recipes
+      for a company’s proprietary or value-add software. Or, the package
+      group could contain the recipes that enable graphics. A package group
+      is really just another recipe. Because package group files are
+      recipes, they end with the ``.bb`` filename extension.
 
--  *Source Directory:* This term refers to the directory structure
-   created as a result of creating a local copy of the ``poky`` Git
-   repository ``git://git.yoctoproject.org/poky`` or expanding a
-   released ``poky`` tarball.
+   Poky
+      Poky, which is pronounced *Pock*-ee, is a reference embedded
+      distribution and a reference test configuration. Poky provides the
+      following:
 
-   .. note::
+      -  A base-level functional distro used to illustrate how to customize
+         a distribution.
 
-      Creating a local copy of the
-      poky
-      Git repository is the recommended method for setting up your
-      Source Directory.
+      -  A means by which to test the Yocto Project components (i.e. Poky
+         is used to validate the Yocto Project).
 
-   Sometimes you might hear the term "poky directory" used to refer to
-   this directory structure.
+      -  A vehicle through which you can download the Yocto Project.
 
-   .. note::
+      Poky is not a product level distro. Rather, it is a good starting
+      point for customization.
 
-      The OpenEmbedded build system does not support file or directory
-      names that contain spaces. Be sure that the Source Directory you
-      use does not contain these types of names.
+      .. note::
 
-   The Source Directory contains BitBake, Documentation, Metadata and
-   other files that all support the Yocto Project. Consequently, you
-   must have the Source Directory in place on your development system in
-   order to do any development using the Yocto Project.
+         Poky began as an open-source project initially developed by
+         OpenedHand. OpenedHand developed Poky from the existing
+         OpenEmbedded build system to create a commercially supportable
+         build system for embedded Linux. After Intel Corporation acquired
+         OpenedHand, the poky project became the basis for the Yocto
+         Project's build system.
 
-   When you create a local copy of the Git repository, you can name the
-   repository anything you like. Throughout much of the documentation,
-   "poky" is used as the name of the top-level folder of the local copy
-   of the poky Git repository. So, for example, cloning the ``poky`` Git
-   repository results in a local Git repository whose top-level folder
-   is also named "poky".
+   Recipe
+      A set of instructions for building packages. A recipe
+      describes where you get source code, which patches to apply, how to
+      configure the source, how to compile it and so on. Recipes also
+      describe dependencies for libraries or for other recipes. Recipes
+      represent the logical unit of execution, the software to build, the
+      images to build, and use the ``.bb`` file extension.
 
-   While it is not recommended that you use tarball expansion to set up
-   the Source Directory, if you do, the top-level directory name of the
-   Source Directory is derived from the Yocto Project release tarball.
-   For example, downloading and unpacking ```` results in a Source
-   Directory whose root folder is named ````.
+   Reference Kit
+      A working example of a system, which includes a
+      :term:`BSP<Board Support Package (BSP)>` as well as a
+      :term:`build host<Build Host>` and other components, that can
+      work on specific hardware.
 
-   It is important to understand the differences between the Source
-   Directory created by unpacking a released tarball as compared to
-   cloning ``git://git.yoctoproject.org/poky``. When you unpack a
-   tarball, you have an exact copy of the files based on the time of
-   release - a fixed release point. Any changes you make to your local
-   files in the Source Directory are on top of the release and will
-   remain local only. On the other hand, when you clone the ``poky`` Git
-   repository, you have an active development repository with access to
-   the upstream repository's branches and tags. In this case, any local
-   changes you make to the local Source Directory can be later applied
-   to active development branches of the upstream ``poky`` Git
-   repository.
+   Source Directory
+     This term refers to the directory structure
+     created as a result of creating a local copy of the ``poky`` Git
+     repository ``git://git.yoctoproject.org/poky`` or expanding a
+     released ``poky`` tarball.
 
-   For more information on concepts related to Git repositories,
-   branches, and tags, see the "`Repositories, Tags, and
-   Branches <&YOCTO_DOCS_OM_URL;#repositories-tags-and-branches>`__"
-   section in the Yocto Project Overview and Concepts Manual.
+     .. note::
 
--  *Task:* A unit of execution for BitBake (e.g.
-   ```do_compile`` <#ref-tasks-compile>`__,
-   ```do_fetch`` <#ref-tasks-fetch>`__,
-   ```do_patch`` <#ref-tasks-patch>`__, and so forth).
+        Creating a local copy of the
+        poky
+        Git repository is the recommended method for setting up your
+        Source Directory.
 
--  *Toaster:* A web interface to the Yocto Project's `OpenEmbedded Build
-   System <#build-system-term>`__. The interface enables you to
-   configure and run your builds. Information about builds is collected
-   and stored in a database. For information on Toaster, see the
-   `Toaster User Manual <&YOCTO_DOCS_TOAST_URL;>`__.
+     Sometimes you might hear the term "poky directory" used to refer to
+     this directory structure.
 
--  *Upstream:* A reference to source code or repositories that are not
-   local to the development system but located in a master area that is
-   controlled by the maintainer of the source code. For example, in
-   order for a developer to work on a particular piece of code, they
-   need to first get a copy of it from an "upstream" source.
+     .. note::
+
+        The OpenEmbedded build system does not support file or directory
+        names that contain spaces. Be sure that the Source Directory you
+        use does not contain these types of names.
+
+     The Source Directory contains BitBake, Documentation, Metadata and
+     other files that all support the Yocto Project. Consequently, you
+     must have the Source Directory in place on your development system in
+     order to do any development using the Yocto Project.
+
+     When you create a local copy of the Git repository, you can name the
+     repository anything you like. Throughout much of the documentation,
+     "poky" is used as the name of the top-level folder of the local copy
+     of the poky Git repository. So, for example, cloning the ``poky`` Git
+     repository results in a local Git repository whose top-level folder
+     is also named "poky".
+
+     While it is not recommended that you use tarball expansion to set up
+     the Source Directory, if you do, the top-level directory name of the
+     Source Directory is derived from the Yocto Project release tarball.
+     For example, downloading and unpacking ```` results in a Source
+     Directory whose root folder is named ````.
+
+     It is important to understand the differences between the Source
+     Directory created by unpacking a released tarball as compared to
+     cloning ``git://git.yoctoproject.org/poky``. When you unpack a
+     tarball, you have an exact copy of the files based on the time of
+     release - a fixed release point. Any changes you make to your local
+     files in the Source Directory are on top of the release and will
+     remain local only. On the other hand, when you clone the ``poky`` Git
+     repository, you have an active development repository with access to
+     the upstream repository's branches and tags. In this case, any local
+     changes you make to the local Source Directory can be later applied
+     to active development branches of the upstream ``poky`` Git
+     repository.
+
+     For more information on concepts related to Git repositories,
+     branches, and tags, see the "`Repositories, Tags, and
+     Branches <&YOCTO_DOCS_OM_URL;#repositories-tags-and-branches>`__"
+     section in the Yocto Project Overview and Concepts Manual.
+
+   Task
+      A unit of execution for BitBake (e.g.
+      ```do_compile`` <#ref-tasks-compile>`__,
+      ```do_fetch`` <#ref-tasks-fetch>`__,
+      ```do_patch`` <#ref-tasks-patch>`__, and so forth).
+
+   Toaster
+      A web interface to the Yocto Project's `OpenEmbedded Build
+      System <#build-system-term>`__. The interface enables you to
+      configure and run your builds. Information about builds is collected
+      and stored in a database. For information on Toaster, see the
+      `Toaster User Manual <&YOCTO_DOCS_TOAST_URL;>`__.
+
+   Upstream
+      A reference to source code or repositories that are not
+      local to the development system but located in a master area that is
+      controlled by the maintainer of the source code. For example, in
+      order for a developer to work on a particular piece of code, they
+      need to first get a copy of it from an "upstream" source.

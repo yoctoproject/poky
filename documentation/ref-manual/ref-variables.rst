@@ -7,12 +7,12 @@ Variables Glossary
 This chapter lists common variables used in the OpenEmbedded build
 system and gives an overview of their function and contents.
 
-`A <#var-ABIEXTENSION>`__ :term:`B` `C <#var-CACHE>`__
-:term:`D` `E <#var-EFI_PROVIDER>`__ `F <#var-FEATURE_PACKAGES>`__
+`A <#var-ABIEXTENSION>`__ `B <#var-B>`__ `C <#var-CACHE>`__
+`D <#var-D>`__ `E <#var-EFI_PROVIDER>`__ `F <#var-FEATURE_PACKAGES>`__
 `G <#var-GCCPIE>`__ `H <#var-HOMEPAGE>`__ `I <#var-ICECC_DISABLED>`__
 `K <#var-KARCH>`__ `L <#var-LABELS>`__ `M <#var-MACHINE>`__
-`N <#var-NATIVELSBSTRING>`__ `O <#var-OBJCOPY>`__ :term:`P`
-`R <#var-RANLIB>`__ :term:`S` :term:`T`
+`N <#var-NATIVELSBSTRING>`__ `O <#var-OBJCOPY>`__ `P <#var-P>`__
+`R <#var-RANLIB>`__ `S <#var-S>`__ `T <#var-T>`__
 `U <#var-UBOOT_CONFIG>`__ `V <#var-VOLATILE_LOG_DIR>`__
 `W <#var-WARN_QA>`__ `X <#var-XSERVER>`__
 
@@ -30,7 +30,7 @@ system and gives an overview of their function and contents.
       Specifies whether to produce an output package even if it is empty.
       By default, BitBake does not produce empty packages. This default
       behavior can cause issues when there is an
-      :term:`RDEPENDS` or some other hard runtime
+      ```RDEPENDS`` <#var-RDEPENDS>`__ or some other hard runtime
       requirement on the existence of the package.
    
       Like all package-controlling variables, you must always use them in
@@ -49,7 +49,7 @@ system and gives an overview of their function and contents.
       has four commands that also exist as part of another package, you
       identify them as follows: ALTERNATIVE_busybox = "sh sed test bracket"
       For more information on the alternatives system, see the
-      ":ref:`update-alternatives.bbclass <ref-classes-update-alternatives>`"
+      "```update-alternatives.bbclass`` <#ref-classes-update-alternatives>`__"
       section.
    
    ALTERNATIVE_LINK_NAME
@@ -72,7 +72,7 @@ system and gives an overview of their function and contents.
          .
    
       For more information on the alternatives system, see the
-      ":ref:`update-alternatives.bbclass <ref-classes-update-alternatives>`"
+      "```update-alternatives.bbclass`` <#ref-classes-update-alternatives>`__"
       section.
    
    ALTERNATIVE_PRIORITY
@@ -86,7 +86,7 @@ system and gives an overview of their function and contents.
       ALTERNATIVE_PRIORITY_pkg[name] = "priority"
    
       For more information on the alternatives system, see the
-      ":ref:`update-alternatives.bbclass <ref-classes-update-alternatives>`"
+      "```update-alternatives.bbclass`` <#ref-classes-update-alternatives>`__"
       section.
    
    ALTERNATIVE_TARGET
@@ -103,7 +103,7 @@ system and gives an overview of their function and contents.
    
          If ``ALTERNATIVE_TARGET`` is not defined, it inherits the value
          from the
-         :term:`ALTERNATIVE_LINK_NAME`
+         ```ALTERNATIVE_LINK_NAME`` <#var-ALTERNATIVE_LINK_NAME>`__
          variable.
    
          If ``ALTERNATIVE_LINK_NAME`` and ``ALTERNATIVE_TARGET`` are the
@@ -112,25 +112,25 @@ system and gives an overview of their function and contents.
    
          Finally, if the file referenced has not been renamed, the
          alternatives system will rename it to avoid the need to rename
-         alternative files in the :ref:`ref-tasks-install`
+         alternative files in the ```do_install`` <#ref-tasks-install>`__
          task while retaining support for the command if necessary.
    
       For more information on the alternatives system, see the
-      ":ref:`update-alternatives.bbclass <ref-classes-update-alternatives>`"
+      "```update-alternatives.bbclass`` <#ref-classes-update-alternatives>`__"
       section.
    
    APPEND
       An override list of append strings for each target specified with
-      :term:`LABELS`.
+      ```LABELS`` <#var-LABELS>`__.
    
-      See the :ref:`grub-efi <ref-classes-grub-efi>` class for more
+      See the ```grub-efi`` <#ref-classes-grub-efi>`__ class for more
       information on how this variable is used.
    
    AR
       The minimal command and arguments used to run ``ar``.
    
    ARCHIVER_MODE
-      When used with the :ref:`archiver <ref-classes-archiver>` class,
+      When used with the ```archiver`` <#ref-classes-archiver>`__ class,
       determines the type of information used to create a released archive.
       You can use this variable to create archives of patched source,
       original source, configured source, and so forth by employing the
@@ -144,13 +144,14 @@ system and gives an overview of their function and contents.
       = "1" # Uses environment data. ARCHIVER_MODE[recipe] = "1" # Uses
       recipe and include files. ARCHIVER_MODE[srpm] = "1" # Uses RPM
       package files. For information on how the variable works, see the
-      ``meta/classes/archiver.bbclass`` file in the :term:`Source Directory`.
+      ``meta/classes/archiver.bbclass`` file in the `Source
+      Directory <#source-directory>`__.
    
    AS
       Minimal command and arguments needed to run the assembler.
    
    ASSUME_PROVIDED
-      Lists recipe names (:term:`PN` values) BitBake does not
+      Lists recipe names (```PN`` <#var-PN>`__ values) BitBake does not
       attempt to build. Instead, BitBake assumes these recipes have already
       been built.
    
@@ -177,7 +178,7 @@ system and gives an overview of their function and contents.
       order to send patches and forward bugs.
    
    AUTO_LIBNAME_PKGS
-      When the :ref:`debian <ref-classes-debian>` class is inherited,
+      When the ```debian`` <#ref-classes-debian>`__ class is inherited,
       which is the default behavior, ``AUTO_LIBNAME_PKGS`` specifies which
       packages should be checked for libraries and renamed according to
       Debian library package naming.
@@ -188,7 +189,7 @@ system and gives an overview of their function and contents.
    AUTO_SYSLINUXMENU
       Enables creating an automatic menu for the syslinux bootloader. You
       must set this variable in your recipe. The
-      :ref:`syslinux <ref-classes-syslinux>` class checks this variable.
+      ```syslinux`` <#ref-classes-syslinux>`__ class checks this variable.
    
    AUTOREV
       When ``SRCREV`` is set to the value of this variable, it specifies to
@@ -196,10 +197,10 @@ system and gives an overview of their function and contents.
       SRCREV = "${AUTOREV}"
    
       If you use the previous statement to retrieve the latest version of
-      software, you need to be sure :term:`PV` contains
-      ``${``\ :term:`SRCPV`\ ``}``. For example, suppose you
+      software, you need to be sure ```PV`` <#var-PV>`__ contains
+      ``${``\ ```SRCPV`` <#var-SRCPV>`__\ ``}``. For example, suppose you
       have a kernel recipe that inherits the
-      :ref:`kernel <ref-classes-kernel>` class and you use the previous
+      `kernel <#ref-classes-kernel>`__ class and you use the previous
       statement. In this example, ``${SRCPV}`` does not automatically get
       into ``PV``. Consequently, you need to change ``PV`` in your recipe
       so that it does contain ``${SRCPV}``.
@@ -211,8 +212,8 @@ system and gives an overview of their function and contents.
    
    AVAILABLE_LICENSES
       List of licenses found in the directories specified by
-      :term:`COMMON_LICENSE_DIR` and
-      :term:`LICENSE_PATH`.
+      ```COMMON_LICENSE_DIR`` <#var-COMMON_LICENSE_DIR>`__ and
+      ```LICENSE_PATH`` <#var-LICENSE_PATH>`__.
    
       .. note::
    
@@ -239,15 +240,15 @@ system and gives an overview of their function and contents.
    
       To add a tune to the list, be sure to append it with spaces using the
       "+=" BitBake operator. Do not simply replace the list by using the
-      "=" operator. See the
-      ":ref:`Basic Syntax <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:basic syntax>`" section in the BitBake
+      "=" operator. See the "`Basic
+      Syntax <&YOCTO_DOCS_BB_URL;#basic-syntax>`__" section in the BitBake
       User Manual for more information.
    
    B
-      The directory within the :term:`Build Directory` in
+      The directory within the `Build Directory <#build-directory>`__ in
       which the OpenEmbedded build system places generated objects during a
       recipe's build process. By default, this directory is the same as the
-      :term:`S` directory, which is defined as: S =
+      ```S`` <#var-S>`__ directory, which is defined as: S =
       "${WORKDIR}/${BP}"
    
       You can separate the (``S``) directory and the directory pointed to
@@ -258,7 +259,7 @@ system and gives an overview of their function and contents.
    BAD_RECOMMENDATIONS
       Lists "recommended-only" packages to not install. Recommended-only
       packages are packages installed only through the
-      :term:`RRECOMMENDS` variable. You can prevent any
+      ```RRECOMMENDS`` <#var-RRECOMMENDS>`__ variable. You can prevent any
       of these "recommended" packages from being installed by listing them
       with the ``BAD_RECOMMENDATIONS`` variable: BAD_RECOMMENDATIONS =
       "package_name package_name package_name ..."
@@ -269,15 +270,15 @@ system and gives an overview of their function and contents.
    
       It is important to realize that if you choose to not install packages
       using this variable and some other packages are dependent on them
-      (i.e. listed in a recipe's :term:`RDEPENDS`
+      (i.e. listed in a recipe's ```RDEPENDS`` <#var-RDEPENDS>`__
       variable), the OpenEmbedded build system ignores your request and
       will install the packages to avoid dependency errors.
    
       Support for this variable exists only when using the IPK and RPM
       packaging backend. Support does not exist for DEB.
    
-      See the :term:`NO_RECOMMENDATIONS` and the
-      :term:`PACKAGE_EXCLUDE` variables for related
+      See the ```NO_RECOMMENDATIONS`` <#var-NO_RECOMMENDATIONS>`__ and the
+      ```PACKAGE_EXCLUDE`` <#var-PACKAGE_EXCLUDE>`__ variables for related
       information.
    
    BASE_LIB
@@ -290,7 +291,7 @@ system and gives an overview of their function and contents.
       on Multilib.
    
       The ``BASE_LIB`` variable is defined in the machine include files in
-      the :term:`Source Directory`. If Multilib is not
+      the `Source Directory <#source-directory>`__. If Multilib is not
       being used, the value defaults to "lib".
    
    BASE_WORKDIR
@@ -326,10 +327,10 @@ system and gives an overview of their function and contents.
       -  Attempts to access networks not in the host list cause a failure.
    
       Using ``BB_ALLOWED_NETWORKS`` in conjunction with
-      :term:`PREMIRRORS` is very useful. Adding the host
+      ```PREMIRRORS`` <#var-PREMIRRORS>`__ is very useful. Adding the host
       you want to use to ``PREMIRRORS`` results in the source code being
       fetched from an allowed location and avoids raising an error when a
-      host that is not allowed is in a :term:`SRC_URI`
+      host that is not allowed is in a ```SRC_URI`` <#var-SRC_URI>`__
       statement. This is because the fetcher does not attempt to use the
       host listed in ``SRC_URI`` after a successful fetch from the
       ``PREMIRRORS`` occurs.
@@ -348,7 +349,7 @@ system and gives an overview of their function and contents.
    
       You can change the default behavior by setting this variable to "1",
       "yes", or "true" in your ``local.conf`` file, which is located in the
-      :term:`Build Directory`: Here is an example:
+      `Build Directory <#build-directory>`__: Here is an example:
       BB_DANGLINGAPPENDS_WARNONLY = "1"
    
    BB_DISKMON_DIRS
@@ -357,7 +358,7 @@ system and gives an overview of their function and contents.
    
       Disk space monitoring is disabled by default. To enable monitoring,
       add the ``BB_DISKMON_DIRS`` variable to your ``conf/local.conf`` file
-      found in the :term:`Build Directory`. Use the
+      found in the `Build Directory <#build-directory>`__. Use the
       following form: BB_DISKMON_DIRS = "action,dir,threshold [...]" where:
       action is: ABORT: Immediately abort the build when a threshold is
       broken. STOPTASKS: Stop the build after the currently executing tasks
@@ -378,7 +379,7 @@ system and gives an overview of their function and contents.
       WARN,${SSTATE_DIR},1G,100K" BB_DISKMON_DIRS =
       "STOPTASKS,${TMPDIR},1G" BB_DISKMON_DIRS = "ABORT,${TMPDIR},,100K"
       The first example works only if you also provide the
-      :term:`BB_DISKMON_WARNINTERVAL`
+      ```BB_DISKMON_WARNINTERVAL`` <#var-BB_DISKMON_WARNINTERVAL>`__
       variable in the ``conf/local.conf``. This example causes the build
       system to immediately abort when either the disk space in
       ``${TMPDIR}`` drops below 1 Gbyte or the available free inodes drops
@@ -401,10 +402,10 @@ system and gives an overview of their function and contents.
    BB_DISKMON_WARNINTERVAL
       Defines the disk space and free inode warning intervals. To set these
       intervals, define the variable in your ``conf/local.conf`` file in
-      the :term:`Build Directory`.
+      the `Build Directory <#build-directory>`__.
    
       If you are going to use the ``BB_DISKMON_WARNINTERVAL`` variable, you
-      must also use the :term:`BB_DISKMON_DIRS`
+      must also use the ```BB_DISKMON_DIRS`` <#var-BB_DISKMON_DIRS>`__
       variable and define its action as "WARN". During the build,
       subsequent warnings are issued each time disk space or number of free
       inodes further reduces by the respective interval.
@@ -435,12 +436,12 @@ system and gives an overview of their function and contents.
    BB_GENERATE_MIRROR_TARBALLS
       Causes tarballs of the source control repositories (e.g. Git
       repositories), including metadata, to be placed in the
-      :term:`DL_DIR` directory.
+      ```DL_DIR`` <#var-DL_DIR>`__ directory.
    
       For performance reasons, creating and placing tarballs of these
       repositories is not the default action by the OpenEmbedded build
       system. BB_GENERATE_MIRROR_TARBALLS = "1" Set this variable in your
-      ``local.conf`` file in the :term:`Build Directory`.
+      ``local.conf`` file in the `Build Directory <#build-directory>`__.
    
       Once you have the tarballs containing your source files, you can
       clean up your ``DL_DIR`` directory by deleting any Git or other
@@ -480,7 +481,7 @@ system and gives an overview of their function and contents.
       ``quilt-native``, which is a copy of Quilt built to run on the build
       system; "crosses" such as ``gcc-cross``, which is a compiler built to
       run on the build machine but produces binaries that run on the target
-      :term:`MACHINE`; "nativesdk", which targets the SDK
+      ```MACHINE`` <#var-MACHINE>`__; "nativesdk", which targets the SDK
       machine instead of ``MACHINE``; and "mulitlibs" in the form
       "``multilib:``\ multilib_name".
    
@@ -494,7 +495,7 @@ system and gives an overview of their function and contents.
          Internally, the ``BBCLASSEXTEND`` mechanism generates recipe
          variants by rewriting variable values and applying overrides such
          as ``_class-native``. For example, to generate a native version of
-         a recipe, a :term:`DEPENDS` on "foo" is rewritten
+         a recipe, a ```DEPENDS`` <#var-DEPENDS>`__ on "foo" is rewritten
          to a ``DEPENDS`` on "foo-native".
    
          Even when using ``BBCLASSEXTEND``, the recipe is only parsed once.
@@ -510,7 +511,7 @@ system and gives an overview of their function and contents.
    
    BBFILE_PATTERN
       Variable that expands to match files from
-      :term:`BBFILES` in a particular layer. This variable
+      ```BBFILES`` <#var-BBFILES>`__ in a particular layer. This variable
       is used in the ``conf/layer.conf`` file and must be suffixed with the
       name of the specific layer (e.g. ``BBFILE_PATTERN_emenlow``).
    
@@ -522,7 +523,7 @@ system and gives an overview of their function and contents.
       prioritize a layer against other layers that contain the same recipe
       - effectively letting you control the precedence for the multiple
       layers. The precedence established through this variable stands
-      regardless of a recipe's version (:term:`PV` variable). For
+      regardless of a recipe's version (```PV`` <#var-PV>`__ variable). For
       example, a layer that has a recipe with a higher ``PV`` value but for
       which the ``BBFILE_PRIORITY`` is set to have a lower precedence still
       has a lower precedence.
@@ -546,7 +547,7 @@ system and gives an overview of their function and contents.
       software.
    
       When specifying recipe files, you can pattern match using Python's
-      ```glob`https://docs.python.org/3/library/glob.html syntax.
+      ```glob`` <https://docs.python.org/3/library/glob.html>`__ syntax.
       For details on the syntax, see the documentation by following the
       previous link.
    
@@ -575,15 +576,15 @@ system and gives an overview of their function and contents.
       Variable that controls how BitBake displays logs on build failure.
    
    BBINCLUDELOGS_LINES
-      If :term:`BBINCLUDELOGS` is set, specifies the
+      If ```BBINCLUDELOGS`` <#var-BBINCLUDELOGS>`__ is set, specifies the
       maximum number of lines from the task log file to print when
       reporting a failed task. If you do not set ``BBINCLUDELOGS_LINES``,
       the entire log is printed.
    
    BBLAYERS
       Lists the layers to enable during the build. This variable is defined
-      in the ``bblayers.conf`` configuration file in the :term:`Build Directory`.
-      Here is an example: BBLAYERS = " \\
+      in the ``bblayers.conf`` configuration file in the `Build
+      Directory <#build-directory>`__. Here is an example: BBLAYERS = " \\
       /home/scottrif/poky/meta \\ /home/scottrif/poky/meta-poky \\
       /home/scottrif/poky/meta-yocto-bsp \\
       /home/scottrif/poky/meta-mykernel \\ "
@@ -604,7 +605,7 @@ system and gives an overview of their function and contents.
       compiler. Consequently, the syntax follows Python's Regular
       Expression (re) syntax. The expressions are compared against the full
       paths to the files. For complete syntax information, see Python's
-      documentation at http://docs.python.org/3/library/re.html#re.
+      documentation at ` <http://docs.python.org/3/library/re.html#re>`__.
    
       The following example uses a complete regular expression to tell
       BitBake to ignore all recipe and recipe append files in the
@@ -628,7 +629,7 @@ system and gives an overview of their function and contents.
       multiconfigname for each configuration file you are using. For
       example, the following line specifies three configuration files:
       BBMULTICONFIG = "configA configB configC" Each configuration file you
-      use must reside in the :term:`Build Directory`
+      use must reside in the `Build Directory <#build-directory>`__
       ``conf/multiconfig`` directory (e.g.
       build_directory\ ``/conf/multiconfig/configA.conf``).
    
@@ -665,13 +666,13 @@ system and gives an overview of their function and contents.
       environment: export BBSERVER=localhost:$port
    
       By default, ``BBSERVER`` also appears in
-      :term:`bitbake:BB_HASHBASE_WHITELIST`.
+      ```BB_HASHBASE_WHITELIST`` <&YOCTO_DOCS_BB_URL;#var-BB_HASHBASE_WHITELIST>`__.
       Consequently, ``BBSERVER`` is excluded from checksum and dependency
       data.
    
    BINCONFIG
       When inheriting the
-      :ref:`binconfig-disabled <ref-classes-binconfig-disabled>` class,
+      ```binconfig-disabled`` <#ref-classes-binconfig-disabled>`__ class,
       this variable specifies binary configuration scripts to disable in
       favor of using ``pkg-config`` to query the information. The
       ``binconfig-disabled`` class will modify the specified scripts to
@@ -683,7 +684,7 @@ system and gives an overview of their function and contents.
       ${bindir}/libpng16-config"
    
    BINCONFIG_GLOB
-      When inheriting the :ref:`binconfig <ref-classes-binconfig>` class,
+      When inheriting the ```binconfig`` <#ref-classes-binconfig>`__ class,
       this variable specifies a wildcard for configuration scripts that
       need editing. The scripts are edited to correct any paths that have
       been set up during compilation so that they are correct for use when
@@ -704,10 +705,10 @@ system and gives an overview of their function and contents.
          .
    
       For more information on how this variable works, see
-      ``meta/classes/binconfig.bbclass`` in the :term:`Source Directory`.
-      You can also find general
+      ``meta/classes/binconfig.bbclass`` in the `Source
+      Directory <#source-directory>`__. You can also find general
       information on the class in the
-      ":ref:`binconfig.bbclass <ref-classes-binconfig>`" section.
+      "```binconfig.bbclass`` <#ref-classes-binconfig>`__" section.
    
    BP
       The base recipe name and version but without any special recipe name
@@ -715,12 +716,12 @@ system and gives an overview of their function and contents.
       comprised of the following: ${BPN}-${PV}
    
    BPN
-      This variable is a version of the :term:`PN` variable with
+      This variable is a version of the ```PN`` <#var-PN>`__ variable with
       common prefixes and suffixes removed, such as ``nativesdk-``,
       ``-cross``, ``-native``, and multilib's ``lib64-`` and ``lib32-``.
       The exact lists of prefixes and suffixes removed are specified by the
-      :term:`MLPREFIX` and
-      :term:`SPECIAL_PKGSUFFIX` variables,
+      ```MLPREFIX`` <#var-MLPREFIX>`__ and
+      ```SPECIAL_PKGSUFFIX`` <#var-SPECIAL_PKGSUFFIX>`__ variables,
       respectively.
    
    BUGTRACKER
@@ -746,37 +747,37 @@ system and gives an overview of their function and contents.
       Specifies the linker command to be used for the build host when the C
       compiler is being used as the linker. By default, ``BUILD_CCLD``
       points to GCC and passes as arguments the value of
-      :term:`BUILD_CC_ARCH`, assuming
+      ```BUILD_CC_ARCH`` <#var-BUILD_CC_ARCH>`__, assuming
       ``BUILD_CC_ARCH`` is set.
    
    BUILD_CFLAGS
       Specifies the flags to pass to the C compiler when building for the
       build host. When building in the ``-native`` context,
-      :term:`CFLAGS` is set to the value of this variable by
+      ```CFLAGS`` <#var-CFLAGS>`__ is set to the value of this variable by
       default.
    
    BUILD_CPPFLAGS
       Specifies the flags to pass to the C preprocessor (i.e. to both the C
       and the C++ compilers) when building for the build host. When
-      building in the ``-native`` context, :term:`CPPFLAGS`
+      building in the ``-native`` context, ```CPPFLAGS`` <#var-CPPFLAGS>`__
       is set to the value of this variable by default.
    
    BUILD_CXXFLAGS
       Specifies the flags to pass to the C++ compiler when building for the
       build host. When building in the ``-native`` context,
-      :term:`CXXFLAGS` is set to the value of this variable
+      ```CXXFLAGS`` <#var-CXXFLAGS>`__ is set to the value of this variable
       by default.
    
    BUILD_FC
       Specifies the Fortran compiler command for the build host. By
       default, ``BUILD_FC`` points to Gfortran and passes as arguments the
-      value of :term:`BUILD_CC_ARCH`, assuming
+      value of ```BUILD_CC_ARCH`` <#var-BUILD_CC_ARCH>`__, assuming
       ``BUILD_CC_ARCH`` is set.
    
    BUILD_LD
       Specifies the linker command for the build host. By default,
       ``BUILD_LD`` points to the GNU linker (ld) and passes as arguments
-      the value of :term:`BUILD_LD_ARCH`, assuming
+      the value of ```BUILD_LD_ARCH`` <#var-BUILD_LD_ARCH>`__, assuming
       ``BUILD_LD_ARCH`` is set.
    
    BUILD_LD_ARCH
@@ -786,14 +787,14 @@ system and gives an overview of their function and contents.
    BUILD_LDFLAGS
       Specifies the flags to pass to the linker when building for the build
       host. When building in the ``-native`` context,
-      :term:`LDFLAGS` is set to the value of this variable
+      ```LDFLAGS`` <#var-LDFLAGS>`__ is set to the value of this variable
       by default.
    
    BUILD_OPTIMIZATION
       Specifies the optimization flags passed to the C compiler when
       building for the build host or the SDK. The flags are passed through
-      the :term:`BUILD_CFLAGS` and
-      :term:`BUILDSDK_CFLAGS` default values.
+      the ```BUILD_CFLAGS`` <#var-BUILD_CFLAGS>`__ and
+      ```BUILDSDK_CFLAGS`` <#var-BUILDSDK_CFLAGS>`__ default values.
    
       The default value of the ``BUILD_OPTIMIZATION`` variable is "-O2
       -pipe".
@@ -807,14 +808,14 @@ system and gives an overview of their function and contents.
    BUILD_PREFIX
       The toolchain binary prefix used for native recipes. The OpenEmbedded
       build system uses the ``BUILD_PREFIX`` value to set the
-      :term:`TARGET_PREFIX` when building for
+      ```TARGET_PREFIX`` <#var-TARGET_PREFIX>`__ when building for
       ``native`` recipes.
    
    BUILD_STRIP
       Specifies the command to be used to strip debugging symbols from
       binaries produced for the build host. By default, ``BUILD_STRIP``
       points to
-      ``${``\ :term:`BUILD_PREFIX`\ ``}strip``.
+      ``${``\ ```BUILD_PREFIX`` <#var-BUILD_PREFIX>`__\ ``}strip``.
    
    BUILD_SYS
       Specifies the system, including the architecture and the operating
@@ -822,9 +823,9 @@ system and gives an overview of their function and contents.
       ``native`` recipes).
    
       The OpenEmbedded build system automatically sets this variable based
-      on :term:`BUILD_ARCH`,
-      :term:`BUILD_VENDOR`, and
-      :term:`BUILD_OS`. You do not need to set the
+      on ```BUILD_ARCH`` <#var-BUILD_ARCH>`__,
+      ```BUILD_VENDOR`` <#var-BUILD_VENDOR>`__, and
+      ```BUILD_OS`` <#var-BUILD_OS>`__. You do not need to set the
       ``BUILD_SYS`` variable yourself.
    
    BUILD_VENDOR
@@ -832,7 +833,7 @@ system and gives an overview of their function and contents.
       The default value is an empty string ("").
    
    BUILDDIR
-      Points to the location of the :term:`Build Directory`.
+      Points to the location of the `Build Directory <#build-directory>`__.
       You can define this directory indirectly through the
       ````` <#structure-core-script>`__ script by passing in a Build
       Directory path when you run the script. If you run the script and do
@@ -840,7 +841,7 @@ system and gives an overview of their function and contents.
       ``build`` in the current directory.
    
    BUILDHISTORY_COMMIT
-      When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
+      When inheriting the ```buildhistory`` <#ref-classes-buildhistory>`__
       class, this variable specifies whether or not to commit the build
       history output in a local Git repository. If set to "1", this local
       repository will be maintained automatically by the ``buildhistory``
@@ -853,10 +854,10 @@ system and gives an overview of their function and contents.
       history output in a local Git repository: BUILDHISTORY_COMMIT ?= "0"
    
    BUILDHISTORY_COMMIT_AUTHOR
-      When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
+      When inheriting the ```buildhistory`` <#ref-classes-buildhistory>`__
       class, this variable specifies the author to use for each Git commit.
       In order for the ``BUILDHISTORY_COMMIT_AUTHOR`` variable to work, the
-      :term:`BUILDHISTORY_COMMIT` variable must
+      ```BUILDHISTORY_COMMIT`` <#var-BUILDHISTORY_COMMIT>`__ variable must
       be set to "1".
    
       Git requires that the value you provide for the
@@ -868,7 +869,7 @@ system and gives an overview of their function and contents.
       BUILDHISTORY_COMMIT_AUTHOR ?= "buildhistory <buildhistory@${DISTRO}>"
    
    BUILDHISTORY_DIR
-      When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
+      When inheriting the ```buildhistory`` <#ref-classes-buildhistory>`__
       class, this variable specifies the directory in which build history
       information is kept. For more information on how the variable works,
       see the ``buildhistory.class``.
@@ -877,7 +878,7 @@ system and gives an overview of their function and contents.
       BUILDHISTORY_DIR ?= "${TOPDIR}/buildhistory"
    
    BUILDHISTORY_FEATURES
-      When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
+      When inheriting the ```buildhistory`` <#ref-classes-buildhistory>`__
       class, this variable specifies the build history features to be
       enabled. For more information on how build history works, see the
       "`Maintaining Build Output
@@ -903,7 +904,7 @@ system and gives an overview of their function and contents.
       features: BUILDHISTORY_FEATURES ?= "image package sdk"
    
    BUILDHISTORY_IMAGE_FILES
-      When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
+      When inheriting the ```buildhistory`` <#ref-classes-buildhistory>`__
       class, this variable specifies a list of paths to files copied from
       the image contents into the build history directory under an
       "image-files" directory in the directory for the image, so that you
@@ -917,11 +918,11 @@ system and gives an overview of their function and contents.
       following files: BUILDHISTORY_IMAGE_FILES ?= "/etc/passwd /etc/group"
    
    BUILDHISTORY_PUSH_REPO
-      When inheriting the :ref:`buildhistory <ref-classes-buildhistory>`
+      When inheriting the ```buildhistory`` <#ref-classes-buildhistory>`__
       class, this variable optionally specifies a remote repository to
       which build history pushes Git changes. In order for
       ``BUILDHISTORY_PUSH_REPO`` to work,
-      :term:`BUILDHISTORY_COMMIT` must be set to
+      ```BUILDHISTORY_COMMIT`` <#var-BUILDHISTORY_COMMIT>`__ must be set to
       "1".
    
       The repository should correspond to a remote address that specifies a
@@ -935,33 +936,33 @@ system and gives an overview of their function and contents.
    BUILDSDK_CFLAGS
       Specifies the flags to pass to the C compiler when building for the
       SDK. When building in the ``nativesdk-`` context,
-      :term:`CFLAGS` is set to the value of this variable by
+      ```CFLAGS`` <#var-CFLAGS>`__ is set to the value of this variable by
       default.
    
    BUILDSDK_CPPFLAGS
       Specifies the flags to pass to the C pre-processor (i.e. to both the
       C and the C++ compilers) when building for the SDK. When building in
-      the ``nativesdk-`` context, :term:`CPPFLAGS` is set
+      the ``nativesdk-`` context, ```CPPFLAGS`` <#var-CPPFLAGS>`__ is set
       to the value of this variable by default.
    
    BUILDSDK_CXXFLAGS
       Specifies the flags to pass to the C++ compiler when building for the
       SDK. When building in the ``nativesdk-`` context,
-      :term:`CXXFLAGS` is set to the value of this variable
+      ```CXXFLAGS`` <#var-CXXFLAGS>`__ is set to the value of this variable
       by default.
    
    BUILDSDK_LDFLAGS
       Specifies the flags to pass to the linker when building for the SDK.
       When building in the ``nativesdk-`` context,
-      :term:`LDFLAGS` is set to the value of this variable
+      ```LDFLAGS`` <#var-LDFLAGS>`__ is set to the value of this variable
       by default.
    
    BUILDSTATS_BASE
       Points to the location of the directory that holds build statistics
       when you use and enable the
-      :ref:`buildstats <ref-classes-buildstats>` class. The
+      ```buildstats`` <#ref-classes-buildstats>`__ class. The
       ``BUILDSTATS_BASE`` directory defaults to
-      ``${``\ :term:`TMPDIR`\ ``}/buildstats/``.
+      ``${``\ ```TMPDIR`` <#var-TMPDIR>`__\ ``}/buildstats/``.
    
    BUSYBOX_SPLIT_SUID
       For the BusyBox recipe, specifies whether to split the output
@@ -975,7 +976,7 @@ system and gives an overview of their function and contents.
    
    CACHE
       Specifies the directory BitBake uses to store a cache of the
-      :term:`Metadata` so it does not need to be parsed every time
+      `Metadata <#metadata>`__ so it does not need to be parsed every time
       BitBake is started.
    
    CC
@@ -989,21 +990,21 @@ system and gives an overview of their function and contents.
       Default initialization for ``CFLAGS`` varies depending on what is
       being built:
    
-      -  :term:`TARGET_CFLAGS` when building for the
+      -  ```TARGET_CFLAGS`` <#var-TARGET_CFLAGS>`__ when building for the
          target
    
-      -  :term:`BUILD_CFLAGS` when building for the
+      -  ```BUILD_CFLAGS`` <#var-BUILD_CFLAGS>`__ when building for the
          build host (i.e. ``-native``)
    
-      -  :term:`BUILDSDK_CFLAGS` when building for
+      -  ```BUILDSDK_CFLAGS`` <#var-BUILDSDK_CFLAGS>`__ when building for
          an SDK (i.e. ``nativesdk-``)
    
    CLASSOVERRIDE
       An internal variable specifying the special class override that
       should currently apply (e.g. "class-target", "class-native", and so
       forth). The classes that use this variable (e.g.
-      :ref:`native <ref-classes-native>`,
-      :ref:`nativesdk <ref-classes-nativesdk>`, and so forth) set the
+      ```native`` <#ref-classes-native>`__,
+      ```nativesdk`` <#ref-classes-nativesdk>`__, and so forth) set the
       variable to appropriate values.
    
       .. note::
@@ -1021,19 +1022,19 @@ system and gives an overview of their function and contents.
       building for the build host: FOO_class-native = "native" FOO =
       "other" The underlying mechanism behind ``CLASSOVERRIDE`` is simply
       that it is included in the default value of
-      :term:`OVERRIDES`.
+      ```OVERRIDES`` <#var-OVERRIDES>`__.
    
    CLEANBROKEN
       If set to "1" within a recipe, ``CLEANBROKEN`` specifies that the
       ``make clean`` command does not work for the software being built.
       Consequently, the OpenEmbedded build system will not try to run
-      ``make clean`` during the :ref:`ref-tasks-configure`
+      ``make clean`` during the ```do_configure`` <#ref-tasks-configure>`__
       task, which is the default behavior.
    
    COMBINED_FEATURES
       Provides a list of hardware features that are enabled in both
-      :term:`MACHINE_FEATURES` and
-      :term:`DISTRO_FEATURES`. This select list of
+      ```MACHINE_FEATURES`` <#var-MACHINE_FEATURES>`__ and
+      ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__. This select list of
       features contains features that make sense to be controlled both at
       the machine and distribution configuration level. For example, the
       "bluetooth" feature requires hardware support but should also be
@@ -1041,15 +1042,15 @@ system and gives an overview of their function and contents.
       Bluetooth but you do not ever intend to use it.
    
    COMMON_LICENSE_DIR
-      Points to ``meta/files/common-licenses`` in the
-      :term:`Source Directory`, which is where generic license
+      Points to ``meta/files/common-licenses`` in the `Source
+      Directory <#source-directory>`__, which is where generic license
       files reside.
    
    COMPATIBLE_HOST
       A regular expression that resolves to one or more hosts (when the
       recipe is native) or one or more targets (when the recipe is
       non-native) with which a recipe is compatible. The regular expression
-      is matched against :term:`HOST_SYS`. You can use the
+      is matched against ```HOST_SYS`` <#var-HOST_SYS>`__. You can use the
       variable to stop recipes from being built for classes of systems with
       which the recipes are not compatible. Stopping these builds is
       particularly useful with kernels. The variable also helps to increase
@@ -1059,7 +1060,7 @@ system and gives an overview of their function and contents.
    COMPATIBLE_MACHINE
       A regular expression that resolves to one or more target machines
       with which a recipe is compatible. The regular expression is matched
-      against :term:`MACHINEOVERRIDES`. You can use
+      against ```MACHINEOVERRIDES`` <#var-MACHINEOVERRIDES>`__. You can use
       the variable to stop recipes from being built for machines with which
       the recipes are not compatible. Stopping these builds is particularly
       useful with kernels. The variable also helps to increase parsing
@@ -1083,7 +1084,7 @@ system and gives an overview of their function and contents.
    
       The resulting list of complementary packages is associated with an
       item that can be added to
-      :term:`IMAGE_FEATURES`. An example usage of
+      ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__. An example usage of
       this is the "dev-pkgs" item that when added to ``IMAGE_FEATURES``
       will install -dev packages (containing headers and other development
       files) for every package in the image.
@@ -1098,9 +1099,9 @@ system and gives an overview of their function and contents.
       sysroots for other recipes.
    
       The default is
-      "``${``\ :term:`STAGING_DIR`\ ``}-components``."
+      "``${``\ ```STAGING_DIR`` <#var-STAGING_DIR>`__\ ``}-components``."
       (i.e.
-      "``${``\ :term:`TMPDIR`\ ``}/sysroots-components``").
+      "``${``\ ```TMPDIR`` <#var-TMPDIR>`__\ ``}/sysroots-components``").
    
    CONF_VERSION
       Tracks the version of the local configuration file (i.e.
@@ -1182,7 +1183,7 @@ system and gives an overview of their function and contents.
    
    CONFLICT_DISTRO_FEATURES
       When inheriting the
-      :ref:`distro_features_check <ref-classes-distro_features_check>`
+      ```distro_features_check`` <#ref-classes-distro_features_check>`__
       class, this variable identifies distribution features that would be
       in conflict should the recipe be built. In other words, if the
       ``CONFLICT_DISTRO_FEATURES`` variable lists a feature that also
@@ -1191,9 +1192,9 @@ system and gives an overview of their function and contents.
    
    COPYLEFT_LICENSE_EXCLUDE
       A space-separated list of licenses to exclude from the source
-      archived by the :ref:`archiver <ref-classes-archiver>` class. In
+      archived by the ```archiver`` <#ref-classes-archiver>`__ class. In
       other words, if a license in a recipe's
-      :term:`LICENSE` value is in the value of
+      ```LICENSE`` <#var-LICENSE>`__ value is in the value of
       ``COPYLEFT_LICENSE_EXCLUDE``, then its source is not archived by the
       class.
    
@@ -1207,62 +1208,62 @@ system and gives an overview of their function and contents.
    
       The default value, which is "CLOSED Proprietary", for
       ``COPYLEFT_LICENSE_EXCLUDE`` is set by the
-      :ref:`copyleft_filter <ref-classes-copyleft_filter>` class, which
+      ```copyleft_filter`` <#ref-classes-copyleft_filter>`__ class, which
       is inherited by the ``archiver`` class.
    
    COPYLEFT_LICENSE_INCLUDE
       A space-separated list of licenses to include in the source archived
-      by the :ref:`archiver <ref-classes-archiver>` class. In other
-      words, if a license in a recipe's :term:`LICENSE`
+      by the ```archiver`` <#ref-classes-archiver>`__ class. In other
+      words, if a license in a recipe's ```LICENSE`` <#var-LICENSE>`__
       value is in the value of ``COPYLEFT_LICENSE_INCLUDE``, then its
       source is archived by the class.
    
       The default value is set by the
-      :ref:`copyleft_filter <ref-classes-copyleft_filter>` class, which
+      ```copyleft_filter`` <#ref-classes-copyleft_filter>`__ class, which
       is inherited by the ``archiver`` class. The default value includes
       "GPL*", "LGPL*", and "AGPL*".
    
    COPYLEFT_PN_EXCLUDE
       A list of recipes to exclude in the source archived by the
-      :ref:`archiver <ref-classes-archiver>` class. The
+      ```archiver`` <#ref-classes-archiver>`__ class. The
       ``COPYLEFT_PN_EXCLUDE`` variable overrides the license inclusion and
       exclusion caused through the
-      :term:`COPYLEFT_LICENSE_INCLUDE` and
-      :term:`COPYLEFT_LICENSE_EXCLUDE`
+      ```COPYLEFT_LICENSE_INCLUDE`` <#var-COPYLEFT_LICENSE_INCLUDE>`__ and
+      ```COPYLEFT_LICENSE_EXCLUDE`` <#var-COPYLEFT_LICENSE_EXCLUDE>`__
       variables, respectively.
    
       The default value, which is "" indicating to not explicitly exclude
       any recipes by name, for ``COPYLEFT_PN_EXCLUDE`` is set by the
-      :ref:`copyleft_filter <ref-classes-copyleft_filter>` class, which
+      ```copyleft_filter`` <#ref-classes-copyleft_filter>`__ class, which
       is inherited by the ``archiver`` class.
    
    COPYLEFT_PN_INCLUDE
       A list of recipes to include in the source archived by the
-      :ref:`archiver <ref-classes-archiver>` class. The
+      ```archiver`` <#ref-classes-archiver>`__ class. The
       ``COPYLEFT_PN_INCLUDE`` variable overrides the license inclusion and
       exclusion caused through the
-      :term:`COPYLEFT_LICENSE_INCLUDE` and
-      :term:`COPYLEFT_LICENSE_EXCLUDE`
+      ```COPYLEFT_LICENSE_INCLUDE`` <#var-COPYLEFT_LICENSE_INCLUDE>`__ and
+      ```COPYLEFT_LICENSE_EXCLUDE`` <#var-COPYLEFT_LICENSE_EXCLUDE>`__
       variables, respectively.
    
       The default value, which is "" indicating to not explicitly include
       any recipes by name, for ``COPYLEFT_PN_INCLUDE`` is set by the
-      :ref:`copyleft_filter <ref-classes-copyleft_filter>` class, which
+      ```copyleft_filter`` <#ref-classes-copyleft_filter>`__ class, which
       is inherited by the ``archiver`` class.
    
    COPYLEFT_RECIPE_TYPES
       A space-separated list of recipe types to include in the source
-      archived by the :ref:`archiver <ref-classes-archiver>` class.
+      archived by the ```archiver`` <#ref-classes-archiver>`__ class.
       Recipe types are ``target``, ``native``, ``nativesdk``, ``cross``,
       ``crosssdk``, and ``cross-canadian``.
    
       The default value, which is "target*", for ``COPYLEFT_RECIPE_TYPES``
-      is set by the :ref:`copyleft_filter <ref-classes-copyleft_filter>`
+      is set by the ```copyleft_filter`` <#ref-classes-copyleft_filter>`__
       class, which is inherited by the ``archiver`` class.
    
    COPY_LIC_DIRS
       If set to "1" along with the
-      :term:`COPY_LIC_MANIFEST` variable, the
+      ```COPY_LIC_MANIFEST`` <#var-COPY_LIC_MANIFEST>`__ variable, the
       OpenEmbedded build system copies into the image the license files,
       which are located in ``/usr/share/common-licenses``, for each
       package. The license files are placed in directories within the image
@@ -1303,7 +1304,7 @@ system and gives an overview of their function and contents.
    CORE_IMAGE_EXTRA_INSTALL
       Specifies the list of packages to be added to the image. You should
       only set this variable in the ``local.conf`` configuration file found
-      in the :term:`Build Directory`.
+      in the `Build Directory <#build-directory>`__.
    
       This variable replaces ``POKY_EXTRA_INSTALL``, which is no longer
       supported.
@@ -1320,7 +1321,7 @@ system and gives an overview of their function and contents.
       the ``poky/meta`` layer.
    
    COREBASE_FILES
-      Lists files from the :term:`COREBASE` directory that
+      Lists files from the ```COREBASE`` <#var-COREBASE>`__ directory that
       should be copied other than the layers listed in the
       ``bblayers.conf`` file. The ``COREBASE_FILES`` variable exists for
       the purpose of copying metadata from the OpenEmbedded build system
@@ -1344,19 +1345,19 @@ system and gives an overview of their function and contents.
       Default initialization for ``CPPFLAGS`` varies depending on what is
       being built:
    
-      -  :term:`TARGET_CPPFLAGS` when building for
+      -  ```TARGET_CPPFLAGS`` <#var-TARGET_CPPFLAGS>`__ when building for
          the target
    
-      -  :term:`BUILD_CPPFLAGS` when building for the
+      -  ```BUILD_CPPFLAGS`` <#var-BUILD_CPPFLAGS>`__ when building for the
          build host (i.e. ``-native``)
    
-      -  :term:`BUILDSDK_CPPFLAGS` when building
+      -  ```BUILDSDK_CPPFLAGS`` <#var-BUILDSDK_CPPFLAGS>`__ when building
          for an SDK (i.e. ``nativesdk-``)
    
    CROSS_COMPILE
       The toolchain binary prefix for the target tools. The
       ``CROSS_COMPILE`` variable is the same as the
-      :term:`TARGET_PREFIX` variable.
+      ```TARGET_PREFIX`` <#var-TARGET_PREFIX>`__ variable.
    
       .. note::
    
@@ -1380,19 +1381,19 @@ system and gives an overview of their function and contents.
       Default initialization for ``CXXFLAGS`` varies depending on what is
       being built:
    
-      -  :term:`TARGET_CXXFLAGS` when building for
+      -  ```TARGET_CXXFLAGS`` <#var-TARGET_CXXFLAGS>`__ when building for
          the target
    
-      -  :term:`BUILD_CXXFLAGS` when building for the
+      -  ```BUILD_CXXFLAGS`` <#var-BUILD_CXXFLAGS>`__ when building for the
          build host (i.e. ``-native``)
    
-      -  :term:`BUILDSDK_CXXFLAGS` when building
+      -  ```BUILDSDK_CXXFLAGS`` <#var-BUILDSDK_CXXFLAGS>`__ when building
          for an SDK (i.e. ``nativesdk-``)
    
    D
-      The destination directory. The location in the :term:`Build Directory`
-      where components are installed by the
-      :ref:`ref-tasks-install` task. This location defaults
+      The destination directory. The location in the `Build
+      Directory <#build-directory>`__ where components are installed by the
+      ```do_install`` <#ref-tasks-install>`__ task. This location defaults
       to: ${WORKDIR}/image
    
       .. note::
@@ -1410,7 +1411,7 @@ system and gives an overview of their function and contents.
       suitable for timestamps.
    
    DEBIAN_NOAUTONAME
-      When the :ref:`debian <ref-classes-debian>` class is inherited,
+      When the ```debian`` <#ref-classes-debian>`__ class is inherited,
       which is the default behavior, ``DEBIAN_NOAUTONAME`` specifies a
       particular package should not be renamed according to Debian library
       package naming. You must use the package name as an override when you
@@ -1418,7 +1419,7 @@ system and gives an overview of their function and contents.
       DEBIAN_NOAUTONAME_fontconfig-utils = "1"
    
    DEBIANNAME
-      When the :ref:`debian <ref-classes-debian>` class is inherited,
+      When the ```debian`` <#ref-classes-debian>`__ class is inherited,
       which is the default behavior, ``DEBIANNAME`` allows you to override
       the library name for an individual package. Overriding the library
       name in these cases is rare. You must use the package name as an
@@ -1456,12 +1457,12 @@ system and gives an overview of their function and contents.
       The default CPU and Application Binary Interface (ABI) tunings (i.e.
       the "tune") used by the OpenEmbedded build system. The
       ``DEFAULTTUNE`` helps define
-      :term:`TUNE_FEATURES`.
+      ```TUNE_FEATURES`` <#var-TUNE_FEATURES>`__.
    
       The default tune is either implicitly or explicitly set by the
-      machine (:term:`MACHINE`). However, you can override
+      machine (```MACHINE`` <#var-MACHINE>`__). However, you can override
       the setting using available tunes as defined with
-      :term:`AVAILTUNES`.
+      ```AVAILTUNES`` <#var-AVAILTUNES>`__.
    
    DEPENDS
       Lists a recipe's build-time dependencies. These are dependencies on
@@ -1472,13 +1473,13 @@ system and gives an overview of their function and contents.
       assignment: DEPENDS = "bar" The practical effect of the previous
       assignment is that all files installed by bar will be available in
       the appropriate staging sysroot, given by the
-      :term:`STAGING_DIR* <STAGING_DIR>` variables, by the time the
-      :ref:`ref-tasks-configure` task for ``foo`` runs.
+      ```STAGING_DIR*`` <#var-STAGING_DIR>`__ variables, by the time the
+      ```do_configure`` <#ref-tasks-configure>`__ task for ``foo`` runs.
       This mechanism is implemented by having ``do_configure`` depend on
-      the :ref:`ref-tasks-populate_sysroot` task of
+      the ```do_populate_sysroot`` <#ref-tasks-populate_sysroot>`__ task of
       each recipe listed in ``DEPENDS``, through a
-      ``[``\ :ref:`deptask <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
-      declaration in the :ref:`base <ref-classes-base>` class.
+      ``[``\ ```deptask`` <&YOCTO_DOCS_BB_URL;#variable-flags>`__\ ``]``
+      declaration in the ```base`` <#ref-classes-base>`__ class.
    
       .. note::
    
@@ -1491,13 +1492,13 @@ system and gives an overview of their function and contents.
       that run on the build machine during the build. For example, a recipe
       that makes use of a code generator built by the recipe ``codegen``
       might have the following: DEPENDS = "codegen-native" For more
-      information, see the :ref:`native <ref-classes-native>` class and
-      the :term:`EXTRANATIVEPATH` variable.
+      information, see the ```native`` <#ref-classes-native>`__ class and
+      the ```EXTRANATIVEPATH`` <#var-EXTRANATIVEPATH>`__ variable.
    
       .. note::
    
          -  ``DEPENDS`` is a list of recipe names. Or, to be more precise,
-            it is a list of :term:`PROVIDES` names, which
+            it is a list of ```PROVIDES`` <#var-PROVIDES>`__ names, which
             usually match recipe names. Putting a package name such as
             "foo-dev" in ``DEPENDS`` does not make sense. Use "foo"
             instead, as this will put files from all the packages that make
@@ -1523,9 +1524,9 @@ system and gives an overview of their function and contents.
             fail to link against ``libfoo``.
    
       For information on runtime dependencies, see the
-      :term:`RDEPENDS` variable. You can also see the
-      ":ref:`Tasks <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks>`" and
-      ":ref:`Dependencies <bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies>`" sections in the
+      ```RDEPENDS`` <#var-RDEPENDS>`__ variable. You can also see the
+      "`Tasks <&YOCTO_DOCS_BB_URL;#tasks>`__" and
+      "`Dependencies <&YOCTO_DOCS_BB_URL;#dependencies>`__" sections in the
       BitBake User Manual for additional information on tasks and
       dependencies.
    
@@ -1533,7 +1534,7 @@ system and gives an overview of their function and contents.
       Points to the general area that the OpenEmbedded build system uses to
       place images, packages, SDKs, and other output files that are ready
       to be used outside of the build system. By default, this directory
-      resides within the :term:`Build Directory` as
+      resides within the `Build Directory <#build-directory>`__ as
       ``${TMPDIR}/deploy``.
    
       For more information on the structure of the Build Directory, see
@@ -1549,17 +1550,17 @@ system and gives an overview of their function and contents.
       Points to the area that the OpenEmbedded build system uses to place
       Debian packages that are ready to be used outside of the build
       system. This variable applies only when
-      :term:`PACKAGE_CLASSES` contains
+      ```PACKAGE_CLASSES`` <#var-PACKAGE_CLASSES>`__ contains
       "package_deb".
    
       The BitBake configuration file initially defines the
       ``DEPLOY_DIR_DEB`` variable as a sub-folder of
-      :term:`DEPLOY_DIR`: DEPLOY_DIR_DEB =
+      ```DEPLOY_DIR`` <#var-DEPLOY_DIR>`__: DEPLOY_DIR_DEB =
       "${DEPLOY_DIR}/deb"
    
-      The :ref:`package_deb <ref-classes-package_deb>` class uses the
+      The ```package_deb`` <#ref-classes-package_deb>`__ class uses the
       ``DEPLOY_DIR_DEB`` variable to make sure the
-      :ref:`ref-tasks-package_write_deb` task
+      ```do_package_write_deb`` <#ref-tasks-package_write_deb>`__ task
       writes Debian packages into the appropriate folder. For more
       information on how packaging works, see the "`Package
       Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section
@@ -1570,7 +1571,7 @@ system and gives an overview of their function and contents.
       images and other associated output files that are ready to be
       deployed onto the target machine. The directory is machine-specific
       as it contains the ``${MACHINE}`` name. By default, this directory
-      resides within the :term:`Build Directory` as
+      resides within the `Build Directory <#build-directory>`__ as
       ``${DEPLOY_DIR}/images/${MACHINE}/``.
    
       For more information on the structure of the Build Directory, see
@@ -1585,16 +1586,16 @@ system and gives an overview of their function and contents.
       Points to the area that the OpenEmbedded build system uses to place
       IPK packages that are ready to be used outside of the build system.
       This variable applies only when
-      :term:`PACKAGE_CLASSES` contains
+      ```PACKAGE_CLASSES`` <#var-PACKAGE_CLASSES>`__ contains
       "package_ipk".
    
       The BitBake configuration file initially defines this variable as a
-      sub-folder of :term:`DEPLOY_DIR`: DEPLOY_DIR_IPK =
+      sub-folder of ```DEPLOY_DIR`` <#var-DEPLOY_DIR>`__: DEPLOY_DIR_IPK =
       "${DEPLOY_DIR}/ipk"
    
-      The :ref:`package_ipk <ref-classes-package_ipk>` class uses the
+      The ```package_ipk`` <#ref-classes-package_ipk>`__ class uses the
       ``DEPLOY_DIR_IPK`` variable to make sure the
-      :ref:`ref-tasks-package_write_ipk` task
+      ```do_package_write_ipk`` <#ref-tasks-package_write_ipk>`__ task
       writes IPK packages into the appropriate folder. For more information
       on how packaging works, see the "`Package
       Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section
@@ -1604,16 +1605,16 @@ system and gives an overview of their function and contents.
       Points to the area that the OpenEmbedded build system uses to place
       RPM packages that are ready to be used outside of the build system.
       This variable applies only when
-      :term:`PACKAGE_CLASSES` contains
+      ```PACKAGE_CLASSES`` <#var-PACKAGE_CLASSES>`__ contains
       "package_rpm".
    
       The BitBake configuration file initially defines this variable as a
-      sub-folder of :term:`DEPLOY_DIR`: DEPLOY_DIR_RPM =
+      sub-folder of ```DEPLOY_DIR`` <#var-DEPLOY_DIR>`__: DEPLOY_DIR_RPM =
       "${DEPLOY_DIR}/rpm"
    
-      The :ref:`package_rpm <ref-classes-package_rpm>` class uses the
+      The ```package_rpm`` <#ref-classes-package_rpm>`__ class uses the
       ``DEPLOY_DIR_RPM`` variable to make sure the
-      :ref:`ref-tasks-package_write_rpm` task
+      ```do_package_write_rpm`` <#ref-tasks-package_write_rpm>`__ task
       writes RPM packages into the appropriate folder. For more information
       on how packaging works, see the "`Package
       Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section
@@ -1623,54 +1624,54 @@ system and gives an overview of their function and contents.
       Points to the area that the OpenEmbedded build system uses to place
       tarballs that are ready to be used outside of the build system. This
       variable applies only when
-      :term:`PACKAGE_CLASSES` contains
+      ```PACKAGE_CLASSES`` <#var-PACKAGE_CLASSES>`__ contains
       "package_tar".
    
       The BitBake configuration file initially defines this variable as a
-      sub-folder of :term:`DEPLOY_DIR`: DEPLOY_DIR_TAR =
+      sub-folder of ```DEPLOY_DIR`` <#var-DEPLOY_DIR>`__: DEPLOY_DIR_TAR =
       "${DEPLOY_DIR}/tar"
    
-      The :ref:`package_tar <ref-classes-package_tar>` class uses the
+      The ```package_tar`` <#ref-classes-package_tar>`__ class uses the
       ``DEPLOY_DIR_TAR`` variable to make sure the
-      :ref:`ref-tasks-package_write_tar` task
+      ```do_package_write_tar`` <#ref-tasks-package_write_tar>`__ task
       writes TAR packages into the appropriate folder. For more information
       on how packaging works, see the "`Package
       Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section
       in the Yocto Project Overview and Concepts Manual.
    
    DEPLOYDIR
-      When inheriting the :ref:`deploy <ref-classes-deploy>` class, the
+      When inheriting the ```deploy`` <#ref-classes-deploy>`__ class, the
       ``DEPLOYDIR`` points to a temporary work area for deployed files that
       is set in the ``deploy`` class as follows: DEPLOYDIR =
-      "${WORKDIR}/deploy-${:term:`PN`}"
+      "${WORKDIR}/deploy-${```PN`` <#var-PN>`__}"
    
       Recipes inheriting the ``deploy`` class should copy files to be
       deployed into ``DEPLOYDIR``, and the class will take care of copying
-      them into :term:`DEPLOY_DIR_IMAGE`
+      them into ```DEPLOY_DIR_IMAGE`` <#var-DEPLOY_DIR_IMAGE>`__
       afterwards.
    
    DESCRIPTION
       The package description used by package managers. If not set,
-      ``DESCRIPTION`` takes the value of the :term:`SUMMARY`
+      ``DESCRIPTION`` takes the value of the ```SUMMARY`` <#var-SUMMARY>`__
       variable.
    
    DISTRO
       The short name of the distribution. For information on the long name
-      of the distribution, see the :term:`DISTRO_NAME`
+      of the distribution, see the ```DISTRO_NAME`` <#var-DISTRO_NAME>`__
       variable.
    
       The ``DISTRO`` variable corresponds to a distribution configuration
       file whose root name is the same as the variable's argument and whose
       filename extension is ``.conf``. For example, the distribution
       configuration file for the Poky distribution is named ``poky.conf``
-      and resides in the ``meta-poky/conf/distro`` directory of the
-      :term:`Source Directory`.
+      and resides in the ``meta-poky/conf/distro`` directory of the `Source
+      Directory <#source-directory>`__.
    
       Within that ``poky.conf`` file, the ``DISTRO`` variable is set as
       follows: DISTRO = "poky"
    
       Distribution configuration files are located in a ``conf/distro``
-      directory within the :term:`Metadata` that contains the
+      directory within the `Metadata <#metadata>`__ that contains the
       distribution configuration. The value for ``DISTRO`` must not contain
       spaces, and is typically all lower-case.
    
@@ -1708,7 +1709,7 @@ system and gives an overview of their function and contents.
       In most cases, the presence or absence of a feature in
       ``DISTRO_FEATURES`` is translated to the appropriate option supplied
       to the configure script during the
-      :ref:`ref-tasks-configure` task for recipes that
+      ```do_configure`` <#ref-tasks-configure>`__ task for recipes that
       optionally support the feature. For example, specifying "x11" in
       ``DISTRO_FEATURES``, causes every piece of software built for the
       target that can optionally support X11 to have its X11 support
@@ -1743,59 +1744,59 @@ system and gives an overview of their function and contents.
    
       When creating a custom distribution, you might find it useful to be
       able to reuse the default
-      :term:`DISTRO_FEATURES` options without the
+      ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__ options without the
       need to write out the full set. Here is an example that uses
       ``DISTRO_FEATURES_DEFAULT`` from a custom distro configuration file:
       DISTRO_FEATURES ?= "${DISTRO_FEATURES_DEFAULT} myfeature"
    
    DISTRO_FEATURES_FILTER_NATIVE
       Specifies a list of features that if present in the target
-      :term:`DISTRO_FEATURES` value should be
+      ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__ value should be
       included in ``DISTRO_FEATURES`` when building native recipes. This
       variable is used in addition to the features filtered using the
-      :term:`DISTRO_FEATURES_NATIVE`
+      ```DISTRO_FEATURES_NATIVE`` <#var-DISTRO_FEATURES_NATIVE>`__
       variable.
    
    DISTRO_FEATURES_FILTER_NATIVESDK
       Specifies a list of features that if present in the target
-      :term:`DISTRO_FEATURES` value should be
+      ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__ value should be
       included in ``DISTRO_FEATURES`` when building nativesdk recipes. This
       variable is used in addition to the features filtered using the
-      :term:`DISTRO_FEATURES_NATIVESDK`
+      ```DISTRO_FEATURES_NATIVESDK`` <#var-DISTRO_FEATURES_NATIVESDK>`__
       variable.
    
    DISTRO_FEATURES_NATIVE
       Specifies a list of features that should be included in
-      :term:`DISTRO_FEATURES` when building native
+      ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__ when building native
       recipes. This variable is used in addition to the features filtered
       using the
-      :term:`DISTRO_FEATURES_FILTER_NATIVE`
+      ```DISTRO_FEATURES_FILTER_NATIVE`` <#var-DISTRO_FEATURES_FILTER_NATIVE>`__
       variable.
    
    DISTRO_FEATURES_NATIVESDK
       Specifies a list of features that should be included in
-      :term:`DISTRO_FEATURES` when building
+      ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__ when building
       nativesdk recipes. This variable is used in addition to the features
       filtered using the
-      :term:`DISTRO_FEATURES_FILTER_NATIVESDK`
+      ```DISTRO_FEATURES_FILTER_NATIVESDK`` <#var-DISTRO_FEATURES_FILTER_NATIVESDK>`__
       variable.
    
    DISTRO_NAME
       The long name of the distribution. For information on the short name
-      of the distribution, see the :term:`DISTRO` variable.
+      of the distribution, see the ```DISTRO`` <#var-DISTRO>`__ variable.
    
       The ``DISTRO_NAME`` variable corresponds to a distribution
       configuration file whose root name is the same as the variable's
       argument and whose filename extension is ``.conf``. For example, the
       distribution configuration file for the Poky distribution is named
       ``poky.conf`` and resides in the ``meta-poky/conf/distro`` directory
-      of the :term:`Source Directory`.
+      of the `Source Directory <#source-directory>`__.
    
       Within that ``poky.conf`` file, the ``DISTRO_NAME`` variable is set
       as follows: DISTRO_NAME = "Poky (Yocto Project Reference Distro)"
    
       Distribution configuration files are located in a ``conf/distro``
-      directory within the :term:`Metadata` that contains the
+      directory within the `Metadata <#metadata>`__ that contains the
       distribution configuration.
    
       .. note::
@@ -1813,27 +1814,27 @@ system and gives an overview of their function and contents.
    DISTROOVERRIDES
       A colon-separated list of overrides specific to the current
       distribution. By default, this list includes the value of
-      :term:`DISTRO`.
+      ```DISTRO`` <#var-DISTRO>`__.
    
       You can extend ``DISTROOVERRIDES`` to add extra overrides that should
       apply to the distribution.
    
       The underlying mechanism behind ``DISTROOVERRIDES`` is simply that it
       is included in the default value of
-      :term:`OVERRIDES`.
+      ```OVERRIDES`` <#var-OVERRIDES>`__.
    
    DL_DIR
       The central download directory used by the build process to store
       downloads. By default, ``DL_DIR`` gets files suitable for mirroring
       for everything except Git repositories. If you want tarballs of Git
       repositories, use the
-      :term:`BB_GENERATE_MIRROR_TARBALLS`
+      ```BB_GENERATE_MIRROR_TARBALLS`` <#var-BB_GENERATE_MIRROR_TARBALLS>`__
       variable.
    
       You can set this directory by defining the ``DL_DIR`` variable in the
       ``conf/local.conf`` file. This directory is self-maintaining and you
       should not have to touch it. By default, the directory is
-      ``downloads`` in the :term:`Build Directory`. #DL_DIR
+      ``downloads`` in the `Build Directory <#build-directory>`__. #DL_DIR
       ?= "${TOPDIR}/downloads" To specify a different download directory,
       simply remove the comment from the line and provide your directory.
    
@@ -1853,12 +1854,12 @@ system and gives an overview of their function and contents.
       process gets source files when working behind a firewall or proxy
       server, see this specific question in the
       "`FAQ <#how-does-the-yocto-project-obtain-source-code-and-will-it-work-behind-my-firewall-or-proxy-server>`__"
-      chapter. You can also refer to the
-      ":yocto_wiki:`Working Behind a Network Proxy </wiki/Working_Behind_a_Network_Proxy>`"
-      Wiki page.
+      chapter. You can also refer to the "`Working Behind a Network
+      Proxy <&YOCTO_WIKI_URL;/wiki/Working_Behind_a_Network_Proxy>`__" Wiki
+      page.
    
    DOC_COMPRESS
-      When inheriting the :ref:`compress_doc <ref-classes-compress_doc>`
+      When inheriting the ```compress_doc`` <#ref-classes-compress_doc>`__
       class, this variable sets the compression policy used when the
       OpenEmbedded build system compresses man pages and info pages. By
       default, the compression method used is gz (gzip). Other policies
@@ -1869,12 +1870,12 @@ system and gives an overview of their function and contents.
    
    EFI_PROVIDER
       When building bootable images (i.e. where ``hddimg``, ``iso``, or
-      ``wic.vmdk`` is in :term:`IMAGE_FSTYPES`), the
+      ``wic.vmdk`` is in ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__), the
       ``EFI_PROVIDER`` variable specifies the EFI bootloader to use. The
       default is "grub-efi", but "systemd-boot" can be used instead.
    
-      See the :ref:`systemd-boot <ref-classes-systemd-boot>` and
-      :ref:`image-live <ref-classes-image-live>` classes for more
+      See the ```systemd-boot`` <#ref-classes-systemd-boot>`__ and
+      ```image-live`` <#ref-classes-image-live>`__ classes for more
       information.
    
    ENABLE_BINARY_LOCALE_GENERATION
@@ -1883,13 +1884,13 @@ system and gives an overview of their function and contents.
       less).
    
    ERR_REPORT_DIR
-      When used with the :ref:`report-error <ref-classes-report-error>`
+      When used with the ```report-error`` <#ref-classes-report-error>`__
       class, specifies the path used for storing the debug files created by
       the `error reporting
       tool <&YOCTO_DOCS_DEV_URL;#using-the-error-reporting-tool>`__, which
       allows you to submit build errors you encounter to a central
       database. By default, the value of this variable is
-      ``${``\ :term:`LOG_DIR`\ ``}/error-report``.
+      ``${``\ ```LOG_DIR`` <#var-LOG_DIR>`__\ ``}/error-report``.
    
       You can set ``ERR_REPORT_DIR`` to the path you want the error
       reporting tool to store the debug files as follows in your
@@ -1900,7 +1901,7 @@ system and gives an overview of their function and contents.
       errors by the OpenEmbedded build system. You set this variable in
       your distribution configuration file. For a list of the checks you
       can control with this variable, see the
-      ":ref:`insane.bbclass <ref-classes-insane>`" section.
+      "```insane.bbclass`` <#ref-classes-insane>`__" section.
    
    EXCLUDE_FROM_SHLIBS
       Triggers the OpenEmbedded build system's shared libraries resolver to
@@ -1917,7 +1918,7 @@ system and gives an overview of their function and contents.
          implicitly define some dependencies between packages.
    
       The ``EXCLUDE_FROM_SHLIBS`` variable is similar to the
-      :term:`PRIVATE_LIBS` variable, which excludes a
+      ```PRIVATE_LIBS`` <#var-PRIVATE_LIBS>`__ variable, which excludes a
       package's particular libraries only and not the whole package.
    
       Use the ``EXCLUDE_FROM_SHLIBS`` variable by setting it to "1" for a
@@ -1944,13 +1945,13 @@ system and gives an overview of their function and contents.
    
    EXTENDPE
       Used with file and pathnames to create a prefix for a recipe's
-      version based on the recipe's :term:`PE` value. If ``PE``
+      version based on the recipe's ```PE`` <#var-PE>`__ value. If ``PE``
       is set and greater than zero for a recipe, ``EXTENDPE`` becomes that
       value (e.g if ``PE`` is equal to "1" then ``EXTENDPE`` becomes "1_").
       If a recipe's ``PE`` is not set (the default) or is equal to zero,
       ``EXTENDPE`` becomes "".
    
-      See the :term:`STAMP` variable for an example.
+      See the ```STAMP`` <#var-STAMP>`__ variable for an example.
    
    EXTENDPKGV
       The full package version specification as it appears on the final
@@ -1970,43 +1971,43 @@ system and gives an overview of their function and contents.
       any externally installed tools. Setting the ``EXTERNAL_KERNEL_TOOLS``
       variable tells the OpenEmbedded build system to prefer the installed
       external tools. See the
-      :ref:`kernel-yocto <ref-classes-kernel-yocto>` class in
+      ```kernel-yocto`` <#ref-classes-kernel-yocto>`__ class in
       ``meta/classes`` to see how the variable is used.
    
    EXTERNALSRC
-      When inheriting the :ref:`externalsrc <ref-classes-externalsrc>`
+      When inheriting the ```externalsrc`` <#ref-classes-externalsrc>`__
       class, this variable points to the source tree, which is outside of
       the OpenEmbedded build system. When set, this variable sets the
-      :term:`S` variable, which is what the OpenEmbedded build
+      ```S`` <#var-S>`__ variable, which is what the OpenEmbedded build
       system uses to locate unpacked recipe source code.
    
       For more information on ``externalsrc.bbclass``, see the
-      ":ref:`externalsrc.bbclass <ref-classes-externalsrc>`" section. You
+      "```externalsrc.bbclass`` <#ref-classes-externalsrc>`__" section. You
       can also find information on how to use this variable in the
       "`Building Software from an External
       Source <&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source>`__"
       section in the Yocto Project Development Tasks Manual.
    
    EXTERNALSRC_BUILD
-      When inheriting the :ref:`externalsrc <ref-classes-externalsrc>`
+      When inheriting the ```externalsrc`` <#ref-classes-externalsrc>`__
       class, this variable points to the directory in which the recipe's
       source code is built, which is outside of the OpenEmbedded build
-      system. When set, this variable sets the :term:`B` variable,
+      system. When set, this variable sets the ```B`` <#var-B>`__ variable,
       which is what the OpenEmbedded build system uses to locate the Build
       Directory.
    
       For more information on ``externalsrc.bbclass``, see the
-      ":ref:`externalsrc.bbclass <ref-classes-externalsrc>`" section. You
+      "```externalsrc.bbclass`` <#ref-classes-externalsrc>`__" section. You
       can also find information on how to use this variable in the
       "`Building Software from an External
       Source <&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source>`__"
       section in the Yocto Project Development Tasks Manual.
    
    EXTRA_AUTORECONF
-      For recipes inheriting the :ref:`autotools <ref-classes-autotools>`
+      For recipes inheriting the ```autotools`` <#ref-classes-autotools>`__
       class, you can use ``EXTRA_AUTORECONF`` to specify extra options to
       pass to the ``autoreconf`` command that is executed during the
-      :ref:`ref-tasks-configure` task.
+      ```do_configure`` <#ref-tasks-configure>`__ task.
    
       The default value is "--exclude=autopoint".
    
@@ -2015,7 +2016,7 @@ system and gives an overview of their function and contents.
       more than one feature, separate them with a space.
    
       Typically, you configure this variable in your ``local.conf`` file,
-      which is found in the :term:`Build Directory`.
+      which is found in the `Build Directory <#build-directory>`__.
       Although you can use this variable from within a recipe, best
       practices dictate that you do not.
    
@@ -2054,7 +2055,7 @@ system and gives an overview of their function and contents.
    
    EXTRA_IMAGECMD
       Specifies additional options for the image creation command that has
-      been specified in :term:`IMAGE_CMD`. When setting
+      been specified in ```IMAGE_CMD`` <#var-IMAGE_CMD>`__. When setting
       this variable, use an override for the associated image type. Here is
       an example: EXTRA_IMAGECMD_ext3 ?= "-i 4096"
    
@@ -2079,7 +2080,7 @@ system and gives an overview of their function and contents.
    
    EXTRANATIVEPATH
       A list of subdirectories of
-      ``${``\ :term:`STAGING_BINDIR_NATIVE`\ ``}``
+      ``${``\ ```STAGING_BINDIR_NATIVE`` <#var-STAGING_BINDIR_NATIVE>`__\ ``}``
       added to the beginning of the environment variable ``PATH``. As an
       example, the following prepends
       "${STAGING_BINDIR_NATIVE}/foo:${STAGING_BINDIR_NATIVE}/bar:" to
@@ -2087,11 +2088,11 @@ system and gives an overview of their function and contents.
    
    EXTRA_OECMAKE
       Additional `CMake <https://cmake.org/overview/>`__ options. See the
-      :ref:`cmake <ref-classes-cmake>` class for additional information.
+      ```cmake`` <#ref-classes-cmake>`__ class for additional information.
    
    EXTRA_OECONF
       Additional ``configure`` script options. See
-      :term:`PACKAGECONFIG_CONFARGS` for
+      ```PACKAGECONFIG_CONFARGS`` <#var-PACKAGECONFIG_CONFARGS>`__ for
       additional information on passing configure script options.
    
    EXTRA_OEMAKE
@@ -2100,21 +2101,21 @@ system and gives an overview of their function and contents.
       Because the ``EXTRA_OEMAKE`` defaults to "", you need to set the
       variable to specify any required GNU options.
    
-      :term:`PARALLEL_MAKE` and
-      :term:`PARALLEL_MAKEINST` also make use of
+      ```PARALLEL_MAKE`` <#var-PARALLEL_MAKE>`__ and
+      ```PARALLEL_MAKEINST`` <#var-PARALLEL_MAKEINST>`__ also make use of
       ``EXTRA_OEMAKE`` to pass the required flags.
    
    EXTRA_OESCONS
-      When inheriting the :ref:`scons <ref-classes-scons>` class, this
+      When inheriting the ```scons`` <#ref-classes-scons>`__ class, this
       variable specifies additional configuration options you want to pass
       to the ``scons`` command line.
    
    EXTRA_USERS_PARAMS
-      When inheriting the :ref:`extrausers <ref-classes-extrausers>`
+      When inheriting the ```extrausers`` <#ref-classes-extrausers>`__
       class, this variable provides image level user and group operations.
       This is a more global method of providing user and group
       configuration as compared to using the
-      :ref:`useradd <ref-classes-useradd>` class, which ties user and
+      ```useradd`` <#ref-classes-useradd>`__ class, which ties user and
       group configurations to a specific recipe.
    
       The set list of commands you can configure using the
@@ -2126,7 +2127,7 @@ system and gives an overview of their function and contents.
    
    FEATURE_PACKAGES
       Defines one or more packages to include in an image when a specific
-      item is included in :term:`IMAGE_FEATURES`.
+      item is included in ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__.
       When setting the value, ``FEATURE_PACKAGES`` should have the name of
       the feature item as an override. Here is an example:
       FEATURE_PACKAGES_widget = "package1 package2"
@@ -2160,7 +2161,7 @@ system and gives an overview of their function and contents.
    
    FILES
       The list of files and directories that are placed in a package. The
-      :term:`PACKAGES` variable lists the packages
+      ```PACKAGES`` <#var-PACKAGES>`__ variable lists the packages
       generated by a recipe.
    
       To use the ``FILES`` variable, provide a package name override that
@@ -2173,7 +2174,7 @@ system and gives an overview of their function and contents.
    
          -  When specifying files or paths, you can pattern match using
             Python's
-            ```glob`https://docs.python.org/2/library/glob.html
+            ```glob`` <https://docs.python.org/2/library/glob.html>`__
             syntax. For details on the syntax, see the documentation by
             following the previous link.
    
@@ -2182,7 +2183,7 @@ system and gives an overview of their function and contents.
             use ``${sysconfdir}`` rather than ``/etc``, or ``${bindir}``
             rather than ``/usr/bin``. You can find a list of these
             variables at the top of the ``meta/conf/bitbake.conf`` file in
-            the :term:`Source Directory`. You will also
+            the `Source Directory <#source-directory>`__. You will also
             find the default values of the various ``FILES_*`` variables in
             this file.
    
@@ -2190,12 +2191,12 @@ system and gives an overview of their function and contents.
       editable and you know they should not be overwritten during the
       package update process by the Package Management System (PMS), you
       can identify these files so that the PMS will not overwrite them. See
-      the :term:`CONFFILES` variable for information on
+      the ```CONFFILES`` <#var-CONFFILES>`__ variable for information on
       how to identify these files to the PMS.
    
    FILES_SOLIBSDEV
       Defines the file specification to match
-      :term:`SOLIBSDEV`. In other words,
+      ```SOLIBSDEV`` <#var-SOLIBSDEV>`__. In other words,
       ``FILES_SOLIBSDEV`` defines the full path name of the development
       symbolic link (symlink) for shared libraries on the target platform.
    
@@ -2207,7 +2208,7 @@ system and gives an overview of their function and contents.
       Extends the search path the OpenEmbedded build system uses when
       looking for files and patches as it processes recipes and append
       files. The default directories BitBake uses when it processes recipes
-      are initially defined by the :term:`FILESPATH`
+      are initially defined by the ```FILESPATH`` <#var-FILESPATH>`__
       variable. You can extend ``FILESPATH`` variable by using
       ``FILESEXTRAPATHS``.
    
@@ -2222,7 +2223,7 @@ system and gives an overview of their function and contents.
    
          When extending ``FILESEXTRAPATHS``, be sure to use the immediate
          expansion (``:=``) operator. Immediate expansion makes sure that
-         BitBake evaluates :term:`THISDIR` at the time the
+         BitBake evaluates ```THISDIR`` <#var-THISDIR>`__ at the time the
          directive is encountered rather than at some later time when
          expansion might result in a directory that does not contain the
          files you need.
@@ -2241,14 +2242,14 @@ system and gives an overview of their function and contents.
       FILESEXTRAPATHS_prepend := "path_1:path_2:path_3:"
    
       A final example shows how you can extend the search path and include
-      a :term:`MACHINE`-specific override, which is useful
+      a ```MACHINE`` <#var-MACHINE>`__-specific override, which is useful
       in a BSP layer: FILESEXTRAPATHS_prepend_intel-x86-common :=
       "${THISDIR}/${PN}:" The previous statement appears in the
       ``linux-yocto-dev.bbappend`` file, which is found in the Yocto
       Project `Source
       Repositories <&YOCTO_DOCS_OM_URL;#source-repositories>`__ in
       ``meta-intel/common/recipes-kernel/linux``. Here, the machine
-      override is a special :term:`PACKAGE_ARCH`
+      override is a special ```PACKAGE_ARCH`` <#var-PACKAGE_ARCH>`__
       definition for multiple ``meta-intel`` machines.
    
       .. note::
@@ -2263,15 +2264,15 @@ system and gives an overview of their function and contents.
       recipe to correctly extend the path.
    
    FILESOVERRIDES
-      A subset of :term:`OVERRIDES` used by the
+      A subset of ```OVERRIDES`` <#var-OVERRIDES>`__ used by the
       OpenEmbedded build system for creating
-      :term:`FILESPATH`. The ``FILESOVERRIDES`` variable
+      ```FILESPATH`` <#var-FILESPATH>`__. The ``FILESOVERRIDES`` variable
       uses overrides to automatically extend the
-      :term:`FILESPATH` variable. For an example of how
-      that works, see the :term:`FILESPATH` variable
+      ```FILESPATH`` <#var-FILESPATH>`__ variable. For an example of how
+      that works, see the ```FILESPATH`` <#var-FILESPATH>`__ variable
       description. Additionally, you find more information on how overrides
-      are handled in the
-      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
+      are handled in the "`Conditional Syntax
+      (Overrides) <&YOCTO_DOCS_BB_URL;#conditional-syntax-overrides>`__"
       section of the BitBake User Manual.
    
       By default, the ``FILESOVERRIDES`` variable is defined as:
@@ -2292,22 +2293,22 @@ system and gives an overview of their function and contents.
       During the build process, BitBake searches each directory in
       ``FILESPATH`` in the specified order when looking for files and
       patches specified by each ``file://`` URI in a recipe's
-      :term:`SRC_URI` statements.
+      ```SRC_URI`` <#var-SRC_URI>`__ statements.
    
       The default value for the ``FILESPATH`` variable is defined in the
-      ``base.bbclass`` class found in ``meta/classes`` in the
-      :term:`Source Directory`: FILESPATH =
+      ``base.bbclass`` class found in ``meta/classes`` in the `Source
+      Directory <#source-directory>`__: FILESPATH =
       "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", \\
       "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}" The
       ``FILESPATH`` variable is automatically extended using the overrides
-      from the :term:`FILESOVERRIDES` variable.
+      from the ```FILESOVERRIDES`` <#var-FILESOVERRIDES>`__ variable.
    
       .. note::
    
          -  Do not hand-edit the ``FILESPATH`` variable. If you want the
             build system to look in directories other than the defaults,
             extend the ``FILESPATH`` variable by using the
-            :term:`FILESEXTRAPATHS` variable.
+            ```FILESEXTRAPATHS`` <#var-FILESEXTRAPATHS>`__ variable.
    
          -  Be aware that the default ``FILESPATH`` directories do not map
             to directories in custom layers where append files
@@ -2322,7 +2323,7 @@ system and gives an overview of their function and contents.
       files/defconfig files/MACHINEA/defconfig files/MACHINEB/defconfig
       Also in the example, the ``SRC_URI`` statement contains
       "file://defconfig". Given this scenario, you can set
-      :term:`MACHINE` to "MACHINEA" and cause the build
+      ```MACHINE`` <#var-MACHINE>`__ to "MACHINEA" and cause the build
       system to use files from ``files/MACHINEA``. Set ``MACHINE`` to
       "MACHINEB" and the build system uses files from ``files/MACHINEB``.
       Finally, for any machine other than "MACHINEA" and "MACHINEB", the
@@ -2333,7 +2334,7 @@ system and gives an overview of their function and contents.
       in the Yocto Project Overview and Concepts Manual and the "`Patching
       Code <&YOCTO_DOCS_DEV_URL;#new-recipe-patching-code>`__" section in
       the Yocto Project Development Tasks Manual. See the
-      :ref:`ref-tasks-patch` task as well.
+      ```do_patch`` <#ref-tasks-patch>`__ task as well.
    
    FILESYSTEM_PERMS_TABLES
       Allows you to define your own file permissions settings table as part
@@ -2343,17 +2344,17 @@ system and gives an overview of their function and contents.
       packages themselves but this is not always possible.
    
       By default, the OpenEmbedded build system uses the ``fs-perms.txt``,
-      which is located in the ``meta/files`` folder in the :term:`Source Directory`.
-      If you create your own file
+      which is located in the ``meta/files`` folder in the `Source
+      Directory <#source-directory>`__. If you create your own file
       permissions setting table, you should place it in your layer or the
       distro's layer.
    
       You define the ``FILESYSTEM_PERMS_TABLES`` variable in the
-      ``conf/local.conf`` file, which is found in the :term:`Build Directory`,
-      to point to your custom
+      ``conf/local.conf`` file, which is found in the `Build
+      Directory <#build-directory>`__, to point to your custom
       ``fs-perms.txt``. You can specify more than a single file permissions
       setting table. The paths you specify to these files must be defined
-      within the :term:`BBPATH` variable.
+      within the ```BBPATH`` <#var-BBPATH>`__ variable.
    
       For guidance on how to create your own file permissions settings
       table file, examine the existing ``fs-perms.txt``.
@@ -2366,16 +2367,16 @@ system and gives an overview of their function and contents.
       For e.g. rsa2048.
 
    FONT_EXTRA_RDEPENDS
-      When inheriting the :ref:`fontcache <ref-classes-fontcache>` class,
+      When inheriting the ```fontcache`` <#ref-classes-fontcache>`__ class,
       this variable specifies the runtime dependencies for font packages.
       By default, the ``FONT_EXTRA_RDEPENDS`` is set to "fontconfig-utils".
    
    FONT_PACKAGES
-      When inheriting the :ref:`fontcache <ref-classes-fontcache>` class,
+      When inheriting the ```fontcache`` <#ref-classes-fontcache>`__ class,
       this variable identifies packages containing font files that need to
       be cached by Fontconfig. By default, the ``fontcache`` class assumes
       that fonts are in the recipe's main package (i.e.
-      ``${``\ :term:`PN`\ ``}``). Use this variable if fonts you
+      ``${``\ ```PN`` <#var-PN>`__\ ``}``). Use this variable if fonts you
       need are in a package other than that main package.
    
    FORCE_RO_REMOVE
@@ -2428,23 +2429,23 @@ system and gives an overview of their function and contents.
       "en_GB.UTF-8 en_US.UTF-8"
    
    GROUPADD_PARAM
-      When inheriting the :ref:`useradd <ref-classes-useradd>` class,
+      When inheriting the ```useradd`` <#ref-classes-useradd>`__ class,
       this variable specifies for a package what parameters should be
       passed to the ``groupadd`` command if you wish to add a group to the
       system when the package is installed.
    
       Here is an example from the ``dbus`` recipe: GROUPADD_PARAM_${PN} =
       "-r netdev" For information on the standard Linux shell command
-      ``groupadd``, see http://linux.die.net/man/8/groupadd.
+      ``groupadd``, see ` <http://linux.die.net/man/8/groupadd>`__.
    
    GROUPMEMS_PARAM
-      When inheriting the :ref:`useradd <ref-classes-useradd>` class,
+      When inheriting the ```useradd`` <#ref-classes-useradd>`__ class,
       this variable specifies for a package what parameters should be
       passed to the ``groupmems`` command if you wish to modify the members
       of a group when the package is installed.
    
       For information on the standard Linux shell command ``groupmems``,
-      see http://linux.die.net/man/8/groupmems.
+      see ` <http://linux.die.net/man/8/groupmems>`__.
    
    GRUB_GFXSERIAL
       Configures the GNU GRand Unified Bootloader (GRUB) to have graphics
@@ -2452,7 +2453,7 @@ system and gives an overview of their function and contents.
       ``local.conf`` or distribution configuration file to enable graphics
       and serial in the menu.
    
-      See the :ref:`grub-efi <ref-classes-grub-efi>` class for more
+      See the ```grub-efi`` <#ref-classes-grub-efi>`__ class for more
       information on how this variable is used.
    
    GRUB_OPTS
@@ -2461,7 +2462,7 @@ system and gives an overview of their function and contents.
       multiple options.
    
       The ``GRUB_OPTS`` variable is optional. See the
-      :ref:`grub-efi <ref-classes-grub-efi>` class for more information
+      ```grub-efi`` <#ref-classes-grub-efi>`__ class for more information
       on how this variable is used.
    
    GRUB_TIMEOUT
@@ -2469,12 +2470,12 @@ system and gives an overview of their function and contents.
       GNU GRand Unified Bootloader (GRUB).
    
       The ``GRUB_TIMEOUT`` variable is optional. See the
-      :ref:`grub-efi <ref-classes-grub-efi>` class for more information
+      ```grub-efi`` <#ref-classes-grub-efi>`__ class for more information
       on how this variable is used.
    
    GTKIMMODULES_PACKAGES
       When inheriting the
-      :ref:`gtk-immodules-cache <ref-classes-gtk-immodules-cache>` class,
+      ```gtk-immodules-cache`` <#ref-classes-gtk-immodules-cache>`__ class,
       this variable specifies the packages that contain the GTK+ input
       method modules being installed when the modules are in packages other
       than the main package.
@@ -2485,7 +2486,7 @@ system and gives an overview of their function and contents.
    
    HOST_ARCH
       The name of the target architecture, which is normally the same as
-      :term:`TARGET_ARCH`. The OpenEmbedded build system
+      ```TARGET_ARCH`` <#var-TARGET_ARCH>`__. The OpenEmbedded build system
       supports many architectures. Here is an example list of architectures
       supported. This list is by no means complete as the architecture is
       configurable: arm i586 x86_64 powerpc powerpc64 mips mipsel
@@ -2497,7 +2498,7 @@ system and gives an overview of their function and contents.
       Default initialization for ``HOST_CC_ARCH`` varies depending on what
       is being built:
    
-      -  :term:`TARGET_CC_ARCH` when building for the
+      -  ```TARGET_CC_ARCH`` <#var-TARGET_CC_ARCH>`__ when building for the
          target
    
       -  ``BUILD_CC_ARCH`` when building for the build host (i.e.
@@ -2508,14 +2509,14 @@ system and gives an overview of their function and contents.
    
    HOST_OS
       Specifies the name of the target operating system, which is normally
-      the same as the :term:`TARGET_OS`. The variable can
+      the same as the ```TARGET_OS`` <#var-TARGET_OS>`__. The variable can
       be set to "linux" for ``glibc``-based systems and to "linux-musl" for
       ``musl``. For ARM/EABI targets, there are also "linux-gnueabi" and
       "linux-musleabi" values possible.
    
    HOST_PREFIX
       Specifies the prefix for the cross-compile toolchain. ``HOST_PREFIX``
-      is normally the same as :term:`TARGET_PREFIX`.
+      is normally the same as ```TARGET_PREFIX`` <#var-TARGET_PREFIX>`__.
    
    HOST_SYS
       Specifies the system, including the architecture and the operating
@@ -2523,9 +2524,9 @@ system and gives an overview of their function and contents.
       current recipe.
    
       The OpenEmbedded build system automatically sets this variable based
-      on :term:`HOST_ARCH`,
-      :term:`HOST_VENDOR`, and
-      :term:`HOST_OS` variables.
+      on ```HOST_ARCH`` <#var-HOST_ARCH>`__,
+      ```HOST_VENDOR`` <#var-HOST_VENDOR>`__, and
+      ```HOST_OS`` <#var-HOST_OS>`__ variables.
    
       .. note::
    
@@ -2548,25 +2549,25 @@ system and gives an overview of their function and contents.
       is not started.
    
       For additional information, see
-      :term:`HOSTTOOLS_NONFATAL`.
+      ```HOSTTOOLS_NONFATAL`` <#var-HOSTTOOLS_NONFATAL>`__.
    
    HOSTTOOLS_NONFATAL
       A space-separated list (filter) of tools on the build host that
       should be allowed to be called from within build tasks. Using this
       filter helps reduce the possibility of host contamination. Unlike
-      :term:`HOSTTOOLS`, the OpenEmbedded build system
+      ```HOSTTOOLS`` <#var-HOSTTOOLS>`__, the OpenEmbedded build system
       does not produce an error if a tool specified in the value of
       ``HOSTTOOLS_NONFATAL`` is not found on the build host. Thus, you can
       use ``HOSTTOOLS_NONFATAL`` to filter optional host tools.
    
    HOST_VENDOR
       Specifies the name of the vendor. ``HOST_VENDOR`` is normally the
-      same as :term:`TARGET_VENDOR`.
+      same as ```TARGET_VENDOR`` <#var-TARGET_VENDOR>`__.
    
    ICECC_DISABLED
       Disables or enables the ``icecc`` (Icecream) function. For more
       information on this function and best practices for using this
-      variable, see the ":ref:`icecc.bbclass <ref-classes-icecc>`"
+      variable, see the "```icecc.bbclass`` <#ref-classes-icecc>`__"
       section.
    
       Setting this variable to "1" in your ``local.conf`` disables the
@@ -2575,7 +2576,7 @@ system and gives an overview of their function and contents.
    
    ICECC_ENV_EXEC
       Points to the ``icecc-create-env`` script that you provide. This
-      variable is used by the :ref:`icecc <ref-classes-icecc>` class. You
+      variable is used by the ```icecc`` <#ref-classes-icecc>`__ class. You
       set this variable in your ``local.conf`` file.
    
       If you do not point to a script that you provide, the OpenEmbedded
@@ -2585,7 +2586,7 @@ system and gives an overview of their function and contents.
    
    ICECC_PARALLEL_MAKE
       Extra options passed to the ``make`` command during the
-      :ref:`ref-tasks-compile` task that specify parallel
+      ```do_compile`` <#ref-tasks-compile>`__ task that specify parallel
       compilation. This variable usually takes the form of "-j x", where x
       represents the maximum number of parallel threads ``make`` can run.
    
@@ -2601,7 +2602,7 @@ system and gives an overview of their function and contents.
       performance could take some experimentation since machine speed,
       network lag, available memory, and existing machine loads can all
       affect build time. Consequently, unlike the
-      :term:`PARALLEL_MAKE` variable, there is no
+      ```PARALLEL_MAKE`` <#var-PARALLEL_MAKE>`__ variable, there is no
       rule-of-thumb for setting ``ICECC_PARALLEL_MAKE`` to achieve optimal
       performance.
    
@@ -2612,13 +2613,13 @@ system and gives an overview of their function and contents.
    ICECC_PATH
       The location of the ``icecc`` binary. You can set this variable in
       your ``local.conf`` file. If your ``local.conf`` file does not define
-      this variable, the :ref:`icecc <ref-classes-icecc>` class attempts
+      this variable, the ```icecc`` <#ref-classes-icecc>`__ class attempts
       to define it by locating ``icecc`` using ``which``.
    
    ICECC_USER_CLASS_BL
       Identifies user classes that you do not want the Icecream distributed
       compile support to consider. This variable is used by the
-      :ref:`icecc <ref-classes-icecc>` class. You set this variable in
+      ```icecc`` <#ref-classes-icecc>`__ class. You set this variable in
       your ``local.conf`` file.
    
       When you list classes using this variable, you are "blacklisting"
@@ -2628,7 +2629,7 @@ system and gives an overview of their function and contents.
    ICECC_USER_PACKAGE_BL
       Identifies user recipes that you do not want the Icecream distributed
       compile support to consider. This variable is used by the
-      :ref:`icecc <ref-classes-icecc>` class. You set this variable in
+      ```icecc`` <#ref-classes-icecc>`__ class. You set this variable in
       your ``local.conf`` file.
    
       When you list packages using this variable, you are "blacklisting"
@@ -2637,15 +2638,15 @@ system and gives an overview of their function and contents.
    
    ICECC_USER_PACKAGE_WL
       Identifies user recipes that use an empty
-      :term:`PARALLEL_MAKE` variable that you want to
+      ```PARALLEL_MAKE`` <#var-PARALLEL_MAKE>`__ variable that you want to
       force remote distributed compilation on using the Icecream
       distributed compile support. This variable is used by the
-      :ref:`icecc <ref-classes-icecc>` class. You set this variable in
+      ```icecc`` <#ref-classes-icecc>`__ class. You set this variable in
       your ``local.conf`` file.
    
    IMAGE_BASENAME
       The base name of image output files. This variable defaults to the
-      recipe name (``${``\ :term:`PN`\ ``}``).
+      recipe name (``${``\ ```PN`` <#var-PN>`__\ ``}``).
    
    IMAGE_BOOT_FILES
       A space-separated list of files installed into the boot partition
@@ -2655,7 +2656,7 @@ system and gives an overview of their function and contents.
       installed under the same name as the source files. To change the
       installed name, separate it from the original name with a semi-colon
       (;). Source files need to be located in
-      :term:`DEPLOY_DIR_IMAGE`. Here are two
+      ```DEPLOY_DIR_IMAGE`` <#var-DEPLOY_DIR_IMAGE>`__. Here are two
       examples: IMAGE_BOOT_FILES = "u-boot.img uImage;kernel"
       IMAGE_BOOT_FILES = "u-boot.${UBOOT_SUFFIX} ${KERNEL_IMAGETYPE}"
    
@@ -2686,12 +2687,12 @@ system and gives an overview of their function and contents.
       configuration file.
    
       For more information, see ``meta/classes/image_types.bbclass`` in the
-      :term:`Source Directory`.
+      `Source Directory <#source-directory>`__.
    
    IMAGE_CMD
       Specifies the command to create the image file for a specific image
       type, which corresponds to the value set set in
-      :term:`IMAGE_FSTYPES`, (e.g. ``ext3``,
+      ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__, (e.g. ``ext3``,
       ``btrfs``, and so forth). When setting this variable, you should use
       an override for the associated type. Here is an example:
       IMAGE_CMD_jffs2 = "mkfs.jffs2 --root=${IMAGE_ROOTFS} \\ --faketime
@@ -2700,7 +2701,7 @@ system and gives an overview of their function and contents.
    
       You typically do not need to set this variable unless you are adding
       support for a new image type. For more examples on how to set this
-      variable, see the :ref:`image_types <ref-classes-image_types>`
+      variable, see the ```image_types`` <#ref-classes-image_types>`__
       class file, which is ``meta/classes/image_types.bbclass``.
    
    IMAGE_DEVICE_TABLES
@@ -2709,15 +2710,15 @@ system and gives an overview of their function and contents.
       These files list basic device nodes that should be created under
       ``/dev`` within the image. If ``IMAGE_DEVICE_TABLES`` is not set,
       ``files/device_table-minimal.txt`` is used, which is located by
-      :term:`BBPATH`. For details on how you should write
+      ```BBPATH`` <#var-BBPATH>`__. For details on how you should write
       device table files, see ``meta/files/device_table-minimal.txt`` as an
       example.
    
    IMAGE_FEATURES
       The primary list of features to include in an image. Typically, you
       configure this variable in an image recipe. Although you can use this
-      variable from your ``local.conf`` file, which is found in the
-      :term:`Build Directory`, best practices dictate that you do
+      variable from your ``local.conf`` file, which is found in the `Build
+      Directory <#build-directory>`__, best practices dictate that you do
       not.
    
       .. note::
@@ -2743,7 +2744,7 @@ system and gives an overview of their function and contents.
       IMAGE_FSTYPES = "ext3 tar.bz2"
    
       For the complete list of supported image formats from which you can
-      choose, see :term:`IMAGE_TYPES`.
+      choose, see ```IMAGE_TYPES`` <#var-IMAGE_TYPES>`__.
    
       .. note::
    
@@ -2758,13 +2759,13 @@ system and gives an overview of their function and contents.
    
    IMAGE_INSTALL
       Used by recipes to specify the packages to install into an image
-      through the :ref:`image <ref-classes-image>` class. Use the
+      through the ```image`` <#ref-classes-image>`__ class. Use the
       ``IMAGE_INSTALL`` variable with care to avoid ordering issues.
    
       Image recipes set ``IMAGE_INSTALL`` to specify the packages to
       install into an image through ``image.bbclass``. Additionally,
       "helper" classes such as the
-      :ref:`core-image <ref-classes-core-image>` class exist that can
+      ```core-image`` <#ref-classes-core-image>`__ class exist that can
       take lists used with ``IMAGE_FEATURES`` and turn them into
       auto-generated entries in ``IMAGE_INSTALL`` in addition to its
       default contents.
@@ -2780,7 +2781,7 @@ system and gives an overview of their function and contents.
             ```core-image-minimal-initramfs`` <#images-core-image-minimal-initramfs>`__
             image, do not use the ``IMAGE_INSTALL`` variable to specify
             packages for installation. Instead, use the
-            :term:`PACKAGE_INSTALL` variable, which
+            ```PACKAGE_INSTALL`` <#var-PACKAGE_INSTALL>`__ variable, which
             allows the initial RAM filesystem (initramfs) recipe to use a
             fixed set of packages and not be affected by ``IMAGE_INSTALL``.
             For information on creating an initramfs, see the "`Building an
@@ -2789,13 +2790,13 @@ system and gives an overview of their function and contents.
             section in the Yocto Project Development Tasks Manual.
    
          -  Using ``IMAGE_INSTALL`` with the
-            :ref:`+= <bitbake:appending-and-prepending>`
+            ```+=`` <&YOCTO_DOCS_BB_URL;#appending-and-prepending>`__
             BitBake operator within the ``/conf/local.conf`` file or from
             within an image recipe is not recommended. Use of this operator
             in these ways can cause ordering issues. Since
             ``core-image.bbclass`` sets ``IMAGE_INSTALL`` to a default
             value using the
-            :ref:`?= <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:setting a default value (?=)>`
+            ```?=`` <&YOCTO_DOCS_BB_URL;#setting-a-default-value>`__
             operator, using a ``+=`` operation against ``IMAGE_INSTALL``
             results in unexpected behavior when used within
             ``conf/local.conf``. Furthermore, the same operation from
@@ -2819,7 +2820,7 @@ system and gives an overview of their function and contents.
       only provide locale files by language and not by country-specific
       language).
    
-      See the :term:`GLIBC_GENERATE_LOCALES`
+      See the ```GLIBC_GENERATE_LOCALES`` <#var-GLIBC_GENERATE_LOCALES>`__
       variable for information on generating GLIBC locales.
    
    IMAGE_MANIFEST
@@ -2828,19 +2829,19 @@ system and gives an overview of their function and contents.
       information on a line-per-package basis as follows: packagename
       packagearch version
    
-      The :ref:`image <ref-classes-image>` class defines the manifest
+      The ```image`` <#ref-classes-image>`__ class defines the manifest
       file as follows: IMAGE_MANIFEST =
       "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.manifest" The location is
-      derived using the :term:`DEPLOY_DIR_IMAGE`
-      and :term:`IMAGE_NAME` variables. You can find
+      derived using the ```DEPLOY_DIR_IMAGE`` <#var-DEPLOY_DIR_IMAGE>`__
+      and ```IMAGE_NAME`` <#var-IMAGE_NAME>`__ variables. You can find
       information on how the image is created in the "`Image
       Generation <&YOCTO_DOCS_OM_URL;#image-generation-dev-environment>`__"
       section in the Yocto Project Overview and Concepts Manual.
    
    IMAGE_NAME
       The name of the output image files minus the extension. This variable
-      is derived using the :term:`IMAGE_BASENAME`,
-      :term:`MACHINE`, and :term:`DATETIME`
+      is derived using the ```IMAGE_BASENAME`` <#var-IMAGE_BASENAME>`__,
+      ```MACHINE`` <#var-MACHINE>`__, and ```DATETIME`` <#var-DATETIME>`__
       variables: IMAGE_NAME = "${IMAGE_BASENAME}-${MACHINE}-${DATETIME}"
    
    IMAGE_OVERHEAD_FACTOR
@@ -2873,10 +2874,10 @@ system and gives an overview of their function and contents.
    IMAGE_PKGTYPE
       Defines the package type (i.e. DEB, RPM, IPK, or TAR) used by the
       OpenEmbedded build system. The variable is defined appropriately by
-      the :ref:`package_deb <ref-classes-package_deb>`,
-      :ref:`package_rpm <ref-classes-package_rpm>`,
-      :ref:`package_ipk <ref-classes-package_ipk>`, or
-      :ref:`package_tar <ref-classes-package_tar>` class.
+      the ```package_deb`` <#ref-classes-package_deb>`__,
+      ```package_rpm`` <#ref-classes-package_rpm>`__,
+      ```package_ipk`` <#ref-classes-package_ipk>`__, or
+      ```package_tar`` <#ref-classes-package_tar>`__ class.
    
       .. note::
    
@@ -2885,14 +2886,14 @@ system and gives an overview of their function and contents.
          class is broken and is not supported. It is recommended that you
          do not use it.
    
-      The :ref:`populate_sdk_* <ref-classes-populate-sdk-*>` and
-      :ref:`image <ref-classes-image>` classes use the ``IMAGE_PKGTYPE``
+      The ```populate_sdk_*`` <#ref-classes-populate-sdk-*>`__ and
+      ```image`` <#ref-classes-image>`__ classes use the ``IMAGE_PKGTYPE``
       for packaging up images and SDKs.
    
       You should not set the ``IMAGE_PKGTYPE`` manually. Rather, the
       variable is set indirectly through the appropriate
-      :ref:`package_* <ref-classes-package>` class using the
-      :term:`PACKAGE_CLASSES` variable. The
+      ```package_*`` <#ref-classes-package>`__ class using the
+      ```PACKAGE_CLASSES`` <#var-PACKAGE_CLASSES>`__ variable. The
       OpenEmbedded build system uses the first package type (e.g. DEB, RPM,
       or IPK) that appears with the variable
    
@@ -2912,7 +2913,7 @@ system and gives an overview of their function and contents.
       If you need to pass the root filesystem path to a command within the
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
       directory that becomes the root filesystem image. See the
-      :term:`IMAGE_ROOTFS` variable for more
+      ```IMAGE_ROOTFS`` <#var-IMAGE_ROOTFS>`__ variable for more
       information.
    
    IMAGE_PREPROCESS_COMMAND
@@ -2924,19 +2925,19 @@ system and gives an overview of their function and contents.
       If you need to pass the root filesystem path to a command within the
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
       directory that becomes the root filesystem image. See the
-      :term:`IMAGE_ROOTFS` variable for more
+      ```IMAGE_ROOTFS`` <#var-IMAGE_ROOTFS>`__ variable for more
       information.
    
    IMAGE_ROOTFS
       The location of the root filesystem while it is under construction
-      (i.e. during the :ref:`ref-tasks-rootfs` task). This
+      (i.e. during the ```do_rootfs`` <#ref-tasks-rootfs>`__ task). This
       variable is not configurable. Do not change it.
    
    IMAGE_ROOTFS_ALIGNMENT
       Specifies the alignment for the output image file in Kbytes. If the
       size of the image is not a multiple of this value, then the size is
       rounded up to the nearest multiple of the value. The default value is
-      "1". See :term:`IMAGE_ROOTFS_SIZE` for
+      "1". See ```IMAGE_ROOTFS_SIZE`` <#var-IMAGE_ROOTFS_SIZE>`__ for
       additional information.
    
    IMAGE_ROOTFS_EXTRA_SPACE
@@ -2970,17 +2971,17 @@ system and gives an overview of their function and contents.
       internal-rootfs-size = Initial root filesystem size before any
       modifications. xspace = IMAGE_ROOTFS_EXTRA_SPACE
    
-      See the :term:`IMAGE_OVERHEAD_FACTOR`
-      and :term:`IMAGE_ROOTFS_EXTRA_SPACE`
+      See the ```IMAGE_OVERHEAD_FACTOR`` <#var-IMAGE_OVERHEAD_FACTOR>`__
+      and ```IMAGE_ROOTFS_EXTRA_SPACE`` <#var-IMAGE_ROOTFS_EXTRA_SPACE>`__
       variables for related information.
    
    IMAGE_TYPEDEP
       Specifies a dependency from one image type on another. Here is an
-      example from the :ref:`image-live <ref-classes-image-live>` class:
+      example from the ```image-live`` <#ref-classes-image-live>`__ class:
       IMAGE_TYPEDEP_live = "ext3"
    
       In the previous example, the variable ensures that when "live" is
-      listed with the :term:`IMAGE_FSTYPES` variable,
+      listed with the ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__ variable,
       the OpenEmbedded build system produces an ``ext3`` image first since
       one of the components of the live image is an ``ext3`` formatted
       partition containing the root filesystem.
@@ -2994,7 +2995,8 @@ system and gives an overview of their function and contents.
       wic.bz2 wic.gz wic.lzma
    
       For more information about these types of images, see
-      ``meta/classes/image_types*.bbclass`` in the :term:`Source Directory`.
+      ``meta/classes/image_types*.bbclass`` in the `Source
+      Directory <#source-directory>`__.
    
    INC_PR
       Helps define the recipe revision for recipes that share a common
@@ -3003,7 +3005,7 @@ system and gives an overview of their function and contents.
    
       Suppose, for example, you have a set of recipes that are used across
       several projects. And, within each of those recipes the revision (its
-      :term:`PR` value) is set accordingly. In this case, when
+      ```PR`` <#var-PR>`__ value) is set accordingly. In this case, when
       the revision of those recipes changes, the burden is on you to find
       all those recipes and be sure that they get changed to reflect the
       updated version of the recipe. In this scenario, it can get
@@ -3032,7 +3034,7 @@ system and gives an overview of their function and contents.
    
    INCOMPATIBLE_LICENSE
       Specifies a space-separated list of license names (as they would
-      appear in :term:`LICENSE`) that should be excluded
+      appear in ```LICENSE`` <#var-LICENSE>`__) that should be excluded
       from the build. Recipes that provide no alternatives to listed
       incompatible licenses are not built. Packages that are individually
       licensed with the specified incompatible licenses will be deleted.
@@ -3078,8 +3080,9 @@ system and gives an overview of their function and contents.
       configuration and in each individual recipe. The OpenEmbedded build
       system ignores changes to ``INHERIT`` in individual recipes.
    
-      For more information on ``INHERIT``, see the
-      :ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:\`\`inherit\`\` configuration directive`"
+      For more information on ``INHERIT``, see the "```INHERIT``
+      Configuration
+      Directive <&YOCTO_DOCS_BB_URL;#inherit-configuration-directive>`__"
       section in the Bitbake User Manual.
    
    INHERIT_DISTRO
@@ -3092,7 +3095,7 @@ system and gives an overview of their function and contents.
    
    INHIBIT_DEFAULT_DEPS
       Prevents the default dependencies, namely the C compiler and standard
-      C library (libc), from being added to :term:`DEPENDS`.
+      C library (libc), from being added to ```DEPENDS`` <#var-DEPENDS>`__.
       This variable is usually used within recipes that do not require any
       compilation using the C compiler.
    
@@ -3103,9 +3106,9 @@ system and gives an overview of their function and contents.
       Prevents the OpenEmbedded build system from splitting out debug
       information during packaging. By default, the build system splits out
       debugging information during the
-      :ref:`ref-tasks-package` task. For more information on
+      ```do_package`` <#ref-tasks-package>`__ task. For more information on
       how debug information is split out, see the
-      :term:`PACKAGE_DEBUG_SPLIT_STYLE`
+      ```PACKAGE_DEBUG_SPLIT_STYLE`` <#var-PACKAGE_DEBUG_SPLIT_STYLE>`__
       variable.
    
       To prevent the build system from splitting out debug information
@@ -3118,7 +3121,7 @@ system and gives an overview of their function and contents.
       files.
    
       By default, the OpenEmbedded build system strips binaries and puts
-      the debugging symbols into ``${``\ :term:`PN`\ ``}-dbg``.
+      the debugging symbols into ``${``\ ```PN`` <#var-PN>`__\ ``}-dbg``.
       Consequently, you should not set ``INHIBIT_PACKAGE_STRIP`` when you
       plan to debug in general.
    
@@ -3132,7 +3135,7 @@ system and gives an overview of their function and contents.
       this stripping.
    
       If you want to use this variable, include the
-      :ref:`staging <ref-classes-staging>` class. This class uses a
+      ```staging`` <#ref-classes-staging>`__ class. This class uses a
       ``sys_strip()`` function to test for the variable and acts
       accordingly.
    
@@ -3150,24 +3153,24 @@ system and gives an overview of their function and contents.
       Defines the format for the output image of an initial RAM filesystem
       (initramfs), which is used during boot. Supported formats are the
       same as those supported by the
-      :term:`IMAGE_FSTYPES` variable.
+      ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__ variable.
    
       The default value of this variable, which is set in the
-      ``meta/conf/bitbake.conf`` configuration file in the
-      :term:`Source Directory`, is "cpio.gz". The Linux kernel's
+      ``meta/conf/bitbake.conf`` configuration file in the `Source
+      Directory <#source-directory>`__, is "cpio.gz". The Linux kernel's
       initramfs mechanism, as opposed to the initial RAM filesystem
       `initrd <https://en.wikipedia.org/wiki/Initrd>`__ mechanism, expects
       an optionally compressed cpio archive.
    
    INITRAMFS_IMAGE
-      Specifies the :term:`PROVIDES` name of an image
+      Specifies the ```PROVIDES`` <#var-PROVIDES>`__ name of an image
       recipe that is used to build an initial RAM filesystem (initramfs)
       image. In other words, the ``INITRAMFS_IMAGE`` variable causes an
       additional recipe to be built as a dependency to whatever root
       filesystem recipe you might be using (e.g. ``core-image-sato``). The
       initramfs image recipe you provide should set
-      :term:`IMAGE_FSTYPES` to
-      :term:`INITRAMFS_FSTYPES`.
+      ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__ to
+      ```INITRAMFS_FSTYPES`` <#var-INITRAMFS_FSTYPES>`__.
    
       An initramfs image provides a temporary root filesystem used for
       early system initialization (e.g. loading of modules needed to locate
@@ -3186,15 +3189,15 @@ system and gives an overview of their function and contents.
    
       You can also find more information by referencing the
       ``meta-poky/conf/local.conf.sample.extended`` configuration file in
-      the Source Directory, the :ref:`image <ref-classes-image>` class,
-      and the :ref:`kernel <ref-classes-kernel>` class to see how to use
+      the Source Directory, the ```image`` <#ref-classes-image>`__ class,
+      and the ```kernel`` <#ref-classes-kernel>`__ class to see how to use
       the ``INITRAMFS_IMAGE`` variable.
    
       If ``INITRAMFS_IMAGE`` is empty, which is the default, then no
       initramfs image is built.
    
       For more information, you can also see the
-      :term:`INITRAMFS_IMAGE_BUNDLE`
+      ```INITRAMFS_IMAGE_BUNDLE`` <#var-INITRAMFS_IMAGE_BUNDLE>`__
       variable, which allows the generated image to be bundled inside the
       kernel image. Additionally, for information on creating an initramfs
       image, see the "`Building an Initial RAM Filesystem (initramfs)
@@ -3203,13 +3206,13 @@ system and gives an overview of their function and contents.
    
    INITRAMFS_IMAGE_BUNDLE
       Controls whether or not the image recipe specified by
-      :term:`INITRAMFS_IMAGE` is run through an
+      ```INITRAMFS_IMAGE`` <#var-INITRAMFS_IMAGE>`__ is run through an
       extra pass
-      (:ref:`ref-tasks-bundle_initramfs`) during
+      (```do_bundle_initramfs`` <#ref-tasks-bundle_initramfs>`__) during
       kernel compilation in order to build a single binary that contains
       both the kernel image and the initial RAM filesystem (initramfs)
       image. This makes use of the
-      :term:`CONFIG_INITRAMFS_SOURCE` kernel
+      ```CONFIG_INITRAMFS_SOURCE`` <#var-CONFIG_INITRAMFS_SOURCE>`__ kernel
       feature.
    
       .. note::
@@ -3222,13 +3225,13 @@ system and gives an overview of their function and contents.
          since the initramfs is bundled inside the kernel image.
    
       The combined binary is deposited into the ``tmp/deploy`` directory,
-      which is part of the :term:`Build Directory`.
+      which is part of the `Build Directory <#build-directory>`__.
    
       Setting the variable to "1" in a configuration file causes the
       OpenEmbedded build system to generate a kernel image with the
       initramfs specified in ``INITRAMFS_IMAGE`` bundled within:
       INITRAMFS_IMAGE_BUNDLE = "1" By default, the
-      :ref:`kernel <ref-classes-kernel>` class sets this variable to a
+      ```kernel`` <#ref-classes-kernel>`__ class sets this variable to a
       null string as follows: INITRAMFS_IMAGE_BUNDLE ?= ""
    
       .. note::
@@ -3239,7 +3242,7 @@ system and gives an overview of their function and contents.
          recipe file.
    
       See the
-      :yocto_git:`local.conf.sample.extended </cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample.extended>`
+      ```local.conf.sample.extended`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample.extended>`__
       file for additional information. Also, for information on creating an
       initramfs, see the "`Building an Initial RAM Filesystem (initramfs)
       Image <&YOCTO_DOCS_DEV_URL;#building-an-initramfs-image>`__" section
@@ -3254,14 +3257,14 @@ system and gives an overview of their function and contents.
       file, has the following value: KERNEL_ARTIFACT_LINK_NAME ?=
       "${MACHINE}"
    
-      See the :term:`MACHINE` variable for additional
+      See the ```MACHINE`` <#var-MACHINE>`__ variable for additional
       information.
    
    INITRAMFS_NAME
       The base name of the initial RAM filesystem image. This variable is
       set in the ``meta/classes/kernel-artifact-names.bbclass`` file as
       follows: INITRAMFS_NAME ?= "initramfs-${KERNEL_ARTIFACT_NAME}" The
-      value of the :term:`KERNEL_ARTIFACT_NAME`
+      value of the ```KERNEL_ARTIFACT_NAME`` <#var-KERNEL_ARTIFACT_NAME>`__
       variable, which is set in the same file, has the following value:
       KERNEL_ARTIFACT_NAME ?=
       "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
@@ -3271,16 +3274,16 @@ system and gives an overview of their function and contents.
       initial RAM disk (``initrd``).
    
       The ``INITRD`` variable is an optional variable used with the
-      :ref:`image-live <ref-classes-image-live>` class.
+      ```image-live`` <#ref-classes-image-live>`__ class.
    
    INITRD_IMAGE
       When building a "live" bootable image (i.e. when
-      :term:`IMAGE_FSTYPES` contains "live"),
+      ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__ contains "live"),
       ``INITRD_IMAGE`` specifies the image recipe that should be built to
       provide the initial RAM disk image. The default value is
       "core-image-minimal-initramfs".
    
-      See the :ref:`image-live <ref-classes-image-live>` class for more
+      See the ```image-live`` <#ref-classes-image-live>`__ class for more
       information.
    
    INITSCRIPT_NAME
@@ -3296,7 +3299,7 @@ system and gives an overview of their function and contents.
       ``INITSCRIPT_*`` as an override.
    
       This variable is used in recipes when using ``update-rc.d.bbclass``.
-      The variable is optional and defaults to the :term:`PN`
+      The variable is optional and defaults to the ```PN`` <#var-PN>`__
       variable.
    
    INITSCRIPT_PARAMS
@@ -3307,12 +3310,12 @@ system and gives an overview of their function and contents.
       in initlevels 2 and 5, and stops the script in levels 0, 1 and 6.
    
       The variable's default value is "defaults", which is set in the
-      :ref:`update-rc.d <ref-classes-update-rc.d>` class.
+      ```update-rc.d`` <#ref-classes-update-rc.d>`__ class.
    
       The value in ``INITSCRIPT_PARAMS`` is passed through to the
       ``update-rc.d`` command. For more information on valid parameters,
       please see the ``update-rc.d`` manual page at
-      http://www.tin.org/bin/man.cgi?section=8&topic=update-rc.d.
+      ` <http://www.tin.org/bin/man.cgi?section=8&topic=update-rc.d>`__.
    
    INSANE_SKIP
       Specifies the QA checks to skip for a specific package within a
@@ -3321,7 +3324,7 @@ system and gives an overview of their function and contents.
       recipe. The package name override must be used, which in this example
       is ``${PN}``: INSANE_SKIP_${PN} += "dev-so"
    
-      See the ":ref:`insane.bbclass <ref-classes-insane>`" section for a
+      See the "```insane.bbclass`` <#ref-classes-insane>`__" section for a
       list of the valid QA checks you can specify using this variable.
    
    INSTALL_TIMEZONE_FILE
@@ -3373,7 +3376,7 @@ system and gives an overview of their function and contents.
       BSP.
    
    KBUILD_DEFCONFIG
-      When used with the :ref:`kernel-yocto <ref-classes-kernel-yocto>`
+      When used with the ```kernel-yocto`` <#ref-classes-kernel-yocto>`__
       class, specifies an "in-tree" kernel configuration file for use
       during a kernel build.
    
@@ -3383,7 +3386,7 @@ system and gives an overview of their function and contents.
       "out-of-tree"). However, if you want to use a ``defconfig`` file that
       is part of the kernel tree (i.e. "in-tree"), you can use the
       ``KBUILD_DEFCONFIG`` variable and append the
-      :term:`KMACHINE` variable to point to the
+      ```KMACHINE`` <#var-KMACHINE>`__ variable to point to the
       ``defconfig`` file.
    
       To use the variable, set it in the append file for your kernel recipe
@@ -3401,7 +3404,7 @@ system and gives an overview of their function and contents.
    KERNEL_ALT_IMAGETYPE
       Specifies an alternate kernel image type for creation in addition to
       the kernel image type specified using the
-      :term:`KERNEL_IMAGETYPE` variable.
+      ```KERNEL_IMAGETYPE`` <#var-KERNEL_IMAGETYPE>`__ variable.
    
    KERNEL_ARTIFACT_NAME
       Specifies the name of all of the build artifacts. You can change the
@@ -3413,8 +3416,8 @@ system and gives an overview of their function and contents.
       following default value: KERNEL_ARTIFACT_NAME ?=
       "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
    
-      See the :term:`PKGE`, :term:`PKGV`,
-      :term:`PKGR`, and :term:`MACHINE`
+      See the ```PKGE`` <#var-PKGE>`__, ```PKGV`` <#var-PKGV>`__,
+      ```PKGR`` <#var-PKGR>`__, and ```MACHINE`` <#var-MACHINE>`__
       variables for additional information.
    
       .. note::
@@ -3427,7 +3430,7 @@ system and gives an overview of their function and contents.
    
    KERNEL_CLASSES
       A list of classes defining kernel image types that the
-      :ref:`kernel <ref-classes-kernel>` class should inherit. You
+      ```kernel`` <#ref-classes-kernel>`__ class should inherit. You
       typically append this variable to enable extended image types. An
       example is the "kernel-fitimage", which enables fitImage support and
       resides in ``meta/classes/kernel-fitimage.bbclass``. You can register
@@ -3446,7 +3449,7 @@ system and gives an overview of their function and contents.
          file is preferred.
    
       In order to use this variable, the
-      :ref:`kernel-devicetree <ref-classes-kernel-devicetree>` class must
+      ```kernel-devicetree`` <#ref-classes-kernel-devicetree>`__ class must
       be inherited.
    
    KERNEL_DTB_LINK_NAME
@@ -3457,14 +3460,14 @@ system and gives an overview of their function and contents.
       the same file, has the following value: KERNEL_ARTIFACT_LINK_NAME ?=
       "${MACHINE}"
    
-      See the :term:`MACHINE` variable for additional
+      See the ```MACHINE`` <#var-MACHINE>`__ variable for additional
       information.
    
    KERNEL_DTB_NAME
       The base name of the kernel device tree binary (DTB). This variable
       is set in the ``meta/classes/kernel-artifact-names.bbclass`` file as
       follows: KERNEL_DTB_NAME ?= "${KERNEL_ARTIFACT_NAME}" The value of
-      the :term:`KERNEL_ARTIFACT_NAME`
+      the ```KERNEL_ARTIFACT_NAME`` <#var-KERNEL_ARTIFACT_NAME>`__
       variable, which is set in the same file, has the following value:
       KERNEL_ARTIFACT_NAME ?=
       "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
@@ -3476,8 +3479,8 @@ system and gives an overview of their function and contents.
    KERNEL_FEATURES
       Includes additional kernel metadata. In the OpenEmbedded build
       system, the default Board Support Packages (BSPs)
-      :term:`Metadata` is provided through the
-      :term:`KMACHINE` and :term:`KBRANCH`
+      `Metadata <#metadata>`__ is provided through the
+      ```KMACHINE`` <#var-KMACHINE>`__ and ```KBRANCH`` <#var-KBRANCH>`__
       variables. You can use the ``KERNEL_FEATURES`` variable from within
       the kernel recipe or kernel append file to further add metadata for
       all BSPs or specific BSPs.
@@ -3508,14 +3511,14 @@ system and gives an overview of their function and contents.
       file, has the following value: KERNEL_ARTIFACT_LINK_NAME ?=
       "${MACHINE}"
    
-      See the :term:`MACHINE` variable for additional
+      See the ```MACHINE`` <#var-MACHINE>`__ variable for additional
       information.
    
    KERNEL_FIT_NAME
       The base name of the kernel flattened image tree (FIT) image. This
       variable is set in the ``meta/classes/kernel-artifact-names.bbclass``
       file as follows: KERNEL_FIT_NAME ?= "${KERNEL_ARTIFACT_NAME}" The
-      value of the :term:`KERNEL_ARTIFACT_NAME`
+      value of the ```KERNEL_ARTIFACT_NAME`` <#var-KERNEL_ARTIFACT_NAME>`__
       variable, which is set in the same file, has the following value:
       KERNEL_ARTIFACT_NAME ?=
       "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
@@ -3528,14 +3531,14 @@ system and gives an overview of their function and contents.
       file, has the following value: KERNEL_ARTIFACT_LINK_NAME ?=
       "${MACHINE}"
    
-      See the :term:`MACHINE` variable for additional
+      See the ```MACHINE`` <#var-MACHINE>`__ variable for additional
       information.
    
    KERNEL_IMAGE_MAXSIZE
       Specifies the maximum size of the kernel image file in kilobytes. If
       ``KERNEL_IMAGE_MAXSIZE`` is set, the size of the kernel image file is
       checked against the set value during the
-      :ref:`ref-tasks-sizecheck` task. The task fails if
+      ```do_sizecheck`` <#ref-tasks-sizecheck>`__ task. The task fails if
       the kernel image file is larger than the setting.
    
       ``KERNEL_IMAGE_MAXSIZE`` is useful for target devices that have a
@@ -3548,7 +3551,7 @@ system and gives an overview of their function and contents.
       The base name of the kernel image. This variable is set in the
       ``meta/classes/kernel-artifact-names.bbclass`` file as follows:
       KERNEL_IMAGE_NAME ?= "${KERNEL_ARTIFACT_NAME}" The value of the
-      :term:`KERNEL_ARTIFACT_NAME` variable,
+      ```KERNEL_ARTIFACT_NAME`` <#var-KERNEL_ARTIFACT_NAME>`__ variable,
       which is set in the same file, has the following value:
       KERNEL_ARTIFACT_NAME ?=
       "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
@@ -3560,7 +3563,7 @@ system and gives an overview of their function and contents.
       build.
    
       If you want to build an alternate kernel image type, use the
-      :term:`KERNEL_ALT_IMAGETYPE` variable.
+      ```KERNEL_ALT_IMAGETYPE`` <#var-KERNEL_ALT_IMAGETYPE>`__ variable.
    
    KERNEL_MODULE_AUTOLOAD
       Lists kernel modules that need to be auto-loaded during boot.
@@ -3588,7 +3591,7 @@ system and gives an overview of their function and contents.
    
       For information on how to populate the ``modname.conf`` file with
       ``modprobe.d`` syntax lines, see the
-      :term:`KERNEL_MODULE_PROBECONF`
+      ```KERNEL_MODULE_PROBECONF`` <#var-KERNEL_MODULE_PROBECONF>`__
       variable.
    
    KERNEL_MODULE_PROBECONF
@@ -3596,33 +3599,33 @@ system and gives an overview of their function and contents.
       expects to find ``module_conf_``\ modname values that specify
       configuration for each of the modules. For information on how to
       provide those module configurations, see the
-      :term:`module_conf_* <module_conf>` variable.
+      ```module_conf_*`` <#var-module_conf>`__ variable.
    
    KERNEL_PATH
       The location of the kernel sources. This variable is set to the value
-      of the :term:`STAGING_KERNEL_DIR` within
-      the :ref:`module <ref-classes-module>` class. For information on
+      of the ```STAGING_KERNEL_DIR`` <#var-STAGING_KERNEL_DIR>`__ within
+      the ```module`` <#ref-classes-module>`__ class. For information on
       how this variable is used, see the "`Incorporating Out-of-Tree
       Modules <&YOCTO_DOCS_KERNEL_DEV_URL;#incorporating-out-of-tree-modules>`__"
       section in the Yocto Project Linux Kernel Development Manual.
    
       To help maximize compatibility with out-of-tree drivers used to build
       modules, the OpenEmbedded build system also recognizes and uses the
-      :term:`KERNEL_SRC` variable, which is identical to
+      ```KERNEL_SRC`` <#var-KERNEL_SRC>`__ variable, which is identical to
       the ``KERNEL_PATH`` variable. Both variables are common variables
       used by external Makefiles to point to the kernel source directory.
    
    KERNEL_SRC
       The location of the kernel sources. This variable is set to the value
-      of the :term:`STAGING_KERNEL_DIR` within
-      the :ref:`module <ref-classes-module>` class. For information on
+      of the ```STAGING_KERNEL_DIR`` <#var-STAGING_KERNEL_DIR>`__ within
+      the ```module`` <#ref-classes-module>`__ class. For information on
       how this variable is used, see the "`Incorporating Out-of-Tree
       Modules <&YOCTO_DOCS_KERNEL_DEV_URL;#incorporating-out-of-tree-modules>`__"
       section in the Yocto Project Linux Kernel Development Manual.
    
       To help maximize compatibility with out-of-tree drivers used to build
       modules, the OpenEmbedded build system also recognizes and uses the
-      :term:`KERNEL_PATH` variable, which is identical
+      ```KERNEL_PATH`` <#var-KERNEL_PATH>`__ variable, which is identical
       to the ``KERNEL_SRC`` variable. Both variables are common variables
       used by external Makefiles to point to the kernel source directory.
    
@@ -3635,7 +3638,7 @@ system and gives an overview of their function and contents.
    
    KERNELDEPMODDEPEND
       Specifies whether the data referenced through
-      :term:`PKGDATA_DIR` is needed or not. The
+      ```PKGDATA_DIR`` <#var-PKGDATA_DIR>`__ is needed or not. The
       ``KERNELDEPMODDEPEND`` does not control whether or not that data
       exists, but simply whether or not it is used. If you do not need to
       use the data, set the ``KERNELDEPMODDEPEND`` variable in your
@@ -3687,13 +3690,13 @@ system and gives an overview of their function and contents.
       You define the ``KTYPE`` variable in the `BSP
       Descriptions <&YOCTO_DOCS_KERNEL_DEV_URL;#bsp-descriptions>`__. The
       value you use must match the value used for the
-      :term:`LINUX_KERNEL_TYPE` value used by the
+      ```LINUX_KERNEL_TYPE`` <#var-LINUX_KERNEL_TYPE>`__ value used by the
       kernel recipe.
    
    LABELS
       Provides a list of targets for automatic configuration.
    
-      See the :ref:`grub-efi <ref-classes-grub-efi>` class for more
+      See the ```grub-efi`` <#ref-classes-grub-efi>`__ class for more
       information on how this variable is used.
    
    LAYERDEPENDS
@@ -3702,7 +3705,7 @@ system and gives an overview of their function and contents.
       by adding it to the end of the layer name. Here is an example:
       LAYERDEPENDS_mylayer = "anotherlayer (=3)" In this previous example,
       version 3 of "anotherlayer" is compared against
-      :term:`LAYERVERSION`\ ``_anotherlayer``.
+      ```LAYERVERSION`` <#var-LAYERVERSION>`__\ ``_anotherlayer``.
    
       An error is produced if any dependency is missing or the version
       numbers (if specified) do not match exactly. This variable is used in
@@ -3730,7 +3733,7 @@ system and gives an overview of their function and contents.
       ``LAYERRECOMMENDS_mylayer``).
    
    LAYERSERIES_COMPAT
-      Lists the versions of the :term:`OpenEmbedded-Core (OE-Core)` for which
+      Lists the versions of the `OpenEmbedded-Core <#oe-core>`__ for which
       a layer is compatible. Using the ``LAYERSERIES_COMPAT`` variable
       allows the layer maintainer to indicate which combinations of the
       layer and OE-Core can be expected to work. The variable gives the
@@ -3739,8 +3742,8 @@ system and gives an overview of their function and contents.
    
       To specify the OE-Core versions for which a layer is compatible, use
       this variable in your layer's ``conf/layer.conf`` configuration file.
-      For the list, use the Yocto Project
-      :yocto_wiki:`Release Name </wiki/Releases>` (e.g.
+      For the list, use the Yocto Project `Release
+      Name <https://wiki.yoctoproject.org/wiki/Releases>`__ (e.g.
       DISTRO_NAME_NO_CAP). To specify multiple OE-Core versions for the
       layer, use a space-separated list: LAYERSERIES_COMPAT_layer_root_name
       = "DISTRO_NAME_NO_CAP DISTRO_NAME_NO_CAP_MINUS_ONE"
@@ -3759,7 +3762,7 @@ system and gives an overview of their function and contents.
    
    LAYERVERSION
       Optionally specifies the version of a layer as a single number. You
-      can use this within :term:`LAYERDEPENDS` for
+      can use this within ```LAYERDEPENDS`` <#var-LAYERDEPENDS>`__ for
       another layer in order to depend on a specific version of the layer.
       This variable is used in the ``conf/layer.conf`` file and must be
       suffixed with the name of the specific layer (e.g.
@@ -3776,18 +3779,18 @@ system and gives an overview of their function and contents.
       Default initialization for ``LDFLAGS`` varies depending on what is
       being built:
    
-      -  :term:`TARGET_LDFLAGS` when building for the
+      -  ```TARGET_LDFLAGS`` <#var-TARGET_LDFLAGS>`__ when building for the
          target
    
-      -  :term:`BUILD_LDFLAGS` when building for the
+      -  ```BUILD_LDFLAGS`` <#var-BUILD_LDFLAGS>`__ when building for the
          build host (i.e. ``-native``)
    
-      -  :term:`BUILDSDK_LDFLAGS` when building for
+      -  ```BUILDSDK_LDFLAGS`` <#var-BUILDSDK_LDFLAGS>`__ when building for
          an SDK (i.e. ``nativesdk-``)
    
    LEAD_SONAME
       Specifies the lead (or primary) compiled library file (i.e. ``.so``)
-      that the :ref:`debian <ref-classes-debian>` class applies its
+      that the ```debian`` <#ref-classes-debian>`__ class applies its
       naming policy to given a recipe that packages multiple libraries.
    
       This variable works in conjunction with the ``debian`` class.
@@ -3801,7 +3804,7 @@ system and gives an overview of their function and contents.
       license change.
    
       This variable must be defined for all recipes (unless
-      :term:`LICENSE` is set to "CLOSED").
+      ```LICENSE`` <#var-LICENSE>`__ is set to "CLOSED").
    
       For more information, see the "`Tracking License
       Changes <&YOCTO_DOCS_DEV_URL;#usingpoky-configuring-LIC_FILES_CHKSUM>`__"
@@ -3822,7 +3825,7 @@ system and gives an overview of their function and contents.
    
       -  For standard licenses, use the names of the files in
          ``meta/files/common-licenses/`` or the
-         :term:`SPDXLICENSEMAP` flag names defined in
+         ```SPDXLICENSEMAP`` <#var-SPDXLICENSEMAP>`__ flag names defined in
          ``meta/conf/licenses.conf``.
    
       Here are some examples: LICENSE = "LGPLv2.1 \| GPLv3" LICENSE =
@@ -3844,34 +3847,34 @@ system and gives an overview of their function and contents.
    LICENSE_CREATE_PACKAGE
       Setting ``LICENSE_CREATE_PACKAGE`` to "1" causes the OpenEmbedded
       build system to create an extra package (i.e.
-      ``${``\ :term:`PN`\ ``}-lic``) for each recipe and to add
+      ``${``\ ```PN`` <#var-PN>`__\ ``}-lic``) for each recipe and to add
       those packages to the
-      :term:`RRECOMMENDS`\ ``_${PN}``.
+      ```RRECOMMENDS`` <#var-RRECOMMENDS>`__\ ``_${PN}``.
    
       The ``${PN}-lic`` package installs a directory in
       ``/usr/share/licenses`` named ``${PN}``, which is the recipe's base
       name, and installs files in that directory that contain license and
       copyright information (i.e. copies of the appropriate license files
       from ``meta/common-licenses`` that match the licenses specified in
-      the :term:`LICENSE` variable of the recipe metadata
+      the ```LICENSE`` <#var-LICENSE>`__ variable of the recipe metadata
       and copies of files marked in
-      :term:`LIC_FILES_CHKSUM` as containing
+      ```LIC_FILES_CHKSUM`` <#var-LIC_FILES_CHKSUM>`__ as containing
       license text).
    
       For related information on providing license text, see the
-      :term:`COPY_LIC_DIRS` variable, the
-      :term:`COPY_LIC_MANIFEST` variable, and the
+      ```COPY_LIC_DIRS`` <#var-COPY_LIC_DIRS>`__ variable, the
+      ```COPY_LIC_MANIFEST`` <#var-COPY_LIC_MANIFEST>`__ variable, and the
       "`Providing License
       Text <&YOCTO_DOCS_DEV_URL;#providing-license-text>`__" section in the
       Yocto Project Development Tasks Manual.
    
    LICENSE_FLAGS
       Specifies additional flags for a recipe you must whitelist through
-      :term:`LICENSE_FLAGS_WHITELIST` in
+      ```LICENSE_FLAGS_WHITELIST`` <#var-LICENSE_FLAGS_WHITELIST>`__ in
       order to allow the recipe to be built. When providing multiple flags,
       separate them with spaces.
    
-      This value is independent of :term:`LICENSE` and is
+      This value is independent of ```LICENSE`` <#var-LICENSE>`__ and is
       typically used to mark recipes that might require additional licenses
       in order to be used in a commercial product. For more information,
       see the "`Enabling Commercially Licensed
@@ -3880,7 +3883,7 @@ system and gives an overview of their function and contents.
    
    LICENSE_FLAGS_WHITELIST
       Lists license flags that when specified in
-      :term:`LICENSE_FLAGS` within a recipe should not
+      ```LICENSE_FLAGS`` <#var-LICENSE_FLAGS>`__ within a recipe should not
       prevent that recipe from being built. This practice is otherwise
       known as "whitelisting" license flags. For more information, see the
       "`Enabling Commercially Licensed
@@ -3904,10 +3907,10 @@ system and gives an overview of their function and contents.
       kernel types.
    
       If you do not specify a ``LINUX_KERNEL_TYPE``, it defaults to
-      "standard". Together with :term:`KMACHINE`, the
+      "standard". Together with ```KMACHINE`` <#var-KMACHINE>`__, the
       ``LINUX_KERNEL_TYPE`` variable defines the search arguments used by
       the kernel tools to find the appropriate description within the
-      kernel :term:`Metadata` with which to build out the sources
+      kernel `Metadata <#metadata>`__ with which to build out the sources
       and configuration.
    
    LINUX_VERSION
@@ -3918,7 +3921,7 @@ system and gives an overview of their function and contents.
       ``meta/recipes-kernel/linux`` defines the variables as follows:
       LINUX_VERSION ?= "3.4.24"
    
-      The ``LINUX_VERSION`` variable is used to define :term:`PV`
+      The ``LINUX_VERSION`` variable is used to define ```PV`` <#var-PV>`__
       for the recipe: PV = "${LINUX_VERSION}+git${SRCPV}"
    
    LINUX_VERSION_EXTENSION
@@ -3926,7 +3929,7 @@ system and gives an overview of their function and contents.
       kernel built with the OpenEmbedded build system. You define this
       variable in the kernel recipe. For example, the linux-yocto kernel
       recipes all define the variable as follows: LINUX_VERSION_EXTENSION
-      ?= "-yocto-${:term:`LINUX_KERNEL_TYPE`}"
+      ?= "-yocto-${`LINUX_KERNEL_TYPE <#var-LINUX_KERNEL_TYPE>`__}"
    
       Defining this variable essentially sets the Linux kernel
       configuration item ``CONFIG_LOCALVERSION``, which is visible through
@@ -3938,12 +3941,12 @@ system and gives an overview of their function and contents.
       overall log files. The default directory is ``${TMPDIR}/log``.
    
       For the directory containing logs specific to each task, see the
-      :term:`T` variable.
+      ```T`` <#var-T>`__ variable.
    
    MACHINE
       Specifies the target device for which the image is built. You define
-      ``MACHINE`` in the ``local.conf`` file found in the
-      :term:`Build Directory`. By default, ``MACHINE`` is set to
+      ``MACHINE`` in the ``local.conf`` file found in the `Build
+      Directory <#build-directory>`__. By default, ``MACHINE`` is set to
       "qemux86", which is an x86-based architecture machine to be emulated
       using QEMU: MACHINE ?= "qemux86"
    
@@ -3951,7 +3954,7 @@ system and gives an overview of their function and contents.
       name, through which machine-specific configurations are set. Thus,
       when ``MACHINE`` is set to "qemux86" there exists the corresponding
       ``qemux86.conf`` machine configuration file, which can be found in
-      the :term:`Source Directory` in
+      the `Source Directory <#source-directory>`__ in
       ``meta/conf/machine``.
    
       The list of machines supported by the Yocto Project as shipped
@@ -3971,8 +3974,8 @@ system and gives an overview of their function and contents.
    
    MACHINE_ARCH
       Specifies the name of the machine-specific architecture. This
-      variable is set automatically from :term:`MACHINE` or
-      :term:`TUNE_PKGARCH`. You should not hand-edit
+      variable is set automatically from ```MACHINE`` <#var-MACHINE>`__ or
+      ```TUNE_PKGARCH`` <#var-TUNE_PKGARCH>`__. You should not hand-edit
       the ``MACHINE_ARCH`` variable.
    
    MACHINE_ESSENTIAL_EXTRA_RDEPENDS
@@ -4091,11 +4094,11 @@ system and gives an overview of their function and contents.
    
    MACHINE_FEATURES
       Specifies the list of hardware features the
-      :term:`MACHINE` is capable of supporting. For related
+      ```MACHINE`` <#var-MACHINE>`__ is capable of supporting. For related
       information on enabling features, see the
-      :term:`DISTRO_FEATURES`,
-      :term:`COMBINED_FEATURES`, and
-      :term:`IMAGE_FEATURES` variables.
+      ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__,
+      ```COMBINED_FEATURES`` <#var-COMBINED_FEATURES>`__, and
+      ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__ variables.
    
       For a list of hardware features supported by the Yocto Project as
       shipped, see the "`Machine Features <#ref-features-machine>`__"
@@ -4121,7 +4124,7 @@ system and gives an overview of their function and contents.
    MACHINEOVERRIDES
       A colon-separated list of overrides that apply to the current
       machine. By default, this list includes the value of
-      :term:`MACHINE`.
+      ```MACHINE`` <#var-MACHINE>`__.
    
       You can extend ``MACHINEOVERRIDES`` to add extra overrides that
       should apply to a machine. For example, all machines emulated in QEMU
@@ -4133,7 +4136,7 @@ system and gives an overview of their function and contents.
       recipe: SRC_URI_append_qemuall = "file://wired.config \\
       file://wired-setup \\ " The underlying mechanism behind
       ``MACHINEOVERRIDES`` is simply that it is included in the default
-      value of :term:`OVERRIDES`.
+      value of ```OVERRIDES`` <#var-OVERRIDES>`__.
    
    MAINTAINER
       The email address of the distribution maintainer.
@@ -4143,18 +4146,18 @@ system and gives an overview of their function and contents.
       gets source code. When the build system searches for source code, it
       first tries the local download directory. If that location fails, the
       build system tries locations defined by
-      :term:`PREMIRRORS`, the upstream source, and then
+      ```PREMIRRORS`` <#var-PREMIRRORS>`__, the upstream source, and then
       locations specified by ``MIRRORS`` in that order.
    
-      Assuming your distribution (:term:`DISTRO`) is "poky",
+      Assuming your distribution (```DISTRO`` <#var-DISTRO>`__) is "poky",
       the default value for ``MIRRORS`` is defined in the
       ``conf/distro/poky.conf`` file in the ``meta-poky`` Git repository.
    
    MLPREFIX
-      Specifies a prefix has been added to :term:`PN` to create a
+      Specifies a prefix has been added to ```PN`` <#var-PN>`__ to create a
       special version of a recipe or package (i.e. a Multilib version). The
       variable is used in places where the prefix needs to be added to or
-      removed from a the name (e.g. the :term:`BPN` variable).
+      removed from a the name (e.g. the ```BPN`` <#var-BPN>`__ variable).
       ``MLPREFIX`` gets set when a prefix has been added to ``PN``.
    
       .. note::
@@ -4171,10 +4174,10 @@ system and gives an overview of their function and contents.
          for it as well.
    
       To help understand when ``MLPREFIX`` might be needed, consider when
-      :term:`BBCLASSEXTEND` is used to provide a
+      ```BBCLASSEXTEND`` <#var-BBCLASSEXTEND>`__ is used to provide a
       ``nativesdk`` version of a recipe in addition to the target version.
       If that recipe declares build-time dependencies on tasks in other
-      recipes by using :term:`DEPENDS`, then a dependency on
+      recipes by using ```DEPENDS`` <#var-DEPENDS>`__, then a dependency on
       "foo" will automatically get rewritten to a dependency on
       "nativesdk-foo". However, dependencies like the following will not
       get rewritten automatically: do_foo[depends] += "recipe:do_foo" If
@@ -4188,11 +4191,11 @@ system and gives an overview of their function and contents.
       module_autoload_rfcomm = "rfcomm"
    
       should now be replaced with: KERNEL_MODULE_AUTOLOAD += "rfcomm" See
-      the :term:`KERNEL_MODULE_AUTOLOAD`
+      the ```KERNEL_MODULE_AUTOLOAD`` <#var-KERNEL_MODULE_AUTOLOAD>`__
       variable for more information.
    
    module_conf
-      Specifies ```modprobe.d`http://linux.die.net/man/5/modprobe.d
+      Specifies ```modprobe.d`` <http://linux.die.net/man/5/modprobe.d>`__
       syntax lines for inclusion in the ``/etc/modprobe.d/modname.conf``
       file.
    
@@ -4201,7 +4204,7 @@ system and gives an overview of their function and contents.
       configuration file, a distribution configuration file, an append file
       for the recipe, or the recipe itself). If you use this variable, you
       must also be sure to list the module name in the
-      :term:`KERNEL_MODULE_AUTOLOAD`
+      ```KERNEL_MODULE_AUTOLOAD`` <#var-KERNEL_MODULE_AUTOLOAD>`__
       variable.
    
       Here is the general syntax: module_conf_module_name =
@@ -4218,7 +4221,7 @@ system and gives an overview of their function and contents.
    
       For information on how to specify kernel modules to auto-load on
       boot, see the
-      :term:`KERNEL_MODULE_AUTOLOAD`
+      ```KERNEL_MODULE_AUTOLOAD`` <#var-KERNEL_MODULE_AUTOLOAD>`__
       variable.
    
    MODULE_TARBALL_DEPLOY
@@ -4234,14 +4237,14 @@ system and gives an overview of their function and contents.
       same file, has the following value: KERNEL_ARTIFACT_LINK_NAME ?=
       "${MACHINE}"
    
-      See the :term:`MACHINE` variable for additional
+      See the ```MACHINE`` <#var-MACHINE>`__ variable for additional
       information.
    
    MODULE_TARBALL_NAME
       The base name of the kernel module tarball. This variable is set in
       the ``meta/classes/kernel-artifact-names.bbclass`` file as follows:
       MODULE_TARBALL_NAME ?= "${KERNEL_ARTIFACT_NAME}" The value of the
-      :term:`KERNEL_ARTIFACT_NAME` variable,
+      ```KERNEL_ARTIFACT_NAME`` <#var-KERNEL_ARTIFACT_NAME>`__ variable,
       which is set in the same file, has the following value:
       KERNEL_ARTIFACT_NAME ?=
       "${PKGE}-${PKGV}-${PKGR}-${MACHINE}${IMAGE_VERSION_SUFFIX}"
@@ -4254,11 +4257,11 @@ system and gives an overview of their function and contents.
    
       The default value of this variable is:
       ${PACKAGE_ARCH}${TARGET_VENDOR}-${TARGET_OS} Some classes (e.g.
-      :ref:`cross-canadian <ref-classes-cross-canadian>`) modify the
+      ```cross-canadian`` <#ref-classes-cross-canadian>`__) modify the
       ``MULTIMACH_TARGET_SYS`` value.
    
-      See the :term:`STAMP` variable for an example. See the
-      :term:`STAGING_DIR_TARGET` variable for
+      See the ```STAMP`` <#var-STAMP>`__ variable for an example. See the
+      ```STAGING_DIR_TARGET`` <#var-STAGING_DIR_TARGET>`__ variable for
       more information.
    
    NATIVELSBSTRING
@@ -4273,7 +4276,7 @@ system and gives an overview of their function and contents.
       packages for different distributions (e.g. to avoid problems with
       ``glibc`` version incompatibilities). Additionally, the variable is
       checked against
-      :term:`SANITY_TESTED_DISTROS` if that
+      ```SANITY_TESTED_DISTROS`` <#var-SANITY_TESTED_DISTROS>`__ if that
       variable is set.
    
    NM
@@ -4297,7 +4300,7 @@ system and gives an overview of their function and contents.
    NO_RECOMMENDATIONS
       Prevents installation of all "recommended-only" packages.
       Recommended-only packages are packages installed only through the
-      :term:`RRECOMMENDS` variable). Setting the
+      ```RRECOMMENDS`` <#var-RRECOMMENDS>`__ variable). Setting the
       ``NO_RECOMMENDATIONS`` variable to "1" turns this feature on:
       NO_RECOMMENDATIONS = "1"
    
@@ -4307,7 +4310,7 @@ system and gives an overview of their function and contents.
    
       It is important to realize that if you choose to not install packages
       using this variable and some other packages are dependent on them
-      (i.e. listed in a recipe's :term:`RDEPENDS`
+      (i.e. listed in a recipe's ```RDEPENDS`` <#var-RDEPENDS>`__
       variable), the OpenEmbedded build system ignores your request and
       will install the packages to avoid dependency errors.
    
@@ -4322,8 +4325,8 @@ system and gives an overview of their function and contents.
       Support for this variable exists only when using the IPK and RPM
       packaging backend. Support does not exist for DEB.
    
-      See the :term:`BAD_RECOMMENDATIONS` and
-      the :term:`PACKAGE_EXCLUDE` variables for
+      See the ```BAD_RECOMMENDATIONS`` <#var-BAD_RECOMMENDATIONS>`__ and
+      the ```PACKAGE_EXCLUDE`` <#var-PACKAGE_EXCLUDE>`__ variables for
       related information.
    
    NOAUTOPACKAGEDEBUG
@@ -4342,7 +4345,7 @@ system and gives an overview of their function and contents.
       The minimal command and arguments to run ``objdump``.
    
    OE_BINCONFIG_EXTRA_MANGLE
-      When inheriting the :ref:`binconfig <ref-classes-binconfig>` class,
+      When inheriting the ```binconfig`` <#ref-classes-binconfig>`__ class,
       this variable specifies additional arguments passed to the "sed"
       command. The sed command alters any paths in configuration scripts
       that have been set up during compilation. Inheriting this class
@@ -4350,11 +4353,11 @@ system and gives an overview of their function and contents.
       ``sysroots/`` directory so that all builds that use the script will
       use the correct directories for the cross compiling layout.
    
-      See the ``meta/classes/binconfig.bbclass`` in the 
-      :term:`Source Directory` for details on how this class
+      See the ``meta/classes/binconfig.bbclass`` in the `Source
+      Directory <#source-directory>`__ for details on how this class
       applies these additional sed command arguments. For general
       information on the ``binconfig`` class, see the
-      ":ref:`binconfig.bbclass <ref-classes-binconfig>`" section.
+      "```binconfig.bbclass`` <#ref-classes-binconfig>`__" section.
    
    OE_IMPORTS
       An internal variable used to tell the OpenEmbedded build system what
@@ -4414,15 +4417,16 @@ system and gives an overview of their function and contents.
       As an example, if the string "an-override" appears as an element in
       the colon-separated list in ``OVERRIDES``, then the following
       assignment will override ``FOO`` with the value "overridden" at the
-      end of parsing: FOO_an-override = "overridden" See the
-      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
+      end of parsing: FOO_an-override = "overridden" See the "`Conditional
+      Syntax
+      (Overrides) <&YOCTO_DOCS_BB_URL;#conditional-syntax-overrides>`__"
       section in the BitBake User Manual for more information on the
       overrides mechanism.
    
       The default value of ``OVERRIDES`` includes the values of the
-      :term:`CLASSOVERRIDE`,
-      :term:`MACHINEOVERRIDES`, and
-      :term:`DISTROOVERRIDES` variables. Another
+      ```CLASSOVERRIDE`` <#var-CLASSOVERRIDE>`__,
+      ```MACHINEOVERRIDES`` <#var-MACHINEOVERRIDES>`__, and
+      ```DISTROOVERRIDES`` <#var-DISTROOVERRIDES>`__ variables. Another
       important override included by default is ``pn-${PN}``. This override
       allows variables to be set for a single recipe within configuration
       (``.conf``) files. Here is an example: FOO_pn-myrecipe =
@@ -4464,8 +4468,8 @@ system and gives an overview of their function and contents.
       The architecture of the resulting package or packages.
    
       By default, the value of this variable is set to
-      :term:`TUNE_PKGARCH` when building for the
-      target, :term:`BUILD_ARCH` when building for the
+      ```TUNE_PKGARCH`` <#var-TUNE_PKGARCH>`__ when building for the
+      target, ```BUILD_ARCH`` <#var-BUILD_ARCH>`__ when building for the
       build host, and "${SDK_ARCH}-${SDKPKGSUFFIX}" when building for the
       SDK.
    
@@ -4478,7 +4482,7 @@ system and gives an overview of their function and contents.
       However, if your recipe's output packages are built specific to the
       target machine rather than generally for the architecture of the
       machine, you should set ``PACKAGE_ARCH`` to the value of
-      :term:`MACHINE_ARCH` in the recipe as follows:
+      ```MACHINE_ARCH`` <#var-MACHINE_ARCH>`__ in the recipe as follows:
       PACKAGE_ARCH = "${MACHINE_ARCH}"
    
    PACKAGE_ARCHS
@@ -4495,8 +4499,8 @@ system and gives an overview of their function and contents.
    
    PACKAGE_CLASSES
       This variable, which is set in the ``local.conf`` configuration file
-      found in the ``conf`` folder of the
-      :term:`Build Directory`, specifies the package manager the
+      found in the ``conf`` folder of the `Build
+      Directory <#build-directory>`__, specifies the package manager the
       OpenEmbedded build system uses when packaging data.
    
       You can provide one or more of the following arguments for the
@@ -4520,7 +4524,7 @@ system and gives an overview of their function and contents.
    
       For information on packaging and build performance effects as a
       result of the package manager in use, see the
-      ":ref:`package.bbclass <ref-classes-package>`" section.
+      "```package.bbclass`` <#ref-classes-package>`__" section.
    
    PACKAGE_DEBUG_SPLIT_STYLE
       Determines how to split up the binary and debug information when
@@ -4562,7 +4566,7 @@ system and gives an overview of their function and contents.
    
       You might find that you want to prevent installing certain packages
       when you are installing complementary packages. For example, if you
-      are using :term:`IMAGE_FEATURES` to install
+      are using ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__ to install
       ``dev-pkgs``, you might not want to install all packages from a
       particular multilib. If you find yourself in this situation, you can
       use the ``PACKAGE_EXCLUDE_COMPLEMENTARY`` variable to specify regular
@@ -4579,7 +4583,7 @@ system and gives an overview of their function and contents.
    
       If you choose to not install a package using this variable and some
       other package is dependent on it (i.e. listed in a recipe's
-      :term:`RDEPENDS` variable), the OpenEmbedded build
+      ```RDEPENDS`` <#var-RDEPENDS>`__ variable), the OpenEmbedded build
       system generates a fatal installation error. Because the build system
       halts the process with a fatal error, you can use the variable with
       an iterative development process to remove specific components from a
@@ -4588,8 +4592,8 @@ system and gives an overview of their function and contents.
       Support for this variable exists only when using the IPK and RPM
       packaging backend. Support does not exist for DEB.
    
-      See the :term:`NO_RECOMMENDATIONS` and the
-      :term:`BAD_RECOMMENDATIONS` variables for
+      See the ```NO_RECOMMENDATIONS`` <#var-NO_RECOMMENDATIONS>`__ and the
+      ```BAD_RECOMMENDATIONS`` <#var-BAD_RECOMMENDATIONS>`__ variables for
       related information.
    
    PACKAGE_EXTRA_ARCHS
@@ -4602,8 +4606,8 @@ system and gives an overview of their function and contents.
       package feed URIs during the build. When used, the
       ``PACKAGE_FEED_ARCHS`` variable is appended to the final package feed
       URI, which is constructed using the
-      :term:`PACKAGE_FEED_URIS` and
-      :term:`PACKAGE_FEED_BASE_PATHS`
+      ```PACKAGE_FEED_URIS`` <#var-PACKAGE_FEED_URIS>`__ and
+      ```PACKAGE_FEED_BASE_PATHS`` <#var-PACKAGE_FEED_BASE_PATHS>`__
       variables.
    
       .. note::
@@ -4636,8 +4640,8 @@ system and gives an overview of their function and contents.
       Specifies the base path used when constructing package feed URIs. The
       ``PACKAGE_FEED_BASE_PATHS`` variable makes up the middle portion of a
       package feed URI used by the OpenEmbedded build system. The base path
-      lies between the :term:`PACKAGE_FEED_URIS`
-      and :term:`PACKAGE_FEED_ARCHS` variables.
+      lies between the ```PACKAGE_FEED_URIS`` <#var-PACKAGE_FEED_URIS>`__
+      and ```PACKAGE_FEED_ARCHS`` <#var-PACKAGE_FEED_ARCHS>`__ variables.
    
       Consider the following example where the ``PACKAGE_FEED_URIS``,
       ``PACKAGE_FEED_BASE_PATHS``, and ``PACKAGE_FEED_ARCHS`` variables are
@@ -4659,8 +4663,8 @@ system and gives an overview of their function and contents.
       Specifies the front portion of the package feed URI used by the
       OpenEmbedded build system. Each final package feed URI is comprised
       of ``PACKAGE_FEED_URIS``,
-      :term:`PACKAGE_FEED_BASE_PATHS`, and
-      :term:`PACKAGE_FEED_ARCHS` variables.
+      ```PACKAGE_FEED_BASE_PATHS`` <#var-PACKAGE_FEED_BASE_PATHS>`__, and
+      ```PACKAGE_FEED_ARCHS`` <#var-PACKAGE_FEED_ARCHS>`__ variables.
    
       Consider the following example where the ``PACKAGE_FEED_URIS``,
       ``PACKAGE_FEED_BASE_PATHS``, and ``PACKAGE_FEED_ARCHS`` variables are
@@ -4687,7 +4691,7 @@ system and gives an overview of their function and contents.
       not the final list of packages that are actually installed. This
       variable is internal to the image construction code. Consequently, in
       general, you should use the
-      :term:`IMAGE_INSTALL` variable to specify
+      ```IMAGE_INSTALL`` <#var-IMAGE_INSTALL>`__ variable to specify
       packages for installation. The exception to this is when working with
       the
       ```core-image-minimal-initramfs`` <#images-core-image-minimal-initramfs>`__
@@ -4705,7 +4709,7 @@ system and gives an overview of their function and contents.
    
    PACKAGE_PREPROCESS_FUNCS
       Specifies a list of functions run to pre-process the
-      :term:`PKGD` directory prior to splitting the files out
+      ```PKGD`` <#var-PKGD>`__ directory prior to splitting the files out
       to individual packages.
    
    PACKAGE_WRITE_DEPS
@@ -4740,21 +4744,21 @@ system and gives an overview of their function and contents.
       order is important and specifies the following:
    
       1. Extra arguments that should be added to the configure script
-         argument list (:term:`EXTRA_OECONF` or
-         :term:`PACKAGECONFIG_CONFARGS`) if
+         argument list (```EXTRA_OECONF`` <#var-EXTRA_OECONF>`__ or
+         ```PACKAGECONFIG_CONFARGS`` <#var-PACKAGECONFIG_CONFARGS>`__) if
          the feature is enabled.
    
       2. Extra arguments that should be added to ``EXTRA_OECONF`` or
          ``PACKAGECONFIG_CONFARGS`` if the feature is disabled.
    
-      3. Additional build dependencies (:term:`DEPENDS`)
+      3. Additional build dependencies (```DEPENDS`` <#var-DEPENDS>`__)
          that should be added if the feature is enabled.
    
-      4. Additional runtime dependencies (:term:`RDEPENDS`)
+      4. Additional runtime dependencies (```RDEPENDS`` <#var-RDEPENDS>`__)
          that should be added if the feature is enabled.
    
       5. Additional runtime recommendations
-         (:term:`RRECOMMENDS`) that should be added if
+         (```RRECOMMENDS`` <#var-RRECOMMENDS>`__) that should be added if
          the feature is enabled.
    
       6. Any conflicting (that is, mutually exclusive) ``PACKAGECONFIG``
@@ -4793,10 +4797,10 @@ system and gives an overview of their function and contents.
    
    PACKAGECONFIG_CONFARGS
       A space-separated list of configuration options generated from the
-      :term:`PACKAGECONFIG` setting.
+      ```PACKAGECONFIG`` <#var-PACKAGECONFIG>`__ setting.
    
-      Classes such as :ref:`autotools <ref-classes-autotools>` and
-      :ref:`cmake <ref-classes-cmake>` use ``PACKAGECONFIG_CONFARGS`` to
+      Classes such as ```autotools`` <#ref-classes-autotools>`__ and
+      ```cmake`` <#ref-classes-cmake>`__ use ``PACKAGECONFIG_CONFARGS`` to
       pass ``PACKAGECONFIG`` options to ``configure`` and ``cmake``,
       respectively. If you are using ``PACKAGECONFIG`` but not a class that
       handles the ``do_configure`` task, then you need to use
@@ -4804,7 +4808,7 @@ system and gives an overview of their function and contents.
    
    PACKAGEGROUP_DISABLE_COMPLEMENTARY
       For recipes inheriting the
-      :ref:`packagegroup <ref-classes-packagegroup>` class, setting
+      ```packagegroup`` <#ref-classes-packagegroup>`__ class, setting
       ``PACKAGEGROUP_DISABLE_COMPLEMENTARY`` to "1" specifies that the
       normal complementary packages (i.e. ``-dev``, ``-dbg``, and so forth)
       should not be automatically created by the ``packagegroup`` recipe,
@@ -4815,8 +4819,8 @@ system and gives an overview of their function and contents.
       following: ${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale
       ${PACKAGE_BEFORE_PN} ${PN}
    
-      During packaging, the :ref:`ref-tasks-package` task
-      goes through ``PACKAGES`` and uses the :term:`FILES`
+      During packaging, the ```do_package`` <#ref-tasks-package>`__ task
+      goes through ``PACKAGES`` and uses the ```FILES`` <#var-FILES>`__
       variable corresponding to each package to assign files to the
       package. If a file matches the ``FILES`` variable for more than one
       package in ``PACKAGES``, it will be assigned to the earliest
@@ -4824,26 +4828,26 @@ system and gives an overview of their function and contents.
    
       Packages in the variable's list that are empty (i.e. where none of
       the patterns in ``FILES_``\ pkg match any files installed by the
-      :ref:`ref-tasks-install` task) are not generated,
+      ```do_install`` <#ref-tasks-install>`__ task) are not generated,
       unless generation is forced through the
-      :term:`ALLOW_EMPTY` variable.
+      ```ALLOW_EMPTY`` <#var-ALLOW_EMPTY>`__ variable.
    
    PACKAGES_DYNAMIC
       A promise that your recipe satisfies runtime dependencies for
       optional modules that are found in other recipes.
       ``PACKAGES_DYNAMIC`` does not actually satisfy the dependencies, it
       only states that they should be satisfied. For example, if a hard,
-      runtime dependency (:term:`RDEPENDS`) of another
+      runtime dependency (```RDEPENDS`` <#var-RDEPENDS>`__) of another
       package is satisfied at build time through the ``PACKAGES_DYNAMIC``
       variable, but a package with the module name is never actually
       produced, then the other package will be broken. Thus, if you attempt
       to include that package in an image, you will get a dependency
       failure from the packaging system during the
-      :ref:`ref-tasks-rootfs` task.
+      ```do_rootfs`` <#ref-tasks-rootfs>`__ task.
    
       Typically, if there is a chance that such a situation can occur and
       the package that is not created is valid without the dependency being
-      satisfied, then you should use :term:`RRECOMMENDS`
+      satisfied, then you should use ```RRECOMMENDS`` <#var-RRECOMMENDS>`__
       (a soft runtime dependency) instead of ``RDEPENDS``.
    
       For an example of how to use the ``PACKAGES_DYNAMIC`` variable when
@@ -4856,14 +4860,14 @@ system and gives an overview of their function and contents.
       files into individual packages. Recipes can either prepend to this
       variable or prepend to the ``populate_packages`` function in order to
       perform additional package splitting. In either case, the function
-      should set :term:`PACKAGES`,
-      :term:`FILES`, :term:`RDEPENDS` and
+      should set ```PACKAGES`` <#var-PACKAGES>`__,
+      ```FILES`` <#var-FILES>`__, ```RDEPENDS`` <#var-RDEPENDS>`__ and
       other packaging variables appropriately in order to perform the
       desired splitting.
    
    PARALLEL_MAKE
       Extra options passed to the ``make`` command during the
-      :ref:`ref-tasks-compile` task in order to specify
+      ```do_compile`` <#ref-tasks-compile>`__ task in order to specify
       parallel compilation on the local build host. This variable is
       usually in the form "-j x", where x represents the maximum number of
       parallel threads ``make`` can run.
@@ -4909,15 +4913,15 @@ system and gives an overview of their function and contents.
    
    PARALLEL_MAKEINST
       Extra options passed to the ``make install`` command during the
-      :ref:`ref-tasks-install` task in order to specify
+      ```do_install`` <#ref-tasks-install>`__ task in order to specify
       parallel installation. This variable defaults to the value of
-      :term:`PARALLEL_MAKE`.
+      ```PARALLEL_MAKE`` <#var-PARALLEL_MAKE>`__.
    
       .. note::
    
          In order for ``PARALLEL_MAKEINST`` to be effective, ``make`` must
          be called with
-         ``${``\ :term:`EXTRA_OEMAKE`\ ``}``. An easy
+         ``${``\ ```EXTRA_OEMAKE`` <#var-EXTRA_OEMAKE>`__\ ``}``. An easy
          way to ensure this is to use the ``oe_runmake`` function.
    
          If the software being built experiences dependency issues during
@@ -4942,7 +4946,7 @@ system and gives an overview of their function and contents.
    
    PATCHTOOL
       Specifies the utility used to apply patches for a recipe during the
-      :ref:`ref-tasks-patch` task. You can specify one of
+      ```do_patch`` <#ref-tasks-patch>`__ task. You can specify one of
       three utilities: "patch", "quilt", or "git". The default utility used
       is "quilt" except for the quilt-native recipe itself. Because the
       quilt tool is not available at the time quilt-native is being
@@ -4957,20 +4961,20 @@ system and gives an overview of their function and contents.
       variable is used to make upgrades possible when the versioning scheme
       changes in some backwards incompatible way.
    
-      ``PE`` is the default value of the :term:`PKGE` variable.
+      ``PE`` is the default value of the ```PKGE`` <#var-PKGE>`__ variable.
    
    PF
       Specifies the recipe or package name and includes all version and
       revision numbers (i.e. ``glibc-2.13-r20+svnr15508/`` and
       ``bash-4.2-r1/``). This variable is comprised of the following:
-      ${:term:`PN`}-${:term:`EXTENDPE`}${:term:`PV`}-${:term:`PR`}
+      ${`PN <#var-PN>`__}-${`EXTENDPE <#var-EXTENDPE>`__}${`PV <#var-PV>`__}-${`PR <#var-PR>`__}
    
    PIXBUF_PACKAGES
-      When inheriting the :ref:`pixbufcache <ref-classes-pixbufcache>`
+      When inheriting the ```pixbufcache`` <#ref-classes-pixbufcache>`__
       class, this variable identifies packages that contain the pixbuf
       loaders used with ``gdk-pixbuf``. By default, the ``pixbufcache``
       class assumes that the loaders are in the recipe's main package (i.e.
-      ``${``\ :term:`PN`\ ``}``). Use this variable if the
+      ``${``\ ```PN`` <#var-PN>`__\ ``}``). Use this variable if the
       loaders you need are in a package other than that main package.
    
    PKG
@@ -4983,7 +4987,7 @@ system and gives an overview of their function and contents.
          PKG
          variable, you must use a package name override.
    
-      For example, when the :ref:`debian <ref-classes-debian>` class
+      For example, when the ```debian`` <#ref-classes-debian>`__ class
       renames the output package, it does so by setting
       ``PKG_packagename``.
    
@@ -5001,7 +5005,7 @@ system and gives an overview of their function and contents.
    PKGDATA_DIR
       Points to a shared, global-state directory that holds data generated
       during the packaging process. During the packaging process, the
-      :ref:`ref-tasks-packagedata` task packages data
+      ```do_packagedata`` <#ref-tasks-packagedata>`__ task packages data
       for each recipe and installs it into this temporary, shared area.
       This directory defaults to the following, which you should not
       change: ${STAGING_DIR_HOST}/pkgdata For examples of how this data is
@@ -5012,7 +5016,7 @@ system and gives an overview of their function and contents.
       ``oe-pkgdata-util`` <&YOCTO_DOCS_DEV_URL;#viewing-package-information-with-oe-pkgdata-util>`__"
       section in the Yocto Project Development Tasks Manual. For more
       information on the shared, global-state directory, see
-      :term:`STAGING_DIR_HOST`.
+      ```STAGING_DIR_HOST`` <#var-STAGING_DIR_HOST>`__.
    
    PKGDEST
       Points to the parent directory for files to be packaged after they
@@ -5020,30 +5024,30 @@ system and gives an overview of their function and contents.
       the following: ${WORKDIR}/packages-split
    
       Under this directory, the build system creates directories for each
-      package specified in :term:`PACKAGES`. Do not change
+      package specified in ```PACKAGES`` <#var-PACKAGES>`__. Do not change
       this default.
    
    PKGDESTWORK
       Points to a temporary work area where the
-      :ref:`ref-tasks-package` task saves package metadata.
+      ```do_package`` <#ref-tasks-package>`__ task saves package metadata.
       The ``PKGDESTWORK`` location defaults to the following:
       ${WORKDIR}/pkgdata Do not change this default.
    
-      The :ref:`ref-tasks-packagedata` task copies the
+      The ```do_packagedata`` <#ref-tasks-packagedata>`__ task copies the
       package metadata from ``PKGDESTWORK`` to
-      :term:`PKGDATA_DIR` to make it available globally.
+      ```PKGDATA_DIR`` <#var-PKGDATA_DIR>`__ to make it available globally.
    
    PKGE
       The epoch of the package(s) built by the recipe. By default, ``PKGE``
-      is set to :term:`PE`.
+      is set to ```PE`` <#var-PE>`__.
    
    PKGR
       The revision of the package(s) built by the recipe. By default,
-      ``PKGR`` is set to :term:`PR`.
+      ``PKGR`` is set to ```PR`` <#var-PR>`__.
    
    PKGV
       The version of the package(s) built by the recipe. By default,
-      ``PKGV`` is set to :term:`PV`.
+      ``PKGV`` is set to ```PV`` <#var-PV>`__.
    
    PN
       This variable can have two separate functions depending on the
@@ -5067,7 +5071,7 @@ system and gives an overview of their function and contents.
    PNBLACKLIST
       Lists recipes you do not want the OpenEmbedded build system to build.
       This variable works in conjunction with the
-      :ref:`blacklist <ref-classes-blacklist>` class, which is inherited
+      ```blacklist`` <#ref-classes-blacklist>`__ class, which is inherited
       globally.
    
       To prevent a recipe from being built, use the ``PNBLACKLIST``
@@ -5084,7 +5088,7 @@ system and gives an overview of their function and contents.
       If you need to pass the SDK path to a command within a function, you
       can use ``${SDK_DIR}``, which points to the parent directory used by
       the OpenEmbedded build system when creating SDK output. See the
-      :term:`SDK_DIR` variable for more information.
+      ```SDK_DIR`` <#var-SDK_DIR>`__ variable for more information.
    
    POPULATE_SDK_POST_TARGET_COMMAND
       Specifies a list of functions to call once the OpenEmbedded build
@@ -5095,12 +5099,12 @@ system and gives an overview of their function and contents.
       If you need to pass the SDK path to a command within a function, you
       can use ``${SDK_DIR}``, which points to the parent directory used by
       the OpenEmbedded build system when creating SDK output. See the
-      :term:`SDK_DIR` variable for more information.
+      ```SDK_DIR`` <#var-SDK_DIR>`__ variable for more information.
    
    PR
       The revision of the recipe. The default value for this variable is
       "r0". Subsequent revisions of the recipe conventionally have the
-      values "r1", "r2", and so forth. When :term:`PV` increases,
+      values "r1", "r2", and so forth. When ```PV`` <#var-PV>`__ increases,
       ``PR`` is conventionally reset to "r0".
    
       .. note::
@@ -5118,7 +5122,7 @@ system and gives an overview of their function and contents.
       The ``PR`` variable primarily becomes significant when a package
       manager dynamically installs packages on an already built image. In
       this case, ``PR``, which is the default value of
-      :term:`PKGR`, helps the package manager distinguish which
+      ```PKGR`` <#var-PKGR>`__, helps the package manager distinguish which
       package is the most recent one in cases where many packages have the
       same ``PV`` (i.e. ``PKGV``). A component having many packages with
       the same ``PV`` usually means that the packages all install the same
@@ -5141,7 +5145,7 @@ system and gives an overview of their function and contents.
       which recipe is preferred and thus provides the item (i.e. the
       preferred provider). You should always suffix this variable with the
       name of the provided item. And, you should define the variable using
-      the preferred recipe's name (:term:`PN`). Here is a common
+      the preferred recipe's name (```PN`` <#var-PN>`__). Here is a common
       example: PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto" In the
       previous example, multiple recipes are providing "virtual/kernel".
       The ``PREFERRED_PROVIDER`` variable is set with the name (``PN``) of
@@ -5170,8 +5174,8 @@ system and gives an overview of their function and contents.
    PREFERRED_VERSION
       If multiple versions of recipes exist, this variable determines which
       version is given preference. You must always suffix the variable with
-      the :term:`PN` you want to select, and you should set the
-      :term:`PV` accordingly for precedence.
+      the ```PN`` <#var-PN>`__ you want to select, and you should set the
+      ```PV`` <#var-PV>`__ accordingly for precedence.
    
       The ``PREFERRED_VERSION`` variable supports limited wildcard use
       through the "``%``" character. You can use the character to match any
@@ -5188,7 +5192,7 @@ system and gives an overview of their function and contents.
          string. You cannot use the wildcard character in any other
          location of the string.
    
-      The specified version is matched against :term:`PV`, which
+      The specified version is matched against ```PV`` <#var-PV>`__, which
       does not necessarily match the version part of the recipe's filename.
       For example, consider two recipes ``foo_1.2.bb`` and ``foo_git.bb``
       where ``foo_git.bb`` contains the following assignment: PV =
@@ -5200,7 +5204,7 @@ system and gives an overview of their function and contents.
    
       Sometimes the ``PREFERRED_VERSION`` variable can be set by
       configuration files in a way that is hard to change. You can use
-      :term:`OVERRIDES` to set a machine-specific
+      ```OVERRIDES`` <#var-OVERRIDES>`__ to set a machine-specific
       override. Here is an example: PREFERRED_VERSION_linux-yocto_qemux86 =
       "5.0%" Although not recommended, worst case, you can also use the
       "forcevariable" override, which is the strongest override possible.
@@ -5222,16 +5226,16 @@ system and gives an overview of their function and contents.
       first tries the local download directory. If that location fails, the
       build system tries locations defined by ``PREMIRRORS``, the upstream
       source, and then locations specified by
-      :term:`MIRRORS` in that order.
+      ```MIRRORS`` <#var-MIRRORS>`__ in that order.
    
-      Assuming your distribution (:term:`DISTRO`) is "poky",
+      Assuming your distribution (```DISTRO`` <#var-DISTRO>`__) is "poky",
       the default value for ``PREMIRRORS`` is defined in the
       ``conf/distro/poky.conf`` file in the ``meta-poky`` Git repository.
    
       Typically, you could add a specific server for the build system to
       attempt before any others by adding something like the following to
-      the ``local.conf`` configuration file in the
-      :term:`Build Directory`: PREMIRRORS_prepend = "\\
+      the ``local.conf`` configuration file in the `Build
+      Directory <#build-directory>`__: PREMIRRORS_prepend = "\\
       git://.*/.\* http://www.yoctoproject.org/sources/ \\n \\ ftp://.*/.\*
       http://www.yoctoproject.org/sources/ \\n \\ http://.*/.\*
       http://www.yoctoproject.org/sources/ \\n \\ https://.*/.\*
@@ -5311,7 +5315,7 @@ system and gives an overview of their function and contents.
       "virtual/function" (e.g. "virtual/kernel"). The slash is simply part
       of the name and has no syntactical significance.
    
-      The :term:`PREFERRED_PROVIDER` variable is
+      The ```PREFERRED_PROVIDER`` <#var-PREFERRED_PROVIDER>`__ variable is
       used to select which particular recipe provides a virtual target.
    
       .. note::
@@ -5331,10 +5335,10 @@ system and gives an overview of their function and contents.
                                     
    
    PRSERV_HOST
-      The network based :term:`PR` service host and port.
+      The network based ```PR`` <#var-PR>`__ service host and port.
    
       The ``conf/local.conf.sample.extended`` configuration file in the
-      :term:`Source Directory` shows how the
+      `Source Directory <#source-directory>`__ shows how the
       ``PRSERV_HOST`` variable is set: PRSERV_HOST = "localhost:0" You must
       set the variable if you want to automatically start a local `PR
       service <&YOCTO_DOCS_DEV_URL;#working-with-a-pr-service>`__. You can
@@ -5346,7 +5350,7 @@ system and gives an overview of their function and contents.
       functionality is enabled when building a recipe. You should not set
       this variable directly. Enabling and disabling building Package Tests
       at build time should be done by adding "ptest" to (or removing it
-      from) :term:`DISTRO_FEATURES`.
+      from) ```DISTRO_FEATURES`` <#var-DISTRO_FEATURES>`__.
    
    PV
       The version of the recipe. The version is normally extracted from the
@@ -5356,14 +5360,14 @@ system and gives an overview of their function and contents.
       building an unstable (i.e. development) version from a source code
       repository (e.g. Git or Subversion).
    
-      ``PV`` is the default value of the :term:`PKGV` variable.
+      ``PV`` is the default value of the ```PKGV`` <#var-PKGV>`__ variable.
    
    PYTHON_ABI
       When used by recipes that inherit the
-      :ref:`distutils3 <ref-classes-distutils3>`,
-      :ref:`setuptools3 <ref-classes-setuptools3>`,
-      :ref:`distutils <ref-classes-distutils>`, or
-      :ref:`setuptools <ref-classes-setuptools>` classes, denotes the
+      ```distutils3`` <#ref-classes-distutils3>`__,
+      ```setuptools3`` <#ref-classes-setuptools3>`__,
+      ```distutils`` <#ref-classes-distutils>`__, or
+      ```setuptools`` <#ref-classes-setuptools>`__ classes, denotes the
       Application Binary Interface (ABI) currently in use for Python. By
       default, the ABI is "m". You do not have to set this variable as the
       OpenEmbedded build system sets it for you.
@@ -5378,10 +5382,10 @@ system and gives an overview of their function and contents.
    
    PYTHON_PN
       When used by recipes that inherit the
-      `distutils3 <ref-classes-distutils3>`,
-      :ref:`setuptools3 <ref-classes-setuptools3>`,
-      :ref:`distutils <ref-classes-distutils>`, or
-      :ref:`setuptools <ref-classes-setuptools>` classes, specifies the
+      ```distutils3`` <#ref-classes-distutils3>`__,
+      ```setuptools3`` <#ref-classes-setuptools3>`__,
+      ```distutils`` <#ref-classes-distutils>`__, or
+      ```setuptools`` <#ref-classes-setuptools>`__ classes, specifies the
       major Python version being built. For Python 3.x, ``PYTHON_PN`` would
       be "python3". You do not have to set this variable as the
       OpenEmbedded build system automatically sets it for you.
@@ -5428,15 +5432,15 @@ system and gives an overview of their function and contents.
       ```do_package_write_*`` <#ref-tasks-package_write_deb>`__ tasks.
       Exactly how this is done depends on which package format is used,
       which is determined by
-      :term:`PACKAGE_CLASSES`. When the
+      ```PACKAGE_CLASSES`` <#var-PACKAGE_CLASSES>`__. When the
       corresponding package manager installs the package, it will know to
       also install the packages on which it depends.
    
       To ensure that the packages ``bar`` and ``baz`` get built, the
       previous ``RDEPENDS`` assignment also causes a task dependency to be
       added. This dependency is from the recipe's
-      :ref:`ref-tasks-build` (not to be confused with
-      :ref:`ref-tasks-compile`) task to the
+      ```do_build`` <#ref-tasks-build>`__ (not to be confused with
+      ```do_compile`` <#ref-tasks-compile>`__) task to the
       ``do_package_write_*`` task of the recipes that build ``bar`` and
       ``baz``.
    
@@ -5445,7 +5449,7 @@ system and gives an overview of their function and contents.
       package names and recipe names usually match, the important point
       here is that you are providing package names within the ``RDEPENDS``
       variable. For an example of the default list of packages created from
-      a recipe, see the :term:`PACKAGES` variable.
+      a recipe, see the ```PACKAGES`` <#var-PACKAGES>`__ variable.
    
       Because the ``RDEPENDS`` variable applies to packages being built,
       you should always use the variable in a form with an attached package
@@ -5474,9 +5478,9 @@ system and gives an overview of their function and contents.
          . Use the "+=" operator rather than the "=" operator.
    
       The package names you use with ``RDEPENDS`` must appear as they would
-      in the ``PACKAGES`` variable. The :term:`PKG` variable
+      in the ``PACKAGES`` variable. The ```PKG`` <#var-PKG>`__ variable
       allows a different name to be used for the final package (e.g. the
-      :ref:`debian <ref-classes-debian>` class uses this to rename
+      ```debian`` <#ref-classes-debian>`__ class uses this to rename
       packages), but this final package name cannot be used with
       ``RDEPENDS``, which makes sense as ``RDEPENDS`` is meant to be
       independent of the package format used.
@@ -5499,15 +5503,15 @@ system and gives an overview of their function and contents.
       greater of the package ``foo``: RDEPENDS_${PN} = "foo (>= 1.2)"
    
       For information on build-time dependencies, see the
-      :term:`DEPENDS` variable. You can also see the
-      ":ref:`Tasks <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks>`" and
-      ":ref:`Dependencies <bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies>`" sections in the
+      ```DEPENDS`` <#var-DEPENDS>`__ variable. You can also see the
+      "`Tasks <&YOCTO_DOCS_BB_URL;#tasks>`__" and
+      "`Dependencies <&YOCTO_DOCS_BB_URL;#dependencies>`__" sections in the
       BitBake User Manual for additional information on tasks and
       dependencies.
    
    REQUIRED_DISTRO_FEATURES
       When inheriting the
-      :ref:`distro_features_check <ref-classes-distro_features_check>`
+      ```distro_features_check`` <#ref-classes-distro_features_check>`__
       class, this variable identifies distribution features that must exist
       in the current configuration in order for the OpenEmbedded build
       system to build the recipe. In other words, if the
@@ -5518,7 +5522,7 @@ system and gives an overview of their function and contents.
    RM_WORK_EXCLUDE
       With ``rm_work`` enabled, this variable specifies a list of recipes
       whose work directories should not be removed. See the
-      ":ref:`rm_work.bbclass <ref-classes-rm-work>`" section for more
+      "```rm_work.bbclass`` <#ref-classes-rm-work>`__" section for more
       details.
    
    ROOT_HOME
@@ -5542,7 +5546,7 @@ system and gives an overview of their function and contents.
       Indicates a filesystem image to include as the root filesystem.
    
       The ``ROOTFS`` variable is an optional variable used with the
-      :ref:`image-live <ref-classes-image-live>` class.
+      ```image-live`` <#ref-classes-image-live>`__ class.
    
    ROOTFS_POSTINSTALL_COMMAND
       Specifies a list of functions to call after the OpenEmbedded build
@@ -5552,7 +5556,7 @@ system and gives an overview of their function and contents.
       If you need to pass the root filesystem path to a command within a
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
       directory that becomes the root filesystem image. See the
-      :term:`IMAGE_ROOTFS` variable for more
+      ```IMAGE_ROOTFS`` <#var-IMAGE_ROOTFS>`__ variable for more
       information.
    
    ROOTFS_POSTPROCESS_COMMAND
@@ -5564,7 +5568,7 @@ system and gives an overview of their function and contents.
       If you need to pass the root filesystem path to a command within a
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
       directory that becomes the root filesystem image. See the
-      :term:`IMAGE_ROOTFS` variable for more
+      ```IMAGE_ROOTFS`` <#var-IMAGE_ROOTFS>`__ variable for more
       information.
    
    ROOTFS_POSTUNINSTALL_COMMAND
@@ -5578,7 +5582,7 @@ system and gives an overview of their function and contents.
       If you need to pass the root filesystem path to a command within a
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
       directory that becomes the root filesystem image. See the
-      :term:`IMAGE_ROOTFS` variable for more
+      ```IMAGE_ROOTFS`` <#var-IMAGE_ROOTFS>`__ variable for more
       information.
    
    ROOTFS_PREPROCESS_COMMAND
@@ -5590,7 +5594,7 @@ system and gives an overview of their function and contents.
       If you need to pass the root filesystem path to a command within a
       function, you can use ``${IMAGE_ROOTFS}``, which points to the
       directory that becomes the root filesystem image. See the
-      :term:`IMAGE_ROOTFS` variable for more
+      ```IMAGE_ROOTFS`` <#var-IMAGE_ROOTFS>`__ variable for more
       information.
    
    RPROVIDES
@@ -5619,15 +5623,15 @@ system and gives an overview of their function and contents.
       The package manager will automatically install the ``RRECOMMENDS``
       list of packages when installing the built package. However, you can
       prevent listed packages from being installed by using the
-      :term:`BAD_RECOMMENDATIONS`,
-      :term:`NO_RECOMMENDATIONS`, and
-      :term:`PACKAGE_EXCLUDE` variables.
+      ```BAD_RECOMMENDATIONS`` <#var-BAD_RECOMMENDATIONS>`__,
+      ```NO_RECOMMENDATIONS`` <#var-NO_RECOMMENDATIONS>`__, and
+      ```PACKAGE_EXCLUDE`` <#var-PACKAGE_EXCLUDE>`__ variables.
    
       Packages specified in ``RRECOMMENDS`` need not actually be produced.
       However, a recipe must exist that provides each package, either
-      through the :term:`PACKAGES` or
-      :term:`PACKAGES_DYNAMIC` variables or the
-      :term:`RPROVIDES` variable, or an error will occur
+      through the ```PACKAGES`` <#var-PACKAGES>`__ or
+      ```PACKAGES_DYNAMIC`` <#var-PACKAGES_DYNAMIC>`__ variables or the
+      ```RPROVIDES`` <#var-RPROVIDES>`__ variable, or an error will occur
       during the build. If such a recipe does exist and the package is not
       produced, the build continues without error.
    
@@ -5680,9 +5684,9 @@ system and gives an overview of their function and contents.
       example: RSUGGESTS_${PN} = "useful_package another_package"
    
    S
-      The location in the :term:`Build Directory` where
+      The location in the `Build Directory <#build-directory>`__ where
       unpacked recipe source code resides. By default, this directory is
-      ``${``\ :term:`WORKDIR`\ ``}/${``\ :term:`BPN`\ ``}-${``\ :term:`PV`\ ``}``,
+      ``${``\ ```WORKDIR`` <#var-WORKDIR>`__\ ``}/${``\ ```BPN`` <#var-BPN>`__\ ``}-${``\ ```PV`` <#var-PV>`__\ ``}``,
       where ``${BPN}`` is the base recipe name and ``${PV}`` is the recipe
       version. If the source tarball extracts the code to a directory named
       anything other than ``${BPN}-${PV}``, or if the source code is
@@ -5690,7 +5694,7 @@ system and gives an overview of their function and contents.
       ``S`` in the recipe so that the OpenEmbedded build system knows where
       to find the unpacked source.
    
-      As an example, assume a :term:`Source Directory`
+      As an example, assume a `Source Directory <#source-directory>`__
       top-level folder named ``poky`` and a default Build Directory at
       ``poky/build``. In this case, the work directory the build system
       uses to keep the unpacked recipe for ``db`` is the following:
@@ -5699,7 +5703,7 @@ system and gives an overview of their function and contents.
    
       This next example assumes a Git repository. By default, Git
       repositories are cloned to ``${WORKDIR}/git`` during
-      :ref:`ref-tasks-fetch`. Since this path is different
+      ```do_fetch`` <#ref-tasks-fetch>`__. Since this path is different
       from the default value of ``S``, you must set it specifically so the
       source can be located: SRC_URI = "git://path/to/repo.git" S =
       "${WORKDIR}/git"
@@ -5717,24 +5721,24 @@ system and gives an overview of their function and contents.
       as read from ``/etc/lsb-release``. Separate the list items with
       explicit newline characters (``\n``). If ``SANITY_TESTED_DISTROS`` is
       not empty and the current value of
-      :term:`NATIVELSBSTRING` does not appear in the
+      ```NATIVELSBSTRING`` <#var-NATIVELSBSTRING>`__ does not appear in the
       list, then the build system reports a warning that indicates the
       current host distribution has not been tested as a build host.
    
    SDK_ARCH
       The target architecture for the SDK. Typically, you do not directly
-      set this variable. Instead, use :term:`SDKMACHINE`.
+      set this variable. Instead, use ```SDKMACHINE`` <#var-SDKMACHINE>`__.
    
    SDK_DEPLOY
       The directory set up and used by the
-      :ref:`populate_sdk_base <ref-classes-populate-sdk>` class to which
+      ```populate_sdk_base`` <#ref-classes-populate-sdk>`__ class to which
       the SDK is deployed. The ``populate_sdk_base`` class defines
       ``SDK_DEPLOY`` as follows: SDK_DEPLOY = "${TMPDIR}/deploy/sdk"
    
    SDK_DIR
       The parent directory used by the OpenEmbedded build system when
       creating SDK output. The
-      :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class defines
+      ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class defines
       the variable as follows: SDK_DIR = "${WORKDIR}/sdk"
    
       .. note::
@@ -5766,11 +5770,11 @@ system and gives an overview of their function and contents.
       file contains package information on a line-per-package basis as
       follows: packagename packagearch version
    
-      The :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class
+      The ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class
       defines the manifest file as follows: SDK_HOST_MANIFEST =
       "${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.host.manifest" The location is
-      derived using the :term:`SDK_DEPLOY` and
-      :term:`TOOLCHAIN_OUTPUTNAME` variables.
+      derived using the ```SDK_DEPLOY`` <#var-SDK_DEPLOY>`__ and
+      ```TOOLCHAIN_OUTPUTNAME`` <#var-TOOLCHAIN_OUTPUTNAME>`__ variables.
    
    SDK_INCLUDE_PKGDATA
       When set to "1", specifies to include the packagedata for all recipes
@@ -5790,7 +5794,7 @@ system and gives an overview of their function and contents.
    SDK_INCLUDE_TOOLCHAIN
       When set to "1", specifies to include the toolchain in the extensible
       SDK. Including the toolchain is useful particularly when
-      :term:`SDK_EXT_TYPE` is set to "minimal" to keep
+      ```SDK_EXT_TYPE`` <#var-SDK_EXT_TYPE>`__ is set to "minimal" to keep
       the SDK reasonably small but you still want to provide a usable
       toolchain. For example, suppose you want to use the toolchain from an
       IDE or from other tools and you do not want to perform additional
@@ -5801,9 +5805,9 @@ system and gives an overview of their function and contents.
       ``SDK_EXT_TYPE`` is set to "full".
    
    SDK_INHERIT_BLACKLIST
-      A list of classes to remove from the :term:`INHERIT`
+      A list of classes to remove from the ```INHERIT`` <#var-INHERIT>`__
       value globally within the extensible SDK configuration. The
-      :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class sets the
+      ```populate-sdk-ext`` <#ref-classes-populate-sdk-*>`__ class sets the
       default value: SDK_INHERIT_BLACKLIST ?= "buildhistory icecc"
    
       Some classes are not generally applicable within the extensible SDK
@@ -5823,16 +5827,16 @@ system and gives an overview of their function and contents.
       within the extensible SDK.
    
       By default, ``SDK_LOCAL_CONF_BLACKLIST`` is set in the
-      :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class and
+      ```populate-sdk-ext`` <#ref-classes-populate-sdk-*>`__ class and
       excludes the following variables:
-      :term:`CONF_VERSION`
-      :term:`BB_NUMBER_THREADS`
-      :term:`bitbake:BB_NUMBER_PARSE_THREADS`
-      :term:`PARALLEL_MAKE`
-      :term:`PRSERV_HOST`
-      :term:`SSTATE_MIRRORS` :term:`DL_DIR`
-      :term:`SSTATE_DIR` :term:`TMPDIR`
-      :term:`BB_SERVER_TIMEOUT`
+      `CONF_VERSION <#var-CONF_VERSION>`__
+      `BB_NUMBER_THREADS <#var-BB_NUMBER_THREADS>`__
+      `BB_NUMBER_PARSE_THREADS <&YOCTO_DOCS_BB_URL;#var-BB_NUMBER_PARSE_THREADS>`__
+      `PARALLEL_MAKE <#var-PARALLEL_MAKE>`__
+      `PRSERV_HOST <#var-PRSERV_HOST>`__
+      `SSTATE_MIRRORS <#var-SSTATE_MIRRORS>`__ `DL_DIR <#var-DL_DIR>`__
+      `SSTATE_DIR <#var-SSTATE_DIR>`__ `TMPDIR <#var-TMPDIR>`__
+      `BB_SERVER_TIMEOUT <#var-BB_SERVER_TIMEOUT>`__
    
       For additional information on how to customize the extensible SDK's
       configuration, see the "`Configuring the Extensible
@@ -5844,10 +5848,10 @@ system and gives an overview of their function and contents.
       A list of variables allowed through from the OpenEmbedded build
       system configuration into the extensible SDK configuration. By
       default, the list of variables is empty and is set in the
-      :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class.
+      ```populate-sdk-ext`` <#ref-classes-populate-sdk-*>`__ class.
    
       This list overrides the variables specified using the
-      :term:`SDK_LOCAL_CONF_BLACKLIST`
+      ```SDK_LOCAL_CONF_BLACKLIST`` <#var-SDK_LOCAL_CONF_BLACKLIST>`__
       variable as well as any variables identified by automatic
       blacklisting due to the "/" character being found at the start of the
       value, which is usually indicative of being a path and thus might not
@@ -5861,19 +5865,19 @@ system and gives an overview of their function and contents.
    
    SDK_NAME
       The base name for SDK output files. The name is derived from the
-      :term:`DISTRO`, :term:`TCLIBC`,
-      :term:`SDK_ARCH`,
-      :term:`IMAGE_BASENAME`, and
-      :term:`TUNE_PKGARCH` variables: SDK_NAME =
+      ```DISTRO`` <#var-DISTRO>`__, ```TCLIBC`` <#var-TCLIBC>`__,
+      ```SDK_ARCH`` <#var-SDK_ARCH>`__,
+      ```IMAGE_BASENAME`` <#var-IMAGE_BASENAME>`__, and
+      ```TUNE_PKGARCH`` <#var-TUNE_PKGARCH>`__ variables: SDK_NAME =
       "${DISTRO}-${TCLIBC}-${SDK_ARCH}-${IMAGE_BASENAME}-${TUNE_PKGARCH}"
    
    SDK_OS
       Specifies the operating system for which the SDK will be built. The
-      default value is the value of :term:`BUILD_OS`.
+      default value is the value of ```BUILD_OS`` <#var-BUILD_OS>`__.
    
    SDK_OUTPUT
       The location used by the OpenEmbedded build system when creating SDK
-      output. The :ref:`populate_sdk_base <ref-classes-populate-sdk-*>`
+      output. The ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__
       class defines the variable as follows: SDK_DIR = "${WORKDIR}/sdk"
       SDK_OUTPUT = "${SDK_DIR}/image" SDK_DEPLOY = "${DEPLOY_DIR}/sdk"
    
@@ -5904,12 +5908,12 @@ system and gives an overview of their function and contents.
       If you need to pass an SDK path to a command within a function, you
       can use ``${SDK_DIR}``, which points to the parent directory used by
       the OpenEmbedded build system when creating SDK output. See the
-      :term:`SDK_DIR` variable for more information.
+      ```SDK_DIR`` <#var-SDK_DIR>`__ variable for more information.
    
    SDK_PREFIX
       The toolchain binary prefix used for ``nativesdk`` recipes. The
       OpenEmbedded build system uses the ``SDK_PREFIX`` value to set the
-      :term:`TARGET_PREFIX` when building
+      ```TARGET_PREFIX`` <#var-TARGET_PREFIX>`__ when building
       ``nativesdk`` recipes. The default value is "${SDK_SYS}-".
    
    SDK_RECRDEP_TASKS
@@ -5920,16 +5924,16 @@ system and gives an overview of their function and contents.
       to the SDK. To specify tasks beyond these four, you need to use the
       ``SDK_RECRDEP_TASKS`` variable (e.g. you are defining additional
       tasks that are needed in order to build
-      :term:`SDK_TARGETS`).
+      ```SDK_TARGETS`` <#var-SDK_TARGETS>`__).
    
    SDK_SYS
       Specifies the system, including the architecture and the operating
       system, for which the SDK will be built.
    
       The OpenEmbedded build system automatically sets this variable based
-      on :term:`SDK_ARCH`,
-      :term:`SDK_VENDOR`, and
-      :term:`SDK_OS`. You do not need to set the ``SDK_SYS``
+      on ```SDK_ARCH`` <#var-SDK_ARCH>`__,
+      ```SDK_VENDOR`` <#var-SDK_VENDOR>`__, and
+      ```SDK_OS`` <#var-SDK_OS>`__. You do not need to set the ``SDK_SYS``
       variable yourself.
    
    SDK_TARGET_MANIFEST
@@ -5938,11 +5942,11 @@ system and gives an overview of their function and contents.
       file contains package information on a line-per-package basis as
       follows: packagename packagearch version
    
-      The :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class
+      The ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class
       defines the manifest file as follows: SDK_TARGET_MANIFEST =
       "${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.target.manifest" The location
-      is derived using the :term:`SDK_DEPLOY` and
-      :term:`TOOLCHAIN_OUTPUTNAME` variables.
+      is derived using the ```SDK_DEPLOY`` <#var-SDK_DEPLOY>`__ and
+      ```TOOLCHAIN_OUTPUTNAME`` <#var-TOOLCHAIN_OUTPUTNAME>`__ variables.
    
    SDK_TARGETS
       A list of targets to install from shared state as part of the
@@ -5954,9 +5958,9 @@ system and gives an overview of their function and contents.
    
    SDK_TITLE
       The title to be printed when running the SDK installer. By default,
-      this title is based on the :term:`DISTRO_NAME` or
-      :term:`DISTRO` variable and is set in the
-      :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class as
+      this title is based on the ```DISTRO_NAME`` <#var-DISTRO_NAME>`__ or
+      ```DISTRO`` <#var-DISTRO>`__ variable and is set in the
+      ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class as
       follows: SDK_TITLE ??= "${@d.getVar('DISTRO_NAME') or
       d.getVar('DISTRO')} SDK" For the default distribution "poky",
       ``SDK_TITLE`` is set to "Poky (Yocto Project Reference Distro)".
@@ -5982,14 +5986,14 @@ system and gives an overview of their function and contents.
       "${@d.getVar('DISTRO_VERSION').replace('snapshot-${DATE}','snapshot')}"
    
       For additional information, see the
-      :term:`DISTRO_VERSION` and
-      :term:`DATE` variables.
+      ```DISTRO_VERSION`` <#var-DISTRO_VERSION>`__ and
+      ```DATE`` <#var-DATE>`__ variables.
    
    SDKEXTPATH
       The default installation directory for the Extensible SDK. By
-      default, this directory is based on the :term:`DISTRO`
+      default, this directory is based on the ```DISTRO`` <#var-DISTRO>`__
       variable and is set in the
-      :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class as
+      ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class as
       follows: SDKEXTPATH ??= "~/${@d.getVar('DISTRO')}_sdk" For the
       default distribution "poky", the ``SDKEXTPATH`` is set to "poky_sdk".
    
@@ -6031,7 +6035,7 @@ system and gives an overview of their function and contents.
    SDKTARGETSYSROOT
       The full path to the sysroot used for cross-compilation within an SDK
       as it will be when installed into the default
-      :term:`SDKPATH`.
+      ```SDKPATH`` <#var-SDKPATH>`__.
    
    SECTION
       The section in which packages should be categorized. Package
@@ -6040,7 +6044,7 @@ system and gives an overview of their function and contents.
    SELECTED_OPTIMIZATION
       Specifies the optimization flags passed to the C compiler when
       building for the target. The flags are passed through the default
-      value of the :term:`TARGET_CFLAGS` variable.
+      value of the ```TARGET_CFLAGS`` <#var-TARGET_CFLAGS>`__ variable.
    
       The ``SELECTED_OPTIMIZATION`` variable takes the value of
       ``FULL_OPTIMIZATION`` unless ``DEBUG_BUILD`` = "1". If that is the
@@ -6070,7 +6074,7 @@ system and gives an overview of their function and contents.
    
    SERIAL_CONSOLES_CHECK
       Specifies serial consoles, which must be listed in
-      :term:`SERIAL_CONSOLES`, to check against
+      ```SERIAL_CONSOLES`` <#var-SERIAL_CONSOLES>`__, to check against
       ``/proc/console`` before enabling them using getty. This variable
       allows aliasing in the format: <device>:<alias>. If a device was
       listed as "sclp_line0" in ``/dev/`` and "ttyS0" was listed in
@@ -6131,8 +6135,8 @@ system and gives an overview of their function and contents.
       prebuilt binaries and libraries such as ``libstdc++`` and ``glibc``.
    
       To enable file removal, set the variable to "1" in your
-      ``conf/local.conf`` configuration file in your: 
-      :term:`Build Directory`. SKIP_FILEDEPS = "1"
+      ``conf/local.conf`` configuration file in your: `Build
+      Directory <#build-directory>`__. SKIP_FILEDEPS = "1"
    
    SOC_FAMILY
       Groups together machines based upon the same family of SOC (System On
@@ -6171,8 +6175,8 @@ system and gives an overview of their function and contents.
       recipes are fetched regardless of whether or not a recipe is
       compatible with the configuration. A recipe is considered
       incompatible with the currently configured machine when either or
-      both the :term:`COMPATIBLE_MACHINE`
-      variable and :term:`COMPATIBLE_HOST` variables
+      both the ```COMPATIBLE_MACHINE`` <#var-COMPATIBLE_MACHINE>`__
+      variable and ```COMPATIBLE_HOST`` <#var-COMPATIBLE_HOST>`__ variables
       specify compatibility with a machine other than that of the current
       machine or host.
    
@@ -6184,12 +6188,12 @@ system and gives an overview of their function and contents.
          do not set the variable during a normal build.
    
    SOURCE_MIRROR_URL
-      Defines your own :term:`PREMIRRORS` from which to
+      Defines your own ```PREMIRRORS`` <#var-PREMIRRORS>`__ from which to
       first fetch source before attempting to fetch from the upstream
-      specified in :term:`SRC_URI`.
+      specified in ```SRC_URI`` <#var-SRC_URI>`__.
    
       To use this variable, you must globally inherit the
-      :ref:`own-mirrors <ref-classes-own-mirrors>` class and then provide
+      ```own-mirrors`` <#ref-classes-own-mirrors>`__ class and then provide
       the URL to your mirrors. Here is the general syntax: INHERIT +=
       "own-mirrors" SOURCE_MIRROR_URL =
       "http://example.com/my_source_mirror"
@@ -6205,14 +6209,14 @@ system and gives an overview of their function and contents.
       ``meta/files/common-licenses/``. For the default ``SPDXLICENSEMAP``
       mappings, see the ``meta/conf/licenses.conf`` file.
    
-      For additional information, see the :term:`LICENSE`
+      For additional information, see the ```LICENSE`` <#var-LICENSE>`__
       variable.
    
    SPECIAL_PKGSUFFIX
-      A list of prefixes for :term:`PN` used by the OpenEmbedded
+      A list of prefixes for ```PN`` <#var-PN>`__ used by the OpenEmbedded
       build system to create variants of recipes or packages. The list
       specifies the prefixes to strip off during certain circumstances such
-      as the generation of the :term:`BPN` variable.
+      as the generation of the ```BPN`` <#var-BPN>`__ variable.
    
    SPL_BINARY
       The file type for the Secondary Program Loader (SPL). Some devices
@@ -6252,13 +6256,13 @@ system and gives an overview of their function and contents.
       protocols are highly dependent on particular BitBake Fetcher
       submodules. Depending on the fetcher BitBake uses, various URL
       parameters are employed. For specifics on the supported Fetchers, see
-      the ":ref:`Fetchers <bitbake:bb-fetchers>`" section in the
+      the "`Fetchers <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__" section in the
       BitBake User Manual.
    
       -  *``file://`` -* Fetches files, which are usually files shipped
-         with the :term:`Metadata`, from the local machine (e.g.
+         with the `Metadata <#metadata>`__, from the local machine (e.g.
          `patch <&YOCTO_DOCS_OM_URL;#patching-dev-environment>`__ files).
-         The path is relative to the :term:`FILESPATH`
+         The path is relative to the ```FILESPATH`` <#var-FILESPATH>`__
          variable. Thus, the build system searches, in order, from the
          following directories, which are assumed to be a subdirectories of
          the directory in which the recipe file (``.bb``) or append file
@@ -6330,13 +6334,13 @@ system and gives an overview of their function and contents.
          patch. The default level is 1.
    
       -  *``patchdir`` -* Specifies the directory in which the patch should
-         be applied. The default is ``${``\ :term:`S`\ ``}``.
+         be applied. The default is ``${``\ ```S`` <#var-S>`__\ ``}``.
    
       Here are options specific to recipes building code from a revision
       control system:
    
       -  *``mindate`` -* Apply the patch only if
-         :term:`SRCDATE` is equal to or greater than
+         ```SRCDATE`` <#var-SRCDATE>`__ is equal to or greater than
          ``mindate``.
    
       -  *``maxdate`` -* Apply the patch only if ``SRCDATE`` is not later
@@ -6360,7 +6364,7 @@ system and gives an overview of their function and contents.
          an archive. The default action is to unpack the file.
    
       -  *``destsuffix`` -* Places the file (or extracts its contents) into
-         the specified subdirectory of :term:`WORKDIR` when
+         the specified subdirectory of ```WORKDIR`` <#var-WORKDIR>`__ when
          the Git fetcher is used.
    
       -  *``subdir`` -* Places the file (or extracts its contents) into the
@@ -6394,10 +6398,10 @@ system and gives an overview of their function and contents.
    
    SRCPV
       Returns the version string of the current package. This string is
-      used to help define the value of :term:`PV`.
+      used to help define the value of ```PV`` <#var-PV>`__.
    
       The ``SRCPV`` variable is defined in the ``meta/conf/bitbake.conf``
-      configuration file in the :term:`Source Directory` as
+      configuration file in the `Source Directory <#source-directory>`__ as
       follows: SRCPV = "${@bb.fetch2.get_srcrev(d)}"
    
       Recipes that need to define ``PV`` do so with the help of the
@@ -6429,7 +6433,7 @@ system and gives an overview of their function and contents.
    
    SSTATE_MIRROR_ALLOW_NETWORK
       If set to "1", allows fetches from mirrors that are specified in
-      :term:`SSTATE_MIRRORS` to work even when
+      ```SSTATE_MIRRORS`` <#var-SSTATE_MIRRORS>`__ to work even when
       fetching from the network is disabled by setting ``BB_NO_NETWORK`` to
       "1". Using the ``SSTATE_MIRROR_ALLOW_NETWORK`` variable is useful if
       you have set ``SSTATE_MIRRORS`` to point to an internal server for
@@ -6439,8 +6443,8 @@ system and gives an overview of their function and contents.
    SSTATE_MIRRORS
       Configures the OpenEmbedded build system to search other mirror
       locations for prebuilt cache data objects before building out the
-      data. This variable works like fetcher :term:`MIRRORS`
-      and :term:`PREMIRRORS` and points to the cache
+      data. This variable works like fetcher ```MIRRORS`` <#var-MIRRORS>`__
+      and ```PREMIRRORS`` <#var-PREMIRRORS>`__ and points to the cache
       locations to check for the shared state (sstate) objects.
    
       You can specify a filesystem directory or a remote URL such as HTTP
@@ -6452,15 +6456,15 @@ system and gives an overview of their function and contents.
       a different GCC version for native builds, you must configure
       ``SSTATE_MIRRORS`` with a regular expression that maps local search
       paths to server paths. The paths need to take into account
-      :term:`NATIVELSBSTRING` set by the
-      :ref:`uninative <ref-classes-uninative>` class. For example, the
+      ```NATIVELSBSTRING`` <#var-NATIVELSBSTRING>`__ set by the
+      ```uninative`` <#ref-classes-uninative>`__ class. For example, the
       following maps the local search path ``universal-4.9`` to the
       server-provided path server_url_sstate_path: SSTATE_MIRRORS ?=
       file://universal-4.9/(.*)
       http://server_url_sstate_path/universal-4.8/\1 \\n
    
       If a mirror uses the same structure as
-      :term:`SSTATE_DIR`, you need to add "PATH" at the
+      ```SSTATE_DIR`` <#var-SSTATE_DIR>`__, you need to add "PATH" at the
       end as shown in the examples below. The build system substitutes the
       correct path within the directory structure. SSTATE_MIRRORS ?= "\\
       file://.\*
@@ -6480,11 +6484,11 @@ system and gives an overview of their function and contents.
       by the ``SSTATE_SCAN_FILES`` variable. Typically, recipes add files
       they want to be scanned to the value of ``SSTATE_SCAN_FILES`` rather
       than the variable being comprehensively set. The
-      :ref:`sstate <ref-classes-sstate>` class specifies the default list
+      ```sstate`` <#ref-classes-sstate>`__ class specifies the default list
       of files.
    
       For details on the process, see the
-      :ref:`staging <ref-classes-staging>` class.
+      ```staging`` <#ref-classes-staging>`__ class.
    
    STAGING_BASE_LIBDIR_NATIVE
       Specifies the path to the ``/lib`` subdirectory of the sysroot
@@ -6493,12 +6497,12 @@ system and gives an overview of their function and contents.
    STAGING_BASELIBDIR
       Specifies the path to the ``/lib`` subdirectory of the sysroot
       directory for the target for which the current recipe is being built
-      (:term:`STAGING_DIR_HOST`).
+      (```STAGING_DIR_HOST`` <#var-STAGING_DIR_HOST>`__).
    
    STAGING_BINDIR
       Specifies the path to the ``/usr/bin`` subdirectory of the sysroot
       directory for the target for which the current recipe is being built
-      (:term:`STAGING_DIR_HOST`).
+      (```STAGING_DIR_HOST`` <#var-STAGING_DIR_HOST>`__).
    
    STAGING_BINDIR_CROSS
       Specifies the path to the directory containing binary configuration
@@ -6524,7 +6528,7 @@ system and gives an overview of their function and contents.
    STAGING_DATADIR
       Specifies the path to the ``/usr/share`` subdirectory of the sysroot
       directory for the target for which the current recipe is being built
-      (:term:`STAGING_DIR_HOST`).
+      (```STAGING_DIR_HOST`` <#var-STAGING_DIR_HOST>`__).
    
    STAGING_DATADIR_NATIVE
       Specifies the path to the ``/usr/share`` subdirectory of the sysroot
@@ -6535,14 +6539,14 @@ system and gives an overview of their function and contents.
       during packaging.
    
       For information on how staging for recipe-specific sysroots occurs,
-      see the :ref:`ref-tasks-populate_sysroot`
+      see the ```do_populate_sysroot`` <#ref-tasks-populate_sysroot>`__
       task, the "`Sharing Files Between
       Recipes <&YOCTO_DOCS_DEV_URL;#new-sharing-files-between-recipes>`__"
       section in the Yocto Project Development Tasks Manual, the
       "`Configuration, Compilation, and
       Staging <&YOCTO_DOCS_OM_URL;#configuration-compilation-and-staging-dev-environment>`__"
       section in the Yocto Project Overview and Concepts Manual, and the
-      :term:`SYSROOT_DIRS` variable.
+      ```SYSROOT_DIRS`` <#var-SYSROOT_DIRS>`__ variable.
    
       .. note::
    
@@ -6562,15 +6566,15 @@ system and gives an overview of their function and contents.
       Specifies the path to the sysroot directory for the system on which
       the component is built to run (the system that hosts the component).
       For most recipes, this sysroot is the one in which that recipe's
-      :ref:`ref-tasks-populate_sysroot` task copies
+      ```do_populate_sysroot`` <#ref-tasks-populate_sysroot>`__ task copies
       files. Exceptions include ``-native`` recipes, where the
       ``do_populate_sysroot`` task instead uses
-      :term:`STAGING_DIR_NATIVE`. Depending on
+      ```STAGING_DIR_NATIVE`` <#var-STAGING_DIR_NATIVE>`__. Depending on
       the type of recipe and the build target, ``STAGING_DIR_HOST`` can
       have the following values:
    
       -  For recipes building for the target machine, the value is
-         "${:term:`STAGING_DIR`}/${:term:`MACHINE`}".
+         "${`STAGING_DIR <#var-STAGING_DIR>`__}/${`MACHINE <#var-MACHINE>`__}".
    
       -  For native recipes building for the build host, the value is empty
          given the assumption that when building for the build host, the
@@ -6582,16 +6586,16 @@ system and gives an overview of their function and contents.
             as ``/usr``. Rather, these recipes are installed into
             ``STAGING_DIR_NATIVE``. When compiling ``-native`` recipes,
             standard build environment variables such as
-            :term:`CPPFLAGS` and
-            :term:`CFLAGS` are set up so that both host paths
+            ```CPPFLAGS`` <#var-CPPFLAGS>`__ and
+            ```CFLAGS`` <#var-CFLAGS>`__ are set up so that both host paths
             and ``STAGING_DIR_NATIVE`` are searched for libraries and
             headers using, for example, GCC's ``-isystem`` option.
    
             Thus, the emphasis is that the ``STAGING_DIR*`` variables
             should be viewed as input variables by tasks such as
-            :ref:`ref-tasks-configure`,
-            :ref:`ref-tasks-compile`, and
-            :ref:`ref-tasks-install`. Having the real system
+            ```do_configure`` <#ref-tasks-configure>`__,
+            ```do_compile`` <#ref-tasks-compile>`__, and
+            ```do_install`` <#ref-tasks-install>`__. Having the real system
             root correspond to ``STAGING_DIR_HOST`` makes conceptual sense
             for ``-native`` recipes, as they make use of host headers and
             libraries.
@@ -6604,7 +6608,7 @@ system and gives an overview of their function and contents.
       Specifies the path to the sysroot used for the system for which the
       component generates code. For components that do not generate code,
       which is the majority, ``STAGING_DIR_TARGET`` is set to match
-      :term:`STAGING_DIR_HOST`.
+      ```STAGING_DIR_HOST`` <#var-STAGING_DIR_HOST>`__.
    
       Some recipes build binaries that can run on the target system but
       those binaries in turn generate code for another different system
@@ -6623,12 +6627,12 @@ system and gives an overview of their function and contents.
    STAGING_EXECPREFIXDIR
       Specifies the path to the ``/usr`` subdirectory of the sysroot
       directory for the target for which the current recipe is being built
-      (:term:`STAGING_DIR_HOST`).
+      (```STAGING_DIR_HOST`` <#var-STAGING_DIR_HOST>`__).
    
    STAGING_INCDIR
       Specifies the path to the ``/usr/include`` subdirectory of the
       sysroot directory for the target for which the current recipe being
-      built (:term:`STAGING_DIR_HOST`).
+      built (```STAGING_DIR_HOST`` <#var-STAGING_DIR_HOST>`__).
    
    STAGING_INCDIR_NATIVE
       Specifies the path to the ``/usr/include`` subdirectory of the
@@ -6648,7 +6652,7 @@ system and gives an overview of their function and contents.
    STAGING_LIBDIR
       Specifies the path to the ``/usr/lib`` subdirectory of the sysroot
       directory for the target for which the current recipe is being built
-      (:term:`STAGING_DIR_HOST`).
+      (```STAGING_DIR_HOST`` <#var-STAGING_DIR_HOST>`__).
    
    STAGING_LIBDIR_NATIVE
       Specifies the path to the ``/usr/lib`` subdirectory of the sysroot
@@ -6667,10 +6671,10 @@ system and gives an overview of their function and contents.
       Tasks <&YOCTO_DOCS_OM_URL;#stamp-files-and-the-rerunning-of-tasks>`__"
       section in the Yocto Project Overview and Concepts Manual.
    
-      See :term:`STAMPS_DIR`,
-      :term:`MULTIMACH_TARGET_SYS`,
-      :term:`PN`, :term:`EXTENDPE`,
-      :term:`PV`, and :term:`PR` for related variable
+      See ```STAMPS_DIR`` <#var-STAMPS_DIR>`__,
+      ```MULTIMACH_TARGET_SYS`` <#var-MULTIMACH_TARGET_SYS>`__,
+      ```PN`` <#var-PN>`__, ```EXTENDPE`` <#var-EXTENDPE>`__,
+      ```PV`` <#var-PV>`__, and ```PR`` <#var-PR>`__ for related variable
       information.
    
    STAMPS_DIR
@@ -6685,7 +6689,7 @@ system and gives an overview of their function and contents.
       The short (72 characters or less) summary of the binary package for
       packaging systems such as ``opkg``, ``rpm``, or ``dpkg``. By default,
       ``SUMMARY`` is used to define the
-      :term:`DESCRIPTION` variable if ``DESCRIPTION`` is
+      ```DESCRIPTION`` <#var-DESCRIPTION>`__ variable if ``DESCRIPTION`` is
       not set in the recipe.
    
    SVNDIR
@@ -6698,7 +6702,7 @@ system and gives an overview of their function and contents.
       follows where "X" is the console number you want to use:
       SYSLINUX_DEFAULT_CONSOLE = "console=ttyX"
    
-      The :ref:`syslinux <ref-classes-syslinux>` class initially sets
+      The ```syslinux`` <#ref-classes-syslinux>`__ class initially sets
       this variable to null but then checks for a value later.
    
    SYSLINUX_OPTS
@@ -6706,14 +6710,14 @@ system and gives an overview of their function and contents.
       this variable in your recipe. If you want to list multiple options,
       separate the options with a semicolon character (``;``).
    
-      The :ref:`syslinux <ref-classes-syslinux>` class uses this variable
+      The ```syslinux`` <#ref-classes-syslinux>`__ class uses this variable
       to create a set of options.
    
    SYSLINUX_SERIAL
       Specifies the alternate serial port or turns it off. To turn off
       serial, set this variable to an empty string in your recipe. The
       variable's default value is set in the
-      :ref:`syslinux <ref-classes-syslinux>` class as follows:
+      ```syslinux`` <#ref-classes-syslinux>`__ class as follows:
       SYSLINUX_SERIAL ?= "0 115200"
    
       The class checks for and uses the variable as needed.
@@ -6722,36 +6726,36 @@ system and gives an overview of their function and contents.
       An ``.LSS`` file used as the background for the VGA boot menu when
       you use the boot menu. You need to set this variable in your recipe.
    
-      The :ref:`syslinux <ref-classes-syslinux>` class checks for this
+      The ```syslinux`` <#ref-classes-syslinux>`__ class checks for this
       variable and if found, the OpenEmbedded build system installs the
       splash screen.
    
    SYSLINUX_SERIAL_TTY
       Specifies the alternate console=tty... kernel boot argument. The
       variable's default value is set in the
-      :ref:`syslinux <ref-classes-syslinux>` class as follows:
+      ```syslinux`` <#ref-classes-syslinux>`__ class as follows:
       SYSLINUX_SERIAL_TTY ?= "console=ttyS0,115200"
    
       The class checks for and uses the variable as needed.
    
    SYSROOT_DESTDIR
       Points to the temporary directory under the work directory (default
-      "``${``\ :term:`WORKDIR`\ ``}/sysroot-destdir``")
+      "``${``\ ```WORKDIR`` <#var-WORKDIR>`__\ ``}/sysroot-destdir``")
       where the files populated into the sysroot are assembled during the
-      :ref:`ref-tasks-populate_sysroot` task.
+      ```do_populate_sysroot`` <#ref-tasks-populate_sysroot>`__ task.
    
    SYSROOT_DIRS
       Directories that are staged into the sysroot by the
-      :ref:`ref-tasks-populate_sysroot` task. By
+      ```do_populate_sysroot`` <#ref-tasks-populate_sysroot>`__ task. By
       default, the following directories are staged: SYSROOT_DIRS = " \\
       ${includedir} \\ ${libdir} \\ ${base_libdir} \\
       ${nonarch_base_libdir} \\ ${datadir} \\ "
    
    SYSROOT_DIRS_BLACKLIST
       Directories that are not staged into the sysroot by the
-      :ref:`ref-tasks-populate_sysroot` task. You
+      ```do_populate_sysroot`` <#ref-tasks-populate_sysroot>`__ task. You
       can use this variable to exclude certain subdirectories of
-      directories listed in :term:`SYSROOT_DIRS` from
+      directories listed in ```SYSROOT_DIRS`` <#var-SYSROOT_DIRS>`__ from
       staging. By default, the following directories are not staged:
       SYSROOT_DIRS_BLACKLIST = " \\ ${mandir} \\ ${docdir} \\ ${infodir} \\
       ${datadir}/locale \\ ${datadir}/applications \\ ${datadir}/fonts \\
@@ -6759,9 +6763,9 @@ system and gives an overview of their function and contents.
    
    SYSROOT_DIRS_NATIVE
       Extra directories staged into the sysroot by the
-      :ref:`ref-tasks-populate_sysroot` task for
+      ```do_populate_sysroot`` <#ref-tasks-populate_sysroot>`__ task for
       ``-native`` recipes, in addition to those specified in
-      :term:`SYSROOT_DIRS`. By default, the following
+      ```SYSROOT_DIRS`` <#var-SYSROOT_DIRS>`__. By default, the following
       extra directories are staged: SYSROOT_DIRS_NATIVE = " \\ ${bindir} \\
       ${sbindir} \\ ${base_bindir} \\ ${base_sbindir} \\ ${libexecdir} \\
       ${sysconfdir} \\ ${localstatedir} \\ "
@@ -6781,50 +6785,50 @@ system and gives an overview of their function and contents.
       processing on the staged files, or to stage additional files.
    
    SYSTEMD_AUTO_ENABLE
-      When inheriting the :ref:`systemd <ref-classes-systemd>` class,
+      When inheriting the ```systemd`` <#ref-classes-systemd>`__ class,
       this variable specifies whether the specified service in
-      :term:`SYSTEMD_SERVICE` should start
+      ```SYSTEMD_SERVICE`` <#var-SYSTEMD_SERVICE>`__ should start
       automatically or not. By default, the service is enabled to
       automatically start at boot time. The default setting is in the
-      :ref:`systemd <ref-classes-systemd>` class as follows:
+      ```systemd`` <#ref-classes-systemd>`__ class as follows:
       SYSTEMD_AUTO_ENABLE ??= "enable"
    
       You can disable the service by setting the variable to "disable".
    
    SYSTEMD_BOOT_CFG
-      When :term:`EFI_PROVIDER` is set to
+      When ```EFI_PROVIDER`` <#var-EFI_PROVIDER>`__ is set to
       "systemd-boot", the ``SYSTEMD_BOOT_CFG`` variable specifies the
       configuration file that should be used. By default, the
-      :ref:`systemd-boot <ref-classes-systemd-boot>` class sets the
+      ```systemd-boot`` <#ref-classes-systemd-boot>`__ class sets the
       ``SYSTEMD_BOOT_CFG`` as follows: SYSTEMD_BOOT_CFG ?=
-      "${:term:`S`}/loader.conf"
+      "${`S <#var-S>`__}/loader.conf"
    
       For information on Systemd-boot, see the `Systemd-boot
       documentation <http://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
    
    SYSTEMD_BOOT_ENTRIES
-      When :term:`EFI_PROVIDER` is set to
+      When ```EFI_PROVIDER`` <#var-EFI_PROVIDER>`__ is set to
       "systemd-boot", the ``SYSTEMD_BOOT_ENTRIES`` variable specifies a
       list of entry files (``*.conf``) to install that contain one boot
       entry per file. By default, the
-      :ref:`systemd-boot <ref-classes-systemd-boot>` class sets the
+      ```systemd-boot`` <#ref-classes-systemd-boot>`__ class sets the
       ``SYSTEMD_BOOT_ENTRIES`` as follows: SYSTEMD_BOOT_ENTRIES ?= ""
    
       For information on Systemd-boot, see the `Systemd-boot
       documentation <http://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
    
    SYSTEMD_BOOT_TIMEOUT
-      When :term:`EFI_PROVIDER` is set to
+      When ```EFI_PROVIDER`` <#var-EFI_PROVIDER>`__ is set to
       "systemd-boot", the ``SYSTEMD_BOOT_TIMEOUT`` variable specifies the
       boot menu timeout in seconds. By default, the
-      :ref:`systemd-boot <ref-classes-systemd-boot>` class sets the
+      ```systemd-boot`` <#ref-classes-systemd-boot>`__ class sets the
       ``SYSTEMD_BOOT_TIMEOUT`` as follows: SYSTEMD_BOOT_TIMEOUT ?= "10"
    
       For information on Systemd-boot, see the `Systemd-boot
       documentation <http://www.freedesktop.org/wiki/Software/systemd/systemd-boot/>`__.
    
    SYSTEMD_PACKAGES
-      When inheriting the :ref:`systemd <ref-classes-systemd>` class,
+      When inheriting the ```systemd`` <#ref-classes-systemd>`__ class,
       this variable locates the systemd unit files when they are not found
       in the main recipe's package. By default, the ``SYSTEMD_PACKAGES``
       variable is set such that the systemd unit files are assumed to
@@ -6835,7 +6839,7 @@ system and gives an overview of their function and contents.
       the build system can find the systemd unit files.
    
    SYSTEMD_SERVICE
-      When inheriting the :ref:`systemd <ref-classes-systemd>` class,
+      When inheriting the ```systemd`` <#ref-classes-systemd>`__ class,
       this variable specifies the systemd service name for a package.
    
       When you specify this file in your recipe, use a package name
@@ -6848,7 +6852,7 @@ system and gives an overview of their function and contents.
       `SysVinit <&YOCTO_DOCS_DEV_URL;#new-recipe-enabling-system-services>`__,
       specifies a space-separated list of the virtual terminals that should
       run a `getty <http://en.wikipedia.org/wiki/Getty_%28Unix%29>`__
-      (allowing login), assuming :term:`USE_VT` is not set to
+      (allowing login), assuming ```USE_VT`` <#var-USE_VT>`__ is not set to
       "0".
    
       The default value for ``SYSVINIT_ENABLED_GETTYS`` is "1" (i.e. only
@@ -6860,12 +6864,12 @@ system and gives an overview of their function and contents.
       particular recipe. The variable is typically set as follows: T =
       "${WORKDIR}/temp"
    
-      The :term:`WORKDIR` is the directory into which
+      The ```WORKDIR`` <#var-WORKDIR>`__ is the directory into which
       BitBake unpacks and builds the recipe. The default ``bitbake.conf``
       file sets this variable.
    
       The ``T`` variable is not to be confused with the
-      :term:`TMPDIR` variable, which points to the root of
+      ```TMPDIR`` <#var-TMPDIR>`__ variable, which points to the root of
       the directory tree where BitBake places the output of an entire
       build.
    
@@ -6876,19 +6880,19 @@ system and gives an overview of their function and contents.
       configurable: arm i586 x86_64 powerpc powerpc64 mips mipsel
    
       For additional information on machine architectures, see the
-      :term:`TUNE_ARCH` variable.
+      ```TUNE_ARCH`` <#var-TUNE_ARCH>`__ variable.
    
    TARGET_AS_ARCH
       Specifies architecture-specific assembler flags for the target
       system. ``TARGET_AS_ARCH`` is initialized from
-      :term:`TUNE_ASARGS` by default in the BitBake
+      ```TUNE_ASARGS`` <#var-TUNE_ASARGS>`__ by default in the BitBake
       configuration file (``meta/conf/bitbake.conf``): TARGET_AS_ARCH =
       "${TUNE_ASARGS}"
    
    TARGET_CC_ARCH
       Specifies architecture-specific C compiler flags for the target
       system. ``TARGET_CC_ARCH`` is initialized from
-      :term:`TUNE_CCARGS` by default.
+      ```TUNE_CCARGS`` <#var-TUNE_CCARGS>`__ by default.
    
       .. note::
    
@@ -6904,17 +6908,17 @@ system and gives an overview of their function and contents.
    TARGET_CC_KERNEL_ARCH
       This is a specific kernel compiler flag for a CPU or Application
       Binary Interface (ABI) tune. The flag is used rarely and only for
-      cases where a userspace :term:`TUNE_CCARGS` is not
+      cases where a userspace ```TUNE_CCARGS`` <#var-TUNE_CCARGS>`__ is not
       compatible with the kernel compilation. The ``TARGET_CC_KERNEL_ARCH``
       variable allows the kernel (and associated modules) to use a
       different configuration. See the
       ``meta/conf/machine/include/arm/feature-arm-thumb.inc`` file in the
-      :term:`Source Directory` for an example.
+      `Source Directory <#source-directory>`__ for an example.
    
    TARGET_CFLAGS
       Specifies the flags to pass to the C compiler when building for the
       target. When building in the target context,
-      :term:`CFLAGS` is set to the value of this variable by
+      ```CFLAGS`` <#var-CFLAGS>`__ is set to the value of this variable by
       default.
    
       Additionally, the SDK's environment setup script sets the ``CFLAGS``
@@ -6924,7 +6928,7 @@ system and gives an overview of their function and contents.
    TARGET_CPPFLAGS
       Specifies the flags to pass to the C pre-processor (i.e. to both the
       C and the C++ compilers) when building for the target. When building
-      in the target context, :term:`CPPFLAGS` is set to the
+      in the target context, ```CPPFLAGS`` <#var-CPPFLAGS>`__ is set to the
       value of this variable by default.
    
       Additionally, the SDK's environment setup script sets the
@@ -6935,7 +6939,7 @@ system and gives an overview of their function and contents.
    TARGET_CXXFLAGS
       Specifies the flags to pass to the C++ compiler when building for the
       target. When building in the target context,
-      :term:`CXXFLAGS` is set to the value of this variable
+      ```CXXFLAGS`` <#var-CXXFLAGS>`__ is set to the value of this variable
       by default.
    
       Additionally, the SDK's environment setup script sets the
@@ -6952,18 +6956,18 @@ system and gives an overview of their function and contents.
    TARGET_LD_ARCH
       Specifies architecture-specific linker flags for the target system.
       ``TARGET_LD_ARCH`` is initialized from
-      :term:`TUNE_LDARGS` by default in the BitBake
+      ```TUNE_LDARGS`` <#var-TUNE_LDARGS>`__ by default in the BitBake
       configuration file (``meta/conf/bitbake.conf``): TARGET_LD_ARCH =
       "${TUNE_LDARGS}"
    
    TARGET_LDFLAGS
       Specifies the flags to pass to the linker when building for the
       target. When building in the target context,
-      :term:`LDFLAGS` is set to the value of this variable
+      ```LDFLAGS`` <#var-LDFLAGS>`__ is set to the value of this variable
       by default.
    
       Additionally, the SDK's environment setup script sets the
-      :term:`LDFLAGS` variable in the environment to the
+      ```LDFLAGS`` <#var-LDFLAGS>`__ variable in the environment to the
       ``TARGET_LDFLAGS`` value so that executables built using the SDK also
       have the flags applied.
    
@@ -6980,7 +6984,7 @@ system and gives an overview of their function and contents.
       ``TARGET_PREFIX`` is set as follows:
    
       -  For recipes building for the target machine, the value is
-         "${:term:`TARGET_SYS`}-".
+         "${`TARGET_SYS <#var-TARGET_SYS>`__}-".
    
       -  For native recipes, the build system sets the variable to the
          value of ``BUILD_PREFIX``.
@@ -6994,9 +6998,9 @@ system and gives an overview of their function and contents.
       current recipe.
    
       The OpenEmbedded build system automatically sets this variable based
-      on :term:`TARGET_ARCH`,
-      :term:`TARGET_VENDOR`, and
-      :term:`TARGET_OS` variables.
+      on ```TARGET_ARCH`` <#var-TARGET_ARCH>`__,
+      ```TARGET_VENDOR`` <#var-TARGET_VENDOR>`__, and
+      ```TARGET_OS`` <#var-TARGET_OS>`__ variables.
    
       .. note::
    
@@ -7024,9 +7028,9 @@ system and gives an overview of their function and contents.
    
    TCLIBCAPPEND
       Specifies a suffix to be appended onto the
-      :term:`TMPDIR` value. The suffix identifies the
+      ```TMPDIR`` <#var-TMPDIR>`__ value. The suffix identifies the
       ``libc`` variant for building. When you are building for multiple
-      variants with the same :term:`Build Directory`, this
+      variants with the same `Build Directory <#build-directory>`__, this
       mechanism ensures that output for different ``libc`` variants is kept
       separate to avoid potential conflicts.
    
@@ -7059,7 +7063,7 @@ system and gives an overview of their function and contents.
          page on the Yocto Project website and click on the "RELEASE
          INFORMATION" link for the appropriate release.
    
-      The ``TCMODE`` variable is similar to :term:`TCLIBC`,
+      The ``TCMODE`` variable is similar to ```TCLIBC`` <#var-TCLIBC>`__,
       which controls the variant of the GNU standard C library (``libc``)
       used during the build process: ``glibc`` or ``musl``.
    
@@ -7067,7 +7071,7 @@ system and gives an overview of their function and contents.
       toolchain. One example is the Sourcery G++ Toolchain. The support for
       this toolchain resides in the separate Mentor Graphics
       ``meta-sourcery`` layer at
-      http://github.com/MentorEmbedded/meta-sourcery/.
+      ` <http://github.com/MentorEmbedded/meta-sourcery/>`__.
    
       The layer's ``README`` file contains information on how to use the
       Sourcery G++ Toolchain as an external toolchain. In summary, you must
@@ -7082,7 +7086,7 @@ system and gives an overview of their function and contents.
    
    TEST_EXPORT_DIR
       The location the OpenEmbedded build system uses to export tests when
-      the :term:`TEST_EXPORT_ONLY` variable is set
+      the ```TEST_EXPORT_ONLY`` <#var-TEST_EXPORT_ONLY>`__ variable is set
       to "1".
    
       The ``TEST_EXPORT_DIR`` variable defaults to
@@ -7117,7 +7121,7 @@ system and gives an overview of their function and contents.
    TEST_POWERCONTROL_EXTRA_ARGS
       For automated hardware testing, specifies additional arguments to
       pass through to the command specified in
-      :term:`TEST_POWERCONTROL_CMD`. Setting
+      ```TEST_POWERCONTROL_CMD`` <#var-TEST_POWERCONTROL_CMD>`__. Setting
       ``TEST_POWERCONTROL_EXTRA_ARGS`` is optional. You can use it if you
       wish, for example, to separate the machine-specific and
       non-machine-specific parts of the arguments.
@@ -7148,7 +7152,7 @@ system and gives an overview of their function and contents.
    TEST_SERIALCONTROL_EXTRA_ARGS
       For automated hardware testing, specifies additional arguments to
       pass through to the command specified in
-      :term:`TEST_SERIALCONTROL_CMD`. Setting
+      ```TEST_SERIALCONTROL_CMD`` <#var-TEST_SERIALCONTROL_CMD>`__. Setting
       ``TEST_SERIALCONTROL_EXTRA_ARGS`` is optional. You can use it if you
       wish, for example, to separate the machine-specific and
       non-machine-specific parts of the command.
@@ -7191,7 +7195,7 @@ system and gives an overview of their function and contents.
       -  *"simpleremote":* Runs the tests on target hardware that is
          already up and running. The hardware can be on the network or it
          can be a device running an image on QEMU. You must also set
-         :term:`TEST_TARGET_IP` when you use
+         ```TEST_TARGET_IP`` <#var-TEST_TARGET_IP>`__ when you use
          "simpleremote".
    
          .. note::
@@ -7207,7 +7211,7 @@ system and gives an overview of their function and contents.
    
    TEST_TARGET_IP
       The IP address of your hardware under test. The ``TEST_TARGET_IP``
-      variable has no effect when :term:`TEST_TARGET` is
+      variable has no effect when ```TEST_TARGET`` <#var-TEST_TARGET>`__ is
       set to "qemu".
    
       When you specify the IP address, you can also include a port. Here is
@@ -7259,14 +7263,14 @@ system and gives an overview of their function and contents.
       These tests are written in Python making use of the ``unittest``
       module, and the majority of them run commands on the target system
       over ``ssh``. You can set this variable to "1" in your ``local.conf``
-      file in the :term:`Build Directory` to have the
+      file in the `Build Directory <#build-directory>`__ to have the
       OpenEmbedded build system automatically run these tests after an
       image successfully builds: TESTIMAGE_AUTO = "1" For more information
       on enabling, running, and writing these tests, see the "`Performing
       Automated Runtime
       Testing <&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing>`__"
       section in the Yocto Project Development Tasks Manual and the
-      ":ref:`testimage*.bbclass <ref-classes-testimage*>`" section.
+      "```testimage*.bbclass`` <#ref-classes-testimage*>`__" section.
    
    THISDIR
       The directory in which the file BitBake is currently parsing is
@@ -7281,12 +7285,12 @@ system and gives an overview of their function and contents.
       This variable is the base directory the OpenEmbedded build system
       uses for all build output and intermediate files (other than the
       shared state cache). By default, the ``TMPDIR`` variable points to
-      ``tmp`` within the :term:`Build Directory`.
+      ``tmp`` within the `Build Directory <#build-directory>`__.
    
       If you want to establish this directory in a location other than the
       default, you can uncomment and edit the following statement in the
-      ``conf/local.conf`` file in the :term:`Source Directory`:
-      #TMPDIR = "${TOPDIR}/tmp" An
+      ``conf/local.conf`` file in the `Source
+      Directory <#source-directory>`__: #TMPDIR = "${TOPDIR}/tmp" An
       example use for this scenario is to set ``TMPDIR`` to a local disk,
       which does not use NFS, while having the Build Directory use NFS.
    
@@ -7300,7 +7304,7 @@ system and gives an overview of their function and contents.
       This variable lists packages the OpenEmbedded build system uses when
       building an SDK, which contains a cross-development environment. The
       packages specified by this variable are part of the toolchain set
-      that runs on the :term:`SDKMACHINE`, and each
+      that runs on the ```SDKMACHINE`` <#var-SDKMACHINE>`__, and each
       package should usually have the prefix ``nativesdk-``. For example,
       consider the following command when building an SDK: $ bitbake -c
       populate_sdk imagename In this case, a default list of packages is
@@ -7321,11 +7325,11 @@ system and gives an overview of their function and contents.
    
    TOOLCHAIN_OUTPUTNAME
       This variable defines the name used for the toolchain output. The
-      :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class sets
+      ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class sets
       the ``TOOLCHAIN_OUTPUTNAME`` variable as follows:
       TOOLCHAIN_OUTPUTNAME ?= "${SDK_NAME}-toolchain-${SDK_VERSION}" See
-      the :term:`SDK_NAME` and
-      :term:`SDK_VERSION` variables for additional
+      the ```SDK_NAME`` <#var-SDK_NAME>`__ and
+      ```SDK_VERSION`` <#var-SDK_VERSION>`__ variables for additional
       information.
    
    TOOLCHAIN_TARGET_TASK
@@ -7348,12 +7352,12 @@ system and gives an overview of their function and contents.
       Development Kit (eSDK) <&YOCTO_DOCS_SDK_URL;>`__ manual.
    
    TOPDIR
-      The top-level :term:`Build Directory`. BitBake
+      The top-level `Build Directory <#build-directory>`__. BitBake
       automatically sets this variable when you initialize your build
       environment using ````` <#structure-core-script>`__.
    
    TRANSLATED_TARGET_ARCH
-      A sanitized version of :term:`TARGET_ARCH`. This
+      A sanitized version of ```TARGET_ARCH`` <#var-TARGET_ARCH>`__. This
       variable is used where the architecture is needed in a value where
       underscores are not allowed, for example within package filenames. In
       this case, dash characters replace any underscore characters used in
@@ -7370,12 +7374,12 @@ system and gives an overview of their function and contents.
       definitions can be a single static definition, or can be dynamically
       adjusted. You can see details for a given CPU family by looking at
       the architecture's ``README`` file. For example, the
-      ``meta/conf/machine/include/mips/README`` file in the 
-      :term:`Source Directory` provides information for
+      ``meta/conf/machine/include/mips/README`` file in the `Source
+      Directory <#source-directory>`__ provides information for
       ``TUNE_ARCH`` specific to the ``mips`` architecture.
    
       ``TUNE_ARCH`` is tied closely to
-      :term:`TARGET_ARCH`, which defines the target
+      ```TARGET_ARCH`` <#var-TARGET_ARCH>`__, which defines the target
       machine's architecture. The BitBake configuration file
       (``meta/conf/bitbake.conf``) sets ``TARGET_ARCH`` as follows:
       TARGET_ARCH = "${TUNE_ARCH}"
@@ -7389,7 +7393,7 @@ system and gives an overview of their function and contents.
       system. The set of flags is based on the selected tune features.
       ``TUNE_ASARGS`` is set using the tune include files, which are
       typically under ``meta/conf/machine/include/`` and are influenced
-      through :term:`TUNE_FEATURES`. For example, the
+      through ```TUNE_FEATURES`` <#var-TUNE_FEATURES>`__. For example, the
       ``meta/conf/machine/include/x86/arch-x86.inc`` file defines the flags
       for the x86 architecture as follows: TUNE_ASARGS +=
       "${@bb.utils.contains("TUNE_FEATURES", "mx32", "-x32", "", d)}"
@@ -7405,7 +7409,7 @@ system and gives an overview of their function and contents.
       system. The set of flags is based on the selected tune features.
       ``TUNE_CCARGS`` is set using the tune include files, which are
       typically under ``meta/conf/machine/include/`` and are influenced
-      through :term:`TUNE_FEATURES`.
+      through ```TUNE_FEATURES`` <#var-TUNE_FEATURES>`__.
    
       .. note::
    
@@ -7418,7 +7422,7 @@ system and gives an overview of their function and contents.
       The set of flags is based on the selected tune features.
       ``TUNE_LDARGS`` is set using the tune include files, which are
       typically under ``meta/conf/machine/include/`` and are influenced
-      through :term:`TUNE_FEATURES`. For example, the
+      through ```TUNE_FEATURES`` <#var-TUNE_FEATURES>`__. For example, the
       ``meta/conf/machine/include/x86/arch-x86.inc`` file defines the flags
       for the x86 architecture as follows: TUNE_LDARGS +=
       "${@bb.utils.contains("TUNE_FEATURES", "mx32", "-m elf32_x86_64", "",
@@ -7442,7 +7446,7 @@ system and gives an overview of their function and contents.
       The BitBake configuration file (``meta/conf/bitbake.conf``) defines
       ``TUNE_FEATURES`` as follows: TUNE_FEATURES ??=
       "${TUNE_FEATURES_tune-${DEFAULTTUNE}}" See the
-      :term:`DEFAULTTUNE` variable for more information.
+      ```DEFAULTTUNE`` <#var-DEFAULTTUNE>`__ variable for more information.
    
    TUNE_PKGARCH
       The package architecture understood by the packaging system to define
@@ -7459,34 +7463,34 @@ system and gives an overview of their function and contents.
       An underlying Application Binary Interface (ABI) used by a particular
       tuning in a given toolchain layer. Providers that use prebuilt
       libraries can use the ``TUNEABI``,
-      :term:`TUNEABI_OVERRIDE`, and
-      :term:`TUNEABI_WHITELIST` variables to check
+      ```TUNEABI_OVERRIDE`` <#var-TUNEABI_OVERRIDE>`__, and
+      ```TUNEABI_WHITELIST`` <#var-TUNEABI_WHITELIST>`__ variables to check
       compatibility of tunings against their selection of libraries.
    
       If ``TUNEABI`` is undefined, then every tuning is allowed. See the
-      :ref:`sanity <ref-classes-sanity>` class to see how the variable is
+      ```sanity`` <#ref-classes-sanity>`__ class to see how the variable is
       used.
    
    TUNEABI_OVERRIDE
       If set, the OpenEmbedded system ignores the
-      :term:`TUNEABI_WHITELIST` variable.
+      ```TUNEABI_WHITELIST`` <#var-TUNEABI_WHITELIST>`__ variable.
       Providers that use prebuilt libraries can use the
       ``TUNEABI_OVERRIDE``, ``TUNEABI_WHITELIST``, and
-      :term:`TUNEABI` variables to check compatibility of a
+      ```TUNEABI`` <#var-TUNEABI>`__ variables to check compatibility of a
       tuning against their selection of libraries.
    
-      See the :ref:`sanity <ref-classes-sanity>` class to see how the
+      See the ```sanity`` <#ref-classes-sanity>`__ class to see how the
       variable is used.
    
    TUNEABI_WHITELIST
-      A whitelist of permissible :term:`TUNEABI` values. If
+      A whitelist of permissible ```TUNEABI`` <#var-TUNEABI>`__ values. If
       ``TUNEABI_WHITELIST`` is not set, all tunes are allowed. Providers
       that use prebuilt libraries can use the ``TUNEABI_WHITELIST``,
-      :term:`TUNEABI_OVERRIDE`, and ``TUNEABI``
+      ```TUNEABI_OVERRIDE`` <#var-TUNEABI_OVERRIDE>`__, and ``TUNEABI``
       variables to check compatibility of a tuning against their selection
       of libraries.
    
-      See the :ref:`sanity <ref-classes-sanity>` class to see how the
+      See the ```sanity`` <#ref-classes-sanity>`__ class to see how the
       variable is used.
    
    TUNECONFLICTS[feature]
@@ -7494,7 +7498,7 @@ system and gives an overview of their function and contents.
       that conflict with feature.
    
       Known tuning conflicts are specified in the machine include files in
-      the :term:`Source Directory`. Here is an example from
+      the `Source Directory <#source-directory>`__. Here is an example from
       the ``meta/conf/machine/include/mips/arch-mips.inc`` include file
       that lists the "o32" and "n64" features as conflicting with the "n32"
       feature: TUNECONFLICTS[n32] = "o32 n64"
@@ -7506,12 +7510,12 @@ system and gives an overview of their function and contents.
       ``meta/conf/machine/include/arm/arch-arm.inc``). Here is an example
       from that file: TUNEVALID[bigendian] = "Enable big-endian mode."
    
-      See the machine include files in the :term:`Source Directory`
-      for these features.
+      See the machine include files in the `Source
+      Directory <#source-directory>`__ for these features.
    
    UBOOT_CONFIG
-      Configures the :term:`UBOOT_MACHINE` and can
-      also define :term:`IMAGE_FSTYPES` for individual
+      Configures the ```UBOOT_MACHINE`` <#var-UBOOT_MACHINE>`__ and can
+      also define ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__ for individual
       cases.
    
       Following is an example from the ``meta-fsl-arm`` layer. UBOOT_CONFIG
@@ -7525,7 +7529,7 @@ system and gives an overview of their function and contents.
       "sdcard" specifies the ``IMAGE_FSTYPES`` to use for the U-boot image.
    
       For more information on how the ``UBOOT_CONFIG`` is handled, see the
-      ```uboot-config`http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/classes/uboot-config.bbclass
+      ```uboot-config`` <http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/classes/uboot-config.bbclass>`__
       class.
    
    UBOOT_ENTRYPOINT
@@ -7607,10 +7611,10 @@ system and gives an overview of their function and contents.
    UNKNOWN_CONFIGURE_WHITELIST
       Specifies a list of options that, if reported by the configure script
       as being invalid, should not generate a warning during the
-      :ref:`ref-tasks-configure` task. Normally, invalid
+      ```do_configure`` <#ref-tasks-configure>`__ task. Normally, invalid
       configure options are simply not passed to the configure script (e.g.
-      should be removed from :term:`EXTRA_OECONF` or
-      :term:`PACKAGECONFIG_CONFARGS`).
+      should be removed from ```EXTRA_OECONF`` <#var-EXTRA_OECONF>`__ or
+      ```PACKAGECONFIG_CONFARGS`` <#var-PACKAGECONFIG_CONFARGS>`__).
       However, common options, for example, exist that are passed to all
       configure scripts at a class level that might not be valid for some
       configure scripts. It follows that no benefit exists in seeing a
@@ -7619,12 +7623,12 @@ system and gives an overview of their function and contents.
    
       The configure arguments check that uses
       ``UNKNOWN_CONFIGURE_WHITELIST`` is part of the
-      :ref:`insane <ref-classes-insane>` class and is only enabled if the
-      recipe inherits the :ref:`autotools <ref-classes-autotools>` class.
+      ```insane`` <#ref-classes-insane>`__ class and is only enabled if the
+      recipe inherits the ```autotools`` <#ref-classes-autotools>`__ class.
    
    UPDATERCPN
       For recipes inheriting the
-      :ref:`update-rc.d <ref-classes-update-rc.d>` class, ``UPDATERCPN``
+      ```update-rc.d`` <#ref-classes-update-rc.d>`__ class, ``UPDATERCPN``
       specifies the package that contains the initscript that is enabled.
    
       The default value is "${PN}". Given that almost all recipes that
@@ -7647,7 +7651,7 @@ system and gives an overview of their function and contents.
       Use the ``UPSTREAM_CHECK_REGEX`` variable to specify a different
       regular expression instead of the default one when the package
       checking system is parsing the page found using
-      :term:`UPSTREAM_CHECK_URI`.
+      ```UPSTREAM_CHECK_URI`` <#var-UPSTREAM_CHECK_URI>`__.
       UPSTREAM_CHECK_REGEX = "package_regex"
    
    UPSTREAM_CHECK_URI
@@ -7692,14 +7696,15 @@ system and gives an overview of their function and contents.
    
       The default list is set in your ``local.conf`` file: USER_CLASSES ?=
       "buildstats image-mklibs image-prelink" For more information, see
-      ``meta-poky/conf/local.conf.sample`` in the :term:`Source Directory`.
+      ``meta-poky/conf/local.conf.sample`` in the `Source
+      Directory <#source-directory>`__.
    
    USERADD_ERROR_DYNAMIC
       If set to ``error``, forces the OpenEmbedded build system to produce
       an error if the user identification (``uid``) and group
       identification (``gid``) values are not defined in any of the files
-      listed in :term:`USERADD_UID_TABLES` and
-      :term:`USERADD_GID_TABLES`. If set to
+      listed in ```USERADD_UID_TABLES`` <#var-USERADD_UID_TABLES>`__ and
+      ```USERADD_GID_TABLES`` <#var-USERADD_GID_TABLES>`__. If set to
       ``warn``, a warning will be issued instead.
    
       The default behavior for the build system is to dynamically apply
@@ -7710,9 +7715,9 @@ system and gives an overview of their function and contents.
       file as follows: USERADD_ERROR_DYNAMIC = "error" Overriding the
       default behavior implies you are going to also take steps to set
       static ``uid`` and ``gid`` values through use of the
-      :term:`USERADDEXTENSION`,
-      :term:`USERADD_UID_TABLES`, and
-      :term:`USERADD_GID_TABLES` variables.
+      ```USERADDEXTENSION`` <#var-USERADDEXTENSION>`__,
+      ```USERADD_UID_TABLES`` <#var-USERADD_UID_TABLES>`__, and
+      ```USERADD_GID_TABLES`` <#var-USERADD_GID_TABLES>`__ variables.
    
       .. note::
    
@@ -7740,7 +7745,7 @@ system and gives an overview of their function and contents.
       adds a group to the system during package installation.
    
       When applying static group identification (``gid``) values, the
-      OpenEmbedded build system looks in :term:`BBPATH` for a
+      OpenEmbedded build system looks in ```BBPATH`` <#var-BBPATH>`__ for a
       ``files/group`` file and then applies those ``uid`` values. Set the
       variable as follows in your ``local.conf`` file: USERADD_GID_TABLES =
       "files/group"
@@ -7755,7 +7760,7 @@ system and gives an overview of their function and contents.
          values.
    
    USERADD_PACKAGES
-      When inheriting the :ref:`useradd <ref-classes-useradd>` class,
+      When inheriting the ```useradd`` <#ref-classes-useradd>`__ class,
       this variable specifies the individual packages within the recipe
       that require users and/or groups to be added.
    
@@ -7776,7 +7781,7 @@ system and gives an overview of their function and contents.
          variables.
    
    USERADD_PARAM
-      When inheriting the :ref:`useradd <ref-classes-useradd>` class,
+      When inheriting the ```useradd`` <#ref-classes-useradd>`__ class,
       this variable specifies for a package what parameters should pass to
       the ``useradd`` command if you add a user to the system when the
       package is installed.
@@ -7785,7 +7790,7 @@ system and gives an overview of their function and contents.
       "--system --home ${localstatedir}/lib/dbus \\ --no-create-home
       --shell /bin/false \\ --user-group messagebus" For information on the
       standard Linux shell command ``useradd``, see
-      http://linux.die.net/man/8/useradd.
+      ` <http://linux.die.net/man/8/useradd>`__.
    
    USERADD_UID_TABLES
       Specifies a password file to use for obtaining static user
@@ -7793,7 +7798,7 @@ system and gives an overview of their function and contents.
       adds a user to the system during package installation.
    
       When applying static user identification (``uid``) values, the
-      OpenEmbedded build system looks in :term:`BBPATH` for a
+      OpenEmbedded build system looks in ```BBPATH`` <#var-BBPATH>`__ for a
       ``files/passwd`` file and then applies those ``uid`` values. Set the
       variable as follows in your ``local.conf`` file: USERADD_UID_TABLES =
       "files/passwd"
@@ -7810,7 +7815,7 @@ system and gives an overview of their function and contents.
    USERADDEXTENSION
       When set to "useradd-staticids", causes the OpenEmbedded build system
       to base all user and group additions on a static ``passwd`` and
-      ``group`` files found in :term:`BBPATH`.
+      ``group`` files found in ```BBPATH`` <#var-BBPATH>`__.
    
       To use static user identification (``uid``) and group identification
       (``gid``) values, set the variable as follows in your ``local.conf``
@@ -7828,10 +7833,10 @@ system and gives an overview of their function and contents.
    
       If you use static ``uid`` and ``gid`` information, you must also
       specify the ``files/passwd`` and ``files/group`` files by setting the
-      :term:`USERADD_UID_TABLES` and
-      :term:`USERADD_GID_TABLES` variables.
+      ```USERADD_UID_TABLES`` <#var-USERADD_UID_TABLES>`__ and
+      ```USERADD_GID_TABLES`` <#var-USERADD_GID_TABLES>`__ variables.
       Additionally, you should also set the
-      :term:`USERADD_ERROR_DYNAMIC` variable.
+      ```USERADD_ERROR_DYNAMIC`` <#var-USERADD_ERROR_DYNAMIC>`__ variable.
    
    VOLATILE_LOG_DIR
       Specifies the persistence of the target's ``/var/log`` directory,
@@ -7846,18 +7851,18 @@ system and gives an overview of their function and contents.
       warnings by the OpenEmbedded build system. You set this variable in
       your distribution configuration file. For a list of the checks you
       can control with this variable, see the
-      ":ref:`insane.bbclass <ref-classes-insane>`" section.
+      "```insane.bbclass`` <#ref-classes-insane>`__" section.
    
    WKS_FILE_DEPENDS
       When placed in the recipe that builds your image, this variable lists
       build-time dependencies. The ``WKS_FILE_DEPENDS`` variable is only
       applicable when Wic images are active (i.e. when
-      :term:`IMAGE_FSTYPES` contains entries related
+      ```IMAGE_FSTYPES`` <#var-IMAGE_FSTYPES>`__ contains entries related
       to Wic). If your recipe does not create Wic images, the variable has
       no effect.
    
       The ``WKS_FILE_DEPENDS`` variable is similar to the
-      :term:`DEPENDS` variable. When you use the variable in
+      ```DEPENDS`` <#var-DEPENDS>`__ variable. When you use the variable in
       your recipe that builds the Wic image, dependencies you list in the
       ``WIC_FILE_DEPENDS`` variable are added to the ``DEPENDS`` variable.
    
@@ -7881,7 +7886,7 @@ system and gives an overview of their function and contents.
    WORKDIR
       The pathname of the work directory in which the OpenEmbedded build
       system builds a recipe. This directory is located within the
-      :term:`TMPDIR` directory structure and is specific to
+      ```TMPDIR`` <#var-TMPDIR>`__ directory structure and is specific to
       the recipe being built and the system for which it is being built.
    
       The ``WORKDIR`` directory is defined as follows:
@@ -7917,7 +7922,7 @@ system and gives an overview of their function and contents.
       server and drivers for the current machine, assuming your image
       directly includes ``packagegroup-core-x11-xserver`` or, perhaps
       indirectly, includes "x11-base" in
-      :term:`IMAGE_FEATURES`.
+      ```IMAGE_FEATURES`` <#var-IMAGE_FEATURES>`__.
    
       The default value of ``XSERVER``, if not specified in the machine
       configuration, is "xserver-xorg xf86-video-fbdev xf86-input-evdev".
