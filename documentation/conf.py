@@ -33,9 +33,11 @@ sys.path.insert(0, os.path.abspath('sphinx'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.autosectionlabel',
     'sphinx.ext.extlinks',
     'yocto-vars'
 ]
+autosectionlabel_prefix_document = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
