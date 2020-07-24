@@ -1366,10 +1366,10 @@ release notes
 Kernel Module Autoloading
 -------------------------
 
-The ```module_autoload_*`` <#var-module_autoload>`__ variable is now
+The :term:`module_autoload_* <module_autoload>` variable is now
 deprecated and a new
 :term:`KERNEL_MODULE_AUTOLOAD` variable
-should be used instead. Also, ```module_conf_*`` <#var-module_conf>`__
+should be used instead. Also, :term:`module_conf_* <module_conf>`
 must now be used in conjunction with a new
 :term:`KERNEL_MODULE_PROBECONF` variable.
 The new variables no longer require you to specify the module name as

@@ -377,12 +377,12 @@ information.
 Stages (copies) a subset of the files installed by the
 :ref:`ref-tasks-install` task into the appropriate
 sysroot. For information on how to access these files from other
-recipes, see the ```STAGING_DIR*`` <#var-STAGING_DIR_HOST>`__ variables.
+recipes, see the :term:`STAGING_DIR* <STAGING_DIR_HOST>` variables.
 Directories that would typically not be needed by other recipes at build
 time (e.g. ``/etc``) are not copied by default.
 
 For information on what directories are copied by default, see the
-```SYSROOT_DIRS*`` <#var-SYSROOT_DIRS>`__ variables. You can change
+:term:`SYSROOT_DIRS* <SYSROOT_DIRS>` variables. You can change
 these variables inside your recipe if you need to make additional (or
 fewer) directories available to other recipes at build time.
 
@@ -451,7 +451,7 @@ section for information on checking the upgrade status of a recipe.
 
 To build the ``checkpkg`` task, use the ``bitbake`` command with the
 "-c" option and task name: $ bitbake core-image-minimal -c checkpkg By
-default, the results are stored in ```$LOG_DIR`` <#var-LOG_DIR>`__ (e.g.
+default, the results are stored in :term:`$LOG_DIR <LOG_DIR>` (e.g.
 ``$BUILD_DIR/tmp/log``).
 
 .. _ref-tasks-checkuri:

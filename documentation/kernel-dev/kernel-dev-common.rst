@@ -1548,7 +1548,7 @@ Typically, you will need to set the following variables:
 
 -  :term:`DESCRIPTION`
 
--  ```LICENSE*`` <&YOCTO_DOCS_REF_URL;#var-LICENSE>`__
+-  :term:`LICENSE* <LICENSE>`
 
 -  :term:`SRC_URI`
 

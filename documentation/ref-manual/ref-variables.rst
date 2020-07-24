@@ -1473,7 +1473,7 @@ system and gives an overview of their function and contents.
       assignment: DEPENDS = "bar" The practical effect of the previous
       assignment is that all files installed by bar will be available in
       the appropriate staging sysroot, given by the
-      ```STAGING_DIR*`` <#var-STAGING_DIR>`__ variables, by the time the
+      :term:`STAGING_DIR* <STAGING_DIR>` variables, by the time the
       :ref:`ref-tasks-configure` task for ``foo`` runs.
       This mechanism is implemented by having ``do_configure`` depend on
       the :ref:`ref-tasks-populate_sysroot` task of
@@ -3599,7 +3599,7 @@ system and gives an overview of their function and contents.
       expects to find ``module_conf_``\ modname values that specify
       configuration for each of the modules. For information on how to
       provide those module configurations, see the
-      ```module_conf_*`` <#var-module_conf>`__ variable.
+      :term:`module_conf_* <module_conf>` variable.
    
    KERNEL_PATH
       The location of the kernel sources. This variable is set to the value

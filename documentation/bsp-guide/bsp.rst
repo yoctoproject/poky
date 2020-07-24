@@ -1260,7 +1260,7 @@ the "`Yocto Project Variables
 Glossary <&YOCTO_DOCS_REF_URL;#ref-variables-glos>`__" in the Yocto
 Project Reference Manual.
 
--  ```PREFERRED_PROVIDER_virtual/xserver`` <&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER>`__:
+-  :term:`PREFERRED_PROVIDER_virtual/xserver <PREFERRED_PROVIDER>`:
    The recipe that provides "virtual/xserver" when more than one
    provider is found. In this case, the recipe that provides
    "virtual/xserver" is "xserver-xorg", which exists in
@@ -1334,13 +1334,13 @@ Project Reference Manual.
    Defines a serial console (TTY) to enable using getty. In this case,
    the baud rate is "115200" and the device name is "ttyO0".
 
--  ```PREFERRED_PROVIDER_virtual/kernel`` <&YOCTO_DOCS_REF_URL;#var-PREFERRED_PROVIDER>`__:
+-  :term:`PREFERRED_PROVIDER_virtual/kernel <PREFERRED_PROVIDER>`:
    Specifies the recipe that provides "virtual/kernel" when more than
    one provider is found. In this case, the recipe that provides
    "virtual/kernel" is "linux-yocto", which exists in the layer's
    ``recipes-kernel/linux`` directory.
 
--  ```PREFERRED_VERSION_linux-yocto`` <&YOCTO_DOCS_REF_URL;#var-PREFERRED_VERSION>`__:
+-  :term:`PREFERRED_VERSION_linux-yocto <PREFERRED_VERSION>`:
    Defines the version of the recipe used to build the kernel, which is
    "5.0" in this case.
 
@@ -1372,7 +1372,7 @@ Project Reference Manual.
       u-boot.inc
       include file.
 
--  ```UBOOT_*`` <&YOCTO_DOCS_REF_URL;#var-UBOOT_ENTRYPOINT>`__: Defines
+-  :term:`UBOOT_* <UBOOT_ENTRYPOINT>`: Defines
    various U-Boot configurations needed to build a U-Boot image. In this
    example, a U-Boot image is required to boot the BeagleBone device.
    See the following variables for more information:

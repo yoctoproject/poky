@@ -4206,18 +4206,18 @@ If you have multiple CPUs, you might try increasing the default values
 to gain more speed. See the descriptions in the glossary for each
 variable for more information:
 
--  ```BB_NUMBER_THREADS``: <&YOCTO_DOCS_REF_URL;#var-BB_NUMBER_THREADS>`__
+-  :term:`BB_NUMBER_THREADS`:
    The maximum number of threads BitBake simultaneously executes.
 
 -  ```BB_NUMBER_PARSE_THREADS``: <&YOCTO_DOCS_BB_URL;#var-BB_NUMBER_PARSE_THREADS>`__
    The number of threads BitBake uses during parsing.
 
--  ```PARALLEL_MAKE``: <&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKE>`__ Extra
+-  :term:`PARALLEL_MAKE`: Extra
    options passed to the ``make`` command during the
    :ref:`ref-tasks-compile` task in
    order to specify parallel compilation on the local build host.
 
--  ```PARALLEL_MAKEINST``: <&YOCTO_DOCS_REF_URL;#var-PARALLEL_MAKEINST>`__
+-  :term:`PARALLEL_MAKEINST`:
    Extra options passed to the ``make`` command during the
    :ref:`ref-tasks-install` task in
    order to specify parallel installation on the local build host.
@@ -4329,7 +4329,7 @@ can control which static library files (``*.a`` files) get included in
 the built library.
 
 The :term:`PACKAGES` and
-```FILES_*`` <&YOCTO_DOCS_REF_URL;#var-FILES>`__ variables in the
+:term:`FILES_* <FILES>` variables in the
 ``meta/conf/bitbake.conf`` configuration file define how files installed
 by the ``do_install`` task are packaged. By default, the ``PACKAGES``
 variable includes ``${PN}-staticdev``, which represents all static
@@ -7290,8 +7290,8 @@ Finally, for those recipes fetched from a version control system (e.g.,
 Git), a file exists that lists source revisions that are specified in
 the recipe and lists the actual revisions used during the build. Listed
 and actual revisions might differ when
-```SRCREV`` <&YOCTO_DOCS_REF_URL;#var-SRCREV>`__ is set to
-${```AUTOREV`` <&YOCTO_DOCS_REF_URL;#var-AUTOREV>`__}. Here is an
+:term:`SRCREV` is set to
+${:term:`AUTOREV`}. Here is an
 example assuming
 ``buildhistory/packages/qemux86-poky-linux/linux-yocto/latest_srcrev``):
 # SRCREV_machine = "38cd560d5022ed2dbd1ab0dca9642e47c98a0aa1"
