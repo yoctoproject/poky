@@ -162,10 +162,10 @@ an entire Linux distribution, including the toolchain, from source.
    <target>' Common targets are: core-image-minimal core-image-sato
    meta-toolchain meta-ide-support You can also run generated qemu
    images with a command like 'runqemu qemux86-64' Among other things,
-   the script creates the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, which is
-   ``build`` in this case and is located in the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. After the
+   the script creates the
+   :term:`Build Directory`, which is
+   ``build`` in this case and is located in the :term:`Source Directory`.
+   After the
    script runs, your current working directory is set to the Build
    Directory. Later, when the build completes, the Build Directory
    contains all the files created during the build.
@@ -271,8 +271,8 @@ Follow these steps to add a hardware layer:
 
 4. *Add Your Layer to the Layer Configuration File:* Before you can use
    a layer during a build, you must add it to your ``bblayers.conf``
-   file, which is found in the `Build
-   Directory's <&YOCTO_DOCS_REF_URL;#build-directory>`__ ``conf``
+   file, which is found in the
+   :term:`Build Directory` ``conf``
    directory.
 
    Use the ``bitbake-layers add-layer`` command to add the layer to the

@@ -12,8 +12,8 @@ application.
 Fundamentally, the ADT consists of the following:
 
 -  An architecture-specific cross-toolchain and matching sysroot both
-   built by the `OpenEmbedded build
-   system <&YOCTO_DOCS_DEV_URL;#build-system-term>`__. The toolchain and
+   built by the :term:`OpenEmbedded Build System`.
+   The toolchain and
    sysroot are based on a `Metadata <&YOCTO_DOCS_DEV_URL;#metadata>`__
    configuration and extensions, which allows you to cross-develop on
    the host machine for the target hardware.
@@ -33,8 +33,8 @@ Toolchain <&YOCTO_DOCS_DEV_URL;#cross-development-toolchain>`__ consists
 of a cross-compiler, cross-linker, and cross-debugger that are used to
 develop user-space applications for targeted hardware. This toolchain is
 created either by running the ADT Installer script, a toolchain
-installer script, or through a `Build
-Directory <&YOCTO_DOCS_DEV_URL;#build-directory>`__ that is based on
+installer script, or through a :term:`Build Directory`
+that is based on
 your Metadata configuration or extension for your targeted device. The
 cross-toolchain works with a matching target sysroot.
 
@@ -79,13 +79,13 @@ your application or image. QEMU is made available a number of ways:
 -  If you use the ADT Installer script to install ADT, you can specify
    whether or not to install QEMU.
 
--  If you have cloned the ``poky`` Git repository to create a `Source
-   Directory <&YOCTO_DOCS_DEV_URL;#source-directory>`__ and you have
+-  If you have cloned the ``poky`` Git repository to create a
+   :term:`Source Directory` and you have
    sourced the environment setup script, QEMU is installed and
    automatically available.
 
 -  If you have downloaded a Yocto Project release and unpacked it to
-   create a `Source Directory <&YOCTO_DOCS_DEV_URL;#source-directory>`__
+   create a :term:`Source Directory`
    and you have sourced the environment setup script, QEMU is installed
    and automatically available.
 

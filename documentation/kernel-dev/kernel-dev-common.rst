@@ -24,8 +24,8 @@ host is set up to use the Yocto Project. For information on how to get
 set up, see the "`Preparing the Build
 Host <&YOCTO_DOCS_DEV_URL;#dev-preparing-the-build-host>`__" section in
 the Yocto Project Development Tasks Manual. Part of preparing the system
-is creating a local Git repository of the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (``poky``) on your
+is creating a local Git repository of the
+:term:`Source Directory` (``poky``) on your
 system. Follow the steps in the "`Cloning the ``poky``
 Repository <&YOCTO_DOCS_DEV_URL;#cloning-the-poky-repository>`__"
 section in the Yocto Project Development Tasks Manual to set up your
@@ -76,8 +76,8 @@ section:
    "qemux86-64", which is fine if you are building for the QEMU emulator
    in 64-bit mode. However, if you are not, you need to set the
    ``MACHINE`` variable appropriately in your ``conf/local.conf`` file
-   found in the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ (i.e.
+   found in the
+   :term:`Build Directory` (i.e.
    ``~/poky/build`` in this example).
 
    Also, since you are preparing to work on the kernel image, you need
@@ -240,8 +240,8 @@ section:
    "qemux86-64", which is fine if you are building for the QEMU emulator
    in 64-bit mode. However, if you are not, you need to set the
    ``MACHINE`` variable appropriately in your ``conf/local.conf`` file
-   found in the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ (i.e.
+   found in the
+   :term:`Build Directory` (i.e.
    ``~/poky/build`` in this example).
 
    Also, since you are preparing to work on the kernel image, you need
@@ -289,8 +289,8 @@ section:
    ` <&YOCTO_GIT_URL;>`__.
 
    For simplicity, it is recommended that you create your copy of the
-   kernel Git repository outside of the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__, which is
+   kernel Git repository outside of the
+   :term:`Source Directory`, which is
    usually named ``poky``. Also, be sure you are in the
    ``standard/base`` branch.
 
@@ -317,8 +317,8 @@ section:
 
 6. *Create a Local Copy of the Kernel Cache Git Repository:* For
    simplicity, it is recommended that you create your copy of the kernel
-   cache Git repository outside of the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__, which is
+   cache Git repository outside of the
+   :term:`Source Directory`, which is
    usually named ``poky``. Also, for this example, be sure you are in
    the ``yocto-4.12`` branch.
 
@@ -483,8 +483,8 @@ ensure the build process uses the appropriate kernel branch.
 Although this particular example does not use it, the
 :term:`KERNEL_FEATURES`
 variable could be used to enable features specific to the kernel. The
-append file points to specific commits in the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ Git repository and
+append file points to specific commits in the
+:term:`Source Directory` Git repository and
 the ``meta`` Git repository branches to identify the exact kernel needed
 to build the BSP.
 
@@ -781,8 +781,8 @@ the "`Getting Ready to Develop Using
 
 8. *Build the Image With Your Modified Kernel:* You can now build an
    image that includes your kernel patches. Execute the following
-   command from your `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ in the terminal
+   command from your
+   :term:`Build Directory` in the terminal
    set up to run BitBake: $ cd ~/poky/build $ bitbake core-image-minimal
 
 Using Traditional Kernel Development to Patch the Kernel
@@ -1134,8 +1134,7 @@ build system applies fragments on top of and after applying the existing
 defconfig file configurations.
 
 Syntactically, the configuration statement is identical to what would
-appear in the ``.config`` file, which is in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
+appear in the ``.config`` file, which is in the :term:`Build Directory`.
 
 .. note::
 

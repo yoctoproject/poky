@@ -74,12 +74,12 @@ section in the Yocto Project Development Tasks Manual.
 The BSP layer's base directory (``meta-bsp_root_name``) is the root
 directory of that Layer. This directory is what you add to the
 :term:`BBLAYERS` variable in the
-``conf/bblayers.conf`` file found in your `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, which is
+``conf/bblayers.conf`` file found in your
+:term:`Build Directory`, which is
 established after you run the OpenEmbedded build environment setup
 script (i.e. ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__).
-Adding the root directory allows the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ to recognize the BSP
+Adding the root directory allows the :term:`OpenEmbedded Build System`
+to recognize the BSP
 layer and from it build an image. Here is an example: BBLAYERS ?= " \\
 /usr/local/src/yocto/meta \\ /usr/local/src/yocto/meta-poky \\
 /usr/local/src/yocto/meta-yocto-bsp \\ /usr/local/src/yocto/meta-mylayer
@@ -144,8 +144,7 @@ section.
    machine that uses CROPS.
 
 2. *Clone the ``poky`` Repository:* You need to have a local copy of the
-   Yocto Project `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (i.e. a local
+   Yocto Project :term:`Source Directory` (i.e. a local
    ``poky`` repository). See the "`Cloning the ``poky``
    Repository <&YOCTO_DOCS_DEV_URL;#cloning-the-poky-repository>`__" and
    possibly the "`Checking Out by Branch in
@@ -169,8 +168,7 @@ section.
    file.
 
    1. *Navigate to Your Source Directory:* Typically, you set up the
-      ``meta-intel`` Git repository inside the `Source
-      Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (e.g.
+      ``meta-intel`` Git repository inside the :term:`Source Directory` (e.g.
       ``poky``). $ cd /home/you/poky
 
    2. *Clone the Layer:* $ git clone
@@ -218,10 +216,10 @@ section.
    ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__ environment
    setup script to define the OpenEmbedded build environment on your
    build host. $ source OE_INIT_FILE Among other things, the script
-   creates the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, which is
-   ``build`` in this case and is located in the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. After the
+   creates the
+   :term:`Build Directory`, which is
+   ``build`` in this case and is located in the :term:`Source Directory`.
+   After the
    script runs, your current working directory is set to the ``build``
    directory.
 
@@ -629,8 +627,8 @@ types of files although, in practice, it is likely that you would have
 one or the other.
 
 For your BSP, you typically want to use an existing Yocto Project kernel
-recipe found in the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ at
+recipe found in the :term:`Source Directory`
+at
 ``meta/recipes-kernel/linux``. You can append machine-specific changes
 to the kernel recipe by using a similarly named append file, which is
 located in the BSP Layer for your target device (e.g. the
@@ -848,8 +846,8 @@ Yocto Project:
 
 -  *File System Layout:* When possible, use the same directory names in
    your BSP layer as listed in the ``recipes.txt`` file, which is found
-   in ``poky/meta`` directory of the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ or in the
+   in ``poky/meta`` directory of the :term:`Source Directory`
+   or in the
    OpenEmbedded-Core Layer (``openembedded-core``) at
    ` <http://git.openembedded.org/openembedded-core/tree/meta>`__.
 

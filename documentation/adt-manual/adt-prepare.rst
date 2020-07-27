@@ -50,7 +50,7 @@ for more information.
    other mentioned benefits had you run the ADT Installer script.
 
 -  *Use the toolchain from within the Build Directory:* If you already
-   have a `Build Directory <&YOCTO_DOCS_DEV_URL;#build-directory>`__,
+   have a :term:`Build Directory`,
    you can build the cross-toolchain within the directory. However, like
    the previous method mentioned, you only get the cross-toolchain and
    QEMU - you do not get any of the other benefits without taking
@@ -79,9 +79,8 @@ the tarball using either of these methods:
    ` <&YOCTO_ADTINSTALLER_DL_URL;>`__ into any directory.
 
 -  *Build the Tarball:* You can use
-   `BitBake <&YOCTO_DOCS_DEV_URL;#bitbake-term>`__ to generate the
-   tarball inside an existing `Build
-   Directory <&YOCTO_DOCS_DEV_URL;#build-directory>`__.
+   :term:`BitBake` to generate the
+   tarball inside an existing :term:`Build Directory`.
 
    If you use BitBake to generate the ADT Installer tarball, you must
    ``source`` the environment setup script
@@ -90,8 +89,8 @@ the tarball using either of these methods:
    located in the Source Directory before running the ``bitbake``
    command that creates the tarball.
 
-   The following example commands establish the `Source
-   Directory <&YOCTO_DOCS_DEV_URL;#source-directory>`__, check out the
+   The following example commands establish the
+   :term:`Source Directory`, check out the
    current release branch, set up the build environment while also
    creating the default Build Directory, and run the ``bitbake`` command
    that results in the tarball
@@ -268,8 +267,8 @@ Using BitBake and the Build Directory
 -------------------------------------
 
 A final way of making the cross-toolchain available is to use BitBake to
-generate the toolchain within an existing `Build
-Directory <&YOCTO_DOCS_DEV_URL;#build-directory>`__. This method does
+generate the toolchain within an existing :term:`Build Directory`.
+This method does
 not install the toolchain into the default ``/opt`` directory. As with
 the previous method, if you need to install the target sysroot, you must
 do that separately as well.
@@ -280,8 +279,7 @@ Follow these steps to generate the toolchain into the Build Directory:
    environment setup script (i.e.
    ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__ or
    ```oe-init-build-env-memres`` <&YOCTO_DOCS_REF_URL;#structure-memres-core-script>`__)
-   located in the `Source
-   Directory <&YOCTO_DOCS_DEV_URL;#source-directory>`__.
+   located in the :term:`Source Directory`.
 
 2. *Check your Local Configuration File:* At this point, you should be
    sure that the :term:`MACHINE`
@@ -332,8 +330,8 @@ cross-development environment by sourcing the toolchain's environment
 setup script. If you used the ADT Installer or hand-installed
 cross-toolchain, then you can find this script in the directory you
 chose for installation. For this release, the default installation
-directory is ````. If you installed the toolchain in the `Build
-Directory <&YOCTO_DOCS_DEV_URL;#build-directory>`__, you can find the
+directory is ````. If you installed the toolchain in the
+:term:`Build Directory`, you can find the
 environment setup script for the toolchain in the Build Directory's
 ``tmp`` directory.
 
@@ -432,8 +430,8 @@ this by including the ``eclipse-debug`` image feature.
    image features.
 
 To include the ``eclipse-debug`` image feature, modify your
-``local.conf`` file in the `Build
-Directory <&YOCTO_DOCS_DEV_URL;#build-directory>`__ so that the
+``local.conf`` file in the :term:`Build Directory`
+so that the
 :term:`EXTRA_IMAGE_FEATURES`
 variable includes the "eclipse-debug" feature. After modifying the
 configuration file, you can rebuild the image. Once the image is
@@ -484,8 +482,7 @@ Optionally Building a Toolchain Installer
 =========================================
 
 As an alternative to locating and downloading a toolchain installer, you
-can build the toolchain installer if you have a `Build
-Directory <&YOCTO_DOCS_DEV_URL;#build-directory>`__.
+can build the toolchain installer if you have a :term:`Build Directory`.
 
 .. note::
 

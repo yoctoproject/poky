@@ -14,8 +14,7 @@ Once you have a suitable `cross-development
 toolchain <&YOCTO_DOCS_REF_URL;#cross-development-toolchain>`__
 installed, it is very easy to develop a project using the `GNU
 Autotools-based <https://en.wikipedia.org/wiki/GNU_Build_System>`__
-workflow, which is outside of the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__.
+workflow, which is outside of the :term:`OpenEmbedded Build System`.
 
 The following figure presents a simple Autotools workflow.
 

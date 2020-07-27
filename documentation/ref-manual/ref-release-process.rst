@@ -117,7 +117,7 @@ consists of the following pieces:
    an ARM target, did the build produce ARM binaries. If, for example,
    the build produced PPC binaries then there is a problem.
 
--  ```testimage.bbclass`` <#ref-classes-testimage*>`__: This class
+-  :ref:`testimage.bbclass <ref-classes-testimage*>`: This class
    performs runtime testing of images after they are built. The tests
    are usually used with `QEMU <&YOCTO_DOCS_DEV_URL;#dev-manual-qemu>`__
    to boot the images and check the combined runtime result boot

@@ -12,8 +12,8 @@ dependencies as described in the "`Preparing to Use
 Toaster <#toaster-manual-start>`__" chapter, you are ready to start
 Toaster.
 
-Navigate to the root of your `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (e.g. ``poky``): $
+Navigate to the root of your
+:term:`Source Directory` (e.g. ``poky``): $
 cd poky Once in that directory, source the build environment script: $
 source oe-init-build-env Next, from the build directory (e.g.
 ``poky/build``), start Toaster using this command: $ source toaster
@@ -267,8 +267,8 @@ Perform the following steps to install Toaster:
     the "`Configuring Toaster <#configuring-toaster>`__" section.
 
     This line also runs the ``checksettings`` command, which configures
-    the location of the Toaster `Build
-    Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. The Toaster
+    the location of the Toaster :term:`Build Directory`.
+    The Toaster
     root directory ``TOASTER_DIR`` determines where the Toaster build
     directory is created on the file system. In the example above,
     ``TOASTER_DIR`` is set as follows: /var/www/toaster/poky This

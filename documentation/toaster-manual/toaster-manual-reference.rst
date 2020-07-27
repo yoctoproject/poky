@@ -422,15 +422,15 @@ at the
 `Django <https://docs.djangoproject.com/en/1.7/topics/settings/>`__
 site. However, several ``manage.py`` commands have been created that are
 specific to Toaster and are used to control configuration and back-end
-tasks. You can locate these commands in the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (e.g. ``poky``) at
+tasks. You can locate these commands in the
+:term:`Source Directory` (e.g. ``poky``) at
 ``bitbake/lib/manage.py``. This section documents those commands.
 
 .. note::
 
    -  When using ``manage.py`` commands given a default configuration,
-      you must be sure that your working directory is set to the `Build
-      Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. Using
+      you must be sure that your working directory is set to the
+      :term:`Build Directory`. Using
       ``manage.py`` commands from the Build Directory allows Toaster to
       find the ``toaster.sqlite`` file, which is located in the Build
       Directory.

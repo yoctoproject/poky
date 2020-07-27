@@ -100,8 +100,8 @@ available. Follow these general steps to run QEMU:
    Here are some additional examples to help illustrate further QEMU:
 
    -  This example starts QEMU with MACHINE set to "qemux86-64".
-      Assuming a standard `Build
-      Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, ``runqemu``
+      Assuming a standard
+      :term:`Build Directory`, ``runqemu``
       automatically finds the ``bzImage-qemux86-64.bin`` image file and
       the ``core-image-minimal-qemux86-64-20200218002850.rootfs.ext4``
       (assuming the current build created a ``core-image-minimal``
@@ -232,8 +232,8 @@ be a problem when QEMU is running with KVM enabled. Specifically,
 software compiled with a certain CPU feature crashes when run on a CPU
 under KVM that does not support that feature. To work around this
 problem, you can override QEMU's runtime CPU setting by changing the
-``QB_CPU_KVM`` variable in ``qemuboot.conf`` in the `Build
-Directory's <&YOCTO_DOCS_REF_URL;#build-directory>`__ ``deploy/image``
+``QB_CPU_KVM`` variable in ``qemuboot.conf`` in the
+:term:`Build Directory` ``deploy/image``
 directory. This setting specifies a ``-cpu`` option passed into QEMU in
 the ``runqemu`` script. Running ``qemu -cpu help`` returns a list of
 available supported CPU types.

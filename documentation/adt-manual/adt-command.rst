@@ -6,8 +6,8 @@ Using the Command Line
 
 Recall that earlier the manual discussed how to use an existing
 toolchain tarball that had been installed into the default installation
-directory, ``/opt/poky/DISTRO``, which is outside of the `Build
-Directory <&YOCTO_DOCS_DEV_URL;#build-directory>`__ (see the section
+directory, ``/opt/poky/DISTRO``, which is outside of the :term:`Build Directory`
+(see the section
 "`Using a Cross-Toolchain
 Tarball) <#using-an-existing-toolchain-tarball>`__". And, that sourcing
 your architecture-specific environment setup script initializes a

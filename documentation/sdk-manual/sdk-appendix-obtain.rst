@@ -70,8 +70,8 @@ build the SDK installer. Follow these steps:
    machine that uses CROPS.
 
 2. *Clone the ``poky`` Repository:* You need to have a local copy of the
-   Yocto Project `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (i.e. a local
+   Yocto Project :term:`Source Directory`
+   (i.e. a local
    ``poky`` repository). See the "`Cloning the ``poky``
    Repository <&YOCTO_DOCS_DEV_URL;#cloning-the-poky-repository>`__" and
    possibly the "`Checking Out by Branch in
@@ -87,8 +87,8 @@ build the SDK installer. Follow these steps:
    ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__ environment
    setup script to define the OpenEmbedded build environment on your
    build host. $ source OE_INIT_FILE Among other things, the script
-   creates the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, which is
+   creates the :term:`Build Directory`,
+   which is
    ``build`` in this case and is located in the Source Directory. After
    the script runs, your current working directory is set to the
    ``build`` directory.

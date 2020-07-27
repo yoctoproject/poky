@@ -48,8 +48,8 @@ Follow these general steps to create your layer without using tools:
 
 2. *Create a Directory:* Create the directory for your layer. When you
    create the layer, be sure to create the directory in an area not
-   associated with the Yocto Project `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (e.g. the cloned
+   associated with the Yocto Project :term:`Source Directory`
+   (e.g. the cloned
    ``poky`` repository).
 
    While not strictly required, prepend the name of the directory with
@@ -263,8 +263,7 @@ following list:
    repository that use the ``meta-layer_name`` format.
 
 -  *Group Your Layers Locally:* Clone your repository alongside other
-   cloned ``meta`` directories from the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__.
+   cloned ``meta`` directories from the :term:`Source Directory`.
 
 Making Sure Your Layer is Compatible With Yocto Project
 -------------------------------------------------------
@@ -449,8 +448,8 @@ does not have a corresponding recipe with a matching name. See the
 variable for information on how to handle this error.
 
 As an example, consider the main formfactor recipe and a corresponding
-formfactor append file both from the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. Here is the main
+formfactor append file both from the :term:`Source Directory`.
+Here is the main
 formfactor recipe, which is named ``formfactor_0.0.bb`` and located in
 the "meta" layer at ``meta/recipes-bsp/formfactor``: SUMMARY = "Device
 formfactor information" SECTION = "base" LICENSE = "MIT"
@@ -769,8 +768,8 @@ high-level image features by using the
 variables. Although the functions for both variables are nearly
 equivalent, best practices dictate using ``IMAGE_FEATURES`` from within
 a recipe and using ``EXTRA_IMAGE_FEATURES`` from within your
-``local.conf`` file, which is found in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
+``local.conf`` file, which is found in the
+:term:`Build Directory`.
 
 To understand how these features work, the best reference is
 ``meta/classes/core-image.bbclass``. This class lists out the available
@@ -996,8 +995,8 @@ application that builds using Autotools. Creating the base recipe using
 ``recipetool`` results in a recipe that has the pre-build dependencies,
 license requirements, and checksums configured.
 
-To run the tool, you just need to be in your `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ and have sourced the
+To run the tool, you just need to be in your
+:term:`Build Directory` and have sourced the
 build environment setup script (i.e.
 ```oe-init-build-env`` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__).
 To get help on the tool, use the following command: $ recipetool -h
@@ -1799,8 +1798,8 @@ different ways:
 
    To enable a service using systemd, your recipe needs to inherit the
    :ref:`systemd <ref-classes-systemd>` class. See
-   the ``systemd.bbclass`` file located in your `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. section for
+   the ``systemd.bbclass`` file located in your :term:`Source Directory`
+   section for
    more information.
 
 .. _new-recipe-packaging:
@@ -2251,7 +2250,7 @@ could lead to compatibility problems with ABI in the future. However,
 sometimes you have no choice.
 
 The easiest solution is to create a recipe that uses the
-```bin_package`` <&YOCTO_DOCS_REF_URL;#ref-classes-bin-package>`__ class
+:ref:`bin_package <ref-classes-bin-package>` class
 and to be sure that you are using default locations for build artifacts.
 In most cases, the ``bin_package`` class handles "skipping" the
 configure and compile steps as well as sets things up to grab packages
@@ -2739,7 +2738,7 @@ The following steps describe how to set up the AUH utility:
       your build directory.
 
    -  If you want to enable testing through the
-      ```testimage`` <&YOCTO_DOCS_REF_URL;#ref-classes-testimage*>`__
+      :ref:`testimage <ref-classes-testimage*>`
       class, which is optional, you need to have the following set in
       your ``conf/local.conf`` file: INHERIT += "testimage"
 
@@ -2856,8 +2855,8 @@ could add it easily using the
 script. For example, suppose you use the ``nano.bb`` recipe from the
 ``meta-oe`` layer in the ``meta-openembedded`` repository. For this
 example, assume that the layer has been cloned into following area:
-/home/scottrif/meta-openembedded The following command from your `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ adds the layer to
+/home/scottrif/meta-openembedded The following command from your
+:term:`Build Directory` adds the layer to
 your build configuration (i.e. ``${BUILDDIR}/conf/bblayers.conf``): $
 bitbake-layers add-layer /home/scottrif/meta-openembedded/meta-oe NOTE:
 Starting bitbake server... Parsing recipes: 100%
@@ -3014,8 +3013,8 @@ You might find it helpful during development to modify the temporary
 source code used by recipes to build packages. For example, suppose you
 are developing a patch and you need to experiment a bit to figure out
 your solution. After you have initially built the package, you can
-iteratively tweak the source code, which is located in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, and then you can
+iteratively tweak the source code, which is located in the
+:term:`Build Directory`, and then you can
 force a re-compile and quickly test your altered code. Once you settle
 on a solution, you can then preserve your changes in the form of
 patches.
@@ -3024,8 +3023,8 @@ During a build, the unpacked temporary source code used by recipes to
 build packages is available in the Build Directory as defined by the
 :term:`S` variable. Below is the default
 value for the ``S`` variable as defined in the
-``meta/conf/bitbake.conf`` configuration file in the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__: S =
+``meta/conf/bitbake.conf`` configuration file in the
+:term:`Source Directory`: S =
 "${WORKDIR}/${BP}" You should be aware that many recipes override the
 ``S`` variable. For example, recipes that fetch their source from Git
 usually set ``S`` to ``${WORKDIR}/git``.
@@ -3096,8 +3095,8 @@ form of a patch all using Quilt.
 Follow these general steps:
 
 1. *Find the Source Code:* Temporary source code used by the
-   OpenEmbedded build system is kept in the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. See the
+   OpenEmbedded build system is kept in the
+   :term:`Build Directory`. See the
    "`Finding Temporary Source
    Code <#finding-the-temporary-source-code>`__" section to learn how to
    locate the directory that has the temporary source code for a
@@ -3314,8 +3313,8 @@ build host running Linux.
       Build <&YOCTO_DOCS_BRIEF_URL;>`__ document.
 
 The build process creates an entire Linux distribution from source and
-places it in your `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ under
+places it in your
+:term:`Build Directory` under
 ``tmp/deploy/images``. For detailed information on the build process
 using BitBake, see the
 "`Images <&YOCTO_DOCS_OM_URL;#images-dev-environment>`__" section in the
@@ -3372,8 +3371,8 @@ The following figure and list overviews the build process:
 
    The target is the name of the recipe you want to build. Common
    targets are the images in ``meta/recipes-core/images``,
-   ``meta/recipes-sato/images``, and so forth all found in the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. Or, the target
+   ``meta/recipes-sato/images``, and so forth all found in the
+   :term:`Source Directory`. Or, the target
    can be the name of a recipe for a specific piece of software such as
    BusyBox. For more details about the images the OpenEmbedded build
    system supports, see the
@@ -3557,8 +3556,8 @@ Follow these steps to create an initramfs image:
 
 1. *Create the initramfs Image Recipe:* You can reference the
    ``core-image-minimal-initramfs.bb`` recipe found in the
-   ``meta/recipes-core`` directory of the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ as an example
+   ``meta/recipes-core`` directory of the :term:`Source Directory`
+   as an example
    from which to work.
 
 2. *Decide if You Need to Bundle the initramfs Image Into the Kernel
@@ -3715,8 +3714,8 @@ memory used for decompressing the kernel and for the ``__init__``
 functions.
 
 To help you see where you currently are with kernel and root filesystem
-sizes, you can use two tools found in the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ in the
+sizes, you can use two tools found in the :term:`Source Directory`
+in the
 ``scripts/tiny/`` directory:
 
 -  ``ksize.py``: Reports component sizes for the kernel build objects.
@@ -4049,8 +4048,8 @@ your tunings to best consider build times and package feed maintenance.
 Building Software from an External Source
 -----------------------------------------
 
-By default, the OpenEmbedded build system uses the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ when building source
+By default, the OpenEmbedded build system uses the
+:term:`Build Directory` when building source
 code. The build process involves fetching the source files, unpacking
 them, and then patching them if necessary before the build takes place.
 
@@ -4158,8 +4157,7 @@ directory:
 2. *Start With a Clean Build:* You can start with a clean build by
    removing the
    ``${``\ :term:`TMPDIR`\ ``}``
-   directory or using a new `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
+   directory or using a new :term:`Build Directory`.
 
 3. *Build Your Target:* Use BitBake to build your target: $ bitbake
    target The build completes using the known local "snapshot" of source
@@ -4258,7 +4256,7 @@ Following are additional factors that can affect build speed:
    contents could easily be rebuilt.
 
 -  Inheriting the
-   ```rm_work`` <&YOCTO_DOCS_REF_URL;#ref-classes-rm-work>`__ class:
+   :ref:`rm_work <ref-classes-rm-work>` class:
    Inheriting this class has shown to speed up builds due to
    significantly lower amounts of data stored in the data cache as well
    as on disk. Inheriting this class also makes cleanup of
@@ -4409,8 +4407,8 @@ meet your needs.
 In order to enable Multilib, you first need to ensure your recipe is
 extended to support multiple libraries. Many standard recipes are
 already extended and support multiple libraries. You can check in the
-``meta/conf/multilib.conf`` configuration file in the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ to see how this is
+``meta/conf/multilib.conf`` configuration file in the
+:term:`Source Directory` to see how this is
 done using the
 :term:`BBCLASSEXTEND` variable.
 Eventually, all recipes will be covered and this list will not be
@@ -4436,8 +4434,8 @@ Using Multilib
 
 After you have set up the recipes, you need to define the actual
 combination of multiple libraries you want to build. You accomplish this
-through your ``local.conf`` configuration file in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. An example
+through your ``local.conf`` configuration file in the
+:term:`Build Directory`. An example
 configuration would be as follows: MACHINE = "qemux86-64" require
 conf/multilib.conf MULTILIBS = "multilib:lib32"
 DEFAULTTUNE_virtclass-multilib-lib32 = "x86" IMAGE_INSTALL_append = "
@@ -4936,8 +4934,8 @@ Raw Mode
 
 Running Wic in raw mode allows you to specify all the partitions through
 the ``wic`` command line. The primary use for raw mode is if you have
-built your kernel outside of the Yocto Project `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. In other words, you
+built your kernel outside of the Yocto Project
+:term:`Build Directory`. In other words, you
 can point to arbitrary kernel, root filesystem locations, and so forth.
 Contrast this behavior with cooked mode where Wic looks in the Build
 Directory (e.g. ``tmp/deploy/images/``\ machine).
@@ -5210,8 +5208,8 @@ This next example demonstrates that through modification of the
 As mentioned earlier, you can use the command ``wic list images`` to
 show the list of existing kickstart files. The directory in which the
 ``directdisk-gpt.wks`` file resides is
-``scripts/lib/image/canned-wks/``, which is located in the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (e.g. ``poky``).
+``scripts/lib/image/canned-wks/``, which is located in the
+:term:`Source Directory` (e.g. ``poky``).
 Because available files reside in this directory, you can create and add
 your own custom files to the directory. Subsequent use of the
 ``wic list images`` command would then include your kickstart files.
@@ -5520,8 +5518,8 @@ Security Flags
 
 The Yocto Project has security flags that you can enable that help make
 your build output more secure. The security flags are in the
-``meta/conf/distro/include/security_flags.inc`` file in your `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (e.g. ``poky``).
+``meta/conf/distro/include/security_flags.inc`` file in your
+:term:`Source Directory` (e.g. ``poky``).
 
 .. note::
 
@@ -5561,7 +5559,7 @@ system to make your images more secure:
    :ref:`extrausers <ref-classes-extrausers>`
    class, which is the preferred method. For an example on how to set up
    both root and user passwords, see the
-   "```extrausers.bbclass`` <&YOCTO_DOCS_REF_URL;#ref-classes-extrausers>`__"
+   ":ref:`extrausers.bbclass <ref-classes-extrausers>`"
    section.
 
    .. note::
@@ -5663,8 +5661,8 @@ layer. The following steps provide some more detail:
    limited to the list in the previous bulleted item.
 
 -  *Point to Your distribution configuration file:* In your
-   ``local.conf`` file in the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__, set your
+   ``local.conf`` file in the :term:`Build Directory`,
+   set your
    :term:`DISTRO` variable to point to
    your distribution's configuration file. For example, if your
    distribution's configuration file is named ``mydistro.conf``, then
@@ -5704,8 +5702,8 @@ new build directory.
 
 The OpenEmbedded build system uses the environment variable
 ``TEMPLATECONF`` to locate the directory from which it gathers
-configuration information that ultimately ends up in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ ``conf`` directory.
+configuration information that ultimately ends up in the
+:term:`Build Directory` ``conf`` directory.
 By default, ``TEMPLATECONF`` is set as follows in the ``poky``
 repository: TEMPLATECONF=${TEMPLATECONF:-meta-poky/conf} This is the
 directory used by the build system to find templates from which to build
@@ -5762,7 +5760,7 @@ the :term:`Build Directory`: INHERIT
 += "rm_work" Adding this statement deletes the work directory used for
 building a recipe once the recipe is built. For more information on
 "rm_work", see the
-```rm_work`` <&YOCTO_DOCS_REF_URL;#ref-classes-rm-work>`__ class in the
+:ref:`rm_work <ref-classes-rm-work>` class in the
 Yocto Project Reference Manual.
 
 Working with Packages
@@ -5947,8 +5945,7 @@ The simplest form for a PR Service is for it to exist for a single host
 development system that builds the package feed (building system). For
 this scenario, you can enable a local PR Service by setting
 :term:`PRSERV_HOST` in your
-``local.conf`` file in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: PRSERV_HOST =
+``local.conf`` file in the :term:`Build Directory`: PRSERV_HOST =
 "localhost:0" Once the service is started, packages will automatically
 get increasing ``PR`` values and BitBake takes care of starting and
 stopping the server.
@@ -6253,8 +6250,8 @@ to use. In your configuration, you use the
 :term:`PACKAGE_CLASSES`
 variable to specify the format:
 
-1. Open the ``local.conf`` file inside your `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ (e.g.
+1. Open the ``local.conf`` file inside your
+   :term:`Build Directory` (e.g.
    ``~/poky/build/conf/local.conf``).
 
 2. Select the desired package format as follows: PACKAGE_CLASSES ?=
@@ -6582,8 +6579,8 @@ Adding ptest to Your Build
 To add package testing to your build, add the
 :term:`DISTRO_FEATURES` and
 :term:`EXTRA_IMAGE_FEATURES`
-variables to your ``local.conf`` file, which is found in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__:
+variables to your ``local.conf`` file, which is found in the
+:term:`Build Directory`:
 DISTRO_FEATURES_append = " ptest" EXTRA_IMAGE_FEATURES += "ptest-pkgs"
 Once your build is complete, the ptest files are installed into the
 ``/usr/lib/package/ptest`` directory within the image, where ``package``
@@ -7407,8 +7404,8 @@ dependency graphs, so you can see why something was pulled into the
 image. If you are just interested in this information and not interested
 in collecting specific package or SDK information, you can enable
 writing only image information without any history by adding the
-following to your ``conf/local.conf`` file found in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: INHERIT +=
+following to your ``conf/local.conf`` file found in the
+:term:`Build Directory`: INHERIT +=
 "buildhistory" BUILDHISTORY_COMMIT = "0" BUILDHISTORY_FEATURES = "image"
 Here, you set the
 :term:`BUILDHISTORY_FEATURES`
@@ -7856,19 +7853,19 @@ You can start the tests automatically or manually:
    the OpenEmbedded build system successfully creates an image, first
    set the
    :term:`TESTIMAGE_AUTO`
-   variable to "1" in your ``local.conf`` file in the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: TESTIMAGE_AUTO =
+   variable to "1" in your ``local.conf`` file in the
+   :term:`Build Directory`: TESTIMAGE_AUTO =
    "1" Next, build your image. If the image successfully builds, the
    tests run: bitbake core-image-sato
 
 -  *Manually running tests:* To manually run the tests, first globally
    inherit the
-   ```testimage`` <&YOCTO_DOCS_REF_URL;#ref-classes-testimage*>`__ class
+   :ref:`testimage <ref-classes-testimage*>` class
    by editing your ``local.conf`` file: INHERIT += "testimage" Next, use
    BitBake to run the tests: bitbake -c testimage image
 
-All test files reside in ``meta/lib/oeqa/runtime`` in the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. A test name maps
+All test files reside in ``meta/lib/oeqa/runtime`` in the
+:term:`Source Directory`. A test name maps
 directly to a Python module. Each test module may contain a number of
 individual tests. Tests are usually grouped together by the area tested
 (e.g tests for systemd reside in ``meta/lib/oeqa/runtime/systemd.py``).
@@ -7934,8 +7931,8 @@ If your image is already built, make sure the following are set in your
 "IP-address-for-the-test-target" TEST_SERVER_IP =
 "IP-address-for-the-test-server" You can then export the tests with the
 following BitBake command form: $ bitbake image -c testexport Exporting
-the tests places them in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ in
+the tests places them in the
+:term:`Build Directory` in
 ``tmp/testexport/``\ image, which is controlled by the
 ``TEST_EXPORT_DIR`` variable.
 
@@ -8158,8 +8155,8 @@ section:
 -  "`Viewing Task Variable
    Dependencies <#dev-viewing-task-variable-dependencies>`__" describes
    how to use the ``bitbake-dumpsig`` command in conjunction with key
-   subdirectories in the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ to determine
+   subdirectories in the
+   :term:`Build Directory` to determine
    variable dependencies.
 
 -  "`Running Specific Tasks <#dev-debugging-taskrunning>`__" describes
@@ -8313,7 +8310,7 @@ Following are a few of the available ``oe-pkgdata-util`` subcommands.
 
       If you want to inspect the ``${WORKDIR}/packages-split``
       directory, make sure that
-      ```rm_work`` <&YOCTO_DOCS_REF_URL;#ref-classes-rm-work>`__ is not
+      :ref:`rm_work <ref-classes-rm-work>` is not
       enabled when you build the recipe.
 
 -  ``oe-pkgdata-util find-path ``\ path\ `` ...``: Lists the names of
@@ -8704,8 +8701,7 @@ the names ``bbplain``, ``bbnote``, ``bbdebug``, ``bbwarn``, ``bberror``,
 and ``bbfatal``. The
 :ref:`logging <ref-classes-logging>` class
 implements these functions. See that class in the ``meta/classes``
-folder of the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ for information.
+folder of the :term:`Source Directory` for information.
 
 Logging With Python
 ~~~~~~~~~~~~~~~~~~~
@@ -8890,8 +8886,8 @@ to the file: tools/snep-send.$(OBJEXT): include/near/dbus.h
 Once you have edited the file, use the ``refresh`` command to create the
 patch: $ quilt refresh Refreshed patch patches/parallelmake.patch Once
 the patch file exists, you need to add it back to the originating recipe
-folder. Here is an example assuming a top-level `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ named ``poky``: $
+folder. Here is an example assuming a top-level
+:term:`Source Directory` named ``poky``: $
 cp patches/parallelmake.patch poky/meta/recipes-connectivity/neard/neard
 The final thing you need to do to implement the fix in the build is to
 update the "neard" recipe (i.e. ``neard-0.14.bb``) so that the
@@ -9163,8 +9159,8 @@ Here are some other tips that you might find useful:
    virtual console (e.g. Fn+Left or Fn+Right on a Zaurus).
 
 -  Removing :term:`TMPDIR` (usually
-   ``tmp/``, within the `Build
-   Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__) can often fix
+   ``tmp/``, within the
+   :term:`Build Directory`) can often fix
    temporary build issues. Removing ``TMPDIR`` is usually a relatively
    cheap operation, because task output will be cached in
    :term:`SSTATE_DIR` (usually
@@ -9471,8 +9467,7 @@ repository:
    methods to find out:
 
    -  *Maintenance File:* Examine the ``maintainers.inc`` file, which is
-      located in the `Source
-      Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ at
+      located in the :term:`Source Directory` at
       ``meta/conf/distro/include``, to see who is responsible for code.
 
    -  *Search by File:* Using `Git <&YOCTO_DOCS_OM_URL;#git>`__, you can
@@ -9495,8 +9490,8 @@ repository:
    The Yocto Project provides two scripts that conveniently let you
    generate and send pull requests to the Yocto Project. These scripts
    are ``create-pull-request`` and ``send-pull-request``. You can find
-   these scripts in the ``scripts`` directory within the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (e.g.
+   these scripts in the ``scripts`` directory within the
+   :term:`Source Directory` (e.g.
    ``~/poky/scripts``).
 
    Using these scripts correctly formats the requests without
@@ -9641,8 +9636,8 @@ As mentioned in the "`Licensing <&YOCTO_DOCS_OM_URL;#licensing>`__"
 section in the Yocto Project Overview and Concepts Manual, open source
 projects are open to the public and they consequently have different
 licensing structures in place. This section describes the mechanism by
-which the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ tracks changes to
+which the :term:`OpenEmbedded Build System`
+tracks changes to
 licensing text and covers how to maintain open source license compliance
 during your project's lifecycle. The section also describes how to
 enable commercially licensed recipes, which by default are disabled.
@@ -9947,8 +9942,8 @@ of compliance in mind.
 
 One way of doing this (but certainly not the only way) is to release
 just the source as a tarball. You can do this by adding the following to
-the ``local.conf`` file found in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__: INHERIT +=
+the ``local.conf`` file found in the
+:term:`Build Directory`: INHERIT +=
 "archiver" ARCHIVER_MODE[src] = "original" During the creation of your
 image, the source from all recipes that deploy packages to the image is
 placed within subdirectories of ``DEPLOY_DIR/sources`` based on the
@@ -10070,8 +10065,8 @@ The error reporting tool allows you to submit errors encountered during
 builds to a central database. Outside of the build environment, you can
 use a web interface to browse errors, view statistics, and query for
 errors. The tool works using a client-server system where the client
-portion is integrated with the installed Yocto Project `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ (e.g. ``poky``).
+portion is integrated with the installed Yocto Project
+:term:`Source Directory` (e.g. ``poky``).
 The server receives the information collected and saves it in a
 database.
 
@@ -10093,8 +10088,8 @@ By default, the error reporting tool is disabled. You can enable it by
 inheriting the
 :ref:`report-error <ref-classes-report-error>`
 class by adding the following statement to the end of your
-``local.conf`` file in your `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. INHERIT +=
+``local.conf`` file in your
+:term:`Build Directory`. INHERIT +=
 "report-error"
 
 By default, the error reporting feature stores information in
@@ -10155,8 +10150,8 @@ The Yocto Project provides the Wayland protocol libraries and the
 reference
 `Weston <http://en.wikipedia.org/wiki/Wayland_(display_server_protocol)#Weston>`__
 compositor as part of its release. You can find the integrated packages
-in the ``meta`` layer of the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. Specifically, you
+in the ``meta`` layer of the :term:`Source Directory`.
+Specifically, you
 can find the recipes that build both Wayland and Weston at
 ``meta/recipes-graphics/wayland``.
 

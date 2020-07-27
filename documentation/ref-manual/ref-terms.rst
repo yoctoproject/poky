@@ -378,8 +378,8 @@ universal, the list includes them just in case:
       :ref:`ref-tasks-patch`, and so forth).
 
    Toaster
-      A web interface to the Yocto Project's `OpenEmbedded Build
-      System <#build-system-term>`__. The interface enables you to
+      A web interface to the Yocto Project's :term:`OpenEmbedded Build System`.
+      The interface enables you to
       configure and run your builds. Information about builds is collected
       and stored in a database. For information on Toaster, see the
       `Toaster User Manual <&YOCTO_DOCS_TOAST_URL;>`__.

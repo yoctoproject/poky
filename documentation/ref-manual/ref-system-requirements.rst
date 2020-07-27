@@ -348,8 +348,8 @@ installer:
       system.
 
    Once the build completes, you can find the ``.sh`` file that installs
-   the tools in the ``tmp/deploy/sdk`` subdirectory of the `Build
-   Directory <#build-directory>`__. The installer file has the string
+   the tools in the ``tmp/deploy/sdk`` subdirectory of the
+   :term:`Build Directory`. The installer file has the string
    "buildtools" (or "buildtools-extended") in the name.
 
 3. Transfer the ``.sh`` file from the build host to the machine that

@@ -140,8 +140,7 @@ particular working environment and set of practices.
     Following are some best practices for setting up machines used for
     developing images:
 
-    -  Have the `OpenEmbedded build
-       system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ available on
+    -  Have the :term:`OpenEmbedded Build System` available on
        the developer workstations so developers can run their own builds
        and directly rebuild the software stack.
 
@@ -740,8 +739,8 @@ Cloning and Checking Out Branches
 
 To use the Yocto Project for development, you need a release locally
 installed on your development system. This locally installed set of
-files is referred to as the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ in the Yocto
+files is referred to as the :term:`Source Directory`
+ in the Yocto
 Project documentation.
 
 The preferred method of creating your Source Directory is by using

@@ -86,8 +86,8 @@ Once your development host is set up to use the Yocto Project, several
 methods exist for you to do work in the Yocto Project environment:
 
 -  *Command Lines, BitBake, and Shells:* Traditional development in the
-   Yocto Project involves using the `OpenEmbedded build
-   system <&YOCTO_DOCS_REF_URL;#build-system-term>`__, which uses
+   Yocto Project involves using the :term:`OpenEmbedded Build System`,
+   which uses
    BitBake, in a command-line environment from a shell on your
    development host. You can accomplish this from a host that is a
    native Linux machine or from a host that has been set up with CROPS.
@@ -162,8 +162,8 @@ these tarballs gives you a snapshot of the released files.
 
 .. note::
 
-   -  The recommended method for setting up the Yocto Project `Source
-      Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ and the files
+   -  The recommended method for setting up the Yocto Project
+      :term:`Source Directory` and the files
       for supported BSPs (e.g., ``meta-intel``) is to use `Git <#git>`__
       to create a local copy of the upstream repositories.
 
@@ -350,8 +350,8 @@ Book <http://book.git-scm.com>`__.
    software on which to develop. The Yocto Project has two scripts named
    ``create-pull-request`` and ``send-pull-request`` that ship with the
    release to facilitate this workflow. You can find these scripts in
-   the ``scripts`` folder of the `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. For information
+   the ``scripts`` folder of the
+   :term:`Source Directory`. For information
    on how to use these scripts, see the "`Using Scripts to Push a Change
    Upstream and Request a
    Pull <&YOCTO_DOCS_DEV_URL;#pushing-a-change-upstream>`__" section in
@@ -638,8 +638,8 @@ When you build an image using the Yocto Project, the build process uses
 a known list of licenses to ensure compliance. You can find this list in
 the :term:`Source Directory` at
 ``meta/files/common-licenses``. Once the build completes, the list of
-all licenses found and used during that build are kept in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ at
+all licenses found and used during that build are kept in the
+:term:`Build Directory` at
 ``tmp/deploy/licenses``.
 
 If a module requires a license that is not in the base list, the build

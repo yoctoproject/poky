@@ -39,8 +39,7 @@ All SDKs consist of the following:
 Additionally, an extensible SDK has tools that allow you to easily add
 new applications and libraries to an image, modify the source of an
 existing component, test changes on the target hardware, and easily
-integrate an application into the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__.
+integrate an application into the :term:`OpenEmbedded Build System`.
 
 You can use an SDK to independently develop and test code that is
 destined to run on some target machine. SDKs are completely
@@ -126,8 +125,7 @@ of a cross-compiler, cross-linker, and cross-debugger that are used to
 develop user-space applications for targeted hardware. Additionally, for
 an extensible SDK, the toolchain also has built-in ``devtool``
 functionality. This toolchain is created by running a SDK installer
-script or through a `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ that is based on
+script or through a :term:`Build Directory` that is based on
 your metadata configuration or extension for your targeted device. The
 cross-toolchain works with a matching target sysroot.
 
@@ -149,8 +147,8 @@ The QEMU emulator allows you to simulate your hardware while running
 your application or image. QEMU is not part of the SDK but is made
 available a number of different ways:
 
--  If you have cloned the ``poky`` Git repository to create a `Source
-   Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__ and you have
+-  If you have cloned the ``poky`` Git repository to create a
+   :term:`Source Directory` and you have
    sourced the environment setup script, QEMU is installed and
    automatically available.
 

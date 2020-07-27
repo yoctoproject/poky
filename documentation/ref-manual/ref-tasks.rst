@@ -409,7 +409,7 @@ dependencies specified by :term:`DEPENDS`). See the
 
 Removes work files after the OpenEmbedded build system has finished with
 them. You can learn more by looking at the
-"```rm_work.bbclass`` <#ref-classes-rm-work>`__" section.
+":ref:`rm_work.bbclass <ref-classes-rm-work>`" section.
 
 .. _ref-tasks-unpack:
 

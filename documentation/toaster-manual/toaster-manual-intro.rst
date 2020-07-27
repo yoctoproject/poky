@@ -4,8 +4,8 @@
 Introduction
 ************
 
-Toaster is a web interface to the Yocto Project's `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__. The interface
+Toaster is a web interface to the Yocto Project's
+:term:`OpenEmbedded Build System`. The interface
 enables you to configure and run your builds. Information about builds
 is collected and stored in a database. You can use Toaster to configure
 and start builds on multiple remote build servers.

@@ -144,8 +144,7 @@ system and gives an overview of their function and contents.
       = "1" # Uses environment data. ARCHIVER_MODE[recipe] = "1" # Uses
       recipe and include files. ARCHIVER_MODE[srpm] = "1" # Uses RPM
       package files. For information on how the variable works, see the
-      ``meta/classes/archiver.bbclass`` file in the `Source
-      Directory <#source-directory>`__.
+      ``meta/classes/archiver.bbclass`` file in the :term:`Source Directory`.
    
    AS
       Minimal command and arguments needed to run the assembler.
@@ -583,8 +582,8 @@ system and gives an overview of their function and contents.
    
    BBLAYERS
       Lists the layers to enable during the build. This variable is defined
-      in the ``bblayers.conf`` configuration file in the `Build
-      Directory <#build-directory>`__. Here is an example: BBLAYERS = " \\
+      in the ``bblayers.conf`` configuration file in the :term:`Build Directory`.
+      Here is an example: BBLAYERS = " \\
       /home/scottrif/poky/meta \\ /home/scottrif/poky/meta-poky \\
       /home/scottrif/poky/meta-yocto-bsp \\
       /home/scottrif/poky/meta-mykernel \\ "
@@ -705,8 +704,8 @@ system and gives an overview of their function and contents.
          .
    
       For more information on how this variable works, see
-      ``meta/classes/binconfig.bbclass`` in the `Source
-      Directory <#source-directory>`__. You can also find general
+      ``meta/classes/binconfig.bbclass`` in the :term:`Source Directory`.
+      You can also find general
       information on the class in the
       ":ref:`binconfig.bbclass <ref-classes-binconfig>`" section.
    
@@ -1042,8 +1041,8 @@ system and gives an overview of their function and contents.
       Bluetooth but you do not ever intend to use it.
    
    COMMON_LICENSE_DIR
-      Points to ``meta/files/common-licenses`` in the `Source
-      Directory <#source-directory>`__, which is where generic license
+      Points to ``meta/files/common-licenses`` in the
+      :term:`Source Directory`, which is where generic license
       files reside.
    
    COMPATIBLE_HOST
@@ -1391,8 +1390,8 @@ system and gives an overview of their function and contents.
          for an SDK (i.e. ``nativesdk-``)
    
    D
-      The destination directory. The location in the `Build
-      Directory <#build-directory>`__ where components are installed by the
+      The destination directory. The location in the :term:`Build Directory`
+      where components are installed by the
       :ref:`ref-tasks-install` task. This location defaults
       to: ${WORKDIR}/image
    
@@ -1664,8 +1663,8 @@ system and gives an overview of their function and contents.
       file whose root name is the same as the variable's argument and whose
       filename extension is ``.conf``. For example, the distribution
       configuration file for the Poky distribution is named ``poky.conf``
-      and resides in the ``meta-poky/conf/distro`` directory of the `Source
-      Directory <#source-directory>`__.
+      and resides in the ``meta-poky/conf/distro`` directory of the
+      :term:`Source Directory`.
    
       Within that ``poky.conf`` file, the ``DISTRO`` variable is set as
       follows: DISTRO = "poky"
@@ -2296,8 +2295,8 @@ system and gives an overview of their function and contents.
       :term:`SRC_URI` statements.
    
       The default value for the ``FILESPATH`` variable is defined in the
-      ``base.bbclass`` class found in ``meta/classes`` in the `Source
-      Directory <#source-directory>`__: FILESPATH =
+      ``base.bbclass`` class found in ``meta/classes`` in the
+      :term:`Source Directory`: FILESPATH =
       "${@base_set_filespath(["${FILE_DIRNAME}/${BP}", \\
       "${FILE_DIRNAME}/${BPN}", "${FILE_DIRNAME}/files"], d)}" The
       ``FILESPATH`` variable is automatically extended using the overrides
@@ -2344,14 +2343,14 @@ system and gives an overview of their function and contents.
       packages themselves but this is not always possible.
    
       By default, the OpenEmbedded build system uses the ``fs-perms.txt``,
-      which is located in the ``meta/files`` folder in the `Source
-      Directory <#source-directory>`__. If you create your own file
+      which is located in the ``meta/files`` folder in the :term:`Source Directory`.
+      If you create your own file
       permissions setting table, you should place it in your layer or the
       distro's layer.
    
       You define the ``FILESYSTEM_PERMS_TABLES`` variable in the
-      ``conf/local.conf`` file, which is found in the `Build
-      Directory <#build-directory>`__, to point to your custom
+      ``conf/local.conf`` file, which is found in the :term:`Build Directory`,
+      to point to your custom
       ``fs-perms.txt``. You can specify more than a single file permissions
       setting table. The paths you specify to these files must be defined
       within the :term:`BBPATH` variable.
@@ -2717,8 +2716,8 @@ system and gives an overview of their function and contents.
    IMAGE_FEATURES
       The primary list of features to include in an image. Typically, you
       configure this variable in an image recipe. Although you can use this
-      variable from your ``local.conf`` file, which is found in the `Build
-      Directory <#build-directory>`__, best practices dictate that you do
+      variable from your ``local.conf`` file, which is found in the
+      :term:`Build Directory`, best practices dictate that you do
       not.
    
       .. note::
@@ -2886,13 +2885,13 @@ system and gives an overview of their function and contents.
          class is broken and is not supported. It is recommended that you
          do not use it.
    
-      The ```populate_sdk_*`` <#ref-classes-populate-sdk-*>`__ and
+      The :ref:`populate_sdk_* <ref-classes-populate-sdk-*>` and
       :ref:`image <ref-classes-image>` classes use the ``IMAGE_PKGTYPE``
       for packaging up images and SDKs.
    
       You should not set the ``IMAGE_PKGTYPE`` manually. Rather, the
       variable is set indirectly through the appropriate
-      ```package_*`` <#ref-classes-package>`__ class using the
+      :ref:`package_* <ref-classes-package>` class using the
       :term:`PACKAGE_CLASSES` variable. The
       OpenEmbedded build system uses the first package type (e.g. DEB, RPM,
       or IPK) that appears with the variable
@@ -2995,8 +2994,7 @@ system and gives an overview of their function and contents.
       wic.bz2 wic.gz wic.lzma
    
       For more information about these types of images, see
-      ``meta/classes/image_types*.bbclass`` in the `Source
-      Directory <#source-directory>`__.
+      ``meta/classes/image_types*.bbclass`` in the :term:`Source Directory`.
    
    INC_PR
       Helps define the recipe revision for recipes that share a common
@@ -3156,8 +3154,8 @@ system and gives an overview of their function and contents.
       :term:`IMAGE_FSTYPES` variable.
    
       The default value of this variable, which is set in the
-      ``meta/conf/bitbake.conf`` configuration file in the `Source
-      Directory <#source-directory>`__, is "cpio.gz". The Linux kernel's
+      ``meta/conf/bitbake.conf`` configuration file in the
+      :term:`Source Directory`, is "cpio.gz". The Linux kernel's
       initramfs mechanism, as opposed to the initial RAM filesystem
       `initrd <https://en.wikipedia.org/wiki/Initrd>`__ mechanism, expects
       an optionally compressed cpio archive.
@@ -3945,8 +3943,8 @@ system and gives an overview of their function and contents.
    
    MACHINE
       Specifies the target device for which the image is built. You define
-      ``MACHINE`` in the ``local.conf`` file found in the `Build
-      Directory <#build-directory>`__. By default, ``MACHINE`` is set to
+      ``MACHINE`` in the ``local.conf`` file found in the
+      :term:`Build Directory`. By default, ``MACHINE`` is set to
       "qemux86", which is an x86-based architecture machine to be emulated
       using QEMU: MACHINE ?= "qemux86"
    
@@ -4353,8 +4351,8 @@ system and gives an overview of their function and contents.
       ``sysroots/`` directory so that all builds that use the script will
       use the correct directories for the cross compiling layout.
    
-      See the ``meta/classes/binconfig.bbclass`` in the `Source
-      Directory <#source-directory>`__ for details on how this class
+      See the ``meta/classes/binconfig.bbclass`` in the 
+      :term:`Source Directory` for details on how this class
       applies these additional sed command arguments. For general
       information on the ``binconfig`` class, see the
       ":ref:`binconfig.bbclass <ref-classes-binconfig>`" section.
@@ -4499,8 +4497,8 @@ system and gives an overview of their function and contents.
    
    PACKAGE_CLASSES
       This variable, which is set in the ``local.conf`` configuration file
-      found in the ``conf`` folder of the `Build
-      Directory <#build-directory>`__, specifies the package manager the
+      found in the ``conf`` folder of the
+      :term:`Build Directory`, specifies the package manager the
       OpenEmbedded build system uses when packaging data.
    
       You can provide one or more of the following arguments for the
@@ -5234,8 +5232,8 @@ system and gives an overview of their function and contents.
    
       Typically, you could add a specific server for the build system to
       attempt before any others by adding something like the following to
-      the ``local.conf`` configuration file in the `Build
-      Directory <#build-directory>`__: PREMIRRORS_prepend = "\\
+      the ``local.conf`` configuration file in the
+      :term:`Build Directory`: PREMIRRORS_prepend = "\\
       git://.*/.\* http://www.yoctoproject.org/sources/ \\n \\ ftp://.*/.\*
       http://www.yoctoproject.org/sources/ \\n \\ http://.*/.\*
       http://www.yoctoproject.org/sources/ \\n \\ https://.*/.\*
@@ -5364,8 +5362,8 @@ system and gives an overview of their function and contents.
    
    PYTHON_ABI
       When used by recipes that inherit the
-      ```distutils3`` <#ref-classes-distutils3>`__,
-      ```setuptools3`` <#ref-classes-setuptools3>`__,
+      :ref:`distutils3 <ref-classes-distutils3>`,
+      :ref:`setuptools3 <ref-classes-setuptools3>`,
       :ref:`distutils <ref-classes-distutils>`, or
       :ref:`setuptools <ref-classes-setuptools>` classes, denotes the
       Application Binary Interface (ABI) currently in use for Python. By
@@ -5382,8 +5380,8 @@ system and gives an overview of their function and contents.
    
    PYTHON_PN
       When used by recipes that inherit the
-      ```distutils3`` <#ref-classes-distutils3>`__,
-      ```setuptools3`` <#ref-classes-setuptools3>`__,
+      `distutils3 <ref-classes-distutils3>`,
+      :ref:`setuptools3 <ref-classes-setuptools3>`,
       :ref:`distutils <ref-classes-distutils>`, or
       :ref:`setuptools <ref-classes-setuptools>` classes, specifies the
       major Python version being built. For Python 3.x, ``PYTHON_PN`` would
@@ -5522,7 +5520,7 @@ system and gives an overview of their function and contents.
    RM_WORK_EXCLUDE
       With ``rm_work`` enabled, this variable specifies a list of recipes
       whose work directories should not be removed. See the
-      "```rm_work.bbclass`` <#ref-classes-rm-work>`__" section for more
+      ":ref:`rm_work.bbclass <ref-classes-rm-work>`" section for more
       details.
    
    ROOT_HOME
@@ -5731,14 +5729,14 @@ system and gives an overview of their function and contents.
    
    SDK_DEPLOY
       The directory set up and used by the
-      ```populate_sdk_base`` <#ref-classes-populate-sdk>`__ class to which
+      :ref:`populate_sdk_base <ref-classes-populate-sdk>` class to which
       the SDK is deployed. The ``populate_sdk_base`` class defines
       ``SDK_DEPLOY`` as follows: SDK_DEPLOY = "${TMPDIR}/deploy/sdk"
    
    SDK_DIR
       The parent directory used by the OpenEmbedded build system when
       creating SDK output. The
-      ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class defines
+      :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class defines
       the variable as follows: SDK_DIR = "${WORKDIR}/sdk"
    
       .. note::
@@ -5770,7 +5768,7 @@ system and gives an overview of their function and contents.
       file contains package information on a line-per-package basis as
       follows: packagename packagearch version
    
-      The ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class
+      The :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class
       defines the manifest file as follows: SDK_HOST_MANIFEST =
       "${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.host.manifest" The location is
       derived using the :term:`SDK_DEPLOY` and
@@ -5807,7 +5805,7 @@ system and gives an overview of their function and contents.
    SDK_INHERIT_BLACKLIST
       A list of classes to remove from the :term:`INHERIT`
       value globally within the extensible SDK configuration. The
-      ```populate-sdk-ext`` <#ref-classes-populate-sdk-*>`__ class sets the
+      :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class sets the
       default value: SDK_INHERIT_BLACKLIST ?= "buildhistory icecc"
    
       Some classes are not generally applicable within the extensible SDK
@@ -5827,7 +5825,7 @@ system and gives an overview of their function and contents.
       within the extensible SDK.
    
       By default, ``SDK_LOCAL_CONF_BLACKLIST`` is set in the
-      ```populate-sdk-ext`` <#ref-classes-populate-sdk-*>`__ class and
+      :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class and
       excludes the following variables:
       :term:`CONF_VERSION`
       :term:`BB_NUMBER_THREADS`
@@ -5848,7 +5846,7 @@ system and gives an overview of their function and contents.
       A list of variables allowed through from the OpenEmbedded build
       system configuration into the extensible SDK configuration. By
       default, the list of variables is empty and is set in the
-      ```populate-sdk-ext`` <#ref-classes-populate-sdk-*>`__ class.
+      :ref:`populate-sdk-ext <ref-classes-populate-sdk-*>` class.
    
       This list overrides the variables specified using the
       :term:`SDK_LOCAL_CONF_BLACKLIST`
@@ -5877,7 +5875,7 @@ system and gives an overview of their function and contents.
    
    SDK_OUTPUT
       The location used by the OpenEmbedded build system when creating SDK
-      output. The ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__
+      output. The :ref:`populate_sdk_base <ref-classes-populate-sdk-*>`
       class defines the variable as follows: SDK_DIR = "${WORKDIR}/sdk"
       SDK_OUTPUT = "${SDK_DIR}/image" SDK_DEPLOY = "${DEPLOY_DIR}/sdk"
    
@@ -5942,7 +5940,7 @@ system and gives an overview of their function and contents.
       file contains package information on a line-per-package basis as
       follows: packagename packagearch version
    
-      The ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class
+      The :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class
       defines the manifest file as follows: SDK_TARGET_MANIFEST =
       "${SDK_DEPLOY}/${TOOLCHAIN_OUTPUTNAME}.target.manifest" The location
       is derived using the :term:`SDK_DEPLOY` and
@@ -5960,7 +5958,7 @@ system and gives an overview of their function and contents.
       The title to be printed when running the SDK installer. By default,
       this title is based on the :term:`DISTRO_NAME` or
       :term:`DISTRO` variable and is set in the
-      ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class as
+      :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class as
       follows: SDK_TITLE ??= "${@d.getVar('DISTRO_NAME') or
       d.getVar('DISTRO')} SDK" For the default distribution "poky",
       ``SDK_TITLE`` is set to "Poky (Yocto Project Reference Distro)".
@@ -5993,7 +5991,7 @@ system and gives an overview of their function and contents.
       The default installation directory for the Extensible SDK. By
       default, this directory is based on the :term:`DISTRO`
       variable and is set in the
-      ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class as
+      :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class as
       follows: SDKEXTPATH ??= "~/${@d.getVar('DISTRO')}_sdk" For the
       default distribution "poky", the ``SDKEXTPATH`` is set to "poky_sdk".
    
@@ -6135,8 +6133,8 @@ system and gives an overview of their function and contents.
       prebuilt binaries and libraries such as ``libstdc++`` and ``glibc``.
    
       To enable file removal, set the variable to "1" in your
-      ``conf/local.conf`` configuration file in your: `Build
-      Directory <#build-directory>`__. SKIP_FILEDEPS = "1"
+      ``conf/local.conf`` configuration file in your: 
+      :term:`Build Directory`. SKIP_FILEDEPS = "1"
    
    SOC_FAMILY
       Groups together machines based upon the same family of SOC (System On
@@ -7289,8 +7287,8 @@ system and gives an overview of their function and contents.
    
       If you want to establish this directory in a location other than the
       default, you can uncomment and edit the following statement in the
-      ``conf/local.conf`` file in the `Source
-      Directory <#source-directory>`__: #TMPDIR = "${TOPDIR}/tmp" An
+      ``conf/local.conf`` file in the :term:`Source Directory`:
+      #TMPDIR = "${TOPDIR}/tmp" An
       example use for this scenario is to set ``TMPDIR`` to a local disk,
       which does not use NFS, while having the Build Directory use NFS.
    
@@ -7325,7 +7323,7 @@ system and gives an overview of their function and contents.
    
    TOOLCHAIN_OUTPUTNAME
       This variable defines the name used for the toolchain output. The
-      ```populate_sdk_base`` <#ref-classes-populate-sdk-*>`__ class sets
+      :ref:`populate_sdk_base <ref-classes-populate-sdk-*>` class sets
       the ``TOOLCHAIN_OUTPUTNAME`` variable as follows:
       TOOLCHAIN_OUTPUTNAME ?= "${SDK_NAME}-toolchain-${SDK_VERSION}" See
       the :term:`SDK_NAME` and
@@ -7374,8 +7372,8 @@ system and gives an overview of their function and contents.
       definitions can be a single static definition, or can be dynamically
       adjusted. You can see details for a given CPU family by looking at
       the architecture's ``README`` file. For example, the
-      ``meta/conf/machine/include/mips/README`` file in the `Source
-      Directory <#source-directory>`__ provides information for
+      ``meta/conf/machine/include/mips/README`` file in the 
+      :term:`Source Directory` provides information for
       ``TUNE_ARCH`` specific to the ``mips`` architecture.
    
       ``TUNE_ARCH`` is tied closely to
@@ -7510,8 +7508,8 @@ system and gives an overview of their function and contents.
       ``meta/conf/machine/include/arm/arch-arm.inc``). Here is an example
       from that file: TUNEVALID[bigendian] = "Enable big-endian mode."
    
-      See the machine include files in the `Source
-      Directory <#source-directory>`__ for these features.
+      See the machine include files in the :term:`Source Directory`
+      for these features.
    
    UBOOT_CONFIG
       Configures the :term:`UBOOT_MACHINE` and can
@@ -7696,8 +7694,7 @@ system and gives an overview of their function and contents.
    
       The default list is set in your ``local.conf`` file: USER_CLASSES ?=
       "buildstats image-mklibs image-prelink" For more information, see
-      ``meta-poky/conf/local.conf.sample`` in the `Source
-      Directory <#source-directory>`__.
+      ``meta-poky/conf/local.conf.sample`` in the :term:`Source Directory`.
    
    USERADD_ERROR_DYNAMIC
       If set to ``error``, forces the OpenEmbedded build system to produce

@@ -256,8 +256,7 @@ situation changes, the team will not support spaces in pathnames.
 **A:** The toolchain configuration is very flexible and customizable. It
 is primarily controlled with the ``TCMODE`` variable. This variable
 controls which ``tcmode-*.inc`` file to include from the
-``meta/conf/distro/include`` directory within the `Source
-Directory <#source-directory>`__.
+``meta/conf/distro/include`` directory within the :term:`Source Directory`.
 
 The default value of ``TCMODE`` is "default", which tells the
 OpenEmbedded build system to use its internally built toolchain (i.e.
@@ -342,8 +341,8 @@ redirect requests through proxy servers.
 **A:** Yes - you can easily do this. When you use BitBake to build an
 image, all the build output goes into the directory created when you run
 the build environment setup script (i.e.
-````` <#structure-core-script>`__). By default, this `Build
-Directory <#build-directory>`__ is named ``build`` but can be named
+````` <#structure-core-script>`__). By default, this :term:`Build Directory`
+is named ``build`` but can be named
 anything you want.
 
 Within the Build Directory, is the ``tmp`` directory. To remove all the
@@ -379,8 +378,8 @@ system of that image. Thus, the build system provides a value of
 "/usr/bin" for ``bindir``, a value of "/usr/lib" for ``libdir``, and so
 forth.
 
-Meanwhile, ``DESTDIR`` is a path within the `Build
-Directory <#build-directory>`__. However, when the recipe builds a
+Meanwhile, ``DESTDIR`` is a path within the :term:`Build Directory`.
+However, when the recipe builds a
 native program (i.e. one that is intended to run on the build machine),
 that program is never installed directly to the build machine's root
 file system. Consequently, the build system uses paths within the Build

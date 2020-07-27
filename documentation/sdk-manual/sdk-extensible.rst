@@ -9,8 +9,8 @@ Information covers the pieces of the SDK, how to install it, and
 presents a look at using the ``devtool`` functionality. The extensible
 SDK makes it easy to add new applications and libraries to an image,
 modify the source for an existing component, test changes on the target
-hardware, and ease integration into the rest of the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__.
+hardware, and ease integration into the rest of the
+:term:`OpenEmbedded Build System`.
 
 .. note::
 

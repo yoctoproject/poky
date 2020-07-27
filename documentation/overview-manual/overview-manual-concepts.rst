@@ -6,8 +6,8 @@ Yocto Project Concepts
 
 This chapter provides explanations for Yocto Project concepts that go
 beyond the surface of "how-to" information and reference (or look-up)
-material. Concepts such as components, the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ workflow,
+material. Concepts such as components, the :term:`OpenEmbedded Build System`
+workflow,
 cross-development toolchains, shared state cache, and so forth are
 explained.
 
@@ -48,8 +48,8 @@ Concepts <#openembedded-build-system-build-concepts>`__" section.
 BitBake
 -------
 
-BitBake is the tool at the heart of the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ and is responsible
+BitBake is the tool at the heart of the :term:`OpenEmbedded Build System`
+and is responsible
 for parsing the :term:`Metadata`, generating
 a list of tasks from it, and then executing those tasks.
 
@@ -109,7 +109,7 @@ Class files (``.bbclass``) contain information that is useful to share
 between recipes files. An example is the
 :ref:`autotools <ref-classes-autotools>` class,
 which contains common settings for any application that Autotools uses.
-The "`Classes <&YOCTO_DOCS_REF_URL;#ref-classes>`__" chapter in the
+The ":ref:`ref-manual/ref-classes:Classes`" chapter in the
 Yocto Project Reference Manual provides details about classes and how to
 use them.
 
@@ -123,8 +123,8 @@ variables that govern the OpenEmbedded build process. These files fall
 into several areas that define machine configuration options,
 distribution configuration options, compiler tuning options, general
 common configuration options, and user configuration options in
-``conf/local.conf``, which is found in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
+``conf/local.conf``, which is found in the :term:`Build Directory`.
+
 
 .. _overview-layers:
 
@@ -164,8 +164,8 @@ OpenEmbedded Build System Concepts
 ==================================
 
 This section takes a more detailed look inside the build process used by
-the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__, which is the build
+the :term:`OpenEmbedded Build System`,
+which is the build
 system specific to the Yocto Project. At the heart of the build system
 is BitBake, the task executor.
 
@@ -221,8 +221,8 @@ figure <#general-workflow-figure>`__:
 
 BitBake needs some basic configuration files in order to complete a
 build. These files are ``*.conf`` files. The minimally necessary ones
-reside as example files in the ``build/conf`` directory of the `Source
-Directory <&YOCTO_DOCS_REF_URL;#source-directory>`__. For simplicity,
+reside as example files in the ``build/conf`` directory of the
+:term:`Source Directory`. For simplicity,
 this section refers to the Source Directory as the "Poky Directory."
 
 When you clone the `Poky <&YOCTO_DOCS_REF_URL;#poky>`__ Git repository
@@ -241,8 +241,8 @@ for creating actual configuration files when you source
 ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__, which is the
 build environment script.
 
-Sourcing the build environment script creates a `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ if one does not
+Sourcing the build environment script creates a
+:term:`Build Directory` if one does not
 already exist. BitBake uses the Build Directory for all its work during
 builds. The Build Directory has a ``conf`` directory that contains
 default versions of your ``local.conf`` and ``bblayers.conf``
@@ -357,8 +357,8 @@ Configuration Edits" box in the figure.
 
 When you launch your build with the ``bitbake target`` command, BitBake
 sorts out the configurations to ultimately define your build
-environment. It is important to understand that the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ reads the
+environment. It is important to understand that the
+:term:`OpenEmbedded Build System` reads the
 configuration files in a specific order: ``site.conf``, ``auto.conf``,
 and ``local.conf``. And, the build system applies the normal assignment
 statement rules as described in the "`Syntax and
@@ -460,7 +460,7 @@ typically find in the distribution layer:
    can be shared among recipes in the distribution. When your recipes
    inherit a class, they take on the settings and functions for that
    class. You can read more about class files in the
-   "`Classes <&YOCTO_DOCS_REF_URL;#ref-classes>`__" chapter of the Yocto
+   ":ref:`ref-manual/ref-classes:Classes`" chapter of the Yocto
    Reference Manual.
 
 -  *conf:* This area holds configuration files for the layer
@@ -643,8 +643,8 @@ Package Feeds
 -------------
 
 When the OpenEmbedded build system generates an image or an SDK, it gets
-the packages from a package feed area located in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. The `general
+the packages from a package feed area located in the
+:term:`Build Directory`. The `general
 workflow figure <#general-workflow-figure>`__ shows this package feeds
 area in the upper-right corner.
 
@@ -687,7 +687,7 @@ package files are kept:
    for the i586 or qemux86 architectures.
 
 BitBake uses the
-```do_package_write_*`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb>`__
+:ref:`do_package_write_* <ref-tasks-package_write_deb>`
 tasks to generate packages and place them into the package holding area
 (e.g. ``do_package_write_ipk`` for IPK packages). See the
 ":ref:`ref-tasks-package_write_deb`",
@@ -733,8 +733,8 @@ code:
 
 The :ref:`ref-tasks-fetch` and
 :ref:`ref-tasks-unpack` tasks fetch
-the source files and unpack them into the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__.
+the source files and unpack them into the
+:term:`Build Directory`.
 
 .. note::
 
@@ -984,7 +984,7 @@ details on how this is accomplished, you can look at
 ```package.bbclass`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/package.bbclass>`__.
 
 Depending on the type of packages being created (RPM, DEB, or IPK), the
-```do_package_write_*`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb>`__
+:ref:`do_package_write_* <ref-tasks-package_write_deb>`
 task creates the actual packages and places them in the Package Feed
 area, which is ``${TMPDIR}/deploy``. You can see the "`Package
 Feeds <#package-feeds-dev-environment>`__" section for more detail on
@@ -1067,7 +1067,7 @@ processing includes creation of a manifest file and optimizations.
 The manifest file (``.manifest``) resides in the same directory as the
 root filesystem image. This file lists out, line-by-line, the installed
 packages. The manifest file is useful for the
-```testimage`` <&YOCTO_DOCS_REF_URL;#ref-classes-testimage*>`__ class,
+:ref:`testimage <ref-classes-testimage*>` class,
 for example, to determine whether or not to run specific tests. See the
 :term:`IMAGE_MANIFEST`
 variable for additional information.
@@ -1102,7 +1102,7 @@ as specified by the ``IMAGE_FSTYPES`` were ``ext4``, the dynamically
 generated task would be as follows: do_image_ext4
 
 The final task involved in image creation is the
-```do_image_complete`` <&YOCTO_DOCS_REF_URL;#ref-tasks-image-complete>`__
+:ref:`do_image_complete <ref-tasks-image-complete>`
 task. This task completes the image by applying any image post
 processing as defined through the
 :term:`IMAGE_POSTPROCESS_COMMAND`
@@ -1242,7 +1242,7 @@ version of the task where instead of building something, BitBake can
 skip to the end result and simply place a set of files into specific
 locations as needed. In some cases, it makes sense to have a setscene
 task variant (e.g. generating package files in the
-```do_package_write_*`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb>`__
+:ref:`do_package_write_* <ref-tasks-package_write_deb>`
 task). In other cases, it does not make sense (e.g. a
 :ref:`ref-tasks-patch` task or a
 :ref:`ref-tasks-unpack` task) since
@@ -1317,8 +1317,8 @@ this output:
    Images
    " chapter in the Yocto Project Reference Manual.
 
-The build process writes images out to the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ inside the
+The build process writes images out to the :term:`Build Directory`
+inside the
 ``tmp/deploy/images/machine/`` folder as shown in the figure. This
 folder contains any files expected to be loaded on the target device.
 The :term:`DEPLOY_DIR` variable
@@ -1775,8 +1775,8 @@ need to fix this situation.
 Thus far, this section has limited discussion to the direct inputs into
 a task. Information based on direct inputs is referred to as the
 "basehash" in the code. However, the question of a task's indirect
-inputs still exits - items already built and present in the `Build
-Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__. The checksum (or
+inputs still exits - items already built and present in the
+:term:`Build Directory`. The checksum (or
 signature) for a particular task needs to add the hashes of all the
 tasks on which the particular task depends. Choosing which dependencies
 to add is a policy decision. However, the effect is to generate a master
@@ -2117,9 +2117,9 @@ Fakeroot and Pseudo
 Some tasks are easier to implement when allowed to perform certain
 operations that are normally reserved for the root user (e.g.
 :ref:`ref-tasks-install`,
-```do_package_write*`` <&YOCTO_DOCS_REF_URL;#ref-tasks-package_write_deb>`__,
+:ref:`do_package_write* <ref-tasks-package_write_deb>`,
 :ref:`ref-tasks-rootfs`, and
-```do_image*`` <&YOCTO_DOCS_REF_URL;#ref-tasks-image>`__). For example,
+:ref:`do_image* <ref-tasks-image>`). For example,
 the ``do_install`` task benefits from being able to set the UID and GID
 of installed files to arbitrary values.
 
@@ -2139,8 +2139,8 @@ The capability to run tasks in a fake root environment is known as
 the BitBake keyword/variable flag that requests a fake root environment
 for a task.
 
-In the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__, the program that
+In the :term:`OpenEmbedded Build System`,
+the program that
 implements fakeroot is known as
 `Pseudo <https://www.yoctoproject.org/software-item/pseudo/>`__. Pseudo
 overrides system calls by using the environment variable ``LD_PRELOAD``,

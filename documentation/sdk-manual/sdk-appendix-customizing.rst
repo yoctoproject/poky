@@ -150,7 +150,7 @@ set. If the ``DISTRO_NAME`` variable is not set, the title is derived
 from the :term:`DISTRO` variable.
 
 The
-```populate_sdk_base`` <&YOCTO_DOCS_REF_URL;#ref-classes-populate-sdk-*>`__
+:ref:`populate_sdk_base <ref-classes-populate-sdk-*>`
 class defines the default value of the ``SDK_TITLE`` variable as
 follows: SDK_TITLE ??= "${@d.getVar('DISTRO_NAME') or
 d.getVar('DISTRO')} SDK"
@@ -212,7 +212,7 @@ installation directory for the SDK is based on the
 :term:`DISTRO` and
 :term:`SDKEXTPATH` variables from
 within the
-```populate_sdk_base`` <&YOCTO_DOCS_REF_URL;#ref-classes-populate-sdk-*>`__
+:ref:`populate_sdk_base <ref-classes-populate-sdk-*>`
 class as follows: SDKEXTPATH ??= "~/${@d.getVar('DISTRO')}_sdk" You can
 change this default installation directory by specifically setting the
 ``SDKEXTPATH`` variable.
@@ -276,8 +276,8 @@ source, you need to do a number of things:
 
    -  Alternatively, if you just want to set the ``SSTATE_MIRRORS``
       variable's value for the SDK alone, create a
-      ``conf/sdk-extra.conf`` file either in your `Build
-      Directory <&YOCTO_DOCS_REF_URL;#build-directory>`__ or within any
+      ``conf/sdk-extra.conf`` file either in your
+      :term:`Build Directory` or within any
       layer and put your ``SSTATE_MIRRORS`` setting within that file.
 
       .. note::

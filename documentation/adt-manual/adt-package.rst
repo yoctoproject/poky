@@ -59,7 +59,7 @@ add it into a working ``opkg`` repository. Use these commands: $ bitbake
 libglade $ bitbake package-index
 
 Next, source the cross-toolchain environment setup script found in the
-`Source Directory <&YOCTO_DOCS_DEV_URL;#source-directory>`__. Follow
+:term:`Source Directory`. Follow
 that by setting up the installation destination to point to your sysroot
 as sysroot_dir. Finally, have an OPKG configuration file conf_file that
 corresponds to the ``opkg`` repository you have just created. The

@@ -731,7 +731,7 @@ Automated Image Testing
 -----------------------
 
 A new automated image testing framework has been added through the
-```testimage.bbclass`` <#ref-classes-testimage*>`__ class. This
+:ref:`testimage.bbclass <ref-classes-testimage*>` class. This
 framework replaces the older ``imagetest-qemu`` framework.
 
 You can learn more about performing automated image tests in the
@@ -1077,7 +1077,7 @@ future releases the :ref:`autotools <ref-classes-autotools>` class
 will enable a separate build directory by default as well. Recipes
 building Autotools-based software that fails to build with a separate
 build directory should be changed to inherit from the
-```autotools-brokensep`` <#ref-classes-autotools>`__ class instead of
+:ref:`autotools-brokensep <ref-classes-autotools>` class instead of
 the ``autotools`` or ``autotools_stage``\ classes.
 
 .. _migration-1.6-building-qemu-native:
@@ -1305,7 +1305,7 @@ occurred:
    However, if the software is not capable of being built in this
    manner, you will need to either patch the software so that it can
    build separately, or you will need to change the recipe to inherit
-   the ```autotools-brokensep`` <#ref-classes-autotools>`__ class
+   the :ref:`autotools-brokensep <ref-classes-autotools>` class
    instead of the ``autotools`` or ``autotools_stage`` classes.
 
 -  *The ``--foreign`` option is no longer passed to ``automake`` when
@@ -2048,7 +2048,7 @@ time.
 A minor part of this restructuring is that the post-processing
 definitions and functions have been moved from the
 :ref:`image <ref-classes-image>` class to the
-```rootfs-postcommands`` <#ref-classes-rootfs*>`__ class. Functionally,
+:ref:`rootfs-postcommands <ref-classes-rootfs*>` class. Functionally,
 however, they remain unchanged.
 
 .. _migration-2.1-removed-recipes:
@@ -3973,7 +3973,7 @@ For names of recipes removed because of this repository change, see the
 
 Previously, it was possible for Python recipes that inherited the
 :ref:`distutils <ref-classes-distutils>` and
-```distutils3`` <#ref-classes-distutils3>`__ classes to fetch code
+:ref:`distutils3 <ref-classes-distutils3>` classes to fetch code
 during the :ref:`ref-tasks-configure` task to satisfy
 dependencies mentioned in ``setup.py`` if those dependencies were not
 provided in the sysroot (i.e. recipes providing the dependencies were
@@ -4183,7 +4183,7 @@ This section provides information about automatic testing changes:
    practices now dictate that you use the
    :term:`IMAGE_CLASSES` variable rather than the
    :term:`INHERIT` variable when you inherit the
-   ```testimage`` <#ref-classes-testimage*>`__ and
+   :ref:`testimage <ref-classes-testimage*>` and
    :ref:`testsdk <ref-classes-testsdk>` classes used for automatic
    testing.
 

@@ -14,8 +14,8 @@ some default behavior.
 Any :term:`Metadata` usually found in a recipe can also be
 placed in a class file. Class files are identified by the extension
 ``.bbclass`` and are usually placed in a ``classes/`` directory beneath
-the ``meta*/`` directory found in the `Source
-Directory <#source-directory>`__. Class files can also be pointed to by
+the ``meta*/`` directory found in the :term:`Source Directory`.
+Class files can also be pointed to by
 :term:`BUILDDIR` (e.g. ``build/``) in the same way as
 ``.conf`` files in the ``conf`` directory. Class files are searched for
 in :term:`BBPATH` using the same method by which ``.conf``
@@ -555,7 +555,7 @@ used.
    ``distutils`` class in their recipes.
 
 -  Extensions that use build systems based on ``setuptools3`` require
-   the ```setuptools3`` <#ref-classes-setuptools>`__ class in their
+   the :ref:`setuptools3 <ref-classes-setuptools>` class in their
    recipes.
 
 The ``distutils3*`` classes either inherit their corresponding
@@ -592,8 +592,8 @@ ${WORKDIR}/${BPN}/{PV}/ See these variables for more information:
 :term:`PV`,
 
 For more information on the ``externalsrc`` class, see the comments in
-``meta/classes/externalsrc.bbclass`` in the `Source
-Directory <#source-directory>`__. For information on how to use the
+``meta/classes/externalsrc.bbclass`` in the :term:`Source Directory`.
+For information on how to use the
 ``externalsrc`` class, see the "`Building Software from an External
 Source <&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source>`__"
 section in the Yocto Project Development Tasks Manual.
@@ -1733,8 +1733,8 @@ package-specific classes:
 
 You can control the list of resulting package formats by using the
 ``PACKAGE_CLASSES`` variable defined in your ``conf/local.conf``
-configuration file, which is located in the `Build
-Directory <#build-directory>`__. When defining the variable, you can
+configuration file, which is located in the :term:`Build Directory`.
+When defining the variable, you can
 specify one or more package types. Since images are generated from
 packages, a packaging class is needed to enable image generation. The
 first class listed in this variable is used for image generation.
@@ -2181,8 +2181,8 @@ recipe are no longer needed. However, by default, the build system
 preserves these files for inspection and possible debugging purposes. If
 you would rather have these files deleted to save disk space as the
 build progresses, you can enable ``rm_work`` by adding the following to
-your ``local.conf`` file, which is found in the `Build
-Directory <#build-directory>`__. INHERIT += "rm_work" If you are
+your ``local.conf`` file, which is found in the :term:`Build Directory`.
+INHERIT += "rm_work" If you are
 modifying and building source code out of the work directory for a
 recipe, enabling ``rm_work`` will potentially result in your changes to
 the source being lost. To exclude some recipes from having their work
@@ -2565,7 +2565,7 @@ Other classes use the ``terminal`` class anywhere a separate terminal
 session needs to be started. For example, the
 :ref:`patch <ref-classes-patch>` class assuming
 :term:`PATCHRESOLVE` is set to "user", the
-```cml1`` <#ref-classes-cml1>`__ class, and the
+:ref:`cml1 <ref-classes-cml1>` class, and the
 :ref:`devshell <ref-classes-devshell>` class all use the ``terminal``
 class.
 

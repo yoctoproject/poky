@@ -180,8 +180,8 @@ developing using the Yocto Project:
    changes on the development system within the BitBake environment and
    then deploying only the updated packages to the target.
 
-   The Yocto Project `OpenEmbedded build
-   system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ produces packages
+   The Yocto Project :term:`OpenEmbedded Build System`
+   produces packages
    in standard formats (i.e. RPM, DEB, IPK, and TAR). You can deploy
    these packages into the running system on the target by using
    utilities on the target such as ``rpm`` or ``ipk``.
@@ -202,8 +202,8 @@ The Yocto Project's "Layer Model" is a development model for embedded
 and IoT Linux creation that distinguishes the Yocto Project from other
 simple build systems. The Layer Model simultaneously supports
 collaboration and customization. Layers are repositories that contain
-related sets of instructions that tell the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ what to do. You can
+related sets of instructions that tell the :term:`OpenEmbedded Build System`
+what to do. You can
 collaborate, share, and reuse layers.
 
 Layers can contain changes to previous instructions or settings at any
@@ -292,8 +292,8 @@ The Yocto Project employs a collection of components and tools used by
 the project itself, by project developers, and by those using the Yocto
 Project. These components and tools are open source projects and
 metadata that are separate from the reference distribution
-(`Poky <&YOCTO_DOCS_REF_URL;#poky>`__) and the `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__. Most of the
+(`Poky <&YOCTO_DOCS_REF_URL;#poky>`__) and the 
+:term:`OpenEmbedded Build System`. Most of the
 components and tools are downloaded separately.
 
 This section provides brief overviews of the components and tools
@@ -367,8 +367,8 @@ The following list consists of tools that help production related
 activities using the Yocto Project:
 
 -  *Auto Upgrade Helper:* This utility when used in conjunction with the
-   `OpenEmbedded build
-   system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ (BitBake and
+   :term:`OpenEmbedded Build System`
+   (BitBake and
    OE-Core) automatically generates upgrades for recipes that are based
    on new versions of the recipes published upstream.
 
@@ -668,8 +668,8 @@ Project.
 
 -  *Toaster:* Regardless of what your Build Host is running, you can use
    Toaster to develop software using the Yocto Project. Toaster is a web
-   interface to the Yocto Project's `Open-Embedded build
-   system <&YOCTO_DOCS_REF_URL;#build-system-term>`__. The interface
+   interface to the Yocto Project's :term:`OpenEmbedded Build System`.
+   The interface
    enables you to configure and run your builds. Information about
    builds is collected and stored in a database. You can use Toaster to
    configure and start builds on multiple remote build servers.
@@ -789,8 +789,7 @@ section in the BitBake User's Manual.
 The OpenEmbedded Build System Workflow
 ======================================
 
-The `OpenEmbedded build
-system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ uses a "workflow" to
+The :term:`OpenEmbedded Build System` uses a "workflow" to
 accomplish image and SDK generation. The following figure overviews that
 workflow:
 
@@ -836,8 +835,8 @@ helpful for getting started:
 
 -  *Configuration Files:* Files that hold global definitions of
    variables, user-defined variables, and hardware configuration
-   information. These files tell the `Open-Embedded build
-   system <&YOCTO_DOCS_REF_URL;#build-system-term>`__ what to build and
+   information. These files tell the :term:`OpenEmbedded Build System`
+   what to build and
    what to put into the image to support a particular platform.
 
 -  *Extensible Software Development Kit (eSDK):* A custom SDK for
