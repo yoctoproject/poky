@@ -18,6 +18,9 @@ workflow, which is outside of the :term:`OpenEmbedded Build System`.
 
 The following figure presents a simple Autotools workflow.
 
+.. image:: figures/sdk-autotools-flow.png
+   :align: center
+
 Follow these steps to create a simple Autotools-based "Hello World"
 project:
 
@@ -127,6 +130,9 @@ general ``make`` rules.
 This section presents a simple Makefile development flow and provides an
 example that lets you see how you can use cross-toolchain environment
 variables and Makefile variables during development.
+
+.. image:: figures/sdk-makefile-flow.png
+   :align: center
 
 The main point of this section is to explain the following three cases
 regarding variable behavior:

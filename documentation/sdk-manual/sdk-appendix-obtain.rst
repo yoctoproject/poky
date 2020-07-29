@@ -233,6 +233,10 @@ The following figure shows the resulting directory structure after you
 install the Standard SDK by running the ``*.sh`` SDK installation
 script:
 
+.. image:: figures/sdk-installed-standard-sdk-directory.png
+   :scale: 80%
+   :align: center
+
 The installed SDK consists of an environment setup script for the SDK, a
 configuration file for the target, a version file for the target, and
 the root filesystem (``sysroots``) needed to develop objects for the
@@ -254,6 +258,10 @@ Installed Extensible SDK Directory Structure
 The following figure shows the resulting directory structure after you
 install the Extensible SDK by running the ``*.sh`` SDK installation
 script:
+
+.. image:: figures/sdk-installed-extensible-sdk-directory.png
+   :scale: 80%
+   :align: center
 
 The installed directory structure for the extensible SDK is quite
 different than the installed structure for the standard SDK. The

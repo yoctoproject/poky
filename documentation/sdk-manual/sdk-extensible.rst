@@ -226,6 +226,9 @@ with ``devtool add`` form different combinations. The following diagram
 shows common development flows you would use with the ``devtool add``
 command:
 
+.. image:: figures/sdk-devtool-add-flow.png
+   :align: center
+
 1. *Generating the New Recipe*: The top part of the flow shows three
    scenarios by which you could use ``devtool add`` to generate a recipe
    based on existing source code.
@@ -371,6 +374,9 @@ Depending on your particular scenario, the arguments and options you use
 with ``devtool modify`` form different combinations. The following
 diagram shows common development flows for the ``devtool modify``
 command:
+
+.. image:: figures/sdk-devtool-modify-flow.png
+   :align: center
 
 1. *Preparing to Modify the Code*: The top part of the flow shows three
    scenarios by which you could use ``devtool modify`` to prepare to
@@ -575,6 +581,9 @@ and work with any source file forms that the
 
 The following diagram shows the common development flow used with the
 ``devtool upgrade`` command:
+
+.. image:: figures/sdk-devtool-upgrade-flow.png
+   :align: center
 
 1. *Initiate the Upgrade*: The top part of the flow shows the typical
    scenario by which you use the ``devtool upgrade`` command. The
