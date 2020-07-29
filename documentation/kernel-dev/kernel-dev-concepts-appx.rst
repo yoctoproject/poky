@@ -224,6 +224,9 @@ the line-by-line code ``diff`` level is now a trivial operation.
 
 The following illustration shows the conceptual Yocto Linux kernel.
 
+.. image:: figures/kernel-architecture-overview.png
+   :align: center
+
 In the illustration, the "Kernel.org Branch Point" marks the specific
 spot (or Linux kernel release) from which the Yocto Linux kernel is
 created. From this point forward in the tree, features and differences
@@ -323,6 +326,9 @@ The following figure shows the temporary file structure created on your
 host system when you build the kernel using Bitbake. This
 :term:`Build Directory` contains all the
 source files used during the build.
+
+.. image:: figures/kernel-overview-2-generic.png
+   :align: center
 
 Again, for additional information on the Yocto Project kernel's
 architecture and its branching strategy, see the "`Yocto Linux Kernel

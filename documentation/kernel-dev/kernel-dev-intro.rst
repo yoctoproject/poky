@@ -110,6 +110,9 @@ This section presents a high-level overview of the Yocto Project kernel
 modification workflow. The illustration and accompanying list provide
 general information and references for further information.
 
+.. image:: figures/kernel-dev-flow.png
+   :align: center
+
 1. *Set up Your Host Development System to Support Development Using the
    Yocto Project*: See the "`Setting Up the Development Host to Use the
    Yocto Project <&YOCTO_DOCS_DEV_URL;#dev-manual-start>`__" section in
