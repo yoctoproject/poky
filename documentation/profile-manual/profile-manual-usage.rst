@@ -414,7 +414,7 @@ raw_syscalls:sys_exit [Tracepoint event]
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    These are exactly the same set of events defined by the trace event
    subsystem and exposed by ftrace/tracecmd/kernelshark as files in
    /sys/kernel/debug/tracing/events, by SystemTap as
@@ -568,7 +568,7 @@ two programming language bindings, one for Python and one for Perl.
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    Language bindings for manipulating and aggregating trace data are of
    course not a new idea. One of the first projects to do this was IBM's
    DProbes dpcc compiler, an ANSI C compiler which targeted a low-level
@@ -792,14 +792,14 @@ purpose of demonstrating how to use filters, it's close enough.
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    These are exactly the same set of event filters defined by the trace
    event subsystem. See the ftrace/tracecmd/kernelshark section for more
    discussion about these event filters.
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    These event filters are implemented by a special-purpose
    pseudo-interpreter in the kernel and are an integral and
    indispensable part of the perf design as it relates to tracing.
@@ -885,7 +885,7 @@ callgraphs from starting a few programs during those 30 seconds:
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    The trace events subsystem accommodate static and dynamic tracepoints
    in exactly the same way - there's no difference as far as the
    infrastructure is concerned. See the ftrace section for more details
@@ -893,7 +893,7 @@ callgraphs from starting a few programs during those 30 seconds:
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    Dynamic tracepoints are implemented under the covers by kprobes and
    uprobes. kprobes and uprobes are also used by and in fact are the
    main focus of SystemTap.
@@ -1043,7 +1043,7 @@ great way to learn about how the kernel code works in a dynamic sense.
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    The ftrace function tracer is also available from within perf, as the
    ftrace:function tracepoint.
 
@@ -1319,7 +1319,7 @@ trace-cmd and kernelshark in the next section.
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    These tracepoints and their representation are used not only by
    ftrace, but by many of the other tools covered in this document and
    they form a central point of integration for the various tracers
@@ -1328,7 +1328,7 @@ trace-cmd and kernelshark in the next section.
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    Eventually all the special-purpose tracers currently available in
    /sys/kernel/debug/tracing will be removed and replaced with
    equivalent tracers based on the 'trace events' subsystem.
@@ -1633,7 +1633,7 @@ to the selected function, and so on.
 
 .. container:: informalexample
 
-   Tying it Together:
+   **Tying it Together**:
    If you like sysprof's 'caller-oriented' display, you may be able to
    approximate it in other tools as well. For example, 'perf report' has
    the -g (--call-graph) option that you can experiment with; one of the
