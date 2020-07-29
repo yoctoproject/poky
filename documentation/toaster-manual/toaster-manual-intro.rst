@@ -94,6 +94,12 @@ When Toaster is set up as a local instance, all the components reside on
 a single build host. Fundamentally, a local instance of Toaster is
 suited for a single user developing on a single build host.
 
+.. image:: figures/simple-configuration.png
+   :align: center
+
 Toaster as a hosted service is suited for multiple users developing
 across several build hosts. When Toaster is set up as a hosted service,
 its components can be spread across several machines:
+
+.. image:: figures/hosted-service.png
+   :align: center

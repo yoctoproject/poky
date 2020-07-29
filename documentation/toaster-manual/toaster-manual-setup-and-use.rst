@@ -439,6 +439,10 @@ When you create a project in Toaster, you will be asked to provide a
 name and to select a Yocto Project release. One of the release options
 you will find is called "Local Yocto Project".
 
+.. image:: figures/new-project.png
+   :align: center
+   :scale: 75%
+
 When you select the "Local Yocto Project" release, Toaster will run your
 builds using the local Yocto Project clone you have in your computer:
 the same clone you are using to run Toaster. Unless you manually update
@@ -463,8 +467,16 @@ Yocto Project:
 
 -  `meta-yocto-bsp <http://layers.openembedded.org/layerindex/branch/master/layer/meta-yocto-bsp/>`__
 
+.. image:: figures/compatible-layers.png
+   :align: center
+   :scale: 75%
+
 If you want to build any other layers, you will need to manually import
 them into your Toaster project, using the "Import layer" page.
+
+.. image:: figures/import-layer.png
+   :align: center
+   :scale: 75%
 
 .. _toaster-web-interface-preferred-version:
 
@@ -477,6 +489,10 @@ versions of the ``bash`` recipe (i.e. 3.2.48 and 4.3.30-r0) and two
 versions of the ``which`` recipe (i.e. 2.21 and 2.18). The following
 figure shows this exact scenario:
 
+.. image:: figures/bash-oecore.png
+   :align: center
+   :scale: 75%
+
 By default, the OpenEmbedded build system builds one of the two recipes.
 For the ``bash`` case, version 4.3.30-r0 is built by default.
 Unfortunately, Toaster as it exists, is not able to override the default
@@ -487,11 +503,23 @@ variable. You can do so from Toaster, using the "Add variable" form,
 which is available in the "BitBake variables" page of the project
 configuration section as shown in the following screen:
 
+.. image:: figures/add-variable.png
+   :align: center
+   :scale: 75%
+
 To specify ``bash`` 3.2.48 as the version to build, enter
 "PREFERRED_VERSION_bash" in the "Variable" field, and "3.2.48" in the
 "Value" field. Next, click the "Add variable" button:
+
+.. image:: figures/set-variable.png
+   :align: center
+   :scale: 75%
 
 After clicking the "Add variable" button, the settings for
 ``PREFERRED_VERSION`` are added to the bottom of the BitBake variables
 list. With these settings, the OpenEmbedded build system builds the
 desired version of the recipe rather than the default version:
+
+.. image:: figures/variable-added.png
+   :align: center
+   :scale: 75%
