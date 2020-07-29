@@ -941,6 +941,9 @@ Overview
 The following figure shows the basic process for creating a new recipe.
 The remainder of the section provides details for the steps.
 
+.. image:: figures/recipe-workflow.png
+   :align: center
+
 .. _new-recipe-locate-or-automatically-create-a-base-recipe:
 
 Locate or Automatically Create a Base Recipe
@@ -3322,6 +3325,9 @@ Yocto Project Overview and Concepts Manual.
 
 The following figure and list overviews the build process:
 
+.. image:: figures/bitbake-build-flow.png
+   :align: center
+
 1. *Set up Your Host Development System to Support Development Using the
    Yocto Project*: See the "`Setting Up to Use the Yocto
    Project <#dev-manual-start>`__" section for options on how to get a
@@ -3440,6 +3446,9 @@ Follow these steps to set up and execute multiple configuration builds:
    They must reside in the current build directory in a sub-directory of
    ``conf`` named ``multiconfig``. Following is an example that defines
    two configuration files for the "x86" and "arm" multiconfigs:
+
+   .. image:: figures/multiconfig_files.png
+      :align: center
 
    The reason for this required file hierarchy is because the ``BBPATH``
    variable is not constructed until the layers are parsed.
@@ -6792,6 +6801,9 @@ test the application:
 $ cd /usr/lib/node_modules/cute-files $ node cute-files.js On a browser,
 go to ``http://192.168.7.2:3000`` and you see the following:
 
+.. image:: figures/cute-files-npm-example.png
+   :align: center
+
 You can find the recipe in ``workspace/recipes/cute-files``. You can use
 the recipe in any layer you choose.
 
@@ -7247,6 +7259,9 @@ in the Build Directory as defined by the
 :term:`BUILDHISTORY_DIR`
 variable. The following is an example abbreviated listing:
 
+.. image:: figures/buildhistory.png
+   :align: center
+
 At the top level, a ``metadata-revs`` file exists that lists the
 revisions of the repositories for the enabled layers when the build was
 produced. The rest of the data splits into separate ``packages``,
@@ -7536,6 +7551,9 @@ instruction in the ``README`` file here.
 ` <http://git.yoctoproject.org/cgit/cgit.cgi/buildhistory-web/>`__.
 
 Here is a sample screenshot of the interface:
+
+.. image:: figures/buildhistory-web.png
+   :align: center
 
 Performing Automated Runtime Testing
 ====================================
