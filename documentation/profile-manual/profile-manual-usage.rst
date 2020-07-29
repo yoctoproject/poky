@@ -160,6 +160,9 @@ and wrote 0.176 MB perf.data (~7700 samples) ] To see the results in a
 perf.data file in the current working directory and display the results
 in an interactive UI: root@crownbay:~# perf report
 
+.. image:: figures/perf-wget-flat-stripped.png
+   :align: center
+
 The above screenshot displays a 'flat' profile, one entry for each
 'bucket' corresponding to the functions that were profiled during the
 profiling run, ordered from the most popular to the least (perf has
@@ -188,6 +191,9 @@ linux-2.6.19.2.tar.b 100%
 [ perf record: Woken up 3 times to write data ] [ perf record: Captured
 and wrote 0.652 MB perf.data (~28476 samples) ] root@crownbay:~# perf
 report
+
+.. image:: figures/perf-wget-g-copy-to-user-expanded-stripped.png
+   :align: center
 
 Using the callgraph view, we can actually see not only which functions
 took the most time, but we can also see a summary of how those functions
@@ -222,6 +228,9 @@ displayed in the callstack, here in the expanded sys_clock_gettime()
 function. Later we'll see it resolve to a userspace function call in
 busybox.
 
+.. image:: figures/perf-wget-g-copy-from-user-expanded-stripped.png
+   :align: center
+
 The above screenshot shows the other half of the journey for the data -
 from the wget program's userspace buffers to disk. To get the buffers to
 disk, the wget program issues a write(2), which does a copy-from-user to
@@ -235,6 +244,9 @@ is spent in the program we're profiling, wget. Remember that wget is
 actually implemented as an applet in busybox, so while the process name
 is 'wget', the executable we're actually interested in is busybox. So
 let's expand the first entry containing busybox:
+
+.. image:: figures/perf-wget-busybox-expanded-stripped.png
+   :align: center
 
 Again, before we expanded we saw that the function was labeled with a
 hex value instead of a symbol as with most of the kernel entries.
@@ -270,13 +282,22 @@ busybox-dbg-1.20.2-r2.core2_32.rpm Now that the debuginfo is installed,
 we see that the busybox entries now display their functions
 symbolically:
 
+.. image:: figures/perf-wget-busybox-debuginfo.png
+   :align: center
+
 If we expand one of the entries and press 'enter' on a leaf node, we're
 presented with a menu of actions we can take to get more information
 related to that entry:
 
+.. image:: figures/perf-wget-busybox-dso-zoom-menu.png
+   :align: center
+
 One of these actions allows us to show a view that displays a
 busybox-centric view of the profiled functions (in this case we've also
 expanded all the nodes using the 'E' key):
+
+.. image:: figures/perf-wget-busybox-dso-zoom.png
+   :align: center
 
 Finally, we can see that now that the busybox debuginfo is installed,
 the previously unresolved symbol in the sys_clock_gettime() entry
@@ -285,15 +306,24 @@ sys_clock_gettime system call that was the source of 6.75% of the
 copy-to-user overhead was initiated by the handle_input() busybox
 function:
 
+.. image:: figures/perf-wget-g-copy-to-user-expanded-debuginfo.png
+   :align: center
+
 At the lowest level of detail, we can dive down to the assembly level
 and see which instructions caused the most overhead in a function.
 Pressing 'enter' on the 'udhcpc_main' function, we're again presented
 with a menu:
 
+.. image:: figures/perf-wget-busybox-annotate-menu.png
+   :align: center
+
 Selecting 'Annotate udhcpc_main', we get a detailed listing of
 percentages by instruction for the udhcpc_main function. From the
 display, we can see that over 50% of the time spent in this function is
 taken up by a couple tests and the move of a constant (1) to a register:
+
+.. image:: figures/perf-wget-busybox-annotate-udhcpc.png
+   :align: center
 
 As a segue into tracing, let's try another profile using a different
 counter, something other than the default 'cycles'.
@@ -423,6 +453,9 @@ syscalls:sys_enter_write 12854 syscalls:sys_exit_write . . .
 and tell perf to do a profile using it as the sampling event:
 root@crownbay:~# perf record -g -e sched:sched_wakeup wget
 http://downloads.yoctoproject.org/mirror/sources/linux-2.6.19.2.tar.bz2
+
+.. image:: figures/sched-wakeup-profile.png
+   :align: center
 
 The screenshot above shows the results of running a profile using
 sched:sched_switch tracepoint, which shows the relative costs of various
@@ -653,6 +686,9 @@ linux-2.6.19.2.tar.b 100% \|*******************************\| 41727k
 0:00:00 ETA Here we see entries not only for our wget load, but for
 other processes running on the system as well:
 
+.. image:: figures/perf-systemwide.png
+   :align: center
+
 In the snapshot above, we can see callchains that originate in libc, and
 a callchain from Xorg that demonstrates that we're using a proprietary X
 driver in userspace (notice the presence of 'PVR' and some other
@@ -665,12 +701,18 @@ record a profile: root@crownbay:~# perf record -g -a -e cycles:u ^C[
 perf record: Woken up 2 times to write data ] [ perf record: Captured
 and wrote 0.376 MB perf.data (~16443 samples) ]
 
+.. image:: figures/perf-report-cycles-u.png
+   :align: center
+
 Notice in the screenshot above, we see only userspace entries ([.])
 
 Finally, we can press 'enter' on a leaf node and select the 'Zoom into
 DSO' menu item to show only entries associated with a specific DSO. In
 the screenshot below, we've zoomed into the 'libc' DSO which shows all
 the entries associated with the libc-xxx.so DSO.
+
+.. image:: figures/perf-systemwide-libc.png
+   :align: center
 
 We can also use the system-wide -a switch to do system-wide tracing.
 Here we'll trace a couple of scheduler events: root@crownbay:~# perf
@@ -837,6 +879,9 @@ gthumb 1300 [001] 34219.264551: do_fork: (c1028460) pcmanfm 1296 [000]
 34237.114106: do_fork: (c1028460) gaku 1312 [000] 34237.202388: do_fork:
 (c1028460) And using 'perf report' on the same file, we can see the
 callgraphs from starting a few programs during those 30 seconds:
+
+.. image:: figures/perf-probe-do_fork-profile.png
+   :align: center
 
 .. container:: informalexample
 
@@ -1312,6 +1357,9 @@ choosing from the kernelshark menu: Capture \| Record That will display
 the following dialog, which allows you to choose one or more events (or
 even one or more complete subsystems) to trace:
 
+.. image:: figures/kernelshark-choose-events.png
+   :align: center
+
 Note that these are exactly the same sets of events described in the
 previous trace events subsystem section, and in fact is where trace-cmd
 gets them for kernelshark.
@@ -1324,6 +1372,9 @@ After doing that, we can start and stop the trace using the 'Run' and
 'Stop' button on the lower right corner of the dialog (the same button
 will turn into the 'Stop' button after the trace has started):
 
+.. image:: figures/kernelshark-output-display.png
+   :align: center
+
 Notice that the right-hand pane shows the exact trace-cmd command-line
 that's used to run the trace, along with the results of the trace-cmd
 run.
@@ -1332,8 +1383,14 @@ Once the 'Stop' button is pressed, the graphical view magically fills up
 with a colorful per-cpu display of the trace data, along with the
 detailed event listing below that:
 
+.. image:: figures/kernelshark-i915-display.png
+   :align: center
+
 Here's another example, this time a display resulting from tracing 'all
 events':
+
+.. image:: figures/kernelshark-all.png
+   :align: center
 
 The tool is pretty self-explanatory, but for more detailed information
 on navigating through the data, see the `kernelshark
@@ -1543,6 +1600,9 @@ press the 'Profile' button.
 Once you've pressed the profile button, the three panes will fill up
 with profiling data:
 
+.. image:: figures/sysprof-copy-to-user.png
+   :align: center
+
 The left pane shows a list of functions and processes. Selecting one of
 those expands that function in the right pane, showing all its callees.
 Note that this caller-oriented display is essentially the inverse of
@@ -1554,6 +1614,9 @@ looking up the callchain we can see that one of the callers of
 Notice that this is essentially a portion of the same information we saw
 in the perf display shown in the perf section of this page.
 
+.. image:: figures/sysprof-copy-from-user.png
+   :align: center
+
 Similarly, the above is a snapshot of the Sysprof display of a
 copy-from-user callchain.
 
@@ -1561,6 +1624,9 @@ Finally, looking at the third Sysprof pane in the lower left, we can see
 a list of all the callers of a particular function selected in the top
 left pane. In this case, the lower pane is showing all the callers of
 \__mark_inode_dirty:
+
+.. image:: figures/sysprof-callers.png
+   :align: center
 
 Double-clicking on one of those functions will in turn change the focus
 to the selected function, and so on.
