@@ -86,6 +86,9 @@ simple JSON files.
 The following figure shows the Yocto Project Autobuilder stack with a
 topology that includes a controller and a cluster of workers:
 
+.. image:: figures/ab-test-cluster.png
+   :align: center
+
 .. _test-project-tests:
 
 Yocto Project Tests - Types of Testing Overview
