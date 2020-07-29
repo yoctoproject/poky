@@ -95,6 +95,10 @@ common working area used across the tool.
 
 The following figure shows the workspace structure:
 
+.. image:: figures/build-workspace-directory.png
+   :align: center
+   :scale: 70%
+
 attic - A directory created if devtool believes it must preserve
 anything when you run "devtool reset". For example, if you run "devtool
 add", make changes to the recipe, and then run "devtool reset", devtool
