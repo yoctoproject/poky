@@ -92,7 +92,7 @@ particular working environment and set of practices.
 
     It is relatively easy to set up Git services and create
     infrastructure like
-    `http://git.yoctoproject.org <&YOCTO_GIT_URL;>`__, which is based on
+    :yocto_git:`http://git.yoctoproject.org <>`, which is based on
     server software called ``gitolite`` with ``cgit`` being used to
     generate the web interface that lets you view the repositories. The
     ``gitolite`` software identifies users using SSH keys and allows
@@ -322,8 +322,7 @@ Project Build Host:
    validation and their status, see the "`Supported Linux
    Distributions <&YOCTO_DOCS_REF_URL;#detailed-supported-distros>`__"
    section in the Yocto Project Reference Manual and the wiki page at
-   `Distribution
-   Support <&YOCTO_WIKI_URL;/wiki/Distribution_Support>`__.
+   :yocto_wiki:`Distribution Support </wiki/Distribution_Support>`.
 
 2. *Have Enough Free Memory:* Your system should have at least 50 Gbytes
    of free disk space for building images.
@@ -598,14 +597,14 @@ Working from a copy of the upstream Yocto Project `Source
 Repositories <&YOCTO_DOCS_OM_URL;#source-repositories>`__ is the
 preferred method for obtaining and using a Yocto Project release. You
 can view the Yocto Project Source Repositories at
-` <&YOCTO_GIT_URL;>`__. In particular, you can find the ``poky``
-repository at ` <http://git.yoctoproject.org/cgit/cgit.cgi/poky/>`__.
+:yocto_git:`/`. In particular, you can find the ``poky``
+repository at :yocto_git:`/cgit.cgi/poky`.
 
 Use the following procedure to locate the latest upstream copy of the
 ``poky`` Git repository:
 
 1. *Access Repositories:* Open a browser and go to
-   ` <&YOCTO_GIT_URL;>`__ to access the GUI-based interface into the
+   :yocto_git:`/` to access the GUI-based interface into the
    Yocto Project source repositories.
 
 2. *Select the Repository:* Click on the repository in which you are
@@ -614,7 +613,7 @@ Use the following procedure to locate the latest upstream copy of the
 3. *Find the URL Used to Clone the Repository:* At the bottom of the
    page, note the URL used to
    `clone <&YOCTO_DOCS_OM_URL;#git-commands-clone>`__ that repository
-   (e.g. ``YOCTO_GIT_URL/poky``).
+   (e.g. :yocto_git:`/git/poky`).
 
    .. note::
 
@@ -642,7 +641,7 @@ of a given component.
 Follow these steps to locate and download a particular tarball:
 
 1. *Access the Index of Releases:* Open a browser and go to
-   ` <&YOCTO_DL_URL;/releases>`__ to access the Index of Releases. The
+   :yocto_dl:`Index of Releases <releases>`. The
    list represents released components (e.g. ``bitbake``, ``sato``, and
    so on).
 
@@ -670,7 +669,7 @@ Follow these steps to locate and download a particular tarball:
 Using the Downloads Page
 ------------------------
 
-The `Yocto Project Website <&YOCTO_HOME_URL;>`__ uses a "DOWNLOADS" page
+The :yocto_home:`Yocto Project Website <>` uses a "DOWNLOADS" page
 from which you can locate and download tarballs of any Yocto Project
 release. Rather than Git repositories, these files represent snapshot
 tarballs similar to the tarballs located in the Index of Releases
@@ -684,8 +683,8 @@ Releases <#accessing-index-of-releases>`__" section.
    repository. The procedure in this section exists should you desire a
    tarball snapshot of any given component.
 
-1. *Go to the Yocto Project Website:* Open The `Yocto Project
-   Website <&YOCTO_HOME_URL;>`__ in your browser.
+1. *Go to the Yocto Project Website:* Open The
+   :yocto_home:`Yocto Project Website <>` in your browser.
 
 2. *Get to the Downloads Area:* Select the "DOWNLOADS" item from the
    pull-down "SOFTWARE" tab menu near the top of the page.

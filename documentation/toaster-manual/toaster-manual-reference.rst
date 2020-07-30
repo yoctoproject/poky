@@ -160,14 +160,14 @@ As shipped, Toaster is configured to work with the following releases:
 -  *Yocto Project DISTRO "DISTRO_NAME" or OpenEmbedded "DISTRO_NAME":*
    This release causes your Toaster projects to build against the head
    of the DISTRO_NAME_NO_CAP branch at
-   ` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/log/?h=rocko>`__ or
-   ` <http://git.openembedded.org/openembedded-core/commit/?h=rocko>`__.
+   https://git.yoctoproject.org/cgit/cgit.cgi/poky/log/?h=rocko or
+   http://git.openembedded.org/openembedded-core/commit/?h=rocko.
 
 -  *Yocto Project "Master" or OpenEmbedded "Master":* This release
    causes your Toaster Projects to build against the head of the master
    branch, which is where active development takes place, at
-   ` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/log/>`__ or
-   ` <http://git.openembedded.org/openembedded-core/log/>`__.
+   https://git.yoctoproject.org/cgit/cgit.cgi/poky/log/ or
+   http://git.openembedded.org/openembedded-core/log/.
 
 -  *Local Yocto Project or Local OpenEmbedded:* This release causes your
    Toaster Projects to build against the head of the ``poky`` or

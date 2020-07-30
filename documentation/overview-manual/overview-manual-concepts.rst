@@ -277,7 +277,7 @@ The ``local.conf`` file provides many basic variables that define a
 build environment. Here is a list of a few. To see the default
 configurations in a ``local.conf`` file created by the build environment
 script, see the
-```local.conf.sample`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample>`__
+:yocto_git:`local.conf.sample </cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample>`
 in the ``meta-poky`` layer:
 
 -  *Target Machine Selection:* Controlled by the
@@ -397,17 +397,17 @@ figure <#general-workflow-figure>`__:
    configurations. This type of information is specific to a particular
    target architecture. A good example of a BSP layer from the `Poky
    Reference Distribution <#gs-reference-distribution-poky>`__ is the
-   ```meta-yocto-bsp`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto-bsp>`__
+   :yocto_git:`meta-yocto-bsp </cgit/cgit.cgi/poky/tree/meta-yocto-bsp>`
    layer.
 
 -  *Policy Configuration:* Distribution Layers (i.e. "Distro Layer" in
    the following figure) providing top-level or general policies for the
    images or SDKs being built for a particular distribution. For
    example, in the Poky Reference Distribution the distro layer is the
-   ```meta-poky`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky>`__
+   :yocto_git:`meta-poky </cgit/cgit.cgi/poky/tree/meta-poky>`
    layer. Within the distro layer is a ``conf/distro`` directory that
    contains distro configuration files (e.g.
-   ```poky.conf`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky/conf/distro/poky.conf>`__
+   :yocto_git:`poky.conf </cgit/cgit.cgi/poky/tree/meta-poky/conf/distro/poky.conf>`
    that contain many policy configurations for the Poky distribution.
 
 The following figure shows an expanded representation of these three
@@ -901,7 +901,7 @@ This step in the build process consists of the following tasks:
    variables. For information on how this variable works within that
    class, see the
    :ref:`autotools <ref-classes-autotools>` class
-   `here <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/autotools.bbclass>`__.
+   :yocto_git:`here </cgit/cgit.cgi/poky/tree/meta/classes/autotools.bbclass>`.
 
 -  *``do_compile``*: Once a configuration task has been satisfied,
    BitBake compiles the source using the
@@ -981,7 +981,7 @@ The :term:`FILES` variable defines the
 files that go into each package in
 :term:`PACKAGES`. If you want
 details on how this is accomplished, you can look at
-```package.bbclass`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/package.bbclass>`__.
+:yocto_git:`package.bbclass </cgit/cgit.cgi/poky/tree/meta/classes/package.bbclass>`.
 
 Depending on the type of packages being created (RPM, DEB, or IPK), the
 :ref:`do_package_write_* <ref-tasks-package_write_deb>`

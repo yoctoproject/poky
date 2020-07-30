@@ -143,7 +143,7 @@ Yocto Project Source Repositories
 =================================
 
 The Yocto Project team maintains complete source repositories for all
-Yocto Project files at ` <&YOCTO_GIT_URL;>`__. This web-based source
+Yocto Project files at :yocto_git:`/`. This web-based source
 code browser is organized into categories by function such as IDE
 Plugins, Matchbox, Poky, Yocto Linux Kernel, and so forth. From the
 interface, you can click on any particular item in the "Name" column and
@@ -155,7 +155,7 @@ history, and ultimately enhance the Yocto Project's tools, Board Support
 Packages, and so forth.
 
 For any supported release of Yocto Project, you can also go to the
-`Yocto Project Website <&YOCTO_HOME_URL;>`__ and select the "DOWNLOADS"
+:yocto_home:`Yocto Project Website <>` and select the "DOWNLOADS"
 item from the "SOFTWARE" menu and get a released tarball of the ``poky``
 repository, any supported BSP tarball, or Yocto Project tools. Unpacking
 these tarballs gives you a snapshot of the released files.
@@ -176,7 +176,7 @@ these tarballs gives you a snapshot of the released files.
 In summary, here is where you can get the project files needed for
 development:
 
--  `Source Repositories: <&YOCTO_GIT_URL;>`__ This area contains IDE
+-  :yocto_git:`Source Repositories: <>` This area contains IDE
    Plugins, Matchbox, Poky, Poky Support, Tools, Yocto Linux Kernel, and
    Yocto Metadata Layers. You can create local copies of Git
    repositories for each of these areas.
@@ -189,7 +189,7 @@ development:
    Repositories <&YOCTO_DOCS_DEV_URL;#accessing-source-repositories>`__"
    Section in the Yocto Project Development Tasks Manual.
 
--  `Index of /releases: <&YOCTO_DL_URL;/releases/>`__ This is an index
+-  :yocto_dl:`Index of /releases: <releases>` This is an index
    of releases such as Poky, Pseudo, installers for cross-development
    toolchains, miscellaneous support and all released versions of Yocto
    Project in the form of images or tarballs. Downloading and extracting
@@ -204,14 +204,13 @@ development:
    Releases <&YOCTO_DOCS_DEV_URL;#accessing-index-of-releases>`__"
    section in the Yocto Project Development Tasks Manual.
 
--  *"DOWNLOADS" page for the*\ `Yocto Project
-   Website <&YOCTO_HOME_URL;>`__\ *:*
+-  *"DOWNLOADS" page for the* :yocto_home:`Yocto Project Website <>` *:*
 
    The Yocto Project website includes a "DOWNLOADS" page accessible
    through the "SOFTWARE" menu that allows you to download any Yocto
    Project release, tool, and Board Support Package (BSP) in tarball
-   form. The tarballs are similar to those found in the `Index of
-   /releases: <&YOCTO_DL_URL;/releases/>`__ area.
+   form. The tarballs are similar to those found in the
+   :yocto_dl:`Index of /releases: <releases>` area.
 
    .. image:: figures/yp-download.png
       :align: center
@@ -259,8 +258,8 @@ and so forth.
 
 The Yocto Project ``poky`` Git repository also has an upstream
 contribution Git repository named ``poky-contrib``. You can see all the
-branches in this repository using the web interface of the `Source
-Repositories <&YOCTO_GIT_URL;>`__ organized within the "Poky Support"
+branches in this repository using the web interface of the
+:yocto_git:`Source Repositories <>` organized within the "Poky Support"
 area. These branches hold changes (commits) to the project that have
 been submitted or committed by the Yocto Project development team and by
 community members who contribute to the project. The maintainer
@@ -400,7 +399,7 @@ Repositories, Tags, and Branches
 As mentioned briefly in the previous section and also in the "`Git
 Workflows and the Yocto
 Project <#gs-git-workflows-and-the-yocto-project>`__" section, the Yocto
-Project maintains source repositories at ` <&YOCTO_GIT_URL;>`__. If you
+Project maintains source repositories at :yocto_git:`/`. If you
 look at this web-interface of the repositories, each item is a separate
 Git repository.
 
@@ -432,7 +431,7 @@ files. Git uses "branches" to organize different development efforts.
 For example, the ``poky`` repository has several branches that include
 the current "DISTRO_NAME_NO_CAP" branch, the "master" branch, and many
 branches for past Yocto Project releases. You can see all the branches
-by going to ` <&YOCTO_GIT_URL;/cgit.cgi/poky/>`__ and clicking on the
+by going to https://git.yoctoproject.org/cgit.cgi/poky/ and clicking on the
 ``[...]`` link beneath the "Branch" heading.
 
 Each of these branches represents a specific area of development. The
@@ -472,7 +471,7 @@ Git uses "tags" to mark specific changes in a repository branch
 structure. Typically, a tag is used to mark a special point such as the
 final change (or commit) before a project is released. You can see the
 tags used with the ``poky`` Git repository by going to
-` <&YOCTO_GIT_URL;/cgit.cgi/poky/>`__ and clicking on the ``[...]`` link
+https://git.yoctoproject.org/cgit.cgi/poky/ and clicking on the ``[...]`` link
 beneath the "Tag" heading.
 
 Some key tags for the ``poky`` repository are ``jethro-14.0.3``,

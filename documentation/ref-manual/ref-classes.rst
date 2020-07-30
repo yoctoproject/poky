@@ -2749,7 +2749,7 @@ To use this class, you need to define a number of variables:
 These variables list alternative commands needed by a package, provide
 pathnames for links, default links for targets, and so forth. For
 details on how to use this class, see the comments in the
-```update-alternatives.bbclass`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/classes/update-alternatives.bbclass>`__
+:yocto_git:`update-alternatives.bbclass </cgit/cgit.cgi/poky/tree/meta/classes/update-alternatives.bbclass>`
 file.
 
 .. note::

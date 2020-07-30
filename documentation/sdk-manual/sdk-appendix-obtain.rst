@@ -175,8 +175,8 @@ Follow these steps to extract the root filesystem:
 1. *Locate and Download the Tarball for the Pre-Built Root Filesystem
    Image File:* You need to find and download the root filesystem image
    file that is appropriate for your target system. These files are kept
-   in machine-specific folders in the `Index of
-   Releases <&YOCTO_DL_URL;/releases/yocto/yocto-&DISTRO;/machines/>`__
+   in machine-specific folders in the
+   :yocto_dl:`Index of Releases <releases/yocto/yocto-&DISTRO;/machines/>`
    in the "machines" directory.
 
    The machine-specific folders of the "machines" directory contain

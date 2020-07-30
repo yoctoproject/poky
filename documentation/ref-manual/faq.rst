@@ -134,10 +134,9 @@ http://proxy.yoyodyne.com:18023/ # If you do not want to use proxy at
 all, set this to off. #use_proxy = on The Yocto Project also includes a
 ``meta-poky/conf/site.conf.sample`` file that shows how to configure CVS
 and Git proxy servers if needed. For more information on setting up
-various proxy types and configuring proxy servers, see the "`Working
-Behind a Network
-Proxy <&YOCTO_WIKI_URL;/wiki/Working_Behind_a_Network_Proxy>`__" Wiki
-page.
+various proxy types and configuring proxy servers, see the
+":yocto_wiki:`Working Behind a Network Proxy </wiki/Working_Behind_a_Network_Proxy>`"
+Wiki page.
 
 **Q:** What’s the difference between target and target\ ``-native``?
 
@@ -332,9 +331,9 @@ redirect requests through proxy servers.
 
 .. note::
 
-   You can find more information on the "
-   Working Behind a Network Proxy
-   " Wiki page.
+   You can find more information on the
+   ":yocto_wiki:`Working Behind a Network Proxy </wiki/Working_Behind_a_Network_Proxy>`"
+   Wiki page.
 
 **Q:** Can I get rid of build output so I can start over?
 

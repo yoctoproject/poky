@@ -138,8 +138,8 @@ an entire Linux distribution, including the toolchain, from source.
    -  If you do not know your proxy settings, consult your local network
       infrastructure resources and get that information. A good starting
       point could also be to check your web browser settings. Finally,
-      you can find more information on the "`Working Behind a Network
-      Proxy <https://wiki.yoctoproject.org/wiki/Working_Behind_a_Network_Proxy>`__"
+      you can find more information on the
+      ":yocto_wiki:`Working Behind a Network Proxy </wiki/Working_Behind_a_Network_Proxy>`"
       page of the Yocto Project Wiki.
 
 1. *Initialize the Build Environment:* From within the ``poky``
@@ -239,7 +239,7 @@ modular development and makes it easier to reuse the layer metadata.
 Follow these steps to add a hardware layer:
 
 1. *Find a Layer:* Lots of hardware layers exist. The Yocto Project
-   `Source Repositories <&YOCTO_GIT_URL;>`__ has many hardware layers.
+   :yocto_git:`Source Repositories <>` has many hardware layers.
    This example adds the
    `meta-altera <https://github.com/kraj/meta-altera>`__ hardware layer.
 
@@ -324,7 +324,7 @@ Now that you have experienced using the Yocto Project, you might be
 asking yourself "What now?" The Yocto Project has many sources of
 information including the website, wiki pages, and user manuals:
 
--  *Website:* The `Yocto Project Website <&YOCTO_HOME_URL;>`__ provides
+-  *Website:* The :yocto_home:`Yocto Project Website <>` provides
    background information, the latest builds, breaking news, full
    development documentation, and access to a rich Yocto Project
    Development Community into which you can tap.
@@ -343,7 +343,7 @@ information including the website, wiki pages, and user manuals:
    The manual also provides conceptual information for various aspects
    of the Yocto Project.
 
--  *Yocto Project Wiki:* The `Yocto Project Wiki <&YOCTO_WIKI_URL;>`__
+-  *Yocto Project Wiki:* The :yocto_wiki:`Yocto Project Wiki <>`
    provides additional information on where to go next when ramping up
    with the Yocto Project, release information, project planning, and QA
    information.

@@ -20,8 +20,8 @@ BSPs and Linux kernel types.
 Kernel Metadata exists in many places. One area in the Yocto Project
 `Source Repositories <&YOCTO_DOCS_OM_URL;#source-repositories>`__ is the
 ``yocto-kernel-cache`` Git repository. You can find this repository
-grouped under the "Yocto Linux Kernel" heading in the `Yocto Project
-Source Repositories <&YOCTO_GIT_URL;>`__.
+grouped under the "Yocto Linux Kernel" heading in the
+:yocto_git:`Yocto Project Source Repositories <>`.
 
 Kernel development tools ("kern-tools") exist also in the Yocto Project
 Source Repositories under the "Yocto Linux Kernel" heading in the
@@ -188,7 +188,7 @@ either
 :term:`FILESEXTRAPATHS` if
 you are creating Metadata in `recipe-space <#recipe-space-metadata>`__,
 or the top level of
-```yocto-kernel-cache`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/yocto-kernel-cache/tree/>`__
+:yocto_git:`yocto-kernel-cache </cgit/cgit.cgi/yocto-kernel-cache/tree/>`
 if you are creating `Metadata outside of the
 recipe-space <#metadata-outside-the-recipe-space>`__.
 

@@ -38,7 +38,7 @@ needs for targeted hardware.
 
 You can find a web interface to the Yocto Linux kernels in the `Source
 Repositories <&YOCTO_DOCS_OM_URL;#source-repositories>`__ at
-` <&YOCTO_GIT_URL;>`__. If you look at the interface, you will see to
+:yocto_git:`/`. If you look at the interface, you will see to
 the left a grouping of Git repositories titled "Yocto Linux Kernel".
 Within this group, you will find several Linux Yocto kernels developed
 and included with Yocto Project releases:

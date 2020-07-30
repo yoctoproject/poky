@@ -68,8 +68,7 @@ Follow these general steps to create your layer without using tools:
    ``conf`` directory and then modify the file as needed.
 
    The ``meta-yocto-bsp/conf/layer.conf`` file in the Yocto Project
-   `Source
-   Repositories <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto-bsp/conf>`__
+   :yocto_git:`Source Repositories </cgit/cgit.cgi/poky/tree/meta-yocto-bsp/conf>`
    demonstrates the required syntax. For your layer, you need to replace
    "yoctobsp" with a unique identifier for your layer (e.g. "machinexyz"
    for a layer named "meta-machinexyz"): # We have a conf and classes
@@ -120,7 +119,7 @@ Follow these general steps to create your layer without using tools:
       Lists all layers on which this layer depends (if any).
 
    -  :term:`LAYERSERIES_COMPAT`:
-      Lists the `Yocto Project <&YOCTO_WIKI_URL;/wiki/Releases>`__
+      Lists the :yocto_wiki:`Yocto Project </wiki/Releases>`
       releases for which the current version is compatible. This
       variable is a good way to indicate if your particular layer is
       current.
@@ -4001,9 +4000,9 @@ your tunings to best consider build times and package feed maintenance.
    higher levels noted earlier can be useful. For example, consider how
    NXP (formerly Freescale) allows for the easy reuse of binary packages
    in their layer
-   ```meta-freescale`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/>`__.
+   :yocto_git:`meta-freescale </cgit/cgit.cgi/meta-freescale/>`.
    In this example, the
-   ```fsl-dynamic-packagearch`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/tree/classes/fsl-dynamic-packagearch.bbclass>`__
+   :yocto_git:`fsl-dynamic-packagearch </cgit/cgit.cgi/meta-freescale/tree/classes/fsl-dynamic-packagearch.bbclass>`
    class shares GPU packages for i.MX53 boards because all boards share
    the AMD GPU. The i.MX6-based boards can do the same because all
    boards share the Vivante GPU. This class inspects the BitBake
@@ -5058,7 +5057,7 @@ partition.
 Source plugins are subclasses defined in plugin files. As shipped, the
 Yocto Project provides several plugin files. You can see the source
 plugin files that ship with the Yocto Project
-`here <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/scripts/lib/wic/plugins/source>`__.
+:yocto_git:`here </cgit/cgit.cgi/poky/tree/scripts/lib/wic/plugins/source>`.
 Each of these plugin files contains source plugins that are designed to
 populate a specific Wic image partition.
 
@@ -5591,8 +5590,8 @@ Tools for Hardening Your Image
 ------------------------------
 
 The Yocto Project provides tools for making your image more secure. You
-can find these tools in the ``meta-security`` layer of the `Yocto
-Project Source Repositories <&YOCTO_GIT_URL;>`__.
+can find these tools in the ``meta-security`` layer of the
+:yocto_git:`Yocto Project Source Repositories <>`.
 
 Creating Your Own Distribution
 ==============================
@@ -5872,7 +5871,7 @@ the following:
    build system uses this string to help define the value of ``PV`` when
    the source code revision needs to be included in it.
 
--  `PR Service <https://wiki.yoctoproject.org/wiki/PR_Service>`__: A
+-  :yocto_wiki:`PR Service </wiki/PR_Service>`: A
    network-based service that helps automate keeping package feeds
    compatible with existing package manager applications such as RPM,
    APT, and OPKG.
@@ -6574,7 +6573,7 @@ testname where the result can be ``PASS``, ``FAIL``, or ``SKIP``, and
 the testname can be any identifying string.
 
 For a list of Yocto Project recipes that are already enabled with ptest,
-see the `Ptest <https://wiki.yoctoproject.org/wiki/Ptest>`__ wiki page.
+see the :yocto_wiki:`Ptest </wiki/Ptest>` wiki page.
 
 .. note::
 
@@ -9209,10 +9208,9 @@ Here are some other tips that you might find useful:
    indicate that the documentation should be extended or improved. In
    such cases, consider filing a documentation bug using the Yocto
    Project implementation of
-   `Bugzilla <https://bugzilla.yoctoproject.org/>`__. For information on
+   :yocto_bugs:`Bugzilla <>`. For information on
    how to submit a bug against the Yocto Project, see the Yocto Project
-   Bugzilla `wiki
-   page <&YOCTO_WIKI_URL;/wiki/Bugzilla_Configuration_and_Bug_Tracking>`__
+   Bugzilla :yocto_wiki:`wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
    and the "`Submitting a Defect Against the Yocto
    Project <#submitting-a-defect-against-the-yocto-project>`__" section.
 
@@ -9241,13 +9239,12 @@ against the Yocto Project. For additional information on this
 implementation of Bugzilla see the "`Yocto Project
 Bugzilla <&YOCTO_DOCS_REF_URL;#resources-bugtracker>`__" section in the
 Yocto Project Reference Manual. For more detail on any of the following
-steps, see the Yocto Project `Bugzilla wiki
-page <&YOCTO_WIKI_URL;/wiki/Bugzilla_Configuration_and_Bug_Tracking>`__.
+steps, see the Yocto Project
+:yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`.
 
 Use the following general steps to submit a bug"
 
-1.  Open the Yocto Project implementation of
-    `Bugzilla <&YOCTO_BUGZILLA_URL;>`__.
+1.  Open the Yocto Project implementation of :yocto_bugs:`Bugzilla <>`.
 
 2.  Click "File a Bug" to enter a new bug.
 
@@ -9365,8 +9362,8 @@ concepts on working in the Yocto Project development environment.
 Two commonly used testing repositories exist for OpenEmbedded-Core:
 
 -  *"ross/mut" branch:* The "mut" (master-under-test) tree exists in the
-   ``poky-contrib`` repository in the `Yocto Project source
-   repositories <&YOCTO_GIT_URL;>`__.
+   ``poky-contrib`` repository in the
+   :yocto_git:`Yocto Project source repositories <>`.
 
 -  *"master-next" branch:* This branch is part of the main "poky"
    repository in the Yocto Project source repositories.

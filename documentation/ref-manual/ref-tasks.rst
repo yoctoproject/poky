@@ -310,7 +310,7 @@ to locate and apply patch files to the source code.
 Patch files, by default, are ``*.patch`` and ``*.diff`` files created
 and kept in a subdirectory of the directory holding the recipe file. For
 example, consider the
-```bluez5`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/recipes-connectivity/bluez5>`__
+:yocto_git:`bluez5 </cgit/cgit.cgi/poky/tree/meta/recipes-connectivity/bluez5>`
 recipe from the OE-Core layer (i.e. ``poky/meta``):
 poky/meta/recipes-connectivity/bluez5 This recipe has two patch files
 located here: poky/meta/recipes-connectivity/bluez5/bluez5

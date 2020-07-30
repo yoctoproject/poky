@@ -43,7 +43,7 @@ To help understand the BSP layer concept, consider the BSPs that the
 Yocto Project supports and provides with each release. You can see the
 layers in the `Yocto Project Source
 Repositories <&YOCTO_DOCS_OM_URL;#yocto-project-repositories>`__ through
-a web interface at ` <&YOCTO_GIT_URL;>`__. If you go to that interface,
+a web interface at :yocto_git:`/`. If you go to that interface,
 you will find a list of repositories under "Yocto Metadata Layers".
 
 .. note::
@@ -270,7 +270,7 @@ meta-bsp_root_name/recipes-graphics/\*
 meta-bsp_root_name/recipes-kernel/linux/linux-yocto_kernel_rev.bbappend
 
 Below is an example of the Raspberry Pi BSP layer that is available from
-the `Source Respositories <&YOCTO_GIT_URL;>`__:
+the :yocto_git:`Source Respositories <>`:
 meta-raspberrypi/COPYING.MIT meta-raspberrypi/README.md
 meta-raspberrypi/classes
 meta-raspberrypi/classes/sdcard_image-rpi.bbclass meta-raspberrypi/conf/
@@ -487,7 +487,7 @@ This optional area contains useful pre-built kernels and user-space
 filesystem images released with the BSP that are appropriate to the
 target system. This directory typically contains graphical (e.g. Sato)
 and minimal live images when the BSP tarball has been created and made
-available in the `Yocto Project <&YOCTO_HOME_URL;>`__ website. You can
+available in the :yocto_home:`Yocto Project <>` website. You can
 use these kernels and images to get a system running and quickly get
 started on development tasks.
 
@@ -871,13 +871,13 @@ Yocto Project:
    ``meta-``\ bsp_root_name directory. This license covers the BSP
    Metadata as a whole. You must specify which license to use since no
    default license exists when one is not specified. See the
-   ```COPYING.MIT`` <&YOCTO_GIT_URL;/cgit.cgi/meta-raspberrypi/tree/COPYING.MIT>`__
+   :yocto_git:`COPYING.MIT </cgit.cgi/meta-raspberrypi/tree/COPYING.MIT>`
    file for the Raspberry Pi BSP in the ``meta-raspberrypi`` BSP layer
    as an example.
 
 -  *README File:* You must include a ``README`` file in the
    ``meta-``\ bsp_root_name directory. See the
-   ```README.md`` <&YOCTO_GIT_URL;/cgit.cgi/meta-raspberrypi/tree/README.md>`__
+   :yocto_git:`README.md </cgit.cgi/meta-raspberrypi/tree/README.md>`
    file for the Raspberry Pi BSP in the ``meta-raspberrypi`` BSP layer
    as an example.
 
@@ -976,8 +976,8 @@ Yocto Project:
 -  *Use a Yocto Linux Kernel:* Kernel recipes in the BSP should be based
    on a Yocto Linux kernel. Basing your recipes on these kernels reduces
    the costs for maintaining the BSP and increases its scalability. See
-   the ``Yocto Linux Kernel`` category in the `Source
-   Repositories <&YOCTO_GIT_URL;>`__ for these kernels.
+   the ``Yocto Linux Kernel`` category in the
+   :yocto_git:`Source Repositories <>` for these kernels.
 
 Customizing a Recipe for a BSP
 ==============================
@@ -1067,7 +1067,7 @@ of the licensed version in the BSP recipe.
 
 For cases where you can substitute a free component and still maintain
 the system's functionality, the "DOWNLOADS" selection from the
-"SOFTWARE" tab on the `Yocto Project website <&YOCTO_HOME_URL;>`__ makes
+"SOFTWARE" tab on the :yocto_home:`Yocto Project Website <>` makes
 available de-featured BSPs that are completely free of any IP
 encumbrances. For these cases, you can use the substitution directly and
 without any further licensing requirements. If present, these fully
@@ -1114,8 +1114,8 @@ list describes them in order of preference:
    image with no change at all to the normal build process.
 
 2. *Get a Pre-Built Version of the BSP:* You can get this type of BSP by
-   selecting the "DOWNLOADS" item from the "SOFTWARE" tab on the `Yocto
-   Project website <&YOCTO_HOME_URL;>`__. You can download BSP tarballs
+   selecting the "DOWNLOADS" item from the "SOFTWARE" tab on the
+   :yocto_home:`Yocto Project website <>`. You can download BSP tarballs
    that contain proprietary components after agreeing to the licensing
    requirements of each of the individually encumbered packages as part
    of the download process. Obtaining the BSP this way allows you to
@@ -1156,20 +1156,20 @@ Use these steps to create a BSP layer:
 -  *Create a Layer Configuration File:* Every layer needs a layer
    configuration file. This configuration file establishes locations for
    the layer's recipes, priorities for the layer, and so forth. You can
-   find examples of ``layer.conf`` files in the Yocto Project `Source
-   Repositories <&YOCTO_GIT_URL;>`__. To get examples of what you need
+   find examples of ``layer.conf`` files in the Yocto Project
+   :yocto_git:`Source Repositories <>`. To get examples of what you need
    in your configuration file, locate a layer (e.g. "meta-ti") and
    examine the
-   ` <&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-ti/tree/conf/layer.conf>`__
+   :yocto_git:`local.conf </cgit/cgit.cgi/meta-ti/tree/conf/layer.conf>`
    file.
 
 -  *Create a Machine Configuration File:* Create a
    ``conf/machine/``\ bsp_root_name\ ``.conf`` file. See
-   ```meta-yocto-bsp/conf/machine`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto-bsp/conf/machine>`__
+   :yocto_git:`meta-yocto-bsp/conf/machine </cgit/cgit.cgi/poky/tree/meta-yocto-bsp/conf/machine>`
    for sample bsp_root_name\ ``.conf`` files. Other samples such as
-   ```meta-ti`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-ti/tree/conf/machine>`__
+   :yocto_git:`meta-ti </cgit/cgit.cgi/meta-ti/tree/conf/machine>`
    and
-   ```meta-freescale`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/meta-freescale/tree/conf/machine>`__
+   :yocto_git:`meta-freescale </cgit/cgit.cgi/meta-freescale/tree/conf/machine>`
    exist from other vendors that have more specific machine and tuning
    examples.
 
@@ -1184,7 +1184,7 @@ Use these steps to create a BSP layer:
 
 The remainder of this section provides a description of the Yocto
 Project reference BSP for Beaglebone, which resides in the
-```meta-yocto-bsp`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-yocto-bsp>`__
+:yocto_git:`meta-yocto-bsp </cgit/cgit.cgi/poky/tree/meta-yocto-bsp>`
 layer.
 
 BSP Layer Configuration Example
@@ -1199,8 +1199,8 @@ BBFILE_COLLECTIONS += "yoctobsp" BBFILE_PATTERN_yoctobsp =
 "^${LAYERDIR}/" BBFILE_PRIORITY_yoctobsp = "5" LAYERVERSION_yoctobsp =
 "4" LAYERSERIES_COMPAT_yoctobsp = "DISTRO_NAME_NO_CAP" The variables
 used in this file configure the layer. A good way to learn about layer
-configuration files is to examine various files for BSP from the `Source
-Repositories <&YOCTO_GIT_URL;>`__.
+configuration files is to examine various files for BSP from the
+:yocto_git:`Source Repositories <>`.
 
 For a detailed description of this particular layer configuration file,
 see "`step 3 <&YOCTO_DOCS_DEV_URL;#dev-layer-config-file-description>`__
@@ -1409,7 +1409,7 @@ PREFERRED_VERSION_linux-yocto ?= "5.0%" The
 metadata used to build the kernel. In this case, a kernel append file
 (i.e. ``linux-yocto_5.0.bbappend``) is used to override an established
 kernel recipe (i.e. ``linux-yocto_5.0.bb``), which is located in
-` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta/recipes-kernel/linux>`__.
+https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/recipes-kernel/linux.
 
 Following is the contents of the append file: KBRANCH_genericx86 =
 "v5.0/standard/base" KBRANCH_genericx86-64 = "v5.0/standard/base"

@@ -33,7 +33,7 @@ Yocto Project Bugzilla
 ======================
 
 The Yocto Project uses its own implementation of
-`Bugzilla <&YOCTO_BUGZILLA_URL;>`__ to track defects (bugs).
+:yocto_bugs:`Bugzilla <>` to track defects (bugs).
 Implementations of Bugzilla work well for group development because they
 track bugs and code changes, can be used to communicate changes and
 problems with developers, can be used to submit and review patches, and
@@ -52,11 +52,9 @@ against the Yocto Project, see the following:
    Project <&YOCTO_DOCS_DEV_URL;#submitting-a-defect-against-the-yocto-project>`__"
    section in the Yocto Project Development Tasks Manual.
 
--  The Yocto Project `Bugzilla wiki
-   page <&YOCTO_WIKI_URL;/wiki/Bugzilla_Configuration_and_Bug_Tracking>`__
+-  The Yocto Project :yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
 
-For information on Bugzilla in general, see
-` <http://www.bugzilla.org/about/>`__.
+For information on Bugzilla in general, see http://www.bugzilla.org/about/.
 
 .. _resources-mailinglist:
 
@@ -109,11 +107,10 @@ Links and Related Documentation
 
 Here is a list of resources you might find helpful:
 
--  `The Yocto Project website <&YOCTO_HOME_URL;>`__\ *:* The home site
+-  :yocto_home:`The Yocto Project Website <>`\ *:* The home site
    for the Yocto Project.
 
--  `The Yocto Project Main Wiki
-   Page <&YOCTO_WIKI_URL;/wiki/Main_Page>`__\ *:* The main wiki page for
+-  :yocto_wiki:`The Yocto Project Main Wiki Page </wiki/Main_Page>`\ *:* The main wiki page for
    the Yocto Project. This page contains information about project
    planning, release engineering, QA & automation, a reference site map,
    and other resources related to the Yocto Project.
@@ -182,12 +179,12 @@ Here is a list of resources you might find helpful:
    the :term:`OpenEmbedded Build System`, which uses
    BitBake, that reports build information.
 
--  `FAQ <&YOCTO_WIKI_URL;/wiki/FAQ>`__\ *:* A list of commonly asked
+-  :yocto_wiki:`FAQ </wiki/FAQ>`\ *:* A list of commonly asked
    questions and their answers.
 
 -  *Release Notes:* Features, updates and known issues for the current
    release of the Yocto Project. To access the Release Notes, go to the
-   `Downloads <&YOCTO_HOME_URL;/software-overview/downloads/>`__ page on
+   :yocto_home:`Downloads </software-overview/downloads>` page on
    the Yocto Project website and click on the "RELEASE INFORMATION" link
    for the appropriate release.
 
@@ -195,8 +192,7 @@ Here is a list of resources you might find helpful:
    the Yocto Project uses. If you find problems with the Yocto Project,
    you should report them using this application.
 
--  `Bugzilla Configuration and Bug Tracking Wiki
-   Page <&YOCTO_WIKI_URL;/wiki/Bugzilla_Configuration_and_Bug_Tracking>`__\ *:*
+-  :yocto_wiki:`Bugzilla Configuration and Bug Tracking Wiki Page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`\ *:*
    Information on how to get set up and use the Yocto Project
    implementation of Bugzilla for logging and tracking Yocto Project
    defects.

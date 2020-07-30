@@ -47,8 +47,8 @@ Project:
    system, software, and service vendors exist whose products and
    services adopt and support the Yocto Project. For a look at the Yocto
    Project community and the companies involved with the Yocto Project,
-   see the "COMMUNITY" and "ECOSYSTEM" tabs on the `Yocto
-   Project <&YOCTO_HOME_URL;>`__ home page.
+   see the "COMMUNITY" and "ECOSYSTEM" tabs on the
+   :yocto_home:`Yocto Project <>` home page.
 
 -  *Architecture Agnostic:* Yocto Project supports Intel, ARM, MIPS,
    AMD, PPC and other architectures. Most ODMs, OSVs, and chip vendors
@@ -482,8 +482,7 @@ The following list consists of components associated with the
    OpenEmbedded-derived systems, which includes the Yocto Project. The
    Yocto Project and the OpenEmbedded Project both maintain the
    OpenEmbedded-Core. You can find the OE-Core metadata in the Yocto
-   Project `Source
-   Repositories <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta>`__.
+   Project :yocto_git:`Source Repositories </cgit/cgit.cgi/poky/tree/meta>`.
 
    Historically, the Yocto Project integrated the OE-Core metadata
    throughout the Yocto Project source repository reference system
@@ -543,8 +542,8 @@ targets:
    applications that you can tailor to a specific, non-desktop platform
    to enhance usability in constrained environments.
 
-   You can find the Matchbox source in the Yocto Project `Source
-   Repositories <&YOCTO_GIT_URL;>`__.
+   You can find the Matchbox source in the Yocto Project
+   :yocto_git:`Source Repositories <>`.
 
 -  *Opkg* Open PacKaGe management (opkg) is a lightweight package
    management system based on the itsy package (ipkg) management system.
@@ -696,8 +695,8 @@ into a usable binary image.
 Poky is a combined repository of BitBake, OpenEmbedded-Core (which is
 found in ``meta``), ``meta-poky``, ``meta-yocto-bsp``, and documentation
 provided all together and known to work well together. You can view
-these items that make up the Poky repository in the `Source
-Repositories <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/>`__.
+these items that make up the Poky repository in the
+:yocto_git:`Source Repositories </cgit/cgit.cgi/poky/tree/>`.
 
 .. note::
 

@@ -10,7 +10,7 @@ Tree Construction
 This section describes construction of the Yocto Project kernel source
 repositories as accomplished by the Yocto Project team to create Yocto
 Linux kernel repositories. These kernel repositories are found under the
-heading "Yocto Linux Kernel" at `YOCTO_GIT_URL <&YOCTO_GIT_URL;>`__ and
+heading "Yocto Linux Kernel" at :yocto_git:`/` and
 are shipped as part of a Yocto Project release. The team creates these
 repositories by compiling and executing the set of feature descriptions
 for every BSP and feature in the product. Those feature descriptions
@@ -80,7 +80,7 @@ to the kernel.
 
 The following steps describe what happens when the Yocto Project Team
 constructs the Yocto Project kernel source Git repository (or tree)
-found at ` <&YOCTO_GIT_URL;>`__ given the introduction of a new
+found at :yocto_git:`/` given the introduction of a new
 top-level kernel feature or BSP. The following actions effectively
 provide the Metadata and create the tree that includes the new feature,
 patch, or BSP:
@@ -93,10 +93,9 @@ patch, or BSP:
    located by searching these system directories:
 
    -  The in-tree kernel-cache directories, which are located in the
-      ```yocto-kernel-cache`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/yocto-kernel-cache/tree/bsp>`__
+      :yocto_git:`yocto-kernel-cache </cgit/cgit.cgi/yocto-kernel-cache/tree/bsp>`
       repository organized under the "Yocto Linux Kernel" heading in the
-      `Yocto Project Source
-      Repositories <http://git.yoctoproject.org/cgit/cgit.cgi>`__.
+      :yocto_git:`Yocto Project Source Repositories <>`.
 
    -  Areas pointed to by ``SRC_URI`` statements found in kernel recipes
 
@@ -143,8 +142,7 @@ specific to some target hardware.
       as shipped with the Yocto Project release. Any add-ons and
       configuration data are applied to the end of an existing branch.
       The full repository generation that is found in the official Yocto
-      Project kernel repositories at
-      `http://git.yoctoproject.org <&YOCTO_GIT_URL;>`__ is the
+      Project kernel repositories at :yocto_git:`/` is the
       combination of all supported boards and configurations.
 
    -  The technique the Yocto Project team uses is flexible and allows
@@ -152,12 +150,12 @@ specific to some target hardware.
       patches specific to a deployment. Any additions to the kernel
       become an integrated part of the branches.
 
-   -  The full kernel tree that you see on ` <&YOCTO_GIT_URL;>`__ is
+   -  The full kernel tree that you see on :yocto_git:`/` is
       generated through repeating the above steps for all valid BSPs.
       The end result is a branched, clean history tree that makes up the
       kernel for a given release. You can see the script (``kgit-scc``)
       responsible for this in the
-      ```yocto-kernel-tools`` <&YOCTO_GIT_URL;/cgit.cgi/yocto-kernel-tools/tree/tools>`__
+      :yocto_git:`yocto-kernel-tools </cgit.cgi/yocto-kernel-tools/tree/tools>`
       repository.
 
    -  The steps used to construct the full kernel tree are the same

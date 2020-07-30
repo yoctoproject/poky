@@ -20,10 +20,10 @@ Project, and provides insight into how the Yocto Project team develops
 and maintains Yocto Linux kernel Git repositories and Metadata.
 
 Each Yocto Project release has a set of Yocto Linux kernel recipes,
-whose Git repositories you can view in the Yocto `Source
-Repositories <&YOCTO_GIT_URL;>`__ under the "Yocto Linux Kernel"
+whose Git repositories you can view in the Yocto
+:yocto_git:`Source Repositories <>` under the "Yocto Linux Kernel"
 heading. New recipes for the release track the latest Linux kernel
-upstream developments from ` <http://www.kernel.org>`__ and introduce
+upstream developments from http://www.kernel.org> and introduce
 newly-supported platforms. Previous recipes in the release are refreshed
 and supported for at least one additional Yocto Project release. As they
 align, these previous releases are updated to include the latest from

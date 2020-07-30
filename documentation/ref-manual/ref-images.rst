@@ -40,8 +40,8 @@ Following is a list of supported recipes:
    Player <http://www.vmware.com/products/player/overview.html>`__ or
    `VMware
    Workstation <http://www.vmware.com/products/workstation/overview.html>`__.
-   For more information on this image, see the `Build
-   Appliance <&YOCTO_HOME_URL;/software-item/build-appliance/>`__ page
+   For more information on this image, see the :yocto_home:`Build
+   Appliance <software-item/build-appliance>` page
    on the Yocto Project website.
 
 -  ``core-image-base``: A console-only image that fully supports the

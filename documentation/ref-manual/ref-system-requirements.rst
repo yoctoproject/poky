@@ -13,8 +13,8 @@ Rather, use this manual to find variable definitions, class
 descriptions, and so forth as needed during the course of using the
 Yocto Project.
 
-For introductory information on the Yocto Project, see the `Yocto
-Project Website <&YOCTO_HOME_URL;>`__ and the "`Yocto Project
+For introductory information on the Yocto Project, see the
+:yocto_home:`Yocto Project Website <>` and the "`Yocto Project
 Development
 Environment <&YOCTO_DOCS_OM_URL;#overview-development-environment>`__"
 chapter in the Yocto Project Overview and Concepts Manual.
@@ -68,8 +68,8 @@ distributions:
    -  If you encounter problems, please go to `Yocto Project
       Bugzilla <&YOCTO_BUGZILLA_URL;>`__ and submit a bug. We are
       interested in hearing about your experience. For information on
-      how to submit a bug, see the Yocto Project `Bugzilla wiki
-      page <&YOCTO_WIKI_URL;/wiki/Bugzilla_Configuration_and_Bug_Tracking>`__
+      how to submit a bug, see the Yocto Project
+      :yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
       and the "`Submitting a Defect Against the Yocto
       Project <&YOCTO_DOCS_DEV_URL;#submitting-a-defect-against-the-yocto-project>`__"
       section in the Yocto Project Development Tasks Manual.
@@ -255,7 +255,7 @@ installer and automatically installs the tools for you:
 
 1. Execute the ``install-buildtools`` script. Here is an example: $ cd
    poky $ scripts/install-buildtools --without-extended-buildtools \\
-   --base-url YOCTO_DL_URL/releases/yocto \\ --release yocto-DISTRO \\
+   --base-url https://downloads.yoctoproject.org/releases/yocto \\ --release yocto-DISTRO \\
    --installer-version DISTRO
 
    During execution, the buildtools tarball will be downloaded, the

@@ -1248,8 +1248,8 @@ The following reference BSPs changes occurred:
 
 The previous reference BSPs for the ``beagleboard`` and
 ``routerstationpro`` machines are still available in a new
-``meta-yocto-bsp-old`` layer in the `Source
-Repositories <&YOCTO_GIT_URL;>`__ at
+``meta-yocto-bsp-old`` layer in the
+:yocto_git:`Source Repositories <>` at
 http://git.yoctoproject.org/cgit/cgit.cgi/meta-yocto-bsp-old/.
 
 Moving to the Yocto Project 1.7 Release

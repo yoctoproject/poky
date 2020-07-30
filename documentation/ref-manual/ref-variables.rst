@@ -1853,9 +1853,9 @@ system and gives an overview of their function and contents.
       process gets source files when working behind a firewall or proxy
       server, see this specific question in the
       "`FAQ <#how-does-the-yocto-project-obtain-source-code-and-will-it-work-behind-my-firewall-or-proxy-server>`__"
-      chapter. You can also refer to the "`Working Behind a Network
-      Proxy <&YOCTO_WIKI_URL;/wiki/Working_Behind_a_Network_Proxy>`__" Wiki
-      page.
+      chapter. You can also refer to the
+      ":yocto_wiki:`Working Behind a Network Proxy </wiki/Working_Behind_a_Network_Proxy>`"
+      Wiki page.
    
    DOC_COMPRESS
       When inheriting the :ref:`compress_doc <ref-classes-compress_doc>`
@@ -3240,7 +3240,7 @@ system and gives an overview of their function and contents.
          recipe file.
    
       See the
-      ```local.conf.sample.extended`` <&YOCTO_GIT_URL;/cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample.extended>`__
+      :yocto_git:`local.conf.sample.extended </cgit/cgit.cgi/poky/tree/meta-poky/conf/local.conf.sample.extended>`
       file for additional information. Also, for information on creating an
       initramfs, see the "`Building an Initial RAM Filesystem (initramfs)
       Image <&YOCTO_DOCS_DEV_URL;#building-an-initramfs-image>`__" section
@@ -3740,8 +3740,8 @@ system and gives an overview of their function and contents.
    
       To specify the OE-Core versions for which a layer is compatible, use
       this variable in your layer's ``conf/layer.conf`` configuration file.
-      For the list, use the Yocto Project `Release
-      Name <https://wiki.yoctoproject.org/wiki/Releases>`__ (e.g.
+      For the list, use the Yocto Project
+      :yocto_wiki:`Release Name </wiki/Releases>` (e.g.
       DISTRO_NAME_NO_CAP). To specify multiple OE-Core versions for the
       layer, use a space-separated list: LAYERSERIES_COMPAT_layer_root_name
       = "DISTRO_NAME_NO_CAP DISTRO_NAME_NO_CAP_MINUS_ONE"

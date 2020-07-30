@@ -66,8 +66,8 @@ Other Information
 
 Because this manual presents information for many different topics,
 supplemental information is recommended for full comprehension. For
-additional introductory information on the Yocto Project, see the `Yocto
-Project Website <&YOCTO_HOME_URL;>`__. If you want to build an image
+additional introductory information on the Yocto Project, see the
+:yocto_home:`Yocto Project Website <>`. If you want to build an image
 with no knowledge of Yocto Project as a way of quickly testing it out,
 see the `Yocto Project Quick Build <&YOCTO_DOCS_BRIEF_URL;>`__ document.
 For a comprehensive list of links and other documentation, see the

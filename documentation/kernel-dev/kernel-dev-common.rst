@@ -286,7 +286,7 @@ section:
 5. *Create a Local Copy of the Kernel Git Repository:* You can find Git
    repositories of supported Yocto Project kernels organized under
    "Yocto Linux Kernel" in the Yocto Project Source Repositories at
-   ` <&YOCTO_GIT_URL;>`__.
+   :yocto_git:`/`.
 
    For simplicity, it is recommended that you create your copy of the
    kernel Git repository outside of the
@@ -1404,7 +1404,7 @@ To help you use your own sources, the Yocto Project provides a
 linux-yocto custom recipe (``linux-yocto-custom.bb``) that uses
 ``kernel.org`` sources and the Yocto Project Linux kernel tools for
 managing kernel Metadata. You can find this recipe in the ``poky`` Git
-repository of the Yocto Project `Source Repository <&YOCTO_GIT_URL;>`__
+repository of the Yocto Project :yocto_git:`Source Repository <>`
 at: poky/meta-skeleton/recipes-kernel/linux/linux-yocto-custom.bb
 
 Here are some basic steps you can use to work with your own sources:
@@ -1535,7 +1535,7 @@ Linux kernel sources, if you need an external kernel module, the
 create your own out-of-tree Linux kernel module recipe.
 
 This template recipe is located in the ``poky`` Git repository of the
-Yocto Project `Source Repository <&YOCTO_GIT_URL;>`__ at:
+Yocto Project :yocto_git:`Source Repository <>` at:
 poky/meta-skeleton/recipes-kernel/hello-mod/hello-mod_0.1.bb
 
 To get started, copy this recipe to your layer and give it a meaningful
