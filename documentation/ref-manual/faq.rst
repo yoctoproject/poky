@@ -263,7 +263,7 @@ OpenEmbedded build system to use its internally built toolchain (i.e.
 particular, "external-*" refers to external toolchains. One example is
 the Sourcery G++ Toolchain. The support for this toolchain resides in
 the separate ``meta-sourcery`` layer at
-` <http://github.com/MentorEmbedded/meta-sourcery/>`__.
+http://github.com/MentorEmbedded/meta-sourcery/.
 
 In addition to the toolchain configuration, you also need a
 corresponding toolchain recipe file. This recipe file needs to package

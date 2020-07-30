@@ -546,7 +546,7 @@ system and gives an overview of their function and contents.
       software.
    
       When specifying recipe files, you can pattern match using Python's
-      ```glob`` <https://docs.python.org/3/library/glob.html>`__ syntax.
+      ```glob`https://docs.python.org/3/library/glob.html syntax.
       For details on the syntax, see the documentation by following the
       previous link.
    
@@ -604,7 +604,7 @@ system and gives an overview of their function and contents.
       compiler. Consequently, the syntax follows Python's Regular
       Expression (re) syntax. The expressions are compared against the full
       paths to the files. For complete syntax information, see Python's
-      documentation at ` <http://docs.python.org/3/library/re.html#re>`__.
+      documentation at http://docs.python.org/3/library/re.html#re.
    
       The following example uses a complete regular expression to tell
       BitBake to ignore all recipe and recipe append files in the
@@ -2173,7 +2173,7 @@ system and gives an overview of their function and contents.
    
          -  When specifying files or paths, you can pattern match using
             Python's
-            ```glob`` <https://docs.python.org/2/library/glob.html>`__
+            ```glob`https://docs.python.org/2/library/glob.html
             syntax. For details on the syntax, see the documentation by
             following the previous link.
    
@@ -2435,7 +2435,7 @@ system and gives an overview of their function and contents.
    
       Here is an example from the ``dbus`` recipe: GROUPADD_PARAM_${PN} =
       "-r netdev" For information on the standard Linux shell command
-      ``groupadd``, see ` <http://linux.die.net/man/8/groupadd>`__.
+      ``groupadd``, see http://linux.die.net/man/8/groupadd.
    
    GROUPMEMS_PARAM
       When inheriting the :ref:`useradd <ref-classes-useradd>` class,
@@ -2444,7 +2444,7 @@ system and gives an overview of their function and contents.
       of a group when the package is installed.
    
       For information on the standard Linux shell command ``groupmems``,
-      see ` <http://linux.die.net/man/8/groupmems>`__.
+      see http://linux.die.net/man/8/groupmems.
    
    GRUB_GFXSERIAL
       Configures the GNU GRand Unified Bootloader (GRUB) to have graphics
@@ -3313,7 +3313,7 @@ system and gives an overview of their function and contents.
       The value in ``INITSCRIPT_PARAMS`` is passed through to the
       ``update-rc.d`` command. For more information on valid parameters,
       please see the ``update-rc.d`` manual page at
-      ` <http://www.tin.org/bin/man.cgi?section=8&topic=update-rc.d>`__.
+      http://www.tin.org/bin/man.cgi?section=8&topic=update-rc.d.
    
    INSANE_SKIP
       Specifies the QA checks to skip for a specific package within a
@@ -4193,7 +4193,7 @@ system and gives an overview of their function and contents.
       variable for more information.
    
    module_conf
-      Specifies ```modprobe.d`` <http://linux.die.net/man/5/modprobe.d>`__
+      Specifies ```modprobe.d`http://linux.die.net/man/5/modprobe.d
       syntax lines for inclusion in the ``/etc/modprobe.d/modname.conf``
       file.
    
@@ -7069,7 +7069,7 @@ system and gives an overview of their function and contents.
       toolchain. One example is the Sourcery G++ Toolchain. The support for
       this toolchain resides in the separate Mentor Graphics
       ``meta-sourcery`` layer at
-      ` <http://github.com/MentorEmbedded/meta-sourcery/>`__.
+      http://github.com/MentorEmbedded/meta-sourcery/.
    
       The layer's ``README`` file contains information on how to use the
       Sourcery G++ Toolchain as an external toolchain. In summary, you must
@@ -7527,7 +7527,7 @@ system and gives an overview of their function and contents.
       "sdcard" specifies the ``IMAGE_FSTYPES`` to use for the U-boot image.
    
       For more information on how the ``UBOOT_CONFIG`` is handled, see the
-      ```uboot-config`` <http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/classes/uboot-config.bbclass>`__
+      ```uboot-config`http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/classes/uboot-config.bbclass
       class.
    
    UBOOT_ENTRYPOINT
@@ -7787,7 +7787,7 @@ system and gives an overview of their function and contents.
       "--system --home ${localstatedir}/lib/dbus \\ --no-create-home
       --shell /bin/false \\ --user-group messagebus" For information on the
       standard Linux shell command ``useradd``, see
-      ` <http://linux.die.net/man/8/useradd>`__.
+      http://linux.die.net/man/8/useradd.
    
    USERADD_UID_TABLES
       Specifies a password file to use for obtaining static user

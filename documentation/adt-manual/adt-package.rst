@@ -20,19 +20,19 @@ using three different Package Management Systems (PMS):
 -  *OPKG:* A less well known PMS whose use originated in the
    OpenEmbedded and OpenWrt embedded Linux projects. This PMS works with
    files packaged in an ``.ipk`` format. See
-   ` <http://en.wikipedia.org/wiki/Opkg>`__ for more information about
+   http://en.wikipedia.org/wiki/Opkg for more information about
    OPKG.
 
 -  *RPM:* A more widely known PMS intended for GNU/Linux distributions.
    This PMS works with files packaged in an ``.rpm`` format. The build
    system currently installs through this PMS by default. See
-   ` <http://en.wikipedia.org/wiki/RPM_Package_Manager>`__ for more
+   http://en.wikipedia.org/wiki/RPM_Package_Manager for more
    information about RPM.
 
 -  *Debian:* The PMS for Debian-based systems is built on many PMS
    tools. The lower-level PMS tool ``dpkg`` forms the base of the Debian
    PMS. For information on dpkg see
-   ` <http://en.wikipedia.org/wiki/Dpkg>`__.
+   http://en.wikipedia.org/wiki/Dpkg.
 
 Configuring the PMS
 ===================

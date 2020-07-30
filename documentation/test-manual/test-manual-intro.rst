@@ -27,7 +27,7 @@ loaded with information from the `README <>`__ files and notes from key
 engineers:
 
 -  *``yocto-autobuilder2``:* This
-   ```README.md`` <http://git.yoctoproject.org/clean/cgit.cgi/yocto-autobuilder2/tree/README.md>`__
+   ```README.md`http://git.yoctoproject.org/clean/cgit.cgi/yocto-autobuilder2/tree/README.md
    is the main README which detials how to set up the Yocto Project
    Autobuilder. The ``yocto-autobuilder2`` repository represents the
    Yocto Project's console UI plugin to Buildbot and the configuration
@@ -35,7 +35,7 @@ engineers:
    requires.
 
 -  *``yocto-autobuilder-helper``:* This
-   ```README`` <http://git.yoctoproject.org/clean/cgit.cgi/yocto-autobuilder-helper/tree/README>`__
+   ```README`http://git.yoctoproject.org/clean/cgit.cgi/yocto-autobuilder-helper/tree/README
    and repository contains Yocto Project Autobuilder Helper scripts and
    configuration. The ``yocto-autobuilder-helper`` repository contains
    the "glue" logic that defines which tests to run and how to run them.

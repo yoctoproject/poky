@@ -261,7 +261,7 @@ Follow these steps to add a hardware layer:
    ``local.conf`` file specifies the machine for the build. For this
    example, set the ``MACHINE`` variable to "cyclone5". These
    configurations are used:
-   ` <https://github.com/kraj/meta-altera/blob/master/conf/machine/cyclone5.conf>`__.
+   https://github.com/kraj/meta-altera/blob/master/conf/machine/cyclone5.conf.
 
    .. note::
 

@@ -445,14 +445,14 @@ as your Yocto Project build host:
 
 5. *Optionally Orient Yourself With Docker:* If you are unfamiliar with
    Docker and the container concept, you can learn more here -
-   ` <https://docs.docker.com/get-started/>`__.
+   https://docs.docker.com/get-started/.
 
 6. *Launch Docker or Docker Toolbox:* You should be able to launch
    Docker or the Docker Toolbox and have a terminal shell on your
    development host.
 
 7. *Set Up the Containers to Use the Yocto Project:* Go to
-   ` <https://github.com/crops/docker-win-mac-docs/wiki>`__ and follow
+   https://github.com/crops/docker-win-mac-docs/wiki and follow
    the directions for your particular build host (i.e. Linux, Mac, or
    Windows).
 
@@ -514,7 +514,7 @@ your Yocto Project build host:
 
 4. *Optionally Orient Yourself on WSL:* If you are unfamiliar with WSL,
    you can learn more here -
-   ` <https://docs.microsoft.com/en-us/windows/wsl/wsl2-about>`__.
+   https://docs.microsoft.com/en-us/windows/wsl/wsl2-about.
 
 5. *Launch your WSL Distibution:* From the Windows start menu simply
    launch your WSL distribution just like any other application.

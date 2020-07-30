@@ -287,7 +287,7 @@ particular recipe.
 .. note::
 
    -  For the ``oe-core`` layer, recipe maintainers come from the
-      ```maintainers.inc`` <http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/distro/include/maintainers.inc>`__
+      ```maintainers.inc`http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/distro/include/maintainers.inc
       file.
 
    -  If the recipe is using the `Git

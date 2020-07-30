@@ -54,7 +54,7 @@ codename are likely to be compatible and thus work together.
 Releases are given a nominal release version as well but the codename is
 used in repositories for this reason. You can find information on Yocto
 Project releases and codenames at
-` <https://wiki.yoctoproject.org/wiki/Releases>`__.
+https://wiki.yoctoproject.org/wiki/Releases.
 
 Stable Release Process
 ======================
@@ -84,7 +84,7 @@ Community LTS trees and branches exist where community members share
 patches for older releases. However, these types of patches do not go
 through the same release process as do point releases. You can find more
 information about stable branch maintenance at
-` <https://wiki.yoctoproject.org/wiki/Stable_branch_maintenance>`__.
+https://wiki.yoctoproject.org/wiki/Stable_branch_maintenance.
 
 Testing and Quality Assurance
 =============================

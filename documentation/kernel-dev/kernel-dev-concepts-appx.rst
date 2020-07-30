@@ -11,7 +11,7 @@ Yocto Project Kernel Development and Maintenance
 
 Kernels available through the Yocto Project (Yocto Linux kernels), like
 other kernels, are based off the Linux kernel releases from
-` <http://www.kernel.org>`__. At the beginning of a major Linux kernel
+http://www.kernel.org. At the beginning of a major Linux kernel
 development cycle, the Yocto Project team chooses a Linux kernel based
 on factors such as release timing, the anticipated release timing of
 final upstream ``kernel.org`` versions, and Yocto Project feature
@@ -162,7 +162,7 @@ implemented by the Yocto Project team using the Source Code Manager
       different work flows, front-ends and management techniques.
 
    -  You can find documentation on Git at
-      ` <http://git-scm.com/documentation>`__. You can also get an
+      http://git-scm.com/documentation. You can also get an
       introduction to Git as it applies to the Yocto Project in the
       "`Git <&YOCTO_DOCS_OM_URL;#git>`__" section in the Yocto Project
       Overview and Concepts Manual. The latter reference provides an

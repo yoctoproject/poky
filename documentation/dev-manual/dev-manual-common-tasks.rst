@@ -294,7 +294,7 @@ Logo for your layer and application. The process consists of two parts:
    successful compatibility registration.
 
 2. Completion of an application acceptance form, which you can find at
-   ` <https://www.yoctoproject.org/webform/yocto-project-compatible-registration>`__.
+   https://www.yoctoproject.org/webform/yocto-project-compatible-registration.
 
 To be granted permission to use the logo, you need to satisfy the
 following:
@@ -318,7 +318,7 @@ application, you can use the Yocto Project Compatibility Logo with your
 layer and the application that uses your layer.
 
 To access the form, use this link:
-` <https://www.yoctoproject.org/webform/yocto-project-compatible-registration>`__.
+https://www.yoctoproject.org/webform/yocto-project-compatible-registration.
 Follow the instructions on the form to complete your application.
 
 The application consists of the following sections:
@@ -1713,7 +1713,7 @@ the software being built:
    install the built software into the directories.
 
    You can find more information on ``install`` at
-   ` <http://www.gnu.org/software/coreutils/manual/html_node/install-invocation.html>`__.
+   http://www.gnu.org/software/coreutils/manual/html_node/install-invocation.html.
 
 For the scenarios that do not use Autotools or CMake, you need to track
 the installation and diagnose and fix any issues until everything
@@ -1796,7 +1796,7 @@ different ways:
 -  *systemd:* System Management Daemon (systemd) was designed to replace
    SysVinit and to provide enhanced management of services. For more
    information on systemd, see the systemd homepage at
-   ` <http://freedesktop.org/wiki/Software/systemd/>`__.
+   http://freedesktop.org/wiki/Software/systemd/.
 
    To enable a service using systemd, your recipe needs to inherit the
    :ref:`systemd <ref-classes-systemd>` class. See
@@ -1952,7 +1952,7 @@ recipe, but which one? You can configure your build to call out the
 kernel recipe you want by using the
 :term:`PREFERRED_PROVIDER`
 variable. As an example, consider the
-```x86-base.inc`` <https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/machine/include/x86-base.inc>`__
+```x86-base.inc`https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/machine/include/x86-base.inc
 include file, which is a machine (i.e.
 :term:`MACHINE`) configuration file.
 This include file is the reason all x86-based machines use the
@@ -2806,7 +2806,7 @@ the layer tree.
 
 You can easily set up to run the AUH utility on a regular basis by using
 a cron job. See the
-```weeklyjob.sh`` <http://git.yoctoproject.org/cgit/cgit.cgi/auto-upgrade-helper/tree/weeklyjob.sh>`__
+```weeklyjob.sh`http://git.yoctoproject.org/cgit/cgit.cgi/auto-upgrade-helper/tree/weeklyjob.sh
 file distributed with the utility for an example.
 
 .. _gs-using-devtool-upgrade:
@@ -4764,7 +4764,7 @@ follows:
 A good example of an external toolchain used with the Yocto Project is
 Mentor Graphics Sourcery G++ Toolchain. You can see information on how
 to use that particular layer in the ``README`` file at
-` <http://github.com/MentorEmbedded/meta-sourcery/>`__. You can find
+http://github.com/MentorEmbedded/meta-sourcery/. You can find
 further information by reading about the
 :term:`TCMODE` variable in the Yocto
 Project Reference Manual's variable glossary.
@@ -5583,7 +5583,7 @@ system to make your images more secure:
 -  Consider enabling a Mandatory Access Control (MAC) framework such as
    SMACK or SELinux and tuning it appropriately for your device's usage.
    You can find more information in the
-   ```meta-selinux`` <http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/>`__
+   ```meta-selinux`http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/
    layer.
 
 Tools for Hardening Your Image
@@ -6690,7 +6690,7 @@ NPM packages:
    packages, the registry approach is slightly simpler. However, you
    might consider the project approach because you do not have to
    publish your module in the NPM registry
-   (```npm-registry`` <https://docs.npmjs.com/misc/registry>`__), which
+   (```npm-registry`https://docs.npmjs.com/misc/registry), which
    is NPM's public registry.
 
 -  Be familiar with
@@ -6698,7 +6698,7 @@ NPM packages:
 
 -  The NPM host tools need the native ``nodejs-npm`` package, which is
    part of the OpenEmbedded environment. You need to get the package by
-   cloning the ` <https://github.com/openembedded/meta-openembedded>`__
+   cloning the https://github.com/openembedded/meta-openembedded
    repository out of GitHub. Be sure to add the path to your local copy
    to your ``bblayers.conf`` file.
 
@@ -7547,7 +7547,7 @@ packages/qemux86_64-poky-linux/v86d/v86d: PKGSIZE changed from 110579 to
 
 To see changes to the build history using a web interface, follow the
 instruction in the ``README`` file here.
-` <http://git.yoctoproject.org/cgit/cgit.cgi/buildhistory-web/>`__.
+http://git.yoctoproject.org/cgit/cgit.cgi/buildhistory-web/.
 
 Here is a sample screenshot of the interface:
 
@@ -8945,7 +8945,7 @@ style analysis of program crashes. GDB is available as a package within
 the Yocto Project and is installed in SDK images by default. See the
 ":ref:`ref-manual/ref-images:Images`" chapter in the Yocto
 Project Reference Manual for a description of these images. You can find
-information on GDB at ` <http://sourceware.org/gdb/>`__.
+information on GDB at http://sourceware.org/gdb/.
 
 .. note::
 
@@ -10086,7 +10086,7 @@ The server receives the information collected and saves it in a
 database.
 
 A live instance of the error reporting server exists at
-` <http://errors.yoctoproject.org>`__. This server exists so that when
+http://errors.yoctoproject.org. This server exists so that when
 you want to get help with build failures, you can submit all of the
 information on the failure easily and then point to the URL in your bug
 report or send an email to the mailing list.
@@ -10119,7 +10119,7 @@ following command sends the errors to an upstream server: $
 send-error-report
 /home/brandusa/project/poky/build/tmp/log/error-report/error_report_201403141617.txt
 In the previous example, the errors are sent to a public database
-available at ` <http://errors.yoctoproject.org>`__, which is used by the
+available at http://errors.yoctoproject.org, which is used by the
 entire community. If you specify a particular server, you can send the
 errors to a different database. Use the following command for more
 information on available options: $ send-error-report --help
@@ -10145,7 +10145,7 @@ Setting Up Your Own Error Reporting Server
 
 If you want to set up your own error reporting server, you can obtain
 the code from the Git repository at
-` <http://git.yoctoproject.org/cgit/cgit.cgi/error-report-web/>`__.
+http://git.yoctoproject.org/cgit/cgit.cgi/error-report-web/.
 Instructions on how to set it up are in the README document.
 
 .. _dev-using-wayland-and-weston:

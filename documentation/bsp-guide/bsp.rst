@@ -108,7 +108,7 @@ Some layers function as a layer to hold other BSP layers. These layers
 are knows as "`container
 layers <&YOCTO_DOCS_REF_URL;#term-container-layer>`__". An example of
 this type of layer is OpenEmbedded's
-```meta-openembedded`` <https://github.com/openembedded/meta-openembedded>`__
+```meta-openembedded`https://github.com/openembedded/meta-openembedded
 layer. The ``meta-openembedded`` layer contains many ``meta-*`` layers.
 In cases like this, you need to include the names of the actual layers
 you want to work with, such as: BBLAYERS ?= " \\
@@ -164,7 +164,7 @@ section.
 4. *Optionally Clone the ``meta-intel`` BSP Layer:* If your hardware is
    based on current Intel CPUs and devices, you can leverage this BSP
    layer. For details on the ``meta-intel`` BSP layer, see the layer's
-   ```README`` <http://git.yoctoproject.org/cgit/cgit.cgi/meta-intel/tree/README>`__
+   ```README`http://git.yoctoproject.org/cgit/cgit.cgi/meta-intel/tree/README
    file.
 
    1. *Navigate to Your Source Directory:* Typically, you set up the
@@ -849,7 +849,7 @@ Yocto Project:
    in ``poky/meta`` directory of the :term:`Source Directory`
    or in the
    OpenEmbedded-Core Layer (``openembedded-core``) at
-   ` <http://git.openembedded.org/openembedded-core/tree/meta>`__.
+   http://git.openembedded.org/openembedded-core/tree/meta.
 
    You should place recipes (``*.bb`` files) and recipe modifications
    (``*.bbappend`` files) into ``recipes-*`` subdirectories by

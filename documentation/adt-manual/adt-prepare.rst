@@ -137,7 +137,7 @@ comments in the ``adt-installer.conf`` file:
    set up your own IPKG repository pointed to by ``YOCTOADT_REPO``, you
    need to be sure that the directory structure follows the same layout
    as the reference directory set up at
-   ` <http://adtrepo.yoctoproject.org>`__. Also, your repository needs
+   http://adtrepo.yoctoproject.org. Also, your repository needs
    to be accessible through HTTP.
 
 -  ``YOCTOADT_TARGETS``: The machine target architectures for which you
@@ -572,7 +572,7 @@ follows:
 A good example of an external toolchain used with the Yocto Project is
 Mentor Graphics Sourcery G++ Toolchain. You can see information on how
 to use that particular layer in the ``README`` file at
-` <http://github.com/MentorEmbedded/meta-sourcery/>`__. You can find
+http://github.com/MentorEmbedded/meta-sourcery/. You can find
 further information by reading about the
 :term:`TCMODE` variable in the Yocto
 Project Reference Manual's variable glossary.

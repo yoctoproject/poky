@@ -283,7 +283,7 @@ The ``ccache`` class enables the C/C++ Compiler Cache for the build.
 This class is used to give a minor performance boost during the build.
 However, using the class can lead to unexpected side-effects. Thus, it
 is recommended that you do not use this class. See
-` <http://ccache.samba.org/>`__ for information on the C/C++ Compiler
+http://ccache.samba.org/ for information on the C/C++ Compiler
 Cache.
 
 .. _ref-classes-chrpath:

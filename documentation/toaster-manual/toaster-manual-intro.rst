@@ -29,7 +29,7 @@ extensive information about the build process.
    -  Browse layers listed in the various `layer
       sources <#layer-source>`__ that are available in your project
       (e.g. the OpenEmbedded Layer Index at
-      ` <http://layers.openembedded.org/layerindex/>`__).
+      http://layers.openembedded.org/layerindex/).
 
    -  Browse images, recipes, and machines provided by those layers.
 

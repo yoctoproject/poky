@@ -381,12 +381,12 @@ commands.
 .. note::
 
    -  For more information on Git, see
-      ` <http://git-scm.com/documentation>`__.
+      http://git-scm.com/documentation.
 
    -  If you need to download Git, it is recommended that you add Git to
       your system through your distribution's "software store" (e.g. for
       Ubuntu, use the Ubuntu Software feature). For the Git download
-      page, see ` <http://git-scm.com/download>`__.
+      page, see http://git-scm.com/download.
 
    -  For information beyond the introductory nature in this section,
       see the "`Locating Yocto Project Source

@@ -24,9 +24,9 @@ type of layer source called a "layer index."
 A layer index is a web application that contains information about a set
 of custom layers. A good example of an existing layer index is the
 OpenEmbedded Layer Index. A public instance of this layer index exists
-at ` <http://layers.openembedded.org>`__. You can find the code for this
+at http://layers.openembedded.org. You can find the code for this
 layer index's web application at
-` <http://git.yoctoproject.org/cgit/cgit.cgi/layerindex-web/>`__.
+http://git.yoctoproject.org/cgit/cgit.cgi/layerindex-web/.
 
 When you tie a layer source into Toaster, it can query the layer source
 through a
@@ -87,9 +87,9 @@ describes two methods by which you can configure and use your layer
 index.
 
 In the previous section, the code for the OpenEmbedded Metadata Index
-(i.e. ` <http://layers.openembedded.org>`__) was referenced. You can use
+(i.e. http://layers.openembedded.org) was referenced. You can use
 this code, which is at
-` <http://git.yoctoproject.org/cgit/cgit.cgi/layerindex-web/>`__, as a
+http://git.yoctoproject.org/cgit/cgit.cgi/layerindex-web/, as a
 base to create your own layer index.
 
 Use the Administration Interface

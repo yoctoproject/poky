@@ -212,7 +212,7 @@ Errors and Warnings
    you could add the following to your recipe: CFLAGS_append = " -fPIC "
 
    For more information on text relocations at runtime, see
-   ` <http://www.akkadia.org/drepper/textrelocs.html>`__.
+   http://www.akkadia.org/drepper/textrelocs.html.
 
     
 

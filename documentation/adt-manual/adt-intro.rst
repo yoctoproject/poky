@@ -107,18 +107,18 @@ tools are common development tools for the Linux platform.
 
 -  *PowerTOP:* Helps you determine what software is using the most
    power. You can find out more about PowerTOP at
-   ` <https://01.org/powertop/>`__.
+   https://01.org/powertop/.
 
 -  *OProfile:* A system-wide profiler for Linux systems that is capable
    of profiling all running code at low overhead. You can find out more
-   about OProfile at ` <http://oprofile.sourceforge.net/about/>`__. For
+   about OProfile at http://oprofile.sourceforge.net/about/. For
    examples on how to setup and use this tool, see the
    "`OProfile <&YOCTO_DOCS_PROF_URL;#profile-manual-oprofile>`__"
    section in the Yocto Project Profiling and Tracing Manual.
 
 -  *Perf:* Performance counters for Linux used to keep track of certain
    types of hardware and software events. For more information on these
-   types of counters see ` <https://perf.wiki.kernel.org/>`__. For
+   types of counters see https://perf.wiki.kernel.org/. For
    examples on how to setup and use this tool, see the
    "`perf <&YOCTO_DOCS_PROF_URL;#profile-manual-perf>`__" section in the
    Yocto Project Profiling and Tracing Manual.
@@ -127,12 +127,12 @@ tools are common development tools for the Linux platform.
    information gathering about a running Linux system. This information
    helps you diagnose performance or functional problems. SystemTap is
    not available as a user-space tool through the Eclipse IDE Yocto
-   Plug-in. See ` <http://sourceware.org/systemtap>`__ for more
+   Plug-in. See http://sourceware.org/systemtap for more
    information on SystemTap. For examples on how to setup and use this
    tool, see the
    "`SystemTap <&YOCTO_DOCS_PROF_URL;#profile-manual-systemtap>`__"
    section in the Yocto Project Profiling and Tracing Manual.
 
 -  *Lttng-ust:* A User-space Tracer designed to provide detailed
-   information on user-space activity. See ` <http://lttng.org/ust>`__
+   information on user-space activity. See http://lttng.org/ust
    for more information on Lttng-ust.

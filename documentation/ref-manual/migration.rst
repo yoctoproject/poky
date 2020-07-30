@@ -836,7 +836,7 @@ Following is a list of short entries describing other changes:
 
 -  ``image.bbclass``: Move ``runtime_mapping_rename`` to avoid conflict
    with ``multilib``. See
-   ```YOCTO #4993`` <https://bugzilla.yoctoproject.org/show_bug.cgi?id=4993>`__
+   ```YOCTO #4993`https://bugzilla.yoctoproject.org/show_bug.cgi?id=4993
    in Bugzilla for more information.
 
 -  ``linux-dtb``: Use kernel build system to generate the ``dtb`` files.
@@ -1658,9 +1658,9 @@ apply this
 The standard ``linux-yocto`` kernel source tree already has a workaround
 for the same issue.
 
-For further details, see ` <https://gcc.gnu.org/gcc-5/changes.html>`__
+For further details, see https://gcc.gnu.org/gcc-5/changes.html
 and the porting guide at
-` <https://gcc.gnu.org/gcc-5/porting_to.html>`__.
+https://gcc.gnu.org/gcc-5/porting_to.html.
 
 Alternatively, you can switch back to GCC 4.9 or 4.8 by setting
 ``GCCVERSION`` in your configuration, as follows: GCCVERSION = "4.9%"
@@ -1991,13 +1991,13 @@ The use of ``${libdir}/${BPN}`` as ``libexecdir`` is different as
 compared to all other mainstream distributions, which either uses
 ``${prefix}/libexec`` or ``${libdir}``. The use is also contrary to the
 GNU Coding Standards (i.e.
-` <https://www.gnu.org/prep/standards/html_node/Directory-Variables.html>`__)
+https://www.gnu.org/prep/standards/html_node/Directory-Variables.html)
 that suggest ``${prefix}/libexec`` and also notes that any
 package-specific nesting should be done by the package itself. Finally,
 having ``libexecdir`` change between recipes makes it very difficult for
 different recipes to invoke binaries that have been installed into
 ``libexecdir``. The Filesystem Hierarchy Standard (i.e.
-` <http://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch04s07.html>`__) now
+http://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch04s07.html) now
 recognizes the use of ``${prefix}/libexec/``, giving distributions the
 choice between ``${prefix}/lib`` or ``${prefix}/libexec`` without
 breaking FHS.
@@ -3874,7 +3874,7 @@ GCC 8.2 is Now Used by Default
 
 The GNU Compiler Collection version 8.2 is now used by default for
 compilation. For more information on what has changed in the GCC 8.x
-release, see ` <https://gcc.gnu.org/gcc-8/changes.html>`__.
+release, see https://gcc.gnu.org/gcc-8/changes.html.
 
 If you still need to compile with version 7.x, GCC 7.3 is also provided.
 You can select this version by setting the and can be selected by
@@ -4472,7 +4472,7 @@ The following miscellaneous changes occurred:
    from the top-level ``scripts`` directory.
 
 -  Perl now builds for the target using
-   ```perl-cross`` <http://arsv.github.io/perl-cross/>`__ for better
+   ```perl-cross`http://arsv.github.io/perl-cross/ for better
    maintainability and improved build performance. This change should
    not present any problems unless you have heavily customized your Perl
    recipe.
@@ -4690,7 +4690,7 @@ The following BitBake changes have occurred.
    ```BB_HASHCHECK_FUNCTION`` <&YOCTO_DOCS_BB_URL;#var-bb-BB_HASHCHECK_FUNCTION>`__
    have changed. If you are using your own custom hash check function,
    see
-   ` <http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=40a5e193c4ba45c928fccd899415ea56b5417725>`__
+   http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=40a5e193c4ba45c928fccd899415ea56b5417725
    for details.
 
 -  Task specifications in ``BB_TASKDEPDATA`` and class implementations

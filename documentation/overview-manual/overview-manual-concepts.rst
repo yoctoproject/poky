@@ -385,7 +385,7 @@ figure <#general-workflow-figure>`__:
 -  *Metadata (``.bb`` + Patches):* Software layers containing
    user-supplied recipe files, patches, and append files. A good example
    of a software layer might be the
-   ```meta-qt5`` <https://github.com/meta-qt5/meta-qt5>`__ layer from
+   ```meta-qt5`https://github.com/meta-qt5/meta-qt5 layer from
    the `OpenEmbedded Layer
    Index <http://layers.openembedded.org/layerindex/branch/master/layers/>`__.
    This layer is for version 5.0 of the popular
