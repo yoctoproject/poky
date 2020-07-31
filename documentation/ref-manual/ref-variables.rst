@@ -665,7 +665,7 @@ system and gives an overview of their function and contents.
       environment: export BBSERVER=localhost:$port
    
       By default, ``BBSERVER`` also appears in
-      ```BB_HASHBASE_WHITELIST`` <&YOCTO_DOCS_BB_URL;#var-BB_HASHBASE_WHITELIST>`__.
+      :term:`bitbake:BB_HASHBASE_WHITELIST`.
       Consequently, ``BBSERVER`` is excluded from checksum and dependency
       data.
    
@@ -5829,7 +5829,7 @@ system and gives an overview of their function and contents.
       excludes the following variables:
       :term:`CONF_VERSION`
       :term:`BB_NUMBER_THREADS`
-      `BB_NUMBER_PARSE_THREADS <&YOCTO_DOCS_BB_URL;#var-BB_NUMBER_PARSE_THREADS>`__
+      :term:`bitbake:BB_NUMBER_PARSE_THREADS`
       :term:`PARALLEL_MAKE`
       :term:`PRSERV_HOST`
       :term:`SSTATE_MIRRORS` :term:`DL_DIR`

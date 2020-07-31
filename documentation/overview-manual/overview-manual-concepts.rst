@@ -1288,10 +1288,10 @@ dependencies, such as the compiler, from the cache.
 
 The availability of objects in the sstate cache is handled by the
 function specified by the
-```BB_HASHCHECK_FUNCTION`` <&YOCTO_DOCS_BB_URL;#var-BB_HASHCHECK_FUNCTION>`__
+:term:`bitbake:BB_HASHCHECK_FUNCTION`
 variable and returns a list of available objects. The function specified
 by the
-```BB_SETSCENE_DEPVALID`` <&YOCTO_DOCS_BB_URL;#var-BB_SETSCENE_DEPVALID>`__
+:term:`bitbake:BB_SETSCENE_DEPVALID`
 variable is the function that determines whether a given dependency
 needs to be followed, and whether for any given relationship the
 function needs to be passed. The function returns a True or False value.
@@ -2171,7 +2171,7 @@ accomplished using fakeroot.
                       
 
 For more information, see the
-```FAKEROOT*`` <&YOCTO_DOCS_BB_URL;#var-FAKEROOT>`__ variables in the
+:term:`FAKEROOT* <bitbake:FAKEROOT>` variables in the
 BitBake User Manual. You can also reference the "`Why Not
 Fakeroot? <https://github.com/wrpseudo/pseudo/wiki/WhyNotFakeroot>`__"
 article for background information on Fakeroot and Pseudo.

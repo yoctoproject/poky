@@ -4153,7 +4153,7 @@ directory:
    variable, inherit the
    :ref:`own-mirrors <ref-classes-own-mirrors>`
    class, and use the
-   ```BB_NO_NETWORK`` <&YOCTO_DOCS_BB_URL;#var-bb-BB_NO_NETWORK>`__
+   :term:`bitbake:BB_NO_NETWORK`
    variable to your ``local.conf``. SOURCE_MIRROR_URL ?=
    "file:///home/your-download-dir/" INHERIT += "own-mirrors"
    BB_NO_NETWORK = "1" The ``SOURCE_MIRROR_URL`` and ``own-mirror``
@@ -4215,7 +4215,7 @@ variable for more information:
 -  :term:`BB_NUMBER_THREADS`:
    The maximum number of threads BitBake simultaneously executes.
 
--  ```BB_NUMBER_PARSE_THREADS``: <&YOCTO_DOCS_BB_URL;#var-BB_NUMBER_PARSE_THREADS>`__
+-  :term:`bitbake:BB_NUMBER_PARSE_THREADS`:
    The number of threads BitBake uses during parsing.
 
 -  :term:`PARALLEL_MAKE`: Extra
@@ -8456,7 +8456,7 @@ BitBake has determined by doing the following:
 
    The output of ``bitbake-dumpsig`` also includes the value each
    variable had, a list of dependencies for each variable, and
-   ```BB_HASHBASE_WHITELIST`` <&YOCTO_DOCS_BB_URL;#var-BB_HASHBASE_WHITELIST>`__
+   :term:`bitbake:BB_HASHBASE_WHITELIST`
    information.
 
 There is also a ``bitbake-diffsigs`` command for comparing two

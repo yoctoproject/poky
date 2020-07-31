@@ -4677,7 +4677,7 @@ The following BitBake changes have occurred.
    ``bb.build.exec_func()`` in custom classes or scripts.
 
 -  The
-   ```BB_SETSCENE_VERIFY_FUNCTION2`` <&YOCTO_DOCS_BB_URL;#var-bb-BB_SETSCENE_VERIFY_FUNCTION2>`__
+   :term:`bitbake:BB_SETSCENE_VERIFY_FUNCTION2`
    is no longer used. In the unlikely event that you have any references
    to it, they should be removed.
 
@@ -4687,7 +4687,7 @@ The following BitBake changes have occurred.
    scripts that handles these two events need to be updated.
 
 -  The arguments passed to functions used with
-   ```BB_HASHCHECK_FUNCTION`` <&YOCTO_DOCS_BB_URL;#var-bb-BB_HASHCHECK_FUNCTION>`__
+   :term:`bitbake:BB_HASHCHECK_FUNCTION`
    have changed. If you are using your own custom hash check function,
    see
    http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=40a5e193c4ba45c928fccd899415ea56b5417725
