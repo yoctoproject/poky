@@ -1163,7 +1163,7 @@ the Yocto Project Overview and Concepts Manual.
 
 The :ref:`ref-tasks-fetch` task uses
 the prefix of each entry in the ``SRC_URI`` variable value to determine
-which `fetcher <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__ to use to get your
+which :ref:`fetcher <bitbake:bb-fetchers>` to use to get your
 source files. It is the ``SRC_URI`` variable that triggers the fetcher.
 The :ref:`ref-tasks-patch` task uses
 the variable after source is fetched to apply patches. The OpenEmbedded
@@ -2302,10 +2302,10 @@ doing the following:
    If ``${S}`` might contain a Makefile, or if you inherit some class
    that replaces ``do_configure`` and ``do_compile`` with custom
    versions, then you can use the
-   ``[``\ ```noexec`` <&YOCTO_DOCS_BB_URL;#variable-flags>`__\ ``]``
+   ``[``\ :ref:`noexec <bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
    flag to turn the tasks into no-ops, as follows: do_configure[noexec]
    = "1" do_compile[noexec] = "1" Unlike
-   ```deleting the tasks`` <&YOCTO_DOCS_BB_URL;#deleting-a-task>`__,
+   :ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:deleting a task`,
    using the flag preserves the dependency chain from the
    :ref:`ref-tasks-fetch`,
    :ref:`ref-tasks-unpack`, and
@@ -2341,8 +2341,8 @@ Recipe Syntax
 
 Understanding recipe file syntax is important for writing recipes. The
 following list overviews the basic items that make up a BitBake recipe
-file. For more complete BitBake syntax descriptions, see the "`Syntax
-and Operators <&YOCTO_DOCS_BB_URL;#bitbake-user-manual-metadata>`__"
+file. For more complete BitBake syntax descriptions, see the
+":doc:`bitbake-user-manual/bitbake-user-manual-metadata`"
 chapter of the BitBake User Manual.
 
 -  *Variable Assignments and Manipulations:* Variable assignments allow
@@ -2385,8 +2385,8 @@ chapter of the BitBake User Manual.
 
 This next list summarizes the most important and most commonly used
 parts of the recipe syntax. For more information on these parts of the
-syntax, you can reference the `Syntax and
-Operators <&YOCTO_DOCS_BB_URL;#bitbake-user-manual-metadata>`__ chapter
+syntax, you can reference the
+:doc:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata` chapter
 in the BitBake User Manual.
 
 -  *Line Continuation (\):* Use the backward slash (``\``) character to
@@ -6661,7 +6661,7 @@ Creating Node Package Manager (NPM) Packages
 
 `NPM <https://en.wikipedia.org/wiki/Npm_(software)>`__ is a package
 manager for the JavaScript programming language. The Yocto Project
-supports the NPM `fetcher <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__. You can
+supports the NPM :ref:`fetcher <bitbake:bb-fetchers>`. You can
 use this fetcher in combination with
 ```devtool`` <&YOCTO_DOCS_REF_URL;#ref-devtool-reference>`__ to create
 recipes that produce NPM packages.
@@ -8239,9 +8239,9 @@ Viewing Variable Values
 
 Sometimes you need to know the value of a variable as a result of
 BitBake's parsing step. This could be because some unexpected behavior
-occurred in your project. Perhaps an attempt to `modify a
-variable <&YOCTO_DOCS_BB_URL;#modifying-existing-variables>`__ did not
-work out as expected.
+occurred in your project. Perhaps an attempt to :ref:`modify a variable
+<bitbake:bitbake-user-manual/bitbake-user-manual-metadata:modifying existing
+variables>` did not work out as expected.
 
 BitBake's ``-e`` option is used to display variable values after
 parsing. The following command displays the variable values after the
@@ -8404,15 +8404,15 @@ dependencies for the recipes involved in building recipename.
 Viewing Task Variable Dependencies
 ----------------------------------
 
-As mentioned in the "`Checksums
-(Signatures) <&YOCTO_DOCS_BB_URL;#checksums>`__" section of the BitBake
+As mentioned in the
+":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-execution:checksums (signatures)`" section of the BitBake
 User Manual, BitBake tries to automatically determine what variables a
 task depends on so that it can rerun the task if any values of the
 variables change. This determination is usually reliable. However, if
 you do things like construct variable names at runtime, then you might
 have to manually declare dependencies on those variables using
-``vardeps`` as described in the "`Variable
-Flags <&YOCTO_DOCS_BB_URL;#variable-flags>`__" section of the BitBake
+``vardeps`` as described in the
+":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags`" section of the BitBake
 User Manual.
 
 If you are unsure whether a variable dependency is being picked up
@@ -8691,7 +8691,7 @@ log to ``${T}/log.do_``\ task, and can also log to standard output
 
 -  ``bb.debug(``\ level\ ``, ``\ msg\ ``)``: Writes "DEBUG: msg" to the
    log. Also logs to stdout if the log level is greater than or equal to
-   level. See the "`-D <&YOCTO_DOCS_BB_URL;#usage-and-syntax>`__" option
+   level. See the ":ref:`-D <bitbake:bitbake-user-manual/bitbake-user-manual-intro:usage and syntax>`" option
    in the BitBake User Manual for more information.
 
 -  ``bb.warn(``\ msg\ ``)``: Writes "WARNING: msg" to the log while also

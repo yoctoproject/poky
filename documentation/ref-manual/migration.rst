@@ -2452,7 +2452,7 @@ compared to uClibc.
 ``${``\ :term:`B`\ ``}`` is no longer the default working
 directory for tasks. Consequently, any custom tasks you define now need
 to either have the
-``[``\ ```dirs`` <&YOCTO_DOCS_BB_URL;#variable-flags>`__\ ``]`` flag
+``[``\ :ref:`dirs <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]`` flag
 set, or the task needs to change into the appropriate working directory
 manually (e.g using ``cd`` for a shell task).
 
@@ -2942,8 +2942,8 @@ The following changes took place for BitBake:
    fetcher passes the new parameter through the ``SVN_SSH`` environment
    variable during the :ref:`ref-tasks-fetch` task.
 
-   See the "`Subversion (SVN) Fetcher
-   (svn://) <&YOCTO_DOCS_BB_URL;#svn-fetcher>`__" section in the BitBake
+   See the ":ref:`bitbake:svn-fetcher`"
+   section in the BitBake
    User Manual for additional information.
 
 -  *``BB_SETSCENE_VERIFY_FUNCTION`` and ``BB_SETSCENE_VERIFY_FUNCTION2``
@@ -3546,7 +3546,7 @@ The following are additional changes:
 
 -  BitBake fires multiple "BuildStarted" events when multiconfig is
    enabled (one per configuration). For more information, see the
-   "`Events <&YOCTO_DOCS_BB_URL;#events>`__" section in the BitBake User
+   ":ref:`Events <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:events>`" section in the BitBake User
    Manual.
 
 -  By default, the ``security_flags.inc`` file sets a
@@ -4143,8 +4143,7 @@ The following changes have occurred:
    specifying list items to remove, be aware that leading and trailing
    whitespace resulting from the removal is retained.
 
-   See the "`Removal (Override Style
-   Syntax) <&YOCTO_DOCS_BB_URL;#removing-override-style-syntax>`__"
+   See the ":ref:`bitbake:removing-override-style-syntax`"
    section in the BitBake User Manual for a detailed example.
 
 .. _migration-2.6-systemd-configuration-now-split-out-to-system-conf:

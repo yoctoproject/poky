@@ -290,8 +290,8 @@ particular recipe.
       ```maintainers.inc`http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/distro/include/maintainers.inc
       file.
 
-   -  If the recipe is using the `Git
-      fetcher <&YOCTO_DOCS_BB_URL;#git-fetcher>`__ rather than a
+   -  If the recipe is using the :ref:`bitbake:git-fetcher`
+      rather than a
       tarball, the commit hash points to the commit that matches the
       recipe's latest version tag.
 

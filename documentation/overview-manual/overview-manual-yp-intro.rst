@@ -474,8 +474,8 @@ The following list consists of components associated with the
    is a build engine that works through recipes written in a specific
    format in order to perform sets of tasks.
 
-   You can learn more about BitBake in the `BitBake User
-   Manual <&YOCTO_DOCS_BB_URL;>`__.
+   You can learn more about BitBake in the :doc:`BitBake User
+   Manual <bitbake:index>`.
 
 -  *OpenEmbedded-Core:* OpenEmbedded-Core (OE-Core) is a common layer of
    metadata (i.e. recipes, classes, and associated files) used by
@@ -779,8 +779,8 @@ additional tasks as well as task prerequisites. Recipe syntax through
 BitBake also supports both ``_prepend`` and ``_append`` operators as a
 method of extending task functionality. These operators inject code into
 the beginning or end of a task. For information on these BitBake
-operators, see the "`Appending and Prepending (Override Style
-Syntax) <&YOCTO_DOCS_BB_URL;#appending-and-prepending-override-style-syntax>`__"
+operators, see the
+":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:appending and prepending (override style syntax)`"
 section in the BitBake User's Manual.
 
 .. _openembedded-build-system-workflow:

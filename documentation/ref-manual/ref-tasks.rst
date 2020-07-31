@@ -14,8 +14,8 @@ Normal Recipe Build Tasks
 
 The following sections describe normal tasks associated with building a
 recipe. For more information on tasks and dependencies, see the
-"`Tasks <&YOCTO_DOCS_BB_URL;#tasks>`__" and
-"`Dependencies <&YOCTO_DOCS_BB_URL;#dependencies>`__" sections in the
+":ref:`Tasks <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks>`" and
+":ref:`Dependencies <bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies>`" sections in the
 BitBake User Manual.
 
 .. _ref-tasks-build:
@@ -125,7 +125,7 @@ If the ``do_deploy`` task re-executes, any previous output is removed
 
 Fetches the source code. This task uses the
 :term:`SRC_URI` variable and the argument's prefix to
-determine the correct `fetcher <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__
+determine the correct :ref:`fetcher <bitbake:bb-fetchers>`
 module.
 
 .. _ref-tasks-image:

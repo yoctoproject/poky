@@ -577,7 +577,7 @@ specify source code revision and versioning schemes, extract code into
 or out of the ``devtool``
 :ref:`devtool-the-workspace-layer-structure`,
 and work with any source file forms that the
-`fetchers <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__ support.
+:ref:`fetchers <bitbake:bb-fetchers>` support.
 
 The following diagram shows the common development flow used with the
 ``devtool upgrade`` command:

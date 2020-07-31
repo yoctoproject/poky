@@ -46,8 +46,8 @@ environment setup script (i.e. ````` <#structure-core-script>`__) places
 the ``scripts/`` and ``bitbake/bin/`` directories (in that order) into
 the shell's ``PATH`` environment variable.
 
-For more information on BitBake, see the `BitBake User
-Manual <&YOCTO_DOCS_BB_URL;>`__.
+For more information on BitBake, see the :doc:`BitBake User Manual
+<bitbake:index>`.
 
 .. _structure-core-build:
 

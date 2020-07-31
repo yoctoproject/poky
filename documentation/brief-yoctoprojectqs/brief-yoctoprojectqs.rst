@@ -204,8 +204,7 @@ an entire Linux distribution, including the toolchain, from source.
    command, see the
    "`BitBake <&YOCTO_DOCS_OM_URL;#usingpoky-components-bitbake>`__"
    section in the Yocto Project Overview and Concepts Manual, or see the
-   "`BitBake
-   Command <&YOCTO_DOCS_BB_URL;#bitbake-user-manual-command>`__" section
+   ":ref:`BitBake Command <bitbake:bitbake-user-manual-command>`" section
    in the BitBake User Manual.
 
 4. *Simulate Your Image Using QEMU:* Once this particular image is

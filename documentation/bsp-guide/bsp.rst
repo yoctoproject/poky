@@ -789,8 +789,8 @@ workflow.
 
 7. *Build the Image:* The OpenEmbedded build system uses the BitBake
    tool to build images based on the type of image you want to create.
-   You can find more information about BitBake in the `BitBake User
-   Manual <&YOCTO_DOCS_BB_URL;>`__.
+   You can find more information about BitBake in the
+   :doc:`BitBake User Manual <bitbake:index>`.
 
    The build process supports several types of images to satisfy
    different needs. See the

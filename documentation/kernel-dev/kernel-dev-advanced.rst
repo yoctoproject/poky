@@ -316,7 +316,7 @@ in the "`Features <#features>`__" section. The
 variable in the kernel recipe selects the kernel type. For example, in
 the ``linux-yocto_4.12.bb`` kernel recipe found in
 ``poky/meta/recipes-kernel/linux``, a
-```require`` <&YOCTO_DOCS_BB_URL;#require-inclusion>`__ directive
+:ref:`require <bitbake:require-inclusion>` directive
 includes the ``poky/meta/recipes-kernel/linux/linux-yocto.inc`` file,
 which has the following statement that defines the default kernel type:
 LINUX_KERNEL_TYPE ??= "standard"

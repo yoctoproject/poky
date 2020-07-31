@@ -123,7 +123,7 @@ Here is a list of resources you might find helpful:
 -  `BitBake <http://www.openembedded.org/wiki/BitBake>`__\ *:* The tool
    used to process metadata.
 
--  `BitBake User Manual <&YOCTO_DOCS_BB_URL;>`__\ *:* A comprehensive
+-  :doc:`BitBake User Manual <bitbake:index>`\ *:* A comprehensive
    guide to the BitBake tool. If you want information on BitBake, see
    this manual.
 

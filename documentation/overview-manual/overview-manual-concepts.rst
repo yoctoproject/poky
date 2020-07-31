@@ -54,7 +54,7 @@ for parsing the :term:`Metadata`, generating
 a list of tasks from it, and then executing those tasks.
 
 This section briefly introduces BitBake. If you want more information on
-BitBake, see the `BitBake User Manual <&YOCTO_DOCS_BB_URL;>`__.
+BitBake, see the :doc:`BitBake User Manual <bitbake:index>`.
 
 To see a list of the options BitBake supports, use either of the
 following commands: $ bitbake -h $ bitbake --help
@@ -69,7 +69,7 @@ versions of ``matchbox-desktop`` might exist. BitBake chooses the one
 selected by the distribution configuration. You can get more details
 about how BitBake chooses between different target versions and
 providers in the
-"`Preferences <&YOCTO_DOCS_BB_URL;#bb-bitbake-preferences>`__" section
+":ref:`Preferences <bitbake:bb-bitbake-preferences>`" section
 of the BitBake User Manual.
 
 BitBake also tries to execute any dependent tasks first. So for example,
@@ -361,8 +361,8 @@ environment. It is important to understand that the
 :term:`OpenEmbedded Build System` reads the
 configuration files in a specific order: ``site.conf``, ``auto.conf``,
 and ``local.conf``. And, the build system applies the normal assignment
-statement rules as described in the "`Syntax and
-Operators <&YOCTO_DOCS_BB_URL;#bitbake-user-manual-metadata>`__" chapter
+statement rules as described in the
+":doc:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata`" chapter
 of the BitBake User Manual. Because the files are parsed in a specific
 order, variable assignments for the same variable could be affected. For
 example, if the ``auto.conf`` file and the ``local.conf`` set variable1
@@ -599,7 +599,7 @@ Source Control Managers (Optional)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Another place from which the build system can get source files is with
-`fetchers <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__ employing various Source
+:ref:`fetchers <bitbake:bb-fetchers>` employing various Source
 Control Managers (SCMs) such as Git or Subversion. In such cases, a
 repository is cloned or checked out. The
 :ref:`ref-tasks-fetch` task inside
@@ -1212,7 +1212,7 @@ Since ``STAMPS_DIR`` is usually a subdirectory of ``TMPDIR``, removing
 properly be rerun to repopulate ``TMPDIR``.
 
 If you want some task to always be considered "out of date", you can
-mark it with the ```nostamp`` <&YOCTO_DOCS_BB_URL;#variable-flags>`__
+mark it with the :ref:`nostamp <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`
 varflag. If some other task depends on such a task, then that task will
 also always be considered out of date, which might not be what you want.
 
@@ -1913,14 +1913,14 @@ do_deploy[dirs] = "${DEPLOYDIR} ${B}" do_deploy[stamp-extra-info] =
    through the shared state cache if possible. If the task was
    accelerated, ``sstate_setscene()`` returns True. Otherwise, it
    returns False, and the normal ``do_deploy`` task runs. For more
-   information, see the "`setscene <&YOCTO_DOCS_BB_URL;#setscene>`__"
+   information, see the ":ref:`setscene <bitbake:bitbake-user-manual/bitbake-user-manual-execution:setscene>`"
    section in the BitBake User Manual.
 
 -  The ``do_deploy[dirs] = "${DEPLOYDIR} ${B}"`` line creates
    ``${DEPLOYDIR}`` and ``${B}`` before the ``do_deploy`` task runs, and
    also sets the current working directory of ``do_deploy`` to ``${B}``.
-   For more information, see the "`Variable
-   Flags <&YOCTO_DOCS_BB_URL;#variable-flags>`__" section in the BitBake
+   For more information, see the ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags`"
+   section in the BitBake
    User Manual.
 
    .. note::
@@ -1947,7 +1947,7 @@ do_deploy[dirs] = "${DEPLOYDIR} ${B}" do_deploy[stamp-extra-info] =
    extra metadata to the `stamp
    file <#stamp-files-and-the-rerunning-of-tasks>`__. In this case, the
    metadata makes the task specific to a machine's architecture. See
-   "`The Task List <&YOCTO_DOCS_BB_URL;#ref-bitbake-tasklist>`__"
+   ":ref:`bitbake:ref-bitbake-tasklist`"
    section in the BitBake User Manual for more information on the
    ``stamp-extra-info`` flag.
 
@@ -2106,7 +2106,7 @@ dependencies, you must manually declare the dependencies.
 
 The ``do_package`` task depends on the ``do_packagedata`` task of each
 recipe in :term:`DEPENDS` through use
-of a ``[``\ ```deptask`` <&YOCTO_DOCS_BB_URL;#variable-flags>`__\ ``]``
+of a ``[``\ :ref:`deptask <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
 declaration, which guarantees that the required
 shared-library/module-to-package mapping information will be available
 when needed as long as ``DEPENDS`` has been correctly set.

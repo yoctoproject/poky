@@ -47,8 +47,8 @@ universal, the list includes them just in case:
 
    BitBake
       The task executor and scheduler used by the OpenEmbedded build system to
-      build images. For more information on BitBake, see the `BitBake User
-      Manual <&YOCTO_DOCS_BB_URL;>`__.
+      build images. For more information on BitBake, see the :doc:`BitBake User
+      Manual <bitbake:index>`.
 
    Board Support Package (BSP)
       A group of drivers, definitions, and other components that provide support

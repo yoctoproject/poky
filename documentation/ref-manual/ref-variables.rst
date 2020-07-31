@@ -239,8 +239,8 @@ system and gives an overview of their function and contents.
    
       To add a tune to the list, be sure to append it with spaces using the
       "+=" BitBake operator. Do not simply replace the list by using the
-      "=" operator. See the "`Basic
-      Syntax <&YOCTO_DOCS_BB_URL;#basic-syntax>`__" section in the BitBake
+      "=" operator. See the
+      ":ref:`Basic Syntax <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:basic syntax>`" section in the BitBake
       User Manual for more information.
    
    B
@@ -1477,7 +1477,7 @@ system and gives an overview of their function and contents.
       This mechanism is implemented by having ``do_configure`` depend on
       the :ref:`ref-tasks-populate_sysroot` task of
       each recipe listed in ``DEPENDS``, through a
-      ``[``\ ```deptask`` <&YOCTO_DOCS_BB_URL;#variable-flags>`__\ ``]``
+      ``[``\ :ref:`deptask <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:variable flags>`\ ``]``
       declaration in the :ref:`base <ref-classes-base>` class.
    
       .. note::
@@ -1524,8 +1524,8 @@ system and gives an overview of their function and contents.
    
       For information on runtime dependencies, see the
       :term:`RDEPENDS` variable. You can also see the
-      "`Tasks <&YOCTO_DOCS_BB_URL;#tasks>`__" and
-      "`Dependencies <&YOCTO_DOCS_BB_URL;#dependencies>`__" sections in the
+      ":ref:`Tasks <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks>`" and
+      ":ref:`Dependencies <bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies>`" sections in the
       BitBake User Manual for additional information on tasks and
       dependencies.
    
@@ -2270,8 +2270,8 @@ system and gives an overview of their function and contents.
       :term:`FILESPATH` variable. For an example of how
       that works, see the :term:`FILESPATH` variable
       description. Additionally, you find more information on how overrides
-      are handled in the "`Conditional Syntax
-      (Overrides) <&YOCTO_DOCS_BB_URL;#conditional-syntax-overrides>`__"
+      are handled in the
+      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
       section of the BitBake User Manual.
    
       By default, the ``FILESOVERRIDES`` variable is defined as:
@@ -2789,13 +2789,13 @@ system and gives an overview of their function and contents.
             section in the Yocto Project Development Tasks Manual.
    
          -  Using ``IMAGE_INSTALL`` with the
-            ```+=`` <&YOCTO_DOCS_BB_URL;#appending-and-prepending>`__
+            :ref:`+= <bitbake:appending-and-prepending>`
             BitBake operator within the ``/conf/local.conf`` file or from
             within an image recipe is not recommended. Use of this operator
             in these ways can cause ordering issues. Since
             ``core-image.bbclass`` sets ``IMAGE_INSTALL`` to a default
             value using the
-            ```?=`` <&YOCTO_DOCS_BB_URL;#setting-a-default-value>`__
+            :ref:`?= <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:setting a default value (?=)>`
             operator, using a ``+=`` operation against ``IMAGE_INSTALL``
             results in unexpected behavior when used within
             ``conf/local.conf``. Furthermore, the same operation from
@@ -3078,9 +3078,8 @@ system and gives an overview of their function and contents.
       configuration and in each individual recipe. The OpenEmbedded build
       system ignores changes to ``INHERIT`` in individual recipes.
    
-      For more information on ``INHERIT``, see the "```INHERIT``
-      Configuration
-      Directive <&YOCTO_DOCS_BB_URL;#inherit-configuration-directive>`__"
+      For more information on ``INHERIT``, see the
+      :ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:\`\`inherit\`\` configuration directive`"
       section in the Bitbake User Manual.
    
    INHERIT_DISTRO
@@ -4415,9 +4414,8 @@ system and gives an overview of their function and contents.
       As an example, if the string "an-override" appears as an element in
       the colon-separated list in ``OVERRIDES``, then the following
       assignment will override ``FOO`` with the value "overridden" at the
-      end of parsing: FOO_an-override = "overridden" See the "`Conditional
-      Syntax
-      (Overrides) <&YOCTO_DOCS_BB_URL;#conditional-syntax-overrides>`__"
+      end of parsing: FOO_an-override = "overridden" See the
+      ":ref:`bitbake:bitbake-user-manual/bitbake-user-manual-metadata:conditional syntax (overrides)`"
       section in the BitBake User Manual for more information on the
       overrides mechanism.
    
@@ -5502,8 +5500,8 @@ system and gives an overview of their function and contents.
    
       For information on build-time dependencies, see the
       :term:`DEPENDS` variable. You can also see the
-      "`Tasks <&YOCTO_DOCS_BB_URL;#tasks>`__" and
-      "`Dependencies <&YOCTO_DOCS_BB_URL;#dependencies>`__" sections in the
+      ":ref:`Tasks <bitbake:bitbake-user-manual/bitbake-user-manual-metadata:tasks>`" and
+      ":ref:`Dependencies <bitbake:bitbake-user-manual/bitbake-user-manual-execution:dependencies>`" sections in the
       BitBake User Manual for additional information on tasks and
       dependencies.
    
@@ -6254,7 +6252,7 @@ system and gives an overview of their function and contents.
       protocols are highly dependent on particular BitBake Fetcher
       submodules. Depending on the fetcher BitBake uses, various URL
       parameters are employed. For specifics on the supported Fetchers, see
-      the "`Fetchers <&YOCTO_DOCS_BB_URL;#bb-fetchers>`__" section in the
+      the ":ref:`Fetchers <bitbake:bb-fetchers>`" section in the
       BitBake User Manual.
    
       -  *``file://`` -* Fetches files, which are usually files shipped
