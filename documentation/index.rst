@@ -45,6 +45,7 @@ Welcome to The Yocto Project's documentation!
    :caption: Manuals/Variable Index
 
    genindex
+   Current/Previous Version Specific Manuals <releases>
 
 
 
