@@ -1,6 +1,8 @@
 .. include:: <xhtml1-lat1.txt>
 .. include:: <xhtml1-symbol.txt>
 
+----
+
 | |project_name|
 | <docs@lists.yoctoproject.org>
 

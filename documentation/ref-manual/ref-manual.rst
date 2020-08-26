@@ -4,8 +4,6 @@
 Yocto Project Reference Manual
 ==============================
 
-.. include:: /boilerplate.rst
-
 .. toctree::
    :caption: Table of Contents
    :numbered:
@@ -27,3 +25,5 @@ Yocto Project Reference Manual
    faq
    resources
    history
+
+.. include:: /boilerplate.rst

@@ -4,8 +4,6 @@
 Yocto Project Overview and Concepts Manual
 ==========================================
 
-.. include:: /boilerplate.rst
-
 .. toctree::
    :caption: Table of Contents
    :numbered:
@@ -15,3 +13,5 @@ Yocto Project Overview and Concepts Manual
    overview-manual-development-environment
    overview-manual-concepts
    history
+
+.. include:: /boilerplate.rst

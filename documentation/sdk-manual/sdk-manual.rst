@@ -4,8 +4,6 @@
 Yocto Project Application Development and the Extensible Software Development Kit (eSDK)
 ========================================================================================
 
-.. include:: /boilerplate.rst
-
 .. toctree::
    :caption: Table of Contents
    :numbered:
@@ -18,3 +16,5 @@ Yocto Project Application Development and the Extensible Software Development Ki
    sdk-appendix-customizing
    sdk-appendix-customizing-standard
    history
+
+.. include:: /boilerplate.rst

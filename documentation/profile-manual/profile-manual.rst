@@ -4,8 +4,6 @@
 Yocto Project Profiling and Tracing Manual
 ==========================================
 
-.. include:: /boilerplate.rst
-
 .. toctree::
    :caption: Table of Contents
    :numbered:
@@ -15,3 +13,5 @@ Yocto Project Profiling and Tracing Manual
    profile-manual-usage
    profile-manual-examples
    history
+
+.. include:: /boilerplate.rst

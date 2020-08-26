@@ -4,8 +4,6 @@
 Yocto Project Linux Kernel Development Manual
 =============================================
 
-.. include:: /boilerplate.rst
-
 .. toctree::
    :caption: Table of Contents
    :numbered:
@@ -17,3 +15,5 @@ Yocto Project Linux Kernel Development Manual
    kernel-dev-maint-appx
    kernel-dev-faq
    history
+
+.. include:: /boilerplate.rst

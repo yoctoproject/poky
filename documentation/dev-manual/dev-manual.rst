@@ -4,8 +4,6 @@
 Yocto Project Development Tasks Manual
 ======================================
 
-.. include:: /boilerplate.rst
-
 .. toctree::
    :caption: Table of Contents
    :numbered:
@@ -15,3 +13,5 @@ Yocto Project Development Tasks Manual
    dev-manual-common-tasks
    dev-manual-qemu
    history
+
+.. include:: /boilerplate.rst

@@ -4,8 +4,6 @@
 Yocto Project Test Environment Manual
 =====================================
 
-.. include:: /boilerplate.rst
-
 .. toctree::
    :caption: Table of Contents
    :numbered:
@@ -14,3 +12,5 @@ Yocto Project Test Environment Manual
    test-manual-test-process
    test-manual-understand-autobuilder
    history
+
+.. include:: /boilerplate.rst
