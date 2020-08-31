@@ -2242,6 +2242,12 @@ The following lists specific examples of virtual providers:
 
 -  ``virtual/libgles2``: Provides ``glesv2.pc`` (i.e. libGLESv2).
 
+.. note::
+
+   Virtual providers only apply to build time dependencies specified with
+   :term:`PROVIDES` and :term:`DEPENDS`. They do not apply to runtime
+   dependencies specified with :term:`RPROVIDES` and :term:`RDEPENDS`.
+
 Properly Versioning Pre-Release Recipes
 ---------------------------------------
 
