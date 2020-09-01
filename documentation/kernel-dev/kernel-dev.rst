@@ -4,6 +4,8 @@
 Yocto Project Linux Kernel Development Manual
 =============================================
 
+|
+
 .. toctree::
    :caption: Table of Contents
    :numbered:

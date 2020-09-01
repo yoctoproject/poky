@@ -4,6 +4,8 @@
 Yocto Project Application Developer's Guide
 ===========================================
 
+|
+
 .. toctree::
    :caption: Table of Contents
    :numbered:

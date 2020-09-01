@@ -8,6 +8,8 @@
 Welcome to The Yocto Project's documentation!
 =============================================
 
+|
+
 .. toctree::
    :maxdepth: 1
    :caption: Introduction and Overview

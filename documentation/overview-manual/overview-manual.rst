@@ -4,6 +4,8 @@
 Yocto Project Overview and Concepts Manual
 ==========================================
 
+|
+
 .. toctree::
    :caption: Table of Contents
    :numbered:
