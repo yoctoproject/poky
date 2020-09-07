@@ -12,7 +12,14 @@ BUILDDIR      = _build
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: help Makefile.sphinx
+.PHONY: help Makefile.sphinx publish
+
+publish: Makefile.sphinx html singlehtml
+	rm -rf $(BUILDDIR)/final/
+	mkdir -p $(BUILDDIR)/final/
+	cp -r $(BUILDDIR)/html/* $(BUILDDIR)/final/
+	cp $(BUILDDIR)/singlehtml/index.html $(BUILDDIR)/final/singleindex.html
+	sed -i -e 's@index.html#@singleindex.html#@g' $(BUILDDIR)/final/singleindex.html
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
