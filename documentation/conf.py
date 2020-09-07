@@ -35,6 +35,7 @@ sys.path.insert(0, os.path.abspath('sphinx'))
 extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.extlinks',
+    'sphinx.ext.intersphinx',
     'yocto-vars'
 ]
 autosectionlabel_prefix_document = True
@@ -70,6 +71,11 @@ extlinks = {
     'yocto_git': ('https://git.yoctoproject.org%s', None),
     'oe_home': ('https://www.openembedded.org%s', None),
     'oe_lists': ('https://lists.openembedded.org%s', None),
+}
+
+# Intersphinx config to use cross reference with Bitbake user manual
+intersphinx_mapping = {
+    'bitbake': ('https://docs.yoctoproject.org/bitbake/', None)
 }
 
 # -- Options for HTML output -------------------------------------------------
