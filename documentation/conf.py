@@ -91,6 +91,9 @@ intersphinx_mapping = {
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+html_theme_options = {
+    'sticky_navigation': False,
+}
 
 html_logo = 'sphinx-static/YoctoProject_Logo_RGB.jpg'
 
@@ -105,3 +108,12 @@ html_context = {
     ],
     'current_version': current_version,
 }
+
+# Hide 'Created using Sphinx' text
+html_show_sphinx = False
+
+# Add 'Last updated' on each page
+html_last_updated_fmt = '%b %d, %Y'
+
+# Remove the trailing 'dot' in section numbers
+html_secnumber_suffix = " "
