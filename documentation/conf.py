@@ -103,11 +103,12 @@ html_logo = 'sphinx-static/YoctoProject_Logo_RGB.jpg'
 html_static_path = ['sphinx-static']
 
 html_context = {
-    'css_files': [
-        '_static/theme_overrides.css',
-    ],
     'current_version': current_version,
 }
+
+# Add customm CSS and JS files
+html_css_files = ['theme_overrides.css']
+html_js_files = ['switchers.js']
 
 # Hide 'Created using Sphinx' text
 html_show_sphinx = False
