@@ -12,17 +12,24 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
-
+import os
+import sys
 import datetime
+
+current_version = "dev"
+
+# String used in sidebar
+version = 'Version: ' + current_version
+if current_version == 'dev':
+    version = 'Version: Current Development'
+# Version seen in documentation_options.js and hence in js switchers code
+release = current_version
+
 
 # -- Project information -----------------------------------------------------
 project = 'The Yocto Project'
 copyright = '2010-%s, The Linux Foundation' % datetime.datetime.now().year
 author = 'The Linux Foundation'
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -96,4 +103,5 @@ html_context = {
     'css_files': [
         '_static/theme_overrides.css',
     ],
+    'current_version': current_version,
 }

@@ -40,7 +40,7 @@ Welcome to The Yocto Project's documentation!
    :maxdepth: 1
    :caption: 'Mega' Manual
 
-   All-in-one 'Mega' Manual <https://www.yoctoproject.org/docs/@VER@/singleindex.html>
+   All-in-one 'Mega' Manual <https://www.yoctoproject.org/docs/singleindex.html>
 
 .. toctree::
    :maxdepth: 1
