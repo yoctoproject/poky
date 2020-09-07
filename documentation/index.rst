@@ -16,7 +16,7 @@ Welcome to The Yocto Project's documentation!
 
    Quick Build <brief-yoctoprojectqs/brief-yoctoprojectqs>
    what-i-wish-id-known
-   Transitioning to a custom environment for systems development <https://www.yoctoproject.org/docs/transitioning-to-a-custom-environment>
+   transitioning-to-a-custom-environment
    Yocto Project Software Overview <https://www.yoctoproject.org/software-overview/>
    Tips and Tricks Wiki <https://wiki.yoctoproject.org/wiki/TipsAndTricks>
 
