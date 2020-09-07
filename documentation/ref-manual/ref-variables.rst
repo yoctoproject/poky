@@ -2361,7 +2361,7 @@ system and gives an overview of their function and contents.
    FIT_HASH_ALG
       Specifies the hash algorithm used in creating the FIT Image. For e.g. sha256.
 
-   FIT_SIGN_ALG</glossterm>
+   FIT_SIGN_ALG
       Specifies the signature algorithm used in creating the FIT Image.
       For e.g. rsa2048.
 
@@ -7527,6 +7527,18 @@ system and gives an overview of their function and contents.
       For more information on how the ``UBOOT_CONFIG`` is handled, see the
       ```uboot-config`http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/classes/uboot-config.bbclass
       class.
+
+   UBOOT_DTB_LOADADDRESS
+      Specifies the load address for the dtb image used by U-boot. During FIT
+      image creation, the ``UBOOT_DTB_LOADADDRESS`` variable is used in
+      ``kernel-fitimage`` class to specify the load address to be used in
+      creating the dtb sections of Image Tree Source for the FIT image.
+
+   UBOOT_DTBO_LOADADDRESS
+      Specifies the load address for the dtbo image used by U-boot.  During FIT
+      image creation, the ``UBOOT_DTBO_LOADADDRESS`` variable is used in
+      ``kernel-fitimage`` class to specify the load address to be used in
+      creating the dtbo sections of Image Tree Source for the FIT image.
    
    UBOOT_ENTRYPOINT
       Specifies the entry point for the U-Boot image. During U-Boot image
@@ -7578,19 +7590,6 @@ system and gives an overview of their function and contents.
       entrypoint to be used in creating the Image Tree Source for
       the FIT image.
    
-   UBOOT_SUFFIX
-      Points to the generated U-Boot extension. For example, ``u-boot.sb``
-      has a ``.sb`` extension.
-   
-      The default U-Boot extension is ``.bin``
-   
-   UBOOT_TARGET
-      Specifies the target used for building U-Boot. The target is passed
-      directly as part of the "make" command (e.g. SPL and AIS). If you do
-      not specifically set this variable, the OpenEmbedded build process
-      passes and uses "all" for the target during the U-Boot building
-      process.
-
    UBOOT_SIGN_ENABLE
       Enable signing of FIT image. The default value is "0".
 
@@ -7603,6 +7602,19 @@ system and gives an overview of their function and contents.
       :term:`UBOOT_SIGN_KEYDIR` directory. For e.g. dev.key key and dev.crt
       certificate stored in :term:`UBOOT_SIGN_KEYDIR` directory will have
       :term:`UBOOT_SIGN_KEYNAME` set to "dev".
+
+   UBOOT_SUFFIX
+      Points to the generated U-Boot extension. For example, ``u-boot.sb``
+      has a ``.sb`` extension.
+
+      The default U-Boot extension is ``.bin``
+
+   UBOOT_TARGET
+      Specifies the target used for building U-Boot. The target is passed
+      directly as part of the "make" command (e.g. SPL and AIS). If you do
+      not specifically set this variable, the OpenEmbedded build process
+      passes and uses "all" for the target during the U-Boot building
+      process.
 
    UNKNOWN_CONFIGURE_WHITELIST
       Specifies a list of options that, if reported by the configure script
