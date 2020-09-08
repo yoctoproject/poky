@@ -140,8 +140,8 @@ back to the Yocto Project, such as ``create-pull-request`` and
 
 .. _structure-core-script:
 
-````
-----
+``oe-init-build-env``
+---------------------
 
 This script sets up the OpenEmbedded build environment. Running this
 script with the ``source`` command in a shell makes changes to ``PATH``
