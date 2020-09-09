@@ -34,13 +34,13 @@ Welcome to The Yocto Project's documentation!
    Application Development and the Extensible SDK (eSDK) <sdk-manual/sdk-manual>
    Toaster Manual <toaster-manual/toaster-manual>
    Test Environment Manual <test-manual/test-manual>
-   Bitbake User Manual <https://link to bitbake manual FIXME>
+   Bitbake User Manual <https://docs.yoctoproject.org/bitbake>
 
 .. toctree::
    :maxdepth: 1
    :caption: 'Mega' Manual
 
-   All-in-one 'Mega' Manual <https://www.yoctoproject.org/docs/singleindex.html>
+   All-in-one 'Mega' Manual <https://docs.yoctoproject.org/singleindex.html>
 
 .. toctree::
    :maxdepth: 1
