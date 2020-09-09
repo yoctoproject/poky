@@ -42,38 +42,6 @@ Supported Linux Distributions
 Currently, the Yocto Project is supported on the following
 distributions:
 
-.. note::
-
-   -  Yocto Project releases are tested against the stable Linux
-      distributions in the following list. The Yocto Project should work
-      on other distributions but validation is not performed against
-      them.
-
-   -  In particular, the Yocto Project does not support and currently
-      has no plans to support rolling-releases or development
-      distributions due to their constantly changing nature. We welcome
-      patches and bug reports, but keep in mind that our priority is on
-      the supported platforms listed below.
-
-   -  You may use Windows Subsystem For Linux v2 to set up a build host
-      using Windows 10, but validation is not performed against build
-      hosts using WSLv2.
-
-      .. note::
-
-         The Yocto Project is not compatible with WSLv1, it is
-         compatible but not officially supported nor validated with
-         WSLv2, if you still decide to use WSL please upgrade to WSLv2.
-
-   -  If you encounter problems, please go to `Yocto Project
-      Bugzilla <&YOCTO_BUGZILLA_URL;>`__ and submit a bug. We are
-      interested in hearing about your experience. For information on
-      how to submit a bug, see the Yocto Project
-      :yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
-      and the "`Submitting a Defect Against the Yocto
-      Project <&YOCTO_DOCS_DEV_URL;#submitting-a-defect-against-the-yocto-project>`__"
-      section in the Yocto Project Development Tasks Manual.
-
 -  Ubuntu 16.04 (LTS)
 
 -  Ubuntu 18.04 (LTS)
@@ -98,13 +66,43 @@ distributions:
 
 -  OpenSUSE Leap 15.1
 
+
 .. note::
 
-   While the Yocto Project Team attempts to ensure all Yocto Project
-   releases are one hundred percent compatible with each officially
-   supported Linux distribution, instances might exist where you
-   encounter a problem while using the Yocto Project on a specific
-   distribution.
+   -  While the Yocto Project Team attempts to ensure all Yocto Project
+      releases are one hundred percent compatible with each officially
+      supported Linux distribution, instances might exist where you
+      encounter a problem while using the Yocto Project on a specific
+      distribution.
+
+   -  Yocto Project releases are tested against the stable Linux
+      distributions in the above list. The Yocto Project should work
+      on other distributions but validation is not performed against
+      them.
+
+   -  In particular, the Yocto Project does not support and currently
+      has no plans to support rolling-releases or development
+      distributions due to their constantly changing nature. We welcome
+      patches and bug reports, but keep in mind that our priority is on
+      the supported platforms listed below.
+
+   -  You may use Windows Subsystem For Linux v2 to set up a build host
+      using Windows 10, but validation is not performed against build
+      hosts using WSLv2.
+
+   -  The Yocto Project is not compatible with WSLv1, it is
+      compatible but not officially supported nor validated with
+      WSLv2, if you still decide to use WSL please upgrade to WSLv2.
+
+   -  If you encounter problems, please go to `Yocto Project
+      Bugzilla <&YOCTO_BUGZILLA_URL;>`__ and submit a bug. We are
+      interested in hearing about your experience. For information on
+      how to submit a bug, see the Yocto Project
+      :yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
+      and the "`Submitting a Defect Against the Yocto
+      Project <&YOCTO_DOCS_DEV_URL;#submitting-a-defect-against-the-yocto-project>`__"
+      section in the Yocto Project Development Tasks Manual.
+
 
 Required Packages for the Build Host
 ====================================
