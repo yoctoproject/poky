@@ -5,9 +5,9 @@ Setting Up to Use the Yocto Project
 ***********************************
 
 This chapter provides guidance on how to prepare to use the Yocto
-Project. You can learn about creating a team environment that develops
-using the Yocto Project, how to set up a `build
-host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__, how to locate
+Project. You can learn about creating a team environment to develop
+using the Yocto Project, how to set up a :ref:`build
+host <dev-manual/dev-manual-start:preparing the build host>`, how to locate
 Yocto Project source repositories, and how to create local Git
 repositories.
 
@@ -79,8 +79,9 @@ particular working environment and set of practices.
     configuration files, classes, and so forth) and any software you are
     developing under the control of an SCM system that is compatible
     with the OpenEmbedded build system is advisable. Of all of the SCMs
-    supported by BitBake, the Yocto Project team strongly recommends
-    using `Git <&YOCTO_DOCS_OM_URL;#git>`__. Git is a distributed system
+    supported by BitBake, the Yocto Project team strongly recommends using
+    :ref:`overview-manual/overview-manual-development-environment:git`.
+    Git is a distributed system
     that is easy to back up, allows you to work remotely, and then
     connects back to the infrastructure.
 
@@ -171,8 +172,8 @@ particular working environment and set of practices.
 
     -  Highlights when commits break the build.
 
-    -  Populates an `sstate
-       cache <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__ from which
+    -  Populates an :ref:`sstate
+       cache <overview-manual/overview-manual-concepts:shared state cache>` from which
        developers can pull rather than requiring local builds.
 
     -  Allows commit hook triggers, which trigger builds when commits
@@ -226,20 +227,17 @@ particular working environment and set of practices.
     some best practices exist within the Yocto Project development
     environment. Consider the following:
 
-    -  Use `Git <&YOCTO_DOCS_OM_URL;#git>`__ as the source control
+    -  Use :ref:`overview-manual/overview-manual-development-environment:git` as the source control
        system.
 
     -  Maintain your Metadata in layers that make sense for your
-       situation. See the "`The Yocto Project Layer
-       Model <&YOCTO_DOCS_OM_URL;#the-yocto-project-layer-model>`__"
+       situation. See the ":ref:`overview-manual/overview-manual-yp-intro:the yocto project layer model`"
        section in the Yocto Project Overview and Concepts Manual and the
-       "`Understanding and Creating
-       Layers <#understanding-and-creating-layers>`__" section for more
-       information on layers.
+       ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
+       section for more information on layers.
 
     -  Separate the project's Metadata and code by using separate Git
-       repositories. See the "`Yocto Project Source
-       Repositories <&YOCTO_DOCS_OM_URL;#yocto-project-repositories>`__"
+       repositories. See the ":ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`"
        section in the Yocto Project Overview and Concepts Manual for
        information on these repositories. See the "`Locating Yocto
        Project Source Files <#locating-yocto-project-source-files>`__"
@@ -258,15 +256,16 @@ particular working environment and set of practices.
     -  The Yocto Project community encourages you to send patches to the
        project to fix bugs or add features. If you do submit patches,
        follow the project commit guidelines for writing good commit
-       messages. See the "`Submitting a Change to the Yocto
-       Project <#how-to-submit-a-change>`__" section.
+       messages. See the
+       ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+       section.
 
     -  Send changes to the core sooner than later as others are likely
        to run into the same issues. For some guidance on mailing lists
-       to use, see the list in the "`Submitting a Change to the Yocto
-       Project <#how-to-submit-a-change>`__" section. For a description
-       of the available mailing lists, see the "`Mailing
-       Lists <&YOCTO_DOCS_REF_URL;#resources-mailinglist>`__" section in
+       to use, see the list in the
+       ":ref:`dev-manual/dev-manual-common-tasks:submitting a change to the yocto project`"
+       section. For a description
+       of the available mailing lists, see the ":ref:`resources-mailinglist`" section in
        the Yocto Project Reference Manual.
 
 .. _dev-preparing-the-build-host:
@@ -275,7 +274,7 @@ Preparing the Build Host
 ========================
 
 This section provides procedures to set up a system to be used as your
-`build host <&YOCTO_DOCS_REF_URL;#hardware-build-system-term>`__ for
+:term:`Build Host` for
 development using the Yocto Project. Your build host can be a native
 Linux machine (recommended), it can be a machine (Linux, Mac, or
 Windows) that uses `CROPS <https://github.com/crops/poky-container>`__,
@@ -297,15 +296,11 @@ are necessary depending on what you want to accomplish. See the
 following references for information on how to prepare for Board Support
 Package (BSP) development and kernel development:
 
--  *BSP Development:* See the "`Preparing Your Build Host to Work With
-   BSP
-   Layers <&YOCTO_DOCS_BSP_URL;#preparing-your-build-host-to-work-with-bsp-layers>`__"
+-  *BSP Development:* See the ":ref:`bsp-guide/bsp:preparing your build host to work with bsp layers`"
    section in the Yocto Project Board Support Package (BSP) Developer's
    Guide.
 
--  *Kernel Development:* See the "`Preparing the Build Host to Work on
-   the
-   Kernel <&YOCTO_DOCS_KERNEL_DEV_URL;#preparing-the-build-host-to-work-on-the-kernel>`__"
+-  *Kernel Development:* See the ":ref:`kernel-dev/kernel-dev-common:preparing the build host to work on the kernel`"
    section in the Yocto Project Linux Kernel Development Manual.
 
 Setting Up a Native Linux Host
@@ -319,8 +314,8 @@ Project Build Host:
    a recent release of Fedora, openSUSE, Debian, Ubuntu, RHEL or CentOS
    as these releases are frequently tested against the Yocto Project and
    officially supported. For a list of the distributions under
-   validation and their status, see the "`Supported Linux
-   Distributions <&YOCTO_DOCS_REF_URL;#detailed-supported-distros>`__"
+   validation and their status, see the ":ref:`Supported Linux
+   Distributions <detailed-supported-distros>`"
    section in the Yocto Project Reference Manual and the wiki page at
    :yocto_wiki:`Distribution Support </wiki/Distribution_Support>`.
 
@@ -341,9 +336,8 @@ Project Build Host:
 
    If your build host does not meet any of these three listed version
    requirements, you can take steps to prepare the system so that you
-   can still use the Yocto Project. See the "`Required Git, tar, Python
-   and gcc
-   Versions <&YOCTO_DOCS_REF_URL;#required-git-tar-python-and-gcc-versions>`__"
+   can still use the Yocto Project. See the
+   ":ref:`ref-manual/ref-system-requirements:required git, tar, python and gcc versions`"
    section in the Yocto Project Reference Manual for information.
 
 4. *Install Development Host Packages:* Required development host
@@ -351,23 +345,19 @@ Project Build Host:
    with the Yocto Project. Collectively, the number of required packages
    is large if you want to be able to cover all cases.
 
-   For lists of required packages for all scenarios, see the "`Required
-   Packages for the Build
-   Host <&YOCTO_DOCS_REF_URL;#required-packages-for-the-build-host>`__"
+   For lists of required packages for all scenarios, see the
+   ":ref:`ref-manual/ref-system-requirements:required packages for the build host`"
    section in the Yocto Project Reference Manual.
 
 Once you have completed the previous steps, you are ready to continue
 using a given development path on your native Linux machine. If you are
-going to use BitBake, see the "`Cloning the ``poky``
-Repository <#cloning-the-poky-repository>`__" section. If you are going
-to use the Extensible SDK, see the "`Using the Extensible
-SDK <&YOCTO_DOCS_SDK_URL;#sdk-extensible>`__" Chapter in the Yocto
+going to use BitBake, see the
+":ref:`dev-manual/dev-manual-start:cloning the \`\`poky\`\` repository`"
+section. If you are going
+to use the Extensible SDK, see the ":doc:`../sdk-manual/sdk-extensible`" Chapter in the Yocto
 Project Application Development and the Extensible Software Development
-Kit (eSDK) manual. If you want to work on the kernel, see the `Yocto
-Project Linux Kernel Development
-Manual <&YOCTO_DOCS_KERNEL_DEV_URL;>`__. If you are going to use
-Toaster, see the "`Setting Up and Using
-Toaster <&YOCTO_DOCS_TOAST_URL;#toaster-manual-setup-and-use>`__"
+Kit (eSDK) manual. If you want to work on the kernel, see the :doc:`../kernel-dev/kernel-dev`. If you are going to use
+Toaster, see the ":doc:`../toaster-manual/toaster-manual-setup-and-use`"
 section in the Toaster User Manual.
 
 .. _setting-up-to-use-crops:
@@ -465,12 +455,11 @@ Once you have a container set up, everything is in place to develop just
 as if you were running on a native Linux machine. If you are going to
 use the Poky container, see the "`Cloning the ``poky``
 Repository <#cloning-the-poky-repository>`__" section. If you are going
-to use the Extensible SDK container, see the "`Using the Extensible
-SDK <&YOCTO_DOCS_SDK_URL;#sdk-extensible>`__" Chapter in the Yocto
+to use the Extensible SDK container, see the
+":doc:`../sdk-manual/sdk-extensible`" Chapter in the Yocto
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you are going to use the Toaster container, see
-the "`Setting Up and Using
-Toaster <&YOCTO_DOCS_TOAST_URL;#toaster-manual-setup-and-use>`__"
+the ":doc:`../toaster-manual/toaster-manual-setup-and-use`"
 section in the Toaster User Manual.
 
 .. _setting-up-to-use-wsl:
@@ -490,8 +479,14 @@ your Yocto Project build host:
 1. *Make sure your Windows 10 machine is capable of running WSLv2:*
    WSLv2 is only available for Windows 10 builds > 18917. To check which
    build version you are running, you may open a command prompt on
-   Windows and execute the command "ver". C:\Users\myuser> ver Microsoft
-   Windows [Version 10.0.19041.153] If your build is capable of running
+   Windows and execute the command "ver".
+   ::
+
+      C:\Users\myuser> ver
+
+      Microsoft Windows [Version 10.0.19041.153]
+
+   If your build is capable of running
    WSLv2 you may continue, for more information on this subject or
    instructions on how to upgrade to WSLv2 visit `Windows 10
    WSLv2 <https://docs.microsoft.com/en-us/windows/wsl/wsl2-install>`__
@@ -507,8 +502,14 @@ your Yocto Project build host:
    distribution.
 
 3. *Check your Linux distribution is using WSLv2:* Open a Windows
-   PowerShell and run: C:\WINDOWS\system32> wsl -l -v NAME STATE VERSION
-   \*Ubuntu Running 2 Note the version column which says the WSL version
+   PowerShell and run:
+   ::
+
+      C:\WINDOWS\system32> wsl -l -v
+      NAME    STATE   VERSION
+      *Ubuntu Running 2
+
+   Note the version column which says the WSL version
    being used by your distribution, on compatible systems, this can be
    changed back at any point in time.
 
@@ -529,25 +530,35 @@ your Yocto Project build host:
 
    1. *Find the location of your VHDX file:* First you need to find the
       distro app package directory, to achieve this open a Windows
-      Powershell as Administrator and run: C:\WINDOWS\system32>
-      Get-AppxPackage -Name "*Ubuntu*" \| Select PackageFamilyName
-      PackageFamilyName -----------------
-      CanonicalGroupLimited.UbuntuonWindows_79abcdefgh You should now
+      Powershell as Administrator and run:
+      ::
+
+         C:\WINDOWS\system32> Get-AppxPackage -Name "*Ubuntu*" | Select PackageFamilyName
+         PackageFamilyName
+         -----------------
+         CanonicalGroupLimited.UbuntuonWindows_79abcdefgh
+
+
+      You should now
       replace the PackageFamilyName and your user on the following path
       to find your VHDX file:
-      ``C:\Users\user\AppData\Local\Packages\PackageFamilyName\LocalState\``
-      For example: ls
-      C:\Users\myuser\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79abcdefgh\LocalState\\
-      Mode LastWriteTime Length Name -a---- 3/14/2020 9:52 PM
-      57418973184 ext4.vhdx Your VHDX file path is:
+      ::
+
+          ls C:\Users\myuser\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79abcdefgh\LocalState\
+          Mode                 LastWriteTime         Length Name
+          -a----         3/14/2020   9:52 PM    57418973184 ext4.vhdx
+
+      Your VHDX file path is:
       ``C:\Users\myuser\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79abcdefgh\LocalState\ext4.vhdx``
 
    2. *Optimize your VHDX file:* Open a Windows Powershell as
       Administrator to optimize your VHDX file, shutting down WSL first:
-      C:\WINDOWS\system32> wsl --shutdown C:\WINDOWS\system32>
-      optimize-vhd -Path
-      C:\Users\myuser\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79abcdefgh\LocalState\ext4.vhdx
-      -Mode full A progress bar should be shown while optimizing the
+      ::
+
+         C:\WINDOWS\system32> wsl --shutdown
+         C:\WINDOWS\system32> optimize-vhd -Path C:\Users\myuser\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79abcdefgh\LocalState\ext4.vhdx -Mode full
+
+      A progress bar should be shown while optimizing the
       VHDX file, and storage should now be reflected correctly on the
       Windows Explorer.
 
@@ -565,12 +576,10 @@ your Yocto Project build host:
 
 Once you have WSLv2 set up, everything is in place to develop just as if
 you were running on a native Linux machine. If you are going to use the
-Extensible SDK container, see the "`Using the Extensible
-SDK <&YOCTO_DOCS_SDK_URL;#sdk-extensible>`__" Chapter in the Yocto
+Extensible SDK container, see the ":doc:`../sdk-manual/sdk-extensible`" Chapter in the Yocto
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual. If you are going to use the Toaster container, see
-the "`Setting Up and Using
-Toaster <&YOCTO_DOCS_TOAST_URL;#toaster-manual-setup-and-use>`__"
+the ":doc:`../toaster-manual/toaster-manual-setup-and-use`"
 section in the Toaster User Manual.
 
 Locating Yocto Project Source Files
@@ -582,19 +591,17 @@ files you'll need to work with the Yocto Project.
 .. note::
 
    -  For concepts and introductory information about Git as it is used
-      in the Yocto Project, see the "`Git <&YOCTO_DOCS_OM_URL;#git>`__"
+      in the Yocto Project, see the ":ref:`overview-manual/overview-manual-development-environment:git`"
       section in the Yocto Project Overview and Concepts Manual.
 
-   -  For concepts on Yocto Project source repositories, see the "`Yocto
-      Project Source
-      Repositories <&YOCTO_DOCS_OM_URL;#yocto-project-repositories>`__"
+   -  For concepts on Yocto Project source repositories, see the
+      ":ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`"
       section in the Yocto Project Overview and Concepts Manual."
 
 Accessing Source Repositories
 -----------------------------
 
-Working from a copy of the upstream Yocto Project `Source
-Repositories <&YOCTO_DOCS_OM_URL;#source-repositories>`__ is the
+Working from a copy of the upstream :ref:`dev-manual/dev-manual-start:accessing source repositories` is the
 preferred method for obtaining and using a Yocto Project release. You
 can view the Yocto Project Source Repositories at
 :yocto_git:`/`. In particular, you can find the ``poky``
@@ -611,8 +618,7 @@ Use the following procedure to locate the latest upstream copy of the
    interested (e.g. ``poky``).
 
 3. *Find the URL Used to Clone the Repository:* At the bottom of the
-   page, note the URL used to
-   `clone <&YOCTO_DOCS_OM_URL;#git-commands-clone>`__ that repository
+   page, note the URL used to clone that repository
    (e.g. :yocto_git:`/git/poky`).
 
    .. note::
@@ -658,9 +664,9 @@ Follow these steps to locate and download a particular tarball:
    are interested (e.g. ``yocto``).
 
 3. *Find the Tarball:* Drill down to find the associated tarball. For
-   example, click on ``yocto-DISTRO`` to view files associated with the
-   Yocto Project DISTRO release (e.g.
-   ``poky-DISTRO_NAME_NO_CAP-POKYVERSION.tar.bz2``, which is the
+   example, click on ``yocto-&DISTRO;`` to view files associated with the
+   Yocto Project &DISTRO; release (e.g.
+   ``&YOCTO_POKY;.tar.bz2``, which is the
    released Poky tarball).
 
 4. *Download the Tarball:* Click the tarball to download and save a
@@ -691,8 +697,7 @@ Releases <#accessing-index-of-releases>`__" section.
 
 3. *Select a Yocto Project Release:* Use the menu next to "RELEASE" to
    display and choose a recent or past supported Yocto Project release
-   (e.g. DISTRO_NAME_NO_CAP, DISTRO_NAME_NO_CAP_MINUS_ONE, and so
-   forth).
+   (e.g. &DISTRO_NAME_NO_CAP;, &DISTRO_NAME_NO_CAP_MINUS_ONE;, and so forth).
 
    .. note::
 
@@ -711,7 +716,7 @@ Accessing Nightly Builds
 ------------------------
 
 Yocto Project maintains an area for nightly builds that contains tarball
-releases at ` <&YOCTO_AB_NIGHTLY_URL;>`__. These builds include Yocto
+releases at https://autobuilder.yocto.io//pub/nightly/. These builds include Yocto
 Project releases ("poky"), toolchains, and builds for supported
 machines.
 
@@ -719,7 +724,7 @@ Should you ever want to access a nightly build of a particular Yocto
 Project component, use the following procedure:
 
 1. *Locate the Index of Nightly Builds:* Open a browser and go to
-   ` <&YOCTO_AB_NIGHTLY_URL;>`__ to access the Nightly Builds.
+   https://autobuilder.yocto.io//pub/nightly/ to access the Nightly Builds.
 
 2. *Select a Date:* Click on the date in which you are interested. If
    you want the latest builds, use "CURRENT".
@@ -739,11 +744,10 @@ Cloning and Checking Out Branches
 To use the Yocto Project for development, you need a release locally
 installed on your development system. This locally installed set of
 files is referred to as the :term:`Source Directory`
- in the Yocto
-Project documentation.
+in the Yocto Project documentation.
 
 The preferred method of creating your Source Directory is by using
-`Git <&YOCTO_DOCS_OM_URL;#git>`__ to clone a local copy of the upstream
+:ref:`overview-manual/overview-manual-development-environment:git` to clone a local copy of the upstream
 ``poky`` repository. Working from a cloned copy of the upstream
 repository allows you to contribute back into the Yocto Project or to
 simply work with the latest software on a development branch. Because
@@ -756,19 +760,26 @@ Cloning the ``poky`` Repository
 -------------------------------
 
 Follow these steps to create a local version of the upstream
-```poky`` <&YOCTO_DOCS_REF_URL;#poky>`__ Git repository.
+:term:`Poky` Git repository.
 
 1. *Set Your Directory:* Change your working directory to where you want
    to create your local copy of ``poky``.
 
 2. *Clone the Repository:* The following example command clones the
    ``poky`` repository and uses the default name "poky" for your local
-   repository: $ git clone git://git.yoctoproject.org/poky Cloning into
-   'poky'... remote: Counting objects: 432160, done. remote: Compressing
-   objects: 100% (102056/102056), done. remote: Total 432160 (delta
-   323116), reused 432037 (delta 323000) Receiving objects: 100%
-   (432160/432160), 153.81 MiB \| 8.54 MiB/s, done. Resolving deltas:
-   100% (323116/323116), done. Checking connectivity... done. Unless you
+   repository:
+   ::
+
+      $ git clone git://git.yoctoproject.org/poky
+      Cloning into 'poky'...
+      remote: Counting objects: 432160, done.
+      remote: Compressing objects: 100% (102056/102056), done.
+      remote: Total 432160 (delta 323116), reused 432037 (delta 323000)
+      Receiving objects: 100% (432160/432160), 153.81 MiB | 8.54 MiB/s, done.
+      Resolving deltas: 100% (323116/323116), done.
+      Checking connectivity... done.
+
+   Unless you
    specify a specific development branch or tag name, Git clones the
    "master" branch, which results in a snapshot of the latest
    development changes for "master". For information on how to check out
@@ -779,13 +790,21 @@ Follow these steps to create a local version of the upstream
 
    Once the local repository is created, you can change to that
    directory and check its status. Here, the single "master" branch
-   exists on your system and by default, it is checked out: $ cd ~/poky
-   $ git status On branch master Your branch is up-to-date with
-   'origin/master'. nothing to commit, working directory clean $ git
-   branch \* master Your local repository of poky is identical to the
+   exists on your system and by default, it is checked out:
+   ::
+
+      $ cd ~/poky
+      $ git status
+      On branch master
+      Your branch is up-to-date with 'origin/master'.
+      nothing to commit, working directory clean
+      $ git branch
+      * master
+
+   Your local repository of poky is identical to the
    upstream poky repository at the time from which it was cloned. As you
    work with the local branch, you can periodically use the
-   ``git pull DASHDASHrebase`` command to be sure you are up-to-date
+   ``git pull --rebase`` command to be sure you are up-to-date
    with the upstream branch.
 
 Checking Out by Branch in Poky
@@ -809,28 +828,48 @@ and then specifically check out that development branch.
    copy of poky, see the "`Cloning the ``poky``
    Repository <#cloning-the-poky-repository>`__" section.
 
-2. *Determine Existing Branch Names:* $ git branch -a \* master
-   remotes/origin/1.1_M1 remotes/origin/1.1_M2 remotes/origin/1.1_M3
-   remotes/origin/1.1_M4 remotes/origin/1.2_M1 remotes/origin/1.2_M2
-   remotes/origin/1.2_M3 . . . remotes/origin/thud
-   remotes/origin/thud-next remotes/origin/warrior
-   remotes/origin/warrior-next remotes/origin/zeus
-   remotes/origin/zeus-next ... and so on ...
+2. *Determine Existing Branch Names:*
+   ::
+
+      $ git branch -a
+      * master
+      remotes/origin/1.1_M1
+      remotes/origin/1.1_M2
+      remotes/origin/1.1_M3
+      remotes/origin/1.1_M4
+      remotes/origin/1.2_M1
+      remotes/origin/1.2_M2
+      remotes/origin/1.2_M3
+      . . .
+      remotes/origin/thud
+      remotes/origin/thud-next
+      remotes/origin/warrior
+      remotes/origin/warrior-next
+      remotes/origin/zeus
+      remotes/origin/zeus-next
+      ... and so on ...
 
 3. *Check out the Branch:* Check out the development branch in which you
    want to work. For example, to access the files for the Yocto Project
-   DISTRO Release (DISTRO_NAME), use the following command: $ git
-   checkout -b DISTRO_NAME_NO_CAP origin/DISTRO_NAME_NO_CAP Branch
-   DISTRO_NAME_NO_CAP set up to track remote branch DISTRO_NAME_NO_CAP
-   from origin. Switched to a new branch 'DISTRO_NAME_NO_CAP' The
-   previous command checks out the "DISTRO_NAME_NO_CAP" development
+   &DISTRO; Release (&DISTRO_NAME;), use the following command:
+   ::
+
+      $ git checkout -b &DISTRO_NAME; origin/&DISTRO_NAME;
+      Branch &DISTRO_NAME; set up to track remote branch &DISTRO_NAME; from origin.
+      Switched to a new branch '&DISTRO_NAME;'
+
+   The previous command checks out the "&DISTRO_NAME;" development
    branch and reports that the branch is tracking the upstream
-   "origin/DISTRO_NAME_NO_CAP" branch.
+   "origin/&DISTRO_NAME;" branch.
 
    The following command displays the branches that are now part of your
    local poky repository. The asterisk character indicates the branch
-   that is currently checked out for work: $ git branch master \*
-   DISTRO_NAME_NO_CAP
+   that is currently checked out for work:
+   ::
+
+      $ git branch
+        master *
+        &DISTRO_NAME;
 
 .. _checkout-out-by-tag-in-poky:
 
@@ -854,20 +893,48 @@ similar to checking out by branch name except you use tag names.
    Repository <#cloning-the-poky-repository>`__" section.
 
 2. *Fetch the Tag Names:* To checkout the branch based on a tag name,
-   you need to fetch the upstream tags into your local repository: $ git
-   fetch --tags $
+   you need to fetch the upstream tags into your local repository:
+   ::
 
-3. *List the Tag Names:* You can list the tag names now: $ git tag
-   1.1_M1.final 1.1_M1.rc1 1.1_M1.rc2 1.1_M2.final 1.1_M2.rc1 . . .
-   yocto-2.5 yocto-2.5.1 yocto-2.5.2 yocto-2.5.3 yocto-2.6 yocto-2.6.1
-   yocto-2.6.2 yocto-2.7 yocto_1.5_M5.rc8
+      $ git fetch --tags
+      $
 
-4. *Check out the Branch:* $ git checkout tags/DISTRO_REL_TAG -b
-   my_yocto_DISTRO Switched to a new branch 'my_yocto_DISTRO' $ git
-   branch master \* my_yocto_DISTRO The previous command creates and
-   checks out a local branch named "my_yocto_DISTRO", which is based on
+3. *List the Tag Names:* You can list the tag names now:
+   ::
+
+      $ git tag
+      1.1_M1.final
+      1.1_M1.rc1
+      1.1_M1.rc2
+      1.1_M2.final
+      1.1_M2.rc1
+         .
+         .
+         .
+      yocto-2.5
+      yocto-2.5.1
+      yocto-2.5.2
+      yocto-2.5.3
+      yocto-2.6
+      yocto-2.6.1
+      yocto-2.6.2
+      yocto-2.7
+      yocto_1.5_M5.rc8
+
+
+4. *Check out the Branch:*
+   ::
+
+      $ git checkout tags/yocto-&DISTRO; -b my_yocto_&DISTRO;
+      Switched to a new branch 'my_yocto_&DISTRO;'
+      $ git branch
+        master
+      * my_yocto_&DISTRO;
+
+   The previous command creates and
+   checks out a local branch named "my_yocto_&DISTRO;", which is based on
    the commit in the upstream poky repository that has the same tag. In
    this example, the files you have available locally as a result of the
-   ``checkout`` command are a snapshot of the "DISTRO_NAME_NO_CAP"
-   development branch at the point where Yocto Project DISTRO was
+   ``checkout`` command are a snapshot of the "&DISTRO_NAME_NO_CAP;"
+   development branch at the point where Yocto Project &DISTRO; was
    released.

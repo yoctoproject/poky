@@ -50,8 +50,7 @@ available. Follow these general steps to run QEMU:
 
 1. *Install QEMU:* QEMU is made available with the Yocto Project a
    number of ways. One method is to install a Software Development Kit
-   (SDK). See "`The QEMU
-   Emulator <&YOCTO_DOCS_SDK_URL;#the-qemu-emulator>`__" section in the
+   (SDK). See ":ref:`sdk-manual/sdk-intro:the qemu emulator`" section in the
    Yocto Project Application Development and the Extensible Software
    Development Kit (eSDK) manual for information on how to install QEMU.
 
@@ -60,14 +59,18 @@ available. Follow these general steps to run QEMU:
 
    -  If you cloned the ``poky`` repository or you downloaded and
       unpacked a Yocto Project release tarball, you can source the build
-      environment script (i.e.
-      ````` <&YOCTO_DOCS_REF_URL;#structure-core-script>`__): $ cd
-      ~/poky $ source oe-init-build-env
+      environment script (i.e. :ref:`structure-core-script`):
+      ::
+
+         $ cd ~/poky
+         $ source oe-init-build-env
 
    -  If you installed a cross-toolchain, you can run the script that
       initializes the toolchain. For example, the following commands run
       the initialization script from the default ``poky_sdk`` directory:
-      . ~/poky_sdk/environment-setup-core2-64-poky-linux
+      ::
+
+         . ~/poky_sdk/environment-setup-core2-64-poky-linux
 
 3. *Ensure the Artifacts are in Place:* You need to be sure you have a
    pre-built kernel that will boot in QEMU. You also need the target
@@ -78,18 +81,21 @@ available. Follow these general steps to run QEMU:
       your :term:`Build Directory`.
 
    -  If you have not built an image, you can go to the
-      `machines/qemu <&YOCTO_MACHINES_DL_URL;>`__ area and download a
+      :yocto_dl:`machines/qemu <releases/yocto/yocto-3.1.2/machines/qemu/>` area and download a
       pre-built image that matches your architecture and can be run on
       QEMU.
 
-   See the "`Extracting the Root
-   Filesystem <&YOCTO_DOCS_SDK_URL;#sdk-extracting-the-root-filesystem>`__"
+   See the ":ref:`sdk-manual/sdk-appendix-obtain:extracting the root filesystem`"
    section in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual for information on
    how to extract a root filesystem.
 
-4. *Run QEMU:* The basic ``runqemu`` command syntax is as follows: $
-   runqemu [option ] [...] Based on what you provide on the command
+4. *Run QEMU:* The basic ``runqemu`` command syntax is as follows:
+   ::
+
+      $ runqemu [option ] [...]
+
+   Based on what you provide on the command
    line, ``runqemu`` does a good job of figuring out what you are trying
    to do. For example, by default, QEMU looks for the most recently
    built image according to the timestamp when it needs to look for an
@@ -113,30 +119,40 @@ available. Follow these general steps to run QEMU:
          and uses the most recently built image according to the
          timestamp.
 
-      $ runqemu qemux86-64
+      ::
+
+        $ runqemu qemux86-64
 
    -  This example produces the exact same results as the previous
       example. This command, however, specifically provides the image
-      and root filesystem type. $ runqemu qemux86-64 core-image-minimal
-      ext4
+      and root filesystem type.
+      ::
+
+         $ runqemu qemux86-64 core-image-minimal ext4
 
    -  This example specifies to boot an initial RAM disk image and to
       enable audio in QEMU. For this case, ``runqemu`` set the internal
       variable ``FSTYPE`` to "cpio.gz". Also, for audio to be enabled,
       an appropriate driver must be installed (see the previous
-      description for the ``audio`` option for more information). $
-      runqemu qemux86-64 ramfs audio
+      description for the ``audio`` option for more information).
+      ::
+
+         $ runqemu qemux86-64 ramfs audio
 
    -  This example does not provide enough information for QEMU to
       launch. While the command does provide a root filesystem type, it
-      must also minimally provide a MACHINE, KERNEL, or VM option. $
-      runqemu ext4
+      must also minimally provide a MACHINE, KERNEL, or VM option.
+      ::
+
+         $ runqemu ext4
 
    -  This example specifies to boot a virtual machine image
       (``.wic.vmdk`` file). From the ``.wic.vmdk``, ``runqemu``
       determines the QEMU architecture (MACHINE) to be "qemux86-64" and
-      the root filesystem type to be "vmdk". $ runqemu
-      /home/scott-lenovo/vm/core-image-minimal-qemux86-64.wic.vmdk
+      the root filesystem type to be "vmdk".
+      ::
+
+         $ runqemu /home/scott-lenovo/vm/core-image-minimal-qemux86-64.wic.vmdk
 
 Switching Between Consoles
 ==========================
@@ -191,15 +207,19 @@ using an NFS server.
    The ``runqemu-extract-sdk`` takes a root filesystem tarball and
    extracts it into a location that you specify. Here is an example that
    takes a file system and extracts it to a directory named
-   ``test-nfs``: runqemu-extract-sdk
-   ./tmp/deploy/images/qemux86-64/core-image-sato-qemux86-64.tar.bz2
-   test-nfs
+   ``test-nfs``:
+   ::
+
+      runqemu-extract-sdk ./tmp/deploy/images/qemux86-64/core-image-sato-qemux86-64.tar.bz2 test-nfs
 
 2. *Start QEMU:* Once you have extracted the file system, you can run
    ``runqemu`` normally with the additional location of the file system.
    You can then also make changes to the files within ``./test-nfs`` and
    see those changes appear in the image in real time. Here is an
-   example using the ``qemux86`` image: runqemu qemux86-64 ./test-nfs
+   example using the ``qemux86`` image:
+   ::
+
+      runqemu qemux86-64 ./test-nfs
 
 .. note::
 
@@ -297,38 +317,57 @@ present, the toolchain is also automatically used.
 QEMU Command-Line Syntax
 ========================
 
-The basic ``runqemu`` command syntax is as follows: $ runqemu [option ]
-[...] Based on what you provide on the command line, ``runqemu`` does a
+The basic ``runqemu`` command syntax is as follows:
+::
+
+   $ runqemu [option ] [...]
+
+Based on what you provide on the command line, ``runqemu`` does a
 good job of figuring out what you are trying to do. For example, by
 default, QEMU looks for the most recently built image according to the
 timestamp when it needs to look for an image. Minimally, through the use
 of options, you must provide either a machine name, a virtual machine
 image (``*wic.vmdk``), or a kernel image (``*.bin``).
 
-Following is the command-line help output for the ``runqemu`` command: $
-runqemu --help Usage: you can run this script with any valid combination
-of the following environment variables (in any order): KERNEL - the
-kernel image file to use ROOTFS - the rootfs image file or nfsroot
-directory to use MACHINE - the machine name (optional, autodetected from
-KERNEL filename if unspecified) Simplified QEMU command-line options can
-be passed with: nographic - disable video console serial - enable a
-serial console on /dev/ttyS0 slirp - enable user networking, no root
-privileges is required kvm - enable KVM when running x86/x86_64
-(VT-capable CPU required) kvm-vhost - enable KVM with vhost when running
-x86/x86_64 (VT-capable CPU required) publicvnc - enable a VNC server
-open to all hosts audio - enable audio [*/]ovmf\* - OVMF firmware file
-or base name for booting with UEFI tcpserial=<port> - specify tcp serial
-port number biosdir=<dir> - specify custom bios dir
-biosfilename=<filename> - specify bios filename qemuparams=<xyz> -
-specify custom parameters to QEMU bootparams=<xyz> - specify custom
-kernel parameters during boot help, -h, --help: print this text
-Examples: runqemu runqemu qemuarm runqemu tmp/deploy/images/qemuarm
-runqemu tmp/deploy/images/qemux86/<qemuboot.conf> runqemu qemux86-64
-core-image-sato ext4 runqemu qemux86-64 wic-image-minimal wic runqemu
-path/to/bzImage-qemux86.bin path/to/nfsrootdir/ serial runqemu qemux86
-iso/hddimg/wic.vmdk/wic.qcow2/wic.vdi/ramfs/cpio.gz... runqemu qemux86
-qemuparams="-m 256" runqemu qemux86 bootparams="psplash=false" runqemu
-path/to/<image>-<machine>.wic runqemu path/to/<image>-<machine>.wic.vmdk
+Following is the command-line help output for the ``runqemu`` command:
+::
+
+   $ runqemu --help
+
+   Usage: you can run this script with any valid combination
+   of the following environment variables (in any order):
+     KERNEL - the kernel image file to use
+     ROOTFS - the rootfs image file or nfsroot directory to use
+     MACHINE - the machine name (optional, autodetected from KERNEL filename if unspecified)
+     Simplified QEMU command-line options can be passed with:
+       nographic - disable video console
+       serial - enable a serial console on /dev/ttyS0
+       slirp - enable user networking, no root privileges is required
+       kvm - enable KVM when running x86/x86_64 (VT-capable CPU required)
+       kvm-vhost - enable KVM with vhost when running x86/x86_64 (VT-capable CPU required)
+       publicvnc - enable a VNC server open to all hosts
+       audio - enable audio
+       [*/]ovmf* - OVMF firmware file or base name for booting with UEFI
+     tcpserial=<port> - specify tcp serial port number
+     biosdir=<dir> - specify custom bios dir
+     biosfilename=<filename> - specify bios filename
+     qemuparams=<xyz> - specify custom parameters to QEMU
+     bootparams=<xyz> - specify custom kernel parameters during boot
+     help, -h, --help: print this text
+
+   Examples:
+     runqemu
+     runqemu qemuarm
+     runqemu tmp/deploy/images/qemuarm
+     runqemu tmp/deploy/images/qemux86/<qemuboot.conf>
+     runqemu qemux86-64 core-image-sato ext4
+     runqemu qemux86-64 wic-image-minimal wic
+     runqemu path/to/bzImage-qemux86.bin path/to/nfsrootdir/ serial
+     runqemu qemux86 iso/hddimg/wic.vmdk/wic.qcow2/wic.vdi/ramfs/cpio.gz...
+     runqemu qemux86 qemuparams="-m 256"
+     runqemu qemux86 bootparams="psplash=false"
+     runqemu path/to/<image>-<machine>.wic
+     runqemu path/to/<image>-<machine>.wic.vmdk
 
 .. _qemu-dev-runqemu-command-line-options:
 
