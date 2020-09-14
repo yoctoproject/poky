@@ -23,11 +23,11 @@ We have two broad categories of test builds, including "full" and
 "quick". On the Autobuilder, these can be seen as "a-quick" and
 "a-full", simply for ease of sorting in the UI. Use our Autobuilder
 console view to see where me manage most test-related items, available
-at: `https://autobuilder.yoctoproject.org/typhoon/#/console <#>`__.
+at: :yocto_ab:`/typhoon/#/console`.
 
 Builds are triggered manually when the test branches are ready. The
 builds are monitored by the SWAT team. For additional information, see
-`https://wiki.yoctoproject.org/wiki/Yocto_Build_Failure_Swat_Team <#>`__.
+:yocto_wiki:`/wiki/Yocto_Build_Failure_Swat_Team`.
 If successful, the changes would usually be merged to the ``master``
 branch. If not successful, someone would respond to the changes on the
 mailing list explaining that there was a failure in testing. The choice
@@ -37,9 +37,9 @@ which the result was required.
 The Autobuilder does build the ``master`` branch once daily for several
 reasons, in particular, to ensure the current ``master`` branch does
 build, but also to keep ``yocto-testresults``
-(`http://git.yoctoproject.org/cgit.cgi/yocto-testresults/ <#>`__),
+(:yocto_git:`/cgit.cgi/yocto-testresults/`),
 buildhistory
-(`http://git.yoctoproject.org/cgit.cgi/poky-buildhistory/ <#>`__), and
+(:yocto_git:`/cgit.cgi/poky-buildhistory/`), and
 our sstate up to date. On the weekend, there is a master-next build
 instead to ensure the test results are updated for the less frequently
 run targets.
@@ -47,7 +47,7 @@ run targets.
 Performance builds (buildperf-\* targets in the console) are triggered
 separately every six hours and automatically push their results to the
 buildstats repository at:
-`http://git.yoctoproject.org/cgit.cgi/yocto-buildstats/ <#>`__.
+:yocto_git:`/cgit.cgi/yocto-buildstats/`.
 
 The 'quick' targets have been selected to be the ones which catch the
 most failures or give the most valuable data. We run 'fast' ptests in
@@ -55,8 +55,6 @@ this case for example but not the ones which take a long time. The quick
 target doesn't include \*-lsb builds for all architectures, some world
 builds and doesn't trigger performance tests or ltp testing. The full
 build includes all these things and is slower but more comprehensive.
-
-.. _test-yocto-project-autobuilder-overview:
 
 Release Builds
 ==============
@@ -76,7 +74,7 @@ box to "generate an email to QA"is also checked.
 When the build completes, an email is sent out using the send-qa-email
 script in the ``yocto-autobuilder-helper`` repository to the list of
 people configured for that release. Release builds are placed into a
-directory in `https://autobuilder.yocto.io/pub/releases <#>`__ on the
+directory in https://autobuilder.yocto.io/pub/releases on the
 Autobuilder which is included in the email. The process from here is
 more manual and control is effectively passed to release engineering.
 The next steps include:
