@@ -28,8 +28,8 @@ newly-supported platforms. Previous recipes in the release are refreshed
 and supported for at least one additional Yocto Project release. As they
 align, these previous releases are updated to include the latest from
 the Long Term Support Initiative (LTSI) project. You can learn more
-about Yocto Linux kernels and LTSI in the "`Yocto Project Kernel
-Development and Maintenance <#kernel-big-picture>`__" section.
+about Yocto Linux kernels and LTSI in the ":ref:`Yocto Project Kernel
+Development and Maintenance <kernel-big-picture>`" section.
 
 Also included is a Yocto Linux kernel development recipe
 (``linux-yocto-dev.bb``) should you want to work with the very latest in
@@ -81,17 +81,16 @@ facilitate the process of working with the kernel recipes. If you find
 you need some additional background, please be sure to review and
 understand the following documentation:
 
--  `Yocto Project Quick Build <&YOCTO_DOCS_BRIEF_URL;>`__ document.
+-  :doc:`../brief-yoctoprojectqs/brief-yoctoprojectqs` document.
 
--  `Yocto Project Overview and Concepts Manual <&YOCTO_DOCS_OM_URL;>`__.
+-  :doc:`../overview-manual/overview-manual`.
 
--  ```devtool``
-   workflow <&YOCTO_DOCS_SDK_URL;#using-devtool-in-your-sdk-workflow>`__
+-  :ref:`devtool
+   workflow <sdk-manual/sdk-extensible:using \`\`devtool\`\` in your sdk workflow>`
    as described in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual.
 
--  The "`Understanding and Creating
-   Layers <&YOCTO_DOCS_DEV_URL;#understanding-and-creating-layers>`__"
+-  The ":ref:`dev-manual/dev-manual-common-tasks:understanding and creating layers`"
    section in the Yocto Project Development Tasks Manual.
 
 -  The "`Kernel Modification
@@ -114,8 +113,7 @@ general information and references for further information.
    :align: center
 
 1. *Set up Your Host Development System to Support Development Using the
-   Yocto Project*: See the "`Setting Up the Development Host to Use the
-   Yocto Project <&YOCTO_DOCS_DEV_URL;#dev-manual-start>`__" section in
+   Yocto Project*: See the ":doc:`../dev-manual/dev-manual-start`" section in
    the Yocto Project Development Tasks Manual for options on how to get
    a build host ready to use the Yocto Project.
 
@@ -127,31 +125,33 @@ general information and references for further information.
 
    Using ``devtool`` and the eSDK requires that you have a clean build
    of the image and that you are set up with the appropriate eSDK. For
-   more information, see the "`Getting Ready to Develop Using
-   ``devtool`` <#getting-ready-to-develop-using-devtool>`__" section.
+   more information, see the
+   ":ref:`kernel-dev/kernel-dev-common:getting ready to develop using \`\`devtool\`\``"
+   section.
 
    Using traditional kernel development requires that you have the
    kernel source available in an isolated local Git repository. For more
-   information, see the "`Getting Ready for Traditional Kernel
-   Development <#getting-ready-for-traditional-kernel-development>`__"
+   information, see the
+   ":ref:`kernel-dev/kernel-dev-common:getting ready for traditional kernel development`"
    section.
 
 3. *Make Changes to the Kernel Source Code if applicable:* Modifying the
    kernel does not always mean directly changing source files. However,
    if you have to do this, you make the changes to the files in the
    eSDK's Build Directory if you are using ``devtool``. For more
-   information, see the "`Using ``devtool`` to Patch the
-   Kernel <#using-devtool-to-patch-the-kernel>`__" section.
+   information, see the
+   ":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
+   section.
 
    If you are using traditional kernel development, you edit the source
-   files in the kernel's local Git repository. For more information, see
-   the "`Using Traditional Kernel Development to Patch the
-   Kernel <#using-traditional-kernel-development-to-patch-the-kernel>`__"
+   files in the kernel's local Git repository. For more information, see the
+   ":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
    section.
 
 4. *Make Kernel Configuration Changes if Applicable:* If your situation
    calls for changing the kernel's configuration, you can use
-   ```menuconfig`` <#using-menuconfig>`__, which allows you to
+   :ref:`menuconfig <kernel-dev/kernel-dev-common:using \`\`menuconfig\`\`>`,
+   which allows you to
    interactively develop and test the configuration changes you are
    making to the kernel. Saving changes you make with ``menuconfig``
    updates the kernel's ``.config`` file.

@@ -17,9 +17,9 @@ the Metadata and the tools that manage it is to help you manage the
 complexity of the configuration and sources used to support multiple
 BSPs and Linux kernel types.
 
-Kernel Metadata exists in many places. One area in the Yocto Project
-`Source Repositories <&YOCTO_DOCS_OM_URL;#source-repositories>`__ is the
-``yocto-kernel-cache`` Git repository. You can find this repository
+Kernel Metadata exists in many places. One area in the
+:ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
+is the ``yocto-kernel-cache`` Git repository. You can find this repository
 grouped under the "Yocto Linux Kernel" heading in the
 :yocto_git:`Yocto Project Source Repositories <>`.
 
@@ -79,10 +79,14 @@ to indicate the branch.
    ::
 
            KBRANCH_edgerouter = "standard/edgerouter"
-                  
+
 
 The linux-yocto style recipes can optionally define the following
-variables: KERNEL_FEATURES LINUX_KERNEL_TYPE
+variables:
+
+  - :term:`KERNEL_FEATURES`
+
+  - :term:`LINUX_KERNEL_TYPE`
 
 :term:`LINUX_KERNEL_TYPE`
 defines the kernel type to be used in assembling the configuration. If
@@ -111,9 +115,18 @@ variable to include features (configuration fragments, patches, or both)
 that are not already included by the ``KMACHINE`` and
 ``LINUX_KERNEL_TYPE`` variable combination. For example, to include a
 feature specified as "features/netfilter/netfilter.scc", specify:
-KERNEL_FEATURES += "features/netfilter/netfilter.scc" To include a
+::
+
+   KERNEL_FEATURES += "features/netfilter/netfilter.scc"
+
+To include a
 feature called "cfg/sound.scc" just for the ``qemux86`` machine,
-specify: KERNEL_FEATURES_append_qemux86 = " cfg/sound.scc" The value of
+specify:
+::
+
+   KERNEL_FEATURES_append_qemux86 = " cfg/sound.scc"
+
+The value of
 the entries in ``KERNEL_FEATURES`` are dependent on their location
 within the kernel Metadata itself. The examples here are taken from the
 ``yocto-kernel-cache`` repository. Each branch of this repository
@@ -125,7 +138,7 @@ Kernel Metadata Syntax
 ======================
 
 The kernel Metadata consists of three primary types of files: ``scc``
- [1]_ description files, configuration fragments, and patches. The
+[1]_ description files, configuration fragments, and patches. The
 ``scc`` files define variables and include or otherwise reference any of
 the three file types. The description files are used to aggregate all
 types of kernel Metadata into what ultimately describes the sources and
@@ -152,8 +165,15 @@ types to form the final description of what will be assembled and built.
 While the kernel Metadata syntax does not enforce any logical separation
 of configuration fragments, patches, features or kernel types, best
 practices dictate a logical separation of these types of Metadata. The
-following Metadata file hierarchy is recommended: base/ bsp/ cfg/
-features/ ktypes/ patches/
+following Metadata file hierarchy is recommended:
+::
+
+   base/
+      bsp/
+      cfg/
+      features/
+      ktypes/
+      patches/
 
 The ``bsp`` directory contains the `BSP
 descriptions <#bsp-descriptions>`__. The remaining directories all
@@ -192,6 +212,11 @@ or the top level of
 if you are creating `Metadata outside of the
 recipe-space <#metadata-outside-the-recipe-space>`__.
 
+.. [1]
+   ``scc`` stands for Series Configuration Control, but the naming has
+   less significance in the current implementation of the tooling than
+   it had in the past. Consider ``scc`` files to be description files.
+
 Configuration
 -------------
 
@@ -205,15 +230,27 @@ used with the ``linux-yocto-4.12`` kernel as defined outside of the
 recipe space (i.e. ``yocto-kernel-cache``). This Metadata consists of
 two files: ``smp.scc`` and ``smp.cfg``. You can find these files in the
 ``cfg`` directory of the ``yocto-4.12`` branch in the
-``yocto-kernel-cache`` Git repository: cfg/smp.scc: define
-KFEATURE_DESCRIPTION "Enable SMP for 32 bit builds" define
-KFEATURE_COMPATIBILITY all kconf hardware smp.cfg cfg/smp.cfg:
-CONFIG_SMP=y CONFIG_SCHED_SMT=y # Increase default NR_CPUS from 8 to 64
-so that platform with # more than 8 processors can be all activated at
-boot time CONFIG_NR_CPUS=64 # The following is needed when setting
-NR_CPUS to something # greater than 8 on x86 architectures, it should be
-automatically # disregarded by Kconfig when using a different arch
-CONFIG_X86_BIGSMP=y You can find general information on configuration
+``yocto-kernel-cache`` Git repository:
+::
+
+   cfg/smp.scc:
+      define KFEATURE_DESCRIPTION "Enable SMP for 32 bit builds"
+      define KFEATURE_COMPATIBILITY all
+
+      kconf hardware smp.cfg
+
+   cfg/smp.cfg:
+      CONFIG_SMP=y
+      CONFIG_SCHED_SMT=y
+      # Increase default NR_CPUS from 8 to 64 so that platform with
+      # more than 8 processors can be all activated at boot time
+      CONFIG_NR_CPUS=64
+      # The following is needed when setting NR_CPUS to something
+      # greater than 8 on x86 architectures, it should be automatically
+      # disregarded by Kconfig when using a different arch
+      CONFIG_X86_BIGSMP=y
+
+You can find general information on configuration
 fragment files in the "`Creating Configuration
 Fragments <#creating-config-fragments>`__" section.
 
@@ -238,8 +275,10 @@ non-hardware fragment.
 
 As described in the "`Validating
 Configuration <#validating-configuration>`__" section, you can use the
-following BitBake command to audit your configuration: $ bitbake
-linux-yocto -c kernel_configcheck -f
+following BitBake command to audit your configuration:
+::
+
+   $ bitbake linux-yocto -c kernel_configcheck -f
 
 Patches
 -------
@@ -258,20 +297,38 @@ in the ``patches/build`` directory of the ``yocto-4.12`` branch in the
 ``yocto-kernel-cache`` Git repository.
 
 The following listings show the ``build.scc`` file and part of the
-``modpost-mask-trivial-warnings.patch`` file: patches/build/build.scc:
-patch arm-serialize-build-targets.patch patch
-powerpc-serialize-image-targets.patch patch
-kbuild-exclude-meta-directory-from-distclean-processi.patch # applied by
-kgit # patch kbuild-add-meta-files-to-the-ignore-li.patch patch
-modpost-mask-trivial-warnings.patch patch
-menuconfig-check-lxdiaglog.sh-Allow-specification-of.patch
-patches/build/modpost-mask-trivial-warnings.patch: From
-bd48931bc142bdd104668f3a062a1f22600aae61 Mon Sep 17 00:00:00 2001 From:
-Paul Gortmaker <paul.gortmaker@windriver.com> Date: Sun, 25 Jan 2009
-17:58:09 -0500 Subject: [PATCH] modpost: mask trivial warnings Newer
-HOSTCC will complain about various stdio fcns because . . . char
-\*dump_write = NULL, \*files_source = NULL; int opt; -- 2.10.1 generated
-by cgit v0.10.2 at 2017-09-28 15:23:23 (GMT) The description file can
+``modpost-mask-trivial-warnings.patch`` file:
+::
+
+   patches/build/build.scc:
+      patch arm-serialize-build-targets.patch
+      patch powerpc-serialize-image-targets.patch
+      patch kbuild-exclude-meta-directory-from-distclean-processi.patch
+
+      # applied by kgit
+      # patch kbuild-add-meta-files-to-the-ignore-li.patch
+
+      patch modpost-mask-trivial-warnings.patch
+      patch menuconfig-check-lxdiaglog.sh-Allow-specification-of.patch
+
+   patches/build/modpost-mask-trivial-warnings.patch:
+      From bd48931bc142bdd104668f3a062a1f22600aae61 Mon Sep 17 00:00:00 2001
+      From: Paul Gortmaker <paul.gortmaker@windriver.com>
+      Date: Sun, 25 Jan 2009 17:58:09 -0500
+      Subject: [PATCH] modpost: mask trivial warnings
+
+      Newer HOSTCC will complain about various stdio fcns because
+                        .
+                        .
+                        .
+ 	        char *dump_write = NULL, *files_source = NULL;
+ 	        int opt;
+      --
+      2.10.1
+
+      generated by cgit v0.10.2 at 2017-09-28 15:23:23 (GMT)
+
+The description file can
 include multiple patch statements where each statement handles a single
 patch. In the example ``build.scc`` file, five patch statements exist
 for the five patches in the directory.
@@ -289,11 +346,19 @@ Features
 
 Features are complex kernel Metadata types that consist of configuration
 fragments, patches, and possibly other feature description files. As an
-example, consider the following generic listing: features/myfeature.scc
-define KFEATURE_DESCRIPTION "Enable myfeature" patch
-0001-myfeature-core.patch patch 0002-myfeature-interface.patch include
-cfg/myfeature_dependency.scc kconf non-hardware myfeature.cfg This
-example shows how the ``patch`` and ``kconf`` commands are used as well
+example, consider the following generic listing:
+::
+
+   features/myfeature.scc
+      define KFEATURE_DESCRIPTION "Enable myfeature"
+
+      patch 0001-myfeature-core.patch
+      patch 0002-myfeature-interface.patch
+
+      include cfg/myfeature_dependency.scc
+      kconf non-hardware myfeature.cfg
+
+This example shows how the ``patch`` and ``kconf`` commands are used as well
 as how an additional feature description file is included with the
 ``include`` command.
 
@@ -319,11 +384,16 @@ the ``linux-yocto_4.12.bb`` kernel recipe found in
 :ref:`require <bitbake:require-inclusion>` directive
 includes the ``poky/meta/recipes-kernel/linux/linux-yocto.inc`` file,
 which has the following statement that defines the default kernel type:
-LINUX_KERNEL_TYPE ??= "standard"
+::
+
+   LINUX_KERNEL_TYPE ??= "standard"
 
 Another example would be the real-time kernel (i.e.
 ``linux-yocto-rt_4.12.bb``). This kernel recipe directly sets the kernel
-type as follows: LINUX_KERNEL_TYPE = "preempt-rt"
+type as follows:
+::
+
+   LINUX_KERNEL_TYPE = "preempt-rt"
 
 .. note::
 
@@ -358,16 +428,36 @@ for Linux Yocto kernels:
 For any given kernel type, the Metadata is defined by the ``.scc`` (e.g.
 ``standard.scc``). Here is a partial listing for the ``standard.scc``
 file, which is found in the ``ktypes/standard`` directory of the
-``yocto-kernel-cache`` Git repository: # Include this kernel type
-fragment to get the standard features and # configuration values. #
-Note: if only the features are desired, but not the configuration # then
-this should be included as: # include ktypes/standard/standard.scc nocfg
-# if no chained configuration is desired, include it as: # include
-ktypes/standard/standard.scc nocfg inherit include ktypes/base/base.scc
-branch standard kconf non-hardware standard.cfg include
-features/kgdb/kgdb.scc . . . include cfg/net/ip6_nf.scc include
-cfg/net/bridge.scc include cfg/systemd.scc include
-features/rfkill/rfkill.scc
+``yocto-kernel-cache`` Git repository:
+::
+
+   # Include this kernel type fragment to get the standard features and
+   # configuration values.
+
+   # Note: if only the features are desired, but not the configuration
+   #       then this should be included as:
+   #             include ktypes/standard/standard.scc nocfg
+   #       if no chained configuration is desired, include it as:
+   #             include ktypes/standard/standard.scc nocfg inherit
+
+
+
+   include ktypes/base/base.scc
+   branch standard
+
+   kconf non-hardware standard.cfg
+
+   include features/kgdb/kgdb.scc
+              .
+              .
+              .
+
+   include cfg/net/ip6_nf.scc
+   include cfg/net/bridge.scc
+
+   include cfg/systemd.scc
+
+   include features/rfkill/rfkill.scc
 
 As with any ``.scc`` file, a kernel type definition can aggregate other
 ``.scc`` files with ``include`` commands. These definitions can also
@@ -409,29 +499,49 @@ supported kernel type.
 This section overviews the BSP description structure, the aggregation
 concepts, and presents a detailed example using a BSP supported by the
 Yocto Project (i.e. BeagleBone Board). For complete information on BSP
-layer file hierarchy, see the `Yocto Project Board Support Package (BSP)
-Developer's Guide <&YOCTO_DOCS_BSP_URL;>`__.
+layer file hierarchy, see the :doc:`../bsp-guide/bsp-guide`.
 
 .. _bsp-description-file-overview:
 
-Overview
-~~~~~~~~
+Description Overview
+~~~~~~~~~~~~~~~~~~~~
 
 For simplicity, consider the following root BSP layer description files
 for the BeagleBone board. These files employ both a structure and naming
 convention for consistency. The naming convention for the file is as
-follows: bsp_root_name-kernel_type.scc Here are some example root layer
+follows:
+::
+
+   bsp_root_name-kernel_type.scc
+
+Here are some example root layer
 BSP filenames for the BeagleBone Board BSP, which is supported by the
-Yocto Project: beaglebone-standard.scc beaglebone-preempt-rt.scc Each
-file uses the root name (i.e "beaglebone") BSP name followed by the
+Yocto Project:
+::
+
+   beaglebone-standard.scc
+   beaglebone-preempt-rt.scc
+
+Each file uses the root name (i.e "beaglebone") BSP name followed by the
 kernel type.
 
-Examine the ``beaglebone-standard.scc`` file: define KMACHINE beaglebone
-define KTYPE standard define KARCH arm include
-ktypes/standard/standard.scc branch beaglebone include beaglebone.scc #
-default policy for standard kernels include
-features/latencytop/latencytop.scc include
-features/profiling/profiling.scc Every top-level BSP description file
+Examine the ``beaglebone-standard.scc`` file:
+::
+
+   define KMACHINE beaglebone
+   define KTYPE standard
+   define KARCH arm
+
+   include ktypes/standard/standard.scc
+   branch beaglebone
+
+   include beaglebone.scc
+
+   # default policy for standard kernels
+   include features/latencytop/latencytop.scc
+   include features/profiling/profiling.scc
+
+Every top-level BSP description file
 should define the :term:`KMACHINE`,
 :term:`KTYPE`, and
 :term:`KARCH` variables. These
@@ -450,27 +560,52 @@ description file match.
 
 To separate your kernel policy from your hardware configuration, you
 include a kernel type (``ktype``), such as "standard". In the previous
-example, this is done using the following: include
-ktypes/standard/standard.scc This file aggregates all the configuration
+example, this is done using the following:
+::
+
+   include ktypes/standard/standard.scc
+
+This file aggregates all the configuration
 fragments, patches, and features that make up your standard kernel
 policy. See the "`Kernel Types <#kernel-types>`__" section for more
 information.
 
 To aggregate common configurations and features specific to the kernel
-for mybsp, use the following: include mybsp.scc You can see that in the
-BeagleBone example with the following: include beaglebone.scc For
-information on how to break a complete ``.config`` file into the various
+for mybsp, use the following:
+::
+
+   include mybsp.scc
+
+You can see that in the BeagleBone example with the following:
+::
+
+   include beaglebone.scc
+
+For information on how to break a complete ``.config`` file into the various
 configuration fragments, see the "`Creating Configuration
 Fragments <#creating-config-fragments>`__" section.
 
 Finally, if you have any configurations specific to the hardware that
-are not in a ``*.scc`` file, you can include them as follows: kconf
-hardware mybsp-extra.cfg The BeagleBone example does not include these
+are not in a ``*.scc`` file, you can include them as follows:
+::
+
+   kconf hardware mybsp-extra.cfg
+
+The BeagleBone example does not include these
 types of configurations. However, the Malta 32-bit board does
 ("mti-malta32"). Here is the ``mti-malta32-le-standard.scc`` file:
-define KMACHINE mti-malta32-le define KMACHINE qemumipsel define KTYPE
-standard define KARCH mips include ktypes/standard/standard.scc branch
-mti-malta32 include mti-malta32.scc kconf hardware mti-malta32-le.cfg
+::
+
+   define KMACHINE mti-malta32-le
+   define KMACHINE qemumipsel
+   define KTYPE standard
+   define KARCH mips
+
+   include ktypes/standard/standard.scc
+   branch mti-malta32
+
+   include mti-malta32.scc
+   kconf hardware mti-malta32-le.cfg
 
 .. _bsp-description-file-example-minnow:
 
@@ -488,15 +623,28 @@ definition given the ``linux-yocto-4.4`` branch of the
    Although the Minnow Board BSP is unused, the Metadata remains and is
    being used here just as an example.
 
-include cfg/x86.scc include features/eg20t/eg20t.scc include
-cfg/dmaengine.scc include features/power/intel.scc include cfg/efi.scc
-include features/usb/ehci-hcd.scc include features/usb/ohci-hcd.scc
-include features/usb/usb-gadgets.scc include
-features/usb/touchscreen-composite.scc include cfg/timer/hpet.scc
-include features/leds/leds.scc include features/spi/spidev.scc include
-features/i2c/i2cdev.scc include features/mei/mei-txe.scc # Earlyprintk
-and port debug requires 8250 kconf hardware cfg/8250.cfg kconf hardware
-minnow.cfg kconf hardware minnow-dev.cfg
+::
+
+   include cfg/x86.scc
+   include features/eg20t/eg20t.scc
+   include cfg/dmaengine.scc
+   include features/power/intel.scc
+   include cfg/efi.scc
+   include features/usb/ehci-hcd.scc
+   include features/usb/ohci-hcd.scc
+   include features/usb/usb-gadgets.scc
+   include features/usb/touchscreen-composite.scc
+   include cfg/timer/hpet.scc
+   include features/leds/leds.scc
+   include features/spi/spidev.scc
+   include features/i2c/i2cdev.scc
+   include features/mei/mei-txe.scc
+
+   # Earlyprintk and port debug requires 8250
+   kconf hardware cfg/8250.cfg
+
+   kconf hardware minnow.cfg
+   kconf hardware minnow-dev.cfg
 
 The ``minnow.scc`` description file includes a hardware configuration
 fragment (``minnow.cfg``) specific to the Minnow BSP as well as several
@@ -505,23 +653,51 @@ found on the machine. This ``minnow.scc`` description file is then
 included in each of the three "minnow" description files for the
 supported kernel types (i.e. "standard", "preempt-rt", and "tiny").
 Consider the "minnow" description for the "standard" kernel type (i.e.
-``minnow-standard.scc``: define KMACHINE minnow define KTYPE standard
-define KARCH i386 include ktypes/standard include minnow.scc # Extra
-minnow configs above the minimal defined in minnow.scc include
-cfg/efi-ext.scc include features/media/media-all.scc include
-features/sound/snd_hda_intel.scc # The following should really be in
-standard.scc # USB live-image support include cfg/usb-mass-storage.scc
-include cfg/boot-live.scc # Basic profiling include
-features/latencytop/latencytop.scc include
-features/profiling/profiling.scc # Requested drivers that don't have an
-existing scc kconf hardware minnow-drivers-extra.cfg The ``include``
-command midway through the file includes the ``minnow.scc`` description
+``minnow-standard.scc``:
+::
+
+   define KMACHINE minnow
+   define KTYPE standard
+   define KARCH i386
+
+   include ktypes/standard
+
+   include minnow.scc
+
+   # Extra minnow configs above the minimal defined in minnow.scc
+   include cfg/efi-ext.scc
+   include features/media/media-all.scc
+   include features/sound/snd_hda_intel.scc
+
+   # The following should really be in standard.scc
+   # USB live-image support
+   include cfg/usb-mass-storage.scc
+   include cfg/boot-live.scc
+
+   # Basic profiling
+   include features/latencytop/latencytop.scc
+   include features/profiling/profiling.scc
+
+   # Requested drivers that don't have an existing scc
+   kconf hardware minnow-drivers-extra.cfg
+
+The ``include`` command midway through the file includes the ``minnow.scc`` description
 that defines all enabled hardware for the BSP that is common to all
 kernel types. Using this command significantly reduces duplication.
 
 Now consider the "minnow" description for the "tiny" kernel type (i.e.
-``minnow-tiny.scc``): define KMACHINE minnow define KTYPE tiny define
-KARCH i386 include ktypes/tiny include minnow.scc As you might expect,
+``minnow-tiny.scc``):
+::
+
+   define KMACHINE minnow
+   define KTYPE tiny
+   define KARCH i386
+
+   include ktypes/tiny
+
+   include minnow.scc
+
+As you might expect,
 the "tiny" description includes quite a bit less. In fact, it includes
 only the minimal policy defined by the "tiny" kernel type and the
 hardware-specific configuration required for booting the machine along
@@ -574,9 +750,16 @@ See the "`Modifying an Existing
 Recipe <#modifying-an-existing-recipe>`__" section for more information.
 
 Here is an example that shows a trivial tree of kernel Metadata stored
-in recipe-space within a BSP layer: meta-my_bsp_layer/ \`--
-recipes-kernel \`-- linux \`-- linux-yocto \|-- bsp-standard.scc \|--
-bsp.cfg \`-- standard.cfg
+in recipe-space within a BSP layer:
+::
+
+   meta-my_bsp_layer/
+   `-- recipes-kernel
+       `-- linux
+           `-- linux-yocto
+               |-- bsp-standard.scc
+               |-- bsp.cfg
+               `-- standard.cfg
 
 When the Metadata is stored in recipe-space, you must take steps to
 ensure BitBake has the necessary information to decide what files to
@@ -591,8 +774,12 @@ value when changing the content of files not explicitly listed in the
 
 If the BSP description is in recipe space, you cannot simply list the
 ``*.scc`` in the ``SRC_URI`` statement. You need to use the following
-form from your kernel append file: SRC_URI_append_myplatform = " \\
-file://myplatform;type=kmeta;destsuffix=myplatform \\ "
+form from your kernel append file:
+::
+
+   SRC_URI_append_myplatform = " \
+       file://myplatform;type=kmeta;destsuffix=myplatform \
+       "
 
 Metadata Outside the Recipe-Space
 ---------------------------------
@@ -602,10 +789,13 @@ reside in a separate repository. The OpenEmbedded build system adds the
 Metadata to the build as a "type=kmeta" repository through the
 :term:`SRC_URI` variable. As an
 example, consider the following ``SRC_URI`` statement from the
-``linux-yocto_4.12.bb`` kernel recipe: SRC_URI =
-"git://git.yoctoproject.org/linux-yocto-4.12.git;name=machine;branch=${KBRANCH};
-\\
-git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=yocto-4.12;destsuffix=${KMETA}"
+``linux-yocto_4.12.bb`` kernel recipe:
+::
+
+   SRC_URI = "git://git.yoctoproject.org/linux-yocto-4.12.git;name=machine;branch=${KBRANCH}; \
+              git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=yocto-4.12;destsuffix=${KMETA}"
+
+
 ``${KMETA}``, in this context, is simply used to name the directory into
 which the Git fetcher places the Metadata. This behavior is no different
 than any multi-repository ``SRC_URI`` statement used in a recipe (e.g.
@@ -684,21 +874,43 @@ patches into a feature.
 
 Once you have a new branch, you can set up your kernel Metadata to use
 the branch a couple different ways. In the recipe, you can specify the
-new branch as the ``KBRANCH`` to use for the board as follows: KBRANCH =
-"mynewbranch" Another method is to use the ``branch`` command in the BSP
-description: mybsp.scc: define KMACHINE mybsp define KTYPE standard
-define KARCH i386 include standard.scc branch mynewbranch include
-mybsp-hw.scc
+new branch as the ``KBRANCH`` to use for the board as follows:
+::
+
+   KBRANCH = "mynewbranch"
+
+Another method is to use the ``branch`` command in the BSP
+description:
+
+   mybsp.scc:
+      define KMACHINE mybsp
+      define KTYPE standard
+      define KARCH i386
+      include standard.scc
+
+      branch mynewbranch
+
+      include mybsp-hw.scc
 
 If you find yourself with numerous branches, you might consider using a
 hierarchical branching system similar to what the Yocto Linux Kernel Git
-repositories use: common/kernel_type/machine
+repositories use:
+::
+
+   common/kernel_type/machine
 
 If you had two kernel types, "standard" and "small" for instance, three
 machines, and common as ``mydir``, the branches in your Git repository
-might look like this: mydir/base mydir/standard/base
-mydir/standard/machine_a mydir/standard/machine_b
-mydir/standard/machine_c mydir/small/base mydir/small/machine_a
+might look like this:
+:
+
+   mydir/base
+   mydir/standard/base
+   mydir/standard/machine_a
+   mydir/standard/machine_b
+   mydir/standard/machine_c
+   mydir/small/base
+   mydir/small/machine_a
 
 This organization can help clarify the branch relationships. In this
 case, ``mydir/standard/machine_a`` includes everything in ``mydir/base``
@@ -725,9 +937,19 @@ that have to be regularly updated. The Yocto Project Linux kernel tools
 provide for this with the ``git merge`` command.
 
 To merge a feature branch into a BSP, insert the ``git merge`` command
-after any ``branch`` commands: mybsp.scc: define KMACHINE mybsp define
-KTYPE standard define KARCH i386 include standard.scc branch mynewbranch
-git merge myfeature include mybsp-hw.scc
+after any ``branch`` commands:
+::
+
+   mybsp.scc:
+      define KMACHINE mybsp
+      define KTYPE standard
+      define KARCH i386
+      include standard.scc
+
+      branch mynewbranch
+      git merge myfeature
+
+      include mybsp-hw.scc
 
 .. _scc-reference:
 
@@ -758,7 +980,4 @@ within an SCC description file (``.scc``):
 
 -  ``patch PATCH_FILE``: Applies the patch to the current Git branch.
 
-.. [1]
-   ``scc`` stands for Series Configuration Control, but the naming has
-   less significance in the current implementation of the tooling than
-   it had in the past. Consider ``scc`` files to be description files.
+

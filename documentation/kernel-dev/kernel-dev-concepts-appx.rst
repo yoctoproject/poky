@@ -36,47 +36,46 @@ and custom features. These additions result in a commercially released
 Yocto Project Linux kernel that caters to specific embedded designer
 needs for targeted hardware.
 
-You can find a web interface to the Yocto Linux kernels in the `Source
-Repositories <&YOCTO_DOCS_OM_URL;#source-repositories>`__ at
-:yocto_git:`/`. If you look at the interface, you will see to
+You can find a web interface to the Yocto Linux kernels in the
+:ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`
+at :yocto_git:`/`. If you look at the interface, you will see to
 the left a grouping of Git repositories titled "Yocto Linux Kernel".
 Within this group, you will find several Linux Yocto kernels developed
 and included with Yocto Project releases:
 
--  *``linux-yocto-4.1``:* The stable Yocto Project kernel to use with
+-  *linux-yocto-4.1:* The stable Yocto Project kernel to use with
    the Yocto Project Release 2.0. This kernel is based on the Linux 4.1
    released kernel.
 
--  *``linux-yocto-4.4``:* The stable Yocto Project kernel to use with
+-  *linux-yocto-4.4:* The stable Yocto Project kernel to use with
    the Yocto Project Release 2.1. This kernel is based on the Linux 4.4
    released kernel.
 
--  *``linux-yocto-4.6``:* A temporary kernel that is not tied to any
+-  *linux-yocto-4.6:* A temporary kernel that is not tied to any
    Yocto Project release.
 
--  *``linux-yocto-4.8``:* The stable yocto Project kernel to use with
+-  *linux-yocto-4.8:* The stable yocto Project kernel to use with
    the Yocto Project Release 2.2.
 
--  *``linux-yocto-4.9``:* The stable Yocto Project kernel to use with
+-  *linux-yocto-4.9:* The stable Yocto Project kernel to use with
    the Yocto Project Release 2.3. This kernel is based on the Linux 4.9
    released kernel.
 
--  *``linux-yocto-4.10``:* The default stable Yocto Project kernel to
+-  *linux-yocto-4.10:* The default stable Yocto Project kernel to
    use with the Yocto Project Release 2.3. This kernel is based on the
    Linux 4.10 released kernel.
 
--  *``linux-yocto-4.12``:* The default stable Yocto Project kernel to
+-  *linux-yocto-4.12:* The default stable Yocto Project kernel to
    use with the Yocto Project Release 2.4. This kernel is based on the
    Linux 4.12 released kernel.
 
--  *``yocto-kernel-cache``:* The ``linux-yocto-cache`` contains patches
+-  *yocto-kernel-cache:* The ``linux-yocto-cache`` contains patches
    and configurations for the linux-yocto kernel tree. This repository
    is useful when working on the linux-yocto kernel. For more
-   information on this "Advanced Kernel Metadata", see the "`Working
-   With Advanced Metadata
-   (``yocto-kernel-cache``) <#kernel-dev-advanced>`__" Chapter.
+   information on this "Advanced Kernel Metadata", see the
+   ":doc:`kernel-dev-advanced`" Chapter.
 
--  *``linux-yocto-dev``:* A development kernel based on the latest
+-  *linux-yocto-dev:* A development kernel based on the latest
    upstream release candidate available.
 
 .. note::
@@ -164,7 +163,7 @@ implemented by the Yocto Project team using the Source Code Manager
    -  You can find documentation on Git at
       http://git-scm.com/documentation. You can also get an
       introduction to Git as it applies to the Yocto Project in the
-      "`Git <&YOCTO_DOCS_OM_URL;#git>`__" section in the Yocto Project
+      ":ref:`overview-manual/overview-manual-development-environment:git`" section in the Yocto Project
       Overview and Concepts Manual. The latter reference provides an
       overview of Git and presents a minimal set of Git commands that
       allows you to be functional using Git. You can use as much, or as
@@ -295,17 +294,16 @@ available on your host system.
 Kernel source code is available on your host system several different
 ways:
 
--  *Files Accessed While using ``devtool``:* ``devtool``, which is
+-  *Files Accessed While using devtool:* ``devtool``, which is
    available with the Yocto Project, is the preferred method by which to
-   modify the kernel. See the "`Kernel Modification
-   Workflow <#kernel-modification-workflow>`__" section.
+   modify the kernel. See the ":ref:`kernel-dev/kernel-dev-intro:kernel modification workflow`" section.
 
 -  *Cloned Repository:* If you are working in the kernel all the time,
    you probably would want to set up your own local Git repository of
    the Yocto Linux kernel tree. For information on how to clone a Yocto
-   Linux kernel Git repository, see the "`Preparing the Build Host to
-   Work on the
-   Kernel <#preparing-the-build-host-to-work-on-the-kernel>`__" section.
+   Linux kernel Git repository, see the
+   ":ref:`kernel-dev/kernel-dev-common:preparing the build host to work on the kernel`"
+   section.
 
 -  *Temporary Source Files from a Build:* If you just need to make some
    patches to the kernel using a traditional BitBake workflow (i.e. not
@@ -331,13 +329,12 @@ source files used during the build.
    :align: center
 
 Again, for additional information on the Yocto Project kernel's
-architecture and its branching strategy, see the "`Yocto Linux Kernel
-Architecture and Branching
-Strategies <#yocto-linux-kernel-architecture-and-branching-strategies>`__"
-section. You can also reference the "`Using ``devtool`` to Patch the
-Kernel <#using-devtool-to-patch-the-kernel>`__" and "`Using Traditional
-Kernel Development to Patch the
-Kernel <#using-traditional-kernel-development-to-patch-the-kernel>`__"
+architecture and its branching strategy, see the
+":ref:`kernel-dev/kernel-dev-concepts-appx:yocto linux kernel architecture and branching strategies`"
+section. You can also reference the
+":ref:`kernel-dev/kernel-dev-common:using \`\`devtool\`\` to patch the kernel`"
+and
+":ref:`kernel-dev/kernel-dev-common:using traditional kernel development to patch the kernel`"
 sections for detailed example that modifies the kernel.
 
 Determining Hardware and Non-Hardware Features for the Kernel Configuration Audit Phase
@@ -346,8 +343,8 @@ Determining Hardware and Non-Hardware Features for the Kernel Configuration Audi
 This section describes part of the kernel configuration audit phase that
 most developers can ignore. For general information on kernel
 configuration including ``menuconfig``, ``defconfig`` files, and
-configuration fragments, see the "`Configuring the
-Kernel <#configuring-the-kernel>`__" section.
+configuration fragments, see the
+":ref:`kernel-dev/kernel-dev-common:configuring the kernel`" section.
 
 During this part of the audit phase, the contents of the final
 ``.config`` file are compared against the fragments specified by the
@@ -366,23 +363,27 @@ To determine whether or not a given option is "hardware" or
 files that classify individual or groups of options as either hardware
 or non-hardware. To better show this, consider a situation where the
 ``yocto-kernel-cache`` contains the following files:
-yocto-kernel-cache/features/drm-psb/hardware.cfg
-yocto-kernel-cache/features/kgdb/hardware.cfg
-yocto-kernel-cache/ktypes/base/hardware.cfg
-yocto-kernel-cache/bsp/mti-malta32/hardware.cfg
-yocto-kernel-cache/bsp/qemu-ppc32/hardware.cfg
-yocto-kernel-cache/bsp/qemuarma9/hardware.cfg
-yocto-kernel-cache/bsp/mti-malta64/hardware.cfg
-yocto-kernel-cache/bsp/arm-versatile-926ejs/hardware.cfg
-yocto-kernel-cache/bsp/common-pc/hardware.cfg
-yocto-kernel-cache/bsp/common-pc-64/hardware.cfg
-yocto-kernel-cache/features/rfkill/non-hardware.cfg
-yocto-kernel-cache/ktypes/base/non-hardware.cfg
-yocto-kernel-cache/features/aufs/non-hardware.kcf
-yocto-kernel-cache/features/ocf/non-hardware.kcf
-yocto-kernel-cache/ktypes/base/non-hardware.kcf
-yocto-kernel-cache/ktypes/base/hardware.kcf
-yocto-kernel-cache/bsp/qemu-ppc32/hardware.kcf The following list
+::
+
+   yocto-kernel-cache/features/drm-psb/hardware.cfg
+   yocto-kernel-cache/features/kgdb/hardware.cfg
+   yocto-kernel-cache/ktypes/base/hardware.cfg
+   yocto-kernel-cache/bsp/mti-malta32/hardware.cfg
+   yocto-kernel-cache/bsp/qemu-ppc32/hardware.cfg
+   yocto-kernel-cache/bsp/qemuarma9/hardware.cfg
+   yocto-kernel-cache/bsp/mti-malta64/hardware.cfg
+   yocto-kernel-cache/bsp/arm-versatile-926ejs/hardware.cfg
+   yocto-kernel-cache/bsp/common-pc/hardware.cfg
+   yocto-kernel-cache/bsp/common-pc-64/hardware.cfg
+   yocto-kernel-cache/features/rfkill/non-hardware.cfg
+   yocto-kernel-cache/ktypes/base/non-hardware.cfg
+   yocto-kernel-cache/features/aufs/non-hardware.kcf
+   yocto-kernel-cache/features/ocf/non-hardware.kcf
+   yocto-kernel-cache/ktypes/base/non-hardware.kcf
+   yocto-kernel-cache/ktypes/base/hardware.kcf
+   yocto-kernel-cache/bsp/qemu-ppc32/hardware.kcf
+
+The following list
 provides explanations for the various files:
 
 -  ``hardware.kcf``: Specifies a list of kernel Kconfig files that
@@ -402,10 +403,18 @@ provides explanations for the various files:
    (i.e. ``hardware.kcf`` or ``non-hardware.kcf``).
 
 Here is a specific example using the
-``kernel-cache/bsp/mti-malta32/hardware.cfg``: CONFIG_SERIAL_8250
-CONFIG_SERIAL_8250_CONSOLE CONFIG_SERIAL_8250_NR_UARTS
-CONFIG_SERIAL_8250_PCI CONFIG_SERIAL_CORE CONFIG_SERIAL_CORE_CONSOLE
-CONFIG_VGA_ARB The kernel configuration audit automatically detects
+``kernel-cache/bsp/mti-malta32/hardware.cfg``:
+::
+
+   CONFIG_SERIAL_8250
+   CONFIG_SERIAL_8250_CONSOLE
+   CONFIG_SERIAL_8250_NR_UARTS
+   CONFIG_SERIAL_8250_PCI
+   CONFIG_SERIAL_CORE
+   CONFIG_SERIAL_CORE_CONSOLE
+   CONFIG_VGA_ARB
+
+The kernel configuration audit automatically detects
 these files (hence the names must be exactly the ones discussed here),
 and uses them as inputs when generating warnings about the final
 ``.config`` file.
