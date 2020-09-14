@@ -17,8 +17,13 @@ month cadence roughly timed each April and October of the year.
 Following are examples of some major YP releases with their codenames
 also shown. See the "`Major Release
 Codenames <#major-release-codenames>`__" section for information on
-codenames used with major releases. 2.2 (Morty) 2.1 (Krogoth) 2.0
-(Jethro) While the cadence is never perfect, this timescale facilitates
+codenames used with major releases.
+
+  - 2.2 (Morty) 
+  - 2.1 (Krogoth)
+  - 2.0 (Jethro) 
+
+While the cadence is never perfect, this timescale facilitates
 regular releases that have strong QA cycles while not overwhelming users
 with too many new releases. The cadence is predictable and avoids many
 major holidays in various geographies.
@@ -26,7 +31,13 @@ major holidays in various geographies.
 The Yocto project delivers minor (point) releases on an unscheduled
 basis and are usually driven by the accumulation of enough significant
 fixes or enhancements to the associated major release. Following are
-some example past point releases: 2.1.1 2.1.2 2.2.1 The point release
+some example past point releases:
+
+  - 2.1.1
+  - 2.1.2
+  - 2.2.1 
+
+The point release
 indicates a point in the major release branch where a full QA cycle and
 release process validates the content of the new branch.
 
@@ -39,9 +50,8 @@ Major Release Codenames
 =======================
 
 Each major release receives a codename that identifies the release in
-the `Yocto Project Source
-Repositories <&YOCTO_DOCS_OM_URL;#yocto-project-repositories>`__. The
-concept is that branches of :term:`Metadata` with the same
+the :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`.
+The concept is that branches of :term:`Metadata` with the same
 codename are likely to be compatible and thus work together.
 
 .. note::
@@ -95,9 +105,8 @@ provide the Yocto Project team a way to ensure a release is validated.
 Additionally, because the test strategies are visible to you as a
 developer, you can validate your projects. This section overviews the
 available test infrastructure used in the Yocto Project. For information
-on how to run available tests on your projects, see the "`Performing
-Automated Runtime
-Testing <&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing>`__"
+on how to run available tests on your projects, see the
+":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
 section in the Yocto Project Development Tasks Manual.
 
 The QA/testing infrastructure is woven into the project to the point
@@ -119,12 +128,12 @@ consists of the following pieces:
 
 -  :ref:`testimage.bbclass <ref-classes-testimage*>`: This class
    performs runtime testing of images after they are built. The tests
-   are usually used with `QEMU <&YOCTO_DOCS_DEV_URL;#dev-manual-qemu>`__
+   are usually used with :doc:`QEMU <../dev-manual/dev-manual-qemu>`
    to boot the images and check the combined runtime result boot
    operation and functions. However, the test can also use the IP
    address of a machine to test.
 
--  ```ptest`` <&YOCTO_DOCS_DEV_URL;#testing-packages-with-ptest>`__:
+-  :ref:`ptest <dev-manual/dev-manual-common-tasks:testing packages with ptest>`:
    Runs tests against packages produced during the build for a given
    piece of software. The test allows the packages to be be run within a
    target image.
@@ -147,7 +156,7 @@ effort has been made to automate the tests so that more people can use
 them and the Yocto Project development team can run them faster and more
 efficiently.
 
-The Yocto Project's main Autobuilder (``autobuilder.yoctoproject.org``)
+The Yocto Project's main Autobuilder (https://autobuilder.yoctoproject.org/)
 publicly tests each Yocto Project release's code in the
 :term:`OpenEmbedded-Core (OE-Core)`, Poky, and BitBake repositories. The testing
 occurs for both the current state of the "master" branch and also for

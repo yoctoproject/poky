@@ -26,8 +26,11 @@ One method you can use to determine which recipes are checking to see if
 a particular feature is contained or not is to ``grep`` through the
 :term:`Metadata` for the feature. Here is an example that
 discovers the recipes whose build is potentially changed based on a
-given feature: $ cd poky $ git grep
-'contains.*MACHINE_FEATURES.*feature'
+given feature:
+::
+
+   $ cd poky
+   $ git grep 'contains.*MACHINE_FEATURES.*feature'
 
 .. _ref-features-machine:
 
@@ -115,8 +118,7 @@ metadata:
 -  *api-documentation:* Enables generation of API documentation during
    recipe builds. The resulting documentation is added to SDK tarballs
    when the ``bitbake -c populate_sdk`` command is used. See the
-   "`Adding API Documentation to the Standard
-   SDK <&YOCTO_DOCS_SDK_URL;#adding-api-documentation-to-the-standard-sdk>`__"
+   ":ref:`sdk-manual/sdk-appendix-customizing-standard:adding api documentation to the standard sdk`"
    section in the Yocto Project Application Development and the
    Extensible Software Development Kit (eSDK) manual.
 
@@ -154,8 +156,7 @@ metadata:
 
 -  *ptest:* Enables building the package tests where supported by
    individual recipes. For more information on package tests, see the
-   "`Testing Packages With
-   ptest <&YOCTO_DOCS_DEV_URL;#testing-packages-with-ptest>`__" section
+   ":ref:`dev-manual/dev-manual-common-tasks:testing packages with ptest`" section
    in the Yocto Project Development Tasks Manual.
 
 -  *smbfs:* Include SMB networks client support (for mounting
@@ -237,8 +238,8 @@ The following image features are available for all images:
 -  *ptest-pkgs:* Installs ptest packages for all ptest-enabled recipes.
 
 -  *read-only-rootfs:* Creates an image whose root filesystem is
-   read-only. See the "`Creating a Read-Only Root
-   Filesystem <&YOCTO_DOCS_DEV_URL;#creating-a-read-only-root-filesystem>`__"
+   read-only. See the
+   ":ref:`dev-manual/dev-manual-common-tasks:creating a read-only root filesystem`"
    section in the Yocto Project Development Tasks Manual for more
    information.
 
@@ -263,8 +264,7 @@ these valid features is as follows:
 
 -  *perf:* Installs profiling tools such as ``perf``, ``systemtap``, and
    ``LTTng``. For general information on user-space tools, see the
-   `Yocto Project Application Development and the Extensible Software
-   Development Kit (eSDK) <&YOCTO_DOCS_SDK_URL;>`__ manual.
+   :doc:`../sdk-manual/sdk-manual` manual.
 
 -  *ssh-server-dropbear:* Installs the Dropbear minimal SSH server.
 
@@ -275,12 +275,10 @@ these valid features is as follows:
    will not be installed.
 
 -  *tools-debug:* Installs debugging tools such as ``strace`` and
-   ``gdb``. For information on GDB, see the "`Debugging With the GNU
-   Project Debugger (GDB)
-   Remotely <&YOCTO_DOCS_DEV_URL;#platdev-gdb-remotedebug>`__" section
+   ``gdb``. For information on GDB, see the
+   ":ref:`platdev-gdb-remotedebug`" section
    in the Yocto Project Development Tasks Manual. For information on
-   tracing and profiling, see the `Yocto Project Profiling and Tracing
-   Manual <&YOCTO_DOCS_PROF_URL;>`__.
+   tracing and profiling, see the :doc:`../profile-manual/profile-manual`.
 
 -  *tools-sdk:* Installs a full SDK that runs on the device.
 

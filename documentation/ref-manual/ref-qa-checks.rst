@@ -209,7 +209,10 @@ Errors and Warnings
    Typically, the way to solve this performance issue is to add "-fPIC"
    or "-fpic" to the compiler command-line options. For example, given
    software that reads :term:`CFLAGS` when you build it,
-   you could add the following to your recipe: CFLAGS_append = " -fPIC "
+   you could add the following to your recipe:
+   ::
+
+      CFLAGS_append = " -fPIC "
 
    For more information on text relocations at runtime, see
    http://www.akkadia.org/drepper/textrelocs.html.
@@ -224,7 +227,10 @@ Errors and Warnings
    variable is being passed to the linker command. A common workaround
    for this situation is to pass in ``LDFLAGS`` using
    :term:`TARGET_CC_ARCH` within the recipe as
-   follows: TARGET_CC_ARCH += "${LDFLAGS}"
+   follows:
+   ::
+
+      TARGET_CC_ARCH += "${LDFLAGS}"
 
     
 
@@ -244,10 +250,11 @@ Errors and Warnings
 
    The ``/usr/share/info/dir`` should not be packaged. Add the following
    line to your :ref:`ref-tasks-install` task or to your
-   ``do_install_append`` within the recipe as follows: rm
-   ${D}${infodir}/dir
+   ``do_install_append`` within the recipe as follows:
+   ::
 
-    
+      rm ${D}${infodir}/dir
+   
 
 -  ``Symlink <path> in <packagename> points to TMPDIR [symlink-to-sysroot]``
 

@@ -14,18 +14,15 @@ descriptions, and so forth as needed during the course of using the
 Yocto Project.
 
 For introductory information on the Yocto Project, see the
-:yocto_home:`Yocto Project Website <>` and the "`Yocto Project
-Development
-Environment <&YOCTO_DOCS_OM_URL;#overview-development-environment>`__"
+:yocto_home:`Yocto Project Website <>` and the
+":ref:`overview-manual/overview-manual-development-environment:the yocto project development environment`"
 chapter in the Yocto Project Overview and Concepts Manual.
 
 If you want to use the Yocto Project to quickly build an image without
-having to understand concepts, work through the `Yocto Project Quick
-Build <&YOCTO_DOCS_BRIEF_URL;>`__ document. You can find "how-to"
-information in the `Yocto Project Development Tasks
-Manual <&YOCTO_DOCS_DEV_URL;>`__. You can find Yocto Project overview
-and conceptual information in the `Yocto Project Overview and Concepts
-Manual <&YOCTO_DOCS_OM_URL;>`__.
+having to understand concepts, work through the
+:doc:`../brief-yoctoprojectqs/brief-yoctoprojectqs` document. You can find "how-to"
+information in the :doc:`../dev-manual/dev-manual`. You can find Yocto Project overview
+and conceptual information in the :doc:`../overview-manual/overview-manual`.
 
 .. note::
 
@@ -95,12 +92,11 @@ distributions:
       WSLv2, if you still decide to use WSL please upgrade to WSLv2.
 
    -  If you encounter problems, please go to `Yocto Project
-      Bugzilla <&YOCTO_BUGZILLA_URL;>`__ and submit a bug. We are
+      Bugzilla <http://bugzilla.yoctoproject.org>`__ and submit a bug. We are
       interested in hearing about your experience. For information on
       how to submit a bug, see the Yocto Project
       :yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
-      and the "`Submitting a Defect Against the Yocto
-      Project <&YOCTO_DOCS_DEV_URL;#submitting-a-defect-against-the-yocto-project>`__"
+      and the ":ref:`dev-manual/dev-manual-common-tasks:submitting a defect against the yocto project`"
       section in the Yocto Project Development Tasks Manual.
 
 
@@ -126,19 +122,28 @@ supported Ubuntu or Debian Linux distribution:
       might experience QEMU build failures due to the package installing
       its own custom ``/usr/include/linux/soundcard.h`` on the Debian
       system. If you run into this situation, either of the following
-      solutions exist: $ sudo apt-get build-dep qemu $ sudo apt-get
-      remove oss4-dev
+      solutions exist:
+      ::
+
+         $ sudo apt-get build-dep qemu
+         $ sudo apt-get remove oss4-dev
 
    -  For Debian-8, ``python3-git`` and ``pylint3`` are no longer
-      available via ``apt-get``. $ sudo pip3 install GitPython
-      pylint==1.9.5
+      available via ``apt-get``.
+      ::
+
+         $ sudo pip3 install GitPython pylint==1.9.5
 
 -  *Essentials:* Packages needed to build an image on a headless system:
-   $ sudo apt-get install UBUNTU_HOST_PACKAGES_ESSENTIAL
+   ::
+
+      $ sudo apt-get install &UBUNTU_HOST_PACKAGES_ESSENTIAL;
 
 -  *Documentation:* Packages needed if you are going to build out the
-   Yocto Project documentation manuals: $ sudo apt-get install make
-   xsltproc docbook-utils fop dblatex xmlto
+   Yocto Project documentation manuals:
+   ::
+
+      $ sudo apt-get install make xsltproc docbook-utils fop dblatex xmlto
 
 Fedora Packages
 ---------------
@@ -147,12 +152,17 @@ The following list shows the required packages by function given a
 supported Fedora Linux distribution:
 
 -  *Essentials:* Packages needed to build an image for a headless
-   system: $ sudo dnf install FEDORA_HOST_PACKAGES_ESSENTIAL
+   system:
+   ::
+
+      $ sudo dnf install &FEDORA_HOST_PACKAGES_ESSENTIAL;
 
 -  *Documentation:* Packages needed if you are going to build out the
-   Yocto Project documentation manuals: $ sudo dnf install
-   docbook-style-dsssl docbook-style-xsl \\ docbook-dtds docbook-utils
-   fop libxslt dblatex xmlto
+   Yocto Project documentation manuals:
+   ::
+
+      $ sudo dnf install  docbook-style-dsssl docbook-style-xsl \
+      docbook-dtds docbook-utils fop libxslt dblatex xmlto
 
 openSUSE Packages
 -----------------
@@ -161,7 +171,10 @@ The following list shows the required packages by function given a
 supported openSUSE Linux distribution:
 
 -  *Essentials:* Packages needed to build an image for a headless
-   system: $ sudo zypper install OPENSUSE_HOST_PACKAGES_ESSENTIAL
+   system:
+   ::
+
+      $ sudo zypper install &OPENSUSE_HOST_PACKAGES_ESSENTIAL;
 
 -  *Documentation:* Packages needed if you are going to build out the
    Yocto Project documentation manuals: $ sudo zypper install dblatex
@@ -174,7 +187,10 @@ The following list shows the required packages by function given a
 supported CentOS-7 Linux distribution:
 
 -  *Essentials:* Packages needed to build an image for a headless
-   system: $ sudo yum install CENTOS7_HOST_PACKAGES_ESSENTIAL
+   system:
+   ::
+
+      $ sudo yum install &CENTOS7_HOST_PACKAGES_ESSENTIAL;
 
    .. note::
 
@@ -187,9 +203,11 @@ supported CentOS-7 Linux distribution:
          ``epel-release``.
 
 -  *Documentation:* Packages needed if you are going to build out the
-   Yocto Project documentation manuals: $ sudo yum install
-   docbook-style-dsssl docbook-style-xsl \\ docbook-dtds docbook-utils
-   fop libxslt dblatex xmlto
+   Yocto Project documentation manuals:
+   ::
+
+      $ sudo yum install docbook-style-dsssl docbook-style-xsl \
+      docbook-dtds docbook-utils fop libxslt dblatex xmlto
 
 CentOS-8 Packages
 -----------------
@@ -198,7 +216,10 @@ The following list shows the required packages by function given a
 supported CentOS-8 Linux distribution:
 
 -  *Essentials:* Packages needed to build an image for a headless
-   system: $ sudo dnf install CENTOS8_HOST_PACKAGES_ESSENTIAL
+   system:
+   ::
+
+      $ sudo dnf install &CENTOS8_HOST_PACKAGES_ESSENTIAL;
 
    .. note::
 
@@ -214,9 +235,11 @@ supported CentOS-8 Linux distribution:
          ``epel-release``.
 
 -  *Documentation:* Packages needed if you are going to build out the
-   Yocto Project documentation manuals: $ sudo dnf install
-   docbook-style-dsssl docbook-style-xsl \\ docbook-dtds docbook-utils
-   fop libxslt dblatex xmlto
+   Yocto Project documentation manuals:
+   ::
+
+      $ sudo dnf install docbook-style-dsssl docbook-style-xsl \\
+      docbook-dtds docbook-utils fop libxslt dblatex xmlto
 
 Required Git, tar, Python and gcc Versions
 ==========================================
@@ -251,10 +274,14 @@ The ``install-buildtools`` script is the easiest of the three methods by
 which you can get these tools. It downloads a pre-built buildtools
 installer and automatically installs the tools for you:
 
-1. Execute the ``install-buildtools`` script. Here is an example: $ cd
-   poky $ scripts/install-buildtools --without-extended-buildtools \\
-   --base-url https://downloads.yoctoproject.org/releases/yocto \\ --release yocto-DISTRO \\
-   --installer-version DISTRO
+1. Execute the ``install-buildtools`` script. Here is an example:
+   ::
+
+      $ cd poky
+      $ scripts/install-buildtools --without-extended-buildtools \
+        --base-url https://downloads.yoctoproject.org/releases/yocto \
+        --release yocto-&DISTRO; \
+        --installer-version &DISTRO;
 
    During execution, the buildtools tarball will be downloaded, the
    checksum of the download will be verified, the installer will be run
@@ -263,17 +290,25 @@ installer and automatically installs the tools for you:
 
    To avoid the need of ``sudo`` privileges, the ``install-buildtools``
    script will by default tell the installer to install in:
-   /path/to/poky/buildtools
+   ::
+
+      /path/to/poky/buildtools
 
    If your host development system needs the additional tools provided
    in the ``buildtools-extended`` tarball, you can instead execute the
-   ``install-buildtools`` script with the default parameters: $ cd poky
-   $ scripts/install-buildtools
+   ``install-buildtools`` script with the default parameters:
+   ::
+
+      $ cd poky
+      $ scripts/install-buildtools
 
 2. Source the tools environment setup script by using a command like the
-   following: $ source
-   /path/to/poky/buildtools/environment-setup-x86_64-pokysdk-linux Of
-   course, you need to supply your installation directory and be sure to
+   following:
+   ::
+
+      $ source /path/to/poky/buildtools/environment-setup-x86_64-pokysdk-linux
+
+   Of course, you need to supply your installation directory and be sure to
    use the right file (i.e. i586 or x86_64).
 
    After you have sourced the setup script, the tools are added to
@@ -290,21 +325,30 @@ Downloading a Pre-Built ``buildtools`` Tarball
 Downloading and running a pre-built buildtools installer is the easiest
 of the two methods by which you can get these tools:
 
-1. Locate and download the ``*.sh`` at
-   ` <&YOCTO_RELEASE_DL_URL;/buildtools/>`__.
+1. Locate and download the ``*.sh`` at &YOCTO_RELEASE_DL_URL;/buildtools/
 
 2. Execute the installation script. Here is an example for the
-   traditional installer: $ sh
-   ~/Downloads/x86_64-buildtools-nativesdk-standalone-DISTRO.sh Here is
-   an example for the extended installer: $ sh
-   ~/Downloads/x86_64-buildtools-extended-nativesdk-standalone-DISTRO.sh
+   traditional installer:
+   ::
+
+      $ sh ~/Downloads/x86_64-buildtools-nativesdk-standalone-DISTRO.sh
+
+   Here is an example for the extended installer:
+   ::
+
+      $ sh ~/Downloads/x86_64-buildtools-extended-nativesdk-standalone-DISTRO.sh
+
    During execution, a prompt appears that allows you to choose the
    installation directory. For example, you could choose the following:
    /home/your-username/buildtools
 
 3. Source the tools environment setup script by using a command like the
-   following: $ source
-   /home/your_username/buildtools/environment-setup-i586-poky-linux Of
+   following:
+   ::
+
+      $ source /home/your_username/buildtools/environment-setup-i586-poky-linux
+
+   Of
    course, you need to supply your installation directory and be sure to
    use the right file (i.e. i585 or x86-64).
 
@@ -330,11 +374,17 @@ installer:
 
 1. On the machine that is able to run BitBake, be sure you have set up
    your build environment with the setup script
-   (````` <#structure-core-script>`__).
+   (:ref:`structure-core-script`).
 
-2. Run the BitBake command to build the tarball: $ bitbake
-   buildtools-tarball or run the BitBake command to build the extended
-   tarball: $ bitbake buildtools-extended-tarball
+2. Run the BitBake command to build the tarball:
+   ::
+
+      $ bitbake buildtools-tarball
+
+   or run the BitBake command to build the extended tarball:
+   ::
+
+      $ bitbake buildtools-extended-tarball
 
    .. note::
 
@@ -355,18 +405,27 @@ installer:
 
 4. On the machine that does not meet the requirements, run the ``.sh``
    file to install the tools. Here is an example for the traditional
-   installer: $ sh
-   ~/Downloads/x86_64-buildtools-nativesdk-standalone-DISTRO.sh Here is
-   an example for the extended installer: $ sh
-   ~/Downloads/x86_64-buildtools-extended-nativesdk-standalone-DISTRO.sh
+   installer:
+   ::
+
+      $ sh ~/Downloads/x86_64-buildtools-nativesdk-standalone-&DISTRO;.sh
+
+   Here is an example for the extended installer:
+   ::
+
+      $ sh ~/Downloads/x86_64-buildtools-extended-nativesdk-standalone-&DISTRO;.sh
+
    During execution, a prompt appears that allows you to choose the
    installation directory. For example, you could choose the following:
    /home/your_username/buildtools
 
 5. Source the tools environment setup script by using a command like the
-   following: $ source
-   /home/your_username/buildtools/environment-setup-x86_64-poky-linux Of
-   course, you need to supply your installation directory and be sure to
+   following:
+   ::
+
+      $ source /home/your_username/buildtools/environment-setup-x86_64-poky-linux
+
+   Of course, you need to supply your installation directory and be sure to
    use the right file (i.e. i586 or x86_64).
 
    After you have sourced the setup script, the tools are added to

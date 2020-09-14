@@ -109,7 +109,7 @@ after other tasks works the same way.
    ::
 
            do_build[recrdeptask] += "do_deploy"
-                      
+
 
    See the "
    Dependencies
@@ -143,8 +143,7 @@ The ``do_image`` task performs pre-processing on the image through the
 :term:`IMAGE_PREPROCESS_COMMAND` and
 dynamically generates supporting ``do_image_*`` tasks as needed.
 
-For more information on image creation, see the "`Image
-Generation <&YOCTO_DOCS_OM_URL;#image-generation-dev-environment>`__"
+For more information on image creation, see the ":ref:`image-generation-dev-environment`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-image-complete:
@@ -162,8 +161,8 @@ The ``do_image_complete`` task performs post-processing on the image
 through the
 :term:`IMAGE_POSTPROCESS_COMMAND`.
 
-For more information on image creation, see the "`Image
-Generation <&YOCTO_DOCS_OM_URL;#image-generation-dev-environment>`__"
+For more information on image creation, see the
+":ref:`image-generation-dev-environment`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-install:
@@ -176,10 +175,9 @@ Copies files that are to be packaged into the holding area
 working directory set to ``${``\ :term:`B`\ ``}``, which is the
 compilation directory. The ``do_install`` task, as well as other tasks
 that either directly or indirectly depend on the installed files (e.g.
-:ref:`ref-tasks-package`,
-```do_package_write_*`` <#ref-tasks-package_write_deb>`__, and
+:ref:`ref-tasks-package`, ``do_package_write_*``, and
 :ref:`ref-tasks-rootfs`), run under
-`fakeroot <&YOCTO_DOCS_OM_URL;#fakeroot-and-pseudo>`__.
+:ref:`fakeroot <overview-manual/overview-manual-concepts:fakeroot and pseudo>`.
 
 .. note::
 
@@ -187,9 +185,8 @@ that either directly or indirectly depend on the installed files (e.g.
    of the installed files to unintended values. Some methods of copying
    files, notably when using the recursive ``cp`` command, can preserve
    the UID and/or GID of the original file, which is usually not what
-   you want. The
-   ```host-user-contaminated`` <#insane-host-user-contaminated>`__ QA
-   check checks for files that probably have the wrong ownership.
+   you want. The ``host-user-contaminated`` QA check checks for files
+   that probably have the wrong ownership.
 
    Safe methods for installing files include the following:
 
@@ -223,9 +220,8 @@ variables.
 The ``do_package`` task, in conjunction with the
 :ref:`ref-tasks-packagedata` task, also saves some
 important package metadata. For additional information, see the
-:term:`PKGDESTWORK` variable and the "`Automatically
-Added Runtime
-Dependencies <&YOCTO_DOCS_OM_URL;#automatically-added-runtime-dependencies>`__"
+:term:`PKGDESTWORK` variable and the
+":ref:`overview-manual/overview-manual-concepts:automatically added runtime dependencies`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_qa:
@@ -243,8 +239,8 @@ see the :ref:`insane <ref-classes-insane>` class.
 
 Creates Debian packages (i.e. ``*.deb`` files) and places them in the
 ``${``\ :term:`DEPLOY_DIR_DEB`\ ``}`` directory in
-the package feeds area. For more information, see the "`Package
-Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section in
+the package feeds area. For more information, see the
+":ref:`package-feeds-dev-environment`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_write_ipk:
@@ -254,8 +250,8 @@ the Yocto Project Overview and Concepts Manual.
 
 Creates IPK packages (i.e. ``*.ipk`` files) and places them in the
 ``${``\ :term:`DEPLOY_DIR_IPK`\ ``}`` directory in
-the package feeds area. For more information, see the "`Package
-Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section in
+the package feeds area. For more information, see the
+":ref:`package-feeds-dev-environment`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_write_rpm:
@@ -265,8 +261,8 @@ the Yocto Project Overview and Concepts Manual.
 
 Creates RPM packages (i.e. ``*.rpm`` files) and places them in the
 ``${``\ :term:`DEPLOY_DIR_RPM`\ ``}`` directory in
-the package feeds area. For more information, see the "`Package
-Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section in
+the package feeds area. For more information, see the
+":ref:`package-feeds-dev-environment`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-package_write_tar:
@@ -276,8 +272,8 @@ the Yocto Project Overview and Concepts Manual.
 
 Creates tarballs and places them in the
 ``${``\ :term:`DEPLOY_DIR_TAR`\ ``}`` directory in
-the package feeds area. For more information, see the "`Package
-Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__" section in
+the package feeds area. For more information, see the
+":ref:`package-feeds-dev-environment`" section in
 the Yocto Project Overview and Concepts Manual.
 
 .. _ref-tasks-packagedata:
@@ -312,8 +308,14 @@ and kept in a subdirectory of the directory holding the recipe file. For
 example, consider the
 :yocto_git:`bluez5 </cgit/cgit.cgi/poky/tree/meta/recipes-connectivity/bluez5>`
 recipe from the OE-Core layer (i.e. ``poky/meta``):
-poky/meta/recipes-connectivity/bluez5 This recipe has two patch files
-located here: poky/meta/recipes-connectivity/bluez5/bluez5
+::
+
+   poky/meta/recipes-connectivity/bluez5
+
+This recipe has two patch files located here:
+::
+
+   poky/meta/recipes-connectivity/bluez5/bluez5
 
 In the ``bluez5`` recipe, the ``SRC_URI`` statements point to the source
 and patch files needed to build the package.
@@ -331,23 +333,35 @@ and patch files needed to build the package.
 As mentioned earlier, the build system treats files whose file types are
 ``.patch`` and ``.diff`` as patch files. However, you can use the
 "apply=yes" parameter with the ``SRC_URI`` statement to indicate any
-file as a patch file: SRC_URI = " \\ git://path_to_repo/some_package \\
-file://file;apply=yes \\ "
+file as a patch file:
+::
+
+   SRC_URI = " \\
+       git://path_to_repo/some_package \\
+       file://file;apply=yes \\
+       "
 
 Conversely, if you have a directory full of patch files and you want to
 exclude some so that the ``do_patch`` task does not apply them during
 the patch phase, you can use the "apply=no" parameter with the
-``SRC_URI`` statement: SRC_URI = " \\ git://path_to_repo/some_package \\
-file://path_to_lots_of_patch_files \\
-file://path_to_lots_of_patch_files/patch_file5;apply=no \\ " In the
+``SRC_URI`` statement:
+::
+
+   SRC_URI = " \
+       git://path_to_repo/some_package \
+       file://path_to_lots_of_patch_files \
+       file://path_to_lots_of_patch_files/patch_file5;apply=no \
+       "
+
+In the
 previous example, assuming all the files in the directory holding the
 patch files end with either ``.patch`` or ``.diff``, every file would be
 applied as a patch by default except for the patch_file5 patch.
 
 You can find out more about the patching process in the
-"`Patching <&YOCTO_DOCS_OM_URL;#patching-dev-environment>`__" section in
-the Yocto Project Overview and Concepts Manual and the "`Patching
-Code <&YOCTO_DOCS_DEV_URL;#new-recipe-patching-code>`__" section in the
+":ref:`patching-dev-environment`" section in
+the Yocto Project Overview and Concepts Manual and the
+":ref:`new-recipe-patching-code`" section in the
 Yocto Project Development Tasks Manual.
 
 .. _ref-tasks-populate_lic:
@@ -364,8 +378,7 @@ the image is constructed.
 -------------------
 
 Creates the file and directory structure for an installable SDK. See the
-"`SDK
-Generation <&YOCTO_DOCS_OM_URL;#sdk-generation-dev-environment>`__"
+":ref:`sdk-generation-dev-environment`"
 section in the Yocto Project Overview and Concepts Manual for more
 information.
 
@@ -420,8 +433,7 @@ Unpacks the source code into a working directory pointed to by
 ``${``\ :term:`WORKDIR`\ ``}``. The :term:`S`
 variable also plays a role in where unpacked source files ultimately
 reside. For more information on how source files are unpacked, see the
-"`Source
-Fetching <&YOCTO_DOCS_OM_URL;#source-fetching-dev-environment>`__"
+":ref:`source-fetching-dev-environment`"
 section in the Yocto Project Overview and Concepts Manual and also see
 the ``WORKDIR`` and ``S`` variable descriptions.
 
@@ -442,16 +454,24 @@ of the recipe exists upstream and a status of not updated, updated, or
 unknown.
 
 To check the upstream version and status of a recipe, use the following
-devtool commands: $ devtool latest-version $ devtool
-check-upgrade-status See the "```devtool`` Quick
-Reference <#ref-devtool-reference>`__" chapter for more information on
-``devtool``. See the "`Checking on the Upgrade Status of a
-Recipe <&YOCTO_DOCS_REF_URL;#devtool-checking-on-the-upgrade-status-of-a-recipe>`__"
+devtool commands:
+::
+
+   $ devtool latest-version
+   $ devtool check-upgrade-status
+
+See the ":ref:`ref-manual/ref-devtool-reference:\`\`devtool\`\` quick reference`"
+chapter for more information on
+``devtool``. See the ":ref:`devtool-checking-on-the-upgrade-status-of-a-recipe`"
 section for information on checking the upgrade status of a recipe.
 
 To build the ``checkpkg`` task, use the ``bitbake`` command with the
-"-c" option and task name: $ bitbake core-image-minimal -c checkpkg By
-default, the results are stored in :term:`$LOG_DIR <LOG_DIR>` (e.g.
+"-c" option and task name:
+::
+
+   $ bitbake core-image-minimal -c checkpkg
+
+By default, the results are stored in :term:`$LOG_DIR <LOG_DIR>` (e.g.
 ``$BUILD_DIR/tmp/log``).
 
 .. _ref-tasks-checkuri:
@@ -473,11 +493,13 @@ Removes all output files for a target from the
 :ref:`ref-tasks-install`, and
 :ref:`ref-tasks-package`).
 
-You can run this task using BitBake as follows: $ bitbake -c clean
-recipe
+You can run this task using BitBake as follows:
+::
+
+   $ bitbake -c clean recipe
 
 Running this task does not remove the
-`sstate <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__ cache files.
+:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>` cache files.
 Consequently, if no changes have been made and the recipe is rebuilt
 after cleaning, output files are simply restored from the sstate cache.
 If you want to remove the sstate cache files for the recipe, you need to
@@ -490,14 +512,16 @@ use the :ref:`ref-tasks-cleansstate` task instead
 ---------------
 
 Removes all output files, shared state
-(`sstate <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__) cache, and
+(:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`) cache, and
 downloaded source files for a target (i.e. the contents of
 :term:`DL_DIR`). Essentially, the ``do_cleanall`` task is
 identical to the :ref:`ref-tasks-cleansstate` task
 with the added removal of downloaded source files.
 
-You can run this task using BitBake as follows: $ bitbake -c cleanall
-recipe
+You can run this task using BitBake as follows:
+::
+
+   $ bitbake -c cleanall recipe
 
 Typically, you would not normally use the ``cleanall`` task. Do so only
 if you want to start fresh with the :ref:`ref-tasks-fetch`
@@ -509,14 +533,16 @@ task.
 ------------------
 
 Removes all output files and shared state
-(`sstate <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__) cache for a
+(:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`) cache for a
 target. Essentially, the ``do_cleansstate`` task is identical to the
 :ref:`ref-tasks-clean` task with the added removal of
-shared state (`sstate <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__)
+shared state (`:ref:`sstate <overview-manual/overview-manual-concepts:shared state cache>`)
 cache.
 
-You can run this task using BitBake as follows: $ bitbake -c cleansstate
-recipe
+You can run this task using BitBake as follows:
+::
+
+   $ bitbake -c cleansstate recipe
 
 When you run the ``do_cleansstate`` task, the OpenEmbedded build system
 no longer uses any sstate. Consequently, building the recipe from
@@ -531,8 +557,8 @@ scratch is guaranteed.
    as follows:
    ::
 
-           $ bitbake -f -c do_cleansstate target
-                      
+      $ bitbake -f -c do_cleansstate target
+
 
 .. _ref-tasks-devpyshell:
 
@@ -542,9 +568,7 @@ scratch is guaranteed.
 Starts a shell in which an interactive Python interpreter allows you to
 interact with the BitBake build environment. From within this shell, you
 can directly examine and set bits from the data store and execute
-functions as if within the BitBake environment. See the "`Using a
-Development Python
-Shell <&YOCTO_DOCS_DEV_URL;#platdev-appdev-devpyshell>`__" section in
+functions as if within the BitBake environment. See the ":ref:`platdev-appdev-devpyshell`" section in
 the Yocto Project Development Tasks Manual for more information about
 using ``devpyshell``.
 
@@ -554,8 +578,7 @@ using ``devpyshell``.
 ---------------
 
 Starts a shell whose environment is set up for development, debugging,
-or both. See the "`Using a Development
-Shell <&YOCTO_DOCS_DEV_URL;#platdev-appdev-devshell>`__" section in the
+or both. See the ":ref:`platdev-appdev-devshell`" section in the
 Yocto Project Development Tasks Manual for more information about using
 ``devshell``.
 
@@ -571,8 +594,7 @@ Lists all defined tasks for a target.
 ``do_package_index``
 --------------------
 
-Creates or updates the index in the `Package
-Feeds <&YOCTO_DOCS_OM_URL;#package-feeds-dev-environment>`__ area.
+Creates or updates the index in the `:ref:`package-feeds-dev-environment` area.
 
 .. note::
 
@@ -615,8 +637,7 @@ has some more information about these types of images.
 -------------
 
 Creates the root filesystem (file and directory structure) for an image.
-See the "`Image
-Generation <&YOCTO_DOCS_OM_URL;#image-generation-dev-environment>`__"
+See the ":ref:`image-generation-dev-environment`"
 section in the Yocto Project Overview and Concepts Manual for more
 information on how the root filesystem is created.
 
@@ -626,9 +647,8 @@ information on how the root filesystem is created.
 ----------------
 
 Boots an image and performs runtime tests within the image. For
-information on automatically testing images, see the "`Performing
-Automated Runtime
-Testing <&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing>`__"
+information on automatically testing images, see the
+":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _ref-tasks-testimage_auto:
@@ -640,9 +660,8 @@ Boots an image and performs runtime tests within the image immediately
 after it has been built. This task is enabled when you set
 :term:`TESTIMAGE_AUTO` equal to "1".
 
-For information on automatically testing images, see the "`Performing
-Automated Runtime
-Testing <&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing>`__"
+For information on automatically testing images, see the
+":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
 section in the Yocto Project Development Tasks Manual.
 
 Kernel-Related Tasks
@@ -674,9 +693,13 @@ changes made by the user with other methods (i.e. using
 (:ref:`ref-tasks-kernel_menuconfig`). Once the
 file of differences is created, it can be used to create a config
 fragment that only contains the differences. You can invoke this task
-from the command line as follows: $ bitbake linux-yocto -c diffconfig
-For more information, see the "`Creating Configuration
-Fragments <&YOCTO_DOCS_KERNEL_DEV_URL;#creating-config-fragments>`__"
+from the command line as follows:
+::
+
+   $ bitbake linux-yocto -c diffconfig
+
+For more information, see the
+":ref:`kernel-dev/kernel-dev-common:creating configuration fragments`"
 section in the Yocto Project Linux Kernel Development Manual.
 
 .. _ref-tasks-kernel_checkout:
@@ -701,9 +724,13 @@ Validates the configuration produced by the
 configuration does not appear in the final ``.config`` file or when you
 override a policy configuration in a hardware configuration fragment.
 You can run this task explicitly and view the output by using the
-following command: $ bitbake linux-yocto -c kernel_configcheck -f For
-more information, see the "`Validating
-Configuration <&YOCTO_DOCS_KERNEL_DEV_URL;#validating-configuration>`__"
+following command:
+::
+
+   $ bitbake linux-yocto -c kernel_configcheck -f
+
+For more information, see the
+":ref:`kernel-dev/kernel-dev-common:validating configuration`"
 section in the Yocto Project Linux Kernel Development Manual.
 
 .. _ref-tasks-kernel_configme:
@@ -733,10 +760,9 @@ tool, which you then use to modify the kernel configuration.
    ::
 
            $ bitbake linux-yocto -c menuconfig
-                      
 
-See the "`Using
-``menuconfig`` <&YOCTO_DOCS_KERNEL_DEV_URL;#using-menuconfig>`__"
+
+See the ":ref:`kernel-dev/kernel-dev-common:using \`\`menuconfig\`\``"
 section in the Yocto Project Linux Kernel Development Manual for more
 information on this configuration tool.
 
@@ -760,7 +786,7 @@ which can then be applied by subsequent tasks such as
 
 Runs ``make menuconfig`` for the kernel. For information on
 ``menuconfig``, see the
-"`Using  ``menuconfig`` <&YOCTO_DOCS_KERNEL_DEV_URL;#using-menuconfig>`__"
+":ref:`kernel-dev/kernel-dev-common:using \`\`menuconfig\`\``"
 section in the Yocto Project Linux Kernel Development Manual.
 
 .. _ref-tasks-savedefconfig:
@@ -773,8 +799,10 @@ instead of the default defconfig. The saved defconfig contains the
 differences between the default defconfig and the changes made by the
 user using other methods (i.e. the
 :ref:`ref-tasks-kernel_menuconfig` task. You
-can invoke the task using the following command: $ bitbake linux-yocto
--c savedefconfig
+can invoke the task using the following command:
+::
+
+   $ bitbake linux-yocto -c savedefconfig
 
 .. _ref-tasks-shared_workdir:
 

@@ -47,7 +47,7 @@ splitting out of debug symbols during packaging).
    even if the recipes do not produce architecture-specific output.
 
    Configuring such recipes for all architectures causes the
-   ```do_package_write_*`` <#ref-tasks-package_write_deb>`__ tasks to
+   ```do_package_write_*`` tasks to
    have different signatures for the machines with different tunings.
    Additionally, unnecessary rebuilds occur every time an image for a
    different ``MACHINE`` is built even when the recipe never changes.
@@ -67,9 +67,8 @@ inherit the ``allarch`` class.
 The ``archiver`` class supports releasing source code and other
 materials with the binaries.
 
-For more details on the source archiver, see the "`Maintaining Open
-Source License Compliance During Your Product's
-Lifecycle <&YOCTO_DOCS_DEV_URL;#maintaining-open-source-license-compliance-during-your-products-lifecycle>`__"
+For more details on the source archiver, see the
+":ref:`dev-manual/dev-manual-common-tasks:maintaining open source license compliance during your product's lifecycle`"
 section in the Yocto Project Development Tasks Manual. You can also see
 the :term:`ARCHIVER_MODE` variable for information
 about the variable flags (varflags) that help control archive creation.
@@ -86,8 +85,8 @@ standardization. This class defines a set of tasks (e.g. ``configure``,
 ``compile`` and so forth) that work for all Autotooled packages. It
 should usually be enough to define a few standard variables and then
 simply ``inherit autotools``. These classes can also work with software
-that emulates Autotools. For more information, see the "`Autotooled
-Package <&YOCTO_DOCS_DEV_URL;#new-recipe-autotooled-package>`__" section
+that emulates Autotools. For more information, see the
+":ref:`new-recipe-autotooled-package`" section
 in the Yocto Project Development Tasks Manual.
 
 By default, the ``autotools*`` classes use out-of-tree builds (i.e.
@@ -177,7 +176,7 @@ example use for this class.
    ::
 
            SRC_URI = "git://example.com/downloads/somepackage.rpm;subpath=${BP}"
-                  
+
 
    See the "
    Fetchers
@@ -229,8 +228,10 @@ value as a variable flag (varflag) and provide a reason, which is
 reported, if the package is requested to be built as the value. For
 example, if you want to blacklist a recipe called "exoticware", you add
 the following to your ``local.conf`` or distribution configuration:
-INHERIT += "blacklist" PNBLACKLIST[exoticware] = "Not supported by our
-organization."
+::
+
+   INHERIT += "blacklist"
+   PNBLACKLIST[exoticware] = "Not supported by our organization."
 
 .. _ref-classes-buildhistory:
 
@@ -240,8 +241,8 @@ organization."
 The ``buildhistory`` class records a history of build output metadata,
 which can be used to detect possible regressions as well as used for
 analysis of the build output. For more information on using Build
-History, see the "`Maintaining Build Output
-Quality <&YOCTO_DOCS_DEV_URL;#maintaining-build-output-quality>`__"
+History, see the
+":ref:`dev-manual/dev-manual-common-tasks:maintaining build output quality`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _ref-classes-buildstats:
@@ -411,8 +412,7 @@ cross-compilation tools.
 
 The ``cross-canadian`` class provides support for the recipes that build
 the Canadian Cross-compilation tools for SDKs. See the
-"`Cross-Development Toolchain
-Generation <&YOCTO_DOCS_OM_URL;#cross-development-toolchain-generation>`__"
+":ref:`overview-manual/overview-manual-concepts:cross-development toolchain generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 discussion on these cross-compilation tools.
 
@@ -423,8 +423,7 @@ discussion on these cross-compilation tools.
 
 The ``crosssdk`` class provides support for the recipes that build the
 cross-compilation tools used for building SDKs. See the
-"`Cross-Development Toolchain
-Generation <&YOCTO_DOCS_OM_URL;#cross-development-toolchain-generation>`__"
+":ref:`overview-manual/overview-manual-concepts:cross-development toolchain generation`"
 section in the Yocto Project Overview and Concepts Manual for more
 discussion on these cross-compilation tools.
 
@@ -465,8 +464,7 @@ staging the files from ``DEPLOYDIR`` to ``DEPLOY_DIR_IMAGE``.
 ====================
 
 The ``devshell`` class adds the ``do_devshell`` task. Distribution
-policy dictates whether to include this class. See the "`Using a
-Development Shell <&YOCTO_DOCS_DEV_URL;#platdev-appdev-devshell>`__"
+policy dictates whether to include this class. See the ":ref:`platdev-appdev-devshell`"
 section in the Yocto Project Development Tasks Manual for more
 information about using ``devshell``.
 
@@ -478,16 +476,26 @@ information about using ``devshell``.
 The ``devupstream`` class uses
 :term:`BBCLASSEXTEND` to add a variant of the
 recipe that fetches from an alternative URI (e.g. Git) instead of a
-tarball. Following is an example: BBCLASSEXTEND = "devupstream:target"
-SRC_URI_class-devupstream = "git://git.example.com/example"
-SRCREV_class-devupstream = "abcd1234" Adding the above statements to
-your recipe creates a variant that has
+tarball. Following is an example:
+::
+
+   BBCLASSEXTEND = "devupstream:target"
+   SRC_URI_class-devupstream = "git://git.example.com/example"
+   SRCREV_class-devupstream = "abcd1234"
+
+Adding the above statements to your recipe creates a variant that has
 :term:`DEFAULT_PREFERENCE` set to "-1".
 Consequently, you need to select the variant of the recipe to use it.
 Any development-specific adjustments can be done by using the
 ``class-devupstream`` override. Here is an example:
-DEPENDS_append_class-devupstream = " gperf-native"
-do_configure_prepend_class-devupstream() { touch ${S}/README } The class
+::
+
+   DEPENDS_append_class-devupstream = " gperf-native"
+   do_configure_prepend_class-devupstream() {
+       touch ${S}/README
+   }
+
+The class
 currently only supports creating a development variant of the target
 recipe, not ``native`` or ``nativesdk`` variants.
 
@@ -587,15 +595,19 @@ that use the :term:`B` variable to point to the directory in
 which the OpenEmbedded build system places the generated objects built
 from the recipes. By default, the ``B`` directory is set to the
 following, which is separate from the source directory (``S``):
-${WORKDIR}/${BPN}/{PV}/ See these variables for more information:
+::
+
+   ${WORKDIR}/${BPN}/{PV}/
+
+See these variables for more information:
 :term:`WORKDIR`, :term:`BPN`, and
 :term:`PV`,
 
 For more information on the ``externalsrc`` class, see the comments in
 ``meta/classes/externalsrc.bbclass`` in the :term:`Source Directory`.
 For information on how to use the
-``externalsrc`` class, see the "`Building Software from an External
-Source <&YOCTO_DOCS_DEV_URL;#building-software-from-an-external-source>`__"
+``externalsrc`` class, see the
+":ref:`dev-manual/dev-manual-common-tasks:building software from an external source`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _ref-classes-extrausers:
@@ -619,15 +631,36 @@ be performed using the
    useradd
    class to add user and group configuration to a specific recipe.
 
-Here is an example that uses this class in an image recipe: inherit
-extrausers EXTRA_USERS_PARAMS = "\\ useradd -p '' tester; \\ groupadd
-developers; \\ userdel nobody; \\ groupdel -g video; \\ groupmod -g 1020
-developers; \\ usermod -s /bin/sh tester; \\ " Here is an example that
-adds two users named "tester-jim" and "tester-sue" and assigns
-passwords: inherit extrausers EXTRA_USERS_PARAMS = "\\ useradd -P
-tester01 tester-jim; \\ useradd -P tester01 tester-sue; \\ " Finally,
-here is an example that sets the root password to "1876*18": inherit
-extrausers EXTRA_USERS_PARAMS = "\\ usermod -P 1876*18 root; \\ "
+Here is an example that uses this class in an image recipe:
+::
+
+   inherit extrausers
+   EXTRA_USERS_PARAMS = "\
+       useradd -p '' tester; \
+       groupadd developers; \
+       userdel nobody; \
+       groupdel -g video; \
+       groupmod -g 1020 developers; \
+       usermod -s /bin/sh tester; \
+       "
+
+Here is an example that adds two users named "tester-jim" and "tester-sue" and assigns
+passwords:
+::
+
+   inherit extrausers
+   EXTRA_USERS_PARAMS = "\
+       useradd -P tester01 tester-jim; \
+       useradd -P tester01 tester-sue; \
+       "
+
+Finally, here is an example that sets the root password to "1876*18":
+::
+
+   inherit extrausers
+   EXTRA_USERS_PARAMS = "\
+       usermod -P 1876*18 root; \
+       "
 
 .. _ref-classes-fontcache:
 
@@ -837,8 +870,7 @@ provided by the recipe ``icecc-create-env-native.bb``.
 .. note::
 
    This script is a modified version and not the one that comes with
-   icecc
-   .
+   icecc.
 
 If you do not want the Icecream distributed compile support to apply to
 specific recipes or classes, you can effectively "blacklist" them by
@@ -863,10 +895,18 @@ At the distribution level, you can inherit the ``icecc`` class to be
 sure that all builders start with the same sstate signatures. After
 inheriting the class, you can then disable the feature by setting the
 :term:`ICECC_DISABLED` variable to "1" as follows:
-INHERIT_DISTRO_append = " icecc" ICECC_DISABLED ??= "1" This practice
+::
+
+   INHERIT_DISTRO_append = " icecc"
+   ICECC_DISABLED ??= "1"
+
+This practice
 makes sure everyone is using the same signatures but also requires
 individuals that do want to use Icecream to enable the feature
-individually as follows in your ``local.conf`` file: ICECC_DISABLED = ""
+individually as follows in your ``local.conf`` file:
+::
+
+   ICECC_DISABLED = ""
 
 .. _ref-classes-image:
 
@@ -884,11 +924,11 @@ then one or more image files are created.
 -  The ``IMAGE_INSTALL`` variable controls the list of packages to
    install into the image.
 
-For information on customizing images, see the "`Customizing
-Images <&YOCTO_DOCS_DEV_URL;#usingpoky-extend-customimage>`__" section
+For information on customizing images, see the
+":ref:`usingpoky-extend-customimage`" section
 in the Yocto Project Development Tasks Manual. For information on how
 images are created, see the
-"`Images <&YOCTO_DOCS_OM_URL;#images-dev-environment>`__" section in the
+":ref:`images-dev-environment`" section in the
 Yocto Project Overview and Concpets Manual.
 
 .. _ref-classes-image-buildinfo:
@@ -912,19 +952,19 @@ types.
 
 By default, the :ref:`image <ref-classes-image>` class automatically
 enables the ``image_types`` class. The ``image`` class uses the
-``IMGCLASSES`` variable as follows: IMGCLASSES =
-"rootfs_${IMAGE_PKGTYPE} image_types ${IMAGE_CLASSES}" IMGCLASSES +=
-"${@['populate_sdk_base', 'populate_sdk_ext']['linux' in
-d.getVar("SDK_OS")]}" IMGCLASSES +=
-"${@bb.utils.contains_any('IMAGE_FSTYPES', 'live iso hddimg',
-'image-live', '', d)}" IMGCLASSES +=
-"${@bb.utils.contains('IMAGE_FSTYPES', 'container', 'image-container',
-'', d)}" IMGCLASSES += "image_types_wic" IMGCLASSES +=
-"rootfs-postcommands" IMGCLASSES += "image-postinst-intercepts" inherit
-${IMGCLASSES}
+``IMGCLASSES`` variable as follows:
+::
 
-The ``image_types`` class also handles conversion and compression of
-images.
+   IMGCLASSES = "rootfs_${IMAGE_PKGTYPE} image_types ${IMAGE_CLASSES}"
+   IMGCLASSES += "${@['populate_sdk_base', 'populate_sdk_ext']['linux' in d.getVar("SDK_OS")]}"
+   IMGCLASSES += "${@bb.utils.contains_any('IMAGE_FSTYPES', 'live iso hddimg', 'image-live', '', d)}"
+   IMGCLASSES += "${@bb.utils.contains('IMAGE_FSTYPES', 'container', 'image-container', '', d)}"
+   IMGCLASSES += "image_types_wic"
+   IMGCLASSES += "rootfs-postcommands"
+   IMGCLASSES += "image-postinst-intercepts"
+   inherit ${IMGCLASSES}
+
+The ``image_types`` class also handles conversion and compression of images.
 
 .. note::
 
@@ -957,7 +997,9 @@ the size of libraries contained in the image.
 
 By default, the class is enabled in the ``local.conf.template`` using
 the :term:`USER_CLASSES` variable as follows:
-USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+::
+
+   USER_CLASSES ?= "buildstats image-mklibs image-prelink"
 
 .. _ref-classes-image-prelink:
 
@@ -971,7 +1013,9 @@ time.
 
 By default, the class is enabled in the ``local.conf.template`` using
 the :term:`USER_CLASSES` variable as follows:
-USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+::
+
+   USER_CLASSES ?= "buildstats image-mklibs image-prelink"
 
 .. _ref-classes-insane:
 
@@ -1000,32 +1044,36 @@ should use :term:`INSANE_SKIP`. For example, to skip
 the check for symbolic link ``.so`` files in the main package of a
 recipe, add the following to the recipe. You need to realize that the
 package name override, in this example ``${PN}``, must be used:
-INSANE_SKIP_${PN} += "dev-so" Please keep in mind that the QA checks
+::
+
+   INSANE_SKIP_${PN} += "dev-so"
+
+Please keep in mind that the QA checks
 exist in order to detect real or potential problems in the packaged
 output. So exercise caution when disabling these checks.
 
 The following list shows the tests you can list with the ``WARN_QA`` and
 ``ERROR_QA`` variables:
 
--  *``already-stripped:``* Checks that produced binaries have not
+-  ``already-stripped:`` Checks that produced binaries have not
    already been stripped prior to the build system extracting debug
    symbols. It is common for upstream software projects to default to
    stripping debug symbols for output binaries. In order for debugging
    to work on the target using ``-dbg`` packages, this stripping must be
    disabled.
 
--  *``arch:``* Checks the Executable and Linkable Format (ELF) type, bit
+-  ``arch:`` Checks the Executable and Linkable Format (ELF) type, bit
    size, and endianness of any binaries to ensure they match the target
    architecture. This test fails if any binaries do not match the type
    since there would be an incompatibility. The test could indicate that
    the wrong compiler or compiler options have been used. Sometimes
    software, like bootloaders, might need to bypass this check.
 
--  *``buildpaths:``* Checks for paths to locations on the build host
+-  ``buildpaths:`` Checks for paths to locations on the build host
    inside the output files. Currently, this test triggers too many false
    positives and thus is not normally enabled.
 
--  *``build-deps:``* Determines if a build-time dependency that is
+-  ``build-deps:`` Determines if a build-time dependency that is
    specified through :term:`DEPENDS`, explicit
    :term:`RDEPENDS`, or task-level dependencies exists
    to match any runtime dependency. This determination is particularly
@@ -1045,20 +1093,20 @@ The following list shows the tests you can list with the ``WARN_QA`` and
    ``initscripts`` recipe is actually built and thus the
    ``initscripts-functions`` package is made available.
 
--  *``compile-host-path:``* Checks the
+-  ``compile-host-path:`` Checks the
    :ref:`ref-tasks-compile` log for indications that
    paths to locations on the build host were used. Using such paths
    might result in host contamination of the build output.
 
--  *``debug-deps:``* Checks that all packages except ``-dbg`` packages
+-  ``debug-deps:`` Checks that all packages except ``-dbg`` packages
    do not depend on ``-dbg`` packages, which would cause a packaging
    bug.
 
--  *``debug-files:``* Checks for ``.debug`` directories in anything but
+-  ``debug-files:`` Checks for ``.debug`` directories in anything but
    the ``-dbg`` package. The debug files should all be in the ``-dbg``
    package. Thus, anything packaged elsewhere is incorrect packaging.
 
--  *``dep-cmp:``* Checks for invalid version comparison statements in
+-  ``dep-cmp:`` Checks for invalid version comparison statements in
    runtime dependency relationships between packages (i.e. in
    :term:`RDEPENDS`,
    :term:`RRECOMMENDS`,
@@ -1069,22 +1117,22 @@ The following list shows the tests you can list with the ``WARN_QA`` and
    comparisons might trigger failures or undesirable behavior when
    passed to the package manager.
 
--  *``desktop:``* Runs the ``desktop-file-validate`` program against any
+-  ``desktop:`` Runs the ``desktop-file-validate`` program against any
    ``.desktop`` files to validate their contents against the
    specification for ``.desktop`` files.
 
--  *``dev-deps:``* Checks that all packages except ``-dev`` or
+-  ``dev-deps:`` Checks that all packages except ``-dev`` or
    ``-staticdev`` packages do not depend on ``-dev`` packages, which
    would be a packaging bug.
 
--  *``dev-so:``* Checks that the ``.so`` symbolic links are in the
+-  ``dev-so:`` Checks that the ``.so`` symbolic links are in the
    ``-dev`` package and not in any of the other packages. In general,
    these symlinks are only useful for development purposes. Thus, the
    ``-dev`` package is the correct location for them. Some very rare
    cases do exist for dynamically loaded modules where these symlinks
    are needed instead in the main package.
 
--  *``file-rdeps:``* Checks that file-level dependencies identified by
+-  ``file-rdeps:`` Checks that file-level dependencies identified by
    the OpenEmbedded build system at packaging time are satisfied. For
    example, a shell script might start with the line ``#!/bin/bash``.
    This line would translate to a file dependency on ``/bin/bash``. Of
@@ -1097,10 +1145,10 @@ The following list shows the tests you can list with the ``WARN_QA`` and
    :term:`RDEPENDS` exist to handle any file-level
    dependency detected in packaged files.
 
--  *``files-invalid:``* Checks for :term:`FILES` variable
+-  ``files-invalid:`` Checks for :term:`FILES` variable
    values that contain "//", which is invalid.
 
--  *``host-user-contaminated:``* Checks that no package produced by the
+-  ``host-user-contaminated:`` Checks that no package produced by the
    recipe contains any files outside of ``/home`` with a user or group
    ID that matches the user running BitBake. A match usually indicates
    that the files are being installed with an incorrect UID/GID, since
@@ -1108,16 +1156,16 @@ The following list shows the tests you can list with the ``WARN_QA`` and
    see the section describing the
    :ref:`ref-tasks-install` task.
 
--  *``incompatible-license:``* Report when packages are excluded from
+-  ``incompatible-license:`` Report when packages are excluded from
    being created due to being marked with a license that is in
    :term:`INCOMPATIBLE_LICENSE`.
 
--  *``install-host-path:``* Checks the
+-  ``install-host-path:`` Checks the
    :ref:`ref-tasks-install` log for indications that
    paths to locations on the build host were used. Using such paths
    might result in host contamination of the build output.
 
--  *``installed-vs-shipped:``* Reports when files have been installed
+-  ``installed-vs-shipped:`` Reports when files have been installed
    within ``do_install`` but have not been included in any package by
    way of the :term:`FILES` variable. Files that do not
    appear in any package cannot be present in an image later on in the
@@ -1125,67 +1173,69 @@ The following list shows the tests you can list with the ``WARN_QA`` and
    installed at all. These files can be deleted at the end of
    ``do_install`` if the files are not needed in any package.
 
--  *``invalid-chars:``* Checks that the recipe metadata variables
+-  ``invalid-chars:`` Checks that the recipe metadata variables
    :term:`DESCRIPTION`,
    :term:`SUMMARY`, :term:`LICENSE`, and
    :term:`SECTION` do not contain non-UTF-8 characters.
    Some package managers do not support such characters.
 
--  *``invalid-packageconfig:``* Checks that no undefined features are
+-  ``invalid-packageconfig:`` Checks that no undefined features are
    being added to :term:`PACKAGECONFIG`. For
    example, any name "foo" for which the following form does not exist:
-   PACKAGECONFIG[foo] = "..."
+   ::
 
--  *``la:``* Checks ``.la`` files for any ``TMPDIR`` paths. Any ``.la``
+      PACKAGECONFIG[foo] = "..."
+
+-  ``la:`` Checks ``.la`` files for any ``TMPDIR`` paths. Any ``.la``
    file containing these paths is incorrect since ``libtool`` adds the
    correct sysroot prefix when using the files automatically itself.
 
--  *``ldflags:``* Ensures that the binaries were linked with the
+-  ``ldflags:`` Ensures that the binaries were linked with the
    :term:`LDFLAGS` options provided by the build system.
    If this test fails, check that the ``LDFLAGS`` variable is being
    passed to the linker command.
 
--  *``libdir:``* Checks for libraries being installed into incorrect
+-  ``libdir:`` Checks for libraries being installed into incorrect
    (possibly hardcoded) installation paths. For example, this test will
    catch recipes that install ``/lib/bar.so`` when ``${base_libdir}`` is
    "lib32". Another example is when recipes install
    ``/usr/lib64/foo.so`` when ``${libdir}`` is "/usr/lib".
 
--  *``libexec:``* Checks if a package contains files in
+-  ``libexec:`` Checks if a package contains files in
    ``/usr/libexec``. This check is not performed if the ``libexecdir``
    variable has been set explicitly to ``/usr/libexec``.
 
--  *``packages-list:``* Checks for the same package being listed
+-  ``packages-list:`` Checks for the same package being listed
    multiple times through the :term:`PACKAGES` variable
    value. Installing the package in this manner can cause errors during
    packaging.
 
--  *``perm-config:``* Reports lines in ``fs-perms.txt`` that have an
+-  ``perm-config:`` Reports lines in ``fs-perms.txt`` that have an
    invalid format.
 
--  *``perm-line:``* Reports lines in ``fs-perms.txt`` that have an
+-  ``perm-line:`` Reports lines in ``fs-perms.txt`` that have an
    invalid format.
 
--  *``perm-link:``* Reports lines in ``fs-perms.txt`` that specify
+-  ``perm-link:`` Reports lines in ``fs-perms.txt`` that specify
    'link' where the specified target already exists.
 
--  *``perms:``* Currently, this check is unused but reserved.
+-  ``perms:`` Currently, this check is unused but reserved.
 
--  *``pkgconfig:``* Checks ``.pc`` files for any
+-  ``pkgconfig:`` Checks ``.pc`` files for any
    :term:`TMPDIR`/:term:`WORKDIR` paths.
    Any ``.pc`` file containing these paths is incorrect since
    ``pkg-config`` itself adds the correct sysroot prefix when the files
    are accessed.
 
--  *``pkgname:``* Checks that all packages in
+-  ``pkgname:`` Checks that all packages in
    :term:`PACKAGES` have names that do not contain
    invalid characters (i.e. characters other than 0-9, a-z, ., +, and
    -).
 
--  *``pkgv-undefined:``* Checks to see if the ``PKGV`` variable is
+-  ``pkgv-undefined:`` Checks to see if the ``PKGV`` variable is
    undefined during :ref:`ref-tasks-package`.
 
--  *``pkgvarcheck:``* Checks through the variables
+-  ``pkgvarcheck:`` Checks through the variables
    :term:`RDEPENDS`,
    :term:`RRECOMMENDS`,
    :term:`RSUGGESTS`,
@@ -1199,7 +1249,7 @@ The following list shows the tests you can list with the ``WARN_QA`` and
    unnecessarily complicate dependencies of other packages within the
    same recipe or have other unintended consequences.
 
--  *``pn-overrides:``* Checks that a recipe does not have a name
+-  ``pn-overrides:`` Checks that a recipe does not have a name
    (:term:`PN`) value that appears in
    :term:`OVERRIDES`. If a recipe is named such that
    its ``PN`` value matches something already in ``OVERRIDES`` (e.g.
@@ -1208,43 +1258,43 @@ The following list shows the tests you can list with the ``WARN_QA`` and
    For example, assignments such as ``FILES_${PN} = "xyz"`` effectively
    turn into ``FILES = "xyz"``.
 
--  *``rpaths:``* Checks for rpaths in the binaries that contain build
+-  ``rpaths:`` Checks for rpaths in the binaries that contain build
    system paths such as ``TMPDIR``. If this test fails, bad ``-rpath``
    options are being passed to the linker commands and your binaries
    have potential security issues.
 
--  *``split-strip:``* Reports that splitting or stripping debug symbols
+-  ``split-strip:`` Reports that splitting or stripping debug symbols
    from binaries has failed.
 
--  *``staticdev:``* Checks for static library files (``*.a``) in
+-  ``staticdev:`` Checks for static library files (``*.a``) in
    non-``staticdev`` packages.
 
--  *``symlink-to-sysroot:``* Checks for symlinks in packages that point
+-  ``symlink-to-sysroot:`` Checks for symlinks in packages that point
    into :term:`TMPDIR` on the host. Such symlinks will
    work on the host, but are clearly invalid when running on the target.
 
--  *``textrel:``* Checks for ELF binaries that contain relocations in
+-  ``textrel:`` Checks for ELF binaries that contain relocations in
    their ``.text`` sections, which can result in a performance impact at
    runtime. See the explanation for the
    ```ELF binary`` <#qa-issue-textrel>`__ message for more information
    regarding runtime performance issues.
 
--  *``unlisted-pkg-lics:``* Checks that all declared licenses applying
+-  ``unlisted-pkg-lics:`` Checks that all declared licenses applying
    for a package are also declared on the recipe level (i.e. any license
    in ``LICENSE_*`` should appear in :term:`LICENSE`).
 
--  *``useless-rpaths:``* Checks for dynamic library load paths (rpaths)
+-  ``useless-rpaths:`` Checks for dynamic library load paths (rpaths)
    in the binaries that by default on a standard system are searched by
    the linker (e.g. ``/lib`` and ``/usr/lib``). While these paths will
    not cause any breakage, they do waste space and are unnecessary.
 
--  *``var-undefined:``* Reports when variables fundamental to packaging
+-  ``var-undefined:`` Reports when variables fundamental to packaging
    (i.e. :term:`WORKDIR`,
    :term:`DEPLOY_DIR`, :term:`D`,
    :term:`PN`, and :term:`PKGD`) are undefined
    during :ref:`ref-tasks-package`.
 
--  *``version-going-backwards:``* If Build History is enabled, reports
+-  ``version-going-backwards:`` If Build History is enabled, reports
    when a package being written out has a lower version than the
    previously written package under the same name. If you are placing
    output packages into a feed and upgrading packages on a target system
@@ -1257,7 +1307,7 @@ The following list shows the tests you can list with the ``WARN_QA`` and
       If you are not using runtime package management on your target
       system, then you do not need to worry about this situation.
 
--  *``xorg-driver-abi:``* Checks that all packages containing Xorg
+-  ``xorg-driver-abi:`` Checks that all packages containing Xorg
    drivers have ABI dependencies. The ``xserver-xorg`` recipe provides
    driver ABI names. All drivers should depend on the ABI versions that
    they have been built against. Driver recipes that include
@@ -1293,9 +1343,8 @@ packages such as ``kernel-vmlinux``.
 
 The ``kernel`` class contains logic that allows you to embed an initial
 RAM filesystem (initramfs) image when you build the kernel image. For
-information on how to build an initramfs, see the "`Building an Initial
-RAM Filesystem (initramfs)
-Image <&YOCTO_DOCS_DEV_URL;#building-an-initramfs-image>`__" section in
+information on how to build an initramfs, see the
+":ref:`building-an-initramfs-image`" section in
 the Yocto Project Development Tasks Manual.
 
 Various other classes are used by the ``kernel`` and ``module`` classes
@@ -1545,8 +1594,7 @@ and implements the :ref:`ref-tasks-compile` and
 everything needed to build and package a kernel module.
 
 For general information on out-of-tree Linux kernel modules, see the
-"`Incorporating Out-of-Tree
-Modules <&YOCTO_DOCS_KERNEL_DEV_URL;#incorporating-out-of-tree-modules>`__"
+":ref:`kernel-dev/kernel-dev-common:incorporating out-of-tree modules`"
 section in the Yocto Project Linux Kernel Development Manual.
 
 .. _ref-classes-module-base:
@@ -1569,9 +1617,8 @@ The ``multilib*`` classes provide support for building libraries with
 different target optimizations or target architectures and installing
 them side-by-side in the same image.
 
-For more information on using the Multilib feature, see the "`Combining
-Multiple Versions of Library Files into One
-Image <&YOCTO_DOCS_DEV_URL;#combining-multiple-versions-library-files-into-one-image>`__"
+For more information on using the Multilib feature, see the
+":ref:`combining-multiple-versions-library-files-into-one-image`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _ref-classes-native:
@@ -1597,14 +1644,18 @@ a couple different ways:
       naming convention:
       ::
 
-              myrecipe-native.bb
-                             
+         myrecipe-native.bb
+
 
       Not using this naming convention can lead to subtle problems
       caused by existing code that depends on that naming convention.
 
 -  Create or modify a target recipe that contains the following:
-   :term:`BBCLASSEXTEND` = "native" Inside the
+   ::
+
+      BBCLASSEXTEND = "native"
+
+   Inside the
    recipe, use ``_class-native`` and ``_class-target`` overrides to
    specify any functionality specific to the respective native or target
    case.
@@ -1632,7 +1683,11 @@ couple different ways:
    that the ``nativesdk`` class is inherited last.
 
 -  Create a ``nativesdk`` variant of any recipe by adding the following:
-   :term:`BBCLASSEXTEND` = "nativesdk" Inside the
+   ::
+
+       BBCLASSEXTEND = "nativesdk"
+
+   Inside the
    recipe, use ``_class-nativesdk`` and ``_class-target`` overrides to
    specify any functionality specific to the respective SDK machine or
    target case.
@@ -1643,7 +1698,7 @@ couple different ways:
    ::
 
            nativesdk-myrecipe.bb
-                  
+
 
    Not doing so can lead to subtle problems because code exists that
    depends on the naming convention.
@@ -1675,9 +1730,8 @@ package manager (NPM) <https://en.wikipedia.org/wiki/Npm_(software)>`__.
    npm://
    fetcher to have dependencies fetched and packaged automatically.
 
-For information on how to create NPM packages, see the "`Creating Node
-Package Manager (NPM)
-Packages <&YOCTO_DOCS_DEV_URL;#creating-node-package-manager-npm-packages>`__"
+For information on how to create NPM packages, see the
+":ref:`dev-manual/dev-manual-common-tasks:creating node package manager (npm) packages`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _ref-classes-oelint:
@@ -1706,8 +1760,12 @@ before attempting to fetch it from the upstream specified in
 
 To use this class, inherit it globally and specify
 :term:`SOURCE_MIRROR_URL`. Here is an example:
-INHERIT += "own-mirrors" SOURCE_MIRROR_URL =
-"http://example.com/my-source-mirror" You can specify only a single URL
+::
+
+   INHERIT += "own-mirrors"
+   SOURCE_MIRROR_URL = "http://example.com/my-source-mirror"
+
+You can specify only a single URL
 in ``SOURCE_MIRROR_URL``.
 
 .. _ref-classes-package:
@@ -1742,9 +1800,8 @@ first class listed in this variable is used for image generation.
 If you take the optional step to set up a repository (package feed) on
 the development host that can be used by DNF, you can install packages
 from the feed while you are running the image on the target (i.e.
-runtime installation of packages). For more information, see the "`Using
-Runtime Package
-Management <&YOCTO_DOCS_DEV_URL;#using-runtime-package-management>`__"
+runtime installation of packages). For more information, see the
+":ref:`dev-manual/dev-manual-common-tasks:using runtime package management`"
 section in the Yocto Project Development Tasks Manual.
 
 The package-specific class you choose can affect build-time performance
@@ -1774,9 +1831,9 @@ consider some further things about using RPM:
 You can find additional information on the effects of the package class
 at these two Yocto Project mailing list links:
 
--  `https://lists.yoctoproject.org/pipermail/poky/2011-May/006362.html <&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006362.html>`__
+-  https://lists.yoctoproject.org/pipermail/poky/2011-May/006362.html
 
--  `https://lists.yoctoproject.org/pipermail/poky/2011-May/006363.html <&YOCTO_LISTS_URL;/pipermail/poky/2011-May/006363.html>`__
+-  https://lists.yoctoproject.org/pipermail/poky/2011-May/006363.html
 
 .. _ref-classes-package_deb:
 
@@ -1870,9 +1927,8 @@ group recipes (e.g. ``PACKAGES``, ``PACKAGE_ARCH``, ``ALLOW_EMPTY``, and
 so forth). It is highly recommended that all package group recipes
 inherit this class.
 
-For information on how to use this class, see the "`Customizing Images
-Using Custom Package
-Groups <&YOCTO_DOCS_DEV_URL;#usingpoky-extend-customimage-customtasks>`__"
+For information on how to use this class, see the
+":ref:`usingpoky-extend-customimage-customtasks`"
 section in the Yocto Project Development Tasks Manual.
 
 Previously, this class was called the ``task`` class.
@@ -1937,8 +1993,7 @@ files.
 The ``populate_sdk`` class provides support for SDK-only recipes. For
 information on advantages gained when building a cross-development
 toolchain using the :ref:`ref-tasks-populate_sdk`
-task, see the "`Building an SDK
-Installer <&YOCTO_DOCS_SDK_URL;#sdk-building-an-sdk-installer>`__"
+task, see the ":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) manual.
 
@@ -1950,19 +2005,19 @@ Software Development Kit (eSDK) manual.
 The ``populate_sdk_*`` classes support SDK creation and consist of the
 following classes:
 
--  *``populate_sdk_base``:* The base class supporting SDK creation under
+-  ``populate_sdk_base``: The base class supporting SDK creation under
    all package managers (i.e. DEB, RPM, and opkg).
 
--  *``populate_sdk_deb``:* Supports creation of the SDK given the Debian
+-  ``populate_sdk_deb``: Supports creation of the SDK given the Debian
    package manager.
 
--  *``populate_sdk_rpm``:* Supports creation of the SDK given the RPM
+-  ``populate_sdk_rpm``: Supports creation of the SDK given the RPM
    package manager.
 
--  *``populate_sdk_ipk``:* Supports creation of the SDK given the opkg
+-  ``populate_sdk_ipk``: Supports creation of the SDK given the opkg
    (IPK format) package manager.
 
--  *``populate_sdk_ext``:* Supports extensible SDK creation under all
+-  ``populate_sdk_ext``: Supports extensible SDK creation under all
    package managers.
 
 The ``populate_sdk_base`` class inherits the appropriate
@@ -1977,8 +2032,10 @@ contains the cross-compiler and associated tooling, and the target,
 which contains a target root filesystem that is configured for the SDK
 usage. These two images reside in :term:`SDK_OUTPUT`,
 which consists of the following:
-${SDK_OUTPUT}/${SDK_ARCH}-nativesdk-pkgs
-${SDK_OUTPUT}/${SDKTARGETSYSROOT}/target-pkgs
+::
+
+   ${SDK_OUTPUT}/${SDK_ARCH}-nativesdk-pkgs
+   ${SDK_OUTPUT}/${SDKTARGETSYSROOT}/target-pkgs
 
 Finally, the base populate SDK class creates the toolchain environment
 setup script, the tarball of the SDK, and the installer.
@@ -1989,13 +2046,12 @@ These classes are inherited by and used with the ``populate_sdk_base``
 class.
 
 For more information on the cross-development toolchain generation, see
-the "`Cross-Development Toolchain
-Generation <&YOCTO_DOCS_OM_URL;#cross-development-toolchain-generation>`__"
+the ":ref:`overview-manual/overview-manual-concepts:cross-development toolchain generation`"
 section in the Yocto Project Overview and Concepts Manual. For
 information on advantages gained when building a cross-development
 toolchain using the :ref:`ref-tasks-populate_sdk`
-task, see the "`Building an SDK
-Installer <&YOCTO_DOCS_SDK_URL;#sdk-building-an-sdk-installer>`__"
+task, see the
+":ref:`sdk-manual/sdk-appendix-obtain:building an sdk installer`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) manual.
 
@@ -2034,8 +2090,8 @@ The ``primport`` class provides functionality for importing
 ``prserv.bbclass``
 ==================
 
-The ``prserv`` class provides functionality for using a `PR
-service <&YOCTO_DOCS_DEV_URL;#working-with-a-pr-service>`__ in order to
+The ``prserv`` class provides functionality for using a :ref:`PR
+service <dev-manual/dev-manual-common-tasks:working with a pr service>` in order to
 automatically manage the incrementing of the :term:`PR`
 variable for each recipe.
 
@@ -2054,11 +2110,10 @@ runtime tests for recipes that build software that provides these tests.
 
 This class is intended to be inherited by individual recipes. However,
 the class' functionality is largely disabled unless "ptest" appears in
-:term:`DISTRO_FEATURES`. See the "`Testing
-Packages With
-ptest <&YOCTO_DOCS_DEV_URL;#testing-packages-with-ptest>`__" section in
-the Yocto Project Development Tasks Manual for more information on
-ptest.
+:term:`DISTRO_FEATURES`. See the
+":ref:`dev-manual/dev-manual-common-tasks:testing packages with ptest`"
+section in the Yocto Project Development Tasks Manual for more information
+on ptest.
 
 .. _ref-classes-ptest-gnome:
 
@@ -2068,10 +2123,9 @@ ptest.
 Enables package tests (ptests) specifically for GNOME packages, which
 have tests intended to be executed with ``gnome-desktop-testing``.
 
-For information on setting up and running ptests, see the "`Testing
-Packages With
-ptest <&YOCTO_DOCS_DEV_URL;#testing-packages-with-ptest>`__" section in
-the Yocto Project Development Tasks Manual.
+For information on setting up and running ptests, see the
+":ref:`dev-manual/dev-manual-common-tasks:testing packages with ptest`"
+section in the Yocto Project Development Tasks Manual.
 
 .. _ref-classes-python-dir:
 
@@ -2142,7 +2196,9 @@ absent from both the sysroot and target packages.
 
 If a recipe needs the ``.la`` files to be installed, then the recipe can
 override the removal by setting ``REMOVE_LIBTOOL_LA`` to "0" as follows:
-REMOVE_LIBTOOL_LA = "0"
+::
+
+   REMOVE_LIBTOOL_LA = "0"
 
 .. note::
 
@@ -2155,9 +2211,9 @@ REMOVE_LIBTOOL_LA = "0"
 ``report-error.bbclass``
 ========================
 
-The ``report-error`` class supports enabling the `error reporting
-tool <&YOCTO_DOCS_DEV_URL;#using-the-error-reporting-tool>`__, which
-allows you to submit build error information to a central database.
+The ``report-error`` class supports enabling the :ref:`error reporting
+tool <dev-manual/dev-manual-common-tasks:using the error reporting tool>`",
+which allows you to submit build error information to a central database.
 
 The class collects debug information for recipe, recipe version, task,
 machine, distro, build system, target system, host distro, branch,
@@ -2182,14 +2238,20 @@ preserves these files for inspection and possible debugging purposes. If
 you would rather have these files deleted to save disk space as the
 build progresses, you can enable ``rm_work`` by adding the following to
 your ``local.conf`` file, which is found in the :term:`Build Directory`.
-INHERIT += "rm_work" If you are
+::
+
+   INHERIT += "rm_work"
+
+If you are
 modifying and building source code out of the work directory for a
 recipe, enabling ``rm_work`` will potentially result in your changes to
 the source being lost. To exclude some recipes from having their work
 directories deleted by ``rm_work``, you can add the names of the recipe
 or recipes you are working on to the ``RM_WORK_EXCLUDE`` variable, which
 can also be set in your ``local.conf`` file. Here is an example:
-RM_WORK_EXCLUDE += "busybox glibc"
+::
+
+   RM_WORK_EXCLUDE += "busybox glibc"
 
 .. _ref-classes-rootfs*:
 
@@ -2219,8 +2281,7 @@ The root filesystem is created from packages using one of the
 :term:`PACKAGE_CLASSES` variable.
 
 For information on how root filesystem images are created, see the
-"`Image
-Generation <&YOCTO_DOCS_OM_URL;#image-generation-dev-environment>`__"
+:ref:`image-generation-dev-environment`"
 section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-classes-sanity:
@@ -2339,9 +2400,9 @@ The ``sstate`` class provides support for Shared State (sstate). By
 default, the class is enabled through the
 :term:`INHERIT_DISTRO` variable's default value.
 
-For more information on sstate, see the "`Shared State
-Cache <&YOCTO_DOCS_OM_URL;#shared-state-cache>`__" section in the Yocto
-Project Overview and Concepts Manual.
+For more information on sstate, see the
+":ref:`overview-manual/overview-manual-concepts:shared state cache`"
+section in the Yocto Project Overview and Concepts Manual.
 
 .. _ref-classes-staging:
 
@@ -2510,14 +2571,17 @@ You should set :term:`SYSTEMD_SERVICE` to the
 name of the service file. You should also use a package name override to
 indicate the package to which the value applies. If the value applies to
 the recipe's main package, use ``${``\ :term:`PN`\ ``}``. Here
-is an example from the connman recipe: SYSTEMD_SERVICE_${PN} =
-"connman.service" Services are set up to start on boot automatically
+is an example from the connman recipe:
+::
+
+   SYSTEMD_SERVICE_${PN} = "connman.service"
+
+Services are set up to start on boot automatically
 unless you have set
 :term:`SYSTEMD_AUTO_ENABLE` to "disable".
 
-For more information on ``systemd``, see the "`Selecting an
-Initialization
-Manager <&YOCTO_DOCS_DEV_URL;#selecting-an-initialization-manager>`__"
+For more information on ``systemd``, see the
+":ref:`dev-manual/dev-manual-common-tasks:selecting an initialization manager`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _ref-classes-systemd-boot:
@@ -2593,13 +2657,17 @@ The tests are commands that run on the target system over ``ssh``. Each
 test is written in Python and makes use of the ``unittest`` module.
 
 The ``testimage.bbclass`` runs tests on an image when called using the
-following: $ bitbake -c testimage image The ``testimage-auto`` class
+following:
+::
+
+   $ bitbake -c testimage image
+
+The ``testimage-auto`` class
 runs tests on an image after the image is constructed (i.e.
 :term:`TESTIMAGE_AUTO` must be set to "1").
 
 For information on how to enable, run, and create new tests, see the
-"`Performing Automated Runtime
-Testing <&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing>`__"
+":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _ref-classes-testsdk:
@@ -2609,7 +2677,10 @@ section in the Yocto Project Development Tasks Manual.
 
 This class supports running automated tests against software development
 kits (SDKs). The ``testsdk`` class runs tests on an SDK when called
-using the following: $ bitbake -c testsdk image
+using the following:
+::
+
+   $ bitbake -c testsdk image
 
 .. note::
 
@@ -2682,7 +2753,9 @@ The ``typecheck`` class provides support for validating the values of
 variables set at the configuration level against their defined types.
 The OpenEmbedded build system allows you to define the type of a
 variable using the "type" varflag. Here is an example:
-IMAGE_FEATURES[type] = "list"
+::
+
+   IMAGE_FEATURES[type] = "list"
 
 .. _ref-classes-uboot-config:
 
@@ -2690,11 +2763,18 @@ IMAGE_FEATURES[type] = "list"
 ========================
 
 The ``uboot-config`` class provides support for U-Boot configuration for
-a machine. Specify the machine in your recipe as follows: UBOOT_CONFIG
-??= <default> UBOOT_CONFIG[foo] = "config,images" You can also specify
-the machine using this method: UBOOT_MACHINE = "config" See the
-:term:`UBOOT_CONFIG` and
-:term:`UBOOT_MACHINE` variables for additional
+a machine. Specify the machine in your recipe as follows:
+::
+
+   UBOOT_CONFIG ??= <default>
+   UBOOT_CONFIG[foo] = "config,images"
+
+You can also specify the machine using this method:
+::
+
+   UBOOT_MACHINE = "config"
+
+See the :term:`UBOOT_CONFIG` and :term:`UBOOT_MACHINE` variables for additional
 information.
 
 .. _ref-classes-uninative:

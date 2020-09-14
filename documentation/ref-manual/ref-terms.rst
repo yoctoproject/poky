@@ -26,7 +26,12 @@ universal, the list includes them just in case:
 
       When you name an append file, you can use the "``%``" wildcard character
       to allow for matching recipe names. For example, suppose you have an
-      append file named as follows: busybox_1.21.%.bbappend That append file
+      append file named as follows:
+      ::
+      
+         busybox_1.21.%.bbappend
+
+      That append file
       would match any ``busybox_1.21.``\ x\ ``.bb`` version of the recipe. So,
       the append file would match any of the following recipe names:
 
@@ -68,11 +73,11 @@ universal, the list includes them just in case:
       examples assume your :term:`Source Directory` is named ``poky``:
 
          -  Create the Build Directory inside your Source Directory and let
-            the name of the Build Directory default to ``build``: 
+            the name of the Build Directory default to ``build``:
 
             .. code-block:: shell
 
-               $ cd $HOME/poky 
+               $ cd $HOME/poky
                $ source oe-init-build-env
 
          -  Create the Build Directory inside your home directory and
@@ -80,18 +85,18 @@ universal, the list includes them just in case:
 
             .. code-block:: shell
 
-               $ cd $HOME 
+               $ cd $HOME
                $ source poky/oe-init-build-env test-builds
 
          -  Provide a directory path and specifically name the Build
             Directory. Any intermediate folders in the pathname must exist.
             This next example creates a Build Directory named
             ``YP-POKYVERSION`` in your home directory within the existing
-            directory ``mybuilds``: 
+            directory ``mybuilds``:
 
             .. code-block:: shell
 
-               $ cd $HOME 
+               $ cd $HOME
                $ source $HOME/poky/oe-init-build-env $HOME/mybuilds/YP-POKYVERSION
 
       .. note::
@@ -349,8 +354,9 @@ universal, the list includes them just in case:
      While it is not recommended that you use tarball expansion to set up
      the Source Directory, if you do, the top-level directory name of the
      Source Directory is derived from the Yocto Project release tarball.
-     For example, downloading and unpacking ```` results in a Source
-     Directory whose root folder is named ````.
+     For example, downloading and unpacking
+     :yocto_dl:`releases/yocto/&DISTRO_REL_TAG;/&YOCTO_POKY;.tar.bz2`
+     results in a Source Directory whose root folder is named ``poky``.
 
      It is important to understand the differences between the Source
      Directory created by unpacking a released tarball as compared to
@@ -366,8 +372,8 @@ universal, the list includes them just in case:
      repository.
 
      For more information on concepts related to Git repositories,
-     branches, and tags, see the "`Repositories, Tags, and
-     Branches <&YOCTO_DOCS_OM_URL;#repositories-tags-and-branches>`__"
+     branches, and tags, see the
+     ":ref:`overview-manual/overview-manual-development-environment:repositories, tags, and branches`"
      section in the Yocto Project Overview and Concepts Manual.
 
    Task
@@ -381,7 +387,7 @@ universal, the list includes them just in case:
       The interface enables you to
       configure and run your builds. Information about builds is collected
       and stored in a database. For information on Toaster, see the
-      `Toaster User Manual <&YOCTO_DOCS_TOAST_URL;>`__.
+      :doc:`../toaster-manual/toaster-manual`.
 
    Upstream
       A reference to source code or repositories that are not

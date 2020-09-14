@@ -25,23 +25,23 @@ Distribution (Distro)
 This section lists variables whose configuration context is the
 distribution, or distro.
 
--  ``DISTRO``
+-  :term:`DISTRO`
 
--  ``DISTRO_NAME``
+-  :term:`DISTRO_NAME`
 
--  ``DISTRO_VERSION``
+-  :term:`DISTRO_VERSION`
 
--  ``MAINTAINER``
+-  :term:`MAINTAINER`
 
--  ``PACKAGE_CLASSES``
+-  :term:`PACKAGE_CLASSES`
 
--  ``TARGET_OS``
+-  :term:`TARGET_OS`
 
--  ``TARGET_FPU``
+-  :term:`TARGET_FPU`
 
--  ``TCMODE``
+-  :term:`TCMODE`
 
--  ``TCLIBC``
+-  :term:`TCLIBC`
 
 .. _ref-varlocality-config-machine:
 
@@ -50,23 +50,23 @@ Machine
 
 This section lists variables whose configuration context is the machine.
 
--  ``TARGET_ARCH``
+-  :term:`TARGET_ARCH`
 
--  ``SERIAL_CONSOLES``
+-  :term:`SERIAL_CONSOLES`
 
--  ``PACKAGE_EXTRA_ARCHS``
+-  :term:`PACKAGE_EXTRA_ARCHS`
 
--  ``IMAGE_FSTYPES``
+-  :term:`IMAGE_FSTYPES`
 
--  ``MACHINE_FEATURES``
+-  :term:`MACHINE_FEATURES`
 
--  ``MACHINE_EXTRA_RDEPENDS``
+-  :term:`MACHINE_EXTRA_RDEPENDS`
 
--  ``MACHINE_EXTRA_RRECOMMENDS``
+-  :term:`MACHINE_EXTRA_RRECOMMENDS`
 
--  ``MACHINE_ESSENTIAL_EXTRA_RDEPENDS``
+-  :term:`MACHINE_ESSENTIAL_EXTRA_RDEPENDS`
 
--  ``MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS``
+-  :term:`MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS`
 
 .. _ref-varlocality-config-local:
 
@@ -76,23 +76,23 @@ Local
 This section lists variables whose configuration context is the local
 configuration through the ``local.conf`` file.
 
--  ``DISTRO``
+-  :term:`DISTRO`
 
--  ``MACHINE``
+-  :term:`MACHINE`
 
--  ``DL_DIR``
+-  :term:`DL_DIR`
 
--  ``BBFILES``
+-  :term:`BBFILES`
 
--  ``EXTRA_IMAGE_FEATURES``
+-  :term:`EXTRA_IMAGE_FEATURES`
 
--  ``PACKAGE_CLASSES``
+-  :term:`PACKAGE_CLASSES`
 
--  ``BB_NUMBER_THREADS``
+-  :term:`BB_NUMBER_THREADS`
 
--  ``BBINCLUDELOGS``
+-  :term:`BBINCLUDELOGS`
 
--  ``ENABLE_BINARY_LOCALE_GENERATION``
+-  :term:`ENABLE_BINARY_LOCALE_GENERATION`
 
 .. _ref-varlocality-recipes:
 
@@ -109,11 +109,11 @@ Required
 
 This section lists variables that are required for recipes.
 
--  ``LICENSE``
+-  :term:`LICENSE`
 
--  ``LIC_FILES_CHKSUM``
+-  :term:`LIC_FILES_CHKSUM`
 
--  ``SRC_URI`` - used in recipes that fetch local or remote files.
+-  :term:`SRC_URI` - used in recipes that fetch local or remote files.
 
 .. _ref-varlocality-recipe-dependencies:
 
@@ -122,15 +122,15 @@ Dependencies
 
 This section lists variables that define recipe dependencies.
 
--  ``DEPENDS``
+-  :term:`DEPENDS`
 
--  ``RDEPENDS``
+-  :term:`RDEPENDS`
 
--  ``RRECOMMENDS``
+-  :term:`RRECOMMENDS`
 
--  ``RCONFLICTS``
+-  :term:`RCONFLICTS`
 
--  ``RREPLACES``
+-  :term:`RREPLACES`
 
 .. _ref-varlocality-recipe-paths:
 
@@ -139,11 +139,11 @@ Paths
 
 This section lists variables that define recipe paths.
 
--  ``WORKDIR``
+-  :term:`WORKDIR`
 
--  ``S``
+-  :term:`S`
 
--  ``FILES``
+-  :term:`FILES`
 
 .. _ref-varlocality-recipe-build:
 
@@ -153,14 +153,14 @@ Extra Build Information
 This section lists variables that define extra build information for
 recipes.
 
--  ``DEFAULT_PREFERENCE``
+-  :term:`DEFAULT_PREFERENCE`
 
--  ``EXTRA_OECMAKE``
+-  :term:`EXTRA_OECMAKE`
 
--  ``EXTRA_OECONF``
+-  :term:`EXTRA_OECONF`
 
--  ``EXTRA_OEMAKE``
+-  :term:`EXTRA_OEMAKE`
 
--  ``PACKAGECONFIG_CONFARGS``
+-  :term:`PACKAGECONFIG_CONFARGS`
 
--  ``PACKAGES``
+-  :term:`PACKAGES`

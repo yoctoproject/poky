@@ -15,7 +15,9 @@ Some considerations are not tied to a specific Yocto Project release.
 This section presents information you should consider when migrating to
 any new Yocto Project release.
 
--  *Dealing with Customized Recipes*: Issues could arise if you take
+-  *Dealing with Customized Recipes*:
+
+   Issues could arise if you take
    older recipes that contain customizations and simply copy them
    forward expecting them to work after you migrate to new Yocto Project
    metadata. For example, suppose you have a recipe in your layer that
@@ -39,7 +41,9 @@ any new Yocto Project release.
    use an append file. A good example of this is when introducing a
    newer or older version of a recipe in another layer.
 
--  *Updating Append Files*: Since append files generally only contain
+-  *Updating Append Files*:
+
+   Since append files generally only contain
    your customizations, they often do not need to be adjusted for new
    releases. However, if the ``.bbappend`` file is specific to a
    particular version of the recipe (i.e. its name does not use the %
@@ -85,8 +89,9 @@ location (either local or remote) and then point to it in
 :term:`SSTATE_MIRRORS`, you need to append "PATH"
 to the end of the mirror URL so that the path used by BitBake before the
 mirror substitution is appended to the path used to access the mirror.
-Here is an example: SSTATE_MIRRORS = "file://.\*
-http://someserver.tld/share/sstate/PATH"
+Here is an example: ::
+
+   SSTATE_MIRRORS = "file://.* http://someserver.tld/share/sstate/PATH"
 
 .. _migration-1.3-bblayers-conf:
 
@@ -106,18 +111,6 @@ Recipes
 -------
 
 Differences include changes for the following:
-
--  Python function whitespace
-
--  ``proto=`` in ``SRC_URI``
-
--  ``nativesdk``
-
--  Task recipes
-
--  ``IMAGE_FEATURES``
-
--  Removed recipes
 
 .. _migration-1.3-python-function-whitespace:
 
@@ -205,26 +198,26 @@ unlikely that you would have any references to them in your own
 :term:`Metadata`. However, you should check your metadata
 against this list to be sure:
 
--  *``libx11-trim``*: Replaced by ``libx11``, which has a negligible
+-  ``libx11-trim``: Replaced by ``libx11``, which has a negligible
    size difference with modern Xorg.
 
--  *``xserver-xorg-lite``*: Use ``xserver-xorg``, which has a negligible
+-  ``xserver-xorg-lite``: Use ``xserver-xorg``, which has a negligible
    size difference when DRI and GLX modules are not installed.
 
--  *``xserver-kdrive``*: Effectively unmaintained for many years.
+-  ``xserver-kdrive``: Effectively unmaintained for many years.
 
--  *``mesa-xlib``*: No longer serves any purpose.
+-  ``mesa-xlib``: No longer serves any purpose.
 
--  *``galago``*: Replaced by telepathy.
+-  ``galago``: Replaced by telepathy.
 
--  *``gail``*: Functionality was integrated into GTK+ 2.13.
+-  ``gail``: Functionality was integrated into GTK+ 2.13.
 
--  *``eggdbus``*: No longer needed.
+-  ``eggdbus``: No longer needed.
 
--  *``gcc-*-intermediate``*: The build has been restructured to avoid
+-  ``gcc-*-intermediate``: The build has been restructured to avoid
    the need for this step.
 
--  *``libgsmd``*: Unmaintained for many years. Functionality now
+-  ``libgsmd``: Unmaintained for many years. Functionality now
    provided by ``ofono`` instead.
 
 -  *contacts, dates, tasks, eds-tools*: Largely unmaintained PIM
@@ -238,8 +231,9 @@ recipes were not parsed in the default configuration. Many of these
 recipes are already provided in an updated and maintained form within
 the OpenEmbedded community layers such as ``meta-oe`` and
 ``meta-gnome``. For the remainder, you can now find them in the
-``meta-extras`` repository, which is in the Yocto Project `Source
-Repositories <&YOCTO_DOCS_OM_URL;#source-repositories>`__.
+``meta-extras`` repository, which is in the
+:yocto_git:`Source Repositories <>` at
+http://git.yoctoproject.org/cgit/cgit.cgi/meta-extras/.
 
 .. _1.3-linux-kernel-naming:
 
@@ -248,13 +242,15 @@ Linux Kernel Naming
 
 The naming scheme for kernel output binaries has been changed to now
 include :term:`PE` as part of the filename:
-KERNEL_IMAGE_BASE_NAME ?=
-"${KERNEL_IMAGETYPE}-${PE}-${PV}-${PR}-${MACHINE}-${DATETIME}"
+::
+
+   KERNEL_IMAGE_BASE_NAME ?= "${KERNEL_IMAGETYPE}-${PE}-${PV}-${PR}-${MACHINE}-${DATETIME}"
 
 Because the ``PE`` variable is not set by default, these binary files
 could result with names that include two dash characters. Here is an
-example:
-bzImage--3.10.9+git0+cd502a8814_7144bcc4b8-r0-qemux86-64-20130830085431.bin
+example: ::
+
+   bzImage--3.10.9+git0+cd502a8814_7144bcc4b8-r0-qemux86-64-20130830085431.bin
 
 Moving to the Yocto Project 1.4 Release
 =======================================
@@ -298,8 +294,12 @@ Differences include the following:
 
 -  *Shared State Code:* The shared state code has been optimized to
    avoid running unnecessary tasks. For example, the following no longer
-   populates the target sysroot since that is not necessary: $ bitbake
-   -c rootfs some-image Instead, the system just needs to extract the
+   populates the target sysroot since that is not necessary:
+   ::
+
+      $ bitbake -c rootfs some-image
+
+   Instead, the system just needs to extract the
    output package contents, re-create the packages, and construct the
    root filesystem. This change is unlikely to cause any problems unless
    you have missing declared dependencies.
@@ -337,9 +337,9 @@ creating an append file for the ``netbase`` recipe, you now need to
 create an append file for the ``init-ifupdown`` recipe instead, which
 you can find in the :term:`Source Directory` at
 ``meta/recipes-core/init-ifupdown``. For information on how to use
-append files, see the "`Using .bbappend
-Files <&YOCTO_DOCS_DEV_URL;#using-bbappend-files>`__" section in the
-Yocto Project Development Tasks Manual.
+append files, see the
+":ref:`dev-manual/dev-manual-common-tasks:using .bbappend files in your layer`"
+section in the Yocto Project Development Tasks Manual.
 
 .. _migration-1.4-remote-debugging:
 
@@ -360,7 +360,7 @@ Variables
 
 The following variables have changed:
 
--  *``SANITY_TESTED_DISTROS``:* This variable now uses a distribution
+-  ``SANITY_TESTED_DISTROS``: This variable now uses a distribution
    ID, which is composed of the host distributor ID followed by the
    release. Previously,
    :term:`SANITY_TESTED_DISTROS` was
@@ -369,7 +369,7 @@ The following variables have changed:
    you are not specifically setting this variable, or if you are
    specifically setting it to "".
 
--  *``SRC_URI``:* The ``${``\ :term:`PN`\ ``}``,
+-  ``SRC_URI``: The ``${``\ :term:`PN`\ ``}``,
    ``${``\ :term:`PF`\ ``}``,
    ``${``\ :term:`P`\ ``}``, and ``FILE_DIRNAME`` directories
    have been dropped from the default value of the
@@ -390,7 +390,10 @@ Target Package Management with RPM
 If runtime package management is enabled and the RPM backend is
 selected, Smart is now installed for package download, dependency
 resolution, and upgrades instead of Zypper. For more information on how
-to use Smart, run the following command on the target: smart --help
+to use Smart, run the following command on the target:
+::
+
+   smart --help
 
 .. _migration-1.4-recipes-moved:
 
@@ -400,29 +403,29 @@ Recipes Moved
 The following recipes were moved from their previous locations because
 they are no longer used by anything in the OpenEmbedded-Core:
 
--  *``clutter-box2d``:* Now resides in the ``meta-oe`` layer.
+-  ``clutter-box2d``: Now resides in the ``meta-oe`` layer.
 
--  *``evolution-data-server``:* Now resides in the ``meta-gnome`` layer.
+-  ``evolution-data-server``: Now resides in the ``meta-gnome`` layer.
 
--  *``gthumb``:* Now resides in the ``meta-gnome`` layer.
+-  ``gthumb``: Now resides in the ``meta-gnome`` layer.
 
--  *``gtkhtml2``:* Now resides in the ``meta-oe`` layer.
+-  ``gtkhtml2``: Now resides in the ``meta-oe`` layer.
 
--  *``gupnp``:* Now resides in the ``meta-multimedia`` layer.
+-  ``gupnp``: Now resides in the ``meta-multimedia`` layer.
 
--  *``gypsy``:* Now resides in the ``meta-oe`` layer.
+-  ``gypsy``: Now resides in the ``meta-oe`` layer.
 
--  *``libcanberra``:* Now resides in the ``meta-gnome`` layer.
+-  ``libcanberra``: Now resides in the ``meta-gnome`` layer.
 
--  *``libgdata``:* Now resides in the ``meta-gnome`` layer.
+-  ``libgdata``: Now resides in the ``meta-gnome`` layer.
 
--  *``libmusicbrainz``:* Now resides in the ``meta-multimedia`` layer.
+-  ``libmusicbrainz``: Now resides in the ``meta-multimedia`` layer.
 
--  *``metacity``:* Now resides in the ``meta-gnome`` layer.
+-  ``metacity``: Now resides in the ``meta-gnome`` layer.
 
--  *``polkit``:* Now resides in the ``meta-oe`` layer.
+-  ``polkit``: Now resides in the ``meta-oe`` layer.
 
--  *``zeroconf``:* Now resides in the ``meta-networking`` layer.
+-  ``zeroconf``: Now resides in the ``meta-networking`` layer.
 
 .. _migration-1.4-removals-and-renames:
 
@@ -431,58 +434,58 @@ Removals and Renames
 
 The following list shows what has been removed or renamed:
 
--  *``evieext``:* Removed because it has been removed from ``xserver``
+-  ``evieext``: Removed because it has been removed from ``xserver``
    since 2008.
 
 -  *Gtk+ DirectFB:* Removed support because upstream Gtk+ no longer
    supports it as of version 2.18.
 
--  *``libxfontcache / xfontcacheproto``:* Removed because they were
+-  ``libxfontcache / xfontcacheproto``: Removed because they were
    removed from the Xorg server in 2008.
 
--  *``libxp / libxprintapputil / libxprintutil / printproto``:* Removed
+-  ``libxp / libxprintapputil / libxprintutil / printproto``: Removed
    because the XPrint server was removed from Xorg in 2008.
 
--  *``libxtrap / xtrapproto``:* Removed because their functionality was
+-  ``libxtrap / xtrapproto``: Removed because their functionality was
    broken upstream.
 
 -  *linux-yocto 3.0 kernel:* Removed with linux-yocto 3.8 kernel being
    added. The linux-yocto 3.2 and linux-yocto 3.4 kernels remain as part
    of the release.
 
--  *``lsbsetup``:* Removed with functionality now provided by
+-  ``lsbsetup``: Removed with functionality now provided by
    ``lsbtest``.
 
--  *``matchbox-stroke``:* Removed because it was never more than a
+-  ``matchbox-stroke``: Removed because it was never more than a
    proof-of-concept.
 
--  *``matchbox-wm-2 / matchbox-theme-sato-2``:* Removed because they are
+-  ``matchbox-wm-2 / matchbox-theme-sato-2``: Removed because they are
    not maintained. However, ``matchbox-wm`` and ``matchbox-theme-sato``
    are still provided.
 
--  *``mesa-dri``:* Renamed to ``mesa``.
+-  ``mesa-dri``: Renamed to ``mesa``.
 
--  *``mesa-xlib``:* Removed because it was no longer useful.
+-  ``mesa-xlib``: Removed because it was no longer useful.
 
--  *``mutter``:* Removed because nothing ever uses it and the recipe is
+-  ``mutter``: Removed because nothing ever uses it and the recipe is
    very old.
 
--  *``orinoco-conf``:* Removed because it has become obsolete.
+-  ``orinoco-conf``: Removed because it has become obsolete.
 
--  *``update-modules``:* Removed because it is no longer used. The
+-  ``update-modules``: Removed because it is no longer used. The
    kernel module ``postinstall`` and ``postrm`` scripts can now do the
    same task without the use of this script.
 
--  *``web``:* Removed because it is not maintained. Superseded by
+-  ``web``: Removed because it is not maintained. Superseded by
    ``web-webkit``.
 
--  *``xf86bigfontproto``:* Removed because upstream it has been disabled
+-  ``xf86bigfontproto``: Removed because upstream it has been disabled
    by default since 2007. Nothing uses ``xf86bigfontproto``.
 
--  *``xf86rushproto``:* Removed because its dependency in ``xserver``
+-  ``xf86rushproto``: Removed because its dependency in ``xserver``
    was spurious and it was removed in 2005.
 
--  *``zypper / libzypp / sat-solver``:* Removed and been functionally
+-  ``zypper / libzypp / sat-solver``: Removed and been functionally
    replaced with Smart (``python-smartpm``) when RPM packaging is used
    and package management is enabled on the target.
 
@@ -735,8 +738,7 @@ A new automated image testing framework has been added through the
 framework replaces the older ``imagetest-qemu`` framework.
 
 You can learn more about performing automated image tests in the
-"`Performing Automated Runtime
-Testing <&YOCTO_DOCS_DEV_URL;#performing-automated-runtime-testing>`__"
+":ref:`dev-manual/dev-manual-common-tasks:performing automated runtime testing`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _migration-1.5-build-history:
@@ -758,9 +760,8 @@ Following are changes to Build History:
    utilities have improved command-line handling. Use the ``--help``
    option for each utility for more information on the new syntax.
 
-For more information on Build History, see the "`Maintaining Build
-Output
-Quality <&YOCTO_DOCS_DEV_URL;#maintaining-build-output-quality>`__"
+For more information on Build History, see the
+":ref:`dev-manual/dev-manual-common-tasks:maintaining build output quality`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _migration-1.5-udev:
@@ -836,7 +837,7 @@ Following is a list of short entries describing other changes:
 
 -  ``image.bbclass``: Move ``runtime_mapping_rename`` to avoid conflict
    with ``multilib``. See
-   ```YOCTO #4993`https://bugzilla.yoctoproject.org/show_bug.cgi?id=4993
+   `YOCTO #4993 <https://bugzilla.yoctoproject.org/show_bug.cgi?id=4993>`_
    in Bugzilla for more information.
 
 -  ``linux-dtb``: Use kernel build system to generate the ``dtb`` files.
@@ -856,9 +857,8 @@ Project 1.6 Release from the prior release.
 
 The :ref:`archiver <ref-classes-archiver>` class has been rewritten
 and its configuration has been simplified. For more details on the
-source archiver, see the "`Maintaining Open Source License Compliance
-During Your Product's
-Lifecycle <&YOCTO_DOCS_DEV_URL;#maintaining-open-source-license-compliance-during-your-products-lifecycle>`__"
+source archiver, see the
+":ref:`dev-manual/dev-manual-common-tasks:maintaining open source license compliance during your product's lifecycle`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _migration-1.6-packaging-changes:
@@ -992,9 +992,8 @@ NFS mount, an error occurs.
 The ``PRINC`` variable has been deprecated and triggers a warning if
 detected during a build. For :term:`PR` increments on changes,
 use the PR service instead. You can find out more about this service in
-the "`Working With a PR
-Service <&YOCTO_DOCS_DEV_URL;#working-with-a-pr-service>`__" section in
-the Yocto Project Development Tasks Manual.
+the ":ref:`dev-manual/dev-manual-common-tasks:working with a pr service`"
+section in the Yocto Project Development Tasks Manual.
 
 .. _migration-1.6-variable-changes-IMAGE_TYPES:
 
@@ -1039,19 +1038,25 @@ Preprocess and Post Process Command Variable Behavior
 
 The following variables now expect a semicolon separated list of
 functions to call and not arbitrary shell commands:
-:term:`ROOTFS_PREPROCESS_COMMAND`
-:term:`ROOTFS_POSTPROCESS_COMMAND`
-:term:`SDK_POSTPROCESS_COMMAND`
-:term:`POPULATE_SDK_POST_TARGET_COMMAND`
-:term:`POPULATE_SDK_POST_HOST_COMMAND`
-:term:`IMAGE_POSTPROCESS_COMMAND`
-:term:`IMAGE_PREPROCESS_COMMAND`
-:term:`ROOTFS_POSTUNINSTALL_COMMAND`
-:term:`ROOTFS_POSTINSTALL_COMMAND` For
+
+  - :term:`ROOTFS_PREPROCESS_COMMAND`
+  - :term:`ROOTFS_POSTPROCESS_COMMAND`
+  - :term:`SDK_POSTPROCESS_COMMAND`
+  - :term:`POPULATE_SDK_POST_TARGET_COMMAND`
+  - :term:`POPULATE_SDK_POST_HOST_COMMAND`
+  - :term:`IMAGE_POSTPROCESS_COMMAND`
+  - :term:`IMAGE_PREPROCESS_COMMAND`
+  - :term:`ROOTFS_POSTUNINSTALL_COMMAND`
+  - :term:`ROOTFS_POSTINSTALL_COMMAND`
+
+For
 migration purposes, you can simply wrap shell commands in a shell
-function and then call the function. Here is an example:
-my_postprocess_function() { echo "hello" > ${IMAGE_ROOTFS}/hello.txt }
-ROOTFS_POSTPROCESS_COMMAND += "my_postprocess_function; "
+function and then call the function. Here is an example: ::
+
+   my_postprocess_function() {
+      echo "hello" > ${IMAGE_ROOTFS}/hello.txt
+   }
+   ROOTFS_POSTPROCESS_COMMAND += "my_postprocess_function; "
 
 .. _migration-1.6-package-test-ptest:
 
@@ -1059,9 +1064,9 @@ Package Test (ptest)
 --------------------
 
 Package Tests (ptest) are built but not installed by default. For
-information on using Package Tests, see the "`Testing Packages with
-ptest <&YOCTO_DOCS_DEV_URL;#testing-packages-with-ptest>`__" section in
-the Yocto Project Development Tasks Manual. For information on the
+information on using Package Tests, see the
+":ref:`dev-manual/dev-manual-common-tasks:testing packages with ptest`"
+section in the Yocto Project Development Tasks Manual. For information on the
 ``ptest`` class, see the ":ref:`ptest.bbclass <ref-classes-ptest>`"
 section.
 
@@ -1087,8 +1092,11 @@ the ``autotools`` or ``autotools_stage``\ classes.
 
 ``qemu-native`` now builds without SDL-based graphical output support by
 default. The following additional lines are needed in your
-``local.conf`` to enable it: PACKAGECONFIG_pn-qemu-native = "sdl"
-ASSUME_PROVIDED += "libsdl-native"
+``local.conf`` to enable it:
+::
+
+   PACKAGECONFIG_pn-qemu-native = "sdl"
+   ASSUME_PROVIDED += "libsdl-native"
 
 .. note::
 
@@ -1270,15 +1278,18 @@ means that existing ``local.conf`` files will need to be be modified to
 append to ``PACKAGECONFIG`` for ``qemu-native`` and ``nativesdk-qemu``
 instead of setting it. In other words, to enable graphical output for
 QEMU, you should now have these lines in ``local.conf``:
-PACKAGECONFIG_append_pn-qemu-native = " sdl"
-PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
+::
+
+   PACKAGECONFIG_append_pn-qemu-native = " sdl"
+   PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
 
 .. _migration-1.7-minimum-git-version:
 
 Minimum Git version
 -------------------
 
-The minimum `Git <&YOCTO_DOCS_OM_URL;#git>`__ version required on the
+The minimum :ref:`overview-manual/overview-manual-development-environment:git`
+version required on the
 build host is now 1.7.8 because the ``--list`` option is now required by
 BitBake's Git fetcher. As always, if your host distribution does not
 provide a version of Git that meets this requirement, you can use the
@@ -1308,8 +1319,8 @@ occurred:
    the :ref:`autotools-brokensep <ref-classes-autotools>` class
    instead of the ``autotools`` or ``autotools_stage`` classes.
 
--  *The ``--foreign`` option is no longer passed to ``automake`` when
-   running ``autoconf``:* This option tells ``automake`` that a
+-  The ``--foreign`` option is no longer passed to ``automake`` when
+   running ``autoconf``: This option tells ``automake`` that a
    particular software package does not follow the GNU standards and
    therefore should not be expected to distribute certain files such as
    ``ChangeLog``, ``AUTHORS``, and so forth. Because the majority of
@@ -1331,15 +1342,31 @@ disable the scripts due to the scripts previously requiring error-prone
 path substitution. Software that links against these libraries using
 these scripts should use the much more robust ``pkg-config`` instead.
 The list of recipes changed in this version (and their configuration
-scripts) is as follows: directfb (directfb-config) freetype
-(freetype-config) gpgme (gpgme-config) libassuan (libassuan-config)
-libcroco (croco-6.0-config) libgcrypt (libgcrypt-config) libgpg-error
-(gpg-error-config) libksba (ksba-config) libpcap (pcap-config) libpcre
-(pcre-config) libpng (libpng-config, libpng16-config) libsdl
-(sdl-config) libusb-compat (libusb-config) libxml2 (xml2-config) libxslt
-(xslt-config) ncurses (ncurses-config) neon (neon-config) npth
-(npth-config) pth (pth-config) taglib (taglib-config) Additionally,
-support for ``pkg-config`` has been added to some recipes in the
+scripts) is as follows:
+::
+
+   directfb (directfb-config)
+   freetype (freetype-config)
+   gpgme (gpgme-config)
+   libassuan (libassuan-config)
+   libcroco (croco-6.0-config)
+   libgcrypt (libgcrypt-config)
+   libgpg-error (gpg-error-config)
+   libksba (ksba-config)
+   libpcap (pcap-config)
+   libpcre (pcre-config)
+   libpng (libpng-config, libpng16-config)
+   libsdl (sdl-config)
+   libusb-compat (libusb-config)
+   libxml2 (xml2-config)
+   libxslt (xslt-config)
+   ncurses (ncurses-config)
+   neon (neon-config)
+   npth (npth-config)
+   pth (pth-config)
+   taglib (taglib-config)
+
+Additionally, support for ``pkg-config`` has been added to some recipes in the
 previous list in the rare cases where the upstream software package does
 not already provide it.
 
@@ -1453,8 +1480,8 @@ The following miscellaneous change occurred:
    build header as printed by BitBake upon starting the build. You
    should manually remove old "build-id" files from your existing build
    history repositories to avoid confusion. For information on the build
-   history feature, see the "`Maintaining Build Output
-   Quality <&YOCTO_DOCS_DEV_URL;#maintaining-build-output-quality>`__"
+   history feature, see the
+   ":ref:`dev-manual/dev-manual-common-tasks:maintaining build output quality`"
    section in the Yocto Project Development Tasks Manual.
 
 Moving to the Yocto Project 1.8 Release
@@ -1515,11 +1542,12 @@ you can now remove them.
 Additionally, a ``bluetooth`` class has been added to make selection of
 the appropriate bluetooth support within a recipe a little easier. If
 you wish to make use of this class in a recipe, add something such as
-the following: inherit bluetooth PACKAGECONFIG ??=
-"${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', '${BLUEZ}', '',
-d)}" PACKAGECONFIG[bluez4] =
-"--enable-bluetooth,--disable-bluetooth,bluez4" PACKAGECONFIG[bluez5] =
-"--enable-bluez5,--disable-bluez5,bluez5"
+the following: ::
+
+   inherit bluetooth
+   PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', '${BLUEZ}', '', d)}"
+   PACKAGECONFIG[bluez4] = "--enable-bluetooth,--disable-bluetooth,bluez4"
+   PACKAGECONFIG[bluez5] = "--enable-bluez5,--disable-bluez5,bluez5"
 
 .. _migration-1.8-kernel-build-changes:
 
@@ -1542,8 +1570,9 @@ where the ``linux.inc`` file in ``meta-oe`` was updated.
 
 Recipes that rely on the kernel source code and do not inherit the
 module classes might need to add explicit dependencies on the
-``do_shared_workdir`` kernel task, for example: do_configure[depends] +=
-"virtual/kernel:do_shared_workdir"
+``do_shared_workdir`` kernel task, for example: ::
+
+   do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 .. _migration-1.8-ssl:
 
@@ -1588,8 +1617,9 @@ One of the improvements is to attempt to run "make clean" during the
 ``do_configure`` task if a ``Makefile`` exists. Some software packages
 do not provide a working clean target within their make files. If you
 have such recipes, you need to set
-:term:`CLEANBROKEN` to "1" within the recipe, for
-example: CLEANBROKEN = "1"
+:term:`CLEANBROKEN` to "1" within the recipe, for example: ::
+
+   CLEANBROKEN = "1"
 
 .. _migration-1.8-qa-check-and-validation-changes:
 
@@ -1663,7 +1693,10 @@ and the porting guide at
 https://gcc.gnu.org/gcc-5/porting_to.html.
 
 Alternatively, you can switch back to GCC 4.9 or 4.8 by setting
-``GCCVERSION`` in your configuration, as follows: GCCVERSION = "4.9%"
+``GCCVERSION`` in your configuration, as follows:
+::
+
+   GCCVERSION = "4.9%"
 
 .. _migration-2.0-Gstreamer-0.10-removed:
 
@@ -1726,7 +1759,10 @@ unlikely to require any changes to Metadata. However, these minor
 changes in behavior exist:
 
 -  All potential overrides are now visible in the variable history as
-   seen when you run the following: $ bitbake -e
+   seen when you run the following:
+   ::
+
+      $ bitbake -e
 
 -  ``d.delVar('``\ VARNAME\ ``')`` and
    ``d.setVar('``\ VARNAME\ ``', None)`` result in the variable and all
@@ -1833,7 +1869,9 @@ changes.
 Additionally, work directories for old versions of recipes are now
 pruned. If you wish to disable pruning old work directories, you can set
 the following variable in your configuration:
-SSTATE_PRUNE_OBSOLETEWORKDIR = "0"
+::
+
+   SSTATE_PRUNE_OBSOLETEWORKDIR = "0"
 
 .. _migration-2.0-linux-yocto-kernel-metadata-repository-now-split-from-source:
 
@@ -1952,9 +1990,11 @@ defaulted to False if not specified. Now, however, no default exists so
 one must be specified. You must change any ``getVar()`` calls that do
 not specify the final expand parameter to calls that do specify the
 parameter. You can run the following ``sed`` command at the base of a
-layer to make this change: sed -e 's:\(\.getVar([^,()]*\)):\1, False):g'
--i \`grep -ril getVar \*\` sed -e 's:\(\.getVarFlag([^,()]*,
-[^,()]*\)):\1, False):g' -i \`grep -ril getVarFlag \*\`
+layer to make this change:
+::
+
+   sed -e 's:\(\.getVar([^,()]*\)):\1, False):g' -i `grep -ril getVar *`
+   sed -e 's:\(\.getVarFlag([^,()]*,[^,()]*\)):\1, False):g' -i `grep -ril getVarFlag *`
 
 .. note::
 
@@ -2124,8 +2164,8 @@ The following changes have been made to the build system user interface:
 
 -  *Hob GTK+-based UI*: Removed because it is unmaintained and based on
    the outdated GTK+ 2 library. The Toaster web-based UI is much more
-   capable and is actively maintained. See the "`Using the Toaster Web
-   Interface <&YOCTO_DOCS_TOAST_URL;#using-the-toaster-web-interface>`__"
+   capable and is actively maintained. See the
+   ":ref:`toaster-manual/toaster-manual-setup-and-use:using the toaster web interface`"
    section in the Toaster User Manual for more information on this
    interface.
 
@@ -2138,12 +2178,11 @@ ADT Removed
 -----------
 
 The Application Development Toolkit (ADT) has been removed because its
-functionality almost completely overlapped with the `standard
-SDK <&YOCTO_DOCS_SDK_URL;#sdk-using-the-standard-sdk>`__ and the
-`extensible SDK <&YOCTO_DOCS_SDK_URL;#sdk-extensible>`__. For
-information on these SDKs and how to build and use them, see the `Yocto
-Project Application Development and the Extensible Software Development
-Kit (eSDK) <&YOCTO_DOCS_SDK_URL;>`__ manual.
+functionality almost completely overlapped with the :ref:`standard
+SDK <sdk-manual/sdk-using:using the standard sdk>` and the
+:ref:`extensible SDK <sdk-manual/sdk-extensible:using the extensible sdk>`. For
+information on these SDKs and how to build and use them, see the
+:doc:`../sdk-manual/sdk-manual` manual.
 
 .. note::
 
@@ -2253,8 +2292,7 @@ This release supports generation of GLib Introspective Repository (GIR)
 files through GObject introspection, which is the standard mechanism for
 accessing GObject-based software from runtime environments. You can
 enable, disable, and test the generation of this data. See the
-"`Enabling GObject Introspection
-Support <&YOCTO_DOCS_DEV_URL;#enabling-gobject-introspection-support>`__"
+":ref:`dev-manual/dev-manual-common-tasks:enabling gobject introspection support`"
 section in the Yocto Project Development Tasks Manual for more
 information.
 
@@ -2279,7 +2317,14 @@ These additional changes exist:
 -  Previously, the following list of packages were removed if
    package-management was not in
    :term:`IMAGE_FEATURES`, regardless of any
-   dependencies: update-rc.d base-passwd shadow update-alternatives
+   dependencies:
+   ::
+
+      update-rc.d
+      base-passwd
+      shadow
+      update-alternatives
+
    run-postinsts With the Yocto Project 2.1 release, these packages are
    only removed if "read-only-rootfs" is in ``IMAGE_FEATURES``, since
    they might still be needed for a read-write image even in the absence
@@ -2287,7 +2332,7 @@ These additional changes exist:
    removed at runtime).
 
 -  The
-   ```devtool modify`` <&YOCTO_DOCS_SDK_URL;#sdk-devtool-use-devtool-modify-to-modify-the-source-of-an-existing-component>`__
+   :ref:`devtool modify <sdk-manual/sdk-extensible:use \`\`devtool modify\`\` to modify the source of an existing component>`
    command now defaults to extracting the source since that is most
    commonly expected. The "-x" or "--extract" options are now no-ops. If
    you wish to provide your own existing source tree, you will now need
@@ -2409,10 +2454,15 @@ The metadata is now required to use Python 3 syntax. For help preparing
 metadata, see any of the many Python 3 porting guides available.
 Alternatively, you can reference the conversion commits for Bitbake and
 you can use :term:`OpenEmbedded-Core (OE-Core)` as a guide for changes. Following are
-particular areas of interest: \* subprocess command-line pipes needing
-locale decoding \* the syntax for octal values changed \* the
-``iter*()`` functions changed name \* iterators now return views, not
-lists \* changed names for Python modules
+particular areas of interest:
+
+  - subprocess command-line pipes needing locale decoding
+
+  - the syntax for octal values changed
+
+  - the ``iter*()`` functions changed name \* iterators now return views, not lists
+
+  - changed names for Python modules
 
 .. _migration-2.2-target-python-recipes-switched-to-python-3:
 
@@ -2474,7 +2524,12 @@ The new ``runqemu`` is a Python script. Machine knowledge is no longer
 hardcoded into ``runqemu``. You can choose to use the ``qemuboot``
 configuration file to define the BSP's own arguments and to make it
 bootable with ``runqemu``. If you use a configuration file, use the
-following form: image-name-machine.qemuboot.conf The configuration file
+following form:
+::
+
+   image-name-machine.qemuboot.conf
+
+The configuration file
 enables fine-grained tuning of options passed to QEMU without the
 ``runqemu`` script hard-coding any knowledge about different machines.
 Using a configuration file is particularly convenient when trying to use
@@ -2485,14 +2540,28 @@ rootfs). QEMU boot arguments can be set in BSP's configuration file and
 the ``qemuboot`` class will save them to ``qemuboot.conf``.
 
 If you want to use ``runqemu`` without a configuration file, use the
-following command form: $ runqemu machine rootfs kernel [options]
-Supported machines are as follows: qemuarm qemuarm64 qemux86 qemux86-64
-qemuppc qemumips qemumips64 qemumipsel qemumips64el Consider the
+following command form:
+::
+
+   $ runqemu machine rootfs kernel [options]
+
+Supported machines are as follows:
+
+  - qemuarm
+  - qemuarm64
+  - qemux86
+  - qemux86-64
+  - qemuppc
+  - qemumips
+  - qemumips64
+  - qemumipsel
+  - qemumips64el
+
+Consider the
 following example, which uses the ``qemux86-64`` machine, provides a
-root filesystem, provides an image, and uses the ``nographic`` option: $
-runqemu qemux86-64
-tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.ext4
-tmp/deploy/images/qemux86-64/bzImage nographic
+root filesystem, provides an image, and uses the ``nographic`` option: ::
+
+   $ runqemu qemux86-64 tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.ext4 tmp/deploy/images/qemux86-64/bzImage nographic
 
 Following is a list of variables that can be set in configuration files
 such as ``bsp.conf`` to enable the BSP to be booted by ``runqemu``:
@@ -2501,31 +2570,35 @@ such as ``bsp.conf`` to enable the BSP to be booted by ``runqemu``:
 
    "QB" means "QEMU Boot".
 
-QB_SYSTEM_NAME: QEMU name (e.g. "qemu-system-i386") QB_OPT_APPEND:
-Options to append to QEMU (e.g. "-show-cursor") QB_DEFAULT_KERNEL:
-Default kernel to boot (e.g. "bzImage") QB_DEFAULT_FSTYPE: Default
-FSTYPE to boot (e.g. "ext4") QB_MEM: Memory (e.g. "-m 512") QB_MACHINE:
-QEMU machine (e.g. "-machine virt") QB_CPU: QEMU cpu (e.g. "-cpu
-qemu32") QB_CPU_KVM: Similar to QB_CPU except used for kvm support (e.g.
-"-cpu kvm64") QB_KERNEL_CMDLINE_APPEND: Options to append to the
-kernel's -append option (e.g. "console=ttyS0 console=tty") QB_DTB: QEMU
-dtb name QB_AUDIO_DRV: QEMU audio driver (e.g. "alsa", set it when
-support audio) QB_AUDIO_OPT: QEMU audio option (e.g. "-soundhw
-ac97,es1370"), which is used when QB_AUDIO_DRV is set. QB_KERNEL_ROOT:
-Kernel's root (e.g. /dev/vda) QB_TAP_OPT: Network option for 'tap' mode
-(e.g. "-netdev tap,id=net0,ifname=@TAP@,script=no,downscript=no -device
-virtio-net-device,netdev=net0"). runqemu will replace "@TAP@" with the
-one that is used, such as tap0, tap1 ... QB_SLIRP_OPT: Network option
-for SLIRP mode (e.g. "-netdev user,id=net0 -device
-virtio-net-device,netdev=net0") QB_ROOTFS_OPT: Used as rootfs (e.g.
-"-drive id=disk0,file=@ROOTFS@,if=none,format=raw -device
-virtio-blk-device,drive=disk0"). runqemu will replace "@ROOTFS@" with
-the one which is used, such as core-image-minimal-qemuarm64.ext4.
-QB_SERIAL_OPT: Serial port (e.g. "-serial mon:stdio") QB_TCPSERIAL_OPT:
-tcp serial port option (e.g. " -device virtio-serial-device -chardev
-socket,id=virtcon,port=@PORT@,host=127.0.0.1 -device
-virtconsole,chardev=virtcon" runqemu will replace "@PORT@" with the port
-number which is used.
+::
+
+   QB_SYSTEM_NAME: QEMU name (e.g. "qemu-system-i386")
+   QB_OPT_APPEND: Options to append to QEMU (e.g. "-show-cursor")
+   QB_DEFAULT_KERNEL: Default kernel to boot (e.g. "bzImage")
+   QB_DEFAULT_FSTYPE: Default FSTYPE to boot (e.g. "ext4")
+   QB_MEM: Memory (e.g. "-m 512")
+   QB_MACHINE: QEMU machine (e.g. "-machine virt")
+   QB_CPU: QEMU cpu (e.g. "-cpu qemu32")
+   QB_CPU_KVM: Similar to QB_CPU except used for kvm support (e.g. "-cpu kvm64")
+   QB_KERNEL_CMDLINE_APPEND: Options to append to the kernel's -append
+                             option (e.g. "console=ttyS0 console=tty")
+   QB_DTB: QEMU dtb name
+   QB_AUDIO_DRV: QEMU audio driver (e.g. "alsa", set it when support audio)
+   QB_AUDIO_OPT: QEMU audio option (e.g. "-soundhw ac97,es1370"), which is used
+                 when QB_AUDIO_DRV is set.
+   QB_KERNEL_ROOT: Kernel's root (e.g. /dev/vda)
+   QB_TAP_OPT: Network option for 'tap' mode (e.g.
+               "-netdev tap,id=net0,ifname=@TAP@,script=no,downscript=no -device virtio-net-device,netdev=net0").
+                runqemu will replace "@TAP@" with the one that is used, such as tap0, tap1 ...
+   QB_SLIRP_OPT: Network option for SLIRP mode (e.g. "-netdev user,id=net0 -device virtio-net-device,netdev=net0")
+   QB_ROOTFS_OPT: Used as rootfs (e.g.
+                  "-drive id=disk0,file=@ROOTFS@,if=none,format=raw -device virtio-blk-device,drive=disk0").
+                  runqemu will replace "@ROOTFS@" with the one which is used, such as
+                  core-image-minimal-qemuarm64.ext4.
+   QB_SERIAL_OPT: Serial port (e.g. "-serial mon:stdio")
+   QB_TCPSERIAL_OPT: tcp serial port option (e.g.
+                     " -device virtio-serial-device -chardev socket,id=virtcon,port=@PORT@,host=127.0.0.1 -device      virtconsole,chardev=virtcon"
+                     runqemu will replace "@PORT@" with the port number which is used.
 
 To use ``runqemu``, set :term:`IMAGE_CLASSES` as
 follows and run ``runqemu``:
@@ -2536,7 +2609,9 @@ follows and run ``runqemu``:
    runqemu help
    .
 
-IMAGE_CLASSES += "qemuboot"
+::
+
+   IMAGE_CLASSES += "qemuboot"
 
 .. _migration-2.2-default-linker-hash-style-changed:
 
@@ -2551,7 +2626,10 @@ recipes. You need to fix these recipes so that they use the expected
 ``LDFLAGS``. Depending on how the software is built, the build system
 used by the software (e.g. a Makefile) might need to be patched.
 However, sometimes making this fix is as simple as adding the following
-to the recipe: TARGET_CC_ARCH += "${LDFLAGS}"
+to the recipe:
+::
+
+   TARGET_CC_ARCH += "${LDFLAGS}"
 
 .. _migration-2.2-kernel-image-base-name-no-longer-uses-kernel-imagetype:
 
@@ -2562,8 +2640,12 @@ The ``KERNEL_IMAGE_BASE_NAME`` variable no longer uses the
 :term:`KERNEL_IMAGETYPE` variable to create the
 image's base name. Because the OpenEmbedded build system can now build
 multiple kernel image types, this part of the kernel image base name as
-been removed leaving only the following: KERNEL_IMAGE_BASE_NAME ?=
-"${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${DATETIME}" If you have recipes or
+been removed leaving only the following:
+::
+
+   KERNEL_IMAGE_BASE_NAME ?= "${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${DATETIME}"
+
+If you have recipes or
 classes that use ``KERNEL_IMAGE_BASE_NAME`` directly, you might need to
 update the references to ensure they continue to work.
 
@@ -2787,7 +2869,7 @@ Consider the following:
    ``systemd-systemctl-native`` is added to ``PACKAGE_WRITE_DEPS``,
    which is also conditional on "systemd" being in ``DISTRO_FEATURES``.
 
--  *Examine Recipes that Use ``SSTATEPOSTINSTFUNCS``:* You need to
+-  Examine Recipes that Use ``SSTATEPOSTINSTFUNCS``: You need to
    examine any recipe that uses ``SSTATEPOSTINSTFUNCS`` and determine
    steps to take.
 
@@ -2800,8 +2882,7 @@ Consider the following:
    :term:`SYSROOT_PREPROCESS_FUNCS`.
 
    For an example, see the ``pixbufcache`` class in ``meta/classes/`` in
-   the Yocto Project `Source
-   Repositories <&YOCTO_DOCS_OM_URL;#source-repositories>`__.
+   the :ref:`overview-manual/overview-manual-development-environment:yocto project source repositories`.
 
    .. note::
 
@@ -2866,26 +2947,35 @@ Changes to Scripts
 
 The following changes to scripts took place:
 
--  *``oe-find-native-sysroot``:* The usage for the
-   ``oe-find-native-sysroot`` script has changed to the following: $ .
-   oe-find-native-sysroot recipe You must now supply a recipe for recipe
-   as part of the command. Prior to the Yocto Project DISTRO release, it
+-  ``oe-find-native-sysroot``: The usage for the
+   ``oe-find-native-sysroot`` script has changed to the following:
+   ::
+
+      $ . oe-find-native-sysroot recipe
+
+   You must now supply a recipe for recipe
+   as part of the command. Prior to the Yocto Project &DISTRO; release, it
    was not necessary to provide the script with the command.
 
--  *``oe-run-native``:* The usage for the ``oe-run-native`` script has
-   changed to the following: $ oe-run-native native_recipe tool You must
+-  ``oe-run-native``: The usage for the ``oe-run-native`` script has
+   changed to the following:
+   ::
+
+      $ oe-run-native native_recipe tool
+
+   You must
    supply the name of the native recipe and the tool you want to run as
    part of the command. Prior to the Yocto Project DISTRO release, it
    was not necessary to provide the native recipe with the command.
 
--  *``cleanup-workdir``:* The ``cleanup-workdir`` script has been
+-  ``cleanup-workdir``: The ``cleanup-workdir`` script has been
    removed because the script was found to be deleting files it should
    not have, which lead to broken build trees. Rather than trying to
    delete portions of :term:`TMPDIR` and getting it wrong,
    it is recommended that you delete ``TMPDIR`` and have it restored
    from shared state (sstate) on subsequent builds.
 
--  *``wipe-sysroot``:* The ``wipe-sysroot`` script has been removed as
+-  ``wipe-sysroot``: The ``wipe-sysroot`` script has been removed as
    it is no longer needed with recipe-specific sysroots.
 
 .. _migration-2.3-functions:
@@ -2946,8 +3036,8 @@ The following changes took place for BitBake:
    section in the BitBake
    User Manual for additional information.
 
--  *``BB_SETSCENE_VERIFY_FUNCTION`` and ``BB_SETSCENE_VERIFY_FUNCTION2``
-   Removed:* Because the mechanism they were part of is no longer
+-  ``BB_SETSCENE_VERIFY_FUNCTION`` and ``BB_SETSCENE_VERIFY_FUNCTION2``
+   Removed: Because the mechanism they were part of is no longer
    necessary with recipe-specific sysroots, the
    ``BB_SETSCENE_VERIFY_FUNCTION`` and ``BB_SETSCENE_VERIFY_FUNCTION2``
    variables have been removed.
@@ -3080,29 +3170,29 @@ Removed Recipes
 
 The following recipes have been removed:
 
--  *``linux-yocto 4.8:``* Version 4.8 has been removed. Versions 4.1
+-  ``linux-yocto 4.8``: Version 4.8 has been removed. Versions 4.1
    (LTSI), 4.4 (LTS), 4.9 (LTS/LTSI) and 4.10 are now present.
 
--  *``python-smartpm:``* Functionally replaced by ``dnf``.
+-  ``python-smartpm``: Functionally replaced by ``dnf``.
 
--  *``createrepo:``* Replaced by the ``createrepo-c`` recipe.
+-  ``createrepo``: Replaced by the ``createrepo-c`` recipe.
 
--  *``rpmresolve:``* No longer needed with the move to RPM 4 as RPM
+-  ``rpmresolve``: No longer needed with the move to RPM 4 as RPM
    itself is used instead.
 
--  *``gstreamer:``* Removed the GStreamer Git version recipes as they
+-  ``gstreamer``: Removed the GStreamer Git version recipes as they
    have been stale. ``1.10.``\ x recipes are still present.
 
--  *``alsa-conf-base:``* Merged into ``alsa-conf`` since ``libasound``
+-  ``alsa-conf-base``: Merged into ``alsa-conf`` since ``libasound``
    depended on both. Essentially, no way existed to install only one of
    these.
 
--  *``tremor:``* Moved to ``meta-multimedia``. Fixed-integer Vorbis
+-  ``tremor``: Moved to ``meta-multimedia``. Fixed-integer Vorbis
    decoding is not needed by current hardware. Thus, GStreamer's ivorbis
    plugin has been disabled by default eliminating the need for the
    ``tremor`` recipe in :term:`OpenEmbedded-Core (OE-Core)`.
 
--  *``gummiboot:``* Replaced by ``systemd-boot``.
+-  ``gummiboot``: Replaced by ``systemd-boot``.
 
 .. _migration-2.3-wic-changes:
 
@@ -3135,7 +3225,7 @@ QA Changes
 
 The following QA checks have changed:
 
--  *``unsafe-references-in-binaries``:* The
+-  ``unsafe-references-in-binaries``: The
    ``unsafe-references-in-binaries`` QA check, which was disabled by
    default, has now been removed. This check was intended to detect
    binaries in ``/bin`` that link to libraries in ``/usr/lib`` and have
@@ -3146,7 +3236,7 @@ The following QA checks have changed:
    separate partition from ``/`` is now a rare configuration.
    Consequently, ``unsafe-references-in-binaries`` was removed.
 
--  *``file-rdeps``:* The ``file-rdeps`` QA check is now an error by
+-  ``file-rdeps``: The ``file-rdeps`` QA check is now an error by
    default instead of a warning. Because it is an error instead of a
    warning, you need to address missing runtime dependencies.
 
@@ -3202,8 +3292,15 @@ The following miscellaneous changes have occurred:
 
 -  The ``USE_LDCONFIG`` variable has been replaced with the "ldconfig"
    ``DISTRO_FEATURES`` feature. Distributions that previously set:
-   USE_LDCONFIG = "0" should now instead use the following:
-   DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " ldconfig"
+   ::
+
+      USE_LDCONFIG = "0"
+
+   should now instead use the following:
+
+   ::
+
+      DISTRO_FEATURES_BACKFILL_CONSIDERED_append = " ldconfig"
 
 -  The default value of
    :term:`COPYLEFT_LICENSE_INCLUDE` now
@@ -3219,7 +3316,10 @@ The following miscellaneous changes have occurred:
    order to allow module packages from multiple kernel versions to
    co-exist on a target system. If you wish to return to the previous
    naming scheme that does not include the version suffix, use the
-   following: KERNEL_MODULE_PACKAGE_SUFFIX to ""
+   following:
+   ::
+
+      KERNEL_MODULE_PACKAGE_SUFFIX to ""
 
 -  Removal of ``libtool`` ``*.la`` files is now enabled by default. The
    ``*.la`` files are not actually needed on Linux and relocating them
@@ -3285,7 +3385,7 @@ Packaging Changes
 This section provides information about packaging changes that have
 occurred:
 
--  *``python3`` Changes:*
+-  ``python3`` Changes:
 
    -  The main "python3" package now brings in all of the standard
       Python 3 distribution rather than a subset. This behavior matches
@@ -3293,16 +3393,16 @@ occurred:
       wish to install a subset of Python 3, specify ``python-core`` plus
       one or more of the individual packages that are still produced.
 
-   -  *``python3``:* The ``bz2.py``, ``lzma.py``, and
+   -  ``python3``: The ``bz2.py``, ``lzma.py``, and
       ``_compression.py`` scripts have been moved from the
       ``python3-misc`` package to the ``python3-compression`` package.
 
--  *``binutils``:* The ``libbfd`` library is now packaged in a separate
+-  ``binutils``: The ``libbfd`` library is now packaged in a separate
    "libbfd" package. This packaging saves space when certain tools (e.g.
    ``perf``) are installed. In such cases, the tools only need
    ``libbfd`` rather than all the packages in ``binutils``.
 
--  *``util-linux`` Changes:*
+-  ``util-linux`` Changes:
 
    -  The ``su`` program is now packaged in a separate "util-linux-su"
       package, which is only built when "pam" is listed in the
@@ -3326,7 +3426,7 @@ occurred:
       recommended runtime dependency (i.e. ``RRECOMMENDS``) on the
       ``util-linux-ionice`` package.
 
--  *``initscripts``:* The ``sushell`` program is now packaged in a
+-  ``initscripts``: The ``sushell`` program is now packaged in a
    separate "initscripts-sushell" package. This packaging change allows
    systems to pull ``sushell`` in when ``selinux`` is enabled. The
    change also eliminates needing to pull in the entire ``initscripts``
@@ -3334,7 +3434,7 @@ occurred:
    (i.e. ``RDEPENDS``) on the ``sushell`` package when "selinux" is in
    ``DISTRO_FEATURES``.
 
--  *``glib-2.0``:* The ``glib-2.0`` package now has a recommended
+-  ``glib-2.0``: The ``glib-2.0`` package now has a recommended
    runtime dependency (i.e. ``RRECOMMENDS``) on the ``shared-mime-info``
    package, since large portions of GIO are not useful without the MIME
    database. You can remove the dependency by using the
@@ -3351,102 +3451,102 @@ Removed Recipes
 
 The following recipes have been removed:
 
--  *``acpitests``:* This recipe is not maintained.
+-  ``acpitests``: This recipe is not maintained.
 
--  *``autogen-native``:* No longer required by Grub, oe-core, or
+-  ``autogen-native``: No longer required by Grub, oe-core, or
    meta-oe.
 
--  *``bdwgc``:* Nothing in OpenEmbedded-Core requires this recipe. It
+-  ``bdwgc``: Nothing in OpenEmbedded-Core requires this recipe. It
    has moved to meta-oe.
 
--  *``byacc``:* This recipe was only needed by rpm 5.x and has moved to
+-  ``byacc``: This recipe was only needed by rpm 5.x and has moved to
    meta-oe.
 
--  *``gcc (5.4)``:* The 5.4 series dropped the recipe in favor of 6.3 /
+-  ``gcc (5.4)``: The 5.4 series dropped the recipe in favor of 6.3 /
    7.2.
 
--  *``gnome-common``:* Deprecated upstream and no longer needed.
+-  ``gnome-common``: Deprecated upstream and no longer needed.
 
--  *``go-bootstrap-native``:* Go 1.9 does its own bootstrapping so this
+-  ``go-bootstrap-native``: Go 1.9 does its own bootstrapping so this
    recipe has been removed.
 
--  *``guile``:* This recipe was only needed by ``autogen-native`` and
+-  ``guile``: This recipe was only needed by ``autogen-native`` and
    ``remake``. The recipe is no longer needed by either of these
    programs.
 
--  *``libclass-isa-perl``:* This recipe was previously needed for LSB 4,
+-  ``libclass-isa-perl``: This recipe was previously needed for LSB 4,
    no longer needed.
 
--  *``libdumpvalue-perl``:* This recipe was previously needed for LSB 4,
+-  ``libdumpvalue-perl``: This recipe was previously needed for LSB 4,
    no longer needed.
 
--  *``libenv-perl``:* This recipe was previously needed for LSB 4, no
+-  ``libenv-perl``: This recipe was previously needed for LSB 4, no
    longer needed.
 
--  *``libfile-checktree-perl``:* This recipe was previously needed for
+-  ``libfile-checktree-perl``: This recipe was previously needed for
    LSB 4, no longer needed.
 
--  *``libi18n-collate-perl``:* This recipe was previously needed for LSB
+-  ``libi18n-collate-perl``: This recipe was previously needed for LSB
    4, no longer needed.
 
--  *``libiconv``:* This recipe was only needed for ``uclibc``, which was
+-  ``libiconv``: This recipe was only needed for ``uclibc``, which was
    removed in the previous release. ``glibc`` and ``musl`` have their
    own implementations. ``meta-mingw`` still needs ``libiconv``, so it
    has been moved to ``meta-mingw``.
 
--  *``libpng12``:* This recipe was previously needed for LSB. The
+-  ``libpng12``: This recipe was previously needed for LSB. The
    current ``libpng`` is 1.6.x.
 
--  *``libpod-plainer-perl``:* This recipe was previously needed for LSB
+-  ``libpod-plainer-perl``: This recipe was previously needed for LSB
    4, no longer needed.
 
--  *``linux-yocto (4.1)``:* This recipe was removed in favor of 4.4,
+-  ``linux-yocto (4.1)``: This recipe was removed in favor of 4.4,
    4.9, 4.10 and 4.12.
 
--  *``mailx``:* This recipe was previously only needed for LSB
+-  ``mailx``: This recipe was previously only needed for LSB
    compatibility, and upstream is defunct.
 
--  *``mesa (git version only)``:* The git version recipe was stale with
+-  ``mesa (git version only)``: The git version recipe was stale with
    respect to the release version.
 
--  *``ofono (git version only)``:* The git version recipe was stale with
+-  ``ofono (git version only)``: The git version recipe was stale with
    respect to the release version.
 
--  *``portmap``:* This recipe is obsolete and is superseded by
+-  ``portmap``: This recipe is obsolete and is superseded by
    ``rpcbind``.
 
--  *``python3-pygpgme``:* This recipe is old and unmaintained. It was
+-  ``python3-pygpgme``: This recipe is old and unmaintained. It was
    previously required by ``dnf``, which has switched to official
    ``gpgme`` Python bindings.
 
--  *``python-async``:* This recipe has been removed in favor of the
+-  ``python-async``: This recipe has been removed in favor of the
    Python 3 version.
 
--  *``python-gitdb``:* This recipe has been removed in favor of the
+-  ``python-gitdb``: This recipe has been removed in favor of the
    Python 3 version.
 
--  *``python-git``:* This recipe was removed in favor of the Python 3
+-  ``python-git``: This recipe was removed in favor of the Python 3
    version.
 
--  *``python-mako``:* This recipe was removed in favor of the Python 3
+-  ``python-mako``: This recipe was removed in favor of the Python 3
    version.
 
--  *``python-pexpect``:* This recipe was removed in favor of the Python
+-  ``python-pexpect``: This recipe was removed in favor of the Python
    3 version.
 
--  *``python-ptyprocess``:* This recipe was removed in favor of Python
+-  ``python-ptyprocess``: This recipe was removed in favor of Python
    the 3 version.
 
--  *``python-pycurl``:* Nothing is using this recipe in
+-  ``python-pycurl``: Nothing is using this recipe in
    OpenEmbedded-Core (i.e. ``meta-oe``).
 
--  *``python-six``:* This recipe was removed in favor of the Python 3
+-  ``python-six``: This recipe was removed in favor of the Python 3
    version.
 
--  *``python-smmap``:* This recipe was removed in favor of the Python 3
+-  ``python-smmap``: This recipe was removed in favor of the Python 3
    version.
 
--  *``remake``:* Using ``remake`` as the provider of ``virtual/make`` is
+-  ``remake``: Using ``remake`` as the provider of ``virtual/make`` is
    broken. Consequently, this recipe is not needed in OpenEmbedded-Core.
 
 .. _migration-2.4-kernel-device-tree-move:
@@ -3598,17 +3698,17 @@ Packaging Changes
 This section provides information about packaging changes that have
 occurred:
 
--  *``bind-libs``:* The libraries packaged by the bind recipe are in a
+-  ``bind-libs``: The libraries packaged by the bind recipe are in a
    separate ``bind-libs`` package.
 
--  *``libfm-gtk``:* The ``libfm`` GTK+ bindings are split into a
+-  ``libfm-gtk``: The ``libfm`` GTK+ bindings are split into a
    separate ``libfm-gtk`` package.
 
--  *``flex-libfl``:* The flex recipe splits out libfl into a separate
+-  ``flex-libfl``: The flex recipe splits out libfl into a separate
    ``flex-libfl`` package to avoid too many dependencies being pulled in
    where only the library is needed.
 
--  *``grub-efi``:* The ``grub-efi`` configuration is split into a
+-  ``grub-efi``: The ``grub-efi`` configuration is split into a
    separate ``grub-bootconf`` recipe. However, the dependency
    relationship from ``grub-efi`` is through a virtual/grub-bootconf
    provider making it possible to have your own recipe provide the
@@ -3628,42 +3728,42 @@ Removed Recipes
 
 The following recipes have been removed:
 
--  *``gcc``:* The version 6.4 recipes are replaced by 7.x.
+-  ``gcc``: The version 6.4 recipes are replaced by 7.x.
 
--  *``gst-player``:* Renamed to ``gst-examples`` as per upstream.
+-  ``gst-player``: Renamed to ``gst-examples`` as per upstream.
 
--  *``hostap-utils``:* This software package is obsolete.
+-  ``hostap-utils``: This software package is obsolete.
 
--  *``latencytop``:* This recipe is no longer maintained upstream. The
+-  ``latencytop``: This recipe is no longer maintained upstream. The
    last release was in 2009.
 
--  *``libpfm4``:* The only file that requires this recipe is
+-  ``libpfm4``: The only file that requires this recipe is
    ``oprofile``, which has been removed.
 
--  *``linux-yocto``:* The version 4.4, 4.9, and 4.10 recipes have been
+-  ``linux-yocto``: The version 4.4, 4.9, and 4.10 recipes have been
    removed. Versions 4.12, 4.14, and 4.15 remain.
 
--  *``man``:* This recipe has been replaced by modern ``man-db``
+-  ``man``: This recipe has been replaced by modern ``man-db``
 
--  *``mkelfimage``:* This tool has been removed in the upstream coreboot
+-  ``mkelfimage``: This tool has been removed in the upstream coreboot
    project, and is no longer needed with the removal of the ELF image
    type.
 
--  *``nativesdk-postinst-intercept``:* This recipe is not maintained.
+-  ``nativesdk-postinst-intercept``: This recipe is not maintained.
 
--  *``neon``:* This software package is no longer maintained upstream
+-  ``neon``: This software package is no longer maintained upstream
    and is no longer needed by anything in OpenEmbedded-Core.
 
--  *``oprofile``:* The functionality of this recipe is replaced by
+-  ``oprofile``: The functionality of this recipe is replaced by
    ``perf`` and keeping compatibility on an ongoing basis with ``musl``
    is difficult.
 
--  *``pax``:* This software package is obsolete.
+-  ``pax``: This software package is obsolete.
 
--  *``stat``:* This software package is not maintained upstream.
+-  ``stat``: This software package is not maintained upstream.
    ``coreutils`` provides a modern stat binary.
 
--  *``zisofs-tools-native``:* This recipe is no longer needed because
+-  ``zisofs-tools-native``: This recipe is no longer needed because
    the compressed ISO image feature has been removed.
 
 .. _migration-2.5-scripts-and-tools-changes:
@@ -3673,17 +3773,16 @@ Scripts and Tools Changes
 
 The following are changes to scripts and tools:
 
--  *``yocto-bsp``, ``yocto-kernel``, and ``yocto-layer``*: The
+-  ``yocto-bsp``, ``yocto-kernel``, and ``yocto-layer``: The
    ``yocto-bsp``, ``yocto-kernel``, and ``yocto-layer`` scripts
    previously shipped with poky but not in OpenEmbedded-Core have been
    removed. These scripts are not maintained and are outdated. In many
    cases, they are also limited in scope. The
    ``bitbake-layers create-layer`` command is a direct replacement for
    ``yocto-layer``. See the documentation to create a BSP or kernel
-   recipe in the "`BSP Kernel Recipe
-   Example <&YOCTO_DOCS_BSP_URL;#bsp-kernel-recipe-example>`__" section.
+   recipe in the ":ref:`bsp-guide/bsp:bsp kernel recipe example`" section.
 
--  *``devtool finish``:* ``devtool finish`` now exits with an error if
+-  ``devtool finish``: ``devtool finish`` now exits with an error if
    there are uncommitted changes or a rebase/am in progress in the
    recipe's source repository. If this error occurs, there might be
    uncommitted changes that will not be included in updates to the
@@ -3691,11 +3790,11 @@ The following are changes to scripts and tools:
    situations that the uncommitted changes are inconsequential and you
    want to proceed regardless.
 
--  *``scripts/oe-setup-rpmrepo`` script:* The functionality of
+-  ``scripts/oe-setup-rpmrepo`` script: The functionality of
    ``scripts/oe-setup-rpmrepo`` is replaced by
    ``bitbake package-index``.
 
--  *``scripts/test-dependencies.sh`` script:* The script is largely made
+-  ``scripts/test-dependencies.sh`` script: The script is largely made
    obsolete by the recipe-specific sysroots functionality introduced in
    the previous release.
 
@@ -3725,8 +3824,15 @@ The following are BitBake changes:
    tree" tasks have been removed (e.g. ``fetchall``, ``checkuriall``,
    and the ``*all`` tasks provided by the ``distrodata`` and
    ``archiver`` classes). There is a BitBake option to complete this for
-   any arbitrary task. For example: bitbake <target> -c fetchall should
-   now be replaced with: bitbake <target> --runall=fetch
+   any arbitrary task. For example:
+   ::
+
+      bitbake <target> -c fetchall
+
+   should now be replaced with:
+   ::
+
+      bitbake <target> --runall=fetch
 
 .. _migration-2.5-python-and-python3-changes:
 
@@ -3749,8 +3855,15 @@ one of the packages provided by the Python recipe. You can no longer run
 ``bitbake python-foo`` or have a
 :term:`DEPENDS` on ``python-foo``,
 but doing either of the following causes the package to work as
-expected: IMAGE_INSTALL_append = " python-foo" or RDEPENDS_${PN} =
-"python-foo" The earlier build-time provides behavior was a quirk of the
+expected: ::
+
+   IMAGE_INSTALL_append = " python-foo"
+
+or ::
+
+   RDEPENDS_${PN} = "python-foo"
+
+The earlier build-time provides behavior was a quirk of the
 way the Python manifest file was created. For more information on this
 change please see `this
 commit <http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=8d94b9db221d1def42f091b991903faa2d1651ce>`__.
@@ -3798,17 +3911,36 @@ The following are additional changes:
    ``bitbake/lib/bb``. These are typically used from recipes and
    classes. Any references to the old functions must be updated. The
    following table shows the removed functions and their replacements:
-   *Removed* *Replacement* ============================
-   ============================ base_path_join() oe.path.join()
-   base_path_relative() oe.path.relative() base_path_out()
-   oe.path.format_display() base_read_file() oe.utils.read_file()
-   base_ifelse() oe.utils.ifelse() base_conditional()
-   oe.utils.conditional() base_less_or_equal() oe.utils.less_or_equal()
-   base_version_less_or_equal() oe.utils.version_less_or_equal()
-   base_contains() bb.utils.contains() base_both_contain()
-   oe.utils.both_contain() base_prune_suffix() oe.utils.prune_suffix()
-   oe_filter() oe.utils.str_filter() oe_filter_out()
-   oe.utils.str_filter_out() (or use the \_remove operator).
+
+   +------------------------------+----------------------------------------------------------+
+   | *Removed*                    | *Replacement*                                            |
+   +==============================+==========================================================+
+   | base_path_join()             | oe.path.join()                                           |
+   +------------------------------+----------------------------------------------------------+
+   | base_path_relative()         | oe.path.relative()                                       |
+   +------------------------------+----------------------------------------------------------+
+   | base_path_out()              | oe.path.format_display()                                 |
+   +------------------------------+----------------------------------------------------------+
+   | base_read_file()             | oe.utils.read_file()                                     |
+   +------------------------------+----------------------------------------------------------+
+   | base_ifelse()                | oe.utils.ifelse()                                        |
+   +------------------------------+----------------------------------------------------------+
+   | base_conditional()           | oe.utils.conditional()                                   |
+   +------------------------------+----------------------------------------------------------+
+   | base_less_or_equal()         | oe.utils.less_or_equal()                                 |
+   +------------------------------+----------------------------------------------------------+
+   | base_version_less_or_equal() | oe.utils.version_less_or_equal()                         |
+   +------------------------------+----------------------------------------------------------+
+   | base_contains()              | bb.utils.contains()                                      |
+   +------------------------------+----------------------------------------------------------+
+   | base_both_contain()          | oe.utils.both_contain()                                  |
+   +------------------------------+----------------------------------------------------------+
+   | base_prune_suffix()          | oe.utils.prune_suffix()                                  |
+   +------------------------------+----------------------------------------------------------+
+   | oe_filter()                  | oe.utils.str_filter()                                    |
+   +------------------------------+----------------------------------------------------------+
+   | oe_filter_out()              | oe.utils.str_filter_out() (or use the \_remove operator) |
+   +------------------------------+----------------------------------------------------------+
 
 -  Using ``exit 1`` to explicitly defer a postinstall script until first
    boot is now deprecated since it is not an obvious mechanism and can
@@ -3819,8 +3951,8 @@ The following are additional changes:
    Any failure of a ``pkg_postinst()`` script (including ``exit 1``)
    will trigger a warning during ``do_rootfs``.
 
-   For more information, see the "`Post-Installation
-   Scripts <&YOCTO_DOCS_DEV_URL;#new-recipe-post-installation-scripts>`__"
+   For more information, see the
+   ":ref:`dev-manual/dev-manual-common-tasks:post-installation scripts`"
    section in the Yocto Project Development Tasks Manual.
 
 -  The ``elf`` image type has been removed. This image type was removed
@@ -3886,46 +4018,55 @@ your configuration.
 Removed Recipes
 ---------------
 
-The following recipes have been removed: *``beecrypt``:* No longer
-needed since moving to RPM 4. *``bigreqsproto``:* Replaced by
-``xorgproto``. *``calibrateproto``:* Removed in favor of ``xinput``.
-*``compositeproto``:* Replaced by ``xorgproto``. *``damageproto``:*
-Replaced by ``xorgproto``. *``dmxproto``:* Replaced by ``xorgproto``.
-*``dri2proto``:* Replaced by ``xorgproto``. *``dri3proto``:* Replaced by
-``xorgproto``. *``eee-acpi-scripts``:* Became obsolete.
-*``fixesproto``:* Replaced by ``xorgproto``. *``fontsproto``:* Replaced
-by ``xorgproto``. *``fstests``:* Became obsolete. *``gccmakedep``:* No
-longer used. *``glproto``:* Replaced by ``xorgproto``.
-*``gnome-desktop3``:* No longer needed. This recipe has moved to
-``meta-oe``. *``icon-naming-utils``:* No longer used since the Sato
-theme was removed in 2016. *``inputproto``:* Replaced by ``xorgproto``.
-*``kbproto``:* Replaced by ``xorgproto``. *``libusb-compat``:* Became
-obsolete. *``libuser``:* Became obsolete. *``libnfsidmap``:* No longer
-an external requirement since ``nfs-utils`` 2.2.1. ``libnfsidmap`` is
-now integrated. *``libxcalibrate``:* No longer needed with ``xinput``
-*``mktemp``:* Became obsolete. The ``mktemp`` command is provided by
-both ``busybox`` and ``coreutils``. *``ossp-uuid``:* Is not being
-maintained and has mostly been replaced by ``uuid.h`` in ``util-linux``.
-*``pax-utils``:* No longer needed. Previous QA tests that did use this
-recipe are now done at build time. *``pcmciautils``:* Became obsolete.
-*``pixz``:* No longer needed. ``xz`` now supports multi-threaded
-compression. *``presentproto``:* Replaced by ``xorgproto``.
-*``randrproto``:* Replaced by ``xorgproto``. *``recordproto``:* Replaced
-by ``xorgproto``. *``renderproto``:* Replaced by ``xorgproto``.
-*``resourceproto``:* Replaced by ``xorgproto``. *``scrnsaverproto``:*
-Replaced by ``xorgproto``. *``trace-cmd``:* Became obsolete. ``perf``
-replaced this recipe's functionally. *``videoproto``:* Replaced by
-``xorgproto``. *``wireless-tools``:* Became obsolete. Superseded by
-``iw``. *``xcmiscproto``:* Replaced by ``xorgproto``. *``xextproto``:*
-Replaced by ``xorgproto``. *``xf86dgaproto``:* Replaced by
-``xorgproto``. *``xf86driproto``:* Replaced by ``xorgproto``.
-*``xf86miscproto``:* Replaced by ``xorgproto``. *``xf86-video-omapfb``:*
-Became obsolete. Use kernel modesetting driver instead.
-*``xf86-video-omap``:* Became obsolete. Use kernel modesetting driver
-instead. *``xf86vidmodeproto``:* Replaced by ``xorgproto``.
-*``xineramaproto``:* Replaced by ``xorgproto``. *``xproto``:* Replaced
-by ``xorgproto``. *``yasm``:* No longer needed since previous usages are
-now satisfied by ``nasm``.
+The following recipes have been removed:
+
+- *beecrypt*: No longer needed since moving to RPM 4.
+- *bigreqsproto*: Replaced by ``xorgproto``.
+- *calibrateproto*: Removed in favor of ``xinput``.
+- *compositeproto*: Replaced by ``xorgproto``.
+- *damageproto*: Replaced by ``xorgproto``.
+- *dmxproto*: Replaced by ``xorgproto``.
+- *dri2proto*: Replaced by ``xorgproto``.
+- *dri3proto*: Replaced by ``xorgproto``.
+- *eee-acpi-scripts*: Became obsolete.
+- *fixesproto*: Replaced by ``xorgproto``.
+- *fontsproto*: Replaced by ``xorgproto``.
+- *fstests*: Became obsolete.
+- *gccmakedep*: No longer used.
+- *glproto*: Replaced by ``xorgproto``.
+- *gnome-desktop3*: No longer needed. This recipe has moved to ``meta-oe``.
+- *icon-naming-utils*: No longer used since the Sato theme was removed in 2016.
+- *inputproto*: Replaced by ``xorgproto``.
+- *kbproto*: Replaced by ``xorgproto``.
+- *libusb-compat*: Became obsolete.
+- *libuser*: Became obsolete.
+- *libnfsidmap*: No longer an external requirement since ``nfs-utils`` 2.2.1. ``libnfsidmap`` is now integrated.
+- *libxcalibrate*: No longer needed with ``xinput``
+- *mktemp*: Became obsolete. The ``mktemp`` command is provided by both ``busybox`` and ``coreutils``.
+- *ossp-uuid*: Is not being maintained and has mostly been replaced by ``uuid.h`` in ``util-linux``.
+- *pax-utils*: No longer needed. Previous QA tests that did use this recipe are now done at build time.
+- *pcmciautils*: Became obsolete.
+- *pixz*: No longer needed. ``xz`` now supports multi-threaded compression.
+- *presentproto*: Replaced by ``xorgproto``.
+- *randrproto*: Replaced by ``xorgproto``.
+- *recordproto*: Replaced by ``xorgproto``.
+- *renderproto*: Replaced by ``xorgproto``.
+- *resourceproto*: Replaced by ``xorgproto``.
+- *scrnsaverproto*: Replaced by ``xorgproto``.
+- *trace-cmd*: Became obsolete. ``perf`` replaced this recipe's functionally.
+- *videoproto*: Replaced by ``xorgproto``.
+- *wireless-tools*: Became obsolete. Superseded by ``iw``.
+- *xcmiscproto*: Replaced by ``xorgproto``.
+- *xextproto*: Replaced by ``xorgproto``.
+- *xf86dgaproto*: Replaced by ``xorgproto``.
+- *xf86driproto*: Replaced by ``xorgproto``.
+- *xf86miscproto*: Replaced by ``xorgproto``.
+- *xf86-video-omapfb*: Became obsolete. Use kernel modesetting driver instead.
+- *xf86-video-omap*: Became obsolete. Use kernel modesetting driver instead.
+- *xf86vidmodeproto*: Replaced by ``xorgproto``.
+- *xineramaproto*: Replaced by ``xorgproto``.
+- *xproto*: Replaced by ``xorgproto``.
+- *yasm*: No longer needed since previous usages are now satisfied by ``nasm``.
 
 .. _migration-2.6-packaging-changes:
 
@@ -3934,30 +4075,30 @@ Packaging Changes
 
 The following packaging changes have been made:
 
--  *``cmake``:* ``cmake.m4`` and ``toolchain`` files have been moved to
+-  *cmake*: ``cmake.m4`` and ``toolchain`` files have been moved to
    the main package.
 
--  *``iptables``:* The ``iptables`` modules have been split into
+-  *iptables*: The ``iptables`` modules have been split into
    separate packages.
 
--  *``alsa-lib``:* ``libasound`` is now in the main ``alsa-lib`` package
+-  *alsa-lib*: ``libasound`` is now in the main ``alsa-lib`` package
    instead of ``libasound``.
 
--  *``glibc``:* ``libnss-db`` is now in its own package along with a
+-  *glibc*: ``libnss-db`` is now in its own package along with a
    ``/var/db/makedbs.sh`` script to update databases.
 
--  *``python`` and ``python3``:* The main package has been removed from
+-  *python and python3*: The main package has been removed from
    the recipe. You must install specific packages or ``python-modules``
    / ``python3-modules`` for everything.
 
--  *``systemtap``:* Moved ``systemtap-exporter`` into its own package.
+-  *systemtap*: Moved ``systemtap-exporter`` into its own package.
 
 .. _migration-2.6-xorg-protocol-dependencies:
 
 XOrg Protocol dependencies
 --------------------------
 
-The "*proto" upstream repositories have been combined into one
+The ``*proto`` upstream repositories have been combined into one
 "xorgproto" repository. Thus, the corresponding recipes have also been
 combined into a single ``xorgproto`` recipe. Any recipes that depend
 upon the older ``*proto`` recipes need to be changed to depend on the
@@ -4024,19 +4165,21 @@ The following changes have been made:
    allows easier and more direct changes.
 
    The ``IMAGE_VERSION_SUFFIX`` variable is set in the ``bitbake.conf``
-   configuration file as follows: IMAGE_VERSION_SUFFIX = "-${DATETIME}"
+   configuration file as follows:
+   ::
 
--  Several variables have changed names for consistency: Old Variable
-   Name New Variable Name
-   ========================================================
-   KERNEL_IMAGE_BASE_NAME :term:`KERNEL_IMAGE_NAME`
-   KERNEL_IMAGE_SYMLINK_NAME
-   :term:`KERNEL_IMAGE_LINK_NAME`
-   MODULE_TARBALL_BASE_NAME
-   :term:`MODULE_TARBALL_NAME`
-   MODULE_TARBALL_SYMLINK_NAME
-   :term:`MODULE_TARBALL_LINK_NAME`
-   INITRAMFS_BASE_NAME :term:`INITRAMFS_NAME`
+      IMAGE_VERSION_SUFFIX = "-${DATETIME}"
+
+-  Several variables have changed names for consistency:
+   ::
+
+      Old Variable                  Name New Variable Name
+      ========================================================
+      KERNEL_IMAGE_BASE_NAME        :term:`KERNEL_IMAGE_NAME`
+      KERNEL_IMAGE_SYMLINK_NAME     :term:`KERNEL_IMAGE_LINK_NAME`
+      MODULE_TARBALL_BASE_NAME      :term:`MODULE_TARBALL_NAME`
+      MODULE_TARBALL_SYMLINK_NAME   :term:`MODULE_TARBALL_LINK_NAME`
+      INITRAMFS_BASE_NAME           :term:`INITRAMFS_NAME`
 
 -  The ``MODULE_IMAGE_BASE_NAME`` variable has been removed. The module
    tarball name is now controlled directly with the
@@ -4107,8 +4250,8 @@ Override Changes
 
 The following changes have occurred:
 
--  *The ``virtclass-native`` and ``virtclass-nativesdk`` Overrides Have
-   Been Removed:* The ``virtclass-native`` and ``virtclass-nativesdk``
+-  The ``virtclass-native`` and ``virtclass-nativesdk`` Overrides Have
+   Been Removed: The ``virtclass-native`` and ``virtclass-nativesdk``
    overrides have been deprecated since 2012 in favor of
    ``class-native`` and ``class-nativesdk``, respectively. Both
    ``virtclass-native`` and ``virtclass-nativesdk`` are now dropped.
@@ -4119,8 +4262,8 @@ The following changes have occurred:
       virtclass-multilib-
       overrides for multilib are still valid.
 
--  *The ``forcevariable`` Override Now Has a Higher Priority Than
-   ``libc`` Overrides:* The ``forcevariable`` override is documented to
+-  The ``forcevariable`` Override Now Has a Higher Priority Than
+   ``libc`` Overrides: The ``forcevariable`` override is documented to
    be the highest priority override. However, due to a long-standing
    quirk of how :term:`OVERRIDES` is set, the ``libc``
    overrides (e.g. ``libc-glibc``, ``libc-musl``, and so forth)
@@ -4132,7 +4275,7 @@ The following changes have occurred:
    check how you use ``forcevariable`` and ``libc-*`` overrides in your
    custom layers and configuration files to ensure they make sense.
 
--  *The ``build-${BUILD_OS}`` Override Has Been Removed:* The
+-  The ``build-${BUILD_OS}`` Override Has Been Removed: The
    ``build-${BUILD_OS}``, which is typically ``build-linux``, override
    has been removed because building on a host operating system other
    than a recent version of Linux is neither supported nor recommended.
@@ -4158,10 +4301,16 @@ where machine-specific configurations need to be applied (e.g. for
 ``qemu*`` machines).
 
 Currently, the new recipe packages the following files:
-${sysconfdir}/machine-id ${sysconfdir}/systemd/coredump.conf
-${sysconfdir}/systemd/journald.conf ${sysconfdir}/systemd/logind.conf
-${sysconfdir}/systemd/system.conf ${sysconfdir}/systemd/user.conf If you
-previously used bbappend files to append the ``systemd`` recipe to
+::
+
+   ${sysconfdir}/machine-id
+   ${sysconfdir}/systemd/coredump.conf
+   ${sysconfdir}/systemd/journald.conf
+   ${sysconfdir}/systemd/logind.conf
+   ${sysconfdir}/systemd/system.conf
+   ${sysconfdir}/systemd/user.conf
+
+If you previously used bbappend files to append the ``systemd`` recipe to
 change any of the listed files, you must do so for the ``systemd-conf``
 recipe instead.
 
@@ -4172,13 +4321,13 @@ Automatic Testing Changes
 
 This section provides information about automatic testing changes:
 
--  *``TEST_IMAGE`` Variable Removed:* Prior to this release, you set the
+-  ``TEST_IMAGE`` Variable Removed: Prior to this release, you set the
    ``TEST_IMAGE`` variable to "1" to enable automatic testing for
    successfully built images. The ``TEST_IMAGE`` variable no longer
    exists and has been replaced by the
    :term:`TESTIMAGE_AUTO` variable.
 
--  *Inheriting the ``testimage`` and ``testsdk`` Classes:* Best
+-  Inheriting the ``testimage`` and ``testsdk`` Classes: Best
    practices now dictate that you use the
    :term:`IMAGE_CLASSES` variable rather than the
    :term:`INHERIT` variable when you inherit the
@@ -4231,8 +4380,7 @@ Any failure of a ``pkg_postinst()`` script (including exit 1) triggers
 an error during the :ref:`ref-tasks-rootfs` task.
 
 For more information on post-installation behavior, see the
-"`Post-Installation
-Scripts <&YOCTO_DOCS_DEV_URL;#new-recipe-post-installation-scripts>`__"
+":ref:`dev-manual/dev-manual-common-tasks:post-installation scripts`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _migration-2.6-python-3-profile-guided-optimizations:
@@ -4253,8 +4401,12 @@ If you wish to disable Python profile-guided optimization regardless of
 the value of ``MACHINE_FEATURES``, then ensure that
 :term:`PACKAGECONFIG` for the ``python3`` recipe
 does not contain "pgo". You could accomplish the latter using the
-following at the configuration level: PACKAGECONFIG_remove_pn-python3 =
-"pgo" Alternatively, you can set ``PACKAGECONFIG`` using an append file
+following at the configuration level:
+::
+
+   PACKAGECONFIG_remove_pn-python3 = "pgo"
+
+Alternatively, you can set ``PACKAGECONFIG`` using an append file
 for the ``python3`` recipe.
 
 .. _migration-2.6-miscellaneous-changes:
@@ -4267,7 +4419,10 @@ The following miscellaneous changes occurred:
 -  Default to using the Thumb-2 instruction set for armv7a and above. If
    you have any custom recipes that build software that needs to be
    built with the ARM instruction set, change the recipe to set the
-   instruction set as follows: ARM_INSTRUCTION_SET = "arm"
+   instruction set as follows:
+   ::
+
+      ARM_INSTRUCTION_SET = "arm"
 
 -  ``run-postinsts`` no longer uses ``/etc/*-postinsts`` for
    ``dpkg/opkg`` in favor of built-in postinst support. RPM behavior
@@ -4385,10 +4540,11 @@ License Value Corrections
 -------------------------
 
 The following corrections have been made to the
-:term:`LICENSE` values set by recipes: *socat*: Corrected
-``LICENSE`` to be "GPLv2" rather than "GPLv2+". *libgfortran*: Set
-license to "GPL-3.0-with-GCC-exception". *elfutils*: Removed
-"Elfutils-Exception" and set to "GPLv2" for shared libraries
+:term:`LICENSE` values set by recipes:
+
+- *socat*: Corrected ``LICENSE`` to be "GPLv2" rather than "GPLv2+".
+- *libgfortran*: Set license to "GPL-3.0-with-GCC-exception".
+- *elfutils*: Removed "Elfutils-Exception" and set to "GPLv2" for shared libraries
 
 .. _migration-2.7-packaging-changes:
 
@@ -4439,26 +4595,28 @@ This section provides information about packaging changes.
 Removed Recipes
 ---------------
 
-The following recipes have been removed: *gcc*: Drop version 7.3
-recipes. Version 8.3 now remains. *linux-yocto*: Drop versions 4.14 and
-4.18 recipes. Versions 4.19 and 5.0 remain. *go*: Drop version 1.9
-recipes. Versions 1.11 and 1.12 remain. *xvideo-tests*: Became obsolete.
-*libart-lgpl*: Became obsolete. *gtk-icon-utils-native*: These tools are
-now provided by gtk+3-native *gcc-cross-initial*: No longer needed.
-gcc-cross/gcc-crosssdk is now used instead. *gcc-crosssdk-initial*: No
-longer needed. gcc-cross/gcc-crosssdk is now used instead.
-*glibc-initial*: Removed because the benefits of having it for
-site_config are currently outweighed by the cost of building the recipe.
+The following recipes have been removed:
+
+- *gcc*: Drop version 7.3 recipes. Version 8.3 now remains.
+- *linux-yocto*: Drop versions 4.14 and 4.18 recipes. Versions 4.19 and 5.0 remain.
+- *go*: Drop version 1.9 recipes. Versions 1.11 and 1.12 remain.
+- *xvideo-tests*: Became obsolete.
+- *libart-lgpl*: Became obsolete.
+- *gtk-icon-utils-native*: These tools are now provided by gtk+3-native
+- *gcc-cross-initial*: No longer needed. gcc-cross/gcc-crosssdk is now used instead.
+- *gcc-crosssdk-initial*: No longer needed. gcc-cross/gcc-crosssdk is now used instead.
+- *glibc-initial*: Removed because the benefits of having it for site_config are currently outweighed by the cost of building the recipe.
 
 .. _migration-2.7-removed-classes:
 
 Removed Classes
 ---------------
 
-The following classes have been removed: *distutils-tools*: This class
-was never used. *bugzilla.bbclass*: Became obsolete. *distrodata*: This
-functionally has been replaced by a more modern tinfoil-based
-implementation.
+The following classes have been removed:
+
+- *distutils-tools*: This class was never used.
+- *bugzilla.bbclass*: Became obsolete.
+- *distrodata*: This functionally has been replaced by a more modern tinfoil-based implementation.
 
 .. _migration-2.7-miscellaneous-changes:
 
@@ -4471,7 +4629,7 @@ The following miscellaneous changes occurred:
    from the top-level ``scripts`` directory.
 
 -  Perl now builds for the target using
-   ```perl-cross`http://arsv.github.io/perl-cross/ for better
+   `perl-cross <http://arsv.github.io/perl-cross/>`_ for better
    maintainability and improved build performance. This change should
    not present any problems unless you have heavily customized your Perl
    recipe.
@@ -4883,7 +5041,9 @@ need runtime tests enabled for core components, then it is recommended
 that you remove "ptest" from
 :term:`DISTRO_FEATURES` to save a significant
 amount of build time e.g. by adding the following in your configuration:
-DISTRO_FEATURES_remove = "ptest"
+::
+
+   DISTRO_FEATURES_remove = "ptest"
 
 .. _migration-3.1-removed-recipes:
 
@@ -4988,12 +5148,15 @@ parameter instead of the earlier ``name`` which overlapped with the
 generic ``name`` parameter. All recipes using the npm fetcher will need
 to be changed as a result.
 
-An example of the new scheme: SRC_URI =
-"npm://registry.npmjs.org;package=array-flatten;version=1.1.1 \\
-npmsw://${THISDIR}/npm-shrinkwrap.json" Another example where the
-sources are fetched from git rather than an npm repository: SRC_URI =
-"git://github.com/foo/bar.git;protocol=https \\
-npmsw://${THISDIR}/npm-shrinkwrap.json"
+An example of the new scheme: ::
+
+   SRC_URI = "npm://registry.npmjs.org;package=array-flatten;version=1.1.1 \
+              npmsw://${THISDIR}/npm-shrinkwrap.json"
+
+Another example where the sources are fetched from git rather than an npm repository: ::
+
+   SRC_URI = "git://github.com/foo/bar.git;protocol=https \
+              npmsw://${THISDIR}/npm-shrinkwrap.json"
 
 devtool and recipetool have also been updated to match with the npm
 fetcher changes. Other than producing working and more complete recipes

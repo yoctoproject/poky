@@ -23,8 +23,7 @@ The Yocto Project gladly accepts contributions. You can submit changes
 to the project either by creating and sending pull requests, or by
 submitting patches through email. For information on how to do both as
 well as information on how to identify the maintainer for each area of
-code, see the "`Submitting a Change to the Yocto
-Project <&YOCTO_DOCS_DEV_URL;#how-to-submit-a-change>`__" section in the
+code, see the ":ref:`how-to-submit-a-change`" section in the
 Yocto Project Development Tasks Manual.
 
 .. _resources-bugtracker:
@@ -48,8 +47,7 @@ A general procedure and guidelines exist for when you use Bugzilla to
 submit a bug. For information on how to use Bugzilla to submit a bug
 against the Yocto Project, see the following:
 
--  The "`Submitting a Defect Against the Yocto
-   Project <&YOCTO_DOCS_DEV_URL;#submitting-a-defect-against-the-yocto-project>`__"
+-  The ":ref:`dev-manual/dev-manual-common-tasks:submitting a defect against the yocto project`"
    section in the Yocto Project Development Tasks Manual.
 
 -  The Yocto Project :yocto_wiki:`Bugzilla wiki page </wiki/Bugzilla_Configuration_and_Bug_Tracking>`
@@ -67,22 +65,22 @@ and announcements. To subscribe to one of the following mailing lists,
 click on the appropriate URL in the following list and follow the
 instructions:
 
--  ` <&YOCTO_LISTS_URL;/listinfo/yocto>`__ - General Yocto Project
+-  https://lists.yoctoproject.org/g/yocto - General Yocto Project
    discussion mailing list.
 
--  ` <&OE_LISTS_URL;/listinfo/openembedded-core>`__ - Discussion mailing
+-  https://lists.openembedded.org/g/openembedded-core - Discussion mailing
    list about OpenEmbedded-Core (the core metadata).
 
--  ` <&OE_LISTS_URL;/listinfo/openembedded-devel>`__ - Discussion
+-  https://lists.openembedded.org/g/openembedded-devel - Discussion
    mailing list about OpenEmbedded.
 
--  ` <&OE_LISTS_URL;/listinfo/bitbake-devel>`__ - Discussion mailing
+-  https://lists.openembedded.org/g/bitbake-devel - Discussion mailing
    list about the :term:`BitBake` build tool.
 
--  ` <&YOCTO_LISTS_URL;/listinfo/poky>`__ - Discussion mailing list
+-  https://lists.yoctoproject.org/g/poky - Discussion mailing list
    about `Poky <#poky>`__.
 
--  ` <&YOCTO_LISTS_URL;/listinfo/yocto-announce>`__ - Mailing list to
+-  https://lists.yoctoproject.org/g/yocto-announce - Mailing list to
    receive official Yocto Project release and milestone announcements.
 
 For more Yocto Project-related mailing lists, see the
@@ -115,7 +113,7 @@ Here is a list of resources you might find helpful:
    planning, release engineering, QA & automation, a reference site map,
    and other resources related to the Yocto Project.
 
--  `OpenEmbedded <&OE_HOME_URL;>`__\ *:* The build system used by the
+-  `OpenEmbedded <http://www.openembedded.org/>`__\ *:* The build system used by the
    Yocto Project. This project is the upstream, generic, embedded
    distribution from which the Yocto Project derives its build system
    (Poky) and to which it contributes.
@@ -127,53 +125,47 @@ Here is a list of resources you might find helpful:
    guide to the BitBake tool. If you want information on BitBake, see
    this manual.
 
--  `Yocto Project Quick Build <&YOCTO_DOCS_BRIEF_URL;>`__\ *:* This
+-  :doc:`../brief-yoctoprojectqs/brief-yoctoprojectqs` *:* This
    short document lets you experience building an image using the Yocto
    Project without having to understand any concepts or details.
 
--  `Yocto Project Overview and Concepts
-   Manual <&YOCTO_DOCS_OM_URL;>`__\ *:* This manual provides overview
+-  :doc:`../overview-manual/overview-manual` *:* This manual provides overview
    and conceptual information about the Yocto Project.
 
--  `Yocto Project Development Tasks
-   Manual <&YOCTO_DOCS_DEV_URL;>`__\ *:* This manual is a "how-to" guide
+-  :doc:`../dev-manual/dev-manual` *:* This manual is a "how-to" guide
    that presents procedures useful to both application and system
    developers who use the Yocto Project.
 
--  `Yocto Project Application Development and the Extensible Software
-   Development Kit (eSDK) <&YOCTO_DOCS_SDK_URL;>`__\ *manual:* This
+-  :doc:`../sdk-manual/sdk-manual` *manual :* This
    guide provides information that lets you get going with the standard
    or extensible SDK. An SDK, with its cross-development toolchains,
    allows you to develop projects inside or outside of the Yocto Project
    environment.
 
--  `Yocto Project Board Support Package (BSP) Developer's
-   Guide <&YOCTO_DOCS_BSP_URL;>`__\ *:* This guide defines the structure
+-  :doc:`../bsp-guide/bsp` *:* This guide defines the structure
    for BSP components. Having a commonly understood structure encourages
    standardization.
 
--  `Yocto Project Linux Kernel Development
-   Manual <&YOCTO_DOCS_KERNEL_DEV_URL;>`__\ *:* This manual describes
+-  :doc:`../kernel-dev/kernel-dev` *:* This manual describes
    how to work with Linux Yocto kernels as well as provides a bit of
    conceptual information on the construction of the Yocto Linux kernel
    tree.
 
--  `Yocto Project Reference Manual <&YOCTO_DOCS_REF_URL;>`__\ *:* This
+-  :doc:`../ref-manual/ref-manual` *:* This
    manual provides reference material such as variable, task, and class
    descriptions.
 
--  `Yocto Project Mega-Manual <&YOCTO_DOCS_MM_URL;>`__\ *:* This manual
+-  `Yocto Project Mega-Manual <https://docs.yoctoproject.org/singleindex.html>`__\ *:* This manual
    is simply a single HTML file comprised of the bulk of the Yocto
    Project manuals. The Mega-Manual primarily exists as a vehicle by
    which you can easily search for phrases and terms used in the Yocto
    Project documentation set.
 
--  `Yocto Project Profiling and Tracing
-   Manual <&YOCTO_DOCS_PROF_URL;>`__\ *:* This manual presents a set of
+-  :doc:`../profile-manual/profile-manual` *:* This manual presents a set of
    common and generally useful tracing and profiling schemes along with
    their applications (as appropriate) to each tool.
 
--  `Toaster User Manual <&YOCTO_DOCS_TOAST_URL;>`__\ *:* This manual
+-  :doc:`../toaster-manual/toaster-manual` *:* This manual
    introduces and describes how to set up and use Toaster. Toaster is an
    Application Programming Interface (API) and web-based interface to
    the :term:`OpenEmbedded Build System`, which uses
@@ -188,7 +180,7 @@ Here is a list of resources you might find helpful:
    the Yocto Project website and click on the "RELEASE INFORMATION" link
    for the appropriate release.
 
--  `Bugzilla <&YOCTO_BUGZILLA_URL;>`__\ *:* The bug tracking application
+-  `Bugzilla <https://bugzilla.yoctoproject.org>`__\ *:* The bug tracking application
    the Yocto Project uses. If you find problems with the Yocto Project,
    you should report them using this application.
 

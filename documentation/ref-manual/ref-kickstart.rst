@@ -30,7 +30,13 @@ Command: part or partition
 ==========================
 
 Either of these commands creates a partition on the system and uses the
-following syntax: part [mntpoint] partition [mntpoint] If you do not
+following syntax:
+::
+
+   part [mntpoint] 
+   partition [mntpoint]
+
+If you do not
 provide mntpoint, Wic creates a partition but does not mount it.
 
 The ``mntpoint`` is where the partition is mounted and must be in one of
@@ -62,20 +68,19 @@ Here is an example that uses "/" as the mountpoint. The command uses
 Here is a list that describes other supported options you can use with
 the ``part`` and ``partition`` commands:
 
--  *``--size``:* The minimum partition size in MBytes. Specify an
+-  ``--size``: The minimum partition size in MBytes. Specify an
    integer value such as 500. Do not append the number with "MB". You do
    not need this option if you use ``--source``.
 
--  *``--fixed-size``:* The exact partition size in MBytes. You cannot
+-  ``--fixed-size``: The exact partition size in MBytes. You cannot
    specify with ``--size``. An error occurs when assembling the disk
    image if the partition data is larger than ``--fixed-size``.
 
--  *``--source``:* This option is a Wic-specific option that names the
+-  ``--source``: This option is a Wic-specific option that names the
    source of the data that populates the partition. The most common
    value for this option is "rootfs", but you can use any value that
    maps to a valid source plugin. For information on the source plugins,
-   see the "`Using the Wic Plugins
-   Interface <&YOCTO_DOCS_DEV_URL;#wic-using-the-wic-plugin-interface>`__"
+   see the ":ref:`dev-manual/dev-manual-common-tasks:using the wic plugin interface`"
    section in the Yocto Project Development Tasks Manual.
 
    If you use ``--source rootfs``, Wic creates a partition as large as
@@ -98,10 +103,10 @@ the ``part`` and ``partition`` commands:
    creates an empty partition. Consequently, you must use the ``--size``
    option to specify the size of the empty partition.
 
--  *``--ondisk`` or ``--ondrive``:* Forces the partition to be created
+-  ``--ondisk`` or ``--ondrive``: Forces the partition to be created
    on a particular disk.
 
--  *``--fstype``:* Sets the file system type for the partition. Valid
+-  ``--fstype``: Sets the file system type for the partition. Valid
    values are:
 
    -  ``ext4``
@@ -116,66 +121,66 @@ the ``part`` and ``partition`` commands:
 
    -  ``swap``
 
--  *``--fsoptions``:* Specifies a free-form string of options to be used
+-  ``--fsoptions``: Specifies a free-form string of options to be used
    when mounting the filesystem. This string is copied into the
    ``/etc/fstab`` file of the installed system and should be enclosed in
    quotes. If not specified, the default string is "defaults".
 
--  *``--label label``:* Specifies the label to give to the filesystem to
+-  ``--label label``: Specifies the label to give to the filesystem to
    be made on the partition. If the given label is already in use by
    another filesystem, a new label is created for the partition.
 
--  *``--active``:* Marks the partition as active.
+-  ``--active``: Marks the partition as active.
 
--  *``--align (in KBytes)``:* This option is a Wic-specific option that
+-  ``--align (in KBytes)``: This option is a Wic-specific option that
    says to start partitions on boundaries given x KBytes.
 
--  *``--no-table``:* This option is a Wic-specific option. Using the
+-  ``--no-table``: This option is a Wic-specific option. Using the
    option reserves space for the partition and causes it to become
    populated. However, the partition is not added to the partition
    table.
 
--  *``--exclude-path``:* This option is a Wic-specific option that
+-  ``--exclude-path``: This option is a Wic-specific option that
    excludes the given relative path from the resulting image. This
    option is only effective with the rootfs source plugin.
 
--  *``--extra-space``:* This option is a Wic-specific option that adds
+-  ``--extra-space``: This option is a Wic-specific option that adds
    extra space after the space filled by the content of the partition.
    The final size can exceed the size specified by the ``--size``
    option. The default value is 10 Mbytes.
 
--  *``--overhead-factor``:* This option is a Wic-specific option that
+-  ``--overhead-factor``: This option is a Wic-specific option that
    multiplies the size of the partition by the option's value. You must
    supply a value greater than or equal to "1". The default value is
    "1.3".
 
--  *``--part-name``:* This option is a Wic-specific option that
+-  ``--part-name``: This option is a Wic-specific option that
    specifies a name for GPT partitions.
 
--  *``--part-type``:* This option is a Wic-specific option that
+-  ``--part-type``: This option is a Wic-specific option that
    specifies the partition type globally unique identifier (GUID) for
    GPT partitions. You can find the list of partition type GUIDs at
    http://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs.
 
--  *``--use-uuid``:* This option is a Wic-specific option that causes
+-  ``--use-uuid``: This option is a Wic-specific option that causes
    Wic to generate a random GUID for the partition. The generated
    identifier is used in the bootloader configuration to specify the
    root partition.
 
--  *``--uuid``:* This option is a Wic-specific option that specifies the
+-  ``--uuid``: This option is a Wic-specific option that specifies the
    partition UUID.
 
--  *``--fsuuid``:* This option is a Wic-specific option that specifies
+-  ``--fsuuid``: This option is a Wic-specific option that specifies
    the filesystem UUID. You can generate or modify
    :term:`WKS_FILE` with this option if a preconfigured
    filesystem UUID is added to the kernel command line in the bootloader
    configuration before you run Wic.
 
--  *``--system-id``:* This option is a Wic-specific option that
+-  ``--system-id``: This option is a Wic-specific option that
    specifies the partition system ID, which is a one byte long,
    hexadecimal parameter with or without the 0x prefix.
 
--  *``--mkfs-extraopts``:* This option specifies additional options to
+-  ``--mkfs-extraopts``: This option specifies additional options to
    pass to the ``mkfs`` utility. Some default options for certain
    filesystems do not take effect. See Wic's help on kickstart (i.e.
    ``wic help kickstart``).
@@ -195,13 +200,13 @@ supports the following options:
    command essentially provides a means of modifying bootloader
    configuration.
 
--  *``--timeout``:* Specifies the number of seconds before the
+-  ``--timeout``: Specifies the number of seconds before the
    bootloader times out and boots the default option.
 
--  *``--append``:* Specifies kernel parameters. These parameters will be
+-  ``--append``: Specifies kernel parameters. These parameters will be
    added to the syslinux ``APPEND`` or ``grub`` kernel command line.
 
--  *``--configfile``:* Specifies a user-defined configuration file for
+-  ``--configfile``: Specifies a user-defined configuration file for
    the bootloader. You can provide a full pathname for the file or a
    file that exists in the ``canned-wks`` folder. This option overrides
    all other bootloader options.

@@ -11,8 +11,7 @@ is a key part of the extensible SDK.
 
 This chapter provides a Quick Reference for the ``devtool`` command. For
 more information on how to apply the command when using the extensible
-SDK, see the "`Using the Extensible
-SDK <&YOCTO_DOCS_SDK_URL;#sdk-extensible>`__" chapter in the Yocto
+SDK, see the ":doc:`../sdk-manual/sdk-extensible`" chapter in the Yocto
 Project Application Development and the Extensible Software Development
 Kit (eSDK) manual.
 
@@ -23,66 +22,99 @@ Getting Help
 
 The ``devtool`` command line is organized similarly to Git in that it
 has a number of sub-commands for each function. You can run
-``devtool --help`` to see all the commands: $ devtool -h NOTE: Starting
-bitbake server... usage: devtool [--basepath BASEPATH] [--bbpath BBPATH]
-[-d] [-q] [--color COLOR] [-h] <subcommand> ... OpenEmbedded development
-tool options: --basepath BASEPATH Base directory of SDK / build
-directory --bbpath BBPATH Explicitly specify the BBPATH, rather than
-getting it from the metadata -d, --debug Enable debug output -q, --quiet
-Print only errors --color COLOR Colorize output (where COLOR is auto,
-always, never) -h, --help show this help message and exit subcommands:
-Beginning work on a recipe: add Add a new recipe modify Modify the
-source for an existing recipe upgrade Upgrade an existing recipe Getting
-information: status Show workspace status search Search available
-recipes latest-version Report the latest version of an existing recipe
-check-upgrade-status Report upgradability for multiple (or all) recipes
-Working on a recipe in the workspace: build Build a recipe rename Rename
-a recipe file in the workspace edit-recipe Edit a recipe file
-find-recipe Find a recipe file configure-help Get help on configure
-script options update-recipe Apply changes from external source tree to
-recipe reset Remove a recipe from your workspace finish Finish working
-on a recipe in your workspace Testing changes on target: deploy-target
-Deploy recipe output files to live target machine undeploy-target
-Undeploy recipe output files in live target machine build-image Build
-image including workspace recipe packages Advanced: create-workspace Set
-up workspace in an alternative location export Export workspace into a
-tar archive import Import exported tar archive into workspace extract
-Extract the source for an existing recipe sync Synchronize the source
-tree for an existing recipe Use devtool <subcommand> --help to get help
-on a specific command As directed in the general help output, you can
+``devtool --help`` to see all the commands:
+::
+
+   $ devtool -h
+   NOTE: Starting bitbake server...
+   usage: devtool [--basepath BASEPATH] [--bbpath BBPATH] [-d] [-q] [--color COLOR] [-h] <subcommand> ...
+
+   OpenEmbedded development tool
+
+   options:
+     --basepath BASEPATH   Base directory of SDK / build directory
+     --bbpath BBPATH       Explicitly specify the BBPATH, rather than getting it from the metadata
+     -d, --debug           Enable debug output
+     -q, --quiet           Print only errors
+     --color COLOR         Colorize output (where COLOR is auto, always, never)
+     -h, --help            show this help message and exit
+
+   subcommands:
+     Beginning work on a recipe:
+       add                   Add a new recipe
+       modify                Modify the source for an existing recipe
+       upgrade               Upgrade an existing recipe
+     Getting information:
+       status                Show workspace status
+       latest-version        Report the latest version of an existing recipe
+       check-upgrade-status  Report upgradability for multiple (or all) recipes
+       search                Search available recipes
+     Working on a recipe in the workspace:
+       build                 Build a recipe
+       rename                Rename a recipe file in the workspace
+       edit-recipe           Edit a recipe file
+       find-recipe           Find a recipe file
+       configure-help        Get help on configure script options
+       update-recipe         Apply changes from external source tree to recipe
+       reset                 Remove a recipe from your workspace
+       finish                Finish working on a recipe in your workspace
+     Testing changes on target:
+       deploy-target         Deploy recipe output files to live target machine
+       undeploy-target       Undeploy recipe output files in live target machine
+       build-image           Build image including workspace recipe packages
+     Advanced:
+       create-workspace      Set up workspace in an alternative location
+       extract               Extract the source for an existing recipe
+       sync                  Synchronize the source tree for an existing recipe
+       menuconfig            Alter build-time configuration for a recipe
+       import                Import exported tar archive into workspace
+       export                Export workspace into a tar archive
+     other:
+       selftest-reverse      Reverse value (for selftest)
+       pluginfile            Print the filename of this plugin
+       bbdir                 Print the BBPATH directory of this plugin
+       count                 How many times have this plugin been registered.
+       multiloaded           How many times have this plugin been initialized
+   Use devtool <subcommand> --help to get help on a specific command
+
+As directed in the general help output, you can
 get more syntax on a specific command by providing the command name and
-using "--help": $ devtool add --help NOTE: Starting bitbake server...
-usage: devtool add [-h] [--same-dir \| --no-same-dir] [--fetch URI]
-[--fetch-dev] [--version VERSION] [--no-git] [--srcrev SRCREV \|
---autorev] [--srcbranch SRCBRANCH] [--binary] [--also-native]
-[--src-subdir SUBDIR] [--mirrors] [--provides PROVIDES] [recipename]
-[srctree] [fetchuri] Adds a new recipe to the workspace to build a
-specified source tree. Can optionally fetch a remote URI and unpack it
-to create the source tree. arguments: recipename Name for new recipe to
-add (just name - no version, path or extension). If not specified, will
-attempt to auto-detect it. srctree Path to external source tree. If not
-specified, a subdirectory of /home/scottrif/poky/build/workspace/sources
-will be used. fetchuri Fetch the specified URI and extract it to create
-the source tree options: -h, --help show this help message and exit
---same-dir, -s Build in same directory as source --no-same-dir Force
-build in a separate build directory --fetch URI, -f URI Fetch the
-specified URI and extract it to create the source tree (deprecated -
-pass as positional argument instead) --fetch-dev For npm, also fetch
-devDependencies --version VERSION, -V VERSION Version to use within
-recipe (PV) --no-git, -g If fetching source, do not set up source tree
-as a git repository --srcrev SRCREV, -S SRCREV Source revision to fetch
-if fetching from an SCM such as git (default latest) --autorev, -a When
-fetching from a git repository, set SRCREV in the recipe to a floating
-revision instead of fixed --srcbranch SRCBRANCH, -B SRCBRANCH Branch in
-source repository if fetching from an SCM such as git (default master)
---binary, -b Treat the source tree as something that should be installed
-verbatim (no compilation, same directory structure). Useful with binary
-packages e.g. RPMs. --also-native Also add native variant (i.e. support
-building recipe for the build host as well as the target machine)
---src-subdir SUBDIR Specify subdirectory within source tree to use
---mirrors Enable PREMIRRORS and MIRRORS for source tree fetching
-(disable by default). --provides PROVIDES, -p PROVIDES Specify an alias
-for the item provided by the recipe. E.g. virtual/libgl
+using "--help":
+::
+
+   $ devtool add --help
+   NOTE: Starting bitbake server...
+   usage: devtool add [-h] [--same-dir | --no-same-dir] [--fetch URI] [--npm-dev] [--version VERSION] [--no-git] [--srcrev SRCREV | --autorev] [--srcbranch SRCBRANCH] [--binary] [--also-native] [--src-subdir SUBDIR] [--mirrors]
+                      [--provides PROVIDES]
+                      [recipename] [srctree] [fetchuri]
+
+   Adds a new recipe to the workspace to build a specified source tree. Can optionally fetch a remote URI and unpack it to create the source tree.
+
+   arguments:
+     recipename            Name for new recipe to add (just name - no version, path or extension). If not specified, will attempt to auto-detect it.
+     srctree               Path to external source tree. If not specified, a subdirectory of /media/build1/poky/build/workspace/sources will be used.
+     fetchuri              Fetch the specified URI and extract it to create the source tree
+
+   options:
+     -h, --help            show this help message and exit
+     --same-dir, -s        Build in same directory as source
+     --no-same-dir         Force build in a separate build directory
+     --fetch URI, -f URI   Fetch the specified URI and extract it to create the source tree (deprecated - pass as positional argument instead)
+     --npm-dev             For npm, also fetch devDependencies
+     --version VERSION, -V VERSION
+                           Version to use within recipe (PV)
+     --no-git, -g          If fetching source, do not set up source tree as a git repository
+     --srcrev SRCREV, -S SRCREV
+                           Source revision to fetch if fetching from an SCM such as git (default latest)
+     --autorev, -a         When fetching from a git repository, set SRCREV in the recipe to a floating revision instead of fixed
+     --srcbranch SRCBRANCH, -B SRCBRANCH
+                           Branch in source repository if fetching from an SCM such as git (default master)
+     --binary, -b          Treat the source tree as something that should be installed verbatim (no compilation, same directory structure). Useful with binary packages e.g. RPMs.
+     --also-native         Also add native variant (i.e. support building recipe for the build host as well as the target machine)
+     --src-subdir SUBDIR   Specify subdirectory within source tree to use
+     --mirrors             Enable PREMIRRORS and MIRRORS for source tree fetching (disable by default).
+     --provides PROVIDES, -p PROVIDES
+                           Specify an alias for the item provided by the recipe. E.g. virtual/libgl
 
 .. _devtool-the-workspace-layer-structure:
 
@@ -99,22 +131,35 @@ The following figure shows the workspace structure:
    :align: center
    :scale: 70%
 
-attic - A directory created if devtool believes it must preserve
-anything when you run "devtool reset". For example, if you run "devtool
-add", make changes to the recipe, and then run "devtool reset", devtool
-takes notice that the file has been changed and moves it into the attic
-should you still want the recipe. README - Provides information on what
-is in workspace layer and how to manage it. .devtool_md5 - A checksum
-file used by devtool. appends - A directory that contains \*.bbappend
-files, which point to external source. conf - A configuration directory
-that contains the layer.conf file. recipes - A directory containing
-recipes. This directory contains a folder for each directory added whose
-name matches that of the added recipe. devtool places the recipe.bb file
-within that sub-directory. sources - A directory containing a working
-copy of the source files used when building the recipe. This is the
-default directory used as the location of the source tree when you do
-not provide a source tree path. This directory contains a folder for
-each set of source files matched to a corresponding recipe.
+::
+
+   attic - A directory created if devtool believes it must preserve
+           anything when you run "devtool reset".  For example, if you
+           run "devtool add", make changes to the recipe, and then
+           run "devtool reset", devtool takes notice that the file has
+           been changed and moves it into the attic should you still
+           want the recipe.
+
+   README - Provides information on what is in workspace layer and how to
+            manage it.
+
+   .devtool_md5 - A checksum file used by devtool.
+
+   appends - A directory that contains *.bbappend files, which point to
+             external source.
+
+   conf - A configuration directory that contains the layer.conf file.
+
+   recipes - A directory containing recipes.  This directory contains a
+             folder for each directory added whose name matches that of the
+             added recipe.  devtool places the recipe.bb file
+             within that sub-directory.
+
+   sources - A directory containing a working copy of the source files used
+             when building the recipe.  This is the default directory used
+             as the location of the source tree when you do not provide a
+             source tree path.  This directory contains a folder for each
+             set of source files matched to a corresponding recipe.
 
 .. _devtool-adding-a-new-recipe-to-the-workspace:
 
@@ -127,8 +172,10 @@ you. The source files the recipe uses should exist in an external area.
 
 The following example creates and adds a new recipe named ``jackson`` to
 a workspace layer the tool creates. The source code built by the recipes
-resides in ``/home/user/sources/jackson``: $ devtool add jackson
-/home/user/sources/jackson
+resides in ``/home/user/sources/jackson``:
+::
+
+   $ devtool add jackson /home/user/sources/jackson
 
 If you add a recipe and the workspace layer does not exist, the command
 creates the layer and populates it as described in "`The Workspace Layer
@@ -145,35 +192,38 @@ external source tree.
    that these packages exist on the target hardware before attempting to
    run your application. If dependent packages (e.g. libraries) do not
    exist on the target, your application, when run, will fail to find
-   those functions. For more information, see the "
-   Deploying Your Software on the Target Machine
-   " section.
+   those functions. For more information, see the
+   ":ref:`ref-manual/ref-devtool-reference:deploying your software on the target machine`"
+   section.
 
 By default, ``devtool add`` uses the latest revision (i.e. master) when
 unpacking files from a remote URI. In some cases, you might want to
 specify a source revision by branch, tag, or commit hash. You can
 specify these options when using the ``devtool add`` command:
 
--  To specify a source branch, use the ``--srcbranch`` option: $ devtool
-   add --srcbranch DISTRO_NAME_NO_CAP jackson /home/user/sources/jackson
+-  To specify a source branch, use the ``--srcbranch`` option:
+   ::
+
+      $ devtool add --srcbranch DISTRO_NAME_NO_CAP jackson /home/user/sources/jackson
+
    In the previous example, you are checking out the DISTRO_NAME_NO_CAP
    branch.
 
 -  To specify a specific tag or commit hash, use the ``--srcrev``
-   option: $ devtool add --srcrev DISTRO_REL_TAG jackson
-   /home/user/sources/jackson $ devtool add --srcrev some_commit_hash
-   /home/user/sources/jackson The previous examples check out the
+   option:
+   ::
+
+      $ devtool add --srcrev DISTRO_REL_TAG jackson /home/user/sources/jackson
+      $ devtool add --srcrev some_commit_hash /home/user/sources/jackson
+
+   The previous examples check out the
    DISTRO_REL_TAG tag and the commit associated with the
    some_commit_hash hash.
 
 .. note::
 
    If you prefer to use the latest revision every time the recipe is
-   built, use the options
-   --autorev
-   or
-   -a
-   .
+   built, use the options --autorev or -a.
 
 .. _devtool-extracting-the-source-for-an-existing-recipe:
 
@@ -219,8 +269,12 @@ The ``devtool modify`` command extracts the source for a recipe, sets it
 up as a Git repository if the source had not already been fetched from
 Git, checks out a branch for development, and applies any patches from
 the recipe as commits on top. You can use the following command to
-checkout the source files: $ devtool modify recipe Using the above
-command form, ``devtool`` uses the existing recipe's
+checkout the source files:
+::
+
+   $ devtool modify recipe
+
+Using the above command form, ``devtool`` uses the existing recipe's
 :term:`SRC_URI` statement to locate the upstream source,
 extracts the source into the default sources location in the workspace.
 The default development branch used is "devtool".
@@ -255,16 +309,24 @@ compile, and test the code.
 
 When you are satisfied with the results and you have committed your
 changes to the Git repository, you can then run the
-``devtool update-recipe`` to create the patches and update the recipe: $
-devtool update-recipe recipe If you run the ``devtool update-recipe``
+``devtool update-recipe`` to create the patches and update the recipe:
+::
+
+   $ devtool update-recipe recipe
+
+If you run the ``devtool update-recipe``
 without committing your changes, the command ignores the changes.
 
 Often, you might want to apply customizations made to your software in
 your own layer rather than apply them to the original recipe. If so, you
 can use the ``-a`` or ``--append`` option with the
 ``devtool update-recipe`` command. These options allow you to specify
-the layer into which to write an append file: $ devtool update-recipe
-recipe -a base-layer-directory The ``*.bbappend`` file is created at the
+the layer into which to write an append file:
+::
+
+   $ devtool update-recipe recipe -a base-layer-directory
+
+The ``*.bbappend`` file is created at the
 appropriate path within the specified layer directory, which may or may
 not be in your ``bblayers.conf`` file. If an append file already exists,
 the command updates it appropriately.
@@ -287,7 +349,7 @@ particular recipe.
 .. note::
 
    -  For the ``oe-core`` layer, recipe maintainers come from the
-      ```maintainers.inc`http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/distro/include/maintainers.inc
+      `maintainers.inc <http://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/distro/include/maintainers.inc>`_
       file.
 
    -  If the recipe is using the :ref:`bitbake:git-fetcher`
@@ -296,14 +358,21 @@ particular recipe.
       recipe's latest version tag.
 
 As with all ``devtool`` commands, you can get help on the individual
-command: $ devtool check-upgrade-status -h NOTE: Starting bitbake
-server... usage: devtool check-upgrade-status [-h] [--all] [recipe
-[recipe ...]] Prints a table of recipes together with versions currently
-provided by recipes, and latest upstream versions, when there is a later
-version available arguments: recipe Name of the recipe to report (omit
-to report upgrade info for all recipes) options: -h, --help show this
-help message and exit --all, -a Show all recipes, not just recipes
-needing upgrade
+command:
+::
+
+   $ devtool check-upgrade-status -h
+   NOTE: Starting bitbake server...
+   usage: devtool check-upgrade-status [-h] [--all] [recipe [recipe ...]]
+
+   Prints a table of recipes together with versions currently provided by recipes, and latest upstream versions, when there is a later version available
+
+   arguments:
+     recipe      Name of the recipe to report (omit to report upgrade info for all recipes)
+
+   options:
+     -h, --help  show this help message and exit
+     --all, -a   Show all recipes, not just recipes needing upgrade
 
 Unless you provide a specific recipe name on the command line, the
 command checks all recipes in all configured layers.
@@ -317,21 +386,18 @@ satisfied.
 .. note::
 
    When a reason for not upgrading displays, the reason is usually
-   written into the recipe using the
-   RECIPE_NO_UPDATE_REASON
-   variable. See the
-   base-passwd.bb
-   recipe for an example.
+   written into the recipe using the RECIPE_NO_UPDATE_REASON
+   variable. See the base-passwd.bb recipe for an example.
 
-$ devtool check-upgrade-status ... NOTE: acpid 2.0.30 2.0.31 Ross Burton
-<ross.burton@intel.com> NOTE: u-boot-fw-utils 2018.11 2019.01 Marek
-Vasut <marek.vasut@gmail.com> d3689267f92c5956e09cc7d1baa4700141662bff
-NOTE: u-boot-tools 2018.11 2019.01 Marek Vasut <marek.vasut@gmail.com>
-d3689267f92c5956e09cc7d1baa4700141662bff . . . NOTE: base-passwd 3.5.29
-3.5.45 Anuj Mittal <anuj.mittal@intel.com> cannot be updated due to:
-Version 3.5.38 requires cdebconf for update-passwd utility NOTE: busybox
-1.29.2 1.30.0 Andrej Valek <andrej.valek@siemens.com> NOTE: dbus-test
-1.12.10 1.12.12 Chen Qi <Qi.Chen@windriver.com>
+::
+
+   $ devtool check-upgrade-status ...
+   NOTE: acpid 2.0.30 2.0.31 Ross Burton <ross.burton@intel.com>
+   NOTE: u-boot-fw-utils 2018.11 2019.01 Marek Vasut <marek.vasut@gmail.com> d3689267f92c5956e09cc7d1baa4700141662bff
+   NOTE: u-boot-tools 2018.11 2019.01 Marek Vasut <marek.vasut@gmail.com> d3689267f92c5956e09cc7d1baa4700141662bff . . .
+   NOTE: base-passwd 3.5.29 3.5.45 Anuj Mittal <anuj.mittal@intel.com> cannot be updated due to: Version 3.5.38 requires cdebconf for update-passwd utility
+   NOTE: busybox 1.29.2 1.30.0 Andrej Valek <andrej.valek@siemens.com>
+   NOTE: dbus-test 1.12.10 1.12.12 Chen Qi <Qi.Chen@windriver.com>
 
 .. _devtool-upgrading-a-recipe:
 
@@ -341,17 +407,13 @@ Upgrading a Recipe
 As software matures, upstream recipes are upgraded to newer versions. As
 a developer, you need to keep your local recipes up-to-date with the
 upstream version releases. Several methods exist by which you can
-upgrade recipes. You can read about them in the "`Upgrading
-Recipes <&YOCTO_DOCS_DEV_URL;#gs-upgrading-recipes>`__" section of the
-Yocto Project Development Tasks Manual. This section overviews the
-``devtool upgrade`` command.
+upgrade recipes. You can read about them in the ":ref:`gs-upgrading-recipes`"
+section of the Yocto Project Development Tasks Manual. This section
+overviews the ``devtool upgrade`` command.
 
-.. note::
-
-   Before you upgrade a recipe, you can check on its upgrade status. See
-   the "
-   Checking on the Upgrade Status of a Recipe
-   " for more information.
+Before you upgrade a recipe, you can check on its upgrade status. See
+the ":ref:`devtool-checking-on-the-upgrade-status-of-a-recipe`" section
+for more information.
 
 The ``devtool upgrade`` command upgrades an existing recipe to a more
 recent version of the recipe upstream. The command puts the upgraded
@@ -369,14 +431,11 @@ revision to which you want to upgrade (i.e. the
 :term:`SRCREV`), whether or not to apply patches, and so
 forth.
 
-You can read more on the ``devtool upgrade`` workflow in the "`Use
-``devtool upgrade`` to Create a Version of the Recipe that Supports a
-Newer Version of the
-Software <&YOCTO_DOCS_SDK_URL;#sdk-devtool-use-devtool-upgrade-to-create-a-version-of-the-recipe-that-supports-a-newer-version-of-the-software>`__"
+You can read more on the ``devtool upgrade`` workflow in the
+":ref:`sdk-devtool-use-devtool-upgrade-to-create-a-version-of-the-recipe-that-supports-a-newer-version-of-the-software`"
 section in the Yocto Project Application Development and the Extensible
 Software Development Kit (eSDK) manual. You can also see an example of
-how to use ``devtool upgrade`` in the "`Using
-``devtool upgrade`` <&YOCTO_DOCS_DEV_URL;#gs-using-devtool-upgrade>`__"
+how to use ``devtool upgrade`` in the ":ref:`gs-using-devtool-upgrade`"
 section in the Yocto Project Development Tasks Manual.
 
 .. _devtool-resetting-a-recipe:
@@ -397,10 +456,13 @@ files have been modified, the command preserves the modified files in a
 separate "attic" subdirectory under the workspace layer.
 
 Here is an example that resets the workspace directory that contains the
-``mtr`` recipe: $ devtool reset mtr NOTE: Cleaning sysroot for recipe
-mtr... NOTE: Leaving source tree
-/home/scottrif/poky/build/workspace/sources/mtr as-is; if you no longer
-need it then please delete it manually $
+``mtr`` recipe:
+::
+
+   $ devtool reset mtr
+   NOTE: Cleaning sysroot for recipe mtr...
+   NOTE: Leaving source tree /home/scottrif/poky/build/workspace/sources/mtr as-is; if you no longer need it then please delete it manually
+   $
 
 .. _devtool-building-your-recipe:
 
@@ -414,8 +476,10 @@ Use the ``devtool build`` command to build your recipe. The
 When you use the ``devtool build`` command, you must supply the root
 name of the recipe (i.e. do not provide versions, paths, or extensions).
 You can use either the "-s" or the "--disable-parallel-make" options to
-disable parallel makes during the build. Here is an example: $ devtool
-build recipe
+disable parallel makes during the build. Here is an example:
+::
+
+   $ devtool build recipe
 
 .. _devtool-building-your-image:
 
@@ -429,8 +493,10 @@ device for testing. For proper integration into a final image, you need
 to edit your custom image recipe appropriately.
 
 When you use the ``devtool build-image`` command, you must supply the
-name of the image. This command has no command line options: $ devtool
-build-image image
+name of the image. This command has no command line options:
+::
+
+   $ devtool build-image image
 
 .. _devtool-deploying-your-software-on-the-target-machine:
 
@@ -438,7 +504,11 @@ Deploying Your Software on the Target Machine
 =============================================
 
 Use the ``devtool deploy-target`` command to deploy the recipe's build
-output to the live target machine: $ devtool deploy-target recipe target
+output to the live target machine:
+::
+
+   $ devtool deploy-target recipe target
+
 The target is the address of the target machine, which must be running
 an SSH server (i.e. ``user@hostname[:destdir]``).
 
@@ -485,8 +555,13 @@ Removing Your Software from the Target Machine
 Use the ``devtool undeploy-target`` command to remove deployed build
 output from the target machine. For the ``devtool undeploy-target``
 command to work, you must have previously used the
-```devtool deploy-target`` <#devtool-deploying-your-software-on-the-target-machine>`__
-command. $ devtool undeploy-target recipe target The target is the
+":ref:`devtool deploy-target <ref-manual/ref-devtool-reference:deploying your software on the target machine>`"
+command.
+::
+
+   $ devtool undeploy-target recipe target
+
+The target is the
 address of the target machine, which must be running an SSH server (i.e.
 ``user@hostname``).
 
@@ -501,12 +576,17 @@ new workspace layer, it is populated with the ``README`` file and the
 ``conf`` directory only.
 
 The following example creates a new workspace layer in your current
-working and by default names the workspace layer "workspace": $ devtool
-create-workspace
+working and by default names the workspace layer "workspace":
+::
+
+   $ devtool create-workspace
 
 You can create a workspace layer anywhere by supplying a pathname with
 the command. The following command creates a new workspace layer named
-"new-workspace": $ devtool create-workspace /home/scottrif/new-workspace
+"new-workspace":
+::
+
+   $ devtool create-workspace /home/scottrif/new-workspace
 
 .. _devtool-get-the-status-of-the-recipes-in-your-workspace:
 
@@ -517,13 +597,19 @@ Use the ``devtool status`` command to list the recipes currently in your
 workspace. Information includes the paths to their respective external
 source trees.
 
-The ``devtool status`` command has no command-line options: $ devtool
-status Following is sample output after using
-```devtool add`` <#devtool-adding-a-new-recipe-to-the-workspace>`__ to
-create and add the ``mtr_0.86.bb`` recipe to the ``workspace``
-directory: $ devtool status mtr:
-/home/scottrif/poky/build/workspace/sources/mtr
-(/home/scottrif/poky/build/workspace/recipes/mtr/mtr_0.86.bb) $
+The ``devtool status`` command has no command-line options:
+::
+
+   $ devtool status
+
+Following is sample output after using
+:ref:`devtool add <ref-manual/ref-devtool-reference:adding a new recipe to the workspace layer>`
+to create and add the ``mtr_0.86.bb`` recipe to the ``workspace`` directory:
+::
+
+   $ devtool status mtr
+   :/home/scottrif/poky/build/workspace/sources/mtr (/home/scottrif/poky/build/workspace/recipes/mtr/mtr_0.86.bb)
+   $
 
 .. _devtool-search-for-available-target-recipes:
 
